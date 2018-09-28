@@ -12,4 +12,6 @@ $('input[type=radio][name=kss-sizes]').change(function() {
 
     jQuery('#kss-price').html('₹'+this.dataset['sale_price']+' <small class="kss-original-price text-muted">₹'+this.dataset['list_price']+'</small> <span class="kss-discount text-danger">'+this.dataset['discount_per']+'% OFF</span>');
 
+    jQuery('#cd-add-to-cart').prop("disabled", false);
+
 });
