@@ -69,15 +69,15 @@ Single Product|Kidsuperstore
 						    <label class="radio-label" for="red" style="background-image: url(img/thumbnail/10front@thumb.jpg)">
 						      <div class="radio-option">red</div>
 						    </label> -->
-						    <?php $selected_color_id = $params['variants']->selected_item; $selected_color = $params['variants']->items->{$selected_color_id}->name;
-						    foreach ($params['variants']->items->{$selected_color_id}->images as $image_set) {
+						    <?php $selected_color_id = $params['selected_color_id']; $selected_color = $params['variant_group']->{$selected_color_id}->name;
+						    foreach ($params['variant_group']->{$selected_color_id}->images as $image_set) {
 						     	if($image_set->is_primary) {$selected_image = $image_set->res->desktop->small_thumb;}
 						     } ?>
 						    <input class="d-none radio-input" type="radio" name="kss-variants" id="{{$selected_color_id}}" checked="checked" onclick="location.href='/product'" />
 						    <label class="radio-label" for="{{$selected_color_id}}" style="background-image: url({{$selected_image}})">
 						      <div class="radio-option">{{$selected_color}}</div>
 						    </label>
-						    <?php foreach ($params['variants']->items as $color_id => $color_set) {
+						    <?php foreach ($params['variant_group'] as $color_id => $color_set) {
 						    	if($color_id != $selected_color_id) {
 						    		foreach ($color_set->images as $image_set) {
 								     	if($image_set->is_primary) {$selected_image = $image_set->res->desktop->small_thumb;}
@@ -115,7 +115,7 @@ Single Product|Kidsuperstore
 					<div>
 							<h1 class="kss-title mb-2 mb-sm-2 text-gray font-weight-bold">{{$params['title']}}</h1>
 							<?php
-						    foreach ($params['variants']->items->{$selected_color_id}->items as $size_set) {
+						    foreach ($params['variant_group']->{$selected_color_id}->variants as $size_set) {
 						     	if($size_set->is_default) {
 						     		$list_price = $size_set->list_price;
 						     		$sale_price = $size_set->sale_price;
@@ -179,7 +179,7 @@ Single Product|Kidsuperstore
 				      <div class="radio-option">9-10Y</div>
 				    </label> -->
 				    <?php
-				    foreach ($params['variants']->items->{$selected_color_id}->items as $size_set) {
+				    foreach ($params['variant_group']->{$selected_color_id}->variants as $size_set) {
 				    	$disabled = "";
 				    	if(!$size_set->inventory_available) {$disabled = "disabled";}
 				    	$list_price = $size_set->list_price;
@@ -255,7 +255,7 @@ Single Product|Kidsuperstore
 				    	</div>
 				    </div>
 				  </div>
-				  <!-- <div class="">
+				  <div class="">
 				    <div class="collapse-head border-bottom mb-0" id="headingTwo">
 				        <button class="btn btn-link btn-block text-left py-3 px-0 br-0 collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
 					    	<label class="mb-0 text-body cursor-pointer">
@@ -266,7 +266,7 @@ Single Product|Kidsuperstore
 				    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
 				      	<div class="card-body pb-2 px-0">
 					     	<dl class="row">
-							  <dt class="col-sm-2"><label class="text-muted f-w-4">Format</label></dt>
+							  <!-- <dt class="col-sm-2"><label class="text-muted f-w-4">Format</label></dt>
 							  <dd class="col-sm-10">A description list is perfect for defining terms.</dd>
 
 							  <dt class="col-sm-2"><label class="text-muted f-w-4">Collar</label></dt>
@@ -286,13 +286,22 @@ Single Product|Kidsuperstore
 							  <dt class="col-sm-2"><label class="text-muted f-w-4">Gender</label></dt>
 							  <dd class="col-sm-10">Etiam porta sem malesuada magna mollis euismod.</dd>
 
-							   <dt class="col-sm-2"><label class="text-muted f-w-4">Material</label></dt>
-							  <dd class="col-sm-10">Etiam porta sem malesuada magna mollis euismod.</dd>
+							  <dt class="col-sm-2"><label class="text-muted f-w-4">Material</label></dt>
+							  <dd class="col-sm-10">Etiam porta sem malesuada magna mollis euismod.</dd> -->
+
+							  <dt class="col-sm-2"><label class="text-muted f-w-4">Gender</label></dt>
+							  <dd class="col-sm-10">{{$params['additional_info']->gender}}</dd>
+
+							  <dt class="col-sm-2"><label class="text-muted f-w-4">Sleeves</label></dt>
+							  <dd class="col-sm-10">{{$params['additional_info']->sleeves}}</dd>
+
+							  <dt class="col-sm-2"><label class="text-muted f-w-4">Material</label></dt>
+							  <dd class="col-sm-10">{{$params['additional_info']->material}}</dd>
 
 							</dl>
 				      	</div>
 				    </div>
-				  </div> -->
+				  </div>
 				  <!-- <div class="">
 				    <div class="collapse-head border-bottom mb-0" id="headingThree">
 				        <button class="btn btn-link btn-block text-left py-3 px-0 br-0 collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
@@ -410,7 +419,7 @@ Single Product|Kidsuperstore
 	</a>
 
 	<script type="text/javascript">
-	    window.variants = <?php echo json_encode($params['variants']); ?>
+	    window.variants = <?php echo json_encode($params['variant_group']); ?>
 	</script>
 
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
