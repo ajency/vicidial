@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('sitetitle')
-//Single Product|Kidsuperstore
+Single Product|Kidsuperstore
 @stop
 
 @section('content')
@@ -46,14 +46,14 @@
 
 					</div>
 				</div>
-				<!-- <div class=" d-md-block mb-3">
+				<div class=" d-md-block mb-3">
 					<div class="d-flex justify-content-between mt-3">
 						<label class=""> <a  class="font-weight-bold kss-link" data-toggle="collapse" href="#color-options"  aria-expanded="false" aria-controls="color-options"><i class="fas fa-circle text-warning"></i> <i class="fas fa-circle text-info"></i> <i class="fas fa-circle text-success"></i> More color options</a></label>
 					</div>
 					<div class="collapse" id="color-options">
 					  <div class="card card-body alert-light ">
 					    <div class="radio-wrap w-image kss_variants ">
-						    <input class="d-none radio-input" type="radio" name="kss-variants" id="green" checked="checked"/>
+						    <!-- <input class="d-none radio-input" type="radio" name="kss-variants" id="green" checked="checked"/>
 						    <label class="radio-label" for="green" style="background-image: url(img/thumbnail/6front@thumb.jpg)">
 						      <div class="radio-option">green</div>
 						    </label>
@@ -68,18 +68,38 @@
 						    <input class="d-none radio-input" type="radio" name="kss-variants" id="red"/>
 						    <label class="radio-label" for="red" style="background-image: url(img/thumbnail/10front@thumb.jpg)">
 						      <div class="radio-option">red</div>
+						    </label> -->
+						    <?php $selected_color_id = $params['variants']->selected_item; $selected_color = $params['variants']->items->{$selected_color_id}->name;
+						    foreach ($params['variants']->items->{$selected_color_id}->images as $image_set) {
+						     	if($image_set->is_primary) {$selected_image = $image_set->res->desktop->small_thumb;}
+						     } ?>
+						    <input class="d-none radio-input" type="radio" name="kss-variants" id="{{$selected_color_id}}" checked="checked" onclick="location.href='/product'" />
+						    <label class="radio-label" for="{{$selected_color_id}}" style="background-image: url({{$selected_image}})">
+						      <div class="radio-option">{{$selected_color}}</div>
 						    </label>
+						    <?php foreach ($params['variants']->items as $color_id => $color_set) {
+						    	if($color_id != $selected_color_id) {
+						    		foreach ($color_set->images as $image_set) {
+								     	if($image_set->is_primary) {$selected_image = $image_set->res->desktop->small_thumb;}
+								     } ?>
+								    <input class="d-none radio-input" type="radio" name="kss-variants" id="{{$color_id}}" onclick="location.href='/product'"/>
+								    <label class="radio-label" for="{{$color_id}}" style="background-image: url({{$selected_image}})">
+								      <div class="radio-option">{{$color_set->name}}</div>
+								    </label>
+						    	<?php }
+						    } ?>
 						</div>
 					  </div>
 					</div>
-				</div> -->
+				</div>
 			</div>
 			<div class="col-sm-12 col-lg-5">
-				<nav aria-label="breadcrumb">
+				<!-- <nav aria-label="breadcrumb">
 					<ol class="breadcrumb mb-1 bg-transparent p-0">
-					    <!-- <li class="breadcrumb-item"><a href="#">Home</a></li>
+					    <li class="breadcrumb-item"><a href="#">Home</a></li>
 					    <li class="breadcrumb-item"><a href="#">Boys</a></li>
-					    <li class="breadcrumb-item active"><a href="#">Boys Shirts</a></li> -->
+					    <li class="breadcrumb-item active"><a href="#">Boys Shirts</a></li>
+					   	<li class="breadcrumb-item"><a href="#">Home</a></li>
 					<?php if($params['category']->gender != 'Others') { ?>
 					    <li class="breadcrumb-item"><a href="#">{{$params['category']->gender}}</a></li>
 					<?php } else { ?>
@@ -90,12 +110,20 @@
 					    <li class="breadcrumb-item"><a href="#">{{$params['category']->sub_type}}</a></li>
 					<?php } ?>
 					</ol>
-				</nav>
+				</nav> -->
 				<div class="d-flex">
 					<div>
 							<h1 class="kss-title mb-2 mb-sm-2 text-gray font-weight-bold">{{$params['title']}}</h1>
-
-							<!-- <h4 class="kss-price">₹869 <small class="kss-original-price text-muted">₹1309</small> <span class="kss-discount text-danger">20% OFF</span></h4> -->
+							<?php
+						    foreach ($params['variants']->items->{$selected_color_id}->items as $size_set) {
+						     	if($size_set->is_default) {
+						     		$list_price = $size_set->list_price;
+						     		$sale_price = $size_set->sale_price;
+						     		$discount_amt = $list_price - $sale_price;
+						     		$discount_per = round($discount_amt/$list_price * 100);
+						     	}
+						     } ?>
+							<h4 id="kss-price" class="kss-price">₹{{$sale_price}} <small class="kss-original-price text-muted">₹{{$list_price}}</small> <span class="kss-discount text-danger">{{$discount_per}}% OFF</span></h4>
 				
 					</div>
 
@@ -108,7 +136,7 @@
 				
 				
 
-				<!-- <div class="d-flex justify-content-between mt-4">
+				<div class="d-flex justify-content-between mt-4">
 					<label class="">Select Size (Age Group)</label>
 					<a href="#sizeModal" class="font-weight-bold kss-link" data-toggle="modal" data-target="#sizeModal">Size Chart</a>
 
@@ -130,7 +158,7 @@
 
 				</div>
 				<div class="radio-wrap d-flex kss_sizes wo-image mb-4">
-				    <input class="d-none radio-input" type="radio" name="kss-sizes" id="18-24" checked="checked"/>
+				    <!-- <input class="d-none radio-input" type="radio" name="kss-sizes" id="18-24" checked="checked"/>
 				    <label class="radio-label" for="18-24" title="18-24 months">
 				      <div class="radio-option">18-24M</div>
 				    </label>
@@ -149,8 +177,23 @@
 				     <input class="d-none radio-input" type="radio" name="kss-sizes" id="9-10"/>
 				    <label class="radio-label" for="9-10" title="9-10 years">
 				      <div class="radio-option">9-10Y</div>
-				    </label>
-				</div> -->
+				    </label> -->
+				    <?php
+				    foreach ($params['variants']->items->{$selected_color_id}->items as $size_set) {
+				    	$disabled = "";
+				    	if(!$size_set->inventory_available) {$disabled = "disabled";}
+				    	$list_price = $size_set->list_price;
+			     		$sale_price = $size_set->sale_price;
+			     		$discount_amt = $list_price - $sale_price;
+			     		$discount_per = round($discount_amt/$list_price * 100);
+				    	?>
+				    	<input class="d-none radio-input" type="radio" name="kss-sizes" id="{{$size_set->size->id}}" {{$disabled}} data-list_price="{{$list_price}}" data-sale_price="{{$sale_price}}" data-discount_per="{{$discount_per}}"/>
+					    <label class="radio-label" for="{{$size_set->size->id}}" title="{{$size_set->size->name}}">
+					      <div class="radio-option">{{$size_set->size->name}}</div>
+					    </label>
+				    	<?php
+				     } ?>
+				</div>
 
 				<!-- <div class="row">
 					
@@ -196,7 +239,7 @@
 				 	<p class="text-muted">Tax: Applicable tax on the basis of exact location & discount will be charged at the time of checkout</p>
 				</div> -->
 
-				<!-- <div class="accordion product-collapse" id="accordionExample">
+				<div class="accordion product-collapse" id="accordionExample">
 				  <div class="">
 				    <div class="collapse-head border-bottom mb-0" id="headingOne">
 				        <button class="btn btn-link btn-block text-left py-3 px-0 br-0 " type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -208,15 +251,10 @@
 
 				    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
 				    	<div class="card-body pb-2 px-0">
-				       		<p>
-				       			Blue and orange T-shirt, has a V-neck with a spread collar, short sleeves, DryCell technology for moisture management
-				       		</p>
-				       		<p>
-								Bio-based Wicking finish
-				       		</p>
+				       		<p>{{$params['description']}}</p>
 				    	</div>
 				    </div>
-				  </div> -->
+				  </div>
 				  <!-- <div class="">
 				    <div class="collapse-head border-bottom mb-0" id="headingTwo">
 				        <button class="btn btn-link btn-block text-left py-3 px-0 br-0 collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -372,9 +410,10 @@
 	</a>
 
 	<script type="text/javascript">
-	    jQuery(document).ready(function() {
-	        jQuery('.breadcrumb-item').last().addClass('active');
-	    });
+	    window.variants = <?php echo json_encode($params['variants']); ?>
 	</script>
+
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
+	<script type="text/javascript" src="js/singleproduct.js"></script>
 
 @stop
