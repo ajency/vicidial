@@ -15,6 +15,8 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/product', function () {
+/*Route::get('/product', function () {
     return view('singleproduct');
-});
+});*/
+
+Route::get('/product', 'ProductController@index')->name('product');
