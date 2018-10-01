@@ -69,25 +69,18 @@ Single Product|Kidsuperstore
 						    <label class="radio-label" for="red" style="background-image: url(img/thumbnail/10front@thumb.jpg)">
 						      <div class="radio-option">red</div>
 						    </label> -->
-						    <?php $selected_color_id = $params['selected_color_id']; $selected_color = $params['variant_group']->{$selected_color_id}->name;
-						    foreach ($params['variant_group']->{$selected_color_id}->images as $image_set) {
-						     	if($image_set->is_primary) {$selected_image = $image_set->res->desktop->small_thumb;}
-						     } ?>
-						    <input class="d-none radio-input" type="radio" name="kss-variants" id="{{$selected_color_id}}" checked="checked" onclick="location.href='/product'" />
-						    <label class="radio-label" for="{{$selected_color_id}}" style="background-image: url({{$selected_image}})">
-						      <div class="radio-option">{{$selected_color}}</div>
-						    </label>
-						    <?php foreach ($params['variant_group'] as $color_id => $color_set) {
-						    	if($color_id != $selected_color_id) {
+						    <?php $selected_color_id = $params['selected_color_id'];
+						    	foreach ($params['variant_group'] as $color_id => $color_set) {
+							    	$checked="";
+							    	if($color_id == $selected_color_id) {$checked="checked";}
 						    		foreach ($color_set->images as $image_set) {
 								     	if($image_set->is_primary) {$selected_image = $image_set->res->desktop->small_thumb;}
 								     } ?>
-								    <input class="d-none radio-input" type="radio" name="kss-variants" id="{{$color_id}}" onclick="location.href='/product'"/>
+								    <input class="d-none radio-input" type="radio" name="kss-variants" id="{{$color_id}}" {{$checked}} onclick="location.href='/product'"/>
 								    <label class="radio-label" for="{{$color_id}}" style="background-image: url({{$selected_image}})">
 								      <div class="radio-option">{{$color_set->name}}</div>
 								    </label>
-						    	<?php }
-						    } ?>
+							    <?php } ?>
 						</div>
 					  </div>
 					</div>
