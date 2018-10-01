@@ -16,6 +16,8 @@
 
 </div>
 
+@include('includes.scroll')
+
 <footer class="bg-light mt-5 pb-5 pt-5">
     @include('includes.footer')
 </footer>

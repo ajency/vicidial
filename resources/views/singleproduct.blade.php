@@ -410,11 +410,6 @@ Single Product|Kidsuperstore
         </div>
 	</div> -->
 <?php //@include('cart') ?>
-	<a href="#" class="go-top">
-		<div class="top-icon">
-		</div>
-		Go Top
-	</a>
 
 	<script type="text/javascript">
 	    window.variants = <?php echo json_encode($params['variant_group']); ?>
