@@ -76,8 +76,8 @@ Single Product|Kidsuperstore
 						    		foreach ($color_set->images as $image_set) {
 								     	if($image_set->is_primary) {$selected_image = $image_set->res->desktop->small_thumb;}
 								     } ?>
-								    <input class="d-none radio-input" type="radio" name="kss-variants" id="{{$color_id}}" {{$checked}} onclick="location.href='/product'"/>
-								    <label class="radio-label" for="{{$color_id}}" style="background-image: url({{$selected_image}})">
+								    <input class="d-none radio-input" type="radio" name="kss-variants" id="color-{{$color_id}}" {{$checked}} onclick="location.href='/product'"/>
+								    <label class="radio-label" for="color-{{$color_id}}" style="background-image: url({{$selected_image}})">
 								      <div class="radio-option">{{$color_set->name}}</div>
 								    </label>
 							    <?php } ?>
@@ -180,8 +180,8 @@ Single Product|Kidsuperstore
 			     		$discount_amt = $list_price - $sale_price;
 			     		$discount_per = round($discount_amt/$list_price * 100);
 				    	?>
-				    	<input class="d-none radio-input" type="radio" name="kss-sizes" id="{{$size_set->size->id}}" {{$disabled}} data-list_price="{{$list_price}}" data-sale_price="{{$sale_price}}" data-discount_per="{{$discount_per}}"/>
-					    <label class="radio-label" for="{{$size_set->size->id}}" title="{{$size_set->size->name}}">
+				    	<input class="d-none radio-input" type="radio" name="kss-sizes" id="size-{{$size_set->size->id}}" {{$disabled}} data-list_price="{{$list_price}}" data-sale_price="{{$sale_price}}" data-discount_per="{{$discount_per}}"/>
+					    <label class="radio-label" for="size-{{$size_set->size->id}}" title="{{$size_set->size->name}}">
 					      <div class="radio-option">{{$size_set->size->name}}</div>
 					    </label>
 				    	<?php
