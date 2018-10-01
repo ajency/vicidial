@@ -87,13 +87,17 @@ Single Product|Kidsuperstore
 				</div>
 			</div>
 			<div class="col-sm-12 col-lg-5">
-				<!-- <nav aria-label="breadcrumb">
+				<nav aria-label="breadcrumb">
 					<ol class="breadcrumb mb-1 bg-transparent p-0">
-					    <li class="breadcrumb-item"><a href="#">Home</a></li>
+					    <!-- <li class="breadcrumb-item"><a href="#">Home</a></li>
 					    <li class="breadcrumb-item"><a href="#">Boys</a></li>
-					    <li class="breadcrumb-item active"><a href="#">Boys Shirts</a></li>
+					    <li class="breadcrumb-item active"><a href="#">Boys Shirts</a></li> -->
 					   	<li class="breadcrumb-item"><a href="#">Home</a></li>
-					<?php if($params['category']->gender != 'Others') { ?>
+					   	<li class="breadcrumb-item"><a href="#">{{$params['category']->type}}</a></li>
+					   	<li class="breadcrumb-item"><a href="#">{{$params['category']->age_group}}</a></li>
+					   	<li class="breadcrumb-item"><a href="#">{{$params['category']->gender}}</a></li>
+					   	<li class="breadcrumb-item active"><a href="#">{{$params['category']->sub_type}}</a></li>
+					<!-- <?php if($params['category']->gender != 'Others') { ?>
 					    <li class="breadcrumb-item"><a href="#">{{$params['category']->gender}}</a></li>
 					<?php } else { ?>
 						<li class="breadcrumb-item"><a href="#">{{$params['category']->type}}</a></li>
@@ -101,9 +105,9 @@ Single Product|Kidsuperstore
 
 					<?php if($params['category']->sub_type != 'Others') { ?>
 					    <li class="breadcrumb-item"><a href="#">{{$params['category']->sub_type}}</a></li>
-					<?php } ?>
+					<?php } ?> -->
 					</ol>
-				</nav> -->
+				</nav>
 				<div class="d-flex">
 					<div>
 							<h1 class="kss-title mb-2 mb-sm-2 text-gray font-weight-bold">{{$params['title']}}</h1>
