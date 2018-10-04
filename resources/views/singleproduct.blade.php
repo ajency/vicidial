@@ -1,9 +1,5 @@
 @extends('layouts.default')
 
-@section('sitetitle')
-Single Product|Kidsuperstore
-@stop
-
 @section('content')
     
 	<div class="container mt-0 mt-md-4">

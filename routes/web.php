@@ -11,12 +11,16 @@
 |
 */
 
-Route::get('/', function () {
-    return view('home');
+Route::middleware(['create-seo:home'])->group(function () {
+    Route::get('/', function () {
+	    return view('home');
+	});
 });
 
 /*Route::get('/product', function () {
     return view('singleproduct');
 });*/
 
-Route::get('/product', 'ProductController@index')->name('product');
+Route::middleware(['create-seo:product'])->group(function () {
+    Route::get('/product', 'ProductController@index')->name('product');
+});
