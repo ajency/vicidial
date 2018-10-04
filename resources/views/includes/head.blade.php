@@ -17,4 +17,6 @@
 
 <link rel="stylesheet" type="text/css" href="css/combine.css">
 
-<title>@yield('sitetitle')</title>
+{!! SEOMeta::generate() !!}
+{!! OpenGraph::generate() !!}
+{!! Twitter::generate() !!}
