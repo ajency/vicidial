@@ -115,8 +115,13 @@
 						     		$discount_amt = $list_price - $sale_price;
 						     		$discount_per = round($discount_amt/$list_price * 100);
 						     	}
-						     } ?>
-							<h4 id="kss-price" class="kss-price">₹{{$sale_price}} <small class="kss-original-price text-muted">₹{{$list_price}}</small> <span class="kss-discount text-danger">{{$discount_per}}% OFF</span></h4>
+						    } 
+
+						    if($list_price == $sale_price) { ?>
+								<h4 id="kss-price" class="kss-price">₹{{$sale_price}}</h4>
+							<?php } else { ?>
+								<h4 id="kss-price" class="kss-price">₹{{$sale_price}} <small class="kss-original-price text-muted">₹{{$list_price}}</small> <span class="kss-discount text-danger">{{$discount_per}}% OFF</span></h4>
+							<?php } ?>
 				
 					</div>
 
