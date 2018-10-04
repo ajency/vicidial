@@ -36,7 +36,14 @@ class CreateSEO
     }
 
     public function home() {
-        SEOMeta::setTitle('Home|Kidsuperstore');
+        SEOMeta::setTitle('Online shopping for kids wear and fashion in India - KidSuperStore.in');
+        SEOMeta::setDescription('Kidsuperstore.in: Online shopping site for kids wear and fashion in India. Buy Shoes, Clothing, Dresses and Accessories for Boys, Girls, Toddlers, Juniors and Infants. Shipping | Cash on Delivery | 30 days return.');
+
+        OpenGraph::setTitle('Online shopping for kids wear and fashion in India - KidSuperStore.in');
+        OpenGraph::setDescription('Kidsuperstore.in: Online shopping site for kids wear and fashion in India. Buy Shoes, Clothing, Dresses and Accessories for Boys, Girls, Toddlers, Juniors and Infants. Shipping | Cash on Delivery | 30 days return.');
+
+        Twitter::setTitle('Online shopping for kids wear and fashion in India - KidSuperStore.in');
+        Twitter::setDescription('Kidsuperstore.in: Online shopping site for kids wear and fashion in India. Buy Shoes, Clothing, Dresses and Accessories for Boys, Girls, Toddlers, Juniors and Infants. Shipping | Cash on Delivery | 30 days return.');
     }
 
     public function product() {
