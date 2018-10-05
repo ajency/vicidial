@@ -154,8 +154,8 @@ function fetchProduct(int $product_id, int $selected_color_id){
     $json = [
         "parent_id" => $product["id"],
         "title" => $product["att_magento_display_name"],
-        "slug_name" => $var["slug_name"],
-        "slug_style" => $var["slug_style"],
+        "slug_name" => $product["slug_name"],
+        "slug_style" => $product["slug_style"],
         "category" => [
             "id" => $product["categ_id"],
             "gender" => $product["gender"],
