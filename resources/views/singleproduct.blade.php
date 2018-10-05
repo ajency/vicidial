@@ -9,31 +9,31 @@
 
 					<div class="col-12 order-2 col-sm-12 col-md-12 order-sm-1 px-0 item">
 
-						<img src="img/arrow.png" class="swipe-arrow  d-block d-md-none">
+						<img src="/img/arrow.png" class="swipe-arrow  d-block d-md-none">
 						<div class="loader"></div>
 						<ul id="aniimated-thumbnials" class="d-flex d-sm-block list-unstyled m-0 m-md-2 prod-slides hidden">
 
 							<li class="mx-2 mb-2" >
-								<a href="img/3x/4front@3x.jpg" class="custom-selector">
-									<img data-src="img/1x/4front@1x.jpg" class="lazyload"  data-srcset="img/1x/4front@1x.jpg 1x, img/2x/4front@2x.jpg 2x" >
+								<a href="/img/3x/4front@3x.jpg" class="custom-selector">
+									<img data-src="/img/1x/4front@1x.jpg" class="lazyload"  data-srcset="/img/1x/4front@1x.jpg 1x, /img/2x/4front@2x.jpg 2x" >
 
 								</a>
 							</li>
 							<li class="mx-2 mb-2" >
-								<a href="img/3x/4focus@3x.jpg" class="custom-selector">
-									<img data-src="img/1x/4focus@1x.jpg" class="lazyload"  data-srcset="img/1x/4focus@1x.jpg 1x, img/2x/4focus@2x.jpg 2x" >
+								<a href="/img/3x/4focus@3x.jpg" class="custom-selector">
+									<img data-src="/img/1x/4focus@1x.jpg" class="lazyload"  data-srcset="/img/1x/4focus@1x.jpg 1x, /img/2x/4focus@2x.jpg 2x" >
 
 								</a>
 							</li>
 							<li class="mx-2 mb-2">
-								<a href="img/3x/4back@3x.jpg" class="custom-selector">
-									<img data-src="img/1x/4back@1x.jpg" class="lazyload"  data-srcset="img/1x/4back@1x.jpg 1x, img/2x/4back@2x.jpg 2x" >
+								<a href="/img/3x/4back@3x.jpg" class="custom-selector">
+									<img data-src="/img/1x/4back@1x.jpg" class="lazyload"  data-srcset="/img/1x/4back@1x.jpg 1x, /img/2x/4back@2x.jpg 2x" >
 
 								</a>
 							</li>
 								<li class="mx-2 mb-2">
-								<a href="img/3x/4back@3x.jpg" class=" custom-selector">
-									<img data-src="img/1x/4back.jpg" class="lazyload"  data-srcset="img/1x/4back.jpg 1x, img/2x/4back@2x.jpg 2x" >
+								<a href="/img/3x/4back@3x.jpg" class=" custom-selector">
+									<img data-src="/img/1x/4back.jpg" class="lazyload"  data-srcset="/img/1x/4back.jpg 1x, /img/2x/4back@2x.jpg 2x" >
 
 								</a>
 							</li>
@@ -50,33 +50,33 @@
 					  <div class="card card-body alert-light ">
 					    <div class="radio-wrap w-image kss_variants ">
 						    <!-- <input class="d-none radio-input" type="radio" name="kss-variants" id="green" checked="checked"/>
-						    <label class="radio-label" for="green" style="background-image: url(img/thumbnail/6front@thumb.jpg)">
+						    <label class="radio-label" for="green" style="background-image: url(/img/thumbnail/6front@thumb.jpg)">
 						      <div class="radio-option">green</div>
 						    </label>
 						    <input class="d-none radio-input" type="radio" name="kss-variants" id="yellow"/>
-						    <label class="radio-label" for="yellow" style="background-image: url(img/thumbnail/1front@thumb.jpg)">
+						    <label class="radio-label" for="yellow" style="background-image: url(/img/thumbnail/1front@thumb.jpg)">
 						      <div class="radio-option">yellow</div>
 						    </label>
 						    <input class="d-none radio-input" type="radio" name="kss-variants" id="blue"/>
-						    <label class="radio-label" for="blue" style="background-image: url(img/thumbnail/3front@thumb.jpg)">
+						    <label class="radio-label" for="blue" style="background-image: url(/img/thumbnail/3front@thumb.jpg)">
 						      <div class="radio-option">blue</div>
 						    </label>
 						    <input class="d-none radio-input" type="radio" name="kss-variants" id="red"/>
-						    <label class="radio-label" for="red" style="background-image: url(img/thumbnail/10front@thumb.jpg)">
+						    <label class="radio-label" for="red" style="background-image: url(/img/thumbnail/10front@thumb.jpg)">
 						      <div class="radio-option">red</div>
 						    </label> -->
-						    <?php $selected_color_id = $params['selected_color_id'];
+						    @php $selected_color_id = $params['selected_color_id'];
 						    	foreach ($params['variant_group'] as $color_id => $color_set) {
 							    	$checked="";
 							    	if($color_id == $selected_color_id) {$checked="checked";}
 						    		foreach ($color_set->images as $image_set) {
 								     	if($image_set->is_primary) {$selected_image = $image_set->res->desktop->small_thumb;}
-								     } ?>
+								     } @endphp
 								    <input class="d-none radio-input" type="radio" name="kss-variants" id="color-{{$color_id}}" {{$checked}} onclick="location.href='/product'"/>
 								    <label class="radio-label" for="color-{{$color_id}}" style="background-image: url({{$selected_image}})">
 								      <div class="radio-option">{{$color_set->name}}</div>
 								    </label>
-							    <?php } ?>
+							    @php } @endphp
 						</div>
 					  </div>
 					</div>
@@ -93,21 +93,21 @@
 					   	<li class="breadcrumb-item"><a href="#">{{$params['category']->age_group}}</a></li>
 					   	<li class="breadcrumb-item"><a href="#">{{$params['category']->gender}}</a></li>
 					   	<li class="breadcrumb-item active"><a href="#">{{$params['category']->sub_type}}</a></li>
-					<!-- <?php if($params['category']->gender != 'Others') { ?>
+					<!-- @php if($params['category']->gender != 'Others') { @endphp
 					    <li class="breadcrumb-item"><a href="#">{{$params['category']->gender}}</a></li>
-					<?php } else { ?>
+					@php } else { @endphp
 						<li class="breadcrumb-item"><a href="#">{{$params['category']->type}}</a></li>
-					<?php } ?>
+					@php } @endphp
 
-					<?php if($params['category']->sub_type != 'Others') { ?>
+					@php if($params['category']->sub_type != 'Others') { @endphp
 					    <li class="breadcrumb-item"><a href="#">{{$params['category']->sub_type}}</a></li>
-					<?php } ?> -->
+					@php } @endphp -->
 					</ol>
 				</nav>
 				<div class="d-flex">
 					<div>
 							<h1 class="kss-title mb-2 mb-sm-2 text-gray font-weight-bold">{{$params['title']}}</h1>
-							<?php
+							@php
 						    foreach ($params['variant_group']->{$selected_color_id}->variants as $size_set) {
 						     	if($size_set->is_default) {
 						     		$list_price = $size_set->list_price;
@@ -117,11 +117,11 @@
 						     	}
 						    } 
 
-						    if($list_price == $sale_price) { ?>
+						    if($list_price == $sale_price) { @endphp
 								<h4 id="kss-price" class="kss-price">₹{{$sale_price}}</h4>
-							<?php } else { ?>
+							@php } else { @endphp
 								<h4 id="kss-price" class="kss-price">₹{{$sale_price}} <small class="kss-original-price text-muted">₹{{$list_price}}</small> <span class="kss-discount text-danger">{{$discount_per}}% OFF</span></h4>
-							<?php } ?>
+							@php } @endphp
 				
 					</div>
 
@@ -148,7 +148,7 @@
 				    	        </button>
 					    	</div>
 					      	<div class="modal-body">
-					      		<img src="img/size_chart.png" class="img-fluid">
+					      		<img src="/img/size_chart.png" class="img-fluid">
 					      	</div>
 					    </div>
 					  </div>
@@ -176,7 +176,7 @@
 				    <label class="radio-label" for="9-10" title="9-10 years">
 				      <div class="radio-option">9-10Y</div>
 				    </label> -->
-				    <?php
+				    @php
 				    foreach ($params['variant_group']->{$selected_color_id}->variants as $size_set) {
 				    	$disabled = "";
 				    	if(!$size_set->inventory_available) {$disabled = "disabled";}
@@ -184,13 +184,13 @@
 			     		$sale_price = $size_set->sale_price;
 			     		$discount_amt = $list_price - $sale_price;
 			     		$discount_per = round($discount_amt/$list_price * 100);
-				    	?>
+				    	@endphp
 				    	<input class="d-none radio-input" type="radio" name="kss-sizes" id="size-{{$size_set->size->id}}" {{$disabled}} data-list_price="{{$list_price}}" data-sale_price="{{$sale_price}}" data-discount_per="{{$discount_per}}"/>
 					    <label class="radio-label" for="size-{{$size_set->size->id}}" title="{{$size_set->size->name}}">
 					      <div class="radio-option">{{$size_set->size->name}}</div>
 					    </label>
-				    	<?php
-				     } ?>
+				    	@php
+				     } @endphp
 				</div>
 
 				<div class="row">
@@ -339,7 +339,7 @@
               	<i class="fas fa-heart kss_heart"></i>
                 <a href="/kss/product/" >
                   <div class="image oh loading loading-01">
-                  <img data-src="img/normal/bluefront@1x.jpg" data-srcset="img/normal/bluefront@1x.jpg 1x, img/2x/bluefront@2x.jpg 2x" class="lazyload card-img-top" />
+                  <img data-src="/img/normal/bluefront@1x.jpg" data-srcset="/img/normal/bluefront@1x.jpg 1x, /img/2x/bluefront@2x.jpg 2x" class="lazyload card-img-top" />
                  </div>
                 </a>
                 <div class="card-body">
@@ -358,7 +358,7 @@
            	 		<i class="fas fa-heart kss_heart"></i>
                 <a href="/kss/product/">
                    <div class="image oh loading loading-02">
-                  <img data-src="img/normal/orangefront@1x.jpg" data-srcset="img/normal/orangefront@1x.jpg 1x, img/2x/orangefront@2x.jpg 2x" class="lazyload card-img-top" />
+                  <img data-src="/img/normal/orangefront@1x.jpg" data-srcset="/img/normal/orangefront@1x.jpg 1x, /img/2x/orangefront@2x.jpg 2x" class="lazyload card-img-top" />
                 </div>
                 </a>
                 <div class="card-body">
@@ -377,7 +377,7 @@
               	<i class="fas fa-heart kss_heart"></i>
                 <a href="/kss/product/">
                    <div class="image oh loading loading-03">
-                        <img data-src="img/normal/red1front@1x.jpg" data-srcset="img/normal/red1front@1x.jpg 1x, img/2x/red1front@2x.jpg 2x" class="lazyload card-img-top" />
+                        <img data-src="/img/normal/red1front@1x.jpg" data-srcset="/img/normal/red1front@1x.jpg 1x, /img/2x/red1front@2x.jpg 2x" class="lazyload card-img-top" />
                     </div>
                 </a>
                 <div class="card-body">
@@ -395,7 +395,7 @@
                 <i class="fas fa-heart kss_heart"></i>
                 <a href="/kss/product/">
                    <div class="image oh loading loading-04">
-                   <img data-src="img/normal/redbluefront@1x.jpg"  data-srcset="img/normal/redbluefront@1x.jpg 1x, img/2x/redbluefront@2x.jpg 2x" class="lazyload card-img-top" />
+                   <img data-src="/img/normal/redbluefront@1x.jpg"  data-srcset="/img/normal/redbluefront@1x.jpg 1x, /img/2x/redbluefront@2x.jpg 2x" class="lazyload card-img-top" />
                  </div>
                 </a>
                 <div class="card-body">
@@ -410,13 +410,13 @@
             </div>
         </div>
 	</div> -->
-<?php //@include('cart') ?>
+@php //@include('cart') @endphp
 
 	<script type="text/javascript">
-	    window.variants = <?php echo json_encode($params['variant_group']); ?>
+	    window.variants = @php echo json_encode($params['variant_group']); @endphp
 	</script>
 
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
-	<script type="text/javascript" src="js/singleproduct.js"></script>
+	<script type="text/javascript" src="/js/singleproduct.js"></script>
 
 @stop
