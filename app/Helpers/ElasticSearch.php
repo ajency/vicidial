@@ -69,6 +69,7 @@ function getUnSelectedVariants(int $product_id=1636, int $selected_color_id=231)
             $color_groups[$var["var_color_id"]]["variants"][] = $variant;
             $color_groups[$var["var_color_id"]]["name"] = $var["var_color_value"];
             $color_groups[$var["var_color_id"]]["html"] = $var["var_color_html"];
+            $color_groups[$var["var_color_id"]]["slug_color"] = $var["slug_color"],
             $color_groups[$var["var_color_id"]]["images"] = json_decode('[{"is_primary":true,"res":{"desktop":{"small_thumb":"/img/thumbnail/3front@thumb.jpg"},"mobile":{"small_thumb":"/img/thumbnail/3front@thumb.jpg"}}}]', true);
             $variants[] = $variant;
 
