@@ -72,7 +72,7 @@
 						    		foreach ($color_set->images as $image_set) {
 								     	if($image_set->is_primary) {$selected_image = $image_set->res->desktop->small_thumb;}
 								     } @endphp
-								    <input class="d-none radio-input" type="radio" name="kss-variants" id="color-{{$color_id}}" {{$checked}} onclick="location.href='/product'"/>
+								    <input class="d-none radio-input" type="radio" name="kss-variants" id="color-{{$color_id}}" {{$checked}} onclick="location.href='/{{$slug_name}}/{{$slug_style}}/{{$color_set->slug_color}}/buy'"/>
 								    <label class="radio-label" for="color-{{$color_id}}" style="background-image: url({{$selected_image}})">
 								      <div class="radio-option">{{$color_set->name}}</div>
 								    </label>
