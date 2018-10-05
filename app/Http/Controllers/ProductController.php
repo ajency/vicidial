@@ -7,10 +7,10 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
 
-    public function index(Request $request)
+    public function index($product_slug, $style_slug, $color_slug, Request $request)
     {
         
-        $json = json_decode(singleproduct());
+        $json = json_decode(singleproduct($product_slug, $style_slug, $color_slug));
         $params =  (array) $json;
 
         //print_r($params);
