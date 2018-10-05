@@ -153,7 +153,7 @@ function fetchProduct(int $product_id, int $selected_color_id){
     $product = $product["_source"];
     $json = [
         "parent_id" => $product["id"],
-        "title" => $product["display_name"],
+        "title" => $product["att_magento_display_name"],
         "category" => [
             "id" => $product["categ_id"],
             "gender" => $product["gender"],
@@ -163,6 +163,7 @@ function fetchProduct(int $product_id, int $selected_color_id){
         ],
         "description" => "Incomplete",
         "additional_info" => [
+            "age_group" => $product["age_group"],
             "gender" => $product["gender"],
             "material" => "incomplete",
             "sleeves" => "incomplete",
