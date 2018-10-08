@@ -46,8 +46,19 @@ class CreateSEO
     public function product(array $parameters) {
         $json = json_decode(singleproduct($parameters['product_slug'], $parameters['style_slug'], $parameters['color_slug']));
         $params =  (array) $json;
-        
-        SEOMeta::setTitle('Single Product|Kidsuperstore');
+        $product_name = $params['title'];
+        $selected_color_id = $params['selected_color_id'];
+        foreach ($params['variant_group'] as $color_id => $color_set) {
+            if($color_id == $selected_color_id) {
+                $product_color = $color_set->name;
+            }
+            /*foreach ($color_set->images as $image_set) {
+                if($image_set->is_primary) {$selected_image = $image_set->res->desktop->small_thumb;}
+            }*/
+        }
+        $product_subtype = $params['category']->sub_type;
+
+        SEOMeta::setTitle($product_name.' - '.$product_color.' - '.$product_subtype.' - Kidsuperstore.in');
 
         return $params;
     }
