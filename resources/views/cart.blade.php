@@ -5,7 +5,7 @@
 	<div class="d-flex ">
 		<div class="pr-3 align-items-center">
 			<h3 class="modal-title font-weight-bold" >
-            	<img class="btn-pay btn-back kss_highlight" src="img/left-arrow.png" style="width:20px;"/>
+            	<img class="btn-pay btn-back kss_highlight" src="/img/left-arrow.png" style="width:20px;"/>
           	</h3>
 		</div>
 <!-- 	  	<div class="align-items-center">
