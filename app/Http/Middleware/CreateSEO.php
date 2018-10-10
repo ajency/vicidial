@@ -35,19 +35,19 @@ class CreateSEO
     public function home(string $domain, string $url) {
         SEOMeta::setTitle('Online shopping for kids wear and fashion in India - KidSuperStore.in', false);
         SEOMeta::setDescription('Kidsuperstore.in: Online shopping site for kids wear and fashion in India. Buy Shoes, Clothing, Dresses and Accessories for Boys, Girls, Toddlers, Juniors and Infants. Shipping | Cash on Delivery | 30 days return.');
-        SEOMeta::setCanonical($url);
+        //SEOMeta::setCanonical($url);
         $keywords = ['online shopping for kids', 'online shopping', 'online shopping sites', 'online shopping india', 'india shopping', 'online shopping site', 'kss', 'india shopping online', 'buy online', 'kids wear', 'kids clothing', 'kids fashion', 'kids accessories', 'kidsuperstore', 'kidsuperstore.in', 'kid super store'];
         SEOMeta::setKeywords($keywords);
 
         OpenGraph::setTitle('Online shopping for kids wear and fashion in India - KidSuperStore.in', false);
         OpenGraph::setDescription('Online shopping store in India for Shoes, Clothing, Dresses, Accessories for Kids. | Cash on Delivery | 30 days return.');
-        OpenGraph::addImage($domain.'/img/logo-kss.png');
-        OpenGraph::setUrl($url);
+        //OpenGraph::addImage($domain.'/img/logo-kss.png');
+        //OpenGraph::setUrl($url);
 
         Twitter::setTitle('Online shopping for kids wear and fashion in India - KidSuperStore.in', false);
         Twitter::setDescription('Online shopping store in India for Shoes, Clothing, Dresses, Accessories for Kids. | Cash on Delivery | 30 days return.');
-        Twitter::addImage($domain.'/img/logo-kss.png');
-        Twitter::setUrl($url);
+        //Twitter::addImage($domain.'/img/logo-kss.png');
+        //Twitter::setUrl($url);
     }
 
     public function product(string $domain, string $url, array $parameters) {
@@ -76,19 +76,19 @@ class CreateSEO
 
         SEOMeta::setTitle($product_name.' - '.$product_color.' - '.$product_subtype.' - Kidsuperstore.in', false);
         SEOMeta::setDescription('Buy '.$product_name.' - '.$product_color.' - only at ₹'.$sale_price.' - '.$product_subtype.' for '.$product_gender.'  -  KidSuperStore.in');
-        SEOMeta::setCanonical($url);
+        //SEOMeta::setCanonical($url);
         $keywords = [$product_name, $product_subtype, $product_gender, $product_age_group, $product_department, $product_department.' for '.$product_gender, $product_subtype.' for '.$product_gender, 'Buy '.$product_name.' Online in India at best price only at KidSuperStore.in'];
         SEOMeta::setKeywords($keywords);
 
         OpenGraph::setTitle($product_name.' - '.$product_color.' - '.$product_subtype.' -  KidSuperStore.in', false);
         OpenGraph::setDescription('Buy '.$product_name.' - '.$product_color.' - only at ₹'.$sale_price.' - '.$product_subtype.' for '.$product_gender.'  -  KidSuperStore.in');
-        OpenGraph::addImage($domain.$selected_image);
-        OpenGraph::setUrl($url);
+        //OpenGraph::addImage($domain.$selected_image);
+        //OpenGraph::setUrl($url);
 
         Twitter::setTitle($product_name.' - '.$product_color.' - '.$product_subtype.' -  KidSuperStore.in', false);
         Twitter::setDescription('Buy '.$product_name.' - '.$product_color.' - only at ₹'.$sale_price.' - '.$product_subtype.' for '.$product_gender.'  -  KidSuperStore.in');
-        Twitter::addImage($domain.$selected_image);
-        Twitter::setUrl($url);
+        //Twitter::addImage($domain.$selected_image);
+        //Twitter::setUrl($url);
 
         return $params;
     }
