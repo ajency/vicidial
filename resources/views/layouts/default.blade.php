@@ -13,7 +13,7 @@
 <div id="main">
 
         @yield('content')
-
+		@include('cart') 
 </div>
 
 @include('includes.scroll')
