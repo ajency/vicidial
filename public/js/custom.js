@@ -76,15 +76,15 @@ $(document).ready(function() {
             // jQuery("#kss_cart").addClass("fixed-bottom");
             if(!loaded){
                 $.when(
-                    $.getScript("/views/cart/inline.a590f5f7b0ab6961864b.bundle.js"),
+                    $.getScript("/views/cart/inline.07622d429c92540d0176.bundle.js"),
                     $.getScript("/views/cart/polyfills.c93167049fda1e4f1949.bundle.js"), 
                     $.getScript("/views/cart/styles.d41d8cd98f00b204e980.bundle.css"),  
-                    $.getScript("/views/cart/vendor.0a372ae403dcd41089f9.bundle.js"), 
+                    $.getScript("/views/cart/vendor.3b323b5cb284841a64e4.bundle.js"), 
                     $.Deferred(function( deferred ){
                         $( deferred.resolve );
                     })
                 ).done(function(){
-                    $.getScript("/views/cart/main.60b364ae25938cd57e7b.bundle.js");
+                    $.getScript("/views/cart/main.693226df0fd43246889f.bundle.js");
                     loaded = true;
                 });
             }
