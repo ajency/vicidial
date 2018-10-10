@@ -410,7 +410,7 @@
             </div>
         </div>
 	</div> -->
-@php //@include('cart') @endphp
+
 
 	<script type="text/javascript">
 	    window.variants = @php echo json_encode($params['variant_group']); @endphp

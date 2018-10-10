@@ -8,7 +8,7 @@
             	<img class="btn-pay btn-back kss_highlight" src="img/left-arrow.png" style="width:20px;"/>
           	</h3>
 		</div>
-	  	<div class="align-items-center">
+<!-- 	  	<div class="align-items-center">
 			<h3 class="modal-title font-weight-bold mt-1 mb-0">
 				Cart <span class="text-muted "><strong>&#183;</strong></span>
 				<small class="count text-muted ">2 items</small>
@@ -18,10 +18,11 @@
 	 	 	<button class="btn btn-outline-secondary mt-1" >
                 <i class="far fa-heart"></i> Wishlist
             </button>
-	  	</div>
+	  	</div> -->
 	</div>
+	<app-root></app-root>
 
-	<hr class="mb-0">
+	<!-- <hr class="mb-0">
 	
 	<ul class="cd-cart-items">
 		<li>
@@ -707,5 +708,5 @@
 
     </div>
   </div>
-</div><div class="overlay-fix" style="display:none;">
+</div><div class="overlay-fix" style="display:none;"> -->
                 </div>
