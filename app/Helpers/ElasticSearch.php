@@ -194,54 +194,29 @@ function fetchProduct(int $product_id, int $selected_color_id){
 }
 
 function singleproduct(string $product_slug, string $style_slug, string $color_slug) {
-    $client = ClientBuilder::create()->build();
-    $params = [
-        'index' => 'products',
-        "body" => [
-            "query" =>[
-                "bool" => [
-                    "must" => [
-                        [
-                            "term" => [
-                                "slug_name" => $product_slug,
-                            ]
-                        ],
-                        [
-                            "term" => [
-                                "slug_style" => $style_slug,
-                            ]
-                        ],
-                    ],
-                    
-                ]
-            ]
-        ]
-    ];
-    $product = $client->search($params);
+
+    $elastic = new ElasticQuery;
+    $elastic->set_index("products");
+    $slug_name = ElasticQuery::create_term('slug_name',$product_slug);
+    $slug_style = ElasticQuery::create_term('slug_style',$style_slug);
+    $type = ElasticQuery::create_term('type','product');
+
+    $elastic->append_must($slug_name);
+    $elastic->append_must($slug_style);
+    $elastic->append_must($type);
+ 
+    $product = $elastic->search();
     $product = $product['hits']['hits'][0]['_source'];
 
-    $params = [
-        "index" => "products",
-        "body" => [
-            "query" => [
-                "bool" => [
-                    "must" => [
-                        [
-                            "term" => [
-                                "parent_id" => $product["id"],
-                            ]
-                        ],
-                        [
-                            "term" => [
-                                "slug_color" => $color_slug,
-                            ]
-                        ],
-                    ]
-                ]
-            ]
-        ]
-    ];
-    $variant = $client->search($params);
+    $elastic->set_body();
+    $parent_id = ElasticQuery::create_term('parent_id',$product["id"]);
+    $slug_color = ElasticQuery::create_term('slug_color',$color_slug);
+    $type = ElasticQuery::create_term('type','variant');
+    $elastic->append_term($parent_id);
+    $elastic->append_term($slug_color);
+    $elastic->append_must($type);
+    // print_r(json_encode($elastic->getParams()["body"],true));die();
+    $variant = $elastic->search();
     $variant = $variant['hits']['hits'][0]['_source'];
 
     return fetchProduct($product["id"], $variant["var_color_id"]);

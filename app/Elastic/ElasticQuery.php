@@ -56,8 +56,11 @@ class ElasticQuery {
 		return ["term"=>[$key=>$value]];
 	}
 
+	public static function create_match($key,$value){
+		return ["match"=>[$key=>$value]];
+	}
+
 	public function search(){
-		$elastic_client = ClientBuilder::create()->build();
 		return $this->elastic_client->search($this->params);
 	}
 
@@ -66,8 +69,3 @@ class ElasticQuery {
 		return $this->params;
 	}		
 }
-
-
-#$els = new ElasticQuery
-#$product = ElasticQuery::create_term('product_id',$product_id);
-#$els->append_must($product);
