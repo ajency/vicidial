@@ -11,6 +11,10 @@ class ElasticQuery {
         $this->elastic_client = ClientBuilder::create()->build();
     }
 
+    public function reset(){
+		$this->params = [];
+		return $this;
+	}
 	public function set_index(string $index){
 		$this->params ["index"] = $index;
 		return $this;
@@ -111,9 +115,16 @@ class ElasticQuery {
 		return $this->elastic_client->get($this->params);
 	}
 
+	public function update(){
+		return $this->elastic_client->update($this->params);
+	}
+
+	public function index(){
+		return $this->elastic_client->index($this->params);
+	}
+
 
 	public function getParams(){
-		
 		return $this->params;
 	}
 
@@ -124,17 +135,20 @@ class ElasticQuery {
 		return $this;
 
 	}
-	public function create_update_params(string $id, array $body){
+	public function create_update_params(string $id, array $body, array $params=[]){
 		$this->params["type"] = "_doc";
 		$this->params["id"] = $id;
-		$this->params["body"] = $body;
+		$this->params["body"]["doc"] = $body;
+		$this->params = $params + $this->params;
 		return $this;
 	}
 
-	public function create_index_params(array $body, string $id){
+	public function create_index_params(string $id, array $body, array $params=[]){
 		$this->params["type"] = "_doc";
 		$this->params["body"] = $body;
 		$this->params["id"] = $id;
+		$this->params = $params + $this->params;
+		return $this;
 	}
 
 	public function create_scroll_params(string $scroll, $scroll_id){
@@ -149,7 +163,6 @@ class ElasticQuery {
 	}
 
 	public function create_create_index_params(string $index, array $mappings=[]){
-		// {"mappings": {"_doc": {"properties": {"create_date": {"type": "date","format": "epoch_second"},"date_order": {"type": "date","format": "epoch_second"},"grn_date": {"type": "date","format": "epoch_second"},"date_planned_hidden": {"type": "date","format": "epoch_second"},"picking_type_id":{"type" : "long"},"fiscal_position_id":{"type": "long"},"type":{"type": "keyword"}}}}}
 		$this->params = [
             'index' => $index,
             "body" => [
