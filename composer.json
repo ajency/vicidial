@@ -21,7 +21,8 @@
     },
     "autoload": {
         "files": [
-            "app/Helpers/ElasticSearch.php"
+            "app/Helpers/ElasticSearch.php",
+            "app/Helpers/Helpers.php"
         ],
         "classmap": [
             "database/seeds",
