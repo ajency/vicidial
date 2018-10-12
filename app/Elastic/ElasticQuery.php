@@ -204,5 +204,38 @@ class ElasticQuery {
 		$this->params = ["index" => $index];
 		return $this->elastic_client->indices()->delete($this->params);
 	}
-		
+
+	public static function create_agg_max(string $name, string $field){
+		return [ $name => [ "max" => ["field" => $field]]];
+	}
+
+	public static function create_agg_min(string $name, string $field){
+		return [ $name => [ "min" => ["field" => $field]]];	
+	}
+
+	public static function create_agg_sum(string $name, string $field){
+		return [ $name => [ "sum" => ["field" => $field]]];
+	}
+
+	public static function create_agg_terms(string $name, string $field){
+		return [ $name => [ "terms" => ["field" => $field]]];
+	}
+
+	public static function create_agg_nested(string $name, string $path){
+		return [ $name => [ "nested" => ["path" => $path]]];
+	}
+
+	public static function add_to_aggregation(array $aggs, array $new_aggs){
+		$aggs["aggs"] = $new_aggs;
+		return $aggs;
+	}
+
+	public static function add_metric(array $aggs, array $metric){
+		return $aggs + $metric;
+	}
+
+	public function init_aggregation(){
+		$this->set_body();
+		return $this->params["body"]["aggs"] = [];
+	}		
 }
