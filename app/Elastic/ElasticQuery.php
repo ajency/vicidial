@@ -123,6 +123,10 @@ class ElasticQuery {
 		return $this->elastic_client->index($this->params);
 	}
 
+	public function bulk(){
+		return $this->elastic_client->bulk($this->params);
+	}
+
 
 	public function getParams(){
 		return $this->params;
@@ -135,6 +139,7 @@ class ElasticQuery {
 		return $this;
 
 	}
+
 	public function create_update_params(string $id, array $body, array $params=[]){
 		$this->params["type"] = "_doc";
 		$this->params["id"] = $id;
@@ -158,9 +163,28 @@ class ElasticQuery {
 		return $this;
 	}
 
-	public function create_bulk_params(){
-		
+	public function initialize_bulk_indexing(string $index, array $options =[]){
+		$this->index = $index;
+		$this->options = $options;
+		$this->params = ['body' => []];
+		return $this;
 	}
+
+	public function add_to_bulk_indexing(string $id, array $data, $options=[]){
+		
+		$meta = [
+			'index' => $options + [
+	            '_index' => $this->index,
+	            '_type' => '_doc',
+	            '_id' => $id,
+	        ] + $this->options
+	    ];
+		$this->params["body"][] = $meta;
+		$this->params["body"][] = $data;
+
+		return $this;
+	}
+
 
 	public function create_create_index_params(string $index, array $mappings=[]){
 		$this->params = [
