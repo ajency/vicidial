@@ -1,5 +1,6 @@
 <?php
 use Elasticsearch\ClientBuilder;
+use App\Elastic\ElasticQuery;
 
 function getInventorySum(array $var){
         $total = 0;
@@ -18,40 +19,23 @@ function getUnSelectedVariants(int $product_id=1636, int $selected_color_id=231)
             'id' => $product_id,
         ];
         $product = $client->get($params);
-        $params = [
-            "index" => "products",
-            "body" => [
-                "query" => [
-                    "bool" => [
-                        "must" => [
-                            [
-                                "term" => [
-                                    "parent_id" => $product_id,
-                                ]
-                            ],
-                            [
-                                "term" => [
-                                    "type" => "variant",
-                                ]
-                            ],
-                            
-                        ],
-                        "must_not" => [
-                            [
-                                "term" => [
-                                    "var_color_id" => $selected_color_id,
-                                ]
-                            ],
-                        ]
-                    ]
-                ]
-            ],
-            "size" => 100
-        ];
-        // echo "<pre>";
-        // print_r($params);
-        $response = $client->search($params);
+
         // print_r($response);
+
+        $elastic = new ElasticQuery;
+        $elastic->set_index("products");
+        $parent_id = ElasticQuery::create_term('parent_id', $product_id);
+        $type = ElasticQuery::create_term('type', "variant");
+        $var_color_id = ElasticQuery::create_term('var_color_id', $selected_color_id);
+
+        $elastic->append_must($parent_id)
+        ->append_must($type)
+        ->append_must_not($var_color_id)
+        ->set_size(100)
+        ;
+        Log::debug(json_encode($elastic->getParams()["body"], true));
+        $response = $elastic->search();
+        
         $color_groups = [
 
         ];
@@ -94,34 +78,21 @@ function fetchProduct(int $product_id, int $selected_color_id){
         'type' => '_doc',
         'id' => $product_id,
     ];
+
     $product = $client->get($params);
-    $params = [
-        "index" => "products",
-        "body" => [
-            "query" => [
-                "bool" => [
-                    "must" => [
-                        [
-                            "term" => [
-                                "parent_id" => $product_id,
-                            ]
-                        ],
-                        [
-                            "term" => [
-                                "type" => "variant",
-                            ]
-                        ],
-                        [
-                            "term" => [
-                                "var_color_id" => $selected_color_id,
-                            ]
-                        ],
-                    ]
-                ]
-            ]
-        ]
-    ];
-    $response = $client->search($params);
+
+    $elastic = new ElasticQuery;
+    $elastic->set_index("products");
+    $parent_id = ElasticQuery::create_term('parent_id', $product_id);
+    $type = ElasticQuery::create_term('type', "variant");
+    $var_color_id = ElasticQuery::create_term('var_color_id', $selected_color_id);
+
+    $elastic->append_must($parent_id)
+    ->append_must($type)
+    ->append_must($var_color_id);
+ 
+    $response = $elastic->search();
+
     $id = $response["hits"]["hits"][0]["_source"]["id"];
     $sale_price = $response["hits"]["hits"][0]["_source"]["sale_price"];
     foreach ($response["hits"]["hits"] as $key => $value) {
@@ -150,7 +121,7 @@ function fetchProduct(int $product_id, int $selected_color_id){
         ];
         $variants[] = $variant;
     }
-    Log::debug(json_encode($variants, true));
+    // Log::debug(json_encode($variants, true));
     $product = $product["_source"];
     $json = [
         "parent_id" => $product["id"],
@@ -188,7 +159,7 @@ function fetchProduct(int $product_id, int $selected_color_id){
     //     $json["variant_group"][]
     // }
     $json["variant_group"] = $json["variant_group"]+ getUnSelectedVariants($product_id, $selected_color_id);
-    Log::debug(json_encode($json, true));
+    // Log::debug(json_encode($json, true));
     return json_encode($json, true);
     
 }
@@ -212,8 +183,8 @@ function singleproduct(string $product_slug, string $style_slug, string $color_s
     $parent_id = ElasticQuery::create_term('parent_id',$product["id"]);
     $slug_color = ElasticQuery::create_term('slug_color',$color_slug);
     $type = ElasticQuery::create_term('type','variant');
-    $elastic->append_term($parent_id);
-    $elastic->append_term($slug_color);
+    $elastic->append_must($parent_id);
+    $elastic->append_must($slug_color);
     $elastic->append_must($type);
     // print_r(json_encode($elastic->getParams()["body"],true));die();
     $variant = $elastic->search();
