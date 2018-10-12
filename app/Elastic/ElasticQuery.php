@@ -67,25 +67,16 @@ class ElasticQuery {
 		return $this;
 	}
 
-	public static function create_term($key,$value){
-		return ["term"=>[$key=>$value]];
+	public static function create_term($field, $value){
+		return ["term" => [$field => $value]];
 	}
 
-	public static function create_match($key,$value){
-		return ["match"=>[$key=>$value]];
+	public static function create_match($field, $value){
+		return ["match" => [$field => $value]];
 	}
 
-	public function search(){
-		return $this->elastic_client->search($this->params);
-	}
-
-	public function get(string $id){
-		return $this->elastic_client->get($this->params);
-	}
-
-	public function getParams(){
-		
-		return $this->params;
+	public static function create_range($field, $value){
+		return ["match" => [$field => $value]];
 	}
 
 	public function set_size(int $size){
@@ -93,5 +84,88 @@ class ElasticQuery {
 			$this->set_query();
 		$this->params["body"]["size"] = $size;
 		return $this;
-	}		
+	}
+
+	public function set_from(int $from){
+		if (!isset($this->params['body']))
+			$this->set_query();
+		$this->params["body"]["from"] = $from;
+		return $this;
+	}
+
+	public function set_scroll(string $scroll, int $size){
+		if (!isset($this->params['body']))
+			$this->set_query();
+		$this->params["scroll"] = $scroll;
+		$this->params["size"] = $size;
+		return $this;
+	}
+
+	public function search(){
+		return $this->elastic_client->search($this->params);
+	}
+
+	public function get($id){
+		$this->params["type"] = "_doc";
+		$this->params["id"] = $id;
+		return $this->elastic_client->get($this->params);
+	}
+
+
+	public function getParams(){
+		
+		return $this->params;
+	}
+
+	public function create_get_params(string $id){
+		// $this->params = [];
+		$this->params["type"] = "_doc";
+		$this->params["id"] = $id;
+		return $this;
+
+	}
+	public function create_update_params(string $id, array $body){
+		$this->params["type"] = "_doc";
+		$this->params["id"] = $id;
+		$this->params["body"] = $body;
+		return $this;
+	}
+
+	public function create_index_params(array $body, string $id){
+		$this->params["type"] = "_doc";
+		$this->params["body"] = $body;
+		$this->params["id"] = $id;
+	}
+
+	public function create_scroll_params(string $scroll, $scroll_id){
+		$this->params = []; //  only 2 params
+		$this->params["scroll"] = $scroll;
+		$this->params["scroll_id"] = $scroll_id;
+		return $this;
+	}
+
+	public function create_bulk_params(){
+		
+	}
+
+	public function create_create_index_params(string $index, array $mappings=[]){
+		// {"mappings": {"_doc": {"properties": {"create_date": {"type": "date","format": "epoch_second"},"date_order": {"type": "date","format": "epoch_second"},"grn_date": {"type": "date","format": "epoch_second"},"date_planned_hidden": {"type": "date","format": "epoch_second"},"picking_type_id":{"type" : "long"},"fiscal_position_id":{"type": "long"},"type":{"type": "keyword"}}}}}
+		$this->params = [
+            'index' => $index,
+            "body" => [
+            	"mappings" => [
+            		"_doc" => [
+            			"properties" => $mappings
+            		]
+            	]
+            ]
+        ];
+		return $this->elastic_client->indices()->create($this->params);
+	}
+
+	public function create_delete_index_params(string $index){
+		$this->params = ["index" => $index];
+		return $this->elastic_client->indices()->delete($this->params);
+	}
+		
 }
