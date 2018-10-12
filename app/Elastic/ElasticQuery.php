@@ -52,6 +52,21 @@ class ElasticQuery {
 		return $this;
 	}
 
+	public function reset_must_not(){
+		if (!isset($this->params['body']["query"]['bool'])){
+			$this->reset_bool();
+		}
+		$this->params['body']["query"]['bool']['must_not'] = [];
+		return $this;
+	}
+
+	public function append_must_not($value){
+		if (!isset($this->params['body']["query"]['bool']['must_not']))
+			$this->reset_must_not();
+		$this->params['body']["query"]['bool']['must_not'][] = $value;
+		return $this;
+	}
+
 	public static function create_term($key,$value){
 		return ["term"=>[$key=>$value]];
 	}
@@ -64,8 +79,19 @@ class ElasticQuery {
 		return $this->elastic_client->search($this->params);
 	}
 
+	public function get(string $id){
+		return $this->elastic_client->get($this->params);
+	}
+
 	public function getParams(){
 		
 		return $this->params;
+	}
+
+	public function set_size(int $size){
+		if (!isset($this->params['body']))
+			$this->set_query();
+		$this->params["body"]["size"] = $size;
+		return $this;
 	}		
 }
