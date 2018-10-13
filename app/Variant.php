@@ -148,6 +148,8 @@ class Variant extends Model
 			    'price_mrp' => $this->getMRP(),
 			    'price_final' => $this->getPriceFinal(),
 		    ),
+		    "id" => $this->getID(),
+		    "quantity" => $this->getQuantity(),
   			'related_items' => $this->getRelatedItems(),
   		);
 		return $item;
@@ -219,5 +221,14 @@ class Variant extends Model
     public function getName()
     {
         return $this->elastic_data["name"];
+    }
+
+    public function getQuantity(){
+    	$total = 0;
+    	foreach ($this->elastic_data["inventory"] as $inventory) {
+			$total += $inventory["store_qty"];
+		}
+		return $total;
+
     }
 }
