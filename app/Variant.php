@@ -98,11 +98,10 @@ class Variant extends Model
 		foreach ($variants as  $variant) {
 			$item  = new Varient();
 			$item->set_elastic_data($variant["_source"]);
-			$related_items["size"][] = [
-				$item->getSize() => [
+			$related_items["size"][$item->getSize()] = [
 					"id" => $item->getID(),
 					"availability" => $item->getAvailability(),
-				] 
+				
 			];
 		}
 		return $related_items;
@@ -138,7 +137,7 @@ class Variant extends Model
   			'availability' => $this->getAvailability(),
   			'message' => $this->getMessage(),
   			'attributes' => array (
-    			'title' => 'Cotton Rich Super Skinny Fit Jeans',
+    			'title' => $this->getName(),
     			'image_src_url' => $this->getPrimaryImageSrc(),
     			'image_srcset_url' => $this->getPrimaryImageSrcset(),
     			//write functions for the following variables too. this entire file is a pseudo code, so please check the laravel docs for the right way to name your getters for the models;
@@ -215,5 +214,10 @@ class Variant extends Model
     {
 
         return $this->elastic_data["parent_id"];
+    }
+
+    public function getName()
+    {
+        return $this->elastic_data["name"];
     }
 }

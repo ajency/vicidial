@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Cart;
 use App\Varient;
 use Illuminate\Http\Request;
+use App\Elastic\ElasticQuery;
 
 class CartController extends Controller
 {
@@ -26,7 +27,7 @@ class CartController extends Controller
     	$cart = ($id)? Cart::find($id) : new Cart;
     	$item = true; //Get elastic data here
         $variant = new Varient($params['variant_id']);
-        $item = $variant->getVariantData();
+        $item = $variant->getItemAttributes();
     	if($item){
     		$cart->insert_item(["id"=>$params['variant_id'], "quantity" =>$params['variant_quantity']]);
     		// \Log::info($cart->cart_data);
