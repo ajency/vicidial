@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Elastic\ElasticQuery;
 
 class Variant extends Model
 {
@@ -12,18 +13,41 @@ class Variant extends Model
      * @return 
      * @author 
      **/
+
+    function __construct(int $id){
+    	$this->elastic_id = $id;
+    	parent::__construct();
+    	$this->getElasticData();
+    }
+
 	private function getElasticData()
 	{
 		//use $this->elastic_id to get all the data for this varient from elastic search.
 		//we might use this function as a constructor. This function gets all the data from elastic and saves it in $elastic_data private variable of the class
 		//this includes all the data along with its inventory
 		//@prasad, 
+		$q = new ElasticQuery();
+		$variant_filter = $q->create_term("type", "variant");
+		$variant_id = $q->create_term("id", $this->elastic_id);
+		
+		$q->set_index("products")
+		->append_must($variant_filter)
+		->append_must($variant_id)
+		->set_size(1);
+		$this->elastic_data = $q->search()["hits"]["hits"][0]["_source"];
+		// // print_r($q->getParams());
+		// print_r($this->elastic_data);
+		
 	}
 
 	//returns the availability using the inventory from the elasticData private variable
 	public function getAvailability(){
 		//@prasad, write logic decide if the variant is available 
-		return true;
+		foreach ($$this->elastic_data["inventory"] as $inventory) {
+			if($inventory["store_qty"] > 0 )
+				return true;
+		}
+		return false;
 	}
 
 	public function getMessage(){
