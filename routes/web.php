@@ -20,3 +20,8 @@ Route::middleware(['create-seo:home'])->group(function () {
 Route::middleware(['create-seo:product'])->group(function () {
     Route::get('/{product_slug}/{style_slug}/{color_slug}/buy', 'ProductController@index')->name('product');
 });
+
+
+Route::get('/rest/anonymous/cart/count','CartController@guest_get_count');
+Route::get('/rest/anonymous/cart/insert','CartController@guest_add_item');
+// Route::get('/rest/anonymous/cart/get','')
