@@ -18,11 +18,11 @@ class Cart extends Model
     }
 
     public function insert_item($item){
+    	// \Log::info($item);
     	if(val_integer($item,self::ITEM_FIELDS)){
     		$item = array_only($item,self::ITEM_FIELDS);
-    		// if($this->cart_data == null) $this->cart_data = array($item);
     		$this->cart_data = array_merge([$item], $this->cart_data);  
-    		
+    		// \Log::info($this->cart_data);
     	}else{
     		return false;
     	}
