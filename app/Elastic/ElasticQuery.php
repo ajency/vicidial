@@ -15,6 +15,13 @@ class ElasticQuery {
 		$this->params = [];
 		return $this;
 	}
+
+	/**
+	* Set the index in a ElasticQuery
+	*
+	* @param string $index Index name
+	* @return Varient
+	*/
 	public function set_index(string $index){
 		$this->params ["index"] = $index;
 		return $this;
@@ -49,10 +56,16 @@ class ElasticQuery {
 		return $this;
 	}
 
-	public function append_must($value){
+	/**
+	* Appends filter, conditions to query.bool.must
+	*
+	* @param string $condition
+	* @return Varient
+	*/
+	public function append_must($condition){
 		if (!isset($this->params['body']["query"]['bool']['must']))
 			$this->reset_must();
-		$this->params['body']["query"]['bool']['must'][] = $value;
+		$this->params['body']["query"]['bool']['must'][] = $condition;
 		return $this;
 	}
 
@@ -64,10 +77,16 @@ class ElasticQuery {
 		return $this;
 	}
 
-	public function append_must_not($value){
+	/**
+	* Appends filter, conditions to query.bool.must_not
+	*
+	* @param string $condition
+	* @return Varient
+	*/
+	public function append_must_not($condition){
 		if (!isset($this->params['body']["query"]['bool']['must_not']))
 			$this->reset_must_not();
-		$this->params['body']["query"]['bool']['must_not'][] = $value;
+		$this->params['body']["query"]['bool']['must_not'][] = $condition;
 		return $this;
 	}
 
@@ -90,6 +109,26 @@ class ElasticQuery {
 		return $this;
 	}
 
+	/**
+	* Sets whats fields from a document to fetch
+	* Useful only when doing search operation
+	*
+	* @param array $fields
+	* @return Varient
+	*/
+	public function set_source(array $fields){
+		if (!isset($this->params['body']))
+			$this->set_body();
+		$this->params["body"]["source"] = $fields;
+		return $this;
+	}
+
+	/**
+	* Sets the offset from where to start fetching search  
+	*
+	* @param int $from offset
+	* @return Varient
+	*/
 	public function set_from(int $from){
 		if (!isset($this->params['body']))
 			$this->set_query();
@@ -105,6 +144,13 @@ class ElasticQuery {
 		return $this;
 	}
 
+	/**
+	* Elastic Search function
+	* Can be use for Search and Aggregations
+	*
+	* @param array $params Search params
+	* @return array Elasticsearch Response
+	*/
 	public function search(){
 		return $this->elastic_client->search($this->params);
 	}
@@ -115,19 +161,44 @@ class ElasticQuery {
 		return $this->elastic_client->get($this->params);
 	}
 
+	/**
+	* Elastic Update function
+	* Can be use for Updating specific fields in documents
+	*
+	* @return array Elasticsearch Response
+	*/
 	public function update(){
 		return $this->elastic_client->update($this->params);
 	}
 
+	/**
+	* Elastic Index function
+	* Used for indexing documents one at a time
+	*
+	* @return array Elasticsearch Response
+	*/
 	public function index(){
 		return $this->elastic_client->index($this->params);
 	}
 
+	/**
+	* Elastic Bulk Index function
+	* Used for indexing documents documents in bulk
+	* use initialize_bulk_indexing first 
+	* use add_to_bulk_index to add documents for indexing
+	* @return array Elasticsearch Response
+	*/
 	public function bulk(){
 		return $this->elastic_client->bulk($this->params);
 	}
 
 
+	/**
+	* Returns the $params array for debugging
+	* or manually passing params to Elastic Library
+	* 
+	* @return array $this->params
+	*/
 	public function getParams(){
 		return $this->params;
 	}
@@ -252,5 +323,5 @@ class ElasticQuery {
 		// $this->params["body"]["query"] =["match_all" => new \stdClass()];
 		$this->params["body"]["aggs"] = $aggs;
 		return $this;
-	}		
+	}
 }
