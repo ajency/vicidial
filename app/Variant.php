@@ -14,9 +14,25 @@ class Variant extends Model
      * @author 
      **/
 
-    function __construct(int $id){
-    	$this->elastic_id = $id;
+    function __construct(int $id=0){
+    	if($id){
+    		$this->set_elastic_id($id);
+    	}
     	parent::__construct();
+    }
+
+    /**
+     * Set Elastic Data Array Directly
+     *
+     * @param array
+     */
+    public function set_elastic_data(array $elastic_data){
+    	$this->elastic_data = $elastic_data;
+    	$this->elastic_id = $elastic_data["id"];
+    }
+
+    private function set_elastic_id(int $id){
+    	$this->elastic_id = $id;
     	$this->getElasticData();
     }
 
@@ -43,7 +59,7 @@ class Variant extends Model
 	//returns the availability using the inventory from the elasticData private variable
 	public function getAvailability(){
 		//@prasad, write logic decide if the variant is available 
-		foreach ($$this->elastic_data["inventory"] as $inventory) {
+		foreach ($this->elastic_data["inventory"] as $inventory) {
 			if($inventory["store_qty"] > 0 )
 				return true;
 		}
@@ -68,31 +84,53 @@ class Variant extends Model
 	}
 
 	public function getRelatedItems(){
-		return array (
-	    'size' => 
-	    array (
-	      '18-24M' => 
-	      array (
-	        'id' => 123,
-	        'availability' => true,
-	      ),
-	      '4-8Y' => 
-	      array (
-	        'id' => 125,
-	        'availability' => true,
-	      ),
-	      '8-12Y' => 
-	      array (
-	        'id' => 126,
-	        'availability' => true,
-	      ),
-	      '2-4Y' => 
-	      array (
-	        'id' => 124,
-	        'availability' => false,
-	      ),
-	    ),
-	);
+		$q = new ElasticQuery();
+		$variant_filter = $q->create_term("type", "variant");
+		$color_filter = $q->create_term("var_color_id", $this->getVarColorId());
+		$parent_id_filter = $q->create_term("parent_id", $this->getParentId());
+		$notThisVariant = $q->create_term("id", $this->elastic_id);
+		
+		$q->set_index("products")
+		->append_must($variant_filter)->append_must($color_filter)
+		->append_must($parent_id_filter)->append_must_not($notThisVariant);
+		$related_items = ["size" => []]; 
+		$variants = $q->search()["hits"]["hits"];
+		foreach ($variants as  $variant) {
+			$item  = new Varient();
+			$item->set_elastic_data($variant["_source"]);
+			$related_items["size"][] = [
+				$item->getSize() => [
+					"id" => $item->getID(),
+					"availability" => $item->getAvailability(),
+				] 
+			];
+		}
+		return $related_items;
+	// 	return array (
+	//     'size' => 
+	//     array (
+	//       '18-24M' => 
+	//       array (
+	//         'id' => 123,
+	//         'availability' => true,
+	//       ),
+	//       '4-8Y' => 
+	//       array (
+	//         'id' => 125,
+	//         'availability' => true,
+	//       ),
+	//       '8-12Y' => 
+	//       array (
+	//         'id' => 126,
+	//         'availability' => true,
+	//       ),
+	//       '2-4Y' => 
+	//       array (
+	//         'id' => 124,
+	//         'availability' => false,
+	//       ),
+	//     ),
+	// );
 	}
 
 	public function getItemAttributes(){
@@ -145,5 +183,37 @@ class Variant extends Model
     {
     	//unclear on what to return
         return $this->elastic_data["standard_price"];
+    }
+
+    /**
+     * Get variant color id
+     *
+     * @return int
+     */
+    public function getVarColorId()
+    {
+        return $this->elastic_data["var_color_id"];
+    }
+
+    /**
+     * Get Elastic Data variant 
+     *
+     * @return string
+     */
+    public function getVariantData()
+    {
+        return $this->elastic_data;
+    }
+
+    public function getID()
+    {
+    
+        return $this->elastic_id;
+    }
+
+    public function getParentId()
+    {
+
+        return $this->elastic_data["parent_id"];
     }
 }
