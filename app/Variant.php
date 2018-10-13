@@ -31,6 +31,11 @@ class Variant extends Model
     	$this->elastic_id = $elastic_data["id"];
     }
 
+	/**
+	* Set elastic id and fetch variant 
+	*
+	* @param int
+	*/
     private function set_elastic_id(int $id){
     	$this->elastic_id = $id;
     	$this->getElasticData();
@@ -56,6 +61,11 @@ class Variant extends Model
 		
 	}
 
+	/**
+	* Returns true if atleast one of the wareshouses has inventory 
+	*
+	* @return bool
+	*/
 	//returns the availability using the inventory from the elasticData private variable
 	public function getAvailability(){
 		//@prasad, write logic decide if the variant is available 
@@ -156,30 +166,30 @@ class Variant extends Model
 	}
 
 	/**
-     * Get Variant Size.
-     *
-     * @return string
-     */
+	* Get Variant Size.
+	*
+	* @return string
+	*/
     public function getSize()
     {
         return $this->elastic_data["var_size_value"];
     }
 
     /**
-     * Get Variant MRP
-     *
-     * @return double
-     */
+	* Get Variant MRP
+	*
+	* @return double
+	*/
     public function getMRP()
     {
         return $this->elastic_data["lst_price"];
     }
 
     /**
-     * Get Variant Price Final
-     *
-     * @return double
-     */
+	* Get Variant Price Final
+	*
+	* @return double
+	*/
     public function getPriceFinal()
     {
     	//unclear on what to return
@@ -187,30 +197,41 @@ class Variant extends Model
     }
 
     /**
-     * Get variant color id
-     *
-     * @return int
-     */
+	* Get variant color id
+	*
+	* @return int
+	*/
     public function getVarColorId()
     {
         return $this->elastic_data["var_color_id"];
     }
 
     /**
-     * Get Elastic Data variant 
-     *
-     * @return string
-     */
+	* Get Elastic variant Data 
+	*
+	* @return string
+	*/
     public function getVariantData()
     {
         return $this->elastic_data;
     }
 
+    /**
+	* Get Elastic variant Data 
+	*
+	* @return int
+	*/
     public function getID()
     {
     
-        return $this->elastic_id;
+        return $this->elastic_data["id"];
     }
+
+    /**
+	* Get Elastic variant Data 
+	*
+	* @return int
+	*/
 
     public function getParentId()
     {
@@ -218,11 +239,22 @@ class Variant extends Model
         return $this->elastic_data["parent_id"];
     }
 
+	/**
+	* Get variant name 
+	*
+	* @return string
+	*/
+
     public function getName()
     {
         return $this->elastic_data["name"];
     }
 
+	/**
+	* Get Variant Total Quantity 
+	*
+	* @return int
+	*/
     public function getQuantity(){
     	$total = 0;
     	foreach ($this->elastic_data["inventory"] as $inventory) {
