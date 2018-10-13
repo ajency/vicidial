@@ -51,7 +51,7 @@ class Variant extends Model
 	}
 
 	public function getMessage(){
-		return '20% OFF';
+		return '';
 	}
 
 	public function getPrimaryImageSrc(){
@@ -107,9 +107,43 @@ class Variant extends Model
 			    // 'size' => '1-2Y',
 			    // 'price_mrp' => 1309,
 			    // 'price_final' => 869,
+				'size' => $this->getSize(),	
+			    'price_mrp' => $this->getMRP(),
+			    'price_final' => $this->getPriceFinal(),
 		    ),
   			'related_items' => $this->getRelatedItems(),
   		);
 		return $item;
 	}
+
+	/**
+     * Get Variant Size.
+     *
+     * @return string
+     */
+    public function getSize()
+    {
+        return $this->elastic_data["var_size_value"];
+    }
+
+    /**
+     * Get Variant MRP
+     *
+     * @return double
+     */
+    public function getMRP()
+    {
+        return $this->elastic_data["lst_price"];
+    }
+
+    /**
+     * Get Variant Price Final
+     *
+     * @return double
+     */
+    public function getPriceFinal()
+    {
+    	//unclear on what to return
+        return $this->elastic_data["standard_price"];
+    }
 }
