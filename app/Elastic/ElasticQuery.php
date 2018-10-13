@@ -79,8 +79,8 @@ class ElasticQuery {
 		return ["match" => [$field => $value]];
 	}
 
-	public static function create_range($field, $value){
-		return ["match" => [$field => $value]];
+	public static function create_range($field,array $options){
+		return ["range" => [$field => $options]];
 	}
 
 	public function set_size(int $size){
@@ -226,7 +226,8 @@ class ElasticQuery {
 	}
 
 	public static function add_to_aggregation(array $aggs, array $new_aggs){
-		$aggs["aggs"] = $new_aggs;
+		
+		$aggs[current(array_keys($aggs))]["aggs"] = $new_aggs;
 		return $aggs;
 	}
 
@@ -234,8 +235,22 @@ class ElasticQuery {
 		return $aggs + $metric;
 	}
 
+	// public static function add_metric(array $aggs, array $metric){
+	// 	return $aggs + $metric;
+	// }
+
 	public function init_aggregation(){
-		$this->set_body();
-		return $this->params["body"]["aggs"] = [];
+		if(!isset($this->params["body"])){
+			$this->set_body();
+		};
+		$this->params["body"]["aggs"] = [];
+		return $this;
+	}
+
+	public function set_aggregation(array $aggs){
+		// $this->set_body();
+		// $this->params["body"]["query"] =["match_all" => new \stdClass()];
+		$this->params["body"]["aggs"] = $aggs;
+		return $this;
 	}		
 }
