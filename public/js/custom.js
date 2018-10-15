@@ -55,12 +55,6 @@ $(document).ready(function() {
         jQuery(".kss_filter").addClass("kss_filter_mobile");
     });
 
-  
-
-     /*jQuery(".cd-add-to-cart").click(function() {
-      jQuery( ".kss_sizes" ).toggleClass( "shake" );
-    })*/;
-
     jQuery(".clear-filter").click(function() {
         jQuery(".filter-selection").attr("style", "display: none !important");
     });
@@ -546,19 +540,6 @@ $(function() {
         }
     });
 });
-
-/*$(document).ready(function(){
-    $('.cd-add-to-cart').on('click',function(){
-        //Scroll to top if cart icon is hidden on top
-        $(".cart-counter").removeClass('d-none'), 100;
-        $(".cart-counter").addClass('d-block'), 100;
-         $('#output').html(function(i, val) { return val*1+1 });
-        //Select item image and pass to the function
-        var itemImg = $(this).closest('.container').find('img').eq(1);
-        flyToElement($(itemImg), $('.shopping-cart'));
-    });
-    
-});*/
 
 
 var products = [
