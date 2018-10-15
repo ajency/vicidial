@@ -94,7 +94,7 @@ class Variant extends Model
 		$related_items = ["size" => []]; 
 		$variants = $q->search()["hits"]["hits"];
 		foreach ($variants as  $variant) {
-			$item  = Varient::where('odoo_id', $variant["_source"]['id'])->first();
+			$item  = Variant::where('odoo_id', $variant["_source"]['id'])->first();
 			$related_items["size"][$item->getSize()] = [
 					"id" => $item->getID(),
 					"availability" => $item->getAvailability(),

@@ -20,7 +20,7 @@ class ElasticQuery {
 	* Set the index in a ElasticQuery
 	*
 	* @param string $index Index name
-	* @return Varient
+	* @return ElasticQuery
 	*/
 	public function set_index(string $index){
 		$this->params ["index"] = $index;
@@ -60,7 +60,7 @@ class ElasticQuery {
 	* Appends filter, conditions to query.bool.must
 	*
 	* @param string $condition
-	* @return Varient
+	* @return ElasticQuery
 	*/
 	public function append_must($condition){
 		if (!isset($this->params['body']["query"]['bool']['must']))
@@ -81,7 +81,7 @@ class ElasticQuery {
 	* Appends filter, conditions to query.bool.must_not
 	*
 	* @param string $condition
-	* @return Varient
+	* @return ElasticQuery
 	*/
 	public function append_must_not($condition){
 		if (!isset($this->params['body']["query"]['bool']['must_not']))
@@ -114,7 +114,7 @@ class ElasticQuery {
 	* Useful only when doing search operation
 	*
 	* @param array $fields
-	* @return Varient
+	* @return ElasticQuery
 	*/
 	public function set_source(array $fields){
 		if (!isset($this->params['body']))
@@ -127,7 +127,7 @@ class ElasticQuery {
 	* Sets the offset from where to start fetching search  
 	*
 	* @param int $from offset
-	* @return Varient
+	* @return ElasticQuery
 	*/
 	public function set_from(int $from){
 		if (!isset($this->params['body']))

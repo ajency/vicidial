@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Cart;
-use App\Varient;
+use App\Variant;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -24,7 +24,7 @@ class CartController extends Controller
 		$params = $request->all();
     	$id = $request->session()->get('active_cart_id',false);
     	$cart = ($id)? Cart::find($id) : new Cart;
-        $variant = Varient::where('odoo_id', $params['variant_id'])->first();
+        $variant = Variant::where('odoo_id', $params['variant_id'])->first();
         $item = $variant->getItemAttributes();
     	if($item){
     		$cart->insert_item(["id"=>$params['variant_id'], "quantity" =>$params['variant_quantity']]);
