@@ -57,9 +57,9 @@ $(document).ready(function() {
 
   
 
-     jQuery(".cd-add-to-cart").click(function() {
+     /*jQuery(".cd-add-to-cart").click(function() {
       jQuery( ".kss_sizes" ).toggleClass( "shake" );
-    });
+    })*/;
 
     jQuery(".clear-filter").click(function() {
         jQuery(".filter-selection").attr("style", "display: none !important");
@@ -547,7 +547,7 @@ $(function() {
     });
 });
 
-$(document).ready(function(){
+/*$(document).ready(function(){
     $('.cd-add-to-cart').on('click',function(){
         //Scroll to top if cart icon is hidden on top
         $(".cart-counter").removeClass('d-none'), 100;
@@ -558,7 +558,7 @@ $(document).ready(function(){
         flyToElement($(itemImg), $('.shopping-cart'));
     });
     
-});
+});*/
 
 
 var products = [

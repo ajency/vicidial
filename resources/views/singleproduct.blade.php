@@ -185,7 +185,7 @@
 			     		$discount_amt = $list_price - $sale_price;
 			     		$discount_per = round($discount_amt/$list_price * 100);
 				    	@endphp
-				    	<input class="d-none radio-input" type="radio" name="kss-sizes" id="size-{{$size_set->size->id}}" {{$disabled}} data-list_price="{{$list_price}}" data-sale_price="{{$sale_price}}" data-discount_per="{{$discount_per}}"/>
+				    	<input class="d-none radio-input" type="radio" name="kss-sizes" id="size-{{$size_set->size->id}}" data-variant_id="{{$size_set->id}}" {{$disabled}} data-list_price="{{$list_price}}" data-sale_price="{{$sale_price}}" data-discount_per="{{$discount_per}}"/>
 					    <label class="radio-label" for="size-{{$size_set->size->id}}" title="{{$size_set->size->name}}">
 					      <div class="radio-option">{{$size_set->size->name}}</div>
 					    </label>
@@ -206,8 +206,7 @@
 								</button>
 							</div>
 							<div class="col-6 col-sm-6 col-md-6 col-xl-6 pl-1">
-								<!-- <button class="btn btn-primary btn-lg btn-block cd-add-to-cart " data-price="869" disabled> -->
-								<button id="cd-add-to-cart" class="btn btn-primary btn-lg btn-block cd-add-to-cart-test" data-price="869" disabled>
+								<button id="cd-add-to-cart" class="btn btn-primary btn-lg btn-block cd-add-to-cart" data-price="869" disabled>
 									<div class="btn-label-initial"><i class="fas fa-shopping-cart"></i> Add to Cart</div>
 									<div class="btn-label-success"><i class="fas fa-arrow-right"></i> Go to Cart</div>
 									<div class="btn-icon"><i class="fas fa-circle-notch fa-spin fa-lg"></i></div>
