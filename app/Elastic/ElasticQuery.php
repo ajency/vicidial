@@ -7,11 +7,11 @@ class ElasticQuery {
 	protected $params = ["index" => ""];
 
 	public function __construct()
-    {
-        $this->elastic_client = ClientBuilder::create()->build();
-    }
+	{
+		$this->elastic_client = ClientBuilder::create()->build();
+	}
 
-    public function reset(){
+	public function reset(){
 		$this->params = [];
 		return $this;
 	}
@@ -245,11 +245,11 @@ class ElasticQuery {
 		
 		$meta = [
 			'index' => $options + [
-	            '_index' => $this->index,
-	            '_type' => '_doc',
-	            '_id' => $id,
-	        ] + $this->options
-	    ];
+				'_index' => $this->index,
+				'_type' => '_doc',
+				'_id' => $id,
+			] + $this->options
+		];
 		$this->params["body"][] = $meta;
 		$this->params["body"][] = $data;
 
@@ -259,15 +259,15 @@ class ElasticQuery {
 
 	public function create_create_index_params(string $index, array $mappings=[]){
 		$this->params = [
-            'index' => $index,
-            "body" => [
-            	"mappings" => [
-            		"_doc" => [
-            			"properties" => $mappings
-            		]
-            	]
-            ]
-        ];
+			'index' => $index,
+			"body" => [
+				"mappings" => [
+					"_doc" => [
+						"properties" => $mappings
+					]
+				]
+			]
+		];
 		return $this->elastic_client->indices()->create($this->params);
 	}
 
@@ -296,8 +296,7 @@ class ElasticQuery {
 		return [ $name => [ "nested" => ["path" => $path]]];
 	}
 
-	public static function add_to_aggregation(array $aggs, array $new_aggs){
-		
+	public static function add_to_aggregation(array $aggs, array $new_aggs){	
 		$aggs[current(array_keys($aggs))]["aggs"] = $new_aggs;
 		return $aggs;
 	}
@@ -305,10 +304,6 @@ class ElasticQuery {
 	public static function add_metric(array $aggs, array $metric){
 		return $aggs + $metric;
 	}
-
-	// public static function add_metric(array $aggs, array $metric){
-	// 	return $aggs + $metric;
-	// }
 
 	public function init_aggregation(){
 		if(!isset($this->params["body"])){
@@ -319,8 +314,6 @@ class ElasticQuery {
 	}
 
 	public function set_aggregation(array $aggs){
-		// $this->set_body();
-		// $this->params["body"]["query"] =["match_all" => new \stdClass()];
 		$this->params["body"]["aggs"] = $aggs;
 		return $this;
 	}

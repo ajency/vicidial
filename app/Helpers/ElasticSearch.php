@@ -31,8 +31,7 @@ function getUnSelectedVariants(int $product_id=1636, int $selected_color_id=231)
         $elastic->append_must($parent_id)
         ->append_must($type)
         ->append_must_not($var_color_id)
-        ->set_size(100)
-        ;
+        ->set_size(100);
         Log::debug(json_encode($elastic->getParams()["body"], true));
         $response = $elastic->search();
         
