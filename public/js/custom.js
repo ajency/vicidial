@@ -78,15 +78,29 @@ jQuery("#kss_hide-filter").click(function() {
 // ------------------ Start Disable Arrow on single product ------------------//
 jQuery(".prod-slides img").click(function() {
         jQuery(".swipe-arrow").removeClass("swipe-arrow-visible");
-});
-// ------------------ End Disable Arrow on single product ------------------//
-
-
-
-jQuery("#cd-cart-trigger").click(function() {
-            jQuery("#kss_cart").addClass("fixed-bottom");
-});
-jQuery("#cart_close").click(function() {
+    });
+    // ------------------ Mobile View ------------------//
+       jQuery("#cd-cart-trigger").click(function() {
+            // jQuery("#kss_cart").addClass("fixed-bottom");
+            if(!loaded){
+                $.when(
+                    $.getScript("/views/cart/inline.07622d429c92540d0176.bundle.js"),
+                    $.getScript("/views/cart/polyfills.c93167049fda1e4f1949.bundle.js"), 
+                    $.getScript("/views/cart/styles.d41d8cd98f00b204e980.bundle.css"),  
+                    $.getScript("/views/cart/vendor.3b323b5cb284841a64e4.bundle.js"), 
+                    $.Deferred(function( deferred ){
+                        $( deferred.resolve );
+                    })
+                ).done(function(){
+                    $.getScript("/views/cart/main.693226df0fd43246889f.bundle.js");
+                    loaded = true;
+                });
+            }
+            $("#angular-app").removeClass("d-none");
+            $("#angular-app").addClass("d-block");
+                                 
+        });
+        jQuery("#cart_close").click(function() {
             jQuery("#kss_cart").removeClass("fixed-bottom");
 });
 
