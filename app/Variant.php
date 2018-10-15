@@ -14,12 +14,19 @@ class Variant extends Model
      * @author 
      **/
 
-    function __construct(int $id=0){
-    	if($id){
-    		$this->set_elastic_id($id);
-    	}
-    	parent::__construct();
+    public function __construct(array $attributes = [])
+    {
+       parent::__construct($attributes);
     }
+
+	public function newFromBuilder($attributes = [], $connection = null)
+    {
+    	
+        $model = parent::newFromBuilder($attributes,$connection);
+		$model->fetchElasticData();
+        return $model;
+    }
+
 
     /**
      * Set Elastic Data Array Directly
@@ -31,34 +38,17 @@ class Variant extends Model
     	$this->elastic_id = $elastic_data["id"];
     }
 
-	/**
-	* Set elastic id and fetch variant 
-	*
-	* @param int
-	*/
-    private function set_elastic_id(int $id){
-    	$this->elastic_id = $id;
-    	$this->getElasticData();
-    }
-
-	private function getElasticData()
+	private function fetchElasticData()
 	{
-		//use $this->elastic_id to get all the data for this varient from elastic search.
-		//we might use this function as a constructor. This function gets all the data from elastic and saves it in $elastic_data private variable of the class
-		//this includes all the data along with its inventory
-		//@prasad, 
 		$q = new ElasticQuery();
 		$variant_filter = $q->create_term("type", "variant");
-		$variant_id = $q->create_term("id", $this->elastic_id);
+		$variant_id = $q->create_term("id", $this->odoo_id);
 		
 		$q->set_index("products")
 		->append_must($variant_filter)
 		->append_must($variant_id)
 		->set_size(1);
 		$this->elastic_data = $q->search()["hits"]["hits"][0]["_source"];
-		// // print_r($q->getParams());
-		// print_r($this->elastic_data);
-		
 	}
 
 	/**
@@ -66,9 +56,7 @@ class Variant extends Model
 	*
 	* @return bool
 	*/
-	//returns the availability using the inventory from the elasticData private variable
 	public function getAvailability(){
-		//@prasad, write logic decide if the variant is available 
 		foreach ($this->elastic_data["inventory"] as $inventory) {
 			if($inventory["store_qty"] > 0 )
 				return true;
@@ -106,8 +94,7 @@ class Variant extends Model
 		$related_items = ["size" => []]; 
 		$variants = $q->search()["hits"]["hits"];
 		foreach ($variants as  $variant) {
-			$item  = new Varient();
-			$item->set_elastic_data($variant["_source"]);
+			$item  = Varient::where('odoo_id', $variant["_source"]['id'])->first();
 			$related_items["size"][$item->getSize()] = [
 					"id" => $item->getID(),
 					"availability" => $item->getAvailability(),
@@ -115,31 +102,6 @@ class Variant extends Model
 			];
 		}
 		return $related_items;
-	// 	return array (
-	//     'size' => 
-	//     array (
-	//       '18-24M' => 
-	//       array (
-	//         'id' => 123,
-	//         'availability' => true,
-	//       ),
-	//       '4-8Y' => 
-	//       array (
-	//         'id' => 125,
-	//         'availability' => true,
-	//       ),
-	//       '8-12Y' => 
-	//       array (
-	//         'id' => 126,
-	//         'availability' => true,
-	//       ),
-	//       '2-4Y' => 
-	//       array (
-	//         'id' => 124,
-	//         'availability' => false,
-	//       ),
-	//     ),
-	// );
 	}
 
 	public function getItemAttributes(){
@@ -150,10 +112,6 @@ class Variant extends Model
     			'title' => $this->getName(),
     			'image_src_url' => $this->getPrimaryImageSrc(),
     			'image_srcset_url' => $this->getPrimaryImageSrcset(),
-    			//write functions for the following variables too. this entire file is a pseudo code, so please check the laravel docs for the right way to name your getters for the models;
-			    // 'size' => '1-2Y',
-			    // 'price_mrp' => 1309,
-			    // 'price_final' => 869,
 				'size' => $this->getSize(),	
 			    'price_mrp' => $this->getMRP(),
 			    'price_final' => $this->getPriceFinal(),
