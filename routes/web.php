@@ -23,5 +23,5 @@ Route::middleware(['create-seo:product'])->group(function () {
 
 
 Route::get('/rest/anonymous/cart/count','CartController@guest_get_count');
-Route::get('/rest/anonymous/cart/insert','CartController@guest_add_item');
+Route::post('/rest/anonymous/cart/insert','CartController@guest_add_item');
 // Route::get('/rest/anonymous/cart/get','')

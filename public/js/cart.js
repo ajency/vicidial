@@ -11,11 +11,13 @@ $(document).ready(function(){
             setTimeout(function(){jQuery( ".kss_sizes" ).removeClass( "shake" );},200);
         }
         else{
-            var data = {"variant_id": $('input[type=radio][name=kss-sizes]:checked')[0].dataset['variant_id'],"variant_quantity": 1};
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            var data = {_token: CSRF_TOKEN,"variant_id": $('input[type=radio][name=kss-sizes]:checked')[0].dataset['variant_id'],"variant_quantity": 1};
             $.ajax({
                 url: '/rest/anonymous/cart/insert',
-                type: 'GET',
+                type: 'POST',
                 data: data,
+                dataType: 'JSON',
                 success: function (data) {
                     var itemImg = $(add_to_cart_element).closest('.container').find('img').eq(1);
                     flyToElement($(itemImg), $('.shopping-cart'));
