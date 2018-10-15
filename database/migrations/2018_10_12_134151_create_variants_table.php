@@ -16,7 +16,7 @@ class CreateVariantsTable extends Migration
         Schema::create('variants', function (Blueprint $table) {
             $table->increments('id');
             $table->string('elastic_id');
-            $table->string('odoo_id');
+            $table->integer('odoo_id');
             $table->timestamps();
         });
     }
