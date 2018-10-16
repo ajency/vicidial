@@ -95,9 +95,10 @@ class Variant extends Model
 		$variants = $q->search()["hits"]["hits"];
 		foreach ($variants as  $variant) {
 			$item  = Variant::where('odoo_id', $variant["_source"]['id'])->first();
-			$related_items["size"][$item->getSize()] = [
+			$related_items["size"][] = [
 					"id" => $item->getID(),
 					"availability" => $item->getAvailability(),
+					"value" => $item->getSize(),
 				
 			];
 		}
@@ -113,8 +114,8 @@ class Variant extends Model
     			'image_src_url' => $this->getPrimaryImageSrc(),
     			'image_srcset_url' => $this->getPrimaryImageSrcset(),
 				'size' => $this->getSize(),	
-			    'price_mrp' => $this->getMRP(),
-			    'price_final' => $this->getPriceFinal(),
+			    'price_mrp' => $this->getLstPrice(),
+			    'price_final' => $this->getSalePrice(),
 		    ),
 		    "id" => $this->getID(),
 		    "quantity" => $this->getQuantity(),
@@ -138,7 +139,7 @@ class Variant extends Model
 	*
 	* @return double
 	*/
-    public function getMRP()
+    public function getLstPrice()
     {
         return $this->elastic_data["lst_price"];
     }
@@ -148,10 +149,10 @@ class Variant extends Model
 	*
 	* @return double
 	*/
-    public function getPriceFinal()
+    public function getSalePrice()
     {
     	//unclear on what to return
-        return $this->elastic_data["standard_price"];
+        return $this->elastic_data["sale_price"];
     }
 
     /**

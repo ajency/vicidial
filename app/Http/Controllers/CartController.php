@@ -20,7 +20,6 @@ class CartController extends Controller
         } else {
             return abort('404', "Cart not found for this session");
         }
-
     }
 
     public function guestAddItem(Request $request)
@@ -39,7 +38,6 @@ class CartController extends Controller
             $request->session()->put('active_cart_id', $cart->id);
         }
         return response()->json(['cart_count' => $cart->item_count(), "message" => $message, "item" => $item]);
-
     }
 
     public function guestCartFetch(Request $request)
@@ -51,12 +49,24 @@ class CartController extends Controller
         foreach ($cart->cart_data as $cart_item) {
             $variant = Variant::where('odoo_id', $cart_item['id'])->first();
             $items[] = $variant->getItemAttributes();
-            $total_price += $variant->getPriceFinal();
+            $total_price += $variant->getSalePrice();
         }
 
         $cart    = Cart::find($id);
         $summary = ["total" => $total_price, "discount" => 0, "tax" => "", "coupon" => ""];
         $code    = ["code" => "NEWUSER", "applied" => true];
         return response()->json(['items' => $items, "summary" => $summary, "code" => $code]);
+    }
+
+    public function test(Request $request)
+    {
+        // \Log::info('enters guest_get_count function');
+        $params  = $request->all();
+        $variant = Varient::where('odoo_id', 100)->first();
+        return response()->json([
+            "variant"       => $variant->getVariantData(),
+            "related_items" => $variant->getRelatedItems(),
+        ]);
+
     }
 }
