@@ -29,7 +29,7 @@ export class CartComponent implements OnInit {
       console.log("cart_data from sessionStorage==>", this.cart);
     }
     else{
-      let url = '/rest/anonymous/cart/get';
+      let url = 'http://localhost:8000/rest/anonymous/cart/get';
       this.apiservice.request(url, 'get', {} ).then((response)=>{
         console.log("response ==>", response);
         this.cart = response;
@@ -37,6 +37,11 @@ export class CartComponent implements OnInit {
       })
       .catch((error)=>{
         console.log("error ===>", error);
+        if(error.message == "Cart not found for this session"){
+          this.cart = {
+            items : []
+          }
+        }
       })
     }
   }
