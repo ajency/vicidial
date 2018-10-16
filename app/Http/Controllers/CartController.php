@@ -49,24 +49,13 @@ class CartController extends Controller
         foreach ($cart->cart_data as $cart_item) {
             $variant = Variant::where('odoo_id', $cart_item['id'])->first();
             $items[] = $variant->getItemAttributes();
-            $total_price += $variant->getSalePrice();
+            $total_price += $variant->getSalePrice() * $cart_item["quantity"];
         }
 
         $cart    = Cart::find($id);
         $summary = ["total" => $total_price, "discount" => 0, "tax" => "", "coupon" => ""];
         $code    = ["code" => "NEWUSER", "applied" => true];
-        return response()->json(['items' => $items, "summary" => $summary, "code" => $code]);
+        return response()->json(['cart_count' => $cart->item_count(), 'items' => $items, "summary" => $summary, "code" => $code]);
     }
 
-    public function test(Request $request)
-    {
-        // \Log::info('enters guest_get_count function');
-        $params  = $request->all();
-        $variant = Varient::where('odoo_id', 100)->first();
-        return response()->json([
-            "variant"       => $variant->getVariantData(),
-            "related_items" => $variant->getRelatedItems(),
-        ]);
-
-    }
 }
