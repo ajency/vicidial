@@ -42,40 +42,40 @@ export class CartComponent implements OnInit {
   }
 
   modifyCart(item){
-    console.log("inside modifyCart function ==>", item);
-    let body;
-    body = {
-      old_item : item.id,
-      new_item : item.related_items.size.find(size=> size.value == item.attributes.size).id,
-      quantity : item.quantity
-    }
-    console.log("Body ==>", body);
-    let url = 'http://localhost:8000/rest/anonymous/cart/update';
-    this.apiservice.request(url, 'get', body ).then((response)=>{
-      console.log("response ==>", response);
-      item = response.item;
-      sessionStorage.setItem('cart_data', JSON.stringify(this.cart));
-    })
-    .catch((error)=>{
-      console.log("error ===>", error);
-    })
+    // console.log("inside modifyCart function ==>", item);
+    // let body;
+    // body = {
+    //   old_item : item.id,
+    //   new_item : item.related_items.size.find(size=> size.value == item.attributes.size).id,
+    //   quantity : item.quantity
+    // }
+    // console.log("Body ==>", body);
+    // let url = 'http://localhost:8000/rest/anonymous/cart/update';
+    // this.apiservice.request(url, 'get', body ).then((response)=>{
+    //   console.log("response ==>", response);
+    //   item = response.item;
+    //   sessionStorage.setItem('cart_data', JSON.stringify(this.cart));
+    // })
+    // .catch((error)=>{
+    //   console.log("error ===>", error);
+    // })
   }
 
   deleteItem(item){
-    console.log("delete item ==>", item);
-    let body = {
-      item_id : item.id
-    }
-    let url = 'http://localhost:8000/rest/anonymous/cart/delete';
-    this.apiservice.request(url, 'get', body ).then((response)=>{
-      console.log("response ==>", response);
-      let index = this.cart.items.findIndex(i => i.id == item.id)
-      this.cart.items.splice(index,1);
-      sessionStorage.setItem('cart_data', JSON.stringify(this.cart));
-    })
-    .catch((error)=>{
-      console.log("error ===>", error);
-    })
+    // console.log("delete item ==>", item);
+    // let body = {
+    //   item_id : item.id
+    // }
+    // let url = 'http://localhost:8000/rest/anonymous/cart/delete';
+    // this.apiservice.request(url, 'get', body ).then((response)=>{
+    //   console.log("response ==>", response);
+    //   let index = this.cart.items.findIndex(i => i.id == item.id)
+    //   this.cart.items.splice(index,1);
+    //   sessionStorage.setItem('cart_data', JSON.stringify(this.cart));
+    // })
+    // .catch((error)=>{
+    //   console.log("error ===>", error);
+    // })
   }
 
   verifyMobile(){
