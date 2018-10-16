@@ -30,7 +30,7 @@ $(' .prod-slides').slick({
         }
     }]
 });
-
+  loaded = false;
  // ------------------ Start Image Load ------------------//
 const lazy = () => {
     document.addEventListener('lazyloaded', (e) => {
@@ -84,15 +84,15 @@ jQuery(".prod-slides img").click(function() {
             // jQuery("#kss_cart").addClass("fixed-bottom");
             if(!loaded){
                 $.when(
-                    $.getScript("/views/cart/inline.b6eb6287618da4d893ed.bundle.js"),
-                    $.getScript("/views/cart/polyfills.c93167049fda1e4f1949.bundle.js"), 
-                    $.getScript("/views/cart/styles.d41d8cd98f00b204e980.bundle.css"),  
-                    $.getScript("/views/cart/vendor.e93cd02c46d801d6a813.bundle.js"), 
+                    $.getScript("/views/cart/inline.js"),
+                    $.getScript("/views/cart/polyfills.js"), 
+                    $.getScript("/views/cart/styles.css"),  
+                    $.getScript("/views/cart/vendor.js"), 
                     $.Deferred(function( deferred ){
                         $( deferred.resolve );
                     })
                 ).done(function(){
-                    $.getScript("/views/cart/main.b9e515fb936b48a66672.bundle.js");
+                    $.getScript("/views/cart/main.js");
                     loaded = true;
                 });
             }

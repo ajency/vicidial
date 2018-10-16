@@ -29,7 +29,7 @@ export class CartComponent implements OnInit {
       console.log("cart_data from sessionStorage==>", this.cart);
     }
     else{
-      let url = 'http://localhost:8000/rest/v1/anonymous/cart/get';
+      let url = '/rest/anonymous/cart/get';
       this.apiservice.request(url, 'get', {} ).then((response)=>{
         console.log("response ==>", response);
         this.cart = response;
