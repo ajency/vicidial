@@ -9,7 +9,21 @@ class ElasticQuery
 
     public function __construct()
     {
-        $this->elastic_client = ClientBuilder::create()->build();
+        $hosts = [
+            [
+                "host"   => config('elastic.host'),
+                "port"   => config('elastic.port'),
+                "scheme" => config('elastic.scheme'),
+                "user"   => config('elastic.user'),
+                "pass"   => config('elastic.pass'),
+
+            ],
+        ];
+        \Log::debug(json_encode($hosts, true));
+        $this->elastic_client = ClientBuilder::create()
+            ->setHosts($hosts)
+            ->build();
+        // $this->elastic_client = ClientBuilder::create()->build();
     }
 
     public function reset()
