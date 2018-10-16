@@ -44,9 +44,9 @@
 				</div>
 				<div class=" d-md-block mb-3">
 					<div class="d-flex justify-content-between mt-3">
-						<label class=""> <a  class="font-weight-bold kss-link" data-toggle="collapse" href="#color-options"  aria-expanded="false" aria-controls="color-options"><i class="fas fa-circle text-warning"></i> <i class="fas fa-circle text-info"></i> <i class="fas fa-circle text-success"></i> More color options</a></label>
+						<label class=""> <p  class="font-weight-bold kss-link" href="#color-options"  aria-expanded="false" aria-controls="color-options"> More color options</p></label>
 					</div>
-					<div class="collapse" id="color-options">
+					<div class="collapse show" id="color-options">
 					  <div class="card card-body alert-light ">
 					    <div class="radio-wrap w-image kss_variants ">
 						    <!-- <input class="d-none radio-input" type="radio" name="kss-variants" id="green" checked="checked"/>
@@ -72,7 +72,7 @@
 						    		foreach ($color_set->images as $image_set) {
 								     	if($image_set->is_primary) {$selected_image = $image_set->res->desktop->small_thumb;}
 								     } @endphp
-								    <input class="d-none radio-input" type="radio" name="kss-variants" id="color-{{$color_id}}" {{$checked}} onclick="location.href='/{{$params["slug_name"]}}/{{$params["slug_style"]}}/{{$color_set->slug_color}}/buy'"/>
+								    <input class="d-none radio-input" type="radio" name="kss-variants" id="color-{{$color_id}}" {{$checked}} @php if($checked == ''){ @endphp onclick="location.href='/{{$params["slug_name"]}}/{{$params["slug_style"]}}/{{$color_set->slug_color}}/buy'" @php } @endphp/>
 								    <label class="radio-label" for="color-{{$color_id}}" style="background-image: url({{$selected_image}})">
 								      <div class="radio-option">{{$color_set->name}}</div>
 								    </label>
@@ -185,7 +185,7 @@
 			     		$discount_amt = $list_price - $sale_price;
 			     		$discount_per = round($discount_amt/$list_price * 100);
 				    	@endphp
-				    	<input class="d-none radio-input" type="radio" name="kss-sizes" id="size-{{$size_set->size->id}}" {{$disabled}} data-list_price="{{$list_price}}" data-sale_price="{{$sale_price}}" data-discount_per="{{$discount_per}}"/>
+				    	<input class="d-none radio-input" type="radio" name="kss-sizes" id="size-{{$size_set->size->id}}" data-variant_id="{{$size_set->id}}" {{$disabled}} data-list_price="{{$list_price}}" data-sale_price="{{$sale_price}}" data-discount_per="{{$discount_per}}"/>
 					    <label class="radio-label" for="size-{{$size_set->size->id}}" title="{{$size_set->size->name}}">
 					      <div class="radio-option">{{$size_set->size->name}}</div>
 					    </label>
@@ -198,18 +198,17 @@
 					<div class="col-sm-12 col-md-12 col-12 mobile-fixed pb-2 ">
 						
 						<div class="row">
-							<div class="col-6 col-sm-6 col-md-6 col-xl-6 pr-1">
+							<!-- <div class="col-6 col-sm-6 col-md-6 col-xl-6 pr-1">
 								<button class="btn btn-outline-secondary btn-lg btn-block">
 									<div class="btn-label-initial"><i class="far fa-heart"></i> Save to Wishlist</div>
 									<div class="btn-label-success"><i class="fas fa-arrow-right"></i> Go to Cart</div>
 									<div class="btn-icon"><i class="fas fa-circle-notch fa-spin fa-lg"></i></div>
 								</button>
-							</div>
+							</div> -->
 							<div class="col-6 col-sm-6 col-md-6 col-xl-6 pl-1">
-								<!-- <button class="btn btn-primary btn-lg btn-block cd-add-to-cart " data-price="869" disabled> -->
-								<button id="cd-add-to-cart" class="btn btn-primary btn-lg btn-block cd-add-to-cart-test" data-price="869" disabled>
-									<div class="btn-label-initial"><i class="fas fa-shopping-cart"></i> Add to Cart</div>
-									<div class="btn-label-success"><i class="fas fa-arrow-right"></i> Go to Cart</div>
+								<button id="cd-add-to-cart" class="btn btn-primary btn-lg btn-block cd-add-to-cart" disabled>
+									<div class="btn-label-initial"><i class="fas fa-shopping-cart"></i> Add to Bag</div>
+									<div class="btn-label-success"><i class="fas fa-arrow-right"></i> Go to Bag</div>
 									<div class="btn-icon"><i class="fas fa-circle-notch fa-spin fa-lg"></i></div>
 								</button>
 							</div>
@@ -410,6 +409,14 @@
             </div>
         </div>
 	</div> -->
+
+	<div class="alert kss-alert sticky-alert d-inline-flex align-items-baseline px-sm-4 py-sm-4 px-3 py-3 fade show" role="alert">
+	  <i class="fas fa-check pr-sm-3 pr-2 icon"></i>
+	  <div class="message"></div>
+	  <button type="button" class="close" aria-label="Close">
+	    <span aria-hidden="true">&times;</span>
+	  </button>
+	</div>
 
 
 	<script type="text/javascript">

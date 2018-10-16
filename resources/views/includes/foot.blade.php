@@ -8,3 +8,5 @@
 
 
 <script type="text/javascript" src="/js/custom.js"></script>
+
+<script type="text/javascript" src="/js/cart.js"></script>
