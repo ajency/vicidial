@@ -9,6 +9,7 @@ class Variant extends Model
 {
     protected $elastic_data;
     protected $elastic_index = "products";
+    protected $fillable = ['odoo_id','elastic_id'];
     /**
      *
      * @return
@@ -18,6 +19,7 @@ class Variant extends Model
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
+        $this->elastic_index = config('elastic.prefix').$this->elastic_index;
     }
 
     public function newFromBuilder($attributes = [], $connection = null)
@@ -49,7 +51,10 @@ class Variant extends Model
             ->appendMust($variant_filter)
             ->appendMust($variant_id)
             ->setSize(1);
-        $this->elastic_data = $q->search()["hits"]["hits"][0]["_source"];
+        $search = $q->search();
+        \Log::info("elastic object fetched");
+        \Log::info($search);
+        $this->elastic_data = $search["hits"]["hits"][0]["_source"];
     }
 
     /**
