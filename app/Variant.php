@@ -8,6 +8,7 @@ use App\Elastic\ElasticQuery;
 class Variant extends Model
 {
 	protected $elastic_data;
+	protected $elastic_index ="products";
     /**
      *
      * @return 
@@ -41,13 +42,13 @@ class Variant extends Model
 	private function fetchElasticData()
 	{
 		$q = new ElasticQuery();
-		$variant_filter = $q->create_term("type", "variant");
-		$variant_id = $q->create_term("id", $this->odoo_id);
+		$variant_filter = $q->createTerm("type", "variant");
+		$variant_id = $q->createTerm("id", $this->odoo_id);
 		
-		$q->set_index("products")
-		->append_must($variant_filter)
-		->append_must($variant_id)
-		->set_size(1);
+		$q->setIndex($this->elastic_index)
+		->appendMust($variant_filter)
+		->appendMust($variant_id)
+		->setSize(1);
 		$this->elastic_data = $q->search()["hits"]["hits"][0]["_source"];
 	}
 
@@ -83,14 +84,14 @@ class Variant extends Model
 
 	public function getRelatedItems(){
 		$q = new ElasticQuery();
-		$variant_filter = $q->create_term("type", "variant");
-		$color_filter = $q->create_term("var_color_id", $this->getVarColorId());
-		$parent_id_filter = $q->create_term("parent_id", $this->getParentId());
-		$notThisVariant = $q->create_term("id", $this->elastic_id);
+		$variant_filter = $q->createTerm("type", "variant");
+		$color_filter = $q->createTerm("var_color_id", $this->getVarColorId());
+		$parent_id_filter = $q->createTerm("parent_id", $this->getParentId());
+		$notThisVariant = $q->createTerm("id", $this->elastic_id);
 		
-		$q->set_index("products")
-		->append_must($variant_filter)->append_must($color_filter)
-		->append_must($parent_id_filter)->append_must_not($notThisVariant);
+		$q->setIndex($this->elastic_index)
+		->appendMust($variant_filter)->appendMust($color_filter)
+		->appendMust($parent_id_filter)->appendMustNot($notThisVariant);
 		$related_items = ["size" => []]; 
 		$variants = $q->search()["hits"]["hits"];
 		foreach ($variants as  $variant) {

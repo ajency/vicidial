@@ -23,15 +23,15 @@ function getUnSelectedVariants(int $product_id=1636, int $selected_color_id=231)
         // print_r($response);
 
         $elastic = new ElasticQuery;
-        $elastic->set_index("products");
-        $parent_id = ElasticQuery::create_term('parent_id', $product_id);
-        $type = ElasticQuery::create_term('type', "variant");
-        $var_color_id = ElasticQuery::create_term('var_color_id', $selected_color_id);
+        $elastic->setIndex("products");
+        $parent_id = ElasticQuery::createTerm('parent_id', $product_id);
+        $type = ElasticQuery::createTerm('type', "variant");
+        $var_color_id = ElasticQuery::createTerm('var_color_id', $selected_color_id);
 
-        $elastic->append_must($parent_id)
-        ->append_must($type)
-        ->append_must_not($var_color_id)
-        ->set_size(100);
+        $elastic->appendMust($parent_id)
+        ->appendMust($type)
+        ->appendMustNot($var_color_id)
+        ->setSize(100);
         Log::debug(json_encode($elastic->getParams()["body"], true));
         $response = $elastic->search();
         
@@ -81,14 +81,14 @@ function fetchProduct(int $product_id, int $selected_color_id){
     $product = $client->get($params);
 
     $elastic = new ElasticQuery;
-    $elastic->set_index("products");
-    $parent_id = ElasticQuery::create_term('parent_id', $product_id);
-    $type = ElasticQuery::create_term('type', "variant");
-    $var_color_id = ElasticQuery::create_term('var_color_id', $selected_color_id);
+    $elastic->setIndex("products");
+    $parent_id = ElasticQuery::createTerm('parent_id', $product_id);
+    $type = ElasticQuery::createTerm('type', "variant");
+    $var_color_id = ElasticQuery::createTerm('var_color_id', $selected_color_id);
 
-    $elastic->append_must($parent_id)
-    ->append_must($type)
-    ->append_must($var_color_id);
+    $elastic->appendMust($parent_id)
+    ->appendMust($type)
+    ->appendMust($var_color_id);
  
     $response = $elastic->search();
 
@@ -166,25 +166,25 @@ function fetchProduct(int $product_id, int $selected_color_id){
 function singleproduct(string $product_slug, string $style_slug, string $color_slug) {
 
     $elastic = new ElasticQuery;
-    $elastic->set_index("products");
-    $slug_name = ElasticQuery::create_term('slug_name',$product_slug);
-    $slug_style = ElasticQuery::create_term('slug_style',$style_slug);
-    $type = ElasticQuery::create_term('type','product');
+    $elastic->setIndex("products");
+    $slug_name = ElasticQuery::createTerm('slug_name',$product_slug);
+    $slug_style = ElasticQuery::createTerm('slug_style',$style_slug);
+    $type = ElasticQuery::createTerm('type','product');
 
-    $elastic->append_must($slug_name);
-    $elastic->append_must($slug_style);
-    $elastic->append_must($type);
+    $elastic->appendMust($slug_name);
+    $elastic->appendMust($slug_style);
+    $elastic->appendMust($type);
  
     $product = $elastic->search();
     $product = $product['hits']['hits'][0]['_source'];
 
-    $elastic->set_body();
-    $parent_id = ElasticQuery::create_term('parent_id',$product["id"]);
-    $slug_color = ElasticQuery::create_term('slug_color',$color_slug);
-    $type = ElasticQuery::create_term('type','variant');
-    $elastic->append_must($parent_id);
-    $elastic->append_must($slug_color);
-    $elastic->append_must($type);
+    $elastic->setBody();
+    $parent_id = ElasticQuery::createTerm('parent_id',$product["id"]);
+    $slug_color = ElasticQuery::createTerm('slug_color',$color_slug);
+    $type = ElasticQuery::createTerm('type','variant');
+    $elastic->appendMust($parent_id);
+    $elastic->appendMust($slug_color);
+    $elastic->appendMust($type);
     // print_r(json_encode($elastic->getParams()["body"],true));die();
     $variant = $elastic->search();
     $variant = $variant['hits']['hits'][0]['_source'];
