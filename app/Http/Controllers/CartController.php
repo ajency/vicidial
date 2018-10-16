@@ -36,4 +36,21 @@ class CartController extends Controller
     	return response()->json(['cart_count' => $cart->item_count(), "message" => $message, "item" => $item]);
     	
     }
+
+    public function guest_cart_fetch(Request $request){
+        $id = $request->session()->get('active_cart_id', false);
+        $cart = ($id)? Cart::find($id) : new Cart;
+        $items = [];
+        $total_price = 0;
+        foreach ($cart->cart_data as $cart_item) {
+            $variant = Variant::where('odoo_id', $cart_item['id'])->first();
+            $items[] = $variant->getItemAttributes();
+            $total_price += $variant->getPriceFinal();
+        }
+
+        $cart = Cart::find($id);
+        $summary = ["total"=> $total_price, "discount" => 0, "tax" => "", "coupon" => ""];
+        $code = ["code" => "NEWUSER", "applied" => true];
+        return response()->json(['items' => $items, "summary" => $summary , "code" => $code]); 
+    }
 }
