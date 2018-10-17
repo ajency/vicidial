@@ -1,9 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { isDevMode } from '@angular/core';
+
 @Injectable()
 export class AppServiceService {
 
-  constructor(	private router: Router ) { }
+  apiUrl = '';
+  constructor(	private router: Router ) { 
+    console.log("isDevMode ==>",isDevMode());
+    this.apiUrl = isDevMode() ? 'http://localhost:8000' : '';
+  }
 
   closeCart(){
   	console.log('inside closeCart');
