@@ -12,9 +12,7 @@
  */
 
 Route::middleware(['create-seo:home'])->group(function () {
-    Route::get('/', function () {
-        return view('home');
-    });
+    Route::get('/', 'HomeController@index')->name('home');
 });
 
 Route::middleware(['create-seo:product'])->group(function () {
