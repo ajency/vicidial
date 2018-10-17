@@ -46,39 +46,27 @@
 				@include('includes.singleproduct.productcolorselection', ['params' => $params, 'selected_color_id' => $selected_color_id])
 			</div>
 			<div class="col-sm-12 col-lg-5">
-				<nav aria-label="breadcrumb">
-					<ol class="breadcrumb mb-1 bg-transparent p-0">
-					    <!-- <li class="breadcrumb-item"><a href="#">Home</a></li>
-					    <li class="breadcrumb-item"><a href="#">Boys</a></li>
-					    <li class="breadcrumb-item active"><a href="#">Boys Shirts</a></li> -->
-					   	<li class="breadcrumb-item"><a href="#">Home</a></li>
-					   	<li class="breadcrumb-item"><a href="#">{{$params['category']->type}}</a></li>
-					   	<li class="breadcrumb-item"><a href="#">{{$params['category']->age_group}}</a></li>
-					   	<li class="breadcrumb-item"><a href="#">{{$params['category']->gender}}</a></li>
-					   	<li class="breadcrumb-item active"><a href="#">{{$params['category']->sub_type}}</a></li>
-					<!-- @php if($params['category']->gender != 'Others') { @endphp
-					    <li class="breadcrumb-item"><a href="#">{{$params['category']->gender}}</a></li>
-					@php } else { @endphp
-						<li class="breadcrumb-item"><a href="#">{{$params['category']->type}}</a></li>
-					@php } @endphp
-
-					@php if($params['category']->sub_type != 'Others') { @endphp
-					    <li class="breadcrumb-item"><a href="#">{{$params['category']->sub_type}}</a></li>
-					@php } @endphp -->
-					</ol>
-				</nav>
+				@include('includes.breadcrumbs', ['params' => $params])
 				<div class="d-flex">
 					<div>
 							<h1 class="kss-title mb-2 mb-sm-2 text-gray font-weight-bold">{{$params['title']}}</h1>
 							@php
 						    foreach ($params['variant_group']->{$selected_color_id}->variants as $size_set) {
-						     	if($size_set->is_default) {
-						     		$list_price = $size_set->list_price;
-						     		$sale_price = $size_set->sale_price;
-						     		$discount_amt = $list_price - $sale_price;
-						     		$discount_per = round($discount_amt/$list_price * 100);
-						     	}
-						    } 
+							    if(isset($params['size'])) {
+								    if($params['size'] == $size_set->size->name && $size_set->inventory_available) {
+							        	$list_price = $size_set->list_price;
+							     		$sale_price = $size_set->sale_price;
+							        }
+						        }
+						        else {
+						        	if($size_set->is_default) {
+							     		$list_price = $size_set->list_price;
+							     		$sale_price = $size_set->sale_price;
+							     	}
+						        }
+						    }
+						    $discount_amt = $list_price - $sale_price;
+							$discount_per = round($discount_amt/$list_price * 100);
 
 						    if($list_price == $sale_price) { @endphp
 								<h4 id="kss-price" class="kss-price">₹{{$sale_price}}</h4>
@@ -99,7 +87,7 @@
 
 				<div class="d-flex justify-content-between mt-4">
 					<label class="">Select Size (Age Group)</label>
-					<a href="#sizeModal" class="font-weight-bold kss-link" data-toggle="modal" data-target="#sizeModal">Size Chart</a>
+					<!-- <a href="#sizeModal" class="font-weight-bold kss-link" data-toggle="modal" data-target="#sizeModal">Size Chart</a> -->
 
 					<div class="modal fade" id="sizeModal" tabindex="-1" role="dialog" aria-hidden="true">
 					  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -147,8 +135,13 @@
 			     		$sale_price = $size_set->sale_price;
 			     		$discount_amt = $list_price - $sale_price;
 			     		$discount_per = round($discount_amt/$list_price * 100);
+
+			     		$checked="";
+			     		if(isset($params['size']) && $params['size'] == $size_set->size->name && $size_set->inventory_available) {
+				        	$checked="checked";
+				        }
 				    	@endphp
-				    	<input class="d-none radio-input" type="radio" name="kss-sizes" id="size-{{$size_set->size->id}}" data-variant_id="{{$size_set->id}}" {{$disabled}} data-list_price="{{$list_price}}" data-sale_price="{{$sale_price}}" data-discount_per="{{$discount_per}}"/>
+				    	<input class="d-none radio-input" type="radio" name="kss-sizes" id="size-{{$size_set->size->id}}" {{$checked}} data-variant_id="{{$size_set->id}}" {{$disabled}} data-list_price="{{$list_price}}" data-sale_price="{{$sale_price}}" data-discount_per="{{$discount_per}}"/>
 					    <label class="radio-label" for="size-{{$size_set->size->id}}" title="{{$size_set->size->name}}">
 					      <div class="radio-option">{{$size_set->size->name}}</div>
 					    </label>
@@ -169,7 +162,7 @@
 								</button>
 							</div> -->
 							<div class="col-6 col-sm-6 col-md-6 col-xl-6 pl-1">
-								<button id="cd-add-to-cart" class="btn btn-primary btn-lg btn-block cd-add-to-cart" disabled>
+								<button id="cd-add-to-cart" class="btn btn-primary btn-lg btn-block cd-add-to-cart" @php if(!isset($params['size'])) { @endphp disabled @php } @endphp>
 									<div class="btn-label-initial"><i class="fas fa-shopping-cart"></i> Add to Bag</div>
 									<div class="btn-label-success"><i class="fas fa-arrow-right"></i> Go to Bag</div>
 									<div class="btn-icon"><i class="fas fa-circle-notch fa-spin fa-lg"></i></div>
