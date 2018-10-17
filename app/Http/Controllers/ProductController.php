@@ -9,9 +9,7 @@ class ProductController extends Controller
 
     public function index($product_slug, $style_slug, $color_slug, Request $request)
     {
-        //echo "<pre>";
         $query = $request->all();
-        //print_r($query);
         $params = $request->get('params');
         if(isset($query['size'])) {
         	foreach ($params['variant_group']->{$params['selected_color_id']}->variants as $size_set) {
@@ -29,7 +27,7 @@ class ProductController extends Controller
         $params['breadcrumb']['list'][] = ['name'=>$params['category']->sub_type,'href'=>'#'];
 
         $params['breadcrumb']['current'] = '';
-        //print_r($params);
+        
         return view('singleproduct')->with('params',$params);
     }
 }

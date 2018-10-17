@@ -107,26 +107,6 @@
 
 				</div>
 				<div class="radio-wrap d-flex kss_sizes wo-image mb-4">
-				    <!-- <input class="d-none radio-input" type="radio" name="kss-sizes" id="18-24" checked="checked"/>
-				    <label class="radio-label" for="18-24" title="18-24 months">
-				      <div class="radio-option">18-24M</div>
-				    </label>
-				    <input class="d-none radio-input" type="radio" name="kss-sizes" id="1-2"/>
-				    <label class="radio-label" for="1-2" title="1-2 years">
-				      <div class="radio-option">1-2Y</div>
-				    </label>
-				    <input class="d-none radio-input" type="radio" name="kss-sizes" id="2-4" disabled="" />
-				    <label class="radio-label" for="2-4" title="2-4 years">
-				      <div class="radio-option">2-4Y</div>
-				    </label>
-				    <input class="d-none radio-input" type="radio" name="kss-sizes" id="4-8"/>
-				    <label class="radio-label" for="4-8" title="4-8 years">
-				      <div class="radio-option">4-8Y</div>
-				    </label>
-				     <input class="d-none radio-input" type="radio" name="kss-sizes" id="9-10"/>
-				    <label class="radio-label" for="9-10" title="9-10 years">
-				      <div class="radio-option">9-10Y</div>
-				    </label> -->
 				    @php
 				    foreach ($params['variant_group']->{$selected_color_id}->variants as $size_set) {
 				    	$disabled = "";
@@ -220,28 +200,6 @@
 				    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
 				      	<div class="card-body pb-2 px-0">
 					     	<dl class="row">
-							  <!-- <dt class="col-sm-2"><label class="text-muted f-w-4">Format</label></dt>
-							  <dd class="col-sm-10">A description list is perfect for defining terms.</dd>
-
-							  <dt class="col-sm-2"><label class="text-muted f-w-4">Collar</label></dt>
-							  <dd class="col-sm-10">
-							    <p>Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.</p>
-							  </dd>
-
-							  <dt class="col-sm-2"><label class="text-muted f-w-4">Climate</label></dt>
-							  <dd class="col-sm-10">Etiam porta sem malesuada magna mollis euismod.</dd>
-
-							  <dt class="col-sm-2"><label class="text-muted f-w-4">Pattern</label></dt>
-							  <dd class="col-sm-10">Etiam porta sem malesuada magna mollis euismod.</dd>
-
-							  <dt class="col-sm-2"><label class="text-muted f-w-4">Sleeve</label></dt>
-							  <dd class="col-sm-10">Etiam porta sem malesuada magna mollis euismod.</dd>
-
-							  <dt class="col-sm-2"><label class="text-muted f-w-4">Gender</label></dt>
-							  <dd class="col-sm-10">Etiam porta sem malesuada magna mollis euismod.</dd>
-
-							  <dt class="col-sm-2"><label class="text-muted f-w-4">Material</label></dt>
-							  <dd class="col-sm-10">Etiam porta sem malesuada magna mollis euismod.</dd> -->
 
 							  <dt class="col-sm-2"><label class="text-muted f-w-4">Gender</label></dt>
 							  <dd class="col-sm-10">{{$params['additional_info']->gender}}</dd>

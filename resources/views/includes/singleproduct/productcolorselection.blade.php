@@ -5,22 +5,6 @@
 	<div class="collapse show" id="color-options">
 	  <div class="card card-body alert-light ">
 	    <div class="radio-wrap w-image kss_variants ">
-		    <!-- <input class="d-none radio-input" type="radio" name="kss-variants" id="green" checked="checked"/>
-		    <label class="radio-label" for="green" style="background-image: url(/img/thumbnail/6front@thumb.jpg)">
-		      <div class="radio-option">green</div>
-		    </label>
-		    <input class="d-none radio-input" type="radio" name="kss-variants" id="yellow"/>
-		    <label class="radio-label" for="yellow" style="background-image: url(/img/thumbnail/1front@thumb.jpg)">
-		      <div class="radio-option">yellow</div>
-		    </label>
-		    <input class="d-none radio-input" type="radio" name="kss-variants" id="blue"/>
-		    <label class="radio-label" for="blue" style="background-image: url(/img/thumbnail/3front@thumb.jpg)">
-		      <div class="radio-option">blue</div>
-		    </label>
-		    <input class="d-none radio-input" type="radio" name="kss-variants" id="red"/>
-		    <label class="radio-label" for="red" style="background-image: url(/img/thumbnail/10front@thumb.jpg)">
-		      <div class="radio-option">red</div>
-		    </label> -->
 		    @php foreach ($params['variant_group'] as $color_id => $color_set) {
 			    	$checked="";
 			    	if($color_id == $selected_color_id) {$checked="checked";}
