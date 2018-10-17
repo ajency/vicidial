@@ -1,0 +1,164 @@
+<div id="cd-shadow-layer"></div>
+
+<div id="cd-cart" style="right: 0">
+	<div class="kss_shipping slide-out slide-show">
+		<div class="scroll-container">
+			<nav class="navbar navbar-dark bg-dark pt-3 pb-3 ">
+				<div class="d-flex align-items-center w-100">
+					<div class="">
+						<a href="/kss/product/">
+							 <img src="assets/img/logo-kss.png" xpreview="assets/img/logo-kss.png" class=" img-fluid m-0" width="180px">
+					 </a>
+					</div>
+					<div class="ml-auto align-self-center">
+						<h3 class="m-0 text-white kss_highlight btn-pay" (click)="closeCart()"><span aria-hidden="true">&times;</span></h3>
+					</div>
+				</div>
+				<!--   <div class="row no-gutters w-100">
+						<div class="col-8 col-xl-9">
+						<img src="{{"img/logo-kss.png" | absURL}}" xpreview="{{"img/logo-kss.png" | absURL}}" class=" img-fluid m-0" width="180px">
+						 </div>
+						 <div class="col text-white secure-label">
+							<i class="fas fa-lock float-left mr-2"></i>SECURE<br>
+							CHECKOUT
+						 </div>
+					</div> -->
+			</nav>
+			<div class="py-3 px-3 padding-size">
+				<div class="row no-gutter">
+					<div class="col-8">
+						<h3 class="modal-title font-weight-bold" id="exampleModalLabel">Ship To</h3>
+					</div>
+					<div class="col-4 text-right">
+						<h6 class="text-muted mt-2">STEP: 1 / 3</h6>
+					</div>
+				</div>
+				<hr>
+
+				<div class="shipping-content" *ngIf="addAddress">
+					<div class="row">
+						<div class="col-md-12">
+							<!--firstName-->
+							<div class="form-group ">
+								<input class="form-control form-control-lg" id="names" type="text">
+								<label class="control-label">Name*</label>
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="form-group has-error ">
+								<input class="form-control form-control-lg" id="mobile" type="text" for="inputError">
+								 <label class="control-label" for="inputError">Mobile No*</label>
+								 <small id="passwordHelpBlock" class="form-text text-danger">
+								Please enter mobile number
+								</small>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<input class="form-control form-control-lg" id="email-address" type="text">
+								<label class="control-label">Email Address*</label>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group ">
+								<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+								<label class="control-label">Address*</label>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group ">
+								<input class="form-control form-control-lg" id="pincode" type="text">
+								<label class="control-label">Pincode*</label>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<input class="form-control form-control-lg" id="locality" type="text">
+								<label class="control-label">Locality/Town*</label>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group ">
+								<input class="form-control form-control-lg" id="citys" type="text">
+								<label class="control-label">City District*</label>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<input class="form-control form-control-lg" id="state" type="text">
+								<label class="control-label">State*</label>
+							</div>
+						</div>
+					</div>
+					<div class="row mt-4">
+						<div class="col-md-12">
+							<div class="custom-control custom-checkbox">
+								<input type="checkbox" class="custom-control-input" id="customCheck1">
+								<label class="custom-control-label" for="customCheck1">Make this my default address</label>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div *ngIf="!addAddress" class="shipping-content-info" style="display: block;">
+					<div class="radio-wrap d-flex kss_sizes wo-image mb-4">
+						<input class="d-none radio-input" type="radio" name="kss-sizes" id="address-1" checked="checked"/>
+						<label class="radio-label w-100 border-bottom text-left" for="address-1" title="Pari Shah">
+							<div class="radio-option">
+							 <div class="radio-selection "> <i class="fas fa-check-circle"></i></div>
+									<h3 class="kss-title font-weight-bold w-75">Pari Shah <i class="fas fa-pencil-alt number-edit"></i></h3>
+									<p class="w-75">
+										Maharaja Sayaji Gaikwad Udyog Bhawan Survey Number 152-152, Pune, Maharashtra 411007
+									</p>
+									<p class="w-75">
+										Mobile: <b class="font-weight-bold">+91 9898388993</b>
+									</p>
+							</div>
+						</label>
+
+						<input class="d-none radio-input" type="radio" name="kss-sizes" id="address-2"/>
+						<label class="radio-label w-100 text-left border-bottom" for="address-2" title="Amit Shah">
+							<div class="radio-option">
+								 <div class="radio-selection "> <i class="fas fa-check-circle"></i></div>
+										<h3 class="kss-title font-weight-bold w-75">Amit Shah <i class="fas fa-pencil-alt number-edit"></i></h3>
+									<p class="w-75">
+										Maharaja Sayaji Gaikwad Udyog Bhawan Survey Number 152-152, Pune, Maharashtra 411007
+									</p>
+									<p class="w-75">
+										Mobile: <b class="font-weight-bold">+91 8407917773</b>
+									</p>
+							</div>
+						</label>
+					</div>
+					<button type="button" id="add-address" class="btn btn-outline-secondary btn-lg btn-block" (click)="addAddress = true">Add A New Address</button>
+				</div>
+
+				<div class="seperator mt-2 mb-2"></div>
+
+				<div class="fixed-bottom d-block pl-3 pr-3">
+					<div *ngIf="addAddress" class="row no-gutters px-2 py-2 shipping-state-1" style="display: flex;">
+						<div class="col-6 text-center">
+							<button type="button" class="shipping-details-save btn btn-lg btn-block btn-link text-dark mt-1 mb-1 ml-auto mr-auto" (click)="addAddress = false" >Cancel </button>
+						</div>
+						<div class="col-6 text-center">
+							<button type="button" class="shipping-details-save btn btn-lg btn-block btn-primary mt-1 mb-1 ml-auto mr-auto" (click)="addAddress=false"> Save </button>
+						</div>
+					</div>
+					 <div *ngIf="!addAddress" class="row no-gutters px-2 py-2 shipping-state-2" style="display: flex;">
+						<div class="col-12 text-center">
+							<button id="shipping-summary" type="button" class=" btn btn-lg btn-block btn-primary mt-1 mb-1" (click)="navigateToShippingPage()">Proceed</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>	

@@ -30,7 +30,7 @@ $(' .prod-slides').slick({
         }
     }]
 });
-
+  loaded = false;
  // ------------------ Start Image Load ------------------//
 const lazy = () => {
     document.addEventListener('lazyloaded', (e) => {
@@ -78,15 +78,10 @@ jQuery("#kss_hide-filter").click(function() {
 // ------------------ Start Disable Arrow on single product ------------------//
 jQuery(".prod-slides img").click(function() {
         jQuery(".swipe-arrow").removeClass("swipe-arrow-visible");
-});
-// ------------------ End Disable Arrow on single product ------------------//
+    });
+    // ------------------ Mobile View ------------------//
 
-
-
-jQuery("#cd-cart-trigger").click(function() {
-            jQuery("#kss_cart").addClass("fixed-bottom");
-});
-jQuery("#cart_close").click(function() {
+        jQuery("#cart_close").click(function() {
             jQuery("#kss_cart").removeClass("fixed-bottom");
 });
 

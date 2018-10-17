@@ -44,7 +44,7 @@ class CartController extends Controller
     {
         $id   = $request->session()->get('active_cart_id', false);
         $cart = Cart::find($id);
-        if ($cart->id == null) {
+        if ($cart == null) {
             abort(404, "Cart not found for this session");
         }
 

@@ -1,13 +1,13 @@
-<div class="seperator">
-</div><div id="cd-shadow-layer"></div>
+<!-- <div class="seperator"> -->
+<!-- </div><div id="cd-shadow-layer"></div> -->
 
 <div id="cd-cart">
-	<div class="d-flex ">
-		<div class="pr-3 align-items-center">
+	<!-- <div class="d-flex "> -->
+<!-- 		<div class="pr-3 align-items-center">
 			<h3 class="modal-title font-weight-bold" >
             	<img class="btn-pay btn-back kss_highlight" src="/img/left-arrow.png" style="width:20px;"/>
           	</h3>
-		</div>
+		</div> -->
 <!-- 	  	<div class="align-items-center">
 			<h3 class="modal-title font-weight-bold mt-1 mb-0">
 				Cart <span class="text-muted "><strong>&#183;</strong></span>
@@ -19,9 +19,9 @@
                 <i class="far fa-heart"></i> Wishlist
             </button>
 	  	</div> -->
-	</div>
-	<app-root></app-root>
-
+	<!-- </div> -->
+	<app-root id="angular-app"></app-root>
+</div>
 	<!-- <hr class="mb-0">
 	
 	<ul class="cd-cart-items">
@@ -709,4 +709,4 @@
     </div>
   </div>
 </div><div class="overlay-fix" style="display:none;"> -->
-                </div>
+               <!--  </div> -->
