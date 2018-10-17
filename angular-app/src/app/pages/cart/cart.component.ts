@@ -44,7 +44,7 @@ export class CartComponent implements OnInit {
       this.apiservice.request(url, 'get', {} ).then((response)=>{
         console.log("response ==>", response);
         this.cart = response;
-        sessionStorage.setItem('cart_data', JSON.stringify(this.cart));
+        // sessionStorage.setItem('cart_data', JSON.stringify(this.cart));
       })
       .catch((error)=>{
         console.log("error ===>", error);

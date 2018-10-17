@@ -49,7 +49,7 @@ $(document).ready(function(){
                     //var itemImg = $(add_to_cart_element).closest('.container').find('img').eq(1);
                     //flyToElement($(itemImg), $('.shopping-cart'));
                     sessionStorage.setItem( "cart_count", data.cart_count );
-                    set_cart_data(data.item);
+                    // set_cart_data(data.item);
                     set_cart_count();
                     $('.kss-alert .message').html('<strong>Success!!!</strong> Added to bag');
                     $('.kss-alert').addClass('kss-alert--success');
