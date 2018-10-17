@@ -81,6 +81,12 @@ $(document).ready(function(){
 
     // Tooltip init
     $('[data-toggle="tooltip"]').tooltip();
+
+    jQuery("#cd-cart-trigger").click(function() {
+        // jQuery("#kss_cart").addClass("fixed-bottom");
+        loadAngularApp();
+                             
+    });
 });
 
 
@@ -103,12 +109,12 @@ function set_cart_data(json) {
     var found = 0;
     if(cart_data) {
         cart_data = JSON.parse(cart_data);
-        cart_data.forEach(function(item) {
-          if(item.id == json.id) {
-            found = 1;
-            break;
-          };
-        });
+        // cart_data.forEach(function(item) {
+        //   if(item.id == json.id) {
+        //     found = 1;
+        //     break;
+        //   };
+        // });
     }
     else {
         var cart_data = new Array();
@@ -116,6 +122,24 @@ function set_cart_data(json) {
 
     if(found == 0) {
         cart_data.push(json);
-        sessionStorage.setItem( "cart_data", JSON.stringify(test) );
+        sessionStorage.setItem( "cart_data", JSON.stringify(cart_data) );
     }
 }
+  function loadAngularApp(){
+    if(!loaded){
+      $.when(
+          $.getScript("/views/cart/inline.js"),
+          $.getScript("/views/cart/polyfills.js"), 
+          $.getScript("/views/cart/styles.css"),  
+          $.getScript("/views/cart/vendor.js"), 
+          $.Deferred(function( deferred ){
+              $( deferred.resolve );
+          })
+      ).done(function(){
+          $.getScript("/views/cart/main.js");
+          loaded = true;
+      });
+    }
+    $("#angular-app").removeClass("d-none");
+    $("#angular-app").addClass("d-block");
+  }

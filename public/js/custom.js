@@ -80,26 +80,7 @@ jQuery(".prod-slides img").click(function() {
         jQuery(".swipe-arrow").removeClass("swipe-arrow-visible");
     });
     // ------------------ Mobile View ------------------//
-       jQuery("#cd-cart-trigger").click(function() {
-            // jQuery("#kss_cart").addClass("fixed-bottom");
-            if(!loaded){
-                $.when(
-                    $.getScript("/views/cart/inline.js"),
-                    $.getScript("/views/cart/polyfills.js"), 
-                    $.getScript("/views/cart/styles.css"),  
-                    $.getScript("/views/cart/vendor.js"), 
-                    $.Deferred(function( deferred ){
-                        $( deferred.resolve );
-                    })
-                ).done(function(){
-                    $.getScript("/views/cart/main.js");
-                    loaded = true;
-                });
-            }
-            $("#angular-app").removeClass("d-none");
-            $("#angular-app").addClass("d-block");
-                                 
-        });
+
         jQuery("#cart_close").click(function() {
             jQuery("#kss_cart").removeClass("fixed-bottom");
 });
