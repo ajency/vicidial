@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppServiceService } from '../../service/app-service.service';
 import { ApiServiceService } from '../../service/api-service.service';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-cart',
@@ -17,10 +18,20 @@ export class CartComponent implements OnInit {
                private appservice : AppServiceService,
                private apiservice : ApiServiceService
               ) { 
+
   }
 
   ngOnInit() {
     this.getCartData();
+  }
+
+  ngAfterViewInit(){
+    var self = this;
+    console.log("ngAfterViewInit");
+    $("#cd-cart-trigger").click(function() {
+      console.log("calling getCartData function")
+      self.getCartData();                       
+    });
   }
 
   getCartData(){
@@ -88,6 +99,7 @@ export class CartComponent implements OnInit {
   }
 
   closeCart(){
+    this.cart = null;
     this.appservice.closeCart();
   }
 
