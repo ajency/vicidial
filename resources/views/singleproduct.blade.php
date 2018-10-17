@@ -42,80 +42,31 @@
 
 					</div>
 				</div>
-				<div class=" d-md-block mb-3">
-					<div class="d-flex justify-content-between mt-3">
-						<label class=""> <p  class="font-weight-bold kss-link" href="#color-options"  aria-expanded="false" aria-controls="color-options"> More color options</p></label>
-					</div>
-					<div class="collapse show" id="color-options">
-					  <div class="card card-body alert-light ">
-					    <div class="radio-wrap w-image kss_variants ">
-						    <!-- <input class="d-none radio-input" type="radio" name="kss-variants" id="green" checked="checked"/>
-						    <label class="radio-label" for="green" style="background-image: url(/img/thumbnail/6front@thumb.jpg)">
-						      <div class="radio-option">green</div>
-						    </label>
-						    <input class="d-none radio-input" type="radio" name="kss-variants" id="yellow"/>
-						    <label class="radio-label" for="yellow" style="background-image: url(/img/thumbnail/1front@thumb.jpg)">
-						      <div class="radio-option">yellow</div>
-						    </label>
-						    <input class="d-none radio-input" type="radio" name="kss-variants" id="blue"/>
-						    <label class="radio-label" for="blue" style="background-image: url(/img/thumbnail/3front@thumb.jpg)">
-						      <div class="radio-option">blue</div>
-						    </label>
-						    <input class="d-none radio-input" type="radio" name="kss-variants" id="red"/>
-						    <label class="radio-label" for="red" style="background-image: url(/img/thumbnail/10front@thumb.jpg)">
-						      <div class="radio-option">red</div>
-						    </label> -->
-						    @php $selected_color_id = $params['selected_color_id'];
-						    	foreach ($params['variant_group'] as $color_id => $color_set) {
-							    	$checked="";
-							    	if($color_id == $selected_color_id) {$checked="checked";}
-						    		foreach ($color_set->images as $image_set) {
-								     	if($image_set->is_primary) {$selected_image = $image_set->res->desktop->small_thumb;}
-								     } @endphp
-								    <input class="d-none radio-input" type="radio" name="kss-variants" id="color-{{$color_id}}" {{$checked}} @php if($checked == ''){ @endphp onclick="location.href='/{{$params["slug_name"]}}/{{$params["slug_style"]}}/{{$color_set->slug_color}}/buy'" @php } @endphp/>
-								    <label class="radio-label" for="color-{{$color_id}}" style="background-image: url({{$selected_image}})">
-								      <div class="radio-option">{{$color_set->name}}</div>
-								    </label>
-							    @php } @endphp
-						</div>
-					  </div>
-					</div>
-				</div>
+				@php $selected_color_id = $params['selected_color_id']; @endphp
+				@include('includes.singleproduct.productcolorselection', ['params' => $params, 'selected_color_id' => $selected_color_id])
 			</div>
 			<div class="col-sm-12 col-lg-5">
-				<nav aria-label="breadcrumb">
-					<ol class="breadcrumb mb-1 bg-transparent p-0">
-					    <!-- <li class="breadcrumb-item"><a href="#">Home</a></li>
-					    <li class="breadcrumb-item"><a href="#">Boys</a></li>
-					    <li class="breadcrumb-item active"><a href="#">Boys Shirts</a></li> -->
-					   	<li class="breadcrumb-item"><a href="#">Home</a></li>
-					   	<li class="breadcrumb-item"><a href="#">{{$params['category']->type}}</a></li>
-					   	<li class="breadcrumb-item"><a href="#">{{$params['category']->age_group}}</a></li>
-					   	<li class="breadcrumb-item"><a href="#">{{$params['category']->gender}}</a></li>
-					   	<li class="breadcrumb-item active"><a href="#">{{$params['category']->sub_type}}</a></li>
-					<!-- @php if($params['category']->gender != 'Others') { @endphp
-					    <li class="breadcrumb-item"><a href="#">{{$params['category']->gender}}</a></li>
-					@php } else { @endphp
-						<li class="breadcrumb-item"><a href="#">{{$params['category']->type}}</a></li>
-					@php } @endphp
-
-					@php if($params['category']->sub_type != 'Others') { @endphp
-					    <li class="breadcrumb-item"><a href="#">{{$params['category']->sub_type}}</a></li>
-					@php } @endphp -->
-					</ol>
-				</nav>
+				@include('includes.breadcrumbs', ['params' => $params])
 				<div class="d-flex">
 					<div>
 							<h1 class="kss-title mb-2 mb-sm-2 text-gray font-weight-bold">{{$params['title']}}</h1>
 							@php
 						    foreach ($params['variant_group']->{$selected_color_id}->variants as $size_set) {
-						     	if($size_set->is_default) {
-						     		$list_price = $size_set->list_price;
-						     		$sale_price = $size_set->sale_price;
-						     		$discount_amt = $list_price - $sale_price;
-						     		$discount_per = round($discount_amt/$list_price * 100);
-						     	}
-						    } 
+							    if(isset($params['size'])) {
+								    if($params['size'] == $size_set->size->name && $size_set->inventory_available) {
+							        	$list_price = $size_set->list_price;
+							     		$sale_price = $size_set->sale_price;
+							        }
+						        }
+						        else {
+						        	if($size_set->is_default) {
+							     		$list_price = $size_set->list_price;
+							     		$sale_price = $size_set->sale_price;
+							     	}
+						        }
+						    }
+						    $discount_amt = $list_price - $sale_price;
+							$discount_per = round($discount_amt/$list_price * 100);
 
 						    if($list_price == $sale_price) { @endphp
 								<h4 id="kss-price" class="kss-price">₹{{$sale_price}}</h4>
@@ -136,7 +87,7 @@
 
 				<div class="d-flex justify-content-between mt-4">
 					<label class="">Select Size (Age Group)</label>
-					<a href="#sizeModal" class="font-weight-bold kss-link" data-toggle="modal" data-target="#sizeModal">Size Chart</a>
+					<!-- <a href="#sizeModal" class="font-weight-bold kss-link" data-toggle="modal" data-target="#sizeModal">Size Chart</a> -->
 
 					<div class="modal fade" id="sizeModal" tabindex="-1" role="dialog" aria-hidden="true">
 					  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -156,26 +107,6 @@
 
 				</div>
 				<div class="radio-wrap d-flex kss_sizes wo-image mb-4">
-				    <!-- <input class="d-none radio-input" type="radio" name="kss-sizes" id="18-24" checked="checked"/>
-				    <label class="radio-label" for="18-24" title="18-24 months">
-				      <div class="radio-option">18-24M</div>
-				    </label>
-				    <input class="d-none radio-input" type="radio" name="kss-sizes" id="1-2"/>
-				    <label class="radio-label" for="1-2" title="1-2 years">
-				      <div class="radio-option">1-2Y</div>
-				    </label>
-				    <input class="d-none radio-input" type="radio" name="kss-sizes" id="2-4" disabled="" />
-				    <label class="radio-label" for="2-4" title="2-4 years">
-				      <div class="radio-option">2-4Y</div>
-				    </label>
-				    <input class="d-none radio-input" type="radio" name="kss-sizes" id="4-8"/>
-				    <label class="radio-label" for="4-8" title="4-8 years">
-				      <div class="radio-option">4-8Y</div>
-				    </label>
-				     <input class="d-none radio-input" type="radio" name="kss-sizes" id="9-10"/>
-				    <label class="radio-label" for="9-10" title="9-10 years">
-				      <div class="radio-option">9-10Y</div>
-				    </label> -->
 				    @php
 				    foreach ($params['variant_group']->{$selected_color_id}->variants as $size_set) {
 				    	$disabled = "";
@@ -184,8 +115,13 @@
 			     		$sale_price = $size_set->sale_price;
 			     		$discount_amt = $list_price - $sale_price;
 			     		$discount_per = round($discount_amt/$list_price * 100);
+
+			     		$checked="";
+			     		if(isset($params['size']) && $params['size'] == $size_set->size->name && $size_set->inventory_available) {
+				        	$checked="checked";
+				        }
 				    	@endphp
-				    	<input class="d-none radio-input" type="radio" name="kss-sizes" id="size-{{$size_set->size->id}}" data-variant_id="{{$size_set->id}}" {{$disabled}} data-list_price="{{$list_price}}" data-sale_price="{{$sale_price}}" data-discount_per="{{$discount_per}}"/>
+				    	<input class="d-none radio-input" type="radio" name="kss-sizes" id="size-{{$size_set->size->id}}" {{$checked}} data-variant_id="{{$size_set->id}}" {{$disabled}} data-list_price="{{$list_price}}" data-sale_price="{{$sale_price}}" data-discount_per="{{$discount_per}}"/>
 					    <label class="radio-label" for="size-{{$size_set->size->id}}" title="{{$size_set->size->name}}">
 					      <div class="radio-option">{{$size_set->size->name}}</div>
 					    </label>
@@ -206,7 +142,7 @@
 								</button>
 							</div> -->
 							<div class="col-6 col-sm-6 col-md-6 col-xl-6 pl-1">
-								<button id="cd-add-to-cart" class="btn btn-primary btn-lg btn-block cd-add-to-cart" disabled>
+								<button id="cd-add-to-cart" class="btn btn-primary btn-lg btn-block cd-add-to-cart" @php if(!isset($params['size'])) { @endphp disabled @php } @endphp>
 									<div class="btn-label-initial"><i class="fas fa-shopping-cart"></i> Add to Bag</div>
 									<div class="btn-label-success"><i class="fas fa-arrow-right"></i> Go to Bag</div>
 									<div class="btn-icon"><i class="fas fa-circle-notch fa-spin fa-lg"></i></div>
@@ -264,28 +200,6 @@
 				    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
 				      	<div class="card-body pb-2 px-0">
 					     	<dl class="row">
-							  <!-- <dt class="col-sm-2"><label class="text-muted f-w-4">Format</label></dt>
-							  <dd class="col-sm-10">A description list is perfect for defining terms.</dd>
-
-							  <dt class="col-sm-2"><label class="text-muted f-w-4">Collar</label></dt>
-							  <dd class="col-sm-10">
-							    <p>Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.</p>
-							  </dd>
-
-							  <dt class="col-sm-2"><label class="text-muted f-w-4">Climate</label></dt>
-							  <dd class="col-sm-10">Etiam porta sem malesuada magna mollis euismod.</dd>
-
-							  <dt class="col-sm-2"><label class="text-muted f-w-4">Pattern</label></dt>
-							  <dd class="col-sm-10">Etiam porta sem malesuada magna mollis euismod.</dd>
-
-							  <dt class="col-sm-2"><label class="text-muted f-w-4">Sleeve</label></dt>
-							  <dd class="col-sm-10">Etiam porta sem malesuada magna mollis euismod.</dd>
-
-							  <dt class="col-sm-2"><label class="text-muted f-w-4">Gender</label></dt>
-							  <dd class="col-sm-10">Etiam porta sem malesuada magna mollis euismod.</dd>
-
-							  <dt class="col-sm-2"><label class="text-muted f-w-4">Material</label></dt>
-							  <dd class="col-sm-10">Etiam porta sem malesuada magna mollis euismod.</dd> -->
 
 							  <dt class="col-sm-2"><label class="text-muted f-w-4">Gender</label></dt>
 							  <dd class="col-sm-10">{{$params['additional_info']->gender}}</dd>
