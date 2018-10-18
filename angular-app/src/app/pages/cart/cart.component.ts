@@ -24,6 +24,7 @@ export class CartComponent implements OnInit {
   }
 
   ngOnInit() {
+    $('.ng-cart-loader').removeClass('cart-loader')
     if(sessionStorage.getItem('add_to_cart_clicked')){
       this.addToCartClicked();
       sessionStorage.removeItem('add_to_cart_clicked');
@@ -74,7 +75,7 @@ export class CartComponent implements OnInit {
   }
 
   fetchCartData(){
-    let url = 'http://localhost:8000/rest/anonymous/cart/get';
+    let url = this.appservice.apiUrl + '/rest/anonymous/cart/get';
     this.apiservice.request(url, 'get', {} ).then((response)=>{
       console.log("response ==>", response);
       this.cart = response;
