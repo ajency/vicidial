@@ -14,6 +14,8 @@ export class CartComponent implements OnInit {
   mobileNumberEntered = false;
   enterCoupon = false;
   cart : any;
+  showCartLoader = false;
+  sessionCheckInterval : any;
   constructor( private router: Router,
                private appservice : AppServiceService,
                private apiservice : ApiServiceService
@@ -22,7 +24,13 @@ export class CartComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getCartData();
+    if(sessionStorage.getItem('add_to_cart_clicked')){
+      this.addToCartClicked();
+      sessionStorage.removeItem('add_to_cart_clicked');
+    }
+    else{
+      this.getCartData();
+    }
   }
 
   ngAfterViewInit(){
@@ -32,6 +40,27 @@ export class CartComponent implements OnInit {
       console.log("calling getCartData function")
       self.getCartData();                       
     });
+    $('.cd-add-to-cart').on('click',function(){
+      self.addToCartClicked();
+    });
+  }
+
+  addToCartClicked(){
+    this.showCartLoader = true;
+    if(sessionStorage.getItem('cart_data')){
+      this.cart = JSON.parse(sessionStorage.getItem('cart_data'));
+      console.log("cart_data from sessionStorage==>", this.cart);
+    }
+    this.sessionCheckInterval = setInterval(()=>{
+      if(sessionStorage.getItem('addded_to_cart')){
+        if(sessionStorage.getItem('addded_to_cart') == "true")
+          this.fetchCartData();
+        else
+          this.showCartLoader = false;
+        sessionStorage.removeItem('addded_to_cart');
+        clearInterval(this.sessionCheckInterval);
+      }
+    },100)
   }
 
   getCartData(){
@@ -40,21 +69,27 @@ export class CartComponent implements OnInit {
       console.log("cart_data from sessionStorage==>", this.cart);
     }
     else{
-      let url = this.appservice.apiUrl+'/rest/anonymous/cart/get';
-      this.apiservice.request(url, 'get', {} ).then((response)=>{
-        console.log("response ==>", response);
-        this.cart = response;
-        // sessionStorage.setItem('cart_data', JSON.stringify(this.cart));
-      })
-      .catch((error)=>{
-        console.log("error ===>", error);
-        if(error.message == "Cart not found for this session"){
-          this.cart = {
-            items : []
-          }
-        }
-      })
+      this.fetchCartData()
     }
+  }
+
+  fetchCartData(){
+    let url = 'http://localhost:8000/rest/anonymous/cart/get';
+    this.apiservice.request(url, 'get', {} ).then((response)=>{
+      console.log("response ==>", response);
+      this.cart = response;
+      sessionStorage.setItem('cart_data', JSON.stringify(this.cart));
+      this.showCartLoader=false;
+    })
+    .catch((error)=>{
+      console.log("error ===>", error);
+      if(error.message == "Cart not found for this session"){
+        this.cart = {
+          items : []
+        }
+      }
+      this.showCartLoader=false;
+    })
   }
 
   modifyCart(item){

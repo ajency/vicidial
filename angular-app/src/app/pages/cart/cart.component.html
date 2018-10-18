@@ -1,6 +1,6 @@
 <div id="cd-shadow-layer"></div>
 
-<div *ngIf="cart" id="cd-cart" style="right: 0" class="angular-app">
+<div *ngIf="cart" id="cd-cart" style="right: 0" class="angular-app" [ngClass]="{'cart-loader' : showCartLoader}">
 	<div class="d-flex ">
 		<div class="pr-3 align-items-center">
 			<h3 class="modal-title font-weight-bold" >
@@ -142,9 +142,12 @@
 		</div>
 	</div>	
 
-	<div *ngIf="cart.items.length == 0">
-		SHOPPING BAG EMPTY <br/>
-		Please add items from your Whishlist
+	<div *ngIf="cart.items.length == 0" class="empty-cart text-center d-flex align-items-center justify-content-center flex-column">
+		<i class="fas fa-shopping-cart empty-cart__icon"></i>
+		<h4 class="py-4 mb-0">Your cart is currently empty</h4>
+		<button class="btn btn-primary btn-lg btn-pay d-inline-flex align-items-center justify-content-center">
+			<i class="kss_icon bag-icon-fill icon-sm"></i> Continue shopping
+		</button>
 	</div>
 
 
