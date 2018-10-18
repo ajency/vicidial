@@ -143,7 +143,7 @@
 							</div> -->
 							<div class="col-6 col-sm-6 col-md-6 col-xl-6 pl-1">
 								<button id="cd-add-to-cart" class="btn btn-primary btn-lg btn-block cd-add-to-cart" @php if(!isset($params['size'])) { @endphp disabled @php } @endphp>
-									<div class="btn-label-initial"><i class="fas fa-shopping-cart"></i> Add to Bag</div>
+									<div class="btn-label-initial d-flex align-items-center justify-content-center"><i class="kss_icon bag-icon-fill icon-sm"></i> Add to Bag</div>
 									<div class="btn-label-success"><i class="fas fa-arrow-right"></i> Go to Bag</div>
 									<div class="btn-icon"><i class="fas fa-circle-notch fa-spin fa-lg"></i></div>
 								</button>
