@@ -51,27 +51,18 @@
 					<div>
 							<h1 class="kss-title mb-2 mb-sm-2 text-gray font-weight-bold">{{$params['title']}}</h1>
 							@php
-						    foreach ($params['variant_group']->{$selected_color_id}->variants as $size_set) {
-							    if(isset($params['size'])) {
-								    if($params['size'] == $size_set->size->name && $size_set->inventory_available) {
-							        	$list_price = $size_set->list_price;
-							     		$sale_price = $size_set->sale_price;
-							        }
-						        }
-						        else {
-						        	if($size_set->is_default) {
-							     		$list_price = $size_set->list_price;
-							     		$sale_price = $size_set->sale_price;
-							     	}
-						        }
-						    }
-						    $discount_amt = $list_price - $sale_price;
-							$discount_per = round($discount_amt/$list_price * 100);
 
-						    if($list_price == $sale_price) { @endphp
-								<h4 id="kss-price" class="kss-price">₹{{$sale_price}}</h4>
+							if(isset($params['size'])) {
+							    $default_price = set_default_price($params['variant_group']->{$selected_color_id}->variants, $params['size']);
+					        }
+					        else {
+					        	$default_price = set_default_price($params['variant_group']->{$selected_color_id}->variants);
+					        }
+
+						    if($default_price['list_price'] == $default_price['sale_price']) { @endphp
+								<h4 id="kss-price" class="kss-price">₹{{$default_price['sale_price']}}</h4>
 							@php } else { @endphp
-								<h4 id="kss-price" class="kss-price">₹{{$sale_price}} <small class="kss-original-price text-muted">₹{{$list_price}}</small> <span class="kss-discount text-danger">{{$discount_per}}% OFF</span></h4>
+								<h4 id="kss-price" class="kss-price">₹{{$default_price['sale_price']}} <small class="kss-original-price text-muted">₹{{$default_price['list_price']}}</small> <span class="kss-discount text-danger">{{$default_price['discount_per']}}% OFF</span></h4>
 							@php } @endphp
 				
 					</div>
@@ -109,19 +100,14 @@
 				<div class="radio-wrap d-flex kss_sizes wo-image mb-4">
 				    @php
 				    foreach ($params['variant_group']->{$selected_color_id}->variants as $size_set) {
-				    	$disabled = "";
-				    	if(!$size_set->inventory_available) {$disabled = "disabled";}
-				    	$list_price = $size_set->list_price;
-			     		$sale_price = $size_set->sale_price;
-			     		$discount_amt = $list_price - $sale_price;
-			     		$discount_per = round($discount_amt/$list_price * 100);
-
-			     		$checked="";
-			     		if(isset($params['size']) && $params['size'] == $size_set->size->name && $size_set->inventory_available) {
-				        	$checked="checked";
+				    	if(isset($params['size'])) {
+						    $price_set = get_price_set($size_set, $params['size']);
+				        }
+				        else {
+				        	$price_set = get_price_set($size_set);
 				        }
 				    	@endphp
-				    	<input class="d-none radio-input" type="radio" name="kss-sizes" id="size-{{$size_set->size->id}}" {{$checked}} data-variant_id="{{$size_set->id}}" {{$disabled}} data-list_price="{{$list_price}}" data-sale_price="{{$sale_price}}" data-discount_per="{{$discount_per}}"/>
+				    	<input class="d-none radio-input" type="radio" name="kss-sizes" id="size-{{$size_set->size->id}}" {{$price_set['checked']}} data-variant_id="{{$size_set->id}}" {{$price_set['disabled']}} data-list_price="{{$price_set['list_price']}}" data-sale_price="{{$price_set['sale_price']}}" data-discount_per="{{$price_set['discount_per']}}"/>
 					    <label class="radio-label" for="size-{{$size_set->size->id}}" title="{{$size_set->size->name}}">
 					      <div class="radio-option">{{$size_set->size->name}}</div>
 					    </label>
