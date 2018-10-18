@@ -42,11 +42,11 @@ function copyFile(src, dest) {
   readStream.pipe(fs.createWriteStream(dest));
 }
 
-let assetsDir = path.resolve(__dirname, './dist/assets');
-let assetsDest = path.resolve(rootDir, 'public/assets');
-fs_extra.copy(assetsDir, assetsDest, function(error) {
-	if(error)
-		console.log("error in copying assets folder");
+// let assetsDir = path.resolve(__dirname, './dist/assets');
+// let assetsDest = path.resolve(rootDir, 'public/assets');
+// fs_extra.copy(assetsDir, assetsDest, function(error) {
+// 	if(error)
+// 		console.log("error in copying assets folder");
 
-	console.log("assets copied successfully");
-})
+// 	console.log("assets copied successfully");
+// })
