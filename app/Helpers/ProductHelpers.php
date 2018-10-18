@@ -58,3 +58,12 @@ function set_default_price($variants, $size = null){
         }
     }
 }
+
+//URL Generation
+function create_url($slugs){
+	$url = '';
+	foreach ($slugs as $slug) {
+		$url .= '/'.$slug;
+	}
+	return $url;
+}
