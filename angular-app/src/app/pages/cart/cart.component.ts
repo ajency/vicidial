@@ -76,6 +76,7 @@ export class CartComponent implements OnInit {
   }
 
   fetchCartData(){
+    this.showCartLoader = true;
     let url = this.appservice.apiUrl + '/rest/anonymous/cart/get';
     this.apiservice.request(url, 'get', {} ).then((response)=>{
       console.log("response ==>", response);
