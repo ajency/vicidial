@@ -43,6 +43,7 @@ export class CartComponent implements OnInit {
     });
     $('.cd-add-to-cart').on('click',function(){
       self.addToCartClicked();
+      sessionStorage.removeItem('add_to_cart_clicked');
     });
   }
 
