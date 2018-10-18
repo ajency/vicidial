@@ -1,0 +1,209 @@
+.stripe-bg{
+   background: url(../img/bg-stripe.jpg);
+   background-position: bottom;
+ }
+ .stripe-bg-top{
+   background: url(../img/bg-stripe-top.jpg);
+}
+.sketch-boy{
+    background: url(../img/sprite.png)no-repeat;
+    width: 110px;
+    height: 128px;
+    background-position: 7px -309px;
+    position: absolute;
+    top: 0px;
+}
+.sketch-girl{
+    background: url(../img/sprite.png) no-repeat;
+    background-position: -103px -291px;
+    position: absolute;
+    top: 0;
+    right: 0px;
+    width: 73px;
+    height: 138px;
+}
+.bg-bag{
+    background: url(../img/sprite.png) no-repeat;
+    background-position: -223px -291px;
+    top: 0;
+    right: 0;
+    width: 113px;
+    height: 158px;
+    float: right;
+    margin-top: 0px;
+     @media (min-width: 320px) and (max-width: 767.98px) {
+	 	margin-top: -170px;
+	}
+}
+.bg-gift{
+  background: url(../img/sprite.png) no-repeat;
+    background-position: -3px -491px;
+    top: 0;
+    right: 0;
+    width: 163px;
+    height: 158px;
+    float: right;
+    margin-top: 0;
+     @media (min-width: 320px) and (max-width: 767.98px) {
+        margin-top: -170px;
+    }
+}
+.bg-toy{
+    background: url(../img/sprite.png) no-repeat;
+    background-position: -163px -511px;
+    top: 0;
+    right: 0;
+    width: 133px;
+    height: 152px;
+    float: right;
+    margin-top: 0;
+     @media (min-width: 320px) and (max-width: 767.98px) {
+        margin-top: -170px;
+    }
+}
+.bg-left-overlay{
+	background: url(../img/diwali-bg.png) no-repeat;
+   background-position: -3px -1px;
+    position: absolute;
+	left: 0;
+    bottom: 0px;
+    width: 163px;
+    height: 348px;
+     @media (min-width: 320px) and (max-width: 767.98px) {
+	background-position: -3px -1px;
+    width: 93px;
+    height: 188px;
+    background-size: 190%;
+	}
+}
+
+.bg-right-overlay{
+	background: url(../img/diwali-bg.png) no-repeat;
+    position: absolute;
+    right: 0px !important;
+    bottom: 0px;
+    left: inherit;
+    background-position: -165px -1px;
+    width: 163px;
+    height: 348px;
+     @media (min-width: 320px) and (max-width: 767.98px) {
+    background-position: -83px -1px;
+    width: 93px;
+    height: 188px;
+    background-size: 190%;
+	}
+}
+.sketch-boy{
+    background: url(../img/sprite.png)no-repeat;
+    width: 110px;
+    height: 128px;
+    background-position: 7px -309px;
+    position: absolute;
+    top: 0px;
+}
+.gray-bg{
+    background:#fbfbfb;
+    position: relative;
+}
+.yellow-bg{
+	background:#FFEB64;
+	height:400px;
+	position: relative;
+	 @media (min-width: 320px) and (max-width: 767.98px) {
+	 	height:260px !important;
+	}
+
+
+	.diwali-banner{
+		height: 400px;
+		 @media (min-width: 320px) and (max-width: 767.98px) {
+		 	height:260px;
+		}
+	}
+}
+.light-bg{
+	background:#EFF3FF;
+}
+.beach{
+	position:relative;
+	overflow:hidden;
+	height:190px;
+	margin-top: -140px;
+	.sea-wave{
+		background: url(../img/sea.png);
+		width:140%;
+		height:190px;
+		position: absolute;
+		-webkit-animation: wave 5s;  /* Safari 4.0 - 8.0 */
+	    -webkit-animation-iteration-count: infinite; /* Safari 4.0 - 8.0 */
+	    animation: wave 5s;
+	    animation-iteration-count: infinite;
+	     @media (min-width: 320px) and (max-width: 767.98px) {
+		 	width:200%;
+		}
+	}
+}
+
+@-webkit-keyframes wave {
+    10% {left: 0px;}
+    30% {left: -200px;}
+    60% {left: -300px;}
+    90% {left: -200px;}
+    100% {left: 0px;}
+}
+
+@keyframes wave {
+   10% {left: 0px;}
+    30% {left: -200px;}
+    60% {left: -300px;}
+    90% {left: -200px;}
+    100% {left: 0px;}
+}
+
+.dotted-bg{
+	background: url(../img/dotted-bg.jpg) no-repeat;
+	height: 130px;
+    width: 90%;
+    position: absolute;
+    transform: rotate(-10deg);
+
+}
+.price-range{
+		background:#FFEB64;
+		width:100%;
+}
+ @media (min-width: 320px) and (max-width: 767.98px) {
+	.beach-wear{
+		img{
+			width:75px;
+		}
+	}
+}
+
+.diwali-lamp-1{
+    transition: all 0.5s ease;
+    -webkit-animation: moving 12s infinite;
+    animation: moving 12s infinite;
+}
+
+/*** Mobile Media Queries ***/
+
+@media (min-width: 320px) and (max-width: 767.98px) {
+    #kss-age{
+        .col-md-12{
+            padding: 0px;
+        }
+    }
+    .diwali-lamp-1{
+        width: 20%;
+        img{
+            width: 100%;
+        }
+    }
+    .diwali-lamp-2{
+        width: 20%;
+        img{
+            width: 100%;
+        }
+    }
+}
