@@ -30,7 +30,6 @@ $(' .prod-slides').slick({
         }
     }]
 });
-  loaded = false;
  // ------------------ Start Image Load ------------------//
 const lazy = () => {
     document.addEventListener('lazyloaded', (e) => {
