@@ -67,12 +67,16 @@
     &.kss_variants{
         .radio-label{
             border: 2px solid transparent;
+            &:hover{
+                color: #777;
+            }
         }
         .radio-input:checked+.radio-label{
+            color: #777;
             img {
                 box-shadow: 0 0 0 2px theme-color("primary");
             }  
-        } 
+        }
     }
     &.wo-image {
         .radio-label {

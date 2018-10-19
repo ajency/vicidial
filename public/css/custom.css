@@ -6415,8 +6415,12 @@ a.text-cancel:hover, a.text-cancel:focus {
   width: 54px; }
 .radio-wrap.kss_variants .radio-label {
   border: 2px solid transparent; }
-.radio-wrap.kss_variants .radio-input:checked + .radio-label img {
-  box-shadow: 0 0 0 2px #f9bc23; }
+  .radio-wrap.kss_variants .radio-label:hover {
+    color: #777; }
+.radio-wrap.kss_variants .radio-input:checked + .radio-label {
+  color: #777; }
+  .radio-wrap.kss_variants .radio-input:checked + .radio-label img {
+    box-shadow: 0 0 0 2px #f9bc23; }
 .radio-wrap.wo-image .radio-label {
   min-width: 100px;
   padding: 10px;
@@ -7814,7 +7818,7 @@ img {
       width: 30% !important; } }
 
 #cd-cart {
-  right: -500px;
+  right: -50%;
   background: #FFF;
   transition: right 0.5s ease; }
   @media screen and (prefers-reduced-motion: reduce) {
