@@ -7818,7 +7818,7 @@ img {
       width: 30% !important; } }
 
 #cd-cart {
-  right: -50%;
+  right: -100%;
   background: #FFF;
   transition: right 0.5s ease; }
   @media screen and (prefers-reduced-motion: reduce) {

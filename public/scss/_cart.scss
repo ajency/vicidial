@@ -86,7 +86,7 @@ $L : 1200px;
 
 }
 #cd-cart {
-    right: -50%;
+    right: -100%;
     background: #FFF;
     @include transition(right .5s ease);
     &.speed-in {
