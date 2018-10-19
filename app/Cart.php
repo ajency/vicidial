@@ -26,15 +26,23 @@ class Cart extends Model
     {
         // \Log::info($item);
         if (val_integer($item, self::ITEM_FIELDS)) {
-            $item                         = array_only($item, self::ITEM_FIELDS);
-            $cart_data = $this->cart_data;
+            $item                   = array_only($item, self::ITEM_FIELDS);
+            $cart_data              = $this->cart_data;
             $cart_data[$item["id"]] = ["id" => $item["id"], "quantity" => $item["quantity"]];
-            $this->cart_data = $cart_data;
+            $this->cart_data        = $cart_data;
             // \Log::info($this->cart_data);
         } else {
             return false;
         }
         return $this;
+    }
+
+    public function itemExists($item)
+    {
+        if (isset($this->cart_data[$item["id"]])) {
+            return true;
+        }
+        return false;
     }
 
     public function itemCount()

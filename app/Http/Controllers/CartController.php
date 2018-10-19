@@ -31,13 +31,19 @@ class CartController extends Controller
         $variant = Variant::where('odoo_id', $params['variant_id'])->first();
         $item    = $variant->getItemAttributes();
         if ($item) {
-            $cart->insertItem(["id" => $params['variant_id'], "quantity" => $params['variant_quantity']]);
-            // \Log::info($cart->cart_data);
+            $qty = $params['variant_quantity'];
+            if ($cart->itemExists($item)) {
+                $qty += $cart->cart_data[$item["id"]]["quantity"];
+            }
+
+            $cart->insertItem(["id" => $params['variant_id'], "quantity" => $qty]);
+            // print_r($qty);die();
             $cart->save();
             $message = "Item added successfully";
             $request->session()->put('active_cart_id', $cart->id);
         }
         $summary = $cart->getSummary();
+        $summary["quantity"] = $cart->cart_data[$item["id"]]["quantity"];
         return response()->json(['cart_count' => $cart->itemCount(), "message" => $message, "item" => $item, "summary" => $summary]);
     }
 
