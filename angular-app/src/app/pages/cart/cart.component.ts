@@ -46,6 +46,7 @@ export class CartComponent implements OnInit {
       self.getCartData();                       
     });
     $('.cd-add-to-cart').on('click',function(){
+      console.log("add to cart clicked");
       this.cartOpen = true;
       self.addToCartClicked();
       sessionStorage.removeItem('add_to_cart_clicked');
