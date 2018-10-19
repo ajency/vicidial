@@ -1,4 +1,4 @@
-<nav aria-label="breadcrumb">
+<nav aria-label="breadcrumb" class="d-none d-md-block">
 	<ol class="breadcrumb mb-1 bg-transparent p-0">
 	   	<li class="breadcrumb-item"><a href="#">Home</a></li>
 	@php foreach ($params['breadcrumb']['list'] as $item) { @endphp
