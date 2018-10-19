@@ -708,5 +708,6 @@
 
     </div>
   </div>
-</div><div class="overlay-fix" style="display:none;"> -->
+</div>-->
+<div class="overlay-fix" style="display:none;"> 
                <!--  </div> -->
