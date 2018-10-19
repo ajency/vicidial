@@ -138,7 +138,7 @@ export class CartComponent implements OnInit {
   }
 
   closeCart(){
-    this.cart = null;
+    // this.cart = null;
     this.appservice.closeCart();
   }
 
