@@ -26,6 +26,7 @@ export class CartComponent implements OnInit {
   ngOnInit() {
     $('.ng-cart-loader').removeClass('cart-loader')
     if(sessionStorage.getItem('add_to_cart_clicked')){
+      console.log("add to cart clicked");
       this.addToCartClicked();
       sessionStorage.removeItem('add_to_cart_clicked');
     }
@@ -47,8 +48,7 @@ export class CartComponent implements OnInit {
     });
   }
 
-  addToCartClicked(){
-    console.log("inside addToCartClicked");
+  addToCartClicked(){    
     this.showCartLoader = true;
     if(sessionStorage.getItem('cart_data')){
       this.cart = JSON.parse(sessionStorage.getItem('cart_data'));

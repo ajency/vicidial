@@ -25,7 +25,7 @@ $(document).ready(function(){
         
         // for angular app 
         sessionStorage.setItem( "add_to_cart_clicked", "true");
-        loadAngularApp();
+        openCart();
 
         //Show loader
         $('.cd-add-to-cart .btn-label-initial').addClass('d-none');
@@ -91,17 +91,24 @@ $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();
 
     jQuery("#cd-cart-trigger").click(function() {
-        // jQuery("#kss_cart").addClass("fixed-bottom");
-        loadAngularApp();
-                             
+      openCart();             
     });
 });
+
 
 //Add to cart Listing Page
 $('.select-size button').click(function() {
     //Add to cart
 });
 
+
+function openCart(){
+  loadAngularApp();
+  event.preventDefault();
+  $('#main-nav').removeClass('speed-in');
+  toggle_panel_visibility($('#cd-cart'), $('#cd-shadow-layer'), $('body'));
+  $("body").addClass("hide-scroll"); 
+}
 
 function set_cart_count() {
     //Check if cart count in Session storage
