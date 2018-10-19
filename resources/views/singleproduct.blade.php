@@ -119,7 +119,7 @@
 					
 					<div class="col-sm-12 col-md-12 col-12 mobile-fixed pb-2 ">
 						
-						<div class="row">
+						<!-- <div class="row"> -->
 							<!-- <div class="col-6 col-sm-6 col-md-6 col-xl-6 pr-1">
 								<button class="btn btn-outline-secondary btn-lg btn-block">
 									<div class="btn-label-initial"><i class="far fa-heart"></i> Save to Wishlist</div>
@@ -127,14 +127,14 @@
 									<div class="btn-icon"><i class="fas fa-circle-notch fa-spin fa-lg"></i></div>
 								</button>
 							</div> -->
-							<div class="col-6 col-sm-6 col-md-6 col-xl-6 pl-1">
+							<!-- <div class="col-6 col-sm-6 col-md-6 col-xl-6 pl-1"> -->
 								<button id="cd-add-to-cart" class="btn btn-primary btn-lg btn-block cd-add-to-cart" @php if(!isset($params['size'])) { @endphp disabled @php } @endphp>
 									<div class="btn-label-initial d-flex align-items-center justify-content-center"><i class="kss_icon bag-icon-fill icon-sm"></i> Add to Bag</div>
 									<div class="btn-label-success"><i class="fas fa-arrow-right"></i> Go to Bag</div>
 									<div class="btn-icon"><i class="fas fa-circle-notch fa-spin fa-lg"></i></div>
 								</button>
-							</div>
-						</div>
+							<!-- </div> -->
+						<!-- </div> -->
 					</div>
 				</div>
 
