@@ -24,7 +24,6 @@ class CartController extends Controller
 
     public function guestAddItem(Request $request)
     {
-        // \Log::info('enters guest_get_count function');
         $params  = $request->all();
         $id      = $request->session()->get('active_cart_id', false);
         $cart    = ($id) ? Cart::find($id) : new Cart;
@@ -35,9 +34,7 @@ class CartController extends Controller
             if ($cart->itemExists($item)) {
                 $qty += $cart->cart_data[$item["id"]]["quantity"];
             }
-
             $cart->insertItem(["id" => $params['variant_id'], "quantity" => $qty]);
-            // print_r($qty);die();
             $cart->save();
             $message = "Item added successfully";
             $request->session()->put('active_cart_id', $cart->id);

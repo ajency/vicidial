@@ -47,7 +47,11 @@ class Cart extends Model
 
     public function itemCount()
     {
-        return ($this->cart_data == null) ? 0 : count($this->cart_data);
+        $total = 0 ;
+        foreach ($this->cart_data as $key => $item) {
+            $total += $item["quantity"];
+        }
+        return $total;
     }
 
     public function getSummary()
