@@ -49,7 +49,7 @@ class CartController extends Controller
             abort(404, "Cart not found for this session");
         }
 
-        $items       = [];
+        $items = [];
         foreach ($cart->cart_data as $cart_item) {
             $variant = Variant::where('odoo_id', $cart_item['id'])->first();
             $items[] = $variant->getItemAttributes();
