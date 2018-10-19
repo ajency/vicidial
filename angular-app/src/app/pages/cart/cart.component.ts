@@ -48,6 +48,7 @@ export class CartComponent implements OnInit {
   }
 
   addToCartClicked(){
+    console.log("inside addToCartClicked");
     this.showCartLoader = true;
     if(sessionStorage.getItem('cart_data')){
       this.cart = JSON.parse(sessionStorage.getItem('cart_data'));
