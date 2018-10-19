@@ -16,6 +16,7 @@ export class CartComponent implements OnInit {
   cart : any;
   showCartLoader = false;
   sessionCheckInterval : any;
+  cartOpen = false;
   constructor( private router: Router,
                private appservice : AppServiceService,
                private apiservice : ApiServiceService
@@ -24,6 +25,7 @@ export class CartComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.cartOpen = true;
     $('.ng-cart-loader').removeClass('cart-loader')
     if(sessionStorage.getItem('add_to_cart_clicked')){
       console.log("add to cart clicked");
@@ -39,10 +41,12 @@ export class CartComponent implements OnInit {
     var self = this;
     console.log("ngAfterViewInit");
     $("#cd-cart-trigger").click(function() {
-      console.log("calling getCartData function")
+      console.log("calling getCartData function");
+      this.cartOpen = true;
       self.getCartData();                       
     });
     $('.cd-add-to-cart').on('click',function(){
+      this.cartOpen = true;
       self.addToCartClicked();
       sessionStorage.removeItem('add_to_cart_clicked');
     });
@@ -139,6 +143,7 @@ export class CartComponent implements OnInit {
 
   closeCart(){
     // this.cart = null;
+    this.cartOpen = false;
     this.appservice.closeCart();
   }
 
