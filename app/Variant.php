@@ -240,4 +240,9 @@ class Variant extends Model
         return $total;
 
     }
+
+    public function getDiscount()
+    {
+        return $this->getLstPrice() - $this->getSalePrice();
+    }
 }

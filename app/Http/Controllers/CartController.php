@@ -16,7 +16,7 @@ class CartController extends Controller
         $cart = Cart::find($id);
         if ($cart !== null) {
             // \Log::debug('cart = '.$cart);
-            return response()->json(['cart_count' => $cart->item_count()]);
+            return response()->json(['cart_count' => $cart->itemCount()]);
         } else {
             return abort('404', "Cart not found for this session");
         }
@@ -31,13 +31,14 @@ class CartController extends Controller
         $variant = Variant::where('odoo_id', $params['variant_id'])->first();
         $item    = $variant->getItemAttributes();
         if ($item) {
-            $cart->insert_item(["id" => $params['variant_id'], "quantity" => $params['variant_quantity']]);
+            $cart->insertItem(["id" => $params['variant_id'], "quantity" => $params['variant_quantity']]);
             // \Log::info($cart->cart_data);
             $cart->save();
             $message = "Item added successfully";
             $request->session()->put('active_cart_id', $cart->id);
         }
-        return response()->json(['cart_count' => $cart->item_count(), "message" => $message, "item" => $item]);
+        $summary = $cart->getSummary();
+        return response()->json(['cart_count' => $cart->itemCount(), "message" => $message, "item" => $item, "summary" => $summary]);
     }
 
     public function guestCartFetch(Request $request)
@@ -49,14 +50,12 @@ class CartController extends Controller
         }
 
         $items       = [];
-        $total_price = 0;
         foreach ($cart->cart_data as $cart_item) {
             $variant = Variant::where('odoo_id', $cart_item['id'])->first();
             $items[] = $variant->getItemAttributes();
-            $total_price += $variant->getSalePrice() * $cart_item["quantity"];
         }
-        $summary = ["total" => $total_price, "discount" => 0, "tax" => "", "coupon" => ""];
+        $summary = $cart->getSummary();
         $code    = ["code" => "NEWUSER", "applied" => true];
-        return response()->json(['cart_count' => $cart->item_count(), 'items' => $items, "summary" => $summary, "code" => $code]);
+        return response()->json(['cart_count' => $cart->itemCount(), 'items' => $items, "summary" => $summary, "code" => $code]);
     }
 }
