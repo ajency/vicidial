@@ -1,6 +1,6 @@
 <!-- <div class="seperator"> -->
-<!-- </div><div id="cd-shadow-layer"></div> -->
-
+<!-- </div> -->
+<div id="cd-shadow-layer"></div>
 <div id="cd-cart" class="cart-loader ng-cart-loader">
 	<!-- <div class="d-flex "> -->
 <!-- 		<div class="pr-3 align-items-center">
