@@ -1,25 +1,4 @@
 <?php
-
-//Function to insert category in DB
-function insert_category($elastic_name, $type, $slug){
-	$category = new Category;
-    $category->elastic_name = $elastic_name;
-    $category->type = $type;
-    $category->slug = $slug;
-    $category->save();
-}
-
-//Function to fetch Elastic category name from slug
-function fetch_elastic_category($slug, $type){
-	$category = Category::where('slug', '=', $slug)->where('type', '=', $type)->first();
-	if($category) {
-		$category->getElasticName();
-	}
-	else {
-		return false;
-	}
-}
-
 //Calculate Discount from price
 function calculate_discount($list_price, $sale_price){
 	$discount_amt = $list_price - $sale_price;

@@ -92,6 +92,11 @@ $(document).ready(function(){
     });
 });
 
+//Add to cart Listing Page
+$('.select-size button').click(function() {
+    //Add to cart
+});
+
 
 function set_cart_count() {
     //Check if cart count in Session storage

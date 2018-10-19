@@ -23,7 +23,8 @@
         "files": [
             "app/Helpers/ElasticSearch.php",
             "app/Helpers/Helpers.php",
-            "app/Helpers/ProductHelpers.php"
+            "app/Helpers/ProductHelpers.php",
+            "app/Helpers/CategoryHelpers.php"
         ],
         "classmap": [
             "database/seeds",
