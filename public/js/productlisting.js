@@ -10,5 +10,8 @@ $(".select-size input[type=radio]").change(function(evt){
     buttn.removeClass("disabled");
     buttn.prop("disabled", false);
     buttn.addClass("cd-add-cart");
-    buttn.text("Add To Cart");
+    buttn.addClass("align-items-center");
+    buttn.addClass("d-flex");
+    buttn.addClass("justify-content-center");
+    buttn.html('<i class="kss_icon bag-icon-fill icon-sm"></i> Add To Bag');
 });
