@@ -28,6 +28,11 @@ class CreateSEO
                 $params = $this->product($request->root(), $request->url(), $request->route()->parameters());
                 $request->attributes->add(['params' => $params]);
                 break;
+
+            default:
+                $params = $this->defaultseo($request->root(), $request->url());
+                $request->attributes->add(['params' => $params]);
+                break;
         }
         return $next($request);
     }
@@ -91,5 +96,23 @@ class CreateSEO
         //Twitter::setUrl($url);
 
         return $params;
+    }
+
+    public function defaultseo(string $domain, string $url) {
+        SEOMeta::setTitle('Online shopping for kids wear and fashion in India - KidSuperStore.in', false);
+        SEOMeta::setDescription('Kidsuperstore.in: Online shopping site for kids wear and fashion in India. Buy Shoes, Clothing, Dresses and Accessories for Boys, Girls, Toddlers, Juniors and Infants. Shipping | Cash on Delivery | 30 days return.');
+        //SEOMeta::setCanonical($url);
+        $keywords = ['online shopping for kids', 'online shopping', 'online shopping sites', 'online shopping india', 'india shopping', 'online shopping site', 'kss', 'india shopping online', 'buy online', 'kids wear', 'kids clothing', 'kids fashion', 'kids accessories', 'kidsuperstore', 'kidsuperstore.in', 'kid super store'];
+        SEOMeta::setKeywords($keywords);
+
+        OpenGraph::setTitle('Online shopping for kids wear and fashion in India - KidSuperStore.in', false);
+        OpenGraph::setDescription('Online shopping store in India for Shoes, Clothing, Dresses, Accessories for Kids. | Cash on Delivery | 30 days return.');
+        //OpenGraph::addImage($domain.'/img/logo-kss.png');
+        //OpenGraph::setUrl($url);
+
+        Twitter::setTitle('Online shopping for kids wear and fashion in India - KidSuperStore.in', false);
+        Twitter::setDescription('Online shopping store in India for Shoes, Clothing, Dresses, Accessories for Kids. | Cash on Delivery | 30 days return.');
+        //Twitter::addImage($domain.'/img/logo-kss.png');
+        //Twitter::setUrl($url);
     }
 }

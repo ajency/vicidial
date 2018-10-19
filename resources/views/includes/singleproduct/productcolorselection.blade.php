@@ -10,8 +10,9 @@
 		    	if($color_id == $selected_color_id) {$checked="checked";}
 	    		foreach ($color_set->images as $image_set) {
 			     	if($image_set->is_primary) {$selected_image = $image_set->res->desktop->small_thumb;}
-			     } @endphp
-			    <input class="d-none radio-input" type="radio" name="kss-variants" id="color-{{$color_id}}" {{$checked}} @php if($checked == ''){ @endphp onclick="location.href='/{{$params["slug_name"]}}/{{$params["slug_style"]}}/{{$color_set->slug_color}}/buy'" @php } @endphp/>
+			     }
+			     $url = create_url([$params["slug_name"], $params["slug_style"], $color_set->slug_color, 'buy']); @endphp
+			    <input class="d-none radio-input" type="radio" name="kss-variants" id="color-{{$color_id}}" {{$checked}} @php if($checked == ''){ @endphp onclick="location.href='{{$url}}'" @php } @endphp/>
 				<label class="radio-label" for="color-{{$color_id}}" data-toggle="tooltip" data-placement="bottom" title="{{$color_set->name}}">
 					<img src="{{$selected_image}}" alt="">
 					<div class="radio-option mt-1">{{$color_set->name}}</div>

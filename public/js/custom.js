@@ -510,19 +510,7 @@ $(document).ready(function() {
         $('.recent-search').addClass("d-none");
     });
 });
-$(".select-size input[type=radio]").change(function(evt){
-    var buttn = $(this).closest('.select-size').find("button");
-    buttn.removeClass("disabled");
-    buttn.addClass("cd-add-cart");
-    buttn.text("Add To Cart");
-});
-  $('.select-size button').click(function() {
-          $(".cart-counter").removeClass('d-none'), 100;
-        $(".cart-counter").addClass('d-block'), 100;
 
-         $('#output').html(function(i, val) { return val*1+1 });
-
-    });
 $('.btn-pay').click(function() {
     $("body").removeClass("hide-scroll");
     $('#checkout-flow2').modal('hide');
