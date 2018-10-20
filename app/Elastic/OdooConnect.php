@@ -15,10 +15,10 @@ class OdooConnect
 
     public function __construct()
     {
-        $this->connections = config('esconfig.connections');
-        $this->URL         = config('esconfig.url');
-        $this->DB          = config('esconfig.db');
-        $this->limit       = intval(config('esconfig.limit'));
+        $this->connections = config('odoo.connections');
+        $this->URL         = config('odoo.url');
+        $this->DB          = config('odoo.db');
+        $this->limit       = intval(config('odoo.limit'));
 
         $this->common = Ripcord::client("{$this->URL}/xmlrpc/2/common");
         $this->models = Ripcord::client("{$this->URL}/xmlrpc/2/object");
@@ -41,7 +41,7 @@ class OdooConnect
     public function defaultExec($model, $method, $filters, $attributes = [])
     {
         if (!isset($attributes['limit']) && $method != 'read') {
-            $attributes['limit'] = config('esconfig.limit');
+            $attributes['limit'] = config('odoo.limit');
         }
 
         \Log::info($filters);
@@ -60,7 +60,7 @@ class OdooConnect
     public function multiExec($model, $method, $filters, $attributes = [])
     {
         if (!isset($attributes['limit']) && $method != 'read') {
-            $attributes['limit'] = config('esconfig.limit');
+            $attributes['limit'] = config('odoo.limit');
         }
 
         \Log::info($filters);
