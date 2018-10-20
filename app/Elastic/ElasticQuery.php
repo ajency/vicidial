@@ -310,17 +310,11 @@ class ElasticQuery
         return $this;
     }
 
-    public function createCreateIndexParams(string $index, array $mappings = [])
+    public function createIndex(string $index, array $mappings = [])
     {
         $this->params = [
             'index' => $index,
-            "body"  => [
-                "mappings" => [
-                    "_doc" => [
-                        "properties" => $mappings,
-                    ],
-                ],
-            ],
+            "body"  => $mappings,
         ];
         return $this->elastic_client->indices()->create($this->params);
     }
