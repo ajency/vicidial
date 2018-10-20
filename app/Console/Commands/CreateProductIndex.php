@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use App\Elastic\ElasticQuery;
+use Illuminate\Console\Command;
 
 class CreateProductIndex extends Command
 {
@@ -12,7 +12,7 @@ class CreateProductIndex extends Command
      *
      * @var string
      */
-    protected $signature = 'elastic:create:product';
+    protected $signature = 'elastic:create_index {index}';
 
     /**
      * The console command description.
@@ -38,13 +38,14 @@ class CreateProductIndex extends Command
      */
     public function handle()
     {
-        $path = config_path()."/indexes/product.json";
-        $params = json_decode(file_get_contents($path), true);
-        $q = new ElasticQuery();
-        $response = $q->createIndex(config("elastic.prefix")."products", $params);
-        if ($response["acknowledged"])
-            echo "Index ".$response["index"]." created Successfully";
-        else{
+        $index    = $this->argument('index');
+        $path     = config_path() . "/indexes/{$index}.json";
+        $params   = json_decode(file_get_contents($path), true);
+        $q        = new ElasticQuery();
+        $response = $q->createIndex(config("elastic.prefix") . $index, $params);
+        if ($response["acknowledged"]) {
+            $this->info("Index: " . $response["index"] . " created Successfully");
+        } else {
             print_r($response);
         }
     }
