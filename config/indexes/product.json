@@ -1,0 +1,148 @@
+{
+  "mappings": {
+    "_doc": {
+      "properties": {
+        "id": {
+          "type": "float"
+        },
+        "type": {
+          "type": "keyword"
+        },
+        "search_result_data": {
+          "type": "nested",
+          "properties": {
+            "product_id": {
+              "type": "long"
+            },
+            "product_title": {
+              "type": "text"
+            },
+            "product_slug": {
+              "type": "keyword"
+            },
+            "product_style": {
+              "type": "keyword"
+            },
+            "product_description": {
+              "type": "text"
+            },
+            "product_color_slug": {
+              "type": "keyword"
+            },
+            "product_color_html": {
+              "type": "keyword"
+            }
+          }
+        },
+        "search_data": {
+          "type": "nested",
+          "properties": {
+            "full_text": {
+              "type": "text"
+            },
+            "string_facet": {
+              "type": "nested",
+              "properties": {
+                "facet_name": {
+                  "type": "keyword"
+                },
+                "facet_value": {
+                  "type": "keyword"
+                }
+              }
+            },
+            "number_facet": {
+              "type": "nested",
+              "properties": {
+                "facet_name": {
+                  "type": "keyword"
+                },
+                "facet_value": {
+                  "type": "long"
+                }
+              }
+            },
+            "boolean_facet": {
+              "type": "nested",
+              "properties": {
+                "facet_name": {
+                  "type": "keyword"
+                },
+                "facet_value": {
+                  "type": "boolean"
+                }
+              }
+            },
+            "attributes": {
+              "type": "nested",
+              "properties": {
+                "attribute_name": {
+                  "type": "keyword"
+                },
+                "attribute_value": {
+                  "type": "text"
+                }
+              }
+            },
+            "full_text_boosted": {
+              "type": "text"
+            }
+          }
+        },
+        "number_sort": {
+          "type": "nested",
+          "properties": {
+            "variant_lst_price": {
+              "type": "double"
+            },
+            "variant_sale_price": {
+              "type": "double"
+            },
+            "variant_discount_percent": {
+              "type": "double"
+            },
+            "variant_discount": {
+              "type": "double"
+            }
+          }
+        },
+        "string_sort": {
+          "type": "nested",
+          "properties": {
+            "product_name": {
+              "type": "keyword"
+            }
+          }
+        },
+        "scores": {
+          "type": "nested"
+        },
+        "category": {
+          "type": "nested",
+          "properties": {
+            "direct_parents": {
+              "type": "keyword"
+            },
+            "all_parents": {
+              "type": "keyword"
+            },
+            "paths": {
+              "type": "text"
+            }
+          }
+        },
+        "category_scores": {
+          "type": "nested",
+          "properties": {
+            "number_of_impressions": {
+              "type": "long"
+            },
+            "number_of_orders": {
+              "type": "long"
+            }
+          }
+        }
+      }
+    }
+  }
+}
