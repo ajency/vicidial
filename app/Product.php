@@ -137,4 +137,30 @@ class Product
             }
         }
     }
+
+    public static function getVariantInventory(int $variant_id)
+    {
+        $odoo          = new OdooConnect;
+        $filters       = [["product_id", "=", $variant_id]];
+        $inventoryData = $odoo->multiExec('stock.quant', 'search_read', [$filters], ["fields" => config("product.inventory_fields"), "limit" => 100]);
+
+        $inventory = collect();
+        foreach ($inventoryData as $connectionData) {
+
+            foreach ($connectionData as $invtry) {
+
+                $temp = [
+                    "warehouse_id" => $invtry["warehouse_id"][0],
+                    "warehouse"    => $invtry["warehouse_id"][1],
+                    "location_id"  => $invtry["location_id"][0],
+                    "location"     => $invtry["location_id"][1],
+                    "quantity"     => $invtry["quantity"],
+
+                ];
+                $inventory->push($temp);
+            }
+        }
+
+        return $inventory;
+    }
 }
