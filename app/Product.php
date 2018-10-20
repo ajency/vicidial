@@ -4,6 +4,7 @@ namespace App;
 use App\Elastic\ElasticQuery;
 use App\Elastic\OdooConnect;
 use App\Jobs\CreateProductJobs;
+use App\Variant;
 
 class Product
 {
@@ -73,13 +74,24 @@ class Product
         $variantsData = $odoo->defaultExec("product.product", 'read', [$variant_ids], ['fields' => config('product.variant_fields')]);
         foreach ($variantsData as $variantData) {
             $attributeValues = $odoo->defaultExec('product.attribute.value', 'read', [$variantData['attribute_value_ids']], ['fields' => config('product.attribute_fields')]);
-            $variants->push(sanitiseVariantData($variantData, $attributeValues));
+            $sanitisedData = sanitiseVariantData($variantData, $attributeValues);
+            self::storeVariantData($sanitisedData,$productData);
+            $variants->push($sanitisedData);
         }
         $colorvariants = $variants->groupBy('variant_color_id');
         foreach ($colorvariants as $colorVariantData) {
             $products->push(buildProductIndexFromOdooData($productData, $colorVariantData));
         }
         return $products;
+    }
+
+    public static function storeVariantData($variant,$product){
+        $object = new Variant;
+        $object->elastic_id = $product['product_id'] . '.' . $variant['product_color_id'];
+        $object->odoo_id = $variant['variant_id'];
+        $object->product_id = $product['product_id'];
+        $object->color_id = $variant['product_color_id'];
+        $object->save();
     }
 
     public static function bulkIndexProducts($products)
