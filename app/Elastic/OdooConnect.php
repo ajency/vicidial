@@ -67,7 +67,7 @@ class OdooConnect
         \Log::info($attributes);
         $data = collect();
         foreach ($this->connections as $connection) {
-            $data->put($connection['username'], collect($this->models->execute_kw(
+            $data->put($connection['username'], $this->models->execute_kw(
                 $this->DB,
                 $connection['user_id'],
                 $connection['password'],
