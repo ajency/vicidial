@@ -73,7 +73,7 @@ class OdooConnect
                 $connection['password'],
                 $model, $method, $filters, $attributes
             ));
-            \Log::info('odoo data from ' . $model . ' with user ' . $connection['username'] . ': ' . $data[$connection['username']]);
+            \Log::info('odoo data from ' . $model . ' with user ' . $connection['username'] . ': ' . collect($data[$connection['username']]));
         }
         return $data;
     }
