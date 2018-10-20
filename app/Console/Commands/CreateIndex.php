@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use App\Elastic\ElasticQuery;
 use Illuminate\Console\Command;
 
-class CreateProductIndex extends Command
+class CreateIndex extends Command
 {
     /**
      * The name and signature of the console command.
