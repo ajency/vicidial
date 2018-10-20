@@ -314,15 +314,7 @@ class ElasticQuery
     {
         $this->params = [
             'index' => $index,
-            // "body"  => [
-            //     "mappings" => [
-            //         "_doc" => [
-            //             "properties" => $mappings,
-            //         ],
-            //     ],
-            // ],
             "body"  => $mappings,
-            // ],
         ];
         return $this->elastic_client->indices()->create($this->params);
     }

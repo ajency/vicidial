@@ -19,7 +19,7 @@ class CreateIndex extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Creates an Elasticsearch Index with the name argument and JSON as saved in config/indexes';
 
     /**
      * Create a new command instance.
