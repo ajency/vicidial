@@ -47,7 +47,7 @@ function sanitiseProductData($odooData)
     return $index;
 }
 
-function sanitiseVariantData($odooData, $attributeData)
+function sanitiseVariantData($odooData, $attributeData,$inventoryData)
 {
     $variantData = [
         'variant_id'             => $odooData['id'],
@@ -59,6 +59,7 @@ function sanitiseVariantData($odooData, $attributeData)
         'variant_product_own'    => $odooData['product_own'],
         'variant_style_no'       => $odooData['style_no'],
         'variant_active'         => $odooData['active'],
+        'variant_availability'   => $inventoryData['availability'],
     ];
     $variantData['variant_discount']         = $odooData['lst_price'] - $odooData['sale_price'];
     $variantData['variant_discount_percent'] = ($odooData['lst_price'] > 0) ? $variantData['variant_discount'] / $odooData['lst_price'] * 100 : 0;

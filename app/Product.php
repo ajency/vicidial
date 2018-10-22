@@ -71,9 +71,10 @@ class Product
         $odoo         = new OdooConnect;
         $variants     = collect();
         $variantsData = $odoo->defaultExec("product.product", 'read', [$variant_ids], ['fields' => config('product.variant_fields')]);
+        $variantInventory = self::getVariantInventory($variant_ids); //call prasad's function here
         foreach ($variantsData as $variantData) {
             $attributeValues = $odoo->defaultExec('product.attribute.value', 'read', [$variantData['attribute_value_ids']], ['fields' => config('product.attribute_fields')]);
-            $sanitisedData   = sanitiseVariantData($variantData, $attributeValues);
+            $sanitisedData   = sanitiseVariantData($variantData, $attributeValues, $variantInventory[$variantData['id']]);
             self::storeVariantData($sanitisedData, $productData);
             $variants->push($sanitisedData);
         }
@@ -138,6 +139,19 @@ class Product
         }
     }
 
+    public static function fetchProductImages(int $product_id)
+    {
+        $odoo           = new OdooConnect;
+        $product        = $odoo->defaultExec('product.template', 'read', [$product_id], ["fields" => ["images"]]);
+        $product_images = $odoo->defaultExec("product.image", "read", [$product[0]["images"]], ["fields" => ["image", "color_variant"]]);
+        $images         = collect();
+        foreach ($product_images as $image) {
+            $temp = ["image" => $image["image"], "color" => $image["color_variant"][1]];
+            $images->push($temp);
+        }
+        return $images;
+    }
+
     public static function getVariantInventory(array $variant_ids)
     {
         $odoo          = new OdooConnect;
@@ -157,3 +171,4 @@ class Product
     }
 
 }
+

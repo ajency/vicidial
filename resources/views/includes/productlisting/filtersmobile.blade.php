@@ -33,11 +33,11 @@
     <div class="fixed-bottom d-block d-md-none">
         <div class="row no-gutters">
             <div class="col-6 text-center b-r">
-              <button  data-toggle="modal" data-target="#kss_sort" type="button" class="btn btn-lg btn-block btn-link text-dark mt-1 mb-1">Sort</button>
+              <button  data-toggle="modal" data-target="#kss_sort" type="button" class="btn btn-lg btn-block btn-link text-dark mt-1 mb-1"><i class="fa-sort-amount-down fas text-secondary"></i> Sort</button>
   
             </div>
             <div class="col-6 text-center">
-                <button id="filter" type="button" class=" btn btn-lg btn-block btn-link text-dark mt-1 mb-1">Filter</button>
+                <button id="filter" type="button" class=" btn btn-lg btn-block btn-link text-dark mt-1 mb-1"><i class="fa-filter fas text-secondary"></i> Filter</button>
             </div>
         </div>
     </div>

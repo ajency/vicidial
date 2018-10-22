@@ -82,7 +82,7 @@ return [
             'product' => [
                 'product_active',
             ],
-            'variant' => ['variant_product_own', 'variant_active'],
+            'variant' => ['variant_product_own', 'variant_active','variant_availability'],
         ],
         "number_facet"  => [
             'product' => ['product_id'],

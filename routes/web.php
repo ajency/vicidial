@@ -15,6 +15,10 @@ Route::get('/rest/anonymous/cart/count', 'CartController@guestGetCount');
 Route::post('/rest/anonymous/cart/insert', 'CartController@guestAddItem');
 Route::get('/rest/anonymous/cart/get', 'CartController@guestCartFetch');
 
+Route::get('/shop', 'ListingController@shop')->name('shoplisting');
+
+Route::get('/shop/{static_page}', 'ShopStaticController@index')->name('shopstatic');
+
 Route::middleware(['create-seo:home'])->group(function () {
     Route::get('/', 'HomeController@index')->name('home');
 });

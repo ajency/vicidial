@@ -30,7 +30,6 @@ $(' .prod-slides').slick({
         }
     }]
 });
-  loaded = false;
  // ------------------ Start Image Load ------------------//
 const lazy = () => {
     document.addEventListener('lazyloaded', (e) => {
@@ -150,7 +149,6 @@ $(".navbar-collapse").mmenu({
     //if you change this breakpoint in the style.css file (or _layout.scss if you use SASS), don't forget to update this value as well
     var $L = 1200,
         $menu_navigation = $('#main-nav'),
-        $cart_trigger = $('#cd-cart-trigger'),
         $cancel_trigger = $('.cancel-trigger'),
         $hamburger_icon = $('#cd-hamburger-menu'),
         $lateral_cart = $('#cd-cart'),
@@ -163,14 +161,7 @@ $(".navbar-collapse").mmenu({
         $lateral_cart.removeClass('speed-in');
         toggle_panel_visibility($menu_navigation, $shadow_layer, $('body'));
     });
-    //open cart
-    $cart_trigger.on('click', function(event) {
-        event.preventDefault();
-        //close lateral menu (if it's open)
-        $menu_navigation.removeClass('speed-in');
-        toggle_panel_visibility($lateral_cart, $shadow_layer, $('body'));
-        $("body").addClass("hide-scroll");
-    });
+    
     $cancel_trigger.on('click', function(event) {
         event.preventDefault();
         //close lateral menu (if it's open)

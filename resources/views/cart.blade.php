@@ -1,7 +1,7 @@
 <!-- <div class="seperator"> -->
-<!-- </div><div id="cd-shadow-layer"></div> -->
-
-<div id="cd-cart">
+<!-- </div> -->
+<div id="cd-shadow-layer"></div>
+<div id="cd-cart" class="cart-loader ng-cart-loader">
 	<!-- <div class="d-flex "> -->
 <!-- 		<div class="pr-3 align-items-center">
 			<h3 class="modal-title font-weight-bold" >
@@ -20,7 +20,7 @@
             </button>
 	  	</div> -->
 	<!-- </div> -->
-	<app-root id="angular-app"></app-root>
+	<app-root id="angular-app" class="h-100"></app-root>
 </div>
 	<!-- <hr class="mb-0">
 	
@@ -708,5 +708,6 @@
 
     </div>
   </div>
-</div><div class="overlay-fix" style="display:none;"> -->
+</div>-->
+<div class="overlay-fix" style="display:none;"> 
                <!--  </div> -->
