@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+
 use App\Product;
 use App\ProductColor;
 use Illuminate\Bus\Queueable;
@@ -9,6 +10,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use App\Product;
 
 class FetchProductImages implements ShouldQueue
 {
@@ -32,7 +34,6 @@ class FetchProductImages implements ShouldQueue
      */
     public function handle()
     {
-
         $prod_images = Product::fetchProductImages($this->productId);
         $extension   = "jpg";
 
@@ -67,6 +68,7 @@ class FetchProductImages implements ShouldQueue
             $pc->mapImage($image_id, $type);
             \Storage::disk('local')->delete($subfilepath);
         }
+
 
     }
 }

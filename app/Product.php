@@ -6,8 +6,10 @@ use App\Elastic\OdooConnect;
 use App\Facet;
 use App\Jobs\CreateProductJobs;
 use App\Jobs\FetchProductImages;
-use App\ProductColor;
 use App\Variant;
+use App\ProductColor;
+use App\Facet;
+use DB;
 
 class Product
 {
@@ -174,6 +176,7 @@ class Product
         return $images;
     }
 
+
     public static function getVariantInventory(array $variant_ids)
     {
         $odoo          = new OdooConnect;
@@ -271,6 +274,7 @@ class Product
 
             FetchProductImages::dispatch($product->product_id)->onQueue('process_product_images'); // add it to queue
         }
+
     }
 
 }
