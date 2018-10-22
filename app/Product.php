@@ -5,8 +5,9 @@ use App\Elastic\ElasticQuery;
 use App\Elastic\OdooConnect;
 use App\Facet;
 use App\Jobs\CreateProductJobs;
-use App\ProductColor;
+use App\Jobs\FetchProductImages;
 use App\Variant;
+use App\ProductColor;
 
 class Product
 {
@@ -173,6 +174,7 @@ class Product
         return $images;
     }
 
+
     public static function getVariantInventory(array $variant_ids)
     {
         $odoo          = new OdooConnect;
@@ -257,4 +259,19 @@ class Product
         }
         return false;
     }
+    public static function getNoImageProducts()
+    {
+        $products = Variant::leftJoin('fileupload_mapping', function($join)
+            {
+                $join->on('variants.id', '=', 'fileupload_mapping.object_id');
+                $join->where('fileupload_mapping.object_type', '=', "App\Variant");
+            })->where('fileupload_mapping.id', null)->select('variants.product_id')->distinct()->get();
+        foreach($products as $product) {
+            echo "product==".$product->product_id."\n";
+
+            FetchProductImages::dispatch($product->product_id)->onQueue('process_product_images');// add it to queue
+        }
+        // print_r($productIds);
+    }
+
 }

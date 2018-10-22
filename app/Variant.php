@@ -29,7 +29,7 @@ class Variant extends Model
     {
 
         $model = parent::newFromBuilder($attributes, $connection);
-        $model->fetchElasticData();
+        $model->fetchElasticData();  // locally to comment for queu job 'process_product_images'
         return $model;
     }
 
