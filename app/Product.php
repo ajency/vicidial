@@ -138,29 +138,35 @@ class Product
         }
     }
 
-    public static function getVariantInventory(int $variant_id)
+    public static function getVariantInventory(array $variant_ids)
     {
         $odoo          = new OdooConnect;
-        $filters       = [["product_id", "=", $variant_id]];
+        $filters       = [["product_id", "in", $variant_ids]];
         $inventoryData = $odoo->multiExec('stock.quant', 'search_read', [$filters], ["fields" => config("product.inventory_fields"), "limit" => config("product.inventory_max")]);
-
-        $inventory = collect();
+        $inventory     = [];
         foreach ($inventoryData as $connectionData) {
-
             foreach ($connectionData as $invtry) {
-
                 $temp = [
-                    "warehouse_id" => $invtry["warehouse_id"][0],
-                    "warehouse"    => $invtry["warehouse_id"][1],
-                    "location_id"  => $invtry["location_id"][0],
-                    "location"     => $invtry["location_id"][1],
-                    "quantity"     => $invtry["quantity"],
-
+                    "warehouse" => $invtry["warehouse_id"][1],
+                    "quantity"  => intval($invtry["quantity"]),
                 ];
-                $inventory->push($temp);
+                $inventory[$invtry["product_id"][0]]["inventory"][] = $temp;
             }
         }
-
-        return $inventory;
+        $final = [];
+        foreach ($inventory as $key => $variant) {
+            $ret = [
+                "availability" => false,
+                "inventory"    => $variant["inventory"],
+            ];
+            foreach ($variant["inventory"] as $invntry) {
+                if ($invntry > 0) {
+                    $ret["availability"] = true;
+                    break;
+                }
+            }
+            $final[$key] = $ret;
+        }
+        return $final;
     }
 }
