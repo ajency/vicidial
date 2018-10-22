@@ -9,12 +9,12 @@ var gulp = require('gulp'),
     // browserSync = require('browser-sync').create()
 
 // Minifies JS
-// gulp.task('scripts', function(){
-//     return gulp.src(['./themes/kss/static/js/bootstrap.min.js', './themes/kss/static/js/jquery.fancybox.js', './themes/kss/static/js/slick.min.js', './themes/kss/static/js/jquery.mmenu.all.js', './themes/kss/static/js/jquery.mousewheel.min.js', './themes/kss/static/js/lightgallery-all.min.js', './themes/kss/static/js/lazysizes.min.js', './themes/kss/static/js/jquery.autocomplete.js'])
-//     .pipe(uglify())
-//     .pipe(concat('combine.js'))
-//     .pipe(gulp.dest('./themes/kss/static/js'))
-// });
+gulp.task('scripts', function(){
+    return gulp.src(['public/js/bootstrap.min.js', 'public/js/jquery.fancybox.js', 'public/js/slick.min.js', 'public/js/jquery.mmenu.all.js', 'public/js/jquery.mousewheel.min.js', 'public/js/lightgallery-all.min.js', 'public/js/lazysizes.min.js', 'public/js/jquery.autocomplete.js'])
+    .pipe(uglify())
+    .pipe(concat('combine.js'))
+    .pipe(gulp.dest('public/js'))
+});
 
 /*==========  Minify and concat different styles files  ==========*/
 
@@ -59,5 +59,5 @@ gulp.task('css', function(){
 gulp.task('watch', function() {
     gulp.watch(['public/scss/*.scss'], ['sass']);
     gulp.watch(['public/css/hamburgers.css', 'public/css/jquery.fancybox.css', 'public/css/jquery.mmenu.all.css', 'public/css/lightgallery.css', 'public/css/xzoom.css', 'public/css/custom.css'], ['css']);
-    // gulp.watch(['./themes/kss/static/js/bootstrap.min.js', './themes/kss/static/js/jquery.fancybox.js', './themes/kss/static/js/slick.min.js', './themes/kss/static/js/jquery.mmenu.all.js', './themes/kss/static/js/jquery.mousewheel.min.js', './themes/kss/static/js/lightgallery-all.min.js', './themes/kss/static/js/lazysizes.min.js', './themes/kss/static/js/jquery.autocomplete.js', './themes/kss/static/js/custom.js'], ['scripts']);
+    gulp.watch(['public/js/bootstrap.min.js', 'public/js/jquery.fancybox.js', 'public/js/slick.min.js', 'public/js/jquery.mmenu.all.js', 'public/js/jquery.mousewheel.min.js', 'public/js/lightgallery-all.min.js', 'public/js/lazysizes.min.js', 'public/js/jquery.autocomplete.js'], ['scripts']);
 });
