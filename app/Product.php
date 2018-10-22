@@ -137,4 +137,39 @@ class Product
             }
         }
     }
+
+    public static function getVariantInventory(array $variant_ids)
+    {
+        $odoo          = new OdooConnect;
+        $filters       = [["product_id", "in", $variant_ids]];
+        $inventoryData = $odoo->multiExec('stock.quant', 'search_read', [$filters], ["fields" => config("product.inventory_fields"), "limit" => config("product.inventory_max")]);
+        $inventory     = [];
+        foreach ($inventoryData as $connectionData) {
+            foreach ($connectionData as $invtry) {
+                $temp = [
+                    "warehouse" => $invtry["warehouse_id"][1],
+                    "quantity"  => intval($invtry["quantity"]),
+                ];
+                $inventory[$invtry["product_id"][0]]["inventory"][] = $temp;
+            }
+        }
+        $final = [];
+        foreach ($variant_ids as $variant_id) {
+            $ret = [
+                "availability" => false,
+                "inventory"    => isset($inventory[$variant_id]) ? $inventory[$variant_id] : [],
+            ];
+            if (isset($inventory[$variant_id])) {
+                foreach ($inventory[$variant_id] as $invntry) {
+                    if ($invntry > 0) {
+                        $ret["availability"] = true;
+                        break;
+                    }
+                }
+            }
+            $final[$variant_id] = $ret;
+        }
+
+        return $final;
+    }
 }
