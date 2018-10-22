@@ -190,3 +190,25 @@ function buildProductIndexFromOdooData($productData, $variantData)
 
     return $indexData;
 }
+
+function inventoryFormatData(array $variant_ids,array $inventory){
+
+    $final = [];
+    foreach ($variant_ids as $variant_id) {
+        $ret = [
+            "availability" => false,
+            "inventory"    => isset($inventory[$variant_id]) ? $inventory[$variant_id] : [],
+        ];
+        if (isset($inventory[$variant_id])) {
+            foreach ($inventory[$variant_id] as $invntry) {
+                if ($invntry > 0) {
+                    $ret["availability"] = true;
+                    break;
+                }
+            }
+        }
+        $final[$variant_id] = $ret;
+    }
+
+    return $final;
+}
