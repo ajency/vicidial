@@ -1,0 +1,66 @@
+.header{
+	background-color: theme-color("dark");
+	a{
+		color: white;
+	}
+}
+.recent-search{
+    a{
+        color:#000 !important;
+    }
+}
+.navbar-toggler{
+	padding: 0.15rem 0.45rem;
+}
+.cart-counter{
+    position: absolute;
+    top: 30px;
+    right: -2px;
+}
+.navbar-brand{
+	filter: brightness(0) invert(1);
+}
+.hamburger-inner, .hamburger-inner::before, .hamburger-inner::after{
+	width: 22px;
+	height: 2px;
+	background-color: #ffffff;
+}
+.hamburger-inner::before {
+    top: -7px;
+}
+.hamburger--collapse .hamburger-inner::after{
+	top: -14px;
+}
+.hamburger-box{
+	width: 22px;
+	height: 18px;
+}
+
+.mm-slideout{
+	z-index: initial;
+}
+
+@media (min-width: 360px) and (max-width: 767.98px) {
+.kss-logo{
+	position: absolute;
+    left: 40px;
+    top: 24px;
+}
+}
+
+
+ @media(max-width: 320px){
+        .header{
+          ul{
+            .list-inline-item{
+                margin-right:.1rem;
+            }
+       }
+          img{
+            width:144px;
+            position: absolute;
+    left: 40px;
+    top: 26px;
+          }
+        }
+    }

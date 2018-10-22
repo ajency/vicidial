@@ -14,6 +14,9 @@ export class CartComponent implements OnInit {
   mobileNumberEntered = false;
   enterCoupon = false;
   cart : any;
+  showCartLoader = false;
+  sessionCheckInterval : any;
+  cartOpen = false;
   constructor( private router: Router,
                private appservice : AppServiceService,
                private apiservice : ApiServiceService
@@ -22,16 +25,50 @@ export class CartComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getCartData();
+    this.cartOpen = true;
+    $('.ng-cart-loader').removeClass('cart-loader')
+    if(sessionStorage.getItem('add_to_cart_clicked')){
+      console.log("add to cart clicked");
+      this.addToCartClicked();
+      sessionStorage.removeItem('add_to_cart_clicked');
+    }
+    else{
+      this.getCartData();
+    }
   }
 
   ngAfterViewInit(){
     var self = this;
     console.log("ngAfterViewInit");
     $("#cd-cart-trigger").click(function() {
-      console.log("calling getCartData function")
+      console.log("calling getCartData function");
+      this.cartOpen = true;
       self.getCartData();                       
     });
+    $('.cd-add-to-cart').on('click',function(){
+      console.log("add to cart clicked");
+      this.cartOpen = true;
+      self.addToCartClicked();
+      sessionStorage.removeItem('add_to_cart_clicked');
+    });
+  }
+
+  addToCartClicked(){    
+    this.showCartLoader = true;
+    if(sessionStorage.getItem('cart_data')){
+      this.cart = JSON.parse(sessionStorage.getItem('cart_data'));
+      console.log("cart_data from sessionStorage==>", this.cart);
+    }
+    this.sessionCheckInterval = setInterval(()=>{
+      if(sessionStorage.getItem('addded_to_cart')){
+        if(sessionStorage.getItem('addded_to_cart') == "true")
+          this.fetchCartData();
+        else
+          this.showCartLoader = false;
+        sessionStorage.removeItem('addded_to_cart');
+        clearInterval(this.sessionCheckInterval);
+      }
+    },100)
   }
 
   getCartData(){
@@ -40,21 +77,28 @@ export class CartComponent implements OnInit {
       console.log("cart_data from sessionStorage==>", this.cart);
     }
     else{
-      let url = this.appservice.apiUrl+'/rest/anonymous/cart/get';
-      this.apiservice.request(url, 'get', {} ).then((response)=>{
-        console.log("response ==>", response);
-        this.cart = response;
-        // sessionStorage.setItem('cart_data', JSON.stringify(this.cart));
-      })
-      .catch((error)=>{
-        console.log("error ===>", error);
-        if(error.message == "Cart not found for this session"){
-          this.cart = {
-            items : []
-          }
-        }
-      })
+      this.fetchCartData()
     }
+  }
+
+  fetchCartData(){
+    this.showCartLoader = true;
+    let url = this.appservice.apiUrl + '/rest/anonymous/cart/get';
+    this.apiservice.request(url, 'get', {} ).then((response)=>{
+      console.log("response ==>", response);
+      this.cart = response;
+      sessionStorage.setItem('cart_data', JSON.stringify(this.cart));
+      this.showCartLoader=false;
+    })
+    .catch((error)=>{
+      console.log("error ===>", error);
+      if(error.message == "Cart not found for this session"){
+        this.cart = {
+          items : []
+        }
+      }
+      this.showCartLoader=false;
+    })
   }
 
   modifyCart(item){
@@ -99,7 +143,8 @@ export class CartComponent implements OnInit {
   }
 
   closeCart(){
-    this.cart = null;
+    // this.cart = null;
+    this.cartOpen = false;
     this.appservice.closeCart();
   }
 

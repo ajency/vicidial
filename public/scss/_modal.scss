@@ -1,0 +1,21 @@
+.dark-modal{
+	.close{
+		color: $white;
+	}
+	@media (min-width: 576px){
+		.modal-dialog{
+			max-width: 450px;
+		}
+	}
+	.modal-content{
+		background-color: rgba(25, 25, 25, 0.95);
+	}
+	.list-group-item{
+		background-color: transparent;
+		border-color: rgb(70, 70, 70);
+	}
+	.form-control{
+		background-color: #232323;
+		color: $white;
+	}
+}

@@ -1,0 +1,108 @@
+$size: 20px;
+#card-list {
+    @media (max-width: 575.98px) {
+        padding:10px;
+        .col-lg-4 {
+            padding: 8px;
+        }
+    }
+    .product-card{
+        overflow: hidden;
+        .overlay{
+            width:100%;
+            padding-bottom: 166.666666667%;
+            background: rgba(0, 0, 0, 0.34);
+            opacity: 0;
+            transition: all 0.5s ease;
+            position: absolute;
+            top: 0px;
+            z-index: 99;
+            @media (min-width: 320px) and (max-width: 767.98px) {
+            display:none;
+         } 
+        }
+         .select-size{
+           position: absolute;
+           bottom:66px;
+           width: 100%;
+           z-index: 999;
+           opacity: 0;
+           left: 270px;
+           transition: all 0.5s ease;
+           padding: 10px 0px;
+           border-radius: 0px;
+            .radio-wrap{
+            padding: 8px 0px 0px 8px;
+           text-align: center;
+           .radio-label{
+                min-width: auto;
+                padding: 8px;
+                background: #fff;
+                .radio-option{
+                    width: 52px;
+                }
+           }
+         }   
+         @media (min-width: 320px) and (max-width: 767.98px) {
+            display:none;
+         } 
+        }
+            &:hover{
+            .overlay{
+                opacity:9;
+            }
+            .select-size{
+                opacity: 9;
+                left: 0px;
+
+            }
+        }
+    }
+
+    
+}
+.card {
+  &.product-card{
+    border: 0px;
+    @media (min-width: 320px) and (max-width: 767.98px) {
+        background:none;
+    }
+    .card-title {
+        font-weight: 400;
+        font-size:1rem;
+        @media (max-width: 575.98px) {
+            font-size:.8rem;
+        }
+    }
+  
+    /*.card-img-top {
+        min-height: 24vw;
+        @media (max-width: 1399px) {
+            min-height: 32vw;
+        }
+        @media (max-width: 575.98px) {
+            min-height: 70vw;
+        }
+    }*/
+    .card-body {
+        flex: 1 1 auto;
+        padding: 10px 0px;
+        padding: 10px 0px;
+        .price {
+            .text-muted {
+                color: $gray-500 !important;
+            }
+        }
+    }
+  }
+}
+@media (min-width: 320px) and (max-width: 767.98px) {
+    .kss_mobile-list {
+        display: flex;
+        overflow: scroll;
+        flex-wrap: nowrap;
+    }
+}
+.m-similar{
+    margin-top:-8px;
+}

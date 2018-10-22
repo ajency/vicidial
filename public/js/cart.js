@@ -23,6 +23,9 @@ $(document).ready(function(){
 
         //if($(add_to_cart_element).hasClass('go-to-cart')) {/*Call Angular function*/ return;}
         
+        // for angular app 
+        sessionStorage.setItem( "add_to_cart_clicked", "true");
+        openCart();
 
         //Show loader
         $('.cd-add-to-cart .btn-label-initial').addClass('d-none');
@@ -51,6 +54,7 @@ $(document).ready(function(){
                     //var itemImg = $(add_to_cart_element).closest('.container').find('img').eq(1);
                     //flyToElement($(itemImg), $('.shopping-cart'));
                     sessionStorage.setItem( "cart_count", data.cart_count );
+                    sessionStorage.setItem( "addded_to_cart", "true");
                     // set_cart_data(data.item);
                     set_cart_count();
                     $('.kss-alert .message').html('<strong>Success!!!</strong> Added to bag');
@@ -70,6 +74,7 @@ $(document).ready(function(){
                     $('.kss-alert').addClass('is-open');
                     $(add_to_cart_element).removeClass('cartLoader');
                     setTimeoutVariable();
+                    sessionStorage.setItem( "addded_to_cart", "false");
                 }
             });
         }
@@ -86,17 +91,24 @@ $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();
 
     jQuery("#cd-cart-trigger").click(function() {
-        // jQuery("#kss_cart").addClass("fixed-bottom");
-        loadAngularApp();
-                             
+      openCart();             
     });
 });
+
 
 //Add to cart Listing Page
 $('.select-size button').click(function() {
     //Add to cart
 });
 
+
+function openCart(){
+  loadAngularApp();
+  event.preventDefault();
+  $('#main-nav').removeClass('speed-in');
+  toggle_panel_visibility($('#cd-cart'), $('#cd-shadow-layer'), $('body'));
+  $("body").addClass("hide-scroll"); 
+}
 
 function set_cart_count() {
     //Check if cart count in Session storage
@@ -133,18 +145,21 @@ function set_cart_data(json) {
         sessionStorage.setItem( "cart_data", JSON.stringify(cart_data) );
     }
 }
+
+  loaded = false;
+
   function loadAngularApp(){
     if(!loaded){
       $.when(
-          $.getScript("/views/cart/inline.js"),
-          $.getScript("/views/cart/polyfills.js"), 
-          $.getScript("/views/cart/styles.css"),  
-          $.getScript("/views/cart/vendor.js"), 
+          $.getScript("/views/cart/inline.bundle.js"),
+          $.getScript("/views/cart/polyfills.bundle.js"), 
+          $.getScript("/views/cart/styles.bundle.css"),  
+          $.getScript("/views/cart/vendor.bundle.js"), 
           $.Deferred(function( deferred ){
               $( deferred.resolve );
           })
       ).done(function(){
-          $.getScript("/views/cart/main.js");
+          $.getScript("/views/cart/main.bundle.js");
           loaded = true;
       });
     }
