@@ -139,6 +139,19 @@ class Product
         }
     }
 
+    public static function fetchProductImages(int $product_id)
+    {
+        $odoo           = new OdooConnect;
+        $product        = $odoo->defaultExec('product.template', 'read', [$product_id], ["fields" => ["images"]]);
+        $product_images = $odoo->defaultExec("product.image", "read", [$product[0]["images"]], ["fields" => ["image", "color_variant"]]);
+        $images         = collect();
+        foreach ($product_images as $image) {
+            $temp = ["image" => $image["image"], "color" => $image["color_variant"][1]];
+            $images->push($temp);
+        }
+        return $images;
+    }
+
     public static function getVariantInventory(array $variant_ids)
     {
         $odoo          = new OdooConnect;
