@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Variant extends Model
 {
     protected $elastic_data;
-    protected $elastic_index = "products";
-    protected $fillable = ['odoo_id','elastic_id'];
+    protected $elastic_index = "";
+    protected $fillable = ['odoo_id','elastic_id', 'product_id', 'color_id'];
     /**
      *
      * @return
@@ -19,7 +19,7 @@ class Variant extends Model
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->elastic_index = config('elastic.prefix').$this->elastic_index;
+        $this->elastic_index = config('elastic.indexes.product');
     }
 
     public function newFromBuilder($attributes = [], $connection = null)

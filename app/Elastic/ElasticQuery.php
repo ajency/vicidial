@@ -5,7 +5,8 @@ use Elasticsearch\ClientBuilder;
 
 class ElasticQuery
 {
-    protected $params = ["index" => ""];
+    protected $params = [];
+    protected $index  = "";
 
     public function __construct()
     {
@@ -40,7 +41,8 @@ class ElasticQuery
      */
     public function setIndex(string $index)
     {
-        $this->params["index"] = $index;
+        $this->index           = config('elastic.prefix') . $index;
+        $this->params["index"] = config('elastic.prefix') . $index;
         return $this;
     }
 
@@ -237,7 +239,10 @@ class ElasticQuery
      */
     public function bulk()
     {
-        return $this->elastic_client->bulk($this->params);
+        \Log::debug($this->params);
+        $responses = $this->elastic_client->bulk($this->params);
+        \Log::debug($responses);
+        return $responses;
     }
 
     /**
@@ -286,9 +291,8 @@ class ElasticQuery
         return $this;
     }
 
-    public function initializeBulkIndexing(string $index, array $options = [])
+    public function initializeBulkIndexing(array $options = [])
     {
-        $this->index   = $index;
         $this->options = $options;
         $this->params  = ['body' => []];
         return $this;
