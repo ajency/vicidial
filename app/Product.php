@@ -80,6 +80,7 @@ class Product
         $colorvariants = $variants->groupBy('variant_color_id');
         foreach ($colorvariants as $colorVariantData) {
             $products->push(buildProductIndexFromOdooData($productData, $colorVariantData));
+
         }
         return $products;
     }
@@ -94,8 +95,23 @@ class Product
             $object->color_id   = $variant['product_color_id'];
             $object->save();
         } catch (\Exception $e) {
-            Log::warning($e->getMessage());
+            \Log::warning($e->getMessage());
         }
+        $categories = ['product_category_type', 'product_gender', 'product_age_group', 'product_subtype'];
+        foreach ($categories as $category) {
+            try {
+                $categ               = new Category;
+                $categ->facet_name   = $category;
+                $categ->facet_value  = $product[$category];
+                $categ->display_name = $product[$category];
+                $categ->slug         = str_slug($product[$category]);
+                $categ->sequence     = 10000;
+                $categ->save();
+            } catch (\Exception $e) {
+                \Log::warning($e->getMessage());
+            }
+        }
+
     }
 
     public static function bulkIndexProducts($products)
