@@ -154,19 +154,22 @@ class Product
             }
         }
         $final = [];
-        foreach ($inventory as $key => $variant) {
+        foreach ($variant_ids as $variant_id) {
             $ret = [
                 "availability" => false,
-                "inventory"    => $variant["inventory"],
+                "inventory"    => isset($inventory[$variant_id]) ? $inventory[$variant_id] : [],
             ];
-            foreach ($variant["inventory"] as $invntry) {
-                if ($invntry > 0) {
-                    $ret["availability"] = true;
-                    break;
+            if (isset($inventory[$variant_id])) {
+                foreach ($inventory[$variant_id] as $invntry) {
+                    if ($invntry > 0) {
+                        $ret["availability"] = true;
+                        break;
+                    }
                 }
             }
-            $final[$key] = $ret;
+            $final[$variant_id] = $ret;
         }
+
         return $final;
     }
 }
