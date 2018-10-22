@@ -27,4 +27,18 @@ class ListingController extends Controller
 
         return view('productlisting')->with('params',$params);
     }
+
+    public function shop(Request $request)
+    {
+        $parameters = array();
+        $parameters['categories'] = array();
+        $parameters['query'] = $request->all();
+
+        $search_object = create_search_object($parameters);
+
+        $json = json_decode(listingproducts($search_object));
+        $params =  (array) $json;
+
+        return view('productlisting')->with('params',$params);
+    }
 }
