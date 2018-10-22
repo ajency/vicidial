@@ -2,6 +2,6 @@
 
 @section('content')
     
-	ERROR 404
+	@include('includes.errorcontent')
 
 @stop
