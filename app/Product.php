@@ -71,9 +71,10 @@ class Product
         $odoo         = new OdooConnect;
         $variants     = collect();
         $variantsData = $odoo->defaultExec("product.product", 'read', [$variant_ids], ['fields' => config('product.variant_fields')]);
+        $variantInventory = self::getVariantInventory($variant_ids); //call prasad's function here
         foreach ($variantsData as $variantData) {
             $attributeValues = $odoo->defaultExec('product.attribute.value', 'read', [$variantData['attribute_value_ids']], ['fields' => config('product.attribute_fields')]);
-            $sanitisedData   = sanitiseVariantData($variantData, $attributeValues);
+            $sanitisedData   = sanitiseVariantData($variantData, $attributeValues, $variantInventory[$variantData['id']]);
             self::storeVariantData($sanitisedData, $productData);
             $variants->push($sanitisedData);
         }
