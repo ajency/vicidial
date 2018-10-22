@@ -142,7 +142,7 @@ class Product
     {
         $odoo          = new OdooConnect;
         $filters       = [["product_id", "=", $variant_id]];
-        $inventoryData = $odoo->multiExec('stock.quant', 'search_read', [$filters], ["fields" => config("product.inventory_fields"), "limit" => 100]);
+        $inventoryData = $odoo->multiExec('stock.quant', 'search_read', [$filters], ["fields" => config("product.inventory_fields"), "limit" => config("product.inventory_max")]);
 
         $inventory = collect();
         foreach ($inventoryData as $connectionData) {

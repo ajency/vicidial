@@ -111,4 +111,6 @@ return [
             'variant' => ['variant_style_no'],
         ],
     ],
+    "inventory_fields" => ["warehouse_id", "location_id", "quantity"],
+    "inventory_max"    => 10,
 ];
