@@ -16,6 +16,7 @@ class AddProductColorToVariants extends Migration
         Schema::table('variants', function (Blueprint $table) {
             $table->integer('color_id')->after('odoo_id')->nullable();
             $table->integer('product_id')->after('odoo_id');
+            $table->unique('odoo_id');
         });
     }
 
@@ -28,6 +29,7 @@ class AddProductColorToVariants extends Migration
     {
         Schema::table('variants', function (Blueprint $table) {
             $table->dropColumn(['color_id', 'product_id']);
+            $table->dropUnique('odoo_id');
         });
     }
 }

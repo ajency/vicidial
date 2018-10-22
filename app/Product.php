@@ -53,7 +53,6 @@ class Product
         do {
             $products = self::getProductIDs(['id' => $first_id], $offset);
             CreateProductJobs::dispatch($products)->onQueue('create_jobs');
-            // createJob1($products);
             $offset = $offset + $products->count();
         } while ($products->count() == config('odoo.limit'));
     }
@@ -68,16 +67,14 @@ class Product
 
     public static function indexVariants($variant_ids, $productData)
     {
-        $products       = collect();
-        $odoo           = new OdooConnect;
-        $variants       = collect();
-        $insertVariants = [];
-        $variantsData   = $odoo->defaultExec("product.product", 'read', [$variant_ids], ['fields' => config('product.variant_fields')]);
+        $products     = collect();
+        $odoo         = new OdooConnect;
+        $variants     = collect();
+        $variantsData = $odoo->defaultExec("product.product", 'read', [$variant_ids], ['fields' => config('product.variant_fields')]);
         foreach ($variantsData as $variantData) {
-            $attributeValues  = $odoo->defaultExec('product.attribute.value', 'read', [$variantData['attribute_value_ids']], ['fields' => config('product.attribute_fields')]);
-            $sanitisedData    = sanitiseVariantData($variantData, $attributeValues);
-            $insertVariants[] = self::storeVariantData($sanitisedData, $productData);
-            Variant::insert($insertVariants);
+            $attributeValues = $odoo->defaultExec('product.attribute.value', 'read', [$variantData['attribute_value_ids']], ['fields' => config('product.attribute_fields')]);
+            $sanitisedData   = sanitiseVariantData($variantData, $attributeValues);
+            self::storeVariantData($sanitisedData, $productData);
             $variants->push($sanitisedData);
         }
         $colorvariants = $variants->groupBy('variant_color_id');
@@ -89,12 +86,16 @@ class Product
 
     public static function storeVariantData($variant, $product)
     {
-        return [
-            'elastic_id' => $product['product_id'] . '.' . $variant['product_color_id'],
-            'odoo_id'    => $variant['variant_id'],
-            'product_id' => $product['product_id'],
-            'color_id'   => $variant['product_color_id'],
-        ];
+        try {
+            $object             = new Variant;
+            $object->elastic_id = $product['product_id'] . '.' . $variant['product_color_id'];
+            $object->odoo_id    = $variant['variant_id'];
+            $object->product_id = $product['product_id'];
+            $object->color_id   = $variant['product_color_id'];
+            $object->save();
+        } catch (\Exception $e) {
+            Log::warning($e->getMessage());
+        }
     }
 
     public static function bulkIndexProducts($products)
