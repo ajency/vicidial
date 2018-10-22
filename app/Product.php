@@ -68,14 +68,16 @@ class Product
 
     public static function indexVariants($variant_ids, $productData)
     {
-        $products     = collect();
-        $odoo         = new OdooConnect;
-        $variants     = collect();
-        $variantsData = $odoo->defaultExec("product.product", 'read', [$variant_ids], ['fields' => config('product.variant_fields')]);
+        $products       = collect();
+        $odoo           = new OdooConnect;
+        $variants       = collect();
+        $insertVariants = [];
+        $variantsData   = $odoo->defaultExec("product.product", 'read', [$variant_ids], ['fields' => config('product.variant_fields')]);
         foreach ($variantsData as $variantData) {
-            $attributeValues = $odoo->defaultExec('product.attribute.value', 'read', [$variantData['attribute_value_ids']], ['fields' => config('product.attribute_fields')]);
-            $sanitisedData = sanitiseVariantData($variantData, $attributeValues);
-            self::storeVariantData($sanitisedData,$productData);
+            $attributeValues  = $odoo->defaultExec('product.attribute.value', 'read', [$variantData['attribute_value_ids']], ['fields' => config('product.attribute_fields')]);
+            $sanitisedData    = sanitiseVariantData($variantData, $attributeValues);
+            $insertVariants[] = self::storeVariantData($sanitisedData, $productData);
+            Variant::insert($insertVariants);
             $variants->push($sanitisedData);
         }
         $colorvariants = $variants->groupBy('variant_color_id');
@@ -85,19 +87,20 @@ class Product
         return $products;
     }
 
-    public static function storeVariantData($variant,$product){
-        $object = new Variant;
-        $object->elastic_id = $product['product_id'] . '.' . $variant['product_color_id'];
-        $object->odoo_id = $variant['variant_id'];
-        $object->product_id = $product['product_id'];
-        $object->color_id = $variant['product_color_id'];
-        $object->save();
+    public static function storeVariantData($variant, $product)
+    {
+        return [
+            'elastic_id' => $product['product_id'] . '.' . $variant['product_color_id'],
+            'odoo_id'    => $variant['variant_id'],
+            'product_id' => $product['product_id'],
+            'color_id'   => $variant['product_color_id'],
+        ];
     }
 
     public static function bulkIndexProducts($products)
     {
         $query = new ElasticQuery;
-        $query->setIndex('product');
+        $query->setIndex(config('elastic.indexes.product'));
         $query->initializeBulkIndexing();
         $products->each(function ($item, $key) use ($query) {
             $query->addToBulkIndexing($item['id'], $item, ['op_type' => "create"]);
