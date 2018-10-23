@@ -45,8 +45,6 @@ class ApiLoginController extends Controller
         	$UserObject = User::create([
 	            'name' => '',
 	            'phone' => $data['phone'],
-	            'email' => $data['phone'],
-	            'password' => Hash::make(str_random(10)),
 	        ]);
 
             $UserObject->assignRole('customer');
