@@ -19,10 +19,9 @@ return [
 		],
 	],
 	'model' => [
-		'App\Model_name' => [
-			'base_path' => 'model/',
-			'slug_column' => 'slug',
-			'sizes' => ['thumb']
+		'App\Variant' => [
+			'base_path' => 'products/',
+			'slug_column' => 'elastic_id',
 		],
 	],
 ];

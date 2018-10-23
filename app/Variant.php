@@ -4,6 +4,7 @@ namespace App;
 
 use App\Elastic\ElasticQuery;
 use Illuminate\Database\Eloquent\Model;
+use FileUpload;
 
 class Variant extends Model
 {
@@ -29,7 +30,7 @@ class Variant extends Model
     {
 
         $model = parent::newFromBuilder($attributes, $connection);
-        $model->fetchElasticData();  // locally to comment for queu job 'process_product_images'
+        // $model->fetchElasticData();  // locally to comment for queu job 'process_product_images'
         return $model;
     }
 
