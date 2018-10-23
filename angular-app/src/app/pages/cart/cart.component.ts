@@ -17,6 +17,15 @@ export class CartComponent implements OnInit {
   showCartLoader = false;
   sessionCheckInterval : any;
   cartOpen = false;
+  mobileNumber : number;
+  otp : number;
+  userValidation = {
+    disableSendOtpButton :  false,
+    mobileValidationFailed : false,
+    disableVerifyOtpButton : false,
+    otpVerificationFailed : false
+  }
+  
   constructor( private router: Router,
                private appservice : AppServiceService,
                private apiservice : ApiServiceService
@@ -138,8 +147,56 @@ export class CartComponent implements OnInit {
     // })
   }
 
+  authenticateUser(){
+    this.userValidation.disableSendOtpButton = true;
+    this.userValidation.mobileValidationFailed = false;
+    // this.appservice.apiUrl = 'http://demo8558685.mockable.io/';
+    let url = this.appservice.apiUrl + '/rest/v1/authenticate/generate_otp';
+    let body = {
+      mobile : this.mobileNumber
+    }
+    this.apiservice.request(url, 'get', body ).then((response)=>{
+      console.log("response ==>", response);
+      this.userValidation.disableSendOtpButton = false;
+      if(response.msg == "otp sent successfully"){
+        this.mobileNumberEntered = true;
+      }
+      else{
+        this.userValidation.mobileValidationFailed = true;
+      }
+
+    })
+    .catch((error)=>{
+      console.log("error ===>", error);
+      this.userValidation.disableSendOtpButton = false;
+      this.userValidation.mobileValidationFailed = true;
+    })
+  }
+
   verifyMobile(){
-  	this.router.navigateByUrl('/shipping-details', { skipLocationChange: true });
+    this.userValidation.disableVerifyOtpButton = true;
+    this.userValidation.otpVerificationFailed = false;
+    let url = this.appservice.apiUrl + '/rest/v1/authenticate/login';
+    let body = {
+      mobile : this.otp
+    }
+    this.apiservice.request(url, 'get', body ).then((response)=>{
+      console.log("response ==>", response);
+      this.userValidation.disableVerifyOtpButton = false;
+      if(response.msg == "user login successful"){
+        this.router.navigateByUrl('/shipping-details', { skipLocationChange: true });        
+      }
+      else{
+        this.userValidation.otpVerificationFailed = true;
+      }
+
+    })
+    .catch((error)=>{
+      console.log("error ===>", error);
+      this.userValidation.disableVerifyOtpButton = false;
+      this.userValidation.otpVerificationFailed = true;
+    })
+  	
   }
 
   closeCart(){
