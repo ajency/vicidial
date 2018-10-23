@@ -47,7 +47,7 @@ function sanitiseProductData($odooData)
     return $index;
 }
 
-function sanitiseVariantData($odooData, $attributeData,$inventoryData)
+function sanitiseVariantData($odooData, $attributeData, $inventoryData)
 {
     $variantData = [
         'variant_id'             => $odooData['id'],
@@ -76,7 +76,7 @@ function sanitiseVariantData($odooData, $attributeData,$inventoryData)
         $variantData['variant_size_name'] = $size['name'];
     }
     if (!isset($variantData['product_color_id'])) {
-        $variantData['product_color_id'] = 0;
+        $variantData['product_color_id']   = 0;
         $variantData['product_color_name'] = "";
         $variantData['product_color_html'] = "";
     }
@@ -192,7 +192,23 @@ function buildProductIndexFromOdooData($productData, $variantData)
     return $indexData;
 }
 
-function inventoryFormatData(array $variant_ids,array $inventory){
+function sanitiseInventoryData($inventoryData)
+{
+    $inventory = [];
+    foreach ($inventoryData as $connectionData) {
+        foreach ($connectionData as $invtry) {
+            $temp = [
+                "warehouse" => $invtry["warehouse_id"][1],
+                "quantity"  => intval($invtry["quantity"]),
+            ];
+            $inventory[$invtry["product_id"][0]]["inventory"][] = $temp;
+        }
+    }
+    return $inventory;
+}
+
+function inventoryFormatData(array $variant_ids, array $inventory)
+{
 
     $final = [];
     foreach ($variant_ids as $variant_id) {

@@ -88,6 +88,7 @@ return [
             'product' => ['product_id'],
             'variant' => [
                 'product_color_id',
+                'variant_id',
                 'variant_standard_price',
                 'variant_lst_price',
                 'variant_sale_price',

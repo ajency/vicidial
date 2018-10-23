@@ -67,15 +67,15 @@ class Product
 
     public static function indexVariants($variant_ids, $productData)
     {
-        $products     = collect();
-        $odoo         = new OdooConnect;
-        $variants     = collect();
-        $variantsData = $odoo->defaultExec("product.product", 'read', [$variant_ids], ['fields' => config('product.variant_fields')]);
-        $variantInventory = self::getVariantInventory($variant_ids); //call prasad's function here
+        $products         = collect();
+        $odoo             = new OdooConnect;
+        $variants         = collect();
+        $variantsData     = $odoo->defaultExec("product.product", 'read', [$variant_ids], ['fields' => config('product.variant_fields')]);
+        $variantInventory = self::getVariantInventory($variant_ids);
         foreach ($variantsData as $variantData) {
             $attributeValues = $odoo->defaultExec('product.attribute.value', 'read', [$variantData['attribute_value_ids']], ['fields' => config('product.attribute_fields')]);
             $sanitisedData   = sanitiseVariantData($variantData, $attributeValues, $variantInventory[$variantData['id']]);
-            self::storeVariantData($sanitisedData, $productData);
+            self::storeVariantData($sanitisedData, $productData, $variantInventory[$variantData['id']]);
             $variants->push($sanitisedData);
         }
         $colorvariants = $variants->groupBy('variant_color_id');
@@ -86,7 +86,7 @@ class Product
         return $products;
     }
 
-    public static function storeVariantData($variant, $product)
+    public static function storeVariantData($variant, $product, $inventory)
     {
         try {
             $object             = new Variant;
@@ -94,6 +94,7 @@ class Product
             $object->odoo_id    = $variant['variant_id'];
             $object->product_id = $product['product_id'];
             $object->color_id   = $variant['product_color_id'];
+            $object->inventory  = $inventory['inventory'];
             $object->save();
         } catch (\Exception $e) {
             \Log::warning($e->getMessage());
@@ -157,18 +158,8 @@ class Product
         $odoo          = new OdooConnect;
         $filters       = [["product_id", "in", $variant_ids]];
         $inventoryData = $odoo->multiExec('stock.quant', 'search_read', [$filters], ["fields" => config("product.inventory_fields"), "limit" => config("product.inventory_max")]);
-        $inventory     = [];
-        foreach ($inventoryData as $connectionData) {
-            foreach ($connectionData as $invtry) {
-                $temp = [
-                    "warehouse" => $invtry["warehouse_id"][1],
-                    "quantity"  => intval($invtry["quantity"]),
-                ];
-                $inventory[$invtry["product_id"][0]]["inventory"][] = $temp;
-            }
-        }
+        $inventory     = sanitiseInventoryData($inventoryData);
         return inventoryFormatData($variant_ids, $inventory);
     }
 
 }
-
