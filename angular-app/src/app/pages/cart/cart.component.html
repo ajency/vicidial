@@ -10,7 +10,7 @@
 	  	<div class="align-items-center">
 			<h3 class="modal-title font-weight-bold mt-1 mb-0">
 				Cart <span class="text-muted "><strong>&#183;</strong></span>
-				<small class="count text-muted ">{{cart.items.length}} <span *ngIf="cart.items.length > 1 || cart.items.length == 0">items</span> <span *ngIf="cart.items.length == 1">item</span>
+				<small class="count text-muted ">{{cart.cart_count || 0}} <span *ngIf="(cart.cart_count && (cart.cart_count >1 || cart.cart_count == 0)) || cart.cart_count===undefined">items</span> <span *ngIf="cart.cart_count && cart.cart_count == 1">item</span>
 				</small>
 			</h3>
 	  	</div>
@@ -129,7 +129,7 @@
 		</div>
 		<hr class="dashed">
 		<div class="cd-cart-total">
-			<h5 class="font-weight-bold">Order Total <span>₹{{cart.total}}</span></h5>
+			<h5 class="font-weight-bold">Order Total <span>₹{{cart.summary.order_total}}</span></h5>
 			<p class="sub-text mb-3">Shipping charges will be added at checkout</p>
 		</div>
 
