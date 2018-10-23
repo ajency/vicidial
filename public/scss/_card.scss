@@ -16,7 +16,7 @@ $size: 20px;
             transition: all 0.5s ease;
             position: absolute;
             top: 0px;
-            z-index: 99;
+            z-index: 1;
             @media (min-width: 320px) and (max-width: 767.98px) {
             display:none;
          } 
