@@ -14,9 +14,8 @@ class AddProductColorToVariants extends Migration
     public function up()
     {
         Schema::table('variants', function (Blueprint $table) {
-            $table->integer('color_id')->after('odoo_id')->nullable();
-            $table->integer('product_id')->after('odoo_id');
-            $table->json('inventory')->after('color_id')->nullable();
+            $table->json('inventory')->after('odoo_id')->nullable();
+            $table->integer('product_color_id')->after('inventory')->nullable();
             $table->unique('odoo_id');
         });
     }
@@ -29,7 +28,7 @@ class AddProductColorToVariants extends Migration
     public function down()
     {
         Schema::table('variants', function (Blueprint $table) {
-            $table->dropColumn(['color_id', 'product_id', 'inventory']);
+            $table->dropColumn(['inventory','product_colors_id']);
         });
     }
 }
