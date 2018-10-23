@@ -196,6 +196,7 @@ footer .bl-1{
     font-size: 12px;
     display: none;
     padding: 1em;
+    z-index: 1;
     @media (min-width: 320px) and (max-width: 767.98px) {
         bottom: 5em;
         right: 0em;
