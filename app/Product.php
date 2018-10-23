@@ -5,6 +5,8 @@ use App\Elastic\ElasticQuery;
 use App\Elastic\OdooConnect;
 use App\Jobs\CreateProductJobs;
 use App\Variant;
+use App\ProductColor;
+use App\Facet;
 
 class Product
 {
@@ -88,27 +90,36 @@ class Product
 
     public static function storeVariantData($variant, $product, $inventory)
     {
+        
+        try {
+            $elastic             = new ProductColor;
+            $elastic->elastic_id = $product['product_id'] . '.' . $variant['product_color_id'];
+            $elastic->product_id = $product['product_id'];
+            $elastic->color_id   = $variant['product_color_id'];
+            $elastic->save();
+        } catch (\Exception $e) {
+            \Log::warning($e->getMessage());
+            $elastic = ProductColor::where('elastic_id',$product['product_id'] . '.' . $variant['product_color_id'])->first();
+        }
         try {
             $object             = new Variant;
-            $object->elastic_id = $product['product_id'] . '.' . $variant['product_color_id'];
             $object->odoo_id    = $variant['variant_id'];
-            $object->product_id = $product['product_id'];
-            $object->color_id   = $variant['product_color_id'];
             $object->inventory  = $inventory['inventory'];
+            $object->product_color_id  = $elastic->id;
             $object->save();
         } catch (\Exception $e) {
             \Log::warning($e->getMessage());
         }
-        $categories = ['product_category_type', 'product_gender', 'product_age_group', 'product_subtype'];
-        foreach ($categories as $category) {
+        $facets = ['product_category_type', 'product_gender', 'product_age_group', 'product_subtype'];
+        foreach ($facets as $facet) {
             try {
-                $categ               = new Category;
-                $categ->facet_name   = $category;
-                $categ->facet_value  = $product[$category];
-                $categ->display_name = $product[$category];
-                $categ->slug         = str_slug($product[$category]);
-                $categ->sequence     = 10000;
-                $categ->save();
+                $facetObj               = new Facet;
+                $facetObj->facet_name   = $facet;
+                $facetObj->facet_value  = $product[$facet];
+                $facetObj->display_name = $product[$facet];
+                $facetObj->slug         = str_slug($product[$facet]);
+                $facetObj->sequence     = 10000;
+                $facetObj->save();
             } catch (\Exception $e) {
                 \Log::warning($e->getMessage());
             }
