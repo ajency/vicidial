@@ -17,7 +17,7 @@ export class CartComponent implements OnInit {
   showCartLoader = false;
   sessionCheckInterval : any;
   cartOpen = false;
-  mobileNumber : number;
+  mobileNumber : any;
   otp : number;
   userValidation = {
     disableSendOtpButton :  false,
