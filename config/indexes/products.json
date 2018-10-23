@@ -1,43 +1,86 @@
 {
   "mappings": {
     "_doc": {
-      "properties": {
-        "id": {
-          "type": "float"
+      "dynamic_templates": [
+        {
+          "search_result_data": {
+            "mapping": {
+              "type": "text",
+              "index": false
+            },
+            "path_match": "search_result_data.*"
+          }
         },
-        "type": {
-          "type": "keyword"
-        },
-        "search_result_data": {
-          "type": "nested",
-          "properties": {
-            "product_id": {
+        {
+          "category_scores": {
+            "mapping": {
               "type": "long"
             },
-            "product_title": {
+            "path_match": "category_scores.*"
+          }
+        },
+        {
+          "number_sort": {
+            "mapping": {
+              "type": "double"
+            },
+            "path_match": "number_sort.*"
+          }
+        },
+        {
+          "category": {
+            "mapping": {
               "type": "text"
             },
-            "product_slug": {
-              "type": "keyword"
-            },
-            "product_style": {
-              "type": "keyword"
-            },
-            "product_description": {
+            "path_match": "category.*"
+          }
+        },
+        {
+          "string_sort": {
+            "mapping": {
               "type": "text"
             },
-            "product_color_slug": {
-              "type": "keyword"
+            "path_match": "string_sort.*"
+          }
+        },
+        {
+          "scores": {
+            "mapping": {
+              "type": "double"
             },
-            "product_color_html": {
+            "path_match": "scores.*"
+          }
+        }
+      ],
+      "properties": {
+        "variants": {
+          "type": "nested",
+          "properties": {
+            "variant_id": {
+              "type": "long"
+            },
+            "variant_list_price": {
+              "type": "double"
+            },
+            "variant_sale_price": {
+              "type": "double"
+            },
+            "variant_size_id": {
+              "type": "long"
+            },
+            "variant_size_name": {
               "type": "keyword"
             }
           }
         },
         "search_data": {
           "type": "nested",
+          "include_in_parent": false,
           "properties": {
             "full_text": {
+              "type": "text"
+            },
+            "full_text_boosted": {
               "type": "text"
             },
             "string_facet": {
@@ -83,64 +126,14 @@
                   "type": "text"
                 }
               }
-            },
-            "full_text_boosted": {
-              "type": "text"
             }
           }
         },
-        "number_sort": {
-          "type": "nested",
-          "properties": {
-            "variant_lst_price": {
-              "type": "double"
-            },
-            "variant_sale_price": {
-              "type": "double"
-            },
-            "variant_discount_percent": {
-              "type": "double"
-            },
-            "variant_discount": {
-              "type": "double"
-            }
-          }
+        "type": {
+          "type": "keyword"
         },
-        "string_sort": {
-          "type": "nested",
-          "properties": {
-            "product_name": {
-              "type": "keyword"
-            }
-          }
-        },
-        "scores": {
-          "type": "nested"
-        },
-        "category": {
-          "type": "nested",
-          "properties": {
-            "direct_parents": {
-              "type": "keyword"
-            },
-            "all_parents": {
-              "type": "keyword"
-            },
-            "paths": {
-              "type": "text"
-            }
-          }
-        },
-        "category_scores": {
-          "type": "nested",
-          "properties": {
-            "number_of_impressions": {
-              "type": "long"
-            },
-            "number_of_orders": {
-              "type": "long"
-            }
-          }
+        "id": {
+          "type": "float"
         }
       }
     }

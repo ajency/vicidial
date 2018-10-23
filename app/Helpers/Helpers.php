@@ -126,10 +126,10 @@ function buildProductIndexFromOdooData($productData, $variantData)
         "product_color_name"  => $variantData->first()['product_color_name'],
         "product_color_html"  => $variantData->first()['product_color_html'],
         "product_images"      => [],
-        'variants'            => [],
     ];
+    $indexData["variants"] = [];
     foreach ($variantData as $variant) {
-        $indexData['search_result_data']['variants'][] = [
+        $indexData['variants'][] = [
             "variant_id"         => $variant['variant_id'],
             "variant_list_price" => $variant['variant_lst_price'],
             "variant_sale_price" => $variant['variant_sale_price'],
