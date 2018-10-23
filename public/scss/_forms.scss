@@ -363,7 +363,9 @@ text-align: start;
   color: #FFFFFF;
 }
 .hide-search{
-      position: absolute;
-      right: 5px;
-      top: 4px;
+    position: absolute;
+    right: 5px;
+    top: 4px;
+    z-index: 2;
+    cursor: pointer;
 }

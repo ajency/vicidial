@@ -479,7 +479,7 @@ $(document).ready(function() {
         search_menu_hide('hide');
     });
 
-       $('.hide-search').click(function() {
+    $('.hide-search').click(function() {
         $('.search-input').hide();
         $('.search-icon').show();
          $('.recent-search').removeClass("d-block");
