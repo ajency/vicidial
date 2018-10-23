@@ -445,18 +445,38 @@ $('#payment-details').click(function() {
 
 
 $(document).ready(function() {
-    // $('#wrap input').focus(function() {
-    //      $(".recent-search").removeClass('d-none'), 100;
-    // $(".recent-search").addClass('d-block'), 100;
-    // });
+
+    // Function which checks window size and hide/shows logo/menu
+    function search_menu_hide(state){
+          if (window.matchMedia("(min-width: 992px) and (max-width: 1024px)").matches) {
+            if(state == 'hide'){
+                $('.navbar-nav').hide();
+            }
+            else{
+                $('.navbar-nav').show();
+            }
+        } else if (window.matchMedia("(min-width: 768px) and (max-width: 991px)").matches) {
+            if(state == 'hide'){
+                $('.kss-logo').hide();
+            }
+            else{
+                $('.kss-logo').show();
+            } 
+        }
+        else{
+            return;
+        }
+    }
+
      $('.search-icon').click(function() {
         $('.search-input').show();
         $('.search-icon').hide();
-                $('.recent-search').removeClass("d-none");
+        $('.recent-search').removeClass("d-none");
         $('.overlay-fix').removeClass("d-none");
          $('.recent-search').addClass("d-block");
         $('.overlay-fix').addClass("d-block");
         $('body').addClass('hide-scroll');
+        search_menu_hide('hide');
     });
 
        $('.hide-search').click(function() {
@@ -467,6 +487,7 @@ $(document).ready(function() {
          $('.recent-search').addClass("d-none");
         $('.overlay-fix').addClass("d-none");
         $('body').removeClass('hide-scroll');
+        search_menu_hide('show');
     });
     $('.recent-link').click(function() {
         $('.search-input').hide();
@@ -495,6 +516,7 @@ $(document).ready(function() {
          $('.recent-search').addClass("d-none");
         $('.overlay-fix').addClass("d-none");
         $('body').removeClass('hide-scroll');
+        search_menu_hide('show');
     });
       $('#search').on('focusin focusout', function() {
          $('.recent-search').removeClass("d-block");
