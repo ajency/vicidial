@@ -5,9 +5,6 @@
 @yield('footjs')
 
 <script type="text/javascript" src="/js/combine.js"></script>
-<script type="text/javascript" src="/js/codex-fly.js"></script>
-
-
 
 
 <script type="text/javascript" src="/js/custom.js"></script>
