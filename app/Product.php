@@ -147,7 +147,7 @@ class Product
         $product_images = $odoo->defaultExec("product.image", "read", [$product[0]["images"]], ["fields" => ["image", "color_variant"]]);
         $images         = collect();
         foreach ($product_images as $image) {
-            $temp = ["image" => $image["image"], "color" => $image["color_variant"][1]];
+            $temp = ["image" => $image["image"], "color" => $image["color_variant"][0]];
             $images->push($temp);
         }
         return $images;
