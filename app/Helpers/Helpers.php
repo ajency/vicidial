@@ -155,7 +155,7 @@ function buildProductIndexFromOdooData($productData, $variantData)
             foreach (config('product.facets.' . $facet . '.variant') as $value) {
                 $search_data[$facet][] = [
                     'facet_name'  => $value,
-                    'facet_value' => $variant[$value],
+                    'facet_value' => ($facet == 'string_facet') ? str_slug($variant[$value]) : $variant[$value],
                 ];
             }
         }
