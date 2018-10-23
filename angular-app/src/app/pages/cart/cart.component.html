@@ -1,6 +1,6 @@
 <!-- <div id="cd-shadow-layer"></div> -->
 
-<div *ngIf="cart" class="angular-app h-100" [ngClass]="{'cart-loader' : showCartLoader}">
+<div *ngIf="cart" id="cd-cart" style="right: 0" class="angular-app h-100" [ngClass]="{'cart-loader' : showCartLoader}">
 	<div class="d-flex ">
 		<div class="pr-3 align-items-center">
 			<h3 class="modal-title font-weight-bold" >
@@ -173,7 +173,7 @@
 	              <input type="tel" class="form-control form-control-number form-control-lg" [ngClass]="{'has-error' : userValidation.mobileValidationFailed}" id="frm-mobile" name="mobile" [(ngModel)]="mobileNumber" required minlength = "10" maxlength = "10" pattern="^[789]\d{9}$">
 	              <label class="control-label">Enter Mobile Number</label>
 	               <small *ngIf="userValidation.mobileValidationFailed" id="passwordHelpBlock" class="form-text text-danger">
-						Error in sending otp
+						{{userValidation.mobileValidationErrorMsg}}
 					</small>
 	            </div>
 	          </form>
@@ -200,7 +200,7 @@
 	              <input type="password" class="form-control form-control-number form-control-lg text-center mb-2" [ngClass]="{'has-error' : userValidation.otpVerificationFailed}" id="exampleInputEmail1" aria-describedby="emailHelp" [(ngModel)]="otp" name="otp" placeholder="" required pattern="\d{6}$" minlength = "6" maxlength = "6">
 	              <!-- <small> Resend OTP in 18 sec</small> -->
 	               <small *ngIf="userValidation.otpVerificationFailed" id="passwordHelpBlock" class="form-text text-danger">
-						opt validation failed
+						{{userValidation.otpVerificationErrorMsg}}
 				</small>
 	            </div>
 	          </form>

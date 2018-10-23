@@ -22,8 +22,10 @@ export class CartComponent implements OnInit {
   userValidation = {
     disableSendOtpButton :  false,
     mobileValidationFailed : false,
+    mobileValidationErrorMsg : '',
     disableVerifyOtpButton : false,
-    otpVerificationFailed : false
+    otpVerificationFailed : false,
+    otpVerificationErrorMsg : ''
   }
   
   constructor( private router: Router,
@@ -151,18 +153,20 @@ export class CartComponent implements OnInit {
     this.userValidation.disableSendOtpButton = true;
     this.userValidation.mobileValidationFailed = false;
     // this.appservice.apiUrl = 'http://demo8558685.mockable.io/';
-    let url = this.appservice.apiUrl + '/rest/v1/authenticate/generate_otp';
+    let url = this.appservice.apiUrl + '/rest/v1/authenticate/generate_otp?';
     let body = {
-      mobile : this.mobileNumber
+      phone : this.mobileNumber
     }
-    this.apiservice.request(url, 'get', body ).then((response)=>{
+    url = url+$.param(body);
+    this.apiservice.request(url, 'get', body , {}, true).then((response)=>{
       console.log("response ==>", response);
       this.userValidation.disableSendOtpButton = false;
-      if(response.msg == "otp sent successfully"){
+      if(response.success){
         this.mobileNumberEntered = true;
       }
       else{
         this.userValidation.mobileValidationFailed = true;
+        this.userValidation.mobileValidationErrorMsg = response.message
       }
 
     })
@@ -176,17 +180,21 @@ export class CartComponent implements OnInit {
   verifyMobile(){
     this.userValidation.disableVerifyOtpButton = true;
     this.userValidation.otpVerificationFailed = false;
-    let url = this.appservice.apiUrl + '/rest/v1/authenticate/login';
+    let url = this.appservice.apiUrl + '/rest/v1/authenticate/login?';
     let body = {
-      mobile : this.otp
+      otp : this.otp,
+      phone : this.mobileNumber
     }
-    this.apiservice.request(url, 'get', body ).then((response)=>{
+    url = url + $.param(body);
+    this.apiservice.request(url, 'get', body, {}, true).then((response)=>{
       console.log("response ==>", response);
+      this.otp = null;
       this.userValidation.disableVerifyOtpButton = false;
-      if(response.msg == "user login successful"){
+      if(response.success){
         this.router.navigateByUrl('/shipping-details', { skipLocationChange: true });        
       }
       else{
+        this.userValidation.otpVerificationErrorMsg = response.message;
         this.userValidation.otpVerificationFailed = true;
       }
 
