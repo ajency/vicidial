@@ -154,11 +154,20 @@ class Product
     public static function fetchProductImages(int $product_id)
     {
         $odoo           = new OdooConnect;
-        $product        = $odoo->defaultExec('product.template', 'read', [$product_id], ["fields" => ["images"]]);
-        $product_images = $odoo->defaultExec("product.image", "read", [$product[0]["images"]], ["fields" => ["image", "color_variant"]]);
+        $product        = $odoo->defaultExec('product.template', 'read', [$product_id], ["fields" => ["images", "att_magento_display_name"]]);
+        $magento_name = $product[0]["att_magento_display_name"];
+        $product_images = $odoo->defaultExec("product.image", "read", [$product[0]["images"]], [
+            "fields" => ["image", "color_variant", "name" ]
+        ]);
         $images         = collect();
         foreach ($product_images as $image) {
-            $temp = ["image" => $image["image"], "color_id" => $image["color_variant"][0], "color_name" => $image["color_variant"][1]];
+            $temp = [
+                "image" => $image["image"],
+                "color_id" => $image["color_variant"][0],
+                "color_name" => $image["color_variant"][1], 
+                "name" => $image["name"],
+                "magento_name" => $magento_name,
+            ];
             $images->push($temp);
         }
         return $images;
