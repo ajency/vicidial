@@ -33,7 +33,7 @@ function getUnSelectedVariants(int $product_id, int $selected_color_id){
                 $variant = [
                     "id" => $variant["variant_id"],
 
-                    "inventory_available" => $variant["availability"],
+                    "inventory_available" => $variant["variant_availability"],
 
                 ];
                 $color_groups[$var["product_color_id"]]["variants"][] = $variant;
@@ -72,7 +72,7 @@ function fetchProduct($product){
                 "id" => $variant["variant_size_id"],
                 "name" => $variant["variant_size_name"],
             ],
-            "inventory_available" => $variant["availability"],
+            "inventory_available" => $variant["variant_availability"],
             "inventory" => [],
 
         ];
