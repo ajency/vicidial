@@ -121,23 +121,29 @@ function buildProductIndexFromOdooData($productData, $variantData)
         $productData['product_id'],
         $variantData->first()['product_color_id'],
     ]));
-        
+
     $indexData = [
         'type'        => "product",
         'id'          => floatval($productData['product_id'] . '.' . $variantData->first()['product_color_id']),
         'search_data' => [],
     ];
     $indexData['search_result_data'] = [
-        'product_id'          => $productData['product_id'],
-        "product_title"       => $productData['product_att_magento_display_name'],
-        "product_slug"        => $productData['product_slug'],
-        "product_style"       => $productData['product_style_no'],
-        "product_description" => $productData['product_article_desc'],
-        "product_color_id"    => $variantData->first()['product_color_id'],
-        "product_color_slug"  => str_slug($variantData->first()['product_color_name']),
-        "product_color_name"  => $variantData->first()['product_color_name'],
-        "product_color_html"  => $variantData->first()['product_color_html'],
-        "product_images"      => [],
+        'product_id'            => $productData['product_id'],
+        "product_title"         => $productData['product_att_magento_display_name'],
+        "product_slug"          => $productData['product_slug'],
+        "product_style"         => $productData['product_style_no'],
+        "product_description"   => $productData['product_article_desc'],
+        "product_att_sleeves"   => $productData['product_att_sleeves'],
+        "product_att_material"  => $productData['product_att_material'],
+        "product_category_type" => $productData['product_category_type'],
+        "product_gender"        => $productData['product_gender'],
+        "product_age_group"     => $productData['product_age_group'],
+        "product_subtype"       => $productData['product_subtype'],
+        "product_color_id"      => $variantData->first()['product_color_id'],
+        "product_color_slug"    => str_slug($variantData->first()['product_color_name']),
+        "product_color_name"    => $variantData->first()['product_color_name'],
+        "product_color_html"    => $variantData->first()['product_color_html'],
+        "product_images"        => [],
     ];
     $indexData["variants"] = [];
     foreach ($variantData as $variant) {
