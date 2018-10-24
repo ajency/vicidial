@@ -71,6 +71,8 @@ export class CartComponent implements OnInit {
       this.cart = JSON.parse(sessionStorage.getItem('cart_data'));
       console.log("cart_data from sessionStorage==>", this.cart);
     }
+    else
+      this.cart = { items : [] };
     this.sessionCheckInterval = setInterval(()=>{
       if(sessionStorage.getItem('addded_to_cart')){
         if(sessionStorage.getItem('addded_to_cart') == "true")
