@@ -10,6 +10,8 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Log;
 use App\Product;
 use App\Variant;
+use Illuminate\Http\Request;
+// use Illuminate\Support\Facades\File;
 
 class FetchProductImages implements ShouldQueue
 {
@@ -33,15 +35,36 @@ class FetchProductImages implements ShouldQueue
      */
     public function handle()
     {
-        $prod_images=Product::fetchProductImages($this->productId);
-        foreach($prod_images as $prodImage){
-            $image = $prodImage['image'];
-            $imageName = str_random(10).'.'.'png';
-            $filepath = storage_path(). '/variants/' . $imageName;
-            $actualImage = base64_decode($image);
-            // \File::put($filepath, $actualImage);
-            (new Variant)->uploadImage($actualImage,false);
+        // if($this->productId == 979){
+        if($this->productId == 979)
+        {
+            
+            $prod_images=Product::fetchProductImages($this->productId);
+            $extension = "jpg";
+
+            foreach($prod_images as $prodImage){
+                $image = $prodImage['image'];
+                \Log::debug("product reached===");
+                \Log::debug($image);
+
+                // $image = substr($image, strpos($image, ",")+1);
+
+                $imageName = str_random(10).'.'.$extension;
+                $filepath = storage_path(). '/variants/' . $imageName;
+                $actualImage = base64_decode($image);
+
+
+
+                \File::put($filepath, $actualImage);
+                // $file=File::get($filepath);
+                // if(file_exists($filepath))
+
+                (new Variant)->uploadImage($filepath,false,true,true,'','',"",$filepath,$extension);
+            }
         }
+        
+        // }
+        
         
 
         // Log::debug($prod_images);

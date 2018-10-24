@@ -4,10 +4,13 @@ namespace App;
 
 use App\Elastic\ElasticQuery;
 use Illuminate\Database\Eloquent\Model;
-use FileUpload;
+
+use Ajency\FileUpload\FileUpload;
 
 class Variant extends Model
 {
+    use FileUpload;
+
     protected $elastic_data;
     protected $elastic_index = "";
     protected $fillable      = ['odoo_id', 'elastic_id', 'product_id', 'color_id'];

@@ -254,3 +254,14 @@ function inventoryFormatData(array $variant_ids, array $inventory)
 
     return $final;
 }
+
+function generateVariantImageName($product_name,$color_name,$colors){
+    $colors_count = array_count_values($colors);
+    $append = "";
+    if($colors_count[$color_name]>1)
+        $append = "-".$colors_count[$color_name];
+    $product_name = str_slug($product_name, '-');
+    $color_name = str_slug($color_name, '-');
+    $image_name = $product_name."-".$color_name.$append;
+
+}
