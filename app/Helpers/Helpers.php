@@ -116,7 +116,12 @@ function generateFullTextForIndexing($productData, $variant)
 
 function buildProductIndexFromOdooData($productData, $variantData)
 {
-
+    $productData['product_slug'] = str_slug(implode(' ', [
+        $productData['product_att_magento_display_name'],
+        $productData['product_id'],
+        $variantData->first()['product_color_id'],
+    ]));
+        
     $indexData = [
         'type'        => "product",
         'id'          => floatval($productData['product_id'] . '.' . $variantData->first()['product_color_id']),
@@ -125,7 +130,7 @@ function buildProductIndexFromOdooData($productData, $variantData)
     $indexData['search_result_data'] = [
         'product_id'          => $productData['product_id'],
         "product_title"       => $productData['product_att_magento_display_name'],
-        "product_slug"        => str_slug($productData['product_att_magento_display_name']),
+        "product_slug"        => $productData['product_slug'],
         "product_style"       => $productData['product_style_no'],
         "product_description" => $productData['product_article_desc'],
         "product_color_id"    => $variantData->first()['product_color_id'],
