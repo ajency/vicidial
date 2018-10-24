@@ -19,7 +19,7 @@ export class CartComponent implements OnInit {
   sessionCheckInterval : any;
   cartOpen = false;
   mobileNumber : any;
-  otp : number;
+  otp : any;
   otpCode = {otp1:"",otp2:"",otp3:"",otp4:"",otp5:"",otp6:""}
   userValidation = {
     disableSendOtpButton :  false,
@@ -190,6 +190,8 @@ export class CartComponent implements OnInit {
     this.userValidation.disableVerifyOtpButton = true;
     this.userValidation.otpVerificationFailed = false;
     let url = this.appservice.apiUrl + '/rest/v1/authenticate/login?';
+    this.otp=this.otpCode.otp1+this.otpCode.otp2+this.otpCode.otp3+this.otpCode.otp4+this.otpCode.otp5+this.otpCode.otp6
+    console.log("OTP ==>", this.otp);
     let body = {
       otp : this.otp,
       phone : this.mobileNumber
