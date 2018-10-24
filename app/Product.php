@@ -3,10 +3,10 @@ namespace App;
 
 use App\Elastic\ElasticQuery;
 use App\Elastic\OdooConnect;
-use App\Jobs\CreateProductJobs;
-use App\Variant;
-use App\ProductColor;
 use App\Facet;
+use App\Jobs\CreateProductJobs;
+use App\ProductColor;
+use App\Variant;
 
 class Product
 {
@@ -90,7 +90,7 @@ class Product
 
     public static function storeVariantData($variant, $product, $inventory)
     {
-        
+
         try {
             $elastic             = new ProductColor;
             $elastic->elastic_id = $product['product_id'] . '.' . $variant['product_color_id'];
@@ -99,13 +99,13 @@ class Product
             $elastic->save();
         } catch (\Exception $e) {
             \Log::warning($e->getMessage());
-            $elastic = ProductColor::where('elastic_id',$product['product_id'] . '.' . $variant['product_color_id'])->first();
+            $elastic = ProductColor::where('elastic_id', $product['product_id'] . '.' . $variant['product_color_id'])->first();
         }
         try {
-            $object             = new Variant;
-            $object->odoo_id    = $variant['variant_id'];
-            $object->inventory  = $inventory['inventory'];
-            $object->product_color_id  = $elastic->id;
+            $object                   = new Variant;
+            $object->odoo_id          = $variant['variant_id'];
+            $object->inventory        = $inventory['inventory'];
+            $object->product_color_id = $elastic->id;
             $object->save();
         } catch (\Exception $e) {
             \Log::warning($e->getMessage());
@@ -182,4 +182,79 @@ class Product
         return inventoryFormatData($variant_ids, $inventory);
     }
 
+    public static function getAttributeValue($product, string $field)
+    {
+        $attributes = $product["search_data"][0]["attributes"];
+        foreach ($attributes as $key => $attribute) {
+            if ($attribute["attribute_name"] == $field) {
+                return $attribute["attribute_value"];
+            }
+
+        }
+    }
+
+    public static function getAttributeSlug($product, string $field)
+    {
+        $attributes = $product["search_data"][0]["attributes"];
+        foreach ($attributes as $key => $attribute) {
+            if ($attribute["attribute_name"] == $field) {
+                return $attribute["attribute_slug"];
+            }
+
+        }
+    }
+
+    public static function getStringFacetValue($product, string $field)
+    {
+        $facets = $product["search_data"][0]["string_facet"];
+        foreach ($facets as $key => $facet) {
+            if ($facet["facet_name"] == $field) {
+                return $facet["facet_value"];
+            }
+
+        }
+    }
+
+     public static function getStringFacetSlug($product, string $field)
+    {
+        $facets = $product["search_data"][0]["string_facet"];
+        foreach ($facets as $key => $facet) {
+            if ($facet["facet_name"] == $field) {
+                return $facet["facet_value"];
+            }
+
+        }
+    }
+    
+
+    public static function getNumberFacetValue($product, string $field)
+    {
+        $facets = $product["search_data"][0]["number_facet"];
+        foreach ($facets as $key => $facet) {
+            if ($facet["facet_name"] == $field) {
+                return $facet["facet_value"];
+            }
+
+        }
+    }
+    public static function getVariantSequence($product, $variant_id){
+        $data = $product["variants"];
+        foreach ($data as $key => $value) {
+            if($value["variant_id"] == $variant_id){
+                return $key;
+            }
+        }
+    }
+
+    public static function getVariantAvailability($product, int $variant_id)
+    {
+        $order = self::getVariantSequence($product, $variant_id);
+        $data = $product["search_data"][$order]["boolean_facet"];
+        foreach ($data as $key => $value) {
+            if($value["facet_name"] == "variant_availability"){
+                return $value["facet_value"];
+            }
+        }
+        return false;
+    }
 }

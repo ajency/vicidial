@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
 
-    public function index($product_slug, $style_slug, $color_slug, Request $request)
+    public function index($product_slug, Request $request)
     {
         $query = $request->all();
         $params = $request->get('params');

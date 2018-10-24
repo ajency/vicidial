@@ -56,7 +56,7 @@ class CreateSEO
     }
 
     public function product(string $domain, string $url, array $parameters) {
-        $json = json_decode(singleproduct($parameters['product_slug'], $parameters['style_slug'], $parameters['color_slug']));
+        $json = json_decode(singleproduct($parameters['product_slug']));
         $params =  (array) $json;
         $product_name = $params['title'];
         $selected_color_id = $params['selected_color_id'];
