@@ -80,7 +80,7 @@ class Product
             self::storeVariantData($sanitisedData, $productData, $variantInventory[$variantData['id']]);
             $variants->push($sanitisedData);
         }
-        $colorvariants = $variants->groupBy('variant_color_id');
+        $colorvariants = $variants->groupBy('product_color_id');
         foreach ($colorvariants as $colorVariantData) {
             $products->push(buildProductIndexFromOdooData($productData, $colorVariantData));
 
