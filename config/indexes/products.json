@@ -91,6 +91,9 @@
                 },
                 "facet_value": {
                   "type": "keyword"
+                },
+                "facet_slug": {
+                  "type": "keyword"
                 }
               }
             },
@@ -124,6 +127,9 @@
                 },
                 "attribute_value": {
                   "type": "text"
+                },
+                "attribute_slug": {
+                  "type": "keyword"
                 }
               }
             }
