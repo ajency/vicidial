@@ -271,7 +271,6 @@ class Product
 
             FetchProductImages::dispatch($product->product_id)->onQueue('process_product_images');// add it to queue
         }
-        // print_r($productIds);
     }
 
 

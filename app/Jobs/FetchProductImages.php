@@ -7,11 +7,8 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Log;
 use App\Product;
 use App\ProductColor;
-use Illuminate\Http\Request;
-// use Illuminate\Support\Facades\File;
 
 class FetchProductImages implements ShouldQueue
 {
@@ -64,7 +61,7 @@ class FetchProductImages implements ShouldQueue
                 array_push($default_color_ids, $prodImage["color_id"]);
             }
 
-            $pc->mapImage($image_id,$type); // map images
+            $pc->mapImage($image_id,$type); 
         }
 
     }
