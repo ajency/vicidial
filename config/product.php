@@ -64,6 +64,7 @@ return [
     'facets'          => [
         "string_facet"  => [
             'product' => [
+                'product_slug',
                 'product_att_fashionability',
                 'product_att_material',
                 'product_category_type',
