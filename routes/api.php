@@ -15,5 +15,5 @@ use Illuminate\Http\Request;
 
 Route::middleware('auth:api')->get('/user', 'HomeController@api');
 
-Route::middleware('auth:api')->post('/rest/v1/user/cart/{id}/insert', 'CartController@guestAddItem');
-Route::middleware('auth:api')->get('/rest/v1/user/cart/{id}/get', 'CartController@guestCartFetch');
+Route::middleware('auth:api')->post('/rest/v1/user/cart/{id}/insert', 'CartController@userAddItem');
+Route::middleware('auth:api')->get('/rest/v1/user/cart/{id}/get', 'CartController@userCartFetch');
