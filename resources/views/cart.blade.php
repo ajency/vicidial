@@ -20,7 +20,7 @@
             </button>
 	  	</div> -->
 	<!-- </div> -->
-	<app-root id="angular-app" class="h-100"></app-root>
+	<app-root id="angular-app" class="h-100 d-block"></app-root>
 </div>
 	<!-- <hr class="mb-0">
 	

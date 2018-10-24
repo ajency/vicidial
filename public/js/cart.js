@@ -107,7 +107,7 @@ function openCart(){
   event.preventDefault();
   $('#main-nav').removeClass('speed-in');
   toggle_panel_visibility($('#cd-cart'), $('#cd-shadow-layer'), $('body'));
-  $("body").addClass("hide-scroll"); 
+  $("body").addClass("hide-scroll");
 }
 
 function set_cart_count() {
@@ -163,6 +163,4 @@ function set_cart_data(json) {
           loaded = true;
       });
     }
-    $("#angular-app").removeClass("d-none");
-    $("#angular-app").addClass("d-block");
   }

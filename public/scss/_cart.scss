@@ -91,6 +91,9 @@ $L : 1200px;
     @include transition(right .5s ease);
     &.speed-in {
         right: 0;
+        .fixed-bottom{
+            right: 0;
+        }
     }
     >* {
         padding: 0 1em;
@@ -335,9 +338,10 @@ $L : 1200px;
     padding: 0px;
   }
   .fixed-bottom{
-        right: 0px;
+        right: -100%;
         width:400px;
         left: inherit;
+        @include transition(right .5s ease);
         @media (min-width: 992px) and (min-width: 1199.98px) {
             width: 40% !important;
           }
