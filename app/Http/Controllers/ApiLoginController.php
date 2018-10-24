@@ -31,6 +31,8 @@ class ApiLoginController extends Controller
     {
         $UserObject = $this->createAuthenticateUser($data, $request);
         $token = $this->fetchAccessToken($UserObject);
+        $UserObject->api_token = $token->id;
+        $UserObject->save();
         
         $id = $request->session()->get('active_cart_id', false);
         if($id) {

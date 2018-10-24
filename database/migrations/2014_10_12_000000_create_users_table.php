@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('phone',10)->unique();
             $table->string('password')->nullable();
             $table->integer('cart_id');
+            $table->string('api_token')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
