@@ -12,8 +12,6 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use App\Product;
 use App\ProductColor;
-use Illuminate\Http\Request;
-// use Illuminate\Support\Facades\File;
 
 class FetchProductImages implements ShouldQueue
 {
@@ -67,9 +65,9 @@ class FetchProductImages implements ShouldQueue
                 $type = "default";
                 array_push($default_color_ids, $prodImage["color_id"]);
             }
-
             $pc->mapImage($image_id, $type);
             \Storage::disk('local')->delete($subfilepath);
+
         }
 
 
