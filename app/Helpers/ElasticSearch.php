@@ -13,15 +13,6 @@ function getInventorySum(array $var){
 
 function getUnSelectedVariants(int $product_id=1636, int $selected_color_id=231){
         $client = ClientBuilder::create()->build();
-        // $this->client->search()
-        $params = [
-            'index' => 'products',
-            'type' => '_doc',
-            'id' => $product_id,
-        ];
-        $product = $client->get($params);
-
-        // print_r($response);
 
         $elastic = new ElasticQuery;
         $elastic->setIndex("products");
@@ -98,32 +89,33 @@ function fetchProduct($product){
         ];
     }
     
-    $selected_color_id = Product::getNumberFacetValue($product, "product_color_id");
+    $data = $product["search_result_data"];
+    $selected_color_id = $data["product_color_id"];
     $json = [
-        "parent_id" => intval($product["id"]),
-        "title" => Product::getAttributeValue($product, "product_att_magento_display_name"),
-        "slug_name" => Product::getAttributeSlug($product, "product_att_magento_display_name"),
-        "slug_style" => Product::getAttributeSlug($product, "product_style_no"),
+        "parent_id" => $data["product_id"],
+        "title" => $data["product_title"],
+        "slug_name" => $data["product_slug"],
+        // "slug_style" => $data["product_style"],
         "category" => [
             // "id" => $product["categ_id"],
-            "gender" => Product::getStringFacetValue($product, "product_gender"),
-            "type" => Product::getStringFacetValue($product, "product_category_type"),
-            "age_group" => Product::getStringFacetValue($product, "product_age_group"),
-            "sub_type" => Product::getStringFacetValue($product, "product_subtype"),
+            "gender" =>  $data["product_gender"],
+            "type" => $data["product_category_type"],
+            "age_group" => $data["product_age_group"],
+            "sub_type" => $data["product_subtype"],
         ],
-        "description" => Product::getStringFacetValue($product, "product_description_sale"),
+        "description" => $data["product_description"],
         "additional_info" => [
-            "age_group" => Product::getStringFacetValue($product, "product_age_group"),
-            "gender" => Product::getStringFacetValue($product, "product_gender"),
-            "material" => Product::getStringFacetValue($product, "product_att_material"),
-            "sleeves" => Product::getStringFacetValue($product, "product_att_sleeves"),
+            "age_group" => $data["product_age_group"],
+            "gender" => $data["product_gender"],
+            "material" => $data["product_att_material"],
+            "sleeves" => $data["product_att_sleeves"],
         ],
         "selected_color_id" => $selected_color_id,
         "variant_group" => [
              $selected_color_id => [
-                "name" => Product::getStringFacetValue($product, "product_color_name"),
-                "html" => Product::getNumberFacetValue($product, "product_color_id"),
-                "slug_color" => Product::getStringFacetSlug($product, "product_color_name"),
+                "name" => $data["product_color_name"],
+                "html" => $data["product_color_html"],
+                "slug_color" =>  $data["product_color_slug"],
                 "images" => json_decode('[{"is_primary":true,"res":{"desktop":{"small_thumb":"/img/thumbnail/6front@thumb.jpg","list_thumb":"https://media-cdn.kidsuperstore.in/media/catalog/product/cache/460a3bcbdb4cc235aac43a6f81f8f135/2/0/2018-09-01101712177353.png","main":"https://media-cdn.kidsuperstore.in/media/catalog/product/cache/c687aa7517cf01e65c009f6943c2b1e9/2/0/2018-09-01101712177353.png","zoom":"https://media-cdn.kidsuperstore.in/media/catalog/product/cache/926507dc7f93631a094422215b778fe0/2/0/2018-09-01101712177353.png"},"mobile":{"small_thumb":"/img/thumbnail/6front@thumb.jpg","list_thumb":"https://media-cdn.kidsuperstore.in/media/catalog/product/cache/460a3bcbdb4cc235aac43a6f81f8f135/2/0/2018-09-01101712177353.png","main":"https://media-cdn.kidsuperstore.in/media/catalog/product/cache/c687aa7517cf01e65c009f6943c2b1e9/2/0/2018-09-01101712177353.png","zoom":"https://media-cdn.kidsuperstore.in/media/catalog/product/cache/926507dc7f93631a094422215b778fe0/2/0/2018-09-01101712177353.png"}}},{"is_primary":false,"res":{"desktop":{"small_thumb":"/img/thumbnail/6front@thumb.jpg","list_thumb":"https://media-cdn.kidsuperstore.in/media/catalog/product/cache/460a3bcbdb4cc235aac43a6f81f8f135/2/0/2018-09-01101712177353.png","main":"https://media-cdn.kidsuperstore.in/media/catalog/product/cache/c687aa7517cf01e65c009f6943c2b1e9/2/0/2018-09-01101712177353.png","zoom":"https://media-cdn.kidsuperstore.in/media/catalog/product/cache/926507dc7f93631a094422215b778fe0/2/0/2018-09-01101712177353.png"},"mobile":{"small_thumb":"/img/thumbnail/6front@thumb.jpg","list_thumb":"https://media-cdn.kidsuperstore.in/media/catalog/product/cache/460a3bcbdb4cc235aac43a6f81f8f135/2/0/2018-09-01101712177353.png","main":"https://media-cdn.kidsuperstore.in/media/catalog/product/cache/c687aa7517cf01e65c009f6943c2b1e9/2/0/2018-09-01101712177353.png","zoom":"https://media-cdn.kidsuperstore.in/media/catalog/product/cache/926507dc7f93631a094422215b778fe0/2/0/2018-09-01101712177353.png"}}}]', true),
                 "variants" => $variants,
              ]
@@ -131,15 +123,19 @@ function fetchProduct($product){
         ],
     ];
 
-    // $json["variant_group"] = $json["variant_group"]+ getUnSelectedVariants($product_id, $selected_color_id);
+    // $json["variant_group"] = $json["variant_group"]+ getUnSelectedVariants(intval($product["id"],$selected_color_id);
     // Log::debug(json_encode($json, true));
     return json_encode($json, true);
     
 }
 
-function singleproduct(string $product_slug, string $style_slug, string $color_slug) {
-    $json = '{"query":{"nested":{"path":"search_data","query":{"bool":{"must":[{"nested":{"path":"search_data.attributes","query":{"bool":{"filter":[{"term":{"search_data.attributes.attribute_name":"product_att_magento_display_name"}},{"term":{"search_data.attributes.attribute_slug":"core-t-shirt-aop-5001"}}]}}}}]}}}}}';
+function singleproduct(string $product_slug) {
+    $json = '{"query":{"nested":{"path":"search_data","query":{"bool":{"must":[{"nested":{"path":"search_data.string_facet","query":{"bool":{"filter":[{"term":{"search_data.string_facet.facet_name":"product_slug"}},{"term":{"search_data.string_facet.facet_value":"'.$product_slug.'"}}]}}}}]}}}}}
+';
+    // print_r($json);die();
     $body = json_decode($json, true);
+    // echo "<pre>";
+    // print_r($body);die();
     $client = ClientBuilder::create()->build();
         $products = $client->search(["index" => "new_products", "body"=>$body]);
         $product = $products["hits"]["hits"][0];

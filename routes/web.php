@@ -24,7 +24,7 @@ Route::middleware(['create-seo:home'])->group(function () {
 });
 
 Route::middleware(['create-seo:product'])->group(function () {
-    Route::get('/{product_slug}/{style_slug}/{color_slug}/buy', 'ProductController@index')->name('product');
+    Route::get('/{product_slug}/buy', 'ProductController@index')->name('product');
 });
 
 Route::middleware(['create-seo:listing'])->group(function () {
