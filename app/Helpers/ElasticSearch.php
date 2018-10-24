@@ -13,7 +13,7 @@ function getInventorySum(array $var){
 
 function getUnSelectedVariants(int $product_id, int $selected_color_id){
         $client = ClientBuilder::create()->build();
-         $json = '{"query":{"nested":{"path":"search_data","query":{"bool":{"must_not":[{"nested":{"path":"search_data.number_facet","query":{"bool":{"filter":[{"term":{"search_data.number_facet.facet_name":"product_color_id"}},{"term":{"search_data.number_facet.facet_value":'.$selected_color_id.'}}]}}}}],"must":[{"nested":{"path":"search_data.number_facet","query":{"bool":{"filter":[{"term":{"search_data.number_facet.facet_name":"product_id"}},{"term":{"search_data.number_facet.facet_value":'.$product_id.'}}]}}}}]}}}},"_source":["search_result_data", "variants", "search_data"]}';
+         $json = '{"query":{"nested":{"path":"search_data","query":{"bool":{"must_not":[{"nested":{"path":"search_data.number_facet","query":{"bool":{"filter":[{"term":{"search_data.number_facet.facet_name":"product_color_id"}},{"term":{"search_data.number_facet.facet_value":'.$selected_color_id.'}}]}}}}],"must":[{"nested":{"path":"search_data.number_facet","query":{"bool":{"filter":[{"term":{"search_data.number_facet.facet_name":"product_id"}},{"term":{"search_data.number_facet.facet_value":'.$product_id.'}}]}}}}]}}}},"_source":["search_result_data", "variants"]}';
 
         $body = json_decode($json, true);
         $response = $client->search(["index" => "new_products", "body"=>$body]);
@@ -33,7 +33,7 @@ function getUnSelectedVariants(int $product_id, int $selected_color_id){
                 $variant = [
                     "id" => $variant["variant_id"],
 
-                    "inventory_available" => Product::getVariantAvailability($value["_source"], $variant["variant_id"]),
+                    "inventory_available" => $variant["availability"],
 
                 ];
                 $color_groups[$var["product_color_id"]]["variants"][] = $variant;
@@ -72,7 +72,7 @@ function fetchProduct($product){
                 "id" => $variant["variant_size_id"],
                 "name" => $variant["variant_size_name"],
             ],
-            "inventory_available" => Product::getVariantAvailability($product, $variant["variant_id"]),
+            "inventory_available" => $variant["availability"],
             "inventory" => [],
 
         ];
