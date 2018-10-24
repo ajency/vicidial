@@ -11,52 +11,41 @@ function getInventorySum(array $var){
         return $total;
 }
 
-function getUnSelectedVariants(int $product_id=1636, int $selected_color_id=231){
+function getUnSelectedVariants(int $product_id, int $selected_color_id){
         $client = ClientBuilder::create()->build();
+         $json = '{"query":{"nested":{"path":"search_data","query":{"bool":{"must_not":[{"nested":{"path":"search_data.number_facet","query":{"bool":{"filter":[{"term":{"search_data.number_facet.facet_name":"product_color_id"}},{"term":{"search_data.number_facet.facet_value":'.$selected_color_id.'}}]}}}}],"must":[{"nested":{"path":"search_data.number_facet","query":{"bool":{"filter":[{"term":{"search_data.number_facet.facet_name":"product_id"}},{"term":{"search_data.number_facet.facet_value":'.$product_id.'}}]}}}}]}}}},"_source":["search_result_data", "variants", "search_data"]}';
 
-        $elastic = new ElasticQuery;
-        $elastic->setIndex("products");
-        $parent_id = ElasticQuery::createTerm('parent_id', $product_id);
-        $type = ElasticQuery::createTerm('type', "variant");
-        $var_color_id = ElasticQuery::createTerm('var_color_id', $selected_color_id);
+        $body = json_decode($json, true);
+        $response = $client->search(["index" => "new_products", "body"=>$body]);
 
-        $elastic->appendMust($parent_id)
-        ->appendMust($type)
-        ->appendMustNot($var_color_id)
-        ->setSize(100);
-        Log::debug(json_encode($elastic->getParams()["body"], true));
-        $response = $elastic->search();
-        
+
         $color_groups = [
 
         ];
         
         foreach ($response["hits"]["hits"] as $key => $value) {
             // $variants[$value["_id"]] = $value["_source"];
-            $var = $value["_source"];
+            $var = $value["_source"]["search_result_data"];
             
-            
-            $variant = [
-                "id" => $var["id"],
-                "inventory_available" => (getInventorySum($var) > 0) ? true :false,
+           
+            foreach ($value["_source"]["variants"] as  $variant) {
 
-            ];
-            $color_groups[$var["var_color_id"]]["variants"][] = $variant;
-            $color_groups[$var["var_color_id"]]["name"] = $var["var_color_value"];
-            $color_groups[$var["var_color_id"]]["html"] = $var["var_color_html"];
-            $color_groups[$var["var_color_id"]]["slug_color"] = $var["slug_color"];
-            $color_groups[$var["var_color_id"]]["images"] = json_decode('[{"is_primary":true,"res":{"desktop":{"small_thumb":"/img/thumbnail/3front@thumb.jpg"},"mobile":{"small_thumb":"/img/thumbnail/3front@thumb.jpg"}}}]', true);
+                $variant = [
+                    "id" => $variant["variant_id"],
+
+                    "inventory_available" => Product::getVariantAvailability($value["_source"], $variant["variant_id"]),
+
+                ];
+                $color_groups[$var["product_color_id"]]["variants"][] = $variant;
+            }
+            
+            $color_groups[$var["product_color_id"]]["name"] = $var["product_color_name"];
+            $color_groups[$var["product_color_id"]]["html"] = $var["product_color_html"];
+            $color_groups[$var["product_color_id"]]["images"] = json_decode('[{"is_primary":true,"res":{"desktop":{"small_thumb":"/img/thumbnail/3front@thumb.jpg"},"mobile":{"small_thumb":"/img/thumbnail/3front@thumb.jpg"}}}]', true);
             $variants[] = $variant;
 
         }
-        // print_r($color_groups);die();
-        // $color_groups = [
-        //     "name" => "Blue",
-        //     "html" => "#0000FF",
-        //     "images" => json_decode('[{"is_primary":true,"res":{"desktop":{"small_thumb":"/img/thumbnail/3front@thumb.jpg"},"mobile":{"small_thumb":"/img/thumbnail/3front@thumb.jpg"}}}]', true),
-        //     "variants" => $variants,
 
-        // ];
         return $color_groups;
     }
 
@@ -95,9 +84,7 @@ function fetchProduct($product){
         "parent_id" => $data["product_id"],
         "title" => $data["product_title"],
         "slug_name" => $data["product_slug"],
-        // "slug_style" => $data["product_style"],
         "category" => [
-            // "id" => $product["categ_id"],
             "gender" =>  $data["product_gender"],
             "type" => $data["product_category_type"],
             "age_group" => $data["product_age_group"],
@@ -123,7 +110,7 @@ function fetchProduct($product){
         ],
     ];
 
-    // $json["variant_group"] = $json["variant_group"]+ getUnSelectedVariants(intval($product["id"],$selected_color_id);
+    $json["variant_group"] = $json["variant_group"]+ getUnSelectedVariants($data["product_id"],$selected_color_id);
     // Log::debug(json_encode($json, true));
     return json_encode($json, true);
     
