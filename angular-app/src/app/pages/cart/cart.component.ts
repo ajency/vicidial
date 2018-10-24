@@ -199,7 +199,7 @@ export class CartComponent implements OnInit {
       this.otp = null;
       this.userValidation.disableVerifyOtpButton = false;
       if(response.success){
-        sessionStorage.setItem('token', response.token.id);
+        sessionStorage.setItem('token', response.token);
         sessionStorage.setItem('cart_id', response.user.active_cart_id);
         this.router.navigateByUrl('/shipping-details', { skipLocationChange: true });        
       }
