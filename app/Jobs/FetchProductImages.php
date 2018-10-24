@@ -41,8 +41,14 @@ class FetchProductImages implements ShouldQueue
             
             $prod_images=Product::fetchProductImages($this->productId);
             $extension = "jpg";
-
+            
+            $productColors = ProductColor::where('product_id',$this->productId)->get();
+            foreach($productColors as $pcs){
+                $pcs->unmapAllImages();
+            }            
+            
             foreach($prod_images as $prodImage){
+                $pc = ProductColor::where('product_id',)->('color_id',)->first();
                 $image = $prodImage['image'];
                 \Log::debug("product reached===");
                 \Log::debug($image);
@@ -59,7 +65,8 @@ class FetchProductImages implements ShouldQueue
                 // $file=File::get($filepath);
                 // if(file_exists($filepath))
 
-                (new Variant)->uploadImage($filepath,false,true,true,'','',"",$filepath,$extension);
+                $pc->uploadImage($filepath,false,true,true,'','',"",$filepath,$extension);
+                //$pc->mappingfunc();
             }
         }
         
