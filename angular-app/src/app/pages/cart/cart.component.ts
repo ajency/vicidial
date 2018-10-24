@@ -40,7 +40,7 @@ export class CartComponent implements OnInit {
     $('.ng-cart-loader').removeClass('cart-loader')
     if(sessionStorage.getItem('add_to_cart_clicked')){
       console.log("add to cart clicked");
-      this.addToCartClicked();
+      this.fetchCartDataOnAddToCartSuccess();
       sessionStorage.removeItem('add_to_cart_clicked');
     }
     else{
@@ -59,12 +59,12 @@ export class CartComponent implements OnInit {
     $('.cd-add-to-cart').on('click',function(){
       console.log("add to cart clicked");
       this.cartOpen = true;
-      self.addToCartClicked();
+      self.fetchCartDataOnAddToCartSuccess();
       sessionStorage.removeItem('add_to_cart_clicked');
     });
   }
 
-  addToCartClicked(){    
+  fetchCartDataOnAddToCartSuccess(){    
     this.showCartLoader = true;
     if(sessionStorage.getItem('cart_data')){
       this.cart = JSON.parse(sessionStorage.getItem('cart_data'));
@@ -73,7 +73,7 @@ export class CartComponent implements OnInit {
     this.sessionCheckInterval = setInterval(()=>{
       if(sessionStorage.getItem('addded_to_cart')){
         if(sessionStorage.getItem('addded_to_cart') == "true")
-          this.fetchCartData();
+          this.fetchCartDataFromServer();
         else
           this.showCartLoader = false;
         sessionStorage.removeItem('addded_to_cart');
@@ -88,11 +88,11 @@ export class CartComponent implements OnInit {
       console.log("cart_data from sessionStorage==>", this.cart);
     }
     else{
-      this.fetchCartData()
+      this.fetchCartDataFromServer()
     }
   }
 
-  fetchCartData(){
+  fetchCartDataFromServer(){
     this.showCartLoader = true;
     let url = this.appservice.apiUrl + '/rest/anonymous/cart/get';
     this.apiservice.request(url, 'get', {} ).then((response)=>{
@@ -191,6 +191,7 @@ export class CartComponent implements OnInit {
       this.otp = null;
       this.userValidation.disableVerifyOtpButton = false;
       if(response.success){
+        sessionStorage.setItem('token', response.token.id);
         this.router.navigateByUrl('/shipping-details', { skipLocationChange: true });        
       }
       else{
