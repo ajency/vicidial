@@ -213,7 +213,7 @@
 	            </div>
 	          </form>
 	          <div class="mt-3">
-	            <button (click)="verifyMobile()" id="shipping-details" [disabled]="check_OTP() || userValidation.disableVerifyOtpButton" type="button" class="btn btn-primary  btn-block btn-lg btn-verify" data-toggle="modal" data-target="#checkout-flow">Verify <i class="fas fa-angle-right position-absolute r-0 mt-2" [ngClass]="{'d-none' : !userValidation.disableVerifyOtpButton}"></i></button>
+	            <button (click)="verifyMobile()" id="shipping-details" [disabled]="check_OTP() || userValidation.disableVerifyOtpButton" type="button" class="btn btn-primary  btn-block btn-lg btn-verify" data-toggle="modal" data-target="#checkout-flow"><span>Verify <i class="fas fa-circle-notch fa-spin fa-lg ml-1" [ngClass]="{'d-none' : !userValidation.disableVerifyOtpButton}"></i> </span> <i class="fas fa-angle-right position-absolute r-0 mt-2"></i></button>
 	          </div>
 	        </div>
 
