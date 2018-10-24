@@ -39,11 +39,15 @@ $(document).ready(function(){
             setTimeout(function(){jQuery( ".kss_sizes" ).removeClass( "shake" );},200);
         }
         else{
+            var url = isLoggedInUser() ? ("/api/rest/v1/user/cart/"+sessionStorage.getItem('cart_id')+"/insert") : ("/rest/anonymous/cart/insert")
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             var data = {_token: CSRF_TOKEN,"variant_id": $('input[type=radio][name=kss-sizes]:checked')[0].dataset['variant_id'],"variant_quantity": 1};
             $.ajax({
-                url: '/rest/anonymous/cart/insert',
+                url: url,
                 type: 'POST',
+                headers: {
+                            'Authorization': isLoggedInUser() ? 'Bearer '+sessionStorage.getItem('token') : ''
+                        },
                 data: data,
                 dataType: 'JSON',
                 success: function (data) {
@@ -148,7 +152,7 @@ function set_cart_data(json) {
 
   loaded = false;
 
-  function loadAngularApp(){
+function loadAngularApp(){
     if(!loaded){
       $.when(
           $.getScript("/views/cart/inline.bundle.js"),
@@ -164,3 +168,9 @@ function set_cart_data(json) {
       });
     }
   }
+
+function isLoggedInUser(){
+    if(sessionStorage.getItem('token') && sessionStorage.getItem('cart_id'))
+        return true;
+    return false;
+}
