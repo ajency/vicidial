@@ -19,8 +19,8 @@ return [
 		],
 	],
 	'model' => [
-		'App\Variant' => [
-			'base_path' => 'products/',
+		'App\ProductColor' => [
+			'base_path' => 'products',
 			'slug_column' => 'elastic_id',
 		],
 	],
