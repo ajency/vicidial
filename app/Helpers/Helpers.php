@@ -2,12 +2,19 @@
 
 use Carbon\Carbon;
 
-function val_integer($object,$values){
-	if (empty($object)|| empty($values)) return false;
-	foreach ($values as $value) {
-		if(!isset($object[$value]) || !(ctype_digit($object[$value]) || is_integer($object[$value]) )) return false;
-	}
-	return true;
+function valInteger($object, $values)
+{
+    if (empty($object) || empty($values)) {
+        return false;
+    }
+
+    foreach ($values as $value) {
+        if (!isset($object[$value]) || !(ctype_digit($object[$value]) || is_integer($object[$value]))) {
+            return false;
+        }
+
+    }
+    return true;
 }
 
 function sanitiseProductData($odooData)
@@ -153,16 +160,22 @@ function buildProductIndexFromOdooData($productData, $variantData)
                 ];
             }
             foreach (config('product.facets.' . $facet . '.variant') as $value) {
-                $search_data[$facet][] = [
+                $facetObj = [
                     'facet_name'  => $value,
-                    'facet_value' => ($facet == 'string_facet') ? str_slug($variant[$value]) : $variant[$value],
+                    'facet_value' => $variant[$value],
                 ];
+                if ($facet == 'string_facet') {
+                    $facetObj['facet_slug'] = str_slug($variant[$value]);
+                }
+
+                $search_data[$facet][] = $facetObj;
             }
         }
         foreach (config('product.facets.attributes.product') as $value) {
             $search_data['attributes'][] = [
                 'attribute_name'  => $value,
                 'attribute_value' => $productData[$value],
+                'attribute_slug'  => str_slug($productData[$value]),
             ];
         }
         foreach (config('product.facets.attributes.variant') as $value) {
