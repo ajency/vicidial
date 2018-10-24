@@ -9,13 +9,12 @@ use App\User;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 use Carbon\Carbon;
+use App\Cart;
 
 class ApiLoginController extends Controller
 {
     public function verifyOTP(Request $request)
     {
-        //$role = Role::create(['name' => 'customer']);
-        //$role = Role::findByName('customer');
         $data = $request->all();
         $validator = $this->validateNumber($data);
         if ($validator->fails()) return json_encode(["message"=> $validator->errors()->first(), 'success'=> false]);
@@ -25,8 +24,14 @@ class ApiLoginController extends Controller
         if($otp != $data['otp']) return json_encode(["message"=> 'The entered OTP is invalid. Please try again.', 'success'=> false]);
         if($otp_expiry < Carbon::now()->timestamp) return json_encode(["message"=> 'The entered OTP is Expired', 'success'=> false]);
 
-        $UserObject = $this->createAuthenticateUser($data);
-        $token = $UserObject->tokens->first();
+        return $this->fetchUserDetails($data, $request);
+    }
+
+    public function fetchUserDetails($data, $request)
+    {
+        $UserObject = $this->createAuthenticateUser($data, $request);
+        $token = $this->fetchAccessToken($UserObject);
+        
         $id = $request->session()->get('active_cart_id', false);
         if($id) {
             $user = ["id"=> $UserObject->id, 'active_cart_id'=> $id];
@@ -34,22 +39,62 @@ class ApiLoginController extends Controller
         else {
             $user = ["id"=> $UserObject->id];
         }
-        return json_encode(["message"=> 'user login successful', 'user'=> $user, 'token'=> $token, 'success'=> true]);
+        return json_encode(["message"=> 'user login successful', 'user'=> $user, 'token'=> $token->id, 'success'=> true]);
     }
 
-    public function createAuthenticateUser($data)
+    public function createAuthenticateUser($data, $request)
     {
+        $id = $request->session()->get('active_cart_id', false);
+
         $UserObject = $this->checkUserExists($data);
 
-        if(!$UserObject) {
-        	$UserObject = User::create([
-	            'name' => '',
-	            'phone' => $data['phone'],
-	        ]);
+        if($UserObject) {
+            $cart = Cart::find($UserObject->cart_id);
+        	if ($cart != null && count($cart->cart_data) == 0 && $id) {
+                if($id != $cart->id) $cart->delete();
+                $cart = Cart::find($id);
+            }
+            elseif ($id) {
+                $cart = Cart::find($id);
+                if($cart->user_id == null) {
+                    $cart->user_id = $UserObject->id;
+                    $cart->save();
+                    $UserObject->cart_id = $cart->id;
+                    $UserObject->save();
+                }
+                else {
+                    $cart = new Cart;
+                    $cart->save();
+                }
+            }
+            elseif ($cart == null) {
+                $cart = new Cart;
+                $cart->save();
+            }
+            $request->session()->put('active_cart_id', $cart->id);
+        }
+        else {
+            $cart = ($id) ? Cart::find($id) : null;
+            if($cart == null || $cart->user_id != null) {
+                $cart = new Cart;
+                $cart->save();
+            }
+            $cart->save();
+
+            $UserObject = User::create([
+                'name' => '',
+                'phone' => $data['phone'],
+                'cart_id' => $cart->id,
+            ]);
+
+            $cart->user_id = $UserObject->id;
+            $cart->save();
+
+            $request->session()->put('active_cart_id', $cart->id);
 
             $UserObject->assignRole('customer');
 
-            $UserObject->createToken('KSS_USER')->accessToken;
+            $this->createAccessToken($UserObject);
         }
 
         Auth::guard()->login($UserObject);
@@ -79,5 +124,15 @@ class ApiLoginController extends Controller
             'phone' => 'required|digits:10',
             'otp' => 'required|digits:'.config('otp.length'),
         ]);
+    }
+
+    public function createAccessToken($UserObject)
+    {
+        $UserObject->createToken('KSS_USER')->accessToken;
+    }
+
+    public function fetchAccessToken($UserObject)
+    {
+        return $token = $UserObject->tokens->first();
     }
 }

@@ -19,9 +19,9 @@ class CreateUsersTable extends Migration
             $table->string('email')->nullable();
             $table->string('phone',10)->unique();
             $table->string('password')->nullable();
+            $table->integer('cart_id');
             $table->rememberToken();
-            $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrent();
+            $table->timestamps();
         });
     }
 

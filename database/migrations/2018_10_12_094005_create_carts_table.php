@@ -18,6 +18,7 @@ class CreateCartsTable extends Migration
             $table->json('cart_data');
             $table->string('type')->default('cart');
             $table->boolean('active')->default(1);
+            $table->integer('user_id')->nullable();
             // $table->morphs('owned_by');
             $table->timestamps();
         });

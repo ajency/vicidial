@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
-use AjComm;
 
 class SMSController extends Controller
 {
@@ -35,7 +34,7 @@ class SMSController extends Controller
         $notify = new \Ajency\Comm\Communication\Notification();
         $notify->setEvent('send-otp');
         $notify->setRecipientIds([$sms]);
-        AjComm::sendNotification($notify);*/
+        \AjComm::sendNotification($notify);*/
         $data = array('name' => 'KSS Ajency', 'email' => 'kss@ajency.in', 'otp' => $otp, 'otp_expiry' => config('otp.expiry'));
 
         \Mail::send('email', $data, function($message) use ($data){
