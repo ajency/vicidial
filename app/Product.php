@@ -265,16 +265,18 @@ class Product
     
     public static function getNoImageProducts()
     {
-        $products = ProductColor::leftJoin('fileupload_mapping', function ($join) {
-            $join->on('product_colors.id', '=', 'fileupload_mapping.object_id');
-            $join->where('fileupload_mapping.object_type', '=', "App\ProductColor");
-        })->where('fileupload_mapping.id', null)->select('product_colors.product_id')->distinct()->get();
-        foreach ($products as $product) {
-            echo "product==" . $product->product_id . "\n";
+        $products = ProductColor::leftJoin('fileupload_mapping', function($join)
+            {
+                $join->on('product_colors.id', '=', 'fileupload_mapping.object_id');
+                $join->where('fileupload_mapping.object_type', '=', "App\ProductColor");
+            })->where('fileupload_mapping.id', null)->select('product_colors.product_id')->distinct()->get();
+        foreach($products as $product) {
+            echo "product==".$product->product_id."\n";
 
             FetchProductImages::dispatch($product->product_id)->onQueue('process_product_images'); // add it to queue
         }
 
     }
+
 
 }

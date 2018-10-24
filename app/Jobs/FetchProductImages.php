@@ -11,6 +11,9 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use App\Product;
+use App\ProductColor;
+use Illuminate\Http\Request;
+// use Illuminate\Support\Facades\File;
 
 class FetchProductImages implements ShouldQueue
 {
