@@ -20,6 +20,7 @@ export class CartComponent implements OnInit {
   cartOpen = false;
   mobileNumber : any;
   otp : number;
+  otpCode = {otp1:"",otp2:"",otp3:"",otp4:"",otp5:"",otp6:""}
   userValidation = {
     disableSendOtpButton :  false,
     mobileValidationFailed : false,
@@ -236,5 +237,23 @@ export class CartComponent implements OnInit {
       $('body').addClass('hide-scroll');
     }      
   }
+
+  next(event: KeyboardEvent,el1,el2) {
+    // console.log(el1, el2)
+    if(event.key=="Backspace")
+    {
+      el1.focus();
+    }
+    else
+    {
+      el2.focus();
+    }
+  }
+
+  check_OTP(){
+    if(this.otpCode.otp1=='' || this.otpCode.otp2=='' || this.otpCode.otp3=='' || this.otpCode.otp4=='' || this.otpCode.otp5=='' || this.otpCode.otp6=='')
+      return true;
+  }
+
 
 }
