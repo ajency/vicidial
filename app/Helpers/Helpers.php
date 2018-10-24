@@ -153,6 +153,7 @@ function buildProductIndexFromOdooData($productData, $variantData)
             "variant_sale_price" => $variant['variant_sale_price'],
             "variant_size_id"    => $variant['variant_size_id'],
             "variant_size_name"  => $variant['variant_size_name'],
+            "variant_availability"  => $variant['variant_availability'],
         ];
         $search_data = [
             'full_text'         => generateFullTextForIndexing($productData, $variant),
