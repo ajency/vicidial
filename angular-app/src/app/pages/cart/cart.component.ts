@@ -97,7 +97,7 @@ export class CartComponent implements OnInit {
     this.showCartLoader = true;
     let url = this.appservice.apiUrl + (this.isLoggedInUser() ? ("/api/rest/v1/user/cart/"+sessionStorage.getItem('cart_id')+"/get") : ("/rest/anonymous/cart/get"))
     console.log(this.isLoggedInUser());
-    let header = this.isLoggedInUser() ? { token : sessionStorage.getItem('token') } : {}
+    let header = this.isLoggedInUser() ? { Authorization : 'Bearer '+sessionStorage.getItem('token') } : {}
     this.apiservice.request(url, 'get', {}, header ).then((response)=>{
       console.log("response ==>", response);
       this.cart = response;
