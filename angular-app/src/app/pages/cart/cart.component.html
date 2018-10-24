@@ -10,7 +10,7 @@
 	  	<div class="align-items-center">
 			<h3 class="modal-title font-weight-bold mt-1 mb-0">
 				Cart <span class="text-muted "><strong>&#183;</strong></span>
-				<small class="count text-muted ">{{cart.cart_count || 0}} <span *ngIf="(cart.cart_count && (cart.cart_count >1 || cart.cart_count == 0)) || cart.cart_count===undefined">items</span> <span *ngIf="cart.cart_count && cart.cart_count == 1">item</span>
+				<small class="count text-muted ">{{cart.cart_count || 0}} <span *ngIf="(cart.cart_count !==undefined && (cart.cart_count >1 || cart.cart_count == 0)) || cart.cart_count===undefined">items</span> <span *ngIf="cart.cart_count && cart.cart_count == 1">item</span>
 				</small>
 			</h3>
 	  	</div>
