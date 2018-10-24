@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppServiceService } from '../../service/app-service.service';
 import { ApiServiceService } from '../../service/api-service.service';
-import * as $ from 'jquery';
+// import * as $ from 'jquery';
+declare var $: any;
 
 @Component({
   selector: 'app-cart',
@@ -32,7 +33,6 @@ export class CartComponent implements OnInit {
                private appservice : AppServiceService,
                private apiservice : ApiServiceService
               ) { 
-
   }
 
   ngOnInit() {
@@ -94,8 +94,10 @@ export class CartComponent implements OnInit {
 
   fetchCartDataFromServer(){
     this.showCartLoader = true;
-    let url = this.appservice.apiUrl + '/rest/anonymous/cart/get';
-    this.apiservice.request(url, 'get', {} ).then((response)=>{
+    let url = this.appservice.apiUrl + (this.isLoggedInUser() ? ("/api/rest/v1/user/cart/"+sessionStorage.getItem('cart_id')+"/get") : ("/rest/anonymous/cart/get"))
+    console.log(this.isLoggedInUser());
+    let header = this.isLoggedInUser() ? { token : sessionStorage.getItem('token') } : {}
+    this.apiservice.request(url, 'get', {}, header ).then((response)=>{
       console.log("response ==>", response);
       this.cart = response;
       sessionStorage.setItem('cart_data', JSON.stringify(this.cart));
@@ -110,6 +112,12 @@ export class CartComponent implements OnInit {
       }
       this.showCartLoader=false;
     })
+  }
+
+  isLoggedInUser(){
+    if(sessionStorage.getItem('token') && sessionStorage.getItem('cart_id'))
+      return true;
+    return false;
   }
 
   modifyCart(item){
@@ -192,6 +200,7 @@ export class CartComponent implements OnInit {
       this.userValidation.disableVerifyOtpButton = false;
       if(response.success){
         sessionStorage.setItem('token', response.token.id);
+        sessionStorage.setItem('cart_id', response.user.active_cart_id);
         this.router.navigateByUrl('/shipping-details', { skipLocationChange: true });        
       }
       else{
@@ -212,6 +221,20 @@ export class CartComponent implements OnInit {
     // this.cart = null;
     this.cartOpen = false;
     this.appservice.closeCart();
+  }
+
+  modalHandler(){
+    console.log("modalHandler")
+    if(this.isLoggedInUser()){
+      this.router.navigateByUrl('/shipping-details', { skipLocationChange: true });
+    }
+    else{
+      $('#signin').modal('show');
+      $("#cd-cart").css("overflow", "hidden");
+      $('.modal-backdrop').appendTo('#cd-cart');
+      $('body').removeClass();
+      $('body').addClass('hide-scroll');
+    }      
   }
 
 }

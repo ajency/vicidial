@@ -281,16 +281,7 @@ jQuery(window).on("load", function() {
     // $('.kss_payment').appendTo('#cd-cart');
     $('#modal_pincode').appendTo('#cd-cart');
 })
-//getting click event to show modal
-$('#checkout').click(function() {
-    $('#signin').modal();
-    $("#cd-cart").css("overflow", "hidden");
-    //appending modal background inside the bigform-content
-    $('.modal-backdrop').appendTo('#cd-cart');
-    //removing body classes to able click events
-    $('body').removeClass();
-    $('body').addClass('hide-scroll');
-});
+
 //getting click event to show modal
 $('#delivery-pincode').click(function() {
     $('#modal_pincode').modal();
