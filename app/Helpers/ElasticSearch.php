@@ -41,6 +41,7 @@ function getUnSelectedVariants(int $product_id, int $selected_color_id){
             
             $color_groups[$var["product_color_id"]]["name"] = $var["product_color_name"];
             $color_groups[$var["product_color_id"]]["html"] = $var["product_color_html"];
+            $color_groups[$var["product_color_id"]]["slug_name"] = $var["product_slug"];
             $color_groups[$var["product_color_id"]]["images"] = json_decode('[{"is_primary":true,"res":{"desktop":{"small_thumb":"/img/thumbnail/3front@thumb.jpg"},"mobile":{"small_thumb":"/img/thumbnail/3front@thumb.jpg"}}}]', true);
             $variants[] = $variant;
 
@@ -102,7 +103,7 @@ function fetchProduct($product){
              $selected_color_id => [
                 "name" => $data["product_color_name"],
                 "html" => $data["product_color_html"],
-                "slug_color" =>  $data["product_color_slug"],
+                "slug_name" =>  $data["product_slug"],
                 "images" => json_decode('[{"is_primary":true,"res":{"desktop":{"small_thumb":"/img/thumbnail/6front@thumb.jpg","list_thumb":"https://media-cdn.kidsuperstore.in/media/catalog/product/cache/460a3bcbdb4cc235aac43a6f81f8f135/2/0/2018-09-01101712177353.png","main":"https://media-cdn.kidsuperstore.in/media/catalog/product/cache/c687aa7517cf01e65c009f6943c2b1e9/2/0/2018-09-01101712177353.png","zoom":"https://media-cdn.kidsuperstore.in/media/catalog/product/cache/926507dc7f93631a094422215b778fe0/2/0/2018-09-01101712177353.png"},"mobile":{"small_thumb":"/img/thumbnail/6front@thumb.jpg","list_thumb":"https://media-cdn.kidsuperstore.in/media/catalog/product/cache/460a3bcbdb4cc235aac43a6f81f8f135/2/0/2018-09-01101712177353.png","main":"https://media-cdn.kidsuperstore.in/media/catalog/product/cache/c687aa7517cf01e65c009f6943c2b1e9/2/0/2018-09-01101712177353.png","zoom":"https://media-cdn.kidsuperstore.in/media/catalog/product/cache/926507dc7f93631a094422215b778fe0/2/0/2018-09-01101712177353.png"}}},{"is_primary":false,"res":{"desktop":{"small_thumb":"/img/thumbnail/6front@thumb.jpg","list_thumb":"https://media-cdn.kidsuperstore.in/media/catalog/product/cache/460a3bcbdb4cc235aac43a6f81f8f135/2/0/2018-09-01101712177353.png","main":"https://media-cdn.kidsuperstore.in/media/catalog/product/cache/c687aa7517cf01e65c009f6943c2b1e9/2/0/2018-09-01101712177353.png","zoom":"https://media-cdn.kidsuperstore.in/media/catalog/product/cache/926507dc7f93631a094422215b778fe0/2/0/2018-09-01101712177353.png"},"mobile":{"small_thumb":"/img/thumbnail/6front@thumb.jpg","list_thumb":"https://media-cdn.kidsuperstore.in/media/catalog/product/cache/460a3bcbdb4cc235aac43a6f81f8f135/2/0/2018-09-01101712177353.png","main":"https://media-cdn.kidsuperstore.in/media/catalog/product/cache/c687aa7517cf01e65c009f6943c2b1e9/2/0/2018-09-01101712177353.png","zoom":"https://media-cdn.kidsuperstore.in/media/catalog/product/cache/926507dc7f93631a094422215b778fe0/2/0/2018-09-01101712177353.png"}}}]', true),
                 "variants" => $variants,
              ]
