@@ -158,20 +158,24 @@ export class CartComponent implements OnInit {
   }
 
   deleteItem(item){
-    // console.log("delete item ==>", item);
-    // let body = {
-    //   item_id : item.id
-    // }
-    // let url = 'http://localhost:8000/rest/anonymous/cart/delete';
-    // this.apiservice.request(url, 'get', body ).then((response)=>{
-    //   console.log("response ==>", response);
-    //   let index = this.cart.items.findIndex(i => i.id == item.id)
-    //   this.cart.items.splice(index,1);
-    //   sessionStorage.setItem('cart_data', JSON.stringify(this.cart));
-    // })
-    // .catch((error)=>{
-    //   console.log("error ===>", error);
-    // })
+    console.log("delete item ==>", item);
+    let body = { variant_id : item.id };
+    let url = this.appservice.apiUrl + (this.isLoggedInUser() ? ("/api/rest/v1/user/cart/"+this.getCookie('cart_id')+"/delete?") : ("/rest/anonymous/cart/delete?"));
+    let header = this.isLoggedInUser() ? { Authorization : 'Bearer '+this.getCookie('token') } : {};
+    url = url+$.param(body);
+    this.apiservice.request(url, 'get', body, header ).then((response)=>{
+      console.log("response ==>", response);
+      let index = this.cart.items.findIndex(i => i.id == item.id)
+      this.cart.items.splice(index,1);
+      this.cart.summary = response.summary;
+      this.cart.cart_count = response.cart_count;
+      document.cookie = "cart_count=" + this.cart.cart_count;
+      sessionStorage.setItem('cart_data', JSON.stringify(this.cart));
+      this.updateCartCountInUI()
+    })
+    .catch((error)=>{
+      console.log("error ===>", error);
+    })
   }
 
   authenticateUser(){
@@ -271,11 +275,15 @@ export class CartComponent implements OnInit {
   updateCartCountInUI() {
     //Check if cart count in Session storage
     var cart_count = this.getCookie( "cart_count" );
-    if(cart_count){
-        //Scroll to top if cart icon is hidden on top
-        $(".cart-counter").removeClass('d-none'), 100;
-        $(".cart-counter").addClass('d-block'), 100;
-        $('#output').html(function(i, val) { return cart_count });
+    if(cart_count && cart_count != "0"){
+      //Scroll to top if cart icon is hidden on top
+      $(".cart-counter").removeClass('d-none'), 100;
+      $(".cart-counter").addClass('d-block'), 100;
+      $('#output').html(function(i, val) { return cart_count });
+    }
+    else{
+      $(".cart-counter").addClass('d-none'), 100;
+      $(".cart-counter").removeClass('d-block'), 100;
     }
   }
 
