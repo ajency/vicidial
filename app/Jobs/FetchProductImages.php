@@ -33,6 +33,7 @@ class FetchProductImages implements ShouldQueue
     public function handle()
     {
 
+        if( $this->productId == 982){
         $prod_images = Product::fetchProductImages($this->productId);
         $extension   = "jpg";
 
@@ -49,9 +50,12 @@ class FetchProductImages implements ShouldQueue
             $product_name  = ($prodImage["magento_name"] == "") ? $prodImage["magento_name"] : $prodImage["name"];
             $imageName     = generateVariantImageName($product_name, $prodImage["color_name"], $colors);
             $imageFullName = $imageName . "." . $extension;
-            $filepath      = storage_path() . '/variants/' . $imageFullName;
+            $subfilepath      = '/variants/' . $imageFullName;
+            $subpath      = 'variants/' . $imageFullName; 
             $actualImage   = base64_decode($image);
-            \File::put($filepath, $actualImage);
+            \Storage::put($subfilepath, $actualImage);
+            $disk = \Storage::disk('local');  
+            $filepath      = ($disk->getDriver()->getAdapter()->getPathPrefix()).$subpath;        
             $attributes = $prodImage;
             unset($attributes['image']);
             $image_id = $pc->uploadImage($filepath, false, true, true, '', '', "", $filepath, $extension, $imageName, $attributes);
@@ -62,7 +66,9 @@ class FetchProductImages implements ShouldQueue
             }
 
             $pc->mapImage($image_id, $type);
+            \Storage::disk('local')->delete($subfilepath);
         }
+    }
 
     }
 }
