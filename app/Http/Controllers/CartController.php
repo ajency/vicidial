@@ -114,7 +114,22 @@ class CartController extends Controller
         }
         $cart->removeItem($params["variant_id"]);
         $cart->save();
-        $message = "item deleted successfully";
+        $message = "Item deleted successfully";
+        $summary = $cart->getSummary();
+        return response()->json(['cart_count' => $cart->itemCount(), 'message' => $message, "summary" => $summary]);
+    }
+
+    public function userCartDelete($id, Request $request)
+    {
+        $params = $request->all();
+
+        $cart = Cart::find($id);
+        if ($cart == null) {
+            abort(404, "Cart not found for this session");
+        }
+        $cart->removeItem($params["variant_id"]);
+        $cart->save();
+        $message = "Item deleted successfully";
         $summary = $cart->getSummary();
         return response()->json(['cart_count' => $cart->itemCount(), 'message' => $message, "summary" => $summary]);
     }
