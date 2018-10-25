@@ -1,6 +1,6 @@
 $(document).ready(function(){
     //Set crt count on page load
-    set_cart_count();
+    updateCartCountInUI();
 
     var kss_alert_timeout;
 
@@ -39,14 +39,14 @@ $(document).ready(function(){
             setTimeout(function(){jQuery( ".kss_sizes" ).removeClass( "shake" );},200);
         }
         else{
-            var url = isLoggedInUser() ? ("/api/rest/v1/user/cart/"+sessionStorage.getItem('cart_id')+"/insert") : ("/rest/anonymous/cart/insert")
+            var url = isLoggedInUser() ? ("/api/rest/v1/user/cart/"+getCookie('cart_id')+"/insert") : ("/rest/anonymous/cart/insert")
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             var data = {_token: CSRF_TOKEN,"variant_id": $('input[type=radio][name=kss-sizes]:checked')[0].dataset['variant_id'],"variant_quantity": 1};
             $.ajax({
                 url: url,
                 type: 'POST',
                 headers: {
-                            'Authorization': isLoggedInUser() ? 'Bearer '+sessionStorage.getItem('token') : ''
+                            'Authorization': isLoggedInUser() ? 'Bearer '+getCookie('token') : ''
                         },
                 data: data,
                 dataType: 'JSON',
@@ -57,10 +57,10 @@ $(document).ready(function(){
                     $('.cd-add-to-cart .btn-label-initial').removeClass('d-none');
                     //var itemImg = $(add_to_cart_element).closest('.container').find('img').eq(1);
                     //flyToElement($(itemImg), $('.shopping-cart'));
-                    sessionStorage.setItem( "cart_count", data.cart_count );
+                    document.cookie = "cart_count=" + data.cart_count;
                     sessionStorage.setItem( "addded_to_cart", "true");
                     // set_cart_data(data.item);
-                    set_cart_count();
+                    updateCartCountInUI();
                     $('.kss-alert .message').html('<strong>Success!!!</strong> Added to bag');
                     $('.kss-alert').addClass('kss-alert--success');
                     $('.kss-alert').addClass('is-open');
@@ -114,9 +114,9 @@ function openCart(){
   $("body").addClass("hide-scroll");
 }
 
-function set_cart_count() {
+function updateCartCountInUI() {
     //Check if cart count in Session storage
-    var cart_count = sessionStorage.getItem( "cart_count" );
+    var cart_count = getCookie( "cart_count" );
     if(cart_count)
     {
         //Scroll to top if cart icon is hidden on top
@@ -170,7 +170,24 @@ function loadAngularApp(){
   }
 
 function isLoggedInUser(){
-    if(sessionStorage.getItem('token') && sessionStorage.getItem('cart_id'))
+    if(getCookie('token') && getCookie('cart_id'))
         return true;
     return false;
+}
+
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
 }

@@ -100,14 +100,15 @@ export class CartComponent implements OnInit {
 
   fetchCartDataFromServer(){
     this.showCartLoader = true;
-    let url = this.appservice.apiUrl + (this.isLoggedInUser() ? ("/api/rest/v1/user/cart/"+sessionStorage.getItem('cart_id')+"/get") : ("/rest/anonymous/cart/get"))
+    let url = this.appservice.apiUrl + (this.isLoggedInUser() ? ("/api/rest/v1/user/cart/"+this.getCookie('cart_id')+"/get") : ("/rest/anonymous/cart/get"))
     console.log(this.isLoggedInUser());
-    let header = this.isLoggedInUser() ? { Authorization : 'Bearer '+sessionStorage.getItem('token') } : {}
+    let header = this.isLoggedInUser() ? { Authorization : 'Bearer '+this.getCookie('token') } : {}
     this.apiservice.request(url, 'get', {}, header ).then((response)=>{
       console.log("response ==>", response);
       this.cart = response;
       sessionStorage.setItem('cart_data', JSON.stringify(this.cart));
-      sessionStorage.setItem( "cart_count",this.cart.cart_count);
+      document.cookie = "cart_count=" + this.cart.cart_count;
+      this.updateCartCountInUI();
       this.showCartLoader=false;
       this.zone.run(() => {});
     })
@@ -125,7 +126,7 @@ export class CartComponent implements OnInit {
   }
 
   isLoggedInUser(){
-    if(sessionStorage.getItem('token') && sessionStorage.getItem('cart_id'))
+    if(this.getCookie('token') && this.getCookie('cart_id'))
       return true;
     return false;
   }
@@ -211,8 +212,8 @@ export class CartComponent implements OnInit {
       this.otp = null;
       this.userValidation.disableVerifyOtpButton = false;
       if(response.success){
-        sessionStorage.setItem('token', response.token);
-        sessionStorage.setItem('cart_id', response.user.active_cart_id);
+        document.cookie='token='+ response.token;
+        document.cookie='cart_id=' + response.user.active_cart_id;
         this.router.navigateByUrl('/shipping-details', { skipLocationChange: true });        
       }
       else{
@@ -259,6 +260,33 @@ export class CartComponent implements OnInit {
   check_OTP(){
     if(this.otpCode.otp1=='' || this.otpCode.otp2=='' || this.otpCode.otp3=='' || this.otpCode.otp4=='' || this.otpCode.otp5=='' || this.otpCode.otp6=='')
       return true;
+  }
+
+  updateCartCountInUI() {
+    //Check if cart count in Session storage
+    var cart_count = this.getCookie( "cart_count" );
+    if(cart_count){
+        //Scroll to top if cart icon is hidden on top
+        $(".cart-counter").removeClass('d-none'), 100;
+        $(".cart-counter").addClass('d-block'), 100;
+        $('#output').html(function(i, val) { return cart_count });
+    }
+  }
+
+  getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
   }
   
 }
