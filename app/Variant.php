@@ -5,11 +5,8 @@ namespace App;
 use App\Elastic\ElasticQuery;
 use Illuminate\Database\Eloquent\Model;
 
-use Ajency\FileUpload\FileUpload;
-
 class Variant extends Model
 {
-    use FileUpload;
 
     protected $elastic_data;
     protected $elastic_index = "";

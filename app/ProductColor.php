@@ -2,8 +2,8 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use Ajency\FileUpload\FileUpload;
+use Illuminate\Database\Eloquent\Model;
 
 class ProductColor extends Model
 {
