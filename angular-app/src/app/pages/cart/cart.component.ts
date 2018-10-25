@@ -74,6 +74,8 @@ export class CartComponent implements OnInit {
     }
     else
       this.cart = { items : [] };
+
+    let time = new Date().getTime() + 1500;
     this.sessionCheckInterval = setInterval(()=>{
       if(sessionStorage.getItem('addded_to_cart')){
         if(sessionStorage.getItem('addded_to_cart') == "true")
@@ -81,6 +83,10 @@ export class CartComponent implements OnInit {
         else
           this.showCartLoader = false;
         sessionStorage.removeItem('addded_to_cart');
+        clearInterval(this.sessionCheckInterval);
+      }
+      if(new Date().getTime() > time){
+        this.showCartLoader = false;
         clearInterval(this.sessionCheckInterval);
       }
     this.zone.run(() => {});
