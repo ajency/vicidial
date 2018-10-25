@@ -10,12 +10,12 @@
         <hr>
       </div>
       <div id="headingOne">
-   		  <label class="w-100" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+   		  <label class="w-100" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
             Gender <i class="fas fa-angle-up float-right"></i>
         </label>
       </div>
 
-      <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+      <div id="collapseOne" class="collapsed show" aria-labelledby="headingOne" data-parent="#accordion">
         <div class="card-body">
         	<div class="custom-control custom-checkbox">
     			  <input type="checkbox" class="custom-control-input" id="customCheck1">
@@ -36,14 +36,14 @@
          Size<i class="fas fa-angle-up float-right"></i>
         </label>
       </div>
-      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" >
         <div class="card-body">
        		<div class="custom-control custom-checkbox">
-      		  <input type="checkbox" class="custom-control-input" id="customCheck7">
+      		  <input type="checkbox" class="custom-control-input" id="customCheck7" disabled>
       		  <label class="custom-control-label f-w-4" for="customCheck7">1-12M <span class="sub-text">(03)</span></label>
       		</div>
       		<div class="custom-control custom-checkbox">
-      		  <input type="checkbox" class="custom-control-input" id="customCheck8">
+      		  <input type="checkbox" class="custom-control-input" id="customCheck8" disabled>
       		  <label class="custom-control-label f-w-4" for="customCheck8">2-3Y <span class="sub-text">(20)</span></label>
       		</div>
       		<div class="custom-control custom-checkbox">
@@ -61,13 +61,14 @@
         </div>
       </div>
     </div>
+
       <div class="kss_filter-list">
       <div id="headingThree">
         <label class="w-100 collapsed" data-toggle="collapse" data-target="#collapseseven" aria-expanded="false" aria-controls="collapseseven">
           Color<i class="fas fa-angle-up float-right"></i>
         </label>
       </div>
-      <div id="collapseseven" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+      <div id="collapseseven" class="collapse" aria-labelledby="headingThree" >
         <div class="card-body">
        
           <ul class="product-color p-0">
@@ -119,7 +120,7 @@
           Price<i class="fas fa-angle-up float-right"></i>
         </label>
       </div>
-      <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+      <div id="collapseThree" class="collapse" aria-labelledby="headingThree" >
         <div class="card-body">
       	  <div class="custom-control custom-checkbox">
     			  <input type="checkbox" class="custom-control-input" id="customCheck12">
@@ -157,7 +158,7 @@
           Tags<i class="fas fa-angle-up float-right"></i>
         </label>
       </div>
-      <div id="collapseFour" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+      <div id="collapseFour" class="collapse" aria-labelledby="headingThree" >
         <div class="card-body">
      	    <div class="btn-group mb-1" role="group" aria-label="first group">
           <button type="button" class="btn btn-outline-dark"><i class="fas fa-tag"></i> Toon Tshirt</button>
@@ -180,7 +181,29 @@
         </div>
       </div>
     </div>
-  
+      <div class="kss_filter-list">
+      <div id="headingfive">
+        <label class=" w-100 collapsed" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseTwo">
+         Brand<i class="fas fa-angle-up float-right"></i>
+        </label>
+      </div>
+      <div id="collapseFive" class="collapse" aria-labelledby="headingfive" >
+        <div class="card-body">
+         <div class="custom-control custom-radio">
+            <input type="radio" id="radio3" name="radioDisabled" id="customRadioDisabled" class="custom-control-input" disabled>
+           <label class="custom-control-label" for="customRadioDisabled">Brand 1</label>
+          </div>
+          <div class="custom-control custom-radio">
+            <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+            <label class="custom-control-label" for="customRadio2">Brand 2</label>
+          </div>
+           <div class="custom-control custom-radio">
+            <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input">
+            <label class="custom-control-label" for="customRadio3">Brand 3</label>
+          </div>
+        </div>
+      </div>
+    </div>
       <div class="fixed-bottom d-none footer-filter">
             <div class="row no-gutters px-2 py-2">
                 <div class="col-6 text-center">

@@ -123,6 +123,47 @@ input[type=number]::-webkit-outer-spin-button {
 .product-color {
   margin: 0px;
   text-align: left;
+  &--single{
+    transform: scale(0.7);   
+    li{
+      input{
+        &:checked{
+          & + label:after{
+            font-size: 1.25em;
+            top: 40%;
+          }
+        }
+      }
+    }
+  }
+  &--sm{
+    transform: scale(0.6);
+  }
+  &.no-check{
+    input{
+      &:checked{
+        & + label{
+          opacity: 0.5;
+          &:after{
+            display: none;
+          } 
+        }
+      }
+    }
+  }
+  &.checked{
+    input{
+      & + label{
+        opacity: 1;
+        &:after{
+          content: "\2713";
+          opacity: 1;
+          font-size: 1.25em;
+          top: 40%;
+        } 
+      }
+    }
+  }
 }
 
 .product-color {

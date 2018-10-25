@@ -88,4 +88,6 @@
    }
   }
 
-  
+  .custom-control-input:disabled~.custom-control-label {
+    color: #a4a4a4;
+}
