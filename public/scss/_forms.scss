@@ -130,14 +130,11 @@ input[type=number]::-webkit-outer-spin-button {
         &:checked{
           & + label:after{
             font-size: 1.25em;
-            top: 40%;
+            top: 38%;
           }
         }
       }
     }
-  }
-  &--sm{
-    transform: scale(0.6);
   }
   &.no-check{
     input{
@@ -182,8 +179,7 @@ input[type=number]::-webkit-outer-spin-button {
   opacity: 0;
   visibility: hidden;
 }
-.product-color li input:checked + label {
-  border-color: #6CA1AD;
+.product-color li input:checked + label {;
   opacity: 1;
 }
 .product-color li input:checked + label:after {
@@ -197,7 +193,8 @@ input[type=number]::-webkit-outer-spin-button {
   line-height: 26px;
   display: inline-block;
   position: relative;
-  border: 0px solid #535151;
+  border: 1px solid #8e8e8e;
+  color: #e4e4e4;
   cursor: pointer;
   text-align: center;
   opacity: 0.5;
