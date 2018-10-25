@@ -27,19 +27,14 @@ class SMSController extends Controller
         $request->session()->put('otp', $otp);
         $request->session()->put('otp_expiry', $otp_expiry->timestamp);
 
-    	/*$sms = new \Ajency\Comm\Models\SmsRecipient();
+    	$sms = new \Ajency\Comm\Models\SmsRecipient();
         $sms->setTo(['91'.$data['phone']]);
         $sms->setMessage($otp.' is the OTP to verify your number with KidSuperStore. It will expire in '.config('otp.expiry').' minutes.');
         $sms->setOverride(true);// to send to DND numbers
         $notify = new \Ajency\Comm\Communication\Notification();
         $notify->setEvent('send-otp');
         $notify->setRecipientIds([$sms]);
-        \AjComm::sendNotification($notify);*/
-        $data = array('name' => 'KSS Ajency', 'email' => 'kss@ajency.in', 'otp' => $otp, 'otp_expiry' => config('otp.expiry'));
-
-        \Mail::send('email', $data, function($message) use ($data){
-            $message->to($data['email'], $data['name'])->subject('OTP '.$data['otp'].' - time '.$data['otp_expiry']);
-        });
+        \AjComm::sendNotification($notify);
 
         return json_encode(["message"=> "OTP Sent successfully", 'success'=> true]);
     }
@@ -48,7 +43,6 @@ class SMSController extends Controller
     {
         return $validator = Validator::make($data, [
             'phone' => 'required|digits:10',
-            //'otp' => 'required|digits:'.config('otp.length'),
         ]);
     }
 }
