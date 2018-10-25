@@ -5,7 +5,6 @@ use App\Elastic\ElasticQuery;
 use App\Elastic\OdooConnect;
 use App\Facet;
 use App\Jobs\CreateProductJobs;
-use App\Jobs\FetchProductImages;
 use App\ProductColor;
 use App\Variant;
 
@@ -156,17 +155,17 @@ class Product
     {
         $odoo           = new OdooConnect;
         $product        = $odoo->defaultExec('product.template', 'read', [$product_id], ["fields" => ["images", "att_magento_display_name"]]);
-        $magento_name   = $product[0]["att_magento_display_name"];
+        $magento_name = $product[0]["att_magento_display_name"];
         $product_images = $odoo->defaultExec("product.image", "read", [$product[0]["images"]], [
-            "fields" => ["image", "color_variant", "name"],
+            "fields" => ["image", "color_variant", "name" ]
         ]);
-        $images = collect();
+        $images         = collect();
         foreach ($product_images as $image) {
             $temp = [
-                "image"        => $image["image"],
-                "color_id"     => $image["color_variant"][0],
-                "color_name"   => $image["color_variant"][1],
-                "name"         => $image["name"],
+                "image" => $image["image"],
+                "color_id" => $image["color_variant"][0],
+                "color_name" => $image["color_variant"][1], 
+                "name" => $image["name"],
                 "magento_name" => $magento_name,
             ];
             $images->push($temp);
@@ -216,7 +215,7 @@ class Product
         }
     }
 
-    public static function getStringFacetSlug($product, string $field)
+     public static function getStringFacetSlug($product, string $field)
     {
         $facets = $product["search_data"][0]["string_facet"];
         foreach ($facets as $key => $facet) {
@@ -226,6 +225,7 @@ class Product
 
         }
     }
+    
 
     public static function getNumberFacetValue($product, string $field)
     {
@@ -237,12 +237,10 @@ class Product
 
         }
     }
-
-    public static function getVariantSequence($product, $variant_id)
-    {
+    public static function getVariantSequence($product, $variant_id){
         $data = $product["variants"];
         foreach ($data as $key => $value) {
-            if ($value["variant_id"] == $variant_id) {
+            if($value["variant_id"] == $variant_id){
                 return $key;
             }
         }
@@ -251,26 +249,12 @@ class Product
     public static function getVariantAvailability($product, int $variant_id)
     {
         $order = self::getVariantSequence($product, $variant_id);
-        $data  = $product["search_data"][$order]["boolean_facet"];
+        $data = $product["search_data"][$order]["boolean_facet"];
         foreach ($data as $key => $value) {
-            if ($value["facet_name"] == "variant_availability") {
+            if($value["facet_name"] == "variant_availability"){
                 return $value["facet_value"];
             }
         }
         return false;
     }
-    
-    public static function getNoImageProducts()
-    {
-        $products = ProductColor::leftJoin('fileupload_mapping', function ($join) {
-            $join->on('product_colors.id', '=', 'fileupload_mapping.object_id');
-            $join->where('fileupload_mapping.object_type', '=', "App\ProductColor");
-        })->where('fileupload_mapping.id', null)->select('product_colors.product_id')->distinct()->get();
-        foreach ($products as $product) {
-            echo "product==" . $product->product_id . "\n";
-
-            FetchProductImages::dispatch($product->product_id)->onQueue('process_product_images'); // add it to queue
-        }
-    }
-
 }
