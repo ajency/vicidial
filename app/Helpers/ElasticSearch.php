@@ -112,6 +112,7 @@ function fetchProduct($product){
 
     $json["variant_group"] = $json["variant_group"]+ getUnSelectedVariants($data["product_id"],$selected_color_id);
     // Log::debug(json_encode($json, true));
+    ksort($json["variant_group"]);
     return json_encode($json, true);
     
 }
