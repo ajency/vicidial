@@ -1,5 +1,6 @@
 <?php
 
+use App\User;
 use Carbon\Carbon;
 
 function valInteger($object, $values)
@@ -15,6 +16,16 @@ function valInteger($object, $values)
 
     }
     return true;
+}
+
+function checkUserCart($token, $cart)
+{
+    $token = explode('Bearer ', $token)[1];
+    $user  = User::where('api_token', $token)->first();
+    if ($user->id != $cart->user_id) {
+        abort(403);
+    }
+
 }
 
 function sanitiseProductData($odooData)

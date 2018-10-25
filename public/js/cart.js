@@ -117,12 +117,16 @@ function openCart(){
 function updateCartCountInUI() {
     //Check if cart count in Session storage
     var cart_count = getCookie( "cart_count" );
-    if(cart_count)
+    if(cart_count && cart_count != "0")
     {
         //Scroll to top if cart icon is hidden on top
         $(".cart-counter").removeClass('d-none'), 100;
         $(".cart-counter").addClass('d-block'), 100;
         $('#output').html(function(i, val) { return cart_count });
+    }
+    else{
+        $(".cart-counter").addClass('d-none'), 100;
+        $(".cart-counter").removeClass('d-block'), 100;
     }
 }
 
