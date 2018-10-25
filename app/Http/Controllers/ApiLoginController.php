@@ -51,28 +51,31 @@ class ApiLoginController extends Controller
         $UserObject = $this->checkUserExists($data);
 
         if($UserObject) {
-            $cart = Cart::find($UserObject->cart_id);
-        	if ($cart != null && count($cart->cart_data) == 0 && $id) {
-                if($id != $cart->id) $cart->delete();
+            $cart = null;
+            $user_cart_id = $UserObject->cart_id;
+            if($id) {
                 $cart = Cart::find($id);
-            }
-            elseif ($id) {
-                $cart = Cart::find($id);
-                if($cart->user_id == null) {
+                if($cart != null && $cart->user_id != null) {
+                    $cart = null;
+                }
+                elseif($cart != null) {
                     $cart->user_id = $UserObject->id;
                     $cart->save();
                     $UserObject->cart_id = $cart->id;
                     $UserObject->save();
                 }
-                else {
-                    $cart = new Cart;
-                    $cart->save();
+            }
+
+            if($cart == null) {
+                $cart = Cart::find($user_cart_id);
+            }
+            else {
+                $cartcheck = Cart::find($user_cart_id);
+                if(count($cartcheck->cart_data) == 0) {
+                    $cartcheck->delete();
                 }
             }
-            elseif ($cart == null) {
-                $cart = new Cart;
-                $cart->save();
-            }
+
             $request->session()->put('active_cart_id', $cart->id);
         }
         else {
@@ -81,7 +84,6 @@ class ApiLoginController extends Controller
                 $cart = new Cart;
                 $cart->save();
             }
-            $cart->save();
 
             $UserObject = User::create([
                 'name' => '',
