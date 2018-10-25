@@ -37,16 +37,16 @@ class ProductController extends Controller
         $productColor = ProductColor::where('elastic_id',$elastic_id)->first();
         $imageurl = "";
         $file = $productColor->getSingleImage($preset,$depth);
-        echo $file."<br/>";
+        // echo $file."<br/>";
         if($file){
-            echo "enters1";
+            // echo "enters1";
             $imageurl = $file;
         }
         else{
-            echo "enters2";
-            $productColor->resizeImages($preset,$depth);
+            // echo "enters2";
+            $imageurl = $productColor->resizeImages($preset,$depth,$filename);
         }
-        dd($imageurl);
+        // dd($imageurl);
         return \Redirect::to(url($imageurl),308);
     
     }
