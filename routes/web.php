@@ -30,3 +30,5 @@ Route::middleware(['create-seo:product'])->group(function () {
 Route::middleware(['create-seo:listing'])->group(function () {
     Route::get('/{category_type}/{gender}/{age_group}/{category_subtype}', 'ListingController@index')->name('listing');
 });
+
+Route::get('/test/productlist', 'ProductListTestController@index')->name('productListTest');

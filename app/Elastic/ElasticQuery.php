@@ -52,12 +52,12 @@ class ElasticQuery
         return $this;
     }
 
-    public function setQuery()
+    public function setQuery($query=[])
     {
         if (!isset($this->params['body'])) {
             $this->setBody();
         }
-        $this->params['body']["query"] = [];
+        $this->params['body']["query"] = $query;
         return $this;
     }
 
@@ -158,7 +158,7 @@ class ElasticQuery
             $this->setBody();
         }
 
-        $this->params["body"]["source"] = $fields;
+        $this->params["body"]["_source"] = $fields;
         return $this;
     }
 
