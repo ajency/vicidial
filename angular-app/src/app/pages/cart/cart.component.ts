@@ -83,6 +83,7 @@ export class CartComponent implements OnInit {
         sessionStorage.removeItem('addded_to_cart');
         clearInterval(this.sessionCheckInterval);
       }
+    this.zone.run(() => {});
     },100)
     this.zone.run(() => {});
   }
