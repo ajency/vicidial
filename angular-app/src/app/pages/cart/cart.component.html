@@ -51,25 +51,27 @@
 							  	<label class="m-0">Size:</label>
 							  </div>
 							  <div class="pl-2 pr-4 align-self-center">
-							  	<select class="size form-control form-control-sm br-0  border-dark custom" [(ngModel)]="item.attributes.size" (ngModelChange)="modifyCart(item)">
+							  	{{item.attributes.size}}
+<!-- 							  	<select class="size form-control form-control-sm br-0  border-dark custom" [(ngModel)]="item.attributes.size" (ngModelChange)="modifyCart(item)">
 										<option *ngFor="let option of item.related_items.size">{{option.value}}</option>
-								</select>
+								</select> -->
 							  </div>
 							  <div class="qty align-self-center">
 							  	<label class="m-0">Qty:</label>
 							  </div>
 							  <div class="pl-2">
-								<select class="size form-control form-control-sm br-0  border-dark custom" [(ngModel)]="item.quantity" (ngModelChange)="modifyCart(item)">
+							  	{{item.quantity}}
+<!-- 								<select class="size form-control form-control-sm br-0  border-dark custom" [(ngModel)]="item.quantity" (ngModelChange)="modifyCart(item)">
 										<option [ngValue]=1>1</option>
 										<option [ngValue]=2>2</option>
 										<option [ngValue]=3>3</option>
 										<option [ngValue]=4>4</option>
-								</select>
+								</select> -->
 							  </div>
 							</div>
 						</div>
 							<div class="product-price">
-						<div class="kss-price kss-price--smaller">₹{{item.attributes.price_final}} <small class="kss-original-price text-muted">₹{{item.attributes.price_mrp}}</small> <span class="kss-discount text-danger">{{item.message}}</span></div>
+						<div class="kss-price kss-price--smaller">₹{{item.attributes.price_final}} <small *ngIf="item.attributes.price_final != item.attributes.price_mrp" class="kss-original-price text-muted">₹{{item.attributes.price_mrp}}</small> <span class="kss-discount text-danger">{{item.message}}</span></div>
 					</div>
 					</div>
 
@@ -106,7 +108,7 @@
 			</div>
 		</div> -->
 		<!-- <hr> -->
-		<div class="cart-summary mt-4">
+<!-- 		<div class="cart-summary mt-4">
 			<h4 class="mb-1 font-weight-bold">Price Summary</h4>
 			<p class="sub-text mb-3">Includes GST and all government taxes</p>
 
@@ -118,18 +120,19 @@
 				<div><label class="text-muted f-w-4 m-0">Cart Discount</label></div>
 				<div class="text-success">- ₹{{cart.summary.discount}}</div>
 			</div>
-<!-- 			<div class="d-flex justify-content-between py-1">
+			<div class="d-flex justify-content-between py-1">
 				<div><label class="text-muted f-w-4 m-0">Estimated Tax</label></div>
 				<div>₹{{cart.summary.tax}}</div>
-			</div> -->
-<!-- 			<div class="d-flex justify-content-between py-1">
+			</div>
+			<div class="d-flex justify-content-between py-1">
 				<div><label class="text-muted f-w-4 m-0">Coupon Discount</label></div>
 				<div class="text-success">- ₹{{cart.summary.coupon}}</div>
-			</div> -->
+			</div>
 		</div>
+		<hr class="dashed"> -->
 		<hr class="dashed">
 		<div class="cd-cart-total">
-			<h5 class="font-weight-bold">Order Total <span>₹{{cart.summary.order_total}}</span></h5>
+			<h5 class="font-weight-bold">Cart Total <span>₹{{cart.summary.order_total}}</span></h5>
 			<p class="sub-text mb-3">Shipping charges will be added at checkout</p>
 		</div>
 
