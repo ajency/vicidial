@@ -165,9 +165,17 @@ class ElasticQuery
         if (!isset($query["bool"]["must"])) {
             $query["bool"]["must"] = [];
         }
-        // print_r($query);
         $query["bool"]["must"] = $filters + $query["bool"]["must"];
-        // print_r($query);
+        return $query;
+    }
+
+    public static function addToBoolQuery(string $type, array $filters, array $query = [])
+    {
+        if(in_array($type, ["must", "must_not", "filter", "should"]))
+        if (!isset($query["bool"][$type])) {
+            $query["bool"][$type] = [];
+        }
+        $query["bool"][$type] = $filters + $query["bool"][$type];
         return $query;
     }
 

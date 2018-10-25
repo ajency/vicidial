@@ -21,14 +21,13 @@ function getUnSelectedVariants(int $product_id, int $selected_color_id){
     $product_id_name  = $q::createTerm('search_data.number_facet.facet_name', "product_id");
     $product_id_value = $q::createTerm('search_data.number_facet.facet_value', $product_id);
     
-    $filterColor     = $q::addFilterToQuery([$color_id_name, $color_id_value]);
-    $filterProduct     = $q::addFilterToQuery([$product_id_name, $product_id_value]);
+    $filterColor     = $q::addToBoolQuery('filter', [$color_id_name, $color_id_value]);
+    $filterProduct     = $q::addToBoolQuery('filter', [$product_id_name, $product_id_value]);
     $nested1    = $q::createNested('search_data.number_facet', $filterColor);
-    $must_not = $q->addMustNotToQuery([$nested1]);
-
+    $must_not = $q->addToBoolQuery('must_not', [$nested1]);
 
     $nested1    = $q::createNested('search_data.number_facet', $filterProduct);
-    $must = $q->addMustToQuery([$nested1], $must_not);
+    $must = $q->addToBoolQuery('must', [$nested1], $must_not);
 
     $nested2    = $q::createNested('search_data', $must);
 
