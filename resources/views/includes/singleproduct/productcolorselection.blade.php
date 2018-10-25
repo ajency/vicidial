@@ -24,9 +24,9 @@
 	    		foreach ($color_set->images as $image_set) {
 			     	if($image_set->is_primary) {$selected_image = $image_set->res->desktop->small_thumb;}
 			     }
-			     $url = create_url([$params["slug_name"], 'buy']); @endphp
+			     $url = create_url([$params["slug_name"], 'buy']);
 			     $hexcode = ($color_set->html != '') ? $color_set->html : implode('', explode(" ",$color_set->name));
-			      @endphp
+			@endphp
 			    <input class="d-none radio-input" type="radio" name="kss-variants" id="color-{{$color_id}}" {{$checked}} @php if($checked == ''){ @endphp onclick="location.href='{{$url}}'" @php } @endphp/>
 				<label class="radio-label position-relative" for="color-{{$color_id}}" data-toggle="tooltip" data-placement="bottom" title="{{$color_set->name}}">
 					<ul class="product-color product-color--single product-color--sm position-absolute color-custom-radio p-0 @php if($checked == ''){ @endphp no-check @php } else { @endphp checked @php } @endphp">
