@@ -35,3 +35,5 @@ Route::middleware(['create-seo:listing'])->group(function () {
 });
 
 Route::get('/test/productlist', 'ProductListTestController@index')->name('productListTest');
+
+Route::get('/products/{elastic_id}/{preset}/{depth}/{image}', 'ProductController@get_image');

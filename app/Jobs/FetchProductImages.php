@@ -32,7 +32,6 @@ class FetchProductImages implements ShouldQueue
      */
     public function handle()
     {
-
         $prod_images = Product::fetchProductImages($this->productId);
         $extension   = "jpg";
 
@@ -63,9 +62,9 @@ class FetchProductImages implements ShouldQueue
                 $type = "default";
                 array_push($default_color_ids, $prodImage["color_id"]);
             }
-
             $pc->mapImage($image_id, $type);
             \Storage::disk('local')->delete($subfilepath);
+
         }
 
     }
