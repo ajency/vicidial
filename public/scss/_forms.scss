@@ -93,14 +93,14 @@ label{
 }
 
 .form-control:focus + .control-label, .has-value + .control-label{
-      top: -20px;
+    top: -20px;
     left: 0px;
     font-size: 12px;
   
 }
 .control-label{
   position : absolute;
-  top: 6px;
+  top: 0;
   font-size:14px;
   padding-left: 0px;
   pointer-events : none;
