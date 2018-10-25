@@ -12,12 +12,29 @@ function getInventorySum(array $var){
 }
 
 function getUnSelectedVariants(int $product_id, int $selected_color_id){
-        $client = ClientBuilder::create()->build();
-         $json = '{"query":{"nested":{"path":"search_data","query":{"bool":{"must_not":[{"nested":{"path":"search_data.number_facet","query":{"bool":{"filter":[{"term":{"search_data.number_facet.facet_name":"product_color_id"}},{"term":{"search_data.number_facet.facet_value":'.$selected_color_id.'}}]}}}}],"must":[{"nested":{"path":"search_data.number_facet","query":{"bool":{"filter":[{"term":{"search_data.number_facet.facet_name":"product_id"}},{"term":{"search_data.number_facet.facet_value":'.$product_id.'}}]}}}}]}}}},"_source":["search_result_data", "variants"]}';
 
-        $body = json_decode($json, true);
-        $response = $client->search(["index" => config('elastic.prefix').config('elastic.indexes.product'), "body"=>$body]);
+    $q = new ElasticQuery();
+    $q->setIndex(config("elastic.indexes.product"));
 
+    $color_id_name  = $q::createTerm('search_data.number_facet.facet_name', "product_color_id");
+    $color_id_value = $q::createTerm('search_data.number_facet.facet_value', $selected_color_id);
+    $product_id_name  = $q::createTerm('search_data.number_facet.facet_name', "product_id");
+    $product_id_value = $q::createTerm('search_data.number_facet.facet_value', $product_id);
+    
+    $filterColor     = $q::addFilterToQuery([$color_id_name, $color_id_value]);
+    $filterProduct     = $q::addFilterToQuery([$product_id_name, $product_id_value]);
+    $nested1    = $q::createNested('search_data.number_facet', $filterColor);
+    $must_not = $q->addMustNotToQuery([$nested1]);
+
+
+    $nested1    = $q::createNested('search_data.number_facet', $filterProduct);
+    $must = $q->addMustToQuery([$nested1], $must_not);
+
+    $nested2    = $q::createNested('search_data', $must);
+
+    $q->setQuery($nested2)
+        ->setSource(['search_result_data', 'variants']);
+        $response = $q->search();
 
         $color_groups = [
 

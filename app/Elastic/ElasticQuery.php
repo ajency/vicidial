@@ -150,6 +150,27 @@ class ElasticQuery
         return $query;
     }
 
+    public static function addMustNotToQuery(array $filters, array $query = [])
+    {
+        if (!isset($query["bool"]["must_not"])) {
+            $query["bool"]["must_not"] = [];
+        }
+
+        $query["bool"]["must_not"] = $filters + $query["bool"]["must_not"];
+        return $query;
+    }
+
+    public static function addMustToQuery(array $filters, array $query = [])
+    {
+        if (!isset($query["bool"]["must"])) {
+            $query["bool"]["must"] = [];
+        }
+        // print_r($query);
+        $query["bool"]["must"] = $filters + $query["bool"]["must"];
+        // print_r($query);
+        return $query;
+    }
+
     public function setSize(int $size)
     {
         if (!isset($this->params['body'])) {
