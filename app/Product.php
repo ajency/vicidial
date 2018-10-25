@@ -8,7 +8,6 @@ use App\Jobs\CreateProductJobs;
 use App\Jobs\FetchProductImages;
 use App\Variant;
 use App\ProductColor;
-use App\Facet;
 use DB;
 
 class Product
@@ -270,9 +269,7 @@ class Product
                 $join->where('fileupload_mapping.object_type', '=', "App\ProductColor");
             })->where('fileupload_mapping.id', null)->select('product_colors.product_id')->distinct()->get();
         foreach($products as $product) {
-            echo "product==".$product->product_id."\n";
-
-            FetchProductImages::dispatch($product->product_id)->onQueue('process_product_images'); // add it to queue
+            FetchProductImages::dispatch($product->product_id)->onQueue('process_product_images'); 
         }
     }
 
