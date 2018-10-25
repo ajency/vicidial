@@ -123,6 +123,22 @@ input[type=number]::-webkit-outer-spin-button {
 .product-color {
   margin: 0px;
   text-align: left;
+  &--single{
+    transform: scale(0.7);   
+    li{
+      input{
+        &:checked{
+          & + label:after{
+            font-size: 1.25em;
+            top: 40%;
+          }
+        }
+      }
+    }
+  }
+  &--sm{
+    transform: scale(0.6);
+  }
 }
 
 .product-color {
