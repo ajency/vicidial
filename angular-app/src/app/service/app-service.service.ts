@@ -13,10 +13,6 @@ export class AppServiceService {
 
   closeCart(){
   	console.log('inside closeCart');
-    if(document.getElementById("angular-app"))
-      document.getElementById("angular-app").classList.remove("d-block");
-    if(document.getElementById("angular-app"))
-      document.getElementById("angular-app").classList.add("d-none");
     if(document.getElementsByTagName("body"))
       document.getElementsByTagName("body")[0].classList.remove("hide-scroll");
     if(document.getElementById('cd-cart'))
