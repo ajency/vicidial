@@ -2,7 +2,6 @@
 
 namespace App\Jobs;
 
-
 use App\Product;
 use App\ProductColor;
 use Illuminate\Bus\Queueable;
