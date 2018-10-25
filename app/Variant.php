@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Variant extends Model
 {
     protected $elastic_data;
+    protected $variant;
     protected $elastic_index = "";
     protected $fillable      = ['odoo_id', 'elastic_id', 'product_id', 'color_id'];
     protected $casts         = [
