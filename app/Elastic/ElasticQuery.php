@@ -52,7 +52,7 @@ class ElasticQuery
         return $this;
     }
 
-    public function setQuery($query=[])
+    public function setQuery($query = [])
     {
         if (!isset($this->params['body'])) {
             $this->setBody();
@@ -133,6 +133,50 @@ class ElasticQuery
     public static function createRange($field, array $options)
     {
         return ["range" => [$field => $options]];
+    }
+
+    public static function createNested(string $path, array $query)
+    {
+        return ["nested" => ["path" => $path, "query" => $query]];
+    }
+
+    public static function addFilterToQuery(array $filters, array $query = [])
+    {
+        if (!isset($query["bool"]["filter"])) {
+            $query["bool"]["filter"] = [];
+        }
+
+        $query["bool"]["filter"] = $filters + $query["bool"]["filter"];
+        return $query;
+    }
+
+    public static function addMustNotToQuery(array $filters, array $query = [])
+    {
+        if (!isset($query["bool"]["must_not"])) {
+            $query["bool"]["must_not"] = [];
+        }
+
+        $query["bool"]["must_not"] = $filters + $query["bool"]["must_not"];
+        return $query;
+    }
+
+    public static function addMustToQuery(array $filters, array $query = [])
+    {
+        if (!isset($query["bool"]["must"])) {
+            $query["bool"]["must"] = [];
+        }
+        $query["bool"]["must"] = $filters + $query["bool"]["must"];
+        return $query;
+    }
+
+    public static function addToBoolQuery(string $type, array $filters, array $query = [])
+    {
+        if(in_array($type, ["must", "must_not", "filter", "should"]))
+        if (!isset($query["bool"][$type])) {
+            $query["bool"][$type] = [];
+        }
+        $query["bool"][$type] = $filters + $query["bool"][$type];
+        return $query;
     }
 
     public function setSize(int $size)
