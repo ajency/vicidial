@@ -33,6 +33,10 @@ class Variant extends Model
         return $model;
     }
 
+    public function productColor()
+    {
+        return $this->belongsTo('App\ProductColor', 'product_color_id', "id");
+    }
     /**
      * Set Elastic Data Array Directly
      *
@@ -46,18 +50,20 @@ class Variant extends Model
 
     private function fetchElasticData()
     {
-        $q              = new ElasticQuery();
-        $variant_filter = $q->createTerm("type", "variant");
-        $variant_id     = $q->createTerm("id", $this->odoo_id);
-
-        $q->setIndex($this->elastic_index)
-            ->appendMust($variant_filter)
-            ->appendMust($variant_id)
-            ->setSize(1);
-        $search = $q->search();
+        $this->elastic_id = $this->productColor->elastic_id;
+        $q                = new ElasticQuery();
+        $q->setIndex($this->elastic_index);
+        $search = $q->get($this->elastic_id);
         \Log::info("elastic object fetched");
         \Log::info($search);
-        $this->elastic_data = $search["hits"]["hits"][0]["_source"];
+        $this->elastic_data = $search["_source"];
+        foreach ($this->elastic_data["variants"] as $variant) {
+            if ($variant["variant_id"] == $this->odoo_id) {
+                $this->variant = $variant;
+                break;
+            }
+
+        }
     }
 
     /**
@@ -67,13 +73,23 @@ class Variant extends Model
      */
     public function getAvailability()
     {
-        foreach ($this->elastic_data["inventory"] as $inventory) {
+        foreach ($this->inventory as $inventory) {
             if ($inventory["store_qty"] > 0) {
                 return true;
             }
 
         }
         return false;
+    }
+
+    public function getVariantSequence()
+    {
+        $data = $this->elastic_data["search_result_data"]["variants"];
+        foreach ($data as $key => $value) {
+            if ($value["variant_id"] == $this->odoo_id) {
+                return $key;
+            }
+        }
     }
 
     public function getMessage()
@@ -98,25 +114,18 @@ class Variant extends Model
 
     public function getRelatedItems()
     {
-        $q                = new ElasticQuery();
-        $variant_filter   = $q->createTerm("type", "variant");
-        $color_filter     = $q->createTerm("var_color_id", $this->getVarColorId());
-        $parent_id_filter = $q->createTerm("parent_id", $this->getParentId());
-        $notThisVariant   = $q->createTerm("id", $this->elastic_id);
-
-        $q->setIndex($this->elastic_index)
-            ->appendMust($variant_filter)->appendMust($color_filter)
-            ->appendMust($parent_id_filter)->appendMustNot($notThisVariant);
         $related_items = ["size" => []];
-        $variants      = $q->search()["hits"]["hits"];
+        $variants      = $this->elastic_data["variants"];
         foreach ($variants as $variant) {
-            $item                    = Variant::where('odoo_id', $variant["_source"]['id'])->first();
-            $related_items["size"][] = [
-                "id"           => $item->getID(),
-                "availability" => $item->getAvailability(),
-                "value"        => $item->getSize(),
+            if ($variant["variant_id"] != $this->odoo_id) {
+                $related_items["size"][] = [
+                    "id"           => $variant["variant_id"],
+                    "availability" => $variant["variant_availability"],
+                    "value"        => $variant["variant_size_name"],
 
-            ];
+                ];
+            }
+
         }
         return $related_items;
     }
@@ -148,7 +157,7 @@ class Variant extends Model
      */
     public function getSize()
     {
-        return $this->elastic_data["var_size_value"];
+        return $this->variant["variant_size_name"];
     }
 
     /**
@@ -158,7 +167,7 @@ class Variant extends Model
      */
     public function getLstPrice()
     {
-        return $this->elastic_data["lst_price"];
+        return $this->variant["variant_list_price"];
     }
 
     /**
@@ -168,8 +177,7 @@ class Variant extends Model
      */
     public function getSalePrice()
     {
-        //unclear on what to return
-        return $this->elastic_data["sale_price"];
+        return $this->variant["variant_sale_price"];
     }
 
     /**
@@ -179,7 +187,7 @@ class Variant extends Model
      */
     public function getVarColorId()
     {
-        return $this->elastic_data["var_color_id"];
+        return $this->elastic_data["search_result_data"]["product_color_id"];
     }
 
     /**
@@ -193,14 +201,13 @@ class Variant extends Model
     }
 
     /**
-     * Get Elastic variant Data
+     * Get Elastic variant ID
      *
      * @return int
      */
     public function getID()
     {
-
-        return $this->elastic_data["id"];
+        return $this->variant["variant_id"];
     }
 
     /**
@@ -212,7 +219,7 @@ class Variant extends Model
     public function getParentId()
     {
 
-        return $this->elastic_data["parent_id"];
+        return $this->elastic_data["search_result_data"]["product_id"];
     }
 
     /**
@@ -223,7 +230,7 @@ class Variant extends Model
 
     public function getName()
     {
-        return $this->elastic_data["name"];
+        return $this->elastic_data["search_result_data"]["product_title"];
     }
 
     /**
@@ -234,7 +241,7 @@ class Variant extends Model
     public function getQuantity()
     {
         $total = 0;
-        foreach ($this->elastic_data["inventory"] as $inventory) {
+        foreach ($this->inventory as $inventory) {
             $total += $inventory["store_qty"];
         }
         return $total;
