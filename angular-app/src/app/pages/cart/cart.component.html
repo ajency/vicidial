@@ -173,10 +173,13 @@
 	          <p class="sub-text w-75 mt-3">Your Shipping and payment details will be associated with this number</p>
 	          <form #mobileForm="ngForm">
 	            <div class="form-group mb-0">
-	              <input type="tel" class="form-control form-control-number form-control-lg" [ngClass]="{'has-error' : userValidation.mobileValidationFailed}" id="frm-mobile" name="mobile" [(ngModel)]="mobileNumber" required minlength = "10" maxlength = "10" pattern="^[789]\d{9}$" inputmode="numeric">
+	              <input type="tel" class="form-control form-control-number form-control-lg" [ngClass]="{'has-error' : userValidation.mobileValidationFailed}" id="frm-mobile" name="mobile" [(ngModel)]="mobileNumber" required minlength = "10" maxlength = "10" pattern="^[789]\d{9}$" inputmode="numeric" appNumbers>
 	              <label class="control-label">Enter Mobile Number</label>
 	               <small *ngIf="userValidation.mobileValidationFailed" id="passwordHelpBlock" class="form-text text-danger">
 						{{userValidation.mobileValidationErrorMsg}}
+					</small>
+					<small *ngIf="mobileNumber<7000000000 && mobileNumber.length== 10" id="passwordHelpBlock" class="form-text text-danger">
+						Please enter a valid Indian Mobile Number
 					</small>
 	            </div>
 	          </form>
@@ -202,12 +205,12 @@
 	              <p >Enter the OTP sent to your number</p><h4 class="font-weight-bold m-0">{{mobileNumber}} <i class="fas fa-pencil-alt number-edit"></i></h4>
 	              <!-- <input type="password" class="form-control form-control-number form-control-lg text-center mb-2" [ngClass]="{'has-error' : userValidation.otpVerificationFailed}"  aria-describedby="emailHelp" [(ngModel)]="otp" name="otp" placeholder="" required pattern="\d{6}$" minlength = "6" maxlength = "6" inputmode="numeric"> -->
 	              <div class="otp-fields d-flex align-items-center justify-content-center">
-					<input type="tel" maxlength="1" size="1" min="0" max="9" pattern="\d*" class="form-control form-control-lg form-control-number mb-2 text-center mx-2" #otp1 (keyup)="next($event,otp1,otp2)" [(ngModel)]="otpCode['otp1']" name="otp1">
-					<input type="tel" maxlength="1" size="1" min="0" max="9" pattern="\d*" class="form-control form-control-lg form-control-number mb-2 text-center mx-2" #otp2 (keyup)="next($event,otp1,otp3)" [(ngModel)]="otpCode['otp2']" name="otp1">
-					<input type="tel" maxlength="1" size="1" min="0" max="9" pattern="\d*" class="form-control form-control-lg form-control-number mb-2 text-center mx-2" #otp3 (keyup)="next($event,otp2,otp4)" [(ngModel)]="otpCode['otp3']" name="otp1">
-					<input type="tel" maxlength="1" size="1" min="0" max="9" pattern="\d*" class="form-control form-control-lg form-control-number mb-2 text-center mx-2" #otp4 (keyup)="next($event,otp3,otp5)" [(ngModel)]="otpCode['otp4']" name="otp1">
-					<input type="tel" maxlength="1" size="1" min="0" max="9" pattern="\d*" class="form-control form-control-lg form-control-number mb-2 text-center mx-2" #otp5 (keyup)="next($event,otp4,otp6)" [(ngModel)]="otpCode['otp5']" name="otp1">
-					<input type="tel" maxlength="1" size="1" min="0" max="9" pattern="\d*" class="form-control form-control-lg form-control-number mb-2 text-center mx-2" #otp6 (keyup)="next($event,otp5,otp6)" [(ngModel)]="otpCode['otp6']" name="otp1">
+					<input type="tel" maxlength="1" size="1" min="0" max="9" pattern="\d*" class="form-control form-control-lg form-control-number mb-2 text-center mx-2" #otp1 (keyup)="next($event,otp1,otp2)" [(ngModel)]="otpCode['otp1']" name="otp1" appNumbers>
+					<input type="tel" maxlength="1" size="1" min="0" max="9" pattern="\d*" class="form-control form-control-lg form-control-number mb-2 text-center mx-2" #otp2 (keyup)="next($event,otp1,otp3)" [(ngModel)]="otpCode['otp2']" name="otp1" appNumbers>
+					<input type="tel" maxlength="1" size="1" min="0" max="9" pattern="\d*" class="form-control form-control-lg form-control-number mb-2 text-center mx-2" #otp3 (keyup)="next($event,otp2,otp4)" [(ngModel)]="otpCode['otp3']" name="otp1" appNumbers>
+					<input type="tel" maxlength="1" size="1" min="0" max="9" pattern="\d*" class="form-control form-control-lg form-control-number mb-2 text-center mx-2" #otp4 (keyup)="next($event,otp3,otp5)" [(ngModel)]="otpCode['otp4']" name="otp1" appNumbers>
+					<input type="tel" maxlength="1" size="1" min="0" max="9" pattern="\d*" class="form-control form-control-lg form-control-number mb-2 text-center mx-2" #otp5 (keyup)="next($event,otp4,otp6)" [(ngModel)]="otpCode['otp5']" name="otp1" appNumbers>
+					<input type="tel" maxlength="1" size="1" min="0" max="9" pattern="\d*" class="form-control form-control-lg form-control-number mb-2 text-center mx-2" #otp6 (keyup)="next($event,otp5,otp6)" [(ngModel)]="otpCode['otp6']" name="otp1" appNumbers>
 				</div>
 	              <!-- <small> Resend OTP in 18 sec</small> -->
 	               <small *ngIf="userValidation.otpVerificationFailed" id="passwordHelpBlock" class="form-text text-danger">

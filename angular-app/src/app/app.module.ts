@@ -14,6 +14,7 @@ import { PaymentComponent } from './pages/payment/payment.component';
 
 import { AppServiceService } from './service/app-service.service';
 import { ApiServiceService } from './service/api-service.service';
+import { NumbersDirective } from './directives/numbers.directive';
 
 
 
@@ -23,7 +24,8 @@ import { ApiServiceService } from './service/api-service.service';
     CartComponent,
     ShippingDetailsComponent,
     ShippingSummaryComponent,
-    PaymentComponent
+    PaymentComponent,
+    NumbersDirective
   ],
   imports: [
     BrowserModule,
