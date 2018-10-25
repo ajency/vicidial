@@ -107,6 +107,7 @@ export class CartComponent implements OnInit {
       console.log("response ==>", response);
       this.cart = response;
       sessionStorage.setItem('cart_data', JSON.stringify(this.cart));
+      sessionStorage.setItem( "cart_count",this.cart.cart_count);
       this.showCartLoader=false;
       this.zone.run(() => {});
     })

@@ -22,16 +22,16 @@ $(document).ready(function(){
         if($(add_to_cart_element).hasClass('cartLoader')) return;
 
         //if($(add_to_cart_element).hasClass('go-to-cart')) {/*Call Angular function*/ return;}
-        
-        // for angular app 
-        sessionStorage.setItem( "add_to_cart_clicked", "true");
-        openCart();
 
         //Show loader
         $('.cd-add-to-cart .btn-label-initial').addClass('d-none');
         $('.cd-add-to-cart .btn-label-initial').removeClass('d-flex');
         $('.cd-add-to-cart .btn-icon').show();
         $(add_to_cart_element).addClass('cartLoader');
+        
+        // for angular app 
+        sessionStorage.setItem( "add_to_cart_clicked", "true");
+        openCart();
 
         if($('input[type=radio][name=kss-sizes]:checked').length == 0){
             //Size not selected error css
