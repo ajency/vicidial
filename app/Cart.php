@@ -47,7 +47,7 @@ class Cart extends Model
 
     public function itemCount()
     {
-        $total = 0 ;
+        $total = 0;
         foreach ($this->cart_data as $key => $item) {
             $total += $item["quantity"];
         }
@@ -66,7 +66,13 @@ class Cart extends Model
         return ["total" => $total_price, "discount" => $discount, "tax" => "", "coupon" => "", "order_total" => $total_price - $discount];
     }
 
-    
+    public function removeItem($variant_id)
+    {
+        $cart_data = $this->cart_data;
+        unset($cart_data[$variant_id]);
+        $this->cart_data = $cart_data;
+        return $this;
+    }
 
     // public function remove_item($id){
     //     if(is_integer($id)){

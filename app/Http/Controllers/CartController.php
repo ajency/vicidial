@@ -35,7 +35,7 @@ class CartController extends Controller
             }
             $cart->insertItem(["id" => $params['variant_id'], "quantity" => $qty]);
             $cart->save();
-            $message = "Item added successfully";
+            $message          = "Item added successfully";
             $item["quantity"] = intval($cart->cart_data[$item["id"]]["quantity"]);
         }
         $summary = $cart->getSummary();
@@ -73,10 +73,10 @@ class CartController extends Controller
 
         $items = [];
         foreach ($cart->cart_data as $cart_item) {
-            $variant = Variant::where('odoo_id', $cart_item['id'])->first();
-            $item = $variant->getItem();
+            $variant          = Variant::where('odoo_id', $cart_item['id'])->first();
+            $item             = $variant->getItem();
             $item["quantity"] = intval($cart->cart_data[$item["id"]]["quantity"]);
-            $items[] = $item;
+            $items[]          = $item;
         }
         $summary = $cart->getSummary();
         $code    = ["code" => "NEWUSER", "applied" => true];
@@ -93,13 +93,29 @@ class CartController extends Controller
 
         $items = [];
         foreach ($cart->cart_data as $cart_item) {
-            $variant = Variant::where('odoo_id', $cart_item['id'])->first();
-            $item = $variant->getItem();
+            $variant          = Variant::where('odoo_id', $cart_item['id'])->first();
+            $item             = $variant->getItem();
             $item["quantity"] = intval($cart->cart_data[$item["id"]]["quantity"]);
-            $items[] = $item;
+            $items[]          = $item;
         }
         $summary = $cart->getSummary();
         $code    = ["code" => "NEWUSER", "applied" => true];
         return response()->json(['cart_count' => $cart->itemCount(), 'items' => $items, "summary" => $summary, "code" => $code]);
+    }
+
+    public function guestCartDelete(Request $request)
+    {
+        $id     = $request->session()->get('active_cart_id', false);
+        $params = $request->all();
+
+        $cart = Cart::find($id);
+        if ($cart == null) {
+            abort(404, "Cart not found for this session");
+        }
+        $cart->removeItem($params["variant_id"]);
+        $cart->save();
+        $message = "item deleted successfully";
+        $summary = $cart->getSummary();
+        return response()->json(['cart_count' => $cart->itemCount(), 'message' => $message, "summary" => $summary]);
     }
 }
