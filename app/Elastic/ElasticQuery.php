@@ -52,7 +52,7 @@ class ElasticQuery
         return $this;
     }
 
-    public function setQuery($query=[])
+    public function setQuery($query = [])
     {
         if (!isset($this->params['body'])) {
             $this->setBody();
@@ -133,6 +133,21 @@ class ElasticQuery
     public static function createRange($field, array $options)
     {
         return ["range" => [$field => $options]];
+    }
+
+    public static function createNested(string $path, array $query)
+    {
+        return ["nested" => ["path" => $path, "query" => $query]];
+    }
+
+    public static function addFilterToQuery(array $filters, array $query = [])
+    {
+        if (!isset($query["bool"]["filter"])) {
+            $query["bool"]["filter"] = [];
+        }
+
+        $query["bool"]["filter"] = $filters + $query["bool"]["filter"];
+        return $query;
     }
 
     public function setSize(int $size)
