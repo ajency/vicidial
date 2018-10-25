@@ -148,12 +148,12 @@ function buildProductIndexFromOdooData($productData, $variantData)
     $indexData["variants"] = [];
     foreach ($variantData as $variant) {
         $indexData['variants'][] = [
-            "variant_id"         => $variant['variant_id'],
-            "variant_list_price" => $variant['variant_lst_price'],
-            "variant_sale_price" => $variant['variant_sale_price'],
-            "variant_size_id"    => $variant['variant_size_id'],
-            "variant_size_name"  => $variant['variant_size_name'],
-            "variant_availability"  => $variant['variant_availability'],
+            "variant_id"           => $variant['variant_id'],
+            "variant_list_price"   => $variant['variant_lst_price'],
+            "variant_sale_price"   => $variant['variant_sale_price'],
+            "variant_size_id"      => $variant['variant_size_id'],
+            "variant_size_name"    => $variant['variant_size_name'],
+            "variant_availability" => $variant['variant_availability'],
         ];
         $search_data = [
             'full_text'         => generateFullTextForIndexing($productData, $variant),
@@ -253,4 +253,21 @@ function inventoryFormatData(array $variant_ids, array $inventory)
     }
 
     return $final;
+}
+
+function generateVariantImageName($product_name, $color_name, $colors)
+{
+    $colors_count = array_count_values($colors);
+    \Log::debug("colors count===");
+    \Log::debug($colors_count);
+    $append = "";
+    if ($colors_count["$color_name"] > 1) {
+        $append = "-" . $colors_count[$color_name];
+    }
+
+    $product_name = str_slug($product_name, '-');
+    $color_name   = str_slug($color_name, '-');
+    $image_name   = $product_name . "-" . $color_name . $append;
+    return $image_name;
+
 }
