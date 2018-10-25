@@ -231,6 +231,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'AjFileUpload' => 'Ajency\FileUpload\FileUploadServiceProvider',
+        'Carbon' => 'Carbon\Carbon',
 
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'AjComm' => Ajency\Comm\CommServiceProvider::class,

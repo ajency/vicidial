@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\ProductColor;
 
 class ProductController extends Controller
 {
@@ -29,5 +30,24 @@ class ProductController extends Controller
         $params['breadcrumb']['current'] = '';
         
         return view('singleproduct')->with('params',$params);
+    }
+
+    public function get_image($elastic_id,$preset,$depth,$filename){
+        $path = public_path().'img/'.$filename;
+        $productColor = ProductColor::where('elastic_id',$elastic_id)->first();
+        $imageurl = "";
+        $file = $productColor->getSingleImage($preset,$depth);
+        echo $file."<br/>";
+        if($file){
+            echo "enters1";
+            $imageurl = $file;
+        }
+        else{
+            echo "enters2";
+            $productColor->resizeImages($preset,$depth);
+        }
+        dd($imageurl);
+        return \Redirect::to(url($imageurl),308);
+    
     }
 }

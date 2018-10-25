@@ -70,6 +70,5 @@ class FetchProductImages implements ShouldQueue
 
         }
 
-
     }
 }

@@ -24,4 +24,9 @@ return [
 			'slug_column' => 'elastic_id',
 		],
 	],
+	'presets' => [
+		"thumbnail" => ["1x" => "100X100","2x" => "200X200"],
+		"largethumbnail" => ["1x" => "100X100","2x" => "200X200"],
+		"zoomthumbnail" => ["1x" => "100X100","2x" => "200X200"],
+	]
 ];
