@@ -28,7 +28,7 @@ class CartController extends Controller
         $id      = $request->session()->get('active_cart_id', false);
         $cart    = ($id) ? Cart::find($id) : new Cart;
         $variant = Variant::where('odoo_id', $params['variant_id'])->first();
-        $item    = $variant->getItemAttributes();
+        $item    = $variant->getItem();
         if ($item) {
             $qty = $params['variant_quantity'];
             if ($cart->itemExists($item)) {
@@ -40,7 +40,7 @@ class CartController extends Controller
             $request->session()->put('active_cart_id', $cart->id);
         }
         $summary = $cart->getSummary();
-        $summary["quantity"] = $cart->cart_data[$item["id"]]["quantity"];
+        $item["quantity"] = $cart->cart_data[$item["id"]]["quantity"];
         return response()->json(['cart_count' => $cart->itemCount(), "message" => $message, "item" => $item, "summary" => $summary]);
     }
 

@@ -73,12 +73,15 @@ class Variant extends Model
      */
     public function getAvailability()
     {
-        foreach ($this->inventory as $inventory) {
-            if ($inventory["store_qty"] > 0) {
-                return true;
-            }
+        if (isset($this->inventory["inventory"])) {
+            foreach ($this->inventory["inventory"] as $inventory) {
+                if ($inventory["quantity"] > 0) {
+                    return true;
+                }
 
+            }
         }
+
         return false;
     }
 
@@ -130,24 +133,28 @@ class Variant extends Model
         return $related_items;
     }
 
-    public function getItemAttributes()
+    public function getItem()
     {
-        $item = array(
+        return array(
             'availability'  => $this->getAvailability(),
             'message'       => $this->getMessage(),
-            'attributes'    => array(
-                'title'            => $this->getName(),
-                'image_src_url'    => $this->getPrimaryImageSrc(),
-                'image_srcset_url' => $this->getPrimaryImageSrcset(),
-                'size'             => $this->getSize(),
-                'price_mrp'        => $this->getLstPrice(),
-                'price_final'      => $this->getSalePrice(),
-            ),
+            'attributes'    => $this->getItemAttributes(),
             "id"            => $this->getID(),
-            "quantity"      => $this->getQuantity(),
             'related_items' => $this->getRelatedItems(),
         );
-        return $item;
+
+    }
+    public function getItemAttributes()
+    {
+
+        return array(
+            'title'            => $this->getName(),
+            'image_src_url'    => $this->getPrimaryImageSrc(),
+            'image_srcset_url' => $this->getPrimaryImageSrcset(),
+            'size'             => $this->getSize(),
+            'price_mrp'        => $this->getLstPrice(),
+            'price_final'      => $this->getSalePrice(),
+        );
     }
 
     /**
@@ -241,11 +248,12 @@ class Variant extends Model
     public function getQuantity()
     {
         $total = 0;
-        foreach ($this->inventory as $inventory) {
-            $total += $inventory["store_qty"];
+        if (isset($this->inventory["inventory"])) {
+            foreach ($this->inventory["inventory"] as $inventory) {
+                $total += $inventory["quantity"];
+            }
         }
         return $total;
-
     }
 
     public function getDiscount()

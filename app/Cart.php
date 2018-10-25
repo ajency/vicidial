@@ -25,7 +25,7 @@ class Cart extends Model
     public function insertItem($item)
     {
         // \Log::info($item);
-        if (val_integer($item, self::ITEM_FIELDS)) {
+        if (valInteger($item, self::ITEM_FIELDS)) {
             $item                   = array_only($item, self::ITEM_FIELDS);
             $cart_data              = $this->cart_data;
             $cart_data[$item["id"]] = ["id" => $item["id"], "quantity" => $item["quantity"]];
@@ -65,6 +65,8 @@ class Cart extends Model
         }
         return ["total" => $total_price, "discount" => $discount, "tax" => "", "coupon" => "", "order_total" => $total_price - $discount];
     }
+
+    
 
     // public function remove_item($id){
     //     if(is_integer($id)){
