@@ -30,3 +30,6 @@ yarn-error.log
 /angular-app/yarn-error.log
 
 # /public/views/cart
+
+# packages
+/packages

@@ -35,7 +35,9 @@
             "database/factories"
         ],
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+            "Ajency\\FileUpload\\" : "packages/ajency/laravel-file-upload-package/src",
+            "Ajency\\Comm\\": "packages/ajency/comm/src"
         }
     },
     "autoload-dev": {

@@ -179,6 +179,7 @@ return [
 
         Laravel\Socialite\SocialiteServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
+        Ajency\Comm\CommServiceProvider::class,
 
     ],
 
@@ -230,6 +231,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+        'AjComm' => Ajency\Comm\CommServiceProvider::class,
 
     ],
 
