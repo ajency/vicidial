@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppServiceService } from '../../service/app-service.service';
 import { ApiServiceService } from '../../service/api-service.service';
@@ -32,7 +32,8 @@ export class CartComponent implements OnInit {
   
   constructor( private router: Router,
                private appservice : AppServiceService,
-               private apiservice : ApiServiceService
+               private apiservice : ApiServiceService,
+               private zone : NgZone
               ) { 
   }
 
@@ -83,6 +84,7 @@ export class CartComponent implements OnInit {
         clearInterval(this.sessionCheckInterval);
       }
     },100)
+    this.zone.run(() => {});
   }
 
   getCartData(){
@@ -105,6 +107,7 @@ export class CartComponent implements OnInit {
       this.cart = response;
       sessionStorage.setItem('cart_data', JSON.stringify(this.cart));
       this.showCartLoader=false;
+      this.zone.run(() => {});
     })
     .catch((error)=>{
       console.log("error ===>", error);
@@ -114,7 +117,9 @@ export class CartComponent implements OnInit {
         }
       }
       this.showCartLoader=false;
+      this.zone.run(() => {});
     })
+    this.zone.run(() => {});
   }
 
   isLoggedInUser(){
