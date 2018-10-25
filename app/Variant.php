@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Variant extends Model
 {
-
     protected $elastic_data;
     protected $variant;
     protected $elastic_index = "";
