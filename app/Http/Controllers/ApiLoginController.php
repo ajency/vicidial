@@ -48,35 +48,10 @@ class ApiLoginController extends Controller
     {
         $id = $request->session()->get('active_cart_id', false);
 
-        $UserObject = $this->checkUserExists($data);
+        $UserObject = User::where('phone', '=', $data['phone'])->first();
 
         if($UserObject) {
-            $cart = null;
-            $user_cart_id = $UserObject->cart_id;
-            if($id) {
-                $cart = Cart::find($id);
-                if($cart != null && $cart->user_id != null) {
-                    $cart = null;
-                }
-                elseif($cart != null) {
-                    $cart->user_id = $UserObject->id;
-                    $cart->save();
-                    $UserObject->cart_id = $cart->id;
-                    $UserObject->save();
-                }
-            }
-
-            if($cart == null) {
-                $cart = Cart::find($user_cart_id);
-            }
-            else {
-                $cartcheck = Cart::find($user_cart_id);
-                if(count($cartcheck->cart_data) == 0) {
-                    $cartcheck->delete();
-                }
-            }
-
-            $request->session()->put('active_cart_id', $cart->id);
+            $cart = $this->userCart($id, $UserObject);
         }
         else {
             $cart = ($id) ? Cart::find($id) : null;
@@ -94,32 +69,46 @@ class ApiLoginController extends Controller
             $cart->user_id = $UserObject->id;
             $cart->save();
 
-            $request->session()->put('active_cart_id', $cart->id);
-
             $UserObject->assignRole('customer');
 
             $this->createAccessToken($UserObject);
         }
+
+        $request->session()->put('active_cart_id', $cart->id);
 
         Auth::guard()->login($UserObject);
 
         return $UserObject;
     }
 
-    /*public function login() {
-    	Auth::guard()->login($user);
-    }*/
-
-    public function checkUserExists($data)
+    public function userCart($id, $UserObject)
     {
-        $user = NULL;
-        try {
-            $user = User::where('phone', '=', $data['phone'])->first();
-        } catch (Exception $e) {
-            $user = NULL;
+        $cart = null;
+        $user_cart_id = $UserObject->cart_id;
+        if($id) {
+            $cart = Cart::find($id);
+            if($cart != null && $cart->user_id != null) {
+                $cart = null;
+            }
+            elseif($cart != null) {
+                $cart->user_id = $UserObject->id;
+                $cart->save();
+                $UserObject->cart_id = $cart->id;
+                $UserObject->save();
+            }
         }
 
-        return $user;
+        if($cart == null) {
+            $cart = Cart::find($user_cart_id);
+        }
+        else {
+            $cartcheck = Cart::find($user_cart_id);
+            if(count($cartcheck->cart_data) == 0) {
+                $cartcheck->delete();
+            }
+        }
+
+        return $cart;
     }
 
     public function validateNumber($data)
