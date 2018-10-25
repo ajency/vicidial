@@ -15,6 +15,9 @@ Route::get('/rest/anonymous/cart/count', 'CartController@guestGetCount');
 Route::post('/rest/anonymous/cart/insert', 'CartController@guestAddItem');
 Route::get('/rest/anonymous/cart/get', 'CartController@guestCartFetch');
 
+Route::get('/rest/v1/authenticate/generate_otp', 'ApiLoginController@verifyOTP');
+Route::get('/rest/v1/authenticate/login', 'SMSController@sendSMS');
+
 Route::get('/shop', 'ListingController@shop')->name('shoplisting');
 
 Route::get('/shop/{static_page}', 'ShopStaticController@index')->name('shopstatic');
