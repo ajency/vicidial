@@ -73,20 +73,4 @@ class Cart extends Model
         $this->cart_data = $cart_data;
         return $this;
     }
-
-    // public function remove_item($id){
-    //     if(is_integer($id)){
-    //         $found = false;
-    //         $this->cart_data = array_except($this->cart_data, function($item) use ($found){
-    //             if ($id == $item["id"]){
-    //                 $found = true;
-    //                 return true;
-    //             }
-    //             return false;
-    //         });
-    //         return ($found)? $this:false;
-    //     }else{
-    //         return false;
-    //     }
-    // }
 }

@@ -25,7 +25,11 @@ class CartController extends Controller
     public function userAddItem($id, Request $request)
     {
         $params  = $request->all();
-        $cart    = ($id) ? Cart::find($id) : new Cart;
+        $cart = Cart::find($id);
+        if ($cart == null) {
+            abort(404, "Requested Cart not found");
+        }
+        checkUserCart($request->header('Authorization'),$cart);
         $variant = Variant::where('odoo_id', $params['variant_id'])->first();
         $item    = $variant->getItem();
         if ($item) {
@@ -68,9 +72,9 @@ class CartController extends Controller
     {
         $cart = Cart::find($id);
         if ($cart == null) {
-            abort(404, "Cart not found for this session");
+            abort(404, "Requested Cart not found");
         }
-
+        checkUserCart($request->header('Authorization'),$cart);
         $items = [];
         foreach ($cart->cart_data as $cart_item) {
             $variant          = Variant::where('odoo_id', $cart_item['id'])->first();
@@ -125,8 +129,9 @@ class CartController extends Controller
 
         $cart = Cart::find($id);
         if ($cart == null) {
-            abort(404, "Cart not found for this session");
+            abort(404, "Requested Cart ID not found");
         }
+        checkUserCart($request->header('Authorization'),$cart);
         $cart->removeItem($params["variant_id"]);
         $cart->save();
         $message = "Item deleted successfully";
