@@ -130,7 +130,7 @@ function buildProductIndexFromOdooData($productData, $variantData)
     $productData['product_slug'] = str_slug(implode(' ', [
         $productData['product_att_magento_display_name'],
         $productData['product_id'],
-        $variantData->first()['product_color_id'],
+        $variantData->first()['product_color_name'],
     ]));
 
     $indexData = [
