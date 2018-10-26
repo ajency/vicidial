@@ -1,18 +1,18 @@
 <div class="colorOptions d-md-block mb-3 d-none d-sm-block">
 	<div class="d-flex justify-content-between mt-3">
-		<label class="align-items-center d-flex"> 
+		<label class="align-items-center d-flex colorOptions__trigger cursor-pointer collapsed" href="#color-options"  aria-expanded="false" aria-controls="color-options" data-toggle="collapse"> 
 			<p class="font-weight-bold kss-link mb-0"> Color options</p>
-			<ul class="product-color product-color--single px-1">
-				<li class="d-inline-flex align-middle">
-			    	<input type="checkbox" name="color" id="red" checked=true disabled>
-			    	@php
-			    		$color_obj = $params['variant_group']->{$selected_color_id};
-			    		$hexcode = ($color_obj->html != '') ? $color_obj->html : implode('', explode(" ",$color_obj->name));
-			      	@endphp
-			    	<label for="red" class="mb-0 cursor-auto" style="background-color:{{$hexcode}};"></label>
-			  	</li>
-			</ul>
-			<i class="fas fa-chevron-down cursor-pointer icon-md down-arrow collapsed" href="#color-options"  aria-expanded="false" aria-controls="color-options" data-toggle="collapse"></i>
+				<ul class="product-color product-color--single px-1">
+					<li class="d-inline-flex align-middle">
+				    	<input type="checkbox" name="color" id="red" checked=true disabled>
+				    	@php
+				    		$color_obj = $params['variant_group']->{$selected_color_id};
+				    		$hexcode = ($color_obj->html != '') ? $color_obj->html : implode('', explode(" ",$color_obj->name));
+				      	@endphp
+				    	<label for="{{$hexcode}}" class="mb-0" style="background-color:{{$hexcode}};"></label>
+				  	</li>
+				</ul>
+				<i class="fas fa-chevron-down cursor-pointer icon-md down-arrow"></i>
 		</label>
 	</div>
 	<div class="collapse" id="color-options">
@@ -27,11 +27,11 @@
 			     $url = create_url([$color_set->slug_name, 'buy']);
 			     $hexcode = ($color_set->html != '') ? $color_set->html : implode('', explode(" ",$color_set->name));
 			@endphp
-			    <input class="d-none radio-input" type="radio" name="kss-variants" id="color-{{$color_id}}" {{$checked}} @php if($checked == ''){ @endphp onclick="location.href='{{$url}}'" @php } @endphp/>
-				<label class="radio-label position-relative" for="color-{{$color_id}}" data-toggle="tooltip" data-placement="bottom" title="{{$color_set->name}}">
+			    <input class="d-none radio-input" type="radio" name="kss-variants" id="color-{{$color_id}}" {{$checked}} />
+				<label class="radio-label position-relative variant-wrapper" for="color-{{$color_id}}" data-toggle="tooltip" data-placement="bottom" title="{{$color_set->name}}" @php if($checked == ''){ @endphp onclick="location.href='{{$url}}'" @php } @endphp>
 					<ul class="product-color product-color--single product-color--sm position-absolute color-custom-radio p-0 @php if($checked == ''){ @endphp no-check @php } else { @endphp checked @php } @endphp">
-						<li class="d-inline-flex align-middle">
-					    	<input type="radio" name="color" id="{{$color_set->name}}" {{$checked}} @php if($checked == ''){ @endphp onclick="location.href='{{$url}}'" @php } @endphp/>
+						<li class="d-inline-flex align-middle" @php if($checked == ''){ @endphp onclick="location.href='{{$url}}'" @php } @endphp>
+					    	<input type="radio" name="color" id="{{$color_set->name}}" {{$checked}} />
 					    	<label for="{{$color_set->name}}" class="m-0" style="background-color:{{$hexcode}};"></label>
 					  	</li>
 					</ul>
