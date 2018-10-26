@@ -36,42 +36,39 @@ class FetchProductImages implements ShouldQueue
         \Log::debug("product images");
         \Log::debug($prod_images);
 
-        if($this->productId == 215){
-            $extension   = "jpg";
+        $extension   = "jpg";
 
-            $productColors = ProductColor::where('product_id', $this->productId)->get();
-            foreach ($productColors as $pcs) {
-                $pcs->unmapAllImages();
+        $productColors = ProductColor::where('product_id', $this->productId)->get();
+        foreach ($productColors as $pcs) {
+            $pcs->unmapAllImages();
+        }
+        $prod_images_arr   = json_decode($prod_images, true);
+        $colors            = array_column($prod_images_arr, "color_name");
+        $default_color_ids = [];
+        foreach ($prod_images as $pIndex => $prodImage) {
+            $pc            = ProductColor::where([['product_id', $this->productId], ['color_id', $prodImage["color_id"]]])->first();
+            $image         = $prodImage['image'];
+            $product_name  = ($prodImage["magento_name"] == "") ? $prodImage["magento_name"] : $prodImage["name"];
+            $color_name = isset($prodImage["color_name"])?$prodImage["color_name"]:"";
+            $imageName     = generateVariantImageName($product_name, $color_name, $colors,$pIndex);
+            $imageFullName = $imageName . "." . $extension;
+            $subfilepath   = '/variants/' . $imageFullName;
+            $subpath       = 'variants/' . $imageFullName;
+            $actualImage   = base64_decode($image);
+            \Storage::put($subfilepath, $actualImage);
+            $disk       = \Storage::disk('local');
+            $filepath   = ($disk->getDriver()->getAdapter()->getPathPrefix()) . $subpath;
+            $attributes = $prodImage;
+            unset($attributes['image']);
+            \Log::debug("upload image");
+            $image_id = $pc->uploadImage($filepath, false, true, true, '', '', "", $filepath, $extension, $imageName, $attributes);
+            $type     = "";
+            if (!in_array($prodImage["color_id"], $default_color_ids)) {
+                $type = "default";
+                array_push($default_color_ids, $prodImage["color_id"]);
             }
-            $prod_images_arr   = json_decode($prod_images, true);
-            $colors            = array_column($prod_images_arr, "color_name");
-            $default_color_ids = [];
-            foreach ($prod_images as $pIndex => $prodImage) {
-                $pc            = ProductColor::where([['product_id', $this->productId], ['color_id', $prodImage["color_id"]]])->first();
-                $image         = $prodImage['image'];
-                $product_name  = ($prodImage["magento_name"] == "") ? $prodImage["magento_name"] : $prodImage["name"];
-                $color_name = isset($prodImage["color_name"])?$prodImage["color_name"]:"";
-                $imageName     = generateVariantImageName($product_name, $color_name, $colors,$pIndex);
-                $imageFullName = $imageName . "." . $extension;
-                $subfilepath   = '/variants/' . $imageFullName;
-                $subpath       = 'variants/' . $imageFullName;
-                $actualImage   = base64_decode($image);
-                \Storage::put($subfilepath, $actualImage);
-                $disk       = \Storage::disk('local');
-                $filepath   = ($disk->getDriver()->getAdapter()->getPathPrefix()) . $subpath;
-                $attributes = $prodImage;
-                unset($attributes['image']);
-                \Log::debug("upload image");
-                $image_id = $pc->uploadImage($filepath, false, true, true, '', '', "", $filepath, $extension, $imageName, $attributes);
-                $type     = "";
-                if (!in_array($prodImage["color_id"], $default_color_ids)) {
-                    $type = "default";
-                    array_push($default_color_ids, $prodImage["color_id"]);
-                }
-                $pc->mapImage($image_id, $type);
-                // \Storage::disk('local')->delete($subfilepath);
-
-            }
+            $pc->mapImage($image_id, $type);
+            // \Storage::disk('local')->delete($subfilepath);
 
         }
         
