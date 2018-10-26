@@ -28,6 +28,30 @@ function checkUserCart($token, $cart)
 
 }
 
+function makeQueryfromParams($params)
+{
+    $queryParams    = [];
+    $elasticMapping = [
+        'category_type' => 'search_data.string_facet.product_category_type',
+        'gender'        => 'search_data.string_facet.product_gender',
+        'age_group'     => 'search_data.string_facet.product_age_group',
+        'subtype'       => 'search_data.string_facet.product_subtype',
+    ];
+    foreach ($elasticMapping as $param => $map) {
+        if (array_has($params, $param)) {
+            $categ = $params[$param];
+            if (gettype($categ) != 'array') {
+                $categ = [$categ];
+            }
+
+            if (array_search('all', $categ) === false) {
+                array_set($queryParams, $map, $categ);
+            }
+        }
+    }
+    return $queryParams;
+}
+
 function sanitiseProductData($odooData)
 {
     $create_date   = new Carbon($odooData['create_date']);
