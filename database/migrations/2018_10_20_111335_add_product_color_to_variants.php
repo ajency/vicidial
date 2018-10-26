@@ -28,7 +28,7 @@ class AddProductColorToVariants extends Migration
     public function down()
     {
         Schema::table('variants', function (Blueprint $table) {
-            $table->dropColumn(['inventory','product_colors_id']);
+            $table->dropColumn(['inventory','product_color_id']);
         });
     }
 }
