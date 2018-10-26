@@ -135,7 +135,7 @@ function buildProductIndexFromOdooData($productData, $variantData)
 
     $indexData = [
         'type'        => "product",
-        'id'          => floatval($productData['product_id'] . '.' . $variantData->first()['product_color_id']),
+        'id'          => $productData['product_id'] . '.' . $variantData->first()['product_color_id'],
         'search_data' => [],
     ];
     $indexData['search_result_data'] = [
