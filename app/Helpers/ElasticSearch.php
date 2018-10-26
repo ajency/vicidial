@@ -58,11 +58,10 @@ function getUnSelectedVariants(int $product_id, int $selected_color_id)
         $color_groups[$var["product_color_id"]]["name"]      = $var["product_color_name"];
         $color_groups[$var["product_color_id"]]["html"]      = $var["product_color_html"];
         $color_groups[$var["product_color_id"]]["slug_name"] = $var["product_slug"];
-        //$var["product_color_id"] , $product_id will give you the productColor instance. get default image of size thumb for each instance and add it here
-        $productColor = ProductColor::where([["product_id",$product_id],["color_id",$var["product_color_id"]]])->first();
-        $thumbs = $productColor->getDefaultImage(["variant-thumb"]);
-        $color_groups[$var["product_color_id"]]["images"] = [ $thumbs ];
-        $variants[]                                       = $variant;
+        $productColor                                        = ProductColor::where([["product_id", $product_id], ["color_id", $var["product_color_id"]]])->first();
+        $thumbs                                              = $productColor->getDefaultImage(["variant-thumb"]);
+        $color_groups[$var["product_color_id"]]["images"]    = (isset($thumbs["variant-thumb"])) ? $thumbs["variant-thumb"] : [];
+        $variants[]                                          = $variant;
 
     }
 
@@ -100,9 +99,9 @@ function fetchProduct($product)
 
     $data              = $product["search_result_data"];
     $selected_color_id = $data["product_color_id"];
-    $productColor = ProductColor::where([["product_id",$data["product_id"]],["color_id",$selected_color_id]])->first();
-    $allImages = $productColor->getAllImages(["main","thumb","zoom"]);
-    $thumbImages = $productColor->getDefaultImage(["variant-thumb"]);
+    $productColor      = ProductColor::where([["product_id", $data["product_id"]], ["color_id", $selected_color_id]])->first();
+    $allImages         = $productColor->getAllImages(["main", "thumb", "zoom"]);
+    $thumbImages       = $productColor->getDefaultImage(["variant-thumb"]);
     $json              = [
         "parent_id"         => $data["product_id"],
         "title"             => $data["product_title"],
@@ -121,15 +120,13 @@ function fetchProduct($product)
             "sleeves"   => $data["product_att_sleeves"],
         ],
         "selected_color_id" => $selected_color_id,
-        //images of this product here (all images of preset main and zoom and thumb)
         "images"            => $allImages,
         "variant_group"     => [
             $selected_color_id => [
                 "name"      => $data["product_color_name"],
                 "html"      => $data["product_color_html"],
                 "slug_name" => $data["product_slug"],
-                //only default image of preset thumb here
-                "images"    => $thumbImages,
+                "images"    => (isset($thumbImages["variant-thumb"])) ? $thumbImages["variant-thumb"] : [],
                 "variants"  => $variants,
             ],
 
