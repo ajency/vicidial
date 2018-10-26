@@ -29,10 +29,8 @@ class ProductController extends Controller
 
         $params['breadcrumb']['current'] = '';
 
-        echo "<pre>";
-        print_r($params);
-
-        // return view('singleproduct')->with('params', $params);
+ 
+        return view('singleproduct')->with('params', $params);
     }
 
     public function getImage($photo_id, $preset, $depth, $filename)
