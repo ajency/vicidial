@@ -21,12 +21,23 @@ class AddressController extends Controller
         $address->user_id = $user_id;
         $address->save();
 
-        $address_data = $address->address;
-        $address_data["id"] = $address->id;
-        $address_data["type"] = $address->type;
-        $address_data["default"] = $address->default;
+        $address_data = $this->addressObj($address);
 
         return json_encode(["address"=> $address_data, "message"=> "Address Added successfully", 'success'=> true]);
+    }
+    public function userFetchItems(Request $request)
+    {
+        $user_id = fetchUserFromToken($request->header('Authorization'));
+
+        $addresses = Address::where('user_id', '=', $user_id)->get();
+
+        $address_data = array();
+
+        foreach ($addresses as $address) {
+            $address_data[] = $this->addressObj($address);
+        }
+
+        return json_encode(["addresses"=> $address_data]);
     }
 
     public function defaultAddressSet($user_id, $default)
@@ -41,5 +52,15 @@ class AddressController extends Controller
     	}
 
     	return $default;
+    }
+
+    public function addressObj($address)
+    {
+        $address_data = $address->address;
+        $address_data["id"] = $address->id;
+        $address_data["type"] = $address->type;
+        $address_data["default"] = $address->default;
+
+        return $address_data;
     }
 }

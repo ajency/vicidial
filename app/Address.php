@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Address extends Model
 {
 	protected $casts = [
-        'address' => 'array',
+        'address' => 'array', 'default' => 'boolean',
     ];
 }
