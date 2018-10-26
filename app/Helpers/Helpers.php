@@ -268,7 +268,7 @@ function inventoryFormatData(array $variant_ids, array $inventory)
 
 function generateVariantImageName($product_name, $color_name, $colors)
 {
-    $colors_count = array_count_values($colors);
+    $colors_count = (count($colors)>0)?array_count_values($colors):0;
     \Log::debug("colors count===");
     \Log::debug($colors_count);
     $append = "";

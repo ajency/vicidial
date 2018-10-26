@@ -49,7 +49,8 @@ class FetchProductImages implements ShouldQueue
             $pc            = ProductColor::where([['product_id', $this->productId], ['color_id', $prodImage["color_id"]]])->first();
             $image         = $prodImage['image'];
             $product_name  = ($prodImage["magento_name"] == "") ? $prodImage["magento_name"] : $prodImage["name"];
-            $imageName     = generateVariantImageName($product_name, $prodImage["color_name"], $colors);
+            $color_name = isset($prodImage["color_name"])?$prodImage["color_name"]:"";
+            $imageName     = generateVariantImageName($product_name, $color_name, $colors);
             $imageFullName = $imageName . "." . $extension;
             $subfilepath   = '/variants/' . $imageFullName;
             $subpath       = 'variants/' . $imageFullName;
