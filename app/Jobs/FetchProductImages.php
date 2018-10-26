@@ -33,6 +33,9 @@ class FetchProductImages implements ShouldQueue
     public function handle()
     {
         $prod_images = Product::fetchProductImages($this->productId);
+        \Log::debug("product images");
+        \Log::debug($prod_images);
+
         $extension   = "jpg";
 
         $productColors = ProductColor::where('product_id', $this->productId)->get();
@@ -56,6 +59,7 @@ class FetchProductImages implements ShouldQueue
             $filepath   = ($disk->getDriver()->getAdapter()->getPathPrefix()) . $subpath;
             $attributes = $prodImage;
             unset($attributes['image']);
+            \Log::debug("upload image");
             $image_id = $pc->uploadImage($filepath, false, true, true, '', '', "", $filepath, $extension, $imageName, $attributes);
             $type     = "";
             if (!in_array($prodImage["color_id"], $default_color_ids)) {
