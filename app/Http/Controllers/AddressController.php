@@ -7,7 +7,7 @@ use App\Address;
 
 class AddressController extends Controller
 {
-    public function userAddItem(Request $request)
+    public function userAddAddress(Request $request)
     {
     	$params  = $request->all();
     	$user_id = fetchUserFromToken($request->header('Authorization'));
@@ -25,7 +25,29 @@ class AddressController extends Controller
 
         return json_encode(["address"=> $address_data, "message"=> "Address Added successfully", 'success'=> true]);
     }
-    public function userFetchItems(Request $request)
+
+    public function userEditAddress(Request $request)
+    {
+        $params  = $request->all();
+        $user_id = fetchUserFromToken($request->header('Authorization'));
+
+        $address = Address::find($params["id"]);
+        if($address->user_id != $user_id) abort(403);
+
+        $default = $this->defaultAddressSet($user_id, $params["default"]);
+
+        $address->address = ["name" => $params["name"], "phone" => $params["phone"], "pincode" => $params["pincode"], "state" => $params["state"], "address" => $params["address"], "locality" => $params["locality"], "landmark" => $params["landmark"], "city" => $params["city"]];
+        $address->type = $params["type"];
+        $address->default = $default;
+        $address->user_id = $user_id;
+        $address->save();
+
+        $address_data = $this->addressObj($address);
+
+        return json_encode(["address"=> $address_data, "message"=> "Address Added successfully", 'success'=> true]);
+    }
+
+    public function userFetchAddresses(Request $request)
     {
         $user_id = fetchUserFromToken($request->header('Authorization'));
 
