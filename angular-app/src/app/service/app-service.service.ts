@@ -12,6 +12,7 @@ export class AppServiceService {
   apiUrl = '';
   private addToCart = new Subject<any>();
   private openCart = new Subject<any>();
+  shippingAddresses : any;
 
   constructor(	private router: Router ) { 
     console.log("isDevMode ==>",isDevMode());

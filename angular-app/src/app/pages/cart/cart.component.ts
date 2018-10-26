@@ -238,7 +238,7 @@ export class CartComponent implements OnInit {
       if(response.success){
         document.cookie='token='+ response.token + ";path=/";
         document.cookie='cart_id=' + response.user.active_cart_id + ";path=/";
-        this.router.navigateByUrl('/shipping-details', { skipLocationChange: true });        
+        this.navigateToShippingDetailsPage();        
       }
       else{
         this.userValidation.otpVerificationErrorMsg = response.message;
@@ -263,7 +263,7 @@ export class CartComponent implements OnInit {
   modalHandler(){
     console.log("modalHandler")
     if(this.isLoggedInUser()){
-      this.router.navigateByUrl('/shipping-details', { skipLocationChange: true });
+      this.navigateToShippingDetailsPage();
     }
     else{
       $('#signin').modal('show');
@@ -321,6 +321,21 @@ export class CartComponent implements OnInit {
     this.mobileNumberEntered = false;
     this.otp = null;
     this.userValidation.otpVerificationErrorMsg = '';
+  }
+
+  navigateToShippingDetailsPage(){
+    let url = this.appservice.apiUrl + "/api/rest/v1/user/address/all";
+    console.log(this.isLoggedInUser());
+    let header = this.isLoggedInUser() ? { Authorization : 'Bearer '+this.getCookie('token') } : {};
+    this.apiservice.request(url, 'get', {} , header ).then((response)=>{
+      console.log("response ==>", response);
+      this.appservice.shippingAddresses = response.addresses;
+      this.router.navigateByUrl('/shipping-details', { skipLocationChange: true });
+    })
+    .catch((error)=>{
+      console.log("error ===>", error);
+      this.showCartLoader = false;
+    })
   }
   
 }

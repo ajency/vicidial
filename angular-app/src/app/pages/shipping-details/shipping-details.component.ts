@@ -15,6 +15,7 @@ export class ShippingDetailsComponent implements OnInit {
             ) { }
 
   ngOnInit() {
+    this.addresses = this.appservice.shippingAddresses;
   }
 
   navigateToShippingPage(){
