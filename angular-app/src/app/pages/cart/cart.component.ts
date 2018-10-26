@@ -2,6 +2,7 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppServiceService } from '../../service/app-service.service';
 import { ApiServiceService } from '../../service/api-service.service';
+import { Subscription } from 'rxjs/Subscription';
 // import * as $ from 'jquery';
 declare var $: any;
 
@@ -29,12 +30,35 @@ export class CartComponent implements OnInit {
     otpVerificationFailed : false,
     otpVerificationErrorMsg : ''
   }
+  reloadSubscription: Subscription;
+  loadSubscription: Subscription;
   
   constructor( private router: Router,
                private appservice : AppServiceService,
                private apiservice : ApiServiceService,
                private zone : NgZone
               ) { 
+    this.reloadSubscription = this.appservice.listenToAddToCartEvent().subscribe(()=> { this.reloadCart() });
+    this.loadSubscription = this.appservice.listenToOpenCartEvent().subscribe(()=> { this.loadCart() });
+  }
+
+  reloadCart(){
+    console.log("listened to the add to cart trigger");
+    this.cartOpen = true;
+    this.fetchCartDataOnAddToCartSuccess();
+    sessionStorage.removeItem('add_to_cart_clicked');
+  }
+
+  loadCart(){
+    console.log("listened to open cart trigger");
+    this.cartOpen = true;
+    this.getCartData();
+  }
+
+  ngOnDestroy() {
+  // unsubscribe to ensure no memory leaks
+    this.reloadSubscription.unsubscribe();
+    this.loadSubscription.unsubscribe()
   }
 
   ngOnInit() {
@@ -48,22 +72,6 @@ export class CartComponent implements OnInit {
     else{
       this.getCartData();
     }
-  }
-
-  ngAfterViewInit(){
-    var self = this;
-    console.log("ngAfterViewInit");
-    $("#cd-cart-trigger").click(function() {
-      console.log("calling getCartData function");
-      this.cartOpen = true;
-      self.getCartData();                       
-    });
-    $('.cd-add-to-cart').on('click',function(){
-      console.log("add to cart clicked");
-      this.cartOpen = true;
-      self.fetchCartDataOnAddToCartSuccess();
-      sessionStorage.removeItem('add_to_cart_clicked');
-    });
   }
 
   fetchCartDataOnAddToCartSuccess(){    
@@ -111,9 +119,9 @@ export class CartComponent implements OnInit {
     let header = this.isLoggedInUser() ? { Authorization : 'Bearer '+this.getCookie('token') } : {}
     this.apiservice.request(url, 'get', {}, header ).then((response)=>{
       console.log("response ==>", response);
-      this.cart = response;
+      this.cart = this.calculateOffPercenatge(response);
       sessionStorage.setItem('cart_data', JSON.stringify(this.cart));
-      document.cookie = "cart_count=" + this.cart.cart_count;
+      document.cookie = "cart_count=" + this.cart.cart_count + ";path=/";
       this.updateCartCountInUI();
       this.showCartLoader=false;
       this.zone.run(() => {});
@@ -129,6 +137,15 @@ export class CartComponent implements OnInit {
       this.zone.run(() => {});
     })
     this.zone.run(() => {});
+  }
+
+  calculateOffPercenatge(data){
+    data.items.forEach((item)=>{
+      if(item.attributes.price_mrp != item.attributes.price_final)
+        item.off_percentage = Math.round(((item.attributes.price_mrp - item.attributes.price_final) / (item.attributes.price_mrp )) * 100) + '% OFF';
+      item.href = '/' + item.product_slug +'/buy?size='+item.attributes.size;
+    })
+    return data;
   }
 
   isLoggedInUser(){
@@ -169,7 +186,7 @@ export class CartComponent implements OnInit {
       this.cart.items.splice(index,1);
       this.cart.summary = response.summary;
       this.cart.cart_count = response.cart_count;
-      document.cookie = "cart_count=" + this.cart.cart_count;
+      document.cookie = "cart_count=" + this.cart.cart_count + ";path=/";
       sessionStorage.setItem('cart_data', JSON.stringify(this.cart));
       this.updateCartCountInUI()
     })
@@ -210,7 +227,7 @@ export class CartComponent implements OnInit {
     this.userValidation.disableVerifyOtpButton = true;
     this.userValidation.otpVerificationFailed = false;
     let url = this.appservice.apiUrl + '/rest/v1/authenticate/login?';
-    this.otp=this.otpCode.otp1+this.otpCode.otp2+this.otpCode.otp3+this.otpCode.otp4+this.otpCode.otp5+this.otpCode.otp6
+    // this.otp=this.otpCode.otp1+this.otpCode.otp2+this.otpCode.otp3+this.otpCode.otp4+this.otpCode.otp5+this.otpCode.otp6
     console.log("OTP ==>", this.otp);
     let body = {
       otp : this.otp,
@@ -222,8 +239,8 @@ export class CartComponent implements OnInit {
       this.otp = null;
       this.userValidation.disableVerifyOtpButton = false;
       if(response.success){
-        document.cookie='token='+ response.token;
-        document.cookie='cart_id=' + response.user.active_cart_id;
+        document.cookie='token='+ response.token + ";path=/";
+        document.cookie='cart_id=' + response.user.active_cart_id + ";path=/";
         this.router.navigateByUrl('/shipping-details', { skipLocationChange: true });        
       }
       else{

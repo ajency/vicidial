@@ -57,7 +57,7 @@ $(document).ready(function(){
                     $('.cd-add-to-cart .btn-label-initial').removeClass('d-none');
                     //var itemImg = $(add_to_cart_element).closest('.container').find('img').eq(1);
                     //flyToElement($(itemImg), $('.shopping-cart'));
-                    document.cookie = "cart_count=" + data.cart_count;
+                    document.cookie = "cart_count=" + data.cart_count + ";path=/";
                     sessionStorage.setItem( "addded_to_cart", "true");
                     // set_cart_data(data.item);
                     updateCartCountInUI();

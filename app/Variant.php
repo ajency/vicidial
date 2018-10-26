@@ -138,6 +138,7 @@ class Variant extends Model
     public function getItem()
     {
         return array(
+            'product_slug'  => $this->getProductSlug(),
             'availability'  => $this->getAvailability(),
             'message'       => $this->getMessage(),
             'attributes'    => $this->getItemAttributes(),
@@ -261,5 +262,9 @@ class Variant extends Model
     public function getDiscount()
     {
         return $this->getLstPrice() - $this->getSalePrice();
+    }
+
+    public function getProductSlug(){
+        return $this->elastic_data["search_result_data"]["product_slug"];
     }
 }
