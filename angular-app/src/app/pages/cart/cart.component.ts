@@ -2,6 +2,7 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppServiceService } from '../../service/app-service.service';
 import { ApiServiceService } from '../../service/api-service.service';
+import { Subscription } from 'rxjs/Subscription';
 // import * as $ from 'jquery';
 declare var $: any;
 
@@ -29,12 +30,35 @@ export class CartComponent implements OnInit {
     otpVerificationFailed : false,
     otpVerificationErrorMsg : ''
   }
+  reloadSubscription: Subscription;
+  loadSubscription: Subscription;
   
   constructor( private router: Router,
                private appservice : AppServiceService,
                private apiservice : ApiServiceService,
                private zone : NgZone
               ) { 
+    this.reloadSubscription = this.appservice.listenToAddToCartEvent().subscribe(()=> { this.reloadCart() });
+    this.loadSubscription = this.appservice.listenToOpenCartEvent().subscribe(()=> { this.loadCart() });
+  }
+
+  reloadCart(){
+    console.log("listened to the add to cart trigger");
+    this.cartOpen = true;
+    this.fetchCartDataOnAddToCartSuccess();
+    sessionStorage.removeItem('add_to_cart_clicked');
+  }
+
+  loadCart(){
+    console.log("listened to open cart trigger");
+    this.cartOpen = true;
+    this.getCartData();
+  }
+
+  ngOnDestroy() {
+  // unsubscribe to ensure no memory leaks
+    this.reloadSubscription.unsubscribe();
+    this.loadSubscription.unsubscribe()
   }
 
   ngOnInit() {
@@ -48,22 +72,6 @@ export class CartComponent implements OnInit {
     else{
       this.getCartData();
     }
-  }
-
-  ngAfterViewInit(){
-    var self = this;
-    console.log("ngAfterViewInit");
-    $("#cd-cart-trigger").click(function() {
-      console.log("calling getCartData function");
-      this.cartOpen = true;
-      self.getCartData();                       
-    });
-    $('.cd-add-to-cart').on('click',function(){
-      console.log("add to cart clicked");
-      this.cartOpen = true;
-      self.fetchCartDataOnAddToCartSuccess();
-      sessionStorage.removeItem('add_to_cart_clicked');
-    });
   }
 
   fetchCartDataOnAddToCartSuccess(){    
