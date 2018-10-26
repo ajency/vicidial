@@ -279,4 +279,36 @@ class Product
         }
     }
 
+    public static function getProductCategories()
+    {
+        // echo "<pre>";
+        // echo '{"aggs":{"agg_number_facet":{"nested":{"path":"search_data.string_facet"},"aggs":{"facet_name":{"terms":{"field":"search_data.string_facet.facet_name","include":["product_category_type","product_gender","product_subtype","product_age_group"]},"aggs":{"facet_value":{"terms":{"field":"search_data.string_facet.facet_value"},"aggs":{"count":{"reverse_nested":{}}}}}}}}},"size":0}';
+        $index = config('elastic.indexes.product');
+        $q     = new ElasticQuery;
+
+        $aggs_facet_name = $q::createAggTerms("facet_name", "search_data.string_facet.facet_name", ["include" => [
+            "product_category_type",
+            "product_gender",
+            "product_subtype",
+            "product_age_group",
+        ]]);
+
+        $aggs_facet_value  = $q::createAggTerms("facet_value", "search_data.string_facet.facet_value");
+        $aggs_facet_value  = $q::addToAggregation($aggs_facet_value, $q::createAggReverseNested('count'));
+        $aggs_facet_name   = $q::addToAggregation($aggs_facet_name, $aggs_facet_value);
+        $aggs_string_facet = $q::createAggNested("agg_number_facet", "search_data.string_facet");
+
+        $aggs_string_facet = $q::addToAggregation($aggs_string_facet, $aggs_facet_name);
+        $aggs              = $aggs_string_facet;
+        $q->setIndex($index)
+            ->initAggregation()
+            ->setAggregation($aggs)
+            ->setSize(0);
+
+        $response = $q->search();
+        // echo "\n" . $q->getJSON();
+        // die();
+        return $response;
+    }
+
 }
