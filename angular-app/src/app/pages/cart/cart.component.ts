@@ -169,6 +169,7 @@ export class CartComponent implements OnInit {
   }
 
   deleteItem(item){
+    this.showCartLoader = true;
     console.log("delete item ==>", item);
     let body = { variant_id : item.id };
     let url = this.appservice.apiUrl + (this.isLoggedInUser() ? ("/api/rest/v1/user/cart/"+this.getCookie('cart_id')+"/delete?") : ("/rest/anonymous/cart/delete?"));
@@ -182,10 +183,12 @@ export class CartComponent implements OnInit {
       this.cart.cart_count = response.cart_count;
       document.cookie = "cart_count=" + this.cart.cart_count + ";path=/";
       sessionStorage.setItem('cart_data', JSON.stringify(this.cart));
-      this.updateCartCountInUI()
+      this.updateCartCountInUI();
+      this.showCartLoader = false;
     })
     .catch((error)=>{
       console.log("error ===>", error);
+      this.showCartLoader = false;
     })
   }
 
