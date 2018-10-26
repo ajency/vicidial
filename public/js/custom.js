@@ -291,23 +291,23 @@ $('#delivery-pincode').click(function() {
     $('body').removeClass();
     $('body').addClass('hide-scroll');
 });
-$('.btn-signin').click(function() {
-    $('#signin').modal();
-    $('body').addClass('hide-scroll');
-    //appending modal background inside the bigform-content
-    $('.modal-backdrop').appendTo('#cd-cart');
-    //removing body classes to able click events
-    $(".state-1").removeClass('d-block'), 100;
-    $(".state-1").addClass('d-none'), 100;
-    $(".state-2").removeClass('d-none'), 100;
-    $(".state-2").addClass('d-block'), 100;
-});
-$('.btn-back').click(function() {
-    $(".state-2").removeClass('d-block'), 100;
-    $(".state-2").addClass('d-none'), 100;
-    $(".state-1").removeClass('d-none'), 100;
-    $(".state-1").addClass('d-block'), 100;
-});
+// $('.btn-signin').click(function() {
+//     $('#signin').modal();
+//     $('body').addClass('hide-scroll');
+//     //appending modal background inside the bigform-content
+//     $('.modal-backdrop').appendTo('#cd-cart');
+//     //removing body classes to able click events
+//     $(".state-1").removeClass('d-block'), 100;
+//     $(".state-1").addClass('d-none'), 100;
+//     $(".state-2").removeClass('d-none'), 100;
+//     $(".state-2").addClass('d-block'), 100;
+// });
+// $('.btn-back').click(function() {
+//     $(".state-2").removeClass('d-block'), 100;
+//     $(".state-2").addClass('d-none'), 100;
+//     $(".state-1").removeClass('d-none'), 100;
+//     $(".state-1").addClass('d-block'), 100;
+// });
 $(document).ready(function() {
     // Show or hide the sticky footer button
     $("a.scrollLink").click(function(event) {

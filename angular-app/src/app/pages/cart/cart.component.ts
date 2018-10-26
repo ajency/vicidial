@@ -272,7 +272,6 @@ export class CartComponent implements OnInit {
       $('#signin').modal('show');
       $("#cd-cart").css("overflow", "hidden");
       $('.modal-backdrop').appendTo('#cd-cart');
-      $('body').removeClass();
       $('body').addClass('hide-scroll');
     }      
   }
@@ -318,6 +317,13 @@ export class CartComponent implements OnInit {
         }
     }
     return "";
+  }
+
+  updateOtpModal(){
+    $('#signin').modal('hide');
+    this.mobileNumberEntered = false;
+    this.otp = null;
+    this.userValidation.otpVerificationErrorMsg = '';
   }
   
 }
