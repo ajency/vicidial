@@ -304,15 +304,12 @@ class Product
         $q->setIndex($index)
             ->initAggregation()
             ->setAggregation($aggs)
-            ->setSize(0)
-            ;
+            ->setSize(0);
         return $q;
     }
 
     public static function getProductCategoriesWithFilter($params)
     {
-        // echo "<pre>";
-        // echo '{"query":{"nested":{"path":"search_data","query":{"bool":{"should":[{"nested":{"path":"search_data.string_facet","query":{"bool":{"filter":[{"term":{"search_data.string_facet.facet_name":"product_gender"}},{"term":{"search_data.string_facet.facet_value":"Girls"}}]}}}},{"nested":{"path":"search_data.string_facet","query":{"bool":{"filter":[{"term":{"search_data.string_facet.facet_name":"product_gender"}},{"term":{"search_data.string_facet.facet_value":"Boys"}}]}}}}]}}}},"_source":["search_result_data.product_gender"]}'."\n";
         $q       = self::buildBaseQuery();
         $filters = makeQueryfromParams($params);
         // print_r($filters);
@@ -321,30 +318,29 @@ class Product
 
             foreach ($data as $facet => $data2) {
                 foreach ($data2 as $field => $values) {
-                // print_r($facet);die();
-                $should = [];
-                $nested =[];
-                foreach ($values as $value) {
-                    $facetName  = $q::createTerm($path.".".$facet.'.facet_name', $field);
-                    $facetValue = $q::createTerm($path.".".$facet.'.facet_value', $value);
+                    // print_r($facet);die();
+                    $should = [];
+                    $nested = [];
+                    foreach ($values as $value) {
+                        $facetName  = $q::createTerm($path . "." . $facet . '.facet_name', $field);
+                        $facetValue = $q::createTerm($path . "." . $facet . '.facet_slug', $value);
 
+                        $filter = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
 
-                    $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
-                    
-                    $nested[]     = $q::createNested('search_data.string_facet', $filter);
-                    $should     = $q::addToBoolQuery('should', $nested, $should);
-                    
-                }
-                $nested2 = $q::createNested($path, $should);
-                // print_r($nested2);
-                $must[] = $nested2;
+                        $nested[] = $q::createNested('search_data.string_facet', $filter);
+                        $should   = $q::addToBoolQuery('should', $nested, $should);
 
-            }}
+                    }
+                    $nested2 = $q::createNested($path, $should);
+                    // print_r($nested2);
+                    $must[] = $nested2;
+
+                }}
 
         }
-        $must = $q::addToBoolQuery('must',$must);
+        $must = $q::addToBoolQuery('must', $must);
         $q->setQuery($must);
-            $q->setSource(["search_result_data.product_gender","search_result_data.product_age_group","search_result_data.product_subtype","search_result_data.product_category_type"]);
+        $q->setSource(["search_result_data.product_gender", "search_result_data.product_age_group", "search_result_data.product_subtype", "search_result_data.product_category_type"]);
         //     print_r($q->getJSON()."\n");
         // die();
 
@@ -355,11 +351,12 @@ class Product
     public static function getProductCategories()
     {
         $q = self::buildBaseQuery();
-        return self::processResponse($q->search());;
+        return self::processResponse($q->search());
     }
 
-    public static function processResponse($response){
-
+    public static function processResponse($response)
+    {
+        $result =[];
         foreach ($response["aggregations"]["agg_string_facet"]["facet_name"]["buckets"] as $facet_name) {
             $result[$facet_name["key"]] = [];
             foreach ($facet_name["facet_value"]["buckets"] as $value) {
