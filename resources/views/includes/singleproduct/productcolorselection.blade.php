@@ -4,12 +4,12 @@
 			<p class="font-weight-bold kss-link mb-0"> Color options</p>
 				<ul class="product-color product-color--single px-1">
 					<li class="d-inline-flex align-middle">
-				    	<input type="checkbox" name="color" id="red" checked=true disabled>
+				    	<input type="checkbox" name="color" checked=true disabled>
 				    	@php
 				    		$color_obj = $params['variant_group']->{$selected_color_id};
 				    		$hexcode = ($color_obj->html != '') ? $color_obj->html : implode('', explode(" ",$color_obj->name));
 				      	@endphp
-				    	<label for="{{$hexcode}}" class="mb-0" style="background-color:{{$hexcode}};"></label>
+				    	<label class="mb-0" style="background-color:{{$hexcode}};"></label>
 				  	</li>
 				</ul>
 				<i class="fas fa-chevron-down cursor-pointer icon-md down-arrow"></i>
