@@ -218,7 +218,7 @@ export class CartComponent implements OnInit {
     this.userValidation.disableVerifyOtpButton = true;
     this.userValidation.otpVerificationFailed = false;
     let url = this.appservice.apiUrl + '/rest/v1/authenticate/login?';
-    this.otp=this.otpCode.otp1+this.otpCode.otp2+this.otpCode.otp3+this.otpCode.otp4+this.otpCode.otp5+this.otpCode.otp6
+    // this.otp=this.otpCode.otp1+this.otpCode.otp2+this.otpCode.otp3+this.otpCode.otp4+this.otpCode.otp5+this.otpCode.otp6
     console.log("OTP ==>", this.otp);
     let body = {
       otp : this.otp,
