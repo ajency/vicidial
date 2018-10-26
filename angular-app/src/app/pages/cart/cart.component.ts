@@ -119,7 +119,7 @@ export class CartComponent implements OnInit {
     let header = this.isLoggedInUser() ? { Authorization : 'Bearer '+this.getCookie('token') } : {}
     this.apiservice.request(url, 'get', {}, header ).then((response)=>{
       console.log("response ==>", response);
-      this.cart = response;
+      this.cart = this.calculateOffPercenatge(response);
       sessionStorage.setItem('cart_data', JSON.stringify(this.cart));
       document.cookie = "cart_count=" + this.cart.cart_count;
       this.updateCartCountInUI();
@@ -137,6 +137,15 @@ export class CartComponent implements OnInit {
       this.zone.run(() => {});
     })
     this.zone.run(() => {});
+  }
+
+  calculateOffPercenatge(data){
+    data.items.forEach((item)=>{
+      if(item.attributes.price_mrp != item.attributes.price_final)
+        item.off_percentage = Math.round(((item.attributes.price_mrp - item.attributes.price_final) / (item.attributes.price_mrp )) * 100) + '% OFF';
+      item.href = '/' + item.product_slug +'/buy?size='+item.attributes.size;
+    })
+    return data;
   }
 
   isLoggedInUser(){
