@@ -271,4 +271,12 @@ class Product
         }
     }
 
+    public static function getImg(){
+        $prod_images = '[{"image":false,"id":3,"color_variant":false,"name":false},{"image":false,"id":4,"color_variant":false,"name":false},{"image":false,"id":5,"color_variant":false,"name":"Short-1018"}]';
+        $prod_images_arr   = json_decode($prod_images);
+        foreach($prod_images_arr as $pIndex => $pval){
+            echo "ind===".$pIndex."<br/>";
+        }
+    }
+
 }

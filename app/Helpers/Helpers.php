@@ -266,19 +266,18 @@ function inventoryFormatData(array $variant_ids, array $inventory)
     return $final;
 }
 
-function generateVariantImageName($product_name, $color_name, $colors)
+function generateVariantImageName($product_name, $color_name, $colors,$index)
 {
     $colors_count = (count($colors)>0)?array_count_values($colors):0;
     \Log::debug("colors count===");
     \Log::debug($colors_count);
     $append = "";
     if ($colors_count["$color_name"] > 1) {
-        $append = "-" . $colors_count[$color_name];
+        $append = ($index+1);
     }
 
-    $product_name = str_slug($product_name, '-');
-    $color_name   = str_slug($color_name, '-');
     $image_name   = $product_name . "-" . $color_name . $append;
+    $image_name = str_slug(implode(' ',[$product_name,$color_name,$append]));
     return $image_name;
 
 }
