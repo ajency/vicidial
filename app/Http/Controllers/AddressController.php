@@ -21,7 +21,12 @@ class AddressController extends Controller
         $address->user_id = $user_id;
         $address->save();
 
-        return json_encode(["message"=> "Address Added successfully", 'success'=> true]);
+        $address_data = $address->address;
+        $address_data["id"] = $address->id;
+        $address_data["type"] = $address->type;
+        $address_data["default"] = $address->default;
+
+        return json_encode(["address"=> $address_data, "message"=> "Address Added successfully", 'success'=> true]);
     }
 
     public function defaultAddressSet($user_id, $default)
