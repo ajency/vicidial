@@ -130,12 +130,12 @@ function buildProductIndexFromOdooData($productData, $variantData)
     $productData['product_slug'] = str_slug(implode(' ', [
         $productData['product_att_magento_display_name'],
         $productData['product_id'],
-        $variantData->first()['product_color_id'],
+        $variantData->first()['product_color_name'],
     ]));
 
     $indexData = [
         'type'        => "product",
-        'id'          => floatval($productData['product_id'] . '.' . $variantData->first()['product_color_id']),
+        'id'          => $productData['product_id'] . '.' . $variantData->first()['product_color_id'],
         'search_data' => [],
     ];
     $indexData['search_result_data'] = [
@@ -181,6 +181,9 @@ function buildProductIndexFromOdooData($productData, $variantData)
                     'facet_name'  => $value,
                     'facet_value' => $productData[$value],
                 ];
+                if ($facet == 'string_facet') {
+                    $facetObj['facet_slug'] = str_slug($variant[$value]);
+                }
             }
             foreach (config('product.facets.' . $facet . '.variant') as $value) {
                 $facetObj = [

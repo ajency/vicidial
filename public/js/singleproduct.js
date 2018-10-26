@@ -4,6 +4,16 @@
 });*/
 
 $(function(){
+
+    var customHtml = '<div class="btn-label-initial d-flex align-items-center justify-content-center"><i class="kss_icon bag-icon-fill icon-sm"></i> Add to Bag</div><div class="btn-label-success"><i class="fas fa-arrow-right"></i> Go to Bag</div><div class="btn-icon"><i class="fas fa-circle-notch fa-spin fa-lg"></i></div>';
+
+    var buttn = $('.add-bag-btn .cd-add-to-cart');
+
+    // If radio already checked
+    if($('input[type=radio][name=kss-sizes]:checked').length > 0){
+        buttn.html(customHtml);
+    }
+
     $('input[type=radio][name=kss-sizes]').change(function() {
         //var selected_size_id = this.id;
         //var selected_var_id = window.variants['selected_item'];
@@ -17,8 +27,8 @@ $(function(){
         }
 
         replaceURLParameter('size', this.dataset['title']);
-
         jQuery('#cd-add-to-cart').prop("disabled", false);
+        buttn.html(customHtml);
 
     });   
     
@@ -29,7 +39,7 @@ $(function(){
         $('.colorOptions').removeClass('d-none');
 
         // Disable tooltip in mobile
-        $('.variant-wrapper').tooltip('disable');
+        $('.variant-wrapper,.product-color--single').tooltip('disable');
     }
 
 })

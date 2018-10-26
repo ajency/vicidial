@@ -61,9 +61,9 @@ $(document).ready(function(){
                     sessionStorage.setItem( "addded_to_cart", "true");
                     // set_cart_data(data.item);
                     updateCartCountInUI();
-                    $('.kss-alert .message').html('<strong>Success!!!</strong> Added to bag');
-                    $('.kss-alert').addClass('kss-alert--success');
-                    $('.kss-alert').addClass('is-open');
+                    // $('.kss-alert .message').html('<strong>Success!!!</strong> Added to bag');
+                    // $('.kss-alert').addClass('kss-alert--success');
+                    // $('.kss-alert').addClass('is-open');
                     $(add_to_cart_element).removeClass('cartLoader');
                     //$(add_to_cart_element).addClass('go-to-cart');
                     setTimeoutVariable();

@@ -17,4 +17,16 @@
 			}
 		}
 	}
+	.product-color{
+		input{
+			&:checked{
+				& + label{
+					opacity: 1;
+				}
+			}
+		}
+		label{
+			opacity: 1;
+		}
+	}
 }
