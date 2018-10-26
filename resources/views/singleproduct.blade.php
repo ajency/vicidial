@@ -187,14 +187,14 @@
 				      	<div class="card-body pb-2 px-0">
 					     	<dl class="row">
 
-							  <dt class="col-sm-2"><label class="text-muted f-w-4">Gender</label></dt>
-							  <dd class="col-sm-10">{{$params['additional_info']->gender}}</dd>
+							  <dt class="col-2"><label class="text-muted f-w-4">Gender</label></dt>
+							  <dd class="col-10">{{$params['additional_info']->gender}}</dd>
 
-							  <dt class="col-sm-2"><label class="text-muted f-w-4">Sleeves</label></dt>
-							  <dd class="col-sm-10">{{$params['additional_info']->sleeves}}</dd>
+							  <dt class="col-2"><label class="text-muted f-w-4">Sleeves</label></dt>
+							  <dd class="col-10">{{$params['additional_info']->sleeves}}</dd>
 
-							  <dt class="col-sm-2"><label class="text-muted f-w-4">Material</label></dt>
-							  <dd class="col-sm-10">{{$params['additional_info']->material}}</dd>
+							  <dt class="col-2"><label class="text-muted f-w-4">Material</label></dt>
+							  <dd class="col-10">{{$params['additional_info']->material}}</dd>
 
 							</dl>
 				      	</div>

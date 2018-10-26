@@ -130,8 +130,8 @@
 			</div>
 		</div>
 		<hr class="dashed"> -->
-		<hr class="dashed">
-		<div class="cd-cart-total">
+		<hr class="dashed d-none">
+		<div class="cd-cart-total mt-4">
 			<h5 class="font-weight-bold">Cart Total <span>₹{{cart.summary.order_total}}</span></h5>
 			<p class="sub-text mb-3">Shipping charges will be added at checkout</p>
 		</div>
@@ -146,8 +146,8 @@
 	<div *ngIf="cart.items.length == 0" class="empty-cart text-center d-flex align-items-center justify-content-center flex-column">
 		<i class="fas fa-shopping-cart empty-cart__icon"></i>
 		<h4 class="py-4 mb-0">Your cart is currently empty</h4>
-		<button class="btn btn-primary btn-lg btn-pay d-inline-flex align-items-center justify-content-center" (click)="closeCart()">
-			<i class="kss_icon bag-icon-fill icon-sm"></i> Continue shopping
+		<button class="btn btn-primary btn-lg btn-pay d-inline-flex align-items-center justify-content-center" (click)="closeCart()" style="min-width: 130px;">
+			Shop now
 		</button>
 	</div>
 

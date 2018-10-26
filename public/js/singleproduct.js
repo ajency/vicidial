@@ -22,11 +22,14 @@ $(function(){
 
     });   
     
-    // Detaching color option in mobile
     if ($(window).width() < 767) {
+        // Detaching color option in mobile
         var coloroption = $('.colorOptions').detach();
         $('.kss_sizes').after(coloroption);
         $('.colorOptions').removeClass('d-none');
+
+        // Disable tooltip in mobile
+        $('.variant-wrapper').tooltip('disable');
     }
 
 })
