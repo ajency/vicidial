@@ -33,6 +33,9 @@ class FetchProductImages implements ShouldQueue
     public function handle()
     {
         $prod_images = Product::fetchProductImages($this->productId);
+        \Log::debug("product images");
+        \Log::debug($prod_images);
+
         $extension   = "jpg";
 
         $productColors = ProductColor::where('product_id', $this->productId)->get();
@@ -42,11 +45,12 @@ class FetchProductImages implements ShouldQueue
         $prod_images_arr   = json_decode($prod_images, true);
         $colors            = array_column($prod_images_arr, "color_name");
         $default_color_ids = [];
-        foreach ($prod_images as $prodImage) {
+        foreach ($prod_images as $pIndex => $prodImage) {
             $pc            = ProductColor::where([['product_id', $this->productId], ['color_id', $prodImage["color_id"]]])->first();
             $image         = $prodImage['image'];
             $product_name  = ($prodImage["magento_name"] == "") ? $prodImage["magento_name"] : $prodImage["name"];
-            $imageName     = generateVariantImageName($product_name, $prodImage["color_name"], $colors);
+            $color_name = isset($prodImage["color_name"])?$prodImage["color_name"]:"";
+            $imageName     = generateVariantImageName($product_name, $color_name, $colors,$pIndex);
             $imageFullName = $imageName . "." . $extension;
             $subfilepath   = '/variants/' . $imageFullName;
             $subpath       = 'variants/' . $imageFullName;
@@ -56,6 +60,7 @@ class FetchProductImages implements ShouldQueue
             $filepath   = ($disk->getDriver()->getAdapter()->getPathPrefix()) . $subpath;
             $attributes = $prodImage;
             unset($attributes['image']);
+            \Log::debug("upload image");
             $image_id = $pc->uploadImage($filepath, false, true, true, '', '', "", $filepath, $extension, $imageName, $attributes);
             $type     = "";
             if (!in_array($prodImage["color_id"], $default_color_ids)) {
@@ -63,9 +68,9 @@ class FetchProductImages implements ShouldQueue
                 array_push($default_color_ids, $prodImage["color_id"]);
             }
             $pc->mapImage($image_id, $type);
-            \Storage::disk('local')->delete($subfilepath);
+            // \Storage::disk('local')->delete($subfilepath);
 
         }
-
+        
     }
 }

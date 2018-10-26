@@ -64,7 +64,7 @@ class CreateSEO
             if($color_id == $selected_color_id) {
                 $product_color = $color_set->name;
                 foreach ($color_set->images as $image_set) {
-                    if($image_set->is_primary) {$selected_image = $image_set->res->desktop->small_thumb;}
+                    //if($image_set->is_primary) {$selected_image = $image_set->res->desktop->small_thumb;}
                 }
                 foreach ($color_set->variants as $size_set) {
                     if($size_set->is_default) {
