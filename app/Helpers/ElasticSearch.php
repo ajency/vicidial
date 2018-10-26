@@ -59,7 +59,7 @@ function getUnSelectedVariants(int $product_id, int $selected_color_id)
         $color_groups[$var["product_color_id"]]["slug_name"] = $var["product_slug"];
         //$var["product_color_id"] , $product_id will give you the productColor instance. get default image of size thumb for each instance and add it here
         $productColor = ProductColor::where([["product_id",$product_id],["color_id",$var["product_color_id"]]])->first();
-        $thumbs = $productColor->getDefaultImage(["thumb"]);
+        $thumbs = $productColor->getDefaultImage(["variant-thumb"]);
         $color_groups[$var["product_color_id"]]["images"] = [ $thumbs ];
         $variants[]                                       = $variant;
 
@@ -101,7 +101,7 @@ function fetchProduct($product)
     $selected_color_id = $data["product_color_id"];
     $productColor = ProductColor::where([["product_id",$data["product_id"]],["color_id",$selected_color_id]])->first();
     $allImages = $productColor->getAllImages(["main","thumb","zoom"]);
-    $thumbImages = $productColor->getDefaultImage(["thumb"]);
+    $thumbImages = $productColor->getDefaultImage(["variant-thumb"]);
     $json              = [
         "parent_id"         => $data["product_id"],
         "title"             => $data["product_title"],
