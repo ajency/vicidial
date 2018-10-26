@@ -121,7 +121,7 @@ export class CartComponent implements OnInit {
       console.log("response ==>", response);
       this.cart = this.calculateOffPercenatge(response);
       sessionStorage.setItem('cart_data', JSON.stringify(this.cart));
-      document.cookie = "cart_count=" + this.cart.cart_count;
+      document.cookie = "cart_count=" + this.cart.cart_count + ";path=/";
       this.updateCartCountInUI();
       this.showCartLoader=false;
       this.zone.run(() => {});
@@ -239,8 +239,8 @@ export class CartComponent implements OnInit {
       this.otp = null;
       this.userValidation.disableVerifyOtpButton = false;
       if(response.success){
-        document.cookie='token='+ response.token;
-        document.cookie='cart_id=' + response.user.active_cart_id;
+        document.cookie='token='+ response.token + ";path=/";
+        document.cookie='cart_id=' + response.user.active_cart_id + ";path=/";
         this.router.navigateByUrl('/shipping-details', { skipLocationChange: true });        
       }
       else{
