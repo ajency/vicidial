@@ -3,19 +3,19 @@
    background-position: bottom;
  }
 #home-slider.carousel {
-         @media (max-width: 1399.98px) and (min-width: 992px){
-           height:450px;
-        }
-        @media (min-width: 320px) and (max-width: 767.98px) {
-       height:320px;
-        }
-        @media (min-width: 768px) and (max-width: 992px) {
-       height:600px;
-        }
-         @media (min-width: 992px) and (max-width: 1199.98px) {
-        height:360px;
-         }
-        height:670px;
+    @media (max-width: 1499px) and (min-width: 500px){
+       min-height: 500px;
+    }
+    @media (min-width: 992px) and (max-width: 1199.98px) {
+        min-height:360px;
+    }
+    @media (min-width: 768px) and (max-width: 992px) {
+        min-height: 380px;
+    }
+    @media (min-width: 320px) and (max-width: 767.98px) {
+        min-height: 300px;
+    }
+    min-height:670px;
 }
 
  .stripe-bg-top{
