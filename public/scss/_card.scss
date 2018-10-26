@@ -74,7 +74,9 @@ $size: 20px;
             font-size:.8rem;
         }
     }
-  
+    .card-img-top{
+        border-radius: 5px;
+    }
     /*.card-img-top {
         min-height: 24vw;
         @media (max-width: 1399px) {

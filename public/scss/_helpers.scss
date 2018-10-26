@@ -1,6 +1,9 @@
 a{
     text-decoration:none !important;
 }
+.section{
+    margin-top:5rem;
+}
 .text-gray {
     color: $gray-700;
 }
@@ -276,10 +279,11 @@ footer .bl-1{
 }
 
 
- @media (min-width: 320px) and (max-width: 767.98px) {
+ @media (min-width: 320px) and (max-width: 992px) {
     .overflow-m{
         overflow-x:scroll;
         overflow-y: hidden;
+        display: -webkit-box;
     }
 }
 
@@ -299,6 +303,7 @@ footer .bl-1{
 article {
   border-radius: 5px;
   background: #fff;
+   padding: 5px;
 }
 main {
     columns: 300px;
@@ -306,5 +311,18 @@ main {
 }
 article {
     break-inside: avoid-column;
-    margin-bottom: 1rem; 
+    margin-top: 20px; 
+}
+article:first-child(){
+    margin-top:0px;
+}
+.blur-up {
+    -webkit-filter: blur(5px);
+    filter: blur(5px);
+    transition: filter 500ms ease-in;
+}
+
+.blur-up.lazyloaded {
+    -webkit-filter: blur(0);
+    filter: blur(0);
 }
