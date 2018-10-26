@@ -103,13 +103,12 @@ export class CartComponent implements OnInit {
   }
 
   getCartData(){
+    this.showCartLoader = true;
     if(sessionStorage.getItem('cart_data')){
       this.cart = JSON.parse(sessionStorage.getItem('cart_data'));
       console.log("cart_data from sessionStorage==>", this.cart);
     }
-    else{
-      this.fetchCartDataFromServer()
-    }
+    this.fetchCartDataFromServer();
   }
 
   fetchCartDataFromServer(){
