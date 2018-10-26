@@ -82,8 +82,7 @@ export class CartComponent implements OnInit {
     }
     else
       this.cart = { items : [] };
-
-    let time = new Date().getTime() + 1500;
+    
     this.sessionCheckInterval = setInterval(()=>{
       if(sessionStorage.getItem('addded_to_cart')){
         if(sessionStorage.getItem('addded_to_cart') == "true")
@@ -93,23 +92,18 @@ export class CartComponent implements OnInit {
         sessionStorage.removeItem('addded_to_cart');
         clearInterval(this.sessionCheckInterval);
       }
-      if(new Date().getTime() > time){
-        this.showCartLoader = false;
-        clearInterval(this.sessionCheckInterval);
-      }
     this.zone.run(() => {});
     },100)
     this.zone.run(() => {});
   }
 
   getCartData(){
+    this.showCartLoader = true;
     if(sessionStorage.getItem('cart_data')){
       this.cart = JSON.parse(sessionStorage.getItem('cart_data'));
       console.log("cart_data from sessionStorage==>", this.cart);
     }
-    else{
-      this.fetchCartDataFromServer()
-    }
+    this.fetchCartDataFromServer();
   }
 
   fetchCartDataFromServer(){
@@ -175,6 +169,7 @@ export class CartComponent implements OnInit {
   }
 
   deleteItem(item){
+    this.showCartLoader = true;
     console.log("delete item ==>", item);
     let body = { variant_id : item.id };
     let url = this.appservice.apiUrl + (this.isLoggedInUser() ? ("/api/rest/v1/user/cart/"+this.getCookie('cart_id')+"/delete?") : ("/rest/anonymous/cart/delete?"));
@@ -188,10 +183,12 @@ export class CartComponent implements OnInit {
       this.cart.cart_count = response.cart_count;
       document.cookie = "cart_count=" + this.cart.cart_count + ";path=/";
       sessionStorage.setItem('cart_data', JSON.stringify(this.cart));
-      this.updateCartCountInUI()
+      this.updateCartCountInUI();
+      this.showCartLoader = false;
     })
     .catch((error)=>{
       console.log("error ===>", error);
+      this.showCartLoader = false;
     })
   }
 
@@ -272,7 +269,6 @@ export class CartComponent implements OnInit {
       $('#signin').modal('show');
       $("#cd-cart").css("overflow", "hidden");
       $('.modal-backdrop').appendTo('#cd-cart');
-      $('body').removeClass();
       $('body').addClass('hide-scroll');
     }      
   }
@@ -318,6 +314,13 @@ export class CartComponent implements OnInit {
         }
     }
     return "";
+  }
+
+  updateOtpModal(){
+    $('#signin').modal('hide');
+    this.mobileNumberEntered = false;
+    this.otp = null;
+    this.userValidation.otpVerificationErrorMsg = '';
   }
   
 }
