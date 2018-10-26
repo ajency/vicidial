@@ -1,5 +1,6 @@
 <?php
 use App\Elastic\ElasticQuery;
+use App\ProductColor;
 
 function getInventorySum(array $var)
 {
