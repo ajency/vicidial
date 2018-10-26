@@ -39,7 +39,7 @@ $(function(){
         $('.colorOptions').removeClass('d-none');
 
         // Disable tooltip in mobile
-        $('.variant-wrapper').tooltip('disable');
+        $('.variant-wrapper,.product-color--single').tooltip('disable');
     }
 
 })
