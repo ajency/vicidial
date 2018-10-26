@@ -186,7 +186,7 @@ export class CartComponent implements OnInit {
       this.cart.items.splice(index,1);
       this.cart.summary = response.summary;
       this.cart.cart_count = response.cart_count;
-      document.cookie = "cart_count=" + this.cart.cart_count;
+      document.cookie = "cart_count=" + this.cart.cart_count + ";path=/";
       sessionStorage.setItem('cart_data', JSON.stringify(this.cart));
       this.updateCartCountInUI()
     })
