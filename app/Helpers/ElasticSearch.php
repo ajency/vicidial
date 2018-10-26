@@ -58,7 +58,9 @@ function getUnSelectedVariants(int $product_id, int $selected_color_id)
         $color_groups[$var["product_color_id"]]["html"]      = $var["product_color_html"];
         $color_groups[$var["product_color_id"]]["slug_name"] = $var["product_slug"];
         //$var["product_color_id"] , $product_id will give you the productColor instance. get default image of size thumb for each instance and add it here
-        $color_groups[$var["product_color_id"]]["images"] = json_decode('[{"is_primary":true,"res":{"desktop":{"small_thumb":"/img/thumbnail/3front@thumb.jpg"},"mobile":{"small_thumb":"/img/thumbnail/3front@thumb.jpg"}}}]', true);
+        $productColor = ProductColor::where([["product_id",$product_id],["color_id",$var["product_color_id"]]])->first();
+        $thumbs = $productColor->getDefaultImage(["thumb"]);
+        $color_groups[$var["product_color_id"]]["images"] = [ $thumbs ];
         $variants[]                                       = $variant;
 
     }
@@ -97,6 +99,9 @@ function fetchProduct($product)
 
     $data              = $product["search_result_data"];
     $selected_color_id = $data["product_color_id"];
+    $productColor = ProductColor::where([["product_id",$data["product_id"]],["color_id",$selected_color_id]])->first();
+    $allImages = $productColor->getAllImages(["main","thumb","zoom"]);
+    $thumbImages = $productColor->getDefaultImage(["thumb"]);
     $json              = [
         "parent_id"         => $data["product_id"],
         "title"             => $data["product_title"],
@@ -115,15 +120,15 @@ function fetchProduct($product)
             "sleeves"   => $data["product_att_sleeves"],
         ],
         "selected_color_id" => $selected_color_id,
-        //images of this product here (all images of preset main and zoom)
-        "images"            => [],
+        //images of this product here (all images of preset main and zoom and thumb)
+        "images"            => $allImages,
         "variant_group"     => [
             $selected_color_id => [
                 "name"      => $data["product_color_name"],
                 "html"      => $data["product_color_html"],
                 "slug_name" => $data["product_slug"],
                 //only default image of preset thumb here
-                "images"    => json_decode('[{"is_primary":true,"res":{"desktop":{"small_thumb":"/img/thumbnail/6front@thumb.jpg","list_thumb":"https://media-cdn.kidsuperstore.in/media/catalog/product/cache/460a3bcbdb4cc235aac43a6f81f8f135/2/0/2018-09-01101712177353.png","main":"https://media-cdn.kidsuperstore.in/media/catalog/product/cache/c687aa7517cf01e65c009f6943c2b1e9/2/0/2018-09-01101712177353.png","zoom":"https://media-cdn.kidsuperstore.in/media/catalog/product/cache/926507dc7f93631a094422215b778fe0/2/0/2018-09-01101712177353.png"},"mobile":{"small_thumb":"/img/thumbnail/6front@thumb.jpg","list_thumb":"https://media-cdn.kidsuperstore.in/media/catalog/product/cache/460a3bcbdb4cc235aac43a6f81f8f135/2/0/2018-09-01101712177353.png","main":"https://media-cdn.kidsuperstore.in/media/catalog/product/cache/c687aa7517cf01e65c009f6943c2b1e9/2/0/2018-09-01101712177353.png","zoom":"https://media-cdn.kidsuperstore.in/media/catalog/product/cache/926507dc7f93631a094422215b778fe0/2/0/2018-09-01101712177353.png"}}},{"is_primary":false,"res":{"desktop":{"small_thumb":"/img/thumbnail/6front@thumb.jpg","list_thumb":"https://media-cdn.kidsuperstore.in/media/catalog/product/cache/460a3bcbdb4cc235aac43a6f81f8f135/2/0/2018-09-01101712177353.png","main":"https://media-cdn.kidsuperstore.in/media/catalog/product/cache/c687aa7517cf01e65c009f6943c2b1e9/2/0/2018-09-01101712177353.png","zoom":"https://media-cdn.kidsuperstore.in/media/catalog/product/cache/926507dc7f93631a094422215b778fe0/2/0/2018-09-01101712177353.png"},"mobile":{"small_thumb":"/img/thumbnail/6front@thumb.jpg","list_thumb":"https://media-cdn.kidsuperstore.in/media/catalog/product/cache/460a3bcbdb4cc235aac43a6f81f8f135/2/0/2018-09-01101712177353.png","main":"https://media-cdn.kidsuperstore.in/media/catalog/product/cache/c687aa7517cf01e65c009f6943c2b1e9/2/0/2018-09-01101712177353.png","zoom":"https://media-cdn.kidsuperstore.in/media/catalog/product/cache/926507dc7f93631a094422215b778fe0/2/0/2018-09-01101712177353.png"}}}]', true),
+                "images"    => $thumbImages,
                 "variants"  => $variants,
             ],
 

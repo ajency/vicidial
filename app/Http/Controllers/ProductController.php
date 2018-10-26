@@ -29,19 +29,27 @@ class ProductController extends Controller
 
         $params['breadcrumb']['current'] = '';
 
-        return view('singleproduct')->with('params', $params);
+        echo "<pre>";
+        print_r($params);
+
+        // return view('singleproduct')->with('params', $params);
     }
 
-    public function getImage($elastic_id, $preset, $depth, $filename)
+    public function getImage($photo_id, $preset, $depth, $filename)
     {
         $path         = public_path() . 'img/' . $filename;
-        $productColor = ProductColor::where('elastic_id', $elastic_id)->first();
+        $productColor = ProductColor::join('fileupload_mapping', function ($join) {
+            $join->on('product_colors.id', '=', 'fileupload_mapping.object_id');
+            $join->where('fileupload_mapping.object_type', '=', "App\ProductColor");
+        })->where('fileupload_mapping.file_id', $photo_id)->select('product_colors.*')->first();
+        // $productColor = ProductColor::where('elastic_id', $elastic_id)->first();
+        if($productColor == null) abort(404);
         $imageurl     = "";
-        $file         = $productColor->getSingleImage($preset, $depth);
+        $file         = $productColor->getSingleImage($photo_id,$preset, $depth);
         if ($file) {
             $imageurl = $file;
         } else {
-            $imageurl = $productColor->resizeImages($preset, $depth, $filename);
+            $imageurl = $productColor->resizeImages($photo_id,$preset, $depth, $filename);
         }
         return \Redirect::to(url($imageurl), 308);
 
