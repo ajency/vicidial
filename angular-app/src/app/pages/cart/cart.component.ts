@@ -108,9 +108,9 @@ export class CartComponent implements OnInit {
 
   fetchCartDataFromServer(){
     this.showCartLoader = true;
-    let url = this.appservice.apiUrl + (this.isLoggedInUser() ? ("/api/rest/v1/user/cart/"+this.getCookie('cart_id')+"/get") : ("/rest/anonymous/cart/get"))
+    let url = this.appservice.apiUrl + (this.isLoggedInUser() ? ("/api/rest/v1/user/cart/"+this.appservice.getCookie('cart_id')+"/get") : ("/rest/anonymous/cart/get"))
     console.log(this.isLoggedInUser());
-    let header = this.isLoggedInUser() ? { Authorization : 'Bearer '+this.getCookie('token') } : {}
+    let header = this.isLoggedInUser() ? { Authorization : 'Bearer '+this.appservice.getCookie('token') } : {}
     this.apiservice.request(url, 'get', {}, header ).then((response)=>{
       console.log("response ==>", response);
       this.cart = this.calculateOffPercenatge(response);
@@ -143,7 +143,7 @@ export class CartComponent implements OnInit {
   }
 
   isLoggedInUser(){
-    if(this.getCookie('token') && this.getCookie('cart_id'))
+    if(this.appservice.getCookie('token') && this.appservice.getCookie('cart_id'))
       return true;
     return false;
   }
@@ -172,8 +172,8 @@ export class CartComponent implements OnInit {
     this.showCartLoader = true;
     console.log("delete item ==>", item);
     let body = { variant_id : item.id };
-    let url = this.appservice.apiUrl + (this.isLoggedInUser() ? ("/api/rest/v1/user/cart/"+this.getCookie('cart_id')+"/delete?") : ("/rest/anonymous/cart/delete?"));
-    let header = this.isLoggedInUser() ? { Authorization : 'Bearer '+this.getCookie('token') } : {};
+    let url = this.appservice.apiUrl + (this.isLoggedInUser() ? ("/api/rest/v1/user/cart/"+this.appservice.getCookie('cart_id')+"/delete?") : ("/rest/anonymous/cart/delete?"));
+    let header = this.isLoggedInUser() ? { Authorization : 'Bearer '+this.appservice.getCookie('token') } : {};
     url = url+$.param(body);
     this.apiservice.request(url, 'get', body, header ).then((response)=>{
       console.log("response ==>", response);
@@ -238,7 +238,7 @@ export class CartComponent implements OnInit {
       if(response.success){
         document.cookie='token='+ response.token + ";path=/";
         document.cookie='cart_id=' + response.user.active_cart_id + ";path=/";
-        this.router.navigateByUrl('/shipping-details', { skipLocationChange: true });        
+        this.navigateToShippingDetailsPage();        
       }
       else{
         this.userValidation.otpVerificationErrorMsg = response.message;
@@ -263,7 +263,7 @@ export class CartComponent implements OnInit {
   modalHandler(){
     console.log("modalHandler")
     if(this.isLoggedInUser()){
-      this.router.navigateByUrl('/shipping-details', { skipLocationChange: true });
+      this.navigateToShippingDetailsPage();
     }
     else{
       $('#signin').modal('show');
@@ -287,7 +287,7 @@ export class CartComponent implements OnInit {
 
   updateCartCountInUI() {
     //Check if cart count in Session storage
-    var cart_count = this.getCookie( "cart_count" );
+    var cart_count = this.appservice.getCookie( "cart_count" );
     if(cart_count && cart_count != "0"){
       //Scroll to top if cart icon is hidden on top
       $(".cart-counter").removeClass('d-none'), 100;
@@ -300,27 +300,26 @@ export class CartComponent implements OnInit {
     }
   }
 
-  getCookie(cname) {
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for(var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
-    }
-    return "";
-  }
-
   updateOtpModal(){
     $('#signin').modal('hide');
     this.mobileNumberEntered = false;
     this.otp = null;
     this.userValidation.otpVerificationErrorMsg = '';
+  }
+
+  navigateToShippingDetailsPage(){
+    let url = this.appservice.apiUrl + "/api/rest/v1/user/address/all";
+    console.log(this.isLoggedInUser());
+    let header = this.isLoggedInUser() ? { Authorization : 'Bearer '+this.appservice.getCookie('token') } : {};
+    this.apiservice.request(url, 'get', {} , header ).then((response)=>{
+      console.log("response ==>", response);
+      this.appservice.shippingAddresses = response.addresses;
+      this.router.navigateByUrl('/shipping-details', { skipLocationChange: true });
+    })
+    .catch((error)=>{
+      console.log("error ===>", error);
+      this.showCartLoader = false;
+    })
   }
   
 }

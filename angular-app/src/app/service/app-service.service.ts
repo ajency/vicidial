@@ -12,6 +12,7 @@ export class AppServiceService {
   apiUrl = '';
   private addToCart = new Subject<any>();
   private openCart = new Subject<any>();
+  shippingAddresses : any;
 
   constructor(	private router: Router ) { 
     console.log("isDevMode ==>",isDevMode());
@@ -55,5 +56,21 @@ export class AppServiceService {
 
   listenToOpenCartEvent() : Observable<any> {
     return this.openCart.asObservable();
+  }
+
+  getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
   }
 }
