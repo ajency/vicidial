@@ -34,7 +34,7 @@ class AddressController extends Controller
         $address = Address::find($params["id"]);
         if($address->user_id != $user_id) abort(403);
 
-        $default = $this->defaultAddressSet($user_id, $params["default"]);
+        $default = $this->defaultAddressSet($user_id, $params["default"], $address->id);
 
         $address->address = ["name" => $params["name"], "phone" => $params["phone"], "pincode" => $params["pincode"], "state" => $params["state"], "address" => $params["address"], "locality" => $params["locality"], "landmark" => $params["landmark"], "city" => $params["city"]];
         $address->type = $params["type"];
@@ -62,10 +62,13 @@ class AddressController extends Controller
         return json_encode(["addresses"=> $address_data]);
     }
 
-    public function defaultAddressSet($user_id, $default)
+    public function defaultAddressSet($user_id, $default, $address_id = null)
     {
     	$address = Address::where('user_id', '=', $user_id)->where('default', '=', true)->first();
-    	if($address == null) {
+        if($address_id != null && $address != null && $address_id == $address->id) {
+            $default = true;
+        }
+        elseif($address == null) {
     		$default = true;
     	}
     	elseif($address != null && $default) {
