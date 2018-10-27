@@ -312,58 +312,36 @@ class Product
     {
         $q       = self::buildBaseQuery();
         $filters = makeQueryfromParams($params);
-        // print_r($filters);
-        $must = [];
+        $must    = [];
         foreach ($filters as $path => $data) {
-
             foreach ($data as $facet => $data2) {
                 foreach ($data2 as $field => $values) {
-                    // print_r($facet);die();
                     $should = [];
                     $nested = [];
                     foreach ($values as $value) {
                         $facetName  = $q::createTerm($path . "." . $facet . '.facet_name', $field);
-                        $facetValue = $q::createTerm($path . "." . $facet . '.facet_slug', $value);
-
-                        $filter = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
-
-                        $nested[] = $q::createNested('search_data.string_facet', $filter);
-                        $should   = $q::addToBoolQuery('should', $nested, $should);
-
+                        $facetValue = $q::createTerm($path . "." . $facet . '.facet_value', $value);
+                        $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
+                        $nested[]   = $q::createNested('search_data.string_facet', $filter);
+                        $should     = $q::addToBoolQuery('should', $nested, $should);
                     }
                     $nested2 = $q::createNested($path, $should);
-                    // print_r($nested2);
-                    $must[] = $nested2;
-
-                }}
-
+                    $must[]  = $nested2;
+                }
+            }
         }
         $must = $q::addToBoolQuery('must', $must);
         $q->setQuery($must);
         $q->setSource(["search_result_data.product_gender", "search_result_data.product_age_group", "search_result_data.product_subtype", "search_result_data.product_category_type"]);
-        //     print_r($q->getJSON()."\n");
-        // die();
-
         $response = $q->search();
-        return self::processResponse($response);
+        return sanitiseFilterdata($response,$params);
     }
 
     public static function getProductCategories()
     {
         $q = self::buildBaseQuery();
-        return self::processResponse($q->search());
+        return sanitiseFilterdata($q->search());
     }
 
-    public static function processResponse($response)
-    {
-        $result =[];
-        foreach ($response["aggregations"]["agg_string_facet"]["facet_name"]["buckets"] as $facet_name) {
-            $result[$facet_name["key"]] = [];
-            foreach ($facet_name["facet_value"]["buckets"] as $value) {
-                $result[$facet_name["key"]][] = [$value["key"] => $value["count"]["doc_count"]];
-            }
-        }
-        return $result;
-    }
 
 }
