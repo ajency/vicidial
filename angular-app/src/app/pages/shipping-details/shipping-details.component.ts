@@ -63,6 +63,8 @@ export class ShippingDetailsComponent implements OnInit {
       }
       if(response.address.default)
         this.changeAddreessDefault(response.address.id);
+
+      this.selectedAddressId=response.address.id;
       this.addAddress = false;
       this.appservice.shippingAddresses = this.addresses;
       this.newAddress = {};
