@@ -42,22 +42,27 @@ export class ShippingDetailsComponent implements OnInit {
 
   saveNewAddress(){
     this.showCartLoader = true;
-    let url = this.appservice.apiUrl + this.newAddress.id ? "/api/rest/v1/user/address/edit" :  "/api/rest/v1/user/address/new";
+    let url = this.appservice.apiUrl + (this.newAddress.id ? "/api/rest/v1/user/address/edit" :  "/api/rest/v1/user/address/new");
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     let body : any = {};
     body = this.newAddress;
     body._token = $('meta[name="csrf-token"]').attr('content');
 
-    console.log("body ==>", body);
     this.apiservice.request(url, 'post', body , header ).then((response)=>{
       console.log("response ==>", response);
       if(this.newAddress.id){
-        let editAddress = this.addresses.find(address => address.id == this.newAddress.id);
-        editAddress = response.address;
+       this.addresses = this.addresses.map((address)=> {
+        var a = address;
+        if(address.id == this.newAddress.id)
+          a = response.address;
+        return a
+      });
       }
       else{
         this.addresses.push(response.address);
       }
+      if(response.address.default)
+        this.changeAddreessDefault(response.address.id);
       this.addAddress = false;
       this.appservice.shippingAddresses = this.addresses;
       this.newAddress = {};
@@ -71,9 +76,22 @@ export class ShippingDetailsComponent implements OnInit {
   }
 
   editAddress(address){
-    console.log(address);
-    this.newAddress = address;
+    this.newAddress = Object.assign({}, address);
     this.addAddress = true;
+  }
+
+  changeAddreessDefault(id){
+    this.addresses.forEach((address)=>{
+      if(address.id != id)
+        address.default = false;
+    })
+  }
+
+  addNewAddress(){
+    this.addAddress = true;
+    this.newAddress = {};
+    this.newAddress.default = false;
+    this.newAddress.type = "Home";
   }
 
   navigateToShippingPage(){

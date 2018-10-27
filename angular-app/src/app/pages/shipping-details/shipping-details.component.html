@@ -99,7 +99,7 @@
 						<div class="row">
 							<div class="col-md-12">
 								<div class="form-group ">
-									<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="address" [(ngModel)]="newAddress.landmark" required></textarea>
+									<textarea class="form-control" id="landmark" rows="3" name="landmark" [(ngModel)]="newAddress.landmark" required></textarea>
 									<label class="control-label">Landmark</label>
 								</div>
 							</div>
@@ -134,7 +134,7 @@
 							</label>
 						</div>
 					</div>
-					<button type="button" id="add-address" class="btn btn-outline-secondary btn-lg btn-block" (click)="addAddress = true">Add A New Address</button>
+					<button type="button" id="add-address" class="btn btn-outline-secondary btn-lg btn-block" (click)="addNewAddress()">Add A New Address</button>
 				</div>
 
 				<div class="seperator mt-2 mb-2"></div>
