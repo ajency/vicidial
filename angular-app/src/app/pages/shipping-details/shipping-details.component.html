@@ -1,6 +1,4 @@
-<div id="cd-shadow-layer"></div>
-
-<div id="cd-cart" style="right: 0">
+<div id="cd-cart" [ngClass]="{'cart-loader' : showCartLoader}" class="angular-app h-100">
 	<div class="kss_shipping slide-out slide-show">
 		<div class="scroll-container">
 			<nav class="navbar navbar-dark bg-dark pt-3 pb-3 ">
@@ -24,7 +22,7 @@
 						 </div>
 					</div> -->
 			</nav>
-			<div class="py-3 px-3 padding-size">
+			<div class="py-3 px-3 padding-size">	
 				<div class="row no-gutter">
 					<div class="col-8">
 						<h3 class="modal-title font-weight-bold" id="exampleModalLabel">Ship To</h3>
@@ -34,109 +32,107 @@
 					</div>
 				</div>
 				<hr>
+				<form #myForm="ngForm">
+					<div class="shipping-content" *ngIf="addAddress">
+						<div class="row">
+							<div class="col-md-12">
+								<!--firstName-->
+								<div class="form-group ">
+									<input class="form-control form-control-lg" id="names" type="text" name="name" [(ngModel)]="newAddress.name" required>
+									<label class="control-label">Full Name*</label>
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="form-group has-error ">
+									<input class="form-control form-control-lg" id="mobile" type="number" name="mobile" for="inputError" [(ngModel)]="newAddress.phone" required appNumbers>
+									 <label class="control-label" for="inputError">Mobile Number*</label>
+	<!-- 								 <small id="passwordHelpBlock" class="form-text text-danger">
+									Please enter mobile number
+									</small> -->
+								</div>
+							</div>
+						</div>
+<!-- 						<div class="row">
+							<div class="col-md-12">
+								<div class="form-group">
+									<input class="form-control form-control-lg" id="email-address" type="email" name="email" [(ngModel)]="newAddress.email" required>
+									<label class="control-label">Email Address*</label>
+								</div>
+							</div>
+						</div> -->
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group ">
+									<input class="form-control form-control-lg" id="pincode" type="number" name="pincode" [(ngModel)]="newAddress.pincode" required appNumbers>
+									<label class="control-label">Pincode*</label>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<input class="form-control form-control-lg" id="state" type="text" name="state" [(ngModel)]="newAddress.state" required>
+									<label class="control-label">State*</label>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<div class="form-group ">
+									<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="address" [(ngModel)]="newAddress.address" required></textarea>
+									<label class="control-label">Street Address*</label>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<input class="form-control form-control-lg" id="locality" type="text" name="locality" [(ngModel)]="newAddress.locality" required>
+									<label class="control-label">Locality/Town*</label>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group ">
+									<input class="form-control form-control-lg" id="citys" type="text" name="city" [(ngModel)]="newAddress.city" required>
+									<label class="control-label">City District*</label>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<div class="form-group ">
+									<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="address" [(ngModel)]="newAddress.landmark" required></textarea>
+									<label class="control-label">Landmark</label>
+								</div>
+							</div>
+						</div>
+						<div class="row mt-4">
+							<div class="col-md-12">
+								<div class="custom-control custom-checkbox">
+									<input type="checkbox" class="custom-control-input" id="customCheck1" name="default" [(ngModel)]="newAddress.default">
+									<label class="custom-control-label" for="customCheck1">Make this my default address</label>
+								</div>
+							</div>
+						</div>
+					</div>	
+				</form>
+			
 
-				<div class="shipping-content" *ngIf="addAddress">
-					<div class="row">
-						<div class="col-md-12">
-							<!--firstName-->
-							<div class="form-group ">
-								<input class="form-control form-control-lg" id="names" type="text">
-								<label class="control-label">Name*</label>
-							</div>
-						</div>
-						<div class="col-md-12">
-							<div class="form-group has-error ">
-								<input class="form-control form-control-lg" id="mobile" type="text" for="inputError">
-								 <label class="control-label" for="inputError">Mobile No*</label>
-								 <small id="passwordHelpBlock" class="form-text text-danger">
-								Please enter mobile number
-								</small>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-12">
-							<div class="form-group">
-								<input class="form-control form-control-lg" id="email-address" type="text">
-								<label class="control-label">Email Address*</label>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-12">
-							<div class="form-group ">
-								<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-								<label class="control-label">Address*</label>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-6">
-							<div class="form-group ">
-								<input class="form-control form-control-lg" id="pincode" type="text">
-								<label class="control-label">Pincode*</label>
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="form-group">
-								<input class="form-control form-control-lg" id="locality" type="text">
-								<label class="control-label">Locality/Town*</label>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-6">
-							<div class="form-group ">
-								<input class="form-control form-control-lg" id="citys" type="text">
-								<label class="control-label">City District*</label>
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="form-group">
-								<input class="form-control form-control-lg" id="state" type="text">
-								<label class="control-label">State*</label>
-							</div>
-						</div>
-					</div>
-					<div class="row mt-4">
-						<div class="col-md-12">
-							<div class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input" id="customCheck1">
-								<label class="custom-control-label" for="customCheck1">Make this my default address</label>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div *ngIf="!addAddress" class="shipping-content-info" style="display: block;">
+				<div *ngIf="!addAddress && addresses" class="shipping-content-info" style="display: block;">
 					<div class="radio-wrap d-flex kss_sizes wo-image mb-4">
-						<input class="d-none radio-input" type="radio" name="kss-sizes" id="address-1" checked="checked"/>
-						<label class="radio-label w-100 border-bottom text-left" for="address-1" title="Pari Shah">
-							<div class="radio-option">
-							 <div class="radio-selection "> <i class="fas fa-check-circle"></i></div>
-									<h3 class="kss-title font-weight-bold w-75">Pari Shah <i class="fas fa-pencil-alt number-edit"></i></h3>
-									<p class="w-75">
-										Maharaja Sayaji Gaikwad Udyog Bhawan Survey Number 152-152, Pune, Maharashtra 411007
-									</p>
-									<p class="w-75">
-										Mobile: <b class="font-weight-bold">+91 9898388993</b>
-									</p>
-							</div>
-						</label>
-
-						<input class="d-none radio-input" type="radio" name="kss-sizes" id="address-2"/>
-						<label class="radio-label w-100 text-left border-bottom" for="address-2" title="Amit Shah">
-							<div class="radio-option">
+						<div *ngFor="let address of addresses">
+							<input class="d-none radio-input" type="radio" name="kss-sizes" id="address-{{address.id}}" [value]="address.id" [(ngModel)]="selectedAddressId">
+							<label class="radio-label w-100 border-bottom text-left" for="address-{{address.id}}">
+								<div class="radio-option">
 								 <div class="radio-selection "> <i class="fas fa-check-circle"></i></div>
-										<h3 class="kss-title font-weight-bold w-75">Amit Shah <i class="fas fa-pencil-alt number-edit"></i></h3>
-									<p class="w-75">
-										Maharaja Sayaji Gaikwad Udyog Bhawan Survey Number 152-152, Pune, Maharashtra 411007
-									</p>
-									<p class="w-75">
-										Mobile: <b class="font-weight-bold">+91 8407917773</b>
-									</p>
-							</div>
-						</label>
+										<h3 class="kss-title font-weight-bold w-75">{{address.name}}<i class="fas fa-pencil-alt number-edit" (click)="editAddress(address)"></i></h3>
+										<p class="w-75">
+											{{address.address}}, {{address.city}}, {{address.state}} {{address.pincode}}
+										</p>
+										<p class="w-75">
+											Mobile: <b class="font-weight-bold">{{address.phone}}</b>
+										</p>
+								</div>
+							</label>
+						</div>
 					</div>
 					<button type="button" id="add-address" class="btn btn-outline-secondary btn-lg btn-block" (click)="addAddress = true">Add A New Address</button>
 				</div>
@@ -146,13 +142,13 @@
 				<div class="fixed-bottom d-block pl-3 pr-3">
 					<div *ngIf="addAddress" class="row no-gutters px-2 py-2 shipping-state-1" style="display: flex;">
 						<div class="col-6 text-center">
-							<button type="button" class="shipping-details-save btn btn-lg btn-block btn-link text-dark mt-1 mb-1 ml-auto mr-auto" (click)="addAddress = false" >Cancel </button>
+							<button [disabled]="!addresses.length" type="button" class="shipping-details-save btn btn-lg btn-block btn-link text-dark mt-1 mb-1 ml-auto mr-auto" (click)="addAddress = false" >Cancel </button>
 						</div>
 						<div class="col-6 text-center">
-							<button type="button" class="shipping-details-save btn btn-lg btn-block btn-primary mt-1 mb-1 ml-auto mr-auto" (click)="addAddress=false"> Save </button>
+							<button [disabled]="!myForm.valid"  type="button" class="shipping-details-save btn btn-lg btn-block btn-primary mt-1 mb-1 ml-auto mr-auto" (click)="saveNewAddress()"> Save </button>
 						</div>
 					</div>
-					 <div *ngIf="!addAddress" class="row no-gutters px-2 py-2 shipping-state-2" style="display: flex;">
+					 <div *ngIf="!addAddress && addresses" class="row no-gutters px-2 py-2 shipping-state-2" style="display: flex;">
 						<div class="col-12 text-center">
 							<button id="shipping-summary" type="button" class=" btn btn-lg btn-block btn-primary mt-1 mb-1" (click)="navigateToShippingPage()">Proceed</button>
 						</div>
