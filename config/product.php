@@ -115,4 +115,34 @@ return [
     ],
     "inventory_fields" => ["warehouse_id", "product_id", "quantity"],
     "inventory_max"    => 10,
+    'facet_display_data' => [
+        'product_category_type' => [
+            'name' => 'Category',
+            'is_singleton' => false,
+            'is_collapsed' => true,
+            'template' => 'cateory',
+            'order' => 0,
+        ],
+        'product_gender' => [
+            'name' => 'Gender',
+            'is_singleton' => false,
+            'is_collapsed' => true,
+            'template' => 'gender',
+            'order' => 1,
+        ],
+        'product_age_group' => [
+            'name' => 'Age Group',
+            'is_singleton' => false,
+            'is_collapsed' => true,
+            'template' => 'age',
+            'order' => 2,
+        ],
+        'product_subtype' => [
+            'name' => 'Sub Type',
+            'is_singleton' => false,
+            'is_collapsed' => true,
+            'template' => 'subtype',
+            'order' => 3,
+        ],
+    ],
 ];

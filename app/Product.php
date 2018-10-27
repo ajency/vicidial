@@ -279,4 +279,69 @@ class Product
         }
     }
 
+    public static function buildBaseQuery()
+    {
+
+        // echo "<pre>";
+        // echo '{"aggs":{"agg_number_facet":{"nested":{"path":"search_data.string_facet"},"aggs":{"facet_name":{"terms":{"field":"search_data.string_facet.facet_name","include":["product_category_type","product_gender","product_subtype","product_age_group"]},"aggs":{"facet_value":{"terms":{"field":"search_data.string_facet.facet_value"},"aggs":{"count":{"reverse_nested":{}}}}}}}}},"size":0}';
+        $index    = config('elastic.indexes.product');
+        $q        = new ElasticQuery;
+        $required = [
+            "product_category_type",
+            "product_gender",
+            "product_subtype",
+            "product_age_group",
+        ];
+        $aggs_facet_name = $q::createAggTerms("facet_name", "search_data.string_facet.facet_name", ["include" => $required]);
+
+        $aggs_facet_value  = $q::createAggTerms("facet_value", "search_data.string_facet.facet_value");
+        $aggs_facet_value  = $q::addToAggregation($aggs_facet_value, $q::createAggReverseNested('count'));
+        $aggs_facet_name   = $q::addToAggregation($aggs_facet_name, $aggs_facet_value);
+        $aggs_string_facet = $q::createAggNested("agg_string_facet", "search_data.string_facet");
+
+        $aggs_string_facet = $q::addToAggregation($aggs_string_facet, $aggs_facet_name);
+        $aggs              = $aggs_string_facet;
+        $q->setIndex($index)
+            ->initAggregation()
+            ->setAggregation($aggs)
+            ->setSize(0);
+        return $q;
+    }
+
+    public static function getProductCategoriesWithFilter($params)
+    {
+        $q       = self::buildBaseQuery();
+        $filters = makeQueryfromParams($params);
+        $must    = [];
+        foreach ($filters as $path => $data) {
+            foreach ($data as $facet => $data2) {
+                foreach ($data2 as $field => $values) {
+                    $should = [];
+                    $nested = [];
+                    foreach ($values as $value) {
+                        $facetName  = $q::createTerm($path . "." . $facet . '.facet_name', $field);
+                        $facetValue = $q::createTerm($path . "." . $facet . '.facet_value', $value);
+                        $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
+                        $nested[]   = $q::createNested('search_data.string_facet', $filter);
+                        $should     = $q::addToBoolQuery('should', $nested, $should);
+                    }
+                    $nested2 = $q::createNested($path, $should);
+                    $must[]  = $nested2;
+                }
+            }
+        }
+        $must = $q::addToBoolQuery('must', $must);
+        $q->setQuery($must);
+        $q->setSource(["search_result_data.product_gender", "search_result_data.product_age_group", "search_result_data.product_subtype", "search_result_data.product_category_type"]);
+        $response = $q->search();
+        return sanitiseFilterdata($response,$params);
+    }
+
+    public static function getProductCategories()
+    {
+        $q = self::buildBaseQuery();
+        return sanitiseFilterdata($q->search());
+    }
+
+
 }

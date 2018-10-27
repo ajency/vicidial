@@ -1,5 +1,6 @@
 <?php
 
+use App\Facet;
 use App\User;
 use Carbon\Carbon;
 
@@ -26,6 +27,30 @@ function checkUserCart($token, $cart)
         abort(403);
     }
 
+}
+
+function makeQueryfromParams($params)
+{
+    $queryParams    = [];
+    $elasticMapping = [
+        'product_category_type' => 'search_data.string_facet.product_category_type',
+        'product_gender'        => 'search_data.string_facet.product_gender',
+        'product_age_group'     => 'search_data.string_facet.product_age_group',
+        'product_subtype'       => 'search_data.string_facet.product_subtype',
+    ];
+    foreach ($elasticMapping as $param => $map) {
+        if (array_has($params, $param)) {
+            $categ = $params[$param];
+            if (gettype($categ) != 'array') {
+                $categ = [$categ];
+            }
+
+            if (array_search('all', $categ) === false) {
+                array_set($queryParams, $map, $categ);
+            }
+        }
+    }
+    return $queryParams;
 }
 
 function sanitiseProductData($odooData)
@@ -284,4 +309,41 @@ function generateVariantImageName($product_name, $color_name, $colors,$index)
     $image_name = str_slug(implode(' ',[$product_name,$color_name,$append]));
     return $image_name;
 
+}
+
+function sanitiseFilterdata($result, $params = [])
+{
+    $filterResponse = [];
+    foreach ($result["aggregations"]["agg_string_facet"]["facet_name"]["buckets"] as $facet_name) {
+        $filterResponse[$facet_name["key"]] = [];
+        foreach ($facet_name["facet_value"]["buckets"] as $value) {
+            $filterResponse[$facet_name["key"]][$value["key"]] = $value["count"]["doc_count"];
+        }
+    }
+    $response = [];
+    foreach ($filterResponse as $facetName => $facetValues) {
+        $filter           = [];
+        $facets           = Facet::where('facet_name', $facetName)->get();
+        $filter['header'] = [
+            'facet_name'   => $facetName,
+            'display_name' => config('product.facet_display_data.' . $facetName . '.name'),
+        ];
+        $filter['items'] = [];
+        foreach ($facets as $facet) {
+            $filter['items'][] = [
+                'facet_value'  => $facet->facet_value,
+                'display_name' => $facet->display_name,
+                'slug'         => $facet->slug,
+                'is_selected'  => (array_search($facet->facet_value, array_collapse($params)) === false) ? false : true,
+                'sequence'     => $facet->sequence,
+                'count'        => (isset($facetValues[$facet->facet_value])) ? $facetValues[$facet->facet_value] : 0,
+            ];
+        }
+        $attributes = ['is_singleton', 'is_collapsed', 'template', 'order'];
+        foreach ($attributes as $attribute) {
+            $filter[$attribute] = config('product.facet_display_data.' . $facetName . '.' . $attribute);
+        }
+        $response[] = $filter;
+    }
+    return $response;
 }

@@ -388,9 +388,22 @@ class ElasticQuery
         return [$name => ["sum" => ["field" => $field]]];
     }
 
-    public static function createAggTerms(string $name, string $field)
+    public static function createAggTerms(string $name, string $field, array $params=[])
     {
-        return [$name => ["terms" => ["field" => $field]]];
+        return [
+            $name => [
+                "terms" => ["field" => $field ] + $params,
+            ]
+        ];
+    }
+
+    public static function createAggReverseNested(string $name)
+    {
+        return [
+            $name => [
+                "reverse_nested" => new \StdClass(),
+            ]
+        ];
     }
 
     public static function createAggNested(string $name, string $path)
@@ -422,5 +435,9 @@ class ElasticQuery
     {
         $this->params["body"]["aggs"] = $aggs;
         return $this;
+    }
+
+    public function getJSON(){
+        return json_encode($this->getParams()["body"], true);
     }
 }
