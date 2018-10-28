@@ -22,11 +22,10 @@
 			@php foreach ($params['variant_group'] as $color_id => $color_set) {
 		    	$checked="";
 		    	if($color_id == $selected_color_id) {$checked="checked";}
-	    		foreach ($color_set->images as $image_set) {
-			     	if($image_set->is_primary) {$selected_image = $image_set->res->desktop->small_thumb;}
-			     }
-			     $url = create_url([$color_set->slug_name, 'buy']);
-			     $hexcode = ($color_set->html != '') ? $color_set->html : implode('', explode(" ",$color_set->name));
+		    	$selected_image = '/img/thumbnail/6front@thumb.jpg';
+		    	if(count((array)$color_set->images)>0){$selected_image = $color_set->images->{'variant-thumb'}->{'1x'};}
+			    $url = create_url([$color_set->slug_name, 'buy']);
+			    $hexcode = ($color_set->html != '') ? $color_set->html : implode('', explode(" ",$color_set->name));
 			@endphp
 			    <input class="d-none radio-input" type="radio" name="kss-variants" id="color-{{$color_id}}" {{$checked}} />
 				<label class="radio-label position-relative variant-wrapper" for="color-{{$color_id}}" data-toggle="tooltip" data-placement="bottom" title="{{$color_set->name}}" @php if($checked == ''){ @endphp onclick="location.href='{{$url}}'" @php } @endphp>
