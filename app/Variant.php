@@ -75,8 +75,8 @@ class Variant extends Model
      */
     public function getAvailability()
     {
-        if (isset($this->inventory["inventory"])) {
-            foreach ($this->inventory["inventory"] as $inventory) {
+        if (isset($this->inventory)) {
+            foreach ($this->inventory as $inventory) {
                 if ($inventory["quantity"] > 0) {
                     return true;
                 }
@@ -251,8 +251,8 @@ class Variant extends Model
     public function getQuantity()
     {
         $total = 0;
-        if (isset($this->inventory["inventory"])) {
-            foreach ($this->inventory["inventory"] as $inventory) {
+        if (isset($this->inventory)) {
+            foreach ($this->inventory as $inventory) {
                 $total += $inventory["quantity"];
             }
         }
