@@ -32,7 +32,7 @@
 	</div> -->
 	<div *ngIf="cart.items.length">
 		<ul class="cd-cart-items">
-			<li *ngFor="let item of cart.items" [ngClass]="{'out-of-stock': item.message=='OUT OF STOCK'}">
+			<li *ngFor="let item of cart.items" [ngClass]="{'out-of-stock': !item.availability}">
 				<div class="primary-info d-flex">
 					<div class="product-img">
 						<a href="{{item.href}}">
@@ -70,17 +70,17 @@
 							  </div>
 							</div>
 
-							<div class="product-price" *ngIf="item.message !== 'OUT OF STOCK'">
-								<div>
+							<div class="product-price" *ngIf="item.availability">
+								<!-- <div>
 									<p class="text-danger m-0">{{item.message}}</p>
-								</div>
+								</div> -->
 								<div class="kss-price kss-price--smaller">₹{{item.attributes.price_final}} 	  	<small *ngIf="item.attributes.price_final != item.attributes.price_mrp" 		class="kss-original-price text-muted">₹{{item.attributes.price_mrp}}
 								  </small>
 								  <span class="kss-discount text-danger">{{item.off_percentage}}</span>
 								</div>
 							</div>
 
-							<div class="product-price" *ngIf="item.message == 'OUT OF STOCK'">
+							<div class="product-price" *ngIf="!item.availability">
 								<div class="kss-price kss-price--smaller text-danger-dark">Out of Stock</div>
 							</div>
 						</div>
