@@ -1,5 +1,6 @@
 <?php
 
+use App\Cart;
 use App\Facet;
 use App\User;
 use Carbon\Carbon;
@@ -428,4 +429,69 @@ function formatItems($result, $params){
         "total_item_count" => $total_items,
     ];
     return $response;
+}
+function getWarehousesForCart($cart)
+{
+    $allItems   = collect();
+    $warehouses = [];
+    foreach ($cart->getItems() as $cartItem) {
+        foreach ($cartItem['item']->inventory as $warehouseData) {
+            $warehouses[] = $warehouseData['warehouse_id'];
+        }
+    }
+    $warehouses = array_unique($warehouses);
+    return $warehouses;
+}
+
+function recursivefunc($cartItems, $warehouses)
+{
+    $finalCart      = [];
+    $warehousesData = $warehouses->combine($warehouses->map(function ($item, $key) {
+        return ['id'=>$item ,'items' => collect(), 'remaining_items' => collect()];
+    }));
+    // print_r($warehousesData);
+    foreach ($cartItems as $cartItem) {
+        $processedWarehouses = [];
+        foreach ($cartItem['item']->inventory as $warehouseData) {
+            if(array_search($warehouseData['warehouse_id'], $warehouses->toArray()) === false){
+                continue;
+            }
+            $transferQty  = ($cartItem['quantity'] < $warehouseData['quantity']) ? $cartItem['quantity'] : $warehouseData['quantity'];
+            $warehousesData[$warehouseData['warehouse_id']]['items']->push([
+                'variant'  => $cartItem['item'],
+                'quantity' => $transferQty,
+            ]);
+            $processedWarehouses[] = $warehouseData['warehouse_id'];
+            if ($transferQty < $cartItem['quantity']) {
+                $warehousesData[$warehouseData['warehouse_id']]['remaining_items']->push([
+                    'item'     => $cartItem['item'],
+                    'quantity' => $transferQty,
+                ]);
+            }
+        }
+        foreach ($warehouses as $warehouseID) {
+            if (array_search($warehouseID, $processedWarehouses) === false) {
+                $warehousesData[$warehouseID]['remaining_items']->push($cartItem);
+            }
+        }
+    }
+
+    $selectedWarehouse = $warehousesData->sortByDesc(function($product,$key){
+        return $product['items']->count();
+    })->first();
+    $key = $selectedWarehouse['id'];
+    if($selectedWarehouse['remaining_items']->count() != 0){
+        $otherOrders =  recursivefunc($selectedWarehouse['remaining_items'],$warehouses->diff([$key]));
+        $otherOrders[$key] = $selectedWarehouse['items'];
+        return $otherOrders;
+    }else{
+        return [$key => $selectedWarehouse['items']];
+    }
+}
+
+function seperateSubOrders($cartID)
+{
+    $cart       = Cart::find($cartID);
+    $warehouses = getWarehousesForCart($cart);
+    dd(recursivefunc($cart->getItems(), collect($warehouses)));
 }

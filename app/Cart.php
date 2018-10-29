@@ -88,4 +88,16 @@ class Cart extends Model
 
         return $item;
     }
+
+    public function getItems()
+    {
+        $items = [];
+        foreach ($this->cart_data as $cart_item) {
+            $items[] = [
+                'item'     => Variant::where('odoo_id', $cart_item['id'])->first(),
+                'quantity' => $cart_item["quantity"],
+            ];
+        }
+        return $items;
+    }
 }
