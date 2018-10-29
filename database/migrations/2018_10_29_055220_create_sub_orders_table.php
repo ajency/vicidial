@@ -18,7 +18,8 @@ class CreateSubOrdersTable extends Migration
             $table->integer('order_id');
             $table->json('item_data');
             $table->json('odoo_info')->nullable();
-            $table->integer('odoo_id');
+            $table->integer('odoo_id')->nullable();
+            $table->string('odoo_status')->nullable();
             $table->timestamps();
         });
     }
