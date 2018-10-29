@@ -43,12 +43,12 @@
 								</div>
 							</div>
 							<div class="col-md-12">
-								<div class="form-group has-error ">
+								<div class="form-group" [ngClass]="{'has-error' : newAddress.phone<7000000000 && newAddress.phone.length== 10 }">
 									<input class="form-control form-control-lg" id="mobile" type="tel" minlength = "10" maxlength = "10" pattern="^[789]\d{9}$" inputmode="numeric" name="mobile" for="inputError" [(ngModel)]="newAddress.phone" required appNumbers [ngClass]="{'has-value' : newAddress.phone}">
 									 <label class="control-label" for="inputError">Mobile Number <span class="pl-1 text-danger">*</span></label>
-	<!-- 								 <small id="passwordHelpBlock" class="form-text text-danger">
-									Please enter mobile number
-									</small> -->
+									 <small *ngIf="newAddress.phone<7000000000 && newAddress.phone.length== 10" id="passwordHelpBlock" class="form-text text-danger">
+										Please enter a valid Indian Mobile Number
+									</small>
 								</div>
 							</div>
 							<div class="col-md-12">
