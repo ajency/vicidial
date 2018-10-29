@@ -11,8 +11,12 @@
     @foreach($filters_arr as $filter)
       <?php 
       $file_name = 'includes.productlisting.productfilters.' . $filter["template"]; 
+      $items = $filter["items"];
+      usort($items, function($a, $b) { 
+          return $a["sequence"] > $b["sequence"] ? 1 : -1; 
+      }); 
       ?>
-      @include($file_name, ['items' => $filter["items"]])
+      @include($file_name, ['items' => $items,'singleton'=>($filter["is_singleton"] == true?1:0)])
 
     @endforeach
    <!-- //gender -->

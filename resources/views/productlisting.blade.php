@@ -18,7 +18,7 @@
     	  	@include('includes.productlisting.listingtitle', ['headers' => $params->headers, 'breadcrumbs' => $params->breadcrumbs, 'sort_on' => $params->sort_on])
           <div id="card-list" class="row">
     	    <!-- List of products Blade -->
-            @include('includes.productlisting.listingproducts', ['items' => $params->items])
+            @include('includes.productlisting.listingproducts', ['items' => $params->items,'singleton'])
           </div>
     	  </div>
     	</div>
@@ -34,6 +34,6 @@
 @section('footjs')
 
   <script type="text/javascript" src="/js/productlisting.js"></script>
-  
+
 
 @stop
