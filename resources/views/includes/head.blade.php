@@ -16,6 +16,7 @@
 
 <link rel="stylesheet" type="text/css" href="/css/combine.css">
 
+@yield('headjs')
 {!! SEOMeta::generate() !!}
 {!! OpenGraph::generate() !!}
 {!! Twitter::generate() !!}

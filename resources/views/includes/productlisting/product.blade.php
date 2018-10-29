@@ -1,6 +1,6 @@
 @php
 //URL Generation
-$url = create_url([$product->slug_name, $product->slug_style, $product->slug_color, 'buy']);
+$url = create_url([$product->slug_name, 'buy']);
 @endphp
 <div class="col-lg-4 col-md-6 mb-4 col-6  ">
 

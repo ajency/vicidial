@@ -1,5 +1,6 @@
 <?php
 use App\Category;
+use App\Facet;
 
 //Function to insert category in DB
 function insert_category($elastic_name, $type, $slug){
@@ -43,3 +44,18 @@ function create_search_object($parameters){
 
 	return $search_object;
 }
+
+
+function build_search_object($params) {
+	$all_facets = [];
+	foreach($params['categories'] as $param) {
+		$slugs_arr = explode('--', $param);
+		$all_facets = array_merge($slugs_arr, $all_facets);
+	}
+
+	$facets = Facet::select('facet_name',DB::raw('group_concat(facet_value) as "values"'))->whereIn('slug', $all_facets)->groupBy('facet_name')->get();
+	$facets_arr   = json_decode($facets, true);
+	$search_result = array_column($facets_arr, 'values',"facet_name");
+	return $search_result;
+}
+
