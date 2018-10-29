@@ -270,10 +270,15 @@ function sanitiseInventoryData($inventoryData)
     foreach ($inventoryData as $connectionData) {
         foreach ($connectionData as $invtry) {
             $temp = [
-                "warehouse" => $invtry["warehouse_id"][1],
-                "quantity"  => intval($invtry["quantity"]),
+                "warehouse_name" => $invtry["warehouse_id"][1],
+                "warehouse_id"   => $invtry["warehouse_id"][0],
+                "quantity"       => intval($invtry["quantity"]),
             ];
-            $inventory[$invtry["product_id"][0]]["inventory"][] = $temp;
+            if (is_null($temp["warehouse_id"])) {
+                continue;
+            }
+            $inventory[$invtry["product_id"][0]][] = $temp;
+
         }
     }
     return $inventory;
