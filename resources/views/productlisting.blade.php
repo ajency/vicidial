@@ -1,5 +1,11 @@
 @extends('layouts.default')
 
+@section('headjs')
+
+ <script type="text/javascript" src="/js/handlebars.min.js"></script>
+ 
+@stop
+
 @section('content')
     
 	<section>
@@ -28,5 +34,6 @@
 @section('footjs')
 
   <script type="text/javascript" src="/js/productlisting.js"></script>
+  
 
 @stop
