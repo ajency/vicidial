@@ -23,7 +23,7 @@
 		    	$checked="";
 		    	if($color_id == $selected_color_id) {$checked="checked";}
 		    	$selected_image = '/img/thumbnail/6front@thumb.jpg';
-		    	if(count((array)$color_set->images)>0){$selected_image = $color_set->images->{'variant-thumb'}->{'1x'};}
+		    	if(count((array)$color_set->images)>0){$selected_image = $color_set->images->{'1x'};}
 			    $url = create_url([$color_set->slug_name, 'buy']);
 			    $hexcode = ($color_set->html != '') ? $color_set->html : implode('', explode(" ",$color_set->name));
 			@endphp
