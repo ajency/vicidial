@@ -27,6 +27,7 @@ export class ShippingDetailsComponent implements OnInit {
     type : ''
   };
   selectedAddressId : any;
+  hideDefaultAddressField : boolean = false;
   constructor( private router : Router,
                private appservice : AppServiceService,
                private apiservice : ApiServiceService
@@ -79,6 +80,7 @@ export class ShippingDetailsComponent implements OnInit {
 
   editAddress(address){
     this.newAddress = Object.assign({}, address);
+    this.hideDefaultAddressField = address.default ? true : false;
     this.addAddress = true;
   }
 
