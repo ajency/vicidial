@@ -327,7 +327,7 @@ function sanitiseFilterdata($result, $params = [])
             $filterResponse[$facet_name["key"]][$value["key"]] = $value["count"]["doc_count"];
         }
     }
-    $response = [];
+    $response = ["results_found" => ($result["hits"]["total"] > 0)];
     foreach ($filterResponse as $facetName => $facetValues) {
         $filter           = [];
         $facets           = Facet::where('facet_name', $facetName)->get();
@@ -405,6 +405,7 @@ function formatItems($result){
                     "size_name" => $variant["variant_size_name"],
                 ],
                 "inventory_available" => $variant["variant_availability"],
+                "variant_id" => $variant["variant_id"],
             ];
         }
         $items[] = $item;
