@@ -89,6 +89,13 @@ export class ShippingDetailsComponent implements OnInit {
     })
   }
 
+  setAddressDefault(id){
+    this.addresses.forEach((address)=>{
+      if(address.id == id)
+        address.default = true;
+    })
+  }
+
   addNewAddress(){
     this.addAddress = true;
     this.newAddress = {};
@@ -107,8 +114,13 @@ export class ShippingDetailsComponent implements OnInit {
       console.log("response ==>", response);
       let index = this.addresses.findIndex(i => i.id == id);
       this.addresses.splice(index,1);
-      if(response.default_id)
-        this.changeAddreessDefault(response.default_id);
+      if(!this.addresses.length){
+        this.addNewAddress();
+      }
+      if(response.default_id){
+        this.setAddressDefault(response.default_id);
+        this.selectedAddressId=response.default_id;
+      }
       this.showCartLoader = false;
     })
     .catch((error)=>{
