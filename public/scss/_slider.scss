@@ -124,3 +124,20 @@
     height: 52px;
     background-position: -315px -118px!important;
 }
+
+.slider-placeholder-img{
+    img{
+        background-color: #dadada;
+        height: 450px;
+        @media (max-width: 767px){
+            padding: 0 4em;
+            height: 380px;
+        }
+    }
+}
+
+.prod-slides.center-aligned{
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+}

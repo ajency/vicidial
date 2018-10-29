@@ -18,12 +18,16 @@
 	</div>
 	<div class="collapse" id="color-options">
 		<div class="card card-body alert-light ">
-			<div class="radio-wrap w-image kss_variants d-flex align-items-baseline">
+			<div class="radio-wrap w-image kss_variants d-flex align-items-baseline flex-wrap">
 			@php foreach ($params['variant_group'] as $color_id => $color_set) {
 		    	$checked="";
 		    	if($color_id == $selected_color_id) {$checked="checked";}
-		    	$selected_image = '/img/thumbnail/6front@thumb.jpg';
-		    	if(count((array)$color_set->images)>0){$selected_image = $color_set->images->{'1x'};}
+		    		$image_1x = $image_2x = $image_3x = '/img/placeholder.svg';
+		    	if(count((array)$color_set->images)>0){
+		    		$image_1x = $color_set->images->{'1x'};
+		    		$image_2x = $color_set->images->{'2x'};
+		    		$image_3x = $color_set->images->{'3x'};
+		    	}
 			    $url = create_url([$color_set->slug_name, 'buy']);
 			    $hexcode = ($color_set->html != '') ? $color_set->html : implode('', explode(" ",$color_set->name));
 			@endphp
@@ -35,8 +39,10 @@
 					    	<label for="{{$color_set->name}}" class="m-0" style="background-color:{{$hexcode}};"></label>
 					  	</li>
 					</ul>
-					<img src="{{$selected_image}}" alt="">
-					<div class="radio-option mt-1">{{$color_set->name}}</div>
+					<div class="variant-img-wrapper @php if(count((array)$color_set->images)==0) { @endphp variant-placeholder @php } @endphp">
+						<img src="{{$image_1x}}" class="lazyload blur-up w-100" data-srcset="{{$image_1x}} 50w, {{$image_2x}} 100w, {{$image_3x}} 150w" sizes="50px"  alt="">
+					</div>
+					<div class="radio-option mt-1" >{{$color_set->name}}</div>
 				</label>
 		    @php } @endphp
 			</div>
