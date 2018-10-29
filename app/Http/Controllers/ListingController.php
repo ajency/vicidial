@@ -41,14 +41,18 @@ class ListingController extends Controller
     public function search_object($params)
     {
         $search_object = build_search_object($params);
+        // dd($search_object);
+        $search_object = [
+  "product_category_type" => ["Apparels"]
+];
         // if(isset($search_object->error) && $search_object->error == true) {
         //     return false;
         // }
 
-        $json = json_decode(Product::productList($search_object));
-        $params =  (array) $json;
+        $params = Product::productList($search_object);
+        // $params =  (array) $json;
 
-        return $params;
+        return json_Decode(json_encode($params,JSON_FORCE_OBJECT));
     }
 
     public function index($cat1, $cat2 = null, $cat3 = null, $cat4 = null, Request $request)
@@ -63,6 +67,8 @@ class ListingController extends Controller
 
     	$params = $this->search_object($parameters);
         if($params == false) return view('error404');
+
+        // dd($params);
 
         return view('productlisting')->with('params',$params);
     }
