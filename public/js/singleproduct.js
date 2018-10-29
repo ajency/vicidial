@@ -42,5 +42,10 @@ $(function(){
         $('.variant-wrapper,.product-color--single').tooltip('disable');
     }
 
+    setTimeout(function () {
+        $('.prod-slides').addClass('center-aligned');
+    }, 500);
+
+
 })
 
