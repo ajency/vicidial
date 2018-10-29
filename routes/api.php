@@ -22,3 +22,4 @@ Route::middleware('auth:api')->get('/rest/v1/user/cart/{id}/delete', 'CartContro
 Route::middleware('auth:api')->post('/rest/v1/user/address/new', 'AddressController@userAddAddress');
 Route::middleware('auth:api')->post('/rest/v1/user/address/edit', 'AddressController@userEditAddress');
 Route::middleware('auth:api')->get('/rest/v1/user/address/all', 'AddressController@userFetchAddresses');
+Route::middleware('auth:api')->get('/rest/v1/user/address/delete', 'AddressController@userDeleteAddress');
