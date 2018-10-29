@@ -353,6 +353,17 @@ function sanitiseFilterdata($result, $params = [])
         $response[] = $filter;
     }
     $response["items"] = formatItems($result);
+    $size = $params["display_limit"];
+    $offset = ($params["page"] - 1) * $size;
+    $total_items = $result["hits"]["total"];
+    $total_pages = intval(ceil($total_items / $size));
+    $response["page"] = [
+        "current" => $params["page"],
+        "total" => $total_pages ,
+        "has_previous" => ($params["page"]> 1),
+        "has_next" => ($params["page"] < $total_pages),
+        "total_item_count" => $total_items,
+    ];
     return $response;
 }
 

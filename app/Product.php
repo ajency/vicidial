@@ -312,8 +312,11 @@ class Product
 
     public static function getProductCategoriesWithFilter($params)
     {
+        $size = $params["display_limit"];
+        $offset = ($params["page"] - 1) * $size;
+
         $q       = self::buildBaseQuery();
-        $filters = makeQueryfromParams($params);
+        $filters = makeQueryfromParams($params["search_object"]);
         $must    = [];
         foreach ($filters as $path => $data) {
             foreach ($data as $facet => $data2) {
@@ -334,6 +337,7 @@ class Product
         }
         $must = $q::addToBoolQuery('must', $must);
         $q->setQuery($must);
+        $q->setSize($size)->setFrom($offset);
         $response = $q->search();
         return sanitiseFilterdata($response,$params);
     }
