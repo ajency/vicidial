@@ -5,70 +5,20 @@
 	<div class="container mt-0 mt-md-4">
 		<div class="row">
 			<div class="col-sm-12 col-lg-7">
-				<div class="row center" >
+				<!-- Product Images -->
+				@include('includes.singleproduct.productimages', ['params' => $params])
 
-					<div class="col-12 order-2 col-sm-12 col-md-12 order-sm-1 px-0 item">
-
-						<img src="/img/arrow.png" class="swipe-arrow  d-block d-md-none">
-						<div class="loader"></div>
-						<ul id="aniimated-thumbnials" class="d-flex d-sm-block list-unstyled m-0 m-md-2 prod-slides hidden">
-
-							<li class="mx-2 mb-2" >
-								<a href="/img/3x/4front@3x.jpg" class="custom-selector">
-									<img data-src="/img/1x/4front@1x.jpg" class="lazyload"  data-srcset="/img/1x/4front@1x.jpg 1x, /img/2x/4front@2x.jpg 2x" >
-
-								</a>
-							</li>
-							<li class="mx-2 mb-2" >
-								<a href="/img/3x/4focus@3x.jpg" class="custom-selector">
-									<img data-src="/img/1x/4focus@1x.jpg" class="lazyload"  data-srcset="/img/1x/4focus@1x.jpg 1x, /img/2x/4focus@2x.jpg 2x" >
-
-								</a>
-							</li>
-							<li class="mx-2 mb-2">
-								<a href="/img/3x/4back@3x.jpg" class="custom-selector">
-									<img data-src="/img/1x/4back@1x.jpg" class="lazyload"  data-srcset="/img/1x/4back@1x.jpg 1x, /img/2x/4back@2x.jpg 2x" >
-
-								</a>
-							</li>
-								<li class="mx-2 mb-2">
-								<a href="/img/3x/4back@3x.jpg" class=" custom-selector">
-									<img data-src="/img/1x/4back.jpg" class="lazyload"  data-srcset="/img/1x/4back.jpg 1x, /img/2x/4back@2x.jpg 2x" >
-
-								</a>
-							</li>
-
-						</ul>
-
-					</div>
-				</div>
 				@php $selected_color_id = $params['selected_color_id']; @endphp
+
+				<!-- Product Color-selection Section -->
 				@include('includes.singleproduct.productcolorselection', ['params' => $params, 'selected_color_id' => $selected_color_id])
 			</div>
 			<div class="col-sm-12 col-lg-5">
+				<!-- Breadcrumbs -->
 				@include('includes.breadcrumbs', ['params' => $params])
-				<div class="d-flex">
-					<div>
-							<h1 class="kss-title mb-2 mb-sm-2 text-gray font-weight-bold">{{$params['title']}}</h1>
-							@php
-
-							if(isset($params['size'])) {
-							    $default_price = set_default_price($params['variant_group']->{$selected_color_id}->variants, $params['size']);
-					        }
-					        else {
-					        	$default_price = set_default_price($params['variant_group']->{$selected_color_id}->variants);
-					        }
-
-						    if($default_price['list_price'] == $default_price['sale_price']) { @endphp
-								<h4 id="kss-price" class="kss-price">₹{{$default_price['sale_price']}}</h4>
-							@php } else { @endphp
-								<h4 id="kss-price" class="kss-price">₹{{$default_price['sale_price']}} <small class="kss-original-price text-muted">₹{{$default_price['list_price']}}</small> <span class="kss-discount text-danger">{{$default_price['discount_per']}}% OFF</span></h4>
-							@php } @endphp
 				
-					</div>
-
-
-				</div>
+				<!-- Product Title & Prices Section -->
+				@include('includes.singleproduct.producttitle', ['params' => $params, 'selected_color_id' => $selected_color_id])
 
 				<hr>
 				
@@ -78,7 +28,8 @@
 
 				<div class="d-flex justify-content-between mt-4">
 					<label class="">Select Size (Age Group)</label>
-					<!-- <a href="#sizeModal" class="font-weight-bold kss-link" data-toggle="modal" data-target="#sizeModal">Size Chart</a> -->
+					<!-- Product Size Chart -->
+					<!-- <a href="#sizeModal" class="font-weight-bold kss-link" data-toggle="modal" data-target="#sizeModal">Size Chart</a>
 
 					<div class="modal fade" id="sizeModal" tabindex="-1" role="dialog" aria-hidden="true">
 					  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -94,26 +45,11 @@
 					      	</div>
 					    </div>
 					  </div>
-					</div>
+					</div> -->
 
 				</div>
-				<div class="radio-wrap d-flex kss_sizes wo-image mb-4">
-				    @php
-				    foreach ($params['variant_group']->{$selected_color_id}->variants as $size_set) {
-				    	if(isset($params['size'])) {
-						    $price_set = get_price_set($size_set, $params['size']);
-				        }
-				        else {
-				        	$price_set = get_price_set($size_set);
-				        }
-				    	@endphp
-				    	<input class="d-none radio-input" type="radio" name="kss-sizes" id="size-{{$size_set->size->id}}" {{$price_set['checked']}} data-variant_id="{{$size_set->id}}" {{$price_set['disabled']}} data-list_price="{{$price_set['list_price']}}" data-sale_price="{{$price_set['sale_price']}}" data-discount_per="{{$price_set['discount_per']}}" data-title="{{$size_set->size->name}}"/>
-					    <label class="radio-label" for="size-{{$size_set->size->id}}" title="{{$size_set->size->name}}">
-					      <div class="radio-option">{{$size_set->size->name}}</div>
-					    </label>
-				    	@php
-				     } @endphp
-				</div>
+				<!-- Product Size Selection -->
+				@include('includes.singleproduct.productsizes', ['params' => $params, 'selected_color_id' => $selected_color_id])
 
 				<div class="row">
 					
@@ -157,70 +93,8 @@
 				 	<p class="text-muted">Tax: Applicable tax on the basis of exact location & discount will be charged at the time of checkout</p>
 				</div> -->
 
-				<div class="accordion product-collapse" id="accordionExample">
-				  <div class="">
-				    <div class="collapse-head border-bottom mb-0" id="headingOne">
-				        <button class="btn btn-link btn-block text-left py-3 px-0 br-0 " type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-					      	<label class="mb-0 text-body cursor-pointer">
-					        	Details
-					        </label>
-				      	</button>
-				    </div>
-
-				    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-				    	<div class="card-body pb-2 px-0">
-				       		<p>{{$params['description']}}</p>
-				    	</div>
-				    </div>
-				  </div>
-				  <div class="">
-				    <div class="collapse-head border-bottom mb-0" id="headingTwo">
-				        <button class="btn btn-link btn-block text-left py-3 px-0 br-0 collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-					    	<label class="mb-0 text-body cursor-pointer">
-					        	Additional Info
-					        </label>
-				      	</button>
-				    </div>
-				    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-				      	<div class="card-body pb-2 px-0">
-					     	<dl class="row">
-
-							  <dt class="col-2"><label class="text-muted f-w-4">Gender</label></dt>
-							  <dd class="col-10">{{$params['additional_info']->gender}}</dd>
-
-							  <dt class="col-2"><label class="text-muted f-w-4">Sleeves</label></dt>
-							  <dd class="col-10">{{$params['additional_info']->sleeves}}</dd>
-
-							  <dt class="col-2"><label class="text-muted f-w-4">Material</label></dt>
-							  <dd class="col-10">{{$params['additional_info']->material}}</dd>
-
-							</dl>
-				      	</div>
-				    </div>
-				  </div>
-				  <!-- <div class="">
-				    <div class="collapse-head border-bottom mb-0" id="headingThree">
-				        <button class="btn btn-link btn-block text-left py-3 px-0 br-0 collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-				      		<label class="mb-0 text-body cursor-pointer">
-				        		Reviews
-				      		</label>
-				    	</button>
-				    </div>
-				    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-				      <div class="card-body pb-2 px-0">
-				        <blockquote class="blockquote mb-4">
-						  <h6 class="mb-1"><strong>It fits perfect and he loved it.</strong></h6>
-						  <footer class="blockquote-footer"><span class="badge badge-success"><i class="fas fa-star"></i> 4.5 </span> Seema Kothrud, Pune <cite title="Source Title">7 Jul, 2018</cite></footer>
-						</blockquote>
-						 <blockquote class="blockquote mb-4">
-						  <h6 class="mb-1"><strong>I didn't realize you had clothes for 2T and they're super cute and affordable.</strong></h6>
-						  <footer class="blockquote-footer"><span class="badge badge-success"><i class="fas fa-star"></i> 4.5 </span> Seema Kothrud, Pune <cite title="Source Title">7 Jul, 2018</cite></footer>
-						</blockquote>
-
-				      </div>
-				    </div>
-				  </div> -->
-				</div>
+				<!-- Details / Additional info / Reviews -->
+				@include('includes.singleproduct.productdetails', ['params' => $params])
 
 			</div>
 		</div>
