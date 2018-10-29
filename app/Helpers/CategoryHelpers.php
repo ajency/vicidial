@@ -54,8 +54,12 @@ function build_search_object($params) {
 	}
 
 	$facets = Facet::select('facet_name',DB::raw('group_concat(facet_value) as "values"'))->whereIn('slug', $all_facets)->groupBy('facet_name')->get();
-	$facets_arr   = json_decode($facets, true);
-	$search_result = array_column($facets_arr, 'values',"facet_name");
+	$search_result = [];
+	foreach($facets as $facet){
+		$search_result[$facet->facet_name] = explode(",", $facet->values);
+	}
+	// $facets_arr   = json_decode($facets, true);
+	// $search_result = array_column($facets_arr, 'values',"facet_name");
 	return $search_result;
 }
 

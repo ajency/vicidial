@@ -17,19 +17,23 @@
 
       <div id="collapseGender" class="collapsed show" aria-labelledby="headingOne" data-parent="#accordion">
         <div class="card-body">
+          
+          @{{#if singleton }}
           @{{#each items}}
-          @{{#if is_singleton}}
           <div >
             <input type="radio" name="gender" value="@{{slug}}" @{{#if is_selected }} checked = "checked" @{{/if}}>
             <label for="@{{display_name}}">@{{display_name}} <span class="sub-text">(@{{count}})</span></label>
           </div>
-          @{{else}}
-          <div class="custom-control custom-checkbox">
-            <input type="checkbox" value="@{{slug}}" class="custom-control-input" @{{#if is_selected }} checked = "checked" @{{/if}}>
-            <label class="custom-control-label f-w-4" for="@{{display_name}}">@{{display_name}} <span class="sub-text">(@{{count}})</span></label>
-          </div>     
-          @{{/if}}
           @{{/each}}
+          @{{else}}
+          @{{#each items}}
+          <div class="custom-control custom-checkbox" >
+            <input type="checkbox" ame="gender" value="@{{slug}}" class="custom-control-input" @{{#if is_selected }} checked = "checked" @{{/if}}>
+            <label class="custom-control-label f-w-4" for="@{{display_name}}">@{{display_name}} <span class="sub-text">(@{{count}})</span></label>
+          </div> 
+          @{{/each}}    
+          @{{/if}}
+          
        
         
         </div>
@@ -41,7 +45,10 @@
    // require('handlebars');
    var source   = document.getElementById("filter-gender-template").innerHTML;
    var template = Handlebars.compile(source);
-   var context = { "items" : <?= json_encode($items); ?> };
+   var singleton = (<?= $singleton ?> == 1)?true:false;
+   var context = {};
+   context["singleton"] = singleton;
+   context["items"] = <?= json_encode($items); ?>;
    console.log(context)
    var html    = template(context);
    document.getElementById("filter-gender-template-content").innerHTML = html;

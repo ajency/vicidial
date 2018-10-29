@@ -42,13 +42,14 @@ class ListingController extends Controller
     {
         $search_object = build_search_object($params);
         // dd($search_object);
-        $search_object = [
-  "product_category_type" => ["Apparels"]
-];
+//         $search_object = [
+//   "product_gender" => ["Boys"],
+//   "product_subtype" => ["Jeans"]
+// ];
         // if(isset($search_object->error) && $search_object->error == true) {
         //     return false;
         // }
-
+        // dd($search_object);
         $params = Product::productList($search_object);
         // $params =  (array) $json;
 
