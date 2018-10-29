@@ -24,7 +24,8 @@ export class ShippingDetailsComponent implements OnInit {
     city : '',
     state : '',
     default : false,
-    type : ''
+    type : '',
+    email : ''
   };
   selectedAddressId : any;
   constructor( private router : Router,

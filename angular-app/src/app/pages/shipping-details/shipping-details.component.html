@@ -38,13 +38,13 @@
 							<div class="col-md-12">
 								<!--firstName-->
 								<div class="form-group ">
-									<input class="form-control form-control-lg" id="names" type="text" name="name" [(ngModel)]="newAddress.name" required>
+									<input class="form-control form-control-lg" id="names" type="text" name="name" [(ngModel)]="newAddress.name" required [ngClass]="{'has-value' : newAddress.name}">
 									<label class="control-label">Full Name <span class="pl-1 text-danger">*</span></label>
 								</div>
 							</div>
 							<div class="col-md-12">
 								<div class="form-group has-error ">
-									<input class="form-control form-control-lg" id="mobile" type="number" name="mobile" for="inputError" [(ngModel)]="newAddress.phone" required appNumbers>
+									<input class="form-control form-control-lg" id="mobile" type="tel" minlength = "10" maxlength = "10" pattern="^[789]\d{9}$" inputmode="numeric" name="mobile" for="inputError" [(ngModel)]="newAddress.phone" required appNumbers [ngClass]="{'has-value' : newAddress.phone}">
 									 <label class="control-label" for="inputError">Mobile Number <span class="pl-1 text-danger">*</span></label>
 	<!-- 								 <small id="passwordHelpBlock" class="form-text text-danger">
 									Please enter mobile number
@@ -53,7 +53,7 @@
 							</div>
 							<div class="col-md-12">
 								<div class="form-group">
-									<input class="form-control form-control-lg" id="email-address" type="email" name="email" [(ngModel)]="newAddress.email" required>
+									<input class="form-control form-control-lg" id="email-address" type="email" name="email" [(ngModel)]="newAddress.email" required [ngClass]="{'has-value' : newAddress.email}">
 									<label class="control-label">Email Address <span class="pl-1 text-danger">*</span></label>
 								</div>
 							</div>							
@@ -61,13 +61,13 @@
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group ">
-									<input class="form-control form-control-lg" id="pincode" type="number" name="pincode" [(ngModel)]="newAddress.pincode" required appNumbers>
+									<input class="form-control form-control-lg" id="pincode" type="tel"  minlength = "6" maxlength = "6" name="pincode" [(ngModel)]="newAddress.pincode" required appNumbers inputmode="numeric" [ngClass]="{'has-value' : newAddress.pincode}">
 									<label class="control-label">Pincode <span class="pl-1 text-danger">*</span></label>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<input class="form-control form-control-lg" id="locality" type="text" name="locality" [(ngModel)]="newAddress.locality" required>
+									<input class="form-control form-control-lg" id="locality" type="text" name="locality" [(ngModel)]="newAddress.locality" required [ngClass]="{'has-value' : newAddress.locality}">
 									<label class="control-label">Locality/Town <span class="pl-1 text-danger">*</span></label>
 								</div>
 							</div>
@@ -75,7 +75,7 @@
 						<div class="row">
 							<div class="col-md-12">
 								<div class="form-group ">
-									<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="address" [(ngModel)]="newAddress.address" required></textarea>
+									<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="address" [(ngModel)]="newAddress.address" required [ngClass]="{'has-value' : newAddress.address}"></textarea>
 									<label class="control-label">Street Address(<small>House No,Building,Street,Area</small>) <span class="pl-1 text-danger">*</span></label>
 								</div>
 							</div>
@@ -83,13 +83,13 @@
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group ">
-									<input class="form-control form-control-lg" id="citys" type="text" name="city" [(ngModel)]="newAddress.city" required>
+									<input class="form-control form-control-lg" id="citys" type="text" name="city" [(ngModel)]="newAddress.city" required [ngClass]="{'has-value' : newAddress.city}">
 									<label class="control-label">City/District <span class="pl-1 text-danger">*</span></label>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<input class="form-control form-control-lg" id="state" type="text" name="state" [(ngModel)]="newAddress.state" required>
+									<input class="form-control form-control-lg" id="state" type="text" name="state" [(ngModel)]="newAddress.state" required [ngClass]="{'has-value' : newAddress.state}">
 									<label class="control-label">State*</label>
 								</div>
 <!-- 								<div class="form-group">
@@ -106,7 +106,7 @@
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group ">
-									<input type="text" class="form-control" id="landmark" name="landmark" [(ngModel)]="newAddress.landmark" required>
+									<input type="text" class="form-control" id="landmark" name="landmark" [(ngModel)]="newAddress.landmark" required [ngClass]="{'has-value' : newAddress.landmark}">
 									<label class="control-label">Landmark</label>
 								</div>
 							</div>
