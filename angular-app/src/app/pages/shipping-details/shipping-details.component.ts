@@ -96,6 +96,27 @@ export class ShippingDetailsComponent implements OnInit {
     this.newAddress.type = "";
   }
 
+  deleteAddress(id){
+    console.log(id);
+    this.showCartLoader = true;
+    let body = { address_id : id };
+    let url = this.appservice.apiUrl +  "/api/rest/v1/user/address/delete?";
+    let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
+    url = url+$.param(body);
+    this.apiservice.request(url, 'get', body, header ).then((response)=>{
+      console.log("response ==>", response);
+      let index = this.addresses.findIndex(i => i.id == id);
+      this.addresses.splice(index,1);
+      if(response.default_id)
+        this.changeAddreessDefault(response.default_id);
+      this.showCartLoader = false;
+    })
+    .catch((error)=>{
+      console.log("error ===>", error);
+      this.showCartLoader = false;
+    })
+  }
+
   navigateToShippingPage(){
     console.log(this.selectedAddressId);
   	// this.router.navigateByUrl('/shipping-summary', { skipLocationChange: true })
