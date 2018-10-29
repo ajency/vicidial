@@ -304,7 +304,9 @@ class Product
         $q->setIndex($index)
             ->initAggregation()
             ->setAggregation($aggs)
-            ->setSize(0);
+            ->setSource(["search_result_data", "variants"])
+            ->setSize(10);
+
         return $q;
     }
 
@@ -332,7 +334,6 @@ class Product
         }
         $must = $q::addToBoolQuery('must', $must);
         $q->setQuery($must);
-        $q->setSource(["search_result_data.product_gender", "search_result_data.product_age_group", "search_result_data.product_subtype", "search_result_data.product_category_type"]);
         $response = $q->search();
         return sanitiseFilterdata($response,$params);
     }
