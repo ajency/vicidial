@@ -358,14 +358,16 @@ function sanitiseFilterdata($result, $params = [])
 
 function formatItems($result){
     $items = [];
-    foreach ($result['hits']['hits'] as  $product) {
-        $product = $product["_source"];
+    foreach ($result['hits']['hits'] as  $doc) {
+        $productColor      = ProductColor::where([["elastic_id", $doc["_id"]]])->first();
+        $product = $doc["_source"];
         $data = $product["search_result_data"];
+
         $item = [
             "title" => $data["product_title"],
             "slug_name" => $data["product_slug"],
             "description" => $data["product_description"],
-            "images" => [],
+            "images" => $productColor->getDefaultImage(["list-view"]),
             "variants" => [],
             "product_id" => $data["product_id"],
             "color_id" => $data['product_color_id'],
@@ -392,7 +394,6 @@ function formatItems($result){
                     "size_name" => $variant["variant_size_name"],
                 ],
                 "inventory_available" => $variant["variant_availability"],
-                "inventory" => [],
             ];
         }
         $items[] = $item;
