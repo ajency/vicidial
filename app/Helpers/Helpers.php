@@ -327,7 +327,7 @@ function sanitiseFilterdata($result, $params = [])
             $filterResponse[$facet_name["key"]][$value["key"]] = $value["count"]["doc_count"];
         }
     }
-    $response = ["results_found" => ($result["hits"]["total"] > 0)];
+    $response = [];
     foreach ($filterResponse as $facetName => $facetValues) {
         $filter           = [];
         $facets           = Facet::where('facet_name', $facetName)->get();
@@ -352,23 +352,12 @@ function sanitiseFilterdata($result, $params = [])
         }
         $response[] = $filter;
     }
-    $response["items"] = formatItems($result);
-    $size = $params["display_limit"];
-    $offset = ($params["page"] - 1) * $size;
-    $total_items = $result["hits"]["total"];
-    $total_pages = intval(ceil($total_items / $size));
-    $response["page"] = [
-        "current" => $params["page"],
-        "total" => $total_pages ,
-        "has_previous" => ($params["page"]> 1),
-        "has_next" => ($params["page"] < $total_pages),
-        "total_item_count" => $total_items,
-    ];
     return $response;
 }
 
-function formatItems($result){
+function formatItems($result, $params){
     $items = [];
+    $response = ["results_found" => ($result["hits"]["total"] > 0)];
     foreach ($result['hits']['hits'] as  $doc) {
         $productColor      = ProductColor::where([["elastic_id", $doc["_id"]]])->first();
         $product = $doc["_source"];
@@ -410,5 +399,18 @@ function formatItems($result){
         }
         $items[] = $item;
     }
-    return $items;
+
+    $response["items"] = $items;
+    $size = $params["display_limit"];
+    $offset = ($params["page"] - 1) * $size;
+    $total_items = $result["hits"]["total"];
+    $total_pages = intval(ceil($total_items / $size));
+    $response["page"] = [
+        "current" => $params["page"],
+        "total" => $total_pages ,
+        "has_previous" => ($params["page"]> 1),
+        "has_next" => ($params["page"] < $total_pages),
+        "total_item_count" => $total_items,
+    ];
+    return $response;
 }

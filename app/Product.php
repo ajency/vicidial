@@ -304,16 +304,13 @@ class Product
         $q->setIndex($index)
             ->initAggregation()
             ->setAggregation($aggs)
-            ->setSource(["search_result_data", "variants"])
-            ->setSize(10);
+            ->setSize(0);
 
         return $q;
     }
 
     public static function getProductCategoriesWithFilter($params)
     {
-        $size = $params["display_limit"];
-        $offset = ($params["page"] - 1) * $size;
 
         $q       = self::buildBaseQuery();
         $filters = makeQueryfromParams($params["search_object"]);
@@ -337,7 +334,6 @@ class Product
         }
         $must = $q::addToBoolQuery('must', $must);
         $q->setQuery($must);
-        $q->setSize($size)->setFrom($offset);
         $response = $q->search();
         return sanitiseFilterdata($response,$params);
     }
@@ -348,5 +344,38 @@ class Product
         return sanitiseFilterdata($q->search());
     }
 
+    public static function getItemsWithFilters($params){
+        $size = $params["display_limit"];
+        $offset = ($params["page"] - 1) * $size;
+
+        $index    = config('elastic.indexes.product');
+        $q        = new ElasticQuery;
+        $q->setIndex($index);
+        $q       = self::buildBaseQuery();
+        $filters = makeQueryfromParams($params["search_object"]);
+        $must    = [];
+        foreach ($filters as $path => $data) {
+            foreach ($data as $facet => $data2) {
+                foreach ($data2 as $field => $values) {
+                    $should = [];
+                    $nested = [];
+                    foreach ($values as $value) {
+                        $facetName  = $q::createTerm($path . "." . $facet . '.facet_name', $field);
+                        $facetValue = $q::createTerm($path . "." . $facet . '.facet_value', $value);
+                        $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
+                        $nested[]   = $q::createNested('search_data.string_facet', $filter);
+                        $should     = $q::addToBoolQuery('should', $nested, $should);
+                    }
+                    $nested2 = $q::createNested($path, $should);
+                    $must[]  = $nested2;
+                }
+            }
+        }
+        $must = $q::addToBoolQuery('must', $must);
+        $q->setQuery($must)
+        ->setSource(["search_result_data", "variants"])
+        ->setSize($size)->setFrom($offset);
+        return formatItems($q->search(), $params);
+    }
 
 }
