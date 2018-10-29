@@ -22,7 +22,7 @@
 			@php foreach ($params['variant_group'] as $color_id => $color_set) {
 		    	$checked="";
 		    	if($color_id == $selected_color_id) {$checked="checked";}
-		    		$image_1x = '/img/placeholder.svg';
+		    		$image_1x = $image_2x = $image_3x = '/img/placeholder.svg';
 		    	if(count((array)$color_set->images)>0){
 		    		$image_1x = $color_set->images->{'1x'};
 		    		$image_2x = $color_set->images->{'2x'};
