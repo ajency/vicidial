@@ -101,14 +101,14 @@
 	</div>
 
 	
-	<!-- <div id="similar" class="container">
+	<div id="similar" class="container">
 		<hr class="mt-5">
 		<h3 class="text-left my-4 font-weight-bold">Similar Products</h3>
 	  <div id="card-list" class="row">
             <div class="col-lg-3 col-md-6 mb-4 col-6  ">
               <div class="card h-100 product-card">
-              	<i class="fas fa-heart kss_heart"></i>
-                <a href="/kss/product/" >
+              	<!-- <i class="fas fa-heart kss_heart"></i> -->
+                <a href="#" >
                   <div class="image oh loading loading-01">
                   <img data-src="/img/normal/bluefront@1x.jpg" data-srcset="/img/normal/bluefront@1x.jpg 1x, /img/2x/bluefront@2x.jpg 2x" class="lazyload card-img-top" />
                  </div>
@@ -126,8 +126,8 @@
 
             <div class="col-lg-3 col-md-6 mb-4 col-6  ">
            	  <div class="card h-100 product-card">
-           	 		<i class="fas fa-heart kss_heart"></i>
-                <a href="/kss/product/">
+           	 		<!-- <i class="fas fa-heart kss_heart"></i> -->
+                <a href="#">
                    <div class="image oh loading loading-02">
                   <img data-src="/img/normal/orangefront@1x.jpg" data-srcset="/img/normal/orangefront@1x.jpg 1x, /img/2x/orangefront@2x.jpg 2x" class="lazyload card-img-top" />
                 </div>
@@ -145,8 +145,8 @@
 
             <div class="col-lg-3 col-md-6 mb-4 col-6   ">
               <div class="card h-100 product-card">
-              	<i class="fas fa-heart kss_heart"></i>
-                <a href="/kss/product/">
+              	<!-- <i class="fas fa-heart kss_heart"></i> -->
+                <a href="#">
                    <div class="image oh loading loading-03">
                         <img data-src="/img/normal/red1front@1x.jpg" data-srcset="/img/normal/red1front@1x.jpg 1x, /img/2x/red1front@2x.jpg 2x" class="lazyload card-img-top" />
                     </div>
@@ -163,8 +163,8 @@
             </div>
                 <div class="col-lg-3 col-md-6 mb-4 col-6 ">
               <div class="card h-100 product-card">
-                <i class="fas fa-heart kss_heart"></i>
-                <a href="/kss/product/">
+               <!--  <i class="fas fa-heart kss_heart"></i> -->
+                <a href="#">
                    <div class="image oh loading loading-04">
                    <img data-src="/img/normal/redbluefront@1x.jpg"  data-srcset="/img/normal/redbluefront@1x.jpg 1x, /img/2x/redbluefront@2x.jpg 2x" class="lazyload card-img-top" />
                  </div>
@@ -180,7 +180,7 @@
               </div>
             </div>
         </div>
-	</div> -->
+	</div>
 
 	<div class="alert kss-alert sticky-alert d-inline-flex align-items-baseline px-sm-4 py-sm-4 px-3 py-3 fade show" role="alert">
 	  <i class="fas fa-check pr-sm-3 pr-2 icon"></i>
