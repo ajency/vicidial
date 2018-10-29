@@ -24,7 +24,8 @@ export class ShippingDetailsComponent implements OnInit {
     city : '',
     state : '',
     default : false,
-    type : "Home"
+    type : '',
+    email : ''
   };
   selectedAddressId : any;
   constructor( private router : Router,
@@ -93,7 +94,7 @@ export class ShippingDetailsComponent implements OnInit {
     this.addAddress = true;
     this.newAddress = {};
     this.newAddress.default = false;
-    this.newAddress.type = "Home";
+    this.newAddress.type = "";
   }
 
   navigateToShippingPage(){
