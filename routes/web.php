@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
  */
-
+$config        = config('ajfileupload');
 Route::get('/rest/anonymous/cart/count', 'CartController@guestGetCount');
 Route::post('/rest/anonymous/cart/insert', 'CartController@guestAddItem');
 Route::get('/rest/anonymous/cart/get', 'CartController@guestCartFetch');
@@ -37,4 +37,4 @@ Route::middleware(['create-seo:listing'])->group(function () {
 
 Route::get('/test/productlist', 'ProductListTestController@index')->name('productListTest');
 
-Route::get('/products/{photo_id}/{preset}/{depth}/{image}', 'ProductController@getImage');
+Route::get('/'.$config['base_root_path']. $config['model']["App\ProductColor"]['base_path'].'/{photo_id}/{preset}/{depth}/{image}', 'ProductController@getImage');
