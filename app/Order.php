@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Cart;
+use App\SubOrder
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
@@ -12,10 +13,18 @@ class Order extends Model
         return $this->hasMany('App\SubOrder');
     }
 
-    public function seperateSubOrders()
+    public function setSubOrders()
     {
         $cart       = Cart::find($this->cart_id);
         $warehouses = getWarehousesForCart($cart);
-        $suborders  = generateSuborder($cart->getItems(), collect($warehouses));
+        $suborders  = generateSubordersData($cart->getItems(), collect($warehouses));
+        foreach ($suborders as $warehouseID => $items) {
+        	$subOrder = new SubOrder;
+        	$subOrder->order_id =  $this->id;
+        	$subOrder->warehouse_id = $warehouseID;
+        	$subOrder->setItems($items);
+        	$subOrder->save();
+        	$subOrder->placeOrderOnOdoo();
+        }
     }
 }

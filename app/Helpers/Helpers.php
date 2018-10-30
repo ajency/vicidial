@@ -442,13 +442,12 @@ function getWarehousesForCart($cart)
     return $warehouses;
 }
 
-function recursivefunc($cartItems, $warehouses)
+function generateSubordersData($cartItems, $warehouses)
 {
     $finalCart      = [];
     $warehousesData = $warehouses->combine($warehouses->map(function ($item, $key) {
         return ['id' => $item, 'items' => collect(), 'remaining_items' => collect()];
     }));
-    // print_r($warehousesData);
     foreach ($cartItems as $cartItem) {
         $processedWarehouses = [];
         foreach ($cartItem['item']->inventory as $warehouseData) {
@@ -474,13 +473,12 @@ function recursivefunc($cartItems, $warehouses)
             }
         }
     }
-
     $selectedWarehouse = $warehousesData->sortByDesc(function ($product, $key) {
         return $product['items']->count();
     })->first();
     $key = $selectedWarehouse['id'];
     if ($selectedWarehouse['remaining_items']->count() != 0) {
-        $otherOrders       = recursivefunc($selectedWarehouse['remaining_items'], $warehouses->diff([$key]));
+        $otherOrders       = generateSubordersData($selectedWarehouse['remaining_items'], $warehouses->diff([$key]));
         $otherOrders[$key] = $selectedWarehouse['items'];
         return $otherOrders;
     } else {

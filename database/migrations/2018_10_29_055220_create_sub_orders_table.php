@@ -16,6 +16,7 @@ class CreateSubOrdersTable extends Migration
         Schema::create('sub_orders', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('order_id');
+            $table->integer('warehouse_id');
             $table->json('item_data');
             $table->json('odoo_info')->nullable();
             $table->integer('odoo_id')->nullable();
