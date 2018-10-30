@@ -32,7 +32,15 @@
 @stop
 
 @section('footjs')
+  <?php
+    $facet_display_data = config('product.facet_display_data');
 
+    // usort($facet_display_data, function($a, $b) { 
+    //       return $a["order"] > $b["order"] ? 1 : -1; 
+    //   });
+
+    $config_facet_names_arr = array_keys($facet_display_data);
+  ?>
   <script type="text/javascript" src="/js/productlisting.js"></script>
   @yield('footjs-gender')
   @yield('footjs-age')
@@ -40,7 +48,9 @@
   @yield('footjs-category')
   <script type="text/javascript">
       var facet_list = {}
-      
+      var config_facet_names_arr = <?= json_encode($config_facet_names_arr);?>;
+      console.log("facet array===")
+      console.log(config_facet_names_arr)
      $('.facet-category').on('change', function() { 
       // From the other examples
       console.log("change===")
@@ -87,7 +97,11 @@
         data: data
       })
         .done(function( msg ) {
-          alert( "Data Saved: " + msg );
+          // alert( "Data Saved: " + msg );
+          console.log(config_facet_names_arr);
+          console.log(facet_list)
+          var url = constructCategoryUrl(config_facet_names_arr,facet_list);
+          window.history.pushState('categoryPage', 'Category', url);
         });
       }
       
@@ -96,6 +110,27 @@
       $( "input[name='gender']" ).trigger( "change" );
       $( "input[name='category']" ).trigger( "change" );
       $( "input[name='subtype']" ).trigger( "change" );
+
+      function constructCategoryUrl(facet_names_arr,search_object){
+        var search_str = "";
+        for(item in facet_names_arr){
+          var search_cat = "";
+          console.log("item--"+facet_names_arr[item])
+          var itemval = facet_names_arr[item]
+          console.log(search_object)
+          console.log(search_object[itemval])
+          if(itemval in search_object){
+            if(search_object[facet_names_arr[item]].length>1)
+              search_cat = search_object[facet_names_arr[item]].join('--');
+            else
+              search_cat = search_object[facet_names_arr[item]][0];
+            search_str += '/'+search_cat;
+          }
+          
+
+        }
+        return search_str;
+      }
   </script> 
 
 @stop

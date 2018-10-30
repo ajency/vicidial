@@ -17,7 +17,7 @@
           @{{else}}
           @{{#each items}}
           <div class="custom-control custom-checkbox" >
-            <input type="checkbox" class="facet-category" name="age" value="@{{slug}}" class="custom-control-input" @{{#if is_selected }} checked = "checked" @{{/if}} data-facet-name="@{{../filter_facet_name}}">
+            <input type="checkbox" class="facet-category custom-control-input" name="age" value="@{{slug}}" @{{#if is_selected }} checked = "checked" @{{/if}} data-facet-name="@{{../filter_facet_name}}">
             <label class="custom-control-label f-w-4" for="@{{display_name}}">@{{display_name}} <span class="sub-text">(@{{count}})</span></label>
           </div> 
           @{{/each}}    
