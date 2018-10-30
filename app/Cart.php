@@ -29,7 +29,7 @@ class Cart extends Model
         if (valInteger($item, self::ITEM_FIELDS)) {
             $item                   = array_only($item, self::ITEM_FIELDS);
             $cart_data              = $this->cart_data;
-            $cart_data[$item["id"]] = ["id" => $item["id"], "quantity" => $item["quantity"], 'timestamp' => Carbon::now()->timestamp];
+            $cart_data[$item["id"]] = ["id" => $item["id"], "quantity" => intval($item["quantity"]), 'timestamp' => Carbon::now()->timestamp];
             $this->cart_data        = $cart_data;
             // \Log::info($this->cart_data);
         } else {
