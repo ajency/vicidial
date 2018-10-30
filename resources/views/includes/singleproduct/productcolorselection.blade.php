@@ -42,7 +42,7 @@
 					<div class="variant-img-wrapper @php if(count((array)$color_set->images)==0) { @endphp variant-placeholder @php } @endphp">
 						<img src="{{$image_1x}}" class="lazyload blur-up w-100" data-srcset="{{$image_1x}} 50w, {{$image_2x}} 100w, {{$image_3x}} 150w" sizes="50px"  alt="">
 					</div>
-					<div class="radio-option mt-1" >{{$color_set->name}}</div>
+					<!-- <div class="radio-option mt-1" >{{$color_set->name}}</div> -->
 				</label>
 		    @php } @endphp
 			</div>
