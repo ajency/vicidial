@@ -3,8 +3,8 @@
 namespace App;
 
 use App\Variant;
-use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 
 class Cart extends Model
 {
@@ -73,5 +73,14 @@ class Cart extends Model
         unset($cart_data[$variant_id]);
         $this->cart_data = $cart_data;
         return $this;
+    }
+
+    public function getItem(int $variant_id)
+    {
+        $variant           = Variant::where('odoo_id', $variant_id)->first();
+        $item              = $variant->getItem();
+        $item["quantity"]  = intval($this->cart_data[$item["id"]]["quantity"]);
+        $item["timestamp"] = intval($this->cart_data[$item["id"]]["timestamp"]);
+        return $item;
     }
 }

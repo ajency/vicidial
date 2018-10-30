@@ -91,12 +91,7 @@ class CartController extends Controller
         checkUserCart($request->header('Authorization'),$cart);
         $items = [];
         foreach ($cart->cart_data as $cart_item) {
-            $variant          = Variant::where('odoo_id', $cart_item['id'])->first();
-            $item             = $variant->getItem();
-            $item["quantity"] = intval($cart->cart_data[$item["id"]]["quantity"]);
-            $item["timestamp"] = intval($cart->cart_data[$item["id"]]["timestamp"]);
-            $item["availability"] = ($item["available_quantity"]>=$item["quantity"]) ? true : false;
-            $items[]          = $item;
+            $items[] = $cart->getItem($cart_item['id']);
         }
         $summary = $cart->getSummary();
         $code    = ["code" => "NEWUSER", "applied" => true];
@@ -113,12 +108,7 @@ class CartController extends Controller
 
         $items = [];
         foreach ($cart->cart_data as $cart_item) {
-            $variant          = Variant::where('odoo_id', $cart_item['id'])->first();
-            $item             = $variant->getItem();
-            $item["quantity"] = intval($cart->cart_data[$item["id"]]["quantity"]);
-            $item["availability"] = ($item["available_quantity"]>=$item["quantity"]) ? true : false;
-            $item["timestamp"] = intval($cart->cart_data[$item["id"]]["timestamp"]);
-            $items[]          = $item;
+            $items[] = $cart->getItem($cart_item['id']);
         }
         $summary = $cart->getSummary();
         $code    = ["code" => "NEWUSER", "applied" => true];
