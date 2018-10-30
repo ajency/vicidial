@@ -140,6 +140,7 @@ class Variant extends Model
         return array(
             'product_slug'  => $this->getProductSlug(),
             'availability'  => $this->getAvailability(),
+            'available_quantity' => $this->getQuantity(),
             'message'       => $this->getMessage(),
             'attributes'    => $this->getItemAttributes(),
             "id"            => $this->getID(),
@@ -253,7 +254,9 @@ class Variant extends Model
         $total = 0;
         if (isset($this->inventory)) {
             foreach ($this->inventory as $inventory) {
-                $total += $inventory["quantity"];
+                if($inventory["quantity"] >= 0) {
+                    $total += $inventory["quantity"];
+                }
             }
         }
         return $total;

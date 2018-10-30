@@ -37,9 +37,15 @@ class CartController extends Controller
             if ($cart->itemExists($item)) {
                 $qty += $cart->cart_data[$item["id"]]["quantity"];
             }
-            $cart->insertItem(["id" => $params['variant_id'], "quantity" => $qty]);
-            $cart->save();
-            $message          = "Item added successfully";
+
+            if($item["available_quantity"]>=$qty) {
+                $cart->insertItem(["id" => $params['variant_id'], "quantity" => $qty]);
+                $cart->save();
+                $message = "Item added successfully";
+            }
+            else {
+                abort(404, "Quantity not available");
+            }
             $item["quantity"] = intval($cart->cart_data[$item["id"]]["quantity"]);
         }
         $summary = $cart->getSummary();
@@ -58,9 +64,15 @@ class CartController extends Controller
             if ($cart->itemExists($item)) {
                 $qty += $cart->cart_data[$item["id"]]["quantity"];
             }
-            $cart->insertItem(["id" => $params['variant_id'], "quantity" => $qty]);
-            $cart->save();
-            $message = "Item added successfully";
+
+            if($item["available_quantity"]>=$qty) {
+                $cart->insertItem(["id" => $params['variant_id'], "quantity" => $qty]);
+                $cart->save();
+                $message          = "Item added successfully";
+            }
+            else {
+                abort(404, "Quantity not available");
+            }
             $request->session()->put('active_cart_id', $cart->id);
             $item["quantity"] = intval($cart->cart_data[$item["id"]]["quantity"]);
         }
@@ -80,6 +92,7 @@ class CartController extends Controller
             $variant          = Variant::where('odoo_id', $cart_item['id'])->first();
             $item             = $variant->getItem();
             $item["quantity"] = intval($cart->cart_data[$item["id"]]["quantity"]);
+            $item["availability"] = ($item["available_quantity"]>=$item["quantity"]) ? true : false;
             $items[]          = $item;
         }
         $summary = $cart->getSummary();
@@ -100,6 +113,7 @@ class CartController extends Controller
             $variant          = Variant::where('odoo_id', $cart_item['id'])->first();
             $item             = $variant->getItem();
             $item["quantity"] = intval($cart->cart_data[$item["id"]]["quantity"]);
+            $item["availability"] = ($item["available_quantity"]>=$item["quantity"]) ? true : false;
             $items[]          = $item;
         }
         $summary = $cart->getSummary();
