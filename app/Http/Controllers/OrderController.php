@@ -28,19 +28,20 @@ class OrderController extends Controller
 
         $this->setUserCart($user_id);
 
-        return response()->json(["items"=>getCartData($cart, false), "summary"=>$order->aggregateSubOrderData(), "address"=>$address->aggregateSubOrderData(), "message"=> 'Order Placed successfully']);
+        return response()->json(["items"=>getCartData($cart, false), "summary"=>$order->aggregateSubOrderData(), "address"=>$address->address, "message"=> 'Order Placed successfully']);
 
     }
 
     public function newOrder($cart, $address)
     {
+        if($cart->type == 'order') abort(400,'invalid cart');
         $order = new Order;
         $order->cart_id = $cart->id;
         $order->address_id = $address->id;
         $expires_at = Carbon::now()->addMinutes(config('orders.expiry'));
         $order->expires_at = $expires_at->timestamp;
         $order->save();
-
+        $order->setSubOrders();
         $cart->type = 'order';
         $cart->save();
 

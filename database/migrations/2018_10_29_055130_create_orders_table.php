@@ -18,7 +18,7 @@ class CreateOrdersTable extends Migration
             $table->integer('cart_id');
             $table->integer('address_id');
             $table->string('status')->default('draft');
-            $table->timestamp('expires_at');
+            $table->bigInteger('expires_at');
             $table->json('payment_info')->nullable();
             $table->timestamps();
         });

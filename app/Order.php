@@ -3,7 +3,7 @@
 namespace App;
 
 use App\Cart;
-use App\SubOrder
+use App\SubOrder;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
@@ -18,6 +18,7 @@ class Order extends Model
         $cart       = Cart::find($this->cart_id);
         $warehouses = getWarehousesForCart($cart);
         $suborders  = generateSubordersData($cart->getItems(), collect($warehouses));
+        // print_r($suborders);
         foreach ($suborders as $warehouseID => $items) {
             $subOrder               = new SubOrder;
             $subOrder->order_id     = $this->id;

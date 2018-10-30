@@ -20,9 +20,10 @@ class SubOrder extends Model
     public function setItems($items)
     {
         $itemsData = [];
+        // print_r($items);
         foreach ($items as $itemData) {
             $itemsData[] = [
-                'id'       => $itemData['item']->id,
+                'id'       => $itemData['variant']->id,
                 'quantity' => $itemData['quantity'],
             ];
         }
@@ -38,7 +39,7 @@ class SubOrder extends Model
                 'quantity' => $itemData['quantity'],
             ];
         }
-        $return $itemsData;
+        return $itemsData;
     }
 
     public function placeOrderOnOdoo()
