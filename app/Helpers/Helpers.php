@@ -287,7 +287,7 @@ function sanitiseInventoryData($inventoryData)
             if (is_null($temp["warehouse_id"])) {
                 continue;
             }
-            $inventory[$invtry["product_id"][0]][] = $temp;
+            $inventory[$invtry["product_id"][0]][$temp["warehouse_id"]] = $temp;
 
         }
     }
