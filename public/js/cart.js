@@ -70,10 +70,12 @@ $(document).ready(function(){
                             
                 },
                 error: function (request, status, error) {
+                    var error_msg = (request.responseJSON.message!='') ? request.responseJSON.message : 'Could not add to bag';
+                    //if(request.responseJSON.message!='') error_msg = request.responseJSON.message
                     $('.cd-add-to-cart .btn-icon').hide();
                     $('.cd-add-to-cart .btn-label-initial').addClass('d-flex');
                     $('.cd-add-to-cart .btn-label-initial').removeClass('d-none');
-                    $('.kss-alert .message').html('<strong>Failed!!!</strong> Could not add to bag');
+                    $('.kss-alert .message').html('<strong>Failed!!!</strong> '+error_msg);
                     $('.kss-alert').addClass('kss-alert--failure');
                     $('.kss-alert').addClass('is-open');
                     $(add_to_cart_element).removeClass('cartLoader');
