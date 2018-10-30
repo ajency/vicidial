@@ -1,14 +1,6 @@
  
 <script id="filter-gender-template" type="text/x-handlebars-template">
    <div class="kss_filter-list">
-      <div class="d-md-none d-block">
-  
-      <div class="d-flex">
-      <div><h4 class="mt-0">Filter By</h4></div>
-      <div class="ml-auto"> <h3 id="kss_hide-filter" class="m-0 kss_highlight btn-pay"><span aria-hidden="true">&times;</span></h3></div>
-    </div>
-        <hr>
-      </div>
       <div id="headingOne">
         <label class="w-100" data-target="#collapseGender" aria-expanded="true" aria-controls="collapseGender">
             Gender <i class="fas fa-angle-up float-right"></i>

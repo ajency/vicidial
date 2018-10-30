@@ -1,5 +1,12 @@
 <script id="filter-category-template" type="text/x-handlebars-template"> 
   <div class="kss_filter-list">
+      <div class="d-md-none d-block">
+        <div class="d-flex">
+          <div><h4 class="mt-0">Filter By</h4></div>
+          <div class="ml-auto"> <h3 id="kss_hide-filter" class="m-0 kss_highlight btn-pay"><span aria-hidden="true">&times;</span></h3></div>
+        </div>
+        <hr>
+      </div>
       <div id="headingTwo">
         <label class=" w-100 collapsed" data-toggle="collapse" data-target="#collapseCategory" aria-expanded="false" aria-controls="collapseCategory">
          Category<i class="fas fa-angle-up float-right"></i>
