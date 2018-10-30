@@ -112,7 +112,7 @@
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<select name="type" id="state-list" class="form-control form-control-lg has-value" [(ngModel)]="newAddress.type" required>
+									<select name="type" id="address_type" class="form-control form-control-lg has-value" [(ngModel)]="newAddress.type" required>
 										<option value="">--Select--</option>
 										<option value="Home">Home</option>
 										<option value="Office">Office</option>
@@ -121,7 +121,7 @@
 								</div>
 							</div>							
 						</div>
-						<div *ngIf="!hideDefaultAddressField" class="row mt-4">
+						<div class="row mt-4">
 							<div class="col-md-12">
 								<div class="custom-control custom-checkbox">
 									<input type="checkbox" class="custom-control-input" id="customCheck1" name="default" [(ngModel)]="newAddress.default">
@@ -142,8 +142,8 @@
 									<div class="radio-selection position-relative">
 									 	<i class="fas fa-check-circle"></i>
 									</div>
-									<div class="text-left pl-2">
-										<h3 class="kss-title font-weight-bold w-75">{{address.name}} <span *ngIf="address.default">(Default)  </span> <i class="fas fa-pencil-alt number-edit" (click)="editAddress(address)"></i></h3>
+									<div class="text-left pl-2 flex-fill">
+										<h3 class="kss-title font-weight-bold d-flex align-items-center">{{address.name}} <span *ngIf="address.default">(Default)  </span> <i class="fas fa-pencil-alt number-edit ml-2" (click)="editAddress(address)"></i></h3>
 										<p class="w-75">
 											{{address.address}}, {{address.city}}, {{address.state}} {{address.pincode}}
 										</p>
