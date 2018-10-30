@@ -1,6 +1,5 @@
 <?php
 
-use App\Cart;
 use App\Facet;
 use App\User;
 use Carbon\Carbon;
@@ -447,16 +446,16 @@ function recursivefunc($cartItems, $warehouses)
 {
     $finalCart      = [];
     $warehousesData = $warehouses->combine($warehouses->map(function ($item, $key) {
-        return ['id'=>$item ,'items' => collect(), 'remaining_items' => collect()];
+        return ['id' => $item, 'items' => collect(), 'remaining_items' => collect()];
     }));
     // print_r($warehousesData);
     foreach ($cartItems as $cartItem) {
         $processedWarehouses = [];
         foreach ($cartItem['item']->inventory as $warehouseData) {
-            if(array_search($warehouseData['warehouse_id'], $warehouses->toArray()) === false){
+            if (array_search($warehouseData['warehouse_id'], $warehouses->toArray()) === false) {
                 continue;
             }
-            $transferQty  = ($cartItem['quantity'] < $warehouseData['quantity']) ? $cartItem['quantity'] : $warehouseData['quantity'];
+            $transferQty = ($cartItem['quantity'] < $warehouseData['quantity']) ? $cartItem['quantity'] : $warehouseData['quantity'];
             $warehousesData[$warehouseData['warehouse_id']]['items']->push([
                 'variant'  => $cartItem['item'],
                 'quantity' => $transferQty,
@@ -476,22 +475,15 @@ function recursivefunc($cartItems, $warehouses)
         }
     }
 
-    $selectedWarehouse = $warehousesData->sortByDesc(function($product,$key){
+    $selectedWarehouse = $warehousesData->sortByDesc(function ($product, $key) {
         return $product['items']->count();
     })->first();
     $key = $selectedWarehouse['id'];
-    if($selectedWarehouse['remaining_items']->count() != 0){
-        $otherOrders =  recursivefunc($selectedWarehouse['remaining_items'],$warehouses->diff([$key]));
+    if ($selectedWarehouse['remaining_items']->count() != 0) {
+        $otherOrders       = recursivefunc($selectedWarehouse['remaining_items'], $warehouses->diff([$key]));
         $otherOrders[$key] = $selectedWarehouse['items'];
         return $otherOrders;
-    }else{
+    } else {
         return [$key => $selectedWarehouse['items']];
     }
-}
-
-function seperateSubOrders($cartID)
-{
-    $cart       = Cart::find($cartID);
-    $warehouses = getWarehousesForCart($cart);
-    dd(recursivefunc($cart->getItems(), collect($warehouses)));
 }
