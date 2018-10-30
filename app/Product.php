@@ -341,6 +341,14 @@ class Product
         $nested[]   = $q::createNested('search_data.number_facet', $filter);
         $nested2 = $q::createNested($path, $nested);
         $must = $q::addToBoolQuery('must_not',$nested2, $must);
+
+        $nested = [];
+        $facetName  = $q::createTerm( "search_data.boolean_facet.facet_name", "variant_availability");
+        $facetValue = $q::createTerm("search_data.boolean_facet.facet_value", true);
+        $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
+        $nested[]   = $q::createNested('search_data.boolean_facet', $filter);
+        $nested2 = $q::createNested($path, $nested);
+        $must = $q::addToBoolQuery('filter',$nested2, $must);
         
         $q->setQuery($must);
         $response = $q->search();
@@ -390,10 +398,18 @@ class Product
         $nested2 = $q::createNested($path, $nested);
         $must = $q::addToBoolQuery('must_not',$nested2, $must);
 
+
+        $nested = [];
+        $facetName  = $q::createTerm( "search_data.boolean_facet.facet_name", "variant_availability");
+        $facetValue = $q::createTerm("search_data.boolean_facet.facet_value", true);
+        $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
+        $nested[]   = $q::createNested('search_data.boolean_facet', $filter);
+        $nested2 = $q::createNested($path, $nested);
+        $must = $q::addToBoolQuery('filter',$nested2, $must);
+
         $q->setQuery($must)
         ->setSource(["search_result_data", "variants"])
         ->setSize($size)->setFrom($offset);
-        // echo $q->getJSON();
         return formatItems($q->search(), $params);
     }
 
