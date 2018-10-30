@@ -13,7 +13,7 @@ export class AppServiceService {
   private addToCart = new Subject<any>();
   private openCart = new Subject<any>();
   shippingAddresses : any;
-
+  shippingDetails : any;
   constructor(	private router: Router ) { 
     console.log("isDevMode ==>",isDevMode());
     this.apiUrl = isDevMode() ? 'http://localhost:8000' : '';

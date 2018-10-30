@@ -9,11 +9,14 @@ import { AppServiceService } from '../../service/app-service.service';
 })
 export class ShippingSummaryComponent implements OnInit {
 
+  shippingDetails : any;
   constructor( private router : Router,
   			   		 private appservice : AppServiceService
   					) { }
 
   ngOnInit() {
+    this.shippingDetails = this.appservice.shippingDetails;
+    console.log("this.shippingDetails ==>", this.shippingDetails);
   }
 
   navigateToPaymentPage(){
