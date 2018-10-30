@@ -17,12 +17,12 @@ class ApiLoginController extends Controller
     {
         $data = $request->all();
         $validator = $this->validateNumber($data);
-        if ($validator->fails()) return json_encode(["message"=> $validator->errors()->first(), 'success'=> false]);
+        if ($validator->fails()) return response()->json(["message"=> $validator->errors()->first(), 'success'=> false]);
 
         $otp = $request->session()->get('otp', false);
         $otp_expiry = $request->session()->get('otp_expiry', false);
-        if($otp != $data['otp']) return json_encode(["message"=> 'The entered OTP is invalid. Please try again.', 'success'=> false]);
-        if($otp_expiry < Carbon::now()->timestamp) return json_encode(["message"=> 'The entered OTP is Expired', 'success'=> false]);
+        if($otp != $data['otp']) return response()->json(["message"=> 'The entered OTP is invalid. Please try again.', 'success'=> false]);
+        if($otp_expiry < Carbon::now()->timestamp) return response()->json(["message"=> 'The entered OTP is Expired', 'success'=> false]);
 
         return $this->fetchUserDetails($data, $request);
     }
@@ -41,7 +41,7 @@ class ApiLoginController extends Controller
         else {
             $user = ["id"=> $UserObject->id];
         }
-        return json_encode(["message"=> 'user login successful', 'user'=> $user, 'token'=> $token->id, 'success'=> true]);
+        return response()->json(["message"=> 'user login successful', 'user'=> $user, 'token'=> $token->id, 'success'=> true]);
     }
 
     public function createAuthenticateUser($data, $request)

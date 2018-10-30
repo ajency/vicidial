@@ -19,7 +19,6 @@ class CreateOrdersTable extends Migration
             $table->integer('address_id');
             $table->string('status')->default('draft');
             $table->timestamp('expires_at');
-            $table->json('odoo_info')->nullable();
             $table->json('payment_info')->nullable();
             $table->timestamps();
         });

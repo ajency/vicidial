@@ -47,8 +47,8 @@ class SubOrder extends Model
         $this->odoo_data = [
             'untaxed_amount' => 1.5,
             'tax'            => 1,
-            'round_off'      => 0.5,
             'total'          => 2,
+            'shipping_fee'   => 0,
         ];
         $this->odoo_status = 'draft';
         $this->save();

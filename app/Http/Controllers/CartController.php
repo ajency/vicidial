@@ -38,7 +38,7 @@ class CartController extends Controller
                 $qty += $cart->cart_data[$item["id"]]["quantity"];
             }
 
-            if($item["available_quantity"]>=$qty) {
+            if($variant->getQuantity()>=$qty) {
                 $cart->insertItem(["id" => $params['variant_id'], "quantity" => $qty]);
                 $cart->save();
                 $message = "Item added successfully";
@@ -66,7 +66,7 @@ class CartController extends Controller
                 $qty += $cart->cart_data[$item["id"]]["quantity"];
             }
 
-            if($item["available_quantity"]>=$qty) {
+            if($variant->getQuantity()>=$qty) {
                 $cart->insertItem(["id" => $params['variant_id'], "quantity" => $qty]);
                 $cart->save();
                 $message          = "Item added successfully";
@@ -89,10 +89,9 @@ class CartController extends Controller
             abort(404, "Requested Cart not found");
         }
         checkUserCart($request->header('Authorization'),$cart);
-        $items = [];
-        foreach ($cart->cart_data as $cart_item) {
-            $items[] = $cart->getItem($cart_item['id']);
-        }
+        
+        $items = getCartData($cart);
+
         $summary = $cart->getSummary();
         $code    = ["code" => "NEWUSER", "applied" => true];
         return response()->json(['cart_count' => $cart->itemCount(), 'items' => $items, "summary" => $summary, "code" => $code]);
@@ -106,10 +105,8 @@ class CartController extends Controller
             abort(404, "Cart not found for this session");
         }
 
-        $items = [];
-        foreach ($cart->cart_data as $cart_item) {
-            $items[] = $cart->getItem($cart_item['id']);
-        }
+        $items = getCartData($cart);
+
         $summary = $cart->getSummary();
         $code    = ["code" => "NEWUSER", "applied" => true];
         return response()->json(['cart_count' => $cart->itemCount(), 'items' => $items, "summary" => $summary, "code" => $code]);

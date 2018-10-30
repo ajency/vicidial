@@ -135,17 +135,19 @@ class Variant extends Model
         return $related_items;
     }
 
-    public function getItem()
+    public function getItem($related_items=true)
     {
-        return array(
+        $item = array(
             'product_slug'  => $this->getProductSlug(),
             'availability'  => $this->getAvailability(),
-            'available_quantity' => $this->getQuantity(),
             'message'       => $this->getMessage(),
             'attributes'    => $this->getItemAttributes(),
             "id"            => $this->getID(),
-            'related_items' => $this->getRelatedItems(),
         );
+
+        if($related_items) $item['related_items'] = $this->getRelatedItems();
+        
+        return $item;
 
     }
     public function getItemAttributes()

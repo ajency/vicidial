@@ -75,16 +75,15 @@ class Cart extends Model
         return $this;
     }
 
-    public function getItem(int $variant_id)
+    public function getItem(int $variant_id, $fetch_related=true)
     {
         $variant           = Variant::where('odoo_id', $variant_id)->first();
         if($variant == null)
             abort(404);
-        $item              = $variant->getItem();
+        $item              = $variant->getItem($fetch_related);
         $item["quantity"]  = intval($this->cart_data[$item["id"]]["quantity"]);
         $item["timestamp"] = intval($this->cart_data[$item["id"]]["timestamp"]);
-        $item["availability"] = ($item["available_quantity"]>=$item["quantity"]);
-        $items[]          = $item;
+        $item["availability"] = ($variant->getQuantity()>=$item["quantity"]);
 
         return $item;
     }
@@ -99,5 +98,13 @@ class Cart extends Model
             ];
         }
         return $items;
+    }
+
+    public function checkCartAvailability()
+    {
+        foreach ($this->cart_data as $cart_item) {
+            $item = $this->getItem($cart_item['id']);
+            if(!$item["availability"]) abort(404, "One or more items are Out of Stock");
+        }
     }
 }

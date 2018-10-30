@@ -27,4 +27,23 @@ class Order extends Model
             $subOrder->placeOrderOnOdoo();
         }
     }
+
+    public function aggregateSubOrderData()
+    {
+        $total = [
+            'untaxed_amount' => 0,
+            'tax'            => 0,
+            'total'          => 0,
+            'shipping_fee'   => 0,
+        ];
+        $subOrders = $this->subOrders;
+
+        foreach ($subOrders as $subOrder) {
+            foreach ($total as $key => $value) {
+                $total[$key] += $subOrder->odoo_data[$key];
+            }
+        }
+
+        return $total;
+    }
 }

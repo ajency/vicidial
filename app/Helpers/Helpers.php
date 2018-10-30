@@ -485,3 +485,13 @@ function generateSubordersData($cartItems, $warehouses)
         return [$key => $selectedWarehouse['items']];
     }
 }
+
+function getCartData($cart, $fetch_related=true)
+{
+    $items = [];
+    foreach ($cart->cart_data as $cart_item) {
+        $items[] = $cart->getItem($cart_item['id'], $fetch_related);
+    }
+    
+    return $items;
+}
