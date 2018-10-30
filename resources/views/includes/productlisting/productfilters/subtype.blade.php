@@ -9,9 +9,9 @@
         <div class="card-body">
           @{{#if singleton }}
           @{{#each items}}
-          <div >
-            <input type="radio" name="subtype" value="@{{slug}}" @{{#if is_selected }} checked = "checked" @{{/if}}>
-            <label for="@{{display_name}}">@{{display_name}} <span class="sub-text">(@{{count}})</span></label>
+          <div class="custom-radio custom-control">
+            <input type="radio" name="subtype" value="@{{slug}}" class="custom-control-input" @{{#if is_selected }} checked = "checked" @{{/if}}>
+            <label for="@{{display_name}}" class="custom-control-label f-w-4">@{{display_name}} <span class="sub-text">(@{{count}})</span></label>
           </div>
           @{{/each}}
           @{{else}}
