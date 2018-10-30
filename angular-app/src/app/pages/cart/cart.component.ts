@@ -32,7 +32,7 @@ export class CartComponent implements OnInit {
   }
   reloadSubscription: Subscription;
   loadSubscription: Subscription;
-  
+  cartItemOutOfStock : boolean = false;
   constructor( private router: Router,
                private appservice : AppServiceService,
                private apiservice : ApiServiceService,
@@ -114,6 +114,7 @@ export class CartComponent implements OnInit {
     this.apiservice.request(url, 'get', {}, header ).then((response)=>{
       console.log("response ==>", response);
       this.cart = this.calculateOffPercenatge(response);
+      this.checkCartItemOutOfStock();
       sessionStorage.setItem('cart_data', JSON.stringify(this.cart));
       document.cookie = "cart_count=" + this.cart.cart_count + ";path=/";
       this.updateCartCountInUI();
@@ -181,6 +182,7 @@ export class CartComponent implements OnInit {
       this.cart.items.splice(index,1);
       this.cart.summary = response.summary;
       this.cart.cart_count = response.cart_count;
+      this.checkCartItemOutOfStock();
       document.cookie = "cart_count=" + this.cart.cart_count + ";path=/";
       sessionStorage.setItem('cart_data', JSON.stringify(this.cart));
       this.updateCartCountInUI();
@@ -319,6 +321,16 @@ export class CartComponent implements OnInit {
     .catch((error)=>{
       console.log("error ===>", error);
       this.showCartLoader = false;
+    })
+  }
+
+  checkCartItemOutOfStock(){
+    this.cartItemOutOfStock = false;
+    this.cart.items.forEach((item)=>{
+      if(!item.availability){
+        this.cartItemOutOfStock = true;
+        // break;
+      }
     })
   }
   
