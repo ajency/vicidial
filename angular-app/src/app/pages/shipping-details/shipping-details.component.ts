@@ -152,7 +152,7 @@ export class ShippingDetailsComponent implements OnInit {
   navigateToShippingPage(){
     console.log(this.selectedAddressId);
     this.showCartLoader = true;
-    let url = this.appservice.apiUrl + 'rest/v1/user/cart/' + this.appservice.getCookie('cart_id') + '/create-order'
+    let url = this.appservice.apiUrl + '/api/rest/v1/user/cart/' + this.appservice.getCookie('cart_id') + '/create-order'
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     let body : any = {
       address_id : this.selectedAddressId
