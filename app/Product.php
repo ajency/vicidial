@@ -413,4 +413,15 @@ class Product
         return formatItems($q->search(), $params);
     }
 
+    public static function productListPage($params){
+        $output = [];
+        
+        $output["filters"] = self::getProductCategoriesWithFilter($params);
+        $results = self::getItemsWithFilters($params);
+        $output["page"] = $results["page"];
+        $output["items"] = $results["items"];
+        $output["results_found"] = $results["results_found"];
+        return $output;
+    }
+
 }
