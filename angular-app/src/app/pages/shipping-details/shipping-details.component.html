@@ -88,19 +88,17 @@
 								</div>
 							</div>
 							<div class="col-md-6">
-								<div class="form-group">
+		<!-- 						<div class="form-group">
 									<input class="form-control form-control-lg" id="state" type="text" name="state" [(ngModel)]="newAddress.state" required [ngClass]="{'has-value' : newAddress.state}">
 									<label class="control-label">State<span class="pl-1 text-danger">*</span></label>
-								</div>
-<!-- 								<div class="form-group">
-									<select name="" id="state" class="form-control form-control-lg has-value">
+								</div> -->
+								<div class="form-group">
+									<select name="" id="state" class="form-control form-control-lg has-value"  name="state" [(ngModel)]="newAddress.state" required data-live-search="true">
 										<option value="">--Select--</option>
-										<option value="goa">Goa</option>
-										<option value="maharashtra">Maharashtra</option>
-										<option value="gujarat">Gujarat</option>
+										<option *ngFor="let state of states" value="{{state}}">{{state}}</option>
 									</select>
 									<label class="control-label">State <span class="pl-1 text-danger">*</span></label>
-								</div> -->
+								</div>
 							</div>
 						</div>
 						<div class="row">

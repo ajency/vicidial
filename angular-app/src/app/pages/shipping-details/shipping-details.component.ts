@@ -27,6 +27,8 @@ export class ShippingDetailsComponent implements OnInit {
     type : ''
   };
   selectedAddressId : any;
+  states = [ 'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh', 'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jammu and Kashmir', 'Jharkhand', 'Karnataka', 'Kerala', 'Madhya Pradesh', 'Maharashtra', 'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Orissa', 'Punjab', 'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura', 'Uttaranchal', 'Uttar Pradesh','West Bengal'
+  ]
   hideDefaultAddressField : boolean = false;
   constructor( private router : Router,
                private appservice : AppServiceService,
@@ -36,10 +38,19 @@ export class ShippingDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.addresses = this.appservice.shippingAddresses;
-    if(!this.addresses.length)
+    if(!this.addresses.length){
       this.addAddress = true;
+      setTimeout(()=>{
+        $('#state').selectpicker();
+      },100);  
+    }
     this.addresses.forEach((address)=> {if(address.default == true) this.selectedAddressId=address.id});
+    
   }
+
+  // ngAfterViewInit(){
+  //   $('#state').selectpicker();
+  // }
 
   saveNewAddress(){
     this.showCartLoader = true;
@@ -82,6 +93,9 @@ export class ShippingDetailsComponent implements OnInit {
     this.newAddress = Object.assign({}, address);
     this.hideDefaultAddressField = address.default ? true : false;
     this.addAddress = true;
+    setTimeout(()=>{
+      $('#state').selectpicker();
+    },100);    
   }
 
   changeAddreessDefault(id){
