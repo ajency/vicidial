@@ -19,12 +19,12 @@ class Order extends Model
         $warehouses = getWarehousesForCart($cart);
         $suborders  = generateSubordersData($cart->getItems(), collect($warehouses));
         foreach ($suborders as $warehouseID => $items) {
-        	$subOrder = new SubOrder;
-        	$subOrder->order_id =  $this->id;
-        	$subOrder->warehouse_id = $warehouseID;
-        	$subOrder->setItems($items);
-        	$subOrder->save();
-        	$subOrder->placeOrderOnOdoo();
+            $subOrder               = new SubOrder;
+            $subOrder->order_id     = $this->id;
+            $subOrder->warehouse_id = $warehouseID;
+            $subOrder->setItems($items);
+            $subOrder->save();
+            $subOrder->placeOrderOnOdoo();
         }
     }
 }
