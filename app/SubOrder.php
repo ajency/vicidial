@@ -33,7 +33,7 @@ class SubOrder extends Model
     public function getItems()
     {
         $itemsData = [];
-        foreach ($this->itemData as $itemData) {
+        foreach ($this->item_data as $itemData) {
             $itemsData[] = [
                 'item'     => Variant::find($itemData['id']),
                 'quantity' => $itemData['quantity'],
@@ -53,5 +53,30 @@ class SubOrder extends Model
         ];
         $this->odoo_status = 'draft';
         $this->save();
+    }
+
+    public function abondonOrder()
+    {
+        $items = $this->item_data;
+        foreach ($items as $item) {
+            $variant = Variant::find($item['id']);
+            $variant->inventory[$this->warehouse_id]['quantity'] += $item['quantity'];
+            $variant->save();
+        }
+        $this->item_data = [];
+        $this->save();
+    }
+
+    public function save(array $options = [])
+    {
+        if ($this->id == null) {
+            $items = $this->item_data;
+            foreach ($items as $item) {
+                $variant = Variant::find($item['id']);
+                $variant->inventory[$this->warehouse_id]['quantity'] -= $item['quantity'];
+                $variant->save();
+            }
+        }
+        parent::save($options);
     }
 }
