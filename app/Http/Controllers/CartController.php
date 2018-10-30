@@ -47,6 +47,7 @@ class CartController extends Controller
                 abort(404, "Quantity not available");
             }
             $item["quantity"] = intval($cart->cart_data[$item["id"]]["quantity"]);
+            $item["timestamp"] = intval($cart->cart_data[$item["id"]]["timestamp"]);
         }
         $summary = $cart->getSummary();
         return response()->json(['cart_count' => $cart->itemCount(), "message" => $message, "item" => $item, "summary" => $summary]);
@@ -75,6 +76,7 @@ class CartController extends Controller
             }
             $request->session()->put('active_cart_id', $cart->id);
             $item["quantity"] = intval($cart->cart_data[$item["id"]]["quantity"]);
+            $item["timestamp"] = intval($cart->cart_data[$item["id"]]["timestamp"]);
         }
         $summary = $cart->getSummary();
         return response()->json(['cart_count' => $cart->itemCount(), "message" => $message, "item" => $item, "summary" => $summary]);
@@ -92,6 +94,7 @@ class CartController extends Controller
             $variant          = Variant::where('odoo_id', $cart_item['id'])->first();
             $item             = $variant->getItem();
             $item["quantity"] = intval($cart->cart_data[$item["id"]]["quantity"]);
+            $item["timestamp"] = intval($cart->cart_data[$item["id"]]["timestamp"]);
             $item["availability"] = ($item["available_quantity"]>=$item["quantity"]) ? true : false;
             $items[]          = $item;
         }
@@ -114,6 +117,7 @@ class CartController extends Controller
             $item             = $variant->getItem();
             $item["quantity"] = intval($cart->cart_data[$item["id"]]["quantity"]);
             $item["availability"] = ($item["available_quantity"]>=$item["quantity"]) ? true : false;
+            $item["timestamp"] = intval($cart->cart_data[$item["id"]]["timestamp"]);
             $items[]          = $item;
         }
         $summary = $cart->getSummary();
