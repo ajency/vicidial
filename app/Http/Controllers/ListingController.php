@@ -38,9 +38,10 @@ class ListingController extends Controller
         return view('productlisting')->with('params',$params);
     }
 
-    public function search_object($params)
+    public function search_object($params = null,$search_obj = null)
     {
-        $search_object = build_search_object($params);
+        
+        $search_object = ($search_obj == null)?(build_search_object($params)):$search_obj;
         // dd($search_object);
 //         $search_object = [
 //   "product_gender" => ["Boys"],
@@ -83,5 +84,15 @@ class ListingController extends Controller
         $params = $this->search_object($parameters);
 
         return view('productlisting')->with('params',$params);
+    }
+
+    public function productList(Request $request)
+    {
+        $data = $request->all();
+        $response = $this->search_object(null,$data["search_object"]);
+
+        // dd($params);
+
+        return response()->json($response,200);
     }
 }

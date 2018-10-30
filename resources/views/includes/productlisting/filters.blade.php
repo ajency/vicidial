@@ -16,7 +16,7 @@
           return $a["sequence"] > $b["sequence"] ? 1 : -1; 
       }); 
       ?>
-      @include($file_name, ['items' => $items,'singleton'=>($filter["is_singleton"] == true?1:0)])
+      @include($file_name, ['items' => $items,'singleton'=>($filter["is_singleton"] == true?1:0),'collapsed'=>($filter["is_collapsed"] == true?1:0),'header'=>$filter["header"]])
 
     @endforeach
    <!-- //gender -->
