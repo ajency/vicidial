@@ -333,6 +333,15 @@ class Product
             }
         }
         $must = $q::addToBoolQuery('must', $must);
+
+        $nested = [];
+        $facetName  = $q::createTerm( "search_data.number_facet.facet_name", "product_color_id");
+        $facetValue = $q::createTerm("search_data.number_facet.facet_value", 0);
+        $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
+        $nested[]   = $q::createNested('search_data.number_facet', $filter);
+        $nested2 = $q::createNested($path, $nested);
+        $must = $q::addToBoolQuery('must_not',$nested2, $must);
+        
         $q->setQuery($must);
         $response = $q->search();
         return sanitiseFilterdata($response,$params);
@@ -351,7 +360,6 @@ class Product
         $index    = config('elastic.indexes.product');
         $q        = new ElasticQuery;
         $q->setIndex($index);
-        $q       = self::buildBaseQuery();
         $filters = makeQueryfromParams($params["search_object"]);
         $must    = [];
         foreach ($filters as $path => $data) {
@@ -372,9 +380,20 @@ class Product
             }
         }
         $must = $q::addToBoolQuery('must', $must);
+
+
+        $nested = [];
+        $facetName  = $q::createTerm( "search_data.number_facet.facet_name", "product_color_id");
+        $facetValue = $q::createTerm("search_data.number_facet.facet_value", 0);
+        $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
+        $nested[]   = $q::createNested('search_data.number_facet', $filter);
+        $nested2 = $q::createNested($path, $nested);
+        $must = $q::addToBoolQuery('must_not',$nested2, $must);
+
         $q->setQuery($must)
         ->setSource(["search_result_data", "variants"])
         ->setSize($size)->setFrom($offset);
+        // echo $q->getJSON();
         return formatItems($q->search(), $params);
     }
 
