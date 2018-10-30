@@ -87,6 +87,11 @@ function sanitiseProductData($odooData)
         "product_att_sleeves"              => $odooData["att_sleeves"],
         "product_description_sale"         => $odooData["description_sale"],
         "product_att_material"             => $odooData["att_material"],
+        "product_att_occasion"             => $odooData["att_occasion"],
+        "product_att_wash"                 => $odooData["att_wash1"],
+        "product_att_fabric_type"          => $odooData["att_fabric_type"],
+        "product_att_product_type"         => $odooData["att_product_type"],
+        "product_att_other_attribute"      => $odooData["att_val_add1"],
     ];
     $product_categories = explode('/', $index['product_categories']);
     $categories         = ['product_category_type', 'product_gender', 'product_age_group', 'product_subtype'];
@@ -171,22 +176,27 @@ function buildProductIndexFromOdooData($productData, $variantData)
         'search_data' => [],
     ];
     $indexData['search_result_data'] = [
-        'product_id'            => $productData['product_id'],
-        "product_title"         => $productData['product_att_magento_display_name'],
-        "product_slug"          => $productData['product_slug'],
-        "product_style"         => $productData['product_style_no'],
-        "product_description"   => $productData['product_article_desc'],
-        "product_att_sleeves"   => $productData['product_att_sleeves'],
-        "product_att_material"  => $productData['product_att_material'],
-        "product_category_type" => $productData['product_category_type'],
-        "product_gender"        => $productData['product_gender'],
-        "product_age_group"     => $productData['product_age_group'],
-        "product_subtype"       => $productData['product_subtype'],
-        "product_color_id"      => $variantData->first()['product_color_id'],
-        "product_color_slug"    => str_slug($variantData->first()['product_color_name']),
-        "product_color_name"    => $variantData->first()['product_color_name'],
-        "product_color_html"    => $variantData->first()['product_color_html'],
-        "product_images"        => [],
+        'product_id'                  => $productData['product_id'],
+        "product_title"               => $productData['product_att_magento_display_name'],
+        "product_slug"                => $productData['product_slug'],
+        "product_style"               => $productData['product_style_no'],
+        "product_description"         => $productData['product_description_sale'],
+        "product_att_sleeves"         => $productData['product_att_sleeves'],
+        "product_att_material"        => $productData['product_att_material'],
+        "product_att_occasion"        => $productData['product_att_occasion'],
+        "product_att_wash"            => $productData['product_att_wash'],
+        "product_att_fabric_type"     => $productData['product_att_fabric_type'],
+        "product_att_product_type"    => $productData['product_att_product_type'],
+        "product_att_other_attribute" => $productData['product_att_other_attribute'],
+        "product_category_type"       => $productData['product_category_type'],
+        "product_gender"              => $productData['product_gender'],
+        "product_age_group"           => $productData['product_age_group'],
+        "product_subtype"             => $productData['product_subtype'],
+        "product_color_id"            => $variantData->first()['product_color_id'],
+        "product_color_slug"          => str_slug($variantData->first()['product_color_name']),
+        "product_color_name"          => $variantData->first()['product_color_name'],
+        "product_color_html"          => $variantData->first()['product_color_html'],
+        "product_images"              => [],
     ];
     $indexData["variants"] = [];
     foreach ($variantData as $variant) {
@@ -307,18 +317,18 @@ function inventoryFormatData(array $variant_ids, array $inventory)
     return $final;
 }
 
-function generateVariantImageName($product_name, $color_name, $colors,$index)
+function generateVariantImageName($product_name, $color_name, $colors, $index)
 {
-    $colors_count = (count($colors)>0)?array_count_values($colors):0;
+    $colors_count = (count($colors) > 0) ? array_count_values($colors) : 0;
     \Log::debug("colors count===");
     \Log::debug($colors_count);
     $append = "";
     if ($colors_count["$color_name"] > 1) {
-        $append = ($index+1);
+        $append = ($index + 1);
     }
 
-    $image_name   = $product_name . "-" . $color_name . $append;
-    $image_name = str_slug(implode(' ',[$product_name,$color_name,$append]));
+    $image_name = $product_name . "-" . $color_name . $append;
+    $image_name = str_slug(implode(' ', [$product_name, $color_name, $append]));
     return $image_name;
 
 }

@@ -21,6 +21,11 @@ return [
         "att_sleeves", #sleeves
         "description_sale", #description
         "att_material", # material
+        "att_occasion",
+        "att_wash1",
+        "att_fabric_type",
+        "att_product_type",
+        "att_val_add1",
         // "parent_flag",
         // "sale_price",
         // "qty_available",
@@ -109,6 +114,11 @@ return [
                 'product_description_sale',
                 'product_display_name',
                 'product_hs_code',
+                'product_att_occasion',
+                'product_att_wash',
+                'product_att_fabric_type',
+                'product_att_product_type',
+                'product_att_other_attribute',
             ],
             'variant' => ['variant_style_no'],
         ],
