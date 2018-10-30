@@ -2,20 +2,46 @@
    background: url(../img/bg-stripe.jpg);
    background-position: bottom;
  }
-#home-slider.carousel {
-    @media (max-width: 1499px) and (min-width: 500px){
-       min-height: 500px;
+// #home-slider.carousel {
+//     @media (max-width: 1499px) and (min-width: 500px){
+//        min-height: 500px;
+//     }
+//     @media (min-width: 992px) and (max-width: 1199.98px) {
+//         min-height:360px;
+//     }
+//     @media (min-width: 768px) and (max-width: 992px) {
+//         min-height: 380px;
+//     }
+//     @media (min-width: 320px) and (max-width: 767.98px) {
+//         min-height: 300px;
+//     }
+//     min-height:670px;
+// }
+
+.home-slider{
+    .home-slide-item{
+        display: none;
+        &:first-child{
+            display: block;
+        }
     }
-    @media (min-width: 992px) and (max-width: 1199.98px) {
-        min-height:360px;
+    &.slick-initialized{
+        .home-slide-item{
+            display: block;
+            visibility:visible!important;
+        }
     }
-    @media (min-width: 768px) and (max-width: 992px) {
-        min-height: 380px;
+    @media (orientation: landscape) {
+        min-height: 34vw;
     }
-    @media (min-width: 320px) and (max-width: 767.98px) {
-        min-height: 300px;
+    @media (orientation: portrait) {
+        min-height: 78vw;
+        .home-slide-item{
+            &:first-child{
+                visibility: hidden;
+            }
+        }
     }
-    min-height:670px;
 }
 
  .stripe-bg-top{

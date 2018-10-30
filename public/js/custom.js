@@ -85,7 +85,7 @@ jQuery(".prod-slides img").click(function() {
 });
 
 // ------------------ Mobile View ------------------//
-     
+
 if ($(window).width() < 760) {
         $('.similar-link').appendTo('.m-similar');
         $(window).scroll(function() {
@@ -98,10 +98,10 @@ if ($(window).width() < 760) {
         });
      $('.search-icon').click(function() {
         $('.search-icon').addClass("d-block");
-      
+
 });
 
-/* ========================================== 
+/* ==========================================
 scrollTop() >= 300
 Should be equal the the height of the header
 ========================================== */
@@ -161,7 +161,7 @@ $(".navbar-collapse").mmenu({
         $lateral_cart.removeClass('speed-in');
         toggle_panel_visibility($menu_navigation, $shadow_layer, $('body'));
     });
-    
+
     $cancel_trigger.on('click', function(event) {
         event.preventDefault();
         //close lateral menu (if it's open)
@@ -178,8 +178,8 @@ $(".navbar-collapse").mmenu({
         $menu_navigation.removeClass('speed-in');
         toggle_panel_visibility($lateral_cart, $shadow_layer, $('body'));
         $("body").addClass("hide-scroll");
-    
- 
+
+
     });
 
     $cart_cancel.on('click', function() {
@@ -436,7 +436,7 @@ $(document).ready(function() {
             }
             else{
                 $('.kss-logo').show();
-            } 
+            }
         }
         else{
             return;
@@ -577,3 +577,5 @@ function replaceURLParameter(paramName, paramValue)
     var url = url.substring(url.indexOf(window.location.pathname));
     window.history.replaceState( {} , 'Kidsuperstore.in', url + hash );
 }
+
+$('.home-slider').slick();
