@@ -92,7 +92,6 @@ function fetchProduct($product)
                 "name" => $variant["variant_size_name"],
             ],
             "inventory_available" => $variant["variant_availability"],
-            "inventory"           => [],
 
         ];
     }

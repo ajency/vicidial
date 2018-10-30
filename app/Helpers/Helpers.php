@@ -359,3 +359,63 @@ function sanitiseFilterdata($result, $params = [])
     }
     return $response;
 }
+
+function formatItems($result, $params){
+    $items = [];
+    $response = ["results_found" => ($result["hits"]["total"] > 0)];
+    foreach ($result['hits']['hits'] as  $doc) {
+        $productColor      = ProductColor::where([["elastic_id", $doc["_id"]]])->first();
+        $product = $doc["_source"];
+        $data = $product["search_result_data"];
+
+        $item = [
+            "title" => $data["product_title"],
+            "slug_name" => $data["product_slug"],
+            "description" => $data["product_description"],
+            "images" => $productColor->getDefaultImage(["list-view"]),
+            "variants" => [],
+            "product_id" => $data["product_id"],
+            "color_id" => $data['product_color_id'],
+            "color_name" => $data['product_color_name'],
+            "color_html" => $data['product_color_html'],
+        ];
+
+        // find default product by max sale price
+        $id         = $product["variants"][0]["variant_id"];
+        $sale_price = $product["variants"][0]["variant_sale_price"];
+        foreach ($product["variants"] as $variant) {
+            if ($sale_price < $variant["variant_sale_price"]) {
+                $id         = $variant["variant_id"];
+                $sale_price = $variant["variant_sale_price"];
+            }
+        }
+        foreach ($product["variants"] as $variant) {
+            $item["variants"][] = [
+                "list_price" => $variant["variant_list_price"],
+                "sale_price" => $variant["variant_sale_price"],
+                "is_default" => ($id == $variant["variant_id"]),
+                "size" => [
+                    "size_id" => $variant["variant_size_id"],
+                    "size_name" => $variant["variant_size_name"],
+                ],
+                "inventory_available" => $variant["variant_availability"],
+                "variant_id" => $variant["variant_id"],
+            ];
+        }
+        $items[] = $item;
+    }
+
+    $response["items"] = $items;
+    $size = $params["display_limit"];
+    $offset = ($params["page"] - 1) * $size;
+    $total_items = $result["hits"]["total"];
+    $total_pages = intval(ceil($total_items / $size));
+    $response["page"] = [
+        "current" => $params["page"],
+        "total" => $total_pages ,
+        "has_previous" => ($params["page"]> 1),
+        "has_next" => ($params["page"] < $total_pages),
+        "total_item_count" => $total_items,
+    ];
+    return $response;
+}
