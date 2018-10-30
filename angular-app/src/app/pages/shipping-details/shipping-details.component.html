@@ -138,8 +138,11 @@
 						<div *ngFor="let address of addresses">
 							<input class="d-none radio-input" type="radio" name="kss-sizes" id="address-{{address.id}}" [value]="address.id" [(ngModel)]="selectedAddressId">
 							<label class="radio-label w-100 border-bottom text-left" for="address-{{address.id}}">
-								<div class="radio-option">
-								 <div class="radio-selection "> <i class="fas fa-check-circle"></i></div>
+								<div class="radio-option d-flex align-items-start address-block">
+									<div class="radio-selection position-relative">
+									 	<i class="fas fa-check-circle"></i>
+									</div>
+									<div class="text-left pl-2">
 										<h3 class="kss-title font-weight-bold w-75">{{address.name}}<i class="fas fa-pencil-alt number-edit" (click)="editAddress(address)"></i></h3>
 										<p class="w-75">
 											{{address.address}}, {{address.city}}, {{address.state}} {{address.pincode}}
@@ -147,6 +150,12 @@
 										<p class="w-75">
 											Mobile: <b class="font-weight-bold">{{address.phone}}</b>
 										</p>
+									</div>
+									<div class="product-delete ml-2" title="Remove">
+										<a href="#0" class="cd-item-remove delete d-block text-center">
+											<i class="far fa-trash-alt"></i>
+										</a>
+									</div>
 								</div>
 							</label>
 						</div>

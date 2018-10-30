@@ -45,5 +45,21 @@
 		background-color: #dadada;
     	padding: 0 5px;
     	object-fit: contain;
+    }
+}
+
+.address-block{
+	.radio-selection{
+    	width: 25px;
+    	.fas{
+    		position: relative;
+    		left: 5px;
+    	}
+	}
+	.kss-title{
+		min-height: 35px;
+	}
+	.product-delete{
+		padding: 0 5px;
 	}
 }
