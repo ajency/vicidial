@@ -78,6 +78,8 @@ class Cart extends Model
     public function getItem(int $variant_id)
     {
         $variant           = Variant::where('odoo_id', $variant_id)->first();
+        if($variant == null)
+            abort(404);
         $item              = $variant->getItem();
         $item["quantity"]  = intval($this->cart_data[$item["id"]]["quantity"]);
         $item["timestamp"] = intval($this->cart_data[$item["id"]]["timestamp"]);
