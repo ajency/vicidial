@@ -81,6 +81,9 @@ class Cart extends Model
         $item              = $variant->getItem();
         $item["quantity"]  = intval($this->cart_data[$item["id"]]["quantity"]);
         $item["timestamp"] = intval($this->cart_data[$item["id"]]["timestamp"]);
+        $item["availability"] = ($item["available_quantity"]>=$item["quantity"]);
+        $items[]          = $item;
+
         return $item;
     }
 }
