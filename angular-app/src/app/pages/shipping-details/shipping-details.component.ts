@@ -40,9 +40,7 @@ export class ShippingDetailsComponent implements OnInit {
     this.addresses = this.appservice.shippingAddresses;
     if(!this.addresses.length){
       this.addAddress = true;
-      setTimeout(()=>{
-        $('#state').selectpicker();
-      },100);  
+      this.initSelectPicker(); 
     }
     this.addresses.forEach((address)=> {if(address.default == true) this.selectedAddressId=address.id});
     
@@ -93,9 +91,7 @@ export class ShippingDetailsComponent implements OnInit {
     this.newAddress = Object.assign({}, address);
     this.hideDefaultAddressField = address.default ? true : false;
     this.addAddress = true;
-    setTimeout(()=>{
-      $('#state').selectpicker();
-    },100);    
+    this.initSelectPicker();
   }
 
   changeAddreessDefault(id){
@@ -117,6 +113,14 @@ export class ShippingDetailsComponent implements OnInit {
     this.newAddress = {};
     this.newAddress.default = false;
     this.newAddress.type = "";
+    this.newAddress.state="";
+    this.initSelectPicker();
+  }
+
+  initSelectPicker(){
+    setTimeout(()=>{
+      $('#state').selectpicker();
+    },100); 
   }
 
   deleteAddress(id){
