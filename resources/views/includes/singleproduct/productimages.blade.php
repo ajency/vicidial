@@ -24,7 +24,7 @@
 			@endphp
 				<li class="mx-2 mb-2" >
 					<a href="{{$image_zoom}}" class="custom-selector">
-						<img data-src="{{$image_thumb}}" class="lazyload" data-srcset="{{$image_1x}} 326w, {{$image_2x}} 652w, {{$image_3x}} 978w" sizes="(min-width: 768px) 50vw">
+						<img data-src="{{$image_thumb}}" class="lazyload" data-srcset="{{$image_1x}} 326w, {{$image_2x}} 652w, {{$image_3x}} 978w" sizes="(max-width: 767px) 76vw, (min-width: 768px) and (max-width: 991px) 45vw, (min-width: 992px) 26vw">
 					</a>
 				</li>
 			@php

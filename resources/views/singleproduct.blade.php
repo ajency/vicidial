@@ -110,7 +110,7 @@
               	<!-- <i class="fas fa-heart kss_heart"></i> -->
                 <a href="#" >
                   <div class="image oh loading loading-01">
-                  <img data-src="/img/normal/bluefront@1x.jpg" data-srcset="/img/normal/bluefront@1x.jpg 1x, /img/2x/bluefront@2x.jpg 2x" class="lazyload card-img-top" />
+                  	<img src="/img/10px/blue-tshirt-10px.jpg" data-srcset="/img/1x/blue-tshirt@1x.jpg 270w, /img/2x/blue-tshirt@2x.jpg 540w, /img/3x/blue-tshirt@3x.jpg 978w" class="lazyload card-img-top blur-up" sizes="(min-width: 992px) 25vw,50vw" />
                  </div>
                 </a>
                 <div class="card-body">
@@ -129,7 +129,7 @@
            	 		<!-- <i class="fas fa-heart kss_heart"></i> -->
                 <a href="#">
                    <div class="image oh loading loading-02">
-                  <img data-src="/img/normal/orangefront@1x.jpg" data-srcset="/img/normal/orangefront@1x.jpg 1x, /img/2x/orangefront@2x.jpg 2x" class="lazyload card-img-top" />
+                  <img src="/img/10px/orange-tshirt-10px.jpg" data-srcset="/img/1x/orange-tshirt@1x.jpg 270w, /img/2x/orange-tshirt@2x.jpg 540w, /img/3x/orange-tshirt@3x.jpg 978w" class="lazyload card-img-top blur-up" sizes="(min-width: 992px) 25vw,50vw" />
                 </div>
                 </a>
                 <div class="card-body">
@@ -148,7 +148,7 @@
               	<!-- <i class="fas fa-heart kss_heart"></i> -->
                 <a href="#">
                    <div class="image oh loading loading-03">
-                        <img data-src="/img/normal/red1front@1x.jpg" data-srcset="/img/normal/red1front@1x.jpg 1x, /img/2x/red1front@2x.jpg 2x" class="lazyload card-img-top" />
+                        <img src="/img/10px/red-tshirt-10px.jpg" data-srcset="/img/1x/red-tshirt@1x.jpg 270w, /img/2x/red-tshirt@2x.jpg 540w, /img/3x/red-tshirt@3x.jpg 978w" class="lazyload card-img-top blur-up" sizes="(min-width: 992px) 25vw,50vw" />
                     </div>
                 </a>
                 <div class="card-body">
@@ -165,9 +165,9 @@
               <div class="card h-100 product-card">
                <!--  <i class="fas fa-heart kss_heart"></i> -->
                 <a href="#">
-                   <div class="image oh loading loading-04">
-                   <img data-src="/img/normal/redbluefront@1x.jpg"  data-srcset="/img/normal/redbluefront@1x.jpg 1x, /img/2x/redbluefront@2x.jpg 2x" class="lazyload card-img-top" />
-                 </div>
+                	<div class="image oh loading loading-04">
+                		<img src="/img/10px/mix-tshirt-10px.jpg" data-srcset="/img/1x/mix-tshirt@1x.jpg 270w, /img/2x/mix-tshirt@2x.jpg 540w, /img/3x/mix-tshirt@3x.jpg 978w" class="lazyload card-img-top blur-up" sizes="(min-width: 992px) 25vw,50vw" />
+                 	</div>
                 </a>
                 <div class="card-body">
                   <a href="/kss/product/" class="text-dark">

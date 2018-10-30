@@ -24,10 +24,12 @@ export class ShippingDetailsComponent implements OnInit {
     city : '',
     state : '',
     default : false,
-    type : '',
-    email : ''
+    type : ''
   };
   selectedAddressId : any;
+  states = [ 'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh', 'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jammu and Kashmir', 'Jharkhand', 'Karnataka', 'Kerala', 'Madhya Pradesh', 'Maharashtra', 'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Orissa', 'Punjab', 'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura', 'Uttaranchal', 'Uttar Pradesh','West Bengal'
+  ]
+  hideDefaultAddressField : boolean = false;
   constructor( private router : Router,
                private appservice : AppServiceService,
                private apiservice : ApiServiceService
@@ -36,10 +38,17 @@ export class ShippingDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.addresses = this.appservice.shippingAddresses;
-    if(!this.addresses.length)
+    if(!this.addresses.length){
       this.addAddress = true;
+      this.initSelectPicker(); 
+    }
     this.addresses.forEach((address)=> {if(address.default == true) this.selectedAddressId=address.id});
+    
   }
+
+  // ngAfterViewInit(){
+  //   $('#state').selectpicker();
+  // }
 
   saveNewAddress(){
     this.showCartLoader = true;
@@ -80,7 +89,9 @@ export class ShippingDetailsComponent implements OnInit {
 
   editAddress(address){
     this.newAddress = Object.assign({}, address);
+    this.hideDefaultAddressField = address.default ? true : false;
     this.addAddress = true;
+    this.initSelectPicker();
   }
 
   changeAddreessDefault(id){
@@ -90,11 +101,52 @@ export class ShippingDetailsComponent implements OnInit {
     })
   }
 
+  setAddressDefault(id){
+    this.addresses.forEach((address)=>{
+      if(address.id == id)
+        address.default = true;
+    })
+  }
+
   addNewAddress(){
     this.addAddress = true;
     this.newAddress = {};
     this.newAddress.default = false;
     this.newAddress.type = "";
+    this.newAddress.state="";
+    this.initSelectPicker();
+  }
+
+  initSelectPicker(){
+    setTimeout(()=>{
+      $('#state').selectpicker();
+    },100); 
+  }
+
+  deleteAddress(id){
+    console.log(id);
+    this.showCartLoader = true;
+    let body = { address_id : id };
+    let url = this.appservice.apiUrl +  "/api/rest/v1/user/address/delete?";
+    let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
+    url = url+$.param(body);
+    this.apiservice.request(url, 'get', body, header ).then((response)=>{
+      console.log("response ==>", response);
+      let index = this.addresses.findIndex(i => i.id == id);
+      this.addresses.splice(index,1);
+      if(!this.addresses.length){
+        this.addNewAddress();
+      }
+      if(response.default_id){
+        this.setAddressDefault(response.default_id);
+        this.selectedAddressId=response.default_id;
+      }
+      this.showCartLoader = false;
+    })
+    .catch((error)=>{
+      console.log("error ===>", error);
+      this.showCartLoader = false;
+    })
   }
 
   navigateToShippingPage(){

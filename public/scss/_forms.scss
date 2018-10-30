@@ -408,3 +408,25 @@ text-align: start;
     z-index: 2;
     cursor: pointer;
 }
+
+.custom-bs-select{
+  .dropdown-toggle.btn-light{
+    background-color: transparent;
+    border: 0;
+    color: #495057;
+    padding-bottom: 12px;
+    outline: 0;
+    box-shadow: none;
+    &:hover,&:focus{
+      color: #495057;
+      outline: 0 !important;
+    }
+  }
+  .dropdown-menu{
+    z-index: 1;
+    .inner{
+      position: relative;
+      z-index: 10;
+    }
+  }
+}

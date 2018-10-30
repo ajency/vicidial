@@ -62,6 +62,21 @@ class AddressController extends Controller
         return json_encode(["addresses"=> $address_data]);
     }
 
+    public function userDeleteAddress(Request $request)
+    {
+        $params  = $request->all();
+        $user_id = fetchUserFromToken($request->header('Authorization'));
+
+        $address = Address::find($params["address_id"]);
+        if($address->user_id != $user_id) abort(403);
+
+        $address->delete();
+
+        $default = $this->defaultAddressFirst($user_id);
+
+        return json_encode(["default_id"=> $default, "message"=> "Address Deleted successfully", 'success'=> true]);
+    }
+
     public function defaultAddressSet($user_id, $default, $address_id = null)
     {
     	$address = Address::where('user_id', '=', $user_id)->where('default', '=', true)->first();
@@ -77,6 +92,23 @@ class AddressController extends Controller
     	}
 
     	return $default;
+    }
+
+    public function defaultAddressFirst($user_id)
+    {
+        $address = Address::where('user_id', '=', $user_id)->where('default', '=', true)->first();
+        if($address == null) {
+            $address = Address::where('user_id', '=', $user_id)->first();
+            if($address != null) {
+                $address->default = true;
+                $address->save();
+            }
+            else {
+                return false;
+            }
+        }
+
+        return $address->id;
     }
 
     public function addressObj($address)
