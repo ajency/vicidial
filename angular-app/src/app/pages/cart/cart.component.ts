@@ -16,7 +16,6 @@ export class CartComponent implements OnInit {
   mobileNumberEntered = false;
   enterCoupon = false;
   cart : any;
-  showCartLoader = false;
   sessionCheckInterval : any;
   cartOpen = false;
   mobileNumber : any;
@@ -32,7 +31,7 @@ export class CartComponent implements OnInit {
   }
   reloadSubscription: Subscription;
   loadSubscription: Subscription;
-  
+  cartItemOutOfStock : boolean = false;
   constructor( private router: Router,
                private appservice : AppServiceService,
                private apiservice : ApiServiceService,
@@ -75,7 +74,7 @@ export class CartComponent implements OnInit {
   }
 
   fetchCartDataOnAddToCartSuccess(){    
-    this.showCartLoader = true;
+    this.appservice.showLoader()
     if(sessionStorage.getItem('cart_data')){
       this.cart = JSON.parse(sessionStorage.getItem('cart_data'));
       console.log("cart_data from sessionStorage==>", this.cart);
@@ -88,7 +87,7 @@ export class CartComponent implements OnInit {
         if(sessionStorage.getItem('addded_to_cart') == "true")
           this.fetchCartDataFromServer();
         else
-          this.showCartLoader = false;
+          this.appservice.removeLoader()
         sessionStorage.removeItem('addded_to_cart');
         clearInterval(this.sessionCheckInterval);
       }
@@ -98,7 +97,7 @@ export class CartComponent implements OnInit {
   }
 
   getCartData(){
-    this.showCartLoader = true;
+    this.appservice.showLoader()
     if(sessionStorage.getItem('cart_data')){
       this.cart = JSON.parse(sessionStorage.getItem('cart_data'));
       console.log("cart_data from sessionStorage==>", this.cart);
@@ -107,17 +106,18 @@ export class CartComponent implements OnInit {
   }
 
   fetchCartDataFromServer(){
-    this.showCartLoader = true;
+    this.appservice.showLoader()
     let url = this.appservice.apiUrl + (this.isLoggedInUser() ? ("/api/rest/v1/user/cart/"+this.appservice.getCookie('cart_id')+"/get") : ("/rest/anonymous/cart/get"))
     console.log(this.isLoggedInUser());
     let header = this.isLoggedInUser() ? { Authorization : 'Bearer '+this.appservice.getCookie('token') } : {}
     this.apiservice.request(url, 'get', {}, header ).then((response)=>{
       console.log("response ==>", response);
       this.cart = this.calculateOffPercenatge(response);
+      this.checkCartItemOutOfStock();
       sessionStorage.setItem('cart_data', JSON.stringify(this.cart));
       document.cookie = "cart_count=" + this.cart.cart_count + ";path=/";
       this.updateCartCountInUI();
-      this.showCartLoader=false;
+      this.appservice.removeLoader()
       this.zone.run(() => {});
     })
     .catch((error)=>{
@@ -127,7 +127,7 @@ export class CartComponent implements OnInit {
           items : []
         }
       }
-      this.showCartLoader=false;
+      this.appservice.removeLoader()
       this.zone.run(() => {});
     })
     this.zone.run(() => {});
@@ -169,7 +169,7 @@ export class CartComponent implements OnInit {
   }
 
   deleteItem(item){
-    this.showCartLoader = true;
+    this.appservice.showLoader()
     console.log("delete item ==>", item);
     let body = { variant_id : item.id };
     let url = this.appservice.apiUrl + (this.isLoggedInUser() ? ("/api/rest/v1/user/cart/"+this.appservice.getCookie('cart_id')+"/delete?") : ("/rest/anonymous/cart/delete?"));
@@ -181,14 +181,15 @@ export class CartComponent implements OnInit {
       this.cart.items.splice(index,1);
       this.cart.summary = response.summary;
       this.cart.cart_count = response.cart_count;
+      this.checkCartItemOutOfStock();
       document.cookie = "cart_count=" + this.cart.cart_count + ";path=/";
       sessionStorage.setItem('cart_data', JSON.stringify(this.cart));
       this.updateCartCountInUI();
-      this.showCartLoader = false;
+      this.appservice.removeLoader()
     })
     .catch((error)=>{
       console.log("error ===>", error);
-      this.showCartLoader = false;
+      this.appservice.removeLoader()
     })
   }
 
@@ -308,6 +309,7 @@ export class CartComponent implements OnInit {
   }
 
   navigateToShippingDetailsPage(){
+    this.appservice.showLoader();
     let url = this.appservice.apiUrl + "/api/rest/v1/user/address/all";
     console.log(this.isLoggedInUser());
     let header = this.isLoggedInUser() ? { Authorization : 'Bearer '+this.appservice.getCookie('token') } : {};
@@ -315,10 +317,21 @@ export class CartComponent implements OnInit {
       console.log("response ==>", response);
       this.appservice.shippingAddresses = response.addresses;
       this.router.navigateByUrl('/shipping-details', { skipLocationChange: true });
+      this.appservice.removeLoader();
     })
     .catch((error)=>{
       console.log("error ===>", error);
-      this.showCartLoader = false;
+      this.appservice.removeLoader();
+    })
+  }
+
+  checkCartItemOutOfStock(){
+    this.cartItemOutOfStock = false;
+    this.cart.items.forEach((item)=>{
+      if(!item.availability){
+        this.cartItemOutOfStock = true;
+        // break;
+      }
     })
   }
   

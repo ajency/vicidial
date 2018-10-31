@@ -1,6 +1,6 @@
 <!-- <div id="cd-shadow-layer"></div> -->
 
-<div *ngIf="cart" class="angular-app h-100" [ngClass]="{'cart-loader' : showCartLoader}">
+<div *ngIf="cart" class="angular-app h-100">
 	<div class="d-flex ">
 		<div class="pr-3 align-items-center">
 			<h3 class="modal-title font-weight-bold" >
@@ -30,6 +30,14 @@
 	  </button>
 	</a>
 	</div> -->
+
+	 <div *ngIf="cartItemOutOfStock" class="alert alert-danger m-2 p-2" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	   		<span aria-hidden="true">&times;</span>
+	 	</button>
+	 	An item in your shopping bag has gone out of stock<br> <b>Remove the item</b>
+	</div>
+
 	<div *ngIf="cart.items.length">
 		<ul class="cd-cart-items">
 			<li *ngFor="let item of cart.items" [ngClass]="{'out-of-stock': !item.availability}">
@@ -151,7 +159,7 @@
 		<div class="seperator mb-5"></div>
 
 		<div id="kss_cart" class="p-3 fixed-bottom">
-			<a  id="checkout" class="btn btn-primary btn-lg btn-block " (click)="modalHandler()" >Checkout</a>
+			<a  id="checkout" class="btn btn-primary btn-lg btn-block " [ngClass]="{'disabled' : cartItemOutOfStock}" (click)="modalHandler()" >Checkout</a>
 		</div>
 	</div>	
 

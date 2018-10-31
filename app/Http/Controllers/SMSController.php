@@ -20,7 +20,7 @@ class SMSController extends Controller
     {
         $data = $request->all();
         $validator = $this->validateNumber($data);
-        if ($validator->fails()) return json_encode(["message"=> $validator->errors()->first(), 'success'=> false]);
+        if ($validator->fails()) return response()->json(["message"=> $validator->errors()->first(), 'success'=> false]);
 
     	$otp = $this->generateOTP();
         $otp_expiry = Carbon::now()->addMinutes(config('otp.expiry'));
@@ -36,7 +36,7 @@ class SMSController extends Controller
         $notify->setRecipientIds([$sms]);
         \AjComm::sendNotification($notify);
 
-        return json_encode(["message"=> "OTP Sent successfully", 'success'=> true]);
+        return response()->json(["message"=> "OTP Sent successfully", 'success'=> true]);
     }
 
     public function validateNumber($data)

@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Address;
+use App\User;
 
 class AddressController extends Controller
 {
     public function userAddAddress(Request $request)
     {
     	$params  = $request->all();
-    	$user_id = fetchUserFromToken($request->header('Authorization'));
+    	$user_id = User::getUserByToken($request->header('Authorization'))->id;
 
     	$default = $this->defaultAddressSet($user_id, $params["default"]);
 
@@ -29,7 +30,7 @@ class AddressController extends Controller
     public function userEditAddress(Request $request)
     {
         $params  = $request->all();
-        $user_id = fetchUserFromToken($request->header('Authorization'));
+        $user_id = User::getUserByToken($request->header('Authorization'))->id;
 
         $address = Address::find($params["id"]);
         if($address->user_id != $user_id) abort(403);
@@ -49,7 +50,7 @@ class AddressController extends Controller
 
     public function userFetchAddresses(Request $request)
     {
-        $user_id = fetchUserFromToken($request->header('Authorization'));
+        $user_id = User::getUserByToken($request->header('Authorization'))->id;
 
         $addresses = Address::where('user_id', '=', $user_id)->get();
 
@@ -65,7 +66,7 @@ class AddressController extends Controller
     public function userDeleteAddress(Request $request)
     {
         $params  = $request->all();
-        $user_id = fetchUserFromToken($request->header('Authorization'));
+        $user_id = User::getUserByToken($request->header('Authorization'))->id;
 
         $address = Address::find($params["address_id"]);
         if($address->user_id != $user_id) abort(403);

@@ -1,4 +1,4 @@
-<div id="cd-cart" [ngClass]="{'cart-loader' : showCartLoader}" class="angular-app h-100">
+<div id="cd-cart" class="angular-app h-100">
 	<div class="kss_shipping slide-out slide-show">
 		<div class="scroll-container">
 			<nav class="navbar navbar-dark bg-dark pt-3 pb-3 ">
@@ -24,7 +24,12 @@
 			</nav>
 			<div class="py-3 px-3 padding-size">	
 				<div class="row no-gutter">
-					<div class="col-8">
+					<div class="col-1">
+		             <h3 class="m-0 font-weight-bold back-to-cart">
+		               <img (click)="navigateBack()" class="btn-back kss_highlight" src="/img/left-arrow.png" style="width:20px;">
+		             </h3>
+		           </div>
+					<div class="col-7">
 						<h3 class="modal-title font-weight-bold" id="exampleModalLabel">Ship To</h3>
 					</div>
 					<div class="col-4 text-right">
@@ -119,7 +124,7 @@
 								</div>
 							</div>							
 						</div>
-						<div class="row mt-4">
+						<div *ngIf="!hideDefaultAddressField" class="row mt-4">
 							<div class="col-md-12">
 								<div class="custom-control custom-checkbox">
 									<input type="checkbox" class="custom-control-input" id="customCheck1" name="default" [(ngModel)]="newAddress.default">

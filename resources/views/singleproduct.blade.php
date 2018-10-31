@@ -72,7 +72,7 @@
 								</button>
 							</div> -->
 							<!-- <div class="col-6 col-sm-6 col-md-6 col-xl-6 pl-1"> -->
-								<button id="cd-add-to-cart" class="btn btn-primary btn-lg btn-block cd-add-to-cart" @php if(!isset($params['size'])) { @endphp disabled @php } @endphp>
+								<button id="cd-add-to-cart" class="btn btn-primary btn-lg btn-block cd-add-to-cart" disabled>
 									<div class="btn-label-initial d-flex align-items-center justify-content-center">Select Size</div>
 								</button>
 							<!-- </div> -->

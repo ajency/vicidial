@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Variant;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Cart extends Model
@@ -28,7 +29,7 @@ class Cart extends Model
         if (valInteger($item, self::ITEM_FIELDS)) {
             $item                   = array_only($item, self::ITEM_FIELDS);
             $cart_data              = $this->cart_data;
-            $cart_data[$item["id"]] = ["id" => $item["id"], "quantity" => intval($item["quantity"])];
+            $cart_data[$item["id"]] = ["id" => $item["id"], "quantity" => intval($item["quantity"]), 'timestamp' => Carbon::now()->timestamp];
             $this->cart_data        = $cart_data;
             // \Log::info($this->cart_data);
         } else {
@@ -59,7 +60,7 @@ class Cart extends Model
         $total_price = 0;
         $discount    = 0;
         foreach ($this->cart_data as $cart_item) {
-            $variant = Variant::where('odoo_id', $cart_item['id'])->first();
+            $variant = Variant::find($cart_item['id']);
             $total_price += $variant->getSalePrice() * $cart_item["quantity"];
             $discount += $variant->getDiscount() * $cart_item["quantity"];
         }
@@ -72,5 +73,44 @@ class Cart extends Model
         unset($cart_data[$variant_id]);
         $this->cart_data = $cart_data;
         return $this;
+    }
+
+    public function getItem(int $variant_id, $fetch_related=true)
+    {
+        $variant           = Variant::find($variant_id);
+        if($variant == null)
+            abort(404);
+        $item              = $variant->getItem($fetch_related);
+        $item["quantity"]  = intval($this->cart_data[$item["id"]]["quantity"]);
+        $item["timestamp"] = intval($this->cart_data[$item["id"]]["timestamp"]);
+        $item["availability"] = ($variant->getQuantity()>=$item["quantity"]);
+
+        return $item;
+    }
+
+    public function getItems()
+    {
+        $items = [];
+        foreach ($this->cart_data as $cart_item) {
+            $items[] = [
+                'item'     => Variant::where('odoo_id', $cart_item['id'])->first(),
+                'quantity' => $cart_item["quantity"],
+            ];
+        }
+        return $items;
+    }
+
+    public function checkCartAvailability()
+    {
+        foreach ($this->cart_data as $cart_item) {
+            $item = $this->getItem($cart_item['id']);
+            if(!$item["availability"]) abort(404, "One or more items are Out of Stock");
+        }
+    }
+
+    public function abortNotCart(){
+        if($this->type != "cart"){
+            abort(403);
+        }
     }
 }

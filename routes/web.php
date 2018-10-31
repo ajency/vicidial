@@ -18,6 +18,7 @@ Route::get('/rest/anonymous/cart/delete', 'CartController@guestCartDelete');
 
 Route::get('/rest/v1/authenticate/login', 'ApiLoginController@verifyOTP');
 Route::get('/rest/v1/authenticate/generate_otp', 'SMSController@sendSMS');
+Route::get('/rest/v1/user/cart/mine', 'CartController@getCartID');
 
 Route::get('/test/productlist', 'ProductListTestController@index')->name('productListTest');
 
