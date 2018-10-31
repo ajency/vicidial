@@ -13,7 +13,6 @@ export class ShippingDetailsComponent implements OnInit {
 
 	addAddress = false;
   addresses : any;
-  showCartLoader : boolean = false;
   newAddress : any = {
     name : '',
     phone : '',
@@ -51,7 +50,7 @@ export class ShippingDetailsComponent implements OnInit {
   // }
 
   saveNewAddress(){
-    this.showCartLoader = true;
+    this.appservice.showLoader();
     let url = this.appservice.apiUrl + (this.newAddress.id ? "/api/rest/v1/user/address/edit" :  "/api/rest/v1/user/address/new");
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     let body : any = {};
@@ -78,11 +77,11 @@ export class ShippingDetailsComponent implements OnInit {
       this.addAddress = false;
       this.appservice.shippingAddresses = this.addresses;
       this.newAddress = {};
-      this.showCartLoader = false;
+      this.appservice.removeLoader();
     })
     .catch((error)=>{
       console.log("error ===>", error);
-      this.showCartLoader = false;
+      this.appservice.removeLoader();
       this.addAddress = false;
     })    
   }
@@ -109,6 +108,7 @@ export class ShippingDetailsComponent implements OnInit {
   }
 
   addNewAddress(){
+    this.hideDefaultAddressField = false;
     this.addAddress = true;
     this.newAddress = {};
     this.newAddress.default = false;
@@ -125,7 +125,7 @@ export class ShippingDetailsComponent implements OnInit {
 
   deleteAddress(id){
     console.log(id);
-    this.showCartLoader = true;
+    this.appservice.showLoader();
     let body = { address_id : id };
     let url = this.appservice.apiUrl +  "/api/rest/v1/user/address/delete?";
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
@@ -141,17 +141,17 @@ export class ShippingDetailsComponent implements OnInit {
         this.setAddressDefault(response.default_id);
         this.selectedAddressId=response.default_id;
       }
-      this.showCartLoader = false;
+      this.appservice.removeLoader();
     })
     .catch((error)=>{
       console.log("error ===>", error);
-      this.showCartLoader = false;
+      this.appservice.removeLoader();
     })
   }
 
   navigateToShippingPage(){
     console.log(this.selectedAddressId);
-    this.showCartLoader = true;
+    this.appservice.showLoader();
     let url = this.appservice.apiUrl + '/api/rest/v1/user/cart/' + this.appservice.getCookie('cart_id') + '/create-order'
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     let body : any = {
@@ -162,12 +162,12 @@ export class ShippingDetailsComponent implements OnInit {
     this.apiservice.request(url, 'post', body , header ).then((response)=>{
       console.log("response ==>", response);
       this.appservice.shippingDetails = response;
-      this.showCartLoader = false;
+      this.appservice.removeLoader();
       this.router.navigateByUrl('/shipping-summary', { skipLocationChange: true });      
     })
     .catch((error)=>{
       console.log("error ===>", error);
-      this.showCartLoader = false;
+      this.appservice.removeLoader();
     })  
   }
 

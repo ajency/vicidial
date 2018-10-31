@@ -20,7 +20,7 @@ export class ShippingSummaryComponent implements OnInit {
   }
 
   navigateToPaymentPage(){
-  	this.router.navigateByUrl('/payment', { skipLocationChange: true });
+  	// this.router.navigateByUrl('/payment', { skipLocationChange: true });
   }
   
   closeCart(){

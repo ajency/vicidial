@@ -73,4 +73,12 @@ export class AppServiceService {
     }
     return "";
   }
+
+  showLoader(){
+    $('.ng-cart-loader').addClass('cart-loader')
+  }
+
+  removeLoader(){
+    $('.ng-cart-loader').removeClass('cart-loader')
+  }
 }
