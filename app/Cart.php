@@ -107,4 +107,10 @@ class Cart extends Model
             if(!$item["availability"]) abort(404, "One or more items are Out of Stock");
         }
     }
+
+    public function abortNotCart(){
+        if($this->type != "cart"){
+            abort(403);
+        }
+    }
 }
