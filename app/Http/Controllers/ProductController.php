@@ -10,7 +10,7 @@ class ProductController extends Controller
 
     public function index($product_slug, Request $request)
     {
-        $json = json_decode(singleproduct($parameters['product_slug']));
+        $json = json_decode(singleproduct($product_slug));
         $params =  (array) $json;
 
         $query  = $request->all();

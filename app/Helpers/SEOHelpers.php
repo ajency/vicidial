@@ -79,12 +79,12 @@ function productseo($params) {
 
     OpenGraph::setTitle($product_name.' - '.$product_color.' - '.$product_subtype.' -  KidSuperStore.in', false);
     OpenGraph::setDescription('Buy '.$product_name.' - '.$product_color.' - only at ₹'.$default_price['sale_price'].' - '.$product_subtype.' for '.$product_gender.'  -  KidSuperStore.in');
-    OpenGraph::addImage($domain.$selected_image);
+    OpenGraph::addImage($selected_image);
     OpenGraph::setUrl($url);
 
     Twitter::setTitle($product_name.' - '.$product_color.' - '.$product_subtype.' -  KidSuperStore.in', false);
     Twitter::setDescription('Buy '.$product_name.' - '.$product_color.' - only at ₹'.$default_price['sale_price'].' - '.$product_subtype.' for '.$product_gender.'  -  KidSuperStore.in');
-    Twitter::addImage($domain.$selected_image);
+    Twitter::addImage($selected_image);
     Twitter::setUrl($url);
 }
 
