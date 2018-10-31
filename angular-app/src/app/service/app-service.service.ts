@@ -86,6 +86,7 @@ export class AppServiceService {
 
   updateCartId(){
     this.clearSessionStorage();
+    document.cookie='cart_count=' + 0 + ";path=/";
     let url = this.apiUrl + '/api/rest/v1/user/cart/mine';
     let header = { Authorization : 'Bearer '+this.getCookie('token') };
 
