@@ -93,7 +93,7 @@ class Cart extends Model
         $items = [];
         foreach ($this->cart_data as $cart_item) {
             $items[] = [
-                'item'     => Variant::where('odoo_id', $cart_item['id'])->first(),
+                'item'     => Variant::find($cart_item['id']),
                 'quantity' => $cart_item["quantity"],
             ];
         }
