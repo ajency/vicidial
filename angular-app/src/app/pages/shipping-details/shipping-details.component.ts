@@ -114,6 +114,7 @@ export class ShippingDetailsComponent implements OnInit {
     this.newAddress.default = false;
     this.newAddress.type = "";
     this.newAddress.state="";
+    this.newAddress.landmark = "";
     this.initSelectPicker();
   }
 
