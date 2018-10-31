@@ -9,10 +9,6 @@
 <meta name="theme-color" content="#707279" />
 <link  rel="icon" type="image/x-icon" href="/img/kss_favicon.png" />
 
-<style type="text/css">
-	.mm-menu_offcanvas{display: none;}
-</style>
-
 @yield('headjs')
 {!! SEOMeta::generate() !!}
 {!! OpenGraph::generate() !!}

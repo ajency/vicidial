@@ -133,19 +133,21 @@ $(window).scroll(function(){
 
 
 // ------------------ Shortlist Icon ------------------//
-$(".navbar-collapse").mmenu({
-        wrappers: ["bootstrap4"],
-        "extensions": ["fx-menu-zoom", "fx-panels-zoom", "pagedim-black", "theme-dark"]
-    }, {
-        clone: true
-    });
-    api = $('#mm-0').data('mmenu');
-    api.bind('open:finish', function() {
-        return $('.navbar-toggler').addClass('is-active');
-    });
-    api.bind('close:finish', function() {
-        return $('.navbar-toggler').removeClass('is-active');
-    });
+    // if ($(window).width() < 992) {
+    //     $(".navbar-collapse").mmenu({
+    //         wrappers: ["bootstrap4"],
+    //         "extensions": ["fx-menu-zoom", "fx-panels-zoom", "pagedim-black", "theme-dark"]
+    //     }, {
+    //         clone: true
+    //     });
+    //     api = $('#mm-0').data('mmenu');
+    //     api.bind('open:finish', function() {
+    //         return $('.navbar-toggler').addClass('is-active');
+    //     });
+    //     api.bind('close:finish', function() {
+    //         return $('.navbar-toggler').removeClass('is-active');
+    //     });
+    // }
     //if you change this breakpoint in the style.css file (or _layout.scss if you use SASS), don't forget to update this value as well
     var $L = 1200,
         $menu_navigation = $('#main-nav'),

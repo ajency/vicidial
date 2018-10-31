@@ -1,13 +1,13 @@
 <div class="container pl-2 pl-sm-0 pr-2 pr-sm-0">
-<nav class="navbar navbar-expand-lg pl-1 pr-1 pb-0 pt-0">
+<nav class="navbar navbar-expand-lg better-bootstrap-nav-left pl-1 pr-1 pb-0 pt-0">
     <div class="navbar-toggler hamburger hamburger--collapse" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="hamburger-box">
             <span class="hamburger-inner"></span>
         </span>
     </div>
     <a  href="#">
-<img src="/img/logo-kss.png" xpreview="/img/logo-kss.png" class=" img-fluid m-0 kss-logo" width="180px">
- </a>
+        <img src="/img/logo-kss.png" xpreview="/img/logo-kss.png" class=" img-fluid m-0 kss-logo" width="180px">
+    </a>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-4 mr-auto mt-2 mt-lg-0">
             <li class="nav-item active">
