@@ -252,3 +252,20 @@
         }
     }
 }
+
+.trend-focus-wrapper{
+    columns: 300px;
+    column-gap: 20px;
+
+    .trend-box {
+        border-radius: 5px;
+        background: #fff;
+        padding: 5px;
+        break-inside: avoid-column;
+        margin-top: 20px;
+        &:first-child {
+            margin-top:0px;
+        }
+    }
+
+}

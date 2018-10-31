@@ -26,7 +26,7 @@
 
            <img src="/img/home-banner/home-banner-20px.jpg "
                data-sizes="100vw"
-               class="img-fluid lazyload blur-up w-100" alt="Banner1">
+               class="img-fluid lazyload blur-up w-100" alt="Kidsuperstore Banner1" title="A New Season, A New Look">
          </picture>
     </div>
     <div class="home-slide-item">
@@ -45,7 +45,7 @@
 
          <img src="/img/home-banner/home-banner-boys-20px.jpg "
              data-sizes="100vw"
-             class="img-fluid lazyload blur-up" alt="Banner2">
+             class="img-fluid lazyload blur-up" alt="Kidsuperstore Banner2" title="A New Season, A New Look">
       </picture>
     </div>
     <div class="home-slide-item">
@@ -64,7 +64,7 @@
 
          <img src="/img/home-banner/home-banner-infants-20px.jpg "
              data-sizes="100vw"
-             class="img-fluid lazyload blur-up" alt="Banner2">
+             class="img-fluid lazyload blur-up" alt="Kidsuperstore Banner3" title="A New Season, A New Look">
        </picture>
     </div>
 </div>
@@ -81,7 +81,9 @@
                     data-srcset='/img/gender/infant-large.jpg 813w,
                            /img/gender/infant-medium.jpg 542w,
                            /img/gender/infant-small.jpg 271w'
-                    data-sizes='(min-width: 1200px) 270px, (min-width: 768px) 22vw,  44vw' />
+                    data-sizes='(min-width: 1200px) 270px, (min-width: 768px) 22vw,  44vw'
+                    title="Infants 0-2 years"
+                    alt="Infants 0-2 years"/>
             </div>
           </div>
           <div class="col-md-3 col-6 mb-md-0 mb-3" >
@@ -94,7 +96,9 @@
                       data-srcset='/img/gender/boy-large.jpg 813w,
                              /img/gender/boy-medium.jpg 542w,
                              /img/gender/boy-small.jpg 271w'
-                      data-sizes='(min-width: 1200px) 270px, (min-width: 768px) 22vw,  44vw' />
+                      data-sizes='(min-width: 1200px) 270px, (min-width: 768px) 22vw,  44vw'
+                      title="Boys 2-14 years"
+                      alt="Boys 2-14 years"/>
             </div>
           </div>
           <div class="col-md-3 col-6" >
@@ -107,7 +111,9 @@
                       data-srcset='/img/gender/girl-large.jpg 813w,
                              /img/gender/girl-medium.jpg 542w,
                              /img/gender/girl-small.jpg 271w'
-                      data-sizes='(min-width: 1200px) 270px, (min-width: 768px) 22vw,  44vw' />
+                      data-sizes='(min-width: 1200px) 270px, (min-width: 768px) 22vw,  44vw'
+                      title="Girls 2-14 years"
+                      alt="Girls 2-14 years"/>
             </div>
           </div>
           <div class="col-md-3 col-6">
@@ -126,7 +132,9 @@
                         data-srcset='/img/new-arrival/slider-bag-large.jpg 813w,
                                /img/new-arrival/slider-bag-medium.jpg 542w,
                                /img/new-arrival/slider-bag-small.jpg 271w'
-                        data-sizes='(min-width: 1200px) 270px, (min-width: 768px) 22vw,  44vw' />
+                        data-sizes='(min-width: 1200px) 270px, (min-width: 768px) 22vw,  44vw'
+                        alt="New Arrivals"
+                        title="New Arrivals"/>
                   </div>
                   <div class="carousel-item">
                    <img class="d-block w-100 img-fluid lazyload blur-up"
@@ -134,7 +142,9 @@
                         data-srcset='/img/new-arrival/slider-toy-large.jpg 813w,
                                /img/new-arrival/slider-toy-medium.jpg 542w,
                                /img/new-arrival/slider-toy-small.jpg 271w'
-                        data-sizes='(min-width: 1200px) 270px, (min-width: 768px) 22vw,  44vw' />
+                        data-sizes='(min-width: 1200px) 270px, (min-width: 768px) 22vw,  44vw'
+                        alt="New Arrivals"
+                        title="New Arrivals"/>
                   </div>
                   <div class="carousel-item">
                       <img class="d-block w-100 img-fluid lazyload blur-up"
@@ -142,7 +152,9 @@
                           data-srcset='/img/new-arrival/slider-shoes-large.jpg 813w,
                                /img/new-arrival/slider-shoes-medium.jpg 542w,
                                /img/new-arrival/slider-shoes-small.jpg 271w'
-                          data-sizes='(min-width: 1200px) 270px, (min-width: 768px) 22vw,  44vw' />
+                          data-sizes='(min-width: 1200px) 270px, (min-width: 768px) 22vw,  44vw'
+                          alt="New Arrivals"
+                          title="New Arrivals"/>
                   </div>
                 </div>
               </div>
@@ -165,76 +177,88 @@
 
 <section>
   <div class="container">
-<main>
-    <article style="background-color:#bce4f8;">
+  <div class="trend-focus-wrapper">
+    <div class="trend-box" style="background-color:#bce4f8;">
       <div class="p-3">
-      <h4 class="font-weight-bold m-0">Party Showstoppers</h4>
-      <p>Lorem ipsum dolor sit amet</p>
-    </div>
+        <h4 class="font-weight-bold m-0">Party Showstoppers</h4>
+        <p>Lorem ipsum dolor sit amet</p>
+      </div>
       <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
           src='/img/collection/baby-woollen-cap-10px.jpg'
           data-srcset='/img/collection/baby-woollen-cap-large.jpg 818w,
                  /img/collection/baby-woollen-cap-medium.jpg 409w,
                  /img/collection/baby-woollen-cap-small.jpg 250w'
-          data-sizes='(min-width: 1200px) 366px, (min-width: 991px) 28vw,  (min-width: 768px) 46vw,  91vw' />
-    </article>
-    <article style="background-color:#F4D5D3;">
-      <div class="p-3">
-      <h4 class="font-weight-bold m-0">House Of Comfort</h4>
-      <p>Lorem ipsum dolor sit amet</p>
+          data-sizes='(min-width: 1200px) 366px, (min-width: 991px) 28vw,  (min-width: 768px) 46vw,  91vw'
+          alt="Trend in Focus - Party Showstoppers"
+          title="Party Showstoppers"/>
     </div>
-        <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
+    <div class="trend-box" style="background-color:#F4D5D3;">
+      <div class="p-3">
+        <h4 class="font-weight-bold m-0">House Of Comfort</h4>
+        <p>Lorem ipsum dolor sit amet</p>
+      </div>
+      <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
+          src='/img/collection/party-showstoppers-10px.jpg'
+          data-srcset='/img/collection/party-showstoppers-large.jpg 818w,
+               /img/collection/party-showstoppers-medium.jpg 409w,
+               /img/collection/party-showstoppers-small.jpg 250w'
+          data-sizes='(min-width: 1200px) 366px, (min-width: 991px) 28vw,  (min-width: 768px) 46vw,  91vw'
+          alt="Trend in Focus - House Of Comfort"
+          title="House Of Comfort"/>
+    </div>
+    <div class="trend-box" style="background-color:#fff8ed;">
+      <div class="p-3">
+        <h4 class="font-weight-bold m-0">Party Showstoppers</h4>
+        <p>Lorem ipsum dolor sit amet</p>
+      </div>
+      <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
+          src='/img/collection/printed-top-pyjama-set-10px.jpg'
+          data-srcset='/img/collection/printed-top-pyjama-set-large.jpg 818w,
+                 /img/collection/printed-top-pyjama-set-medium.jpg 409w,
+                 /img/collection/printed-top-pyjama-set-small.jpg 250w'
+          data-sizes='(min-width: 1200px) 366px, (min-width: 991px) 28vw,  (min-width: 768px) 46vw,  91vw'
+          alt="Trend in Focus - Party Showstoppers"
+          title="Party Showstoppers"/>
+    </div>
+    <div class="trend-box" style="background-color:#ffda44;">
+      <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
+          src='/img/collection/girl-floral-10px.jpg'
+          data-srcset='/img/collection/girl-floral-large.jpg 818w,
+                 /img/collection/girl-floral-medium.jpg 409w,
+                 /img/collection/girl-floral-small.jpg 250w'
+          data-sizes='(min-width: 1200px) 366px, (min-width: 991px) 28vw,  (min-width: 768px) 46vw,  91vw'
+          alt="Trend in Focus - Floral Pattern"
+          title="Floral Pattern"/>
+    </div>
+    <div class="trend-box" style="background-color:#F4D5D3;">
+      <div class="p-3">
+        <h4 class="font-weight-bold m-0">House Of Comfort</h4>
+        <p>Lorem ipsum dolor sit amet</p>
+      </div>
+      <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
             src='/img/collection/party-showstoppers-10px.jpg'
             data-srcset='/img/collection/party-showstoppers-large.jpg 818w,
+                   /img/collection/party-showstoppers-medium.jpg 409w,
+                   /img/collection/party-showstoppers-small.jpg 250w'
+            data-sizes='(min-width: 1200px) 366px, (min-width: 991px) 28vw,  (min-width: 768px) 46vw,  91vw'
+            alt="Trend in Focus - House Of Comfort"
+            title="House Of Comfort"/>
+    </div>
+    <div class="trend-box" style="background-color:#F4D5D3;">
+      <div class="p-3">
+        <h4 class="font-weight-bold m-0">Party Showstoppers</h4>
+        <p>Lorem ipsum dolor sit amet</p>
+      </div>
+      <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
+          src='/img/collection/party-showstoppers-10px.jpg'
+          data-srcset='/img/collection/party-showstoppers-large.jpg 818w,
                  /img/collection/party-showstoppers-medium.jpg 409w,
                  /img/collection/party-showstoppers-small.jpg 250w'
-            data-sizes='(min-width: 1200px) 366px, (min-width: 991px) 28vw,  (min-width: 768px) 46vw,  91vw' />
-    </article>
-  <article style="background-color:#fff8ed;">
-      <div class="p-3">
-      <h4 class="font-weight-bold m-0">Party Showstoppers</h4>
-      <p>Lorem ipsum dolor sit amet</p>
+          data-sizes='(min-width: 1200px) 366px, (min-width: 991px) 28vw,  (min-width: 768px) 46vw,  91vw'
+          alt="Trend in Focus - Party Showstoppers"
+          title="Party Showstoppers"/>
     </div>
-          <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
-              src='/img/collection/printed-top-pyjama-set-10px.jpg'
-              data-srcset='/img/collection/printed-top-pyjama-set-large.jpg 818w,
-                     /img/collection/printed-top-pyjama-set-medium.jpg 409w,
-                     /img/collection/printed-top-pyjama-set-small.jpg 250w'
-              data-sizes='(min-width: 1200px) 366px, (min-width: 991px) 28vw,  (min-width: 768px) 46vw,  91vw' />
-    </article>
-    <article style="background-color:#ffda44;">
-             <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
-                  src='/img/collection/girl-floral-10px.jpg'
-                  data-srcset='/img/collection/girl-floral-large.jpg 818w,
-                         /img/collection/girl-floral-medium.jpg 409w,
-                         /img/collection/girl-floral-small.jpg 250w'
-                  data-sizes='(min-width: 1200px) 366px, (min-width: 991px) 28vw,  (min-width: 768px) 46vw,  91vw' />
-    </article>
-    <article style="background-color:#F4D5D3;">
-      <div class="p-3">
-      <h4 class="font-weight-bold m-0">House Of Comfort</h4>
-      <p>Lorem ipsum dolor sit amet</p>
-    </div>
-        <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
-              src='/img/collection/party-showstoppers-10px.jpg'
-              data-srcset='/img/collection/party-showstoppers-large.jpg 818w,
-                     /img/collection/party-showstoppers-medium.jpg 409w,
-                     /img/collection/party-showstoppers-small.jpg 250w'
-              data-sizes='(min-width: 1200px) 366px, (min-width: 991px) 28vw,  (min-width: 768px) 46vw,  91vw' />
-    </article>
-  <article style="background-color:#F4D5D3;">
-      <div class="p-3">
-      <h4 class="font-weight-bold m-0">Party Showstoppers</h4>
-      <p>Lorem ipsum dolor sit amet</p>
-    </div>
-            <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
-                src='/img/collection/party-showstoppers-10px.jpg'
-                data-srcset='/img/collection/party-showstoppers-large.jpg 818w,
-                       /img/collection/party-showstoppers-medium.jpg 409w,
-                       /img/collection/party-showstoppers-small.jpg 250w'
-                data-sizes='(min-width: 1200px) 366px, (min-width: 991px) 28vw,  (min-width: 768px) 46vw,  91vw' />
-    </article>
-  </main>
+  </div>
 </div>
 </section>
 <section class="section">
@@ -253,13 +277,15 @@
       <div class="col-lg-3 col-md-6 mb-4 col-6  ">
         <div class="card h-100 product-card">
           <a href="#">
-            <div class="image oh loading-01 image-loaded">
+            <div class="">
              <img class="d-block w-100 img-fluid lazyload blur-up"
                   src='/img/home-list/1front-10px.jpg'
                   data-srcset='/img/home-list/1front-large.jpg 810w,
                          /img/home-list/1front-medium.jpg 540w,
                          /img/home-list/1front-small.jpg 270w'
-                  data-sizes='(min-width: 1200px) 267px, (min-width: 991px) 22vw, 41vw' />
+                  data-sizes='(min-width: 1200px) 267px, (min-width: 991px) 22vw, 41vw'
+                  title="Product of the Day"
+                  alt="Product of the Day"/>
            </div>
           </a>
         </div>
@@ -267,13 +293,15 @@
       <div class="col-lg-3 col-md-6 mb-4 col-6  ">
         <div class="card h-100 product-card">
           <a href="#">
-            <div class="image oh loading-01 image-loaded">
+            <div class="">
              <img class="d-block w-100 img-fluid lazyload blur-up"
                   src='/img/home-list/2front-10px.jpg'
                   data-srcset='/img/home-list/2front-large.jpg 810w,
                          /img/home-list/2front-medium.jpg 540w,
                          /img/home-list/2front-small.jpg 270w'
-                  data-sizes='(min-width: 1200px) 267px, (min-width: 991px) 22vw, 41vw' />
+                  data-sizes='(min-width: 1200px) 267px, (min-width: 991px) 22vw, 41vw'
+                  title="Product of the Day"
+                  alt="Product of the Day"/>
            </div>
           </a>
         </div>
@@ -281,13 +309,15 @@
       <div class="col-lg-3 col-md-6 mb-4 col-6  ">
         <div class="card h-100 product-card">
           <a href="#">
-            <div class="image oh loading-01 image-loaded">
+            <div class="">
               <img class="d-block w-100 img-fluid lazyload blur-up"
                   src='/img/home-list/3front-10px.jpg'
                   data-srcset='/img/home-list/3front-large.jpg 810w,
                          /img/home-list/3front-medium.jpg 540w,
                          /img/home-list/3front-small.jpg 270w'
-                  data-sizes='(min-width: 1200px) 267px, (min-width: 991px) 22vw, 41vw' />
+                  data-sizes='(min-width: 1200px) 267px, (min-width: 991px) 22vw, 41vw'
+                  title="Product of the Day"
+                  alt="Product of the Day"/>
            </div>
           </a>
         </div>
@@ -295,13 +325,15 @@
       <div class="col-lg-3 col-md-6 mb-4 col-6  ">
         <div class="card h-100 product-card">
           <a href="#">
-            <div class="image oh loading-01 image-loaded">
+            <div class="">
               <img class="d-block w-100 img-fluid lazyload blur-up"
                   src='/img/home-list/4front-10px.jpg'
                   data-srcset='/img/home-list/4front-large.jpg 810w,
                          /img/home-list/4front-medium.jpg 540w,
                          /img/home-list/4front-small.jpg 270w'
-                  data-sizes='(min-width: 1200px) 267px, (min-width: 991px) 22vw, 41vw' />
+                  data-sizes='(min-width: 1200px) 267px, (min-width: 991px) 22vw, 41vw'
+                  title="Product of the Day"
+                  alt="Product of the Day"/>
            </div>
           </a>
         </div>
@@ -309,13 +341,15 @@
       <div class="col-lg-3 col-md-6 mb-4 col-6  ">
         <div class="card h-100 product-card">
           <a href="/kss/product/">
-            <div class="image oh loading-01 image-loaded">
+            <div class="">
               <img class="d-block w-100 img-fluid lazyload blur-up"
                   src='/img/home-list/5front-10px.jpg'
                   data-srcset='/img/home-list/5front-large.jpg 810w,
                          /img/home-list/5front-medium.jpg 540w,
                          /img/home-list/5front-small.jpg 270w'
-                  data-sizes='(min-width: 1200px) 267px, (min-width: 991px) 22vw, 41vw' />
+                  data-sizes='(min-width: 1200px) 267px, (min-width: 991px) 22vw, 41vw'
+                  title="Product of the Day"
+                  alt="Product of the Day"/>
            </div>
           </a>
         </div>
@@ -323,13 +357,15 @@
       <div class="col-lg-3 col-md-6 mb-4 col-6  ">
         <div class="card h-100 product-card">
           <a href="/kss/product/">
-            <div class="image oh loading-01 image-loaded">
+            <div class="">
               <img class="d-block w-100 img-fluid lazyload blur-up"
                   src='/img/home-list/6front-10px.jpg'
                  data-srcset='/img/home-list/6front-large.jpg 810w,
                          /img/home-list/6front-medium.jpg 540w,
                          /img/home-list/6front-small.jpg 270w'
-                 data-sizes='(min-width: 1200px) 267px, (min-width: 991px) 22vw, 41vw' />
+                 data-sizes='(min-width: 1200px) 267px, (min-width: 991px) 22vw, 41vw'
+                 title="Product of the Day"
+                 alt="Product of the Day"/>
             </div>
           </a>
         </div>
@@ -337,28 +373,32 @@
       <div class="col-lg-3 col-md-6 mb-4 col-6  ">
         <div class="card h-100 product-card">
           <a href="/kss/product/">
-            <div class="image oh loading-01 image-loaded">
-              <img class="d-block w-100 img-fluid lazyload blur-up"
-                  src='/img/home-list/7front-10px.jpg'
-                  data-srcset='/img/home-list/7front-large.jpg 810w,
-                         /img/home-list/7front-medium.jpg 540w,
-                         /img/home-list/7front-small.jpg 270w'
-                  data-sizes='(min-width: 1200px) 267px, (min-width: 991px) 22vw, 41vw' />
-           </div>
-          </a>
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-6 mb-4 col-6  ">
-        <div class="card h-100 product-card">
-          <a href="/kss/product/">
-            <div class="image oh loading-01 image-loaded">
+            <div class="">
               <img class="d-block w-100 img-fluid lazyload blur-up"
                   src='/img/home-list/8front-10px.jpg'
                   data-srcset='/img/home-list/8front-large.jpg 810w,
                          /img/home-list/8front-medium.jpg 540w,
                          /img/home-list/8front-small.jpg 270w'
-                  data-sizes='(min-width: 1200px) 267px, (min-width: 991px) 22vw, 41vw' />
+                  data-sizes='(min-width: 1200px) 267px, (min-width: 991px) 22vw, 41vw'
+                  title="Product of the Day"
+                  alt="Product of the Day"/>
             </div>
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 mb-4 col-6  ">
+        <div class="card h-100 product-card">
+          <a href="/kss/product/">
+            <div class="">
+              <img class="d-block w-100 img-fluid lazyload blur-up"
+                  src='/img/home-list/7front-10px.jpg'
+                  data-srcset='/img/home-list/7front-large.jpg 810w,
+                         /img/home-list/7front-medium.jpg 540w,
+                         /img/home-list/7front-small.jpg 270w'
+                  data-sizes='(min-width: 1200px) 267px, (min-width: 991px) 22vw, 41vw'
+                  title="Product of the Day"
+                  alt="Product of the Day"/>
+           </div>
           </a>
         </div>
       </div>
