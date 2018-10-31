@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Product;
-
+use App\Facet;
+use DB;
 class ListingController extends Controller
 {
     public function search_object_old($parameters)
@@ -40,9 +41,19 @@ class ListingController extends Controller
 
     public function search_object($params = null,$search_obj = null)
     {
+        // print_r($params);
+        if($search_obj == null){
+            $valid = validate_category_urls($params);
+            if($valid == false){
+                return $valid;
+            }
+        }
+        
         $search_object = ($search_obj == null)?(build_search_object($params)):$search_obj;
-        $params = Product::productList(["search_object" => $search_object]);
-        return json_Decode(json_encode($params,JSON_FORCE_OBJECT));
+        // dd($search_object);
+        $params = Product::productListPage(["search_object" => $search_object,"display_limit"=> 20,"page" =>1]);
+        // dd($params);
+        return json_decode(json_encode($params,JSON_FORCE_OBJECT));
     }
 
     public function index($cat1, $cat2 = null, $cat3 = null, $cat4 = null, Request $request)
@@ -57,7 +68,20 @@ class ListingController extends Controller
 
     	$params = $this->search_object($parameters);
         if($params == false) return view('error404');
-
+        $facets = Facet::select('facet_name',DB::raw('group_concat(concat(facet_value,"$$$",slug)) as "values"'))->groupBy('facet_name')->get();
+        $search_result_assoc = [];
+        foreach($facets as $facet){
+            $comb = explode(",", $facet->values);
+            $facet_values = [];
+            $facet_value_slug_pairs = [];
+            foreach($comb as $combv){
+                $cmbvalue = explode("$$$", $combv);
+                array_push($facet_values, $cmbvalue[0]);
+                $facet_value_slug_pairs[$cmbvalue[0]]=$cmbvalue[1];
+            }
+            $search_result_assoc[$facet->facet_name] = $facet_value_slug_pairs;
+        }
+        $params->search_result_assoc = $search_result_assoc;
         return view('productlisting')->with('params',$params);
     }
 
@@ -76,7 +100,7 @@ class ListingController extends Controller
     {
         $data = $request->all();
         $response = $this->search_object(null,$data["search_object"]);
-
+        // dd($response);
         return response()->json($response,200);
     }
 

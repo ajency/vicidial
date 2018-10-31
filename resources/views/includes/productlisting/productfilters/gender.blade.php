@@ -13,14 +13,14 @@
           @{{#if singleton }}
           @{{#each items}}
           <div class="custom-radio custom-control">
-            <input type="radio" class="facet-category custom-control-input" name="gender" value="@{{slug}}" @{{#if is_selected }} checked = "checked" @{{/if}} data-facet-name="@{{../filter_facet_name}}">
+            <input type="radio" class="facet-category custom-control-input" name="gender" value="@{{facet_value}}" @{{#if is_selected }} checked = "checked" @{{/if}} data-facet-name="@{{../filter_facet_name}}" data-singleton="true" data-slug="@{{slug}}">
             <label for="@{{display_name}}" class="custom-control-label f-w-4">@{{display_name}} <span class="sub-text">(@{{count}})</span></label>
           </div>
           @{{/each}}
           @{{else}}
           @{{#each items}}
           <div class="custom-control custom-checkbox" >
-            <input type="checkbox" class="facet-category custom-control-input" name="gender" value="@{{slug}}" @{{#if is_selected }} checked = "checked" @{{/if}} data-facet-name="@{{../filter_facet_name}}">
+            <input type="checkbox" class="facet-category custom-control-input" name="gender" value="@{{facet_value}}" @{{#if is_selected }} checked = "checked" @{{/if}} data-facet-name="@{{../filter_facet_name}}" data-singleton="false" data-slug="@{{slug}}">
             <label class="custom-control-label f-w-4" for="@{{display_name}}">@{{display_name}} <span class="sub-text">(@{{count}})</span></label>
           </div> 
           @{{/each}}    

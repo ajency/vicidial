@@ -63,3 +63,33 @@ function build_search_object($params) {
 	return $search_result;
 }
 
+function validate_category_urls($params){
+	$all_facets = [];
+	foreach($params['categories'] as $param) {
+		$slugs_arr = explode('--', $param);
+		$facets_data = Facet::select('facet_name',DB::raw('count(id) as "count"'))->whereIn('slug', $slugs_arr)->groupBy('facet_name')->get();
+		print_r($facets_data);
+		$max_count=0;
+		foreach ($facets_data as $key => $facetcont) {
+			if($key == 0)
+				$max_count =  $facetcont->count;
+			if($facetcont->count > $max_count){
+				$max_count = $facetcont->count;
+			}
+		}
+		if($max_count != count($slugs_arr))
+			return false;
+		$all_facets = array_merge($slugs_arr, $all_facets);
+
+	}
+	$facets_count = Facet::select('slug',DB::raw('count(id) as "count"'))->whereIn('slug', $all_facets)->groupBy('slug')->get();
+	// print_r($facets_count);
+	// echo "facets_count===".count($facets_count);
+	// echo "all_facets===".count($all_facets);
+
+	if(count($facets_count) != count($all_facets)){
+		return false;
+	}
+	return true;
+}
+

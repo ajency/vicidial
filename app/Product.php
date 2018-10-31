@@ -422,6 +422,10 @@ class Product
         $output["page"] = $results["page"];
         $output["items"] = $results["items"];
         $output["results_found"] = $results["results_found"];
+        $output["headers"] = ["page_title"=>"Clothing","product_count"=>17697];
+        $output["sort_on"] =[["name"=>"Latest Products","value"=>"latest","is_selected"=>false],["name"=>"Popularity","value"=>"popular","is_selected"=>true],["name"=>"Price Low to High","value"=>"price_asc","is_selected"=>false],["name"=>"Price High to Low","value"=>"price_dsc","is_selected"=>false],["name"=>"Discount Low to High","value"=>"discount_asc","is_selected"=>false],["name"=>"Discount High to Low","value"=>"discount_dsc","is_selected"=>false]];
+        $output["breadcrumbs"] = [["name"=>"Home","action"=>["type"=>"home","query"=>[]]],["name"=>"Men","action"=>["type"=>"product-list","query"=>["genders"=>["men"]]]],["name"=>"Clothing","action"=>["type"=>"product-list","query"=>["genders"=>["men"],"l1_categories"=>["clothing"]]]]];
+        $output["search"] = ["params"=>["genders"=>["men"],"l1_categories"=>["clothing"]],"pattern"=>[["key"=>"genders","slugs"=>["men"]],["key"=>"l1_categories","slugs"=>["clothing"]]],"is_valid"=>true,"domain"=>"https=>//newsite.stage.kidsuperstore.in","type"=>"product-list","query"=>["page"=>["2"],"page_size"=>["20"]]];
         return $output;
     }
 
