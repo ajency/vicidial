@@ -136,8 +136,10 @@
     }
 }
 
-.prod-slides.center-aligned{
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
+.prod-slides{
+    &.center-aligned,.slick-track{
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+    }    
 }
