@@ -12,7 +12,16 @@ $url = create_url([$product->slug_name, 'buy']);
     <a href="{{$url}}" >
       <div class="image oh loading loading-01">
       <div class="overlay"></div>
-      <img data-src="{{$product->images->desktop->one_x}}" data-srcset="{{$product->images->desktop->one_x}} 1x, {{$product->images->desktop->two_x}} 2x" class="lazyload card-img-top" />
+      @php
+      $image_1x = $image_2x = $image_3x = $load_10x = '/img/placeholder.svg';
+      if(count((array)$product->images)>0){
+        $load_10x = $product->images->{'load'};
+        $image_1x = $product->images->{'1x'};
+        $image_2x = $product->images->{'2x'};
+        $image_3x = $product->images->{'3x'};
+      }
+      @endphp
+      <img data-src="{{$image_1x}}" data-srcset="{{$image_1x}} 1x, {{$image_2x}} 2x" class="lazyload card-img-top" />
      </div>
     </a>
     <!-- Product Info & Size Display -->
