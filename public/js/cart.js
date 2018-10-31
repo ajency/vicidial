@@ -108,7 +108,6 @@ $('.select-size button').click(function() {
 
 function openCart(){
   loadAngularApp();
-  event.preventDefault();
   $('#main-nav').removeClass('speed-in');
   toggle_panel_visibility($('#cd-cart'), $('#cd-shadow-layer'), $('body'));
   $("body").addClass("hide-scroll");
