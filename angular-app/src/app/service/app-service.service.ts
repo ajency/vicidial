@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { isDevMode } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
+import { ApiServiceService } from './api-service.service';
 
 declare var $: any;
 
@@ -14,7 +15,8 @@ export class AppServiceService {
   private openCart = new Subject<any>();
   shippingAddresses : any;
   shippingDetails : any;
-  constructor(	private router: Router ) { 
+  constructor(	private router: Router,
+                private apiservice : ApiServiceService, ) { 
     console.log("isDevMode ==>",isDevMode());
     this.apiUrl = isDevMode() ? 'http://localhost:8000' : '';
     var self = this;
@@ -80,5 +82,24 @@ export class AppServiceService {
 
   removeLoader(){
     $('.ng-cart-loader').removeClass('cart-loader')
+  }
+
+  updateCartId(){
+    this.clearSessionStorage();
+    document.cookie='cart_count=' + 0 + ";path=/";
+    let url = this.apiUrl + '/api/rest/v1/user/cart/mine';
+    let header = { Authorization : 'Bearer '+this.getCookie('token') };
+
+    this.apiservice.request(url, 'get', {} , header ).then((response)=>{
+      console.log("response ==>", response);
+      document.cookie='cart_id=' + response.cart_id + ";path=/";         
+    })
+    .catch((error)=>{
+      console.log("error ===>", error);
+    })  
+  }
+
+  clearSessionStorage(){
+    sessionStorage.removeItem('cart_data');
   }
 }
