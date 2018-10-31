@@ -316,6 +316,8 @@ export class CartComponent implements OnInit {
     this.apiservice.request(url, 'get', {} , header ).then((response)=>{
       console.log("response ==>", response);
       this.appservice.shippingAddresses = response.addresses;
+      $("#cd-cart").css("overflow", "hidden");
+      $('.modal-backdrop').appendTo('#cd-cart');
       this.router.navigateByUrl('/shipping-details', { skipLocationChange: true });
       this.appservice.removeLoader();
     })
