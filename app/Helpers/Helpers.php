@@ -53,20 +53,6 @@ function makeQueryfromParams($params)
     return $queryParams;
 }
 
-function fetchUserFromToken($token)
-{
-    $token = explode('Bearer ', $token)[1];
-    $user  = User::where('api_token', $token)->first();
-    return $user->id;
-}
-
-function userFromToken($token)
-{
-    $token = explode('Bearer ', $token)[1];
-    $user  = User::where('api_token', $token)->first();
-    return $user;
-}
-
 function sanitiseProductData($odooData)
 {
     $create_date   = new Carbon($odooData['create_date']);

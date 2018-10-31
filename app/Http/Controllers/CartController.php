@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Cart;
+use App\User;
 use App\Variant;
 use Illuminate\Http\Request;
 
@@ -145,7 +146,7 @@ class CartController extends Controller
     }
 
     public function getCartID(Request $request){
-        $user = userFromToken($request->header('Authorization'));
+        $user = User::getUserByToken($request->header('Authorization'));
         return response()->json(["cart_id" => $user->cart_id]);
     }
 }

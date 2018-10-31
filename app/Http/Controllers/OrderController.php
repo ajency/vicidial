@@ -15,7 +15,7 @@ class OrderController extends Controller
     public function userCreateOrder($cart_id, Request $request)
     {
         $params = $request->all();
-        $user_id = fetchUserFromToken($request->header('Authorization'));
+        $user_id = User::getUserByToken($request->header('Authorization'))->id
 
         $address = Address::find($params["address_id"]);
         $cart = Cart::find($cart_id);
