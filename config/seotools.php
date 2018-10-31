@@ -6,11 +6,10 @@ return [
          * The default configurations to be used by the meta generator.
          */
         'defaults'       => [
-            'title'        => "It's Over 9000!", // set false to total remove
-            'description'  => 'For those who helped create the Genki Dama', // set false to total remove
+            'title'        => "Online shopping for kids wear and fashion in India - KidSuperStore.in", // set false to total remove
+            'description'  => 'Kidsuperstore.in: Online shopping site for kids wear and fashion in India. Buy Shoes, Clothing, Dresses and Accessories for Boys, Girls, Toddlers, Juniors and Infants. Shipping | Cash on Delivery | 30 days return.', // set false to total remove
             'separator'    => ' - ',
-            'keywords'     => [],
-            'canonical'    => false, // Set null for using Url::current(), set false to total remove
+            'keywords'     => ['online shopping for kids', 'online shopping', 'online shopping sites', 'online shopping india', 'india shopping', 'online shopping site', 'kss', 'india shopping online', 'buy online', 'kids wear', 'kids clothing', 'kids fashion', 'kids accessories', 'kidsuperstore', 'kidsuperstore.in', 'kid super store'],
         ],
 
         /*
@@ -29,12 +28,9 @@ return [
          * The default configurations to be used by the opengraph generator.
          */
         'defaults' => [
-            'title'       => 'Over 9000 Thousand!', // set false to total remove
-            'description' => 'For those who helped create the Genki Dama', // set false to total remove
-            'url'         => false, // Set null for using Url::current(), set false to total remove
-            'type'        => false,
-            'site_name'   => false,
-            'images'      => [],
+            'title'       => 'Online shopping for kids wear and fashion in India - KidSuperStore.in', // set false to total remove
+            'description' => 'Online shopping store in India for Shoes, Clothing, Dresses, Accessories for Kids. | Cash on Delivery | 30 days return.', // set false to total remove
+            'site_name'   => 'Kidsuperstore.in',
         ],
     ],
     'twitter' => [
@@ -42,8 +38,9 @@ return [
          * The default values to be used by the twitter cards generator.
          */
         'defaults' => [
-          //'card'        => 'summary',
-          //'site'        => '@LuizVinicius73',
+            'title'       => 'Online shopping for kids wear and fashion in India - KidSuperStore.in', // set false to total remove
+            'description' => 'Online shopping store in India for Shoes, Clothing, Dresses, Accessories for Kids. | Cash on Delivery | 30 days return.', // set false to total remove
+            'site_name'   => 'Kidsuperstore.in',
         ],
     ],
 ];

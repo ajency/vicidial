@@ -10,8 +10,11 @@ class ProductController extends Controller
 
     public function index($product_slug, Request $request)
     {
+        $json = json_decode(singleproduct($parameters['product_slug']));
+        $params =  (array) $json;
+
         $query  = $request->all();
-        $params = $request->get('params');
+
         if (isset($query['size'])) {
             foreach ($params['variant_group']->{$params['selected_color_id']}->variants as $size_set) {
                 if ($query['size'] == $size_set->size->name && $size_set->inventory_available) {
@@ -29,7 +32,8 @@ class ProductController extends Controller
 
         $params['breadcrumb']['current'] = '';
 
- 
+        setSEO('product', $params);
+
         return view('singleproduct')->with('params', $params);
     }
 

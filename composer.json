@@ -30,7 +30,8 @@
             "app/Helpers/ElasticSearch.php",
             "app/Helpers/Helpers.php",
             "app/Helpers/ProductHelpers.php",
-            "app/Helpers/CategoryHelpers.php"
+            "app/Helpers/CategoryHelpers.php",
+            "app/Helpers/SEOHelpers.php"
         ],
         "classmap": [
             "database/seeds",

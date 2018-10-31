@@ -24,17 +24,17 @@ class ApiLoginController extends Controller
         if($otp != $data['otp']) return response()->json(["message"=> 'The entered OTP is invalid. Please try again.', 'success'=> false]);
         if($otp_expiry < Carbon::now()->timestamp) return response()->json(["message"=> 'The entered OTP is Expired', 'success'=> false]);
 
-        return $this->fetchUserDetails($data, $request);
+        return $this->fetchUserDetails($data);
     }
 
-    public function fetchUserDetails($data, $request)
+    public function fetchUserDetails($data)
     {
-        $UserObject = $this->createAuthenticateUser($data, $request);
+        $UserObject = $this->createAuthenticateUser($data);
         $token = $this->fetchAccessToken($UserObject);
         $UserObject->api_token = $token->id;
         $UserObject->save();
         
-        $id = $request->session()->get('active_cart_id', false);
+        $id = request()->session()->get('active_cart_id', false);
         if($id) {
             $user = ["id"=> $UserObject->id, 'active_cart_id'=> $id];
         }
@@ -44,9 +44,9 @@ class ApiLoginController extends Controller
         return response()->json(["message"=> 'user login successful', 'user'=> $user, 'token'=> $token->id, 'success'=> true]);
     }
 
-    public function createAuthenticateUser($data, $request)
+    public function createAuthenticateUser($data)
     {
-        $id = $request->session()->get('active_cart_id', false);
+        $id = request()->session()->get('active_cart_id', false);
 
         $UserObject = User::where('phone', '=', $data['phone'])->first();
 
@@ -74,7 +74,7 @@ class ApiLoginController extends Controller
             $this->createAccessToken($UserObject);
         }
 
-        $request->session()->put('active_cart_id', $cart->id);
+        request()->session()->put('active_cart_id', $cart->id);
 
         Auth::guard()->login($UserObject);
 
