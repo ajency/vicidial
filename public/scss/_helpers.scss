@@ -20,7 +20,7 @@ a{
     color: $danger;
 }
 footer .bl-1{
-  border-color:#ccc;  
+  border-color:#ccc;
 }
 .text-small {
     font-size: 6px;
@@ -148,7 +148,7 @@ footer .bl-1{
 }
 .bag-icon-fill {
     background-position: -501px -245px;
-} 
+}
 .icon-sm{
     transform: scale(0.8);
     margin-top: -1px;
@@ -258,7 +258,7 @@ footer .bl-1{
         }
     }
     &.is-open{
-        transform: translateX(0);   
+        transform: translateX(0);
     }
 }
 
@@ -282,40 +282,33 @@ footer .bl-1{
  @media (min-width: 320px) and (max-width: 992px) {
     .overflow-m{
         overflow-x:scroll;
-        overflow-y: hidden;
-        display: -webkit-box;
+        display: grid;
+        grid-gap: 10px;
+        grid-template-columns: 5px repeat(8, calc(50% - 40px)) 5px;
+        grid-template-rows: minmax(150px, 1fr);
+        .col-6{
+            max-width: 100%;
+            padding: 0;
+        }
+        &::before,
+        &::after {
+          content: '';
+        }
     }
 }
 
 .sticky-menu{
-        position: fixed;
-        top: 0px;
-        left: 0px;
-        width: 100%;
-        height: 54px;
-        background: #fff;
-        box-shadow: 2px 2px 2px #5a5656;
-        padding: 12px;
-        z-index: 999;
-
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 54px;
+    background: #fff;
+    box-shadow: 2px 2px 2px #5a5656;
+    padding: 12px;
+    z-index: 999;
 }
 
-article {
-  border-radius: 5px;
-  background: #fff;
-   padding: 5px;
-}
-main {
-    columns: 300px;
-    column-gap: 20px; 
-}
-article {
-    break-inside: avoid-column;
-    margin-top: 20px; 
-}
-article:first-child(){
-    margin-top:0px;
-}
 .blur-up {
     -webkit-filter: blur(5px);
     filter: blur(5px);

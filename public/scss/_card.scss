@@ -1,7 +1,7 @@
 $size: 20px;
 #card-list {
     @media (max-width: 575.98px) {
-        padding:10px;
+        // padding:10px;
         .col-lg-4 {
             padding: 8px;
         }
@@ -19,7 +19,7 @@ $size: 20px;
             z-index: 1;
             @media (min-width: 320px) and (max-width: 767.98px) {
             display:none;
-         } 
+         }
         }
          .select-size{
            position: absolute;
@@ -42,10 +42,10 @@ $size: 20px;
                     width: 52px;
                 }
            }
-         }   
+         }
          @media (min-width: 320px) and (max-width: 767.98px) {
             display:none;
-         } 
+         }
         }
             &:hover{
             .overlay{
@@ -59,7 +59,7 @@ $size: 20px;
         }
     }
 
-    
+
 }
 .card {
   &.product-card{

@@ -65,13 +65,6 @@
 }
 /* Icons */
 
-@font-face {
-    font-family: 'slick';
-    font-weight: normal;
-    font-style: normal;
-    src: url('../fonts/slick.eot');
-    src: url('../fonts/slick.eot?#iefix') format('embedded-opentype'), url('../fonts/slick.woff') format('woff'), url('../fonts/slick.ttf') format('truetype'), url('../fonts/slick.svg#slick') format('svg');
-}
 .slick-prev, .slick-next {
     font-size: 0;
     line-height: 0;
@@ -103,26 +96,74 @@
     opacity: .25;
 }
 .slick-prev:before, .slick-next:before {
-    font-family: 'slick';
     font-size: 30px;
     line-height: 1;
     color: #000;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
-.slick-prev {
-    left: 35px;
-    background: url(../img/sprite.png)no-repeat !important;
-    width: 52px;
-    height: 52px;
-    background-position: -395px -118px!important;
+.prod-slides{
+    .slick-prev {
+        left: 35px;
+        background: url(../img/sprite.png)no-repeat !important;
+        width: 52px;
+        height: 52px;
+        background-position: -394px -117px!important;
+    }
+    .slick-next {
+        right: 35px;
+        background: url(../img/sprite.png)no-repeat!important;
+        width: 52px;
+        height: 52px;
+        background-position: -314px -117px!important;
+    }
 }
-.slick-next {
-    right: 35px;
-    background: url(../img/sprite.png)no-repeat!important;
-    width: 52px;
-    height: 52px;
-    background-position: -315px -118px!important;
+.home-slider{
+    .slick-arrow{
+        width: 45px;
+        height: 45px;
+        background-color: rgba(255,255,255,1);
+        opacity: 0.4;
+        transition: opacity 0.3s ease-in;
+        &:before{
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            font-size: 20px;
+            color: gray;
+        }
+        &:hover{
+            opacity: 0.8
+        }
+    }
+
+    .slick-prev {
+        left: 15px;
+        &:before{
+            content: "\f053";
+        }
+    }
+    .slick-next {
+        right: 15px;
+        &:before{
+            content: "\f054";
+        }
+    }
+    @media(max-width: 767px){
+        .slick-arrow{
+            width: 25px;
+            height: 25px;
+            opacity: 0.6;
+            &:before{
+                font-size: 14px;
+            }
+        }
+        .slick-prev {
+            left: 0;
+        }
+        .slick-next {
+            right: 0;
+        }
+    }
 }
 
 .slider-placeholder-img{
