@@ -1,0 +1,15 @@
+#side-menu{
+	padding: 20px 20px 20px 10px;
+	background: $gray-800;
+	.contents{
+		margin-top: 30px;
+	}
+	.nav-link{
+		color: theme-colors("light");
+		font-size: 15px;
+	}
+	.close{
+		color: white;
+		text-shadow: none;
+	}
+}

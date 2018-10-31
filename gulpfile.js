@@ -10,7 +10,7 @@ var gulp = require('gulp'),
 
 // Minifies JS
 gulp.task('scripts', function(){
-    return gulp.src(['public/js/bootstrap.min.js', 'public/js/jquery.fancybox.js', 'public/js/slick.min.js', 'public/js/jquery.mmenu.all.js', 'public/js/jquery.mousewheel.min.js', 'public/js/lightgallery-all.min.js', 'public/js/lazysizes.min.js','public/js/bootstrap-select.min.js', 'public/js/jquery.autocomplete.js'])
+    return gulp.src(['public/js/bootstrap.min.js', 'public/js/jquery.fancybox.js', 'public/js/slick.min.js', 'public/js/bootstrap-better-nav.min.js', 'public/js/jquery.mousewheel.min.js', 'public/js/lightgallery-all.min.js', 'public/js/lazysizes.min.js','public/js/bootstrap-select.min.js', 'public/js/jquery.autocomplete.js'])
     .pipe(uglify())
     .pipe(concat('combine.js'))
     .pipe(gulp.dest('public/js'))
@@ -44,7 +44,7 @@ gulp.task('sass', function() {
 
 gulp.task('css', function(){
     // return gulp.src('./themes/kss/static/css/*.css')
-    return gulp.src(['public/css/hamburgers.css', 'public/css/jquery.fancybox.css', 'public/css/jquery.mmenu.all.css', 'public/css/lightgallery.css', 'public/css/xzoom.css','public/css/bootstrap-select.min.css', 'public/css/custom.css'])
+    return gulp.src(['public/css/jquery.fancybox.css', 'public/css/bootstrap-better-nav.min.css', 'public/css/lightgallery.css', 'public/css/xzoom.css','public/css/bootstrap-select.min.css', 'public/css/custom.css'])
      .pipe(csso())
      .pipe(concat('combine.css'))
    .pipe(gulp.dest('public/css'))
@@ -58,6 +58,6 @@ gulp.task('css', function(){
 
 gulp.task('watch', function() {
     gulp.watch(['public/scss/*.scss'], ['sass']);
-    gulp.watch(['public/css/hamburgers.css', 'public/css/jquery.fancybox.css', 'public/css/jquery.mmenu.all.css', 'public/css/lightgallery.css', 'public/css/xzoom.css','public/css/bootstrap-select.min', 'public/css/custom.css'], ['css']);
-    gulp.watch(['public/js/bootstrap.min.js', 'public/js/jquery.fancybox.js', 'public/js/slick.min.js', 'public/js/jquery.mmenu.all.js', 'public/js/jquery.mousewheel.min.js', 'public/js/lightgallery-all.min.js', 'public/js/lazysizes.min.js', 'public/js/jquery.autocomplete.js'], ['scripts']);
+    gulp.watch(['public/css/jquery.fancybox.css', 'public/css/bootstrap-better-nav.min.css', 'public/css/lightgallery.css', 'public/css/xzoom.css','public/css/bootstrap-select.min', 'public/css/custom.css'], ['css']);
+    gulp.watch(['public/js/bootstrap.min.js', 'public/js/jquery.fancybox.js', 'public/js/slick.min.js', 'public/js/bootstrap-better-nav.min.js', 'public/js/jquery.mousewheel.min.js', 'public/js/lightgallery-all.min.js', 'public/js/lazysizes.min.js', 'public/js/jquery.autocomplete.js'], ['scripts']);
 });
