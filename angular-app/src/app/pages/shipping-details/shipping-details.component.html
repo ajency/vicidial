@@ -146,7 +146,8 @@
 									 	<i class="fas fa-check-circle"></i>
 									</div>
 									<div class="text-left pl-2 flex-fill">
-										<h3 class="kss-title font-weight-bold d-flex align-items-center">{{address.name}} <span *ngIf="address.default" class="pl-2">(Default)  </span> <i class="fas fa-pencil-alt number-edit ml-2" (click)="editAddress(address)"></i></h3>
+										<h3 class="kss-title font-weight-bold d-flex align-items-center w-100">{{address.name}} <span *ngIf="address.default" class="pl-2">(Default)  </span> <i class="fas fa-pencil-alt number-edit ml-2" (click)="editAddress(address)"></i></h3>
+
 										<p class="w-75">
 											{{address.address}}, {{address.city}}, {{address.state}} {{address.pincode}}
 										</p>
