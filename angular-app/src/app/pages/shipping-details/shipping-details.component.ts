@@ -174,4 +174,8 @@ export class ShippingDetailsComponent implements OnInit {
   closeCart(){
     this.appservice.closeCart();
   }
+
+  navigateBack(){
+    this.router.navigateByUrl('/', {skipLocationChange: true});
+  }
 }
