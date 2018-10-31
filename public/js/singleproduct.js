@@ -11,6 +11,7 @@ $(function(){
 
     // If radio already checked
     if($('input[type=radio][name=kss-sizes]:checked').length > 0){
+        jQuery('#cd-add-to-cart').prop("disabled", false);
         buttn.html(customHtml);
     }
 
