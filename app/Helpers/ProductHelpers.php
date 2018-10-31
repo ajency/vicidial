@@ -127,20 +127,24 @@ function sanitiseFilterdata($result, $params = [])
             'display_name' => config('product.facet_display_data.' . $facetName . '.name'),
         ];
         $filter['items'] = [];
+        $is_collapsed = 0;
         foreach ($facets as $facet) {
+            $is_selected = (array_search($facet->facet_value, array_collapse($params["search_object"])) === false) ? false : true;
             $filter['items'][] = [
                 'facet_value'  => $facet->facet_value,
                 'display_name' => $facet->display_name,
                 'slug'         => $facet->slug,
-                'is_selected'  => (array_search($facet->facet_value, array_collapse($params["search_object"])) === false) ? false : true,
+                'is_selected'  => $is_selected,
                 'sequence'     => $facet->sequence,
                 'count'        => (isset($facetValues[$facet->facet_value])) ? $facetValues[$facet->facet_value] : 0,
             ];
+            $is_collapsed += $is_selected ;
         }
         $attributes = ['is_singleton', 'is_collapsed', 'template', 'order'];
         foreach ($attributes as $attribute) {
             $filter[$attribute] = config('product.facet_display_data.' . $facetName . '.' . $attribute);
         }
+        $filter["is_collapsed"] = !boolval($is_collapsed);
         $response[] = $filter;
     }
     return $response;
