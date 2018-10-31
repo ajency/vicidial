@@ -159,7 +159,12 @@ function singleproduct(string $product_slug)
         ->setSource(['search_result_data', 'variants']);
 
     $products = $q->search();
-    $product  = $products["hits"]["hits"][0];
+    try {
+        $product = $products["hits"]["hits"][0];
+    } catch (Exception $e) {
+        abort(404);
+    }
+
     return fetchProduct($product);
 
 }
