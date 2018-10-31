@@ -143,4 +143,9 @@ class CartController extends Controller
         $summary = $cart->getSummary();
         return response()->json(['cart_count' => $cart->itemCount(), 'message' => $message, "summary" => $summary]);
     }
+
+    public function getCartID(Request $request){
+        $user = userFromToken($request->header('Authorization'));
+        return response()->json(["cart_id" => $user->cart_id]);
+    }
 }
