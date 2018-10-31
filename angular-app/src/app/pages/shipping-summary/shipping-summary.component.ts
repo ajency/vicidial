@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'
 import { AppServiceService } from '../../service/app-service.service';
+import { ApiServiceService } from '../../service/api-service.service';
+
 
 @Component({
   selector: 'app-shipping-summary',
@@ -10,13 +12,15 @@ import { AppServiceService } from '../../service/app-service.service';
 export class ShippingSummaryComponent implements OnInit {
 
   shippingDetails : any;
-  constructor( private router : Router,
-  			   		 private appservice : AppServiceService
+  constructor(private router : Router,
+  			   		private appservice : AppServiceService,
+              private apiservice : ApiServiceService
   					) { }
 
   ngOnInit() {
     this.shippingDetails = this.appservice.shippingDetails;
     console.log("this.shippingDetails ==>", this.shippingDetails);
+    this.appservice.updateCartId();
   }
 
   navigateToPaymentPage(){
