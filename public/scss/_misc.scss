@@ -60,6 +60,10 @@
 		min-height: 35px;
 	}
 	.product-delete{
-		padding: 0 5px;
+		.delete{
+			height: 31px;
+    		width: 34px;
+    		margin: 0;
+		}
 	}
 }
