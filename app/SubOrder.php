@@ -55,28 +55,28 @@ class SubOrder extends Model
         $this->save();
     }
 
-    public function abondonOrder()
-    {
-        $items = $this->item_data;
-        foreach ($items as $item) {
-            $variant = Variant::find($item['id']);
-            $variant->inventory[$this->warehouse_id]['quantity'] += $item['quantity'];
-            $variant->save();
-        }
-        $this->item_data = [];
-        $this->save();
-    }
+    // public function abondonOrder()
+    // {
+    //     $items = $this->item_data;
+    //     foreach ($items as $item) {
+    //         $variant = Variant::find($item['id']);
+    //         $variant->inventory[$this->warehouse_id]['quantity'] += $item['quantity'];
+    //         $variant->save();
+    //     }
+    //     $this->item_data = [];
+    //     $this->save();
+    // }
 
-    public function save(array $options = [])
-    {
-        if ($this->id == null) {
-            $items = $this->item_data;
-            foreach ($items as $item) {
-                $variant = Variant::find($item['id']);
-                $variant->inventory[$this->warehouse_id]['quantity'] -= $item['quantity'];
-                $variant->save();
-            }
-        }
-        parent::save($options);
-    }
+    // public function save(array $options = [])
+    // {
+    //     if ($this->id == null) {
+    //         $items = $this->item_data;
+    //         foreach ($items as $item) {
+    //             $variant = Variant::find($item['id']);
+    //             $variant->inventory[$this->warehouse_id]['quantity'] -= $item['quantity'];
+    //             $variant->save();
+    //         }
+    //     }
+    //     parent::save($options);
+    // }
 }
