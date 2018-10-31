@@ -65,6 +65,8 @@ function build_search_object($params) {
 
 function validate_category_urls($params){
 	$all_facets = [];
+	$all_unique_cat_facets = [];
+	$facet_display_data = config('product.facet_display_data');
 	foreach($params['categories'] as $param) {
 		$slugs_arr = explode('--', $param);
 		$facets_data = Facet::select('facet_name',DB::raw('count(id) as "count"'))->whereIn('slug', $slugs_arr)->groupBy('facet_name')->get();
@@ -76,10 +78,13 @@ function validate_category_urls($params){
 			if($facetcont->count > $max_count){
 				$max_count = $facetcont->count;
 			}
+			if($facet_display_data[$facetcont->facet_name]["is_singleton"] == true && count($slugs_arr)>1)
+				return false;
 		}
 		if($max_count != count($slugs_arr))
 			return false;
 		$all_facets = array_merge($slugs_arr, $all_facets);
+		array_push($all_unique_cat_facets,$slugs_arr[0]);
 
 	}
 	$facets_count = Facet::select('slug',DB::raw('count(id) as "count"'))->whereIn('slug', $all_facets)->groupBy('slug')->get();
@@ -90,6 +95,23 @@ function validate_category_urls($params){
 	if(count($facets_count) != count($all_facets)){
 		return false;
 	}
+
+	$facets_data = Facet::select('slug',DB::raw('group_concat(facet_name) as "facet_names"'))->whereIn('slug', $all_unique_cat_facets)->groupBy('slug')->get();
+	$all_facets_arr=[];
+	foreach($facets_data as $key => $facet){
+		if($key == 0)
+			$all_facets_arr = array_merge($all_facets_arr,explode(',',$facet->facet_names));
+		else{
+			$fn_arr = explode(',',$facet->facet_names);
+			$common_arr = array_intersect($all_facets_arr, $fn_arr);
+			// print_r($common_arr);
+			if(count($common_arr)>0){
+				return false;
+			}
+			$all_facets_arr = array_merge($all_facets_arr,$fn_arr);
+		}
+	}
+
 	return true;
 }
 
