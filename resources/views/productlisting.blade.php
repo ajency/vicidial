@@ -172,11 +172,19 @@
           console.log(search_object)
           console.log(search_object[itemval])
           if(itemval in search_object){
-            if(search_object[facet_names_arr[item]].length>1)
-              search_cat = search_object[facet_names_arr[item]].join('--');
-            else
+            if(search_object[facet_names_arr[item]].length>1){
+              var furl =[]
+              for(fitem in search_object[facet_names_arr[item]]){
+                furl.push(facet_value_slug_arr[facet_names_arr[item]][search_object[facet_names_arr[item]][fitem]])
+              }
+              search_cat = furl.join('--');
+              search_str += '/'+search_cat;
+            }
+            else{
               search_cat = search_object[facet_names_arr[item]][0];
-            search_str += '/'+facet_value_slug_arr[facet_names_arr[item]][search_cat];
+              search_str += '/'+facet_value_slug_arr[facet_names_arr[item]][search_cat];
+            }
+            
           }
           
 

@@ -68,6 +68,7 @@ class ListingController extends Controller
 
     	$params = $this->search_object($parameters);
         if($params == false) return view('error404');
+        if(empty((array)$params->filters)) return view('noproducts');
         $facets = Facet::select('facet_name',DB::raw('group_concat(concat(facet_value,"$$$",slug)) as "values"'))->groupBy('facet_name')->get();
         $search_result_assoc = [];
         foreach($facets as $facet){

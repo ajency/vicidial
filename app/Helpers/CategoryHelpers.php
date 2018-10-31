@@ -68,7 +68,7 @@ function validate_category_urls($params){
 	foreach($params['categories'] as $param) {
 		$slugs_arr = explode('--', $param);
 		$facets_data = Facet::select('facet_name',DB::raw('count(id) as "count"'))->whereIn('slug', $slugs_arr)->groupBy('facet_name')->get();
-		print_r($facets_data);
+		// print_r($facets_data);
 		$max_count=0;
 		foreach ($facets_data as $key => $facetcont) {
 			if($key == 0)
