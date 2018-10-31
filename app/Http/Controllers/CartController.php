@@ -106,11 +106,10 @@ class CartController extends Controller
     {
         $id   = $request->session()->get('active_cart_id', false);
         $cart = Cart::find($id);
-        $cart->abortNotCart();
         if ($cart == null) {
             abort(404, "Cart not found for this session");
         }
-
+        $cart->abortNotCart();
         $items = getCartData($cart);
 
         $summary = $cart->getSummary();
@@ -124,10 +123,10 @@ class CartController extends Controller
         $params = $request->all();
 
         $cart = Cart::find($id);
-        $cart->abortNotCart();
         if ($cart == null) {
             abort(404, "Cart not found for this session");
         }
+        $cart->abortNotCart();
         $cart->removeItem($params["variant_id"]);
         $cart->save();
         $message = "Item deleted successfully";
@@ -140,10 +139,10 @@ class CartController extends Controller
         $params = $request->all();
 
         $cart = Cart::find($id);
-        $cart->abortNotCart();
         if ($cart == null) {
             abort(404, "Requested Cart ID not found");
         }
+        $cart->abortNotCart();
         checkUserCart($request->header('Authorization'),$cart);
         $cart->removeItem($params["variant_id"]);
         $cart->save();

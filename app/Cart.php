@@ -109,7 +109,7 @@ class Cart extends Model
     }
 
     public function abortNotCart(){
-        if($this->type != "cart"){
+        if($this->type == "order"){
             abort(403);
         }
     }
