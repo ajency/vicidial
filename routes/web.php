@@ -23,18 +23,12 @@ Route::get('/test/productlist', 'ProductListTestController@index')->name('produc
 
 Route::get('/shop', 'ListingController@shop')->name('shoplisting');
 
-Route::middleware(['create-seo:home'])->group(function () {
-    Route::get('/', 'HomeController@index')->name('home');
-});
+Route::get('/', 'HomeController@index')->name('home');
 
 Route::get('/shop/{static_page}', 'ShopStaticController@index')->name('shopstatic');
 
-Route::middleware(['create-seo:product'])->group(function () {
-    Route::get('/{product_slug}/buy', 'ProductController@index')->name('product');
-});
+Route::get('/{product_slug}/buy', 'ProductController@index')->name('product');
 
 Route::get('/'.$config['base_root_path']. $config['model']["App\ProductColor"]['base_path'].'/{photo_id}/{preset}/{depth}/{image}', 'ProductController@getImage');
 
-Route::middleware(['create-seo:listing'])->group(function () {
-    Route::get('/{cat1}/{cat2?}/{cat3?}/{cat4?}', 'ListingController@index')->name('listing');
-});
+Route::get('/{cat1}/{cat2?}/{cat3?}/{cat4?}', 'ListingController@index')->name('listing');

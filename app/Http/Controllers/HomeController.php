@@ -8,6 +8,7 @@ class HomeController extends Controller
 {
     public function index(Request $request)
     {
+    	setSEO('home');
         return view('home');
     }
 
