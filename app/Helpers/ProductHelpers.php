@@ -56,12 +56,12 @@ function formatItems($result, $params){
         $productColor      = ProductColor::where([["elastic_id", $doc["_id"]]])->first();
         $product = $doc["_source"];
         $data = $product["search_result_data"];
-
+        $listImages       = $productColor->getDefaultImage(["list-view"]);
         $item = [
             "title" => $data["product_title"],
             "slug_name" => $data["product_slug"],
             "description" => $data["product_description"],
-            "images" => $productColor->getDefaultImage(["list-view"]),
+            "images" => (isset($listImages["list-view"])) ? $listImages["list-view"] : [],
             "variants" => [],
             "product_id" => $data["product_id"],
             "color_id" => $data['product_color_id'],
