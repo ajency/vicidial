@@ -142,7 +142,7 @@ class Variant extends Model
             'availability'  => $this->getAvailability(),
             'message'       => $this->getMessage(),
             'attributes'    => $this->getItemAttributes(),
-            "id"            => $this->getID(),
+            "id"            => $this->id,
         );
 
         if($related_items) $item['related_items'] = $this->getRelatedItems();

@@ -39,7 +39,7 @@ class CartController extends Controller
             }
 
             if($variant->getQuantity()>=$qty) {
-                $cart->insertItem(["id" => $params['variant_id'], "quantity" => $qty]);
+                $cart->insertItem(["id" => $variant->id, "quantity" => $qty]);
                 $cart->save();
                 $message = "Item added successfully";
             }
@@ -67,7 +67,7 @@ class CartController extends Controller
             }
 
             if($variant->getQuantity()>=$qty) {
-                $cart->insertItem(["id" => $params['variant_id'], "quantity" => $qty]);
+                $cart->insertItem(["id" => $variant->id, "quantity" => $qty]);
                 $cart->save();
                 $message          = "Item added successfully";
             }

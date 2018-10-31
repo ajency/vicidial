@@ -60,7 +60,7 @@ class Cart extends Model
         $total_price = 0;
         $discount    = 0;
         foreach ($this->cart_data as $cart_item) {
-            $variant = Variant::where('odoo_id', $cart_item['id'])->first();
+            $variant = Variant::find($cart_item['id']);
             $total_price += $variant->getSalePrice() * $cart_item["quantity"];
             $discount += $variant->getDiscount() * $cart_item["quantity"];
         }
@@ -77,7 +77,7 @@ class Cart extends Model
 
     public function getItem(int $variant_id, $fetch_related=true)
     {
-        $variant           = Variant::where('odoo_id', $variant_id)->first();
+        $variant           = Variant::find($variant_id);
         if($variant == null)
             abort(404);
         $item              = $variant->getItem($fetch_related);
