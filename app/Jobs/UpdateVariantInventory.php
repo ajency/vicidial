@@ -15,15 +15,17 @@ class UpdateVariantInventory implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     protected $variant_id;
+    protected $product_move;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($variant_id)
+    public function __construct($product_move)
     {
-        $this->variant_id = $variant_id;
+        $this->product_move = $product_move;
+        $this->variant_id   = $product_move["variant_id"];
     }
 
     /**
