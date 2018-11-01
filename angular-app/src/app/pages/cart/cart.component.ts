@@ -116,7 +116,7 @@ export class CartComponent implements OnInit {
       this.checkCartItemOutOfStock();
       sessionStorage.setItem('cart_data', JSON.stringify(this.cart));
       document.cookie = "cart_count=" + this.cart.cart_count + ";path=/";
-      this.updateCartCountInUI();
+      this.appservice.updateCartCountInUI();
       this.appservice.removeLoader()
       this.zone.run(() => {});
     })
@@ -184,7 +184,7 @@ export class CartComponent implements OnInit {
       this.checkCartItemOutOfStock();
       document.cookie = "cart_count=" + this.cart.cart_count + ";path=/";
       sessionStorage.setItem('cart_data', JSON.stringify(this.cart));
-      this.updateCartCountInUI();
+      this.appservice.updateCartCountInUI();
       this.appservice.removeLoader()
     })
     .catch((error)=>{
@@ -284,21 +284,6 @@ export class CartComponent implements OnInit {
   check_OTP(){
     if(this.otpCode.otp1=='' || this.otpCode.otp2=='' || this.otpCode.otp3=='' || this.otpCode.otp4=='' || this.otpCode.otp5=='' || this.otpCode.otp6=='')
       return true;
-  }
-
-  updateCartCountInUI() {
-    //Check if cart count in Session storage
-    var cart_count = this.appservice.getCookie( "cart_count" );
-    if(cart_count && cart_count != "0"){
-      //Scroll to top if cart icon is hidden on top
-      $(".cart-counter").removeClass('d-none'), 100;
-      $(".cart-counter").addClass('d-block'), 100;
-      $('#output').html(function(i, val) { return cart_count });
-    }
-    else{
-      $(".cart-counter").addClass('d-none'), 100;
-      $(".cart-counter").removeClass('d-block'), 100;
-    }
   }
 
   updateOtpModal(){
