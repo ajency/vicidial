@@ -414,17 +414,34 @@ class Product
         return formatItems($q->search(), $params);
     }
 
-    public static function productListPage($params){
+    public static function productListPage($params,$slug_value_search_result,$slug_search_result){
         $output = [];
         
         $output["filters"] = self::getProductCategoriesWithFilter($params);
         $results = self::getItemsWithFilters($params);
+        $facet_display_data = config('product.facet_display_data');
+        $facet_names = array_keys($facet_display_data);
+        $bread = [];
+        $bread['breadcrumb']           = array("list" =>[],"current"=>"");
+        // $bread['breadcrumb']['list']   = array();
+        $gen_url = "";
+        foreach($facet_names as $fkey => $facet_name){
+            $slugval = array_search($facet_name, $slug_search_result);
+            $gen_url .= "/".$slugval;
+            if(isset($slug_value_search_result[$slugval]["facet_value"])){
+                if($fkey == (count($slug_search_result)-1))
+                    $bread['breadcrumb']['current'] = $slug_value_search_result[$slugval]["facet_value"];
+                else
+                    $bread['breadcrumb']['list'][] = ['name' => $slug_value_search_result[$slugval]["facet_value"], 'href' => url($gen_url)];
+            }
+            
+        }
         $output["page"] = $results["page"];
         $output["items"] = $results["items"];
         $output["results_found"] = $results["results_found"];
         $output["headers"] = ["page_title"=>"Clothing","product_count"=>17697];
         $output["sort_on"] =[["name"=>"Latest Products","value"=>"latest","is_selected"=>false],["name"=>"Popularity","value"=>"popular","is_selected"=>true],["name"=>"Price Low to High","value"=>"price_asc","is_selected"=>false],["name"=>"Price High to Low","value"=>"price_dsc","is_selected"=>false],["name"=>"Discount Low to High","value"=>"discount_asc","is_selected"=>false],["name"=>"Discount High to Low","value"=>"discount_dsc","is_selected"=>false]];
-        $output["breadcrumbs"] = [["name"=>"Home","action"=>["type"=>"home","query"=>[]]],["name"=>"Men","action"=>["type"=>"product-list","query"=>["genders"=>["men"]]]],["name"=>"Clothing","action"=>["type"=>"product-list","query"=>["genders"=>["men"],"l1_categories"=>["clothing"]]]]];
+        $output["breadcrumbs"] = $bread['breadcrumb'];
         $output["search"] = ["params"=>["genders"=>["men"],"l1_categories"=>["clothing"]],"pattern"=>[["key"=>"genders","slugs"=>["men"]],["key"=>"l1_categories","slugs"=>["clothing"]]],"is_valid"=>true,"domain"=>"https=>//newsite.stage.kidsuperstore.in","type"=>"product-list","query"=>["page"=>["2"],"page_size"=>["20"]]];
         return $output;
     }

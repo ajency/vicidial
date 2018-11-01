@@ -140,8 +140,8 @@
       console.log(facet_list);
       
 
-
-      var data = {"search_object":facet_list}
+      var url = constructCategoryUrl(config_facet_names_arr,facet_list,facet_value_slug_assoc);
+      var data = {"search_object":facet_list,"url":url}
       if(call_ajax == true){
         console.log("filter_tags_list===")
         console.log(filter_tags_list)
@@ -197,12 +197,20 @@
                  document.getElementById("filter-"+templateval+"-template-content").innerHTML = html;
                });
               }
+              if(key == "breadcrumbs"){
+                 var source   = document.getElementById("filter-header-template").innerHTML;
+                 var template = Handlebars.compile(source);
+                 var context = {};
+                 context["breadcrumbs"] = values ;
+                 var html    = template(context);
+                 document.getElementById("filter-header-template-content").innerHTML = html;
+              }
           });
 
 
           console.log(config_facet_names_arr);
           console.log(facet_list)
-          var url = constructCategoryUrl(config_facet_names_arr,facet_list,facet_value_slug_assoc);
+          
           window.history.replaceState('categoryPage', 'Category', url);
         });
       }

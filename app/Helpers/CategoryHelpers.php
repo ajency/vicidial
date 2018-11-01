@@ -53,14 +53,26 @@ function build_search_object($params) {
 		$all_facets = array_merge($slugs_arr, $all_facets);
 	}
 
-	$facets = Facet::select('facet_name',DB::raw('group_concat(facet_value) as "values"'))->whereIn('slug', $all_facets)->groupBy('facet_name')->get();
+	$facets = Facet::select('facet_name',DB::raw('group_concat(facet_value) as "values",group_concat(concat(slug,"$$$",facet_value)) as "slugvalues"'))->whereIn('slug', $all_facets)->groupBy('facet_name')->get();
 	$search_result = [];
+	$slug_search_result = [];
+	$slug_value_search_result = [];
 	foreach($facets as $facet){
 		$search_result[$facet->facet_name] = explode(",", $facet->values);
+		$slug_values = explode(",", $facet->slugvalues);
+		foreach($slug_values as $slugval){
+			$slugval_arr = explode("$$$",$slugval);
+			$slug_value_search_result[$slugval_arr[0]] = ["facet_name" => $facet->facet_name,"facet_value" => $slugval_arr[1]];
+			$slug_search_result[$slugval_arr[0]] = $facet->facet_name;
+		}
 	}
 	// $facets_arr   = json_decode($facets, true);
 	// $search_result = array_column($facets_arr, 'values',"facet_name");
-	return $search_result;
+	$dataArr = [];
+	$dataArr["slug_search_result"] =$slug_search_result;
+	$dataArr["slug_value_search_result"] =$slug_value_search_result;
+	$dataArr["search_result"] =$search_result;
+	return $dataArr;
 }
 
 function validate_category_urls($params){
