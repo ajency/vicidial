@@ -50,10 +50,12 @@ class OrderController extends Controller
 
     public function setUserCart($user_id)
     {
-        $cart =  new Cart;
+        $user = User::find($user_id);
+
+        $cart = new Cart;
+        $cart->user_id = $user->id;
         $cart->save();
 
-        $user = User::find($user_id);
         $user->cart_id = $cart->id;
         $user->save();
     }
