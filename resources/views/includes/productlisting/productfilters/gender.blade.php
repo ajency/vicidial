@@ -36,7 +36,6 @@
 @section('footjs-gender')
 
   <script type="text/javascript" >
-   // require('handlebars');
    var source   = document.getElementById("filter-gender-template").innerHTML;
    var template = Handlebars.compile(source);
    var singleton = (<?= $singleton ?> == 1)?true:false;
