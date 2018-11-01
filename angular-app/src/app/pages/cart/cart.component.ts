@@ -122,11 +122,11 @@ export class CartComponent implements OnInit {
     })
     .catch((error)=>{
       console.log("error ===>", error);
-      if(error.message == "Cart not found for this session"){
+      // if(error.message == "Cart not found for this session"){
         this.cart = {
           items : []
         }
-      }
+      // }
       this.appservice.removeLoader()
       this.zone.run(() => {});
     })
