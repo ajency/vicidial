@@ -288,6 +288,7 @@ export class CartComponent implements OnInit {
 
   updateOtpModal(){
     $('#signin').modal('hide');
+    $("#cd-cart").css("overflow", "auto");
     this.mobileNumberEntered = false;
     this.otp = null;
     this.userValidation.otpVerificationErrorMsg = '';
