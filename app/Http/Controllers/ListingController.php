@@ -60,8 +60,9 @@ class ListingController extends Controller
         }
         $search_results["slug_search_result"] = $search_object_arr["slug_search_result"];
         $search_results["slug_value_search_result"] = $search_object_arr["slug_value_search_result"];
+        $search_results["slugs_result"] = $search_object_arr["slugs_result"];
         // dd($search_object);
-        $params = Product::productListPage(["search_object" => $search_object,"display_limit"=> 20,"page" =>1],$search_results["slug_value_search_result"],$search_results["slug_search_result"]);
+        $params = Product::productListPage(["search_object" => $search_object,"display_limit"=> 20,"page" =>1],$search_results["slug_value_search_result"],$search_results["slug_search_result"],$search_results["slugs_result"]);
 
         // dd($params);
         return json_decode(json_encode($params,JSON_FORCE_OBJECT));
