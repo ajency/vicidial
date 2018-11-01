@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Product;
+use App\ProductColor;
 use App\Variant;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -32,9 +33,40 @@ class UpdateVariantInventory implements ShouldQueue
      */
     public function handle()
     {
-        $inventory          = Product::getVariantInventory([$this->variant_id]);
-        $variant            = Variant::where(["odoo_id" => $this->variant_id])->first();
-        $variant->inventory = $inventory[$this->variant_id]["inventory"];
-        $variant->save();
+        $inventory      = Product::getVariantInventory([$this->variant_id]);
+        $var            = Variant::where(["odoo_id" => $this->variant_id])->first();
+        $var->inventory = $inventory[$this->variant_id]["inventory"];
+        $availability   = $var->getAvailability();
+        $var->save();
+        $elastic_id   = $var->productColor->elastic_id;
+        $productColor = $var->getVariantData();
+        foreach ($productColor["variants"] as &$variant) {
+            if ($variant["variant_id"] == $this->variant_id) {
+                $variant["variant_availability"] = $availability;
+                break;
+            }
+        }
+
+        foreach ($productColor["search_data"] as &$variant) {
+            $flag = false;
+            foreach ($variant["number_facet"] as $facet) {
+                if ($facet["facet_name"] == "variant_id" and $facet["facet_value"] == $this->variant_id) {
+                    $flag = true;
+                    break;
+                }
+            }
+            if ($flag) {
+
+                foreach ($variant["boolean_facet"] as &$facet) {
+                    if ($facet["facet_name"] == "variant_availability") {
+                        $facet["facet_value"] = $availability;
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        $result = ProductColor::saveToElastic($elastic_id, $productColor);
+        \Log::info($result);
     }
 }
