@@ -51,12 +51,17 @@
   </div>
   </div>
 </div>
-<div class="d-none d-md-block filter-selection">
-<div class="d-flex mt-3 ">
-  <div class="border border-dark p-1 mr-2 ">Male <span class="ml-1 h6 kss_highlight" aria-hidden="true">&times;</span></div>
-  <div class="border border-dark p-1 mr-2">1-12M <span class="ml-1 h6 kss_highlight" aria-hidden="true">&times;</span></div>
-  <div class="border border-dark p-1 mr-2">Below ₹200.00 <span class="ml-1 h6 kss_highlight" aria-hidden="true">&times;</span></div>
-  <div class=" p-1 mr-2"><a href="#" class="font-weight-bold kss-link clear-filter" >Clear All</a></div>
-</div>
-</div>
+<script id="filter-tags-template" type="text/x-handlebars-template">
+  <div class="d-none d-md-block filter-selection">
+    <div class="d-flex mt-3 ">
+      @{{#each filter_tags_list}}
+        <div class="border border-dark p-1 mr-2 "><span data-slug="@{{slug}}">@{{value}}</span> <span class="ml-1 h6 kss_highlight" aria-hidden="true" onclick="removeFilterTag('@{{slug}}');">&times;</span></div>
+      @{{/each}}
+<!--       <div class="border border-dark p-1 mr-2">1-12M <span class="ml-1 h6 kss_highlight" aria-hidden="true">&times;</span></div>
+      <div class="border border-dark p-1 mr-2">Below ₹200.00 <span class="ml-1 h6 kss_highlight" aria-hidden="true">&times;</span></div> -->
+      <div class=" p-1 mr-2"><a href="#" class="font-weight-bold kss-link clear-filter" >Clear All</a></div>
+    </div>
+  </div>
+</script>
+<div id="filter-tags-template-content"></div>
 <hr class="d-none d-sm-block">

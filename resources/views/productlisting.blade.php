@@ -46,14 +46,16 @@
     $facet_value_slug_assoc = json_encode($params->search_result_assoc);
   ?>
   <script type="text/javascript" src="/js/productlisting.js"></script>
-  @yield('footjs-gender')
+    @yield('footjs-gender')
   @yield('footjs-age')
   @yield('footjs-subtype')
   @yield('footjs-category')
+  @yield('footjs-filter-tags')
   <script type="text/javascript">
       var facet_list = {}
       var config_facet_names_arr = <?= json_encode($config_facet_names_arr);?>;
       var facet_value_slug_assoc = <?= $facet_value_slug_assoc ?>;
+      var filter_tags_list = [] ;
       console.log("facet_value_slug_assoc===")
       console.log(facet_value_slug_assoc)
       console.log("facet array===")
@@ -64,6 +66,7 @@
       var call_ajax = false;
       var facet_name = $(this).data('facet-name')
       var singleton = $(this).data('singleton')
+      var slug_name = $(this).data('slug')
       console.log(facet_name)
       console.log(this.checked+"==="+this.value);
       if(this.checked){
@@ -72,18 +75,49 @@
             console.log("singleton=="+singleton)
             if(singleton == false){
               facet_list[facet_name].push(this.value)
+              var fil_index = filter_tags_list.findIndex(obj => obj.slug==slug_name);
+              if(fil_index == -1)
+                filter_tags_list.push({"slug":slug_name, "value":this.value, "group":facet_name})
               call_ajax = true;
             }
             else{
               facet_list[facet_name] = [this.value]
+              var fil_index = filter_tags_list.findIndex(obj => obj.slug==slug_name);
+              var fil_grp_index = filter_tags_list.findIndex(obj => obj.group==facet_name);
+              if(fil_index == -1){
+                if(fil_grp_index == -1)
+                  filter_tags_list.push({"slug":slug_name, "value":this.value, "group":facet_name})
+                else{
+                  filter_tags_list.splice(fil_grp_index, 1);
+                  filter_tags_list.push({"slug":slug_name, "value":this.value, "group":facet_name})
+                }
+              }
               call_ajax = true;
             }
 
           }
         }
-        else
+        else{
           facet_list[facet_name] = [this.value]
+          var fil_index = filter_tags_list.findIndex(obj => obj.slug==slug_name);
+          if(singleton == true){
+            var fil_grp_index = filter_tags_list.findIndex(obj => obj.group==facet_name);
+            if(fil_index == -1){
+              if(fil_grp_index == -1)
+                filter_tags_list.push({"slug":slug_name, "value":this.value, "group":facet_name})
+              else{
+                filter_tags_list.splice(fil_grp_index, 1);
+                filter_tags_list.push({"slug":slug_name, "value":this.value, "group":facet_name})
+              }
+            }
+          }
+          else{
+            if(fil_index == -1)
+              filter_tags_list.push({"slug":slug_name, "value":this.value, "group":facet_name})
+          }
           call_ajax = true;
+        }
+          
       }
       else{
         console.log("else==")
@@ -101,12 +135,28 @@
                 if (index !== -1) facet_list[facet_name].splice(index, 1);
                 call_ajax = true;
               }
+              var fil_index = filter_tags_list.findIndex(obj => obj.slug==slug_name);
+              filter_tags_list.splice(fil_index, 1);
             }
         }
       }
       console.log(facet_list);
+      
+
+
       var data = {"search_object":facet_list}
       if(call_ajax == true){
+        console.log("filter_tags_list===")
+        console.log(filter_tags_list)
+        var filtersource   = document.getElementById("filter-tags-template").innerHTML;
+        var filtertemplate = Handlebars.compile(filtersource);
+        var filtercontext = {};
+        filtercontext["filter_tags_list"] = filter_tags_list;
+        console.log("filter tags====")
+        console.log(filtercontext)
+        var filterhtml    = filtertemplate(filtercontext);
+        document.getElementById("filter-tags-template-content").innerHTML = filterhtml;
+
         $.ajax({
         method: "POST",
         url: "/api/rest/v1/product-list",
@@ -194,6 +244,18 @@
         }
         return search_str;
       }
-  </script>
+
+      function removeFilterTag(slug){
+        var elm = $("input[data-slug='"+slug+"'].facet-category")
+        var singleton = elm.data("singleton")
+        // if(singleton == true)
+        elm.removeAttr("checked")
+        console.log(elm)
+        console.log("single==="+slug)
+        elm.trigger( "change" );
+        
+      }
+  </script> 
+
 
 @stop
