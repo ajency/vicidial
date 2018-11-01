@@ -1,4 +1,5 @@
 <div class="accordion product-collapse" id="accordionExample">
+  @php if($params['description']) { @endphp
   <div class="">
     <div class="collapse-head border-bottom mb-0" id="headingOne">
         <button class="btn btn-link btn-block text-left py-3 px-0 br-0 " type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -14,6 +15,9 @@
         </div>
     </div>
   </div>
+  @php } @endphp
+
+  @php if($params['additional_info']) { @endphp
   <div class="">
     <div class="collapse-head border-bottom mb-0" id="headingTwo">
         <button class="btn btn-link btn-block text-left py-3 px-0 br-0 collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -39,6 +43,7 @@
         </div>
     </div>
   </div>
+  @php } @endphp
   <!-- <div class="">
     <div class="collapse-head border-bottom mb-0" id="headingThree">
         <button class="btn btn-link btn-block text-left py-3 px-0 br-0 collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
