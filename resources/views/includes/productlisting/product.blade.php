@@ -9,27 +9,29 @@ $url = create_url([$product->slug_name, 'buy']);
   	<!-- Wishlist -->
     <!-- <i class="fas fa-heart kss_heart"></i> -->
     <!-- Product Image Display -->
-    <a href="{{$url}}" >
-      <div class="image oh loading loading-01">
-      <div class="overlay"></div>
-      @php
-      $image_1x = $image_2x = $image_3x = $load_10x = '/img/placeholder.svg';
-      if(count((array)$product->images)>0){
-        $load_10x = $product->images->{'load'};
-        $image_1x = $product->images->{'1x'};
-        $image_2x = $product->images->{'2x'};
-        $image_3x = $product->images->{'3x'};
-      }
-      @endphp
-      <img data-src="{{$image_1x}}" data-srcset="{{$image_1x}} 1x, {{$image_2x}} 2x" class="lazyload card-img-top" />
-     </div>
+    <a href="{{$url}}" class="position-relative">
+      <div class="@php if(count((array)$product->images)==0){ @endphp image @php } @endphp oh loading loading-01">
+        <div class="overlay"></div>
+        @php
+        $image_1x = $image_2x = $image_3x = $load_10x = '/img/placeholder.svg';
+        if(count((array)$product->images)>0){
+          $load_10x = $product->images->{'load'};
+          $image_1x = $product->images->{'1x'};
+          $image_2x = $product->images->{'2x'};
+          $image_3x = $product->images->{'3x'};
+        }
+        @endphp
+        <img src="{{$load_10x}}" data-srcset="{{$image_1x}} 270w, {{$image_2x}} 540w, {{$image_3x}} 810w" sizes="(min-width: 992px) 33.33vw,50vw" class="lazyload card-img-top blur-up @php if(count((array)$product->images)==0){ @endphp placeholder-img @php } @endphp" />
+      </div>
+      <!-- Size Selection Blade -->
+      @include('includes.productlisting.sizeselection', ['product' => $product])       
     </a>
     <!-- Product Info & Size Display -->
     <div class="card-body">
       <a href="{{$url}}" class="text-dark">
         <h5 class="card-title">
           {{$product->title}}
-        </h5>
+        </h5>      
       </a>
       <!-- Calculate & Display Price -->
       @php
@@ -40,7 +42,5 @@ $url = create_url([$product->slug_name, 'buy']);
         <div id="kss-price-{{$product->product_id}}-{{$product->color_id}}" class="kss-price kss-price--smaller">₹{{$default_price['sale_price']}} <small class="kss-original-price text-muted">₹{{$default_price['list_price']}}</small><span class="kss-discount text-danger">{{$default_price['discount_per']}}% OFF</span></div>
       @php } @endphp
     </div>
-    <!-- Size Selection Blade -->
-    @include('includes.productlisting.sizeselection', ['product' => $product])
   </div>
 </div>

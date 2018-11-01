@@ -23,7 +23,7 @@ $size: 20px;
         }
          .select-size{
            position: absolute;
-           bottom:66px;
+           bottom: 0;
            width: 100%;
            z-index: 999;
            opacity: 0;
@@ -31,6 +31,7 @@ $size: 20px;
            transition: all 0.5s ease;
            padding: 10px 0px;
            border-radius: 0px;
+           margin-bottom: 0px;
             .radio-wrap{
             padding: 8px 0px 0px 8px;
            text-align: center;
@@ -39,7 +40,7 @@ $size: 20px;
                 padding: 8px;
                 background: #fff;
                 .radio-option{
-                    width: 52px;
+                    min-width: 52px;
                 }
            }
          }
@@ -96,6 +97,10 @@ $size: 20px;
             }
         }
     }
+  }
+  .placeholder-img{
+    padding: 0 2em;
+    background-color: $placeholder;
   }
 }
 @media (min-width: 320px) and (max-width: 767.98px) {

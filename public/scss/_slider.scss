@@ -168,7 +168,7 @@
 
 .slider-placeholder-img{
     img{
-        background-color: #dadada;
+        background-color: $placeholder;
         height: 450px;
         @media (max-width: 767px){
             padding: 0 4em;
