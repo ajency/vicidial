@@ -53,12 +53,14 @@ function build_search_object($params) {
 		$all_facets = array_merge($slugs_arr, $all_facets);
 	}
 
-	$facets = Facet::select('facet_name',DB::raw('group_concat(facet_value) as "values",group_concat(concat(slug,"$$$",facet_value)) as "slugvalues"'))->whereIn('slug', $all_facets)->groupBy('facet_name')->get();
+	$facets = Facet::select('facet_name',DB::raw('group_concat(facet_value) as "values",group_concat(slug) as "slugs",group_concat(concat(slug,"$$$",facet_value)) as "slugvalues"'))->whereIn('slug', $all_facets)->groupBy('facet_name')->get();
 	$search_result = [];
 	$slug_search_result = [];
 	$slug_value_search_result = [];
+	$slugs_result = [];
 	foreach($facets as $facet){
 		$search_result[$facet->facet_name] = explode(",", $facet->values);
+		$slugs_result[$facet->facet_name] = explode(",", $facet->slugs);
 		$slug_values = explode(",", $facet->slugvalues);
 		foreach($slug_values as $slugval){
 			$slugval_arr = explode("$$$",$slugval);
@@ -72,6 +74,7 @@ function build_search_object($params) {
 	$dataArr["slug_search_result"] =$slug_search_result;
 	$dataArr["slug_value_search_result"] =$slug_value_search_result;
 	$dataArr["search_result"] =$search_result;
+	$dataArr["slugs_result"] =$slugs_result;
 	return $dataArr;
 }
 

@@ -414,7 +414,7 @@ class Product
         return formatItems($q->search(), $params);
     }
 
-    public static function productListPage($params,$slug_value_search_result,$slug_search_result){
+    public static function productListPage($params,$slug_value_search_result,$slug_search_result,$slugs_result){
         $output = [];
         
         $output["filters"] = self::getProductCategoriesWithFilter($params);
@@ -427,12 +427,26 @@ class Product
         $gen_url = "";
         foreach($facet_names as $fkey => $facet_name){
             $slugval = array_search($facet_name, $slug_search_result);
-            $gen_url .= "/".$slugval;
+            
+            $part_url = "";
+            $cat_name = "";
             if(isset($slug_value_search_result[$slugval]["facet_value"])){
+                foreach($slugs_result[$facet_name] as $slugk => $slugv){
+                    if($slugk == 0){
+                        $part_url .= $slugv;
+                        $cat_name =  $slug_value_search_result[$slugv]["facet_value"];
+                    }
+                    else{
+                        $part_url .= "--".$slugv;
+                        $cat_name .= "-".$slug_value_search_result[$slugv]["facet_value"];
+                    }
+                }
+                $gen_url .= "/".$part_url;
+            
                 if($fkey == (count($slug_search_result)-1))
-                    $bread['breadcrumb']['current'] = $slug_value_search_result[$slugval]["facet_value"];
+                    $bread['breadcrumb']['current'] = $cat_name;
                 else
-                    $bread['breadcrumb']['list'][] = ['name' => $slug_value_search_result[$slugval]["facet_value"], 'href' => url($gen_url)];
+                    $bread['breadcrumb']['list'][] = ['name' => $cat_name, 'href' => url($gen_url)];
             }
             
         }
