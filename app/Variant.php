@@ -9,9 +9,10 @@ class Variant extends Model
 {
 
     protected $elastic_data;
+    protected $elastic_id;
     protected $variant;
     protected $elastic_index = "";
-    protected $fillable      = ['odoo_id', 'elastic_id', 'product_id', 'color_id'];
+    protected $fillable      = ['odoo_id', 'product_color_id'];
     protected $casts         = [
         'inventory' => 'array',
     ];
