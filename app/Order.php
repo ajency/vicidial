@@ -13,6 +13,11 @@ class Order extends Model
         return $this->hasMany('App\SubOrder');
     }
 
+    public function cart()
+    {
+        return $this->belongsTo('App\Cart');
+    }
+
     public function setSubOrders()
     {
         $cart       = Cart::find($this->cart_id);
@@ -44,6 +49,8 @@ class Order extends Model
                 $total[$key] += $subOrder->odoo_data[$key];
             }
         }
+
+        $total['final_price'] = $total['total'] + $total['shipping_fee'];
 
         return $total;
     }

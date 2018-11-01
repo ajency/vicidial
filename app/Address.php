@@ -10,4 +10,9 @@ class Address extends Model
         'address' => 'array', 
         'default' => 'boolean',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 }

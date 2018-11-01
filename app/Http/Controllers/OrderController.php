@@ -28,7 +28,7 @@ class OrderController extends Controller
 
         $this->setUserCart($user_id);
 
-        return response()->json(["items"=>getCartData($cart, false), "summary"=>$order->aggregateSubOrderData(), "address"=>$address->address, "message"=> 'Order Placed successfully']);
+        return response()->json(["items"=>getCartData($cart, false), "summary"=>$order->aggregateSubOrderData(), "order_id"=>$order->id, "address"=>$address->address, "message"=> 'Order Placed successfully']);
 
     }
 

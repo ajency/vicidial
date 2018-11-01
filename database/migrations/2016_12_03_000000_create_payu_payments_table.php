@@ -20,9 +20,9 @@ class CreatePayuPaymentsTable extends Migration
             $table->string('payable_type')->nullable();
             $table->string('txnid');
             $table->string('mihpayid');
-            $table->string('firstname');
+            $table->string('firstname')->nullable();
             $table->string('lastname')->nullable();
-            $table->string('email');
+            $table->string('email')->nullable();
             $table->string('phone');
             $table->double('amount');
             $table->double('discount')->default(0);

@@ -14,6 +14,16 @@ class Cart extends Model
         'cart_data' => 'array',
     ];
 
+    public function orders()
+    {
+        return $this->hasMany('App\Order');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+
     public function __construct()
     {
         if ($this->cart_data == null) {
