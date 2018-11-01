@@ -109,10 +109,11 @@ $('.select-size button').click(function() {
 
 
 function openCart(){
-  loadAngularApp();
-  $('#main-nav').removeClass('speed-in');
-  toggle_panel_visibility($('#cd-cart'), $('#cd-shadow-layer'), $('body'));
-  $("body").addClass("hide-scroll");
+    loadAngularApp();
+    $('#main-nav').removeClass('speed-in');
+    $('#cd-cart').addClass("speed-in");
+    $('#cd-shadow-layer').addClass('is-visible');
+    $("body").addClass("hide-scroll");
 }
 
 function updateCartCountInUI() {

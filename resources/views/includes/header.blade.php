@@ -91,12 +91,12 @@
                 </a>
             </li>
             <li class="list-inline-item pr-0 ">
-                <a id="cd-cart-trigger" href="#" class="shopping-cart">
+                <div id="cd-cart-trigger" class="shopping-cart">
                 <!-- <a id="cd-cart-trigger-test" href="#" class="shopping-cart"> -->
                    <i class="kss_icon bag-icon">
                    </i>
                    <span class="badge badge-light cart-counter d-none"><div id="output">0</div></span>
-                </a>
+                </div>
             </li>
         </ul>
     </div>

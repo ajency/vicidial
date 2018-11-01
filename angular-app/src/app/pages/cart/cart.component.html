@@ -9,7 +9,7 @@
 		</div>
 	  	<div class="align-items-center">
 			<h3 class="modal-title font-weight-bold mt-1 mb-0">
-				Cart <span class="text-muted "><strong>&#183;</strong></span>
+				Bag <span class="text-muted "><strong>&#183;</strong></span>
 				<small class="count text-muted ">{{cart.cart_count || 0}} <span *ngIf="(cart.cart_count !==undefined && (cart.cart_count >1 || cart.cart_count == 0)) || cart.cart_count===undefined">items</span> <span *ngIf="cart.cart_count && cart.cart_count == 1">item</span>
 				</small>
 			</h3>
@@ -152,7 +152,7 @@
 		<hr class="dashed"> -->
 		<hr class="dashed d-none">
 		<div class="cd-cart-total mt-4">
-			<h5 class="font-weight-bold">Cart Total <span>₹{{cart.summary.order_total}}</span></h5>
+			<h5 class="font-weight-bold">Bag Total <span>₹{{cart.summary.order_total}}</span></h5>
 			<p class="sub-text mb-3">Shipping charges will be added at checkout</p>
 		</div>
 
@@ -165,7 +165,7 @@
 
 	<div *ngIf="cart.items.length == 0" class="empty-cart text-center d-flex align-items-center justify-content-center flex-column">
 		<i class="fas fa-shopping-cart empty-cart__icon"></i>
-		<h4 class="py-4 mb-0">Your cart is currently empty</h4>
+		<h4 class="py-4 mb-0">Your bag is currently empty</h4>
 		<button class="btn btn-primary btn-lg btn-pay d-inline-flex align-items-center justify-content-center" (click)="closeCart()" style="min-width: 130px;">
 			Shop now
 		</button>
@@ -182,7 +182,7 @@
 	          <div class="d-flex align-items-center">
 	            <div class="pr-3">
 	              <h3  class="m-0 font-weight-bold kss_highlight" data-dismiss="modal" aria-label="Close">
-	                <img class="btn-back kss_highlight" src="/img/close-icon.png" style="width:20px;"/>
+	                <img (click)="updateOtpModal()" class="btn-back kss_highlight" src="/img/close-icon.png" style="width:20px;"/>
 	              </h3>
 	            </div>
 	            <div class="">

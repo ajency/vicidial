@@ -32,8 +32,9 @@ export class AppServiceService {
 
   closeCart(){
   	console.log('inside closeCart');
-    if(document.getElementsByTagName("body"))
+    if(document.getElementsByTagName("body")){
       document.getElementsByTagName("body")[0].classList.remove("hide-scroll");
+    }
     if(document.getElementById('cd-cart'))
       document.getElementById('cd-cart').classList.remove("speed-in");
     if(document.getElementById('cd-shadow-layer'))
@@ -87,6 +88,7 @@ export class AppServiceService {
   updateCartId(){
     this.clearSessionStorage();
     document.cookie='cart_count=' + 0 + ";path=/";
+    this.updateCartCountInUI();
     let url = this.apiUrl + '/api/rest/v1/user/cart/mine';
     let header = { Authorization : 'Bearer '+this.getCookie('token') };
 
@@ -101,5 +103,20 @@ export class AppServiceService {
 
   clearSessionStorage(){
     sessionStorage.removeItem('cart_data');
+  }
+
+  updateCartCountInUI() {
+    //Check if cart count in Session storage
+    var cart_count = this.getCookie( "cart_count" );
+    if(cart_count && cart_count != "0"){
+      //Scroll to top if cart icon is hidden on top
+      $(".cart-counter").removeClass('d-none'), 100;
+      $(".cart-counter").addClass('d-block'), 100;
+      $('#output').html(function(i, val) { return cart_count });
+    }
+    else{
+      $(".cart-counter").addClass('d-none'), 100;
+      $(".cart-counter").removeClass('d-block'), 100;
+    }
   }
 }
