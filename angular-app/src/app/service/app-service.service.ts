@@ -34,7 +34,6 @@ export class AppServiceService {
   	console.log('inside closeCart');
     if(document.getElementsByTagName("body")){
       document.getElementsByTagName("body")[0].classList.remove("hide-scroll");
-      // document.getElementsByTagName("body")[0].classList.remove("overflow-hidden");
     }
     if(document.getElementById('cd-cart'))
       document.getElementById('cd-cart').classList.remove("speed-in");

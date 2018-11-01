@@ -145,7 +145,7 @@ $L : 1200px;
             padding: 0 1.5em;
         }
         .cd-cart-items li {
-            padding: 1.5em;
+            padding: 1.5em 0;
         }
         .cd-item-remove {
             right: 2em;
@@ -232,6 +232,11 @@ $L : 1200px;
             background-repeat: no-repeat;
             background-position-y: 50%;
             cursor: pointer;
+            &.placeholder{
+                background-color: $placeholder;
+                background-size: 80%;
+                background-position: center;
+            }
         }
     }
     .product-detail {
