@@ -10,7 +10,7 @@ $url = create_url([$product->slug_name, 'buy']);
     <!-- <i class="fas fa-heart kss_heart"></i> -->
     <!-- Product Image Display -->
     <a href="{{$url}}" class="position-relative">
-      <div class="@php if(count((array)$product->images)==0){ @endphp image @php } @endphp oh loading loading-01">
+      <div class="image oh loading loading-01">
         <div class="overlay"></div>
         @php
         $image_1x = $image_2x = $image_3x = $load_10x = '/img/placeholder.svg';
@@ -26,7 +26,7 @@ $url = create_url([$product->slug_name, 'buy']);
       <!-- Size Selection Blade -->
       @include('includes.productlisting.sizeselection', ['product' => $product])       
     </a>
-    <!-- Product Info & Size Display -->
+    <!-- Product Info -->
     <div class="card-body">
       <a href="{{$url}}" class="text-dark">
         <h5 class="card-title">
