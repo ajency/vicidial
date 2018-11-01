@@ -11,6 +11,7 @@ $size: 20px;
         .overlay{
             width:100%;
             opacity: 0;
+            background: rgba(0, 0, 0, 0.34);
             transition: all 0.5s ease;
             position: absolute;
             top: 0px;
