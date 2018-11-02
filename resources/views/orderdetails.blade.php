@@ -7,7 +7,7 @@
 			<div class="col-12">
 				<div class="d-none d-md-block mb-4">
 					<!-- Breadcrumbs -->
-					{{-- @include('includes.breadcrumbs', ['params' => $params]) --}}
+					 @include('includes.breadcrumbs', ['params' => $params])
                  </div>
                  <div >
                   <div class="d-flex align-items-top top-navbar">

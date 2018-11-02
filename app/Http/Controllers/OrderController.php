@@ -63,84 +63,86 @@ class OrderController extends Controller
     public function getOrderDetails()
     {
 
-    $params = [
-        "breadcrumbs"=>[ 
-            ["name"=>"Home","action"=>["type"=>"home","query"=>[]]],
-            ["name"=>"Account","action"=>["type"=>"account","query"=>[]]],
-            ["name"=>"Order","action"=>["type"=>"order","query"=>[]]],
-            ["name"=>"Order Details","action"=>["type"=>"order-details","query"=>[]]]
-        ],
-        "order_info"=>[
-            "order_id"=>"123",
-            "txn_no"=>"#544545",
-            "total_amount"=>420,
-            "order_date"=>"20 Aug 2018",
-            "no_of_items"=>3
-        ],
-        "sub_orders"=>[
-            [   
-                "suborder_id" => 123,
-                "total" => 1830,
-                "number_of_items" => 2,
-                "items"=> [
-                    [
-                        "title" => "Cotton Rich Super Skinny Fit Jeans",
-                        "size" => "2-4 years",
-                        "quantity" => 1,
-                        "price" => 869,
-                        "variant_id" => 123,
-                        "images"=> ""
-                    ],
-                    [
-                        "title" => "Peach Casual Printed Tshirt",
-                        "size" => "8-9 years",
-                        "quantity" => 2,
-                        "price" => 869,
-                        "variant_id" => 123,
-                        "images"=> ""
+        $params = [
+            "order_info"=>[
+                "order_id"=>"123",
+                "txn_no"=>"#544545",
+                "total_amount"=>420,
+                "order_date"=>"20 Aug 2018",
+                "no_of_items"=>3
+            ],
+            "sub_orders"=>[
+                [   
+                    "suborder_id" => 123,
+                    "total" => 1830,
+                    "number_of_items" => 2,
+                    "items"=> [
+                        [
+                            "title" => "Cotton Rich Super Skinny Fit Jeans",
+                            "size" => "2-4 years",
+                            "quantity" => 1,
+                            "price" => 869,
+                            "variant_id" => 123,
+                            "images"=> ""
+                        ],
+                        [
+                            "title" => "Peach Casual Printed Tshirt",
+                            "size" => "8-9 years",
+                            "quantity" => 2,
+                            "price" => 869,
+                            "variant_id" => 123,
+                            "images"=> ""
+                        ]
+                    ]
+                ],
+                [   
+                    "suborder_id" => 244,
+                    "total" => 4545,
+                    "number_of_items" => 1,
+                    "items"=> [
+                        [
+                            "title" => "Cotton Rich Super Skinny Fit Jeans",
+                            "size" => "2-4 years",
+                            "quantity" => 1,
+                            "price" => 869,
+                            "variant_id" => 123,
+                            "images"=> ""
+                        ]
                     ]
                 ]
             ],
-            [   
-                "suborder_id" => 244,
-                "total" => 4545,
-                "number_of_items" => 1,
-                "items"=> [
-                    [
-                        "title" => "Cotton Rich Super Skinny Fit Jeans",
-                        "size" => "2-4 years",
-                        "quantity" => 1,
-                        "price" => 869,
-                        "variant_id" => 123,
-                        "images"=> ""
-                    ]
-                ]
+            "payment_info"=>[
+                "payment_mode" => "mastercard",
+                "card_num" => "512345XXXXXX2346",
+            ],
+
+            "shipping_address" => [
+                "name"=> "Shashank",
+                "phone"=> "1112224445",
+                "pincode"=> 214547,
+                "state"=> "Goa",
+                "address"=> "Line4,Line5,line6",
+                "locality"=> "qwersd",
+                "landmark"=> "asdf",
+                "city"=> "Mapusa",
+                "type"=> "Home"
+             ],
+
+             "order_summary" => [
+                        "total" => 12345,
+                        "shipping_fee" => 123,
+                        "final_price" => 13456,
+                        "savings" => 345
             ]
-        ],
-        "payment_info"=>[
-            "payment_mode" => "mastercard",
-            "card_num" => "512345XXXXXX2346",
-        ],
+        ];
 
-        "shipping_address" => [
-            "name"=> "Shashank",
-            "phone"=> "1112224445",
-            "pincode"=> 214547,
-            "state"=> "Goa",
-            "address"=> "Line4,Line5,line6",
-            "locality"=> "qwersd",
-            "landmark"=> "asdf",
-            "city"=> "Mapusa",
-            "type"=> "Home"
-         ],
+        $params['breadcrumb']           = array();
+        $params['breadcrumb']['list']   = array();
+        $params['breadcrumb']['list'][] = ['name' => "Account", 'href' => '#'];
+        $params['breadcrumb']['list'][] = ['name' => "Order", 'href' => '#'];
 
-         "order_summary" => [
-                    "total" => 12345,
-                    "shipping_fee" => 123,
-                    "final_price" => 13456,
-                    "savings" => 345
-        ]
-    ];
-    return view('orderdetails')->with('params',$params);
+        $params['breadcrumb']['current'] = 'Order Details';
+
+        return view('orderdetails')->with('params',$params);
     }
 }

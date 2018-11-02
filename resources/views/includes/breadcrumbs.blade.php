@@ -5,7 +5,7 @@
 	    <li class="breadcrumb-item"><a href="{{$item['href']}}">{{$item['name']}}</a></li>
     @php } @endphp
     @php if($params['breadcrumb']['current']!='') { @endphp
-    	<li class="breadcrumb-item active"><a>{{$params['breadcrumb']['list']}}</a></li>
+    	<li class="breadcrumb-item active"><a>{{$params['breadcrumb']['current']}}</a></li>
     @php } @endphp
 	</ol>
 </nav>
