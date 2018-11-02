@@ -36,7 +36,7 @@ $(function(){
     if ($(window).width() < 767) {
         // Detaching color option in mobile
         var coloroption = $('.colorOptions').detach();
-        $('.kss_sizes').after(coloroption);
+        $('.product-collapse').after(coloroption);
         $('.colorOptions').removeClass('d-none');
 
         // Disable tooltip in mobile
