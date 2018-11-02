@@ -6,7 +6,7 @@
    
    <div class="card shadow-sm">
          <div class="card-body text-muted d-flex">
-            Payment Mode:<i class="mr-1 ml-1 {{ $payment_info['payment_mode'] == 'mastercard' ? 'icon-master-card' : ( $payment_info['payment_mode'] == 'visa' ? 'icon-visa' : ($payment_info['payment_mode'] == 'rupay' ? 'icon-rupay' : 'icon-other-card') ) }} "></i> <strong>ending in {{substr($payment_info['card_num'], -4)}}</strong>
+            Payment Mode:<i class="mr-1 ml-1 {{ $payment_info['payment_mode'] == 'mastercard' ? 'icon-master-card' : ( $payment_info['payment_mode'] == 'visa' ? 'icon-visa' : ($payment_info['payment_mode'] == 'rupay' ? 'icon-rupay' : 'far fa-credit-card no-card ') ) }} "></i> <strong>ending in {{substr($payment_info['card_num'], -4)}}</strong>
          </div>
    </div>
    
