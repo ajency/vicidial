@@ -23,7 +23,7 @@
 			</div>
 			<div class="col-sm-12 col-lg-5">
 				<!-- Breadcrumbs -->
-				@include('includes.breadcrumbs', ['params' => $params])
+				@include('includes.breadcrumbs', ['breadcrumbs' => $params['breadcrumb']])
 
 				<!-- Product Title & Prices Section -->
 				@include('includes.singleproduct.producttitle', ['params' => $params, 'selected_color_id' => $selected_color_id])
