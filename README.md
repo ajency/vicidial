@@ -60,20 +60,28 @@ In the MySQL prompt
 
 `php artisan migrate`
 
+run 
+`php artisan passport:client --personal`
+
+
+
 Add the following to crontab
 
 `* * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1`
 
-run 
+run (only the first time)
+
 `php artisan tinker`
 
 In the tinker console type
+
+`Spatie\Permission\Models\Role::create(['name' => 'customer'])`
 
 `Product::startSync();`
 
 Back to Linux shell
 
-`php artisan elastic:create_index products`
+`php artisan elastic:create_index products` 
 
 `mkdir -p /var/log/laravel/`
 
