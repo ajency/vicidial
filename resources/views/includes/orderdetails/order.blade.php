@@ -1,14 +1,14 @@
 <!-- Order info -->
-
+@foreach ($sub_orders as $sub_order)
 <!-- Order shipped details -->
 <div class="d-flex bd-highlight">
 	<div class="pb-2 pr-2">
-		<label class="d-block m-0">Shipment 1 of 1 Item</label>
+		<label class="d-block m-0">Shipment {{$sub_order['number_of_items']}} of {{$sub_order['number_of_items']}} {{$sub_order['number_of_items'] == 1 ? "Item" : "Items"}}</label>
 		<i class="fas fa-clipboard-check mr-1 text-muted"></i> <span class="text-success font-weight-bold">Order Processed</span>
 	</div>
 	<div class="pb-2 ml-auto">
 		Total:
-		<h6 class="mt-1"><span class="rs-symbol"><i class="fas fa-rupee-sign sm-font"></i></span> 869 for 1 item</h6>
+		<h6 class="mt-1"><span class="rs-symbol"><i class="fas fa-rupee-sign sm-font"></i></span> {{$sub_order['total']}} for {{$sub_order['number_of_items']}} {{$sub_order['number_of_items'] == 1 ? "Item" : "Items"}}</h6>
 	</div>
 </div>
 
@@ -17,47 +17,29 @@
 	<div class="card-body">
 		<div class="primary-info d-lg-flex d-xl-flex">
 			<div class="kss_product_list flex-grow-1 pr-0 pr-md-4">
+				@foreach( $sub_order['items'] as $item)
 				<a href="/kss/product/" class="text-black">
 					<div class="product-img">
 						<div class="img" style="background-image: url(https://jeromie.github.io/kss/img/4front.jpg);"></div>
 					</div>
 					<div class="product-detail">
 						<div class="product-name text-truncate">
-							Cotton Rich Super Skinny Fit Jeans
+							{{$item['title']}}
 						</div>
 						<div class="product-size text-muted mb-1">
-							<span>Size: 2-4 years</span> <span>|</span> <span>Qty: 1</span>
+							<span>Size: {{$item['size']}}</span> <span>|</span> <span>Qty: {{$item['quantity']}}</span>
 						</div>
 						<div class="product-price">
 							<div class="retail-price">
 								<span class="rs-symbol"><i class="fas fa-rupee-sign sm-font"></i></span>
-								<span class="price">869</span>
+								<span class="price">{{$item['price']}}</span>
 							</div>
 						</div>
 					</div>
 				</a>
-
 				<hr class="mt-4 mb-4">
-				<a href="/kss/product/" class="text-black">
-					<div class="product-img">
-						<div class="img" style="background-image: url(https://jeromie.github.io/kss/img/4front.jpg);"></div>
-					</div>
-					<div class="product-detail">
-						<div class="product-name text-truncate">
-							Cotton Rich Super Skinny Fit Jeans
-						</div>
-						<div class="product-size text-muted mb-1">
-							<span>Size: 2-4 years</span> <span>|</span> <span>Qty: 1</span>
-						</div>
-						<div class="product-price">
-							<div class="retail-price">
-								<span class="rs-symbol"><i class="fas fa-rupee-sign sm-font"></i></span>
-								<span class="price">869</span>
-							</div>
-						</div>
-					
-					</div>
-				</a>
+				@endforeach
+				
 
 				<!--<div class="status-progress-wrap">
 					<div  class="status-progress-bar-wrap">
@@ -77,10 +59,10 @@
 						Delivered
 					</div>
 				</div> -->
-
+<!-- 
 				<h6 class="mt-2">
 					Your Order has been placed. We will update the tracking details for this item once it is shipped
-				</h6>
+				</h6> -->
 
 				<!-- <h6 class="mt-3">
 					Delivery Estimate: <strong class="font-weight-bold text-info">Arriving 30 Aug - 3 Sept </strong>
@@ -93,3 +75,4 @@
 		</div>
 	</div>
 </div>
+@endforeach

@@ -1,5 +1,4 @@
 <div class="row justify-content-end">
-	@if($order_info['order_id'])
 	<div class="col">
 		Order No.
 	  	<h6 class="font-weight-bold mt-1 ">{{$order_info['txn_no']}}</h6>
@@ -12,5 +11,4 @@
 		Placed on:
 	  	<h6 class="font-weight-bold mt-1 "><i class="far fa-calendar-alt"></i> {{$order_info['order_date']}} </h6>
 	</div>
-	@endif
 </div>

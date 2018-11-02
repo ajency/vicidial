@@ -7,7 +7,7 @@
 			<div class="col-12">
 				<div class="d-none d-md-block mb-4">
 					<!-- Breadcrumbs -->
-					 @include('includes.breadcrumbs', ['params' => $params])
+					 @include('includes.breadcrumbs', ['breadcrumbs' => $params['breadcrumb']])
                  </div>
                  <div >
                   <div class="d-flex align-items-top top-navbar">
@@ -38,12 +38,11 @@
 				<hr class="mb-4">
 
 				<!-- Order info -->
-				@include('includes.orderdetails.orderinfo', ['order_info' => $params['order_info']])
-
+					@include('includes.orderdetails.orderinfo', ['order_info' => $params['order_info']])
 				<hr class="mb-4">
 
 				<!-- Product info -->
-				@include('includes.orderdetails.order')
+				@include('includes.orderdetails.order', ['sub_orders' => $params['sub_orders']])
 
 				<div class="d-flex  align-self-center">
 					<label>
@@ -54,13 +53,13 @@
 			</div>
 			
 			<!-- Order Info sidebar -->
-			@include('includes.orderdetails.orderstats-sidebar')
+			@include('includes.orderdetails.orderstats-sidebar', ['payment_info' => $params['payment_info'], 'shipping_address' => $params['shipping_address'], 'order_summary' => $params['order_summary'] ])
 
 		</div>
 	
 	</div>
 
 	<!-- Similar Products -->
-	<!-- @include('includes.similar-products') -->
+	{{-- @include('includes.similar-products') --}}
 
 @stop
