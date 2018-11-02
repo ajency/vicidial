@@ -69,7 +69,7 @@ class OrderController extends Controller
                 "txn_no"=>"#544545",
                 "total_amount"=>420,
                 "order_date"=>"20 Aug 2018",
-                "no_of_items"=>3
+                "no_of_items"=>1
             ],
             "sub_orders"=>[
                 [   

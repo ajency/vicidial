@@ -38,7 +38,7 @@
 				<hr class="mb-4">
 
 				<!-- Order info -->
-				@include('includes.orderdetails.orderinfo')
+				@include('includes.orderdetails.orderinfo', ['order_info' => $params['order_info']])
 
 				<hr class="mb-4">
 
@@ -61,6 +61,6 @@
 	</div>
 
 	<!-- Similar Products -->
-	@include('includes.similar-products')
+	<!-- @include('includes.similar-products') -->
 
 @stop
