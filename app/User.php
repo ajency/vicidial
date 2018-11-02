@@ -31,6 +31,16 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function carts()
+    {
+        return $this->hasMany('App\Cart');
+    }
+
+    public function addresses()
+    {
+        return $this->hasMany('App\Address');
+    }
+
     public static function getUserByToken(string $token)
     {
         $token = explode('Bearer ', $token)[1];

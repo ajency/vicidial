@@ -19,6 +19,7 @@ class CreateAddressesTable extends Migration
             $table->string('type');
             $table->boolean('default')->default(0);
             $table->integer('user_id');
+            $table->boolean('active')->default(1);
             $table->timestamp('last_used')->nullable();
             $table->timestamps();
         });

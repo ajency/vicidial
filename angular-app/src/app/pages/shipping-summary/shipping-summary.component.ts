@@ -25,6 +25,7 @@ export class ShippingSummaryComponent implements OnInit {
 
   navigateToPaymentPage(){
   	// this.router.navigateByUrl('/payment', { skipLocationChange: true });
+    window.location.href = "/user/order/" + this.shippingDetails.order_id +"/payment/payu";
   }
   
   closeCart(){

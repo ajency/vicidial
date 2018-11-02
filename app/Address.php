@@ -7,7 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Address extends Model
 {
 	protected $casts = [
-        'address' => 'array', 
+        'address' => 'array',
         'default' => 'boolean',
+        'active' => 'boolean',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 }
