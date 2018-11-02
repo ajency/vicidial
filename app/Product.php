@@ -8,6 +8,7 @@ use App\Jobs\CreateProductJobs;
 use App\Jobs\FetchProductImages;
 use App\ProductColor;
 use App\Variant;
+use App\Jobs\UpdateVariantInventory;
 
 class Product
 {
@@ -471,5 +472,10 @@ class Product
 
     }
 
+    public static function updateInventory($product_move){
+        if ($product_move["to_loc"] == "Stock" or $product_move["from_loc"] == "Stock") {
+            UpdateVariantInventory::dispatch($product_move)->onQueue('update_inventory');
+        }
+    }
 
 }
