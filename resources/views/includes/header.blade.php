@@ -55,7 +55,7 @@
     <div class="my-2 my-lg-0">
         <ul class="list-inline mb-2 pt-3">
             <li class="list-inline-item">
-              <i class="kss_icon search-icon"></i>
+              <i class="kss_icon search-icon cursor-pointer"></i>
 
             <form class="search-input" style="width: 22rem; display:none;">
                  <input id="search" name="search" type="text" placeholder="What're we looking for ?" autocomplete="off">
@@ -91,9 +91,9 @@
                 </a>
             </li>
             <li class="list-inline-item pr-0 ">
-                <div id="cd-cart-trigger" class="shopping-cart">
+                <div id="cd-cart-trigger" class="shopping-cart position-relative">
                 <!-- <a id="cd-cart-trigger-test" href="#" class="shopping-cart"> -->
-                   <i class="kss_icon bag-icon">
+                   <i class="kss_icon bag-icon cursor-pointer">
                    </i>
                    <span class="badge badge-light cart-counter d-none"><div id="output">0</div></span>
                 </div>
