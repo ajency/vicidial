@@ -1,3 +1,4 @@
+
 # KSS PRODUCT SITE
 
 ## Install PHP 7.2
@@ -19,6 +20,14 @@
 `sudo apt update`
 
 `sudo apt install mysql-server mysql-client`
+
+Login into mysql
+
+`mysql -u root -p`
+
+In the MySQL prompt
+
+`create database databasename;`
 
 ## Install Elasticsearch 6.4
 `wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -`
@@ -52,12 +61,22 @@
 `php artisan migrate`
 
 
+`php artisan tinker`
 
+In the tinker console type
+
+`Product::startSync();`
+
+Back to Linux shell
+
+`php artisan elastic:create_index products`
 
 `mkdir -p /var/log/laravel/`
 
 `cat > /etc/supervisor/conf.d/newsite-worker.conf`
+
 paste this
+
 ```
 [program:newsite_product_sync]
 process_name=%(program_name)s_%(process_num)02d
@@ -89,8 +108,6 @@ numprocs=1
 redirect_stderr=true
 stdout_logfile=/var/log/laravel/comm.log
 ```
-
-
 
 `sudo supervisorctl reread` 
 
