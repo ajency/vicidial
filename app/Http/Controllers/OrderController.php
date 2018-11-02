@@ -62,7 +62,14 @@ class OrderController extends Controller
 
     public function getOrderDetails()
     {
-    $result = [
+
+    $params = [
+        "breadcrumbs"=>[ 
+            ["name"=>"Home","action"=>["type"=>"home","query"=>[]]],
+            ["name"=>"Account","action"=>["type"=>"account","query"=>[]]],
+            ["name"=>"Order","action"=>["type"=>"order","query"=>[]]],
+            ["name"=>"Order Details","action"=>["type"=>"order-details","query"=>[]]]
+        ],
         "order_info"=>[
             "order_id"=>"123",
             "txn_no"=>"#544545",
@@ -112,7 +119,7 @@ class OrderController extends Controller
         ],
         "payment_info"=>[
             "payment_mode" => "mastercard",
-            "card_end" => 1135,
+            "card_num" => "512345XXXXXX2346",
         ],
 
         "shipping_address" => [
@@ -134,6 +141,6 @@ class OrderController extends Controller
                     "savings" => 345
         ]
     ];
-    return view('orderdetails');
+    return view('orderdetails')->with('params',$params);
     }
 }
