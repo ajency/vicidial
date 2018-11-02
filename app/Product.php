@@ -265,7 +265,7 @@ class Product
         $products = ProductColor::leftJoin('fileupload_mapping', function ($join) {
             $join->on('product_colors.id', '=', 'fileupload_mapping.object_id');
             $join->where('fileupload_mapping.object_type', '=', "App\ProductColor");
-        })->where('fileupload_mapping.id', null)->select('product_colors.product_id')->distinct()->get();
+        })->where('fileupload_mapping.id', null)->select('product_colors.product_id')->where('product_colors.no_image','!=',true)->distinct()->get();
         foreach ($products as $product) {
             FetchProductImages::dispatch($product->product_id)->onQueue('process_product_images');
         }

@@ -12,7 +12,7 @@ use Illuminate\Queue\SerializesModels;
 class IndexProduct implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    public $tries = 1;
+    public $tries = 3;
     protected $productId;
     /**
      * Create a new job instance.
