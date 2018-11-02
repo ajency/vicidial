@@ -140,8 +140,9 @@ class OrderController extends Controller
         $params['breadcrumb']['list']   = array();
         $params['breadcrumb']['list'][] = ['name' => "Account", 'href' => '#'];
         $params['breadcrumb']['list'][] = ['name' => "Order", 'href' => '#'];
-
         $params['breadcrumb']['current'] = 'Order Details';
+
+        $params['payment_status'] = ["success"];
 
         return view('orderdetails')->with('params',$params);
     }
