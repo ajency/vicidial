@@ -36,7 +36,7 @@
             </ol>
           </nav>
          <h1 class="w-100 kss-title m-0 text-gray font-weight-bold">
-            Boy Tshirts <span class="f-w-4 sub-text"> - 300 Tshirts</span>
+            @{{headers.page_title}} <span class="f-w-4 sub-text"> - @{{headers.product_count}}</span>
          </h1>
     </div>
     <div class="ml-auto d-none d-md-block">
@@ -77,6 +77,7 @@
    var template = Handlebars.compile(source);
    var context = {};
    context["breadcrumbs"] = <?= json_encode($breadcrumbs) ?> ;
+   context["headers"] = <?= json_encode($headers) ?> ;
    console.log("filter tags====")
    console.log(context)
    var html    = template(context);

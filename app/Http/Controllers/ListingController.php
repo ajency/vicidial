@@ -8,37 +8,6 @@ use App\Facet;
 use DB;
 class ListingController extends Controller
 {
-    public function search_object_old($parameters)
-    {
-        $search_object = create_search_object($parameters);
-        if(isset($search_object->error) && $search_object->error == true) {
-            return false;
-        }
-
-        $json = json_decode(listingproducts($search_object));
-
-        $params =  (array) $json;
-
-        return $params;
-    }    
-
-    public function index1($category_type, $gender, $age_group, $category_subtype, Request $request)
-    {
-        $parameters = array();
-        $parameters['categories'] = array();
-        $parameters['categories']['category_type'] = $category_type;
-        $parameters['categories']['gender'] = $gender;
-        $parameters['categories']['age_group'] = $age_group;
-        $parameters['categories']['subtype'] = $category_subtype;
-
-        $parameters['query'] = $request->all();
-
-        $params = $this->search_object($parameters);
-        if($params == false) return view('error404');
-
-        return view('productlisting')->with('params',$params);
-    }
-
     public function search_object($params = null,$search_obj = null)
     {
         // print_r($params);
@@ -61,8 +30,9 @@ class ListingController extends Controller
         $search_results["slug_search_result"] = $search_object_arr["slug_search_result"];
         $search_results["slug_value_search_result"] = $search_object_arr["slug_value_search_result"];
         $search_results["slugs_result"] = $search_object_arr["slugs_result"];
+        $search_results["title"] = $search_object_arr["title"];
         // dd($search_object);
-        $params = Product::productListPage(["search_object" => $search_object,"display_limit"=> 20,"page" =>1],$search_results["slug_value_search_result"],$search_results["slug_search_result"],$search_results["slugs_result"]);
+        $params = Product::productListPage(["search_object" => $search_object,"display_limit"=> 999,"page" =>1],$search_results["slug_value_search_result"],$search_results["slug_search_result"],$search_results["slugs_result"],$search_results["title"]);
 
         // dd($params);
         return json_decode(json_encode($params,JSON_FORCE_OBJECT));
@@ -112,9 +82,10 @@ class ListingController extends Controller
 
     public function productList(Request $request)
     {
-        $data = $request->all();
+        $data = $request->json()->all();
+        // dd($data);
         $parameters = array();
-        $params = explode("/",$data["url"]);
+        $params = explode("/",$data["listurl"]);
         $parameters['categories'] = array();
          // dd($params);
          foreach($params as $param){

@@ -70,11 +70,13 @@ function build_search_object($params) {
 	}
 	// $facets_arr   = json_decode($facets, true);
 	// $search_result = array_column($facets_arr, 'values',"facet_name");
+	
 	$dataArr = [];
 	$dataArr["slug_search_result"] =$slug_search_result;
 	$dataArr["slug_value_search_result"] =$slug_value_search_result;
 	$dataArr["search_result"] =$search_result;
 	$dataArr["slugs_result"] =$slugs_result;
+	$dataArr["title"] = generateProductListTitle($params['categories'],$slug_value_search_result);
 	return $dataArr;
 }
 
@@ -130,3 +132,43 @@ function validate_category_urls($params){
 	return true;
 }
 
+
+
+function generateProductListTitle($categories,$slug_name_value_arr){
+	$titile = "Fashion at KSS";
+
+	switch(count($categories)){
+		case 1:
+			if($slug_name_value_arr[$categories[0]]["facet_name"] == "product_category_type")
+				$titile = $slug_name_value_arr[$categories[0]]["facet_value"]." at KSS";
+			if($slug_name_value_arr[$categories[0]]["facet_name"] == "product_age_group" || $slug_name_value_arr[$categories[0]]["facet_name"] == "product_gender")
+				$titile = $slug_name_value_arr[$categories[0]]["facet_value"]." fashion store";
+			if($slug_name_value_arr[$categories[0]]["facet_name"] == "product_subtype")
+				$titile = $slug_name_value_arr[$categories[0]]["facet_value"]." at KSS";
+			break;
+		case 2:
+			if(($slug_name_value_arr[$categories[0]]["facet_name"] == "product_category_type" && $slug_name_value_arr[$categories[1]]["facet_name"] == "product_gender") || ($slug_name_value_arr[$categories[0]]["facet_name"] == "product_category_type" && $slug_name_value_arr[$categories[1]]["facet_name"] == "product_age_group"))
+				$titile = $slug_name_value_arr[$categories[0]]["facet_value"]." for ".$slug_name_value_arr[$categories[1]]["facet_value"];
+			if(($slug_name_value_arr[$categories[0]]["facet_name"] == "product_age_group" && $slug_name_value_arr[$categories[1]]["facet_name"] == "product_gender") || ($slug_name_value_arr[$categories[0]]["facet_name"] == "product_gender" && $slug_name_value_arr[$categories[1]]["facet_name"] == "product_age_group"))
+				$titile = $slug_name_value_arr[$categories[0]]["facet_value"]."-".$slug_name_value_arr[$categories[1]]["facet_value"]." fashion store";
+			if($slug_name_value_arr[$categories[0]]["facet_name"] == "product_category_type" && $slug_name_value_arr[$categories[1]]["facet_name"] == "product_subtype")
+				$titile = $slug_name_value_arr[$categories[1]]["facet_value"]." at KSS";
+			break;		
+		case 3:
+			if($slug_name_value_arr[$categories[0]]["facet_name"] == "product_category_type" && $slug_name_value_arr[$categories[1]]["facet_name"] == "product_age_group" && $slug_name_value_arr[$categories[2]]["facet_name"] == "product_gender")
+				$titile = $slug_name_value_arr[$categories[0]]["facet_value"]." for ".$slug_name_value_arr[$categories[1]]["facet_value"]."-".$slug_name_value_arr[$categories[2]]["facet_value"];
+			if(($slug_name_value_arr[$categories[0]]["facet_name"] == "product_category_type" && $slug_name_value_arr[$categories[1]]["facet_name"] == "product_age_group" && $slug_name_value_arr[$categories[2]]["facet_name"] == "product_subtype") || ($slug_name_value_arr[$categories[0]]["facet_name"] == "product_category_type" && $slug_name_value_arr[$categories[1]]["facet_name"] == "product_gender" && $slug_name_value_arr[$categories[2]]["facet_name"] == "product_subtype"))
+				$titile = $slug_name_value_arr[$categories[2]]["facet_value"]." for ".$slug_name_value_arr[$categories[1]]["facet_value"];
+			if($slug_name_value_arr[$categories[0]]["facet_name"] == "product_age_group" && $slug_name_value_arr[$categories[1]]["facet_name"] == "product_gender" && $slug_name_value_arr[$categories[2]]["facet_name"] == "product_subtype")
+				$titile = $slug_name_value_arr[$categories[2]]["facet_value"]." for ".$slug_name_value_arr[$categories[0]]["facet_value"]."-".$slug_name_value_arr[$categories[1]]["facet_value"];
+			break;		
+		case 4:
+			if($slug_name_value_arr[$categories[0]]["facet_name"] == "product_category_type" && $slug_name_value_arr[$categories[1]]["facet_name"] == "product_age_group" && $slug_name_value_arr[$categories[2]]["facet_name"] == "product_gender" && $slug_name_value_arr[$categories[2]]["facet_name"] == "product_subtype")
+				$titile = $slug_name_value_arr[$categories[3]]["facet_value"]." for ".$slug_name_value_arr[$categories[1]]["facet_value"]."-".$slug_name_value_arr[$categories[2]]["facet_value"];
+			break;
+		default:
+			$titile = "Fashion at KSS";
+	}
+
+	return $titile;
+}
