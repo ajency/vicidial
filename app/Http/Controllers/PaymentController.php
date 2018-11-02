@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Tzsk\Payu\Facade\Payment;
 use Carbon\Carbon;
+use App\Order;
 
 class PaymentController extends Controller
 {
@@ -43,7 +44,7 @@ class PaymentController extends Controller
 		if($payment->isCaptured() && $order->status == 'payment-in-progress') {
 			$order->status = 'payment-successful';
 			$order->save();
-			$request->session()->flash('payment', true);
+			request()->session()->flash('payment', true);
 			echo "<h1>SUCCESS</h1>";
 		}
 		elseif($order->status == 'payment-in-progress') {
