@@ -196,6 +196,12 @@ export class CartComponent implements OnInit {
     })
   }
 
+  enterclick(event){
+      if (event.keyCode === 13) {
+        $('.is-enter').click();
+      }
+  }
+
   authenticateUser(){
     this.userValidation.disableSendOtpButton = true;
     this.userValidation.mobileValidationFailed = false;

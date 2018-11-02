@@ -55,7 +55,7 @@
 
 img {
     opacity: 1;
-    transition: 0.75s cubic-bezier(0.215, 0.61, 0.355, 1);
+    // transition: 0.75s cubic-bezier(0.215, 0.61, 0.355, 1);
     &[data-imgsrc] {
         opacity: 0;
     }
@@ -70,8 +70,8 @@ img {
 }
 .swipe-arrow-visible {
     visibility: visible;
-    -webkit-animation: swipe 0.8s infinite;
-    animation: swipe 0.8s infinite;
+    // -webkit-animation: swipe 0.8s infinite;
+    // animation: swipe 0.8s infinite;
 }
 @-webkit-keyframes swipe {
     0% {
