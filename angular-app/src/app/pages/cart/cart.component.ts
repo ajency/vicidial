@@ -139,6 +139,9 @@ export class CartComponent implements OnInit {
         item.off_percentage = Math.round(((item.attributes.price_mrp - item.attributes.price_final) / (item.attributes.price_mrp )) * 100) + '% OFF';
       item.href = '/' + item.product_slug +'/buy?size='+item.attributes.size;
     })
+
+    data.items.sort((a,b)=>{ return a.timestamp - b.timestamp});
+    data.items.reverse();
     return data;
   }
 

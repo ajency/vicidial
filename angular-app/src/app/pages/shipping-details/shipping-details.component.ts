@@ -126,6 +126,8 @@ export class ShippingDetailsComponent implements OnInit {
 
   deleteAddress(id){
     console.log(id);
+    let change_selected_address = (id == this.selectedAddressId) ? true : false;
+    let old_id = this.selectedAddressId;
     this.appservice.showLoader();
     let body = { address_id : id };
     let url = this.appservice.apiUrl +  "/api/rest/v1/user/address/delete?";
@@ -140,7 +142,10 @@ export class ShippingDetailsComponent implements OnInit {
       }
       if(response.default_id){
         this.setAddressDefault(response.default_id);
-        this.selectedAddressId=response.default_id;
+        if(change_selected_address)
+          this.selectedAddressId=response.default_id;
+        else
+          this.selectedAddressId = old_id;
       }
       this.appservice.removeLoader();
     })
