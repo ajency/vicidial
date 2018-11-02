@@ -60,7 +60,11 @@ In the MySQL prompt
 
 `php artisan migrate`
 
+Add the following to crontab
 
+`* * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1`
+
+run 
 `php artisan tinker`
 
 In the tinker console type
