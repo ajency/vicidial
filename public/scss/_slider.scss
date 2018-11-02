@@ -170,6 +170,7 @@
     img{
         background-color: $placeholder;
         height: 450px;
+        padding: 0 12em;
         @media (max-width: 767px){
             padding: 0 4em;
             height: 380px;

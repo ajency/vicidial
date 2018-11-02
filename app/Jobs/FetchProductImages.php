@@ -13,6 +13,7 @@ use Illuminate\Queue\SerializesModels;
 class FetchProductImages implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    public $tries = 3;
     protected $productId;
 
     /**
@@ -35,6 +36,11 @@ class FetchProductImages implements ShouldQueue
         $prod_images = Product::fetchProductImages($this->productId);
         \Log::debug("product images");
         \Log::debug($prod_images);
+
+        if($prod_images->count() == 0) {
+            ProductColor::where('product_id', $this->productId)->update(['no_image'=>true]);
+            return;
+        }
 
         $extension   = "jpg";
 

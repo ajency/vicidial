@@ -54,7 +54,7 @@ select::-ms-expand {
 }
 
 label{
-    font-size: .9rem;
+    font-size: .8rem;
 }
 .form-group{
   position: relative;
@@ -189,12 +189,13 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .product-color li label {
   width: 36px;
+  height: 36px;
+  border-radius: 3px;
   color: #fff;
-  height: 26px;
   line-height: 26px;
   display: inline-block;
   position: relative;
-  border: 1px solid #8e8e8e;
+  border:2px solid #fff;
   color: #e4e4e4;
   cursor: pointer;
   text-align: center;

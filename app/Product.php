@@ -8,6 +8,7 @@ use App\Jobs\CreateProductJobs;
 use App\Jobs\FetchProductImages;
 use App\ProductColor;
 use App\Variant;
+use App\Jobs\UpdateVariantInventory;
 
 class Product
 {
@@ -265,7 +266,7 @@ class Product
         $products = ProductColor::leftJoin('fileupload_mapping', function ($join) {
             $join->on('product_colors.id', '=', 'fileupload_mapping.object_id');
             $join->where('fileupload_mapping.object_type', '=', "App\ProductColor");
-        })->where('fileupload_mapping.id', null)->select('product_colors.product_id')->distinct()->get();
+        })->where('fileupload_mapping.id', null)->select('product_colors.product_id')->where('product_colors.no_image','!=',true)->distinct()->get();
         foreach ($products as $product) {
             FetchProductImages::dispatch($product->product_id)->onQueue('process_product_images');
         }
@@ -460,6 +461,20 @@ class Product
         return $output;
     }
 
+    public static function productList($search_object)
+    {
+        $filters = self::getProductCategoriesWithFilter($search_object);
 
+        $result = ["results_found"=>true,"sort_on"=>[["name"=>"Latest Products","value"=>"latest","is_selected"=>false],["name"=>"Popularity","value"=>"popular","is_selected"=>true],["name"=>"Price Low to High","value"=>"price_asc","is_selected"=>false],["name"=>"Price High to Low","value"=>"price_dsc","is_selected"=>false],["name"=>"Discount Low to High","value"=>"discount_asc","is_selected"=>false],["name"=>"Discount High to Low","value"=>"discount_dsc","is_selected"=>false]],"page"=>["current"=>2,"total"=>885,"has_previous"=>true,"has_next"=>true,"total_item_count"=>17697],"filters"=>$filters,"search"=>["params"=>["genders"=>["men"],"l1_categories"=>["clothing"]],"pattern"=>[["key"=>"genders","slugs"=>["men"]],["key"=>"l1_categories","slugs"=>["clothing"]]],"is_valid"=>true,"domain"=>"https=>//newsite.stage.kidsuperstore.in","type"=>"product-list","query"=>["page"=>["2"],"page_size"=>["20"]]],"items"=>[["title"=>"BM Face Casual Graphic Boys Tshirt","slug_name"=>"boys-round-neck-tshirt-with-contrast-rib-and-chest-print","description"=>"Casual fancy tshirt for toddlers","images"=>["desktop"=>["one_x"=>"/img/normal/bluefront@1x.jpg","two_x"=>"/img/normal/bluefront@2x.jpg"],"mobile"=>["one_x"=>"/img/normal/bluefront@1x.jpg","two_x"=>"/img/normal/bluefront@2x.jpg"]],"variants"=>[["list_price"=>1309,"sale_price"=>890,"is_default"=>true,"size"=>["size_id"=>25,"size_name"=>"2-4Y"],"inventory_available"=>true,"inventory"=>[["store"=>["address"=>["location_id"=>34,"location_name"=>"Surat road"],"store_id"=>345,"store_name"=>"Surat Store"],"inventory_count"=>0],["store"=>["address"=>["location_id"=>39,"location_name"=>"C road"],"store_id"=>345,"store_name"=>"Coimbatore Store"],"inventory_count"=>2]],"variant_id"=>4535],["list_price"=>1409,"sale_price"=>895,"is_default"=>false,"size"=>["size_id"=>26,"size_name"=>"4-6Y"],"inventory_available"=>true,"inventory"=>[["store"=>["address"=>["location_id"=>34,"location_name"=>"Surat road"],"store_id"=>345,"store_name"=>"Surat Store"],"inventory_count"=>2],["store"=>["address"=>["location_id"=>39,"location_name"=>"C road"],"store_id"=>345,"store_name"=>"Coimbatore Store"],"inventory_count"=>3]],"variant_id"=>4536],["list_price"=>1509,"sale_price"=>900,"is_default"=>false,"size"=>["size_id"=>23,"size_name"=>"6-8Y"],"inventory_available"=>false,"inventory"=>[["store"=>["address"=>["location_id"=>34,"location_name"=>"Surat road"],"store_id"=>345,"store_name"=>"Surat Store"],"inventory_count"=>0]],"variant_id"=>4537]],"product_id"=>234,"color_id"=>30,"color_name"=>"Gold","color_html"=>"#FFDF00"],["title"=>"Yellow Casual Graphic Boys Tshirt","slug_name"=>"fixed-waist-with-adjustable-elastic-od-woven-short","description"=>"Casual fancy tshirt for toddlers","images"=>["desktop"=>["one_x"=>"/img/normal/orangefront@1x.jpg","two_x"=>"/img/normal/orangefront@2x.jpg"],"mobile"=>["one_x"=>"/img/normal/orangefront@1x.jpg","two_x"=>"/img/normal/orangefront@2x.jpg"]],"variants"=>[["list_price"=>1309,"sale_price"=>890,"is_default"=>true,"size"=>["size_id"=>25,"size_name"=>"2-4Y"],"inventory_available"=>true,"inventory"=>[["store"=>["address"=>["location_id"=>34,"location_name"=>"Surat road"],"store_id"=>345,"store_name"=>"Surat Store"],"inventory_count"=>0],["store"=>["address"=>["location_id"=>39,"location_name"=>"C road"],"store_id"=>345,"store_name"=>"Coimbatore Store"],"inventory_count"=>2]],"variant_id"=>5535],["list_price"=>1409,"sale_price"=>895,"is_default"=>false,"size"=>["size_id"=>26,"size_name"=>"4-6Y"],"inventory_available"=>false,"inventory"=>[["store"=>["address"=>["location_id"=>34,"location_name"=>"Surat road"],"store_id"=>345,"store_name"=>"Surat Store"],"inventory_count"=>0],["store"=>["address"=>["location_id"=>39,"location_name"=>"C road"],"store_id"=>345,"store_name"=>"Coimbatore Store"],"inventory_count"=>0]],"variant_id"=>5536],["list_price"=>1509,"sale_price"=>900,"is_default"=>false,"size"=>["size_id"=>23,"size_name"=>"6-8Y"],"inventory_available"=>true,"inventory"=>[["store"=>["address"=>["location_id"=>34,"location_name"=>"Surat road"],"store_id"=>345,"store_name"=>"Surat Store"],"inventory_count"=>1]],"variant_id"=>5537]],"product_id"=>233,"color_id"=>31,"color_name"=>"Yellow","color_html"=>"#FFFF00"]],"breadcrumbs"=>[["name"=>"Home","action"=>["type"=>"home","query"=>[]]],["name"=>"Men","action"=>["type"=>"product-list","query"=>["genders"=>["men"]]]],["name"=>"Clothing","action"=>["type"=>"product-list","query"=>["genders"=>["men"],"l1_categories"=>["clothing"]]]]],"headers"=>["page_title"=>"Clothing","product_count"=>17697]];
+
+        return $result;
+
+    }
+
+    public static function updateInventory($product_move){
+        if ($product_move["to_loc"] == "Stock" or $product_move["from_loc"] == "Stock") {
+            UpdateVariantInventory::dispatch($product_move)->onQueue('update_inventory');
+        }
+    }
 
 }

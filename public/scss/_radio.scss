@@ -83,6 +83,9 @@
             min-width: 100px;
             padding: 10px;
             text-align: center;
+            @media (min-width: 320px) and (max-width: 767.98px) {
+            min-width: 84px;
+            }
         }
         .radio-input:checked+.radio-label {
             border-color: theme-color("primary");
