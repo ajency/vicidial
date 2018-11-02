@@ -141,7 +141,7 @@
 
 
       var url = constructCategoryUrl(config_facet_names_arr,facet_list,facet_value_slug_assoc);
-      var data = {"search_object":facet_list,"url":url}
+      var data = JSON.stringify({"search_object":facet_list,"listurl":url})
       if(call_ajax == true){
         console.log("filter_tags_list===")
         console.log(filter_tags_list)
@@ -158,11 +158,13 @@
         method: "POST",
         url: "/api/rest/v1/product-list",
         data: data,
-        dataType: "json"
+        dataType: "json",
+        contentType: "application/json"
       })
         .done(function( response ) {
           // alert( "Data Saved: " + msg );
           console.log(response);
+          var header_context = {};
           $.each(response, function(key,values){
               if(key == "filters"){
                 var values_arr = $.map(values, function(el) { return el });
@@ -198,15 +200,20 @@
                });
               }
               if(key == "breadcrumbs"){
-                 var source   = document.getElementById("filter-header-template").innerHTML;
-                 var template = Handlebars.compile(source);
-                 var context = {};
-                 context["breadcrumbs"] = values ;
-                 var html    = template(context);
-                 document.getElementById("filter-header-template-content").innerHTML = html;
+                 header_context.breadcrumbs = values ;
+              }
+              if(key == "headers"){
+                header_context.headers = values ;
               }
           });
 
+          var source   = document.getElementById("filter-header-template").innerHTML;
+          var template = Handlebars.compile(source);
+          var context = {};
+          context["breadcrumbs"] = header_context.breadcrumbs ;
+          context["headers"] = header_context.headers ;
+          var html    = template(context);
+          document.getElementById("filter-header-template-content").innerHTML = html;
 
           console.log(config_facet_names_arr);
           console.log(facet_list)

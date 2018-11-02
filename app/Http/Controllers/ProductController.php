@@ -53,7 +53,7 @@ class ProductController extends Controller
         } else {
             $imageurl = $productColor->resizeImages($photo_id,$preset, $depth, $filename);
         }
-        return \Redirect::to(url($imageurl), 308);
+        return \Redirect::to(url($imageurl), 301);
 
     }
 }
