@@ -29,15 +29,50 @@
     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
         <div class="card-body pb-2 px-0">
             <dl class="row">
+              @php if($params['additional_info']->gender) { @endphp
+              <dt class="col-4 col-sm-3"><label class="text-muted f-w-4">Gender</label></dt>
+              <dd class="col-8 col-sm-9">{{$params['additional_info']->gender}}</dd>
+              @php } @endphp
 
-              <dt class="col-2"><label class="text-muted f-w-4">Gender</label></dt>
-              <dd class="col-10">{{$params['additional_info']->gender}}</dd>
+              @php if($params['additional_info']->age_group) { @endphp
+              <dt class="col-4 col-sm-3"><label class="text-muted f-w-4">Age Group</label></dt>
+              <dd class="col-8 col-sm-9">{{$params['additional_info']->age_group}}</dd>
+              @php } @endphp
 
-              <dt class="col-2"><label class="text-muted f-w-4">Sleeves</label></dt>
-              <dd class="col-10">{{$params['additional_info']->sleeves}}</dd>
+              @php if($params['additional_info']->sleeves) { @endphp
+              <dt class="col-4 col-sm-3"><label class="text-muted f-w-4">Sleeves</label></dt>
+              <dd class="col-8 col-sm-9">{{$params['additional_info']->sleeves}}</dd>
+              @php } @endphp
 
-              <dt class="col-2"><label class="text-muted f-w-4">Material</label></dt>
-              <dd class="col-10">{{$params['additional_info']->material}}</dd>
+              @php if($params['additional_info']->material) { @endphp
+              <dt class="col-4 col-sm-3"><label class="text-muted f-w-4">Material</label></dt>
+              <dd class="col-8 col-sm-9">{{$params['additional_info']->material}}</dd>
+              @php } @endphp
+
+              @php if($params['additional_info']->occasion) { @endphp
+              <dt class="col-4 col-sm-3"><label class="text-muted f-w-4">Occasion</label></dt>
+              <dd class="col-8 col-sm-9">{{$params['additional_info']->occasion}}</dd>
+              @php } @endphp
+
+              @php if($params['additional_info']->wash) { @endphp
+              <dt class="col-4 col-sm-3"><label class="text-muted f-w-4">Wash</label></dt>
+              <dd class="col-8 col-sm-9">{{$params['additional_info']->wash}}</dd>
+              @php } @endphp
+
+              @php if($params['additional_info']->fabric_type) { @endphp
+              <dt class="col-4 col-sm-3"><label class="text-muted f-w-4">Fabric Type</label></dt>
+              <dd class="col-8 col-sm-9">{{$params['additional_info']->fabric_type}}</dd>
+              @php } @endphp
+
+              @php if($params['additional_info']->product_type) { @endphp
+              <dt class="col-4 col-sm-3"><label class="text-muted f-w-4">Product Type</label></dt>
+              <dd class="col-8 col-sm-9">{{$params['additional_info']->product_type}}</dd>
+              @php } @endphp
+
+              @php if($params['additional_info']->other_attribute) { @endphp
+              <dt class="col-4 col-sm-3"><label class="text-muted f-w-4">Other Attribute</label></dt>
+              <dd class="col-8 col-sm-9">{{$params['additional_info']->other_attribute}}</dd>
+              @php } @endphp
 
             </dl>
         </div>
