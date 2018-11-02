@@ -54,6 +54,7 @@
 
 
 
+`mkdir -p /var/log/laravel/`
 
 `cat > /etc/supervisor/conf.d/newsite-worker.conf`
 paste this
