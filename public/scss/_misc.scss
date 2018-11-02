@@ -1,7 +1,8 @@
 
 .color-custom-radio{
-	top: -5px;
-    right: -8px;
+	top: initial;
+    right: -3px;
+    bottom: 0px;
 }
 
 .colorOptions{
@@ -31,12 +32,13 @@
 }
 
 .variant-img-wrapper{
-	height: 84px;
+	height: 64px;
     // overflow: hidden;
     img{
     	height: 100%;
     	width: 100%;
     	object-fit: cover;
+    	border-radius:3px;
     }
 }
 
@@ -68,3 +70,11 @@
 	}
 }
 
+.colorOptions__trigger{
+	border: 2px solid #ccc;
+    padding: 5px 10px 5px 0px;
+    border-radius: 6px;
+    p{
+    margin-right:5px;
+    }
+}

@@ -5,19 +5,20 @@
 <div class="colorOptions d-md-block mb-3 d-none d-sm-block">
 	<div class="d-flex justify-content-between mt-3">
 		<label class="align-items-center d-flex colorOptions__trigger cursor-pointer collapsed" href="#color-options"  aria-expanded="false" aria-controls="color-options" data-toggle="collapse"> 
-			<p class="font-weight-bold kss-link mb-0"> Color options</p>
 				<ul class="product-color product-color--single px-1"  data-toggle="tooltip" data-placement="bottom" title="{{$color_obj->name}}">
 					<li class="d-inline-flex align-middle">
-				    	<input type="checkbox" name="color" checked=true disabled>
+				    	<!-- <input type="checkbox" name="color" checked=true disabled> -->
 				    	
 				    	<label class="mb-0" style="background-color:{{$hexcode}};"></label>
 				  	</li>
 				</ul>
-				<i class="fas fa-chevron-down cursor-pointer icon-md down-arrow"></i>
+			<p class="font-weight-bold kss-link mb-0"> Color options</p>
+			
+				<i class="fas fa-chevron-down cursor-pointer icon-md down-arrow "></i>
 		</label>
 	</div>
 	<div class="collapse" id="color-options">
-		<div class="card card-body alert-light ">
+		<div class="card card-body border-0 p-0 mt-3 ">
 			<div class="radio-wrap w-image kss_variants d-flex align-items-baseline flex-wrap">
 			@php foreach ($params['variant_group'] as $color_id => $color_set) {
 		    	$checked="";
@@ -35,7 +36,7 @@
 				<label class="radio-label position-relative variant-wrapper" for="color-{{$color_id}}" data-toggle="tooltip" data-placement="bottom" title="{{$color_set->name}}" @php if($checked == ''){ @endphp onclick="location.href='{{$url}}'" @php } @endphp>
 					<ul class="product-color product-color--single product-color--sm position-absolute color-custom-radio p-0 @php if($checked == ''){ @endphp no-check @php } else { @endphp checked @php } @endphp">
 						<li class="d-inline-flex align-middle" @php if($checked == ''){ @endphp onclick="location.href='{{$url}}'" @php } @endphp>
-					    	<input type="radio" name="color" id="{{$color_set->name}}" {{$checked}} />
+					    	<!-- <input type="radio" name="color" id="{{$color_set->name}}" {{$checked}} /> -->
 					    	<label for="{{$color_set->name}}" class="m-0" style="background-color:{{$hexcode}};"></label>
 					  	</li>
 					</ul>
