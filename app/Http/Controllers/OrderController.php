@@ -59,4 +59,81 @@ class OrderController extends Controller
         $user->cart_id = $cart->id;
         $user->save();
     }
+
+    public function getOrderDetails()
+    {
+    $result = [
+        "order_info"=>[
+            "order_id"=>"123",
+            "txn_no"=>"#544545",
+            "total_amount"=>420,
+            "order_date"=>"20 Aug 2018",
+            "no_of_items"=>3
+        ],
+        "sub_orders"=>[
+            [   
+                "suborder_id" => 123,
+                "total" => 1830,
+                "number_of_items" => 2,
+                "items"=> [
+                    [
+                        "title" => "Cotton Rich Super Skinny Fit Jeans",
+                        "size" => "2-4 years",
+                        "quantity" => 1,
+                        "price" => 869,
+                        "variant_id" => 123,
+                        "images"=> ""
+                    ],
+                    [
+                        "title" => "Peach Casual Printed Tshirt",
+                        "size" => "8-9 years",
+                        "quantity" => 2,
+                        "price" => 869,
+                        "variant_id" => 123,
+                        "images"=> ""
+                    ]
+                ]
+            ],
+            [   
+                "suborder_id" => 244,
+                "total" => 4545,
+                "number_of_items" => 1,
+                "items"=> [
+                    [
+                        "title" => "Cotton Rich Super Skinny Fit Jeans",
+                        "size" => "2-4 years",
+                        "quantity" => 1,
+                        "price" => 869,
+                        "variant_id" => 123,
+                        "images"=> ""
+                    ]
+                ]
+            ]
+        ],
+        "payment_info"=>[
+            "payment_mode" => "mastercard",
+            "card_end" => 1135,
+        ],
+
+        "shipping_address" => [
+            "name"=> "Shashank",
+            "phone"=> "1112224445",
+            "pincode"=> 214547,
+            "state"=> "Goa",
+            "address"=> "Line4,Line5,line6",
+            "locality"=> "qwersd",
+            "landmark"=> "asdf",
+            "city"=> "Mapusa",
+            "type"=> "Home"
+         ],
+
+         "order_summary" => [
+                    "total" => 12345,
+                    "shipping_fee" => 123,
+                    "final_price" => 13456,
+                    "savings" => 345
+        ]
+    ];
+    return view('orderdetails');
+    }
 }
