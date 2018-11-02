@@ -50,7 +50,7 @@ class PaymentController extends Controller
 		elseif($order->status == 'payment-in-progress') {
 			$order->status = 'payment-failed';
 			$order->save();
-			$request->session()->flash('payment', false);
+			request()->session()->flash('payment', false);
 			echo "<h1>FAILURE</h1>";
 		}
 
