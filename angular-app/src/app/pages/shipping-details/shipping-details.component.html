@@ -139,7 +139,7 @@
 				<div *ngIf="!addAddress && addresses" class="shipping-content-info" style="display: block;">
 					<div class="radio-wrap d-flex kss_sizes wo-image mb-4">
 						<div *ngFor="let address of addresses">
-							<input class="d-none radio-input" type="radio" name="kss-sizes" id="address-{{address.id}}" [value]="address.id" [(ngModel)]="selectedAddressId">
+							<input class="d-none radio-input" type="radio" name="kss-address" id="address-{{address.id}}" [value]="address.id" [(ngModel)]="selectedAddressId">
 							<label class="radio-label w-100 border-bottom text-left" for="address-{{address.id}}">
 								<div class="radio-option d-flex align-items-start address-block">
 									<div class="radio-selection position-relative">
