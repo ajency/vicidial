@@ -45,14 +45,14 @@ class AddressController extends Controller
 
         $address_data = $this->addressObj($address);
 
-        return json_encode(["address"=> $address_data, "message"=> "Address Added successfully", 'success'=> true]);
+        return json_encode(["address"=> $address_data, "message"=> "Address Updated successfully", 'success'=> true]);
     }
 
     public function userFetchAddresses(Request $request)
     {
         $user_id = User::getUserByToken($request->header('Authorization'))->id;
 
-        $addresses = Address::where('user_id', '=', $user_id)->get();
+        $addresses = Address::where('user_id', '=', $user_id)->where('active', '=', true)->get();
 
         $address_data = array();
 
@@ -71,7 +71,8 @@ class AddressController extends Controller
         $address = Address::find($params["address_id"]);
         if($address->user_id != $user_id) abort(403);
 
-        $address->delete();
+        $address->active = false;
+        $address->save();
 
         $default = $this->defaultAddressFirst($user_id);
 
@@ -80,7 +81,7 @@ class AddressController extends Controller
 
     public function defaultAddressSet($user_id, $default, $address_id = null)
     {
-    	$address = Address::where('user_id', '=', $user_id)->where('default', '=', true)->first();
+    	$address = Address::where('user_id', '=', $user_id)->where('active', '=', true)->where('default', '=', true)->first();
         if($address_id != null && $address != null && $address_id == $address->id) {
             $default = true;
         }
@@ -97,9 +98,9 @@ class AddressController extends Controller
 
     public function defaultAddressFirst($user_id)
     {
-        $address = Address::where('user_id', '=', $user_id)->where('default', '=', true)->first();
+        $address = Address::where('user_id', '=', $user_id)->where('active', '=', true)->where('default', '=', true)->first();
         if($address == null) {
-            $address = Address::where('user_id', '=', $user_id)->first();
+            $address = Address::where('user_id', '=', $user_id)->where('active', '=', true)->first();
             if($address != null) {
                 $address->default = true;
                 $address->save();

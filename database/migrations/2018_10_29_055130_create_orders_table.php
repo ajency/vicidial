@@ -19,6 +19,7 @@ class CreateOrdersTable extends Migration
             $table->integer('address_id');
             $table->string('status')->default('draft');
             $table->bigInteger('expires_at');
+            $table->string('txnid')->nullable();
             $table->timestamps();
         });
     }

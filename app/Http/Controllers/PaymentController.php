@@ -14,21 +14,22 @@ class PaymentController extends Controller
     	$cart = $order->cart;
     	$user = $cart->user;
 
-    	$order->status = 'payment-in-progress';
-    	$expires_at = Carbon::now()->addMinutes(config('orders.payu_expiry'));
-        $order->expires_at = $expires_at->timestamp;
-    	$order->save();
-
     	$attributes = [
 		    'txnid' => strtoupper(str_random(8)).str_pad($order->id, 6, '0', STR_PAD_LEFT);, # Transaction ID.
 		    'amount' => $order->aggregateSubOrderData()['final_price'], # Amount to be charged.
-		    'productinfo' => "Kids Products",
+		    'productinfo' => $order->id,
 		    'firstname' => "", # Payee Name.
 		    'email' => "", # Payee Email Address.
 		    'phone' => $user->phone, # Payee Phone Number.
 		];
 
-		return Payment::make($attributes, function ($then) use ($orderid) {
+    	$order->status = 'payment-in-progress';
+    	$expires_at = Carbon::now()->addMinutes(config('orders.payu_expiry'));
+        $order->expires_at = $expires_at->timestamp;
+        $order->txnid = $attributes['txnid'];
+    	$order->save();
+
+		return Payment::with($order)->make($attributes, function ($then) use ($orderid) {
 		    $then->redirectTo('/user/order/'.$orderid.'/payment/payu/status');
 		});
     }
@@ -43,11 +44,13 @@ class PaymentController extends Controller
 			$order->status = 'payment-successful';
 			$order->save();
 			$request->session()->flash('payment', true);
+			echo "<h1>SUCCESS</h1>";
 		}
 		elseif($order->status == 'payment-in-progress') {
 			$order->status = 'payment-failed';
 			$order->save();
 			$request->session()->flash('payment', false);
+			echo "<h1>FAILURE</h1>";
 		}
 
 		//return redirect('account/order-details');

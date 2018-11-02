@@ -5,9 +5,12 @@ namespace App;
 use App\Cart;
 use App\SubOrder;
 use Illuminate\Database\Eloquent\Model;
+use Tzsk\Payu\Fragment\Payable;
 
 class Order extends Model
 {
+    use Payable;
+    
     public function subOrders()
     {
         return $this->hasMany('App\SubOrder');
