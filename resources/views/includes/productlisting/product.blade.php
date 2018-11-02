@@ -25,7 +25,7 @@ $url = create_url([$product->slug_name, 'buy']);
         <img src="{{$load_10x}}" data-srcset="{{$image_1x}} 270w, {{$image_2x}} 540w, {{$image_3x}} 810w" sizes="(min-width: 992px) 33.33vw,50vw" class="lazyload card-img-top blur-up @php if(count((array)$product->images)==0){ @endphp placeholder-img @php } @endphp" />
 
         <!-- Size Selection Blade -->
-        @include('includes.productlisting.sizeselection', ['product' => $product]) 
+        {{-- @include('includes.productlisting.sizeselection', ['product' => $product]) --}}
       </div>      
     </a>
     <!-- Product Info -->
