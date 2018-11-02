@@ -15,7 +15,7 @@ class PaymentController extends Controller
     	$user = $cart->user;
 
     	$attributes = [
-		    'txnid' => strtoupper(str_random(8)).str_pad($order->id, 6, '0', STR_PAD_LEFT);, # Transaction ID.
+		    'txnid' => strtoupper(str_random(8)).str_pad($order->id, 6, '0', STR_PAD_LEFT), # Transaction ID.
 		    'amount' => $order->aggregateSubOrderData()['final_price'], # Amount to be charged.
 		    'productinfo' => $order->id,
 		    'firstname' => "", # Payee Name.
