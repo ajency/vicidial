@@ -25,12 +25,11 @@ Route::get('/shop', 'ListingController@shop')->name('shoplisting');
 
 Route::get('/', 'HomeController@index')->name('home');
 
-
 # PayU
 Route::get('/user/order/{orderid}/payment/payu', 'PaymentController@payment')->name('payment');
 Route::get('/user/order/{orderid}/payment/payu/status', 'PaymentController@status')->name('paymentStatus');
 
-
+Route::get('/account/order-details', 'OrderDetails@index')->name('orderDetails');
 
 Route::get('/shop/{static_page}', 'ShopStaticController@index')->name('shopstatic');
 
