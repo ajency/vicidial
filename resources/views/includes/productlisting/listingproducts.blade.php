@@ -1,8 +1,83 @@
 <!-- Loop all products -->
-@php
-foreach ($items as $product) {
-@endphp
-  <!-- Single Product Blade -->
-  @include('includes.productlisting.product', ['product' => $product])
-@php
-} @endphp
+<script id="products-list-template" type="text/x-handlebars-template">
+ <div id="card-list" class="row">
+  @{{#each products}}
+  <div class="col-lg-4 col-md-6 mb-sm-4 col-6  ">
+
+	  <div class="card h-100 product-card">
+	  
+	  	<!-- Wishlist -->
+	    <!-- <i class="fas fa-heart kss_heart"></i> -->
+	    <!-- Product Image Display -->
+	    <a href="/@{{slug_name}}/buy" class="position-relative">
+	      <div class="product-card__wrapper loading d-flex align-items-center justify-content-center">
+	        <div class="overlay"></div>
+	        @{{assign "image_1x" '/img/placeholder.svg'}}
+	        @{{assign "image_2x" '/img/placeholder.svg'}}
+	        @{{assign "image_3x" '/img/placeholder.svg'}}
+	        @{{assign "load_10x" '/img/placeholder-10x.jpg'}}
+	        @{{#ifImagesExist images }}
+	        	@{{assign "image_1x" images.1x }}
+		        @{{assign "image_2x" images.2x }}
+		        @{{assign "image_3x" images.3x }}
+		        @{{assign "load_10x" images.load }}
+	        @{{/ifImagesExist}}
+	        <img src="/img/placeholder-10x.jpg" data-srcset="@{{@root.image_1x}} 270w, @{{@root.image_2x}} 540w, @{{@root.image_3x}} 810w" sizes="(min-width: 992px) 33.33vw,50vw" class="lazyload card-img-top blur-up placeholder-img" />
+
+	      </div>      
+	    </a>
+	    <!-- Product Info -->
+	    <div class="
+	    -body">
+	      @{{#if title}}
+	      <a href="/@{{slug_name}}/buy" class="text-dark">
+	        <h5 class="card-title">
+	          
+	          @{{title}}
+
+	        </h5>      
+	      </a>
+	      @{{/if}}
+	      <!-- Calculate & Display Price -->
+	        @{{#each variants}}
+		        @{{#if is_default}}
+		        	@{{#ifEquals list_price sale_price }}
+		        		<div id="kss-price-@{{../product_id}}-@{{../color_id}}" class="kss-price kss-price--smaller">₹@{{sale_price}}</div>
+		        	@{{else}}
+		        		<div id="kss-price-@{{../product_id}}-@{{../color_id}}" class="kss-price kss-price--smaller">₹@{{sale_price}} <small class="kss-original-price text-muted">₹@{{list_price}}</small></div>
+		        	@{{/ifEquals}}
+		        @{{/if}}
+	        @{{/each}}
+	    </div>
+	  </div>
+	</div>
+  @{{/each}}
+  </div>
+</script>
+<div id="products-list-template-content"></div>
+
+@section('footjs-products-list')
+  <script type="text/javascript" >
+   // require('handlebars');
+   var source   = document.getElementById("products-list-template").innerHTML;
+   var template = Handlebars.compile(source);
+   Handlebars.registerHelper('assign', function (varName, varValue, options) {
+		    if (!options.data.root) {
+		        options.data.root = {};
+		    }
+		    options.data.root[varName] = varValue;
+		});
+   Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
+	    return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+	});
+   Handlebars.registerHelper('ifImagesExist', function(arg1, options) {
+   		var count = Object.keys(arg1).length;
+	    return (count > 0) ? options.fn(this) : options.inverse(this);
+	});
+   var context = {};
+   context["products"] = <?= json_encode($items); ?>;
+   console.log(context)
+   var html    = template(context);
+   document.getElementById("products-list-template-content").innerHTML = html;
+ </script>
+ @stop

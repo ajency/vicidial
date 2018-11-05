@@ -20,10 +20,10 @@
     	  <div class="col-sm-12 col-md-9 bl-1">
     	    <!-- Title, breadcrumbs, sort Blade -->
     	  	@include('includes.productlisting.listingtitle', ['headers' => $params->headers, 'breadcrumbs' => $params->breadcrumbs, 'sort_on' => $params->sort_on])
-          <div id="card-list" class="row">
+         
     	    <!-- List of products Blade -->
             @include('includes.productlisting.listingproducts', ['items' => $params->items])
-          </div>
+
     	  </div>
     	</div>
     </div>
@@ -47,11 +47,12 @@
     $facet_value_slug_assoc = json_encode($params->search_result_assoc);
   ?>
   <script type="text/javascript" src="/js/productlisting.js"></script>
-    @yield('footjs-gender')
+  @yield('footjs-gender')
   @yield('footjs-age')
   @yield('footjs-subtype')
   @yield('footjs-category')
   @yield('footjs-filter-tags')
+  @yield('footjs-products-list')
   <script type="text/javascript">
       var facet_list = {}
       var config_facet_names_arr = <?= json_encode($config_facet_names_arr);?>;
@@ -209,6 +210,29 @@
               if(key == "headers"){
                 header_context.headers = values ;
               }
+              if(key == "items"){
+                   var source   = document.getElementById("products-list-template").innerHTML;
+        				   var template = Handlebars.compile(source);
+        				   Handlebars.registerHelper('assign', function (varName, varValue, options) {
+        						    if (!options.data.root) {
+        						        options.data.root = {};
+        						    }
+        						    options.data.root[varName] = varValue;
+        						});
+                    Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
+                        return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+                    });
+                     Handlebars.registerHelper('ifImagesExist', function(arg1, options) {
+                        console.log(arg1)
+                        var count = Object.keys(arg1).length;
+                        return (count > 0) ? options.fn(this) : options.inverse(this);
+                    });
+        				   var context = {};
+        				   context["products"] = values;
+        				   console.log(context)
+        				   var html    = template(context);
+        				   document.getElementById("products-list-template-content").innerHTML = html;
+        		}
           });
 
           var source   = document.getElementById("filter-header-template").innerHTML;
@@ -271,6 +295,8 @@
         elm.trigger( "change" );
 
       }
+
+
   </script>
 
 
