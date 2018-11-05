@@ -94,6 +94,23 @@ footer .bl-1{
     background-position: -11px -457px;
     display: inline-block;
 }
+.icon-visa{
+    @extend .kss-ico;
+    background-position: -69px -458px;
+    width: 48px;
+}
+.icon-rupay{
+    @extend .kss-ico;
+    background-position: -133px -458px;
+    width: 70px;
+}
+.no-card{
+    width: 35px;
+    font-size: 2em;
+    text-align: center;
+    position: relative;
+    top: -4px;
+}
 .icon-cod{
     @extend .kss-ico;
     width: 60px;
