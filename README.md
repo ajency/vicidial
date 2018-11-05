@@ -40,9 +40,16 @@ In the MySQL prompt
 
 `sudo apt-get update && sudo apt-get install elasticsearch`
 
-### Install git supervisor and composer (dev and prod)
+### Install git, supervisor and composer (dev and prod)
 `sudo apt-get install git supervisor composer`
 
+#### Setup the github oauth with composer
+Head to https://github.com/settings/tokens/new?scopes=repo&description=Composer+on+<Servername>
+to retrieve a token. It can be stored manually in  "/home/<username>/.composer/auth.json" for future use.
+
+Alternatively you can also add it by using "composer config --global --auth github-oauth.github.com <token>"
+
+#### Setup supervisor
 `mkdir -p /var/log/laravel/`
 
 `cat > /etc/supervisor/conf.d/newsite-worker.conf`
