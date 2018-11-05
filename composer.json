@@ -15,7 +15,11 @@
         },
         {
             "type": "vcs",
-            "url": "https://github.com/ajency/laravel-file-upload-package.git"
+            "url": "git@github.com:ajency/laravel-file-upload-package.git"
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/ajency/laravelcdn"
         }
     ],
     "require": {
@@ -33,7 +37,8 @@
         "laravel/tinker": "~1.0",
         "league/flysystem-aws-s3-v3": "^1.0",
         "spatie/laravel-permission": "^2.23",
-        "tzsk/payu": "dev-ajency"
+        "tzsk/payu": "dev-ajency",
+        "publiux/laravelcdn": "dev-ajency"
     },
     "require-dev": {
         "filp/whoops": "~2.0",
