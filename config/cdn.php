@@ -94,7 +94,7 @@ return [
                 | https://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region
                 |
                 */
-                'region' => '',
+                'region' => 'ap-south-1',
 
                 /*
                 |--------------------------------------------------------------------------
@@ -128,7 +128,7 @@ return [
                 */
                 'buckets'       => [
 
-                    'bucket-name' => '*',
+                    'kss-ajency' => '*',
                     // examples:
                     //   'your-js-bucket-name-here'   =>  ['public/js'],
                     //   'your-css-bucket-name-here'  =>  ['public/css'],

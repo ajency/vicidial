@@ -11,7 +11,7 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.scripts([
+mix.babel([
 	'resources/assets/js/bootstrap.min.js',
 	'resources/assets/js/jquery.fancybox.js',
 	'resources/assets/js/slick.min.js',
