@@ -60,8 +60,18 @@ class OrderController extends Controller
         $user->save();
     }
 
-    public function getOrderDetails()
+    public function getOrderDetails(Request $request)
     {
+        $query  = $request->all();
+
+        if(!isset($query['orderid'])) {
+            return view('error404');
+        }
+
+        $order = Order::find($query['orderid']);
+        if($order == null) {
+            return view('error404');
+        }
 
         $params = [
             "order_info"=>[

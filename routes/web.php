@@ -29,7 +29,7 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('/user/order/{orderid}/payment/payu', 'PaymentController@payment')->name('payment');
 Route::get('/user/order/{orderid}/payment/payu/status', 'PaymentController@status')->name('paymentStatus');
 
-Route::get('/account/order-details', 'OrderController@getOrderDetails')->name('orderDetails');
+Route::get('/my/order/details', 'OrderController@getOrderDetails')->name('orderDetails');
 
 Route::get('/shop/{static_page}', 'ShopStaticController@index')->name('shopstatic');
 

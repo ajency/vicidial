@@ -54,6 +54,6 @@ class PaymentController extends Controller
 			echo "<h1>FAILURE</h1>";
 		}
 
-		//return redirect('account/order-details');
+		return redirect()->route('orderDetails', ['orderid' => $orderid]);
     }
 }
