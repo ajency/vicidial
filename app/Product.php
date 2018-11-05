@@ -272,20 +272,10 @@ class Product
         }
     }
 
-    public static function getImg(){
-        $prod_images = '[{"image":false,"id":3,"color_variant":false,"name":false},{"image":false,"id":4,"color_variant":false,"name":false},{"image":false,"id":5,"color_variant":false,"name":"Short-1018"}]';
-        $prod_images_arr   = json_decode($prod_images);
-        foreach($prod_images_arr as $pIndex => $pval){
-            echo "ind===".$pIndex."<br/>";
-        }
-    }
-
 
     public static function buildBaseQuery()
     {
 
-        // echo "<pre>";
-        // echo '{"aggs":{"agg_number_facet":{"nested":{"path":"search_data.string_facet"},"aggs":{"facet_name":{"terms":{"field":"search_data.string_facet.facet_name","include":["product_category_type","product_gender","product_subtype","product_age_group"]},"aggs":{"facet_value":{"terms":{"field":"search_data.string_facet.facet_value"},"aggs":{"count":{"reverse_nested":{}}}}}}}}},"size":0}';
         $index    = config('elastic.indexes.product');
         $q        = new ElasticQuery;
         $required = [
@@ -417,10 +407,23 @@ class Product
 
     public static function productListPage($params,$slug_value_search_result,$slug_search_result,$slugs_result,$title=""){
         $output = [];
-        
-        $output["filters"] = self::getProductCategoriesWithFilter($params);
-        $results = self::getItemsWithFilters($params);
+        $filter_params = [];
+        $filter_params["search_object"] = [];
         $facet_display_data = config('product.facet_display_data');
+        foreach($params["search_object"] as $paramk => $paramv){
+            if($facet_display_data[$paramk]["is_singleton"] == false){
+                $fields  = $paramv;
+                array_push($fields, "all");
+                $filter_params["search_object"][$paramk] = $fields;
+            }
+            else
+                $filter_params["search_object"][$paramk] = $paramv;
+
+        }
+        // dd($filter_params);
+        $output["filters"] = self::getProductCategoriesWithFilter($filter_params);
+        $results = self::getItemsWithFilters($params);
+        
         $facet_names = array_keys($facet_display_data);
         $bread = [];
         $bread['breadcrumb']           = array("list" =>[],"current"=>"");
