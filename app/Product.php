@@ -420,7 +420,6 @@ class Product
                 $filter_params["search_object"][$paramk] = $paramv;
 
         }
-        // dd($filter_params);
         $output["filters"] = self::getProductCategoriesWithFilter($filter_params);
         $results = self::getItemsWithFilters($params);
         
