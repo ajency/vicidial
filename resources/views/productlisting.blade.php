@@ -188,6 +188,9 @@
                  context["collapsed"] = collapsed;
                  context["filter_display_name"] = filter_display_name;
                  context["filter_facet_name"] = filter_facet_name;
+                 Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
+                      return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+                  });
                  var items = $.map(vval.items, function(el) { return el });
                  items.sort(function(obj1, obj2) {
                   // Ascending: first age less than the previous

@@ -10,14 +10,14 @@
           @{{#if singleton }}
           @{{#each items}}
           <div class="custom-radio custom-control">
-            <input type="radio" class="facet-category custom-control-input" name="age" value="@{{facet_value}}" @{{#if is_selected }} checked = "checked" @{{/if}} data-facet-name="@{{../filter_facet_name}}" data-singleton="true" data-slug="@{{slug}}">
+            <input type="radio" class="facet-category custom-control-input" name="age" value="@{{facet_value}}" @{{#if is_selected }} checked = "checked" @{{/if}} data-facet-name="@{{../filter_facet_name}}" data-singleton="true" data-slug="@{{slug}}" @{{#ifEquals count 0 }} disabled = "disabled" @{{/ifEquals}}>
             <label for="@{{display_name}}" class="custom-control-label f-w-4">@{{display_name}} <span class="sub-text">(@{{count}})</span></label>
           </div>
           @{{/each}}
           @{{else}}
           @{{#each items}}
           <div class="custom-control custom-checkbox" >
-            <input type="checkbox" class="facet-category custom-control-input" name="age" value="@{{facet_value}}" @{{#if is_selected }} checked = "checked" @{{/if}} data-facet-name="@{{../filter_facet_name}}" data-singleton="false" data-slug="@{{slug}}">
+            <input type="checkbox" class="facet-category custom-control-input" name="age" value="@{{facet_value}}" @{{#if is_selected }} checked = "checked" @{{/if}} data-facet-name="@{{../filter_facet_name}}" data-singleton="false" data-slug="@{{slug}}" @{{#ifEquals count 0 }} disabled = "disabled" @{{/ifEquals}}>
             <label class="custom-control-label f-w-4" for="@{{display_name}}">@{{display_name}} <span class="sub-text">(@{{count}})</span></label>
           </div> 
           @{{/each}}    
@@ -32,6 +32,9 @@
    // require('handlebars');
    var source   = document.getElementById("filter-age-template").innerHTML;
    var template = Handlebars.compile(source);
+   Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
+      return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+  });
    var singleton = (<?= $singleton ?> == 1)?true:false;
    var collapsed = (<?= $collapsed ?> == 1)?true:false;
    var filter_display_name = '<?= $header["display_name"] ?>';

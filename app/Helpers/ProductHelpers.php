@@ -1,6 +1,7 @@
 <?php
 use App\Facet;
 use App\ProductColor;
+use App\Variant;
 //Calculate Discount from price
 function calculate_discount($list_price, $sale_price){
 	$discount_amt = $list_price - $sale_price;
@@ -148,4 +149,13 @@ function sanitiseFilterdata($result, $params = [])
         $response[] = $filter;
     }
     return $response;
+}
+
+function getProductThumbImages($variantId){
+    $variant = Variant::find($variantId);
+    $default_imgs = $variant->productColor->getDefaultImage(["variant-thumb"]);
+    if(isset($default_imgs["variant-thumb"]))
+        return $default_imgs["variant-thumb"];
+    else
+        return $default_imgs;
 }

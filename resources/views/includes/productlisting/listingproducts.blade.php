@@ -16,13 +16,15 @@
 	        @{{assign "image_2x" '/img/placeholder.svg'}}
 	        @{{assign "image_3x" '/img/placeholder.svg'}}
 	        @{{assign "load_10x" '/img/placeholder-10x.jpg'}}
+	        @{{assign "default_placeholder_cls" "placeholder-img" }}
 	        @{{#ifImagesExist images }}
 	        	@{{assign "image_1x" images.1x }}
 		        @{{assign "image_2x" images.2x }}
 		        @{{assign "image_3x" images.3x }}
 		        @{{assign "load_10x" images.load }}
+		        @{{assign "default_placeholder_cls" "" }}
 	        @{{/ifImagesExist}}
-	        <img src="/img/placeholder-10x.jpg" data-srcset="@{{@root.image_1x}} 270w, @{{@root.image_2x}} 540w, @{{@root.image_3x}} 810w" sizes="(min-width: 992px) 33.33vw,50vw" class="lazyload card-img-top blur-up placeholder-img" />
+	        <img src="/img/placeholder-10x.jpg" data-srcset="@{{@root.image_1x}} 270w, @{{@root.image_2x}} 540w, @{{@root.image_3x}} 810w" sizes="(min-width: 992px) 33.33vw,50vw" class="lazyload card-img-top blur-up @{{@root.default_placeholder_cls}}" />
 
 	      </div>      
 	    </a>
