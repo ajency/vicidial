@@ -73,77 +73,23 @@ class OrderController extends Controller
             return view('error404');
         }
 
+        $sub_orders = array();
+        foreach ($order->subOrders as $subOrder) {
+            $sub_orders[] = $subOrder->getSubOrder();
+        }
+
+        $payment = $order->payments->first();
+
         $params = [
-            "order_info"=>[
-                "order_id"=>"123",
-                "txn_no"=>"#544545",
-                "total_amount"=>420,
-                "order_date"=>"20 Aug 2018",
-                "no_of_items"=>1
-            ],
-            "sub_orders"=>[
-                [   
-                    "suborder_id" => 123,
-                    "total" => 1830,
-                    "number_of_items" => 2,
-                    "items"=> [
-                        [
-                            "title" => "Cotton Rich Super Skinny Fit Jeans",
-                            "size" => "2-4 years",
-                            "quantity" => 1,
-                            "price" => 869,
-                            "variant_id" => 123,
-                            "images"=> ""
-                        ],
-                        [
-                            "title" => "Peach Casual Printed Tshirt",
-                            "size" => "8-9 years",
-                            "quantity" => 2,
-                            "price" => 869,
-                            "variant_id" => 123,
-                            "images"=> ""
-                        ]
-                    ]
-                ],
-                [   
-                    "suborder_id" => 244,
-                    "total" => 4545,
-                    "number_of_items" => 1,
-                    "items"=> [
-                        [
-                            "title" => "Cotton Rich Super Skinny Fit Jeans",
-                            "size" => "2-4 years",
-                            "quantity" => 1,
-                            "price" => 869,
-                            "variant_id" => 123,
-                            "images"=> ""
-                        ]
-                    ]
-                ]
-            ],
+            "order_info"=>$order->getOrderInfo(),
+            "sub_orders"=>$sub_orders,
             "payment_info"=>[
-                "payment_mode" => "mastercard",
-                "card_num" => "512345XXXXXX2346",
+                //"payment_mode" => $payment->bankcode,
+                "payment_mode" => json_decode($payment->data)->bankcode,
+                "card_num" => $payment->cardnum,
             ],
-
-            "shipping_address" => [
-                "name"=> "Shashank",
-                "phone"=> "1112224445",
-                "pincode"=> 214547,
-                "state"=> "Goa",
-                "address"=> "Line4,Line5,line6",
-                "locality"=> "qwersd",
-                "landmark"=> "asdf",
-                "city"=> "Mapusa",
-                "type"=> "Home"
-             ],
-
-             "order_summary" => [
-                        "total" => 12345,
-                        "shipping_fee" => 123,
-                        "final_price" => 13456,
-                        "savings" => 345
-            ]
+            "shipping_address" => $order->address->shippingAddress(),
+            "order_summary" => $order->aggregateSubOrderData()
         ];
 
         $params['breadcrumb']           = array();
@@ -152,7 +98,9 @@ class OrderController extends Controller
         $params['breadcrumb']['list'][] = ['name' => "Order", 'href' => '#'];
         $params['breadcrumb']['current'] = 'Order Details';
 
-        $params['payment_status'] = "success";
+        if(request()->session()->get('payment', false)) {
+            $params['payment_status'] = request()->session()->get('payment');
+        }
 
         return view('orderdetails')->with('params',$params);
     }

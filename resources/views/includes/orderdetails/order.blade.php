@@ -32,7 +32,7 @@
 						<div class="product-price">
 							<div class="retail-price">
 								<span class="rs-symbol"><i class="fas fa-rupee-sign sm-font"></i></span>
-								<span class="price">{{$item['price']}}</span>
+								<span class="price">{{$item['price_final']}}</span>
 							</div>
 						</div>
 					</div>

@@ -44,14 +44,12 @@ class PaymentController extends Controller
 		if($payment->isCaptured() && $order->status == 'payment-in-progress') {
 			$order->status = 'payment-successful';
 			$order->save();
-			request()->session()->flash('payment', true);
-			echo "<h1>SUCCESS</h1>";
+			request()->session()->flash('payment', "success");
 		}
 		elseif($order->status == 'payment-in-progress') {
 			$order->status = 'payment-failed';
 			$order->save();
-			request()->session()->flash('payment', false);
-			echo "<h1>FAILURE</h1>";
+			request()->session()->flash('payment', "failure");
 		}
 
 		return redirect()->route('orderDetails', ['orderid' => $orderid]);

@@ -6,6 +6,7 @@ use App\Cart;
 use App\SubOrder;
 use Illuminate\Database\Eloquent\Model;
 use Tzsk\Payu\Fragment\Payable;
+use Carbon\Carbon;
 
 class Order extends Model
 {
@@ -19,6 +20,11 @@ class Order extends Model
     public function cart()
     {
         return $this->belongsTo('App\Cart');
+    }
+
+    public function address()
+    {
+        return $this->belongsTo('App\Address');
     }
 
     public function setSubOrders()
@@ -54,7 +60,18 @@ class Order extends Model
         }
 
         $total['final_price'] = $total['total'] + $total['shipping_fee'];
+        $total['savings'] = 70;
 
         return $total;
+    }
+
+    public function getOrderInfo()
+    {
+        $dateInd = Carbon::createFromFormat('Y-m-d H:i:s', $this->created_at, 'UTC');
+        $dateInd->setTimezone('Asia/Kolkata');
+
+        $order_info = array('order_id' => $this->id, 'txn_no' => $this->payments->first()->txnid, 'total_amount' => $this->aggregateSubOrderData()['final_price'], 'order_date' => $dateInd->format('j M Y'), 'no_of_items' => count($this->cart->getItems()));
+
+        return $order_info;
     }
 }

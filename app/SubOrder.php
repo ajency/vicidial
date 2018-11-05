@@ -55,6 +55,21 @@ class SubOrder extends Model
         $this->save();
     }
 
+    public function getSubOrder()
+    {
+        $itemsData = [];
+        foreach ($this->item_data as $itemData) {
+            $variant = Variant::find($itemData['id']);
+            $item = $variant->getItemAttributes();
+            $item['quantity'] = $itemData['quantity'];
+            $item['variant_id'] = $itemData['id'];
+            $itemsData[] = $item;
+        }
+        $sub_order = array('suborder_id' => $this->id, 'total' => $this->odoo_data['total']+$this->odoo_data['shipping_fee'], 'number_of_items' => count($this->item_data), 'items' => $itemsData);
+
+        return $sub_order;
+    }
+
     // public function abondonOrder()
     // {
     //     $items = $this->item_data;
