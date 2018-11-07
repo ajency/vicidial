@@ -155,7 +155,7 @@ function generateProductListTitle($categories,$slug_name_value_arr){
 			if(($slug_name_value_arr[$cat1[0]]["facet_name"] == "product_age_group" && $slug_name_value_arr[$cat2[0]]["facet_name"] == "product_gender") || ($slug_name_value_arr[$cat1[0]]["facet_name"] == "product_gender" && $slug_name_value_arr[$cat2[0]]["facet_name"] == "product_age_group"))
 				$titile = $slug_name_value_arr[$cat1[0]]["facet_value"]."-".$slug_name_value_arr[$cat2[0]]["facet_value"]." fashion store";
 			if($slug_name_value_arr[$cat1[0]]["facet_name"] == "product_category_type" && $slug_name_value_arr[$cat2[0]]["facet_name"] == "product_subtype")
-				$titile = $slug_name_value_arr[$cat1[1]]["facet_value"]." at KSS";
+				$titile = $slug_name_value_arr[$cat1[0]]["facet_value"]." at KSS";
 			break;		
 		case 3:
 			$cat1 = explode("--", $categories[0]);

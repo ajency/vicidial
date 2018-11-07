@@ -10,19 +10,21 @@
 	    <!-- <i class="fas fa-heart kss_heart"></i> -->
 	    <!-- Product Image Display -->
 	    <a href="/@{{slug_name}}/buy" class="position-relative">
-	      <div class="product-card__wrapper loading d-flex align-items-center justify-content-center">
+	      <div class="product-card__wrapper loading d-flex align-items-center justify-content-center mb-2 mb-sm-3">
 	        <div class="overlay"></div>
 	        @{{assign "image_1x" '/img/placeholder.svg'}}
 	        @{{assign "image_2x" '/img/placeholder.svg'}}
 	        @{{assign "image_3x" '/img/placeholder.svg'}}
 	        @{{assign "load_10x" '/img/placeholder-10x.jpg'}}
+	        @{{assign "default_placeholder_cls" "placeholder-img" }}
 	        @{{#ifImagesExist images }}
 	        	@{{assign "image_1x" images.1x }}
 		        @{{assign "image_2x" images.2x }}
 		        @{{assign "image_3x" images.3x }}
 		        @{{assign "load_10x" images.load }}
+		        @{{assign "default_placeholder_cls" "" }}
 	        @{{/ifImagesExist}}
-	        <img src="/img/placeholder-10x.jpg" data-srcset="@{{@root.image_1x}} 270w, @{{@root.image_2x}} 540w, @{{@root.image_3x}} 810w" sizes="(min-width: 992px) 33.33vw,50vw" class="lazyload card-img-top blur-up placeholder-img" />
+	        <img src="/img/placeholder-10x.jpg" data-srcset="@{{@root.image_1x}} 270w, @{{@root.image_2x}} 540w, @{{@root.image_3x}} 810w" sizes="(min-width: 992px) 33.33vw,50vw" class="lazyload card-img-top blur-up @{{@root.default_placeholder_cls}}" />
 
 	      </div>      
 	    </a>
@@ -52,6 +54,11 @@
 	  </div>
 	</div>
   @{{/each}}
+  </div>
+  <div class="text-center mt-3 d-none">
+  	<button class="btn btn-primary btn-lg">
+		<i class="align-middle fa-circle-notch fa-lg fa-spin fas mr-1 d-none"></i> Show more products
+	</button>
   </div>
 </script>
 <div id="products-list-template-content"></div>

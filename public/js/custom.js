@@ -4,32 +4,43 @@ $('.modal #cart_close').click(function() {
 });
  // ------------------ End Close Cart Modal------------------//
 
+$(function(){
+    // Remove loader on slick init
+    $('.prod-slides').on('init', function(event, slick){
+        setTimeout(function () {
+            $(".loader").fadeOut(2000);
+            $(".prod-slides li img").fadeIn(1000);
+        }, 1000);
+    });
 
-$(' .prod-slides').slick({
-    lazyLoad: 'ondemand',
-    slidesToShow: 2.05,
-    centerPadding: '0',
-    adaptiveHeight: false,
-    infinite: false,
-    responsive: [{
-        breakpoint: 768,
-        settings: {
-            arrows: false,
-            centerMode: true,
-            centerPadding: '40px',
-            slidesToShow: 1,
-        }
-    }, {
-        breakpoint: 480,
-        settings: {
-            arrows: false,
-            centerMode: false,
-            centerPadding: '10px',
-            slidesToShow: 1.25,
-            mobileFirst: true,
-        }
-    }]
-});
+    $('.prod-slides').slick({
+        lazyLoad: 'ondemand',
+        slidesToShow: 2.05,
+        centerPadding: '0',
+        adaptiveHeight: false,
+        infinite: false,
+        responsive: [{
+            breakpoint: 768,
+            settings: {
+                arrows: false,
+                centerMode: true,
+                centerPadding: '40px',
+                slidesToShow: 1,
+            }
+        }, {
+            breakpoint: 480,
+            settings: {
+                arrows: false,
+                centerMode: false,
+                centerPadding: '10px',
+                slidesToShow: 1.25,
+                mobileFirst: true,
+            }
+        }]
+    });
+})
+
+
  // ------------------ Start Image Load ------------------//
 const lazy = () => {
     document.addEventListener('lazyloaded', (e) => {
@@ -43,10 +54,13 @@ lazy();
 // ------------------ Start Image Loader ------------------//
 $(document).ready(function() {
     $(function() {
-        $(".loader").fadeOut(2000, function() {
-            $(".prod-slides li img").fadeIn(1000);
-        });
-});
+        // $(".loader").fadeOut(2000, function() {
+        //     $(".prod-slides li img").fadeIn(1000);
+        // });
+        if($('#aniimated-thumbnials').hasClass('slider-placeholder-img')){
+            $(".loader").fadeOut(2000);    
+        }
+    });
 // ------------------ End Image Loader ------------------//
 
 $('#aniimated-thumbnials').lightGallery({

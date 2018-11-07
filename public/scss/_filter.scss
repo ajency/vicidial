@@ -4,15 +4,17 @@
     .fixed-bottom {
         display: none;
     }
-    @media (min-width: 320px) and (max-width: 767.98px) {
+    @media (min-width: 320px) and (max-width: 767px) {
         position: fixed;
         z-index: 9999;
         background: #fff;
         width: 100%;
         height: 100%;
         top: 0px;
-        left: 730px;
+        left: 100%;
         padding: 16px;
+        overflow: auto;
+        padding-bottom: 75px;
     }
     .kss_filter-list {
         cursor: pointer;
