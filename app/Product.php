@@ -423,7 +423,6 @@ class Product
         }
         $output["filters"] = self::getProductCategoriesWithFilter($filter_params);
         $results = self::getItemsWithFilters($params);
-        
         $facet_names = array_keys($facet_display_data);
         $bread = [];
         $bread['breadcrumb']           = array("list" =>[],"current"=>"");
