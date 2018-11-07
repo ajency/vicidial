@@ -10,7 +10,7 @@
 	    <!-- <i class="fas fa-heart kss_heart"></i> -->
 	    <!-- Product Image Display -->
 	    <a href="/@{{slug_name}}/buy" class="position-relative">
-	      <div class="product-card__wrapper loading d-flex align-items-center justify-content-center">
+	      <div class="product-card__wrapper loading d-flex align-items-center justify-content-center mb-2 mb-sm-3">
 	        <div class="overlay"></div>
 	        @{{assign "image_1x" '/img/placeholder.svg'}}
 	        @{{assign "image_2x" '/img/placeholder.svg'}}
