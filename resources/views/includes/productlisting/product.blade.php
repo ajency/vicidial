@@ -10,7 +10,7 @@ $url = create_url([$product->slug_name, 'buy']);
     <!-- <i class="fas fa-heart kss_heart"></i> -->
     <!-- Product Image Display -->
     <a href="{{$url}}" class="position-relative">
-      <div class="product-card__wrapper loading d-flex align-items-center justify-content-center">
+      <div class="product-card__wrapper loading d-flex align-items-center justify-content-center mb-2 mb-sm-3">
         <div class="overlay"></div>
         @php
         $image_1x = $image_2x = $image_3x = '/img/placeholder.svg';
@@ -22,7 +22,7 @@ $url = create_url([$product->slug_name, 'buy']);
           $image_3x = $product->images->{'3x'};
         }
         @endphp
-        <img src="{{$load_10x}}" data-srcset="{{$image_1x}} 270w, {{$image_2x}} 540w, {{$image_3x}} 810w" sizes="(min-width: 992px) 33.33vw,50vw" class="lazyload card-img-top blur-up @php if(count((array)$product->images)==0){ @endphp placeholder-img @php } @endphp" />
+        <img src="{{$load_10x}}" data-srcset="{{$image_1x}} 270w, {{$image_2x}} 540w, {{$image_3x}} 810w" sizes="(min-width: 992px) 33.33vw,50vw" class="lazyload card-img-top blur-up @php if(empty((array)$product->images)){ @endphp placeholder-img @php } @endphp" />
 
         <!-- Size Selection Blade -->
         {{-- @include('includes.productlisting.sizeselection', ['product' => $product]) --}}

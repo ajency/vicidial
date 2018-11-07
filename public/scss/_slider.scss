@@ -18,7 +18,7 @@
 }
 .prod-slides li {
     opacity: 0;
-    transition: all 0.5s ease;
+    // transition: all 0.5s ease;
 }
 .prod-slides.slick-initialized {
     background: none;
@@ -169,7 +169,7 @@
 .slider-placeholder-img{
     img{
         background-color: $placeholder;
-        height: 450px;
+        height: 400px;
         padding: 0 12em;
         @media (max-width: 767px){
             padding: 0 4em;
