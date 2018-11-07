@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fccaf501de81055862de5b0828e02b7d",
+    "content-hash": "f66d7ef0261652d50bb42ce18f871ce8",
     "packages": [
         {
             "name": "ajency/comm",
@@ -1232,16 +1232,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.7.13",
+            "version": "v5.7.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "3ff3110ac14f2b4876acaff289bb55a1af74f02e"
+                "reference": "4cb5bf13e0cd50015f8e6a420a52fa8b90758eb1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/3ff3110ac14f2b4876acaff289bb55a1af74f02e",
-                "reference": "3ff3110ac14f2b4876acaff289bb55a1af74f02e",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/4cb5bf13e0cd50015f8e6a420a52fa8b90758eb1",
+                "reference": "4cb5bf13e0cd50015f8e6a420a52fa8b90758eb1",
                 "shasum": ""
             },
             "require": {
@@ -1307,7 +1307,6 @@
                 "aws/aws-sdk-php": "^3.0",
                 "doctrine/dbal": "^2.6",
                 "filp/whoops": "^2.1.4",
-                "guzzlehttp/guzzle": "^6.3",
                 "league/flysystem-cached-adapter": "^1.0",
                 "mockery/mockery": "^1.0",
                 "moontoast/math": "^1.1",
@@ -1372,7 +1371,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2018-11-07T12:41:02+00:00"
+            "time": "2018-10-30T14:44:34+00:00"
         },
         {
             "name": "laravel/passport",
@@ -2645,69 +2644,6 @@
                 "shell"
             ],
             "time": "2018-10-13T15:16:03+00:00"
-        },
-        {
-            "name": "publiux/laravelcdn",
-            "version": "dev-ajency",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ajency/laravelcdn.git",
-                "reference": "a4f8233956cd02a9e7eaa8723fe096f69099bae0"
-            },
-            "require": {
-                "aws/aws-sdk-php": "~3.0",
-                "illuminate/config": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*|5.7.*",
-                "illuminate/support": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*|5.7.*",
-                "php": ">=5.5.9",
-                "symfony/console": "2.*|3.*|4.*",
-                "symfony/finder": "2.*|3.*|4.*"
-            },
-            "require-dev": {
-                "mockery/mockery": "0.9.3",
-                "phpunit/phpunit": "~4.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Publiux\\laravelcdn\\CdnServiceProvider"
-                    ],
-                    "aliases": {
-                        "CDN": "Publiux\\laravelcdn\\Facades\\CdnFacadeAccessor"
-                    }
-                }
-            },
-            "autoload": {
-                "classmap": [
-                    "tests/TestCase.php",
-                    "src/Publiux/laravelcdn/Exceptions"
-                ],
-                "psr-0": {
-                    "Publiux\\laravelcdn\\": "src/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Raul Ruiz",
-                    "email": "publiux@gmail.com"
-                }
-            ],
-            "description": "Content Delivery Network (CDN) Package for Laravel",
-            "keywords": [
-                "AWS",
-                "AWS S3",
-                "Assets Upload",
-                "CDN",
-                "Content Delivery Network",
-                "S3",
-                "amazon",
-                "laravel",
-                "upload"
-            ],
-            "time": "2018-09-09T19:19:40+00:00"
         },
         {
             "name": "ramsey/uuid",
@@ -5871,8 +5807,7 @@
     "stability-flags": {
         "ajency/comm": 20,
         "ajency/file-upload": 20,
-        "tzsk/payu": 20,
-        "publiux/laravelcdn": 20
+        "tzsk/payu": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

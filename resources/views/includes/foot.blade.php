@@ -1,6 +1,5 @@
 <noscript id="deferred-styles">
-  <!-- <link rel="stylesheet" type="text/css" href="{{CDN::mix('/css/all.css') }}"> -->
-	<link rel="stylesheet" type="text/css" href="{{ mix('/css/all.css') }}">
+	<link rel="stylesheet" type="text/css" href="/css/combine.css">
 </noscript>
 <script>
   var loadDeferredStyles = function() {
@@ -28,8 +27,9 @@
 	lazySizesConfig.loadMode = 3;
 </script>
 
-<!-- <script type="text/javascript" src="{{CDN::mix('/js/all.js') }}"></script> -->
-<script type="text/javascript" src="{{ mix('/js/all.js') }}"></script>
+<script type="text/javascript" src="/js/combine.js"></script>
 
-<!-- <script type="text/javascript" src="{{CDN::mix('/js/cart.js') }}"></script> -->
-<script type="text/javascript" src="{{ mix('/js/cart.js') }}"></script>
+
+<script type="text/javascript" src="/js/custom.js"></script>
+
+<script type="text/javascript" src="/js/cart.js"></script>
