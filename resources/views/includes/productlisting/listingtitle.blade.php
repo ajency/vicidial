@@ -36,7 +36,7 @@
             </ol>
           </nav>
          <h1 class="w-100 kss-title m-0 text-gray font-weight-bold">
-            @{{headers.page_title}} <span class="f-w-4 sub-text"> - @{{headers.product_count}}</span>
+            @{{headers.page_title}} <span class="f-w-4 sub-text"> - @{{headers.product_count}} items</span>
          </h1>
     </div>
     <div class="ml-auto d-none d-md-block">

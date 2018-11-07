@@ -53,6 +53,9 @@ function build_search_object($params) {
 		$all_facets = array_merge($slugs_arr, $all_facets);
 	}
 
+	$facets_count = Facet::select('facet_value',DB::raw('count(id) as "count"'))->whereIn('slug', $all_facets)->groupBy('facet_value')->get()->toArray();
+	// dd(array_column($facets_count, 'count', 'facet_value'));
+	$facets_count_link = array_column($facets_count, 'count', 'facet_value');
 	$facets = Facet::select('facet_name',DB::raw('group_concat(facet_value) as "values",group_concat(slug) as "slugs",group_concat(concat(slug,"$$$",facet_value)) as "slugvalues"'))->whereIn('slug', $all_facets)->groupBy('facet_name')->get();
 	$search_result = [];
 	$slug_search_result = [];

@@ -32,14 +32,26 @@ console.log("facet array===")
 console.log(config_facet_names_arr)
 
 $(document).ready(function(){
-    if($( "input[name='age']:checked" ).length)
-        facetCategoryChange($( "input[name='age']:checked" ),false)
-    if($( "input[name='gender']:checked" ).length)
-        facetCategoryChange($( "input[name='gender']:checked" ),false)
-    if($( "input[name='category']:checked" ).length)
-        facetCategoryChange($( "input[name='category']:checked" ),false)
-    if($( "input[name='subtype']:checked" ).length)
-        facetCategoryChange($( "input[name='subtype']:checked" ),false)
+    if($( "input[name='age']:checked" ).length){
+        $.each($("input[name='age']:checked"), function(){            
+            facetCategoryChange($(this),false)
+        });
+    }
+    if($( "input[name='gender']:checked" ).length){
+        $.each($("input[name='gender']:checked"), function(){            
+            facetCategoryChange($(this),false)
+        });
+    }
+    if($( "input[name='category']:checked" ).length){
+        $.each($("input[name='category']:checked"), function(){            
+            facetCategoryChange($(this),false)
+        });
+    }
+    if($( "input[name='subtype']:checked" ).length){
+        $.each($("input[name='subtype']:checked"), function(){            
+            facetCategoryChange($(this),false)
+        });
+    }
 });
 
 // $('body').on('change', '.facet-category', function() {
@@ -58,6 +70,7 @@ function facetCategoryChange(thisObj,is_ajax = true)
           if(facet_list[facet_name].indexOf($(thisObj).val()) == -1){
             console.log("singleton=="+singleton)
             if(singleton == false){
+                console.log("RAT1=====")
               facet_list[facet_name].push($(thisObj).val())
               var fil_index = filter_tags_list.findIndex(obj => obj.slug==slug_name);
               if(fil_index == -1)
@@ -65,6 +78,7 @@ function facetCategoryChange(thisObj,is_ajax = true)
               call_ajax = true;
             }
             else{
+                console.log("RAT2=====")
               facet_list[facet_name] = [$(thisObj).val()]
               var fil_index = filter_tags_list.findIndex(obj => obj.slug==slug_name);
               var fil_grp_index = filter_tags_list.findIndex(obj => obj.group==facet_name);
@@ -82,6 +96,7 @@ function facetCategoryChange(thisObj,is_ajax = true)
           }
         }
         else{
+            console.log("RAT4=====")
           facet_list[facet_name] = [$(thisObj).val()]
           var fil_index = filter_tags_list.findIndex(obj => obj.slug==slug_name);
           if(singleton == true){
@@ -106,6 +121,7 @@ function facetCategoryChange(thisObj,is_ajax = true)
     else{
         console.log("else==")
         if(facet_list.hasOwnProperty(facet_name)){
+            console.log("RAT5=====")
           console.log("hasproperty=="+$(thisObj).val()+"====="+facet_list[facet_name].indexOf($(thisObj).val()))
           console.log(facet_list[facet_name])
           if(facet_list[facet_name].indexOf($(thisObj).val()) > -1){
@@ -131,18 +147,18 @@ function facetCategoryChange(thisObj,is_ajax = true)
     console.log("listurl====",url)
     var data = JSON.stringify({"search_object":facet_list,"listurl":url})
     if(call_ajax == true){
+        
+        console.log("filter_tags_list===")
+        console.log(filter_tags_list)
+        var filtersource   = document.getElementById("filter-tags-template").innerHTML;
+        var filtertemplate = Handlebars.compile(filtersource);
+        var filtercontext = {};
+        filtercontext["filter_tags_list"] = filter_tags_list;
+        console.log("filter tags====")
+        console.log(filtercontext)
+        var filterhtml    = filtertemplate(filtercontext);
+        document.getElementById("filter-tags-template-content").innerHTML = filterhtml;
         if(is_ajax == true) {
-            console.log("filter_tags_list===")
-            console.log(filter_tags_list)
-            var filtersource   = document.getElementById("filter-tags-template").innerHTML;
-            var filtertemplate = Handlebars.compile(filtersource);
-            var filtercontext = {};
-            filtercontext["filter_tags_list"] = filter_tags_list;
-            console.log("filter tags====")
-            console.log(filtercontext)
-            var filterhtml    = filtertemplate(filtercontext);
-            document.getElementById("filter-tags-template-content").innerHTML = filterhtml;
-
             $.ajax({
                 method: "POST",
                 url: "/api/rest/v1/product-list",

@@ -110,12 +110,11 @@ class Variant extends Model
 
     public function getPrimaryImageSrcset()
     {
-        return array(
-            '100w' => 'https://jeromie.github.io/kss/img/4front.jpg',
-            '200w' => 'https://jeromie.github.io/kss/img/4front_2x.jpg',
-            '300w' => 'https://jeromie.github.io/kss/img/4front_3x.jpg',
-            '400w' => 'https://jeromie.github.io/kss/img/4front_4x.jpg',
-        );
+        $default_imgs = $this->productColor->getDefaultImage(["variant-thumb"]);
+        if(isset($default_imgs["variant-thumb"]))
+            return $default_imgs["variant-thumb"];
+        else
+            return $default_imgs;
     }
 
     public function getRelatedItems()
@@ -156,8 +155,7 @@ class Variant extends Model
 
         return array(
             'title'            => $this->getName(),
-            'image_src_url'    => $this->getPrimaryImageSrc(),
-            'image_srcset_url' => $this->getPrimaryImageSrcset(),
+            'images'           => $this->getPrimaryImageSrcset(),
             'size'             => $this->getSize(),
             'price_mrp'        => $this->getLstPrice(),
             'price_final'      => $this->getSalePrice(),
