@@ -55,6 +55,11 @@
 	</div>
   @{{/each}}
   </div>
+  <div class="text-center mt-3 d-none">
+  	<button class="btn btn-primary btn-lg">
+		<i class="align-middle fa-circle-notch fa-lg fa-spin fas mr-1 d-none"></i> Show more products
+	</button>
+  </div>
 </script>
 <div id="products-list-template-content"></div>
 
