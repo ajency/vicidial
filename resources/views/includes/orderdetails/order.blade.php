@@ -47,7 +47,9 @@
 						</div> -->
 					</div>
 				</a>
-				<hr class="mt-4 mb-4">
+				@if(!$loop->last)
+					<hr class="mt-4 mb-4">
+				@endif
 				@endforeach
 				
 
