@@ -331,7 +331,7 @@ class Product
         $facetValue = $q::createTerm("search_data.number_facet.facet_value", 0);
         $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
         $nested[]   = $q::createNested('search_data.number_facet', $filter);
-        $nested2 = $q::createNested($path, $nested);
+        $nested2 = $q::createNested("search_data", $nested);
         $must = $q::addToBoolQuery('must_not',$nested2, $must);
 
         $nested = [];
@@ -339,10 +339,11 @@ class Product
         $facetValue = $q::createTerm("search_data.boolean_facet.facet_value", true);
         $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
         $nested[]   = $q::createNested('search_data.boolean_facet', $filter);
-        $nested2 = $q::createNested($path, $nested);
+        $nested2 = $q::createNested("search_data", $nested);
         $must = $q::addToBoolQuery('filter',$nested2, $must);
         
         $q->setQuery($must);
+        // dd($q->getParams());
         $response = $q->search();
         return sanitiseFilterdata($response,$params);
     }
@@ -387,7 +388,7 @@ class Product
         $facetValue = $q::createTerm("search_data.number_facet.facet_value", 0);
         $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
         $nested[]   = $q::createNested('search_data.number_facet', $filter);
-        $nested2 = $q::createNested($path, $nested);
+        $nested2 = $q::createNested('search_data', $nested);
         $must = $q::addToBoolQuery('must_not',$nested2, $must);
 
 
@@ -396,7 +397,7 @@ class Product
         $facetValue = $q::createTerm("search_data.boolean_facet.facet_value", true);
         $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
         $nested[]   = $q::createNested('search_data.boolean_facet', $filter);
-        $nested2 = $q::createNested($path, $nested);
+        $nested2 = $q::createNested('search_data', $nested);
         $must = $q::addToBoolQuery('filter',$nested2, $must);
 
         $q->setQuery($must)
