@@ -30,11 +30,21 @@
 							<span>Size: {{$item['size']}}</span> <span>|</span> <span>Qty: {{$item['quantity']}}</span>
 						</div>
 						<div class="product-price">
-							<div class="retail-price">
-								<span class="rs-symbol"><i class="fas fa-rupee-sign sm-font"></i></span>
-								<span class="price">{{$item['price_final']}}</span>
+							<div class="kss-price kss-price--smaller">₹{{$item['price_final']}}
+								@if($item['price_final'] != $item['price_mrp'])
+									<small class="kss-original-price text-muted">₹{{$item['price_mrp']}}
+								  	</small>
+								  	<span class="kss-discount text-danger">{{ round((($item['price_mrp']- $item['price_final']) / ($item['price_mrp'])) * 100)}} % OFF</span>
+							  	@endif
+
 							</div>
 						</div>
+			<!-- 			<div class="product-price">
+							<div class="retail-price">
+								<span class="rs-symbol"><i class="fas fa-rupee-sign sm-font"></i></span>
+								<span class="price">{{$item['price_final']}}</span> 
+							</div>
+						</div> -->
 					</div>
 				</a>
 				<hr class="mt-4 mb-4">

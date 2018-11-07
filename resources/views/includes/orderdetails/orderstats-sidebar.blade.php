@@ -45,7 +45,7 @@
                <label class="text-muted f-w-4 m-0">Shipping Fee</label>
             </div>
             <div class="text-success">
-               <span class="rs-symbol"><i class="fas fa-rupee-sign sm-font"></i></span> {{$order_summary['shipping_fee']}}
+               <span class="rs-symbol"><i class="fas fa-rupee-sign sm-font"></i></span> Free
             </div>
          </div>
 
