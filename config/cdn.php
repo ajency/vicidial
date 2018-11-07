@@ -229,8 +229,8 @@ return [
     |
     */
     'include'   => [
-        'directories' => ['public'],
-        'extensions'  => ['.js', '.css'],
+        'directories' => ['public/css', 'public/fonts', 'public/img', 'public/js'],
+        'extensions'  => [],
         'patterns'    => [],
     ],
 
