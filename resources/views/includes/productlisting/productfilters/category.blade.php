@@ -1,5 +1,5 @@
 <script id="filter-category-template" type="text/x-handlebars-template"> 
-  <div class="kss_filter-list">
+  <div class="kss_filter-list mt-1">
       <div class="d-md-none d-block">
         <div class="d-flex">
           <div><h4 class="mt-0">Filter By</h4></div>
