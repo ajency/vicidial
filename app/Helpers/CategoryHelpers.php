@@ -53,16 +53,39 @@ function build_search_object($params) {
 		$all_facets = array_merge($slugs_arr, $all_facets);
 	}
 
-	$facets_count = Facet::select('facet_value',DB::raw('count(id) as "count"'))->whereIn('slug', $all_facets)->groupBy('facet_value')->get()->toArray();
+	$facets_count = Facet::select('facet_value',DB::raw('count(id) as "count",group_concat(facet_name) as "names"'))->whereIn('slug', $all_facets)->groupBy('facet_value')->get();
 	// dd(array_column($facets_count, 'count', 'facet_value'));
-	$facets_count_link = array_column($facets_count, 'count', 'facet_value');
+	// $facets_count_link = array_column($facets_count, 'count', 'facet_value');
+	$facets_count_link = [];
+	$facet_display_data = config('product.facet_display_data');
+	$facet_display_data_keys = array_keys($facet_display_data);
+	foreach($facets_count as $focuntv){
+		$focuntv_names = explode(",",$focuntv->names);
+		$f_arr = [];
+		foreach($focuntv_names as $fcname){
+			$fval = array_search($fcname,$facet_display_data_keys);
+			array_push($f_arr, $fval);
+		}
+
+		$facets_count_link[$focuntv->facet_value] = $facet_display_data_keys[$f_arr[0]];
+	}
+	
+	// dd($facets_count_link);
 	$facets = Facet::select('facet_name',DB::raw('group_concat(facet_value) as "values",group_concat(slug) as "slugs",group_concat(concat(slug,"$$$",facet_value)) as "slugvalues"'))->whereIn('slug', $all_facets)->groupBy('facet_name')->get();
 	$search_result = [];
 	$slug_search_result = [];
 	$slug_value_search_result = [];
 	$slugs_result = [];
 	foreach($facets as $facet){
-		$search_result[$facet->facet_name] = explode(",", $facet->values);
+		$fvalues = explode(",", $facet->values);
+		foreach($fvalues as $fvaluesv){
+			if($facets_count_link[$fvaluesv] != $facet->facet_name ){
+				$ind = array_search($fvaluesv, $fvalues);
+				unset($fvalues[$ind]);
+			}
+		}
+		if(count($fvalues)>0)
+			$search_result[$facet->facet_name] = $fvalues;
 		$slugs_result[$facet->facet_name] = explode(",", $facet->slugs);
 		$slug_values = explode(",", $facet->slugvalues);
 		foreach($slug_values as $slugval){
