@@ -14,6 +14,7 @@
     "bootstrap-sass": "^3.3.7",
     "cross-env": "^5.1",
     "del": "^2.0.2",
+    "fancy-log": "^1.3.2",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "latest",
     "gulp-clean-css": "^3.10.0",

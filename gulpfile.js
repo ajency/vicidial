@@ -6,9 +6,8 @@ var gulp = require('gulp'),
     csso = require('gulp-csso'),
     prefix = require('gulp-autoprefixer'),
     sass = require('gulp-sass'),
-    sequence = require('run-sequence')
-    // log = require('fancy-log')
-
+    sequence = require('run-sequence'),
+    log = require('fancy-log')
     // browserSync = require('browser-sync').create()
 
 /*==========  Minify and concat different scripts files  ==========*/
@@ -30,6 +29,7 @@ gulp.task('sass', function() {
         // Minify the file
         .pipe(csso())
         .pipe(gulp.dest("public/css"))
+        .on('end', function(){ log('SASS compiled successfully'); });
         // .pipe(browserSync.stream());
 });
 
@@ -45,13 +45,14 @@ gulp.task('sass', function() {
 //});
 
 
-// CSS Version
+// CSS libraries/plugins combined
 gulp.task('css', function(){
     // return gulp.src('./themes/kss/static/css/*.css')
     return gulp.src(['public/css/jquery.fancybox.css', 'public/css/bootstrap-better-nav.min.css', 'public/css/lightgallery.css', 'public/css/xzoom.css','public/css/bootstrap-select.min.css', 'public/css/custom.css'])
-     .pipe(csso())
-     .pipe(concat('combine.css'))
-   .pipe(gulp.dest('public/css'))
+        .pipe(csso())
+        .pipe(concat('combine.css'))
+        .pipe(gulp.dest('public/css'))
+        .on('end', function(){ log('CSS updated successfully'); });
 });
 
 
@@ -61,6 +62,7 @@ gulp.task('build-styles', function (done) {
 });
 
 
+// Gulp watch
 gulp.task('watch', function() {
     gulp.watch(['public/scss/*.scss'], ['sass']);
     gulp.watch(['public/css/jquery.fancybox.css', 'public/css/bootstrap-better-nav.min.css', 'public/css/lightgallery.css', 'public/css/xzoom.css','public/css/bootstrap-select.min', 'public/css/custom.css'], ['css']);
