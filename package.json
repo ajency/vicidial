@@ -13,10 +13,6 @@
     "axios": "^0.17",
     "bootstrap-sass": "^3.3.7",
     "cross-env": "^5.1",
-    "jquery": "^3.2",
-    "laravel-mix": "^1.0",
-    "lodash": "^4.17.4",
-    "vue": "^2.5.7",
     "del": "^2.0.2",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "latest",
@@ -28,7 +24,11 @@
     "gulp-rev": "^8.1.1",
     "gulp-sass": "^2.0.0",
     "gulp-uglify": "^2.0.0",
-    "run-sequence": "^1.2.2"
+    "jquery": "^3.2",
+    "laravel-mix": "^1.0",
+    "lodash": "^4.17.4",
+    "run-sequence": "^1.2.2",
+    "vue": "^2.5.7"
   },
   "dependencies": {
     "handlebars": "^4.0.12"

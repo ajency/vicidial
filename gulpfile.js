@@ -5,8 +5,13 @@ var gulp = require('gulp'),
     uglify = require('gulp-uglify'),
     csso = require('gulp-csso'),
     prefix = require('gulp-autoprefixer'),
-    sass = require('gulp-sass')
+    sass = require('gulp-sass'),
+    sequence = require('run-sequence')
+    // log = require('fancy-log')
+
     // browserSync = require('browser-sync').create()
+
+/*==========  Minify and concat different scripts files  ==========*/
 
 // Minifies JS
 gulp.task('scripts', function(){
@@ -41,7 +46,6 @@ gulp.task('sass', function() {
 
 
 // CSS Version
-
 gulp.task('css', function(){
     // return gulp.src('./themes/kss/static/css/*.css')
     return gulp.src(['public/css/jquery.fancybox.css', 'public/css/bootstrap-better-nav.min.css', 'public/css/lightgallery.css', 'public/css/xzoom.css','public/css/bootstrap-select.min.css', 'public/css/custom.css'])
@@ -50,11 +54,12 @@ gulp.task('css', function(){
    .pipe(gulp.dest('public/css'))
 });
 
-// gulp.task('default', function() {
-//     gulp.run('scripts')
-//     gulp.run('css')
 
-// });
+// Compiling sass and css synchronously
+gulp.task('build-styles', function (done) {
+    sequence('sass', 'css', done);
+});
+
 
 gulp.task('watch', function() {
     gulp.watch(['public/scss/*.scss'], ['sass']);
