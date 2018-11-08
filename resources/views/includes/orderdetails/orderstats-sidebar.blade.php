@@ -100,7 +100,7 @@
    <!-- Total savings -->
    <div class="card shadow-sm mt-3">
       <div class="card-body text-success d-flex">
-         <strong>Your Total Savings on this Order is <i class="fas fa-rupee-sign sm-font"></i></span>{{$order_summary['savings']}}</strong>
+         <strong>Your Total Savings on this Order is <i class="fas fa-rupee-sign sm-font pl-1"></i></span> {{$order_summary['savings']}}</strong>
       </div>
    </div>
 
