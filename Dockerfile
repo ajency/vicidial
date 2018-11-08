@@ -19,14 +19,12 @@ RUN apt-get update && \
 	  php7.2-fpm
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-#RUN apt-get install supervisor
 RUN apt-get install git -y
 ADD . /var/www/html
 WORKDIR /var/www/html
-#RUN mkdir storage/logs
 RUN touch storage/logs/laravel.log
 RUN chmod 777 storage/logs/laravel.log
-#RUN composer config --global --auth github-oauth.github.com github_token
+RUN composer config --global --auth github-oauth.github.com github_token
 RUN composer update 
 RUN composer install 
 RUN chmod -R 777 /var/www/html/storage
