@@ -107,7 +107,13 @@ Add the following to crontab
 `git clone https://github.com/ajency/KSS.git`
 
 ### Install/update composer packages
-`run composer install`
+`composer install`
+
+### Install npm packages
+`npm install`
+
+### Build assets
+`npm run production`
 
 ### Deploy the changes to the database if any
 `php artisan migrate`

@@ -16,6 +16,10 @@
         {
             "type": "vcs",
             "url": "https://github.com/ajency/laravel-file-upload-package.git"
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/ajency/laravelcdn.git"
         }
     ],
     "require": {
