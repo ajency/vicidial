@@ -11,5 +11,28 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css');
+mix.babel([
+	'resources/assets/js/plugins/bootstrap.min.js',
+	'resources/assets/js/plugins/jquery.fancybox.js',
+	'resources/assets/js/plugins/slick.min.js',
+	'resources/assets/js/plugins/bootstrap-better-nav.min.js',
+	'resources/assets/js/plugins/jquery.mousewheel.min.js',
+	'resources/assets/js/plugins/lightgallery-all.min.js',
+	'resources/assets/js/plugins/lazysizes.min.js',
+	'resources/assets/js/plugins/bootstrap-select.min.js',
+	'resources/assets/js/plugins/jquery.autocomplete.js',
+	'resources/assets/js/custom.js'
+	], 'public/js/all.js')
+   .sass('resources/assets/scss/custom.scss', 'public/css')
+   .options({
+      processCssUrls: false
+   })
+   .styles([
+   	'resources/assets/css/plugins/*.css',
+   	'public/css/custom.css'
+   	], 'public/css/all.css')
+   .copyDirectory('resources/assets/img', 'public/img')
+   .copy('resources/assets/js/cart.js', 'public/js/cart.js')
+   .copy('resources/assets/js/productlisting.js', 'public/js/productlisting.js')
+   .copy('resources/assets/js/singleproduct.js', 'public/js/singleproduct.js')
+   .version();
