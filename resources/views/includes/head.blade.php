@@ -9,6 +9,10 @@
 <meta name="theme-color" content="#707279" />
 <link  rel="icon" type="image/x-icon" href="/img/kss_favicon.png" />
 
+@empty($delaycss)
+	<link rel="stylesheet" type="text/css" href="{{ mix('/css/all.css') }}">
+@endempty
+
 @yield('headjs')
 {!! SEOMeta::generate() !!}
 {!! OpenGraph::generate() !!}

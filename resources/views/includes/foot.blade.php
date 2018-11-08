@@ -1,3 +1,4 @@
+@isset($delaycss)
 <noscript id="deferred-styles">
 	<link rel="stylesheet" type="text/css" href="{{CDN::mix('/css/all.css') }}">
 </noscript>
@@ -14,6 +15,8 @@
   if (raf) raf(function() { window.setTimeout(loadDeferredStyles, 0); });
   else window.addEventListener('load', loadDeferredStyles);
 </script>
+@endisset
+
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 

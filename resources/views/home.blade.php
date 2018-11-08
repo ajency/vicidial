@@ -1,9 +1,11 @@
 @extends('layouts.default')
 
+@php
+  $delaycss = true;
+@endphp
+
 @section('headjs')
-
   @include('includes.abovethefold.homecss')
-
 @stop
 
 @section('content')
