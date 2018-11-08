@@ -1,5 +1,9 @@
 @extends('layouts.default')
 
+@section('headjs')
+	@include('includes.abovethefold.orderdetailscss')
+@stop
+
 @section('content')
 
 	<div class="container mt-3 order-details">
@@ -26,7 +30,7 @@
 		            </div> -->
 		          </div>
 		      </div>
-              
+
 			</div>
 		</div>
 		<div class="row mt-md-2 mt-0">
@@ -36,7 +40,7 @@
 				@if(! empty($params['payment_status']))
 					@include('includes.orderdetails.ordermessage', ['status' => $params['payment_status']])
 				@endif
-					
+
 				<hr class="mb-4">
 
 				<!-- Order info -->
@@ -53,12 +57,12 @@
 				</div>
 
 			</div>
-			
+
 			<!-- Order Info sidebar -->
 			@include('includes.orderdetails.orderstats-sidebar', ['payment_info' => $params['payment_info'], 'shipping_address' => $params['shipping_address'], 'order_summary' => $params['order_summary'] ])
 
 		</div>
-	
+
 	</div>
 
 	<!-- Similar Products -->
