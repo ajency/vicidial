@@ -37,6 +37,7 @@
         "laravel/tinker": "~1.0",
         "league/flysystem-aws-s3-v3": "^1.0",
         "spatie/laravel-permission": "^2.23",
+        "publiux/laravelcdn": "dev-ajency",
         "tzsk/payu": "dev-ajency"
     },
     "require-dev": {

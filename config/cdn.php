@@ -15,7 +15,7 @@ return [
     | Default: false
     |
     */
-    'bypass' => env('CDN_Bypass', false),
+    'bypass' => env('CDN_Bypass', true),
 
     /*
     |--------------------------------------------------------------------------
