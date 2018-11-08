@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fccaf501de81055862de5b0828e02b7d",
+    "content-hash": "1584cdbeb9fbbab2aef5ce2fe3be8af0",
     "packages": [
         {
             "name": "ajency/comm",
@@ -2076,16 +2076,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "1.34.0",
+            "version": "1.34.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "1dbd3cb01c5645f3e7deda7aa46ef780d95fcc33"
+                "reference": "19201b87f7dba2a7cbf1cccdf0e1da13c04ee9c9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/1dbd3cb01c5645f3e7deda7aa46ef780d95fcc33",
-                "reference": "1dbd3cb01c5645f3e7deda7aa46ef780d95fcc33",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/19201b87f7dba2a7cbf1cccdf0e1da13c04ee9c9",
+                "reference": "19201b87f7dba2a7cbf1cccdf0e1da13c04ee9c9",
                 "shasum": ""
             },
             "require": {
@@ -2127,7 +2127,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2018-09-20T19:36:25+00:00"
+            "time": "2018-11-08T13:33:47+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -2652,7 +2652,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ajency/laravelcdn.git",
-                "reference": "a4f8233956cd02a9e7eaa8723fe096f69099bae0"
+                "reference": "cbd722fb3262e2c61e5c436ea46750b8f4f092f2"
             },
             "require": {
                 "aws/aws-sdk-php": "~3.0",
@@ -2707,7 +2707,7 @@
                 "laravel",
                 "upload"
             ],
-            "time": "2018-09-09T19:19:40+00:00"
+            "time": "2018-10-30T10:38:12+00:00"
         },
         {
             "name": "ramsey/uuid",
@@ -2839,16 +2839,16 @@
         },
         {
             "name": "spatie/laravel-permission",
-            "version": "2.24.0",
+            "version": "2.25.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-permission.git",
-                "reference": "867df3945e5c622e2e310c36cf226fe4594d7d0f"
+                "reference": "6b41d1d1726d432342546f9d3c79144b082812dc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/867df3945e5c622e2e310c36cf226fe4594d7d0f",
-                "reference": "867df3945e5c622e2e310c36cf226fe4594d7d0f",
+                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/6b41d1d1726d432342546f9d3c79144b082812dc",
+                "reference": "6b41d1d1726d432342546f9d3c79144b082812dc",
                 "shasum": ""
             },
             "require": {
@@ -2899,7 +2899,7 @@
                 "security",
                 "spatie"
             ],
-            "time": "2018-11-07T02:15:22+00:00"
+            "time": "2018-11-07T22:48:36+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -5871,6 +5871,7 @@
     "stability-flags": {
         "ajency/comm": 20,
         "ajency/file-upload": 20,
+        "publiux/laravelcdn": 20,
         "tzsk/payu": 20
     },
     "prefer-stable": false,
