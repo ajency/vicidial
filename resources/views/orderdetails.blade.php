@@ -46,7 +46,7 @@
 				<!-- Product info -->
 				@include('includes.orderdetails.order', ['sub_orders' => $params['sub_orders']])
 
-				<div class="d-flex  align-self-center">
+				<div class="d-flex  align-self-center mb-4">
 					<label>
 						<i class="fas fa-question-circle fa-1x "></i> Need help with this order? <a href="#">Visit our help center</a>
 					</label>
