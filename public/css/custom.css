@@ -9657,6 +9657,10 @@ footer .bl-1 {
 .icon-visa {
   background-position: -69px -458px;
   width: 48px;
+  -webkit-transform: scale(0.8);
+          transform: scale(0.8);
+  margin-left: -2px !important;
+  margin-right: -2px !important;
 }
 
 .icon-rupay {
@@ -12440,6 +12444,14 @@ body #cd-cart .modal.show .modal-dialog {
   border-right: .3em solid transparent;
   border-bottom: 0;
   border-left: .3em solid transparent;
+}
+
+.order-details .kss-title {
+  font-size: 1.1rem;
+}
+
+.order-details label {
+  font-size: .9rem;
 }
 
 #side-menu {

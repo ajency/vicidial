@@ -98,6 +98,9 @@ footer .bl-1{
     @extend .kss-ico;
     background-position: -69px -458px;
     width: 48px;
+    transform: scale(0.8);
+    margin-left: -2px !important;
+    margin-right: -2px !important;
 }
 .icon-rupay{
     @extend .kss-ico;
