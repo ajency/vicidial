@@ -130,7 +130,10 @@ function sanitiseFilterdata($result, $params = [])
         $filter['items'] = [];
         $is_collapsed = 0;
         foreach ($facets as $facet) {
-            $is_selected = (array_search($facet->facet_value, array_collapse($params["search_object"])) === false) ? false : true;
+            if (isset($params["search_object"][$facet->facet_name])){
+                $is_selected =  (array_search($facet->facet_value, $params["search_object"][$facet->facet_name]) === false) ? false : true;
+            }else $is_selected = false;
+            
             $filter['items'][] = [
                 'facet_value'  => $facet->facet_value,
                 'display_name' => $facet->display_name,
