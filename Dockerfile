@@ -13,6 +13,7 @@ RUN apt-get update && \
 	  php7.2-mysql \
 	  php7.2-xml \
           cron \
+	  php7.2-xmlrpc \
 	  nginx \
 	  supervisor \
 	  unzip \
