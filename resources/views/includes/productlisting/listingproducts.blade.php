@@ -5,11 +5,11 @@
   <div class="col-lg-4 col-md-6 mb-sm-4 col-6  ">
 
 	  <div class="card h-100 product-card">
-	  
+
 	  	<!-- Wishlist -->
 	    <!-- <i class="fas fa-heart kss_heart"></i> -->
 	    <!-- Product Image Display -->
-	    <a href="/@{{slug_name}}/buy" class="position-relative">
+	    <a href="/@{{slug_name}}/buy" class="position-relative" title="@{{title}}">
 	      <div class="product-card__wrapper loading d-flex align-items-center justify-content-center mb-2 mb-sm-3">
 	        <div class="overlay"></div>
 	        @{{assign "image_1x" '/img/placeholder.svg'}}
@@ -24,9 +24,9 @@
 		        @{{assign "load_10x" images.load }}
 		        @{{assign "default_placeholder_cls" "" }}
 	        @{{/ifImagesExist}}
-	        <img src="/img/placeholder-10x.jpg" data-srcset="@{{@root.image_1x}} 270w, @{{@root.image_2x}} 540w, @{{@root.image_3x}} 810w" sizes="(min-width: 992px) 33.33vw,50vw" class="lazyload card-img-top blur-up @{{@root.default_placeholder_cls}}" />
+	        <img src="/img/placeholder-10x.jpg" data-srcset="@{{@root.image_1x}} 270w, @{{@root.image_2x}} 540w, @{{@root.image_3x}} 810w" sizes="(min-width: 1200px) 270px,(min-width: 992px) 22vw,(min-width: 768px) 33vw, 45vw" class="lazyload card-img-top blur-up @{{@root.default_placeholder_cls}}"  title="@{{title}}" alt="@{{title}}" />
 
-	      </div>      
+	      </div>
 	    </a>
 	    <!-- Product Info -->
 	    <div class="
@@ -34,10 +34,10 @@
 	      @{{#if title}}
 	      <a href="/@{{slug_name}}/buy" class="text-dark">
 	        <h5 class="card-title">
-	          
+
 	          @{{title}}
 
-	        </h5>      
+	        </h5>
 	      </a>
 	      @{{/if}}
 	      <!-- Calculate & Display Price -->

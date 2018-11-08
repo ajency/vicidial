@@ -7,7 +7,7 @@
             	<!-- <i class="fas fa-heart kss_heart"></i> -->
               <a href="#" >
                 <div class="image oh loading loading-01">
-                	<img src="/img/10px/blue-tshirt-10px.jpg" data-srcset="/img/1x/blue-tshirt@1x.jpg 270w, /img/2x/blue-tshirt@2x.jpg 540w, /img/3x/blue-tshirt@3x.jpg 978w" class="lazyload card-img-top blur-up" sizes="(min-width: 992px) 25vw,50vw" />
+                	<img src="/img/10px/blue-tshirt-10px.jpg" data-srcset="/img/1x/blue-tshirt@1x.jpg 270w, /img/2x/blue-tshirt@2x.jpg 540w, /img/3x/blue-tshirt@3x.jpg 978w" class="lazyload card-img-top blur-up" sizes="(min-width: 992px) 25vw,50vw" alt="Cotton Rich Super Skinny Fit Jeans" title="Cotton Rich Super Skinny Fit Jeans" />
                </div>
               </a>
               <div class="card-body">
@@ -26,7 +26,7 @@
          	 		<!-- <i class="fas fa-heart kss_heart"></i> -->
               <a href="#">
                  <div class="image oh loading loading-02">
-                <img src="/img/10px/orange-tshirt-10px.jpg" data-srcset="/img/1x/orange-tshirt@1x.jpg 270w, /img/2x/orange-tshirt@2x.jpg 540w, /img/3x/orange-tshirt@3x.jpg 978w" class="lazyload card-img-top blur-up" sizes="(min-width: 992px) 25vw,50vw" />
+                <img src="/img/10px/orange-tshirt-10px.jpg" data-srcset="/img/1x/orange-tshirt@1x.jpg 270w, /img/2x/orange-tshirt@2x.jpg 540w, /img/3x/orange-tshirt@3x.jpg 978w" class="lazyload card-img-top blur-up" sizes="(min-width: 992px) 25vw,50vw" alt="Cotton Rich Super Skinny Fit Jeans" title="Cotton Rich Super Skinny Fit Jeans" />
               </div>
               </a>
               <div class="card-body">
@@ -45,7 +45,7 @@
             	<!-- <i class="fas fa-heart kss_heart"></i> -->
               <a href="#">
                  <div class="image oh loading loading-03">
-                      <img src="/img/10px/red-tshirt-10px.jpg" data-srcset="/img/1x/red-tshirt@1x.jpg 270w, /img/2x/red-tshirt@2x.jpg 540w, /img/3x/red-tshirt@3x.jpg 978w" class="lazyload card-img-top blur-up" sizes="(min-width: 992px) 25vw,50vw" />
+                      <img src="/img/10px/red-tshirt-10px.jpg" data-srcset="/img/1x/red-tshirt@1x.jpg 270w, /img/2x/red-tshirt@2x.jpg 540w, /img/3x/red-tshirt@3x.jpg 978w" class="lazyload card-img-top blur-up" sizes="(min-width: 992px) 25vw,50vw" alt="Cotton Rich Super Skinny Fit Jeans" title="Cotton Rich Super Skinny Fit Jeans" />
                   </div>
               </a>
               <div class="card-body">
@@ -63,7 +63,7 @@
              <!--  <i class="fas fa-heart kss_heart"></i> -->
               <a href="#">
               	<div class="image oh loading loading-04">
-              		<img src="/img/10px/mix-tshirt-10px.jpg" data-srcset="/img/1x/mix-tshirt@1x.jpg 270w, /img/2x/mix-tshirt@2x.jpg 540w, /img/3x/mix-tshirt@3x.jpg 978w" class="lazyload card-img-top blur-up" sizes="(min-width: 992px) 25vw,50vw" />
+              		<img src="/img/10px/mix-tshirt-10px.jpg" data-srcset="/img/1x/mix-tshirt@1x.jpg 270w, /img/2x/mix-tshirt@2x.jpg 540w, /img/3x/mix-tshirt@3x.jpg 978w" class="lazyload card-img-top blur-up" sizes="(min-width: 992px) 25vw,50vw" alt="Cotton Rich Super Skinny Fit Jeans" title="Cotton Rich Super Skinny Fit Jeans" />
                	</div>
               </a>
               <div class="card-body">
