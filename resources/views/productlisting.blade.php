@@ -54,6 +54,6 @@
       var config_facet_names_arr = <?= json_encode($config_facet_names_arr);?>;
       var facet_value_slug_assoc = <?= $facet_value_slug_assoc ?>;
   </script>
-  <script type="text/javascript" src="{{ mix('/js/productlisting.js') }}"></script>
+  <script type="text/javascript" src="{{CDN::mix('/js/productlisting.js') }}"></script>
 
 @stop
