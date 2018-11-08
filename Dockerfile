@@ -12,6 +12,7 @@ RUN apt-get update && \
 	  php7.2-zip \
 	  php7.2-mysql \
 	  php7.2-xml \
+	  php7.2-xmlrpc \
           cron \
 	  php7.2-xmlrpc \
 	  nginx \
