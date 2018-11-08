@@ -111,15 +111,6 @@
 	<!-- Similar Products -->
 	@include('includes.similar-products')
 
-
-	<div class="alert kss-alert sticky-alert d-inline-flex align-items-baseline px-sm-4 py-sm-4 px-3 py-3 fade show" role="alert">
-	  <i class="fas fa-check pr-sm-3 pr-2 icon"></i>
-	  <div class="message"></div>
-	  <button type="button" class="close" aria-label="Close">
-	    <span aria-hidden="true">&times;</span>
-	  </button>
-	</div>
-
 @stop
 
 @section('footjs')
