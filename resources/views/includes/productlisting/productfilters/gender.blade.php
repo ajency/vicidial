@@ -2,7 +2,7 @@
 <script id="filter-gender-template" type="text/x-handlebars-template">
    <div class="kss_filter-list">
       <div id="headingOne">
-        <label class="w-100 @{{#if collapsed}} collapsed @{{/if}}" data-toggle="collapse" data-target="#collapseGender" aria-expanded="true" aria-controls="collapseGender">
+        <label class="w-100 mb-0 pb-2 cursor-pointer @{{#if collapsed}} collapsed @{{/if}}" data-toggle="collapse" data-target="#collapseGender" aria-expanded="true" aria-controls="collapseGender">
             @{{filter_display_name}} <i class="fas fa-angle-up float-right"></i>
         </label>
       </div>

@@ -3,7 +3,7 @@
 <!-- Order shipped details -->
 <div class="d-flex bd-highlight">
 	<div class="pb-2 pr-2">
-		<label class="d-block m-0">Shipment {{$sub_order['number_of_items']}} of {{$sub_order['number_of_items']}} {{$sub_order['number_of_items'] == 1 ? "Item" : "Items"}}</label>
+		<label class="d-block m-0">Shipment {{$loop->iteration}} of {{$sub_order['number_of_items']}} {{$sub_order['number_of_items'] == 1 ? "Item" : "Items"}}</label>
 		<i class="fas fa-clipboard-check mr-1 text-muted"></i> <span class="text-success font-weight-bold">Order Processed</span>
 	</div>
 	<div class="pb-2 ml-auto">
@@ -34,7 +34,7 @@
 								@if($item['price_final'] != $item['price_mrp'])
 									<small class="kss-original-price text-muted">₹{{$item['price_mrp']}}
 								  	</small>
-								  	<span class="kss-discount text-danger">{{ round((($item['price_mrp']- $item['price_final']) / ($item['price_mrp'])) * 100)}} % OFF</span>
+								  	<span class="kss-discount text-danger">{{ calculate_discount( $item['price_mrp'],$item['price_final']) }} % OFF</span>
 							  	@endif
 
 							</div>
@@ -47,7 +47,9 @@
 						</div> -->
 					</div>
 				</a>
-				<hr class="mt-4 mb-4">
+				@if(!$loop->last)
+					<hr class="mt-4 mb-4">
+				@endif
 				@endforeach
 				
 

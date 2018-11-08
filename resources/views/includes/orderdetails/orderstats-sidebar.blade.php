@@ -1,15 +1,16 @@
 <!-- Order Details sidebar start -->
 <div class="col-12 col-xl-4 col-lg-4">
-   <label class="">Payment Information</label>
+   @if($payment_info['payment_mode'] and $payment_info['card_num'])
+      <label class="">Payment Information</label>
 
-   <!-- Payment Info/Mode -->
-   
-   <div class="card shadow-sm">
-         <div class="card-body text-muted d-flex">
-            Payment Mode:<i class="mr-1 ml-1 {{ $payment_info['payment_mode'] == 'MAST' ? 'icon-master-card' : ( $payment_info['payment_mode'] == 'VISA' ? 'icon-visa' : ($payment_info['payment_mode'] == 'rupay' ? 'icon-rupay' : 'far fa-credit-card no-card ') ) }} "></i> <strong>ending in {{substr($payment_info['card_num'], -4)}}</strong>
-         </div>
-   </div>
-   
+      <!-- Payment Info/Mode -->
+      
+      <div class="card shadow-sm">
+            <div class="card-body text-muted d-flex">
+               Payment Mode:<i class="mr-1 ml-1 {{ $payment_info['payment_mode'] == 'MAST' ? 'icon-master-card' : ( $payment_info['payment_mode'] == 'VISA' ? 'icon-visa' : ($payment_info['payment_mode'] == 'rupay' ? 'icon-rupay' : 'far fa-credit-card no-card ') ) }} "></i> <strong>ending in {{substr($payment_info['card_num'], -4)}}</strong>
+            </div>
+      </div>
+   @endif
 
    <!-- Shipping Address -->
    <label class="mt-4">Shipping Address</label>
@@ -45,7 +46,7 @@
                <label class="text-muted f-w-4 m-0">Shipping Fee</label>
             </div>
             <div class="text-success">
-               <span class="rs-symbol"><i class="fas fa-rupee-sign sm-font"></i></span> Free
+               <span class="rs-symbol"><i class="fas fa-rupee-sign sm-font"></i></span> {{$order_summary['shipping_fee']}}
             </div>
          </div>
 
@@ -99,7 +100,7 @@
    <!-- Total savings -->
    <div class="card shadow-sm mt-3">
       <div class="card-body text-success d-flex">
-         <strong>Your Total Savings on this Order is <i class="fas fa-rupee-sign sm-font"></i></span>{{$order_summary['savings']}}</strong>
+         <strong>Your Total Savings on this Order is <i class="fas fa-rupee-sign sm-font pl-1"></i></span> {{$order_summary['savings']}}</strong>
       </div>
    </div>
 
