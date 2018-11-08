@@ -11,5 +11,3 @@
 	<!--Angular app-->
 	<app-root id="angular-app" class="h-100 d-block"></app-root>
 </div>
-	
-<div class="overlay-fix" style="display:none;"> 
