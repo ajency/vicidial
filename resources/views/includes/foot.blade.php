@@ -1,5 +1,5 @@
 <noscript id="deferred-styles">
-	<link rel="stylesheet" type="text/css" href="{{ mix('/css/all.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{CDN::mix('/css/all.css') }}">
 </noscript>
 <script>
   var loadDeferredStyles = function() {
@@ -28,6 +28,6 @@
 </script>
 
 
-<script type="text/javascript" src="{{ mix('/js/all.js') }}"></script>
+<script type="text/javascript" src="{{CDN::mix('/js/all.js') }}"></script>
 
-<script type="text/javascript" src="{{ mix('/js/cart.js') }}"></script>
+<script type="text/javascript" src="{{CDN::mix('/js/cart.js') }}"></script>
