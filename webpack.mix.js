@@ -32,7 +32,8 @@ mix.babel([
    	'public/css/custom.css'
    	], 'public/css/all.css')
    .copyDirectory('resources/assets/img', 'public/img')
-   .copy('resources/assets/js/cart.js', 'public/js/cart.js')
-   .copy('resources/assets/js/productlisting.js', 'public/js/productlisting.js')
-   .copy('resources/assets/js/singleproduct.js', 'public/js/singleproduct.js')
+   .copyDirectory('resources/assets/fonts', 'public/fonts')
+   .babel('resources/assets/js/cart.js', 'public/js/cart.js')
+   .babel('resources/assets/js/productlisting.js', 'public/js/productlisting.js')
+   .babel('resources/assets/js/singleproduct.js', 'public/js/singleproduct.js')
    .version();
