@@ -40,31 +40,31 @@
                   <div class="card-body pb-2 px-0">
                      <h5 class="mb-3 fz-sm">Please follow the following steps below to place your order</h5>
                      <ol>
-                        <li class="h5 text-muted fz-sm">
+                        <li class="h5 text-muted fz-sm line-height-5">
                            Explore your favourite online Shopping destination and select the product of your choice.
                         </li>
-                        <li class="h5 text-muted fz-sm">
+                        <li class="h5 text-muted fz-sm line-height-5">
                            Select the desired, size and click on Add to bag. This will automatically open the bag.
                         </li>
-                        <li class="h5 text-muted fz-sm">
+                        <li class="h5 text-muted fz-sm line-height-5">
                            Click on proceed to checkout.
                         </li>
-                        <li class="h5 text-muted fz-sm">
+                        <li class="h5 text-muted fz-sm line-height-5">
                            Login to your account by entering your mobile number.
                         </li>
-                        <li class="h5 text-muted fz-sm">
+                        <li class="h5 text-muted fz-sm line-height-5">
                            Enter the OTP received for your mobile number.
                         </li>
-                        <li class="h5 text-muted fz-sm">
+                        <li class="h5 text-muted fz-sm line-height-5">
                            Select the shipping address you want to ship your products to. Incase you are a first time user you will be prompted to add a new shipping address.
                         </li>
-                        <li class="h5 text-muted fz-sm">
+                        <li class="h5 text-muted fz-sm line-height-5">
                            View your final order summary. Here you can edit your address. You will not be able to edit your bag details here. Hit Pay via PayU to continue paying via payment gateway.
                         </li>
-                        <li class="h5 text-muted fz-sm">
+                        <li class="h5 text-muted fz-sm line-height-5">
                            View your final order summary. Here you can edit your address. You will not be able to edit your bag details here. Hit Pay via PayU to continue paying via payment gateway.
                         </li>
-                        <li class="h5 text-muted fz-sm">
+                        <li class="h5 text-muted fz-sm line-height-5">
                            Then you can proceed to enter your card details to complete the payment. Please Note PayU does not support RuPay cards. It supports MasterCard and Visa.
                         </li>
                      </ol>
@@ -82,8 +82,8 @@
                </div>
                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                   <div class="card-body pb-2 px-0">
-                     <p class="h5 text-muted fz-sm">
-                        Please click here to cancel your order. <br><br>
+                     <p class="h5 text-muted fz-sm line-height-5">
+                        Please click here to cancel your order. <br>
                         Or you can also cancel your order by accessing the “My Orders” section under “My Account” of site and then select the item or order you want to cancel.
                      </p>
                   </div>
@@ -100,7 +100,7 @@
                </div>
                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
                   <div class="card-body pb-2 px-0">
-                     <p class="h5 text-muted fz-sm">
+                     <p class="h5 text-muted fz-sm line-height-5">
                         After you have cancelled or returned your order your amount will be refunded to you within 7 working days or as may be specified per the terms and conditions. 
                      </p>
                   </div>
@@ -117,7 +117,7 @@
                </div>
                <div id="collapsefour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
                   <div class="card-body pb-2 px-0">
-                     <p class="h5 text-muted fz-sm">
+                     <p class="h5 text-muted fz-sm line-height-5">
                         Go to “My Orders” section in “My Account” of site and then select the item or order you want to track.
                      </p>
                   </div>
@@ -134,7 +134,7 @@
                </div>
                <div id="collapseFive" class="collapse " aria-labelledby="headingFive" data-parent="#accordionExample">
                   <div class="card-body pb-2 px-0">
-                     <p class="h5 text-muted fz-sm">
+                     <p class="h5 text-muted fz-sm line-height-5">
                         You can view our shipping and return policy here.
                      </p>
                   </div>
@@ -151,7 +151,7 @@
                </div>
                <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordionExample">
                   <div class="card-body pb-2 px-0">
-                     <p class="h5 text-muted fz-sm">
+                     <p class="h5 text-muted fz-sm line-height-5">
                         You can view our privacy policy here.
                      </p>
                   </div>
@@ -168,8 +168,8 @@
                </div>
                <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordionExample">
                   <div class="card-body pb-2 px-0">
-                     <p class="h5 text-muted fz-sm">
-                        You can write to us at <a href="mailto:care@kidsuperstore.in">care@kidsuperstore.in</a> <br><br>
+                     <p class="h5 text-muted fz-sm line-height-5">
+                        You can write to us at <a href="mailto:care@kidsuperstore.in">care@kidsuperstore.in</a> <br>
                         You can also contact us by submitting your query on the contact form <a href="/contact">here</a>.
                      </p>
                   </div>

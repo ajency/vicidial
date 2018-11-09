@@ -352,3 +352,10 @@ footer .bl-1{
 .white-space-normal{
     white-space: normal;
 }
+
+.line-height-5{
+    line-height: 1.5;
+    @media (max-width: 767px){
+        line-height: 1.3;
+    }
+}
