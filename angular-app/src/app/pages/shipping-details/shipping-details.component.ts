@@ -36,18 +36,87 @@ export class ShippingDetailsComponent implements OnInit {
             ) { }
 
   ngOnInit() {
-    this.addresses = this.appservice.shippingAddresses;
+    if(this.appservice.directNavigationToShippingAddress){
+      this.checkCartStatus();
+      this.appservice.directNavigationToShippingAddress = false;
+    }
+    else{
+      this.addresses = this.appservice.shippingAddresses;
+      this.updateUrl();
+      this.checkAddresses();
+    }
+    
+  }
+
+  checkAddresses(){
     if(!this.addresses.length){
       this.addAddress = true;
       this.initSelectPicker(); 
     }
     this.addresses.forEach((address)=> {if(address.default == true) this.selectedAddressId=address.id});
-    
   }
 
-  // ngAfterViewInit(){
-  //   $('#state').selectpicker();
-  // }
+  updateUrl(){
+    let url = window.location.href.split("#")[0] + '#shipping-address';
+    console.log("check url ==>", url);
+    if(!window.location.href.endsWith('#shipping-address')){
+      console.log("changing history");
+      this.appservice.userVerificationComplete ? history.replaceState({cart : true}, 'cart', url) : history.pushState({cart : true}, 'cart', url);
+      this.appservice.userVerificationComplete = false;
+    }      
+  }
+
+  checkCartStatus(){
+    if(!(this.appservice.getCookie('token') && this.appservice.getCookie('cart_id'))){
+       this.router.navigateByUrl('/cartpage', { skipLocationChange: true });
+    }
+    else{
+      let url = this.appservice.apiUrl + ("/api/rest/v1/user/cart/"+this.appservice.getCookie('cart_id')+"/get");
+      let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
+      this.apiservice.request(url, 'get', {}, header ).then((response)=>{
+         console.log("response ==>", response);
+         let cartItemOutOfStock = false;
+         response.items.forEach((item)=>{
+           if(!item.availability){
+             cartItemOutOfStock = true;
+           }
+         })
+         document.cookie = "cart_count=" + response.cart_count + ";path=/";
+         this.appservice.updateCartCountInUI();
+
+         if(!cartItemOutOfStock && response.items.length){
+           this.getAddress();
+         }
+         else{
+          this.router.navigateByUrl('/cartpage', { skipLocationChange: true });
+         }
+          
+      })
+      .catch((error)=>{
+         console.log("error ===>", error);
+         this.appservice.removeLoader();
+         this.router.navigateByUrl('/cartpage', { skipLocationChange: true });
+         return false;
+      })
+    }
+  }
+
+  getAddress(){
+    let url = this.appservice.apiUrl + "/api/rest/v1/user/address/all";
+    let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
+    this.apiservice.request(url, 'get', {} , header ).then((response)=>{
+    console.log("response ==>", response);
+    this.addresses = response.addresses;
+    this.checkAddresses();
+    this.appservice.shippingAddresses = response.addresses;
+    // this.router.navigateByUrl('/shipping-details', { skipLocationChange: true });
+    this.appservice.removeLoader();
+    })
+    .catch((error)=>{
+    console.log("error ===>", error);
+    this.appservice.removeLoader();
+    })
+  }
 
   saveNewAddress(){
     this.appservice.showLoader();
@@ -178,10 +247,30 @@ export class ShippingDetailsComponent implements OnInit {
   }
 
   closeCart(){
-    this.appservice.closeCart();
+    // this.appservice.closeCart();
+    console.log("history.length ==>", history.length);
+    this.appservice.cartClosedFromShippingPages = true;
+    if(history.length>2)
+      history.go(-2);
+    else{
+      let url = window.location.href.split("#")[0];
+      history.replaceState({cart : false}, 'cart', url);
+      this.appservice.closeCart();
+      this.router.navigateByUrl('/cartpage', {skipLocationChange: true});
+    }
   }
 
   navigateBack(){
-    this.router.navigateByUrl('/', {skipLocationChange: true});
+    // this.router.navigateByUrl('/', {skipLocationChange: true});
+    console.log("history.length ==>", history.length);
+    if(history.length>2)
+      history.back();
+    else{
+      this.appservice.cartClosedFromShippingPages = true;
+      let url = window.location.href.split("#")[0];
+      history.replaceState({cart : false}, 'cart', url);
+      this.appservice.closeCart();
+      this.router.navigateByUrl('/cartpage', {skipLocationChange: true});
+    }
   }
 }

@@ -13,19 +13,25 @@ export class AppServiceService {
   apiUrl = '';
   private addToCart = new Subject<any>();
   private openCart = new Subject<any>();
-  shippingAddresses : any;
+  private closeModal = new Subject<any>();
+  shippingAddresses = [];
   shippingDetails : any;
+  userVerificationComplete : boolean = false;
+  directNavigationToShippingAddress : boolean = false;
+  cartClosedFromShippingPages : boolean = false;
   constructor(	private router: Router,
-                private apiservice : ApiServiceService, ) { 
+                private apiservice : ApiServiceService) { 
     console.log("isDevMode ==>",isDevMode());
     this.apiUrl = isDevMode() ? 'http://localhost:8000' : '';
     var self = this;
     $('.cd-add-to-cart').on('click',function(){
       console.warn("appservice ==========> add to cart clicked");
+      // self.router.navigateByUrl('/cartpage', { skipLocationChange: true });
       self.addToCartClicked();
     });
     $("#cd-cart-trigger").on('click',function(){
       console.warn("appservice ==========> open to cart clicked");
+      // self.router.navigateByUrl('/cartpage', { skipLocationChange: true });
       self.openCartClicked();
     });
   }
@@ -41,7 +47,7 @@ export class AppServiceService {
       document.getElementById('cd-shadow-layer').classList.remove('is-visible');
     if(document.getElementsByClassName("modal-backdrop")[0])
 	    document.getElementsByClassName("modal-backdrop")[0].remove();
-    this.router.navigateByUrl('/', { skipLocationChange: true });
+    // this.router.navigateByUrl('/cartpage', { skipLocationChange: true });
   }
 
   addToCartClicked() {
@@ -51,6 +57,11 @@ export class AppServiceService {
 
   openCartClicked() {
     this.openCart.next();
+      // this.router.navigateByUrl('/cartpage', { skipLocationChange: true });
+  }
+
+  closeVerificationModal() {
+    this.closeModal.next()
   }
 
   listenToAddToCartEvent(): Observable<any> {
@@ -59,6 +70,10 @@ export class AppServiceService {
 
   listenToOpenCartEvent() : Observable<any> {
     return this.openCart.asObservable();
+  }
+
+  listenToCloseModal() : Observable<any> {
+    return this.closeModal.asObservable();
   }
 
   getCookie(cname) {

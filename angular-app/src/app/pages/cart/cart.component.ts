@@ -31,6 +31,7 @@ export class CartComponent implements OnInit {
   }
   reloadSubscription: Subscription;
   loadSubscription: Subscription;
+  closeModalSubscription: Subscription;
   cartItemOutOfStock : boolean = false;
   constructor( private router: Router,
                private appservice : AppServiceService,
@@ -39,9 +40,12 @@ export class CartComponent implements OnInit {
               ) { 
     this.reloadSubscription = this.appservice.listenToAddToCartEvent().subscribe(()=> { this.reloadCart() });
     this.loadSubscription = this.appservice.listenToOpenCartEvent().subscribe(()=> { this.loadCart() });
+
+    this.closeModalSubscription = this.appservice.listenToCloseModal().subscribe(()=>{ this.updateOtpModal(false)});
   }
 
   reloadCart(){
+    this.updateUrl();
     console.log("listened to the add to cart trigger");
     this.cartOpen = true;
     this.fetchCartDataOnAddToCartSuccess();
@@ -49,6 +53,7 @@ export class CartComponent implements OnInit {
   }
 
   loadCart(){
+    this.updateUrl();
     console.log("listened to open cart trigger");
     this.cartOpen = true;
     this.getCartData();
@@ -61,16 +66,35 @@ export class CartComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.cartOpen = true;
-    $('.ng-cart-loader').removeClass('cart-loader')
-    if(sessionStorage.getItem('add_to_cart_clicked')){
-      console.log("add to cart clicked");
-      this.fetchCartDataOnAddToCartSuccess();
-      sessionStorage.removeItem('add_to_cart_clicked');
-    }
+    if(this.appservice.cartClosedFromShippingPages)
+      this.appservice.cartClosedFromShippingPages = false;
     else{
-      this.getCartData();
+      console.log("ngOnInit cart component");   
+      this.updateUrl();
+      this.cartOpen = true;
+      $('.ng-cart-loader').removeClass('cart-loader')
+      if(sessionStorage.getItem('add_to_cart_clicked')){
+        console.log("add to cart clicked");
+        this.fetchCartDataOnAddToCartSuccess();
+        sessionStorage.removeItem('add_to_cart_clicked');
+      }
+      else{
+        this.getCartData();
+      }
     }
+  }
+
+  ngAfterViewInit(){
+    if(window.location.href.endsWith('/user-verification'))
+      this.modalHandler();
+  }
+
+  updateUrl(){
+    let url = window.location.href.split("#")[0] + '#cart';
+    if(window.location.href.endsWith('#shipping-address') || window.location.href.endsWith('#shipping-summary'))
+      history.replaceState({cart : true}, 'cart', url);
+    else if(!(window.location.href.endsWith('#cart') || window.location.href.endsWith('#cart/user-verification')))
+      history.pushState({cart : true}, 'cart', url);
   }
 
   fetchCartDataOnAddToCartSuccess(){    
@@ -248,6 +272,7 @@ export class CartComponent implements OnInit {
       if(response.success){
         document.cookie='token='+ response.token + ";path=/";
         document.cookie='cart_id=' + response.user.active_cart_id + ";path=/";
+        this.appservice.userVerificationComplete = true;
         this.navigateToShippingDetailsPage();        
       }
       else{
@@ -265,9 +290,22 @@ export class CartComponent implements OnInit {
   }
 
   closeCart(){
-    // this.cart = null;
-    this.cartOpen = false;
+    let url = window.location.href.split("#")[0];
+    history.replaceState({cart : false}, 'cart', url);
     this.appservice.closeCart();
+    // console.log(history.length);
+    // if(history.length == 2){
+    //   console.log("history length is 2");
+    //   window.location.href = window.location.href.split("#")[0];
+    // }
+    // else{
+    //   console.log("history length is not 2");
+    //   history.back();
+    // }
+    // this.cart = null;
+    // window.location.back();
+    // this.cartOpen = false;
+    // this.appservice.closeCart();
   }
 
   modalHandler(){
@@ -276,6 +314,9 @@ export class CartComponent implements OnInit {
       this.navigateToShippingDetailsPage();
     }
     else{
+      let url = window.location.href +'/user-verification';
+      if(!window.location.href.endsWith('#cart/user-verification'))
+        history.pushState({cart : true}, 'cart', url);
       $('#signin').modal('show');
       $("#cd-cart").css("overflow", "hidden");
       $('.modal-backdrop').appendTo('#cd-cart');
@@ -295,12 +336,16 @@ export class CartComponent implements OnInit {
       return true;
   }
 
-  updateOtpModal(){
+  updateOtpModal(updateHistory : boolean = true){
     $('#signin').modal('hide');
     $("#cd-cart").css("overflow", "auto");
     this.mobileNumberEntered = false;
     this.otp = null;
     this.userValidation.otpVerificationErrorMsg = '';
+    if(updateHistory){
+      let url = window.location.href.split("#")[0];
+      history.replaceState({cart : false}, 'cart', url);
+    }
   }
 
   navigateToShippingDetailsPage(){

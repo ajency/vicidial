@@ -1,5 +1,5 @@
 <div id="cd-cart" class="angular-app h-100">
-	<div class="kss_shipping slide-out slide-show">
+	<div *ngIf="addAddress || (addresses && addresses.length)" class="kss_shipping slide-out slide-show">
 		<div class="scroll-container">
 			<nav class="navbar navbar-dark bg-dark pt-3 pb-3 ">
 				<div class="d-flex align-items-center w-100">
