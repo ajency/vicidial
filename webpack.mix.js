@@ -23,13 +23,13 @@ mix.babel([
 	'resources/assets/js/plugins/jquery.autocomplete.js',
 	'resources/assets/js/custom.js'
 	], 'public/js/all.js')
-   .sass('resources/assets/scss/custom.scss', 'public/css')
+   .sass('resources/assets/scss/custom.scss', '../resources/assets/css')
    .options({
       processCssUrls: false
    })
    .styles([
    	'resources/assets/css/plugins/*.css',
-   	'public/css/custom.css'
+   	'resources/assets/css/custom.css'
    	], 'public/css/all.css')
    .copyDirectory('resources/assets/img', 'public/img')
    .copyDirectory('resources/assets/fonts', 'public/fonts')
