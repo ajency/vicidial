@@ -92,14 +92,13 @@ class CartController extends Controller
         if ($cart == null) {
             abort(404, "Requested Cart not found");
         }
-        $cart->abortNotCart();
         checkUserCart($request->header('Authorization'),$cart);
         
         $items = getCartData($cart);
 
         $summary = $cart->getSummary();
         $code    = ["code" => "NEWUSER", "applied" => true];
-        return response()->json(['cart_count' => $cart->itemCount(), 'items' => $items, "summary" => $summary, "code" => $code]);
+        return response()->json(['cart_count' => $cart->itemCount(), 'cart_type' => $cart->type, 'items' => $items, "summary" => $summary, "code" => $code]);
     }
 
     public function guestCartFetch(Request $request)
@@ -109,12 +108,11 @@ class CartController extends Controller
         if ($cart == null) {
             abort(404, "Cart not found for this session");
         }
-        $cart->abortNotCart();
         $items = getCartData($cart);
 
         $summary = $cart->getSummary();
         $code    = ["code" => "NEWUSER", "applied" => true];
-        return response()->json(['cart_count' => $cart->itemCount(), 'items' => $items, "summary" => $summary, "code" => $code]);
+        return response()->json(['cart_count' => $cart->itemCount(), 'cart_type' => $cart->type, 'items' => $items, "summary" => $summary, "code" => $code]);
     }
 
     public function guestCartDelete(Request $request)
