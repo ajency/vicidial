@@ -102,6 +102,5 @@
    </div>
     <div class="d-flex bd-highlight mb-3">
         <div class="mr-auto p-2 bd-highlight">© Copyright 2018 Kidsuperstore. All rights reserved.</div>
-        <div class="p-2 bd-highlight ">Powered By Ajency.in</div>
     </div>
 </div>
