@@ -9927,6 +9927,10 @@ footer .bl-1 {
   .fz-sm {
     font-size: 1.1em;
   }
+  .no-shadow-mobile {
+    -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+  }
 }
 
 .sticky-menu {
@@ -12475,13 +12479,6 @@ body #cd-cart .modal.show .modal-dialog {
 
 .order-details label {
   font-size: .9rem;
-}
-
-@media (max-width: 767px) {
-  .contactForm {
-    -webkit-box-shadow: none !important;
-            box-shadow: none !important;
-  }
 }
 
 #side-menu {

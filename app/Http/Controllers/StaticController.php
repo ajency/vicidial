@@ -32,5 +32,10 @@ class StaticController extends Controller
         return view('faq');
     }
 
+    public function about(Request $request)
+    {
+    	setSEO();
+        return view('about-us');
+    }
 
 }

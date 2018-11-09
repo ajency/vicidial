@@ -43,7 +43,7 @@
          </div>
       </div>
       <!-- Contact form -->
-      <div class="col-sm-7 order-first order-md-last pb-3 pb-sm-5 pb-md-0 shadow contactForm">
+      <div class="col-sm-7 order-first order-md-last pb-3 pb-sm-5 pb-md-0 shadow contactForm no-shadow-mobile">
          <div class="row p-md-4">
             <div class="col-md-12">
                <h3 class="text-center mb-sm-3">Send us a message to let us know how we can help</h3>
