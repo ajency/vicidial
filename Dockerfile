@@ -17,7 +17,8 @@ RUN apt-get update && \
 	  nginx \
 	  supervisor \
 	  unzip \
-	  php7.2-fpm
+	  php7.2-fpm \
+	  npm
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN apt-get install git -y
@@ -28,6 +29,8 @@ RUN chmod 777 storage/logs/laravel.log
 RUN composer config --global --auth github-oauth.github.com github_token
 RUN composer update 
 RUN composer install 
+RUN npm install
+RUN npm run production
 RUN chmod -R 777 /var/www/html/storage
 RUN echo "* * * * * cd /var/www/html && php /var/www/html/artisan schedule:run >> /dev/null 2>&1" > /etc/cron.d/artisan-schedule-run
 # Give execution rights on the cron job
