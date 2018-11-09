@@ -14,6 +14,9 @@
 
 `sudo apt-get install php-pear php7.2-curl php7.2-dev php7.2-gd php7.2-mbstring php7.2-zip php7.2-mysql php7.2-xml php7.2-xmlrpc`
 
+### Install NPM
+`sudo apt-get install npm`
+
 ### Install MySQL 8 (only dev)
 `cd /tmp/ && wget https://dev.mysql.com/get/mysql-apt-config_0.8.10-1_all.deb`
 
@@ -114,6 +117,9 @@ Add the following to crontab
 
 ### Build assets
 `npm run production`
+
+### Push Assets to CDN
+`php artisan cdn:push`
 
 ### Deploy the changes to the database if any
 `php artisan migrate`
