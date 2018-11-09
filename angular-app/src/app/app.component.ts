@@ -17,7 +17,7 @@ export class AppComponent {
 
 	window.onpopstate = (event)=>{
 	  console.log("location: " + document.location + ", state: " + JSON.stringify(event.state));
-	  if(window.location.href.endsWith('#cart')){
+	  if(window.location.href.endsWith('#bag')){
 	  	this.router.navigateByUrl('/cartpage', { skipLocationChange: true });
 	  	this.appservice.closeVerificationModal();
 	  }
@@ -25,7 +25,7 @@ export class AppComponent {
 	  	console.log("do nothing");
 	  	// do nothing
 	  }
-	  else if(!window.location.href.endsWith('#cart')){
+	  else if(!window.location.href.endsWith('#bag')){
 	  	console.log("close cart");
 	  	this.appservice.cartClosedFromShippingPages = true;
 	  	this.appservice.closeCart();

@@ -90,10 +90,10 @@ export class CartComponent implements OnInit {
   }
 
   updateUrl(){
-    let url = window.location.href.split("#")[0] + '#cart';
+    let url = window.location.href.split("#")[0] + '#bag';
     if(window.location.href.endsWith('#shipping-address') || window.location.href.endsWith('#shipping-summary'))
       history.replaceState({cart : true}, 'cart', url);
-    else if(!(window.location.href.endsWith('#cart') || window.location.href.endsWith('#cart/user-verification')))
+    else if(!(window.location.href.endsWith('#bag') || window.location.href.endsWith('#bag/user-verification')))
       history.pushState({cart : true}, 'cart', url);
   }
 
@@ -315,7 +315,7 @@ export class CartComponent implements OnInit {
     }
     else{
       let url = window.location.href +'/user-verification';
-      if(!window.location.href.endsWith('#cart/user-verification'))
+      if(!window.location.href.endsWith('#bag/user-verification'))
         history.pushState({cart : true}, 'cart', url);
       $('#signin').modal('show');
       $("#cd-cart").css("overflow", "hidden");
