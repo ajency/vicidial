@@ -44,12 +44,20 @@ class SubOrder extends Model
 
     public function placeOrderOnOdoo()
     {
+        $items = $this->getItems();
+        $total = 0;
+        foreach ($items as $itemData) {
+            if($itemData['quantity'] <= $itemData['item']->inventory[$this->warehouse_id]['quantity']){
+                abort(410, 'Items no longer available in store');
+            }
+            $total+=$itemData['item']->getSalePrice();
+        }
         if ($this->odoo_id == null) {
             $this->odoo_id   = 0;
             $this->odoo_data = [
                 'untaxed_amount' => 1.5,
                 'tax'            => 1,
-                'total'          => 2,
+                'total'          => $total,
                 'shipping_fee'   => 0,
             ];
             $this->odoo_status = 'draft';
