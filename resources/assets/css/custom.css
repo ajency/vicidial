@@ -9920,6 +9920,12 @@ footer .bl-1 {
   }
 }
 
+@media (max-width: 767px) {
+  .one-em {
+    font-size: 1em;
+  }
+}
+
 .sticky-menu {
   position: fixed;
   top: 0px;
@@ -12452,6 +12458,13 @@ body #cd-cart .modal.show .modal-dialog {
 
 .order-details label {
   font-size: .9rem;
+}
+
+@media (max-width: 767px) {
+  .contactForm {
+    -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+  }
 }
 
 #side-menu {

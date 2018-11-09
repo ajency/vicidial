@@ -134,3 +134,11 @@
     	font-size: .9rem;
 	}
 }
+
+// Contact form
+
+.contactForm{
+	@media (max-width: 767px){
+		box-shadow: none !important;
+	}
+}
