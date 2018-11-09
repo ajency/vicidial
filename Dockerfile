@@ -17,8 +17,12 @@ RUN apt-get update && \
 	  nginx \
 	  supervisor \
 	  unzip \
-	  php7.2-fpm \
-	  npm
+	  php7.2-fpm
+	  
+# Nodejs and NPM installtion
+RUN apt-get install -y nodejs npm
+RUN update-alternatives --install /usr/bin/node node /usr/bin/nodejs 10
+
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN apt-get install git -y
