@@ -11,110 +11,116 @@
 @section('content')
  <div id="home-slider" class="home-slider">
     <div  class="home-slide-item">
+      <a href="#">
         <picture>
            <source media="(orientation: landscape)"
-                  data-srcset="{{CDN::mix('/img/home-banner/home-banner-large.jpg') }} 2000w,
-                              {{CDN::mix('/img/home-banner/home-banner-medium.jpg') }} 1200w,
-                              {{CDN::mix('/img/home-banner/home-banner-small.jpg') }} 700w,"
+                  data-srcset="{{CDN::asset('/img/home-banner/home-banner-large.jpg') }} 2000w,
+                              {{CDN::asset('/img/home-banner/home-banner-medium.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/home-banner-small.jpg') }} 700w,"
                   sizes="100vw">
 
            <source media="(orientation: portrait)"
-                  data-srcset="{{CDN::mix('/img/home-banner/home-banner-portrait-large.jpg') }} 1200w,
-                              {{CDN::mix('/img/home-banner/home-banner-portrait-medium.jpg') }} 700w,
-                              {{CDN::mix('/img/home-banner/home-banner-portrait-small.jpg') }} 400w"
+                  data-srcset="{{CDN::asset('/img/home-banner/home-banner-portrait-large.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/home-banner-portrait-medium.jpg') }} 700w,
+                              {{CDN::asset('/img/home-banner/home-banner-portrait-small.jpg') }} 400w"
                   sizes="100vw">
 
-           <img src="{{CDN::mix('/img/home-banner/home-banner-20px.jpg') }}"
+           <img src="{{CDN::asset('/img/home-banner/home-banner-20px.jpg') }}"
                data-sizes="100vw"
                class="img-fluid lazyload blur-up w-100" alt="Kidsuperstore Banner1" title="A New Season, A New Look">
-         </picture>
+        </picture>
+      </a>
     </div>
     <div class="home-slide-item">
-      <picture>
-         <source media="(orientation: landscape)"
-                data-srcset="{{CDN::mix('/img/home-banner/home-banner-boys-large.jpg') }} 2000w,
-                            {{CDN::mix('/img/home-banner/home-banner-boys-medium.jpg') }} 1200w,
-                            {{CDN::mix('/img/home-banner/home-banner-boys-small.jpg') }} 700w"
-                sizes="100vw">
+      <a href="/tshirt/">
+        <picture>
+           <source media="(orientation: landscape)"
+                  data-srcset="{{CDN::asset('/img/home-banner/home-banner-boys-large.jpg') }} 2000w,
+                              {{CDN::asset('/img/home-banner/home-banner-boys-medium.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/home-banner-boys-small.jpg') }} 700w"
+                  sizes="100vw">
 
-         <source media="(orientation: portrait)"
-                data-srcset="{{CDN::mix('/img/home-banner/home-banner-boys-portrait-large.jpg') }} 1200w,
-                            {{CDN::mix('/img/home-banner/home-banner-boys-portrait-medium.jpg') }} 700w,
-                            {{CDN::mix('/img/home-banner/home-banner-boys-portrait-small.jpg') }} 400w"
-                sizes="100vw">
+           <source media="(orientation: portrait)"
+                  data-srcset="{{CDN::asset('/img/home-banner/home-banner-boys-portrait-large.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/home-banner-boys-portrait-medium.jpg') }} 700w,
+                              {{CDN::asset('/img/home-banner/home-banner-boys-portrait-small.jpg') }} 400w"
+                  sizes="100vw">
 
-         <img src="{{CDN::mix('/img/home-banner/home-banner-boys-20px.jpg') }}"
-             data-sizes="100vw"
-             class="img-fluid lazyload blur-up" alt="Kidsuperstore Banner2" title="A New Season, A New Look">
-      </picture>
+           <img src="{{CDN::asset('/img/home-banner/home-banner-boys-20px.jpg') }}"
+               data-sizes="100vw"
+               class="img-fluid lazyload blur-up" alt="Kidsuperstore Banner2" title="A New Season, A New Look">
+        </picture>
+      </a>
     </div>
     <div class="home-slide-item">
-      <picture>
-         <source media="(orientation: landscape)"
-                data-srcset="{{CDN::mix('/img/home-banner/home-banner-infants-large.jpg') }} 2000w,
-                            {{CDN::mix('/img/home-banner/home-banner-infants-medium.jpg') }} 1200w,
-                            {{CDN::mix('/img/home-banner/home-banner-infants-small.jpg') }} 700w"
-                sizes="100vw">
+      <a href="/apparels/girls/dress/">
+        <picture>
+           <source media="(orientation: landscape)"
+                  data-srcset="{{CDN::asset('/img/home-banner/home-banner-infants-large.jpg') }} 2000w,
+                              {{CDN::asset('/img/home-banner/home-banner-infants-medium.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/home-banner-infants-small.jpg') }} 700w"
+                  sizes="100vw">
 
-         <source media="(orientation: portrait)"
-                data-srcset="{{CDN::mix('/img/home-banner/home-banner-infants-portrait-large.jpg') }} 1200w,
-                            {{CDN::mix('/img/home-banner/home-banner-infants-portrait-medium.jpg') }} 700w,
-                            {{CDN::mix('/img/home-banner/home-banner-infants-portrait-small.jpg') }} 400w"
-                sizes="100vw">
+           <source media="(orientation: portrait)"
+                  data-srcset="{{CDN::asset('/img/home-banner/home-banner-infants-portrait-large.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/home-banner-infants-portrait-medium.jpg') }} 700w,
+                              {{CDN::asset('/img/home-banner/home-banner-infants-portrait-small.jpg') }} 400w"
+                  sizes="100vw">
 
-         <img src="{{CDN::mix('/img/home-banner/home-banner-infants-20px.jpg') }}"
-             data-sizes="100vw"
-             class="img-fluid lazyload blur-up" alt="Kidsuperstore Banner3" title="A New Season, A New Look">
-       </picture>
+           <img src="{{CDN::asset('/img/home-banner/home-banner-infants-20px.jpg') }}"
+               data-sizes="100vw"
+               class="img-fluid lazyload blur-up" alt="Kidsuperstore Banner3" title="A New Season, A New Look">
+        </picture>
+      </a>
     </div>
 </div>
 <section class="mt-5">
   <div class="container mb-3">
       <div class="row">
           <div class="col-md-3 col-6 mb-md-0 mb-3">
-            <div class="card border-0 text-center pt-3" style="background-color:#EEFAFC;">
-                <label class="font-weight-bold m-0">0-2 YEARS</label>
-                <h4 class="font-weight-bold ">Infants</h4>
+            <a href="/infant/" class="card link-card border-0 text-center pt-3" style="background-color:#EEFAFC;">
+                <label class="font-weight-bold m-0 link-card_text">0-2 YEARS</label>
+                <h4 class="font-weight-bold link-card_text">Infants</h4>
                 <hr class="w-25 m-auto border-dark">
                 <img class="d-block w-100 img-fluid lazyload blur-up"
-                    src="{{CDN::mix('/img/gender/infant-10px.jpg') }}"
-                    data-srcset="{{CDN::mix('/img/gender/infant-large.jpg') }} 813w,
-                                 {{CDN::mix('/img/gender/infant-medium.jpg') }} 542w,
-                                 {{CDN::mix('/img/gender/infant-small.jpg') }} 271w"
+                    src="{{CDN::asset('/img/gender/infant-10px.jpg') }}"
+                    data-srcset="{{CDN::asset('/img/gender/infant-large.jpg') }} 813w,
+                                 {{CDN::asset('/img/gender/infant-medium.jpg') }} 542w,
+                                 {{CDN::asset('/img/gender/infant-small.jpg') }} 271w"
                     data-sizes='(min-width: 1200px) 270px, (min-width: 768px) 22vw,  44vw'
                     title="Infants 0-2 years"
                     alt="Infants 0-2 years"/>
-            </div>
+            </a>
           </div>
           <div class="col-md-3 col-6 mb-md-0 mb-3" >
-            <div class="card border-0 text-center pt-3" style="background-color:#F3F3F1;">
-                <label class="font-weight-bold m-0">2-14 YEARS</label>
-                <h4 class="font-weight-bold">Boys</h4>
+            <a href="/boys/juniors--toddler--toddlers/" class="card link-card border-0 text-center pt-3" style="background-color:#F3F3F1;">
+                <label class="font-weight-bold m-0 link-card_text">2-14 YEARS</label>
+                <h4 class="font-weight-bold link-card_text">Boys</h4>
                 <hr class="w-25 m-auto border-dark">
                  <img class="d-block w-100 img-fluid lazyload blur-up"
-                      src="{{CDN::mix('/img/gender/boy-10px.jpg') }}"
-                      data-srcset="{{CDN::mix('/img/gender/boy-large.jpg') }} 813w,
-                                   {{CDN::mix('/img/gender/boy-medium.jpg') }} 542w,
-                                   {{CDN::mix('/img/gender/boy-small.jpg') }} 271w"
+                      src="{{CDN::asset('/img/gender/boy-10px.jpg') }}"
+                      data-srcset="{{CDN::asset('/img/gender/boy-large.jpg') }} 813w,
+                                   {{CDN::asset('/img/gender/boy-medium.jpg') }} 542w,
+                                   {{CDN::asset('/img/gender/boy-small.jpg') }} 271w"
                       data-sizes='(min-width: 1200px) 270px, (min-width: 768px) 22vw,  44vw'
                       title="Boys 2-14 years"
                       alt="Boys 2-14 years"/>
-            </div>
+            </a>
           </div>
           <div class="col-md-3 col-6" >
-            <div class="card border-0 text-center pt-3" style="background-color:#F4E6DC;">
-                <label class="font-weight-bold m-0">2-14 YEARS</label>
-                 <h4 class="font-weight-bold">Girls</h4>
+            <a href="/girls/juniors--toddler--toddlers/" class="card link-card border-0 text-center pt-3" style="background-color:#F4E6DC;">
+                <label class="font-weight-bold m-0 link-card_text">2-14 YEARS</label>
+                 <h4 class="font-weight-bold link-card_text">Girls</h4>
                  <hr class="w-25 m-auto border-dark">
                  <img class="d-block w-100 img-fluid lazyload blur-up"
-                      src="{{CDN::mix('/img/gender/girl-10px.jpg') }}"
-                      data-srcset="{{CDN::mix('/img/gender/girl-large.jpg') }} 813w,
-                                   {{CDN::mix('/img/gender/girl-medium.jpg') }} 542w,
-                                   {{CDN::mix('/img/gender/girl-small.jpg') }} 271w"
+                      src="{{CDN::asset('/img/gender/girl-10px.jpg') }}"
+                      data-srcset="{{CDN::asset('/img/gender/girl-large.jpg') }} 813w,
+                                   {{CDN::asset('/img/gender/girl-medium.jpg') }} 542w,
+                                   {{CDN::asset('/img/gender/girl-small.jpg') }} 271w"
                       data-sizes='(min-width: 1200px) 270px, (min-width: 768px) 22vw,  44vw'
                       title="Girls 2-14 years"
                       alt="Girls 2-14 years"/>
-            </div>
+            </a>
           </div>
           <div class="col-md-3 col-6">
             <div class="card border-0 p-3 text-center" style="background-color:#F3F3F1;">
@@ -127,34 +133,28 @@
                 </ol>
                 <div class="carousel-inner mt-5">
                   <div class="carousel-item active">
-                     <img class="d-block w-100 img-fluid lazyload blur-up"
-                        src="{{CDN::mix('/img/new-arrival/slider-bag-10px.jpg') }}"
-                        data-srcset="{{CDN::mix('/img/new-arrival/slider-bag-large.jpg') }} 813w,
-                                     {{CDN::mix('/img/new-arrival/slider-bag-medium.jpg') }} 542w,
-                                     {{CDN::mix('/img/new-arrival/slider-bag-small.jpg') }} 271w"
-                        data-sizes='(min-width: 1200px) 270px, (min-width: 768px) 22vw,  44vw'
-                        alt="New Arrivals"
-                        title="New Arrivals"/>
-                  </div>
-                  <div class="carousel-item">
-                   <img class="d-block w-100 img-fluid lazyload blur-up"
-                        src="{{CDN::mix('/img/new-arrival/slider-toy-10px.jpg') }}"
-                        data-srcset="{{CDN::mix('/img/new-arrival/slider-toy-large.jpg') }} 813w,
-                                     {{CDN::mix('/img/new-arrival/slider-toy-medium.jpg') }} 542w,
-                                     {{CDN::mix('/img/new-arrival/slider-toy-small.jpg') }} 271w"
-                        data-sizes='(min-width: 1200px) 270px, (min-width: 768px) 22vw,  44vw'
-                        alt="New Arrivals"
-                        title="New Arrivals"/>
-                  </div>
-                  <div class="carousel-item">
+                    <a href="/accessories/others/">
                       <img class="d-block w-100 img-fluid lazyload blur-up"
-                          src="{{CDN::mix('/img/new-arrival/slider-shoes-10px.jpg') }}"
-                          data-srcset="{{CDN::mix('/img/new-arrival/slider-shoes-large.jpg') }} 813w,
-                                       {{CDN::mix('/img/new-arrival/slider-shoes-medium.jpg') }} 542w,
-                                       {{CDN::mix('/img/new-arrival/slider-shoes-small.jpg') }} 271w"
-                          data-sizes='(min-width: 1200px) 270px, (min-width: 768px) 22vw,  44vw'
-                          alt="New Arrivals"
-                          title="New Arrivals"/>
+                        src="{{CDN::asset('/img/new-arrival/slider-bag-10px.jpg') }}"
+                        data-srcset="{{CDN::asset('/img/new-arrival/slider-bag-large.jpg') }} 813w,
+                                     {{CDN::asset('/img/new-arrival/slider-bag-medium.jpg') }} 542w,
+                                     {{CDN::asset('/img/new-arrival/slider-bag-small.jpg') }} 271w"
+                        data-sizes='(min-width: 1200px) 270px, (min-width: 768px) 22vw,  44vw'
+                        alt="New Arrivals - Accessories"
+                        title="New Arrivals - Accessories"/>
+                      </a>
+                  </div>
+                  <div class="carousel-item">
+                    <a href="/shoes/">
+                      <img class="d-block w-100 img-fluid lazyload blur-up"
+                        src="{{CDN::asset('/img/new-arrival/slider-shoes-10px.jpg') }}"
+                        data-srcset="{{CDN::asset('/img/new-arrival/slider-shoes-large.jpg') }} 813w,
+                                     {{CDN::asset('/img/new-arrival/slider-shoes-medium.jpg') }} 542w,
+                                     {{CDN::asset('/img/new-arrival/slider-shoes-small.jpg') }} 271w"
+                        data-sizes='(min-width: 1200px) 270px, (min-width: 768px) 22vw,  44vw'
+                        alt="New Arrivals - Shoes"
+                        title="New Arrivals - Shoes"/>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -168,8 +168,8 @@
 <div class="container mt-5 ">
     <div class="row">
         <div class="col-md-12 text-center">
-          <h2 class="font-weight-bold m-0">Trend In Focus</h2>
-          <p>Lorem ipsum dolor sit amet</p>
+          <h2 class="font-weight-bold mb-3">Styles In Focus</h2>
+          <!-- <p>Lorem ipsum dolor sit amet</p> -->
         </div>
     </div>
 </div>
@@ -178,95 +178,101 @@
 <section>
   <div class="container">
   <div class="trend-focus-wrapper">
-    <div class="trend-box" style="background-color:#bce4f8;">
+    <a href="/apparels/woven-tops/" class="trend-box d-block link-card" style="background-color:#F4D5D3;">
       <div class="p-3">
-        <h4 class="font-weight-bold m-0">Party Showstoppers</h4>
-        <p>Lorem ipsum dolor sit amet</p>
+        <h4 class="font-weight-bold m-0 link-card_text">Woven tops</h4>
+        <!-- <p class="link-card_text">Lorem ipsum dolor sit amet</p> -->
       </div>
       <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
-          src="{{CDN::mix('/img/collection/baby-woollen-cap-10px.jpg') }}"
-          data-srcset="{{CDN::mix('/img/collection/baby-woollen-cap-large.jpg') }} 818w,
-                       {{CDN::mix('/img/collection/baby-woollen-cap-medium.jpg') }} 409w,
-                       {{CDN::mix('/img/collection/baby-woollen-cap-small.jpg') }} 250w"
+          src="{{CDN::asset('/img/collection/woven-tops-10px.jpg') }}"
+          data-srcset="{{CDN::asset('/img/collection/woven-tops-large.jpg') }} 818w,
+                       {{CDN::asset('/img/collection/woven-tops-medium.jpg') }} 409w,
+                       {{CDN::asset('/img/collection/woven-tops-small.jpg') }} 250w"
           data-sizes='(min-width: 1200px) 366px, (min-width: 991px) 28vw,  (min-width: 768px) 46vw,  91vw'
           alt="Trend in Focus - Party Showstoppers"
           title="Party Showstoppers"/>
-    </div>
-    <div class="trend-box" style="background-color:#F4D5D3;">
+    </a>
+    <a href="/apparels/jeans/" class="trend-box d-block link-card" style="background-color:#feedcf;">
       <div class="p-3">
-        <h4 class="font-weight-bold m-0">House Of Comfort</h4>
-        <p>Lorem ipsum dolor sit amet</p>
+        <h4 class="font-weight-bold m-0 link-card_text">Jeans</h4>
+        <!-- <p class="link-card_text">Lorem ipsum dolor sit amet</p> -->
       </div>
       <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
-          src="{{CDN::mix('/img/collection/baby-woollen-cap-10px.jpg') }}"
-          data-srcset="{{CDN::mix('/img/collection/baby-woollen-cap-large.jpg') }} 818w,
-                       {{CDN::mix('/img/collection/baby-woollen-cap-medium.jpg') }} 409w,
-                       {{CDN::mix('/img/collection/baby-woollen-cap-small.jpg') }} 250w"
+          src="{{CDN::asset('/img/collection/jeans-10px.jpg') }}"
+          data-srcset="{{CDN::asset('/img/collection/jeans-large.jpg') }} 818w,
+                       {{CDN::asset('/img/collection/jeans-medium.jpg') }} 409w,
+                       {{CDN::asset('/img/collection/jeans-small.jpg') }} 250w"
           data-sizes='(min-width: 1200px) 366px, (min-width: 991px) 28vw,  (min-width: 768px) 46vw,  91vw'
           alt="Trend in Focus - House Of Comfort"
           title="House Of Comfort"/>
-    </div>
-    <div class="trend-box" style="background-color:#fff8ed;">
+    </a>
+    <a href="/apparels/ethnic/" class="trend-box d-block link-card" style="background-color:#efe665;">
       <div class="p-3">
-        <h4 class="font-weight-bold m-0">Party Showstoppers</h4>
-        <p>Lorem ipsum dolor sit amet</p>
+        <h4 class="font-weight-bold m-0 link-card_text">Ethnic</h4>
+        <!-- <p class="link-card_text">Lorem ipsum dolor sit amet</p> -->
       </div>
       <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
-          src="{{CDN::mix('/img/collection/baby-woollen-cap-10px.jpg') }}"
-          data-srcset="{{CDN::mix('/img/collection/baby-woollen-cap-large.jpg') }} 818w,
-                       {{CDN::mix('/img/collection/baby-woollen-cap-medium.jpg') }} 409w,
-                       {{CDN::mix('/img/collection/baby-woollen-cap-small.jpg') }} 250w"
+          src="{{CDN::asset('/img/collection/ethnic-10px.jpg') }}"
+          data-srcset="{{CDN::asset('/img/collection/ethnic-large.jpg') }} 818w,
+                       {{CDN::asset('/img/collection/ethnic-medium.jpg') }} 409w,
+                       {{CDN::asset('/img/collection/ethnic-small.jpg') }} 250w"
           data-sizes='(min-width: 1200px) 366px, (min-width: 991px) 28vw,  (min-width: 768px) 46vw,  91vw'
           alt="Trend in Focus - Party Showstoppers"
           title="Party Showstoppers"/>
-    </div>
-    <div class="trend-box" style="background-color:#ffda44;">
+    </a>
+    <a href="/apparels/infant-utility/" class="trend-box d-block link-card" style="background-color:#fcfbff;">
+      <div class="p-3">
+        <h4 class="font-weight-bold m-0 link-card_text">Infant Accessories</h4>
+        <!-- <p class="link-card_text">Lorem ipsum dolor sit amet</p> -->
+      </div>
       <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
-          src="{{CDN::mix('/img/collection/girl-floral-10px.jpg') }}"
-          data-srcset="{{CDN::mix('/img/collection/girl-floral-large.jpg') }} 818w,
-                       {{CDN::mix('/img/collection/girl-floral-medium.jpg') }} 409w,
-                       {{CDN::mix('/img/collection/girl-floral-small.jpg') }} 250w"
+          src="{{CDN::asset('/img/collection/infant-accessories-10px.jpg') }}"
+          data-srcset="{{CDN::asset('/img/collection/infant-accessories-large.jpg') }} 818w,
+                       {{CDN::asset('/img/collection/infant-accessories-medium.jpg') }} 409w,
+                       {{CDN::asset('/img/collection/infant-accessories-small.jpg') }} 250w"
           data-sizes='(min-width: 1200px) 366px, (min-width: 991px) 28vw,  (min-width: 768px) 46vw,  91vw'
           alt="Trend in Focus - Floral Pattern"
           title="Floral Pattern"/>
-    </div>
-    <div class="trend-box" style="background-color:#F4D5D3;">
+    </a>
+    <a href="/apparels/dress/" class="trend-box d-block link-card" style="background-color:#ed8d77;">
       <div class="p-3">
-        <h4 class="font-weight-bold m-0">House Of Comfort</h4>
-        <p>Lorem ipsum dolor sit amet</p>
+        <h4 class="font-weight-bold m-0 link-card_text">Dresses</h4>
+        <!-- <p class="link-card_text">Lorem ipsum dolor sit amet</p> -->
       </div>
       <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
-            src="{{CDN::mix('/img/collection/baby-woollen-cap-10px.jpg') }}"
-            data-srcset="{{CDN::mix('/img/collection/baby-woollen-cap-large.jpg') }} 818w,
-                         {{CDN::mix('/img/collection/baby-woollen-cap-medium.jpg') }} 409w,
-                         {{CDN::mix('/img/collection/baby-woollen-cap-small.jpg') }} 250w"
+            src="{{CDN::asset('/img/collection/dresses-10px.jpg') }}"
+            data-srcset="{{CDN::asset('/img/collection/dresses-large.jpg') }} 818w,
+                         {{CDN::asset('/img/collection/dresses-medium.jpg') }} 409w,
+                         {{CDN::asset('/img/collection/dresses-small.jpg') }} 250w"
             data-sizes='(min-width: 1200px) 366px, (min-width: 991px) 28vw,  (min-width: 768px) 46vw,  91vw'
             alt="Trend in Focus - House Of Comfort"
             title="House Of Comfort"/>
-    </div>
-    <div class="trend-box" style="background-color:#F4D5D3;">
+    </a>
+    <a href="/shirt/" class="trend-box d-block link-card" style="background-color:#eaeaea;">
       <div class="p-3">
-        <h4 class="font-weight-bold m-0">Party Showstoppers</h4>
-        <p>Lorem ipsum dolor sit amet</p>
+        <h4 class="font-weight-bold m-0 link-card_text">Shirts</h4>
+        <!-- <p class="link-card_text">Lorem ipsum dolor sit amet</p> -->
       </div>
       <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
-          src="{{CDN::mix('/img/collection/baby-woollen-cap-10px.jpg') }}"
-          data-srcset="{{CDN::mix('/img/collection/baby-woollen-cap-large.jpg') }} 818w,
-                       {{CDN::mix('/img/collection/baby-woollen-cap-medium.jpg') }} 409w,
-                       {{CDN::mix('/img/collection/baby-woollen-cap-small.jpg') }} 250w"
+          src="{{CDN::asset('/img/collection/shirt-10px.jpg') }}"
+          data-srcset="{{CDN::asset('/img/collection/shirt-large.jpg') }} 818w,
+                       {{CDN::asset('/img/collection/shirt-medium.jpg') }} 409w,
+                       {{CDN::asset('/img/collection/shirt-small.jpg') }} 250w"
           data-sizes='(min-width: 1200px) 366px, (min-width: 991px) 28vw,  (min-width: 768px) 46vw,  91vw'
           alt="Trend in Focus - Party Showstoppers"
           title="Party Showstoppers"/>
-    </div>
+    </a>
   </div>
 </div>
 </section>
+
+
 <section class="section">
   <div class="container mt-5">
       <div class="row">
           <div class="col-md-12 text-center">
-            <h2 class="font-weight-bold m-0">Product of the Day</h2>
-            <p>Lorem ipsum dolor sit amet</p>
+            <h2 class="font-weight-bold mb-3">Product of the Day</h2>
+            <!-- <p>Lorem ipsum dolor sit amet</p> -->
           </div>
       </div>
   </div>
@@ -276,128 +282,123 @@
     <div id="card-list" class="overflow-m row">
       <div class="col-lg-3 col-md-6 mb-4 col-6  ">
         <div class="card h-100 product-card">
-          <a href="#">
+          <a href="/white-cotton-shirt-251-white/buy/">
             <div class="">
              <img class="d-block w-100 img-fluid lazyload blur-up"
-                  src="{{CDN::mix('/img/home-list/1front-10px.jpg') }}"
-                  data-srcset="{{CDN::mix('/img/home-list/1front-large.jpg') }} 810w,
-                               {{CDN::mix('/img/home-list/1front-medium.jpg') }} 540w,
-                               {{CDN::mix('/img/home-list/1front-small.jpg') }} 270w"
+                  src="{{CDN::asset('/img/product-of-day/boys-shirt-op06-color-white-1-10px.jpg') }}"
+                  data-srcset="{{CDN::asset('/img/product-of-day/boys-shirt-op06-color-white-1-medium.jpg') }} 370w,
+                               {{CDN::asset('/img/product-of-day/boys-shirt-op06-color-white-1-small.jpg') }} 326w"
                   data-sizes='(min-width: 1200px) 267px, (min-width: 991px) 22vw, 41vw'
-                  title="Product of the Day"
-                  alt="Product of the Day"/>
+                  title="White Cotton Shirt"
+                  alt="White Cotton Shirt"/>
            </div>
           </a>
         </div>
       </div>
       <div class="col-lg-3 col-md-6 mb-4 col-6  ">
         <div class="card h-100 product-card">
-          <a href="#">
-            <div class="">
-             <img class="d-block w-100 img-fluid lazyload blur-up"
-                  src="{{CDN::mix('/img/home-list/2front-10px.jpg') }}"
-                  data-srcset="{{CDN::mix('/img/home-list/2front-large.jpg') }} 810w,
-                               {{CDN::mix('/img/home-list/2front-medium.jpg') }} 540w,
-                               {{CDN::mix('/img/home-list/2front-small.jpg') }} 270w"
-                  data-sizes='(min-width: 1200px) 267px, (min-width: 991px) 22vw, 41vw'
-                  title="Product of the Day"
-                  alt="Product of the Day"/>
-           </div>
-          </a>
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-6 mb-4 col-6  ">
-        <div class="card h-100 product-card">
-          <a href="#">
+          <a href="/grey-printed-graphic-t-shirt-1441-grey/buy/">
             <div class="">
               <img class="d-block w-100 img-fluid lazyload blur-up"
-                  src="{{CDN::mix('/img/home-list/3front-10px.jpg') }}"
-                  data-srcset="{{CDN::mix('/img/home-list/3front-large.jpg') }} 810w,
-                               {{CDN::mix('/img/home-list/3front-medium.jpg') }} 540w,
-                               {{CDN::mix('/img/home-list/3front-small.jpg') }} 270w"
+                  src="{{CDN::asset('/img/product-of-day/pc-29028-black-panther-printed-tshirt-color-grey-1-10px.jpg') }}"
+                  data-srcset="{{CDN::asset('/img/product-of-day/pc-29028-black-panther-printed-tshirt-color-grey-1-medium.jpg') }} 400w,
+                               {{CDN::asset('/img/product-of-day/pc-29028-black-panther-printed-tshirt-color-grey-1-small.jpg') }} 326w"
                   data-sizes='(min-width: 1200px) 267px, (min-width: 991px) 22vw, 41vw'
-                  title="Product of the Day"
-                  alt="Product of the Day"/>
+                  title="Grey printed graphic t-shirt"
+                  alt="Grey printed graphic t-shirt"/>
            </div>
           </a>
         </div>
       </div>
       <div class="col-lg-3 col-md-6 mb-4 col-6  ">
         <div class="card h-100 product-card">
-          <a href="#">
+          <a href="/a-line-marigold-embroidered-dress-982-turquoise/buy/">
             <div class="">
               <img class="d-block w-100 img-fluid lazyload blur-up"
-                  src="{{CDN::mix('/img/home-list/4front-10px.jpg') }}"
-                  data-srcset="{{CDN::mix('/img/home-list/4front-large.jpg') }} 810w,
-                               {{CDN::mix('/img/home-list/4front-medium.jpg') }} 540w,
-                               {{CDN::mix('/img/home-list/4front-small.jpg') }} 270w"
+                  src="{{CDN::asset('/img/product-of-day/171081-a-line-marigold-embroidered-dress-color-turquoise-1-10px.jpg') }}"
+                  data-srcset="{{CDN::asset('/img/product-of-day/171081-a-line-marigold-embroidered-dress-color-turquoise-1-large.jpg') }} 810w,
+                               {{CDN::asset('/img/product-of-day/171081-a-line-marigold-embroidered-dress-color-turquoise-1-medium.jpg') }} 652w,
+                               {{CDN::asset('/img/product-of-day/171081-a-line-marigold-embroidered-dress-color-turquoise-1-small.jpg') }} 326w"
                   data-sizes='(min-width: 1200px) 267px, (min-width: 991px) 22vw, 41vw'
-                  title="Product of the Day"
-                  alt="Product of the Day"/>
+                  title="A-line Marigold Embroidered Dress"
+                  alt="A-line Marigold Embroidered Dress"/>
            </div>
           </a>
         </div>
       </div>
       <div class="col-lg-3 col-md-6 mb-4 col-6  ">
         <div class="card h-100 product-card">
-          <a href="/kss/product/">
+          <a href="/chambray-hemla-dress-coral-972-coral/buy/">
             <div class="">
               <img class="d-block w-100 img-fluid lazyload blur-up"
-                  src="{{CDN::mix('/img/home-list/5front-10px.jpg') }}"
-                  data-srcset="{{CDN::mix('/img/home-list/5front-large.jpg') }} 810w,
-                               {{CDN::mix('/img/home-list/5front-medium.jpg') }} 540w,
-                               {{CDN::mix('/img/home-list/5front-small.jpg') }} 270w"
-                  data-sizes='(min-width: 1200px) 267px, (min-width: 991px) 22vw, 41vw'
-                  title="Product of the Day"
-                  alt="Product of the Day"/>
-           </div>
-          </a>
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-6 mb-4 col-6  ">
-        <div class="card h-100 product-card">
-          <a href="/kss/product/">
-            <div class="">
-              <img class="d-block w-100 img-fluid lazyload blur-up"
-                  src="{{CDN::mix('/img/home-list/6front-10px.jpg') }}"
-                  data-srcset="{{CDN::mix('/img/home-list/6front-large.jpg') }} 810w,
-                               {{CDN::mix('/img/home-list/6front-medium.jpg') }} 540w,
-                               {{CDN::mix('/img/home-list/6front-small.jpg') }} 270w"
+                  src="{{CDN::asset('/img/product-of-day/161025-chambray-hemla-dress-coral-color-coral-1-10px.jpg') }}"
+                  data-srcset="{{CDN::asset('/img/product-of-day/161025-chambray-hemla-dress-coral-color-coral-1-large.jpg') }} 810w,
+                               {{CDN::asset('/img/product-of-day/161025-chambray-hemla-dress-coral-color-coral-1-medium.jpg') }} 652w,
+                               {{CDN::asset('/img/product-of-day/161025-chambray-hemla-dress-coral-color-coral-1-small.jpg') }} 326w"
                  data-sizes='(min-width: 1200px) 267px, (min-width: 991px) 22vw, 41vw'
-                 title="Product of the Day"
-                 alt="Product of the Day"/>
+                 title="Chambray Hemla Dress Coral"
+                 alt="Chambray Hemla Dress Coral"/>
             </div>
           </a>
         </div>
       </div>
       <div class="col-lg-3 col-md-6 mb-4 col-6  ">
         <div class="card h-100 product-card">
-          <a href="/kss/product/">
+          <a href="/casual-indigo-shorts-210-dark-wash/buy/">
+            <div class="">
+             <img class="d-block w-100 img-fluid lazyload blur-up"
+                  src="{{CDN::asset('/img/product-of-day/denim-shorts-1556-color-dark-wash-3-10px.jpg') }}"
+                  data-srcset="{{CDN::asset('/img/product-of-day/denim-shorts-1556-color-dark-wash-3-large.jpg') }} 697w,
+                               {{CDN::asset('/img/product-of-day/denim-shorts-1556-color-dark-wash-3-medium.jpg') }} 652w,
+                               {{CDN::asset('/img/product-of-day/denim-shorts-1556-color-dark-wash-3-small.jpg') }} 326w"
+                  data-sizes='(min-width: 1200px) 267px, (min-width: 991px) 22vw, 41vw'
+                  title="Casual indigo shorts"
+                  alt="Casual indigo shorts"/>
+           </div>
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 mb-4 col-6  ">
+        <div class="card h-100 product-card">
+          <a href="/circular-knit-boys-graphic-tshirt-1059-blue/buy/">
             <div class="">
               <img class="d-block w-100 img-fluid lazyload blur-up"
-                  src="{{CDN::mix('/img/home-list/8front-10px.jpg') }}"
-                  data-srcset="{{CDN::mix('/img/home-list/8front-large.jpg') }} 810w,
-                               {{CDN::mix('/img/home-list/8front-medium.jpg') }} 540w,
-                               {{CDN::mix('/img/home-list/8front-small.jpg') }} 270w"
+                  src="{{CDN::asset('/img/product-of-day/infant-boys-t-shirt-3070-color-blue-1-10px.jpg') }}"
+                  data-srcset="{{CDN::asset('/img/product-of-day/infant-boys-t-shirt-3070-color-blue-1-medium.jpg') }} 450w,
+                               {{CDN::asset('/img/product-of-day/infant-boys-t-shirt-3070-color-blue-1-small.jpg') }} 326w"
                   data-sizes='(min-width: 1200px) 267px, (min-width: 991px) 22vw, 41vw'
-                  title="Product of the Day"
-                  alt="Product of the Day"/>
+                  title="Circular knit boys graphic tshirt"
+                  alt="Circular knit boys graphic tshirt"/>
+           </div>
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 mb-4 col-6  ">
+        <div class="card h-100 product-card">
+          <a href="/grey-circular-knit-graphic-girls-tshirt-1272-grey/buy/">
+            <div class="">
+              <img class="d-block w-100 img-fluid lazyload blur-up"
+                  src="{{CDN::asset('/img/product-of-day/jl-ppg-3-side-girls-hd-hs-top-color-grey-1-10px.jpg') }}"
+                  data-srcset="{{CDN::asset('/img/product-of-day/jl-ppg-3-side-girls-hd-hs-top-color-grey-1-medium.jpg') }} 537w,
+                               {{CDN::asset('/img/product-of-day/jl-ppg-3-side-girls-hd-hs-top-color-grey-1-small.jpg') }} 326w"
+                  data-sizes='(min-width: 1200px) 267px, (min-width: 991px) 22vw, 41vw'
+                  title="Grey circular knit graphic girls tshirt"
+                  alt="Grey circular knit graphic girls tshirt"/>
             </div>
           </a>
         </div>
       </div>
       <div class="col-lg-3 col-md-6 mb-4 col-6  ">
         <div class="card h-100 product-card">
-          <a href="/kss/product/">
+          <a href="/cotton-printed-girls-rompers-1061-white/buy/">
             <div class="">
               <img class="d-block w-100 img-fluid lazyload blur-up"
-                  src="{{CDN::mix('/img/home-list/7front-10px.jpg') }}"
-                  data-srcset="{{CDN::mix('/img/home-list/7front-large.jpg') }} 810w,
-                               {{CDN::mix('/img/home-list/7front-medium.jpg') }} 540w,
-                               {{CDN::mix('/img/home-list/7front-small.jpg') }} 270w"
+                  src="{{CDN::asset('/img/product-of-day/new-born-3009-color-white-1-10px.jpg') }}"
+                  data-srcset="{{CDN::asset('/img/product-of-day/new-born-3009-color-white-1-medium.jpg') }} 448w,
+                               {{CDN::asset('/img/product-of-day/new-born-3009-color-white-1-small.jpg') }} 326w"
                   data-sizes='(min-width: 1200px) 267px, (min-width: 991px) 22vw, 41vw'
-                  title="Product of the Day"
-                  alt="Product of the Day"/>
+                  title="Cotton printed girls rompers"
+                  alt="Cotton printed girls rompers"/>
            </div>
           </a>
         </div>
@@ -406,7 +407,7 @@
   </div>
 </section>
 
-<section>
+<!-- <section>
   <div class="container mt-5">
       <div class="row">
           <div class="col-xl-6 mb-xl-0 mb-3">
@@ -436,6 +437,6 @@
           </div>
       </div>
   </div>
-</section>
+</section> -->
 
 @stop
