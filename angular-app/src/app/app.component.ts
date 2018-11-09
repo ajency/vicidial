@@ -27,6 +27,7 @@ export class AppComponent {
 	  }
 	  else if(!window.location.href.endsWith('#cart')){
 	  	console.log("close cart");
+	  	this.appservice.cartClosedFromShippingPages = true;
 	  	this.appservice.closeCart();
 	  }
 	}
