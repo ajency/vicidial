@@ -10,80 +10,116 @@
     </a>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-4 mr-auto mt-2 mt-lg-0">
-            <li class="nav-item active">
-                <a class="nav-link font-weight-bold" href="#">
-                    Home
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle font-weight-bold" href="#" data-toggle="dropdown">
+                    All
                 </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="/bottoms/">Bottoms</a></li>
+                  <li><a class="dropdown-item" href="/dress/">Dress</a></li>
+                  <li><a class="dropdown-item" href="/ethnic/">Ethnic</a></li>
+                  <li><a class="dropdown-item" href="/formal-pant/">Formal Pant</a></li>
+                  <li><a class="dropdown-item" href="/infant-utility/">Infant Utility</a></li>
+                  <li><a class="dropdown-item" href="/jeans/">Jeans</a></li>
+                  <li><a class="dropdown-item" href="/others/">Others</a></li>
+                  <li><a class="dropdown-item" href="/shirt/">Shirt</a></li>
+                  <li><a class="dropdown-item" href="/short/">Short</a></li>
+                  <li><a class="dropdown-item" href="/skirt/">Skirt</a></li>
+                  <li><a class="dropdown-item" href="/sweatshirt/">Sweatshirt</a></li>
+                  <li><a class="dropdown-item" href="/tops/">Tops</a></li>
+                  <li><a class="dropdown-item" href="/tshirt/">Tshirt</a></li>
+                  <li><a class="dropdown-item" href="/woven-tops/">Woven Tops</a></li>
+                </ul>
             </li>
-            <li class="nav-item ">
-                <a class="nav-link font-weight-bold" href="#">
-                    Category
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link font-weight-bold" href="#">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle font-weight-bold" href="#" data-toggle="dropdown">
                     Boys
                 </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="/boys/juniors--toddler/bottoms/">Bottoms</a></li>
+                  <li><a class="dropdown-item" href="/boys/juniors--toddler/ethnic/">Ethnic</a></li>
+                  <li><a class="dropdown-item" href="/boys/juniors--toddler/jeans/">Jeans</a></li>
+                  <li><a class="dropdown-item" href="/boys/juniors--toddler/others/">Others</a></li>
+                  <li><a class="dropdown-item" href="/boys/juniors--toddler/shirt/">Shirt</a></li>
+                  <li><a class="dropdown-item" href="/boys/juniors--toddler/short/">Short</a></li>
+                  <li><a class="dropdown-item" href="/boys/juniors--toddler/tshirt/">Tshirt</a></li>
+                </ul>
             </li>
-            <li class="nav-item">
-                <a class="nav-link font-weight-bold" href="#">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle font-weight-bold" href="#" data-toggle="dropdown">
                     Girls
                 </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="/girls/juniors--toddler/bottoms/">Bottoms</a></li>
+                  <li><a class="dropdown-item" href="/girls/juniors--toddler/dress/">Dress</a></li>
+                  <li><a class="dropdown-item" href="/girls/juniors--toddler/ethnic/">Ethnic</a></li>
+                  <li><a class="dropdown-item" href="/girls/juniors--toddler/formal-pant/">Formal Pant</a></li>
+                  <li><a class="dropdown-item" href="/girls/juniors--toddler/jeans/">Jeans</a></li>
+                  <li><a class="dropdown-item" href="/girls/juniors--toddler/others/">Others</a></li>
+                  <li><a class="dropdown-item" href="/girls/juniors--toddler/short/">Short</a></li>
+                  <li><a class="dropdown-item" href="/girls/juniors--toddler/skirt/">Skirt</a></li>
+                  <li><a class="dropdown-item" href="/girls/juniors--toddler/tops/">Tops</a></li>
+                  <li><a class="dropdown-item" href="/girls/juniors--toddler/tshirt/">Tshirt</a></li>
+                  <li><a class="dropdown-item" href="/girls/juniors--toddler/woven-tops/">Woven Tops</a></li>
+                </ul>
             </li>
-            <li class="nav-item">
-                <a class="nav-link font-weight-bold" href="#">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle font-weight-bold" href="#" data-toggle="dropdown">
                     Infants
                 </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="/infant/bottoms/">Bottoms</a></li>
+                  <li><a class="dropdown-item" href="/infant/dress/">Dress</a></li>
+                  <li><a class="dropdown-item" href="/infant/infant-utility/">Infant Utility</a></li>
+                  <li><a class="dropdown-item" href="/infant/shirt/">Shirt</a></li>
+                  <li><a class="dropdown-item" href="/infant/short/">Short</a></li>
+                  <li><a class="dropdown-item" href="/infant/tshirt/">Tshirt</a></li>
+                  <li><a class="dropdown-item" href="/infant/woven-tops/">Woven Tops</a></li>
+                </ul>
             </li>
-            <li class="nav-item">
-                <a class="nav-link font-weight-bold" href="#">
-                    Toons
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle font-weight-bold" href="#" data-toggle="dropdown">
+                    Kids Accessories
                 </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link font-weight-bold" href="#">
-                    Sports
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link font-weight-bold" href="#">
-                    Princess
-                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="/accessories/boys/">Boys</a></li>
+                  <li><a class="dropdown-item" href="/accessories/girls/">Girls</a></li>
+                  <li><a class="dropdown-item" href="/accessories/others/">Other</a></li>
+                </ul>
             </li>
         </ul>
     </div>
     <div class="my-2 my-lg-0">
         <ul class="list-inline mb-2 pt-3">
-            <li class="list-inline-item">
-              <i class="kss_icon search-icon cursor-pointer"></i>
-
-            <form class="search-input" style="width: 22rem; display:none;">
-                 <input id="search" name="search" type="text" placeholder="What're we looking for ?" autocomplete="off">
-                  <span aria-hidden="true" class="hide-search h1 text-white">&times;</span>
-            </form>
-           <div class="card recent-search" style="width: 22rem; display:none;">
-              <div class="card-header font-weight-bold">
-                Recent Search
-              </div>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                    <a href="#" class="recent-link text-black">
-                    New Born Baby Cloths
-                    </a>
-                </li>
-                <li class="list-group-item">
-                    <a href="#" class="recent-link text-black">
-                     Infants Accessories
-                    </a>
-                </li>
-                <li class="list-group-item">
-                    <a href="#" class="recent-link text-black">
-                    Best of Bath Accessories
-                    </a>
-                </li>
-              </ul>
-            </div>
-            </li>
+            <!-- <li class="list-inline-item">
+                <i class="kss_icon search-icon cursor-pointer"></i>
+                <form class="search-input" style="width: 22rem; display:none;">
+                     <input id="search" name="search" type="text" placeholder="What're we looking for ?" autocomplete="off">
+                      <span aria-hidden="true" class="hide-search h1 text-white">&times;</span>
+                </form>
+                <div class="card recent-search" style="width: 22rem; display:none;">
+                  <div class="card-header font-weight-bold">
+                    Recent Search
+                  </div>
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <a href="#" class="recent-link text-black">
+                        New Born Baby Cloths
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="#" class="recent-link text-black">
+                         Infants Accessories
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="#" class="recent-link text-black">
+                        Best of Bath Accessories
+                        </a>
+                    </li>
+                  </ul>
+                </div>
+            </li> -->
             <li class="list-inline-item">
                 <a href="#">
                     <i class="kss_icon profile-icon">

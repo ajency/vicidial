@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('headjs')
-	@include('includes.abovethefold.orderdetailscss')
+
 @stop
 
 @section('content')

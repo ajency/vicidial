@@ -134,3 +134,27 @@
         }
     }
 }
+
+.dropdown-menu{
+    background-color: theme-color("dark");
+}
+.navbar-nav li:hover>.dropdown-menu {
+    display: block;
+}
+@media(max-width: 991px) {
+    .dropdown-menu{
+        background-color: transparent;
+        position: static !important;
+        transform: none !important;
+        border: 0;
+        .dropdown-item{
+            color: white;
+        }
+    }
+}
+@media (min-width: 992px){
+    .navbar-expand-lg .navbar-nav .nav-link {
+        padding-right: 1rem;
+        padding-left: 1rem;
+    }
+}
