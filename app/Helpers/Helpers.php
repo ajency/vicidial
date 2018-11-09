@@ -390,12 +390,26 @@ function getCartData($cart, $fetch_related = true)
     return $items;
 }
 
-function validateOrder($address, $cart)
+function validateOrder($user, $order)
 {
-    if ($address == null || $address->user_id != $user_id || $cart == null || $cart->user_id != $user_id) {
+    if ($order == null || $order->cart->user_id != $user->id) {
         abort(403);
     }
-    if ($cart->type == 'order') {
+}
+
+function validateCart($user, $cart, $type=null)
+{
+    if ($cart == null || $cart->user_id != $user->id) {
+        abort(403);
+    }
+    if ($type != null && $cart->type != $type) {
         abort(400, 'invalid cart');
+    }
+}
+
+function validateAddress($user, $address)
+{
+    if ($address == null || $address->user_id != $user->id) {
+        abort(403);
     }
 }

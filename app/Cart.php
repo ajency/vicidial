@@ -14,9 +14,9 @@ class Cart extends Model
         'cart_data' => 'array',
     ];
 
-    public function orders()
+    public function order()
     {
-        return $this->hasMany('App\Order');
+        return $this->hasOne('App\Order');
     }
 
     public function user()

@@ -24,6 +24,12 @@ class CartController extends Controller
         }
     }
 
+    public function startFresh(Request $request){
+        $user = User::getUserByToken($request->header('Authorization'));
+        $cart = $user->newCart(true);
+        return response()->json(['cart_id' => $cart->id]);
+    }
+
     public function userAddItem($id, Request $request)
     {
         $params = $request->all();

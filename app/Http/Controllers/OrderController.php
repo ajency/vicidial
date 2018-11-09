@@ -16,11 +16,12 @@ class OrderController extends Controller
         $request->validate(['address_id' => 'required|exists:addresses,id']);
         $params = $request->all();
 
-        $user_id = User::getUserByToken($request->header('Authorization'))->id;
+        $user    = User::getUserByToken($request->header('Authorization'));
         $address = Address::find($params["address_id"]);
         $cart    = Cart::find($cart_id);
 
-        validateOrder($address, $cart);
+        validateCart($user, $cart, 'cart');
+        validateAddress($user, $address);
         $cart->checkCartAvailability();
 
         $order = Order::create([
@@ -31,6 +32,18 @@ class OrderController extends Controller
         $order->setSubOrders();
         $cart->type = 'order';
         $cart->save();
+
+        $order->placeSubOrdersOdoo();
+
+        return response()->json(["items" => getCartData($cart, false), "summary" => $order->aggregateSubOrderData(), "order_id" => $order->id, "address" => $address->address, "message" => 'Order Placed successfully']);
+    }
+
+    public function continueOrder($cart_id)
+    {
+        $user = User::getUserByToken($request->header('Authorization'));
+        $cart    = Cart::find($cart_id);
+        validateCart($user,$cart, 'order');
+        $order = $cart->order;
 
         $order->placeSubOrdersOdoo();
 

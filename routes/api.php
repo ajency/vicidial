@@ -28,4 +28,6 @@ Route::middleware('auth:api')->get('/rest/v1/user/address/delete', 'AddressContr
 Route::post('/rest/v1/product-list', 'ListingController@productList');
 
 Route::middleware('auth:api')->post('/rest/v1/user/cart/{id}/create-order', 'OrderController@userCreateOrder');
+Route::middleware('auth:api')->post('/rest/v1/user/cart/{id}/continue-order', 'OrderController@continueOrder');
 Route::middleware('auth:api')->get('/rest/v1/user/cart/mine', 'CartController@getCartID');
+Route::middleware('auth:api')->get('/rest/v1/user/cart/start-fresh', 'CartController@startFresh');

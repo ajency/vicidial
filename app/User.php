@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Cart;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
@@ -36,6 +37,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Cart');
     }
 
+    public function activeCart()
+    {
+        return Cart::find($this->cart_id)
+    }
+
     public function addresses()
     {
         return $this->hasMany('App\Address');
@@ -46,5 +52,22 @@ class User extends Authenticatable
         $token = explode('Bearer ', $token)[1];
         $user  = self::where('api_token', $token)->first();
         return $user;
+    }
+
+    public function newCart($replicate = false)
+    {
+        $cart = Cart::create(['user_id' => $this->id, 'active' => 1, 'type' => 'cart']);
+        $ac = $this->activeCart();
+        if($replicate){
+            $cart->cart_data = $ac->cart_data;
+            $cart->save();
+        }
+        $ac->active = 0;
+        $ac->save();
+        if($ac->type == 'cart' && empty($ac->cart_data)){
+            $ac->delete();
+        }
+        $this->cart_id = $cart->id;
+        $this->save();
     }
 }
