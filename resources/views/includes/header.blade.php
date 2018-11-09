@@ -11,7 +11,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-4 mr-auto mt-2 mt-lg-0">
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle font-weight-bold" href="#" data-toggle="dropdown">
+                <a class="nav-link dropdown-toggle font-weight-bold" href="#">
                     All
                 </a>
                 <ul class="dropdown-menu">
@@ -32,7 +32,7 @@
                 </ul>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle font-weight-bold" href="#" data-toggle="dropdown">
+                <a class="nav-link dropdown-toggle font-weight-bold" href="#" >
                     Boys
                 </a>
                 <ul class="dropdown-menu">
@@ -46,7 +46,7 @@
                 </ul>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle font-weight-bold" href="#" data-toggle="dropdown">
+                <a class="nav-link dropdown-toggle font-weight-bold" href="#">
                     Girls
                 </a>
                 <ul class="dropdown-menu">
@@ -64,7 +64,7 @@
                 </ul>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle font-weight-bold" href="#" data-toggle="dropdown">
+                <a class="nav-link dropdown-toggle font-weight-bold" href="#">
                     Infants
                 </a>
                 <ul class="dropdown-menu">
@@ -78,7 +78,7 @@
                 </ul>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle font-weight-bold" href="#" data-toggle="dropdown">
+                <a class="nav-link dropdown-toggle font-weight-bold" href="#">
                     Kids Accessories
                 </a>
                 <ul class="dropdown-menu">
