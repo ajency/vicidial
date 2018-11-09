@@ -44,28 +44,30 @@ class SubOrder extends Model
 
     public function placeOrderOnOdoo()
     {
-        $this->odoo_id   = 0;
-        $this->odoo_data = [
-            'untaxed_amount' => 1.5,
-            'tax'            => 1,
-            'total'          => 2,
-            'shipping_fee'   => 0,
-        ];
-        $this->odoo_status = 'draft';
-        $this->save();
+        if ($this->odoo_id == null) {
+            $this->odoo_id   = 0;
+            $this->odoo_data = [
+                'untaxed_amount' => 1.5,
+                'tax'            => 1,
+                'total'          => 2,
+                'shipping_fee'   => 0,
+            ];
+            $this->odoo_status = 'draft';
+            $this->save();
+        }
     }
 
     public function getSubOrder()
     {
         $itemsData = [];
         foreach ($this->item_data as $itemData) {
-            $variant = Variant::find($itemData['id']);
-            $item = $variant->getItemAttributes();
-            $item['quantity'] = $itemData['quantity'];
+            $variant            = Variant::find($itemData['id']);
+            $item               = $variant->getItemAttributes();
+            $item['quantity']   = $itemData['quantity'];
             $item['variant_id'] = $itemData['id'];
-            $itemsData[] = $item;
+            $itemsData[]        = $item;
         }
-        $sub_order = array('suborder_id' => $this->id, 'total' => $this->odoo_data['total']+$this->odoo_data['shipping_fee'], 'number_of_items' => count($this->item_data), 'items' => $itemsData);
+        $sub_order = array('suborder_id' => $this->id, 'total' => $this->odoo_data['total'] + $this->odoo_data['shipping_fee'], 'number_of_items' => count($this->item_data), 'items' => $itemsData);
 
         return $sub_order;
     }

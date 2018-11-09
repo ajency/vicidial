@@ -4,14 +4,14 @@ namespace App;
 
 use App\Cart;
 use App\SubOrder;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Tzsk\Payu\Fragment\Payable;
-use Carbon\Carbon;
 
 class Order extends Model
 {
     use Payable;
-    
+
     public function subOrders()
     {
         return $this->hasMany('App\SubOrder');
@@ -39,6 +39,12 @@ class Order extends Model
             $subOrder->warehouse_id = $warehouseID;
             $subOrder->setItems($items);
             $subOrder->save();
+        }
+    }
+
+    public function placeSubOrdersOdoo()
+    {
+        foreach ($this->subOrders as $subOrder) {
             $subOrder->placeOrderOnOdoo();
         }
     }
@@ -60,7 +66,7 @@ class Order extends Model
         }
 
         $total['final_price'] = $total['total'] + $total['shipping_fee'];
-        $total['savings'] = 70;
+        $total['savings']     = 70;
 
         return $total;
     }
