@@ -462,7 +462,7 @@
             </ol>
          </div>         
 
-         <div class="points delivery mt-5">
+         <div class="points delivery mt-5" id="shipping">
             <h4 class="text-secondary fz-sm font-weight-bold">
                I. Shipping and Delivery:
             </h4>
@@ -530,7 +530,7 @@
             </ol>
          </div>                  
 
-         <div class="points refund mt-5" id="return-refund">
+         <div class="points refund mt-5" id="return">
             <h4 class="text-secondary fz-sm font-weight-bold">
                J. Return and Refund Policy:
             </h4>
@@ -666,7 +666,7 @@
             </ol>
          </div> 
 
-         <div class="points cancellation mt-5">
+         <div class="points cancellation mt-5" id="cancellation">
             <h4 class="text-secondary fz-sm font-weight-bold">
                K. Cancellation Policy
             </h4>

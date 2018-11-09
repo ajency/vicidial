@@ -12,13 +12,13 @@
         <div class="mbr-footer-content col-6 col-md-2">
         <p class="font-weight-bold"><strong>Usefull Links</strong></p>
           <ul class="list-unstyled">
-              <li><a href="#" class="text-gray">Contact Us</a></li>
-              <li><a href="#" class="text-gray">FAQ</a></li>
-              <li><a href="#" class="text-gray">Term of Use</a></li>
+              <li><a href="/contact" class="text-gray">Contact Us</a></li>
+              <li><a href="/faq" class="text-gray">FAQ</a></li>
+              <li><a href="/terms-and-condition" class="text-gray">Term of Use</a></li>
               <li><a href="#" class="text-gray">Track Orders</a></li>
-              <li><a href="#" class="text-gray">Cancellation</a></li>
-              <li><a href="#" class="text-gray">Shipping</a></li>
-              <li><a href="#" class="text-gray">Return 30 days</a></li>
+              <li><a href="/terms-and-condition#cancellation" class="text-gray">Cancellation</a></li>
+              <li><a href="/terms-and-condition#shipping" class="text-gray">Shipping</a></li>
+              <li><a href="/terms-and-condition#return" class="text-gray">Return 30 days</a></li>
               <li><a href="#" class="text-gray">Blog</a></li>
     
               </ul>
