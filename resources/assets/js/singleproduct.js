@@ -41,6 +41,7 @@ $(function(){
 
         // Disable tooltip in mobile
         $('.variant-wrapper,.product-color--single').tooltip('disable');
+        $('.colorOptions__trigger').click();
     }
 
     setTimeout(function () {
