@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class ShopStaticController extends Controller
+class StaticController extends Controller
 {
     public function index($static_page, Request $request)
     {
@@ -13,4 +13,12 @@ class ShopStaticController extends Controller
     	$params['query'] = $request->all();
         return view('shop')->with('params',$params);
     }
+
+	public function contact(Request $request)
+    {
+    	setSEO();
+        return view('contact-us');
+    }
+
+
 }
