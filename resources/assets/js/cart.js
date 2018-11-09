@@ -2,6 +2,17 @@ $(document).ready(function(){
     //Set crt count on page load
     updateCartCountInUI();
 
+    console.log("window.location.href ==>",window.location.href)
+    if(window.location.href.endsWith('#cart') || window.location.href.endsWith('#cart/user-verification') || window.location.href.endsWith('#shipping-address') || window.location.href.endsWith('#shipping-summary'))
+        openCart();
+
+    window.onhashchange = function() { 
+     console.log("hash changed");
+     if(!$('#cd-cart').hasClass("speed-in") && (window.location.href.endsWith('#cart') || window.location.href.endsWith('#cart/user-verification') || window.location.href.endsWith('#shipping-address') || window.location.href.endsWith('#shipping-summary')) ){
+        openCart();
+     }
+    }
+
     var kss_alert_timeout;
 
     function setTimeoutVariable() {
