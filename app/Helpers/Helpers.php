@@ -1,9 +1,7 @@
 <?php
 
-use App\Facet;
 use App\User;
 use Carbon\Carbon;
-use App\ProductColor;
 function valInteger($object, $values)
 {
     if (empty($object) || empty($values)) {
@@ -326,7 +324,6 @@ function generateVariantImageName($product_name, $color_name, $colors, $index)
 
 }
 
-
 function getWarehousesForCart($cart)
 {
     $allItems   = collect();
@@ -384,13 +381,21 @@ function generateSubordersData($cartItems, $warehouses)
     }
 }
 
-function getCartData($cart, $fetch_related=true)
+function getCartData($cart, $fetch_related = true)
 {
     $items = [];
     foreach ($cart->cart_data as $cart_item) {
         $items[] = $cart->getItem($cart_item['id'], $fetch_related);
     }
-    
     return $items;
 }
 
+function validateOrder($address, $cart)
+{
+    if ($address == null || $address->user_id != $user_id || $cart == null || $cart->user_id != $user_id) {
+        abort(403);
+    }
+    if ($cart->type == 'order') {
+        abort(400, 'invalid cart');
+    }
+}
