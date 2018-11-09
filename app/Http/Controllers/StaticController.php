@@ -38,4 +38,10 @@ class StaticController extends Controller
         return view('about-us');
     }
 
+    public function tc(Request $request)
+    {
+    	setSEO();
+        return view('terms-and-condition');
+    }
+
 }
