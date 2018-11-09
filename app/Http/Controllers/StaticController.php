@@ -26,5 +26,11 @@ class StaticController extends Controller
         return view('contact');
     }
 
+    public function faq(Request $request)
+    {
+    	setSEO();
+        return view('faq');
+    }
+
 
 }

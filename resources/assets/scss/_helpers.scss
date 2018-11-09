@@ -321,6 +321,9 @@ footer .bl-1{
     .one-em{
         font-size: 1em;
     }
+    .fz-sm{
+        font-size: 1.1em;
+    }
 }
 
 .sticky-menu{
@@ -344,4 +347,8 @@ footer .bl-1{
 .blur-up.lazyloaded {
     -webkit-filter: blur(0);
     filter: blur(0);
+}
+
+.white-space-normal{
+    white-space: normal;
 }
