@@ -5,7 +5,7 @@
             <span class="hamburger-inner"></span>
         </span>
     </div>
-    <a  href="#">
+    <a href="/">
         <img src="/img/logo-kss.png" xpreview="/img/logo-kss.png" class=" img-fluid m-0 kss-logo" width="180px">
     </a>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
