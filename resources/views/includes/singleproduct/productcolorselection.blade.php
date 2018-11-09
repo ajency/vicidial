@@ -1,7 +1,9 @@
 @php
+	if(count((array)$params['variant_group']) > 1){
 	$color_obj = $params['variant_group']->{$selected_color_id};
 	$hexcode = ($color_obj->html != '') ? $color_obj->html : implode('', explode(" ",$color_obj->name));
 @endphp
+
 <div class="colorOptions d-md-block mb-3 d-none d-sm-block">
 	<div class="d-flex justify-content-between mt-3">
 		<label class="align-items-center d-flex colorOptions__trigger cursor-pointer collapsed" href="#color-options"  aria-expanded="false" aria-controls="color-options" data-toggle="collapse"> 
@@ -50,3 +52,4 @@
 		</div>
 	</div>
 </div>
+@php } @endphp
