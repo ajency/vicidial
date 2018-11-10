@@ -24,6 +24,8 @@ class User extends Authenticatable
         'name', 'phone', 'cart_id',
     ];
 
+    protected $odooModel = "res.partner";
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -78,8 +80,7 @@ class User extends Authenticatable
     private function getOdooIdFromOdoo()
     {
         $odoo  = new OdooConnect;
-        $model = "res.partner";
-        return $odoo->defaultExec($model, 'search_read', [[
+        return $odoo->defaultExec($this->odooModel, 'search_read', [[
             ['phone', '=', $this->phone],
             ['customer', '=', true],
             ['type', '=', 'contact'],
@@ -92,8 +93,7 @@ class User extends Authenticatable
     private function writeNewCustomerToOdoo()
     {
         $odoo  = new OdooConnect;
-        $model = "res.partner";
-        return $odoo->defaultExec($model, 'create', [[
+        return $odoo->defaultExec($this->odooModel, 'create', [[
             "customer"   => true,
             "name"       => $this->name,
             "phone"      => $this->phone,
@@ -105,7 +105,6 @@ class User extends Authenticatable
 
     private function odooSync()
     {
-
         if ($this->odoo_id == null) {
             //check if the id with that phone number exists
             $odoo_id = $this->getOdooIdFromOdoo();
