@@ -10,7 +10,8 @@ class AddressController extends Controller
 {
     public function userAddAddress(Request $request)
     {
-    	$params  = $request->all();
+    	$request->validate(['default' => 'required', 'name' => 'required', 'phone' => 'required', 'pincode' => 'required', 'state' => 'required', 'address' => 'required', 'locality' => 'required', 'landmark' => 'required', 'city' => 'required', 'type' => 'required']);
+        $params  = $request->all();
     	$user_id = User::getUserByToken($request->header('Authorization'))->id;
 
     	$default = $this->defaultAddressSet($user_id, $params["default"]);
@@ -29,6 +30,7 @@ class AddressController extends Controller
 
     public function userEditAddress(Request $request)
     {
+        $request->validate(['default' => 'required', 'name' => 'required', 'phone' => 'required', 'pincode' => 'required', 'state' => 'required', 'address' => 'required', 'locality' => 'required', 'landmark' => 'required', 'city' => 'required', 'type' => 'required']);
         $params  = $request->all();
         $user_id = User::getUserByToken($request->header('Authorization'))->id;
 
@@ -65,16 +67,17 @@ class AddressController extends Controller
 
     public function userDeleteAddress(Request $request)
     {
+        $request->validate(['address_id' => 'required|exists:addresses,id']);
         $params  = $request->all();
-        $user_id = User::getUserByToken($request->header('Authorization'))->id;
+        $user = User::getUserByToken($request->header('Authorization'));
 
         $address = Address::find($params["address_id"]);
-        if($address->user_id != $user_id) abort(403);
+        validateAddress($user, $address);
 
         $address->active = false;
         $address->save();
 
-        $default = $this->defaultAddressFirst($user_id);
+        $default = $this->defaultAddressFirst($user->id);
 
         return json_encode(["default_id"=> $default, "message"=> "Address Deleted successfully", 'success'=> true]);
     }

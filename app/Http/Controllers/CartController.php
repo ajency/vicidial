@@ -17,7 +17,7 @@ class CartController extends Controller
         $cart = Cart::find($id);
         if ($cart !== null) {
             // \Log::debug('cart = '.$cart);
-            $cart->abortNotCart();
+            $cart->abortNotCart('cart');
             return response()->json(['cart_count' => $cart->itemCount()]);
         } else {
             return abort('404', "Cart not found for this session");
@@ -32,13 +32,14 @@ class CartController extends Controller
 
     public function userAddItem($id, Request $request)
     {
+        $request->validate(['variant_id' => 'required|exists:variants,odoo_id', 'variant_quantity' => 'required']);
         $params = $request->all();
         $cart   = Cart::find($id);
         if ($cart == null) {
             abort(404, "Requested Cart not found");
         }
-        $cart->abortNotCart();
-        checkUserCart($request->header('Authorization'), $cart);
+        $user    = User::getUserByToken($request->header('Authorization'));
+        validateCart($user, $cart, 'cart');
         $variant = Variant::where('odoo_id', $params['variant_id'])->first();
         $item    = $variant->getItem();
         if ($item) {
@@ -63,10 +64,11 @@ class CartController extends Controller
 
     public function guestAddItem(Request $request)
     {
+        $request->validate(['variant_id' => 'required|exists:variants,odoo_id', 'variant_quantity' => 'required']);
         $params = $request->all();
         $id     = $request->session()->get('active_cart_id', false);
         $cart   = ($id) ? Cart::find($id) : new Cart;
-        $cart->abortNotCart();
+        $cart->abortNotCart('cart');
         $variant = Variant::where('odoo_id', $params['variant_id'])->first();
         $item    = $variant->getItem();
         if ($item) {
@@ -121,6 +123,7 @@ class CartController extends Controller
 
     public function guestCartDelete(Request $request)
     {
+        $request->validate(['variant_id' => 'required|exists:variants,id']);
         $id     = $request->session()->get('active_cart_id', false);
         $params = $request->all();
 
@@ -128,7 +131,7 @@ class CartController extends Controller
         if ($cart == null) {
             abort(404, "Cart not found for this session");
         }
-        $cart->abortNotCart();
+        $cart->abortNotCart('cart');
         $cart->removeItem($params["variant_id"]);
         $cart->save();
         $message = "Item deleted successfully";
@@ -138,14 +141,15 @@ class CartController extends Controller
 
     public function userCartDelete($id, Request $request)
     {
+        $request->validate(['variant_id' => 'required|exists:variants,id']);
         $params = $request->all();
 
         $cart = Cart::find($id);
         if ($cart == null) {
             abort(404, "Requested Cart ID not found");
         }
-        $cart->abortNotCart();
-        checkUserCart($request->header('Authorization'), $cart);
+        $user    = User::getUserByToken($request->header('Authorization'));
+        validateCart($user, $cart, 'cart');
         $cart->removeItem($params["variant_id"]);
         $cart->save();
         $message = "Item deleted successfully";

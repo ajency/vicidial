@@ -11,14 +11,14 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    public function userCreateOrder($cart_id, Request $request)
+    public function userCreateOrder($id, Request $request)
     {
         $request->validate(['address_id' => 'required|exists:addresses,id']);
         $params = $request->all();
 
         $user    = User::getUserByToken($request->header('Authorization'));
         $address = Address::find($params["address_id"]);
-        $cart    = Cart::find($cart_id);
+        $cart    = Cart::find($id);
 
         validateCart($user, $cart, 'cart');
         validateAddress($user, $address);
@@ -38,10 +38,10 @@ class OrderController extends Controller
         return response()->json(["items" => getCartData($cart, false), "summary" => $order->aggregateSubOrderData(), "order_id" => $order->id, "address" => $address->address, "message" => 'Order Placed successfully']);
     }
 
-    public function continueOrder($cart_id)
+    public function continueOrder($id)
     {
         $user = User::getUserByToken($request->header('Authorization'));
-        $cart    = Cart::find($cart_id);
+        $cart    = Cart::find($id);
         validateCart($user,$cart, 'order');
         $order = $cart->order;
 
