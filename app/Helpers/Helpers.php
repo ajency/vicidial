@@ -403,7 +403,7 @@ function validateCart($user, $cart, $type=null)
         abort(403);
     }
     if ($type != null && $cart->type != $type) {
-        abort(400, 'invalid cart');
+        abort(403, 'invalid cart');
     }
 }
 
