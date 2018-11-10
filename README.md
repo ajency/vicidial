@@ -142,6 +142,9 @@ Add the following to crontab
 ### Get all warehouses from odoo
 `php artisan odoo:warehouses` 
 
+### Get all states from odoo
+`php artisan odoo:states` 
+
 ### create passport keys for API to work
 `php artisan passport:client --personal`
 
