@@ -39,7 +39,7 @@ class User extends Authenticatable
 
     public function activeCart()
     {
-        return Cart::find($this->cart_id)
+        return Cart::find($this->cart_id);
     }
 
     public function addresses()

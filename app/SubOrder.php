@@ -47,7 +47,7 @@ class SubOrder extends Model
         $items = $this->getItems();
         $total = 0;
         foreach ($items as $itemData) {
-            if($itemData['quantity'] <= $itemData['item']->inventory[$this->warehouse_id]['quantity']){
+            if($itemData['quantity'] > $itemData['item']->inventory[$this->warehouse_id]['quantity']){
                 abort(410, 'Items no longer available in store');
             }
             $total+=$itemData['item']->getSalePrice();

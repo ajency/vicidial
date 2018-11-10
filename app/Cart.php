@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Cart extends Model
 {
     const ITEM_FIELDS = ['id', 'quantity'];
+    protected $fillable = ['user_id', 'active', 'type'];
 
     protected $casts = [
         'cart_data' => 'array',
