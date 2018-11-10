@@ -29,6 +29,9 @@ class OrderController extends Controller
             'address_id' => $address->id,
             'expires_at' => Carbon::now()->addMinutes(config('orders.expiry'))->timestamp,
         ]);
+        $order->txnid = strtoupper(str_random(8)).str_pad($order->id, 6, '0', STR_PAD_LEFT);
+        $order->save();
+
         $order->setSubOrders();
         $cart->type = 'order';
         $cart->save();
@@ -55,32 +58,33 @@ class OrderController extends Controller
         $query = $request->all();
 
         if (!isset($query['orderid'])) {
-            return view('error404');
+            abort(404);
         }
 
         $order = Order::find($query['orderid']);
-        if ($order == null) {
-            return view('error404');
-        }
+        $user    = User::getUserByToken('Bearer '.$_COOKIE['token']);
+        validateOrder($user, $order);
 
         $sub_orders = array();
         foreach ($order->subOrders as $subOrder) {
             $sub_orders[] = $subOrder->getSubOrder();
         }
 
-        $payment = $order->payments->first();
-
         $params = [
             "order_info"       => $order->getOrderInfo(),
             "sub_orders"       => $sub_orders,
-            "payment_info"     => [
-                //"payment_mode" => $payment->bankcode,
-                "payment_mode" => json_decode($payment->data)->bankcode,
-                "card_num"     => $payment->cardnum,
-            ],
             "shipping_address" => $order->address->shippingAddress(),
             "order_summary"    => $order->aggregateSubOrderData(),
         ];
+
+        $payment = $order->payments->first();
+        if ($payment!=null) {
+            $params['payment_info'] = [
+                //"payment_mode" => $payment->bankcode,
+                "payment_mode" => json_decode($payment->data)->bankcode,
+                "card_num"     => $payment->cardnum,
+            ];
+        }
 
         $params['breadcrumb']            = array();
         $params['breadcrumb']['list']    = array();

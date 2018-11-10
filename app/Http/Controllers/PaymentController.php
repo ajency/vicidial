@@ -16,7 +16,7 @@ class PaymentController extends Controller
     	$user = $cart->user;
 
     	$attributes = [
-		    'txnid' => strtoupper(str_random(8)).str_pad($order->id, 6, '0', STR_PAD_LEFT), # Transaction ID.
+		    'txnid' => $order->txnid, # Transaction ID.
 		    'amount' => $order->aggregateSubOrderData()['final_price'], # Amount to be charged.
 		    'productinfo' => $order->id,
 		    'firstname' => "", # Payee Name.
@@ -27,7 +27,6 @@ class PaymentController extends Controller
     	$order->status = 'payment-in-progress';
     	$expires_at = Carbon::now()->addMinutes(config('orders.payu_expiry'));
         $order->expires_at = $expires_at->timestamp;
-        $order->txnid = $attributes['txnid'];
     	$order->save();
 
 		return Payment::with($order)->make($attributes, function ($then) use ($orderid) {
