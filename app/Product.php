@@ -14,15 +14,6 @@ class Product
 {
     protected $data;
 
-    public static function getLastSyncedProduct()
-    {
-        // $query      = new ElasticQuery;
-        // $lastSynced = intval($query->appendMust(ElasticQuery::createMatch('type', 'product'))
-        //         ->setAggregation(ElasticQuery::createAggMax('max_id', 'id'))
-        //         ->search()['aggregations']['max_id']['value']);
-        // return $lastSynced;
-        return 0;
-    }
 
     public static function odooFilter($filters)
     {
@@ -52,7 +43,7 @@ class Product
 
     public static function startSync()
     {
-        $first_id = self::getLastSyncedProduct();
+        $first_id = ProductColor::max('product_id');
         $offset   = 0;
         do {
             $products = self::getProductIDs(['id' => $first_id], $offset);

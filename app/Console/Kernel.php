@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\Product;
+use App\Warehouse;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -25,8 +27,14 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->call(function () {
+            \Log::notice('Scheduled Image Sync');
             Product::getNoImageProducts();
         })->daily();
+        $schedule->call(function () {
+            \Log::notice('Scheduled Product Sync');
+            Product::startSync();
+        })->daily();
+        
     }
 
     /**
