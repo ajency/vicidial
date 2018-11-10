@@ -137,7 +137,10 @@ Add the following to crontab
 
 ### Create an elastic index for products
 
-`php artisan elastic:create_index products` 
+`php artisan elastic:create_index products`
+
+### Get all warehouses from odoo
+`php artisan odoo:warehouses` 
 
 ### create passport keys for API to work
 `php artisan passport:client --personal`
@@ -149,6 +152,3 @@ Add the following to crontab
 
 `Spatie\Permission\Models\Role::create(['name' => 'customer'])`
 
-#### In the tinker console run the following command to sync product data from odoo to elasticsearch
-
-`Product::startSync();`

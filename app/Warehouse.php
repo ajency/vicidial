@@ -8,11 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Warehouse extends Model
 {
 
-    public static function getAllWarehouses()
+    public static function getAllWarehousesFromOdoo()
     {
 
         $odoo       = new OdooConnect();
         $max        = self::max('odoo_id');
+        $max        = ($max == null) ? 0 : $max;
         $warehouses = $odoo->defaultExec("stock.warehouse", "search_read", [[['id', '>', $max]]], ["fields" => ['company_id', 'name']]);
         foreach ($warehouses as $warehouse) {
             $wh               = new Warehouse;
@@ -23,6 +24,5 @@ class Warehouse extends Model
             $wh->save();
 
         }
-        return $warehouses;
     }
 }
