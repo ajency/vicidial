@@ -56,7 +56,10 @@ class User extends Authenticatable
 
     public function newCart($replicate = false)
     {
-        $cart = Cart::create(['user_id' => $this->id, 'active' => 1, 'type' => 'cart']);
+        // $cart = Cart::create(['user_id' => $this->id, 'active' => 1, 'type' => 'cart']);
+        $cart = new Cart;
+        $cart->user_id = $this->id;
+        $cart->save();
         $ac = $this->activeCart();
         if($replicate){
             $cart->cart_data = $ac->cart_data;
