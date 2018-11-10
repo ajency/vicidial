@@ -45,6 +45,7 @@ class PaymentController extends Controller
 			$order->status = 'payment-successful';
 			$order->save();
 			request()->session()->flash('payment', "success");
+			$order->cart->user->newCart();
 		}
 		elseif($order->status == 'payment-in-progress') {
 			$order->status = 'payment-failed';
