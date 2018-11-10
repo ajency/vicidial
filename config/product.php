@@ -155,4 +155,10 @@ return [
             'order' => 3,
         ],
     ],
+    'breadcrumb_order' => [
+        'product_category_type',
+        'product_age_group',
+        'product_gender',
+        'product_subtype'
+    ],//Used for breadcrumbs on single product page
 ];
