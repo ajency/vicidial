@@ -1,6 +1,6 @@
 <!-- Order Details sidebar start -->
 <div class="col-12 col-xl-4 col-lg-4">
-   @if($payment_info['payment_mode'] and $payment_info['card_num'])
+   @if(!empty($payment_info) and $payment_info['payment_mode'] and $payment_info['card_num'])
       <label class="">Payment Information</label>
 
       <!-- Payment Info/Mode -->
