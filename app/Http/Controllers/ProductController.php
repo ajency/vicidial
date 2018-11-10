@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\ProductColor;
+use App\Facet;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -25,10 +26,13 @@ class ProductController extends Controller
 
         $params['breadcrumb']           = array();
         $params['breadcrumb']['list']   = array();
-        $params['breadcrumb']['list'][] = ['name' => $params['category']->type, 'href' => '#'];
-        $params['breadcrumb']['list'][] = ['name' => $params['category']->age_group, 'href' => '#'];
-        $params['breadcrumb']['list'][] = ['name' => $params['category']->gender, 'href' => '#'];
-        $params['breadcrumb']['list'][] = ['name' => $params['category']->sub_type, 'href' => '#'];
+        $url = array();
+        $breadcrumb = config('product.breadcrumb_order');
+        foreach ($breadcrumb as $category) {
+            $facet = Facet::where('facet_name', '=', $category)->where('facet_value', '=', $params['category']->{$category})->first();
+            $url[] = $facet->slug;
+            $params['breadcrumb']['list'][] = ['name' => $facet->display_name, 'href' => create_url($url)];
+        }
 
         $params['breadcrumb']['current'] = '';
 

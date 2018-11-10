@@ -29,14 +29,14 @@
     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
         <div class="card-body pb-2 px-0">
             <dl class="row">
-              @php if($params['additional_info']->gender) { @endphp
+              @php if($params['additional_info']->product_gender) { @endphp
               <dt class="col-4 col-sm-3"><label class="text-muted f-w-4">Gender</label></dt>
-              <dd class="col-8 col-sm-9 text-capitalize">{{$params['additional_info']->gender}}</dd>
+              <dd class="col-8 col-sm-9 text-capitalize">{{$params['additional_info']->product_gender}}</dd>
               @php } @endphp
 
-              @php if($params['additional_info']->age_group) { @endphp
+              @php if($params['additional_info']->product_age_group) { @endphp
               <dt class="col-4 col-sm-3"><label class="text-muted f-w-4">Age Group</label></dt>
-              <dd class="col-8 col-sm-9 text-capitalize">{{$params['additional_info']->age_group}}</dd>
+              <dd class="col-8 col-sm-9 text-capitalize">{{$params['additional_info']->product_age_group}}</dd>
               @php } @endphp
 
               @php if($params['additional_info']->sleeves) { @endphp
