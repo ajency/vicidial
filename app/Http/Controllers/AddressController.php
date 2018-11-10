@@ -10,8 +10,8 @@ class AddressController extends Controller
 {
     public function userAddAddress(Request $request)
     {
-    	$request->validate(['default' => 'required', 'name' => 'required', 'phone' => 'required', 'pincode' => 'required', 'state' => 'required', 'address' => 'required', 'locality' => 'required', 'landmark' => 'required', 'city' => 'required', 'type' => 'required']);
-        $params  = $request->all();
+    	$request->validate(['default' => 'required', 'name' => 'required', 'phone' => 'required|digits:10', 'pincode' => 'required|digits:6', 'state' => 'required', 'address' => 'required', 'locality' => 'required', 'landmark' => 'present', 'city' => 'required', 'type' => 'required']);
+    	$params  = $request->all();
     	$user_id = User::getUserByToken($request->header('Authorization'))->id;
 
     	$default = $this->defaultAddressSet($user_id, $params["default"]);
@@ -30,7 +30,7 @@ class AddressController extends Controller
 
     public function userEditAddress(Request $request)
     {
-        $request->validate(['default' => 'required', 'name' => 'required', 'phone' => 'required', 'pincode' => 'required', 'state' => 'required', 'address' => 'required', 'locality' => 'required', 'landmark' => 'required', 'city' => 'required', 'type' => 'required']);
+        $request->validate(['default' => 'required', 'name' => 'required', 'phone' => 'required|digits:10', 'pincode' => 'required|digits:6', 'state' => 'required', 'address' => 'required', 'locality' => 'required', 'landmark' => 'present', 'city' => 'required', 'type' => 'required']);
         $params  = $request->all();
         $user_id = User::getUserByToken($request->header('Authorization'))->id;
 
