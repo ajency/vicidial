@@ -75,35 +75,47 @@ class User extends Authenticatable
         $this->save();
     }
 
-    private function odooSync()
+    private function getOdooIdFromOdoo()
     {
         $odoo  = new OdooConnect;
         $model = "res.partner";
+        return $odoo->defaultExec($model, 'search_read', [[
+            ['phone', '=', $this->phone],
+            ['customer', '=', true],
+            ['type', '=', 'contact'],
+        ]], [
+            "fields" => ['id'],
+            'limit'  => 1,
+        ])->first()['id'];
+    }
+
+    private function writeNewCustomerToOdoo()
+    {
+        $odoo  = new OdooConnect;
+        $model = "res.partner";
+        return $odoo->defaultExec($model, 'create', [[
+            "customer"   => true,
+            "name"       => $this->name,
+            "phone"      => $this->phone,
+            "email"      => ($this->email) ? $this->email : "",
+            "type"       => "contact",
+            "is_company" => false,
+        ]], null)->first();
+    }
+
+    private function odooSync()
+    {
+
         if ($this->odoo_id == null) {
             //check if the id with that phone number exists
-            $odoo_id = $odoo->defaultExec($model, 'search_read', [[ 
-                ['phone', '=', $this->phone],
-                ['customer', '=', true],
-                ['type', '=', 'contact'],
-            ]],
-                [
-                    "fields" => ['id'],
-                    'limit'  => 1,
-                ])->first()['id'];
+            $odoo_id = $this->getOdooIdFromOdoo();
             if ($odoo_id == null) {
                 //if customer does not exist, create a new customer
-                $this->odoo_id = $odoo->defaultExec($model, 'create', [[
-                    "customer"   => true,
-                    "name"       => $this->name,
-                    "phone"      => $this->phone,
-                    "email"      => ($this->email) ? $this->email : "",
-                    "type"       => "contact",
-                    "is_company" => false,
-                ]], null)->first();
+                $this->odoo_id = $this->writeNewCustomerToOdoo();
             } else {
                 $this->odoo_id = $odoo_id;
             }
-        }else{
+        } else {
             //TODO
             //update the customer if the customer already exists
         }
