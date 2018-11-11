@@ -77,7 +77,7 @@ export class ShippingSummaryComponent implements OnInit {
 
     this.apiservice.request(url, 'post', body , header ).then((response)=>{
       console.log("response ==>", response);
-      this.shippingDetails = response;
+      this.shippingDetails = this.getProductUrl(response);
       this.appservice.removeLoader();
       this.appservice.updateCartId();
     })
@@ -99,7 +99,7 @@ export class ShippingSummaryComponent implements OnInit {
 
     this.apiservice.request(url, 'post', body , header ).then((response)=>{
       console.log("response ==>", response);
-      this.shippingDetails = response;
+      this.shippingDetails = this.getProductUrl(response);
       this.appservice.removeLoader();
       this.appservice.updateCartId();
     })
@@ -107,6 +107,13 @@ export class ShippingSummaryComponent implements OnInit {
       console.log("error ===>", error);
       this.appservice.removeLoader();
     })  
+  }
+
+  getProductUrl(data){
+    data.items.forEach((item)=>{
+      item.href = '/' + item.product_slug +'/buy?size='+item.attributes.size;
+    })
+    return data;
   }
 
 }

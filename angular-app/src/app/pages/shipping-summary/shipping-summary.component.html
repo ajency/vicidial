@@ -54,12 +54,17 @@
 				  <li class="p-0 pb-2">
 				    <div class="primary-info d-flex">
 				      <div class="product-img">
-				        <div class="img" style="background-image: url('/img/thumbnail/6front@thumb.jpg');"></div>
+				      	<a href="{{item.href}}">
+				      		<div class="img" style="background-image: url('/img/thumbnail/6front@thumb.jpg');"></div>
+				      	</a>
+				        
 				      </div>
 				      <div class="product-detail">
-				        <label class="m-0 mt-2">
-				          {{item.attributes.title}}
-				        </label>
+				      	<a href="{{item.href}}" class="kss-link kss_highlight">
+					        <label class="m-0 mt-2">
+					          {{item.attributes.title}}
+					        </label>
+					    </a>
 				        	<div class="d-flex flex-row align-items-center py-1">
 							  <div class="size-qty align-self-center">
 							  	<label class="m-0">Size:</label>
