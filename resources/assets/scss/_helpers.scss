@@ -248,22 +248,19 @@ footer .bl-1{
         border-color: #71a764;
     }
     &--failure{
-        background-color: #d96246;
-        border-color: #d96246;
+        background-color: #bc6760;
+        border-color: #bc6760;
     }
     @media (min-width: 768px){
         width: 350px;
         .icon{
-            font-size: 1.2em;
+            font-size: 1.8em;
         }
         .message{
             font-size: 1.15em;
         }
     }
-    .close{
-        position: absolute;
-        right: 5px;
-        top: 5px;
+    .alert-close{
         text-shadow: none;
         color: #fff;
         opacity: 1;
@@ -271,16 +268,28 @@ footer .bl-1{
     }
     &.sticky-alert{
         position: fixed;
-        bottom: 6.5em;
+        top: 0;
         z-index: 10;
-        left: 0;
-        transform: translateX(-500px);
+        right: 0;
+        width: calc(80% - 1rem);
+        transform: translateY(-500px);
         transition: all 0.5s ease;
-        @media (max-width: 768px){
-            bottom: 4em;
+        @media (min-width: 768px) {
+            width: calc(400px - 1rem);
+        }
+        @media (min-width: 360px) and (max-width: 767.98px) {
+            width: calc(100% - 1rem);
+            font-size: 1.1em;
+        }
+        @media (min-width: 992px) and (min-width: 1199.98px) {
+            width: calc(40% - 1rem) !important;
+        }
+        @media (min-width: 1300px) {
+            width: calc(30% - 1rem) !important;
         }
     }
     &.is-open{
+        pointer-events: auto;
         transform: translateX(0);
     }
 }
