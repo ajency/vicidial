@@ -82,7 +82,7 @@ $(document).ready(function(){
                             
                 },
                 error: function (request, status, error) {
-                    var error_msg = (request.responseJSON.message!='') ? request.responseJSON.message : 'Could not add to bag';
+                    var error_msg = (request.responseJSON && request.responseJSON.message!='') ? request.responseJSON.message : 'Could not add to bag';
                     //if(request.responseJSON.message!='') error_msg = request.responseJSON.message
                     $('.cd-add-to-cart .btn-icon').hide();
                     $('.cd-add-to-cart .btn-label-initial').addClass('d-flex');
