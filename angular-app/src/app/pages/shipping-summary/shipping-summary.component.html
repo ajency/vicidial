@@ -24,7 +24,7 @@
 		             </h3>
 		           </div>
 					<div class="col-7">
-						<h3 class="modal-title font-weight-bold" id="exampleModalLabel">Shipping Summary</h3>
+						<h3 class="modal-title font-weight-bold" id="exampleModalLabel">Review your order</h3>
 					</div>
 					<div class="col-4 text-right">
 						<h6 class="text-muted mt-2">STEP: 2 / 2</h6>
@@ -34,6 +34,22 @@
 				<!-- <div class="alert alert-success mb-3" role="alert">
 				  <b><i class="fas fa-truck"></i> Standard Delivery</b> (Free delivery)
 				</div> -->
+				<div>
+					<label class="w-100 border-bottom text-left">
+						<div class="d-flex align-items-start address-block">
+							<div class="text-left pl-2 flex-fill">
+								<h3 class="kss-title font-weight-bold d-flex align-items-center w-100">{{shippingDetails.address.name}}</h3>
+								<p class="w-75">
+									{{shippingDetails.address.address}}, {{shippingDetails.address.city}}, {{shippingDetails.address.state}} {{shippingDetails.address.pincode}}
+								</p>
+								<p class="w-75">
+									Mobile: <b class="font-weight-bold">{{shippingDetails.address.phone}}</b>
+								</p>
+							</div>
+						</div>
+					</label>
+				</div>
+
 				<ul *ngFor="let item of shippingDetails.items" class="cd-cart-items list-unstyled mt-3">
 				  <li class="p-0 pb-2">
 				    <div class="primary-info d-flex">
@@ -44,9 +60,23 @@
 				        <label class="m-0 mt-2">
 				          {{item.attributes.title}}
 				        </label>
-				        <div class="product-size text-muted ">
+				        	<div class="d-flex flex-row align-items-center py-1">
+							  <div class="size-qty align-self-center">
+							  	<label class="m-0">Size:</label>
+							  </div>
+							  <div class="pl-2 pr-4 align-self-center">
+							  	{{item.attributes.size}}
+							  </div>
+							  <div class="qty align-self-center mt-0">
+							  	<label class="m-0">Qty:</label>
+							  </div>
+							  <div class="pl-2">
+							  	{{item.quantity}}
+							  </div>
+							</div>
+				       <!--  <div class="product-size text-muted ">
 				         <p class="sub-text mt-3">Estimated Delivery <b class="text-dark">23 Aug 2018</b></p>
-				        </div>
+				        </div> -->
 				      </div>
 				    </div>
 				  </li>
@@ -81,7 +111,7 @@
 				  <div class="d-flex justify-content-between py-1">
 				    <div>
 				    	<label class="text-muted f-w-4 m-0">
-				    		Order Total
+				    		Total item price
 				    	</label>
 				    </div>
 				    <div> ₹{{shippingDetails.summary.total}} </div>
@@ -93,14 +123,15 @@
 				</div>
 				<hr class="dashed">
 				<div class="cd-cart-total">
-				  <h5 class="font-weight-bold">Total <span>₹{{shippingDetails.summary.total}}</span></h5>
+				  <h5 class="font-weight-bold">Total Payable<span>₹{{shippingDetails.summary.final_price}}</span></h5>
 				</div>
+				Your total savings on this order {{shippingDetails.summary.savings}}
 			</div>
 
 			<div class="fixed-bottom d-show pl-3 pr-3">
 			  <div class="row no-gutters px-2 py-2">
 		      <div class="col-12 text-center">
-		          <button id="payment-details" type="button" class=" btn btn-lg btn-block btn-primary mt-1 mb-1" (click)="navigateToPaymentPage()">Pay <span><strong>&#183;</strong></span> ₹{{shippingDetails.summary.total}}</button>
+		          <button id="payment-details" type="button" class=" btn btn-lg btn-block btn-primary mt-1 mb-1" (click)="navigateToPaymentPage()">Pay <span><strong>&#183;</strong></span> ₹{{shippingDetails.summary.final_price}}</button>
 		      </div>
 			  </div>
 			</div>
