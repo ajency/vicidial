@@ -109,11 +109,7 @@ export class CartComponent implements OnInit {
     
     this.sessionCheckInterval = setInterval(()=>{
       if(sessionStorage.getItem('addded_to_cart')){
-        if(sessionStorage.getItem('addded_to_cart') == "true")
-          this.fetchCartDataFromServer();
-        else
-          this.appservice.removeLoader();
-
+        this.fetchCartDataFromServer();
         sessionStorage.removeItem('addded_to_cart');
         clearInterval(this.sessionCheckInterval);
       }
