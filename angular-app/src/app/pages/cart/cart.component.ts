@@ -353,22 +353,28 @@ export class CartComponent implements OnInit {
   }
 
   navigateToShippingDetailsPage(){
-    this.appservice.showLoader();
-    let url = this.appservice.apiUrl + "/api/rest/v1/user/address/all";
-    console.log(this.isLoggedInUser());
-    let header = this.isLoggedInUser() ? { Authorization : 'Bearer '+this.appservice.getCookie('token') } : {};
-    this.apiservice.request(url, 'get', {} , header ).then((response)=>{
-      console.log("response ==>", response);
-      this.appservice.shippingAddresses = response.addresses;
-      $("#cd-cart").css("overflow", "auto");
-      $('.modal-backdrop').remove();
-      this.router.navigateByUrl('/shipping-details', { skipLocationChange: true });
-      this.appservice.removeLoader();
-    })
-    .catch((error)=>{
-      console.log("error ===>", error);
-      this.appservice.removeLoader();
-    })
+    if(this.cart.cart_type == "cart"){
+      this.appservice.showLoader();
+      let url = this.appservice.apiUrl + "/api/rest/v1/user/address/all";
+      console.log(this.isLoggedInUser());
+      let header = this.isLoggedInUser() ? { Authorization : 'Bearer '+this.appservice.getCookie('token') } : {};
+      this.apiservice.request(url, 'get', {} , header ).then((response)=>{
+        console.log("response ==>", response);
+        this.appservice.shippingAddresses = response.addresses;
+        $("#cd-cart").css("overflow", "auto");
+        $('.modal-backdrop').remove();
+        this.router.navigateByUrl('/shipping-details', { skipLocationChange: true });
+        this.appservice.removeLoader();
+      })
+      .catch((error)=>{
+        console.log("error ===>", error);
+        this.appservice.removeLoader();
+      })
+    }
+    else{
+      this.router.navigateByUrl('/shipping-summary', { skipLocationChange: true });
+      this.appservice.continueOrder = true;
+    }
   }
 
   checkCartItemOutOfStock(){
