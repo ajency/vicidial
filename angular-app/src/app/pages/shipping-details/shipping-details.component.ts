@@ -225,25 +225,8 @@ export class ShippingDetailsComponent implements OnInit {
   }
 
   navigateToShippingPage(){
-    console.log(this.selectedAddressId);
-    this.appservice.showLoader();
-    let url = this.appservice.apiUrl + '/api/rest/v1/user/cart/' + this.appservice.getCookie('cart_id') + '/create-order'
-    let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
-    let body : any = {
-      address_id : this.selectedAddressId
-    };
-    body._token = $('meta[name="csrf-token"]').attr('content');
-
-    this.apiservice.request(url, 'post', body , header ).then((response)=>{
-      console.log("response ==>", response);
-      this.appservice.shippingDetails = response;
-      this.appservice.removeLoader();
-      this.router.navigateByUrl('/shipping-summary', { skipLocationChange: true });      
-    })
-    .catch((error)=>{
-      console.log("error ===>", error);
-      this.appservice.removeLoader();
-    })  
+    this.appservice.selectedAddressId = this.selectedAddressId;
+    this.router.navigateByUrl('/shipping-summary', { skipLocationChange: true });      
   }
 
   closeCart(){
