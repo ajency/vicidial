@@ -4,11 +4,12 @@
 <div class="d-flex bd-highlight">
 	<div class="pb-2 pr-2">
 		<label class="d-block m-0">Shipment {{$loop->iteration}} of {{$sub_order['number_of_items']}} {{$sub_order['number_of_items'] == 1 ? "Item" : "Items"}}</label>
-		<i class="fas fa-clipboard-check mr-1 text-muted"></i> <span class="text-success font-weight-bold">Order Processed</span>
+		<!-- <i class="fas fa-clipboard-check mr-1 text-muted"></i> <span class="text-success font-weight-bold">Order Processed</span> -->
 	</div>
 	<div class="pb-2 ml-auto">
-		Total:
-		<h6 class="mt-1"><span class="rs-symbol"><i class="fas fa-rupee-sign sm-font"></i></span> {{$sub_order['total']}} for {{$sub_order['number_of_items']}} {{$sub_order['number_of_items'] == 1 ? "Item" : "Items"}}</h6>
+<!-- 		Total:
+		<h6 class="mt-1"><span class="rs-symbol"><i class="fas fa-rupee-sign sm-font"></i></span> {{$sub_order['total']}} for {{$sub_order['number_of_items']}} {{$sub_order['number_of_items'] == 1 ? "Item" : "Items"}}</h6> -->
+		<h6 class="mt-1">{{$sub_order['number_of_items']}} {{$sub_order['number_of_items'] == 1 ? "Item" : "Items"}}</h6>
 	</div>
 </div>
 
