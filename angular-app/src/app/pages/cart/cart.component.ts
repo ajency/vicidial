@@ -15,7 +15,7 @@ export class CartComponent implements OnInit {
 
   mobileNumberEntered = false;
   enterCoupon = false;
-  cart : any;
+  cart : any = {};
   sessionCheckInterval : any;
   cartOpen = false;
   mobileNumber : any;
@@ -33,6 +33,7 @@ export class CartComponent implements OnInit {
   loadSubscription: Subscription;
   closeModalSubscription: Subscription;
   cartItemOutOfStock : boolean = false;
+  fetchCartFailed : boolean = false;
   constructor( private router: Router,
                private appservice : AppServiceService,
                private apiservice : ApiServiceService,
@@ -104,14 +105,15 @@ export class CartComponent implements OnInit {
       console.log("cart_data from sessionStorage==>", this.cart);
     }
     else
-      this.cart = { items : [] };
+      this.cart = {};
     
     this.sessionCheckInterval = setInterval(()=>{
       if(sessionStorage.getItem('addded_to_cart')){
         if(sessionStorage.getItem('addded_to_cart') == "true")
           this.fetchCartDataFromServer();
         else
-          this.appservice.removeLoader()
+          this.appservice.removeLoader();
+
         sessionStorage.removeItem('addded_to_cart');
         clearInterval(this.sessionCheckInterval);
       }
@@ -141,16 +143,22 @@ export class CartComponent implements OnInit {
       sessionStorage.setItem('cart_data', JSON.stringify(this.cart));
       document.cookie = "cart_count=" + this.cart.cart_count + ";path=/";
       this.appservice.updateCartCountInUI();
-      this.appservice.removeLoader()
+      this.appservice.removeLoader();
+      this.fetchCartFailed = false;
       this.zone.run(() => {});
     })
     .catch((error)=>{
       console.log("error ===>", error);
-      // if(error.message == "Cart not found for this session"){
+      if(error.message == "Cart not found for this session"){
         this.cart = {
           items : []
         }
-      // }
+        this.fetchCartFailed = false;
+      }
+      else{
+        this.cart = {};
+        this.fetchCartFailed = true;
+      }
       this.appservice.removeLoader()
       this.zone.run(() => {});
     })
