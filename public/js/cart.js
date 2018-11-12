@@ -85,7 +85,7 @@ $(document).ready(function () {
                     $('.cd-add-to-cart .btn-icon').hide();
                     $('.cd-add-to-cart .btn-label-initial').addClass('d-flex');
                     $('.cd-add-to-cart .btn-label-initial').removeClass('d-none');
-                    // $('.kss-alert .message').html('<strong>Failed!!!</strong> '+error_msg);
+                    $('.kss-alert .message').html('<strong>Failed!!!</strong> ' + error_msg);
                     $('.kss-alert').addClass('kss-alert--failure');
                     $('.kss-alert').addClass('is-open');
                     $('#cd-cart').css('pointer-events', 'none');
