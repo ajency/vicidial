@@ -50,20 +50,28 @@ class SubOrder extends Model
             $total += $itemData['item']->getSalePrice();
         }
         $this->odoo_data = [
-            'total'          => $total,
-            'shipping_fee'   => 0,
+            'total'        => $total,
+            'shipping_fee' => 0,
         ];
     }
 
     public function checkInventory()
     {
-        if($this->odoo_id == null){
+        if ($this->odoo_id == null) {
             $items = $this->getItems();
             foreach ($items as $itemData) {
                 if ($itemData['quantity'] > $itemData['item']->inventory[$this->warehouse_id]['quantity']) {
                     abort(410, 'Items no longer available in store');
                 }
             }
+        }
+    }
+
+    public function placeOrder()
+    {
+        if ($this->odoo_id == null) {
+            $this->checkInventory();
+            
         }
     }
 

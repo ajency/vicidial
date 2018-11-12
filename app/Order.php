@@ -4,6 +4,7 @@ namespace App;
 
 use App\Cart;
 use App\SubOrder;
+use App\Jobs\OdooOrder;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Tzsk\Payu\Fragment\Payable;
@@ -54,6 +55,9 @@ class Order extends Model
 
     public function placeOrderOnOdoo(){
         //create a job to place order on odoo for all suborders.
+        foreach ($this->subOrders as $subOrder) {
+            OdooOrder::dispatch($subOrder)->onQueue('odoo_order');
+        }
     }
 
     public function aggregateSubOrderData()

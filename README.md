@@ -70,6 +70,16 @@ numprocs=1
 redirect_stderr=true
 stdout_logfile=/var/log/laravel/product_sync.log
 
+[program:newsite_order_sync]
+process_name=%(program_name)s_%(process_num)02d
+command=php /var/www/newsite/artisan queue:work --queue=odoo_order --tries=5
+autostart=true
+autorestart=true
+user=root
+numprocs=1
+redirect_stderr=true
+stdout_logfile=/var/log/laravel/order_sync.log
+
 [program:newsite_photo_sync]
 process_name=%(program_name)s_%(process_num)02d
 command=php /var/www/newsite/artisan queue:work --queue=process_product_images --tries=3
