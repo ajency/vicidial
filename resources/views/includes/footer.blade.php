@@ -70,22 +70,21 @@
     <div class="border-bottom border-gray mt-4 mb-4 op-1">
     </div>
 
-   <div class="row">
-        <div class="col-12">
-             <p class="font-weight-bold mt-4"><strong>Our Leading Categories</strong></p>
+   <!-- <div class="row">
+      <div class="col-12">
+         <p class="font-weight-bold mt-4"><strong>Our Leading Categories</strong></p>
 
-             <strong>Boys Clothings:</strong>  <a href="#" class="text-dark">T-Shirts </a> |  <a href="#" class="text-dark"> Shirts</a>  |   <a href="#" class="text-dark">Jeans & Trousers</a>  |    <a href="#" class="text-dark">Shorts & Dungarees</a>  |   <a href="#" class="text-dark">Track Pants & Pyjamas</a>  |   <a href="#" class="text-dark">Clothing Sets</a>   |    <a href="#" class="text-dark">Indian Wear</a>   |    <a href="#" class="text-dark">Jackets</a>   |   <a href="#" class="text-dark">Shorts & Dungarees</a>  |   <a href="#" class="text-dark">Track Pants & Pyjamas</a>
-              <br>
-             <strong>Girls Clothings:</strong>  <a href="#" class="text-dark">T-Shirts </a> |  <a href="#" class="text-dark"> Shirts</a>  |   <a href="#" class="text-dark">Jeans & Trousers</a>  |    <a href="#" class="text-dark">Shorts & Dungarees</a>  |   <a href="#" class="text-dark">Track Pants & Pyjamas</a>  |   <a href="#" class="text-dark">Clothing Sets</a>   |    <a href="#" class="text-dark">Indian Wear</a>   |    <a href="#" class="text-dark">Jackets</a>   |   <a href="#" class="text-dark">Shorts & Dungarees</a>  |   <a href="#" class="text-dark">Track Pants & Pyjamas</a>
-              <br>
-              <strong>Infants Clothings:</strong>  <a href="#" class="text-dark">T-Shirts </a> |  <a href="#" class="text-dark"> Shirts</a>  |   <a href="#" class="text-dark">Jeans & Trousers</a>  |    <a href="#" class="text-dark">Shorts & Dungarees</a>  |   <a href="#" class="text-dark">Track Pants & Pyjamas</a>  |   <a href="#" class="text-dark">Clothing Sets</a>   |    <a href="#" class="text-dark">Indian Wear</a>   |    <a href="#" class="text-dark">Jackets</a>   |   <a href="#" class="text-dark">Shorts & Dungarees</a>
-               <br>
-              <strong>Kids Accessories:</strong>  <a href="#" class="text-dark">T-Shirts </a> |  <a href="#" class="text-dark"> Shirts</a>  |   <a href="#" class="text-dark">Jeans & Trousers</a>  |    <a href="#" class="text-dark">Shorts & Dungarees</a>  |   <a href="#" class="text-dark">Track Pants & Pyjamas</a>  |   <a href="#" class="text-dark">Clothing Sets</a>   |    <a href="#" class="text-dark">Indian Wear</a>   |    <a href="#" class="text-dark">Jackets</a>   |   <a href="#" class="text-dark">Shorts & Dungarees</a>
-        </div>
+         <strong>Boys Clothings:</strong>  <a href="#" class="text-dark">T-Shirts </a> |  <a href="#" class="text-dark"> Shirts</a>  |   <a href="#" class="text-dark">Jeans & Trousers</a>  |    <a href="#" class="text-dark">Shorts & Dungarees</a>  |   <a href="#" class="text-dark">Track Pants & Pyjamas</a>  |   <a href="#" class="text-dark">Clothing Sets</a>   |    <a href="#" class="text-dark">Indian Wear</a>   |    <a href="#" class="text-dark">Jackets</a>   |   <a href="#" class="text-dark">Shorts & Dungarees</a>  |   <a href="#" class="text-dark">Track Pants & Pyjamas</a>
+          <br>
+         <strong>Girls Clothings:</strong>  <a href="#" class="text-dark">T-Shirts </a> |  <a href="#" class="text-dark"> Shirts</a>  |   <a href="#" class="text-dark">Jeans & Trousers</a>  |    <a href="#" class="text-dark">Shorts & Dungarees</a>  |   <a href="#" class="text-dark">Track Pants & Pyjamas</a>  |   <a href="#" class="text-dark">Clothing Sets</a>   |    <a href="#" class="text-dark">Indian Wear</a>   |    <a href="#" class="text-dark">Jackets</a>   |   <a href="#" class="text-dark">Shorts & Dungarees</a>  |   <a href="#" class="text-dark">Track Pants & Pyjamas</a>
+          <br>
+          <strong>Infants Clothings:</strong>  <a href="#" class="text-dark">T-Shirts </a> |  <a href="#" class="text-dark"> Shirts</a>  |   <a href="#" class="text-dark">Jeans & Trousers</a>  |    <a href="#" class="text-dark">Shorts & Dungarees</a>  |   <a href="#" class="text-dark">Track Pants & Pyjamas</a>  |   <a href="#" class="text-dark">Clothing Sets</a>   |    <a href="#" class="text-dark">Indian Wear</a>   |    <a href="#" class="text-dark">Jackets</a>   |   <a href="#" class="text-dark">Shorts & Dungarees</a>
+           <br>
+          <strong>Kids Accessories:</strong>  <a href="#" class="text-dark">T-Shirts </a> |  <a href="#" class="text-dark"> Shirts</a>  |   <a href="#" class="text-dark">Jeans & Trousers</a>  |    <a href="#" class="text-dark">Shorts & Dungarees</a>  |   <a href="#" class="text-dark">Track Pants & Pyjamas</a>  |   <a href="#" class="text-dark">Clothing Sets</a>   |    <a href="#" class="text-dark">Indian Wear</a>   |    <a href="#" class="text-dark">Jackets</a>   |   <a href="#" class="text-dark">Shorts & Dungarees</a>
+      </div>
    </div>
 
-   <div class="border-bottom border-gray mt-4 mb-4 op-1">
-   </div>
+   <div class="border-bottom border-gray mt-4 mb-4 op-1"></div> -->
 
      <div class="row">
         <div class="col-12">

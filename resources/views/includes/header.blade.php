@@ -7,6 +7,11 @@
 
     <div class="stellarnav header-menu ml-lg-4" id="">
         <ul class="">
+            <li class="d-lg-none">
+                <a class="nav-link font-weight-bold" href="/">
+                    Home
+                </a>
+            </li>
             <li class="">
                 <a class="nav-link font-weight-bold" href="#">
                     All
@@ -82,6 +87,19 @@
                   <li><a class="dropdown-item" href="/accessories/boys/">Boys</a></li>
                   <li><a class="dropdown-item" href="/accessories/girls/">Girls</a></li>
                   <li><a class="dropdown-item" href="/accessories/others/">Other</a></li>
+                </ul>
+            </li>
+
+            <li class="other-links d-lg-none">
+                <a class="nav-link font-weight-bold" href="#">
+                    Other Links
+                </a>
+                <ul class="">
+                  <li><a class="dropdown-item" href="#">Contact Us</a></li>
+                  <li><a class="dropdown-item" href="#">FAQ</a></li>
+                  <li><a class="dropdown-item" href="#">Terms of Use</a></li>
+                  <li><a class="dropdown-item" href="#">Track Orders</a></li>
+                  <li><a class="dropdown-item" href="#">Cancellation Policy</a></li>
                 </ul>
             </li>
         </ul>

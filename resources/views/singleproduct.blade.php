@@ -108,8 +108,6 @@
 		</div>
 	</div>
 
-	<!-- Similar Products -->
-	@include('includes.similar-products')
 
 @stop
 
