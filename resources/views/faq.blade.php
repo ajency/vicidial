@@ -70,7 +70,7 @@
                            In PayU payment gateway, enter your email id first
                         </li>
                         <li class="h5 text-muted fz-sm line-height-5">
-                           Then you can proceed to enter your card details to complete the payment. Please Note PayU does not support RuPay cards. It supports MasterCard and Visa.
+                           Then you can proceed to enter your card details to complete the payment. Please note PayU does not support RuPay cards. It supports MasterCard and Visa.
                         </li>
                      </ol>
                   </div>
