@@ -60,7 +60,11 @@ export class ApiServiceService {
 
 	public parseRejectedError(error: any): any{
     try{
-      return JSON.parse(error._body);
+    	let error_object = {
+    		message : JSON.parse(error._body).message,
+    		status : error.status
+    	}
+      return error_object
     }
     catch(e){
       return error;
