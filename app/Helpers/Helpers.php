@@ -27,7 +27,7 @@ function checkUserCart($token, $cart)
 
 }
 
-function makeQueryfromParams($params)
+function makeQueryfromParams($searchObject)
 {
     $queryParams    = [];
     $elasticMapping = [
@@ -35,20 +35,36 @@ function makeQueryfromParams($params)
         'product_gender'        => 'search_data.string_facet.product_gender',
         'product_age_group'     => 'search_data.string_facet.product_age_group',
         'product_subtype'       => 'search_data.string_facet.product_subtype',
-        'product_color_id'       => 'search_data.number_facet.product_color_id',
+        'product_color_id'      => 'search_data.number_facet.product_color_id',
+        'variant_sale_price'    => 'search_data.number_facet.variant_sale_price',
     ];
-    foreach ($elasticMapping as $param => $map) {
-        if (array_has($params, $param)) {
-            $categ = $params[$param];
-            if (gettype($categ) != 'array') {
-                $categ = [$categ];
-            }
 
-            if (array_search('all', $categ) === false) {
-                array_set($queryParams, $map, $categ);
-            }
+    foreach ($searchObject as $filterType => $params) {
+        switch ($filterType) {
+            case 'primary_filter':
+                foreach ($elasticMapping as $param => $map) {
+                    if (array_has($params, $param)) {
+                        $categ = $params[$param];
+                        if (gettype($categ) != 'array') {
+                            $categ = [$categ];
+                        }
+                        if (array_search('all', $categ) === false) {
+                            array_set($queryParams, $map, ["type"=>"enum","value" => $categ ]);
+                        }
+                    }
+                }
+                break;
+            case 'range_filter':
+                foreach ($elasticMapping as $param => $map) {
+                    if (array_has($params, $param)) {
+                        array_set($queryParams, $map, ["type"=>"range","value" => $params[$param]]);
+                    }
+                }
+                break;
         }
     }
+
+    
     return $queryParams;
 }
 
