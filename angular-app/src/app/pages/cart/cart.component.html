@@ -31,12 +31,11 @@
 	</a>
 	</div> -->
 
-	 <div *ngIf="cartItemOutOfStock" class="alert alert-danger m-2 p-2" role="alert">
-		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-	   		<span aria-hidden="true">&times;</span>
-	 	</button>
-	 	An item in your shopping bag has gone out of stock<br> <b>Remove the item</b>
+	 <div *ngIf="cartItemOutOfStock" class="oft-msg text-muted m-2 p-2">
+	 	It looks like some of the items in your bag are out of stock. Please edit your bag items to checkout.
 	</div>
+
+	<hr *ngIf="cartItemOutOfStock" class="m-0" />
 
 	<div *ngIf="cart.items && cart.items.length">
 		<ul class="cd-cart-items">
@@ -158,11 +157,9 @@
 
 		<div class="seperator mb-5"></div>
 
-		<div *ngIf="cart.cart_type =='order'" id="kss_cart" class="p-3 fixed-bottom">
-			<a  id="checkout" class="btn btn-primary btn-lg btn-block" (click)="editBag()" >Edit Bag</a>
-		</div>
-		<div id="kss_cart" class="p-3 fixed-bottom">
-			<a  id="checkout" class="btn btn-primary btn-lg btn-block " [ngClass]="{'disabled' : cartItemOutOfStock}" (click)="modalHandler()" >Checkout</a>
+		<div id="kss_cart" class="p-3 fixed-bottom d-flex align-items-center justify-content-between">
+			<button *ngIf="cart.cart_type =='order'" id="checkout" class="btn btn-outline-secondary btn-lg btn-block mr-3" (click)="editBag()" >Edit Bag</button>
+			<button  id="checkout" class="btn btn-primary btn-lg btn-block mt-0" [ngClass]="{'disabled' : cartItemOutOfStock}" (click)="modalHandler()" >Checkout</button>
 		</div>
 	</div>	
 
