@@ -17,12 +17,7 @@
    <div class="row">
       <div class="col-12">
          <div class="mb-4">
-            <nav aria-label="breadcrumb">
-               <ol class="breadcrumb mb-1 bg-transparent p-0">
-                  <li class="breadcrumb-item"><a href="#">Home</a></li>
-                  <li class="breadcrumb-item" active><a href="#">FAQ</a></li>
-               </ol>
-            </nav>
+            @include('includes.breadcrumbs', ['breadcrumbs' => $params['breadcrumb']])
          </div>
       </div>
    </div>
@@ -67,10 +62,10 @@
                            View your final order summary. Here you can edit your address. You will not be able to edit your bag details here. Hit Pay via PayU to continue paying via payment gateway.
                         </li>
                         <li class="h5 text-muted fz-sm line-height-5">
-                           View your final order summary. Here you can edit your address. You will not be able to edit your bag details here. Hit Pay via PayU to continue paying via payment gateway.
+                           In PayU payment gateway, enter your email id first
                         </li>
                         <li class="h5 text-muted fz-sm line-height-5">
-                           Then you can proceed to enter your card details to complete the payment. Please Note PayU does not support RuPay cards. It supports MasterCard and Visa.
+                           Then you can proceed to enter your card details to complete the payment. Please note PayU does not support RuPay cards. It supports MasterCard and Visa.
                         </li>
                      </ol>
                   </div>
