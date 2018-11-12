@@ -145,13 +145,20 @@ export class CartComponent implements OnInit {
     })
     .catch((error)=>{
       console.log("error ===>", error);
-      if(error.message == "Cart not found for this session"){
+      if(error.status == 401){
+        this.appservice.userLogout();
+        this.fetchCartDataFromServer();
+        this.fetchCartFailed = false; 
+      }
+      else if((error.status == 400 || error.status == 403) && this.isLoggedInUser() ){
+        this.getNewCartId();
+        this.fetchCartFailed = false; 
+      }
+      else if(error.status == 404){
         this.cart = {
           items : []
         }
-        this.fetchCartFailed = false;
-        document.cookie = "cart_count=" + 0 + ";path=/";
-        this.appservice.updateCartCountInUI();        
+        this.fetchCartFailed = false;        
       }
       else{
         this.cart = {};
@@ -223,7 +230,16 @@ export class CartComponent implements OnInit {
     })
     .catch((error)=>{
       console.log("error ===>", error);
-      this.appservice.removeLoader()
+      if(error.status == 401){
+        this.appservice.userLogout();
+        this.fetchCartDataFromServer();
+        this.fetchCartFailed = false; 
+      }
+      else if((error.status == 400 || error.status == 403) && this.isLoggedInUser() ){
+        this.getNewCartId();
+        this.fetchCartFailed = false; 
+      }
+      this.appservice.removeLoader();
     })
   }
 
@@ -407,6 +423,27 @@ export class CartComponent implements OnInit {
 
   reloadPage(){
     window.location.reload();
+  }
+
+  getNewCartId(){
+    this.appservice.showLoader();
+    let url = this.appservice.apiUrl + '/api/rest/v1/user/cart/mine';
+    let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
+    this.apiservice.request(url, 'get', {} , header ).then((response)=>{
+      console.log("response ==>", response);
+      if(response.cart_id != this.appservice.getCookie('cart_id')){
+        document.cookie='cart_id=' + response.cart_id + ";path=/";
+        this.fetchCartDataFromServer();
+      }
+      else{
+        this.cart = {};
+        this.fetchCartFailed = true;
+      }
+    })
+    .catch((error)=>{
+      console.log("error ===>", error);
+      this.appservice.removeLoader();
+    })
   }
   
 }

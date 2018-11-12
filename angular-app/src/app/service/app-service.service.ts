@@ -137,4 +137,9 @@ export class AppServiceService {
       $(".cart-counter").removeClass('d-block'), 100;
     }
   }
+
+  userLogout(){
+    document.cookie = "cart_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  }
 }
