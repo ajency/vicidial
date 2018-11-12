@@ -11900,6 +11900,7 @@ select.custom::-ms-expand {
 
 .custom-bs-select .dropdown-menu {
   z-index: 1;
+  background-color: #fff;
 }
 
 .custom-bs-select .dropdown-menu .inner {
