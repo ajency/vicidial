@@ -116,7 +116,12 @@ $size: 20px;
 }
 
 .link-card{
+  transition: all 0.15s ease-in;
   .link-card_text{
     color: #212529;
+  }
+  &:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px 1px rgba(0, 0, 0, 0.15);
   }
 }
