@@ -150,6 +150,8 @@ export class CartComponent implements OnInit {
           items : []
         }
         this.fetchCartFailed = false;
+        document.cookie = "cart_count=" + 0 + ";path=/";
+        this.appservice.updateCartCountInUI();        
       }
       else{
         this.cart = {};
