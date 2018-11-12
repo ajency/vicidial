@@ -27,7 +27,7 @@
 
            <img src="{{CDN::asset('/img/home-banner/home-banner-20px.jpg') }}"
                data-sizes="100vw"
-               class="img-fluid lazyload blur-up w-100" alt="Kidsuperstore Banner1" title="A New Season, A New Look">
+               class="img-fluid lazyload blur-up w-100" alt="Kidsuperstore Banner - Stylish kids-wear collections under Rs.999" title="Stylish kids-wear collections under Rs.999">
         </picture>
       </a>
     </div>
@@ -48,7 +48,7 @@
 
            <img src="{{CDN::asset('/img/home-banner/home-banner-boys-20px.jpg') }}"
                data-sizes="100vw"
-               class="img-fluid lazyload blur-up" alt="Kidsuperstore Banner2" title="A New Season, A New Look">
+               class="img-fluid lazyload blur-up" alt="Kidsuperstore Banner - Trending tshirts for boys and girls" title="Trending tshirts for boys and girls">
         </picture>
       </a>
     </div>
@@ -56,20 +56,20 @@
       <a href="/apparels/girls/dress/">
         <picture>
            <source media="(orientation: landscape)"
-                  data-srcset="{{CDN::asset('/img/home-banner/home-banner-infants-large.jpg') }} 2000w,
-                              {{CDN::asset('/img/home-banner/home-banner-infants-medium.jpg') }} 1200w,
-                              {{CDN::asset('/img/home-banner/home-banner-infants-small.jpg') }} 700w"
+                  data-srcset="{{CDN::asset('/img/home-banner/home-banner-girls-large.jpg') }} 2000w,
+                              {{CDN::asset('/img/home-banner/home-banner-girls-medium.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/home-banner-girls-small.jpg') }} 700w"
                   sizes="100vw">
 
            <source media="(orientation: portrait)"
-                  data-srcset="{{CDN::asset('/img/home-banner/home-banner-infants-portrait-large.jpg') }} 1200w,
-                              {{CDN::asset('/img/home-banner/home-banner-infants-portrait-medium.jpg') }} 700w,
-                              {{CDN::asset('/img/home-banner/home-banner-infants-portrait-small.jpg') }} 400w"
+                  data-srcset="{{CDN::asset('/img/home-banner/home-banner-girls-portrait-large.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/home-banner-girls-portrait-medium.jpg') }} 700w,
+                              {{CDN::asset('/img/home-banner/home-banner-girls-portrait-small.jpg') }} 400w"
                   sizes="100vw">
 
-           <img src="{{CDN::asset('/img/home-banner/home-banner-infants-20px.jpg') }}"
+           <img src="{{CDN::asset('/img/home-banner/home-banner-girls-20px.jpg') }}"
                data-sizes="100vw"
-               class="img-fluid lazyload blur-up" alt="Kidsuperstore Banner3" title="A New Season, A New Look">
+               class="img-fluid lazyload blur-up" alt="Kidsuperstore Banner - Pretty dresses for girls" title="Pretty dresses for girls">
         </picture>
       </a>
     </div>
