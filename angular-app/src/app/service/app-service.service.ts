@@ -21,6 +21,7 @@ export class AppServiceService {
   cartClosedFromShippingPages : boolean = false;
   selectedAddressId : any;
   continueOrder : boolean = false;
+  states : any = [];
   constructor(	private router: Router,
                 private apiservice : ApiServiceService) { 
     console.log("isDevMode ==>",isDevMode());

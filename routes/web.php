@@ -12,10 +12,12 @@
  */
 $config = config('ajfileupload');
 
-Route::get('/rest/anonymous/cart/count', 'CartController@guestGetCount');
-Route::post('/rest/anonymous/cart/insert', 'CartController@guestAddItem');
-Route::get('/rest/anonymous/cart/get', 'CartController@guestCartFetch');
-Route::get('/rest/anonymous/cart/delete', 'CartController@guestCartDelete');
+Route::get('/rest/v1/anonymous/cart/count', 'CartController@guestGetCount');
+Route::post('/rest/v1/anonymous/cart/insert', 'CartController@guestAddItem');
+Route::get('/rest/v1/anonymous/cart/get', 'CartController@guestCartFetch');
+Route::get('/rest/v1/anonymous/cart/delete', 'CartController@guestCartDelete');
+Route::get('/rest/v1/anonymous/states/all', 'AddressController@fetchStates');
+
 Route::get('/contact-us', 'StaticController@contact');
 Route::get('/contact', 'StaticController@contactnew');
 Route::get('/faq', 'StaticController@faq');

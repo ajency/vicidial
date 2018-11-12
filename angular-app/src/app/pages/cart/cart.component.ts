@@ -129,7 +129,7 @@ export class CartComponent implements OnInit {
 
   fetchCartDataFromServer(){
     this.appservice.showLoader()
-    let url = this.appservice.apiUrl + (this.isLoggedInUser() ? ("/api/rest/v1/user/cart/"+this.appservice.getCookie('cart_id')+"/get") : ("/rest/anonymous/cart/get"))
+    let url = this.appservice.apiUrl + (this.isLoggedInUser() ? ("/api/rest/v1/user/cart/"+this.appservice.getCookie('cart_id')+"/get") : ("/rest/v1/anonymous/cart/get"))
     console.log(this.isLoggedInUser());
     let header = this.isLoggedInUser() ? { Authorization : 'Bearer '+this.appservice.getCookie('token') } : {}
     this.apiservice.request(url, 'get', {}, header ).then((response)=>{
@@ -191,7 +191,7 @@ export class CartComponent implements OnInit {
     //   quantity : item.quantity
     // }
     // console.log("Body ==>", body);
-    // let url = 'http://localhost:8000/rest/anonymous/cart/update';
+    // let url = 'http://localhost:8000/rest/v1/anonymous/cart/update';
     // this.apiservice.request(url, 'get', body ).then((response)=>{
     //   console.log("response ==>", response);
     //   item = response.item;
@@ -206,7 +206,7 @@ export class CartComponent implements OnInit {
     this.appservice.showLoader()
     console.log("delete item ==>", item);
     let body = { variant_id : item.id };
-    let url = this.appservice.apiUrl + (this.isLoggedInUser() ? ("/api/rest/v1/user/cart/"+this.appservice.getCookie('cart_id')+"/delete?") : ("/rest/anonymous/cart/delete?"));
+    let url = this.appservice.apiUrl + (this.isLoggedInUser() ? ("/api/rest/v1/user/cart/"+this.appservice.getCookie('cart_id')+"/delete?") : ("/rest/v1/anonymous/cart/delete?"));
     let header = this.isLoggedInUser() ? { Authorization : 'Bearer '+this.appservice.getCookie('token') } : {};
     url = url+$.param(body);
     this.apiservice.request(url, 'get', body, header ).then((response)=>{

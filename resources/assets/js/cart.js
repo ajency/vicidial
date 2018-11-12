@@ -51,7 +51,7 @@ $(document).ready(function(){
             setTimeout(function(){jQuery( ".kss_sizes" ).removeClass( "shake" );},200);
         }
         else{
-            var url = isLoggedInUser() ? ("/api/rest/v1/user/cart/"+getCookie('cart_id')+"/insert") : ("/rest/anonymous/cart/insert")
+            var url = isLoggedInUser() ? ("/api/rest/v1/user/cart/"+getCookie('cart_id')+"/insert") : ("/rest/v1/anonymous/cart/insert")
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             var data = {_token: CSRF_TOKEN,"variant_id": $('input[type=radio][name=kss-sizes]:checked')[0].dataset['variant_id'],"variant_quantity": 1};
             $.ajax({
@@ -87,7 +87,7 @@ $(document).ready(function(){
                     $('.cd-add-to-cart .btn-icon').hide();
                     $('.cd-add-to-cart .btn-label-initial').addClass('d-flex');
                     $('.cd-add-to-cart .btn-label-initial').removeClass('d-none');
-                    // $('.kss-alert .message').html('<strong>Failed!!!</strong> '+error_msg);
+                    $('.kss-alert .message').html('<strong>Failed!!!</strong> '+error_msg);
                     $('.kss-alert').addClass('kss-alert--failure');
                     $('.kss-alert').addClass('is-open');
                     $('#cd-cart').css('pointer-events','none');

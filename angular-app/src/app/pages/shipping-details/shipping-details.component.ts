@@ -21,13 +21,12 @@ export class ShippingDetailsComponent implements OnInit {
     locality : '',
     landmark : '',
     city : '',
-    state : '',
+    state_id : '',
     default : false,
     type : ''
   };
   selectedAddressId : any;
-  states = [ 'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh', 'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jammu and Kashmir', 'Jharkhand', 'Karnataka', 'Kerala', 'Madhya Pradesh', 'Maharashtra', 'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Orissa', 'Punjab', 'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura', 'Uttaranchal', 'Uttar Pradesh','West Bengal'
-  ]
+  states : any = [];
   hideDefaultAddressField : boolean = false;
   constructor( private router : Router,
                private appservice : AppServiceService,
@@ -36,6 +35,7 @@ export class ShippingDetailsComponent implements OnInit {
             ) { }
 
   ngOnInit() {
+    this.states = this.appservice.states.length ? this.appservice.states : this.getAllStates();
     if(this.appservice.directNavigationToShippingAddress){
       this.checkCartStatus();
       this.appservice.directNavigationToShippingAddress = false;
@@ -44,8 +44,7 @@ export class ShippingDetailsComponent implements OnInit {
       this.addresses = this.appservice.shippingAddresses;
       this.updateUrl();
       this.checkAddresses();
-    }
-    
+    }    
   }
 
   checkAddresses(){
@@ -182,7 +181,7 @@ export class ShippingDetailsComponent implements OnInit {
     this.newAddress = {};
     this.newAddress.default = false;
     this.newAddress.type = "";
-    this.newAddress.state="";
+    this.newAddress.state_id="";
     this.newAddress.landmark = "";
     this.initSelectPicker();
   }
@@ -255,5 +254,21 @@ export class ShippingDetailsComponent implements OnInit {
       this.appservice.closeCart();
       this.router.navigateByUrl('/cartpage', {skipLocationChange: true});
     }
+  }
+
+  getAllStates(){    
+    let url = this.appservice.apiUrl + "/rest/v1/anonymous/states/all";
+    this.apiservice.request(url, 'get', {}, {} ).then((response)=>{
+      console.log("response ==>", response);      
+      this.appservice.states = response;
+      this.states = response;
+      this.initSelectPicker();
+      return response;
+    })
+    .catch((error)=>{
+      console.log("error ===>", error);
+      return [];
+    })
+
   }
 }

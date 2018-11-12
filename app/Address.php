@@ -44,8 +44,7 @@ class Address extends Model
             "city"       => $this->address["city"],
             "street"     => $this->address["address"],
             "street2"    => $this->address["locality"],
-            // "state_id"   => $this->address["state_id"],
-            "state_id"   => 586,
+            "state_id"   => $this->address["state_odoo_id"],
             "zip"        => $this->address["pincode"],
 
         ]], null)->first();
@@ -59,8 +58,7 @@ class Address extends Model
             "city"       => $this->address["city"],
             "street"     => $this->address["address"],
             "street2"    => $this->address["locality"],
-            // "state_id"   => $this->address["state_id"],
-            "state_id"   => 586,
+            "state_id"   => $this->address["state_odoo_id"],
             "zip"        => $this->address["pincode"],
 
         ]], null);
