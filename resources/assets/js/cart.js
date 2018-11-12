@@ -71,7 +71,7 @@ $(document).ready(function(){
     });
 
     function addToCart(){
-        var url = isLoggedInUser() ? ("/api/rest/v1/user/cart/"+getCookie('cart_id')+"/insert") : ("/rest/anonymous/cart/insert")
+        var url = isLoggedInUser() ? ("/api/rest/v1/user/cart/"+getCookie('cart_id')+"/insert") : ("/rest/v1/anonymous/cart/insert")
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         var data = {_token: CSRF_TOKEN,"variant_id": $('input[type=radio][name=kss-sizes]:checked')[0].dataset['variant_id'],"variant_quantity": 1};
         $.ajax({
