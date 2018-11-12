@@ -79,7 +79,7 @@ export class ShippingSummaryComponent implements OnInit {
       console.log("response ==>", response);
       this.shippingDetails = this.getProductUrl(response);
       this.appservice.removeLoader();
-      this.appservice.updateCartId();
+      // this.appservice.updateCartId();
     })
     .catch((error)=>{
       console.log("error ===>", error);
@@ -101,7 +101,7 @@ export class ShippingSummaryComponent implements OnInit {
       console.log("response ==>", response);
       this.shippingDetails = this.getProductUrl(response);
       this.appservice.removeLoader();
-      this.appservice.updateCartId();
+      // this.appservice.updateCartId();
     })
     .catch((error)=>{
       console.log("error ===>", error);
