@@ -1,20 +1,17 @@
 <div class="container pl-2 pl-sm-0 pr-2 pr-sm-0">
 <nav class="navbar navbar-expand-lg better-bootstrap-nav-left pl-1 pr-1 pb-0 pt-0">
-    <div class="navbar-toggler hamburger hamburger--collapse" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="hamburger-box">
-            <span class="hamburger-inner"></span>
-        </span>
-    </div>
-    <a href="/">
+
+    <a href="/" class="header-logo">
         <img src="/img/logo-kss.png" xpreview="/img/logo-kss.png" class=" img-fluid m-0 kss-logo" width="180px">
     </a>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ml-4 mr-auto mt-2 mt-lg-0">
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle font-weight-bold" href="#">
+
+    <div class="stellarnav header-menu ml-lg-4" id="">
+        <ul class="">
+            <li class="">
+                <a class="nav-link font-weight-bold" href="#">
                     All
                 </a>
-                <ul class="dropdown-menu">
+                <ul class="">
                   <li><a class="dropdown-item" href="/bottoms/">Bottoms</a></li>
                   <li><a class="dropdown-item" href="/dress/">Dress</a></li>
                   <li><a class="dropdown-item" href="/ethnic/">Ethnic</a></li>
@@ -31,11 +28,11 @@
                   <li><a class="dropdown-item" href="/woven-tops/">Woven Tops</a></li>
                 </ul>
             </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle font-weight-bold" href="#" >
+            <li class="">
+                <a class="nav-link font-weight-bold" href="#" >
                     Boys
                 </a>
-                <ul class="dropdown-menu">
+                <ul class="">
                   <li><a class="dropdown-item" href="/boys/juniors--toddler/bottoms/">Bottoms</a></li>
                   <li><a class="dropdown-item" href="/boys/juniors--toddler/ethnic/">Ethnic</a></li>
                   <li><a class="dropdown-item" href="/boys/juniors--toddler/jeans/">Jeans</a></li>
@@ -45,11 +42,11 @@
                   <li><a class="dropdown-item" href="/boys/juniors--toddler/tshirt/">Tshirt</a></li>
                 </ul>
             </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle font-weight-bold" href="#">
+            <li class="">
+                <a class="nav-link font-weight-bold" href="#">
                     Girls
                 </a>
-                <ul class="dropdown-menu">
+                <ul class="">
                   <li><a class="dropdown-item" href="/girls/juniors--toddler/bottoms/">Bottoms</a></li>
                   <li><a class="dropdown-item" href="/girls/juniors--toddler/dress/">Dress</a></li>
                   <li><a class="dropdown-item" href="/girls/juniors--toddler/ethnic/">Ethnic</a></li>
@@ -63,11 +60,11 @@
                   <li><a class="dropdown-item" href="/girls/juniors--toddler/woven-tops/">Woven Tops</a></li>
                 </ul>
             </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle font-weight-bold" href="#">
+            <li class="">
+                <a class="nav-link font-weight-bold" href="#">
                     Infants
                 </a>
-                <ul class="dropdown-menu">
+                <ul class="">
                   <li><a class="dropdown-item" href="/infant/bottoms/">Bottoms</a></li>
                   <li><a class="dropdown-item" href="/infant/dress/">Dress</a></li>
                   <li><a class="dropdown-item" href="/infant/infant-utility/">Infant Utility</a></li>
@@ -77,11 +74,11 @@
                   <li><a class="dropdown-item" href="/infant/woven-tops/">Woven Tops</a></li>
                 </ul>
             </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle font-weight-bold" href="#">
+            <li class="">
+                <a class="nav-link font-weight-bold" href="#">
                     Kids Accessories
                 </a>
-                <ul class="dropdown-menu">
+                <ul class="">
                   <li><a class="dropdown-item" href="/accessories/boys/">Boys</a></li>
                   <li><a class="dropdown-item" href="/accessories/girls/">Girls</a></li>
                   <li><a class="dropdown-item" href="/accessories/others/">Other</a></li>
@@ -89,7 +86,8 @@
             </li>
         </ul>
     </div>
-    <div class="my-2 my-lg-0">
+
+    <div class="my-2 my-lg-0 ml-auto header-actions">
         <ul class="list-inline mb-2 pt-3">
             <!-- <li class="list-inline-item">
                 <i class="kss_icon search-icon cursor-pointer"></i>
