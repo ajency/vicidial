@@ -38,14 +38,14 @@
 	 	Hey! It looks like you were interrupted during your last checkout process. You can continue from where you left off.
 	</div>
 
-	<hr *ngIf="cartItemOutOfStock" class="m-0" />
+	<hr *ngIf="!cartItemOutOfStock && cart.cart_type == 'order'" class="m-0" />
 
 	<div *ngIf="cart.items && cart.items.length">
 		<ul class="cd-cart-items">
 			<li *ngFor="let item of cart.items" [ngClass]="{'out-of-stock': !item.availability}">
 				<div class="primary-info d-flex">
 					<div class="product-img">
-						<a href="{{item.href}}">
+						<a href="{{item.href}}" [ngClass]="{'variant-placeholder' : item.attributes.images[0]=='/img/placeholder.svg'}">
 							<!-- <div class="img" style="background-image: url('/img/4front.jpg');"></div> -->
 							<img src="{{item.attributes.images[0]}}" class="lazyload img-fit" data-srcset="{{item.attributes.images[0]}} 50w, {{item.attributes.images[1]}} 100w, {{item.attributes.images[2]}} 150w" sizes="50px">
 						</a>

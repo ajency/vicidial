@@ -60,6 +60,7 @@
 	}
 	.kss-title{
 		min-height: 35px;
+		font-size: 1.1rem;
 	}
 	.product-delete{
 		.delete{
@@ -67,6 +68,12 @@
     		width: 34px;
     		margin: 0;
 		}
+	}
+}
+
+.review-section{
+	.kss-title{
+		min-height: auto;
 	}
 }
 

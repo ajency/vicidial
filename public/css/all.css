@@ -11387,6 +11387,16 @@ footer .bl-1 {
      object-fit: contain;
 }
 
+.section-title {
+  font-size: 1.1rem;
+}
+
+@media (max-width: 600px) {
+  .section-title {
+    font-size: .9rem;
+  }
+}
+
 /* Custom Select */
 .kss-custom-select {
   position: relative;
@@ -13849,12 +13859,17 @@ body #cd-cart .modal.show .modal-dialog {
 
 .address-block .kss-title {
   min-height: 35px;
+  font-size: 1.1rem;
 }
 
 .address-block .product-delete .delete {
   height: 31px;
   width: 34px;
   margin: 0;
+}
+
+.review-section .kss-title {
+  min-height: auto;
 }
 
 .colorOptions__trigger {
