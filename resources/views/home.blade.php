@@ -189,8 +189,8 @@
                        {{CDN::asset('/img/collection/woven-tops-medium.jpg') }} 409w,
                        {{CDN::asset('/img/collection/woven-tops-small.jpg') }} 250w"
           data-sizes='(min-width: 1200px) 366px, (min-width: 991px) 28vw,  (min-width: 768px) 46vw,  91vw'
-          alt="Trend in Focus - Party Showstoppers"
-          title="Party Showstoppers"/>
+          alt="Styles in Focus - Woven tops"
+          title="Woven tops"/>
     </a>
     <a href="/apparels/jeans/" class="trend-box d-block link-card" style="background-color:#feedcf;">
       <div class="p-3">
@@ -203,8 +203,8 @@
                        {{CDN::asset('/img/collection/jeans-medium.jpg') }} 409w,
                        {{CDN::asset('/img/collection/jeans-small.jpg') }} 250w"
           data-sizes='(min-width: 1200px) 366px, (min-width: 991px) 28vw,  (min-width: 768px) 46vw,  91vw'
-          alt="Trend in Focus - House Of Comfort"
-          title="House Of Comfort"/>
+          alt="Styles in Focus - Jeans"
+          title="Jeans"/>
     </a>
     <a href="/apparels/ethnic/" class="trend-box d-block link-card" style="background-color:#efe665;">
       <div class="p-3">
@@ -217,8 +217,8 @@
                        {{CDN::asset('/img/collection/ethnic-medium.jpg') }} 409w,
                        {{CDN::asset('/img/collection/ethnic-small.jpg') }} 250w"
           data-sizes='(min-width: 1200px) 366px, (min-width: 991px) 28vw,  (min-width: 768px) 46vw,  91vw'
-          alt="Trend in Focus - Party Showstoppers"
-          title="Party Showstoppers"/>
+          alt="Styles in Focus - Ethnic"
+          title="Ethnic"/>
     </a>
     <a href="/apparels/infant-utility/" class="trend-box d-block link-card" style="background-color:#fcfbff;">
       <div class="p-3">
@@ -231,8 +231,8 @@
                        {{CDN::asset('/img/collection/infant-accessories-medium.jpg') }} 409w,
                        {{CDN::asset('/img/collection/infant-accessories-small.jpg') }} 250w"
           data-sizes='(min-width: 1200px) 366px, (min-width: 991px) 28vw,  (min-width: 768px) 46vw,  91vw'
-          alt="Trend in Focus - Floral Pattern"
-          title="Floral Pattern"/>
+          alt="Styles in Focus - Infant Accessories"
+          title="Infant Accessories"/>
     </a>
     <a href="/apparels/dress/" class="trend-box d-block link-card" style="background-color:#ed8d77;">
       <div class="p-3">
@@ -245,8 +245,8 @@
                          {{CDN::asset('/img/collection/dresses-medium.jpg') }} 409w,
                          {{CDN::asset('/img/collection/dresses-small.jpg') }} 250w"
             data-sizes='(min-width: 1200px) 366px, (min-width: 991px) 28vw,  (min-width: 768px) 46vw,  91vw'
-            alt="Trend in Focus - House Of Comfort"
-            title="House Of Comfort"/>
+            alt="Styles in Focus - Dresses"
+            title="Dresses"/>
     </a>
     <a href="/shirt/" class="trend-box d-block link-card" style="background-color:#eaeaea;">
       <div class="p-3">
@@ -259,8 +259,8 @@
                        {{CDN::asset('/img/collection/shirt-medium.jpg') }} 409w,
                        {{CDN::asset('/img/collection/shirt-small.jpg') }} 250w"
           data-sizes='(min-width: 1200px) 366px, (min-width: 991px) 28vw,  (min-width: 768px) 46vw,  91vw'
-          alt="Trend in Focus - Party Showstoppers"
-          title="Party Showstoppers"/>
+          alt="Styles in Focus - Shirts"
+          title="Shirts"/>
     </a>
   </div>
 </div>
