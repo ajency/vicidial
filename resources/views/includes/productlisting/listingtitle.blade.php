@@ -24,7 +24,7 @@
 <script id="filter-header-template" type="text/x-handlebars-template">
   <div class="d-flex">
     <div>
-            <nav aria-label="breadcrumb">
+<!--             <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-1 bg-transparent p-0">
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
                  @{{#each breadcrumbs.list}}
@@ -34,7 +34,7 @@
                 <li class="breadcrumb-item active"><a href="#">@{{breadcrumbs.current}}</a></li>
                 @{{/if}}
             </ol>
-          </nav>
+          </nav> -->
          <h1 class="w-100 kss-title m-0 text-gray font-weight-bold">
             @{{headers.page_title}} <span class="f-w-4 sub-text"> - @{{headers.product_count}} items</span>
          </h1>
