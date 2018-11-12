@@ -55,7 +55,8 @@
 				    <div class="primary-info d-flex">
 				      <div class="product-img">
 				      	<a href="{{item.href}}">
-				      		<div class="img" style="background-image: url('/img/thumbnail/6front@thumb.jpg');"></div>
+				      		<!-- <div class="img" style="background-image: url('/img/thumbnail/6front@thumb.jpg');"></div> -->
+				      		<img src="{{item.attributes.images[0]}}" class="lazyload img-fit" data-srcset="{{item.attributes.images[0]}} 50w, {{item.attributes.images[1]}} 100w, {{item.attributes.images[2]}} 150w" sizes="50px">
 				      	</a>
 				        
 				      </div>

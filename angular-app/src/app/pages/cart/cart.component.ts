@@ -166,6 +166,7 @@ export class CartComponent implements OnInit {
       if(item.attributes.price_mrp != item.attributes.price_final)
         item.off_percentage = Math.round(((item.attributes.price_mrp - item.attributes.price_final) / (item.attributes.price_mrp )) * 100) + '% OFF';
       item.href = '/' + item.product_slug +'/buy?size='+item.attributes.size;
+      item.attributes.images = Array.isArray(item.attributes.images) ? ['/img/placeholder.svg', '/img/placeholder.svg', '/img/placeholder.svg'] : Object.values(item.attributes.images);
     })
 
     data.items.sort((a,b)=>{ return a.timestamp - b.timestamp});

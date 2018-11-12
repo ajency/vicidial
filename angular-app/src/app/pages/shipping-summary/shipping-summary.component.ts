@@ -112,6 +112,7 @@ export class ShippingSummaryComponent implements OnInit {
   getProductUrl(data){
     data.items.forEach((item)=>{
       item.href = '/' + item.product_slug +'/buy?size='+item.attributes.size;
+      item.attributes.images = Array.isArray(item.attributes.images) ? ['/img/placeholder.svg', '/img/placeholder.svg', '/img/placeholder.svg'] : Object.values(item.attributes.images);
     })
     return data;
   }
