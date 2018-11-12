@@ -67,7 +67,7 @@
                            View your final order summary. Here you can edit your address. You will not be able to edit your bag details here. Hit Pay via PayU to continue paying via payment gateway.
                         </li>
                         <li class="h5 text-muted fz-sm line-height-5">
-                           View your final order summary. Here you can edit your address. You will not be able to edit your bag details here. Hit Pay via PayU to continue paying via payment gateway.
+                           In PayU payment gateway, enter your email id first
                         </li>
                         <li class="h5 text-muted fz-sm line-height-5">
                            Then you can proceed to enter your card details to complete the payment. Please Note PayU does not support RuPay cards. It supports MasterCard and Visa.
