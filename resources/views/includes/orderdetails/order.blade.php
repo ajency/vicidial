@@ -19,9 +19,18 @@
 		<div class="primary-info d-lg-flex d-xl-flex">
 			<div class="kss_product_list flex-grow-1 pr-0 pr-md-4">
 				@foreach( $sub_order['items'] as $item)
+				@php
+				$image_1x = $image_2x = $image_3x = '/img/placeholder.svg';
+		    	if(count((array)$item['images'])>0){
+		    		$image_1x = $item['images']->{'1x'};
+		    		$image_2x = $item['images']->{'2x'};
+		    		$image_3x = $item['images']->{'3x'};
+		    	}
+		    	@endphp
 				<a href="/{{$item['product_slug']}}/buy?size={{$item['size']}}" class="text-black">
 					<div class="product-img">
-						<div class="img" style="background-image: url(https://jeromie.github.io/kss/img/4front.jpg);"></div>
+						<!-- <div class="img" style="background-image: url(https://jeromie.github.io/kss/img/4front.jpg);"></div> -->
+                        <img src="{{$image_1x}}" class="lazyload img-fit" data-srcset="{{$image_1x}} 50w, {{$image_2x}} 100w, {{$image_3x}} 150w" sizes="50px">
 					</div>
 					<div class="product-detail">
 						<div class="product-name text-truncate">
