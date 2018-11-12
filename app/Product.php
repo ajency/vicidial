@@ -44,6 +44,7 @@ class Product
     public static function startSync()
     {
         $first_id = ProductColor::max('product_id');
+        $first_id = ($first_id == null)? 0: $first_id;
         $offset   = 0;
         do {
             $products = self::getProductIDs(['id' => $first_id], $offset);
