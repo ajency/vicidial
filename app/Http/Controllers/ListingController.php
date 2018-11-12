@@ -52,21 +52,9 @@ class ListingController extends Controller
     	$params = $this->search_object($parameters);
         if($params == false) return view('error404');
         if(empty((array)$params->filters)) return view('noproducts');
-        $facets = Facet::select('facet_name',DB::raw('group_concat(concat(facet_value,"$$$",slug)) as "values"'))->groupBy('facet_name')->get();
-        $search_result_assoc = [];
-        foreach($facets as $facet){
-            $comb = explode(",", $facet->values);
-            $facet_values = [];
-            $facet_value_slug_pairs = [];
-            foreach($comb as $combv){
-                $cmbvalue = explode("$$$", $combv);
-                array_push($facet_values, $cmbvalue[0]);
-                $facet_value_slug_pairs[$cmbvalue[0]]=$cmbvalue[1];
-            }
-            $search_result_assoc[$facet->facet_name] = $facet_value_slug_pairs;
-        }
-        $params->search_result_assoc = $search_result_assoc;
         
+        $params->search_result_assoc = getFacetValueSlugPairs();
+        // dd($search_result_assoc);
         return view('productlisting')->with('params',$params);
     }
 
@@ -77,6 +65,7 @@ class ListingController extends Controller
         $parameters['query'] = $request->all();
 
         $params = $this->search_object($parameters);
+        $params->search_result_assoc = getFacetValueSlugPairs();
 
         return view('productlisting')->with('params',$params);
     }
