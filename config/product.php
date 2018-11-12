@@ -37,7 +37,8 @@ return [
         // "color",
         // "product_own", #private/non private
     ],
-    'variant_fields'     => [
+
+    'variant_fields'             => [
         'id',
         'product_tmpl_id',
         'barcode',
@@ -84,13 +85,13 @@ return [
         "lot_name",
     ],
     'update_inventory' => env('UPDATE_INVENTORY',false),
-    'attribute_fields'   => [
+    'attribute_fields'           => [
         'id',
         'name',
         'html_color',
         'attribute_id',
     ],
-    'facets'             => [
+    'facets'                     => [
         "string_facet"  => [
             'product' => [
                 'product_slug',
@@ -112,7 +113,7 @@ return [
             'product' => [
                 'product_active',
             ],
-            'variant' => ['variant_product_own', 'variant_active','variant_availability'],
+            'variant' => ['variant_product_own', 'variant_active', 'variant_availability'],
         ],
         "number_facet"  => [
             'product' => ['product_id'],
@@ -147,48 +148,67 @@ return [
             'variant' => ['variant_style_no'],
         ],
     ],
-    "inventory_fields" => ["warehouse_id", "product_id", "quantity"],
-    "inventory_max"    => 10,
-    'facet_display_data' => [
+    "inventory_fields"           => ["warehouse_id", "product_id", "quantity"],
+    "inventory_max"              => 10,
+    'facet_display_data'         => [
         'product_category_type' => [
-            'name' => 'Category',
-            'is_singleton' => false,
-            'is_collapsed' => false,
-            'template' => 'category',
-            'order' => 0,
-            'display_count' => false,
+            'name'                   => 'Category',
+            'is_singleton'           => false,
+            'is_collapsed'           => false,
+            'template'               => 'category',
+            'order'                  => 0,
+            'display_count'          => false,
             'disabled_at_zero_count' => false,
+            "is_attribute_param"     => false,
+            'filter_type'            => 'primary_filter',
         ],
-        'product_gender' => [
-            'name' => 'Gender',
-            'is_singleton' => false,
-            'is_collapsed' => true,
-            'template' => 'gender',
-            'order' => 1,
-            'display_count' => false,
+        'product_gender'        => [
+            'name'                   => 'Gender',
+            'is_singleton'           => false,
+            'is_collapsed'           => true,
+            'template'               => 'gender',
+            'order'                  => 1,
+            'display_count'          => false,
             'disabled_at_zero_count' => false,
+            "is_attribute_param"     => false,
+            'filter_type'            => 'primary_filter',
         ],
-        'product_age_group' => [
-            'name' => 'Age Group',
-            'is_singleton' => false,
-            'is_collapsed' => true,
-            'template' => 'age',
-            'order' => 2,
-            'display_count' => false,
+        'product_age_group'     => [
+            'name'                   => 'Age Group',
+            'is_singleton'           => false,
+            'is_collapsed'           => true,
+            'template'               => 'age',
+            'order'                  => 2,
+            'display_count'          => false,
             'disabled_at_zero_count' => false,
+            "is_attribute_param"     => false,
+            'filter_type'            => 'primary_filter',
         ],
-        'product_subtype' => [
-            'name' => 'Sub Type',
-            'is_singleton' => false,
-            'is_collapsed' => true,
-            'template' => 'subtype',
-            'order' => 3,
-            'display_count' => false,
+        'product_subtype'       => [
+            'name'                   => 'Sub Type',
+            'is_singleton'           => false,
+            'is_collapsed'           => true,
+            'template'               => 'subtype',
+            'order'                  => 3,
+            'display_count'          => false,
             'disabled_at_zero_count' => false,
+            "is_attribute_param"     => false,
+            'filter_type'            => 'primary_filter',
+        ],
+        'variant_sale_price'    => [
+            'name'                   => 'Price Range',
+            'is_singleton'           => true,
+            'is_collapsed'           => true,
+            'template'               => 'price',
+            'order'                  => 4,
+            'display_count'          => true,
+            'disabled_at_zero_count' => false,
+            "is_attribute_param"     => true,
+            'filter_type'            => 'range_filter',
         ],
     ],
-    "default_list_display_limit" => 30
-    'breadcrumb_order' => [
+    "default_list_display_limit" => 30,
+    'breadcrumb_order'           => [
         'product_category_type',
         'product_age_group',
         'product_gender',

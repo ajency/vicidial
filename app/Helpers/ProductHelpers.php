@@ -119,7 +119,14 @@ function sanitiseFilterdata($result, $params = [])
             $filterResponse[$facet_name["key"]][$value["key"]] = $value["count"]["doc_count"];
         }
     }
-    $response = [];
+    $priceFilter = [
+        "max" => $result["aggregations"]["agg_price"]["facet_name"]["buckets"][0]['facet_value_max']['value'],
+        "min" => $result["aggregations"]["agg_price"]["facet_name"]["buckets"][0]['facet_value_min']['value'],
+    ];
+    $priceFilter["min"] = (int) floor($priceFilter["min"] / 100) * 100;
+    $priceFilter["max"] = (int) ceil($priceFilter["max"] / 100) * 100;
+    $attributes = ['is_singleton', 'is_collapsed', 'template', 'order', 'display_count', 'disabled_at_zero_count', 'is_attribute_param', 'filter_type'];
+    $response           = [];
     foreach ($filterResponse as $facetName => $facetValues) {
         $filter           = [];
         $facets           = Facet::where('facet_name', $facetName)->get();
@@ -128,12 +135,14 @@ function sanitiseFilterdata($result, $params = [])
             'display_name' => config('product.facet_display_data.' . $facetName . '.name'),
         ];
         $filter['items'] = [];
-        $is_collapsed = 0;
+        $is_collapsed    = 0;
         foreach ($facets as $facet) {
-            if (isset($params["search_object"][$facet->facet_name])){
-                $is_selected =  (array_search($facet->facet_value, $params["search_object"][$facet->facet_name]) === false) ? false : true;
-            }else $is_selected = false;
-            
+            if (isset($params["search_object"][$facet->facet_name])) {
+                $is_selected = (array_search($facet->facet_value, $params["search_object"][$facet->facet_name]) === false) ? false : true;
+            } else {
+                $is_selected = false;
+            }
+
             $filter['items'][] = [
                 'facet_value'  => $facet->facet_value,
                 'display_name' => $facet->display_name,
@@ -142,17 +151,37 @@ function sanitiseFilterdata($result, $params = [])
                 'sequence'     => $facet->sequence,
                 'count'        => (isset($facetValues[$facet->facet_value])) ? $facetValues[$facet->facet_value] : 0,
             ];
-            $is_collapsed += $is_selected ;
+            $is_collapsed += $is_selected;
         }
-        $attributes = ['is_singleton', 'is_collapsed', 'template', 'order', 'display_count', 'disabled_at_zero_count' ];
+        
         foreach ($attributes as $attribute) {
             $filter[$attribute] = config('product.facet_display_data.' . $facetName . '.' . $attribute);
         }
         $filter["is_collapsed"] = !boolval($is_collapsed);
-        $response[] = $filter;
+        $response[]             = $filter;
     }
+
+    //le price filter
+    $filter           = [];
+    $filter['header'] = [
+        'facet_name'   => 'variant_sale_price',
+        'display_name' => config('product.facet_display_data.variant_sale_price.name'),
+    ];
+    foreach ($attributes as $attribute) {
+        $filter[$attribute] = config('product.facet_display_data.variant_sale_price.' . $attribute);
+    }
+    $filter["items"] = [];
+    $filter["is_collapsed"] = false;
+    $filter["start"] = $priceFilter['min'];
+    $filter["end"] = $priceFilter['max'];
+    $response[]             = $filter;
+
+    //le color filter
+
+
     return $response;
 }
+
 
 function getProductThumbImages($variantId){
     $variant = Variant::find($variantId);
