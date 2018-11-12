@@ -378,10 +378,23 @@ class Product
         $nested2 = $q::createNested('search_data', $nested);
         $must = $q::addToBoolQuery('filter',$nested2, $must);
 
+        // $must = self::priceFilter($q, $must, 200, 300);
         $q->setQuery($must)
         ->setSource(["search_result_data", "variants"])
         ->setSize($size)->setFrom($offset);
         return formatItems($q->search(), $params);
+    }
+
+    public static function priceFilter($q, $must, $min, $max){
+        $nested = [];
+        $facetName  = $q::createTerm( "search_data.number_facet.facet_name", "variant_sale_price");
+        $facetValue = $q::createRange("search_data.number_facet.facet_value", ['lte' => $max, 'gte' => $min]);
+        $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
+        $nested[]   = $q::createNested('search_data.number_facet', $filter);
+        $nested2 = $q::createNested('search_data', $nested);
+        $must = $q::addToBoolQuery('filter',$nested2, $must);
+        return $must;
+
     }
 
     public static function productListPage($params,$slug_value_search_result,$slug_search_result,$slugs_result,$title=""){
