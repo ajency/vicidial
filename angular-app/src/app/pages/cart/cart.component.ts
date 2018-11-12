@@ -158,13 +158,16 @@ export class CartComponent implements OnInit {
         this.cart = {
           items : []
         }
-        this.fetchCartFailed = false;        
+        this.fetchCartFailed = false;
+        this.updateCartCount();
       }
       else{
         this.cart = {};
         this.fetchCartFailed = true;
+        this.updateCartCount();
       }
       this.appservice.removeLoader()
+
       this.zone.run(() => {});
     })
     this.zone.run(() => {});
@@ -444,6 +447,11 @@ export class CartComponent implements OnInit {
       console.log("error ===>", error);
       this.appservice.removeLoader();
     })
+  }
+
+  updateCartCount(){
+    document.cookie = "cart_count=" + 0 + ";path=/";
+    this.appservice.updateCartCountInUI(); 
   }
   
 }
