@@ -294,7 +294,7 @@ class Product
                         $facetName  = $q::createTerm($path . "." . $facet . '.facet_name', $field);
                         $facetValue = $q::createTerm($path . "." . $facet . '.facet_value', $value);
                         $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
-                        $nested[]   = $q::createNested('search_data.string_facet', $filter);
+                        $nested[]   = $q::createNested($path.'.'.$facet, $filter);
                         $should     = $q::addToBoolQuery('should', $nested, $should);
                     }
                     $nested2 = $q::createNested($path, $should);
@@ -350,7 +350,7 @@ class Product
                         $facetName  = $q::createTerm($path . "." . $facet . '.facet_name', $field);
                         $facetValue = $q::createTerm($path . "." . $facet . '.facet_value', $value);
                         $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
-                        $nested[]   = $q::createNested('search_data.string_facet', $filter);
+                        $nested[]   = $q::createNested($path.'.'.$facet, $filter);
                         $should     = $q::addToBoolQuery('should', $nested, $should);
                     }
                     $nested2 = $q::createNested($path, $should);

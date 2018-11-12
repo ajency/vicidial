@@ -35,6 +35,7 @@ function makeQueryfromParams($params)
         'product_gender'        => 'search_data.string_facet.product_gender',
         'product_age_group'     => 'search_data.string_facet.product_age_group',
         'product_subtype'       => 'search_data.string_facet.product_subtype',
+        'product_color_id'       => 'search_data.number_facet.product_color_id',
     ];
     foreach ($elasticMapping as $param => $map) {
         if (array_has($params, $param)) {
