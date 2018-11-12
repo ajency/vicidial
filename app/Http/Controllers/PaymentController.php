@@ -15,6 +15,8 @@ class PaymentController extends Controller
     	$cart = $order->cart;
     	$user = $cart->user;
 
+    	$order->checkInventoryForSuborders();
+
     	$attributes = [
 		    'txnid' => $order->txnid, # Transaction ID.
 		    'amount' => $order->aggregateSubOrderData()['final_price'], # Amount to be charged.
@@ -37,16 +39,16 @@ class PaymentController extends Controller
     public function status($orderid)
     {
     	$payment = Payment::capture();
-
 		$order = Order::find($orderid);
+		if ($order->status != 'payment-in-progress') abort(400);
 
-		if($payment->isCaptured() && $order->status == 'payment-in-progress') {
+		if($payment->isCaptured()) {
 			$order->status = 'payment-successful';
 			$order->save();
+			$order->placeOrderOnOdoo();
 			request()->session()->flash('payment', "success");
 			$order->cart->user->newCart();
-		}
-		elseif($order->status == 'payment-in-progress') {
+		}else{
 			$order->status = 'payment-failed';
 			$order->save();
 			request()->session()->flash('payment', "failure");

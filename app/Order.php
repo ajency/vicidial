@@ -45,18 +45,20 @@ class Order extends Model
         }
     }
 
-    public function placeSubOrdersOdoo()
+    public function checkInventoryForSuborders()
     {
         foreach ($this->subOrders as $subOrder) {
-            $subOrder->placeOrderOnOdoo();
+            $subOrder->checkInventory();
         }
+    }
+
+    public function placeOrderOnOdoo(){
+        //create a job to place order on odoo for all suborders.
     }
 
     public function aggregateSubOrderData()
     {
         $total = [
-            'untaxed_amount' => 0,
-            'tax'            => 0,
             'total'          => 0,
             'shipping_fee'   => 0,
         ];

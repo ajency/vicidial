@@ -55,7 +55,7 @@ class SubOrder extends Model
         ];
     }
 
-    public function placeOrderOnOdoo()
+    public function checkInventory()
     {
         if($this->odoo_id == null){
             $items = $this->getItems();
