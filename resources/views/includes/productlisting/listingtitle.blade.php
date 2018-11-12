@@ -64,7 +64,7 @@
       @{{#each filter_tags_list}}
         <div class="border border-dark p-1 mr-2 "><span data-slug="@{{slug}}">@{{value}}</span> <span class="ml-1 h6 kss_highlight" aria-hidden="true" onclick="removeFilterTag('@{{slug}}');">&times;</span></div>
       @{{/each}}
-      <div class=" p-1 mr-2"><a href="#" class="font-weight-bold kss-link clear-filter" >Clear All</a></div>
+      <!-- <div class=" p-1 mr-2"><a href="#" class="font-weight-bold kss-link clear-filter" >Clear All</a></div> -->
     </div>
   </div>
 </script>
