@@ -401,5 +401,9 @@ export class CartComponent implements OnInit {
       this.appservice.removeLoader();
     })
   }
+
+  reloadPage(){
+    window.location.reload();
+  }
   
 }
