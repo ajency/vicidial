@@ -156,6 +156,8 @@ return [
             'is_collapsed' => false,
             'template' => 'category',
             'order' => 0,
+            'display_count' => false,
+            'disabled_at_zero_count' => false,
         ],
         'product_gender' => [
             'name' => 'Gender',
@@ -163,6 +165,8 @@ return [
             'is_collapsed' => true,
             'template' => 'gender',
             'order' => 1,
+            'display_count' => false,
+            'disabled_at_zero_count' => false,
         ],
         'product_age_group' => [
             'name' => 'Age Group',
@@ -170,6 +174,8 @@ return [
             'is_collapsed' => true,
             'template' => 'age',
             'order' => 2,
+            'display_count' => false,
+            'disabled_at_zero_count' => false,
         ],
         'product_subtype' => [
             'name' => 'Sub Type',
@@ -177,8 +183,11 @@ return [
             'is_collapsed' => true,
             'template' => 'subtype',
             'order' => 3,
+            'display_count' => false,
+            'disabled_at_zero_count' => false,
         ],
     ],
+    "default_list_display_limit" => 30
     'breadcrumb_order' => [
         'product_category_type',
         'product_age_group',

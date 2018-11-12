@@ -144,7 +144,7 @@ function sanitiseFilterdata($result, $params = [])
             ];
             $is_collapsed += $is_selected ;
         }
-        $attributes = ['is_singleton', 'is_collapsed', 'template', 'order'];
+        $attributes = ['is_singleton', 'is_collapsed', 'template', 'order', 'display_count', 'disabled_at_zero_count' ];
         foreach ($attributes as $attribute) {
             $filter[$attribute] = config('product.facet_display_data.' . $facetName . '.' . $attribute);
         }
