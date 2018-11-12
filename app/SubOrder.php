@@ -4,6 +4,9 @@ namespace App;
 
 use App\Variant;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
+use App\Elastic\OdooConnect;
+use App\Warehouse;
 
 class SubOrder extends Model
 {
@@ -115,4 +118,84 @@ class SubOrder extends Model
     //     }
     //     parent::save($options);
     // }
+
+    public function placeOrderOnOdoo()
+    {
+        $order_lines = [];
+        $itemsData   = [];
+        $i           = 0;
+        foreach ($this->item_data as $itemData) {
+            $variant            = Variant::find($itemData['id']);
+            $item               = $variant->getItemAttributes();
+            $item['quantity']   = $itemData['quantity'];
+            $item['variant_id'] = $itemData['id'];
+            $itemsData[]        = $item;
+            $order_line = self::createOrderLine($i, $variant, $itemData['quantity']);
+            $lines[]    = $order_line;
+            $i++;
+        }
+        $odoo_order  = self::createOrderParams($lines);
+        $id = $this->createOdooOrder($odoo_order);
+        $order = $this->getSaleOrder($id);
+        
+        $this->odoo_id   = $order["id"];
+        $this->odoo_data = [
+            'total'          => $order["amount_total"],
+            'shipping_fee'   => $order["shipping_charge"],
+        ];
+        $this->odoo_status = 'draft';
+        $this->save();
+    }
+
+    public static function createOrderLine($i, Variant $variant, int $quantity)
+    {
+        $order_line = [
+            $i,
+            "virtual_" . $variant->id,
+            array_merge(config('orders.odoo_orderline_defaults'),
+            [
+                "product_id"         => $variant->odoo_id,
+                "product_uom_qty"    => $quantity,
+                "price_unit"         => $variant->getSalePrice(),
+                "discount"           => $variant->getDiscount(),
+                "name"               => $variant->getName(),
+            ]),
+        ];
+        return $order_line;
+    }
+
+    public static function createOrderParams(array $order_lines = [])
+    {
+        $company_id = 1;
+        $date_order = new Carbon;
+        $options    = array_merge(config('orders.odoo_orderline_defaults'),
+        [
+            'partner_id'               => $this->order->cart->user->odoo_id,
+            'partner_invoice_id'       => $this->order->address->odoo_id,
+            'partner_shipping_id'      => $this->order->address->odoo_id,
+            'warehouse_id'             => $this->warehouse_id,
+            'company_id'               => Warehouse::find($this->warehouse_id)->company_id,
+            'date_order'               => $date_order->toDateTimeString(),
+            'origin'                   => "test000000245",
+            "name"                     => "test000000245",
+            "order_line"               => $order_lines,
+        ]);
+        return $options;
+    }
+
+    public function createOdooOrder(array $params)
+    {
+        $model = "sale.order";
+        $odoo  = new OdooConnect;
+        $out   = $odoo->defaultExec($model, 'write', [$params], null);
+        return $out[0];
+    }
+
+    public function getSaleOrder(int $id)
+    {
+        $model = "sale.order";
+        $odoo  = new OdooConnect;
+        $out   = $odoo->defaultExec($model, "read", [$id]);
+        return $out[0];
+    }
 }
