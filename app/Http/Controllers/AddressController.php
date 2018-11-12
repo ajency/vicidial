@@ -5,19 +5,23 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Address;
 use App\User;
+use App\Defaults;
 
 class AddressController extends Controller
 {
     public function userAddAddress(Request $request)
     {
-    	$request->validate(['default' => 'required', 'name' => 'required', 'phone' => 'required|digits:10', 'pincode' => 'required|digits:6', 'state' => 'required', 'address' => 'required', 'locality' => 'required', 'landmark' => 'present', 'city' => 'required', 'type' => 'required']);
+    	$request->validate(['default' => 'required', 'name' => 'required', 'phone' => 'required|digits:10', 'pincode' => 'required|digits:6', 'state_id' => 'required|numeric', 'address' => 'required', 'locality' => 'required', 'landmark' => 'present', 'city' => 'required', 'type' => 'required']);
     	$params  = $request->all();
     	$user_id = User::getUserByToken($request->header('Authorization'))->id;
 
     	$default = $this->defaultAddressSet($user_id, $params["default"]);
 
+        $state = Defaults::find($params["state_id"]);
+        if ($state == null) abort(403);
+
     	$address = new Address;
-        $address->address = ["name" => $params["name"], "phone" => $params["phone"], "pincode" => $params["pincode"], "state" => $params["state"], "address" => $params["address"], "locality" => $params["locality"], "landmark" => $params["landmark"], "city" => $params["city"]];
+        $address->address = ["name" => $params["name"], "phone" => $params["phone"], "pincode" => $params["pincode"], "state_id" => $state->id, "state_odoo_id" => $state->meta_data['odoo_id'], "state" => $state->label, "address" => $params["address"], "locality" => $params["locality"], "landmark" => $params["landmark"], "city" => $params["city"]];
         $address->type = $params["type"];
         $address->default = $default;
         $address->user_id = $user_id;
@@ -30,16 +34,19 @@ class AddressController extends Controller
 
     public function userEditAddress(Request $request)
     {
-        $request->validate(['default' => 'required', 'name' => 'required', 'phone' => 'required|digits:10', 'pincode' => 'required|digits:6', 'state' => 'required', 'address' => 'required', 'locality' => 'required', 'landmark' => 'present', 'city' => 'required', 'type' => 'required']);
+        $request->validate(['default' => 'required', 'name' => 'required', 'phone' => 'required|digits:10', 'pincode' => 'required|digits:6', 'state_id' => 'required|numeric', 'address' => 'required', 'locality' => 'required', 'landmark' => 'present', 'city' => 'required', 'type' => 'required']);
         $params  = $request->all();
         $user_id = User::getUserByToken($request->header('Authorization'))->id;
 
         $address = Address::find($params["id"]);
         if($address->user_id != $user_id) abort(403);
 
+        $state = Defaults::find($params["state_id"]);
+        if ($state == null) abort(403);
+
         $default = $this->defaultAddressSet($user_id, $params["default"], $address->id);
 
-        $address->address = ["name" => $params["name"], "phone" => $params["phone"], "pincode" => $params["pincode"], "state" => $params["state"], "address" => $params["address"], "locality" => $params["locality"], "landmark" => $params["landmark"], "city" => $params["city"]];
+        $address->address = ["name" => $params["name"], "phone" => $params["phone"], "pincode" => $params["pincode"], "state_id" => $state->id, "state_odoo_id" => $state->meta_data['odoo_id'], "state" => $state->label, "address" => $params["address"], "locality" => $params["locality"], "landmark" => $params["landmark"], "city" => $params["city"]];
         $address->type = $params["type"];
         $address->default = $default;
         $address->user_id = $user_id;
@@ -124,5 +131,16 @@ class AddressController extends Controller
         $address_data["default"] = $address->default;
 
         return $address_data;
+    }
+
+    public function fetchStates(Request $request)
+    {
+        $states = Defaults::where('type', '=', 'state')->get();
+        $statesArr = array();
+        foreach ($states as $state) {
+            $statesArr[] = array('id' => $state->id, 'state' => $state->label);
+        }
+        
+        return $statesArr;
     }
 }
