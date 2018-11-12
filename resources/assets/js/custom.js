@@ -64,6 +64,7 @@ $(document).ready(function() {
 
     $('.stellarnav').stellarNav({
         position: "left",
+        breakpoint: 992,
         menuLabel: " ",
         closingDelay: 150
     });
