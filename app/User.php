@@ -75,6 +75,7 @@ class User extends Authenticatable
         }
         $this->cart_id = $cart->id;
         $this->save();
+        return $cart;
     }
 
     private function getOdooIdFromOdoo()
