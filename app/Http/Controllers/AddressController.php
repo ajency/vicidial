@@ -130,6 +130,9 @@ class AddressController extends Controller
         $address_data["type"] = $address->type;
         $address_data["default"] = $address->default;
 
+        unset($address_data['state']);
+        unset($address_data['state_odoo_id']);
+
         return $address_data;
     }
 
