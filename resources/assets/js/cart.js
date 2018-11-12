@@ -21,6 +21,7 @@ $(document).ready(function(){
             $('.kss-alert').removeClass('is-open');
             $('.kss-alert').removeClass('kss-alert--success');
             $('.kss-alert').removeClass('kss-alert--failure');
+            $('#cd-cart').css('pointer-events','auto');
         }, 4500);
 
         kss_alert_timeout;
@@ -81,14 +82,15 @@ $(document).ready(function(){
                             
                 },
                 error: function (request, status, error) {
-                    var error_msg = (request.responseJSON.message!='') ? request.responseJSON.message : 'Could not add to bag';
+                    var error_msg = (request.responseJSON && request.responseJSON.message!='') ? request.responseJSON.message : 'Could not add to bag';
                     //if(request.responseJSON.message!='') error_msg = request.responseJSON.message
                     $('.cd-add-to-cart .btn-icon').hide();
                     $('.cd-add-to-cart .btn-label-initial').addClass('d-flex');
                     $('.cd-add-to-cart .btn-label-initial').removeClass('d-none');
-                    $('.kss-alert .message').html('<strong>Failed!!!</strong> '+error_msg);
+                    // $('.kss-alert .message').html('<strong>Failed!!!</strong> '+error_msg);
                     $('.kss-alert').addClass('kss-alert--failure');
                     $('.kss-alert').addClass('is-open');
+                    $('#cd-cart').css('pointer-events','none');
                     $(add_to_cart_element).removeClass('cartLoader');
                     setTimeoutVariable();
                     sessionStorage.setItem( "addded_to_cart", "false");
@@ -97,8 +99,9 @@ $(document).ready(function(){
         }
     });
 
-    $('.kss-alert .close').on('click',function(){
+    $('.kss-alert .alert-close').on('click',function(){
         $('.kss-alert').removeClass('is-open');
+        $('#cd-cart').css('pointer-events','auto');
         if(kss_alert_timeout){
             clearTimeout(kss_alert_timeout);
         }

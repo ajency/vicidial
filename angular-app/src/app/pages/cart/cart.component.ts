@@ -15,7 +15,7 @@ export class CartComponent implements OnInit {
 
   mobileNumberEntered = false;
   enterCoupon = false;
-  cart : any;
+  cart : any = {};
   sessionCheckInterval : any;
   cartOpen = false;
   mobileNumber : any;
@@ -33,6 +33,7 @@ export class CartComponent implements OnInit {
   loadSubscription: Subscription;
   closeModalSubscription: Subscription;
   cartItemOutOfStock : boolean = false;
+  fetchCartFailed : boolean = false;
   constructor( private router: Router,
                private appservice : AppServiceService,
                private apiservice : ApiServiceService,
@@ -104,14 +105,11 @@ export class CartComponent implements OnInit {
       console.log("cart_data from sessionStorage==>", this.cart);
     }
     else
-      this.cart = { items : [] };
+      this.cart = {};
     
     this.sessionCheckInterval = setInterval(()=>{
       if(sessionStorage.getItem('addded_to_cart')){
-        if(sessionStorage.getItem('addded_to_cart') == "true")
-          this.fetchCartDataFromServer();
-        else
-          this.appservice.removeLoader()
+        this.fetchCartDataFromServer();
         sessionStorage.removeItem('addded_to_cart');
         clearInterval(this.sessionCheckInterval);
       }
@@ -141,16 +139,24 @@ export class CartComponent implements OnInit {
       sessionStorage.setItem('cart_data', JSON.stringify(this.cart));
       document.cookie = "cart_count=" + this.cart.cart_count + ";path=/";
       this.appservice.updateCartCountInUI();
-      this.appservice.removeLoader()
+      this.appservice.removeLoader();
+      this.fetchCartFailed = false;
       this.zone.run(() => {});
     })
     .catch((error)=>{
       console.log("error ===>", error);
-      // if(error.message == "Cart not found for this session"){
+      if(error.message == "Cart not found for this session"){
         this.cart = {
           items : []
         }
-      // }
+        this.fetchCartFailed = false;
+        document.cookie = "cart_count=" + 0 + ";path=/";
+        this.appservice.updateCartCountInUI();        
+      }
+      else{
+        this.cart = {};
+        this.fetchCartFailed = true;
+      }
       this.appservice.removeLoader()
       this.zone.run(() => {});
     })
@@ -162,6 +168,7 @@ export class CartComponent implements OnInit {
       if(item.attributes.price_mrp != item.attributes.price_final)
         item.off_percentage = Math.round(((item.attributes.price_mrp - item.attributes.price_final) / (item.attributes.price_mrp )) * 100) + '% OFF';
       item.href = '/' + item.product_slug +'/buy?size='+item.attributes.size;
+      item.attributes.images = Array.isArray(item.attributes.images) ? ['/img/placeholder.svg', '/img/placeholder.svg', '/img/placeholder.svg'] : Object.values(item.attributes.images);
     })
 
     data.items.sort((a,b)=>{ return a.timestamp - b.timestamp});
@@ -349,22 +356,28 @@ export class CartComponent implements OnInit {
   }
 
   navigateToShippingDetailsPage(){
-    this.appservice.showLoader();
-    let url = this.appservice.apiUrl + "/api/rest/v1/user/address/all";
-    console.log(this.isLoggedInUser());
-    let header = this.isLoggedInUser() ? { Authorization : 'Bearer '+this.appservice.getCookie('token') } : {};
-    this.apiservice.request(url, 'get', {} , header ).then((response)=>{
-      console.log("response ==>", response);
-      this.appservice.shippingAddresses = response.addresses;
-      $("#cd-cart").css("overflow", "auto");
-      $('.modal-backdrop').remove();
-      this.router.navigateByUrl('/shipping-details', { skipLocationChange: true });
-      this.appservice.removeLoader();
-    })
-    .catch((error)=>{
-      console.log("error ===>", error);
-      this.appservice.removeLoader();
-    })
+    if(this.cart.cart_type == "cart"){
+      this.appservice.showLoader();
+      let url = this.appservice.apiUrl + "/api/rest/v1/user/address/all";
+      console.log(this.isLoggedInUser());
+      let header = this.isLoggedInUser() ? { Authorization : 'Bearer '+this.appservice.getCookie('token') } : {};
+      this.apiservice.request(url, 'get', {} , header ).then((response)=>{
+        console.log("response ==>", response);
+        this.appservice.shippingAddresses = response.addresses;
+        $("#cd-cart").css("overflow", "auto");
+        $('.modal-backdrop').remove();
+        this.router.navigateByUrl('/shipping-details', { skipLocationChange: true });
+        this.appservice.removeLoader();
+      })
+      .catch((error)=>{
+        console.log("error ===>", error);
+        this.appservice.removeLoader();
+      })
+    }
+    else{
+      this.router.navigateByUrl('/shipping-summary', { skipLocationChange: true });
+      this.appservice.continueOrder = true;
+    }
   }
 
   checkCartItemOutOfStock(){
@@ -375,6 +388,25 @@ export class CartComponent implements OnInit {
         // break;
       }
     })
+  }
+
+  editBag(){
+    this.appservice.showLoader();
+    let url = this.appservice.apiUrl + '/api/rest/v1/user/cart/start-fresh';
+    let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
+    this.apiservice.request(url, 'get', {} , header ).then((response)=>{
+      console.log("response ==>", response);
+      document.cookie='cart_id=' + response.cart_id + ";path=/";
+      this.fetchCartDataFromServer();
+    })
+    .catch((error)=>{
+      console.log("error ===>", error);
+      this.appservice.removeLoader();
+    })
+  }
+
+  reloadPage(){
+    window.location.reload();
   }
   
 }

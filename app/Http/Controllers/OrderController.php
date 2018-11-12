@@ -41,13 +41,13 @@ class OrderController extends Controller
         return response()->json(["items" => getCartData($cart, false), "summary" => $order->aggregateSubOrderData(), "order_id" => $order->id, "address" => $address->address, "message" => 'Order Placed successfully']);
     }
 
-    public function continueOrder($id)
+    public function continueOrder($id, Request $request)
     {
         $user = User::getUserByToken($request->header('Authorization'));
         $cart    = Cart::find($id);
         validateCart($user,$cart, 'order');
         $order = $cart->order;
-
+        $address = $order->address;
         $order->placeSubOrdersOdoo();
 
         return response()->json(["items" => getCartData($cart, false), "summary" => $order->aggregateSubOrderData(), "order_id" => $order->id, "address" => $address->address, "message" => 'Order Placed successfully']);

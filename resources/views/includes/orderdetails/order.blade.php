@@ -4,11 +4,12 @@
 <div class="d-flex bd-highlight">
 	<div class="pb-2 pr-2">
 		<label class="d-block m-0">Shipment {{$loop->iteration}} of {{$sub_order['number_of_items']}} {{$sub_order['number_of_items'] == 1 ? "Item" : "Items"}}</label>
-		<i class="fas fa-clipboard-check mr-1 text-muted"></i> <span class="text-success font-weight-bold">Order Processed</span>
+		<!-- <i class="fas fa-clipboard-check mr-1 text-muted"></i> <span class="text-success font-weight-bold">Order Processed</span> -->
 	</div>
 	<div class="pb-2 ml-auto">
-		Total:
-		<h6 class="mt-1"><span class="rs-symbol"><i class="fas fa-rupee-sign sm-font"></i></span> {{$sub_order['total']}} for {{$sub_order['number_of_items']}} {{$sub_order['number_of_items'] == 1 ? "Item" : "Items"}}</h6>
+<!-- 		Total:
+		<h6 class="mt-1"><span class="rs-symbol"><i class="fas fa-rupee-sign sm-font"></i></span> {{$sub_order['total']}} for {{$sub_order['number_of_items']}} {{$sub_order['number_of_items'] == 1 ? "Item" : "Items"}}</h6> -->
+		<h6 class="mt-1">{{$sub_order['number_of_items']}} {{$sub_order['number_of_items'] == 1 ? "Item" : "Items"}}</h6>
 	</div>
 </div>
 
@@ -18,9 +19,18 @@
 		<div class="primary-info d-lg-flex d-xl-flex">
 			<div class="kss_product_list flex-grow-1 pr-0 pr-md-4">
 				@foreach( $sub_order['items'] as $item)
-				<a href="/kss/product/" class="text-black">
-					<div class="product-img">
-						<div class="img" style="background-image: url(https://jeromie.github.io/kss/img/4front.jpg);"></div>
+				@php
+				$image_1x = $image_2x = $image_3x = '/img/placeholder.svg';
+		    	if(count((array)$item['images'])>0){
+		    		$image_1x = $item['images']->{'1x'};
+		    		$image_2x = $item['images']->{'2x'};
+		    		$image_3x = $item['images']->{'3x'};
+		    	}
+		    	@endphp
+				<a href="/{{$item['product_slug']}}/buy?size={{$item['size']}}" class="text-black">
+					<div class="product-img @php if(count((array)$item['images'])==0) { @endphp variant-placeholder @php } @endphp">
+						<!-- <div class="img" style="background-image: url(https://jeromie.github.io/kss/img/4front.jpg);"></div> -->
+                        <img src="{{$image_1x}}" class="lazyload img-fit" data-srcset="{{$image_1x}} 50w, {{$image_2x}} 100w, {{$image_3x}} 150w" sizes="50px">
 					</div>
 					<div class="product-detail">
 						<div class="product-name text-truncate">
