@@ -85,7 +85,7 @@
     &.mobile{
         &.left>ul, &.right>ul{
             background-color: darken(theme-color("dark"), 5%);
-            box-shadow: 5px 0 0px 200px rgba(0, 0, 0, 0.4);
+            box-shadow: 5px 0 0px 800px rgba(0, 0, 0, 0.4);
             ul{
                 top: 0;
                 background-color: darken(theme-color("dark"), 10%);
