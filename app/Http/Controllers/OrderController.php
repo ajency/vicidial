@@ -36,8 +36,6 @@ class OrderController extends Controller
         $cart->type = 'order';
         $cart->save();
 
-        $order->placeSubOrdersOdoo();
-
         return response()->json(["items" => getCartData($cart, false), "summary" => $order->aggregateSubOrderData(), "order_id" => $order->id, "address" => $address->address, "message" => 'Order Placed successfully']);
     }
 
@@ -48,7 +46,6 @@ class OrderController extends Controller
         validateCart($user,$cart, 'order');
         $order = $cart->order;
         $address = $order->address;
-        $order->placeSubOrdersOdoo();
 
         return response()->json(["items" => getCartData($cart, false), "summary" => $order->aggregateSubOrderData(), "order_id" => $order->id, "address" => $address->address, "message" => 'Order Placed successfully']);
     }
