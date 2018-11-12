@@ -95,7 +95,7 @@
 
 					</div>
 
-					<div class="product-delete ml-2" title="Remove" (click)="deleteItem(item)">
+					<div *ngIf="cart.cart_type =='cart'" class="product-delete ml-2" title="Remove" (click)="deleteItem(item)">
 						<a  class="cd-item-remove delete d-block text-center">
 							<i class="far fa-trash-alt"></i>
 						</a>
@@ -158,6 +158,9 @@
 
 		<div class="seperator mb-5"></div>
 
+		<div *ngIf="cart.cart_type =='order'" id="kss_cart" class="p-3 fixed-bottom">
+			<a  id="checkout" class="btn btn-primary btn-lg btn-block" (click)="editBag()" >Edit Bag</a>
+		</div>
 		<div id="kss_cart" class="p-3 fixed-bottom">
 			<a  id="checkout" class="btn btn-primary btn-lg btn-block " [ngClass]="{'disabled' : cartItemOutOfStock}" (click)="modalHandler()" >Checkout</a>
 		</div>

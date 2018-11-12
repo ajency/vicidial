@@ -386,5 +386,20 @@ export class CartComponent implements OnInit {
       }
     })
   }
+
+  editBag(){
+    this.appservice.showLoader();
+    let url = this.appservice.apiUrl + '/api/rest/v1/user/cart/start-fresh';
+    let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
+    this.apiservice.request(url, 'get', {} , header ).then((response)=>{
+      console.log("response ==>", response);
+      document.cookie='cart_id=' + response.cart_id + ";path=/";
+      this.fetchCartDataFromServer();
+    })
+    .catch((error)=>{
+      console.log("error ===>", error);
+      this.appservice.removeLoader();
+    })
+  }
   
 }
