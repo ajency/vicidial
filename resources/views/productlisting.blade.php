@@ -1,3 +1,7 @@
+@php
+ $overflow = true; 
+@endphp
+
 @extends('layouts.default')
 
 @section('headjs')
@@ -6,7 +10,7 @@
 
 @section('content')
   <!-- Loader on load -->
-  <div class="pl-loader d-none">
+  <div class="pl-loader">
     <div class="loader block-loader"></div>
   </div>
 	<section class="productlist">

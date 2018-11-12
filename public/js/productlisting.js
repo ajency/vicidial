@@ -62,8 +62,9 @@ console.log("facet_value_slug_assoc===");
 console.log(facet_value_slug_assoc);
 console.log("facet array===");
 console.log(config_facet_names_arr);
-
+// $('body').addClass('overflow-hidden')
 $(document).ready(function () {
+  
   if ($("input[name='age']:checked").length) {
     $.each($("input[name='age']:checked"), function () {
       facetCategoryChange($(this), false);
@@ -84,6 +85,10 @@ $(document).ready(function () {
       facetCategoryChange($(this), false);
     });
   }
+  
+  $('.pl-loader').fadeOut(2000,function(){
+    $('body').removeClass('overflow-hidden')
+  })
 });
 
 // $('body').on('change', '.facet-category', function() {
