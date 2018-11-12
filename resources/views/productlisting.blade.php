@@ -1,12 +1,7 @@
 @extends('layouts.default')
 
-@php
-  $delaycss = true;
-@endphp
-
 @section('headjs')
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.min.js"></script>
-  @include('includes.abovethefold.productlistingcss')
 @stop
 
 @section('content')
