@@ -6,6 +6,13 @@ use Illuminate\Http\Request;
 
 class StaticController extends Controller
 {
+	public function __construct()
+    {
+        $this->params['breadcrumb'] = array();
+        $this->params['breadcrumb']['list']    = array();
+        setSEO();
+    }
+
     public function index($static_page, Request $request)
     {
     	$params = array();
@@ -16,32 +23,32 @@ class StaticController extends Controller
 
 	public function contact(Request $request)
     {
-    	setSEO();
-        return view('contact-us');
+    	$this->params['breadcrumb']['current'] = 'Contact Us';
+        return view('contact-us')->with('params', $this->params);
     }
 
     public function contactnew(Request $request)
     {
-    	setSEO();
-        return view('contact');
+    	$this->params['breadcrumb']['current'] = 'Contact Us';
+        return view('contact')->with('params', $this->params);
     }
 
     public function faq(Request $request)
     {
-    	setSEO();
-        return view('faq');
+    	$this->params['breadcrumb']['current'] = 'Faq';
+        return view('faq')->with('params', $this->params);
     }
 
     public function about(Request $request)
     {
-    	setSEO();
-        return view('about-us');
+        $this->params['breadcrumb']['current'] = 'About Us';
+        return view('about-us')->with('params', $this->params);
     }
 
     public function tc(Request $request)
     {
-    	setSEO();
-        return view('terms-and-condition');
+    	$this->params['breadcrumb']['current'] = 'Terms and Conditions';
+        return view('terms-and-conditions')->with('params', $this->params);
     }
 
 }

@@ -17,12 +17,7 @@
    <div class="row">
       <div class="col-12">
          <div class="mb-4">
-            <nav aria-label="breadcrumb">
-               <ol class="breadcrumb mb-1 bg-transparent p-0">
-                  <li class="breadcrumb-item"><a href="#">Home</a></li>
-                  <li class="breadcrumb-item" active><a href="#">About-us</a></li>
-               </ol>
-            </nav>
+            @include('includes.breadcrumbs', ['breadcrumbs' => $params['breadcrumb']])
          </div>
       </div>
    </div>
