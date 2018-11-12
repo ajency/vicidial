@@ -28,7 +28,7 @@
 		    	}
 		    	@endphp
 				<a href="/{{$item['product_slug']}}/buy?size={{$item['size']}}" class="text-black">
-					<div class="product-img">
+					<div class="product-img @php if(count((array)$item['images'])==0) { @endphp variant-placeholder @php } @endphp">
 						<!-- <div class="img" style="background-image: url(https://jeromie.github.io/kss/img/4front.jpg);"></div> -->
                         <img src="{{$image_1x}}" class="lazyload img-fit" data-srcset="{{$image_1x}} 50w, {{$image_2x}} 100w, {{$image_3x}} 150w" sizes="50px">
 					</div>
