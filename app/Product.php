@@ -110,8 +110,22 @@ class Product
                 $facetObj               = new Facet;
                 $facetObj->facet_name   = $facet;
                 $facetObj->facet_value  = $product[$facet];
-                $facetObj->display_name = $product[$facet];
+                $facetObj->display_name = ($facet == 'product_color_html')? $product['product_color_name']:$product[$facet];
                 $facetObj->slug         = str_slug($product[$facet]);
+                $facetObj->sequence     = 10000;
+                $facetObj->save();
+            } catch (\Exception $e) {
+                \Log::warning($e->getMessage());
+            }
+        }
+        $facets = ['product_color_html'];
+        foreach ($facets as $facet) {
+            try {
+                $facetObj               = new Facet;
+                $facetObj->facet_name   = $facet;
+                $facetObj->facet_value  = $variant[$facet];
+                $facetObj->display_name = ($facet == 'product_color_html')? $variant['product_color_name']:$variant[$facet];
+                $facetObj->slug         = str_slug($variant[$facet]);
                 $facetObj->sequence     = 10000;
                 $facetObj->save();
             } catch (\Exception $e) {
@@ -269,7 +283,7 @@ class Product
 
         $q                 = new ElasticQuery;
 
-        $required          = ["product_category_type", "product_gender", "product_subtype", "product_age_group"];
+        $required          = ["product_category_type", "product_gender", "product_subtype", "product_age_group", "product_color_html"];
         $aggs_facet_name   = $q::createAggTerms("facet_name", "search_data.string_facet.facet_name", ["include" => $required]);
         $aggs_facet_value  = $q::createAggTerms("facet_value", "search_data.string_facet.facet_value");
         $aggs_facet_value  = $q::addToAggregation($aggs_facet_value, $q::createAggReverseNested('count'));
@@ -283,7 +297,6 @@ class Product
         $minMax            = $q::addToAggregation($aggFacetNameP, array_merge($aggMax, $aggMin));
         $aggsPrice         = $q::createAggNested("agg_price", "search_data.number_facet");
         $priceQ            = $q::addToAggregation($aggsPrice, $minMax);
-        // $priceQ = [];
         
         $q->setIndex(config('elastic.indexes.product'))
             ->initAggregation()->setAggregation(array_merge($priceQ, $aggs_string_facet))

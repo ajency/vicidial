@@ -195,6 +195,17 @@ return [
             "is_attribute_param"     => false,
             'filter_type'            => 'primary_filter',
         ],
+        'product_color_html'       => [
+            'name'                   => 'Colour',
+            'is_singleton'           => false,
+            'is_collapsed'           => true,
+            'template'               => 'color',
+            'order'                  => 5,
+            'display_count'          => false,
+            'disabled_at_zero_count' => false,
+            "is_attribute_param"     => true,
+            'filter_type'            => 'primary_filter',
+        ],
         'variant_sale_price'    => [
             'name'                   => 'Price Range',
             'is_singleton'           => true,

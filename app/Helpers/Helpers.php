@@ -35,7 +35,7 @@ function makeQueryfromParams($searchObject)
         'product_gender'        => 'search_data.string_facet.product_gender',
         'product_age_group'     => 'search_data.string_facet.product_age_group',
         'product_subtype'       => 'search_data.string_facet.product_subtype',
-        'product_color_id'      => 'search_data.number_facet.product_color_id',
+        'product_color_html'    => 'search_data.string_facet.product_color_html',
         'variant_sale_price'    => 'search_data.number_facet.variant_sale_price',
     ];
 
@@ -49,7 +49,7 @@ function makeQueryfromParams($searchObject)
                             $categ = [$categ];
                         }
                         if (array_search('all', $categ) === false) {
-                            array_set($queryParams, $map, ["type"=>"enum","value" => $categ ]);
+                            array_set($queryParams, $map, ["type" => "enum", "value" => $categ]);
                         }
                     }
                 }
@@ -57,14 +57,13 @@ function makeQueryfromParams($searchObject)
             case 'range_filter':
                 foreach ($elasticMapping as $param => $map) {
                     if (array_has($params, $param)) {
-                        array_set($queryParams, $map, ["type"=>"range","value" => $params[$param]]);
+                        array_set($queryParams, $map, ["type" => "range", "value" => $params[$param]]);
                     }
                 }
                 break;
         }
     }
 
-    
     return $queryParams;
 }
 

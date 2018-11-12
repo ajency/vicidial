@@ -175,10 +175,7 @@ function sanitiseFilterdata($result, $params = [])
     $filter["start"] = $priceFilter['min'];
     $filter["end"] = $priceFilter['max'];
     $response[]             = $filter;
-
-    //le color filter
-
-
+    dd($response);
     return $response;
 }
 
