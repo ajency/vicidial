@@ -161,4 +161,5 @@ return [
         'product_gender',
         'product_subtype'
     ],//Used for breadcrumbs on single product page
+    "list_page_display_limit"    => 30,
 ];

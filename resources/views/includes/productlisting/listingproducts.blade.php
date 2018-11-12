@@ -55,9 +55,9 @@
 	</div>
   @{{/each}}
   </div>
-  <div class="text-center mt-3 d-none">
-  	<button class="btn btn-primary btn-lg">
-		<i class="align-middle fa-circle-notch fa-lg fa-spin fas mr-1 d-none"></i> Show more products
+  <div class="text-center mt-3 @{{#if show_more }} @{{else}} d-none @{{/if}}">
+  	<button class="btn btn-primary btn-lg" id="showMoreProductsBtn">
+		<i class="load-icon-cls align-middle fa-circle-notch fa-lg fa-spin fas mr-1 d-none"></i> Show more products
 	</button>
   </div>
 </script>
@@ -83,6 +83,10 @@
 	});
    var context = {};
    context["products"] = <?= json_encode($items); ?>;
+   product_list_items = $.extend(product_list_items, context["products"]);
+   console.log("product_list_items====")
+   console.log(product_list_items) 
+   context["show_more"] = <?= $page->has_next ?>;
    console.log(context)
    var html    = template(context);
    document.getElementById("products-list-template-content").innerHTML = html;
