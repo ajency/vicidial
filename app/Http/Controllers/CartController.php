@@ -36,7 +36,7 @@ class CartController extends Controller
         $params = $request->all();
         $cart   = Cart::find($id);
         if ($cart == null) {
-            abort(404, "Requested Cart not found");
+            abort(400, "Invalid Cart");
         }
         $user    = User::getUserByToken($request->header('Authorization'));
         validateCart($user, $cart, 'cart');
@@ -96,9 +96,10 @@ class CartController extends Controller
     {
         $cart = Cart::find($id);
         if ($cart == null) {
-            abort(404, "Requested Cart not found");
+            abort(400, "Invalid Cart");
         }
         checkUserCart($request->header('Authorization'), $cart);
+        if($cart->type == 'order-complete') abort(400);
 
         $items = getCartData($cart);
 
@@ -114,6 +115,7 @@ class CartController extends Controller
         if ($cart == null) {
             abort(404, "Cart not found for this session");
         }
+        if($cart->type == 'order-complete') abort(400);
         $items = getCartData($cart);
 
         $summary = $cart->getSummary();

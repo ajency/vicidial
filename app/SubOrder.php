@@ -42,26 +42,28 @@ class SubOrder extends Model
         return $itemsData;
     }
 
-    public function placeOrderOnOdoo()
+    public function aggregateData()
     {
         $items = $this->getItems();
         $total = 0;
         foreach ($items as $itemData) {
-            if($itemData['quantity'] > $itemData['item']->inventory[$this->warehouse_id]['quantity']){
-                abort(410, 'Items no longer available in store');
-            }
-            $total+=$itemData['item']->getSalePrice();
+            $total += $itemData['item']->getSalePrice();
         }
-        if ($this->odoo_id == null) {
-            $this->odoo_id   = 0;
-            $this->odoo_data = [
-                'untaxed_amount' => 1.5,
-                'tax'            => 1,
-                'total'          => $total,
-                'shipping_fee'   => 0,
-            ];
-            $this->odoo_status = 'draft';
-            $this->save();
+        $this->odoo_data = [
+            'total'          => $total,
+            'shipping_fee'   => 0,
+        ];
+    }
+
+    public function checkInventory()
+    {
+        if($this->odoo_id == null){
+            $items = $this->getItems();
+            foreach ($items as $itemData) {
+                if ($itemData['quantity'] > $itemData['item']->inventory[$this->warehouse_id]['quantity']) {
+                    abort(410, 'Items no longer available in store');
+                }
+            }
         }
     }
 
