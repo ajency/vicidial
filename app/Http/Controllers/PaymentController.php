@@ -47,6 +47,9 @@ class PaymentController extends Controller
 			$order->save();
 			$order->placeOrderOnOdoo();
 			request()->session()->flash('payment', "success");
+			$cart = $order->cart;
+			$cart->type = 'order-complete';
+			$cart->save();
 			$order->cart->user->newCart();
 		}else{
 			$order->status = 'payment-failed';

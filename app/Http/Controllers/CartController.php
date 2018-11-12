@@ -99,6 +99,7 @@ class CartController extends Controller
             abort(404, "Requested Cart not found");
         }
         checkUserCart($request->header('Authorization'), $cart);
+        if($cart->type == 'order-complete') abort(403);
 
         $items = getCartData($cart);
 
@@ -114,6 +115,7 @@ class CartController extends Controller
         if ($cart == null) {
             abort(404, "Cart not found for this session");
         }
+        if($cart->type == 'order-complete') abort(403);
         $items = getCartData($cart);
 
         $summary = $cart->getSummary();
