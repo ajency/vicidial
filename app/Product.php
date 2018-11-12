@@ -283,16 +283,27 @@ class Product
     {
 
         $q       = self::buildBaseQuery();
+
+
         $filters = makeQueryfromParams($params["search_object"]);
+
         $must    = [];
         foreach ($filters as $path => $data) {
             foreach ($data as $facet => $data2) {
                 foreach ($data2 as $field => $values) {
                     $should = [];
                     $nested = [];
-                    foreach ($values as $value) {
+                    if($values['type'] == 'enum'){
+                    foreach ($values['value'] as $value) {
                         $facetName  = $q::createTerm($path . "." . $facet . '.facet_name', $field);
-                        $facetValue = $q::createTerm($path . "." . $facet . '.facet_value', $value);
+                        $facetValue = $q::createTerm($path . "." . $facet . '.facet_value', $value);          
+                        $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
+                        $nested[]   = $q::createNested($path.'.'.$facet, $filter);
+                        $should     = $q::addToBoolQuery('should', $nested, $should);
+                    }}
+                    else if($values['type'] == 'range'){
+                        $facetValue = $q::createRange($path . "." . $facet . '.facet_value', ['lte' => $values['value']['max'], 'gte' => $values['value']['min']]);
+                        $facetName  = $q::createTerm($path . "." . $facet . '.facet_name', $field);          
                         $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
                         $nested[]   = $q::createNested($path.'.'.$facet, $filter);
                         $should     = $q::addToBoolQuery('should', $nested, $should);
@@ -302,6 +313,7 @@ class Product
                 }
             }
         }
+        
         $must = $q::addToBoolQuery('must', $must);
 
         $nested = [];
@@ -346,15 +358,24 @@ class Product
                 foreach ($data2 as $field => $values) {
                     $should = [];
                     $nested = [];
-                    foreach ($values as $value) {
+                    if($values['type'] == 'enum'){
+                    foreach ($values['value'] as $value) {
                         $facetName  = $q::createTerm($path . "." . $facet . '.facet_name', $field);
-                        $facetValue = $q::createTerm($path . "." . $facet . '.facet_value', $value);
+                        $facetValue = $q::createTerm($path . "." . $facet . '.facet_value', $value);          
+                        $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
+                        $nested[]   = $q::createNested($path.'.'.$facet, $filter);
+                        $should     = $q::addToBoolQuery('should', $nested, $should);
+                    }}
+                    else if($values['type'] == 'range'){
+                        $facetValue = $q::createRange($path . "." . $facet . '.facet_value', ['lte' => $values['value']['max'], 'gte' => $values['value']['min']]);
+                        $facetName  = $q::createTerm($path . "." . $facet . '.facet_name', $field);          
                         $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
                         $nested[]   = $q::createNested($path.'.'.$facet, $filter);
                         $should     = $q::addToBoolQuery('should', $nested, $should);
                     }
                     $nested2 = $q::createNested($path, $should);
                     $must[]  = $nested2;
+                
                 }
             }
         }
