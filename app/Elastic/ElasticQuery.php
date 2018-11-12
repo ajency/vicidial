@@ -189,6 +189,16 @@ class ElasticQuery
         return $this;
     }
 
+    public function setSort(array $params)
+    {
+        if (!isset($this->params['body'])) {
+            $this->setQuery();
+        }
+
+        $this->params["body"]["sort"] = $params;
+        return $this;
+    }
+
     /**
      * Sets whats fields from a document to fetch
      * Useful only when doing search operation

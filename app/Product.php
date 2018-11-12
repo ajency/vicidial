@@ -360,7 +360,6 @@ class Product
         }
         $must = $q::addToBoolQuery('must', $must);
 
-
         $nested = [];
         $facetName  = $q::createTerm( "search_data.number_facet.facet_name", "product_color_id");
         $facetValue = $q::createTerm("search_data.number_facet.facet_value", 0);
@@ -368,7 +367,6 @@ class Product
         $nested[]   = $q::createNested('search_data.number_facet', $filter);
         $nested2 = $q::createNested('search_data', $nested);
         $must = $q::addToBoolQuery('must_not',$nested2, $must);
-
 
         $nested = [];
         $facetName  = $q::createTerm( "search_data.boolean_facet.facet_name", "variant_availability");
@@ -381,7 +379,9 @@ class Product
         // $must = self::priceFilter($q, $must, 200, 300);
         $q->setQuery($must)
         ->setSource(["search_result_data", "variants"])
+        // ->setSort(['number_sort.variant_sale_price' => ["order" => "desc"] ])
         ->setSize($size)->setFrom($offset);
+        // dd($q->getJSON());
         return formatItems($q->search(), $params);
     }
 
