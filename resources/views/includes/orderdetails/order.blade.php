@@ -19,7 +19,7 @@
 		<div class="primary-info d-lg-flex d-xl-flex">
 			<div class="kss_product_list flex-grow-1 pr-0 pr-md-4">
 				@foreach( $sub_order['items'] as $item)
-				<a href="/kss/product/" class="text-black">
+				<a href="/{{$item['product_slug']}}/buy?size={{$item['size']}}" class="text-black">
 					<div class="product-img">
 						<div class="img" style="background-image: url(https://jeromie.github.io/kss/img/4front.jpg);"></div>
 					</div>
