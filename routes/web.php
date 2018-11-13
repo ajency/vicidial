@@ -23,6 +23,7 @@ Route::get('/contact', 'StaticController@contactnew');
 Route::get('/faq', 'StaticController@faq');
 Route::get('/about-us', 'StaticController@about');
 Route::get('/terms-and-conditions', 'StaticController@tc');
+Route::get('/privacy-policy', 'StaticController@privacy');
 
 Route::get('/rest/v1/authenticate/login', 'ApiLoginController@verifyOTP');
 Route::get('/rest/v1/authenticate/generate_otp', 'SMSController@sendSMS');
