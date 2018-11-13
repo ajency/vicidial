@@ -9250,7 +9250,6 @@ a.text-cancel:hover, a.text-cancel:focus {
 }
 
 .kss_filter {
-  overflow: hidden;
   -webkit-transition: all 0.5s ease;
   transition: all 0.5s ease;
 }

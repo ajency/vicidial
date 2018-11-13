@@ -23,6 +23,39 @@ $(function(){
         buttn.html('<i class="kss_icon bag-icon-fill icon-sm"></i> Add To Bag');
     });
 
+    // Init ion range slider
+    $('#price-range').ionRangeSlider({
+      type: 'double',
+      from: 0,
+      to: 500,
+      min: 0,
+      max: 1000,
+      prefix: '<i class="fas fa-rupee-sign" aria-hidden="true"></i> ',
+      onChange: function(data) {
+        $('#price-min').val(data.from);
+        $('#price-max').val(data.to);
+      }
+  });
+
+  // Function to update price range on change
+   priceRangeSlider = $("#price-range").data("ionRangeSlider");
+
+    initPriceBar = function(from, to) {
+      return priceRangeSlider.update({
+        type: 'double',
+        from: from,
+        to: to,
+        prefix: '<i class="fas fa-rupee-sign" aria-hidden="true"></i> '
+      });
+    };
+
+   $(document).on('change', '.price-change', function() {
+      var from, to;
+      from = $('#price-min').val();
+      to = $('#price-max').val();
+      return initPriceBar(from, to);
+  });
+
 })
 var facet_list = {}
 var filter_tags_list = [] ;
