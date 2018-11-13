@@ -5,6 +5,7 @@ namespace App;
 use App\Defaults;
 use App\Elastic\OdooConnect;
 use App\Jobs\CreateMoveJobs;
+use App\Elastic\ElasticQuery;
 
 class ProductMove
 {
@@ -34,20 +35,21 @@ class ProductMove
         return $moves;
     }
 
-    public function indexProductMove($move_id)
+    public static function indexProductMove($move_id)
     {
         $odoo          = new OdooConnect;
         $moveData      = $odoo->defaultExec('stock.move.line', 'read', [[$move_id]], ['fields' => config('product.move_fields')])->first();
         $sanitisedData = sanitiseMoveData($moveData, 'move_');
         $elastic_data  = array_merge($sanitisedData, Variant::where('odoo_id', $sanitisedData['move_product_id'])->first()->getVariantData('all', 'variant_'));
-
+        $data = self::indexElasticData($elastic_data);
+        return $data;
     }
 
-    public function indexElasticData($data)
+    public static function indexElasticData($data)
     {
         $query = new ElasticQuery;
         $query->createIndexParams($data['move_id'],$data);
-        $query->setIndex(config('elastic.indexes.move'))->index();
+        return $query->setIndex(config('elastic.indexes.move'))->index();
     }
 
 }
