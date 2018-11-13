@@ -14,6 +14,7 @@ export class AppServiceService {
   private addToCart = new Subject<any>();
   private openCart = new Subject<any>();
   private closeModal = new Subject<any>();
+  private openModal = new Subject<any>();
   shippingAddresses = [];
   shippingDetails : any;
   userVerificationComplete : boolean = false;
@@ -60,7 +61,11 @@ export class AppServiceService {
   }
 
   closeVerificationModal() {
-    this.closeModal.next()
+    this.closeModal.next();
+  }
+
+  openVerificationModal(){
+    this.openModal.next();
   }
 
   listenToAddToCartEvent(): Observable<any> {
@@ -73,6 +78,10 @@ export class AppServiceService {
 
   listenToCloseModal() : Observable<any> {
     return this.closeModal.asObservable();
+  }
+
+  listenToOpenModal() : Observable<any> {
+    return this.openModal.asObservable();
   }
 
   getCookie(cname) {

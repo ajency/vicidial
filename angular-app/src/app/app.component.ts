@@ -23,9 +23,13 @@ export class AppComponent {
 	  }
 	  else if(window.location.href.endsWith('#shipping-address')){
 	  	// do nothing
+	  	this.router.navigateByUrl('/shipping-details', { skipLocationChange: true });
+	  }
+	  else if(window.location.href.endsWith('#bag/user-verification')){
+	  	// this.router.navigateByUrl('/cartpage', { skipLocationChange: true });
+	  	this.appservice.openVerificationModal();
 	  }
 	  else if(!window.location.href.endsWith('#bag')){
-	  	this.appservice.cartClosedFromShippingPages = true;
 	  	this.appservice.closeCart();
 	  }
 	}

@@ -32,6 +32,7 @@ export class CartComponent implements OnInit {
   reloadSubscription: Subscription;
   loadSubscription: Subscription;
   closeModalSubscription: Subscription;
+  openModalSubscription : Subscription;
   cartItemOutOfStock : boolean = false;
   fetchCartFailed : boolean = false;
   constructor( private router: Router,
@@ -43,6 +44,8 @@ export class CartComponent implements OnInit {
     this.loadSubscription = this.appservice.listenToOpenCartEvent().subscribe(()=> { this.loadCart() });
 
     this.closeModalSubscription = this.appservice.listenToCloseModal().subscribe(()=>{ this.updateOtpModal(false)});
+    this.openModalSubscription = this.appservice.listenToOpenModal().subscribe(()=>{ this.modalHandler()});
+
   }
 
   reloadCart(){
