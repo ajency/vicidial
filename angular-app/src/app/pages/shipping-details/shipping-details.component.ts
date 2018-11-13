@@ -183,6 +183,7 @@ export class ShippingDetailsComponent implements OnInit {
   }
 
   initSelectPicker(){
+    $(".kss_shipping").scrollTop(0);
     setTimeout(()=>{
       $('#state').selectpicker();
     },100); 
