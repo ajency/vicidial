@@ -16,6 +16,7 @@
               <li><a href="/contact" class="text-gray">Contact Us</a></li>
               <li><a href="/faq" class="text-gray">FAQ</a></li>
               <li><a href="/terms-and-condition" class="text-gray">Term of Use</a></li>
+              <li><a href="/privacy-policy" class="text-gray">Privacy Policy</a></li>
               <li><a href="#" class="text-gray">Track Orders</a></li>
               <li><a href="/terms-and-condition#cancellation" class="text-gray">Cancellation</a></li>
               <li><a href="/terms-and-condition#shipping" class="text-gray">Shipping</a></li>

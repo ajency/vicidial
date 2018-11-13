@@ -51,4 +51,10 @@ class StaticController extends Controller
         return view('terms-and-conditions')->with('params', $this->params);
     }
 
+    public function privacy(Request $request)
+    {
+        $this->params['breadcrumb']['current'] = 'Privacy Policy';
+        return view('privacy-policy')->with('params', $this->params);
+    }
+
 }
