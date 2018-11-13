@@ -54,7 +54,7 @@ function formatItems($result, $params){
     $items = [];
     $response = ["results_found" => ($result["hits"]["total"] > 0)];
     foreach ($result['hits']['hits'] as  $doc) {
-        $productColor      = ProductColor::where([["elastic_id", $doc["_id"]]])->first();
+        $productColor      = ProductColor::where("elastic_id", $doc["_id"])->first();
         $product = $doc["_source"];
         $data = $product["search_result_data"];
         $listImages       = $productColor->getDefaultImage(["list-view"]);
@@ -112,6 +112,7 @@ function formatItems($result, $params){
 
 function sanitiseFilterdata($result, $params = [])
 {
+    // dd($params);
     $filterResponse = [];
     foreach ($result["aggregations"]["agg_string_facet"]["facet_name"]["buckets"] as $facet_name) {
         $filterResponse[$facet_name["key"]] = [];
@@ -137,8 +138,8 @@ function sanitiseFilterdata($result, $params = [])
         $filter['items'] = [];
         $is_collapsed    = 0;
         foreach ($facets as $facet) {
-            if (isset($params["search_object"][$facet->facet_name])) {
-                $is_selected = (array_search($facet->facet_value, $params["search_object"][$facet->facet_name]) === false) ? false : true;
+            if (isset($params["search_object"]['primary_filter'][$facet->facet_name])) {
+                $is_selected = (array_search($facet->facet_value, $params["search_object"]['primary_filter'][$facet->facet_name]) === false) ? false : true;
             } else {
                 $is_selected = false;
             }
