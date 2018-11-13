@@ -285,24 +285,12 @@ class Product
 
         $must = $q::addToBoolQuery('must', $must);
 
-        $nested     = [];
-        $facetName  = $q::createTerm("search_data.number_facet.facet_name", "product_color_id");
-        $facetValue = $q::createTerm("search_data.number_facet.facet_value", 0);
-        $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
-        $nested[]   = $q::createNested('search_data.number_facet', $filter);
-        $nested2    = $q::createNested("search_data", $nested);
-        $must       = $q::addToBoolQuery('must_not', $nested2, $must);
 
-        $nested     = [];
-        $facetName  = $q::createTerm("search_data.boolean_facet.facet_name", "variant_availability");
-        $facetValue = $q::createTerm("search_data.boolean_facet.facet_value", true);
-        $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
-        $nested[]   = $q::createNested('search_data.boolean_facet', $filter);
-        $nested2    = $q::createNested("search_data", $nested);
-        $must       = $q::addToBoolQuery('filter', $nested2, $must);
+        $must = self::hideZeroColorIDProducts($q, $must);
+        $must = self::hideUnavailableProducts($q, $must);
+        
 
         $q->setQuery($must);
-        // dd($q->getParams());
         $response = $q->search();
         return sanitiseFilterdata($response, $params);
     }
@@ -350,29 +338,36 @@ class Product
         }
         $must = $q::addToBoolQuery('must', $must);
 
-        $nested     = [];
-        $facetName  = $q::createTerm("search_data.number_facet.facet_name", "product_color_id");
-        $facetValue = $q::createTerm("search_data.number_facet.facet_value", 0);
-        $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
-        $nested[]   = $q::createNested('search_data.number_facet', $filter);
-        $nested2    = $q::createNested('search_data', $nested);
-        $must       = $q::addToBoolQuery('must_not', $nested2, $must);
 
-        $nested     = [];
-        $facetName  = $q::createTerm("search_data.boolean_facet.facet_name", "variant_availability");
+        $must = self::hideZeroColorIDProducts($q, $must);
+        $must = self::hideUnavailableProducts($q, $must);
+        $q->setQuery($must)
+        ->setSource(["search_result_data", "variants"])
+        ->setSize($size)->setFrom($offset);
+        return formatItems($q->search(), $params);
+    }
+
+    public static function hideUnavailableProducts($q, $must){
+        $nested = [];
+        $facetName  = $q::createTerm( "search_data.boolean_facet.facet_name", "variant_availability");
         $facetValue = $q::createTerm("search_data.boolean_facet.facet_value", true);
         $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
         $nested[]   = $q::createNested('search_data.boolean_facet', $filter);
-        $nested2    = $q::createNested('search_data', $nested);
-        $must       = $q::addToBoolQuery('filter', $nested2, $must);
+        $nested2 = $q::createNested("search_data", $nested);
+        $must = $q::addToBoolQuery('filter',$nested2, $must);
+        return $must;
+    }
 
-        // $must = self::priceFilter($q, $must, 200, 300);
-        $q->setQuery($must)
-            ->setSource(["search_result_data", "variants"])
-        // ->setSort(['number_sort.variant_sale_price' => ["order" => "desc"] ])
-            ->setSize($size)->setFrom($offset);
-        // dd($q->getJSON());
-        return formatItems($q->search(), $params);
+    public static function hideZeroColorIDProducts($q, $must){
+        $nested = [];
+        $facetName  = $q::createTerm( "search_data.number_facet.facet_name", "product_color_id");
+        $facetValue = $q::createTerm("search_data.number_facet.facet_value", 0);
+        $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
+        $nested[]   = $q::createNested('search_data.number_facet', $filter);
+        $nested2 = $q::createNested("search_data", $nested);
+        $must = $q::addToBoolQuery('must_not',$nested2, $must);
+        return $must;
+
     }
 
     public static function priceFilter($q, $must, $min, $max)
@@ -457,14 +452,5 @@ class Product
         // dd($output);
         return $output;
     }
-
-
-    public static function updateInventory($product_move)
-    {
-        if ($product_move["to_loc"] == "Stock" or $product_move["from_loc"] == "Stock") {
-            UpdateVariantInventory::dispatch($product_move)->onQueue('update_inventory');
-        }
-    }
-
 
 }
