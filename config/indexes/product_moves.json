@@ -2,9 +2,6 @@
   "mappings": {
     "_doc": {
       "properties": {
-        "move_id": {
-          "type": "long"
-        },
         "move_consume_line_ids": {
           "type": "long"
         },
@@ -27,6 +24,9 @@
         },
         "move_from_loc": {
           "type": "keyword"
+        },
+        "move_id": {
+          "type": "long"
         },
         "move_is_locked": {
           "type": "boolean"
@@ -73,7 +73,6 @@
         "move_ordered_qty": {
           "type": "long"
         },
-        
         "move_picking": {
           "type": "text",
           "fields": {
@@ -119,22 +118,17 @@
         "move_state": {
           "type": "keyword"
         },
-        "variant_product_id": {
-          "type": "long"
-        },
-        "variant_product_title": {
+        "move_to_loc": {
           "type": "keyword"
         },
-        "variant_product_slug": {
+        "move_write_date": {
+          "type": "date",
+          "format": "epoch_second"
+        },
+        "variant_product_age_group": {
           "type": "keyword"
         },
-        "variant_product_style": {
-          "type": "keyword"
-        },
-        "variant_product_description": {
-          "type": "text"
-        },
-        "variant_product_att_sleeves": {
+        "variant_product_att_fabric_type": {
           "type": "keyword"
         },
         "variant_product_att_material": {
@@ -143,44 +137,59 @@
         "variant_product_att_occasion": {
           "type": "keyword"
         },
-        "variant_product_att_wash": {
-          "type": "keyword"
-        },
-        "variant_product_att_fabric_type": {
+        "variant_product_att_other_attribute": {
           "type": "keyword"
         },
         "variant_product_att_product_type": {
           "type": "keyword"
         },
-        "variant_product_att_other_attribute": {
+        "variant_product_att_sleeves": {
+          "type": "keyword"
+        },
+        "variant_product_att_wash": {
           "type": "keyword"
         },
         "variant_product_category_type": {
           "type": "keyword"
         },
-        "variant_product_gender": {
-          "type": "keyword"
-        },
-        "variant_product_age_group": {
-          "type": "keyword"
-        },
-        "variant_product_subtype": {
+        "variant_product_color_html": {
           "type": "keyword"
         },
         "variant_product_color_id": {
           "type": "long"
         },
-        "variant_product_color_slug": {
-          "type": "keyword"
-        },
         "variant_product_color_name": {
           "type": "keyword"
         },
-        "variant_product_color_html": {
+        "variant_product_color_slug": {
           "type": "keyword"
+        },
+        "variant_product_description": {
+          "type": "text"
+        },
+        "variant_product_gender": {
+          "type": "keyword"
+        },
+        "variant_product_id": {
+          "type": "long"
         },
         "variant_product_images": {
           "type": "keyword"
+        },
+        "variant_product_slug": {
+          "type": "keyword"
+        },
+        "variant_product_style": {
+          "type": "keyword"
+        },
+        "variant_product_subtype": {
+          "type": "keyword"
+        },
+        "variant_product_title": {
+          "type": "keyword"
+        },
+        "variant_variant_availability": {
+          "type": "boolean"
         },
         "variant_variant_id": {
           "type": "long"
@@ -195,12 +204,6 @@
           "type": "long"
         },
         "variant_variant_size_name": {
-          "type": "keyword"
-        },
-        "variant_variant_availability": {
-          "type": "boolean"
-        },
-        "move_to_loc": {
           "type": "keyword"
         }
       }
