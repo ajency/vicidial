@@ -48,7 +48,7 @@ class Defaults extends Model
     {
         $move = self::where('type', 'sync')->where('label', 'product_move')->first();
         if ($move->meta_data['id'] < $id) {
-            $move->meta_data['id'] = $id;
+            $move->meta_data = ['id' => $id];
             $move->save();
         }
     }

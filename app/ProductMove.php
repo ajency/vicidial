@@ -3,19 +3,19 @@
 namespace App;
 
 use App\Defaults;
+use App\Elastic\ElasticQuery;
 use App\Elastic\OdooConnect;
 use App\Jobs\CreateMoveJobs;
-use App\Elastic\ElasticQuery;
 use App\Jobs\UpdateVariantInventory;
 
 class ProductMove
 {
-    public function startSync()
+    public static function startSync()
     {
         $lastMove = Defaults::getLastProductMove();
         $offset   = 0;
         do {
-            $moves = self::getProductIDs(['id' => $lastMove], $offset);
+            $moves = self::getMoveIDs(['id' => $lastMove], $offset);
             CreateMoveJobs::dispatch($moves)->onQueue('create_jobs');
             $offset = $offset + $moves->count();
         } while ($moves->count() == config('odoo.limit'));
@@ -42,7 +42,7 @@ class ProductMove
         $moveData      = $odoo->defaultExec('stock.move.line', 'read', [[$move_id]], ['fields' => config('product.move_fields')])->first();
         $sanitisedData = sanitiseMoveData($moveData, 'move_');
         $elastic_data  = array_merge($sanitisedData, Variant::where('odoo_id', $sanitisedData['move_product_id'])->first()->getVariantData('all', 'variant_'));
-        $data = self::indexElasticData($elastic_data);
+        $data          = self::indexElasticData($elastic_data);
         if (config('product.update_inventory')) {
             if ($sanitisedData["move_to_loc"] == "Stock" or $sanitisedData["move_from_loc"] == "Stock") {
                 UpdateVariantInventory::dispatch($product_move)->onQueue('update_inventory');
@@ -55,7 +55,18 @@ class ProductMove
     {
         $query = new ElasticQuery;
         $query->createIndexParams($data['move_id'], $data);
-        $query->setIndex(config('elastic.indexes.move'))->index();
+        $response = $query->setIndex(config('elastic.indexes.move'))->index();
+        switch ($response['result']) {
+            case 'created':
+                \Log::info("Product Move {$response['_id']} indexed (Created)");
+                break;
+            case 'updated':
+                \Log::info("Product Move {$response['_id']} indexed (Updated)");
+                break;
+            default:
+                \Log::notice("Product Move {$response['_id']} status {$response['result']}");
+                break;
+        }
     }
 
 }
