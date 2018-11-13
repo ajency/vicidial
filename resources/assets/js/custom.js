@@ -5,39 +5,21 @@ $('.modal #cart_close').click(function() {
  // ------------------ End Close Cart Modal------------------//
 
 $(function(){
-    // Remove loader on slick init
-    $('.prod-slides').on('init', function(event, slick){
-        setTimeout(function () {
-            $(".loader").fadeOut(2000);
-            $(".prod-slides li img").fadeIn(1000);
-        }, 1000);
+    var $carousel = $('.prod-slides');
+    $carousel.on( 'lazyLoad.flickity', function() {
+        // Remove loader on Flickity init
+        $(".loader").fadeOut(1000);
     });
-
-    $('.prod-slides').slick({
-        lazyLoad: 'ondemand',
-        slidesToShow: 2.05,
-        centerPadding: '0',
-        adaptiveHeight: false,
-        infinite: false,
-        responsive: [{
-            breakpoint: 768,
-            settings: {
-                arrows: false,
-                centerMode: true,
-                centerPadding: '40px',
-                slidesToShow: 1,
-            }
-        }, {
-            breakpoint: 480,
-            settings: {
-                arrows: false,
-                centerMode: false,
-                centerPadding: '10px',
-                slidesToShow: 1.25,
-                mobileFirst: true,
-            }
-        }]
+    $carousel.flickity({
+      // options
+      cellAlign: 'left',
+      freeScroll: true,
+      contain: true,
+      lazyLoad: 2,
+      pageDots: false
     });
+    // initialize Flickity
+    $carousel.flickity();
 })
 
 

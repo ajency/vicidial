@@ -17,7 +17,8 @@ let proxy_url = process.env.APP_URL ;
 mix.babel([
 	'resources/assets/js/plugins/bootstrap.min.js',
 	'resources/assets/js/plugins/jquery.fancybox.js',
-	'resources/assets/js/plugins/slick.min.js',
+  'resources/assets/js/plugins/slick.min.js',
+	'resources/assets/js/plugins/flickity.pkgd.min.js',
 	'resources/assets/js/plugins/stellarnav.min.js',
 	'resources/assets/js/plugins/jquery.mousewheel.min.js',
 	'resources/assets/js/plugins/lightgallery-all.min.js',

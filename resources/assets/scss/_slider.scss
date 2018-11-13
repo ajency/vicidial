@@ -1,13 +1,12 @@
-.prod-slides {
-    height: 530px;
-    overflow: hidden;
-    @media(max-width: 767px){
-           height: 130vw;
-    }
-    @media only screen and (min-width: 768px)
-{
-    height: 450px;
-   }
+.prod-slides .carousel-image {
+  display: block;
+  width: auto !important;
+  @media(max-width: 767px){
+      height: 130vw;
+  }
+  @media only screen and (min-width: 768px){
+      height: 450px;
+  }
 }
 .loader {
     background: #ffffff url(../img/loader_818e.gif) center center no-repeat;
@@ -183,5 +182,5 @@
         display: flex !important;
         align-items: center;
         justify-content: center;
-    }    
+    }
 }
