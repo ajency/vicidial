@@ -6,6 +6,7 @@ use App\Defaults;
 use App\Elastic\OdooConnect;
 use App\Jobs\CreateMoveJobs;
 use App\Elastic\ElasticQuery;
+use App\Jobs\UpdateVariantInventory;
 
 class ProductMove
 {
@@ -42,14 +43,19 @@ class ProductMove
         $sanitisedData = sanitiseMoveData($moveData, 'move_');
         $elastic_data  = array_merge($sanitisedData, Variant::where('odoo_id', $sanitisedData['move_product_id'])->first()->getVariantData('all', 'variant_'));
         $data = self::indexElasticData($elastic_data);
-        return $data;
+        if (config('product.update_inventory')) {
+            if ($sanitisedData["move_to_loc"] == "Stock" or $sanitisedData["move_from_loc"] == "Stock") {
+                UpdateVariantInventory::dispatch($product_move)->onQueue('update_inventory');
+            }
+        }
+
     }
 
     public static function indexElasticData($data)
     {
         $query = new ElasticQuery;
-        $query->createIndexParams($data['move_id'],$data);
-        return $query->setIndex(config('elastic.indexes.move'))->index();
+        $query->createIndexParams($data['move_id'], $data);
+        $query->setIndex(config('elastic.indexes.move'))->index();
     }
 
 }

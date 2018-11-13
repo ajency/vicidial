@@ -25,7 +25,7 @@ class UpdateVariantInventory implements ShouldQueue
     public function __construct($product_move)
     {
         $this->product_move = $product_move;
-        $this->variant_id   = $product_move["variant_id"];
+        $this->variant_id   = $product_move["move_product_id"];
     }
 
     /**
@@ -36,7 +36,7 @@ class UpdateVariantInventory implements ShouldQueue
     public function handle()
     {
         $inventory      = Product::getVariantInventory([$this->variant_id]);
-        $var            = Variant::where(["odoo_id" => $this->variant_id])->first();
+        $var            = Variant::where(["odoo_id" => $this->variant_id])->firstOrFail();
         $var->inventory = $inventory[$this->variant_id]["inventory"];
         $var->save();
         $result = ProductColor::updateElasticInventory($this->variant_id, $var->getParentElasticData(), $var->getAvailability());

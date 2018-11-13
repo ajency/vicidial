@@ -83,6 +83,7 @@ return [
         "is_locked",
         "lot_name",
     ],
+    'update_inventory' => env('UPDATE_INVENTORY',false),
     'attribute_fields'   => [
         'id',
         'name',
