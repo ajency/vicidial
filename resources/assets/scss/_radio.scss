@@ -107,8 +107,8 @@
 }
 
 .custom-control {
-    line-height: 28px;
-    margin-bottom: 6px;
+    line-height: 22px;
+    margin-bottom: 10px;
     .custom-control-label {
         padding-left: 7px;
     }
@@ -127,6 +127,18 @@
     height: 1.3rem;
     background-size: 59% 100%;
 }
+
+.custom-radio{
+    .custom-control{
+        &-label{
+            &:after{
+                background-size: 52% 100%;
+                top: 0.22rem;
+            }
+        }
+    }
+}
+
 .kss_sizes{
     display:block !important;
     .radio-option{
