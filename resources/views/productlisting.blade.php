@@ -1,17 +1,19 @@
-@extends('layouts.default')
-
 @php
-  $delaycss = true;
+ $overflow = true; 
 @endphp
+
+@extends('layouts.default')
 
 @section('headjs')
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.min.js"></script>
-  @include('includes.abovethefold.productlistingcss')
 @stop
 
 @section('content')
-
-	<section>
+  <!-- Loader on load -->
+  <div class="pl-loader">
+    <div class="loader block-loader"></div>
+  </div>
+	<section class="productlist">
     <div class="container mt-2 mt-md-4">
      	<div class="row">
      	  <!-- Filters Blade -->
@@ -21,7 +23,7 @@
     	  	@include('includes.productlisting.listingtitle', ['headers' => $params->headers, 'breadcrumbs' => $params->breadcrumbs, 'sort_on' => $params->sort_on])
 
     	    <!-- List of products Blade -->
-            @include('includes.productlisting.listingproducts', ['items' => $params->items])
+            @include('includes.productlisting.listingproducts', ['items' => $params->items,'page' => $params->page])
 
     	  </div>
     	</div>
@@ -45,17 +47,18 @@
     $config_facet_names_arr = array_keys($facet_display_data);
     $facet_value_slug_assoc = json_encode($params->search_result_assoc);
   ?>
-
+  <script type="text/javascript">
+      var config_facet_names_arr = <?= json_encode($config_facet_names_arr);?>;
+      var facet_value_slug_assoc = <?= $facet_value_slug_assoc ?>;
+      var product_list_items = {};
+  </script>
   @yield('footjs-gender')
   @yield('footjs-age')
   @yield('footjs-subtype')
   @yield('footjs-category')
   @yield('footjs-filter-tags')
   @yield('footjs-products-list')
-  <script type="text/javascript">
-      var config_facet_names_arr = <?= json_encode($config_facet_names_arr);?>;
-      var facet_value_slug_assoc = <?= $facet_value_slug_assoc ?>;
-  </script>
+
   <script type="text/javascript" src="{{CDN::mix('/js/productlisting.js') }}"></script>
 
 @stop

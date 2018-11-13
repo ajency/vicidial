@@ -128,14 +128,14 @@ return [
     'facet_display_data' => [
         'product_category_type' => [
             'name' => 'Category',
-            'is_singleton' => true,
+            'is_singleton' => false,
             'is_collapsed' => false,
             'template' => 'category',
             'order' => 0,
         ],
         'product_gender' => [
             'name' => 'Gender',
-            'is_singleton' => true,
+            'is_singleton' => false,
             'is_collapsed' => true,
             'template' => 'gender',
             'order' => 1,
@@ -161,4 +161,5 @@ return [
         'product_gender',
         'product_subtype'
     ],//Used for breadcrumbs on single product page
+    "list_page_display_limit"    => 30,
 ];

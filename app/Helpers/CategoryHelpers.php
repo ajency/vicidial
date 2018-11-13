@@ -208,3 +208,21 @@ function generateProductListTitle($categories,$slug_name_value_arr){
 
 	return $titile;
 }
+
+
+function getFacetValueSlugPairs(){
+	$facets = Facet::select('facet_name',DB::raw('group_concat(concat(facet_value,"$$$",slug)) as "values"'))->groupBy('facet_name')->get();
+    $search_result_assoc = [];
+    foreach($facets as $facet){
+        $comb = explode(",", $facet->values);
+        $facet_values = [];
+        $facet_value_slug_pairs = [];
+        foreach($comb as $combv){
+            $cmbvalue = explode("$$$", $combv);
+            array_push($facet_values, $cmbvalue[0]);
+            $facet_value_slug_pairs[$cmbvalue[0]]=$cmbvalue[1];
+        }
+        $search_result_assoc[$facet->facet_name] = $facet_value_slug_pairs;
+    }
+    return $search_result_assoc;
+}

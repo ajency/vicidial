@@ -53,96 +53,86 @@
       </div>
     </div> -->
 
-      <!-- <div class="kss_filter-list">
-      <div id="headingThree">
-        <label class="w-100 collapsed" data-toggle="collapse" data-target="#collapseseven" aria-expanded="false" aria-controls="collapseseven">
-          Color<i class="fas fa-angle-up float-right"></i>
-        </label>
-      </div>
-      <div id="collapseseven" class="collapse" aria-labelledby="headingThree" >
-        <div class="card-body">
-       
-          <ul class="product-color p-0">
-          <li>
-          <input type="checkbox" name="color" id="red"/>
-          <label for="red" style="background-color:red;"></label>
-          </li>
-          <li>
-          <input type="checkbox" name="color" id="#A2C2C9"/>
-          <label for="#A2C2C9" style="background-color:#A2C2C9;"></label>
-          </li>
-          <li>
-          <input type="checkbox" name="color" id="#EFDBD4"/>
-          <label for="#EFDBD4" style="background-color:#EFDBD4;"></label>
-          </li>
-          <li>
-          <input type="checkbox" name="color" id="#2196F3"/>
-          <label for="#2196F3" style="background-color:#2196F3;"></label>
-          </li>
-          <li>
-          <input type="checkbox" name="color" id="#4CAF50"/>
-          <label for="#4CAF50" style="background-color:#4CAF50;"></label>
-          </li>
-          <li>
-          <input type="checkbox" name="color" id="#00BCD4" checked="checked"/>
-          <label for="#00BCD4" style="background-color:#00BCD4;"></label>
-          </li>
-          <li>
-          <input type="checkbox" name="color" id="#000000"/>
-          <label for="#000000" style="background-color:#000000;"></label>
-          </li>
-          <li>
-          <input type="checkbox" name="color" id="#f56724"/>
-          <label for="#f56724" style="background-color:#f56724;"></label>
-          </li>
-          <li>
-          <input type="checkbox" name="color" id="#874853" checked="checked"/>
-          <label for="#874853" style="background-color:#874853;"></label>
-          </li>
-
-          </ul>
-
+      <div class="kss_filter-list">
+        <div id="headingThree">
+          <label class="w-100 collapsed mb-0 pb-2 cursor-pointer" data-toggle="collapse" data-target="#collapseseven" aria-expanded="false" aria-controls="collapseseven">
+            Color<i class="fas fa-angle-up float-right"></i>
+          </label>
         </div>
-      </div>
-    </div> -->
-    <!-- <div class="kss_filter-list">
+        <div id="collapseseven" class="collapse" aria-labelledby="headingThree" >
+          <div class="card-body">
+         
+            <ul class="product-color product-color--filter p-0">
+              <li>
+              <input type="checkbox" name="color" id="red"/>
+              <label for="red" style="background-color:red;"></label>
+              </li>
+              <li>
+              <input type="checkbox" name="color" id="#A2C2C9"/>
+              <label for="#A2C2C9" style="background-color:#A2C2C9;"></label>
+              </li>
+              <li>
+              <input type="checkbox" name="color" id="#EFDBD4"/>
+              <label for="#EFDBD4" style="background-color:#EFDBD4;"></label>
+              </li>
+              <li>
+              <input type="checkbox" name="color" id="#2196F3"/>
+              <label for="#2196F3" style="background-color:#2196F3;"></label>
+              </li>
+              <li>
+              <input type="checkbox" name="color" id="#4CAF50"/>
+              <label for="#4CAF50" style="background-color:#4CAF50;"></label>
+              </li>
+              <li>
+              <input type="checkbox" name="color" id="#00BCD4" checked="checked"/>
+              <label for="#00BCD4" style="background-color:#00BCD4;"></label>
+              </li>
+              <li>
+              <input type="checkbox" name="color" id="#000000"/>
+              <label for="#000000" style="background-color:#000000;"></label>
+              </li>
+              <li>
+              <input type="checkbox" name="color" id="#f56724"/>
+              <label for="#f56724" style="background-color:#f56724;"></label>
+              </li>
+              <li>
+              <input type="checkbox" name="color" id="#874853" checked="checked"/>
+              <label for="#874853" style="background-color:#874853;"></label>
+              </li>
+
+            </ul>
+
+          </div>
+        </div>
+    </div>
+
+    <div class="kss_filter-list">
       <div id="headingThree">
-        <label class="w-100 collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+        <label class="w-100 collapsed mb-0 pb-2 cursor-pointer" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
           Price<i class="fas fa-angle-up float-right"></i>
         </label>
       </div>
       <div id="collapseThree" class="collapse" aria-labelledby="headingThree" >
         <div class="card-body">
-      	  <div class="custom-control custom-checkbox">
-    			  <input type="checkbox" class="custom-control-input" id="customCheck12">
-    			  <label class="custom-control-label f-w-4" for="customCheck12">Below ₹200.00 <span class="sub-text">(23)</span></label>
-    		  </div>
-      		<div class="custom-control custom-checkbox">
-      		  <input type="checkbox" class="custom-control-input" id="customCheck13">
-      		  <label class="custom-control-label f-w-4" for="customCheck13">₹200.00 - ₹300.00 <span class="sub-text">(43)</span></label>
-      		</div>
-      		<div class="custom-control custom-checkbox">
-      		  <input type="checkbox" class="custom-control-input" id="customCheck14">
-      		  <label class="custom-control-label f-w-4" for="customCheck14">₹300.00 - ₹400.00 <span class="sub-text">(32)</span></label>
-      		</div>
-      		<div class="custom-control custom-checkbox">
-      		  <input type="checkbox" class="custom-control-input" id="customCheck15">
-      		  <label class="custom-control-label f-w-4" for="customCheck15">₹400.00 and above <span class="sub-text">(33)</span></label>
-      		</div>
+          <div class="priceRange">
+            <input type="text" id="price-range" name="example_name" value="" />
+          </div>
           <div class="row mt-3">
             <div class="col-5 col-sm-5">
-           <input class="form-control form-control-lg" id="min" type="text" placeholder="Min">
+           <input class="form-control form-control-lg text-muted price-change" id="price-min" type="text" placeholder="Min">
             </div>
              <div class="col-2 col-sm-2 text-center">
               <h6 class="align-self-center mt-4">to</h6>
             </div>
               <div class="col-5 col-sm-5">
-                 <input class="form-control form-control-lg" id="Max" type="text" placeholder="Max">
+                 <input class="form-control form-control-lg text-muted price-change" id="price-max" type="text" placeholder="Max">
             </div>
           </div> 
         </div>
       </div>
-    </div> -->
+    </div>
+
+
 <!--     <div class="kss_filter-list">
       <div id="headingThree">
         <label class=" w-100 collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
