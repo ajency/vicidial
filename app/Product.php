@@ -223,6 +223,12 @@ class Product
         }
     }
 
+
+    /**
+     * Function to generate Elastic Query for Aggregations required on LHS of ListView page
+     * 
+     * @return ElasticQuery
+     */
     public static function buildBaseQuery()
     {
 
@@ -250,6 +256,12 @@ class Product
         return $q;
     }
 
+
+    /**
+     * Function to return the Data for LHS of Product List View
+     * 
+     * @return array
+     */
     public static function getProductCategoriesWithFilter($params)
     {
 
@@ -301,9 +313,14 @@ class Product
         return sanitiseFilterdata($q->search());
     }
 
-    public static function getItemsWithFilters($params)
-    {
-        $size   = $params["display_limit"];
+
+    /**
+     * Function to return the Data for RHS of Product List View
+     * 
+     * @return array
+     */
+    public static function getItemsWithFilters($params){
+        $size = $params["display_limit"];
         $offset = ($params["page"] - 1) * $size;
 
         $index = config('elastic.indexes.product');
@@ -347,6 +364,11 @@ class Product
         return formatItems($q->search(), $params);
     }
 
+    /**
+     * Query to hide Products which are not available
+     * 
+     * @return array
+     */
     public static function hideUnavailableProducts($q, $must){
         $nested = [];
         $facetName  = $q::createTerm( "search_data.boolean_facet.facet_name", "variant_availability");
@@ -358,6 +380,11 @@ class Product
         return $must;
     }
 
+    /**
+     * Query to hide Products with Color ID equalling 0
+     * 
+     * @return void
+     */
     public static function hideZeroColorIDProducts($q, $must){
         $nested = [];
         $facetName  = $q::createTerm( "search_data.number_facet.facet_name", "product_color_id");
