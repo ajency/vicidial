@@ -1,8 +1,8 @@
 <div class="d-flex">
-    <div class="mt-3">
+    <div class="mt-2">
             <!-- Product Title -->
 
-            <h1 class="kss-title mb-2 mb-sm-2 text-gray  w-100">{{$params['title']}}</h1>
+            <h1 class="kss-title mb-2 mb-sm-2 text-black w-100">{{$params['title']}}</h1>
 
             <!-- Product Default/Selected Price -->
             @php

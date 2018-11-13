@@ -28,13 +28,9 @@
 				<!-- Product Title & Prices Section -->
 				@include('includes.singleproduct.producttitle', ['params' => $params, 'selected_color_id' => $selected_color_id])
 
-				<hr>
+				<hr class="my-2">
 
-
-
-
-
-				<div class="d-flex justify-content-between mt-4">
+				<div class="d-flex justify-content-between mt-3">
 					<label class="">Select Size (Age Group)</label>
 					<!-- Product Size Chart -->
 					<!-- <a href="#sizeModal" class="font-weight-bold kss-link" data-toggle="modal" data-target="#sizeModal">Size Chart</a>
