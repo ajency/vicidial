@@ -9,6 +9,7 @@ $(document).ready(function(){
     window.onhashchange = function() { 
      console.log("hash changed");
      if(!$('#cd-cart').hasClass("speed-in") && (window.location.href.endsWith('#bag') || window.location.href.endsWith('#bag/user-verification') || window.location.href.endsWith('#shipping-address') || window.location.href.endsWith('#shipping-summary')) ){
+        console.log("opening cart from vanilla js");
         openCart();
      }
     }
@@ -103,12 +104,12 @@ $(document).ready(function(){
             },
             error: function (request, status, error) {
                 console.log("Check ==>",request);
-                if(request.responseJSON && request.responseJSON.status == 401)
-                    userLogout();
+                if(request.status == 401)
+                    userLogout(request);
                 else if(!isLoggedInUser() || request.status == 0)
                     showErrorPopup(request);
                 else{
-                    if(request.responseJSON.status == 400 || request.responseJSON.status == 403)
+                    if(request.status == 400 || request.status == 403)
                         getNewCartId();
                     else
                         showErrorPopup(request);
@@ -118,7 +119,7 @@ $(document).ready(function(){
     }
 
     function showErrorPopup(request){
-        var error_msg = (request.responseJSON && request.responseJSON.message!='') ? request.responseJSON.message : 'Could not add to bag';
+        var error_msg = (request && request.responseJSON && request.responseJSON.message!='') ? request.responseJSON.message : 'Could not add to bag';
         //if(request.responseJSON.message!='') error_msg = request.responseJSON.message
         $('.cd-add-to-cart .btn-icon').hide();
         $('.cd-add-to-cart .btn-label-initial').addClass('d-flex');
@@ -131,10 +132,10 @@ $(document).ready(function(){
         setTimeoutVariable();
         sessionStorage.setItem( "addded_to_cart", "false");
     }
-    function userLogout(){
+    function userLogout(request){
         document.cookie = "cart_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-        showErrorPopup();
+        showErrorPopup(request);
     }
     function getNewCartId(){
         var url = "/api/rest/v1/user/cart/mine";

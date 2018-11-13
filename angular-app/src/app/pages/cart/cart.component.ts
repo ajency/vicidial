@@ -66,14 +66,13 @@ export class CartComponent implements OnInit {
   ngOnDestroy() {
   // unsubscribe to ensure no memory leaks
     this.reloadSubscription.unsubscribe();
-    this.loadSubscription.unsubscribe()
+    this.loadSubscription.unsubscribe();
+    this.closeModalSubscription.unsubscribe();
+    this.openModalSubscription.unsubscribe();
   }
 
   ngOnInit() {
-    console.log("ngOnInit cart component", this.appservice.cartClosedFromShippingPages);
-    if(this.appservice.cartClosedFromShippingPages)
-      this.appservice.cartClosedFromShippingPages = false;
-    else{         
+    console.log("ngOnInit cart component");        
       this.updateUrl();
       this.cartOpen = true;
       $('.ng-cart-loader').removeClass('cart-loader')
@@ -84,7 +83,6 @@ export class CartComponent implements OnInit {
       else{
         this.getCartData();
       }
-    }
   }
 
   ngAfterViewInit(){
@@ -291,6 +289,8 @@ export class CartComponent implements OnInit {
         document.cookie='token='+ response.token + ";path=/";
         document.cookie='cart_id=' + response.user.active_cart_id + ";path=/";
         this.appservice.userVerificationComplete = true;
+        // this.updateOtpModal(false);
+        $('body').removeClass('modal-open')
         this.navigateToShippingDetailsPage();        
       }
       else{
@@ -311,19 +311,6 @@ export class CartComponent implements OnInit {
     let url = window.location.href.split("#")[0];
     history.pushState({cart : false}, 'cart', url);
     this.appservice.closeCart();
-    // console.log(history.length);
-    // if(history.length == 2){
-    //   console.log("history length is 2");
-    //   window.location.href = window.location.href.split("#")[0];
-    // }
-    // else{
-    //   console.log("history length is not 2");
-    //   history.back();
-    // }
-    // this.cart = null;
-    // window.location.back();
-    // this.cartOpen = false;
-    // this.appservice.closeCart();
   }
 
   modalHandler(){

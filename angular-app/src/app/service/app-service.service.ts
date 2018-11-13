@@ -19,7 +19,6 @@ export class AppServiceService {
   shippingDetails : any;
   userVerificationComplete : boolean = false;
   directNavigationToShippingAddress : boolean = false;
-  cartClosedFromShippingPages : boolean = false;
   selectedAddressId : any;
   continueOrder : boolean = false;
   states : any = [];
@@ -28,11 +27,9 @@ export class AppServiceService {
     this.apiUrl = isDevMode() ? 'http://localhost:8000' : '';
     var self = this;
     $('.cd-add-to-cart').on('click',function(){
-      // self.router.navigateByUrl('/cartpage', { skipLocationChange: true });
       self.addToCartClicked();
     });
     $("#cd-cart-trigger").on('click',function(){
-      // self.router.navigateByUrl('/cartpage', { skipLocationChange: true });
       self.openCartClicked();
     });
   }
@@ -48,7 +45,6 @@ export class AppServiceService {
       document.getElementById('cd-shadow-layer').classList.remove('is-visible');
     if(document.getElementsByClassName("modal-backdrop")[0])
 	    document.getElementsByClassName("modal-backdrop")[0].remove();
-    // this.router.navigateByUrl('/cartpage', { skipLocationChange: true });
   }
 
   addToCartClicked() {
@@ -57,7 +53,6 @@ export class AppServiceService {
 
   openCartClicked() {
     this.openCart.next();
-      // this.router.navigateByUrl('/cartpage', { skipLocationChange: true });
   }
 
   closeVerificationModal() {
@@ -131,7 +126,6 @@ export class AppServiceService {
     //Check if cart count in Session storage
     var cart_count = this.getCookie( "cart_count" );
     if(cart_count && cart_count != "0"){
-      //Scroll to top if cart icon is hidden on top
       $(".cart-counter").removeClass('d-none'), 100;
       $(".cart-counter").addClass('d-block'), 100;
       $('#output').html(function(i, val) { return cart_count });
