@@ -20,7 +20,7 @@ class OdooOrder implements ShouldQueue
      */
     public function __construct($subOrder)
     {
-        $this->suborder = $subOrder;
+        $this->subOrder = $subOrder;
     }
 
     /**
