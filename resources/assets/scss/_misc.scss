@@ -142,6 +142,19 @@
 	}
 }
 
+//productlist loader
+.pl-loader{
+	height: calc(100vh - 60px);
+    position: fixed;
+    width: 100%;
+    z-index: 999;
+    top: 60px;
+    left: 0;
+    // @media (max-width: 767px){
+    // 	height: calc(100vh - 90px);
+    // }
+}
+
 // about us 
 .kss-care{
 	@media (min-width: 768px){

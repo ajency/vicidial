@@ -3,7 +3,7 @@
 <head>
     @include('includes.head')
 </head>
-<body @isset($overflow) class = "overflow-hidden" @endisset>
+<body @isset($overflow) class = "overflow-h" @endisset>
 
 
 <div class="header">

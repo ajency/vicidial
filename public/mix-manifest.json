@@ -1,8 +1,3 @@
 {
-    "/../resources/assets/css/custom.css": "/../resources/assets/css/custom.css?id=70603664ccf1ac13f939",
-    "/js/all.js": "/js/all.js?id=f623d7d203e40d9e2641",
-    "/css/all.css": "/css/all.css?id=1e22f5f41e539ac81701",
-    "/js/cart.js": "/js/cart.js?id=99d08ebdd1365a516d5d",
-    "/js/productlisting.js": "/js/productlisting.js?id=84de0a02664bba756b27",
-    "/js/singleproduct.js": "/js/singleproduct.js?id=82f3be244815a4dda2d9"
+    "/../resources/assets/css/custom.css": "/../resources/assets/css/custom.css"
 }
