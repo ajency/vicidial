@@ -147,7 +147,7 @@ class SubOrder extends Model
         $order_line = [
             $i,
             "virtual_" . $variant->id,
-            array_merge(config('orders.odoo_orderline_defaults'),
+            array_merge(config('orders.odoo_order_defaults'),
             [
                 "product_id"         => $variant->odoo_id,
                 "product_uom_qty"    => $quantity,
