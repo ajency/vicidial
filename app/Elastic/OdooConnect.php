@@ -78,4 +78,17 @@ class OdooConnect
         return $data;
     }
 
+    public static function odooFilter($filters)
+    {
+        if (isset($filters['id'])) {
+            return [[['id', '>', $filters['id']]]];
+        } elseif (isset($filters['created'])) {
+            return [[['create_date', '>', $filters['created']]]];
+        } elseif (isset($filters['updated'])) {
+            return [[['__last_update', '>', $filters['updated']]]];
+        } elseif (isset($filters['write'])) {
+            return [[['write_date', '>', $filters['write']]]];
+        }
+    }
+
 }

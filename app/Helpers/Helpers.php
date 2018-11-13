@@ -397,7 +397,7 @@ function validateOrder($user, $order)
     }
 }
 
-function validateCart($user, $cart, $type=null)
+function validateCart($user, $cart, $type = null)
 {
     if ($cart == null || $cart->user_id != $user->id) {
         abort(403);
@@ -412,4 +412,41 @@ function validateAddress($user, $address)
     if ($address == null || $address->user_id != $user->id) {
         abort(403);
     }
+}
+
+function sanitiseMoveData($moveData, $prefix = '')
+{
+    $date        = new Carbon($moveData["date"]);
+    $create_date = new Carbon($moveData["create_date"]);
+    $body        = [
+        $prefix . "location_id"      => $moveData["location_id"][0],
+        $prefix . "location"         => $moveData["location_id"][1],
+        $prefix . "location_dest_id" => $moveData["location_dest_id"][0],
+        $prefix . "location_dest"    => $moveData["location_dest_id"][1],
+        $prefix . "state"            => $moveData["state"],
+        $prefix . "product_id"       => $moveData["product_id"][0],
+        $prefix . "product"          => $moveData["product_id"][1],
+        $prefix . "product_uom_id"   => $moveData["product_uom_id"][0],
+        $prefix . "product_uom"      => $moveData["product_uom_id"][1],
+        $prefix . "date"             => $date->timestamp,
+        $prefix . "create_date"      => $create_date->timestamp,
+        $prefix . "picking_id"       => $moveData["picking_id"][0],
+        $prefix . "picking"          => $moveData["picking_id"][1],
+        $prefix . "move_id"          => $moveData["move_id"][0],
+        $prefix . "move"             => $moveData["move_id"][1],
+        $prefix . 'qty_done'         => $moveData['qty_done'],
+        $prefix . 'reference'        => $moveData['reference'],
+        $prefix . 'display_name'     => $moveData['display_name'],
+        $prefix . 'id'               => $moveData['id'],
+        $prefix . 'owner_id'         => $moveData['owner_id'],
+        $prefix . 'consume_line_ids' => $moveData['consume_line_ids'],
+        $prefix . 'ordered_qty'      => $moveData['ordered_qty'],
+        $prefix . 'from_loc'         => $moveData['from_loc'],
+        $prefix . 'to_loc'           => $moveData['to_loc'],
+        $prefix . 'package_id'       => $moveData['package_id'],
+        $prefix . 'is_locked'        => $moveData['is_locked'],
+        $prefix . 'lot_name'         => $moveData['lot_name'],
+    ];
+
+    return $body;
 }

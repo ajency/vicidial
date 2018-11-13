@@ -62,7 +62,7 @@ paste this
 ```
 [program:newsite_product_sync]
 process_name=%(program_name)s_%(process_num)02d
-command=php /var/www/newsite/artisan queue:work --queue=process_product,process_product_images,create_jobs --sleep=3 --tries=3
+command=php /var/www/newsite/artisan queue:work --queue=update_inventory,process_move,process_product,process_product_images,create_jobs --sleep=3 --tries=3
 autostart=true
 autorestart=true
 user=root
@@ -135,9 +135,10 @@ Add the following to crontab
 
 `cp .env.example .env`
 
-### Create an elastic index for products
+### Create an elastic index for products and product moves
 
 `php artisan elastic:create_index products`
+`php artisan elastic:create_index product_moves`
 
 ### Get all warehouses from odoo
 `php artisan odoo:warehouses` 
