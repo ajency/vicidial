@@ -69,3 +69,6 @@
 	{{-- @include('includes.similar-products') --}}
 
 @stop
+@section('footjs')
+	@yield('order-msg')
+@stop

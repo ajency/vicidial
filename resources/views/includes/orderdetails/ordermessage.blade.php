@@ -48,12 +48,10 @@
 	    }
 
 		if(status == 'success'){
-			setTimeout(()=>{
 				getNewCartId();
 				document.cookie = "cart_count=" + 0 + ";path=/";
 				updateCartCountInUI();
 				sessionStorage.removeItem('cart_data');
-			},100);
 		}
 		
 	</script>
