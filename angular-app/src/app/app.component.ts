@@ -16,17 +16,15 @@ export class AppComponent {
   						private router : Router){
 
 	window.onpopstate = (event)=>{
-	  console.log("location: " + document.location + ", state: " + JSON.stringify(event.state));
+	  console.log("On popstate location: " + document.location + ", state: " + JSON.stringify(event.state));
 	  if(window.location.href.endsWith('#bag')){
 	  	this.router.navigateByUrl('/cartpage', { skipLocationChange: true });
 	  	this.appservice.closeVerificationModal();
 	  }
 	  else if(window.location.href.endsWith('#shipping-address')){
-	  	console.log("do nothing");
 	  	// do nothing
 	  }
 	  else if(!window.location.href.endsWith('#bag')){
-	  	console.log("close cart");
 	  	this.appservice.cartClosedFromShippingPages = true;
 	  	this.appservice.closeCart();
 	  }
@@ -35,12 +33,10 @@ export class AppComponent {
 
 	ngOnInit(){
 		if(window.location.href.endsWith('#shipping-address')){
-				console.log("#shipping-address");
 				this.appservice.directNavigationToShippingAddress = true;
 				this.router.navigateByUrl('/shipping-details', { skipLocationChange: true });
 		}
 		else{
-			console.log("naviagting to cart page")
 			this.router.navigateByUrl('/cartpage', { skipLocationChange: true });
 		}
 	}

@@ -76,7 +76,6 @@ export class ShippingSummaryComponent implements OnInit {
     body._token = $('meta[name="csrf-token"]').attr('content');
 
     this.apiservice.request(url, 'post', body , header ).then((response)=>{
-      console.log("response ==>", response);
       this.shippingDetails = this.getProductUrl(response);
       this.appservice.removeLoader();
       // this.appservice.updateCartId();
@@ -98,7 +97,6 @@ export class ShippingSummaryComponent implements OnInit {
     };
 
     this.apiservice.request(url, 'post', body , header ).then((response)=>{
-      console.log("response ==>", response);
       this.shippingDetails = this.getProductUrl(response);
       this.appservice.removeLoader();
       // this.appservice.updateCartId();

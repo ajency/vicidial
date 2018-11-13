@@ -59,7 +59,6 @@ export class ShippingDetailsComponent implements OnInit {
     let url = window.location.href.split("#")[0] + '#shipping-address';
     console.log("check url ==>", url);
     if(!window.location.href.endsWith('#shipping-address')){
-      console.log("changing history");
       this.appservice.userVerificationComplete ? history.replaceState({cart : true}, 'cart', url) : history.pushState({cart : true}, 'cart', url);
       this.appservice.userVerificationComplete = false;
     }      
@@ -73,7 +72,6 @@ export class ShippingDetailsComponent implements OnInit {
       let url = this.appservice.apiUrl + ("/api/rest/v1/user/cart/"+this.appservice.getCookie('cart_id')+"/get");
       let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
       this.apiservice.request(url, 'get', {}, header ).then((response)=>{
-         console.log("response ==>", response);
          let cartItemOutOfStock = false;
          response.items.forEach((item)=>{
            if(!item.availability){
@@ -104,7 +102,6 @@ export class ShippingDetailsComponent implements OnInit {
     let url = this.appservice.apiUrl + "/api/rest/v1/user/address/all";
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     this.apiservice.request(url, 'get', {} , header ).then((response)=>{
-    console.log("response ==>", response);
     this.addresses = response.addresses;
     this.checkAddresses();
     this.appservice.shippingAddresses = response.addresses;
@@ -126,7 +123,6 @@ export class ShippingDetailsComponent implements OnInit {
     body._token = $('meta[name="csrf-token"]').attr('content');
 
     this.apiservice.request(url, 'post', body , header ).then((response)=>{
-      console.log("response ==>", response);
       if(this.newAddress.id){
        this.addresses = this.addresses.map((address)=> {
         var a = address;
@@ -193,7 +189,6 @@ export class ShippingDetailsComponent implements OnInit {
   }
 
   deleteAddress(id){
-    console.log(id);
     let change_selected_address = (id == this.selectedAddressId) ? true : false;
     let old_id = this.selectedAddressId;
     this.appservice.showLoader();
@@ -202,7 +197,6 @@ export class ShippingDetailsComponent implements OnInit {
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     url = url+$.param(body);
     this.apiservice.request(url, 'get', body, header ).then((response)=>{
-      console.log("response ==>", response);
       let index = this.addresses.findIndex(i => i.id == id);
       this.addresses.splice(index,1);
       if(!this.addresses.length){
@@ -259,7 +253,6 @@ export class ShippingDetailsComponent implements OnInit {
   getAllStates(){    
     let url = this.appservice.apiUrl + "/rest/v1/anonymous/states/all";
     this.apiservice.request(url, 'get', {}, {} ).then((response)=>{
-      console.log("response ==>", response);      
       this.appservice.states = response;
       this.states = response;
       this.initSelectPicker();

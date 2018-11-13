@@ -118,7 +118,6 @@ $(document).ready(function(){
     }
 
     function showErrorPopup(request){
-        console.log("showErrorPopup function start")
         var error_msg = (request.responseJSON && request.responseJSON.message!='') ? request.responseJSON.message : 'Could not add to bag';
         //if(request.responseJSON.message!='') error_msg = request.responseJSON.message
         $('.cd-add-to-cart .btn-icon').hide();
