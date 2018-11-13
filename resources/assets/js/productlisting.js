@@ -2,6 +2,9 @@
 console.log("productlisting===")
 console.log(config_facet_names_arr)
 
+var ajax_data = {}
+
+
 $(function(){
 
     $('.kss_sizes .radio-input').prop('checked',false);
@@ -85,6 +88,87 @@ $(document).ready(function(){
             facetCategoryChange($(this),false)
         });
     }
+    $('.pl-loader').fadeOut(2000,function(){
+      $('body').removeClass('overflow-hidden')
+    })
+      
+  $('body').on('click',"#showMoreProductsBtn",function(){
+    $(this).find('.load-icon-cls').removeClass('d-none')
+    var page = $.url().param('page');
+    var url = window.location.href
+    console.log("page==="+page)
+    console.log(url.split("?"))
+    var url_arr = url.split("?")
+    var appendStr = ""
+    if(url_arr.length > 1)
+        appendStr = "&"
+    else
+        appendStr = "?"
+    var pageVal = 1;
+    if(page == undefined){
+        url = url+appendStr+"page=2"
+        pageVal = 2;
+    }
+    else{
+        url = url.replace(/page=\d+/, "page="+(parseInt(page)+1));
+        pageVal = (parseInt(page)+1);
+    }
+    console.log("ul==="+url)
+    ajax_data["page"] = pageVal
+    console.log("ajax_data=====")
+    console.log(ajax_data)
+    $.ajax({
+        method: "POST",
+        url: "/api/rest/v1/product-list",
+        data: JSON.stringify(ajax_data),
+        dataType: "json",
+        contentType: "application/json"
+
+      }).done(function (response) {
+        // alert( "Data Saved: " + msg );
+        console.log(response);
+        var product_list_context = {};
+        $.each(response, function (key, values) {
+          if (key == "page") {
+            product_list_context.page = values;
+          }
+          if (key == "items") {
+            product_list_context.products = values;
+          }
+        });
+        var source = document.getElementById("products-list-template").innerHTML;
+        var template = Handlebars.compile(source);
+        Handlebars.registerHelper('assign', function (varName, varValue, options) {
+          if (!options.data.root) {
+            options.data.root = {};
+          }
+          options.data.root[varName] = varValue;
+        });
+        Handlebars.registerHelper('ifEquals', function (arg1, arg2, options) {
+          return arg1 == arg2 ? options.fn(this) : options.inverse(this);
+        });
+        Handlebars.registerHelper('ifImagesExist', function (arg1, options) {
+          console.log(arg1);
+          var count = Object.keys(arg1).length;
+          return count > 0 ? options.fn(this) : options.inverse(this);
+        });
+        var context = {};
+        var list_count = Object.keys(product_list_items).length;
+        for (var vkey in product_list_context.products) {
+            product_list_items[list_count+vkey] = product_list_context.products[vkey];
+        }
+        // product_list_items = $.extend(product_list_items, values);
+        context["products"] = product_list_items;
+        context["show_more"] = product_list_context.page.has_next
+        console.log("product_list_items======")
+        console.log(product_list_items);
+        var html = template(context);
+        document.getElementById("products-list-template-content").innerHTML = html;
+       window.history.replaceState('categoryPageUrl', 'Category page', url);
+      });
+    
+  })
+
 });
 
 // $('body').on('change', '.facet-category', function() {
@@ -178,7 +262,9 @@ function facetCategoryChange(thisObj,is_ajax = true)
 
     var url = constructCategoryUrl(config_facet_names_arr,facet_list,facet_value_slug_assoc);
     console.log("listurl====",url)
-    var data = JSON.stringify({"search_object":facet_list,"listurl":url})
+    ajax_data = { "search_object": facet_list, "listurl": url , "page": 1}
+    var data = JSON.stringify(ajax_data);
+
     if(call_ajax == true){
         
         console.log("filter_tags_list===")
@@ -202,6 +288,8 @@ function facetCategoryChange(thisObj,is_ajax = true)
                 // alert( "Data Saved: " + msg );
                 console.log(response);
                 var header_context = {};
+                var product_list_context = {};
+
                 $.each(response, function(key,values){
                   if(key == "filters"){
                     var values_arr = $.map(values, function(el) { return el });
@@ -245,30 +333,41 @@ function facetCategoryChange(thisObj,is_ajax = true)
                   if(key == "headers"){
                     header_context.headers = values ;
                   }
+                  if (key == "page") {
+                    product_list_context.page = values;
+                  }
                   if(key == "items"){
-                       var source   = document.getElementById("products-list-template").innerHTML;
-                               var template = Handlebars.compile(source);
-                               Handlebars.registerHelper('assign', function (varName, varValue, options) {
-                                        if (!options.data.root) {
-                                            options.data.root = {};
-                                        }
-                                        options.data.root[varName] = varValue;
-                                    });
-                        Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
-                            return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
-                        });
-                         Handlebars.registerHelper('ifImagesExist', function(arg1, options) {
-                            console.log(arg1)
-                            var count = Object.keys(arg1).length;
-                            return (count > 0) ? options.fn(this) : options.inverse(this);
-                        });
-                               var context = {};
-                               context["products"] = values;
-                               console.log(context)
-                               var html    = template(context);
-                               document.getElementById("products-list-template-content").innerHTML = html;
-                    }
+                                   product_list_context.products = values;
+            
+
+                  }
                 });
+                var source = document.getElementById("products-list-template").innerHTML;
+                var template = Handlebars.compile(source);
+                Handlebars.registerHelper('assign', function (varName, varValue, options) {
+                  if (!options.data.root) {
+                    options.data.root = {};
+                  }
+                  options.data.root[varName] = varValue;
+                });
+                Handlebars.registerHelper('ifEquals', function (arg1, arg2, options) {
+                  return arg1 == arg2 ? options.fn(this) : options.inverse(this);
+                });
+                Handlebars.registerHelper('ifImagesExist', function (arg1, options) {
+                  console.log(arg1);
+                  var count = Object.keys(arg1).length;
+                  return count > 0 ? options.fn(this) : options.inverse(this);
+                });
+                var context = {};
+                context["products"] = product_list_context.products;
+                context["show_more"] = product_list_context.page.has_next
+                console.log(context);
+                var html = template(context);
+                document.getElementById("products-list-template-content").innerHTML = html;
+                product_list_items = $.extend({}, product_list_context.products);
+                console.log("product_list_items====")
+                console.log(product_list_items) 
+
 
                 var source   = document.getElementById("filter-header-template").innerHTML;
                 var template = Handlebars.compile(source);
