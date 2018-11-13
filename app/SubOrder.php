@@ -74,7 +74,30 @@ class SubOrder extends Model
     {
         if ($this->odoo_id == null) {
             $this->checkInventory();
+            $order_lines = [];
+            $itemsData   = [];
+            $i           = 0;
+            foreach ($this->item_data as $itemData) {
+                $variant            = Variant::find($itemData['id']);
+                $item               = $variant->getItemAttributes();
+                $item['quantity']   = $itemData['quantity'];
+                $item['variant_id'] = $itemData['id'];
+                $itemsData[]        = $item;
+                $order_line = self::createOrderLine($i, $variant, $itemData['quantity']);
+                $lines[]    = $order_line;
+                $i++;
+            }
+            $odoo_order  = self::createOrderParams($lines);
+            $id = $this->createOdooOrder($odoo_order);
+            $order = $this->getSaleOrder($id);
             
+            $this->odoo_id   = $order["id"];
+            $this->odoo_data = [
+                'total'          => $order["amount_total"],
+                'shipping_fee'   => $order["shipping_charge"],
+            ];
+            $this->odoo_status = 'draft';
+            $this->save();
         }
     }
 
@@ -119,35 +142,7 @@ class SubOrder extends Model
     //     parent::save($options);
     // }
 
-    public function placeOrderOnOdoo()
-    {
-        $order_lines = [];
-        $itemsData   = [];
-        $i           = 0;
-        foreach ($this->item_data as $itemData) {
-            $variant            = Variant::find($itemData['id']);
-            $item               = $variant->getItemAttributes();
-            $item['quantity']   = $itemData['quantity'];
-            $item['variant_id'] = $itemData['id'];
-            $itemsData[]        = $item;
-            $order_line = self::createOrderLine($i, $variant, $itemData['quantity']);
-            $lines[]    = $order_line;
-            $i++;
-        }
-        $odoo_order  = self::createOrderParams($lines);
-        $id = $this->createOdooOrder($odoo_order);
-        $order = $this->getSaleOrder($id);
-        
-        $this->odoo_id   = $order["id"];
-        $this->odoo_data = [
-            'total'          => $order["amount_total"],
-            'shipping_fee'   => $order["shipping_charge"],
-        ];
-        $this->odoo_status = 'draft';
-        $this->save();
-    }
-
-    public static function createOrderLine($i, Variant $variant, int $quantity)
+    public function createOrderLine($i, Variant $variant, int $quantity)
     {
         $order_line = [
             $i,
@@ -164,20 +159,21 @@ class SubOrder extends Model
         return $order_line;
     }
 
-    public static function createOrderParams(array $order_lines = [])
+    public function createOrderParams(array $order_lines = [])
     {
-        $company_id = 1;
         $date_order = new Carbon;
+        $warehouse = Warehouse::find($this->warehouse_id);
+        $generated_name = $warehouse->name.$date_order->toDateTimeString().random_int(1000, 9999);
         $options    = array_merge(config('orders.odoo_orderline_defaults'),
         [
             'partner_id'               => $this->order->cart->user->odoo_id,
             'partner_invoice_id'       => $this->order->address->odoo_id,
             'partner_shipping_id'      => $this->order->address->odoo_id,
             'warehouse_id'             => $this->warehouse_id,
-            'company_id'               => Warehouse::find($this->warehouse_id)->company_id,
+            'company_id'               => $warehouse->company_id,
             'date_order'               => $date_order->toDateTimeString(),
-            'origin'                   => "test000000245",
-            "name"                     => "test000000245",
+            'origin'                   => $generated_name,
+            "name"                     => $generated_name,
             "order_line"               => $order_lines,
         ]);
         return $options;
@@ -187,7 +183,7 @@ class SubOrder extends Model
     {
         $model = "sale.order";
         $odoo  = new OdooConnect;
-        $out   = $odoo->defaultExec($model, 'write', [$params], null);
+        $out   = $odoo->defaultExec($model, 'create', [$params], null);
         return $out[0];
     }
 

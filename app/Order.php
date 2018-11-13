@@ -41,8 +41,8 @@ class Order extends Model
             $subOrder->order_id     = $this->id;
             $subOrder->warehouse_id = $warehouseID;
             $subOrder->setItems($items);
-            $subOrder->save();
             $subOrder->aggregateData();
+            $subOrder->save();
         }
     }
 
