@@ -21,14 +21,31 @@ class Defaults extends Model
 
     public static function saveOdooStates()
     {
-        Defaults::where('type', 'state')->delete();
+        self::where('type', 'state')->delete();
         foreach (self::getStatesFromOdoo() as $state) {
-            $defaults            = new Defaults;
+            $defaults            = new self;
             $defaults->type      = 'state';
             $defaults->label     = $state["name"];
             $defaults->meta_data = ['name' => $state["name"], 'code' => $state['code'], 'odoo_id' => $state["id"]];
             $defaults->save();
         }
+    }
+
+    public static function getLastProductMove()
+    {
+        $move = self::where('type', 'sync')->where('label', 'product_move')->first();
+        if ($move == null) {
+            $move            = new self;
+            $move->type      = 'sync';
+            $move->label     = 'product_move';
+            $move->meta_data = ['id' => 0];
+            $move->save();
+        }
+        return $move->meta_data['id'];
+    }
+
+    Public static function setLastProductMove($id){
+        
     }
 
 }
