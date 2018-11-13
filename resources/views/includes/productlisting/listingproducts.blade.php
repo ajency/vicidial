@@ -86,7 +86,7 @@
    product_list_items = $.extend(product_list_items, context["products"]);
    console.log("product_list_items====")
    console.log(product_list_items) 
-   context["show_more"] = <?= $page->has_next ?>;
+   context["show_more"] = <?= json_encode($page->has_next)?>;
    console.log(context)
    var html    = template(context);
    document.getElementById("products-list-template-content").innerHTML = html;
