@@ -14,6 +14,7 @@ export class AppServiceService {
   private addToCart = new Subject<any>();
   private openCart = new Subject<any>();
   private closeModal = new Subject<any>();
+  private openModal = new Subject<any>();
   shippingAddresses = [];
   shippingDetails : any;
   userVerificationComplete : boolean = false;
@@ -24,16 +25,13 @@ export class AppServiceService {
   states : any = [];
   constructor(	private router: Router,
                 private apiservice : ApiServiceService) { 
-    console.log("isDevMode ==>",isDevMode());
     this.apiUrl = isDevMode() ? 'http://localhost:8000' : '';
     var self = this;
     $('.cd-add-to-cart').on('click',function(){
-      console.warn("appservice ==========> add to cart clicked");
       // self.router.navigateByUrl('/cartpage', { skipLocationChange: true });
       self.addToCartClicked();
     });
     $("#cd-cart-trigger").on('click',function(){
-      console.warn("appservice ==========> open to cart clicked");
       // self.router.navigateByUrl('/cartpage', { skipLocationChange: true });
       self.openCartClicked();
     });
@@ -54,7 +52,6 @@ export class AppServiceService {
   }
 
   addToCartClicked() {
-    console.log("triggerEvent");
     this.addToCart.next();
   }
 
@@ -64,7 +61,11 @@ export class AppServiceService {
   }
 
   closeVerificationModal() {
-    this.closeModal.next()
+    this.closeModal.next();
+  }
+
+  openVerificationModal(){
+    this.openModal.next();
   }
 
   listenToAddToCartEvent(): Observable<any> {
@@ -77,6 +78,10 @@ export class AppServiceService {
 
   listenToCloseModal() : Observable<any> {
     return this.closeModal.asObservable();
+  }
+
+  listenToOpenModal() : Observable<any> {
+    return this.openModal.asObservable();
   }
 
   getCookie(cname) {
@@ -111,7 +116,6 @@ export class AppServiceService {
     let header = { Authorization : 'Bearer '+this.getCookie('token') };
 
     this.apiservice.request(url, 'get', {} , header ).then((response)=>{
-      console.log("response ==>", response);
       document.cookie='cart_id=' + response.cart_id + ";path=/";         
     })
     .catch((error)=>{

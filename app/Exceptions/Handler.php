@@ -48,7 +48,13 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+
+        $uri = $request->path();
+
+        if (starts_with($uri, 'rest/') or starts_with($uri, 'api/rest/')) {
+            return parent::render($request, $exception);
+        }
+
         return response()->view('error404');
-        return parent::render($request, $exception);
     }
 }

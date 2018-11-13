@@ -32,6 +32,7 @@ export class CartComponent implements OnInit {
   reloadSubscription: Subscription;
   loadSubscription: Subscription;
   closeModalSubscription: Subscription;
+  openModalSubscription : Subscription;
   cartItemOutOfStock : boolean = false;
   fetchCartFailed : boolean = false;
   constructor( private router: Router,
@@ -43,6 +44,8 @@ export class CartComponent implements OnInit {
     this.loadSubscription = this.appservice.listenToOpenCartEvent().subscribe(()=> { this.loadCart() });
 
     this.closeModalSubscription = this.appservice.listenToCloseModal().subscribe(()=>{ this.updateOtpModal(false)});
+    this.openModalSubscription = this.appservice.listenToOpenModal().subscribe(()=>{ this.modalHandler()});
+
   }
 
   reloadCart(){
@@ -67,15 +70,14 @@ export class CartComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("ngOnInit cart component", this.appservice.cartClosedFromShippingPages);
     if(this.appservice.cartClosedFromShippingPages)
       this.appservice.cartClosedFromShippingPages = false;
-    else{
-      console.log("ngOnInit cart component");   
+    else{         
       this.updateUrl();
       this.cartOpen = true;
       $('.ng-cart-loader').removeClass('cart-loader')
       if(sessionStorage.getItem('add_to_cart_clicked')){
-        console.log("add to cart clicked");
         this.fetchCartDataOnAddToCartSuccess();
         sessionStorage.removeItem('add_to_cart_clicked');
       }
@@ -102,7 +104,6 @@ export class CartComponent implements OnInit {
     this.appservice.showLoader()
     if(sessionStorage.getItem('cart_data')){
       this.cart = JSON.parse(sessionStorage.getItem('cart_data'));
-      console.log("cart_data from sessionStorage==>", this.cart);
     }
     else
       this.cart = {};
@@ -122,7 +123,6 @@ export class CartComponent implements OnInit {
     this.appservice.showLoader()
     if(sessionStorage.getItem('cart_data')){
       this.cart = JSON.parse(sessionStorage.getItem('cart_data'));
-      console.log("cart_data from sessionStorage==>", this.cart);
     }
     this.fetchCartDataFromServer();
   }
@@ -130,10 +130,8 @@ export class CartComponent implements OnInit {
   fetchCartDataFromServer(){
     this.appservice.showLoader()
     let url = this.appservice.apiUrl + (this.isLoggedInUser() ? ("/api/rest/v1/user/cart/"+this.appservice.getCookie('cart_id')+"/get") : ("/rest/v1/anonymous/cart/get"))
-    console.log(this.isLoggedInUser());
     let header = this.isLoggedInUser() ? { Authorization : 'Bearer '+this.appservice.getCookie('token') } : {}
     this.apiservice.request(url, 'get', {}, header ).then((response)=>{
-      console.log("response ==>", response);
       this.cart = this.calculateOffPercenatge(response);
       this.checkCartItemOutOfStock();
       sessionStorage.setItem('cart_data', JSON.stringify(this.cart));
@@ -144,7 +142,6 @@ export class CartComponent implements OnInit {
       this.zone.run(() => {});
     })
     .catch((error)=>{
-      console.log("error ===>", error);
       if(error.status == 401){
         this.appservice.userLogout();
         this.fetchCartDataFromServer();
@@ -214,13 +211,11 @@ export class CartComponent implements OnInit {
 
   deleteItem(item){
     this.appservice.showLoader()
-    console.log("delete item ==>", item);
     let body = { variant_id : item.id };
     let url = this.appservice.apiUrl + (this.isLoggedInUser() ? ("/api/rest/v1/user/cart/"+this.appservice.getCookie('cart_id')+"/delete?") : ("/rest/v1/anonymous/cart/delete?"));
     let header = this.isLoggedInUser() ? { Authorization : 'Bearer '+this.appservice.getCookie('token') } : {};
     url = url+$.param(body);
     this.apiservice.request(url, 'get', body, header ).then((response)=>{
-      console.log("response ==>", response);
       let index = this.cart.items.findIndex(i => i.id == item.id)
       this.cart.items.splice(index,1);
       this.cart.summary = response.summary;
@@ -262,7 +257,6 @@ export class CartComponent implements OnInit {
     }
     url = url+$.param(body);
     this.apiservice.request(url, 'get', body , {}, true).then((response)=>{
-      console.log("response ==>", response);
       this.userValidation.disableSendOtpButton = false;
       if(response.success){
         this.mobileNumberEntered = true;
@@ -285,14 +279,12 @@ export class CartComponent implements OnInit {
     this.userValidation.otpVerificationFailed = false;
     let url = this.appservice.apiUrl + '/rest/v1/authenticate/login?';
     // this.otp=this.otpCode.otp1+this.otpCode.otp2+this.otpCode.otp3+this.otpCode.otp4+this.otpCode.otp5+this.otpCode.otp6
-    console.log("OTP ==>", this.otp);
     let body = {
       otp : this.otp,
       phone : this.mobileNumber
     }
     url = url + $.param(body);
     this.apiservice.request(url, 'get', body, {}, true).then((response)=>{
-      console.log("response ==>", response);
       this.otp = null;
       this.userValidation.disableVerifyOtpButton = false;
       if(response.success){
@@ -317,7 +309,7 @@ export class CartComponent implements OnInit {
 
   closeCart(){
     let url = window.location.href.split("#")[0];
-    history.replaceState({cart : false}, 'cart', url);
+    history.pushState({cart : false}, 'cart', url);
     this.appservice.closeCart();
     // console.log(history.length);
     // if(history.length == 2){
@@ -335,7 +327,6 @@ export class CartComponent implements OnInit {
   }
 
   modalHandler(){
-    console.log("modalHandler")
     if(this.isLoggedInUser()){
       this.navigateToShippingDetailsPage();
     }
@@ -378,10 +369,8 @@ export class CartComponent implements OnInit {
     if(this.cart.cart_type == "cart"){
       this.appservice.showLoader();
       let url = this.appservice.apiUrl + "/api/rest/v1/user/address/all";
-      console.log(this.isLoggedInUser());
       let header = this.isLoggedInUser() ? { Authorization : 'Bearer '+this.appservice.getCookie('token') } : {};
       this.apiservice.request(url, 'get', {} , header ).then((response)=>{
-        console.log("response ==>", response);
         this.appservice.shippingAddresses = response.addresses;
         $("#cd-cart").css("overflow", "auto");
         $('.modal-backdrop').remove();
@@ -414,7 +403,6 @@ export class CartComponent implements OnInit {
     let url = this.appservice.apiUrl + '/api/rest/v1/user/cart/start-fresh';
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     this.apiservice.request(url, 'get', {} , header ).then((response)=>{
-      console.log("response ==>", response);
       document.cookie='cart_id=' + response.cart_id + ";path=/";
       this.fetchCartDataFromServer();
     })
@@ -433,7 +421,6 @@ export class CartComponent implements OnInit {
     let url = this.appservice.apiUrl + '/api/rest/v1/user/cart/mine';
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     this.apiservice.request(url, 'get', {} , header ).then((response)=>{
-      console.log("response ==>", response);
       if(response.cart_id != this.appservice.getCookie('cart_id')){
         document.cookie='cart_id=' + response.cart_id + ";path=/";
         this.fetchCartDataFromServer();

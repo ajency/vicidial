@@ -9,8 +9,6 @@ export class ApiServiceService {
 	handleError : any;
   constructor( private http : Http) { 
   	        this.handleError = (error: any): Promise<any> => {
-			        console.warn('error in request fetch',error)
-			        console.log(error.status);
 			        let prerror = this.parseRejectedError(error);
 			        return Promise.reject(prerror);
 		        }
