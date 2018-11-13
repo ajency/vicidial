@@ -204,6 +204,13 @@ input[type=number]::-webkit-outer-spin-button {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
 }
+.product-color--filter{
+    li{
+      label{
+        border-color: #eee;
+      }
+    }
+}
 .product-color li label:after {
   content: "\2713";
   position: absolute;
