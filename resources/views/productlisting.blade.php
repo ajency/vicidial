@@ -5,8 +5,11 @@
 @stop
 
 @section('content')
-
-	<section>
+  <!-- Loader on load -->
+  <div class="pl-loader d-none">
+    <div class="loader block-loader"></div>
+  </div>
+	<section class="productlist">
     <div class="container mt-2 mt-md-4">
      	<div class="row">
      	  <!-- Filters Blade -->
