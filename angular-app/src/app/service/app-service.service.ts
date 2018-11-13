@@ -19,7 +19,6 @@ export class AppServiceService {
   shippingDetails : any;
   userVerificationComplete : boolean = false;
   directNavigationToShippingAddress : boolean = false;
-  cartClosedFromShippingPages : boolean = false;
   selectedAddressId : any;
   continueOrder : boolean = false;
   states : any = [];

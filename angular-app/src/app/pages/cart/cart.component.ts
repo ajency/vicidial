@@ -70,10 +70,7 @@ export class CartComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("ngOnInit cart component", this.appservice.cartClosedFromShippingPages);
-    if(this.appservice.cartClosedFromShippingPages)
-      this.appservice.cartClosedFromShippingPages = false;
-    else{         
+    console.log("ngOnInit cart component");        
       this.updateUrl();
       this.cartOpen = true;
       $('.ng-cart-loader').removeClass('cart-loader')
@@ -84,7 +81,6 @@ export class CartComponent implements OnInit {
       else{
         this.getCartData();
       }
-    }
   }
 
   ngAfterViewInit(){
