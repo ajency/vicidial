@@ -35,7 +35,6 @@ export class AppComponent {
 	  	},50);
 	  }
 	  else if(window.location.href.endsWith('#bag/user-verification')){
-	  	// this.router.navigateByUrl('/cartpage', { skipLocationChange: true });
 	  	this.appservice.openVerificationModal();
 	  }
 	  else if(window.location.href.endsWith('#shipping-summary')){

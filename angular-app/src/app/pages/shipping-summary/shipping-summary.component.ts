@@ -20,9 +20,6 @@ export class ShippingSummaryComponent implements OnInit {
   					) { }
 
   ngOnInit() {
-    // this.shippingDetails = this.appservice.shippingDetails;
-    // console.log("this.shippingDetails ==>", this.shippingDetails);
-    // this.appservice.updateCartId();
     if(this.appservice.continueOrder){
       this.appservice.continueOrder = false;
       this.callContinueOrderApi();
@@ -33,7 +30,6 @@ export class ShippingSummaryComponent implements OnInit {
   }
 
   navigateToPaymentPage(){
-  	// this.router.navigateByUrl('/payment', { skipLocationChange: true });
     window.location.href = "/user/order/" + this.shippingDetails.order_id +"/payment/payu";
   }
   
@@ -41,27 +37,10 @@ export class ShippingSummaryComponent implements OnInit {
     let url = window.location.href.split("#")[0];
     history.pushState({cart : false}, 'cart', url);
     window.location.reload();
-    // console.log("history.lenght ==>", history.length);
-    // this.appservice.cartClosedFromShippingPages = true;
-    // if(history.length > 3)
-    //   history.go(-3);
-    // else{
-    //   // history.go(-2);
-    //   let url = window.location.href.split("#")[0];
-    //   history.replaceState({cart : false}, 'cart', url);
-    //   this.appservice.closeCart();
-    //   this.router.navigateByUrl('/cartpage', {skipLocationChange: true});
-    // }
   }
 
   navigateBack(){
     history.back();
-    // console.log("history.lenght ==>", history.length);
-    // if(history.length > 3)
-    //   history.go(-2);
-    // else{
-    //   history.back();
-    // }
   }
 
   updateUrl(){

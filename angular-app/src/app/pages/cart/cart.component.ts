@@ -66,7 +66,9 @@ export class CartComponent implements OnInit {
   ngOnDestroy() {
   // unsubscribe to ensure no memory leaks
     this.reloadSubscription.unsubscribe();
-    this.loadSubscription.unsubscribe()
+    this.loadSubscription.unsubscribe();
+    this.closeModalSubscription.unsubscribe();
+    this.openModalSubscription.unsubscribe();
   }
 
   ngOnInit() {
@@ -309,19 +311,6 @@ export class CartComponent implements OnInit {
     let url = window.location.href.split("#")[0];
     history.pushState({cart : false}, 'cart', url);
     this.appservice.closeCart();
-    // console.log(history.length);
-    // if(history.length == 2){
-    //   console.log("history length is 2");
-    //   window.location.href = window.location.href.split("#")[0];
-    // }
-    // else{
-    //   console.log("history length is not 2");
-    //   history.back();
-    // }
-    // this.cart = null;
-    // window.location.back();
-    // this.cartOpen = false;
-    // this.appservice.closeCart();
   }
 
   modalHandler(){
