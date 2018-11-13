@@ -37,12 +37,12 @@
           </form>
           <p class="font-weight-bold mt-4"><strong>Keep In Touch (Social Connect)</strong></p>
           <ul class="list-inline">
-            <li class="list-inline-item"><a href="#" class="text-gray"><h3><i class="fab fa-facebook-f"></i></h3></a></li>
-            <li class="list-inline-item"><a href="#" class="text-gray"><h3><i class="fab fa-twitter"></i></h3></a></li>
-            <li class="list-inline-item"><a href="#" class="text-gray"><h3><i class="fab fa-youtube"></i></h3></a></li>
-            <li class="list-inline-item"><a href="#" class="text-gray"><h3><i class="fab fa-instagram"></i></h3></a></li>
-            <li class="list-inline-item"><a href="#" class="text-gray"><h3><i class="fab fa-google-plus-g"></i></h3></a></li>
-            <li class="list-inline-item"><a href="#" class="text-gray"><h3><i class="fab fa-pinterest-p"></i></h3></a></li>
+            <li class="list-inline-item"><a href="https://www.facebook.com/kidsuperstore" class="text-gray" target="_blank"><h3><i class="fab fa-facebook-f"></i></h3></a></li>
+            <!-- <li class="list-inline-item"><a href="#" class="text-gray"><h3><i class="fab fa-twitter"></i></h3></a></li>
+            <li class="list-inline-item"><a href="#" class="text-gray"><h3><i class="fab fa-youtube"></i></h3></a></li> -->
+            <li class="list-inline-item"><a href="https://www.instagram.com/kidsuperstore.in/" class="text-gray" target="_blank"><h3><i class="fab fa-instagram"></i></h3></a></li>
+            <!-- <li class="list-inline-item"><a href="#" class="text-gray"><h3><i class="fab fa-google-plus-g"></i></h3></a></li>
+            <li class="list-inline-item"><a href="#" class="text-gray"><h3><i class="fab fa-pinterest-p"></i></h3></a></li> -->
           </ul>
         </div>
 
