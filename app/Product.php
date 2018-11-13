@@ -190,61 +190,6 @@ class Product
         return inventoryFormatData($variant_ids, $inventory);
     }
 
-    public static function getAttributeValue($product, string $field)
-    {
-        $attributes = $product["search_data"][0]["attributes"];
-        foreach ($attributes as $key => $attribute) {
-            if ($attribute["attribute_name"] == $field) {
-                return $attribute["attribute_value"];
-            }
-
-        }
-    }
-
-    public static function getAttributeSlug($product, string $field)
-    {
-        $attributes = $product["search_data"][0]["attributes"];
-        foreach ($attributes as $key => $attribute) {
-            if ($attribute["attribute_name"] == $field) {
-                return $attribute["attribute_slug"];
-            }
-
-        }
-    }
-
-    public static function getStringFacetValue($product, string $field)
-    {
-        $facets = $product["search_data"][0]["string_facet"];
-        foreach ($facets as $key => $facet) {
-            if ($facet["facet_name"] == $field) {
-                return $facet["facet_value"];
-            }
-
-        }
-    }
-
-    public static function getStringFacetSlug($product, string $field)
-    {
-        $facets = $product["search_data"][0]["string_facet"];
-        foreach ($facets as $key => $facet) {
-            if ($facet["facet_name"] == $field) {
-                return $facet["facet_value"];
-            }
-
-        }
-    }
-
-    public static function getNumberFacetValue($product, string $field)
-    {
-        $facets = $product["search_data"][0]["number_facet"];
-        foreach ($facets as $key => $facet) {
-            if ($facet["facet_name"] == $field) {
-                return $facet["facet_value"];
-            }
-
-        }
-    }
-
     public static function getVariantSequence($product, $variant_id)
     {
         $data = $product["variants"];
