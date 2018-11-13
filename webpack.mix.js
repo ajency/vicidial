@@ -1,4 +1,7 @@
 let mix = require('laravel-mix');
+require('dotenv').config();
+
+let proxy_url = process.env.APP_URL ;
 
 /*
  |--------------------------------------------------------------------------
@@ -37,4 +40,10 @@ mix.babel([
    .babel('resources/assets/js/cart.js', 'public/js/cart.js')
    .babel('resources/assets/js/productlisting.js', 'public/js/productlisting.js')
    .babel('resources/assets/js/singleproduct.js', 'public/js/singleproduct.js')
-   .version();
+   .browserSync({
+        proxy: proxy_url,
+    });
+
+if (mix.inProduction()) {
+   mix.version();
+}

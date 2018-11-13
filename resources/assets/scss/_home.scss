@@ -262,6 +262,7 @@
         background: #fff;
         padding: 5px;
         break-inside: avoid-column;
+        page-break-inside: avoid;
         margin-top: 20px;
         &:first-child {
             margin-top:0px;

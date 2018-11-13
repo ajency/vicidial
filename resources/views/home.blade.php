@@ -9,7 +9,7 @@
 @stop
 
 @section('content')
- <div id="home-slider" class="home-slider">
+<div id="home-slider" class="home-slider">
     <div  class="home-slide-item">
       <a href="#">
         <picture>
