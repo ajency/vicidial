@@ -9310,9 +9310,9 @@ a.text-cancel:hover, a.text-cancel:focus {
 }
 
 .kss_filter .custom-control-label::after {
-  left: -1.6rem;
-  width: 1.4rem;
-  height: 1.1rem;
+  left: -1.55rem;
+  width: 1.3rem;
+  height: 1rem;
 }
 
 .kss_filter .custom-control-input {
