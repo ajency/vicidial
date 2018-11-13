@@ -1,5 +1,5 @@
-<a href="#" class="go-top">
+<a href="#" class="go-top text-black">
 	<div class="top-icon">
 	</div>
-	Go Top
+	Back to top
 </a>
