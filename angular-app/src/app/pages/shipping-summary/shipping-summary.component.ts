@@ -38,26 +38,30 @@ export class ShippingSummaryComponent implements OnInit {
   }
   
   closeCart(){
-    console.log("history.lenght ==>", history.length);
-    this.appservice.cartClosedFromShippingPages = true;
-    if(history.length > 3)
-      history.go(-3);
-    else{
-      // history.go(-2);
-      let url = window.location.href.split("#")[0];
-      history.replaceState({cart : false}, 'cart', url);
-      this.appservice.closeCart();
-      this.router.navigateByUrl('/cartpage', {skipLocationChange: true});
-    }
+    let url = window.location.href.split("#")[0];
+    history.pushState({cart : false}, 'cart', url);
+    window.location.reload();
+    // console.log("history.lenght ==>", history.length);
+    // this.appservice.cartClosedFromShippingPages = true;
+    // if(history.length > 3)
+    //   history.go(-3);
+    // else{
+    //   // history.go(-2);
+    //   let url = window.location.href.split("#")[0];
+    //   history.replaceState({cart : false}, 'cart', url);
+    //   this.appservice.closeCart();
+    //   this.router.navigateByUrl('/cartpage', {skipLocationChange: true});
+    // }
   }
 
   navigateBack(){
-    console.log("history.lenght ==>", history.length);
-    if(history.length > 3)
-      history.go(-2);
-    else{
-      history.back();
-    }
+    history.back();
+    // console.log("history.lenght ==>", history.length);
+    // if(history.length > 3)
+    //   history.go(-2);
+    // else{
+    //   history.back();
+    // }
   }
 
   updateUrl(){

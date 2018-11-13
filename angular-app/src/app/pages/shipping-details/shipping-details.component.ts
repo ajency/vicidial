@@ -223,31 +223,35 @@ export class ShippingDetailsComponent implements OnInit {
   }
 
   closeCart(){
+    let url = window.location.href.split("#")[0];
+    history.pushState({cart : false}, 'cart', url);
+    window.location.reload();
     // this.appservice.closeCart();
-    console.log("history.length ==>", history.length);
-    this.appservice.cartClosedFromShippingPages = true;
-    if(history.length>2)
-      history.go(-2);
-    else{
-      let url = window.location.href.split("#")[0];
-      history.replaceState({cart : false}, 'cart', url);
-      this.appservice.closeCart();
-      this.router.navigateByUrl('/cartpage', {skipLocationChange: true});
-    }
+    // console.log("history.length ==>", history.length);
+    // this.appservice.cartClosedFromShippingPages = true;
+    // if(history.length>2)
+    //   history.go(-2);
+    // else{
+    //   let url = window.location.href.split("#")[0];
+    //   history.replaceState({cart : false}, 'cart', url);
+    //   this.appservice.closeCart();
+    //   this.router.navigateByUrl('/cartpage', {skipLocationChange: true});
+    // }
   }
 
   navigateBack(){
+    history.back();
     // this.router.navigateByUrl('/', {skipLocationChange: true});
-    console.log("history.length ==>", history.length);
-    if(history.length>2)
-      history.back();
-    else{
-      this.appservice.cartClosedFromShippingPages = true;
-      let url = window.location.href.split("#")[0];
-      history.replaceState({cart : false}, 'cart', url);
-      this.appservice.closeCart();
-      this.router.navigateByUrl('/cartpage', {skipLocationChange: true});
-    }
+    // console.log("history.length ==>", history.length);
+    // if(history.length>2)
+    //   history.back();
+    // else{
+    //   this.appservice.cartClosedFromShippingPages = true;
+    //   let url = window.location.href.split("#")[0];
+    //   history.replaceState({cart : false}, 'cart', url);
+    //   this.appservice.closeCart();
+    //   this.router.navigateByUrl('/cartpage', {skipLocationChange: true});
+    // }
   }
 
   getAllStates(){    
@@ -262,6 +266,5 @@ export class ShippingDetailsComponent implements OnInit {
       console.log("error ===>", error);
       return [];
     })
-
   }
 }
