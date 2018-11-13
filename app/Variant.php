@@ -221,13 +221,17 @@ class Variant extends Model
      *
      * @return string
      */
-    public function getVariantData($mode, $data = [])
+    public function getVariantData($mode,$prefix = '', $data = [])
     {
         $productData = $this->elastic_data["search_result_data"];
         $variantData = collect($this->elastic_data['variants'])->where('variant_id', $this->odoo_id)->first();
         $data        = array_merge($productData, $variantData);
         if ($mode == 'all') {
-            return $data;
+            $filteredData = [];
+            foreach ($data as $key => $value) {
+               $filteredData[$prefix.$key] = $value;
+            }
+            return $filteredData;
         } elseif ($mode == 'only') {
             $filteredData = [];
             foreach ($data as $key) {
