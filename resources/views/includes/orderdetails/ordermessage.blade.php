@@ -22,3 +22,39 @@
 	</div>
 	@endif
 </div>
+
+@section('order-msg')
+	<script type="text/javascript">
+		var status = '<?php echo $status;?>';
+
+		function getNewCartId(){
+	        var url = "/api/rest/v1/user/cart/mine";
+	        $.ajax({
+	            url: url,
+	            type: 'GET',
+	            headers: {
+	                        'Authorization': 'Bearer '+getCookie('token')
+	                    },
+	            data: {},
+	            dataType: 'JSON',
+	            success: function (data) {
+	                    document.cookie = "cart_id=" + data.cart_id + ";path=/";
+	                
+	            },
+	            error: function (request, status, error) {
+	            	console.log("error");
+	            }
+	        });
+	    }
+
+		if(status == 'success'){
+			setTimeout(()=>{
+				getNewCartId();
+				document.cookie = "cart_count=" + 0 + ";path=/";
+				updateCartCountInUI();
+				sessionStorage.removeItem('cart_data');
+			},100);
+		}
+		
+	</script>
+@stop

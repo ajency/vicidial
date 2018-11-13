@@ -98,3 +98,7 @@
 	</div>
 </div>
 @endforeach
+
+@section('footjs')
+	@yield('order-msg')
+@stop
