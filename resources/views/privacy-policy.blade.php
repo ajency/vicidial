@@ -10,7 +10,7 @@
 </div>
 <div class="container mt-sm-3">
    <!-- Breadcrumbs -->
-   <div class="row d-none d-sm-block">
+   <div class="row mt-2 mt-sm-2">
       <div class="col-12">
          <div class="mb-4">
             @include('includes.breadcrumbs', ['breadcrumbs' => $params['breadcrumb']])
