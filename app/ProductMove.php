@@ -34,12 +34,20 @@ class ProductMove
         return $moves;
     }
 
-    public function indexProductMove($move_id){
-    	$odoo        = new OdooConnect;
-        $moveData = $odoo->defaultExec('stock.move.line', 'read', [[$move_id]], ['fields' => config('product.move_fields')])->first();
-        $sanitisedData = sanitiseMoveData($moveData,'move_');
-        $elastic_data =  array_merge($sanitisedData, Variant::where('odoo_id',$sanitisedData['product_id'])->first()->getVariantData('all','variant_'));
+    public function indexProductMove($move_id)
+    {
+        $odoo          = new OdooConnect;
+        $moveData      = $odoo->defaultExec('stock.move.line', 'read', [[$move_id]], ['fields' => config('product.move_fields')])->first();
+        $sanitisedData = sanitiseMoveData($moveData, 'move_');
+        $elastic_data  = array_merge($sanitisedData, Variant::where('odoo_id', $sanitisedData['move_product_id'])->first()->getVariantData('all', 'variant_'));
+
     }
 
+    public function indexElasticData($data)
+    {
+        $query = new ElasticQuery;
+        $query->createIndexParams($data['move_id'],$data);
+        $query->setIndex(config('elastic.indexes.move'))->index();
+    }
 
 }

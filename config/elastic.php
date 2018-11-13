@@ -8,5 +8,6 @@ return [
 	"prefix" => env('ELASTIC_PREFIX',""),
 	"indexes" => [
 		"product" => "products",
+		"move" => "product_moves",
 	],
 ];

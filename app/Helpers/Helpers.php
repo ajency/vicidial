@@ -437,6 +437,7 @@ function sanitiseMoveData($moveData, $prefix = '')
         $prefix . 'qty_done'         => $moveData['qty_done'],
         $prefix . 'reference'        => $moveData['reference'],
         $prefix . 'display_name'     => $moveData['display_name'],
+        $prefix . 'id'               => $moveData['id'],
         $prefix . 'owner_id'         => $moveData['owner_id'],
         $prefix . 'consume_line_ids' => $moveData['consume_line_ids'],
         $prefix . 'ordered_qty'      => $moveData['ordered_qty'],
