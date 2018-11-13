@@ -291,6 +291,7 @@ export class CartComponent implements OnInit {
         document.cookie='token='+ response.token + ";path=/";
         document.cookie='cart_id=' + response.user.active_cart_id + ";path=/";
         this.appservice.userVerificationComplete = true;
+        this.updateOtpModal(false);
         this.navigateToShippingDetailsPage();        
       }
       else{
