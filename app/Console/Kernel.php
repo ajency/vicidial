@@ -2,7 +2,9 @@
 
 namespace App\Console;
 
-use App\Product;
+use App\Jobs\ImageSync;
+use App\Jobs\ProductSync;
+use App\Jobs\ProductMoveSync;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 

@@ -111,10 +111,12 @@ class Variant extends Model
     public function getPrimaryImageSrcset()
     {
         $default_imgs = $this->productColor->getDefaultImage(["variant-thumb"]);
-        if(isset($default_imgs["variant-thumb"]))
+        if (isset($default_imgs["variant-thumb"])) {
             return $default_imgs["variant-thumb"];
-        else
+        } else {
             return $default_imgs;
+        }
+
     }
 
     public function getRelatedItems()
@@ -135,18 +137,20 @@ class Variant extends Model
         return $related_items;
     }
 
-    public function getItem($related_items=true)
+    public function getItem($related_items = true)
     {
         $item = array(
-            'product_slug'  => $this->getProductSlug(),
-            'availability'  => $this->getAvailability(),
-            'message'       => $this->getMessage(),
-            'attributes'    => $this->getItemAttributes(),
-            "id"            => $this->id,
+            'product_slug' => $this->getProductSlug(),
+            'availability' => $this->getAvailability(),
+            'message'      => $this->getMessage(),
+            'attributes'   => $this->getItemAttributes(),
+            "id"           => $this->id,
         );
 
-        if($related_items) $item['related_items'] = $this->getRelatedItems();
-        
+        if ($related_items) {
+            $item['related_items'] = $this->getRelatedItems();
+        }
+
         return $item;
 
     }
@@ -154,11 +158,11 @@ class Variant extends Model
     {
 
         return array(
-            'title'            => $this->getName(),
-            'images'           => $this->getPrimaryImageSrcset(),
-            'size'             => $this->getSize(),
-            'price_mrp'        => $this->getLstPrice(),
-            'price_final'      => $this->getSalePrice(),
+            'title'       => $this->getName(),
+            'images'      => $this->getPrimaryImageSrcset(),
+            'size'        => $this->getSize(),
+            'price_mrp'   => $this->getLstPrice(),
+            'price_final' => $this->getSalePrice(),
         );
     }
 
@@ -203,13 +207,34 @@ class Variant extends Model
     }
 
     /**
+     * Get Elastic ProductColor Data
+     *
+     * @return string
+     */
+    public function getParentElasticData()
+    {
+        return $this->elastic_data;
+    }
+
+    /**
      * Get Elastic variant Data
      *
      * @return string
      */
-    public function getVariantData()
+    public function getVariantData($mode, $data = [])
     {
-        return $this->elastic_data;
+        $productData = $this->elastic_data["search_result_data"];
+        $variantData = collect($this->elastic_data['variants'])->where('variant_id', $this->odoo_id)->first();
+        $data        = array_merge($productData, $variantData);
+        if ($mode == 'all') {
+            return $data;
+        } elseif ($mode == 'only') {
+            $filteredData = [];
+            foreach ($data as $key) {
+                $filteredData[$key] = $data[$key];
+            }
+            return $filteredData;
+        }
     }
 
     /**
@@ -255,7 +280,7 @@ class Variant extends Model
         $total = 0;
         if (isset($this->inventory)) {
             foreach ($this->inventory as $inventory) {
-                if($inventory["quantity"] >= 0) {
+                if ($inventory["quantity"] >= 0) {
                     $total += $inventory["quantity"];
                 }
             }
@@ -268,7 +293,8 @@ class Variant extends Model
         return $this->getLstPrice() - $this->getSalePrice();
     }
 
-    public function getProductSlug(){
+    public function getProductSlug()
+    {
         return $this->elastic_data["search_result_data"]["product_slug"];
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'template_fields' => [
+    'template_fields'    => [
         "name",
         "id",
         "article_desc",
@@ -37,7 +37,7 @@ return [
         // "color",
         // "product_own", #private/non private
     ],
-    'variant_fields'  => [
+    'variant_fields'     => [
         'id',
         'product_tmpl_id',
         'barcode',
@@ -60,13 +60,42 @@ return [
         // "supplier_taxes_id", # Vendor Tax
 
     ],
-    'attribute_fields' => [
+    'move_fields'        => [
+        "id",
+        "location_dest_id",
+        "location_id",
+        "state",
+        "product_id",
+        "product_uom_id",
+        "date",
+        "create_date",
+        "move_id",
+        "picking_id",
+        "qty_done",
+        "reference",
+        "name",
+        "display_name",
+        "owner_id",
+        "produce_line_id",
+        "consume_line_ids",
+        "ordered_qty",
+        "from_loc",
+        "to_loc",
+        "package_id",
+        "is_locked",
+        "lot_name",
+        //'lot_id',
+        //'result_package_id',
+        //'in_entire_package',
+        //'lots_visible',
+    ],
+    'attribute_fields'   => [
         'id',
         'name',
         'html_color',
         'attribute_id',
     ],
-    'facets'          => [
+    'facets'             => [
         "string_facet"  => [
             'product' => [
                 'product_slug',

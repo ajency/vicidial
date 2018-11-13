@@ -397,7 +397,7 @@ function validateOrder($user, $order)
     }
 }
 
-function validateCart($user, $cart, $type=null)
+function validateCart($user, $cart, $type = null)
 {
     if ($cart == null || $cart->user_id != $user->id) {
         abort(403);
@@ -412,4 +412,32 @@ function validateAddress($user, $address)
     if ($address == null || $address->user_id != $user->id) {
         abort(403);
     }
+}
+
+function sanitiseMoveData($moveData)
+{
+    $date        = new Carbon($moveData["date"]);
+    $create_date = new Carbon($moveData["create_date"]);
+    $body = [
+        "location_id"      => $moveData["location_id"][0],
+        "location"         => $moveData["location_id"][1],
+        "location_dest_id" => $moveData["location_dest_id"][0],
+        "location_dest"    => $moveData["location_dest_id"][1],
+        "state"            => $moveData["state"],
+        "product_id"       => $moveData["product_id"][0],
+        "product"          => $moveData["product_id"][1],
+        "product_uom_id"   => $moveData["product_uom_id"][0],
+        "product_uom"      => $moveData["product_uom_id"][1],
+        "date"             => $date->timestamp,
+        "create_date"      => $create_date->timestamp,
+        "picking_id"       => $moveData["picking_id"][0],
+        "picking"          => $moveData["picking_id"][1],
+        "move_id"          => $moveData["move_id"][0],
+        "move"             => $moveData["move_id"][1],
+        "write_date"       => $moveData["write_date"],
+        "last_update"      => $moveData["__last_update"],
+        "write_uid"        => $moveData["write_uid"],
+        "create_uid"       => $moveData["create_uid"],
+    ];
+    return $body;
 }

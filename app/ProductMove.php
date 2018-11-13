@@ -33,4 +33,13 @@ class ProductMove
         Defaults::setLastProductMove($moves->last());
         return $moves;
     }
+
+    public function indexProductMove($move_id){
+    	$odoo        = new OdooConnect;
+        $moveData = $odoo->defaultExec('stock.move.line', 'read', [[$move_id]], ['fields' => config('product.move_fields')])->first();
+        $sanitisedData = sanitiseMoveData($moveData);
+        
+    }
+
+
 }
