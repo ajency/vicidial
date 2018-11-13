@@ -2,6 +2,8 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { AppServiceService } from './service/app-service.service';
 import { Router } from '@angular/router';
 import { ApiServiceService } from './service/api-service.service';
+declare var $: any;
+declare var openCart: any;
 
 @Component({
   selector: 'app-root',
@@ -20,6 +22,10 @@ export class AppComponent {
 	  if(window.location.href.endsWith('#bag')){
 	  	this.router.navigateByUrl('/cartpage', { skipLocationChange: true });
 	  	this.appservice.closeVerificationModal();
+	  	if(!$('#cd-cart').hasClass("speed-in") && (window.location.href.endsWith('#bag') || window.location.href.endsWith('#bag/user-verification') || window.location.href.endsWith('#shipping-address') || window.location.href.endsWith('#shipping-summary')) ){
+        console.log("opening cart from angular")
+        openCart();
+     	}
 	  }
 	  else if(window.location.href.endsWith('#shipping-address')){
 	  	// do nothing
@@ -28,6 +34,9 @@ export class AppComponent {
 	  else if(window.location.href.endsWith('#bag/user-verification')){
 	  	// this.router.navigateByUrl('/cartpage', { skipLocationChange: true });
 	  	this.appservice.openVerificationModal();
+	  }
+	  else if(window.location.href.endsWith('#shipping-summary')){
+	  	
 	  }
 	  else if(!window.location.href.endsWith('#bag')){
 	  	this.appservice.closeCart();

@@ -9,6 +9,7 @@ $(document).ready(function(){
     window.onhashchange = function() { 
      console.log("hash changed");
      if(!$('#cd-cart').hasClass("speed-in") && (window.location.href.endsWith('#bag') || window.location.href.endsWith('#bag/user-verification') || window.location.href.endsWith('#shipping-address') || window.location.href.endsWith('#shipping-summary')) ){
+        console.log("opening cart from vanilla js");
         openCart();
      }
     }
