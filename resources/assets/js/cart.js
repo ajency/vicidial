@@ -104,7 +104,7 @@ $(document).ready(function(){
             error: function (request, status, error) {
                 console.log("Check ==>",request);
                 if(request.status == 401)
-                    userLogout();
+                    userLogout(request);
                 else if(!isLoggedInUser() || request.status == 0)
                     showErrorPopup(request);
                 else{
@@ -118,7 +118,7 @@ $(document).ready(function(){
     }
 
     function showErrorPopup(request){
-        var error_msg = (request.responseJSON && request.responseJSON.message!='') ? request.responseJSON.message : 'Could not add to bag';
+        var error_msg = (request && request.responseJSON && request.responseJSON.message!='') ? request.responseJSON.message : 'Could not add to bag';
         //if(request.responseJSON.message!='') error_msg = request.responseJSON.message
         $('.cd-add-to-cart .btn-icon').hide();
         $('.cd-add-to-cart .btn-label-initial').addClass('d-flex');
@@ -131,10 +131,10 @@ $(document).ready(function(){
         setTimeoutVariable();
         sessionStorage.setItem( "addded_to_cart", "false");
     }
-    function userLogout(){
+    function userLogout(request){
         document.cookie = "cart_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-        showErrorPopup();
+        showErrorPopup(request);
     }
     function getNewCartId(){
         var url = "/api/rest/v1/user/cart/mine";
