@@ -135,9 +135,10 @@ Add the following to crontab
 
 `cp .env.example .env`
 
-### Create an elastic index for products
+### Create an elastic index for products and product moves
 
 `php artisan elastic:create_index products`
+`php artisan elastic:create_index product_moves`
 
 ### Get all warehouses from odoo
 `php artisan odoo:warehouses` 
