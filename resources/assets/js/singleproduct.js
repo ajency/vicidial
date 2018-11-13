@@ -5,7 +5,7 @@
 
 $(function(){
 
-    var customHtml = '<div class="btn-label-initial d-flex align-items-center justify-content-center"><i class="kss_icon bag-icon-fill icon-sm"></i> Add to Bag</div><div class="btn-label-success"><i class="fas fa-arrow-right"></i> Go to Bag</div><div class="btn-icon"><i class="fas fa-circle-notch fa-spin fa-lg"></i></div>';
+    var customHtml = '<div class="btn-label-initial d-flex align-items-center justify-content-center py-1"><i class="kss_icon bag-icon-fill icon-sm"></i> Add to Bag</div><div class="btn-label-success py-1"><i class="fas fa-arrow-right"></i> Go to Bag</div><div class="btn-icon py-1"><i class="fas fa-circle-notch fa-spin fa-lg"></i></div>';
 
     var buttn = $('.add-bag-btn .cd-add-to-cart');
 

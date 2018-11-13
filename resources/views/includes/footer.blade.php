@@ -30,7 +30,7 @@
           <p class="font-weight-bold"><strong>Subscribe To Our Newsletter</strong></p>
           <form class="">
             <div class="form-group m-0 d-flex align-items-baseline">
-              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email address">
+              <input type="email" class="form-control px-2" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email address">
               <button type="submit" class="btn btn-primary">Submit</button>
             </div>
             <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
