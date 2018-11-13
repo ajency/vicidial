@@ -147,7 +147,7 @@ class SubOrder extends Model
         $order_line = [
             $i,
             "virtual_" . $variant->id,
-            array_merge(config('orders.odoo_order_defaults'),
+            array_merge(config('orders.odoo_orderline_defaults'),
             [
                 "product_id"         => $variant->odoo_id,
                 "product_uom_qty"    => $quantity,
@@ -163,12 +163,13 @@ class SubOrder extends Model
     {
         $date_order = new Carbon;
         $warehouse = Warehouse::find($this->warehouse_id);
+        $address = $this->order->address->odoo_id;
         $generated_name = $warehouse->name.$date_order->toDateTimeString().random_int(1000, 9999);
-        $options    = array_merge(config('orders.odoo_orderline_defaults'),
+        $options    = array_merge(config('orders.odoo_order_defaults'),
         [
             'partner_id'               => $this->order->cart->user->odoo_id,
-            'partner_invoice_id'       => $this->order->address->odoo_id,
-            'partner_shipping_id'      => $this->order->address->odoo_id,
+            'partner_invoice_id'       => $address,
+            'partner_shipping_id'      => $address,
             'warehouse_id'             => $this->warehouse_id,
             'company_id'               => $warehouse->company_id,
             'date_order'               => $date_order->toDateTimeString(),
