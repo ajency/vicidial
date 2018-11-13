@@ -29,14 +29,18 @@ export class AppComponent {
 	  }
 	  else if(window.location.href.endsWith('#shipping-address')){
 	  	// do nothing
-	  	this.router.navigateByUrl('/shipping-details', { skipLocationChange: true });
+	  	setTimeout(()=>{
+	  		this.appservice.directNavigationToShippingAddress = true;
+		  	this.router.navigateByUrl('/shipping-details', { skipLocationChange: true });	  		
+	  	},50);
 	  }
 	  else if(window.location.href.endsWith('#bag/user-verification')){
 	  	// this.router.navigateByUrl('/cartpage', { skipLocationChange: true });
 	  	this.appservice.openVerificationModal();
 	  }
 	  else if(window.location.href.endsWith('#shipping-summary')){
-	  	
+	  	let url = window.location.href.split("#")[0] + '#bag';
+	  	history.replaceState({cart : true}, 'cart', url);
 	  }
 	  else if(!window.location.href.endsWith('#bag')){
 	  	this.appservice.closeCart();

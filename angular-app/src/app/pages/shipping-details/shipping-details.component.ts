@@ -69,6 +69,7 @@ export class ShippingDetailsComponent implements OnInit {
        this.router.navigateByUrl('/cartpage', { skipLocationChange: true });
     }
     else{
+      this.appservice.showLoader();
       let url = this.appservice.apiUrl + ("/api/rest/v1/user/cart/"+this.appservice.getCookie('cart_id')+"/get");
       let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
       this.apiservice.request(url, 'get', {}, header ).then((response)=>{
@@ -81,24 +82,25 @@ export class ShippingDetailsComponent implements OnInit {
          document.cookie = "cart_count=" + response.cart_count + ";path=/";
          this.appservice.updateCartCountInUI();
 
-         if(!cartItemOutOfStock && response.items.length){
+         if(!cartItemOutOfStock && response.items.length && response.cart_type == "cart"){
            this.getAddress();
          }
          else{
           this.router.navigateByUrl('/cartpage', { skipLocationChange: true });
          }
-          
+         this.appservice.removeLoader(); 
       })
       .catch((error)=>{
          console.log("error ===>", error);
          this.appservice.removeLoader();
          this.router.navigateByUrl('/cartpage', { skipLocationChange: true });
-         return false;
+         this.appservice.removeLoader(); 
       })
     }
   }
 
   getAddress(){
+    this.appservice.showLoader();
     let url = this.appservice.apiUrl + "/api/rest/v1/user/address/all";
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     this.apiservice.request(url, 'get', {} , header ).then((response)=>{
