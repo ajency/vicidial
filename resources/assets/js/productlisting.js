@@ -4,6 +4,7 @@ console.log(config_facet_names_arr)
 
 var ajax_data = {}
 
+var page_val = 1;
 
 $(function(){
 
@@ -68,6 +69,9 @@ console.log("facet array===")
 console.log(config_facet_names_arr)
 
 $(document).ready(function(){
+    var page_no = $.url().param('page');
+    if(page_no != undefined)
+      page_val = page_no
     if($( "input[name='age']:checked" ).length){
         $.each($("input[name='age']:checked"), function(){            
             facetCategoryChange($(this),false)
@@ -262,7 +266,7 @@ function facetCategoryChange(thisObj,is_ajax = true)
 
     var url = constructCategoryUrl(config_facet_names_arr,facet_list,facet_value_slug_assoc);
     console.log("listurl====",url)
-    ajax_data = { "search_object": facet_list, "listurl": url , "page": 1}
+    ajax_data = { "search_object": facet_list, "listurl": url , "page": page_val}
     var data = JSON.stringify(ajax_data);
 
     if(call_ajax == true){

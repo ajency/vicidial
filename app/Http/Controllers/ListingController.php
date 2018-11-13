@@ -50,8 +50,10 @@ class ListingController extends Controller
         if($cat3 != null ) array_push($parameters['categories'], $cat3);
         if($cat4 != null ) array_push($parameters['categories'], $cat4);
     	$parameters['query'] = $request->all();
+        // dd($parameters);
         $page_params = [];
-        $page_params["page"] = 1;
+        $page_params["page"] = (isset($parameters['query']['page']))?$parameters['query']['page']:1;
+        // dd($page_params);
     	$params = $this->search_object($parameters,$page_params);
         if($params == false) return view('error404');
         if(empty((array)$params->filters)) return view('noproducts');
@@ -67,7 +69,7 @@ class ListingController extends Controller
         $parameters['categories'] = array();
         $parameters['query'] = $request->all();
         $page_params = [];
-        $page_params["page"] = 1;
+        $page_params["page"] = (isset($parameters['query']['page']))?$parameters['query']['page']:1;
         $params = $this->search_object($parameters,$page_params);
         $params->search_result_assoc = getFacetValueSlugPairs();
 
