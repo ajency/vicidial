@@ -1,9 +1,5 @@
 @extends('layouts.default')
 
-@section('headjs')
-
-@stop
-
 @section('content')
 
 <!-- Banner -->
