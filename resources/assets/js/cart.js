@@ -103,12 +103,12 @@ $(document).ready(function(){
             },
             error: function (request, status, error) {
                 console.log("Check ==>",request);
-                if(request.responseJSON && request.responseJSON.status == 401)
+                if(request.status == 401)
                     userLogout();
                 else if(!isLoggedInUser() || request.status == 0)
                     showErrorPopup(request);
                 else{
-                    if(request.responseJSON.status == 400 || request.responseJSON.status == 403)
+                    if(request.status == 400 || request.status == 403)
                         getNewCartId();
                     else
                         showErrorPopup(request);
