@@ -44,10 +44,5 @@ $(function(){
         $('.colorOptions__trigger').click();
     }
 
-    setTimeout(function () {
-        $('.prod-slides').addClass('center-aligned');
-    }, 500);
-
-
 })
 

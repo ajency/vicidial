@@ -1,8 +1,6 @@
 @extends('layouts.default')
 
-@php
-  $delaycss = true;
-@endphp
+
 
 @section('headjs')
 	@include('includes.abovethefold.singleproductcss')

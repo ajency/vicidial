@@ -12,7 +12,7 @@
 				$divclass = 'slider-placeholder-img';
 			}
 			@endphp
-		<ul id="aniimated-thumbnials" class="list-unstyled m-0 m-md-2 {{$divclass}} carousel">
+		<ul id="aniimated-thumbnials" class="list-unstyled m-0 mb-3 mb-sm-0 m-lg-2 {{$divclass}} carousel">
 
 			@php
 			if(count((array)$params['images'])>0) {
