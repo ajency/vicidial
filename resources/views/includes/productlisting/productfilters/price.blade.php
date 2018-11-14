@@ -8,7 +8,7 @@
       <div id="collapsePrice" class="collapse @{{#if collapsed}} @{{else}} show @{{/if}}" aria-labelledby="headingThree" >
         <div class="card-body">
           <div class="priceRange">
-            <input type="text" id="price-range" name="price" value="" data-facet-name="@{{filter_facet_name}}" data-singleton="true" data-slug="@{{slug}}" @{{#if disabled_at_zero_count}} @{{#ifEquals count 0 }} disabled = "disabled" @{{/ifEquals}} @{{/if}}/>
+            <input type="text" id="price-range" name="price" value="" data-facet-name="@{{filter_facet_name}}" data-singleton="true" data-slug="@{{slug}}" @{{#if ../disabled_at_zero_count}} @{{#ifEquals count 0 }} disabled = "disabled" @{{/ifEquals}} @{{/if}}/>
           </div>
           <div class="row mt-3">
             <div class="col-5 col-sm-5">
@@ -42,8 +42,14 @@
    var toval = <?= ($filter_type == "range_filter")?$end:0 ?>;
    var filter_display_name = '<?= $header["display_name"] ?>';
    var filter_facet_name = '<?= $header["facet_name"] ?>';
+   var display_count = <?= json_encode($display_count) ?>;
+   var disabled_at_zero_count = <?= json_encode($disabled_at_zero_count) ?>;
+   var is_attribute_param = <?= json_encode($is_attribute_param) ?>;
    console.log("price----"+<?= $singleton ?>)
    var context = {};
+   context["display_count"] = display_count;
+   context["disabled_at_zero_count"] = disabled_at_zero_count;
+   context["is_attribute_param"] = is_attribute_param;
    context["singleton"] = singleton;
    context["collapsed"] = collapsed;
    context["filter_display_name"] = filter_display_name;

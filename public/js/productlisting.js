@@ -243,10 +243,11 @@ function facetCategoryChange(thisObj) {
 
   var url = constructCategoryUrl(config_facet_names_arr, facet_list, facet_value_slug_assoc);
   console.log("listurl====", url);
-  ajax_data = { "search_object": { "primary_filter": facet_list }, "listurl": url, "page": page_val };
-  if (Object.keys(range_facet_list).length > 0) ajax_data["search_object"]["range_filter"] = range_facet_list;
+  ajax_data = { "search_object": { "primary_filter": facet_list, "range_filter": range_facet_list }, "listurl": url, "page": page_val
+    // if( Object.keys(range_facet_list).length>0)
+    //   ajax_data["search_object"]["range_filter"] = range_facet_list
 
-  var data = JSON.stringify(ajax_data);
+  };var data = JSON.stringify(ajax_data);
 
   if (call_ajax == true) {
 
@@ -436,6 +437,8 @@ function initializeSlider(fromval, toval) {
     onChange: function onChange(data) {
       $('#price-min').val(data.from);
       $('#price-max').val(data.to);
+    },
+    onFinish: function onFinish(data) {
       facetCategoryChange($("#price-range"), true, true);
     }
   });
