@@ -3,7 +3,10 @@
 <!-- Order shipped details -->
 <div class="d-flex bd-highlight">
 	<div class="pb-2 pr-2">
-		<label class="d-block m-0">Shipment {{$loop->iteration}} of {{$sub_order['number_of_items']}} {{$sub_order['number_of_items'] == 1 ? "Item" : "Items"}}</label>
+		<label class="d-block m-0">Shipment {{$loop->iteration}}</label>
+		@if(! empty($sub_order['store_address']))
+			<span>Sold by: {{$sub_order['store_address']['store_name']}} - {{$sub_order['store_address']['locality']}}, {{$sub_order['store_address']['city']}}</span>
+		@endif
 		<!-- <i class="fas fa-clipboard-check mr-1 text-muted"></i> <span class="text-success font-weight-bold">Order Processed</span> -->
 	</div>
 	<div class="pb-2 ml-auto">

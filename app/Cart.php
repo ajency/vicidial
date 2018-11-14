@@ -86,14 +86,14 @@ class Cart extends Model
         return $this;
     }
 
-    public function getItem(int $variant_id, $fetch_related = true)
+    public function getItem(int $variant_id, $fetch_related = true, $current_quantity = false)
     {
         $variant = Variant::find($variant_id);
         if ($variant == null) {
             abort(404);
         }
 
-        $item                 = $variant->getItem($fetch_related);
+        $item                 = $variant->getItem($fetch_related, $current_quantity);
         $item["quantity"]     = intval($this->cart_data[$item["id"]]["quantity"]);
         $item["timestamp"]    = intval($this->cart_data[$item["id"]]["timestamp"]);
         $item["availability"] = ($variant->getQuantity() >= $item["quantity"]);

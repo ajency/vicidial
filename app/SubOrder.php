@@ -6,7 +6,6 @@ use App\Variant;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use App\Elastic\OdooConnect;
-use App\Warehouse;
 
 class SubOrder extends Model
 {
@@ -18,6 +17,11 @@ class SubOrder extends Model
     public function order()
     {
         return $this->belongsTo('App\Order');
+    }
+
+    public function warehouse()
+    {
+        return $this->belongsTo('App\Warehouse');
     }
 
     public function setItems($items)
@@ -113,6 +117,10 @@ class SubOrder extends Model
             $itemsData[]            = $item;
         }
         $sub_order = array('suborder_id' => $this->id, 'total' => $this->odoo_data['total'] + $this->odoo_data['shipping_fee'], 'number_of_items' => count($this->item_data), 'items' => $itemsData);
+        $store_address = $this->warehouse->getAddress();
+        if($store_address!=null) {
+            $sub_order['store_address'] = $store_address;
+        }
 
         return $sub_order;
     }
@@ -162,16 +170,15 @@ class SubOrder extends Model
     public function createOrderParams(array $order_lines = [])
     {
         $date_order = new Carbon;
-        $warehouse = Warehouse::find($this->warehouse_id);
         $address = $this->order->address->odoo_id;
-        $generated_name = $warehouse->name.$date_order->toDateTimeString().random_int(1000, 9999);
+        $generated_name = $this->warehouse->name.$date_order->toDateTimeString().random_int(1000, 9999);
         $options    = array_merge(config('orders.odoo_order_defaults'),
         [
             'partner_id'               => $this->order->cart->user->odoo_id,
             'partner_invoice_id'       => $address,
             'partner_shipping_id'      => $address,
             'warehouse_id'             => $this->warehouse_id,
-            'company_id'               => $warehouse->company_id,
+            'company_id'               => $this->warehouse->company_id,
             'date_order'               => $date_order->toDateTimeString(),
             'origin'                   => $generated_name,
             "name"                     => $generated_name,
