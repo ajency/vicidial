@@ -54,8 +54,7 @@ class Handler extends ExceptionHandler
         if (starts_with($uri, 'rest/') or starts_with($uri, 'api/rest/')) {
             return parent::render($request, $exception);
         }
-
-        if(config('app.debug') == 'false'){
+        if(config('app.debug') == false){
             return response()->view('error404');
         }else{
             return parent::render($request, $exception);

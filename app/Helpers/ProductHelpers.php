@@ -161,7 +161,7 @@ function sanitiseFilterdata($result, $params = [])
         $filter["is_collapsed"] = !boolval($is_collapsed);
         $response[]             = $filter;
     }
-
+    // dd($params);
     //le price filter
     $filter           = [];
     $filter['header'] = [
@@ -173,10 +173,15 @@ function sanitiseFilterdata($result, $params = [])
     }
     $filter["items"] = [];
     $filter["is_collapsed"] = false;
-    $filter["start"] = $priceFilter['min'];
-    $filter["end"] = $priceFilter['max'];
+    $filter["bucket_range"] = [];
+    $filter["bucket_range"]["start"] = $priceFilter['min'];
+    $filter["bucket_range"]["end"] = $priceFilter['max'];
+    $filter["selected_range"]=[];
+    $filter["selected_range"]["start"]=(isset($params["search_object"]['range_filter']['variant_sale_price']))? $params["search_object"]['range_filter']['variant_sale_price']['min'] : null ;
+    $filter["selected_range"]["end"]=(isset($params["search_object"]['range_filter']['variant_sale_price']))? $params["search_object"]['range_filter']['variant_sale_price']['max'] : null ;
+    $filter["selected_range"]["end"] = ($filter["selected_range"]["end"] > $filter["bucket_range"]["end"])? $filter["bucket_range"]["end"] : $filter["selected_range"]["end"];
     $response[]             = $filter;
-    // dd($response);
+    dd($response);
     return $response;
 }
 
