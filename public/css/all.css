@@ -11724,6 +11724,12 @@ footer .bl-1 {
   font-size: 1.15em;
 }
 
+@media (max-width: 767px) {
+  .socialIcon-size {
+    font-size: 1.1em;
+  }
+}
+
 .fb-color {
   color: #3B5998;
 }
@@ -11736,6 +11742,12 @@ footer .bl-1 {
   margin-left: 5px;
   margin-bottom: 0;
   font-size: 1.2em;
+}
+
+@media (max-width: 767px) {
+  .social-title {
+    font-size: 1.1em;
+  }
 }
 
 /* Custom Select */
