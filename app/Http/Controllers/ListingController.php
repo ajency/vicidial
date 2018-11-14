@@ -22,7 +22,7 @@ class ListingController extends Controller
         // $search_object = ($search_obj == null)?(build_search_object($params)):$search_obj;
         $search_results = [];
         if($search_obj == null){
-            $search_object = $search_object_arr["search_result"];
+            $search_object = ["primary_filter" => $search_object_arr["search_result"]];
         }
         else{
             $search_object = $search_obj;
@@ -35,6 +35,7 @@ class ListingController extends Controller
                // dd($search_object);
         if(!isset($page_params["display_limit"]))
             $page_params["display_limit"] = config('product.list_page_display_limit');
+        // dd($page_params);
         $params = Product::productListPage(["search_object" => $search_object,"display_limit"=> $page_params["display_limit"],"page" =>$page_params["page"]],$search_results["slug_value_search_result"],$search_results["slug_search_result"],$search_results["slugs_result"],$search_results["title"]);
 
         // dd($params);
@@ -50,16 +51,18 @@ class ListingController extends Controller
         if($cat3 != null ) array_push($parameters['categories'], $cat3);
         if($cat4 != null ) array_push($parameters['categories'], $cat4);
     	$parameters['query'] = $request->all();
+
         // dd($parameters);
         $page_params = [];
         $page_params["page"] = (isset($parameters['query']['page']))?$parameters['query']['page']:1;
         // dd($page_params);
     	$params = $this->search_object($parameters,$page_params);
+         // dd($params);
         if($params == false) return view('error404');
         if(empty((array)$params->filters)) return view('noproducts');
         
         $params->search_result_assoc = getFacetValueSlugPairs();
-        // dd($search_result_assoc);
+        // dd($params);
         return view('productlisting')->with('params',$params);
     }
 
@@ -70,6 +73,7 @@ class ListingController extends Controller
         $parameters['query'] = $request->all();
         $page_params = [];
         $page_params["page"] = (isset($parameters['query']['page']))?$parameters['query']['page']:1;
+
         $params = $this->search_object($parameters,$page_params);
         $params->search_result_assoc = getFacetValueSlugPairs();
 

@@ -10973,6 +10973,10 @@ a.text-cancel:hover, a.text-cancel:focus {
   cursor: pointer;
 }
 
+.kss_filter label {
+  font-size: 0.9rem;
+}
+
 .kss_filter_mobile {
   left: 0px;
 }

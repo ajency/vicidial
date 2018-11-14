@@ -46,12 +46,17 @@
 
     $config_facet_names_arr = array_keys($facet_display_data);
     $facet_value_slug_assoc = json_encode($params->search_result_assoc);
+    $facet_display_data_arr = json_encode($facet_display_data);
   ?>
   <script type="text/javascript">
       var config_facet_names_arr = <?= json_encode($config_facet_names_arr);?>;
       var facet_value_slug_assoc = <?= $facet_value_slug_assoc ?>;
+      var facet_display_data_arr = <?= $facet_display_data_arr ?>;
       var product_list_items = {};
   </script>
+   <script type="text/javascript" src="{{CDN::mix('/js/productlisting.js') }}"></script>
+  @yield('footjs-color')
+  @yield('footjs-price')
   @yield('footjs-gender')
   @yield('footjs-age')
   @yield('footjs-subtype')
@@ -59,6 +64,6 @@
   @yield('footjs-filter-tags')
   @yield('footjs-products-list')
 
-  <script type="text/javascript" src="{{CDN::mix('/js/productlisting.js') }}"></script>
+ 
 
 @stop

@@ -6,13 +6,27 @@ use App\Elastic\OdooConnect;
 use App\Facet;
 use App\Jobs\CreateProductJobs;
 use App\Jobs\FetchProductImages;
+use App\Jobs\UpdateVariantInventory;
 use App\ProductColor;
 use App\Variant;
-use App\Jobs\UpdateVariantInventory;
 
 class Product
 {
     protected $data;
+
+
+    public static function odooFilter($filters)
+    {
+        if (isset($filters['id'])) {
+            return [[['id', '>', $filters['id']]]];
+        } elseif (isset($filters['created'])) {
+            return [[['create_date', '>', $filters['created']]]];
+        } elseif (isset($filters['updated'])) {
+            return [[['__last_update', '>', $filters['updated']]]];
+        } elseif (isset($filters['write'])) {
+            return [[['write_date', '>', $filters['write']]]];
+        }
+    }
 
     public static function getProductIDs($filters, $offset, $limit = false)
     {
@@ -96,8 +110,22 @@ class Product
                 $facetObj               = new Facet;
                 $facetObj->facet_name   = $facet;
                 $facetObj->facet_value  = $product[$facet];
-                $facetObj->display_name = $product[$facet];
+                $facetObj->display_name = ($facet == 'product_color_html')? $product['product_color_name']:$product[$facet];
                 $facetObj->slug         = str_slug($product[$facet]);
+                $facetObj->sequence     = 10000;
+                $facetObj->save();
+            } catch (\Exception $e) {
+                \Log::warning($e->getMessage());
+            }
+        }
+        $facets = ['product_color_html'];
+        foreach ($facets as $facet) {
+            try {
+                $facetObj               = new Facet;
+                $facetObj->facet_name   = $facet;
+                $facetObj->facet_value  = $variant[$facet];
+                $facetObj->display_name = ($facet == 'product_color_html')? $variant['product_color_name']:$variant[$facet];
+                $facetObj->slug         = str_slug($variant[$facet]);
                 $facetObj->sequence     = 10000;
                 $facetObj->save();
             } catch (\Exception $e) {
@@ -244,36 +272,34 @@ class Product
         $products = ProductColor::leftJoin('fileupload_mapping', function ($join) {
             $join->on('product_colors.id', '=', 'fileupload_mapping.object_id');
             $join->where('fileupload_mapping.object_type', '=', "App\ProductColor");
-        })->where('fileupload_mapping.id', null)->select('product_colors.product_id')->where('product_colors.no_image','!=',true)->distinct()->get();
+        })->where('fileupload_mapping.id', null)->select('product_colors.product_id')->where('product_colors.no_image', '!=', true)->distinct()->get();
         foreach ($products as $product) {
             FetchProductImages::dispatch($product->product_id)->onQueue('process_product_images');
         }
     }
 
-
     public static function buildBaseQuery()
     {
 
-        $index    = config('elastic.indexes.product');
-        $q        = new ElasticQuery;
-        $required = [
-            "product_category_type",
-            "product_gender",
-            "product_subtype",
-            "product_age_group",
-        ];
-        $aggs_facet_name = $q::createAggTerms("facet_name", "search_data.string_facet.facet_name", ["include" => $required]);
+        $q                 = new ElasticQuery;
 
+        $required          = ["product_category_type", "product_gender", "product_subtype", "product_age_group", "product_color_html"];
+        $aggs_facet_name   = $q::createAggTerms("facet_name", "search_data.string_facet.facet_name", ["include" => $required]);
         $aggs_facet_value  = $q::createAggTerms("facet_value", "search_data.string_facet.facet_value");
         $aggs_facet_value  = $q::addToAggregation($aggs_facet_value, $q::createAggReverseNested('count'));
         $aggs_facet_name   = $q::addToAggregation($aggs_facet_name, $aggs_facet_value);
         $aggs_string_facet = $q::createAggNested("agg_string_facet", "search_data.string_facet");
-
         $aggs_string_facet = $q::addToAggregation($aggs_string_facet, $aggs_facet_name);
-        $aggs              = $aggs_string_facet;
-        $q->setIndex($index)
-            ->initAggregation()
-            ->setAggregation($aggs)
+        
+        $aggFacetNameP     = $q::createAggTerms("facet_name", "search_data.number_facet.facet_name", ["include" => ['variant_sale_price']]);
+        $aggMax            = $q::createAggMax('facet_value_max', 'search_data.number_facet.facet_value');
+        $aggMin            = $q::createAggMin('facet_value_min', 'search_data.number_facet.facet_value');
+        $minMax            = $q::addToAggregation($aggFacetNameP, array_merge($aggMax, $aggMin));
+        $aggsPrice         = $q::createAggNested("agg_price", "search_data.number_facet");
+        $priceQ            = $q::addToAggregation($aggsPrice, $minMax);
+        
+        $q->setIndex(config('elastic.indexes.product'))
+            ->initAggregation()->setAggregation(array_merge($priceQ, $aggs_string_facet))
             ->setSize(0);
 
         return $q;
@@ -282,19 +308,28 @@ class Product
     public static function getProductCategoriesWithFilter($params)
     {
 
-        $q       = self::buildBaseQuery();
+        $q = self::buildBaseQuery();
+
         $filters = makeQueryfromParams($params["search_object"]);
-        $must    = [];
+
+        $must = [];
         foreach ($filters as $path => $data) {
             foreach ($data as $facet => $data2) {
                 foreach ($data2 as $field => $values) {
                     $should = [];
                     $nested = [];
-                    foreach ($values as $value) {
+                    if ($values['type'] == 'enum') {
+                        foreach ($values['value'] as $value) {
+                            $facetName  = $q::createTerm($path . "." . $facet . '.facet_name', $field);
+                            $facetValue = $q::createTerm($path . "." . $facet . '.facet_value', $value);
+                            $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
+                            $nested[]   = $q::createNested($path . '.' . $facet, $filter);
+                            $should     = $q::addToBoolQuery('should', $nested, $should);
+                        }} else if ($values['type'] == 'range') {
+                        $facetValue = $q::createRange($path . "." . $facet . '.facet_value', ['lte' => $values['value']['max'], 'gte' => $values['value']['min']]);
                         $facetName  = $q::createTerm($path . "." . $facet . '.facet_name', $field);
-                        $facetValue = $q::createTerm($path . "." . $facet . '.facet_value', $value);
                         $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
-                        $nested[]   = $q::createNested('search_data.string_facet', $filter);
+                        $nested[]   = $q::createNested($path . '.' . $facet, $filter);
                         $should     = $q::addToBoolQuery('should', $nested, $should);
                     }
                     $nested2 = $q::createNested($path, $should);
@@ -302,28 +337,29 @@ class Product
                 }
             }
         }
+
         $must = $q::addToBoolQuery('must', $must);
 
-        $nested = [];
-        $facetName  = $q::createTerm( "search_data.number_facet.facet_name", "product_color_id");
+        $nested     = [];
+        $facetName  = $q::createTerm("search_data.number_facet.facet_name", "product_color_id");
         $facetValue = $q::createTerm("search_data.number_facet.facet_value", 0);
         $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
         $nested[]   = $q::createNested('search_data.number_facet', $filter);
-        $nested2 = $q::createNested("search_data", $nested);
-        $must = $q::addToBoolQuery('must_not',$nested2, $must);
+        $nested2    = $q::createNested("search_data", $nested);
+        $must       = $q::addToBoolQuery('must_not', $nested2, $must);
 
-        $nested = [];
-        $facetName  = $q::createTerm( "search_data.boolean_facet.facet_name", "variant_availability");
+        $nested     = [];
+        $facetName  = $q::createTerm("search_data.boolean_facet.facet_name", "variant_availability");
         $facetValue = $q::createTerm("search_data.boolean_facet.facet_value", true);
         $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
         $nested[]   = $q::createNested('search_data.boolean_facet', $filter);
-        $nested2 = $q::createNested("search_data", $nested);
-        $must = $q::addToBoolQuery('filter',$nested2, $must);
-        
+        $nested2    = $q::createNested("search_data", $nested);
+        $must       = $q::addToBoolQuery('filter', $nested2, $must);
+
         $q->setQuery($must);
         // dd($q->getParams());
         $response = $q->search();
-        return sanitiseFilterdata($response,$params);
+        return sanitiseFilterdata($response, $params);
     }
 
     public static function getProductCategories()
@@ -332,12 +368,13 @@ class Product
         return sanitiseFilterdata($q->search());
     }
 
-    public static function getItemsWithFilters($params){
-        $size = $params["display_limit"];
+    public static function getItemsWithFilters($params)
+    {
+        $size   = $params["display_limit"];
         $offset = ($params["page"] - 1) * $size;
 
-        $index    = config('elastic.indexes.product');
-        $q        = new ElasticQuery;
+        $index = config('elastic.indexes.product');
+        $q     = new ElasticQuery;
         $q->setIndex($index);
         $filters = makeQueryfromParams($params["search_object"]);
         $must    = [];
@@ -346,99 +383,143 @@ class Product
                 foreach ($data2 as $field => $values) {
                     $should = [];
                     $nested = [];
-                    foreach ($values as $value) {
+                    if ($values['type'] == 'enum') {
+                        foreach ($values['value'] as $value) {
+                            $facetName  = $q::createTerm($path . "." . $facet . '.facet_name', $field);
+                            $facetValue = $q::createTerm($path . "." . $facet . '.facet_value', $value);
+                            $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
+                            $nested[]   = $q::createNested($path . '.' . $facet, $filter);
+                            $should     = $q::addToBoolQuery('should', $nested, $should);
+                        }} else if ($values['type'] == 'range') {
+                        $facetValue = $q::createRange($path . "." . $facet . '.facet_value', ['lte' => $values['value']['max'], 'gte' => $values['value']['min']]);
                         $facetName  = $q::createTerm($path . "." . $facet . '.facet_name', $field);
-                        $facetValue = $q::createTerm($path . "." . $facet . '.facet_value', $value);
                         $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
-                        $nested[]   = $q::createNested('search_data.string_facet', $filter);
+                        $nested[]   = $q::createNested($path . '.' . $facet, $filter);
                         $should     = $q::addToBoolQuery('should', $nested, $should);
                     }
                     $nested2 = $q::createNested($path, $should);
                     $must[]  = $nested2;
+
                 }
             }
         }
         $must = $q::addToBoolQuery('must', $must);
 
-
-        $nested = [];
-        $facetName  = $q::createTerm( "search_data.number_facet.facet_name", "product_color_id");
+        $nested     = [];
+        $facetName  = $q::createTerm("search_data.number_facet.facet_name", "product_color_id");
         $facetValue = $q::createTerm("search_data.number_facet.facet_value", 0);
         $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
         $nested[]   = $q::createNested('search_data.number_facet', $filter);
-        $nested2 = $q::createNested('search_data', $nested);
-        $must = $q::addToBoolQuery('must_not',$nested2, $must);
+        $nested2    = $q::createNested('search_data', $nested);
+        $must       = $q::addToBoolQuery('must_not', $nested2, $must);
 
-
-        $nested = [];
-        $facetName  = $q::createTerm( "search_data.boolean_facet.facet_name", "variant_availability");
+        $nested     = [];
+        $facetName  = $q::createTerm("search_data.boolean_facet.facet_name", "variant_availability");
         $facetValue = $q::createTerm("search_data.boolean_facet.facet_value", true);
         $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
         $nested[]   = $q::createNested('search_data.boolean_facet', $filter);
-        $nested2 = $q::createNested('search_data', $nested);
-        $must = $q::addToBoolQuery('filter',$nested2, $must);
+        $nested2    = $q::createNested('search_data', $nested);
+        $must       = $q::addToBoolQuery('filter', $nested2, $must);
 
+        // $must = self::priceFilter($q, $must, 200, 300);
         $q->setQuery($must)
-        ->setSource(["search_result_data", "variants"])
-        ->setSize($size)->setFrom($offset);
+            ->setSource(["search_result_data", "variants"])
+        // ->setSort(['number_sort.variant_sale_price' => ["order" => "desc"] ])
+            ->setSize($size)->setFrom($offset);
+        // dd($q->getJSON());
         return formatItems($q->search(), $params);
     }
 
-    public static function productListPage($params,$slug_value_search_result,$slug_search_result,$slugs_result,$title=""){
-        $output = [];
-        $filter_params = [];
+    public static function priceFilter($q, $must, $min, $max)
+    {
+        $nested     = [];
+        $facetName  = $q::createTerm("search_data.number_facet.facet_name", "variant_sale_price");
+        $facetValue = $q::createRange("search_data.number_facet.facet_value", ['lte' => $max, 'gte' => $min]);
+        $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
+        $nested[]   = $q::createNested('search_data.number_facet', $filter);
+        $nested2    = $q::createNested('search_data', $nested);
+        $must       = $q::addToBoolQuery('filter', $nested2, $must);
+        return $must;
+
+    }
+
+    public static function productListPage($params, $slug_value_search_result, $slug_search_result, $slugs_result, $title = "")
+    {
+        $output                         = [];
+        $filter_params                  = [];
         $filter_params["search_object"] = [];
-        $facet_display_data = config('product.facet_display_data');
-        foreach($params["search_object"] as $paramk => $paramv){
-            if($facet_display_data[$paramk]["is_singleton"] == false){
-                $fields  = $paramv;
+        $facet_display_data             = config('product.facet_display_data');
+        // dd($params);
+        foreach ($params["search_object"]["primary_filter"] as $paramk => $paramv) {
+            if ($facet_display_data[$paramk]["is_singleton"] == false) {
+                $fields = $paramv;
                 array_push($fields, "all");
-                $filter_params["search_object"][$paramk] = $fields;
+                $filter_params["search_object"]["primary_filter"][$paramk] = $fields;
+            } else {
+                $filter_params["search_object"]["primary_filter"][$paramk] = $paramv;
             }
-            else
-                $filter_params["search_object"][$paramk] = $paramv;
 
         }
-        $output["filters"] = self::getProductCategoriesWithFilter($filter_params);
-        $results = self::getItemsWithFilters($params);
-        $facet_names = array_keys($facet_display_data);
-        $bread = [];
-        $bread['breadcrumb']           = array("list" =>[],"current"=>"");
+        if( isset($params["search_object"]["range_filter"]))
+            $filter_params["search_object"]["range_filter"] = $params["search_object"]["range_filter"];
+        $filter_params["display_limit"] = $params["display_limit"];
+        $filter_params["page"] = $params["page"];
+        // dd($filter_params);
+
+        // $params = $filter_params =  ['search_object' =>['primary_filter' => [ 'product_gender' => ['Boys','all']]], 'display_limit' => 20, 'page' => 1] ;
+        $params = $filter_params ;
+        $output["filters"]   = self::getProductCategoriesWithFilter($filter_params);
+        // dd($output["filters"]);
+        $results             = self::getItemsWithFilters($params);
+        $facet_names         = array_keys($facet_display_data);
+        $bread               = [];
+        $bread['breadcrumb'] = array("list" => [], "current" => "");
         // $bread['breadcrumb']['list']   = array();
         $gen_url = "";
-        foreach($facet_names as $fkey => $facet_name){
+        foreach ($facet_names as $fkey => $facet_name) {
             $slugval = array_search($facet_name, $slug_search_result);
-            
+
             $part_url = "";
             $cat_name = "";
-            if(isset($slug_value_search_result[$slugval]["facet_value"])){
-                foreach($slugs_result[$facet_name] as $slugk => $slugv){
-                    if($slugk == 0){
+            if (isset($slug_value_search_result[$slugval]["facet_value"])) {
+                foreach ($slugs_result[$facet_name] as $slugk => $slugv) {
+                    if ($slugk == 0) {
                         $part_url .= $slugv;
-                        $cat_name =  $slug_value_search_result[$slugv]["facet_value"];
-                    }
-                    else{
-                        $part_url .= "--".$slugv;
-                        $cat_name .= "-".$slug_value_search_result[$slugv]["facet_value"];
+                        $cat_name = $slug_value_search_result[$slugv]["facet_value"];
+                    } else {
+                        $part_url .= "--" . $slugv;
+                        $cat_name .= "-" . $slug_value_search_result[$slugv]["facet_value"];
                     }
                 }
-                $gen_url .= "/".$part_url;
-            
-                if($fkey == (count($slug_search_result)-1))
+                $gen_url .= "/" . $part_url;
+
+                if ($fkey == (count($slug_search_result) - 1)) {
                     $bread['breadcrumb']['current'] = $cat_name;
-                else
+                } else {
                     $bread['breadcrumb']['list'][] = ['name' => $cat_name, 'href' => url($gen_url)];
+                }
+
             }
-            
+
         }
-        $output["page"] = $results["page"];
-        $output["items"] = $results["items"];
+        $output["page"]          = $results["page"];
+        $output["items"]         = $results["items"];
         $output["results_found"] = $results["results_found"];
-        $output["headers"] = ["page_title"=>$title,"product_count"=>$results["page"]["total_item_count"]];
-        $output["sort_on"] =[["name"=>"Latest Products","value"=>"latest","is_selected"=>false],["name"=>"Popularity","value"=>"popular","is_selected"=>true],["name"=>"Price Low to High","value"=>"price_asc","is_selected"=>false],["name"=>"Price High to Low","value"=>"price_dsc","is_selected"=>false],["name"=>"Discount Low to High","value"=>"discount_asc","is_selected"=>false],["name"=>"Discount High to Low","value"=>"discount_dsc","is_selected"=>false]];
-        $output["breadcrumbs"] = $bread['breadcrumb'];
-        $output["search"] = ["params"=>["genders"=>["men"],"l1_categories"=>["clothing"]],"pattern"=>[["key"=>"genders","slugs"=>["men"]],["key"=>"l1_categories","slugs"=>["clothing"]]],"is_valid"=>true,"domain"=>"https=>//newsite.stage.kidsuperstore.in","type"=>"product-list","query"=>["page"=>["2"],"page_size"=>["20"]]];
+        $output["headers"]       = ["page_title" => $title, "product_count" => $results["page"]["total_item_count"]];
+        $output["sort_on"]       = [["name" => "Latest Products", "value" => "latest", "is_selected" => false], ["name" => "Popularity", "value" => "popular", "is_selected" => true], ["name" => "Price Low to High", "value" => "price_asc", "is_selected" => false], ["name" => "Price High to Low", "value" => "price_dsc", "is_selected" => false], ["name" => "Discount Low to High", "value" => "discount_asc", "is_selected" => false], ["name" => "Discount High to Low", "value" => "discount_dsc", "is_selected" => false]];
+        $output["breadcrumbs"]   = $bread['breadcrumb'];
+        $output["search"]        = ["params" => ["genders" => ["men"], "l1_categories" => ["clothing"]], "pattern" => [["key" => "genders", "slugs" => ["men"]], ["key" => "l1_categories", "slugs" => ["clothing"]]], "is_valid" => true, "domain" => "https=>//newsite.stage.kidsuperstore.in", "type" => "product-list", "query" => ["page" => ["2"], "page_size" => ["20"]]];
+        // dd($output);
         return $output;
     }
+
+
+    public static function updateInventory($product_move)
+    {
+        if ($product_move["to_loc"] == "Stock" or $product_move["from_loc"] == "Stock") {
+            UpdateVariantInventory::dispatch($product_move)->onQueue('update_inventory');
+        }
+    }
+
 
 }

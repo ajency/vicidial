@@ -26,41 +26,9 @@ $(function () {
     buttn.addClass("justify-content-center");
     buttn.html('<i class="kss_icon bag-icon-fill icon-sm"></i> Add To Bag');
   });
-
-  // Init ion range slider
-  $('#price-range').ionRangeSlider({
-    type: 'double',
-    from: 0,
-    to: 500,
-    min: 0,
-    max: 1000,
-    prefix: '<i class="fas fa-rupee-sign" aria-hidden="true"></i> ',
-    onChange: function onChange(data) {
-      $('#price-min').val(data.from);
-      $('#price-max').val(data.to);
-    }
-  });
-
-  // Function to update price range on change
-  priceRangeSlider = $("#price-range").data("ionRangeSlider");
-
-  initPriceBar = function initPriceBar(from, to) {
-    return priceRangeSlider.update({
-      type: 'double',
-      from: from,
-      to: to,
-      prefix: '<i class="fas fa-rupee-sign" aria-hidden="true"></i> '
-    });
-  };
-
-  $(document).on('change', '.price-change', function () {
-    var from, to;
-    from = $('#price-min').val();
-    to = $('#price-max').val();
-    return initPriceBar(from, to);
-  });
 });
 var facet_list = {};
+var range_facet_list = {};
 var filter_tags_list = [];
 console.log("facet_value_slug_assoc===");
 console.log(facet_value_slug_assoc);
@@ -90,6 +58,12 @@ $(document).ready(function () {
       facetCategoryChange($(this), false);
     });
   }
+  if ($("input[name='color']:checked").length) {
+    $.each($("input[name='color']:checked"), function () {
+      facetCategoryChange($(this), false);
+    });
+  }
+
   $('.pl-loader').fadeOut(2000, function () {
     $('body').removeClass('overflow-h');
   });
@@ -170,6 +144,7 @@ $(document).ready(function () {
 // $('body').on('change', '.facet-category', function() {
 function facetCategoryChange(thisObj) {
   var is_ajax = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+  var range_filter = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
   // From the other examples
   console.log("change===");
@@ -179,24 +154,44 @@ function facetCategoryChange(thisObj) {
   var slug_name = $(thisObj).data('slug');
   console.log(facet_name);
   console.log($(thisObj).prop('checked') + "===" + $(thisObj).val());
-  if ($(thisObj).prop('checked')) {
-    if (facet_list.hasOwnProperty(facet_name)) {
-      if (facet_list[facet_name].indexOf($(thisObj).val()) == -1) {
-        console.log("singleton==" + singleton);
-        if (singleton == false) {
-          console.log("RAT1=====");
-          facet_list[facet_name].push($(thisObj).val());
-          var fil_index = filter_tags_list.findIndex(function (obj) {
-            return obj.slug == slug_name;
-          });
-          if (fil_index == -1) filter_tags_list.push({ "slug": slug_name, "value": $(thisObj).val(), "group": facet_name });
-          call_ajax = true;
-        } else {
-          console.log("RAT2=====");
-          facet_list[facet_name] = [$(thisObj).val()];
-          var fil_index = filter_tags_list.findIndex(function (obj) {
-            return obj.slug == slug_name;
-          });
+  if (range_filter == false) {
+    if ($(thisObj).prop('checked')) {
+      if (facet_list.hasOwnProperty(facet_name)) {
+        if (facet_list[facet_name].indexOf($(thisObj).val()) == -1) {
+          console.log("singleton==" + singleton);
+          if (singleton == false) {
+            console.log("RAT1=====");
+            facet_list[facet_name].push($(thisObj).val());
+            var fil_index = filter_tags_list.findIndex(function (obj) {
+              return obj.slug == slug_name;
+            });
+            if (fil_index == -1) filter_tags_list.push({ "slug": slug_name, "value": $(thisObj).val(), "group": facet_name });
+            call_ajax = true;
+          } else {
+            console.log("RAT2=====");
+            facet_list[facet_name] = [$(thisObj).val()];
+            var fil_index = filter_tags_list.findIndex(function (obj) {
+              return obj.slug == slug_name;
+            });
+            var fil_grp_index = filter_tags_list.findIndex(function (obj) {
+              return obj.group == facet_name;
+            });
+            if (fil_index == -1) {
+              if (fil_grp_index == -1) filter_tags_list.push({ "slug": slug_name, "value": $(thisObj).val(), "group": facet_name });else {
+                filter_tags_list.splice(fil_grp_index, 1);
+                filter_tags_list.push({ "slug": slug_name, "value": $(thisObj).val(), "group": facet_name });
+              }
+            }
+            call_ajax = true;
+          }
+        }
+      } else {
+        console.log("RAT4=====");
+        facet_list[facet_name] = [$(thisObj).val()];
+        var fil_index = filter_tags_list.findIndex(function (obj) {
+          return obj.slug == slug_name;
+        });
+        if (singleton == true) {
           var fil_grp_index = filter_tags_list.findIndex(function (obj) {
             return obj.group == facet_name;
           });
@@ -206,72 +201,67 @@ function facetCategoryChange(thisObj) {
               filter_tags_list.push({ "slug": slug_name, "value": $(thisObj).val(), "group": facet_name });
             }
           }
-          call_ajax = true;
+        } else {
+          if (fil_index == -1) filter_tags_list.push({ "slug": slug_name, "value": $(thisObj).val(), "group": facet_name });
         }
+        call_ajax = true;
       }
     } else {
-      console.log("RAT4=====");
-      facet_list[facet_name] = [$(thisObj).val()];
-      var fil_index = filter_tags_list.findIndex(function (obj) {
-        return obj.slug == slug_name;
-      });
-      if (singleton == true) {
-        var fil_grp_index = filter_tags_list.findIndex(function (obj) {
-          return obj.group == facet_name;
-        });
-        if (fil_index == -1) {
-          if (fil_grp_index == -1) filter_tags_list.push({ "slug": slug_name, "value": $(thisObj).val(), "group": facet_name });else {
-            filter_tags_list.splice(fil_grp_index, 1);
-            filter_tags_list.push({ "slug": slug_name, "value": $(thisObj).val(), "group": facet_name });
+      console.log("else==");
+      if (facet_list.hasOwnProperty(facet_name)) {
+        console.log("RAT5=====");
+        console.log("hasproperty==" + $(thisObj).val() + "=====" + facet_list[facet_name].indexOf($(thisObj).val()));
+        console.log(facet_list[facet_name]);
+        if (facet_list[facet_name].indexOf($(thisObj).val()) > -1) {
+          console.log("len==" + facet_list[facet_name].length);
+          if (facet_list[facet_name].length == 1) {
+            delete facet_list[facet_name];
+            call_ajax = true;
+          } else {
+            var index = facet_list[facet_name].indexOf($(thisObj).val());
+            if (index !== -1) facet_list[facet_name].splice(index, 1);
+            call_ajax = true;
           }
+          var fil_index = filter_tags_list.findIndex(function (obj) {
+            return obj.slug == slug_name;
+          });
+          filter_tags_list.splice(fil_index, 1);
         }
-      } else {
-        if (fil_index == -1) filter_tags_list.push({ "slug": slug_name, "value": $(thisObj).val(), "group": facet_name });
       }
-      call_ajax = true;
     }
   } else {
-    console.log("else==");
-    if (facet_list.hasOwnProperty(facet_name)) {
-      console.log("RAT5=====");
-      console.log("hasproperty==" + $(thisObj).val() + "=====" + facet_list[facet_name].indexOf($(thisObj).val()));
-      console.log(facet_list[facet_name]);
-      if (facet_list[facet_name].indexOf($(thisObj).val()) > -1) {
-        console.log("len==" + facet_list[facet_name].length);
-        if (facet_list[facet_name].length == 1) {
-          delete facet_list[facet_name];
-          call_ajax = true;
-        } else {
-          var index = facet_list[facet_name].indexOf($(thisObj).val());
-          if (index !== -1) facet_list[facet_name].splice(index, 1);
-          call_ajax = true;
-        }
-        var fil_index = filter_tags_list.findIndex(function (obj) {
-          return obj.slug == slug_name;
-        });
-        filter_tags_list.splice(fil_index, 1);
-      }
-    }
+    var min_max_val = $(thisObj).val();
+    var min_max_arr = min_max_val.split(";");
+    console.log(min_max_arr);
+    console.log("facet_name===" + facet_name);
+    range_facet_list[facet_name] = {};
+    range_facet_list[facet_name]["min"] = min_max_arr[0];
+    range_facet_list[facet_name]["max"] = min_max_arr[1];
+    call_ajax = true;
   }
   console.log(facet_list);
 
   var url = constructCategoryUrl(config_facet_names_arr, facet_list, facet_value_slug_assoc);
   console.log("listurl====", url);
-  ajax_data = { "search_object": facet_list, "listurl": url, "page": page_val };
+  ajax_data = { "search_object": { "primary_filter": facet_list }, "listurl": url, "page": page_val };
+  if (Object.keys(range_facet_list).length > 0) ajax_data["search_object"]["range_filter"] = range_facet_list;
+
   var data = JSON.stringify(ajax_data);
 
   if (call_ajax == true) {
 
     console.log("filter_tags_list===");
     console.log(filter_tags_list);
-    var filtersource = document.getElementById("filter-tags-template").innerHTML;
-    var filtertemplate = Handlebars.compile(filtersource);
-    var filtercontext = {};
-    filtercontext["filter_tags_list"] = filter_tags_list;
-    console.log("filter tags====");
-    console.log(filtercontext);
-    var filterhtml = filtertemplate(filtercontext);
-    document.getElementById("filter-tags-template-content").innerHTML = filterhtml;
+    if (range_filter == false) {
+      var filtersource = document.getElementById("filter-tags-template").innerHTML;
+      var filtertemplate = Handlebars.compile(filtersource);
+      var filtercontext = {};
+      filtercontext["filter_tags_list"] = filter_tags_list;
+      console.log("filter tags====");
+      console.log(filtercontext);
+      var filterhtml = filtertemplate(filtercontext);
+      document.getElementById("filter-tags-template-content").innerHTML = filterhtml;
+    }
     if (is_ajax == true) {
       $.ajax({
         method: "POST",
@@ -306,6 +296,10 @@ function facetCategoryChange(thisObj) {
               var filter_facet_name = vval.header.facet_name;
               var context = {};
               context["singleton"] = singleton;
+              context["filter_type"] = vval.filter_type != undefined ? vval.filter_type : "primary_filter";
+              context["display_count"] = vval.display_count != undefined ? vval.display_count : false;
+              context["is_attribute_param"] = vval.is_attribute_param != undefined ? vval.is_attribute_param : false;
+              context["disabled_at_zero_count"] = vval.disabled_at_zero_count != undefined ? vval.disabled_at_zero_count : false;
               context["collapsed"] = collapsed;
               context["filter_display_name"] = filter_display_name;
               context["filter_facet_name"] = filter_facet_name;
@@ -324,6 +318,12 @@ function facetCategoryChange(thisObj) {
               var html = template(context);
               console.log(document.getElementById("filter-" + templateval + "-template-content"));
               document.getElementById("filter-" + templateval + "-template-content").innerHTML = html;
+              console.log("vval.start==" + vval.start + "===" + vval.end);
+              initializeSlider(vval.start, vval.end);
+              if (vval.filter_type != undefined && vval.filter_type == "range_filter") {
+                $("#" + templateval + "-min").val(vval.start);
+                $("#" + templateval + "-max").val(vval.end);
+              }
             });
           }
           if (key == "breadcrumbs") {
@@ -422,4 +422,21 @@ function removeFilterTag(slug) {
   console.log(elm);
   console.log("single===" + slug);
   elm.trigger("change");
+}
+
+function initializeSlider(fromval, toval) {
+  // Init ion range slider
+  $('#price-range').ionRangeSlider({
+    type: 'double',
+    from: fromval,
+    to: toval,
+    min: 0,
+    max: 25000,
+    prefix: '<i class="fas fa-rupee-sign" aria-hidden="true"></i> ',
+    onChange: function onChange(data) {
+      $('#price-min').val(data.from);
+      $('#price-max').val(data.to);
+      facetCategoryChange($("#price-range"), true, true);
+    }
+  });
 }
