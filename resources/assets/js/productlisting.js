@@ -60,6 +60,12 @@ $(document).ready(function(){
             facetCategoryChange($(this),false)
         });
     }
+    if($( "input[name='color']:checked" ).length){
+        $.each($("input[name='color']:checked"), function(){            
+            facetCategoryChange($(this),false)
+        });
+    }
+    
     $('.pl-loader').fadeOut(2000,function(){
       $('body').removeClass('overflow-h');
     })
@@ -154,22 +160,42 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false)
     var slug_name = $(thisObj).data('slug')
     console.log(facet_name)
     console.log($(thisObj).prop('checked')+"==="+$(thisObj).val());
-    if($(thisObj).prop('checked')){
-        if(facet_list.hasOwnProperty(facet_name)){
-          if(facet_list[facet_name].indexOf($(thisObj).val()) == -1){
-            console.log("singleton=="+singleton)
-            if(singleton == false){
-                console.log("RAT1=====")
-              facet_list[facet_name].push($(thisObj).val())
-              var fil_index = filter_tags_list.findIndex(obj => obj.slug==slug_name);
-              if(fil_index == -1)
-                filter_tags_list.push({"slug":slug_name, "value":$(thisObj).val(), "group":facet_name})
-              call_ajax = true;
+    if(range_filter == false){
+      if($(thisObj).prop('checked')){
+          if(facet_list.hasOwnProperty(facet_name)){
+            if(facet_list[facet_name].indexOf($(thisObj).val()) == -1){
+              console.log("singleton=="+singleton)
+              if(singleton == false){
+                  console.log("RAT1=====")
+                facet_list[facet_name].push($(thisObj).val())
+                var fil_index = filter_tags_list.findIndex(obj => obj.slug==slug_name);
+                if(fil_index == -1)
+                  filter_tags_list.push({"slug":slug_name, "value":$(thisObj).val(), "group":facet_name})
+                call_ajax = true;
+              }
+              else{
+                  console.log("RAT2=====")
+                facet_list[facet_name] = [$(thisObj).val()]
+                var fil_index = filter_tags_list.findIndex(obj => obj.slug==slug_name);
+                var fil_grp_index = filter_tags_list.findIndex(obj => obj.group==facet_name);
+                if(fil_index == -1){
+                  if(fil_grp_index == -1)
+                    filter_tags_list.push({"slug":slug_name, "value":$(thisObj).val(), "group":facet_name})
+                  else{
+                    filter_tags_list.splice(fil_grp_index, 1);
+                    filter_tags_list.push({"slug":slug_name, "value":$(thisObj).val(), "group":facet_name})
+                  }
+                }
+                call_ajax = true;
+              }
+
             }
-            else{
-                console.log("RAT2=====")
-              facet_list[facet_name] = [$(thisObj).val()]
-              var fil_index = filter_tags_list.findIndex(obj => obj.slug==slug_name);
+          }
+          else{
+              console.log("RAT4=====")
+            facet_list[facet_name] = [$(thisObj).val()]
+            var fil_index = filter_tags_list.findIndex(obj => obj.slug==slug_name);
+            if(singleton == true){
               var fil_grp_index = filter_tags_list.findIndex(obj => obj.group==facet_name);
               if(fil_index == -1){
                 if(fil_grp_index == -1)
@@ -179,76 +205,73 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false)
                   filter_tags_list.push({"slug":slug_name, "value":$(thisObj).val(), "group":facet_name})
                 }
               }
-              call_ajax = true;
-            }
-
-          }
-        }
-        else{
-            console.log("RAT4=====")
-          facet_list[facet_name] = [$(thisObj).val()]
-          var fil_index = filter_tags_list.findIndex(obj => obj.slug==slug_name);
-          if(singleton == true){
-            var fil_grp_index = filter_tags_list.findIndex(obj => obj.group==facet_name);
-            if(fil_index == -1){
-              if(fil_grp_index == -1)
-                filter_tags_list.push({"slug":slug_name, "value":$(thisObj).val(), "group":facet_name})
-              else{
-                filter_tags_list.splice(fil_grp_index, 1);
-                filter_tags_list.push({"slug":slug_name, "value":$(thisObj).val(), "group":facet_name})
-              }
-            }
-          }
-          else{
-            if(fil_index == -1)
-              filter_tags_list.push({"slug":slug_name, "value":$(thisObj).val(), "group":facet_name})
-          }
-          call_ajax = true;
-        }
-
-    }
-    else{
-        console.log("else==")
-        if(facet_list.hasOwnProperty(facet_name)){
-            console.log("RAT5=====")
-          console.log("hasproperty=="+$(thisObj).val()+"====="+facet_list[facet_name].indexOf($(thisObj).val()))
-          console.log(facet_list[facet_name])
-          if(facet_list[facet_name].indexOf($(thisObj).val()) > -1){
-            console.log("len=="+facet_list[facet_name].length)
-            if(facet_list[facet_name].length == 1){
-              delete facet_list[facet_name];
-              call_ajax = true;
             }
             else{
-                var index = facet_list[facet_name].indexOf($(thisObj).val());
-                if (index !== -1) facet_list[facet_name].splice(index, 1);
+              if(fil_index == -1)
+                filter_tags_list.push({"slug":slug_name, "value":$(thisObj).val(), "group":facet_name})
+            }
+            call_ajax = true;
+          }
+
+      }
+      else{
+          console.log("else==")
+          if(facet_list.hasOwnProperty(facet_name)){
+              console.log("RAT5=====")
+            console.log("hasproperty=="+$(thisObj).val()+"====="+facet_list[facet_name].indexOf($(thisObj).val()))
+            console.log(facet_list[facet_name])
+            if(facet_list[facet_name].indexOf($(thisObj).val()) > -1){
+              console.log("len=="+facet_list[facet_name].length)
+              if(facet_list[facet_name].length == 1){
+                delete facet_list[facet_name];
                 call_ajax = true;
               }
-              var fil_index = filter_tags_list.findIndex(obj => obj.slug==slug_name);
-              filter_tags_list.splice(fil_index, 1);
-            }
-        }
+              else{
+                  var index = facet_list[facet_name].indexOf($(thisObj).val());
+                  if (index !== -1) facet_list[facet_name].splice(index, 1);
+                  call_ajax = true;
+                }
+                var fil_index = filter_tags_list.findIndex(obj => obj.slug==slug_name);
+                filter_tags_list.splice(fil_index, 1);
+              }
+          }
+      }
+    }
+    else{
+      var min_max_val = $(thisObj).val()
+      var min_max_arr = min_max_val.split(";")
+      console.log(min_max_arr)
+      console.log("facet_name==="+facet_name)
+      range_facet_list[facet_name]={}
+      range_facet_list[facet_name]["min"] = min_max_arr[0];
+      range_facet_list[facet_name]["max"] = min_max_arr[1];
+      call_ajax = true;
     }
     console.log(facet_list);
 
 
     var url = constructCategoryUrl(config_facet_names_arr,facet_list,facet_value_slug_assoc);
     console.log("listurl====",url)
-    ajax_data = { "search_object": { "primary_filter" : facet_list , "range_filter" : range_facet_list }, "listurl": url , "page": page_val}
+    ajax_data = { "search_object": { "primary_filter" : facet_list }, "listurl": url , "page": page_val}
+    if( Object.keys(range_facet_list).length>0)
+      ajax_data["search_object"]["range_filter"] = range_facet_list
+    
     var data = JSON.stringify(ajax_data);
 
     if(call_ajax == true){
         
         console.log("filter_tags_list===")
         console.log(filter_tags_list)
-        var filtersource   = document.getElementById("filter-tags-template").innerHTML;
-        var filtertemplate = Handlebars.compile(filtersource);
-        var filtercontext = {};
-        filtercontext["filter_tags_list"] = filter_tags_list;
-        console.log("filter tags====")
-        console.log(filtercontext)
-        var filterhtml    = filtertemplate(filtercontext);
-        document.getElementById("filter-tags-template-content").innerHTML = filterhtml;
+        if(range_filter == false){
+          var filtersource   = document.getElementById("filter-tags-template").innerHTML;
+          var filtertemplate = Handlebars.compile(filtersource);
+          var filtercontext = {};
+          filtercontext["filter_tags_list"] = filter_tags_list;
+          console.log("filter tags====")
+          console.log(filtercontext)
+          var filterhtml    = filtertemplate(filtercontext);
+          document.getElementById("filter-tags-template-content").innerHTML = filterhtml;
+        }
         if(is_ajax == true) {
             $.ajax({
                 method: "POST",
@@ -301,6 +324,8 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false)
                      var html    = template(context);
                      console.log(document.getElementById("filter-"+templateval+"-template-content"))
                      document.getElementById("filter-"+templateval+"-template-content").innerHTML = html;
+                     console.log("vval.start=="+vval.start+"==="+vval.end)
+                     initializeSlider(vval.start,vval.end)
                    });
                   }
                   if(key == "breadcrumbs"){
@@ -406,4 +431,21 @@ function removeFilterTag(slug){
     console.log(elm)
     console.log("single==="+slug)
     elm.trigger( "change" );
+}
+
+function initializeSlider(fromval,toval){
+      // Init ion range slider
+  $('#price-range').ionRangeSlider({
+      type: 'double',
+      from: fromval,
+      to: toval,
+      min: 0,
+      max: 25000,
+      prefix: '<i class="fas fa-rupee-sign" aria-hidden="true"></i> ',
+      onChange: function(data) {
+        $('#price-min').val(data.from);
+        $('#price-max').val(data.to);
+        facetCategoryChange($("#price-range"),true,true);
+      }
+  });
 }

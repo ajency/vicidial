@@ -54,7 +54,7 @@
       var facet_display_data_arr = <?= $facet_display_data_arr ?>;
       var product_list_items = {};
   </script>
-   
+   <script type="text/javascript" src="{{CDN::mix('/js/productlisting.js') }}"></script>
   @yield('footjs-color')
   @yield('footjs-price')
   @yield('footjs-gender')
@@ -63,7 +63,7 @@
   @yield('footjs-category')
   @yield('footjs-filter-tags')
   @yield('footjs-products-list')
-<script type="text/javascript" src="{{CDN::mix('/js/productlisting.js') }}"></script>
+
  
 
 @stop

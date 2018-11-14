@@ -6,9 +6,9 @@
         </label>
       </div>
       <div id="collapsePrice" class="collapse @{{#if collapsed}} @{{else}} show @{{/if}}" aria-labelledby="headingThree" >
-        <div class="card-body pt-2">
-          <div class="priceRange mx-3">
-            <input type="text" id="price-range" name="price" value="" onChange="facetCategoryChange(this,true,true);" data-facet-name="@{{../filter_facet_name}}" data-singleton="true" data-slug="@{{slug}}" @{{#if disabled_at_zero_count}} @{{#ifEquals count 0 }} disabled = "disabled" @{{/ifEquals}} @{{/if}}/>
+        <div class="card-body">
+          <div class="priceRange">
+            <input type="text" id="price-range" name="price" value="" data-facet-name="@{{filter_facet_name}}" data-singleton="true" data-slug="@{{slug}}" @{{#if disabled_at_zero_count}} @{{#ifEquals count 0 }} disabled = "disabled" @{{/ifEquals}} @{{/if}}/>
           </div>
           <div class="row mt-3">
             <div class="col-5 col-sm-5">
@@ -49,6 +49,7 @@
    context["filter_display_name"] = filter_display_name;
    context["filter_facet_name"] = filter_facet_name;
    context["items"] = <?= json_encode($items); ?>;
+   console.log("filter_facet_name====")
    console.log(context)
    var html    = template(context);
    document.getElementById("filter-price-template-content").innerHTML = html;
@@ -56,23 +57,13 @@
    console.log("toval==="+toval)
    $(function(){
     // Init ion range slider
-    $('#price-range').ionRangeSlider({
-      type: 'double',
-      from: fromval,
-      to: toval,
-      min: 0,
-      max: 25000,
-      prefix: '<i class="fas fa-rupee-sign" aria-hidden="true"></i> ',
-      onChange: function(data) {
-        $('#price-min').val(data.from);
-        $('#price-max').val(data.to);
-      }
-  });
-
+    initializeSlider(fromval,toval)
+    facetCategoryChange($("#price-range"),false,true);
   // Function to update price range on change
    priceRangeSlider = $("#price-range").data("ionRangeSlider");
 
     initPriceBar = function(from, to) {
+      console.log("initPriceBar=="+from+"==="+to)
       return priceRangeSlider.update({
         type: 'double',
         from: from,
@@ -85,6 +76,7 @@
       var from, to;
       from = $('#price-min').val();
       to = $('#price-max').val();
+      facetCategoryChange($("#price-range"),true,true);
       return initPriceBar(from, to);
   });
 
