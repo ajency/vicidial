@@ -404,11 +404,11 @@ function generateSubordersData($cartItems, $warehouses)
     }
 }
 
-function getCartData($cart, $fetch_related = true)
+function getCartData($cart, $fetch_related = true, $current_quantity = false)
 {
     $items = [];
     foreach ($cart->cart_data as $cart_item) {
-        $items[] = $cart->getItem($cart_item['id'], $fetch_related);
+        $items[] = $cart->getItem($cart_item['id'], $fetch_related, $current_quantity);
     }
     return $items;
 }

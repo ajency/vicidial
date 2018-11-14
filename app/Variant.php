@@ -137,7 +137,7 @@ class Variant extends Model
         return $related_items;
     }
 
-    public function getItem($related_items = true)
+    public function getItem($related_items = true, $current_quantity = false)
     {
         $item = array(
             'product_slug' => $this->getProductSlug(),
@@ -149,6 +149,10 @@ class Variant extends Model
 
         if ($related_items) {
             $item['related_items'] = $this->getRelatedItems();
+        }
+
+        if ($current_quantity) {
+            $item['current_quantity'] = $this->getQuantity();
         }
 
         return $item;
