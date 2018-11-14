@@ -12,7 +12,7 @@
 				$divclass = 'slider-placeholder-img';
 			}
 			@endphp
-		<ul id="aniimated-thumbnials" class="d-flex d-sm-block list-unstyled m-0 m-md-2 {{$divclass}} hidden">
+		<ul id="aniimated-thumbnials" class="list-unstyled m-0 mb-3 mb-sm-0 m-lg-2 {{$divclass}} carousel">
 
 			@php
 			if(count((array)$params['images'])>0) {
@@ -23,9 +23,9 @@
 					$image_zoom = $image_set->{'zoom'}->{'1x'};
 					$image_thumb = $image_set->{'thumb'}->{'1x'};
 			@endphp
-				<li class="mx-2 mb-2" >
+				<li class="carousel-cell">
 					<a href="{{$image_zoom}}" class="custom-selector" title="{{$params['title']}}">
-						<img data-src="{{$image_thumb}}" class="lazyload" data-srcset="{{$image_1x}} 326w, {{$image_2x}} 652w, {{$image_3x}} 978w" sizes="(max-width: 767px) 76vw, (min-width: 768px) and (max-width: 991px) 45vw, (min-width: 992px) 26vw" alt="{{$params['title']}}" title="{{$params['title']}}">
+						<img data-flickity-lazyload-src="{{$image_thumb}}" class="carousel-image" data-flickity-lazyload-srcset="{{$image_1x}} 1x, {{$image_2x}} 2x, {{$image_3x}} 3x" alt="{{$params['title']}}" title="{{$params['title']}}">
 					</a>
 				</li>
 			@php
