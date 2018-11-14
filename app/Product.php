@@ -449,17 +449,27 @@ class Product
         $filter_params                  = [];
         $filter_params["search_object"] = [];
         $facet_display_data             = config('product.facet_display_data');
-        foreach ($params["search_object"] as $paramk => $paramv) {
+        // dd($params);
+        foreach ($params["search_object"]["primary_filter"] as $paramk => $paramv) {
             if ($facet_display_data[$paramk]["is_singleton"] == false) {
                 $fields = $paramv;
                 array_push($fields, "all");
-                $filter_params["search_object"][$paramk] = $fields;
+                $filter_params["search_object"]["primary_filter"][$paramk] = $fields;
             } else {
-                $filter_params["search_object"][$paramk] = $paramv;
+                $filter_params["search_object"]["primary_filter"][$paramk] = $paramv;
             }
 
         }
+        if( isset($params["search_object"]["range_filter"]))
+            $filter_params["search_object"]["range_filter"] = $params["search_object"]["range_filter"];
+        $filter_params["display_limit"] = $params["display_limit"];
+        $filter_params["page"] = $params["page"];
+        // dd($filter_params);
+
+        // $params = $filter_params =  ['search_object' =>['primary_filter' => [ 'product_gender' => ['Boys','all']]], 'display_limit' => 20, 'page' => 1] ;
+        $params = $filter_params ;
         $output["filters"]   = self::getProductCategoriesWithFilter($filter_params);
+        // dd($output["filters"]);
         $results             = self::getItemsWithFilters($params);
         $facet_names         = array_keys($facet_display_data);
         $bread               = [];
@@ -499,6 +509,7 @@ class Product
         $output["sort_on"]       = [["name" => "Latest Products", "value" => "latest", "is_selected" => false], ["name" => "Popularity", "value" => "popular", "is_selected" => true], ["name" => "Price Low to High", "value" => "price_asc", "is_selected" => false], ["name" => "Price High to Low", "value" => "price_dsc", "is_selected" => false], ["name" => "Discount Low to High", "value" => "discount_asc", "is_selected" => false], ["name" => "Discount High to Low", "value" => "discount_dsc", "is_selected" => false]];
         $output["breadcrumbs"]   = $bread['breadcrumb'];
         $output["search"]        = ["params" => ["genders" => ["men"], "l1_categories" => ["clothing"]], "pattern" => [["key" => "genders", "slugs" => ["men"]], ["key" => "l1_categories", "slugs" => ["clothing"]]], "is_valid" => true, "domain" => "https=>//newsite.stage.kidsuperstore.in", "type" => "product-list", "query" => ["page" => ["2"], "page_size" => ["20"]]];
+        // dd($output);
         return $output;
     }
 

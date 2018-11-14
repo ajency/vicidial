@@ -175,7 +175,7 @@ function sanitiseFilterdata($result, $params = [])
     $filter["start"] = $priceFilter['min'];
     $filter["end"] = $priceFilter['max'];
     $response[]             = $filter;
-    dd($response);
+    // dd($response);
     return $response;
 }
 

@@ -27,41 +27,9 @@ $(function(){
         buttn.html('<i class="kss_icon bag-icon-fill icon-sm"></i> Add To Bag');
     });
 
-    // Init ion range slider
-    $('#price-range').ionRangeSlider({
-      type: 'double',
-      from: 0,
-      to: 500,
-      min: 0,
-      max: 1000,
-      prefix: '<i class="fas fa-rupee-sign" aria-hidden="true"></i> ',
-      onChange: function(data) {
-        $('#price-min').val(data.from);
-        $('#price-max').val(data.to);
-      }
-  });
-
-  // Function to update price range on change
-   priceRangeSlider = $("#price-range").data("ionRangeSlider");
-
-    initPriceBar = function(from, to) {
-      return priceRangeSlider.update({
-        type: 'double',
-        from: from,
-        to: to,
-        prefix: '<i class="fas fa-rupee-sign" aria-hidden="true"></i> '
-      });
-    };
-
-   $(document).on('change', '.price-change', function() {
-      var from, to;
-      from = $('#price-min').val();
-      to = $('#price-max').val();
-      return initPriceBar(from, to);
-  });
-
 })
 var facet_list = {}
+var range_facet_list = {}
 var filter_tags_list = [] ;
 console.log("facet_value_slug_assoc===")
 console.log(facet_value_slug_assoc)
@@ -176,7 +144,7 @@ $(document).ready(function(){
 });
 
 // $('body').on('change', '.facet-category', function() {
-function facetCategoryChange(thisObj,is_ajax = true)
+function facetCategoryChange(thisObj,is_ajax = true,range_filter = false)
 {
     // From the other examples
     console.log("change===")
@@ -266,7 +234,7 @@ function facetCategoryChange(thisObj,is_ajax = true)
 
     var url = constructCategoryUrl(config_facet_names_arr,facet_list,facet_value_slug_assoc);
     console.log("listurl====",url)
-    ajax_data = { "search_object": facet_list, "listurl": url , "page": page_val}
+    ajax_data = { "search_object": { "primary_filter" : facet_list , "range_filter" : range_facet_list }, "listurl": url , "page": page_val}
     var data = JSON.stringify(ajax_data);
 
     if(call_ajax == true){

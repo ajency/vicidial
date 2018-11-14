@@ -218,7 +218,7 @@ return [
             'filter_type'            => 'range_filter',
         ],
     ],
-    "default_list_display_limit" => 30,
+    "default_list_display_limit" => 20,
     'breadcrumb_order'           => [
         'product_category_type',
         'product_age_group',
@@ -226,4 +226,5 @@ return [
         'product_subtype'
     ],//Used for breadcrumbs on single product page
     "list_page_display_limit"    => 30,
+
 ];

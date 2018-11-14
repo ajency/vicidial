@@ -15,8 +15,14 @@
       usort($items, function($a, $b) { 
           return $a["sequence"] > $b["sequence"] ? 1 : -1; 
       }); 
+      $filter_parameters = ['items' => $items,'singleton'=>($filter["is_singleton"] == true?1:0),'collapsed'=>($filter["is_collapsed"] == true?1:0),'header'=>$filter["header"],"filter_type" => $filter["filter_type"]];
+      if($filter["filter_type"] == "range_filter"){
+        $filter_parameters["start"] = $filter["start"];
+        $filter_parameters["end"] = $filter["end"];
+      }
       ?>
-      @include($file_name, ['items' => $items,'singleton'=>($filter["is_singleton"] == true?1:0),'collapsed'=>($filter["is_collapsed"] == true?1:0),'header'=>$filter["header"]])
+
+      @include($file_name,$filter_parameters)
 
     @endforeach
    <!-- //gender -->
@@ -53,84 +59,9 @@
       </div>
     </div> -->
 
-      <div class="kss_filter-list">
-        <div id="headingThree">
-          <label class="w-100 collapsed mb-0 pb-2 cursor-pointer" data-toggle="collapse" data-target="#collapseseven" aria-expanded="false" aria-controls="collapseseven">
-            Color<i class="fas fa-angle-up float-right"></i>
-          </label>
-        </div>
-        <div id="collapseseven" class="collapse" aria-labelledby="headingThree" >
-          <div class="card-body">
-         
-            <ul class="product-color product-color--filter p-0">
-              <li>
-              <input type="checkbox" name="color" id="red"/>
-              <label for="red" style="background-color:red;"></label>
-              </li>
-              <li>
-              <input type="checkbox" name="color" id="#A2C2C9"/>
-              <label for="#A2C2C9" style="background-color:#A2C2C9;"></label>
-              </li>
-              <li>
-              <input type="checkbox" name="color" id="#EFDBD4"/>
-              <label for="#EFDBD4" style="background-color:#EFDBD4;"></label>
-              </li>
-              <li>
-              <input type="checkbox" name="color" id="#2196F3"/>
-              <label for="#2196F3" style="background-color:#2196F3;"></label>
-              </li>
-              <li>
-              <input type="checkbox" name="color" id="#4CAF50"/>
-              <label for="#4CAF50" style="background-color:#4CAF50;"></label>
-              </li>
-              <li>
-              <input type="checkbox" name="color" id="#00BCD4" checked="checked"/>
-              <label for="#00BCD4" style="background-color:#00BCD4;"></label>
-              </li>
-              <li>
-              <input type="checkbox" name="color" id="#000000"/>
-              <label for="#000000" style="background-color:#000000;"></label>
-              </li>
-              <li>
-              <input type="checkbox" name="color" id="#f56724"/>
-              <label for="#f56724" style="background-color:#f56724;"></label>
-              </li>
-              <li>
-              <input type="checkbox" name="color" id="#874853" checked="checked"/>
-              <label for="#874853" style="background-color:#874853;"></label>
-              </li>
 
-            </ul>
 
-          </div>
-        </div>
-    </div>
 
-    <div class="kss_filter-list">
-      <div id="headingThree">
-        <label class="w-100 collapsed mb-0 pb-2 cursor-pointer" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-          Price<i class="fas fa-angle-up float-right"></i>
-        </label>
-      </div>
-      <div id="collapseThree" class="collapse" aria-labelledby="headingThree" >
-        <div class="card-body">
-          <div class="priceRange">
-            <input type="text" id="price-range" name="example_name" value="" />
-          </div>
-          <div class="row mt-3">
-            <div class="col-5 col-sm-5">
-           <input class="form-control form-control-lg text-muted price-change" id="price-min" type="text" placeholder="Min">
-            </div>
-             <div class="col-2 col-sm-2 text-center">
-              <h6 class="align-self-center mt-4">to</h6>
-            </div>
-              <div class="col-5 col-sm-5">
-                 <input class="form-control form-control-lg text-muted price-change" id="price-max" type="text" placeholder="Max">
-            </div>
-          </div> 
-        </div>
-      </div>
-    </div>
 
 
 <!--     <div class="kss_filter-list">

@@ -22,7 +22,7 @@ class ListingController extends Controller
         // $search_object = ($search_obj == null)?(build_search_object($params)):$search_obj;
         $search_results = [];
         if($search_obj == null){
-            $search_object = $search_object_arr["search_result"];
+            $search_object = ["primary_filter" => $search_object_arr["search_result"]];
         }
         else{
             $search_object = $search_obj;
@@ -57,11 +57,12 @@ class ListingController extends Controller
         $page_params["page"] = (isset($parameters['query']['page']))?$parameters['query']['page']:1;
         // dd($page_params);
     	$params = $this->search_object($parameters,$page_params);
+         // dd($params);
         if($params == false) return view('error404');
         if(empty((array)$params->filters)) return view('noproducts');
         
         $params->search_result_assoc = getFacetValueSlugPairs();
-        // dd($search_result_assoc);
+        // dd($params);
         return view('productlisting')->with('params',$params);
     }
 
