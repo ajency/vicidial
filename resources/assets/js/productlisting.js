@@ -326,6 +326,11 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false)
                      document.getElementById("filter-"+templateval+"-template-content").innerHTML = html;
                      console.log("vval.start=="+vval.start+"==="+vval.end)
                      initializeSlider(vval.start,vval.end)
+                     if(vval.filter_type != undefined && vval.filter_type == "range_filter"){
+                        $("#"+templateval+"-min").val(vval.start)
+                        $("#"+templateval+"-max").val(vval.end)
+                     }
+                       
                    });
                   }
                   if(key == "breadcrumbs"){
@@ -338,7 +343,7 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false)
                     product_list_context.page = values;
                   }
                   if(key == "items"){
-                                   product_list_context.products = values;
+                    product_list_context.products = values;
             
 
                   }

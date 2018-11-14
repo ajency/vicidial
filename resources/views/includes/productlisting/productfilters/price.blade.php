@@ -12,13 +12,13 @@
           </div>
           <div class="row mt-3">
             <div class="col-5 col-sm-5">
-           <input class="form-control form-control-lg text-muted price-change" id="price-min" type="text" placeholder="Min">
+           <input class="form-control form-control-lg text-muted price-change" value="@{{fromval}}" id="price-min" type="text" placeholder="Min">
             </div>
              <div class="col-2 col-sm-2 text-center">
               <h6 class="align-self-center mt-4">to</h6>
             </div>
               <div class="col-5 col-sm-5">
-                 <input class="form-control form-control-lg text-muted price-change" id="price-max" type="text" placeholder="Max">
+                 <input class="form-control form-control-lg text-muted price-change" value="@{{toval}}" id="price-max" type="text" placeholder="Max">
             </div>
           </div> 
         </div>
@@ -49,6 +49,8 @@
    context["filter_display_name"] = filter_display_name;
    context["filter_facet_name"] = filter_facet_name;
    context["items"] = <?= json_encode($items); ?>;
+   context["fromval"] = fromval;
+   context["toval"] = toval;
    console.log("filter_facet_name====")
    console.log(context)
    var html    = template(context);
