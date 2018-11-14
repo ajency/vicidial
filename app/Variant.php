@@ -152,7 +152,7 @@ class Variant extends Model
         }
 
         if ($current_quantity) {
-            $item['current_quantity'] = $this->getQuantity();
+            $item['available_quantity'] = $this->getQuantity();
         }
 
         return $item;

@@ -82,9 +82,9 @@
 							</div>
 
 							<div class="product-price" *ngIf="item.availability">
-								<!-- <div>
-									<p class="text-danger m-0">{{item.message}}</p>
-								</div> -->
+								<div>
+									<p class="text-danger m-0">Only {{item.available_quantity}} <span *ngIf="item.available_quantity == 1">unit</span> <span *ngIf="item.available_quantity > 1">units</span> in stock</p>
+								</div>
 								<div class="kss-price kss-price--smaller">₹{{item.attributes.price_final}} 	  	<small *ngIf="item.attributes.price_final != item.attributes.price_mrp" 		class="kss-original-price text-muted">₹{{item.attributes.price_mrp}}
 								  </small>
 								  <span class="kss-discount text-danger">{{item.off_percentage}}</span>
