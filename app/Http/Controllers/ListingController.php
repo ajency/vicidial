@@ -35,6 +35,7 @@ class ListingController extends Controller
                // dd($search_object);
         if(!isset($page_params["display_limit"]))
             $page_params["display_limit"] = config('product.list_page_display_limit');
+        // dd($page_params);
         $params = Product::productListPage(["search_object" => $search_object,"display_limit"=> $page_params["display_limit"],"page" =>$page_params["page"]],$search_results["slug_value_search_result"],$search_results["slug_search_result"],$search_results["slugs_result"],$search_results["title"]);
 
         // dd($params);

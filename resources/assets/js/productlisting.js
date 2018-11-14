@@ -313,6 +313,10 @@ function facetCategoryChange(thisObj,is_ajax = true)
                      var filter_facet_name = vval.header.facet_name;
                      var context = {};
                      context["singleton"] = singleton;
+                     context["filter_type"] = (vval.filter_type != undefined)?vval.filter_type:"primary_filter";
+                     context["display_count"] = (vval.display_count != undefined)?vval.display_count:false;
+                     context["is_attribute_param"] = (vval.is_attribute_param != undefined)?vval.is_attribute_param:false;
+                     context["disabled_at_zero_count"] = (vval.disabled_at_zero_count != undefined)?vval.disabled_at_zero_count:false;
                      context["collapsed"] = collapsed;
                      context["filter_display_name"] = filter_display_name;
                      context["filter_facet_name"] = filter_facet_name;
