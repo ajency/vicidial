@@ -406,3 +406,30 @@ footer .bl-1{
         font-size: .9rem;
     }
 }
+
+// Default anchor styling
+
+.kss-anchor{
+    color: darken(theme-color("primary"),10%);
+    &:hover{
+        color: theme-color("primary");
+    }
+}
+
+.socialIcon-size{
+    font-size: 1.15em;
+}
+
+.fb-color{
+    color: #3B5998;
+}
+
+.instagram-color{
+    color: #fb3958;
+}
+
+.social-title{
+    margin-left: 5px;
+    margin-bottom: 0;
+    font-size: 1.2em;
+}

@@ -29,7 +29,7 @@
             </div>
         </div>
 
-        <div class="mbr-footer-content col-12 col-md-4 mt-4 mt-sm-5 mt-md-0">
+        <div class="mbr-footer-content col-md-4 mt-4 mt-sm-5 mt-md-0">
           <p class="font-weight-bold"><strong>Subscribe To Our Newsletter</strong></p>
           <form class="">
             <div class="form-group m-0 d-flex align-items-baseline">
@@ -40,16 +40,16 @@
           </form>
           <p class="font-weight-bold mt-4"><strong>Keep In Touch (Social Connect)</strong></p>
           <ul class="list-inline">
-            <li class="list-inline-item"><a href="https://www.facebook.com/kidsuperstore" class="text-gray" target="_blank"><h3><i class="fab fa-facebook-f"></i></h3></a></li>
+            <li class="list-inline-item"><a href="https://www.facebook.com/kidsuperstore" class="text-dark" target="_blank"><i class="fab fa-facebook-f socialIcon-size"></i><span class="social-title">Facebook</span></a></li>
             <!-- <li class="list-inline-item"><a href="#" class="text-gray"><h3><i class="fab fa-twitter"></i></h3></a></li>
             <li class="list-inline-item"><a href="#" class="text-gray"><h3><i class="fab fa-youtube"></i></h3></a></li> -->
-            <li class="list-inline-item"><a href="https://www.instagram.com/kidsuperstore.in/" class="text-gray" target="_blank"><h3><i class="fab fa-instagram"></i></h3></a></li>
+            <li class="list-inline-item"><a href="https://www.instagram.com/kidsuperstore.in/" class="text-dark" target="_blank"><i class="fab fa-instagram socialIcon-size"></i><span class="social-title">Instagram</span></a></li>
             <!-- <li class="list-inline-item"><a href="#" class="text-gray"><h3><i class="fab fa-google-plus-g"></i></h3></a></li>
             <li class="list-inline-item"><a href="#" class="text-gray"><h3><i class="fab fa-pinterest-p"></i></h3></a></li> -->
           </ul>
         </div>
 
-        <div class="mbr-footer-content col-12 col-md-4 bl-1 mt-4 mt-sm-5 mt-md-0">
+        <div class="mbr-footer-content col-md-4 bl-1 mt-4 mt-sm-5 mt-md-0">
           <div class="d-flex flex-row bd-highlight mb-4">
             <div class="bd-highlight mr-4 ml-2">
               <img width="50" src="/img/tshirt.svg">
