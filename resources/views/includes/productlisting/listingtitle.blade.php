@@ -35,26 +35,26 @@
                 @{{/if}}
             </ol>
           </nav> -->
-         <h1 class="w-100 kss-title m-0 text-gray font-weight-bold">
+        <h1 class="w-100 kss-title m-0 text-gray font-weight-bold">
             @{{headers.page_title}} <span class="f-w-4 sub-text"> - @{{headers.product_count}} items</span>
-         </h1>
+        </h1>
     </div>
 
     <div class="ml-auto d-none">
       <div class="d-flex flex-row kss-select-border mt-2">
-      <div class="size-qty align-self-center">
-        <h6 class="m-0 f-w-4 sub-text"> Sort By:</h6>
+        <div class="size-qty align-self-center">
+          <h6 class="m-0 f-w-4 sub-text"> Sort By:</h6>
+        </div>
+        <div class="pl-2 align-self-center">
+          <select class="size form-control  form-control-sm br-0  border-dark custom"  >
+            <option>Popularity</option>
+            <option>Latest</option>
+            <option>Discount</option>
+            <option>Price: High to Low</option>
+            <option>Price: Low to High</option>
+          </select> 
+        </div>
       </div>
-      <div class="pl-2 align-self-center">
-        <select class="size form-control  form-control-sm br-0  border-dark custom"  >
-          <option>Popularity</option>
-              <option>Latest</option>
-              <option>Discount</option>
-              <option>Price: High to Low</option>
-              <option>Price: Low to High</option>
-        </select> 
-      </div>
-    </div>
     </div>
   </div>
 </script>
