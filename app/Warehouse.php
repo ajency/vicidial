@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Warehouse extends Model
 {
+    protected $casts = [
+        'address' => 'array',
+    ];
 
     public static function getAllWarehousesFromOdoo()
     {
@@ -24,5 +27,16 @@ class Warehouse extends Model
             $wh->save();
 
         }
+    }
+
+    public function getAddress()
+    {
+        if(empty($this->address)) {
+            return null;
+        }
+        else {
+            return array('store_name' => $this->address['store_name'], 'locality' => $this->address['locality'], 'city' => $this->address['city']);
+        }
+
     }
 }
