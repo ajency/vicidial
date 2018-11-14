@@ -99,6 +99,7 @@ function sanitiseProductData($odooData)
         "product_att_fabric_type"          => $odooData["att_fabric_type"],
         "product_att_product_type"         => $odooData["att_product_type"],
         "product_att_other_attribute"      => $odooData["att_val_add1"],
+        "product_vendor"                   => ($odooData["vendor_id"]) ? $odooData["vendor_id"][1] : null,
     ];
     $product_categories = explode('/', $index['product_categories']);
     $categories         = ['product_category_type', 'product_gender', 'product_age_group', 'product_subtype'];
@@ -118,7 +119,7 @@ function sanitiseVariantData($odooData, $attributeData, $inventoryData)
         'variant_standard_price' => floatval($odooData['standard_price']),
         'variant_lst_price'      => $odooData['lst_price'],
         'variant_sale_price'     => $odooData['sale_price'],
-        'variant_product_own'    => $odooData['product_own'],
+        'variant_product_own'    => ($odooData['product_own']) ? 'private' : 'not private',
         'variant_style_no'       => $odooData['style_no'],
         'variant_active'         => $odooData['active'],
         'variant_availability'   => $inventoryData['availability'],
@@ -132,15 +133,17 @@ function sanitiseVariantData($odooData, $attributeData, $inventoryData)
         $variantData['product_color_name'] = $color['name'];
         $variantData['product_color_html'] = $color['html_color'];
 
+    }else{
+        $variantData['product_color_id']   = 0;
+        $variantData['product_color_name'] = "";
+        $variantData['product_color_html'] = "";
     }
     if ($size) {
         $variantData['variant_size_id']   = $size['id'];
         $variantData['variant_size_name'] = $size['name'];
-    }
-    if (!isset($variantData['product_color_id'])) {
-        $variantData['product_color_id']   = 0;
-        $variantData['product_color_name'] = "";
-        $variantData['product_color_html'] = "";
+    }else{
+        $variantData['variant_size_id']   = 0;
+        $variantData['variant_size_name'] = "";
     }
 
     return $variantData;
@@ -189,6 +192,7 @@ function buildProductIndexFromOdooData($productData, $variantData)
         "product_style"               => $productData['product_style_no'],
         "product_description"         => $productData['product_description_sale'],
         "product_att_sleeves"         => $productData['product_att_sleeves'],
+        "product_att_fashionability"  => $productData['product_att_fashionability'],
         "product_att_material"        => $productData['product_att_material'],
         "product_att_occasion"        => $productData['product_att_occasion'],
         "product_att_wash"            => $productData['product_att_wash'],
@@ -199,6 +203,7 @@ function buildProductIndexFromOdooData($productData, $variantData)
         "product_gender"              => $productData['product_gender'],
         "product_age_group"           => $productData['product_age_group'],
         "product_subtype"             => $productData['product_subtype'],
+        "product_vendor"              => $productData['product_vendor'],
         "product_color_id"            => $variantData->first()['product_color_id'],
         "product_color_slug"          => str_slug($variantData->first()['product_color_name']),
         "product_color_name"          => $variantData->first()['product_color_name'],
@@ -208,12 +213,14 @@ function buildProductIndexFromOdooData($productData, $variantData)
     $indexData["variants"] = [];
     foreach ($variantData as $variant) {
         $indexData['variants'][] = [
-            "variant_id"           => $variant['variant_id'],
-            "variant_list_price"   => $variant['variant_lst_price'],
-            "variant_sale_price"   => $variant['variant_sale_price'],
-            "variant_size_id"      => $variant['variant_size_id'],
-            "variant_size_name"    => $variant['variant_size_name'],
-            "variant_availability" => $variant['variant_availability'],
+            "variant_id"             => $variant['variant_id'],
+            "variant_list_price"     => $variant['variant_lst_price'],
+            "variant_sale_price"     => $variant['variant_sale_price'],
+            "variant_standard_price" => $variant['variant_standard_price'],
+            "variant_size_id"        => $variant['variant_size_id'],
+            "variant_size_name"      => $variant['variant_size_name'],
+            "variant_availability"   => $variant['variant_availability'],
+            "variant_product_own"    => $variant['variant_product_own'],
         ];
         $search_data = [
             'full_text'         => generateFullTextForIndexing($productData, $variant),

@@ -29,7 +29,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->job(new ImageSync, 'create_jobs')->daily();
         $schedule->job(new ProductSync, 'create_jobs')->daily();
-        $schedule->job(new ProductMoveSync, 'create_jobs')->everyFiveMinutes();
+        $schedule->job(new ProductMoveSync, 'create_jobs')->everyMinute();
 
     }
 
