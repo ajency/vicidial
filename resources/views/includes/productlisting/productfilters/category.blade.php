@@ -8,12 +8,12 @@
         <hr>
       </div>
       <div id="headingTwo">
-        <label class=" w-100 mb-0 pb-2 cursor-pointer @{{#if collapsed}} collapsed @{{/if}}" data-toggle="collapse" data-target="#collapseCategory" aria-expanded="false" aria-controls="collapseCategory">
+        <label class=" w-100 mb-0 pb-3 cursor-pointer @{{#if collapsed}} collapsed @{{/if}}" data-toggle="collapse" data-target="#collapseCategory" aria-expanded="false" aria-controls="collapseCategory">
          @{{filter_display_name}} <i class="fas fa-angle-up float-right"></i>
         </label>
       </div>
       <div id="collapseCategory" class="collapse @{{#if collapsed}} @{{else}} show @{{/if}}" aria-labelledby="headingTwo" >
-        <div class="card-body">
+        <div class="card-body pt-2">
           @{{#if singleton }}
           @{{#each items}}
           <div class="custom-radio custom-control">

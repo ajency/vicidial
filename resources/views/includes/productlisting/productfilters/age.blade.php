@@ -1,12 +1,12 @@
 <script id="filter-age-template" type="text/x-handlebars-template">
   <div class="kss_filter-list">
       <div id="headingTwo">
-        <label class=" w-100 mb-0 pb-2 cursor-pointer @{{#if collapsed}} collapsed @{{/if}}" data-toggle="collapse" data-target="#collapseAge" aria-expanded="false" aria-controls="collapseAge">
+        <label class=" w-100 mb-0 pb-3 cursor-pointer @{{#if collapsed}} collapsed @{{/if}}" data-toggle="collapse" data-target="#collapseAge" aria-expanded="false" aria-controls="collapseAge">
          @{{filter_display_name}} <i class="fas fa-angle-up float-right"></i>
         </label>
       </div>
       <div id="collapseAge" class="collapse @{{#if collapsed}} @{{else}} show @{{/if}}" aria-labelledby="headingTwo" >
-        <div class="card-body">
+        <div class="card-body pt-2">
           @{{#if singleton }}
           @{{#each items}}
           <div class="custom-radio custom-control">

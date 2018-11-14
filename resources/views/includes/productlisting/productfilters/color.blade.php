@@ -1,12 +1,12 @@
 <script id="filter-color-template" type="text/x-handlebars-template">
       <div class="kss_filter-list">
         <div id="headingThree">
-          <label class="w-100 mb-0 pb-2 cursor-pointer @{{#if collapsed}} collapsed @{{/if}}" data-toggle="collapse" data-target="#collapseColor" aria-expanded="false" aria-controls="collapseColor">
+          <label class="w-100 mb-0 pb-3 cursor-pointer @{{#if collapsed}} collapsed @{{/if}}" data-toggle="collapse" data-target="#collapseColor" aria-expanded="false" aria-controls="collapseColor">
             @{{filter_display_name}}<i class="fas fa-angle-up float-right"></i>
           </label>
         </div>
         <div id="collapseColor" class="collapse @{{#if collapsed}} @{{else}} show @{{/if}}" aria-labelledby="headingThree" >
-          <div class="card-body">
+          <div class="card-body pt-2">
          
             <ul class="product-color product-color--filter p-0">
              @{{#if singleton }}

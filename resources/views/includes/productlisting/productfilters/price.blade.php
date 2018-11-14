@@ -1,13 +1,13 @@
 <script id="filter-price-template" type="text/x-handlebars-template">
     <div class="kss_filter-list">
       <div id="headingThree">
-        <label class="w-100 mb-0 pb-2 cursor-pointer @{{#if collapsed}} collapsed @{{/if}}" data-toggle="collapse" data-target="#collapsePrice" aria-expanded="false" aria-controls="collapsePrice">
+        <label class="w-100 mb-0 pb-3 cursor-pointer @{{#if collapsed}} collapsed @{{/if}}" data-toggle="collapse" data-target="#collapsePrice" aria-expanded="false" aria-controls="collapsePrice">
           @{{filter_display_name}}<i class="fas fa-angle-up float-right"></i>
         </label>
       </div>
       <div id="collapsePrice" class="collapse @{{#if collapsed}} @{{else}} show @{{/if}}" aria-labelledby="headingThree" >
-        <div class="card-body">
-          <div class="priceRange">
+        <div class="card-body pt-2">
+          <div class="priceRange mx-3">
             <input type="text" id="price-range" name="price" value="" onChange="facetCategoryChange(this,true,true);" data-facet-name="@{{../filter_facet_name}}" data-singleton="true" data-slug="@{{slug}}" @{{#if disabled_at_zero_count}} @{{#ifEquals count 0 }} disabled = "disabled" @{{/ifEquals}} @{{/if}}/>
           </div>
           <div class="row mt-3">
