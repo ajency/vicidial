@@ -279,7 +279,7 @@
 </section>
 <section id="kss-clothings" class="stripe-bg-top">
   <div class="container ">
-    <div id="card-list" class="overflow-m row">
+    <div id="card-list" class="overflow-m row productGrid">
       <div class="col-lg-3 col-md-6 mb-4 col-6  ">
         <div class="card h-100 product-card">
           <a href="/white-cotton-shirt-251-white/buy/">

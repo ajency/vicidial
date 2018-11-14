@@ -28,13 +28,9 @@
 				<!-- Product Title & Prices Section -->
 				@include('includes.singleproduct.producttitle', ['params' => $params, 'selected_color_id' => $selected_color_id])
 
-				<hr>
+				<hr class="my-2">
 
-
-
-
-
-				<div class="d-flex justify-content-between mt-4">
+				<div class="d-flex justify-content-between mt-3">
 					<label class="">Select Size (Age Group)</label>
 					<!-- Product Size Chart -->
 					<!-- <a href="#sizeModal" class="font-weight-bold kss-link" data-toggle="modal" data-target="#sizeModal">Size Chart</a>
@@ -72,8 +68,8 @@
 								</button>
 							</div> -->
 							<!-- <div class="col-6 col-sm-6 col-md-6 col-xl-6 pl-1"> -->
-								<button id="cd-add-to-cart" class="btn btn-primary btn-lg btn-block cd-add-to-cart" disabled>
-									<div class="btn-label-initial d-flex align-items-center justify-content-center">Select Size</div>
+								<button id="cd-add-to-cart" class="btn btn-primary btn-lg btn-block cd-add-to-cart text-uppercase" disabled>
+									<div class="btn-label-initial d-flex align-items-center justify-content-center py-1">SELECT SIZE</div>
 								</button>
 							<!-- </div> -->
 						<!-- </div> -->

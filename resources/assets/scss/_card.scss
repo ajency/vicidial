@@ -125,3 +125,14 @@ $size: 20px;
     box-shadow: 0 5px 15px 1px rgba(0, 0, 0, 0.15);
   }
 }
+
+.productGrid{
+  .product-card{
+    box-shadow: 0 0 5px rgba(6, 6, 6, 0.16);
+    display: flex;
+    justify-content: center;
+    @media (max-width: 767px){
+      background-color: #fff;
+    }
+  }
+}

@@ -93,7 +93,7 @@ $(document).ready(function(){
         });
     }
     $('.pl-loader').fadeOut(2000,function(){
-      $('body').removeClass('overflow-hidden')
+      $('body').removeClass('overflow-h');
     })
       
   $('body').on('click',"#showMoreProductsBtn",function(){

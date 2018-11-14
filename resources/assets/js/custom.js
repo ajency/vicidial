@@ -71,15 +71,15 @@ $(document).ready(function() {
 
     // ------------------ End Image Loader ------------------//
 
-    $('#aniimated-thumbnials').lightGallery({
-            selector: '.custom-selector',
-            preload: 0,
-            download: false,
-            fullScreen: false,
-            autoplayControls: false,
-            share: false
+    // $('#aniimated-thumbnials').lightGallery({
+    //         selector: '.custom-selector',
+    //         preload: 0,
+    //         download: false,
+    //         fullScreen: false,
+    //         autoplayControls: false,
+    //         share: false
 
-     });
+    //  });
 
 
     // ------------------ Start Filter For Mobile ------------------//

@@ -195,7 +195,7 @@ input[type=number]::-webkit-outer-spin-button {
   line-height: 26px;
   display: inline-block;
   position: relative;
-  border:2px solid #fff;
+  border:2px solid #e6e6e6;
   color: #e4e4e4;
   cursor: pointer;
   text-align: center;
@@ -232,6 +232,19 @@ input[type=number]::-webkit-outer-spin-button {
       cursor:pointer;
       display: block;
     }
+}
+
+.custom-control{
+  &.custom-checkbox{
+    .custom-control-label{
+      &:before{
+        border-radius: 0;
+      }
+      &:after{
+        background-size: 46% 100%;
+      }
+    }
+  }
 }
 
 .has-error{

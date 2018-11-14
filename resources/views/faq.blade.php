@@ -25,13 +25,13 @@
       <div class="col-sm-10">
          <div class="accordion product-collapse" id="accordionExample">
 
-            <div class="">
-               <div class="collapse-head border-bottom mb-0" id="headingOne">
+            <div class="px-sm-3 shadow-sm no-shadow-mobile mb-sm-4">
+               <div class="collapse-head mb-0" id="headingOne">
                   <button class="btn btn-link btn-block text-left py-3 px-0 br-0 " type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                      <h4 class="mb-0 text-body cursor-pointer font-weight-bold fz-sm white-space-normal">How do I place an order?</h4>
                   </button>
                </div>
-               <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+               <div id="collapseOne" class="collapse show border-top" aria-labelledby="headingOne" data-parent="#accordionExample">
                   <div class="card-body pb-2 px-0">
                      <h5 class="mb-3 fz-sm">Please follow the following steps below to place your order</h5>
                      <ol>
@@ -72,15 +72,15 @@
                </div>
             </div>
 
-            <div class="">
-               <div class="collapse-head border-bottom mb-0" id="headingTwo">
+            <div class="px-sm-3 shadow-sm no-shadow-mobile mb-sm-4">
+               <div class="collapse-head mb-0" id="headingTwo">
                   <button class="btn btn-link btn-block text-left py-3 px-0 br-0 collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                   <h4 class="mb-0 text-body cursor-pointer font-weight-bold fz-sm white-space-normal">
                   How do I cancel an order?
                   </h4>
                   </button>
                </div>
-               <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+               <div id="collapseTwo" class="collapse border-top" aria-labelledby="headingTwo" data-parent="#accordionExample">
                   <div class="card-body pb-2 px-0">
                      <p class="h5 text-muted fz-sm line-height-5">
                         Please click here to cancel your order. <br>
@@ -90,15 +90,15 @@
                </div>
             </div>
 
-            <div class="">
-               <div class="collapse-head border-bottom mb-0" id="headingThree">
+            <div class="px-sm-3 shadow-sm no-shadow-mobile mb-sm-4">
+               <div class="collapse-head mb-0" id="headingThree">
                   <button class="btn btn-link btn-block text-left py-3 px-0 br-0 collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                      <h4 class="mb-0 text-body cursor-pointer font-weight-bold fz-sm white-space-normal">
                         How do I get a refund?
                      </h4>
                   </button>
                </div>
-               <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+               <div id="collapseThree" class="collapse border-top" aria-labelledby="headingThree" data-parent="#accordionExample">
                   <div class="card-body pb-2 px-0">
                      <p class="h5 text-muted fz-sm line-height-5">
                         After you have cancelled or returned your order your amount will be refunded to you within 7 working days or as may be specified per the terms and conditions. 
@@ -107,15 +107,15 @@
                </div>
             </div>
 
-            <div class="">
-               <div class="collapse-head border-bottom mb-0" id="headingFour">
+            <div class="px-sm-3 shadow-sm no-shadow-mobile mb-sm-4">
+               <div class="collapse-head mb-0" id="headingFour">
                   <button class="btn btn-link btn-block text-left py-3 px-0 br-0 collapsed" type="button" data-toggle="collapse" data-target="#collapsefour" aria-expanded="false" aria-controls="collapsefour">
                      <h4 class="mb-0 text-body cursor-pointer font-weight-bold fz-sm white-space-normal">
                         How do I track my order?
                      </h4>
                   </button>
                </div>
-               <div id="collapsefour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+               <div id="collapsefour" class="collapse border-top" aria-labelledby="headingFour" data-parent="#accordionExample">
                   <div class="card-body pb-2 px-0">
                      <p class="h5 text-muted fz-sm line-height-5">
                         Go to “My Orders” section in “My Account” of site and then select the item or order you want to track.
@@ -124,15 +124,15 @@
                </div>
             </div>
     
-            <div class="">
-               <div class="collapse-head border-bottom mb-0" id="headingFive">
+            <div class="px-sm-3 shadow-sm no-shadow-mobile mb-sm-4">
+               <div class="collapse-head mb-0" id="headingFive">
                   <button class="btn btn-link btn-block text-left py-3 px-0 br-0 collapsed" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
                      <h4 class="mb-0 text-body cursor-pointer font-weight-bold fz-sm white-space-normal">
                         What is your shipping and return policy?
                      </h4>
                   </button>
                </div>
-               <div id="collapseFive" class="collapse " aria-labelledby="headingFive" data-parent="#accordionExample">
+               <div id="collapseFive" class="collapse border-top" aria-labelledby="headingFive" data-parent="#accordionExample">
                   <div class="card-body pb-2 px-0">
                      <p class="h5 text-muted fz-sm line-height-5">
                         You can view our shipping and return policy here.
@@ -141,15 +141,15 @@
                </div>
             </div>
 
-            <div class="">
-               <div class="collapse-head border-bottom mb-0" id="headingSix">
+            <div class="px-sm-3 shadow-sm no-shadow-mobile mb-sm-4">
+               <div class="collapse-head mb-0" id="headingSix">
                   <button class="btn btn-link btn-block text-left py-3 px-0 br-0 collapsed" type="button" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
                      <h4 class="mb-0 text-body cursor-pointer font-weight-bold fz-sm white-space-normal">
                         What is your Privacy policy?
                      </h4>
                   </button>
                </div>
-               <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordionExample">
+               <div id="collapseSix" class="collapse border-top" aria-labelledby="headingSix" data-parent="#accordionExample">
                   <div class="card-body pb-2 px-0">
                      <p class="h5 text-muted fz-sm line-height-5">
                         You can view our privacy policy here.
@@ -158,15 +158,15 @@
                </div>
             </div>
 
-            <div class="">
-               <div class="collapse-head border-bottom mb-0" id="headingSeven">
+            <div class="px-sm-3 shadow-sm no-shadow-mobile mb-sm-4">
+               <div class="collapse-head mb-0" id="headingSeven">
                   <button class="btn btn-link btn-block text-left py-3 px-0 br-0 collapsed" type="button" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
                      <h4 class="mb-0 text-body cursor-pointer font-weight-bold fz-sm white-space-normal">
                         How do I contact you?
                      </h4>
                   </button>
                </div>
-               <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordionExample">
+               <div id="collapseSeven" class="collapse border-top" aria-labelledby="headingSeven" data-parent="#accordionExample">
                   <div class="card-body pb-2 px-0">
                      <p class="h5 text-muted fz-sm line-height-5">
                         You can write to us at <a href="mailto:care@kidsuperstore.in">care@kidsuperstore.in</a> <br>
