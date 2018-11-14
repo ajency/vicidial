@@ -17,13 +17,13 @@
                       <li><a href="/about-us" class="text-gray">About Us</a></li>
                       <li><a href="/contact" class="text-gray">Contact Us</a></li>
                       <li><a href="/faq" class="text-gray">FAQ</a></li>
-                      <li><a href="/terms-and-condition" class="text-gray">Term of Use</a></li>
+                      <li><a href="/terms-and-conditions" class="text-gray">Term of Use</a></li>
                       <li><a href="/privacy-policy" class="text-gray">Privacy Policy</a></li>
-                      <li><a href="#" class="text-gray">Track Orders</a></li>
-                      <li><a href="/terms-and-condition#cancellation" class="text-gray">Cancellation</a></li>
-                      <li><a href="/terms-and-condition#shipping" class="text-gray">Shipping</a></li>
-                      <li><a href="/terms-and-condition#return" class="text-gray">Return 30 days</a></li>
-                      <li><a href="#" class="text-gray">Blog</a></li>
+                      <!-- <li><a href="#" class="text-gray">Track Orders</a></li> -->
+                      <li><a href="/terms-and-conditions#cancellation" class="text-gray">Cancellation</a></li>
+                      <li><a href="/terms-and-conditions#shipping" class="text-gray">Shipping</a></li>
+                      <li><a href="/terms-and-conditions#return" class="text-gray">Return 30 days</a></li>
+                      <li><a href="http://ideas.kidsuperstore.in/" class="text-gray">Blog</a></li>
                     </ul>
                 </div>
             </div>
