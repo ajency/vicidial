@@ -22,7 +22,7 @@ class ListingController extends Controller
         // $search_object = ($search_obj == null)?(build_search_object($params)):$search_obj;
         $search_results = [];
         if($search_obj == null){
-            $search_object = ["primary_filter" => $search_object_arr["search_result"]];
+            $search_object = $search_object_arr["search_result"];
         }
         else{
             $search_object = $search_obj;
@@ -88,9 +88,25 @@ class ListingController extends Controller
         $params = explode("/",$data["listurl"]);
         $parameters['categories'] = array();
          // dd($params);
-         foreach($params as $param){
-            if($param != "")
-                array_push($parameters['categories'], $param);
+        $parseurl=parse_url($data["listurl"], PHP_URL_QUERY);
+        $parsed_arr = explode("&", $parseurl);
+        foreach($parsed_arr as $pvals){
+            if (strpos($pvals, "pf=color:") !== false) {
+                $values = str_replace('pf=color:', '', $pvals); 
+                $parameters['categories'] = array_merge($parameters['categories'],(explode(",",$values)));
+            }
+        }
+        
+        foreach($params as $param){      
+            if($param != ""){
+                if (strpos($pvals, "pf=color:") !== false) 
+                    $p_val = preg_replace("/(\?.*)/", "", $param);
+                else if (strpos($pvals, "rf=price:") !== false) 
+                    $p_val = preg_replace("/(\?.*)/", "", $param);
+                else
+                    $p_val = $param;
+                array_push($parameters['categories'], $p_val);
+            }
          }
         
        // dd($parameters);
