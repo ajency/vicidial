@@ -427,5 +427,9 @@ export class CartComponent implements OnInit {
     document.cookie = "cart_count=" + 0 + ";path=/";
     this.appservice.updateCartCountInUI(); 
   }
+
+  shopNow(){
+    window.location.href = '/shop'
+  }
   
 }
