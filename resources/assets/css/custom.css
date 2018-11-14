@@ -9489,7 +9489,7 @@ label {
 }
 
 .kss-price {
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   font-weight: bold;
 }
 
@@ -9527,6 +9527,53 @@ label {
   color: #000;
   border-bottom: 1px solid #F9BC22;
   text-decoration: none !important;
+}
+
+.kss-anchor {
+  color: #b18005;
+}
+
+.kss-anchor:hover {
+  color: #f9bc23;
+}
+
+.socialIcon-size {
+  font-size: 1.15em;
+}
+
+@media (max-width: 767px) {
+  .socialIcon-size {
+    font-size: 1.1em;
+  }
+}
+
+.social-title {
+  margin-left: 5px;
+  margin-bottom: 0;
+  font-size: 1.2em;
+}
+
+@media (max-width: 767px) {
+  .social-title {
+    font-size: 1.1em;
+  }
+}
+
+.product-title {
+  margin-bottom: 0.5rem;
+  width: 100%;
+  color: #000;
+  text-transform: capitalize;
+}
+
+.product-title__single {
+  font-size: 1.2rem;
+}
+
+@media (max-width: 767px) {
+  .product-title__single {
+    font-size: 1.05rem;
+  }
 }
 
 .breadcrumb-item a {
@@ -10076,44 +10123,6 @@ footer .bl-1 {
 @media (max-width: 600px) {
   .section-title {
     font-size: .9rem;
-  }
-}
-
-.kss-anchor {
-  color: #e3a406;
-}
-
-.kss-anchor:hover {
-  color: #f9bc23;
-}
-
-.socialIcon-size {
-  font-size: 1.15em;
-}
-
-@media (max-width: 767px) {
-  .socialIcon-size {
-    font-size: 1.1em;
-  }
-}
-
-.fb-color {
-  color: #3B5998;
-}
-
-.instagram-color {
-  color: #fb3958;
-}
-
-.social-title {
-  margin-left: 5px;
-  margin-bottom: 0;
-  font-size: 1.2em;
-}
-
-@media (max-width: 767px) {
-  .social-title {
-    font-size: 1.1em;
   }
 }
 
