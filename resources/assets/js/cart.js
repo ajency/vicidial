@@ -221,18 +221,39 @@ function set_cart_data(json) {
 
 function loadAngularApp(){
     if(!loaded){
-      $.when(
-          $.getScript("/views/cart/inline.bundle.js"),
-          $.getScript("/views/cart/polyfills.bundle.js"), 
-          $.getScript("/views/cart/styles.bundle.css"),  
-          $.getScript("/views/cart/vendor.bundle.js"), 
-          $.Deferred(function( deferred ){
-              $( deferred.resolve );
-          })
-      ).done(function(){
-          $.getScript("/views/cart/main.bundle.js");
-          loaded = true;
-      });
+        $.getScript("/views/cart/inline.bundle.js")
+            .done(function(script, textStatus){
+                console.log(textStatus);
+                $.getScript("/views/cart/vendor.bundle.js")
+                    .done(function(script2, textStatus2){
+                        console.log(textStatus2);
+                        $.getScript("/views/cart/polyfills.bundle.js")
+                            .done(function(script3, textStatus3){
+                                console.log(textStatus3);
+                                $.getScript("/views/cart/main.bundle.js")
+                                    .done(function(script4,textStatus4){
+                                        console.log(textStatus4);
+                                        loaded = true;
+                                    })
+                                    .fail(function(jqxhr, settings, exception){
+                                        console.log("angular load failed")
+                                        // loadAngularApp();
+                                    })
+                            })
+                            .fail(function(jqxhr, settings, exception){
+                                console.log("angular load failed")
+                                // loadAngularApp();
+                            })
+                    })
+                    .fail(function(jqxhr, settings, exception){
+                        console.log("angular load failed")
+                        // loadAngularApp();
+                    })
+            })
+            .fail(function(jqxhr, settings, exception){
+                console.log("angular load failed")
+                // loadAngularApp();
+            })
     }
   }
 
