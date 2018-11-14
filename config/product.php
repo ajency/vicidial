@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'template_fields'    => [
+    'template_fields'         => [
         "name",
         "id",
         "article_desc",
@@ -26,6 +26,9 @@ return [
         "att_fabric_type",
         "att_product_type",
         "att_val_add1",
+        // "product_own", #private/non private
+        "vendor_id", #Vendor
+        "brand_ids", #Brand
         // "parent_flag",
         // "sale_price",
         // "qty_available",
@@ -35,10 +38,8 @@ return [
         // "list_price",
         // "discount_amt",
         // "color",
-        // "product_own", #private/non private
     ],
-
-    'variant_fields'             => [
+    'variant_fields'          => [
         'id',
         'product_tmpl_id',
         'barcode',
@@ -47,8 +48,8 @@ return [
         "product_own", #private label
         "style_no",
         "lst_price", #MRP
-        "sale_price", #Cost without tax
-        "standard_price",
+        "sale_price", #selling price
+        "standard_price", // cost of the item
         // 'display_name',
         // 'name',
         // 'virtual_available',
@@ -61,7 +62,7 @@ return [
         // "supplier_taxes_id", # Vendor Tax
 
     ],
-    'move_fields'        => [
+    'move_fields'             => [
         "id",
         "location_dest_id",
         "location_id",
@@ -84,14 +85,14 @@ return [
         "is_locked",
         "lot_name",
     ],
-    'update_inventory' => env('UPDATE_INVENTORY',false),
-    'attribute_fields'           => [
+    'update_inventory'        => env('UPDATE_INVENTORY', false),
+    'attribute_fields'        => [
         'id',
         'name',
         'html_color',
         'attribute_id',
     ],
-    'facets'                     => [
+    'facets'                  => [
         "string_facet"  => [
             'product' => [
                 'product_slug',
@@ -107,13 +108,14 @@ return [
                 'product_color_name',
                 'product_color_html',
                 'variant_size_name',
+                'variant_product_own',
             ],
         ],
         "boolean_facet" => [
             'product' => [
                 'product_active',
             ],
-            'variant' => ['variant_product_own', 'variant_active', 'variant_availability'],
+            'variant' => ['variant_active', 'variant_availability'],
         ],
         "number_facet"  => [
             'product' => ['product_id'],
@@ -148,9 +150,9 @@ return [
             'variant' => ['variant_style_no'],
         ],
     ],
-    "inventory_fields"           => ["warehouse_id", "product_id", "quantity"],
-    "inventory_max"              => 10,
-    'facet_display_data'         => [
+    "inventory_fields"        => ["warehouse_id", "product_id", "quantity"],
+    "inventory_max"           => 10,
+    'facet_display_data'      => [
         'product_category_type' => [
             'name'                   => 'Category',
             'is_singleton'           => false,
