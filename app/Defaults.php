@@ -53,4 +53,20 @@ class Defaults extends Model
         }
     }
 
+    public static function getEmailExtras($type, $orig = [])
+    {
+        if (!is_array($orig)) {
+            $orig = [$orig];
+        }
+        $extras = self::where('type', 'email')->where('label', $type)->first();
+        if ($extras == null) {
+            return $orig;
+        }
+
+        foreach ($extras->meta_data as $email) {
+            $orig[] = $email;
+        }
+        return $orig;
+    }
+
 }

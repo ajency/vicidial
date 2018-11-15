@@ -1,7 +1,10 @@
 <?php
 return [
-    "send-otp" =>
-        [
-            "smsgupshup" => ""
-        ]
+    "send-otp"      => [
+        "smsgupshup" => "",
+    ],
+    "order-success" => [
+        'laravel'    => 'email.order-success',
+        'smsgupshup' => "",
+    ],
 ];
