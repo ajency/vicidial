@@ -536,9 +536,8 @@ function sendEmail($event, $data)
     $bcc = (isset($data['bcc'])) ? Defaults::getEmailExtras('bcc', $data['bcc']) : Defaults::getEmailExtras('bcc');
     $email->setBcc($bcc);
 
-    //Template Data & Subject
-    $params                  = (isset($data['template_data'])) ? $data['template_data'] : [];
-    $params['email_subject'] = (isset($data['subject'])) ? $data['subject'] : "";
+    //Template Data
+    $params = (isset($data['template_data'])) ? $data['template_data'] : [];
     $email->setParams($params);
 
     if (isset($data['attach'])) {
@@ -548,7 +547,10 @@ function sendEmail($event, $data)
     $notify = new \Ajency\Comm\Communication\Notification();
     $notify->setEvent($event);
     $notify->setRecipientIds([$email]);
-
+    //subject
+    $notify->setProviderParams([
+        'email' => ['subject' => (isset($data['subject'])) ? $data['subject'] : ""],
+    ]);
     if (isset($data['delay'])) {
         $notify->setDelay($data['delay']);
     }
