@@ -25,8 +25,8 @@ Route::get('/about-us', 'StaticController@about');
 Route::get('/terms-and-conditions', 'StaticController@tc');
 Route::get('/privacy-policy', 'StaticController@privacy');
 
-Route::get('/rest/v1/authenticate/login', 'ApiLoginController@verifyOTP');
-Route::get('/rest/v1/authenticate/generate_otp', 'SMSController@sendSMS');
+Route::get('/rest/v1/authenticate/login', 'UserController@verifyOTP');
+Route::get('/rest/v1/authenticate/generate_otp', 'UserController@sendSMS');
 
 Route::get('/test/productlist', 'ProductListTestController@index')->name('productListTest');
 

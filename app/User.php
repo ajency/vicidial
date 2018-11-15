@@ -126,4 +126,14 @@ class User extends Authenticatable
         $this->odooSync();
         parent::save($options);
     }
+
+    public function userInfo()
+    {
+        if($this->email==null) {
+            return null;
+        }
+        else {
+            return array('name' => $this->name, 'email' => $this->email);
+        }
+    }
 }

@@ -13,6 +13,10 @@ declare var $: any;
 export class ShippingSummaryComponent implements OnInit {
 
   shippingDetails : any;
+  showUserInfoModal : boolean = false;
+  showCancelButton : boolean = false;
+  userName : any;
+  userEmail : any;
   constructor(private router : Router,
   			   		private appservice : AppServiceService,
               private apiservice : ApiServiceService,
@@ -60,6 +64,7 @@ export class ShippingSummaryComponent implements OnInit {
 
     this.apiservice.request(url, 'post', body , header ).then((response)=>{
       this.shippingDetails = this.getProductUrl(response);
+      this.setUserName();
       this.appservice.removeLoader();
       // this.appservice.updateCartId();
     })
@@ -71,8 +76,6 @@ export class ShippingSummaryComponent implements OnInit {
 
   callContinueOrderApi(){
     this.appservice.showLoader();
-     '/api/rest/v1/user/cart/{id}/continue-order'
-
     let url = this.appservice.apiUrl + '/api/rest/v1/user/cart/' + this.appservice.getCookie('cart_id') + '/continue-order';
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     let body : any = {
@@ -81,6 +84,7 @@ export class ShippingSummaryComponent implements OnInit {
 
     this.apiservice.request(url, 'post', body , header ).then((response)=>{
       this.shippingDetails = this.getProductUrl(response);
+      this.setUserName();
       this.appservice.removeLoader();
       // this.appservice.updateCartId();
     })
@@ -96,6 +100,63 @@ export class ShippingSummaryComponent implements OnInit {
       item.attributes.images = Array.isArray(item.attributes.images) ? ['/img/placeholder.svg', '/img/placeholder.svg', '/img/placeholder.svg'] : Object.values(item.attributes.images);
     })
     return data;
+  }
+
+  saveUserInfo(){
+    this.appservice.showLoader();
+    let url = this.appservice.apiUrl + '/api/rest/v1/user/save-user-details';
+    let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
+    let body : any = {
+      _token : $('meta[name="csrf-token"]').attr('content'),
+      name : this.shippingDetails.user_info.name,
+      email : this.shippingDetails.user_info.email
+    };
+
+    this.apiservice.request(url, 'post', body , header ).then((response)=>{
+      this.hideModal();
+      this.userEmail = body.email;
+      this.appservice.removeLoader();
+    })
+    .catch((error)=>{
+      console.log("error ===>", error);
+      this.appservice.removeLoader();
+    }) 
+  }
+
+  setUserName(){
+    if(!this.shippingDetails.user_info){
+      this.shippingDetails.user_info = {};
+      this.shippingDetails.user_info.name = this.shippingDetails.address.name;
+      this.shippingDetails.user_info.email = '';
+      setTimeout(()=>{
+        this.showModal();  
+      },100);
+      
+    }
+    else{
+      this.userEmail = this.shippingDetails.user_info.email;
+    }
+  }
+
+  editUserInfo(){
+    this.showCancelButton = true;
+    this.showModal();    
+  }
+
+  showModal(){
+    this.showUserInfoModal = true;
+    // var backdrop = $('.modal-backdrop');
+    $('#user-info').modal('show');
+    $("#cd-cart").css("overflow", "hidden");
+    $('.modal-backdrop').appendTo('.scroll-container');
+    $('body').addClass('hide-scroll');
+  }
+
+  hideModal(){
+    this.showUserInfoModal = false;
+    $('#user-info').modal('hide');
+    $("#cd-cart").css("overflow", "auto");
+    $('.modal-backdrop').remove();
   }
 
 }
