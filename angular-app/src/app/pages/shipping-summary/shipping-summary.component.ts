@@ -74,8 +74,6 @@ export class ShippingSummaryComponent implements OnInit {
 
   callContinueOrderApi(){
     this.appservice.showLoader();
-     '/api/rest/v1/user/cart/{id}/continue-order'
-
     let url = this.appservice.apiUrl + '/api/rest/v1/user/cart/' + this.appservice.getCookie('cart_id') + '/continue-order';
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     let body : any = {
@@ -103,14 +101,28 @@ export class ShippingSummaryComponent implements OnInit {
   }
 
   saveUserInfo(){
-    // API call
-    // Hide modal on api success
-    this.shippingDetails.user_info = {
-      name : this.userName,
-      email : this.userEmail
+    this.appservice.showLoader();
+    let url = this.appservice.apiUrl + '/api/rest/v1/user/save-user-details';
+    let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
+    let body : any = {
+      _token : $('meta[name="csrf-token"]').attr('content'),
+      user_info : {
+        name : this.userName,
+        email : this.userEmail
+      }
     };
 
-    console.log("userName ===>", this.userName, this.userEmail);
+    this.apiservice.request(url, 'post', body , header ).then((response)=>{
+      this.shippingDetails.user_info = {
+        name : this.userName,
+        email : this.userEmail
+      };
+      this.appservice.removeLoader();
+    })
+    .catch((error)=>{
+      console.log("error ===>", error);
+      this.appservice.removeLoader();
+    }) 
   }
 
   setUserName(){
