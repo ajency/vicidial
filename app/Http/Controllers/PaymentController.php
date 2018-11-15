@@ -21,8 +21,8 @@ class PaymentController extends Controller
 		    'txnid' => $order->txnid, # Transaction ID.
 		    'amount' => $order->aggregateSubOrderData()['final_price'], # Amount to be charged.
 		    'productinfo' => $order->id,
-		    'firstname' => "", # Payee Name.
-		    'email' => "", # Payee Email Address.
+		    'firstname' => $user->name, # Payee Name.
+		    'email' => $user->email, # Payee Email Address.
 		    'phone' => $user->phone, # Payee Phone Number.
 		];
 
