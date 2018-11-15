@@ -9,6 +9,7 @@ use App\Jobs\FetchProductImages;
 use App\Jobs\UpdateVariantInventory;
 use App\ProductColor;
 use App\Variant;
+use App\Warehouse;
 
 class Product
 {
@@ -90,6 +91,9 @@ class Product
             $object->save();
         } catch (\Exception $e) {
             \Log::warning($e->getMessage());
+        }
+        foreach ($inventory['inventory'] as $inventoryData) {
+            Warehouse::where('odoo_id',$inventoryData['warehouse_id'])->update(['location_id' => $inventoryData['location_id'],'location_name' => $inventoryData['location_name']]);
         }
         $facets = ['product_category_type', 'product_gender', 'product_age_group', 'product_subtype'];
         foreach ($facets as $facet) {
