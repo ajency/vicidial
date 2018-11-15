@@ -53,12 +53,15 @@ class SubOrder extends Model
     {
         $items = $this->getItems();
         $total = 0;
+        $savings = 0;
         foreach ($items as $itemData) {
             $total += $itemData['item']->getSalePrice();
+            $savings += $itemData['item']->getSavings();
         }
         $this->odoo_data = [
             'total'        => $total,
             'shipping_fee' => 0,
+            'savings'      => $savings,
         ];
     }
 
@@ -96,10 +99,6 @@ class SubOrder extends Model
             $order = $this->getSaleOrder($id);
             
             $this->odoo_id   = $order["id"];
-            $this->odoo_data = [
-                'total'          => $order["amount_total"],
-                'shipping_fee'   => $order["shipping_charge"],
-            ];
             $this->odoo_status = 'draft';
             $this->save();
         }

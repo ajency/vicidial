@@ -201,6 +201,16 @@ class Variant extends Model
     }
 
     /**
+     * Get Variant Savings
+     *
+     * @return double
+     */
+    public function getSavings()
+    {
+        return $this->variant["variant_sale_price"] - $this->variant["variant_list_price"];
+    }
+
+    /**
      * Get variant color id
      *
      * @return int
