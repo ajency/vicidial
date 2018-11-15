@@ -66,7 +66,7 @@ $(document).ready(function(){
         });
     }
     
-    $('.pl-loader').fadeOut(2000,function(){
+    $('.pl-loader').fadeOut('fast',function(){
       $('body').removeClass('overflow-h');
     })
       
