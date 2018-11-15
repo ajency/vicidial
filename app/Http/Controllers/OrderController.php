@@ -29,7 +29,11 @@ class OrderController extends Controller
             'address_id' => $address->id,
             'expires_at' => Carbon::now()->addMinutes(config('orders.expiry'))->timestamp,
         ]);
-        $order->txnid = strtoupper(str_random(8)).str_pad($order->id, 6, '0', STR_PAD_LEFT);
+
+        $dateInd = Carbon::now();
+        $dateInd->setTimezone('Asia/Kolkata');
+
+        $order->txnid = strtoupper($dateInd->format('Mjy')).str_pad($order->id, 8, '0', STR_PAD_LEFT);
         $order->save();
 
         $order->setSubOrders();
