@@ -346,10 +346,10 @@ export class CartComponent implements OnInit {
     this.mobileNumberEntered = false;
     this.otp = null;
     this.userValidation.otpVerificationErrorMsg = '';
-    if(updateHistory){
-      let url = window.location.href.split("#")[0];
-      history.replaceState({cart : false}, 'cart', url);
-    }
+  }
+
+  closeOtpModal(){
+    history.back();
   }
 
   navigateToShippingDetailsPage(){
