@@ -171,7 +171,7 @@
 			              <label class="control-label">Name</label>			              
 			            </div>
 			            <div class="form-group mb-0">
-			            	<input type="email" class="form-control form-control-number form-control-lg" id="frm-email" name="email" required [(ngModel)]="shippingDetails.user_info.email" [ngClass]="{'has-value' : userEmail}" pattern="[^ @]*@[^ @]*">
+			            	<input type="email" class="form-control form-control-number form-control-lg" id="frm-email" name="email" required [(ngModel)]="shippingDetails.user_info.email" [ngClass]="{'has-value' : userEmail}" pattern="[^ @]+@[^ @]+\.[^ @]+">
 				            <label class="control-label">Email Id</label>
 			            </div>
 			          </form>
