@@ -7511,14 +7511,6 @@ $(document).ready(function () {
 
 	if ($(window).width() < 760) {
 		$('.similar-link').appendTo('.m-similar');
-		$(window).scroll(function () {
-			if ($(this).scrollTop() > 200) {
-				$('.mobile-fixed').show();
-				jQuery(".mobile-fixed").addClass("visible");
-			} else {
-				$('.mobile-fixed').hide();
-			}
-		});
 		$('.search-icon').click(function () {
 			$('.search-icon').addClass("d-block");
 		});

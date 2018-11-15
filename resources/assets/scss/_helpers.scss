@@ -74,14 +74,16 @@ footer .bl-1{
     letter-spacing: 5px;
 }
 .kss_icon {
-    background: url(../img/sprite.png)no-repeat;
+    background-image: url(../img/sprite.png);
+    background-repeat: no-repeat;
     width: 30px;
     height: 33px;
     display: inline-block;
     margin-bottom: -4px;
 }
 .kss-ico{
-      background: url(../img/sprite.png)no-repeat;
+    background-image: url(../img/sprite.png);
+    background-repeat: no-repeat;
 }
 .icon-truck-sm{
     @extend .kss-ico;
@@ -407,35 +409,30 @@ footer .bl-1{
     }
 }
 
-// Default anchor styling
-
-.kss-anchor{
-    color: darken(theme-color("primary"),10%);
-    &:hover{
-        color: theme-color("primary");
+.newsletter{
+    .form-control.newsletter__input{
+        background-color: #fff;
+        padding: 10px;
+    }
+    &__btn{
+        border-radius: 0;
+        border: 0;
+        padding: 10px 0.75rem;
     }
 }
 
-.socialIcon-size{
-    font-size: 1.15em;
-    @media (max-width: 767px){
-        font-size: 1.1em;
-    }
+.kss-input-small{
+    width: 35%; 
 }
 
-.fb-color{
-    color: #3B5998;
-}
-
-.instagram-color{
-    color: #fb3958;
-}
-
-.social-title{
-    margin-left: 5px;
-    margin-bottom: 0;
-    font-size: 1.2em;
-    @media (max-width: 767px){
-        font-size: 1.1em;
+.kss-flash{
+    padding: 0.8em;
+    margin: 0.8em 0;
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.4;
+    &--info{
+        background-color: $flash-info-bg;    
+        color: $flash-info-color;
     }
 }

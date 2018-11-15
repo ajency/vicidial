@@ -2,7 +2,7 @@
     <div class="mt-2">
             <!-- Product Title -->
 
-            <h1 class="kss-title mb-2 mb-sm-2 text-black w-100 text-capitalize">{{$params['title']}}</h1>
+            <h1 class="section-heading section-heading--single">{{$params['title']}}</h1>
 
             <!-- Product Default/Selected Price -->
             @php
