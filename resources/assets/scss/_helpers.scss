@@ -424,3 +424,15 @@ footer .bl-1{
 .kss-input-small{
     width: 35%; 
 }
+
+.kss-flash{
+    padding: 0.8em;
+    margin: 0.8em 0;
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.4;
+    &--info{
+        background-color: $flash-info-bg;    
+        color: $flash-info-color;
+    }
+}

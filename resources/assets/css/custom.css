@@ -10213,6 +10213,19 @@ footer .bl-1 {
   width: 35%;
 }
 
+.kss-flash {
+  padding: 0.8em;
+  margin: 0.8em 0;
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.kss-flash--info {
+  background-color: #f9f9f9;
+  color: #6b6b6b;
+}
+
 /* Custom Select */
 .kss-custom-select {
   position: relative;
@@ -10300,6 +10313,24 @@ label {
   font-size: 1.5em;
   padding-left: 0px;
   font-weight: bold;
+}
+
+.form-control-number::-webkit-input-placeholder {
+  letter-spacing: 0px;
+  font-size: 0.8em;
+  font-weight: 400;
+}
+
+.form-control-number::-ms-input-placeholder {
+  letter-spacing: 0px;
+  font-size: 0.8em;
+  font-weight: 400;
+}
+
+.form-control-number::placeholder {
+  letter-spacing: 0px;
+  font-size: 0.8em;
+  font-weight: 400;
 }
 
 .number-edit {
