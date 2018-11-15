@@ -176,7 +176,7 @@
 			          </form>
 			          <div id="kss_cart" class="pt-3 d-flex align-items-center justify-content-between">
 						<button *ngIf="showCancelButton" id="cancel" class="btn btn-outline-secondary btn-lg btn-block mr-3" (click)="hideModal()" >Cancel</button>
-						<button  id="save" class="btn btn-primary btn-lg btn-block mt-0" [ngClass]="{'disabled' : !userInfo.valid}" (click)="saveUserInfo()" >Save</button>
+						<button id="save" class="btn btn-primary btn-lg btn-block mt-0" [disabled]="!userInfo.valid" (click)="saveUserInfo()" >Save</button>
 					</div>
 			        </div>
 
