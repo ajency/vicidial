@@ -15,19 +15,6 @@ class Product
     protected $data;
 
 
-    public static function odooFilter($filters)
-    {
-        if (isset($filters['id'])) {
-            return [[['id', '>', $filters['id']]]];
-        } elseif (isset($filters['created'])) {
-            return [[['create_date', '>', $filters['created']]]];
-        } elseif (isset($filters['updated'])) {
-            return [[['__last_update', '>', $filters['updated']]]];
-        } elseif (isset($filters['write'])) {
-            return [[['write_date', '>', $filters['write']]]];
-        }
-    }
-
     public static function getProductIDs($filters, $offset, $limit = false)
     {
         $odooFilter = OdooConnect::odooFilter($filters);
@@ -190,61 +177,6 @@ class Product
         return inventoryFormatData($variant_ids, $inventory);
     }
 
-    public static function getAttributeValue($product, string $field)
-    {
-        $attributes = $product["search_data"][0]["attributes"];
-        foreach ($attributes as $key => $attribute) {
-            if ($attribute["attribute_name"] == $field) {
-                return $attribute["attribute_value"];
-            }
-
-        }
-    }
-
-    public static function getAttributeSlug($product, string $field)
-    {
-        $attributes = $product["search_data"][0]["attributes"];
-        foreach ($attributes as $key => $attribute) {
-            if ($attribute["attribute_name"] == $field) {
-                return $attribute["attribute_slug"];
-            }
-
-        }
-    }
-
-    public static function getStringFacetValue($product, string $field)
-    {
-        $facets = $product["search_data"][0]["string_facet"];
-        foreach ($facets as $key => $facet) {
-            if ($facet["facet_name"] == $field) {
-                return $facet["facet_value"];
-            }
-
-        }
-    }
-
-    public static function getStringFacetSlug($product, string $field)
-    {
-        $facets = $product["search_data"][0]["string_facet"];
-        foreach ($facets as $key => $facet) {
-            if ($facet["facet_name"] == $field) {
-                return $facet["facet_value"];
-            }
-
-        }
-    }
-
-    public static function getNumberFacetValue($product, string $field)
-    {
-        $facets = $product["search_data"][0]["number_facet"];
-        foreach ($facets as $key => $facet) {
-            if ($facet["facet_name"] == $field) {
-                return $facet["facet_value"];
-            }
-
-        }
-    }
-
     public static function getVariantSequence($product, $variant_id)
     {
         $data = $product["variants"];
@@ -278,6 +210,12 @@ class Product
         }
     }
 
+
+    /**
+     * Function to generate Elastic Query for Aggregations required on LHS of ListView page
+     * 
+     * @return ElasticQuery
+     */
     public static function buildBaseQuery()
     {
 
@@ -305,6 +243,12 @@ class Product
         return $q;
     }
 
+
+    /**
+     * Function to return the Data for LHS of Product List View
+     * 
+     * @return array
+     */
     public static function getProductCategoriesWithFilter($params)
     {
 
@@ -340,24 +284,12 @@ class Product
 
         $must = $q::addToBoolQuery('must', $must);
 
-        $nested     = [];
-        $facetName  = $q::createTerm("search_data.number_facet.facet_name", "product_color_id");
-        $facetValue = $q::createTerm("search_data.number_facet.facet_value", 0);
-        $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
-        $nested[]   = $q::createNested('search_data.number_facet', $filter);
-        $nested2    = $q::createNested("search_data", $nested);
-        $must       = $q::addToBoolQuery('must_not', $nested2, $must);
 
-        $nested     = [];
-        $facetName  = $q::createTerm("search_data.boolean_facet.facet_name", "variant_availability");
-        $facetValue = $q::createTerm("search_data.boolean_facet.facet_value", true);
-        $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
-        $nested[]   = $q::createNested('search_data.boolean_facet', $filter);
-        $nested2    = $q::createNested("search_data", $nested);
-        $must       = $q::addToBoolQuery('filter', $nested2, $must);
+        $must = self::hideZeroColorIDProducts($q, $must);
+        $must = self::hideUnavailableProducts($q, $must);
+        
 
         $q->setQuery($must);
-        // dd($q->getParams());
         $response = $q->search();
         return sanitiseFilterdata($response, $params);
     }
@@ -368,9 +300,14 @@ class Product
         return sanitiseFilterdata($q->search());
     }
 
-    public static function getItemsWithFilters($params)
-    {
-        $size   = $params["display_limit"];
+
+    /**
+     * Function to return the Data for RHS of Product List View
+     * 
+     * @return array
+     */
+    public static function getItemsWithFilters($params){
+        $size = $params["display_limit"];
         $offset = ($params["page"] - 1) * $size;
 
         $index = config('elastic.indexes.product');
@@ -405,29 +342,46 @@ class Product
         }
         $must = $q::addToBoolQuery('must', $must);
 
-        $nested     = [];
-        $facetName  = $q::createTerm("search_data.number_facet.facet_name", "product_color_id");
-        $facetValue = $q::createTerm("search_data.number_facet.facet_value", 0);
-        $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
-        $nested[]   = $q::createNested('search_data.number_facet', $filter);
-        $nested2    = $q::createNested('search_data', $nested);
-        $must       = $q::addToBoolQuery('must_not', $nested2, $must);
 
-        $nested     = [];
-        $facetName  = $q::createTerm("search_data.boolean_facet.facet_name", "variant_availability");
+        $must = self::hideZeroColorIDProducts($q, $must);
+        $must = self::hideUnavailableProducts($q, $must);
+        $q->setQuery($must)
+        ->setSource(["search_result_data", "variants"])
+        ->setSize($size)->setFrom($offset);
+        return formatItems($q->search(), $params);
+    }
+
+    /**
+     * Query to hide Products which are not available
+     * 
+     * @return array
+     */
+    public static function hideUnavailableProducts($q, $must){
+        $nested = [];
+        $facetName  = $q::createTerm( "search_data.boolean_facet.facet_name", "variant_availability");
         $facetValue = $q::createTerm("search_data.boolean_facet.facet_value", true);
         $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
         $nested[]   = $q::createNested('search_data.boolean_facet', $filter);
-        $nested2    = $q::createNested('search_data', $nested);
-        $must       = $q::addToBoolQuery('filter', $nested2, $must);
+        $nested2 = $q::createNested("search_data", $nested);
+        $must = $q::addToBoolQuery('filter',$nested2, $must);
+        return $must;
+    }
 
-        // $must = self::priceFilter($q, $must, 200, 300);
-        $q->setQuery($must)
-            ->setSource(["search_result_data", "variants"])
-        // ->setSort(['number_sort.variant_sale_price' => ["order" => "desc"] ])
-            ->setSize($size)->setFrom($offset);
-        // dd($q->getJSON());
-        return formatItems($q->search(), $params);
+    /**
+     * Query to hide Products with Color ID equalling 0
+     * 
+     * @return void
+     */
+    public static function hideZeroColorIDProducts($q, $must){
+        $nested = [];
+        $facetName  = $q::createTerm( "search_data.number_facet.facet_name", "product_color_id");
+        $facetValue = $q::createTerm("search_data.number_facet.facet_value", 0);
+        $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
+        $nested[]   = $q::createNested('search_data.number_facet', $filter);
+        $nested2 = $q::createNested("search_data", $nested);
+        $must = $q::addToBoolQuery('must_not',$nested2, $must);
+        return $must;
+
     }
 
     public static function priceFilter($q, $must, $min, $max)
@@ -512,14 +466,5 @@ class Product
         // dd($output);
         return $output;
     }
-
-
-    public static function updateInventory($product_move)
-    {
-        if ($product_move["to_loc"] == "Stock" or $product_move["from_loc"] == "Stock") {
-            UpdateVariantInventory::dispatch($product_move)->onQueue('update_inventory');
-        }
-    }
-
 
 }
