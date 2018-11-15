@@ -135,7 +135,7 @@
 
 				<div *ngIf="shippingDetails.user_info">
 					Order Tracking emails will be sent to the following address : {{userEmail}}
-					<button (click)="editUserInfo()">Edit</button>
+					<i class="fas fa-pencil-alt number-edit cursor-pointer" (click)="editUserInfo()"></i>
 				</div>
 			</div>
 
@@ -175,7 +175,7 @@
 				            <label class="control-label">Email Id</label>
 			            </div>
 			          </form>
-			          <div id="kss_cart" class="p-3 d-flex align-items-center justify-content-between">
+			          <div id="kss_cart" class="pt-3 d-flex align-items-center justify-content-between">
 						<button *ngIf="showCancelButton" id="cancel" class="btn btn-outline-secondary btn-lg btn-block mr-3" (click)="hideModal()" >Cancel</button>
 						<button  id="save" class="btn btn-primary btn-lg btn-block mt-0" [ngClass]="{'disabled' : !userInfo.valid}" (click)="saveUserInfo()" >Save</button>
 					</div>

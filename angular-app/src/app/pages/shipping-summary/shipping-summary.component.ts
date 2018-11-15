@@ -142,9 +142,10 @@ export class ShippingSummaryComponent implements OnInit {
 
   showModal(){
     this.showUserInfoModal = true;
+    // var backdrop = $('.modal-backdrop');
     $('#user-info').modal('show');
     $("#cd-cart").css("overflow", "hidden");
-    $('.modal-backdrop').appendTo('#cd-cart');
+    $('.modal-backdrop').appendTo('.scroll-container');
     $('body').addClass('hide-scroll');
   }
 
@@ -152,6 +153,7 @@ export class ShippingSummaryComponent implements OnInit {
     this.showUserInfoModal = false;
     $('#user-info').modal('hide');
     $("#cd-cart").css("overflow", "auto");
+    $('.modal-backdrop').remove();
   }
 
 }
