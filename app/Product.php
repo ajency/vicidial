@@ -468,7 +468,7 @@ class Product
         // dd($filter_params,$params);
 
         // $params = $filter_params =  ['search_object' =>['primary_filter' => [ 'product_gender' => ['Boys','all']]], 'display_limit' => 20, 'page' => 1] ;
-        $params = $filter_params ;
+        // $params = $filter_params ;
         $output["filters"]   = self::getProductCategoriesWithFilter($filter_params);
         // dd($output["filters"]);
         $results             = self::getItemsWithFilters($params);
