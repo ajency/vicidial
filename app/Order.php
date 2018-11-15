@@ -3,8 +3,8 @@
 namespace App;
 
 use App\Cart;
-use App\SubOrder;
 use App\Jobs\OdooOrder;
+use App\SubOrder;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Tzsk\Payu\Fragment\Payable;
@@ -53,7 +53,8 @@ class Order extends Model
         }
     }
 
-    public function placeOrderOnOdoo(){
+    public function placeOrderOnOdoo()
+    {
         //create a job to place order on odoo for all suborders.
         foreach ($this->subOrders as $subOrder) {
             OdooOrder::dispatch($subOrder)->onQueue('odoo_order');
@@ -63,8 +64,8 @@ class Order extends Model
     public function aggregateSubOrderData()
     {
         $total = [
-            'total'          => 0,
-            'shipping_fee'   => 0,
+            'total'        => 0,
+            'shipping_fee' => 0,
             'savings'   => 0,
         ];
         $subOrders = $this->subOrders;
@@ -88,5 +89,25 @@ class Order extends Model
         $order_info = array('order_id' => $this->id, 'txn_no' => $this->txnid, 'total_amount' => $this->aggregateSubOrderData()['final_price'], 'order_date' => $dateInd->format('j M Y'), 'no_of_items' => count($this->cart->getItems()));
 
         return $order_info;
+    }
+
+    public function sendSuccessEmail()
+    {
+        sendEmail('order-success', [
+            'to'            => $this->cart->user->email,
+            'subject'       => 'Order placed successfully on Kid Super Store',
+            'template_data' => [
+                'order' => $this,
+            ],
+            'priority'      => 'default',
+        ]);
+    }
+
+    public function sendSuccessSMS()
+    {
+        sendSMS('order-success', [
+            'to'      => $order->cart->user->phone,
+            'message' => "Your order with order id {$this->txnid} for Rs. {$this->aggregateSubOrderData()['final_price']} has been placed successfully on Kid Super Store. Check your order at {route('orderDetails',['orderid' => $this->id])}",
+        ]);
     }
 }
