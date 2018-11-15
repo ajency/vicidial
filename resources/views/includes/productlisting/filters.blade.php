@@ -26,13 +26,12 @@
 
     @endforeach
       <div class="fixed-bottom d-none footer-filter">
-            <div class="row no-gutters px-2 py-2">
-                <div class="col-6 text-center">
+            <div class="row no-gutters">
+                <!-- <div class="col-6 text-center">
                   <button type="button" class=" btn btn-lg btn-block btn-link text-dark mt-1 mb-1">Clear All</button>
-      
-                </div>
-                <div class="col-6 text-center">
-                    <button type="button" class="btn btn-lg btn-block btn-primary mt-1 mb-1">Apply</button>
+                </div> -->
+                <div class="col-12 text-center d-flex">
+                    <button type="button" class="btn kss-btn kss-btn--big">Apply</button>
                 </div>
             </div>
         </div>

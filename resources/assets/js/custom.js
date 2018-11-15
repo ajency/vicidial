@@ -71,8 +71,8 @@ $(document).ready(function() {
     jQuery(".clear-filter").click(function() {
             jQuery(".filter-selection").attr("style", "display: none !important");
     });
-    jQuery("#kss_hide-filter").click(function() {
-            jQuery(".kss_filter").removeClass("kss_filter_mobile");
+    jQuery(document).on('click', '#kss_hide-filter', function() {
+        jQuery(".kss_filter").removeClass("kss_filter_mobile");
     });
     // ------------------ End Filter For Mobile ------------------//
 
