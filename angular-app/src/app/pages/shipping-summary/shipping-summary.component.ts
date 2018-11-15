@@ -13,6 +13,8 @@ declare var $: any;
 export class ShippingSummaryComponent implements OnInit {
 
   shippingDetails : any;
+  userName : any;
+  userEmail : any;
   constructor(private router : Router,
   			   		private appservice : AppServiceService,
               private apiservice : ApiServiceService,
@@ -60,6 +62,7 @@ export class ShippingSummaryComponent implements OnInit {
 
     this.apiservice.request(url, 'post', body , header ).then((response)=>{
       this.shippingDetails = this.getProductUrl(response);
+      this.setUserName();
       this.appservice.removeLoader();
       // this.appservice.updateCartId();
     })
@@ -81,6 +84,7 @@ export class ShippingSummaryComponent implements OnInit {
 
     this.apiservice.request(url, 'post', body , header ).then((response)=>{
       this.shippingDetails = this.getProductUrl(response);
+      this.setUserName();
       this.appservice.removeLoader();
       // this.appservice.updateCartId();
     })
@@ -96,6 +100,16 @@ export class ShippingSummaryComponent implements OnInit {
       item.attributes.images = Array.isArray(item.attributes.images) ? ['/img/placeholder.svg', '/img/placeholder.svg', '/img/placeholder.svg'] : Object.values(item.attributes.images);
     })
     return data;
+  }
+
+  saveUserInfo(){
+    this.shippingDetails.user_info = true;
+  }
+
+  setUserName(){
+    if(!this.shippingDetails.user_info){
+      this.userName = this.shippingDetails.address.name;
+    }
   }
 
 }
