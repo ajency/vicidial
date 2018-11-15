@@ -17,8 +17,8 @@
       }); 
       $filter_parameters = ['items' => $items,'singleton'=>($filter["is_singleton"] == true?1:0),'collapsed'=>($filter["is_collapsed"] == true?1:0),'header'=>$filter["header"],"filter_type" => $filter["filter_type"], "display_count"=> $filter["display_count"], "is_attribute_param"=> $filter["is_attribute_param"], "disabled_at_zero_count"=> $filter["disabled_at_zero_count"]];
       if($filter["filter_type"] == "range_filter"){
-        $filter_parameters["start"] = $filter["start"];
-        $filter_parameters["end"] = $filter["end"];
+        $filter_parameters["bucket_range"] = $filter["bucket_range"];
+        $filter_parameters["selected_range"] = $filter["selected_range"];
       }
       ?>
 

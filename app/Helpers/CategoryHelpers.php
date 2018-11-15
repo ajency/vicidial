@@ -64,9 +64,10 @@ function build_search_object($params) {
 			}
 			if($queryk == "rf"){
 				if (strpos($queryv, "price:") !== false) {
+					$price_filter_facet_name = config('product.price_filter_facet_name');
 	                $values = str_replace('price:', '', $queryv); 
 	                $min_max_arr =explode("TO",$values);
-	                $dataArr["search_result"]["range_filter"]=["min"=>$min_max_arr[0],"max"=>$min_max_arr[1]];
+	                $dataArr["search_result"]["range_filter"][$price_filter_facet_name]=["min"=>$min_max_arr[0],"max"=>$min_max_arr[1]];
 	            }
 			}
 		}
@@ -81,6 +82,7 @@ function build_search_object($params) {
 	// $facets_count_link = array_column($facets_count, 'count', 'facet_value');
 	$facets_count_link = [];
 	$facet_display_data = config('product.facet_display_data');
+	
 	$facet_display_data_keys = array_keys($facet_display_data);
 	foreach($facets_count as $focuntv){
 		$focuntv_names = explode(",",$focuntv->names);

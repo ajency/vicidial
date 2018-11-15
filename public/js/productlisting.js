@@ -295,6 +295,7 @@ function facetCategoryChange(thisObj) {
               var filter_display_name = vval.header.display_name;
               var filter_facet_name = vval.header.facet_name;
               var context = {};
+
               context["singleton"] = singleton;
               context["filter_type"] = vval.filter_type != undefined ? vval.filter_type : "primary_filter";
               context["display_count"] = vval.display_count != undefined ? vval.display_count : false;
@@ -303,6 +304,15 @@ function facetCategoryChange(thisObj) {
               context["collapsed"] = collapsed;
               context["filter_display_name"] = filter_display_name;
               context["filter_facet_name"] = filter_facet_name;
+              if (vval.filter_type == "range_filter") {
+                var fromval = vval.selected_range["start"];
+                var toval = vval.selected_range["end"];
+                var minval = vval.bucket_range["start"];
+                var maxval = vval.bucket_range["end"];
+                context["fromval"] = fromval;
+                context["toval"] = toval;
+              }
+
               Handlebars.registerHelper('ifEquals', function (arg1, arg2, options) {
                 return arg1 == arg2 ? options.fn(this) : options.inverse(this);
               });
@@ -318,12 +328,15 @@ function facetCategoryChange(thisObj) {
               var html = template(context);
               console.log(document.getElementById("filter-" + templateval + "-template-content"));
               document.getElementById("filter-" + templateval + "-template-content").innerHTML = html;
-              console.log("vval.start==" + vval.start + "===" + vval.end);
-              initializeSlider(vval.start, vval.end);
-              if (vval.filter_type != undefined && vval.filter_type == "range_filter") {
-                $("#" + templateval + "-min").val(vval.start);
-                $("#" + templateval + "-max").val(vval.end);
+
+              // console.log("vval.start=="+vval.start+"==="+vval.end)
+              if (vval.filter_type == "range_filter") {
+                initializeSlider(fromval, toval, minval, maxval);
               }
+              // if(vval.filter_type != undefined && vval.filter_type == "range_filter"){
+              //    $("#"+templateval+"-min").val(vval.start)
+              //    $("#"+templateval+"-max").val(vval.end)
+              // }
             });
           }
           if (key == "breadcrumbs") {
@@ -424,14 +437,14 @@ function removeFilterTag(slug) {
   elm.trigger("change");
 }
 
-function initializeSlider(fromval, toval) {
+function initializeSlider(fromval, toval, minval, maxval) {
   // Init ion range slider
   $('#price-range').ionRangeSlider({
     type: 'double',
     from: fromval,
     to: toval,
-    min: 0,
-    max: 25000,
+    min: minval,
+    max: maxval,
     prefix: '<i class="fas fa-rupee-sign" aria-hidden="true"></i> ',
     onChange: function onChange(data) {
       $('#price-min').val(data.from);

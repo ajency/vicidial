@@ -38,8 +38,10 @@
   });
    var singleton = (<?= $singleton ?> == 1)?true:false;
    var collapsed = (<?= $collapsed ?> == 1)?true:false;
-   var fromval =  <?= ($filter_type == "range_filter")?$start:0 ?>;
-   var toval = <?= ($filter_type == "range_filter")?$end:0 ?>;
+   var fromval =  <?= ($selected_range["start"])?($selected_range["start"]):0 ?>;
+   var toval = <?= ($selected_range["end"])?($selected_range["end"]):0 ?>;
+   var minval =  <?= $bucket_range["start"] ?>;
+   var maxval = <?= $bucket_range["end"] ?>;
    var filter_display_name = '<?= $header["display_name"] ?>';
    var filter_facet_name = '<?= $header["facet_name"] ?>';
    var display_count = <?= json_encode($display_count) ?>;
@@ -65,7 +67,7 @@
    console.log("toval==="+toval)
    $(function(){
     // Init ion range slider
-    initializeSlider(fromval,toval)
+    initializeSlider(fromval,toval,minval,maxval)
     facetCategoryChange($("#price-range"),false,true);
   // Function to update price range on change
    priceRangeSlider = $("#price-range").data("ionRangeSlider");

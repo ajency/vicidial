@@ -120,6 +120,7 @@ function sanitiseFilterdata($result, $params = [])
             $filterResponse[$facet_name["key"]][$value["key"]] = $value["count"]["doc_count"];
         }
     }
+    // dd($result);
     $priceFilter = [
         "max" => $result["aggregations"]["agg_price"]["facet_name"]["buckets"][0]['facet_value_max']['value'],
         "min" => $result["aggregations"]["agg_price"]["facet_name"]["buckets"][0]['facet_value_min']['value'],
@@ -181,7 +182,7 @@ function sanitiseFilterdata($result, $params = [])
     $filter["selected_range"]["end"]=(isset($params["search_object"]['range_filter']['variant_sale_price']))? $params["search_object"]['range_filter']['variant_sale_price']['max'] : null ;
     $filter["selected_range"]["end"] = ($filter["selected_range"]["end"] > $filter["bucket_range"]["end"])? $filter["bucket_range"]["end"] : $filter["selected_range"]["end"];
     $response[]             = $filter;
-    dd($response);
+    // dd($response);
     return $response;
 }
 
