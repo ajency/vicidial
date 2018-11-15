@@ -125,6 +125,7 @@ export class ShippingSummaryComponent implements OnInit {
 
   setUserName(){
     if(!this.shippingDetails.user_info){
+      this.shippingDetails.user_info = {};
       this.shippingDetails.user_info.name = this.shippingDetails.address.name;
       this.shippingDetails.user_info.email = '';
       this.showUserInfoModal = true;
