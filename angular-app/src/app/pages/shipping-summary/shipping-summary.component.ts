@@ -13,6 +13,8 @@ declare var $: any;
 export class ShippingSummaryComponent implements OnInit {
 
   shippingDetails : any;
+  showUserInfoModal : boolean = false;
+  showCancelButton : boolean = false;
   userName : any;
   userEmail : any;
   constructor(private router : Router,
@@ -106,17 +108,13 @@ export class ShippingSummaryComponent implements OnInit {
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     let body : any = {
       _token : $('meta[name="csrf-token"]').attr('content'),
-      user_info : {
-        name : this.userName,
-        email : this.userEmail
-      }
+      name : this.shippingDetails.user_info.name,
+      email : this.shippingDetails.user_info.email
     };
 
     this.apiservice.request(url, 'post', body , header ).then((response)=>{
-      this.shippingDetails.user_info = {
-        name : this.userName,
-        email : this.userEmail
-      };
+      this.showUserInfoModal = false;
+      this.userEmail = body.email;
       this.appservice.removeLoader();
     })
     .catch((error)=>{
@@ -127,8 +125,18 @@ export class ShippingSummaryComponent implements OnInit {
 
   setUserName(){
     if(!this.shippingDetails.user_info){
-      this.userName = this.shippingDetails.address.name;
+      this.shippingDetails.user_info.name = this.shippingDetails.address.name;
+      this.shippingDetails.user_info.email = '';
+      this.showUserInfoModal = true;
     }
+    else{
+      this.userEmail = this.shippingDetails.user_info.email;
+    }
+  }
+
+  editUserInfo(){
+    this.showUserInfoModal = true;
+    this.showCancelButton = true;
   }
 
 }
