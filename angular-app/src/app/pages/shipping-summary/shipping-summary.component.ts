@@ -113,7 +113,7 @@ export class ShippingSummaryComponent implements OnInit {
     };
 
     this.apiservice.request(url, 'post', body , header ).then((response)=>{
-      this.showUserInfoModal = false;
+      this.hideModal();
       this.userEmail = body.email;
       this.appservice.removeLoader();
     })
@@ -128,7 +128,7 @@ export class ShippingSummaryComponent implements OnInit {
       this.shippingDetails.user_info = {};
       this.shippingDetails.user_info.name = this.shippingDetails.address.name;
       this.shippingDetails.user_info.email = '';
-      this.showUserInfoModal = true;
+      this.showModal();
     }
     else{
       this.userEmail = this.shippingDetails.user_info.email;
@@ -136,8 +136,22 @@ export class ShippingSummaryComponent implements OnInit {
   }
 
   editUserInfo(){
-    this.showUserInfoModal = true;
     this.showCancelButton = true;
+    this.showModal();    
+  }
+
+  showModal(){
+    this.showUserInfoModal = true;
+    $('#user-info').modal('show');
+    $("#cd-cart").css("overflow", "hidden");
+    $('.modal-backdrop').appendTo('#cd-cart');
+    $('body').addClass('hide-scroll');
+  }
+
+  hideModal(){
+    this.showUserInfoModal = false;
+    $('#user-info').modal('hide');
+    $("#cd-cart").css("overflow", "auto");
   }
 
 }

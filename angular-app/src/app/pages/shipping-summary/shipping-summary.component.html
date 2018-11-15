@@ -147,7 +147,7 @@
 			  </div>
 			</div>
 
-			<div *ngIf="showUserInfoModal" class="modal fade show" id="user-info" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" style="display: block">
+			<div class="modal fade show" id="user-info" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
 			  <div class="modal-dialog" role="document">
 			    <div class="modal-content ">
 			      <div class="modal-body">
@@ -176,7 +176,7 @@
 			            </div>
 			          </form>
 			          <div id="kss_cart" class="p-3 d-flex align-items-center justify-content-between">
-						<button *ngIf="showCancelButton" id="cancel" class="btn btn-outline-secondary btn-lg btn-block mr-3" (click)="showUserInfoModal = false" >Cancel</button>
+						<button *ngIf="showCancelButton" id="cancel" class="btn btn-outline-secondary btn-lg btn-block mr-3" (click)="hideModal()" >Cancel</button>
 						<button  id="save" class="btn btn-primary btn-lg btn-block mt-0" [ngClass]="{'disabled' : !userInfo.valid}" (click)="saveUserInfo()" >Save</button>
 					</div>
 			        </div>
