@@ -103,7 +103,14 @@ export class ShippingSummaryComponent implements OnInit {
   }
 
   saveUserInfo(){
-    this.shippingDetails.user_info = true;
+    // API call
+    // Hide modal on api success
+    this.shippingDetails.user_info = {
+      name : this.userName,
+      email : this.userEmail
+    };
+
+    console.log("userName ===>", this.userName, this.userEmail);
   }
 
   setUserName(){

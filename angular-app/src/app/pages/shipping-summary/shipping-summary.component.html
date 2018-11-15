@@ -132,6 +132,10 @@
 				  <h5 class="font-weight-bold">Total Payable<span>₹{{shippingDetails.summary.final_price}}</span></h5>
 				</div>
 				<h5 class="font-weight-bold text-success w-50 line-height-5">Your total savings on this order ₹{{shippingDetails.summary.savings}}</h5>
+
+				<div *ngIf="shippingDetails.user_info">
+					Order Tracking emails will be sent to the following address : {{shippingDetails.user_info.email}}
+				</div>
 			</div>
 
 			<div class="fixed-bottom d-show pl-3 pr-3">
