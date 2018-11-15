@@ -128,4 +128,17 @@ class ApiLoginController extends Controller
     {
         return $token = $UserObject->tokens->first();
     }
+
+    public function saveUserDetails(Request $request)
+    {
+        $request->validate(['name' => 'required', 'email' => 'required|email']);
+        $data			= $request->all();
+
+        $user			= User::getUserByToken($request->header('Authorization'));
+        $user->name		= $data['name'];
+        $user->email	= $data['email'];
+        $user->save();
+
+        return response()->json(["message"=> "User info saved successfully", 'success'=> true]);
+    }
 }

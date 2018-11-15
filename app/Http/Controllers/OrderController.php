@@ -36,7 +36,14 @@ class OrderController extends Controller
         $cart->type = 'order';
         $cart->save();
 
-        return response()->json(["items" => getCartData($cart, false), "summary" => $order->aggregateSubOrderData(), "order_id" => $order->id, "address" => $address->address, "message" => 'Order Placed successfully']);
+        $response = ["items" => getCartData($cart, false), "summary" => $order->aggregateSubOrderData(), "order_id" => $order->id, "address" => $address->address, "message" => 'Order Placed successfully'];
+
+        $user_info = $user->userInfo();
+        if($user_info!=null) {
+            $response['user_info'] = $user_info;
+        }
+
+        return response()->json($response);
     }
 
     public function continueOrder($id, Request $request)
@@ -47,7 +54,14 @@ class OrderController extends Controller
         $order = $cart->order;
         $address = $order->address;
 
-        return response()->json(["items" => getCartData($cart, false), "summary" => $order->aggregateSubOrderData(), "order_id" => $order->id, "address" => $address->address, "message" => 'Order Placed successfully']);
+        $response = ["items" => getCartData($cart, false), "summary" => $order->aggregateSubOrderData(), "order_id" => $order->id, "address" => $address->address, "message" => 'Order Placed successfully'];
+
+        $user_info = $user->userInfo();
+        if($user_info!=null) {
+            $response['user_info'] = $user_info;
+        }
+
+        return response()->json($response);
     }
 
     public function getOrderDetails(Request $request)
