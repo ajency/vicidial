@@ -45,7 +45,7 @@
 								<p class="h6 my-3">
 									Mobile: <b class="font-weight-bold">{{shippingDetails.address.phone}}</b>
 								</p>
-								<p *ngIf="shippingDetails.user_info" class="h6 my-3">
+								<p *ngIf="userEmail" class="h6 my-3">
 									Order Tracking emails will be sent to the following address : <b class="font-weight-bold">{{userEmail}}</b>
 									<i class="fas fa-pencil-alt number-edit cursor-pointer ml-2 mt-1" (click)="editUserInfo()"></i>
 								</p>
