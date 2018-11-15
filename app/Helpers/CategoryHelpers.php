@@ -1,54 +1,10 @@
 <?php
-use App\Category;
 use App\Facet;
-
-//Function to insert category in DB
-function insert_category($elastic_name, $type, $slug){
-	$category = new Category;
-    $category->elastic_name = $elastic_name;
-    $category->type = $type;
-    $category->slug = $slug;
-    $category->save();
-}
-
-//Function to fetch Elastic category name from slug
-function fetch_elastic_category($slug, $type){
-	$category = Category::where('slug', '=', $slug)->where('type', '=', $type)->first();
-	if($category) {
-		return $category->elastic_name;
-	}
-	else {
-		return false;
-	}
-}
-
-//Generate search object from url params
-function create_search_object($parameters){
-	$search_object = new stdClass;
-	foreach ($parameters['categories'] as $type => $slugs) {
-		$search_object->{$type} = array();
-		$slugs_arr = explode('--', $slugs);
-		foreach ($slugs_arr as $slug) {
-			$elastic_name = fetch_elastic_category($slug, $type);
-			if($elastic_name == false){
-				$search_object->error = true;
-				$search_object->error_string = $type;
-				return $search_object;
-			}
-			else {
-				$search_object->{$type}[] = $elastic_name;
-			}
-		}
-
-	}
-
-	return $search_object;
-}
-
 
 function build_search_object($params) {
 	$all_facets = [];
 	$dataArr = [];
+	$facet_display_data = config('product.facet_display_data');
 	$dataArr["search_result"]=[];
 	foreach($params['categories'] as $param) {
 		$slugs_arr = explode('--', $param);
@@ -64,10 +20,14 @@ function build_search_object($params) {
 			}
 			if($queryk == "rf"){
 				if (strpos($queryv, "price:") !== false) {
-					$price_filter_facet_name = config('product.price_filter_facet_name');
+					$ar = array_filter($facet_display_data, function ($item) {
+					        return $item['attribute_param'] === 'price';
+					    }
+					); 
+					$ar_keys_ar = array_keys($ar);
 	                $values = str_replace('price:', '', $queryv); 
 	                $min_max_arr =explode("TO",$values);
-	                $dataArr["search_result"]["range_filter"][$price_filter_facet_name]=["min"=>$min_max_arr[0],"max"=>$min_max_arr[1]];
+	                $dataArr["search_result"]["range_filter"][$ar_keys_ar[0]]=["min"=>$min_max_arr[0],"max"=>$min_max_arr[1]];
 	            }
 			}
 		}
@@ -81,7 +41,7 @@ function build_search_object($params) {
 	// dd(array_column($facets_count, 'count', 'facet_value'));
 	// $facets_count_link = array_column($facets_count, 'count', 'facet_value');
 	$facets_count_link = [];
-	$facet_display_data = config('product.facet_display_data');
+	
 	
 	$facet_display_data_keys = array_keys($facet_display_data);
 	foreach($facets_count as $focuntv){

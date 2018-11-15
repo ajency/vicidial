@@ -5,6 +5,7 @@ console.log(config_facet_names_arr);
 var ajax_data = {};
 
 var page_val = 1;
+var collapsable_load_values = {};
 
 $(function () {
 
@@ -64,12 +65,21 @@ $(document).ready(function () {
     });
   }
 
-  $('.pl-loader').fadeOut(2000, function () {
+  $('.pl-loader').fadeOut('fast', function () {
     $('body').removeClass('overflow-h');
+  });
+
+  $('body').on('shown.bs.collapse', '.collapse', function () {
+    collapsable_load_values[$("input[name='" + $(this).data("field") + "']").data("facet-name")] = false;
+  });
+
+  $('body').on('hidden.bs.collapse', '.collapse', function () {
+    collapsable_load_values[$("input[name='" + $(this).data("field") + "']").data("facet-name")] = true;
   });
 
   $('body').on('click', "#showMoreProductsBtn", function () {
     $(this).find('.load-icon-cls').removeClass('d-none');
+    $(this).prop('disabled', true);
     var page = $.url().param('page');
     var url = window.location.href;
     console.log("page===" + page);
@@ -131,6 +141,10 @@ $(document).ready(function () {
       }
       // product_list_items = $.extend(product_list_items, values);
       context["products"] = product_list_items;
+      if (Object.keys(product_list_items).length <= 0) {
+        $(".productlist__row").addClass('d-none');
+        $(".productlist__na").removeClass('d-none');
+      }
       context["show_more"] = product_list_context.page.has_next;
       console.log("product_list_items======");
       console.log(product_list_items);
@@ -278,6 +292,7 @@ function facetCategoryChange(thisObj) {
       document.getElementById("filter-tags-template-content").innerHTML = filterhtml;
     }
     if (is_ajax == true) {
+
       $.ajax({
         method: "POST",
         url: "/api/rest/v1/product-list",
@@ -306,7 +321,9 @@ function facetCategoryChange(thisObj) {
               var source = document.getElementById("filter-" + templateval + "-template").innerHTML;
               var template = Handlebars.compile(source);
               var singleton = vval.is_singleton;
-              var collapsed = vval.is_collapsed;
+              console.log("collapsable_load_values   1111 ======");
+              console.log(collapsable_load_values);
+              var collapsed = collapsable_load_values[vval.header.facet_name];
               var filter_display_name = vval.header.display_name;
               var filter_facet_name = vval.header.facet_name;
               var context = {};
@@ -343,15 +360,9 @@ function facetCategoryChange(thisObj) {
               var html = template(context);
               console.log(document.getElementById("filter-" + templateval + "-template-content"));
               document.getElementById("filter-" + templateval + "-template-content").innerHTML = html;
-
-              // console.log("vval.start=="+vval.start+"==="+vval.end)
               if (vval.filter_type == "range_filter") {
                 initializeSlider(fromval, toval, minval, maxval);
               }
-              // if(vval.filter_type != undefined && vval.filter_type == "range_filter"){
-              //    $("#"+templateval+"-min").val(vval.start)
-              //    $("#"+templateval+"-max").val(vval.end)
-              // }
             });
           }
           if (key == "breadcrumbs") {
@@ -365,6 +376,10 @@ function facetCategoryChange(thisObj) {
           }
           if (key == "items") {
             product_list_context.products = values;
+            if (Object.keys(values).length <= 0) {
+              $(".productlist__row").addClass('d-none');
+              $(".productlist__na").removeClass('d-none');
+            }
           }
         });
         var source = document.getElementById("products-list-template").innerHTML;
@@ -406,6 +421,15 @@ function facetCategoryChange(thisObj) {
 
         window.history.replaceState('categoryPage', 'Category', url);
       });
+    } else {
+      collapsable_load_values[$("input[name='age']").data("facet-name")] = $("input[name='age']").data("collapsable");
+      collapsable_load_values[$("input[name='category']").data("facet-name")] = $("input[name='category']").data("collapsable");
+      collapsable_load_values[$("input[name='color']").data("facet-name")] = $("input[name='color']").data("collapsable");
+      collapsable_load_values[$("input[name='gender']").data("facet-name")] = $("input[name='gender']").data("collapsable");
+      collapsable_load_values[$("input[name='price']").data("facet-name")] = $("input[name='price']").data("collapsable");
+      collapsable_load_values[$("input[name='subtype']").data("facet-name")] = $("input[name='subtype']").data("collapsable");
+      console.log("collapsable_load_values===");
+      console.log(collapsable_load_values);
     }
   }
 }

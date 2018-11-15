@@ -5,21 +5,21 @@
             @{{filter_display_name}}<i class="fas fa-angle-up float-right"></i>
           </label>
         </div>
-        <div id="collapseColor" class="collapse @{{#if collapsed}} @{{else}} show @{{/if}}" aria-labelledby="headingThree" >
+        <div id="collapseColor" class="collapse@{{#if collapsed}}@{{else}} show @{{/if}}" aria-labelledby="headingThree" data-field="color">
           <div class="card-body pt-2">
          
             <ul class="product-color product-color--filter p-0">
              @{{#if singleton }}
              @{{#each items}}
               <li>
-              <input type="radio" name="color" id="@{{facet_value}}" class="facet-category" value="@{{facet_value}}" onChange="facetCategoryChange(this);" @{{#if is_selected }} checked = "checked" @{{/if}} data-facet-name="@{{../filter_facet_name}}" data-singleton="true" data-slug="@{{slug}}" @{{#if ../disabled_at_zero_count}} @{{#ifEquals count 0 }} disabled = "disabled" @{{/ifEquals}} @{{/if}}/>
+              <input type="radio" name="color" id="@{{facet_value}}" class="facet-category" value="@{{facet_value}}" onChange="facetCategoryChange(this);" @{{#if is_selected }} checked = "checked" @{{/if}} data-facet-name="@{{../filter_facet_name}}" data-singleton="true" data-slug="@{{slug}}" @{{#if ../disabled_at_zero_count}} @{{#ifEquals count 0 }} disabled = "disabled" @{{/ifEquals}} @{{/if}} data-collapsable="@{{../collapsed}}"/>
               <label for="@{{facet_value}}" style="background-color:@{{facet_value}};"></label>
               </li>
               @{{/each}}
               @{{else}}
               @{{#each items}}
               <li>
-              <input type="checkbox" name="color" id="@{{facet_value}}" class="facet-category" value="@{{facet_value}}" onChange="facetCategoryChange(this);" @{{#if is_selected }} checked = "checked" @{{/if}} data-facet-name="@{{../filter_facet_name}}" data-singleton="false" data-slug="@{{slug}}" @{{#if ../disabled_at_zero_count}} @{{#ifEquals count 0 }} disabled = "disabled" @{{/ifEquals}} @{{/if}}/>
+              <input type="checkbox" name="color" id="@{{facet_value}}" class="facet-category" value="@{{facet_value}}" onChange="facetCategoryChange(this);" @{{#if is_selected }} checked = "checked" @{{/if}} data-facet-name="@{{../filter_facet_name}}" data-singleton="false" data-slug="@{{slug}}" @{{#if ../disabled_at_zero_count}} @{{#ifEquals count 0 }} disabled = "disabled" @{{/ifEquals}} @{{/if}} data-collapsable="@{{../collapsed}}"/>
               <label for="@{{facet_value}}" style="background-color:@{{facet_value}};"></label>
               </li>
               @{{/each}}

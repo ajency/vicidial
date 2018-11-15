@@ -162,17 +162,19 @@ return [
             'display_count'          => false,
             'disabled_at_zero_count' => false,
             "is_attribute_param"     => false,
+            "attribute_param"     => null,
             'filter_type'            => 'primary_filter',
         ],
         'product_gender'        => [
             'name'                   => 'Gender',
             'is_singleton'           => false,
-            'is_collapsed'           => true,
+            'is_collapsed'           => false,
             'template'               => 'gender',
             'order'                  => 1,
             'display_count'          => false,
             'disabled_at_zero_count' => false,
             "is_attribute_param"     => false,
+            "attribute_param"     => null,
             'filter_type'            => 'primary_filter',
         ],
         'product_age_group'     => [
@@ -184,6 +186,7 @@ return [
             'display_count'          => false,
             'disabled_at_zero_count' => false,
             "is_attribute_param"     => false,
+            "attribute_param"     => null,
             'filter_type'            => 'primary_filter',
         ],
         'product_subtype'       => [
@@ -195,6 +198,7 @@ return [
             'display_count'          => false,
             'disabled_at_zero_count' => false,
             "is_attribute_param"     => false,
+            "attribute_param"     => null,
             'filter_type'            => 'primary_filter',
         ],
         'product_color_html'       => [
@@ -206,6 +210,7 @@ return [
             'display_count'          => false,
             'disabled_at_zero_count' => false,
             "is_attribute_param"     => true,
+            "attribute_param"     => null,
             'filter_type'            => 'primary_filter',
         ],
         'variant_sale_price'    => [
@@ -217,6 +222,7 @@ return [
             'display_count'          => true,
             'disabled_at_zero_count' => false,
             "is_attribute_param"     => true,
+            "attribute_param"     => "price",
             'filter_type'            => 'range_filter',
         ],
     ],
@@ -227,6 +233,5 @@ return [
         'product_subtype'
     ],//Used for breadcrumbs on single product page
     "list_page_display_limit"    => 30,
-    "price_filter_facet_name"    => "variant_sale_price",
 
 ];

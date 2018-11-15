@@ -5,20 +5,20 @@
           @{{filter_display_name}}<i class="fas fa-angle-up float-right"></i>
         </label>
       </div>
-      <div id="collapsePrice" class="collapse @{{#if collapsed}} @{{else}} show @{{/if}}" aria-labelledby="headingThree" >
+      <div id="collapsePrice" class="collapse@{{#if collapsed}}@{{else}} show @{{/if}}" aria-labelledby="headingThree" data-field="price">
         <div class="card-body">
           <div class="priceRange">
-            <input type="text" id="price-range" name="price" value="" data-facet-name="@{{filter_facet_name}}" data-singleton="true" data-slug="@{{slug}}" @{{#if ../disabled_at_zero_count}} @{{#ifEquals count 0 }} disabled = "disabled" @{{/ifEquals}} @{{/if}}/>
+            <input type="text" id="price-range" name="price" value="" data-facet-name="@{{filter_facet_name}}" data-singleton="true" data-slug="@{{slug}}" @{{#if ../disabled_at_zero_count}} @{{#ifEquals count 0 }} disabled = "disabled" @{{/ifEquals}} @{{/if}} data-collapsable="@{{../collapsed}}"/>
           </div>
           <div class="row">
             <div class="col-5 col-sm-5">
-           <input class="form-control form-control-lg text-muted price-change" value="@{{fromval}}" id="price-min" type="text" placeholder="Min">
+              <input class="form-control form-control-lg text-muted price-change" value="@{{fromval}}" id="price-min" type="text" placeholder="Min">
             </div>
-             <div class="col-2 col-sm-2 text-center">
+            <div class="col-2 col-sm-2 text-center">
               <h6 class="align-self-center mt-4">to</h6>
             </div>
-              <div class="col-5 col-sm-5">
-                 <input class="form-control form-control-lg text-muted price-change" value="@{{toval}}" id="price-max" type="text" placeholder="Max">
+            <div class="col-5 col-sm-5">
+              <input class="form-control form-control-lg text-muted price-change" value="@{{toval}}" id="price-max" type="text" placeholder="Max">
             </div>
           </div> 
         </div>
@@ -83,11 +83,12 @@
     };
 
    $(document).on('change', '.price-change', function() {
+    console.log("price-change===")
       var from, to;
       from = $('#price-min').val();
       to = $('#price-max').val();
-      facetCategoryChange($("#price-range"),true,true);
-      return initPriceBar(from, to);
+      initPriceBar(from, to); 
+      return facetCategoryChange($("#price-range"),true,true);
   });
 
 })
