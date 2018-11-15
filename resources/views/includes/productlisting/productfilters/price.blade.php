@@ -10,7 +10,7 @@
           <div class="priceRange">
             <input type="text" id="price-range" name="price" value="" data-facet-name="@{{filter_facet_name}}" data-singleton="true" data-slug="@{{slug}}" @{{#if ../disabled_at_zero_count}} @{{#ifEquals count 0 }} disabled = "disabled" @{{/ifEquals}} @{{/if}}/>
           </div>
-          <div class="row mt-3">
+          <div class="row">
             <div class="col-5 col-sm-5">
            <input class="form-control form-control-lg text-muted price-change" value="@{{fromval}}" id="price-min" type="text" placeholder="Min">
             </div>

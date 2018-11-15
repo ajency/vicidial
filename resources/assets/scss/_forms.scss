@@ -74,8 +74,9 @@ label{
 }
 .form-control-number{
     font-size: 1.5em;
-    padding-left:0px;
+    padding-left: 5px;
     font-weight:bold;
+    width: 130px;
     &::placeholder{
       letter-spacing: 0px;
       font-size: 0.8em;
