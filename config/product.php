@@ -162,6 +162,7 @@ return [
             'display_count'          => false,
             'disabled_at_zero_count' => false,
             "is_attribute_param"     => false,
+            "attribute_param"     => null,
             'filter_type'            => 'primary_filter',
         ],
         'product_gender'        => [
@@ -173,6 +174,7 @@ return [
             'display_count'          => false,
             'disabled_at_zero_count' => false,
             "is_attribute_param"     => false,
+            "attribute_param"     => null,
             'filter_type'            => 'primary_filter',
         ],
         'product_age_group'     => [
@@ -184,6 +186,7 @@ return [
             'display_count'          => false,
             'disabled_at_zero_count' => false,
             "is_attribute_param"     => false,
+            "attribute_param"     => null,
             'filter_type'            => 'primary_filter',
         ],
         'product_subtype'       => [
@@ -195,6 +198,7 @@ return [
             'display_count'          => false,
             'disabled_at_zero_count' => false,
             "is_attribute_param"     => false,
+            "attribute_param"     => null,
             'filter_type'            => 'primary_filter',
         ],
         'product_color_html'       => [
@@ -206,6 +210,7 @@ return [
             'display_count'          => false,
             'disabled_at_zero_count' => false,
             "is_attribute_param"     => true,
+            "attribute_param"     => null,
             'filter_type'            => 'primary_filter',
         ],
         'variant_sale_price'    => [
@@ -217,6 +222,7 @@ return [
             'display_count'          => true,
             'disabled_at_zero_count' => false,
             "is_attribute_param"     => true,
+            "attribute_param"     => "price",
             'filter_type'            => 'range_filter',
         ],
     ],
