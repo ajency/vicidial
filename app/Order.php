@@ -132,8 +132,8 @@ class Order extends Model
     public function sendSuccessSMS()
     {
         sendSMS('order-success', [
-            'to'      => $order->cart->user->phone,
-            'message' => "Your order with order id {$this->txnid} for Rs. {$this->aggregateSubOrderData()['final_price']} has been placed successfully on Kid Super Store. Check your order at {route('orderDetails',['orderid' => $this->id])}",
+            'to'      => $this->cart->user->phone,
+            'message' => "Your order with order id {$this->txnid} for Rs. {$this->aggregateSubOrderData()['final_price']} has been placed successfully on Kid Super Store. Check your order at ".route('orderDetails',['orderid' => $this->id]),
         ]);
     }
 }
