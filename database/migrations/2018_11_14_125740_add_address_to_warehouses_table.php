@@ -15,8 +15,6 @@ class AddAddressToWarehousesTable extends Migration
     {
         Schema::table('warehouses', function (Blueprint $table) {
             $table->json('address')->nullable();
-            $table->integer('location_id')->nullable();
-            $table->string('location_name')->nullable();
             $table->string('code')->nullable();
         });
     }
@@ -29,7 +27,7 @@ class AddAddressToWarehousesTable extends Migration
     public function down()
     {
         Schema::table('warehouses', function (Blueprint $table) {
-            $table->dropColumn(['address', 'location_id', 'location_name', 'code']);
+            $table->dropColumn(['address', 'code']);
         });
     }
 }
