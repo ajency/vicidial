@@ -112,7 +112,6 @@ function formatItems($result, $params){
 
 function sanitiseFilterdata($result, $params = [])
 {
-    // dd($params);
     $filterResponse = [];
     foreach ($result["aggregations"]["agg_string_facet"]["facet_name"]["buckets"] as $facet_name) {
         $filterResponse[$facet_name["key"]] = [];
@@ -121,12 +120,12 @@ function sanitiseFilterdata($result, $params = [])
         }
     }
     $priceFilter = [
-        "max" => $result["aggregations"]["agg_price"]["facet_name"]["buckets"][0]['facet_value_max']['value'],
-        "min" => $result["aggregations"]["agg_price"]["facet_name"]["buckets"][0]['facet_value_min']['value'],
+        "max" => (isset($result["aggregations"]["agg_price"]["facet_name"]["buckets"][0])) ? $result["aggregations"]["agg_price"]["facet_name"]["buckets"][0]['facet_value_max']['value'] : null,
+        "min" => (isset($result["aggregations"]["agg_price"]["facet_name"]["buckets"][0])) ? $result["aggregations"]["agg_price"]["facet_name"]["buckets"][0]['facet_value_min']['value'] : null,
     ];
     $priceFilter["min"] = (int) floor($priceFilter["min"] / 100) * 100;
     $priceFilter["max"] = (int) ceil($priceFilter["max"] / 100) * 100;
-    $attributes = ['is_singleton', 'is_collapsed', 'template', 'order', 'display_count', 'disabled_at_zero_count', 'is_attribute_param', 'filter_type'];
+    $attributes         = ['is_singleton', 'is_collapsed', 'template', 'order', 'display_count', 'disabled_at_zero_count', 'is_attribute_param', 'filter_type'];
     $response           = [];
     foreach ($filterResponse as $facetName => $facetValues) {
         $filter           = [];
@@ -161,7 +160,6 @@ function sanitiseFilterdata($result, $params = [])
         $filter["is_collapsed"] = !boolval($is_collapsed);
         $response[]             = $filter;
     }
-
     //le price filter
     $filter           = [];
     $filter['header'] = [
@@ -171,12 +169,17 @@ function sanitiseFilterdata($result, $params = [])
     foreach ($attributes as $attribute) {
         $filter[$attribute] = config('product.facet_display_data.variant_sale_price.' . $attribute);
     }
-    $filter["items"] = [];
-    $filter["is_collapsed"] = false;
-    $filter["start"] = $priceFilter['min'];
-    $filter["end"] = $priceFilter['max'];
-    $response[]             = $filter;
-    // dd($response);
+    $filter["items"]                   = [];
+    $filter["is_collapsed"]            = false;
+    $filter["bucket_range"]            = [];
+    $filter["bucket_range"]["start"]   = $priceFilter['min'];
+    $filter["bucket_range"]["end"]     = $priceFilter['max'];
+    $filter["selected_range"]          = [];
+    $filter["selected_range"]["start"] = (isset($params["search_object"]['range_filter']['variant_sale_price'])) ? $params["search_object"]['range_filter']['variant_sale_price']['min'] : $priceFilter['min'];
+    $filter["selected_range"]["start"] = ($filter["selected_range"]["start"] < $filter["bucket_range"]["start"])? $filter["bucket_range"]["start"] : $filter["selected_range"]["start"];
+    $filter["selected_range"]["end"]   = (isset($params["search_object"]['range_filter']['variant_sale_price'])) ? $params["search_object"]['range_filter']['variant_sale_price']['max'] : $priceFilter['max'];
+    $filter["selected_range"]["end"] = ($filter["selected_range"]["end"] > $filter["bucket_range"]["end"])? $filter["bucket_range"]["end"] : $filter["selected_range"]["end"];
+    $response[] = $filter;
     return $response;
 }
 

@@ -418,10 +418,11 @@ class Product
             $filter_params["search_object"]["range_filter"] = $params["search_object"]["range_filter"];
         $filter_params["display_limit"] = $params["display_limit"];
         $filter_params["page"] = $params["page"];
-        // dd($filter_params);
+        // print_r($filter_params);
+        // dd($filter_params,$params);
 
         // $params = $filter_params =  ['search_object' =>['primary_filter' => [ 'product_gender' => ['Boys','all']]], 'display_limit' => 20, 'page' => 1] ;
-        $params = $filter_params ;
+        // $params = $filter_params ;
         $output["filters"]   = self::getProductCategoriesWithFilter($filter_params);
         // dd($output["filters"]);
         $results             = self::getItemsWithFilters($params);

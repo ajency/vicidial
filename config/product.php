@@ -159,7 +159,7 @@ return [
             'is_collapsed'           => false,
             'template'               => 'category',
             'order'                  => 0,
-            'display_count'          => true,
+            'display_count'          => false,
             'disabled_at_zero_count' => false,
             "is_attribute_param"     => false,
             'filter_type'            => 'primary_filter',
@@ -181,8 +181,8 @@ return [
             'is_collapsed'           => true,
             'template'               => 'age',
             'order'                  => 2,
-            'display_count'          => true,
-            'disabled_at_zero_count' => true,
+            'display_count'          => false,
+            'disabled_at_zero_count' => false,
             "is_attribute_param"     => false,
             'filter_type'            => 'primary_filter',
         ],
@@ -192,8 +192,8 @@ return [
             'is_collapsed'           => true,
             'template'               => 'subtype',
             'order'                  => 3,
-            'display_count'          => true,
-            'disabled_at_zero_count' => true,
+            'display_count'          => false,
+            'disabled_at_zero_count' => false,
             "is_attribute_param"     => false,
             'filter_type'            => 'primary_filter',
         ],
@@ -220,7 +220,6 @@ return [
             'filter_type'            => 'range_filter',
         ],
     ],
-    "default_list_display_limit" => 20,
     'breadcrumb_order'           => [
         'product_category_type',
         'product_age_group',
@@ -228,5 +227,6 @@ return [
         'product_subtype'
     ],//Used for breadcrumbs on single product page
     "list_page_display_limit"    => 30,
+    "price_filter_facet_name"    => "variant_sale_price",
 
 ];
