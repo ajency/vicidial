@@ -51,6 +51,20 @@ class PaymentController extends Controller
 			$cart->type = 'order-complete';
 			$cart->save();
 			$order->cart->user->newCart();
+
+			sendEmail('order-complete', [
+				'to' => $order->cart->user->email,
+				'subject' => 'Order placed successfully on Kid Super Store',
+				'template_data' => [
+					'order' => $order,
+				],
+				'priority' => 'default',
+			]);
+
+			sendSMS('order-complete', [
+				'to' => $order->cart->user->phone,
+				'message' => 'Your order with order id <insert id here> for Rs. <enter total here> has been placed successfully on Kid Super Store',
+			]);
 		}else{
 			$order->status = 'payment-failed';
 			$order->save();
