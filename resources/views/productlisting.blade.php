@@ -1,5 +1,6 @@
 @php
  $overflow = true; 
+ $sectionnotfound = true;
 @endphp
 
 @extends('layouts.default')
@@ -14,7 +15,7 @@
     <div class="loader block-loader"></div>
   </div>
 	<section class="productlist">
-    <div class="container mt-2 mt-md-4">
+    <div class="container mt-2 mt-md-4 productlist__row">
      	<div class="row">
      	  <!-- Filters Blade -->
     	  @include('includes.productlisting.filters', ['filters' => $params->filters])
@@ -27,6 +28,9 @@
 
     	  </div>
     	</div>
+    </div>
+    <div class="d-none productlist__na">
+      @include('includes.no-products-content')
     </div>
     <br>
     <br>
