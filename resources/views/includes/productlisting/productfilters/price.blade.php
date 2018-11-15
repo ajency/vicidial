@@ -5,10 +5,10 @@
           @{{filter_display_name}}<i class="fas fa-angle-up float-right"></i>
         </label>
       </div>
-      <div id="collapsePrice" class="collapse @{{#if collapsed}} @{{else}} show @{{/if}}" aria-labelledby="headingThree" >
+      <div id="collapsePrice" class="collapse@{{#if collapsed}}@{{else}} show @{{/if}}" aria-labelledby="headingThree" data-field="price">
         <div class="card-body">
           <div class="priceRange">
-            <input type="text" id="price-range" name="price" value="" data-facet-name="@{{filter_facet_name}}" data-singleton="true" data-slug="@{{slug}}" @{{#if ../disabled_at_zero_count}} @{{#ifEquals count 0 }} disabled = "disabled" @{{/ifEquals}} @{{/if}}/>
+            <input type="text" id="price-range" name="price" value="" data-facet-name="@{{filter_facet_name}}" data-singleton="true" data-slug="@{{slug}}" @{{#if ../disabled_at_zero_count}} @{{#ifEquals count 0 }} disabled = "disabled" @{{/ifEquals}} @{{/if}} data-collapsable="@{{../collapsed}}"/>
           </div>
           <div class="row">
             <div class="col-5 col-sm-5">

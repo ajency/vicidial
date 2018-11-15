@@ -5,12 +5,12 @@
          @{{filter_display_name}} <i class="fas fa-angle-up float-right"></i>
         </label>
       </div>
-      <div id="collapseAge" class="collapse @{{#if collapsed}} @{{else}} show @{{/if}}" aria-labelledby="headingTwo" >
+      <div id="collapseAge" class="collapse@{{#if collapsed}}@{{else}} show @{{/if}}" aria-labelledby="headingTwo" data-field="age">
         <div class="card-body pt-2">
           @{{#if singleton }}
           @{{#each items}}
           <div class="custom-radio custom-control">
-            <input type="radio" class="facet-category custom-control-input" onChange="facetCategoryChange(this);" name="age" value="@{{facet_value}}" @{{#if is_selected }} checked = "checked" @{{/if}} data-facet-name="@{{../filter_facet_name}}" data-singleton="true" data-slug="@{{slug}}" @{{#if ../disabled_at_zero_count}} @{{#ifEquals count 0 }} disabled = "disabled" @{{/ifEquals}} @{{/if}}>
+            <input type="radio" class="facet-category custom-control-input" onChange="facetCategoryChange(this);" name="age" value="@{{facet_value}}" @{{#if is_selected }} checked = "checked" @{{/if}} data-facet-name="@{{../filter_facet_name}}" data-singleton="true" data-slug="@{{slug}}" @{{#if ../disabled_at_zero_count}} @{{#ifEquals count 0 }} disabled = "disabled" @{{/ifEquals}} @{{/if}} data-collapsable="@{{../collapsed}}">
             <label for="@{{display_name}}" class="custom-control-label f-w-4">@{{display_name}} 
             @{{#if ../display_count }}
               <span class="sub-text">(@{{count}})</span>
@@ -21,7 +21,7 @@
           @{{else}}
           @{{#each items}}
           <div class="custom-control custom-checkbox" data-val="@{{display_count_val}}" >
-            <input type="checkbox" class="facet-category custom-control-input" onChange="facetCategoryChange(this);" name="age" value="@{{facet_value}}" @{{#if is_selected }} checked = "checked" @{{/if}} data-facet-name="@{{../filter_facet_name}}" data-singleton="false" data-slug="@{{slug}}" @{{#if ../disabled_at_zero_count}} @{{#ifEquals count 0 }} disabled = "disabled" @{{/ifEquals}} @{{/if}}>
+            <input type="checkbox" class="facet-category custom-control-input" onChange="facetCategoryChange(this);" name="age" value="@{{facet_value}}" @{{#if is_selected }} checked = "checked" @{{/if}} data-facet-name="@{{../filter_facet_name}}" data-singleton="false" data-slug="@{{slug}}" @{{#if ../disabled_at_zero_count}} @{{#ifEquals count 0 }} disabled = "disabled" @{{/ifEquals}} @{{/if}} data-collapsable="@{{../collapsed}}">
             <label class="custom-control-label f-w-4" for="@{{display_name}}">@{{display_name}} 
             @{{#if ../display_count }}
             <span class="sub-text">(@{{count}})</span>

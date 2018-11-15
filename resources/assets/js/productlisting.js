@@ -440,7 +440,7 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false)
           collapsable_load_values[$("input[name='gender']").data("facet-name")] = $("input[name='gender']").data("collapsable")
           collapsable_load_values[$("input[name='price']").data("facet-name")] = $("input[name='price']").data("collapsable")
           collapsable_load_values[$("input[name='subtype']").data("facet-name")] = $("input[name='subtype']").data("collapsable")
-          console.log("collapsable_load_values case 1===")
+          console.log("collapsable_load_values===")
           console.log(collapsable_load_values)
         }
         
