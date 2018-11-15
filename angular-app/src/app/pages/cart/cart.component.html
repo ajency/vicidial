@@ -83,7 +83,7 @@
 
 							<div class="product-price" *ngIf="item.availability">
 								<div>
-									<p class="text-danger m-0">Only {{item.available_quantity}} <span *ngIf="item.available_quantity == 1">unit</span> <span *ngIf="item.available_quantity > 1">units</span> in stock</p>
+									<p class="m-0" [ngClass]="{'text-danger' : item.available_quantity < 6}">Only {{item.available_quantity}} <span *ngIf="item.available_quantity == 1">item</span> <span *ngIf="item.available_quantity > 1">items</span> left in stock</p>
 								</div>
 								<div class="kss-price kss-price--smaller">₹{{item.attributes.price_final}} 	  	<small *ngIf="item.attributes.price_final != item.attributes.price_mrp" 		class="kss-original-price text-muted">₹{{item.attributes.price_mrp}}
 								  </small>
@@ -196,7 +196,7 @@
 	          <div class="d-flex align-items-center">
 	            <div class="pr-3">
 	              <h3  class="m-0 font-weight-bold kss_highlight" data-dismiss="modal" aria-label="Close">
-	                <img (click)="updateOtpModal()" class="btn-back kss_highlight" src="/img/close-icon.png" style="width:20px;"/>
+	                <img (click)="closeOtpModal()" class="btn-back kss_highlight" src="/img/close-icon.png" style="width:20px;"/>
 	              </h3>
 	            </div>
 	            <div class="">
@@ -226,7 +226,7 @@
 	          <div class="d-flex align-items-center">
 	            <div class="pr-3">
 	              <h3 class="modal-title font-weight-bold" data-dismiss="modal" aria-label="Close">
-	                <img (click)="updateOtpModal()" class="btn-back kss_highlight" src="/img/close-icon.png" style="width:20px;"/>
+	                <img (click)="closeOtpModal()" class="btn-back kss_highlight" src="/img/close-icon.png" style="width:20px;"/>
 	              </h3>
 	            </div>
 	            <div class="">
