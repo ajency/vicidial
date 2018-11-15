@@ -83,11 +83,12 @@
     };
 
    $(document).on('change', '.price-change', function() {
+    console.log("price-change===")
       var from, to;
       from = $('#price-min').val();
       to = $('#price-max').val();
-      facetCategoryChange($("#price-range"),true,true);
-      return initPriceBar(from, to);
+      initPriceBar(from, to); 
+      return facetCategoryChange($("#price-range"),true,true);
   });
 
 })
