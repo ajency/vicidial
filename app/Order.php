@@ -65,6 +65,7 @@ class Order extends Model
         $total = [
             'total'          => 0,
             'shipping_fee'   => 0,
+            'savings'   => 0,
         ];
         $subOrders = $this->subOrders;
 
@@ -75,7 +76,6 @@ class Order extends Model
         }
 
         $total['final_price'] = $total['total'] + $total['shipping_fee'];
-        $total['savings']     = 70;
 
         return $total;
     }
