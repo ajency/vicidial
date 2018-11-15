@@ -52,7 +52,7 @@ class PaymentController extends Controller
 			$cart->save();
 			$order->cart->user->newCart();
 
-			sendEmail('order-complete', [
+			sendEmail('order-success', [
 				'to' => $order->cart->user->email,
 				'subject' => 'Order placed successfully on Kid Super Store',
 				'template_data' => [
@@ -61,7 +61,7 @@ class PaymentController extends Controller
 				'priority' => 'default',
 			]);
 
-			sendSMS('order-complete', [
+			sendSMS('order-success', [
 				'to' => $order->cart->user->phone,
 				'message' => 'Your order with order id <insert id here> for Rs. <enter total here> has been placed successfully on Kid Super Store',
 			]);
