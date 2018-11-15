@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class AddAddressToWarehousesTable extends Migration
 {
@@ -15,6 +15,7 @@ class AddAddressToWarehousesTable extends Migration
     {
         Schema::table('warehouses', function (Blueprint $table) {
             $table->json('address')->nullable();
+            $table->string('code')->nullable();
         });
     }
 
@@ -26,7 +27,7 @@ class AddAddressToWarehousesTable extends Migration
     public function down()
     {
         Schema::table('warehouses', function (Blueprint $table) {
-            $table->dropColumn('address');
+            $table->dropColumn(['address', 'code']);
         });
     }
 }
