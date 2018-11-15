@@ -233,6 +233,5 @@ return [
         'product_subtype'
     ],//Used for breadcrumbs on single product page
     "list_page_display_limit"    => 30,
-    "price_filter_facet_name"    => "variant_sale_price",
 
 ];

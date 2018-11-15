@@ -4,6 +4,7 @@ use App\Facet;
 function build_search_object($params) {
 	$all_facets = [];
 	$dataArr = [];
+	$facet_display_data = config('product.facet_display_data');
 	$dataArr["search_result"]=[];
 	foreach($params['categories'] as $param) {
 		$slugs_arr = explode('--', $param);
@@ -19,10 +20,14 @@ function build_search_object($params) {
 			}
 			if($queryk == "rf"){
 				if (strpos($queryv, "price:") !== false) {
-					$price_filter_facet_name = config('product.price_filter_facet_name');
+					$ar = array_filter($facet_display_data, function ($item) {
+					        return $item['attribute_param'] === 'price';
+					    }
+					); 
+					$ar_keys_ar = array_keys($ar);
 	                $values = str_replace('price:', '', $queryv); 
 	                $min_max_arr =explode("TO",$values);
-	                $dataArr["search_result"]["range_filter"][$price_filter_facet_name]=["min"=>$min_max_arr[0],"max"=>$min_max_arr[1]];
+	                $dataArr["search_result"]["range_filter"][$ar_keys_ar[0]]=["min"=>$min_max_arr[0],"max"=>$min_max_arr[1]];
 	            }
 			}
 		}
@@ -36,7 +41,7 @@ function build_search_object($params) {
 	// dd(array_column($facets_count, 'count', 'facet_value'));
 	// $facets_count_link = array_column($facets_count, 'count', 'facet_value');
 	$facets_count_link = [];
-	$facet_display_data = config('product.facet_display_data');
+	
 	
 	$facet_display_data_keys = array_keys($facet_display_data);
 	foreach($facets_count as $focuntv){
