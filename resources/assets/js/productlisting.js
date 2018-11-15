@@ -66,7 +66,7 @@ $(document).ready(function(){
         });
     }
     
-    $('.pl-loader').fadeOut(2000,function(){
+    $('.pl-loader').fadeOut('fast',function(){
       $('body').removeClass('overflow-h');
     })
       
@@ -248,30 +248,13 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false)
       call_ajax = true;
     }
     console.log(facet_list);
-    console.log("range_facet_list==")
-    console.log(range_facet_list)
-    // console.log("min==="+range_facet_list[facet_name]["min"])
+
 
     var url = constructCategoryUrl(config_facet_names_arr,facet_list,facet_value_slug_assoc);
     console.log("listurl====",url)
-    if(url.indexOf("?") !== -1)
-      append_filter_str = "&"
-    else
-      append_filter_str = "?"
-    if( Object.keys(range_facet_list).length>0){
-      console.log(facet_name);
-      for(ritem in range_facet_list){
-        var minval = range_facet_list[ritem]["min"]
-        var maxval = range_facet_list[ritem]["max"]
-        url += append_filter_str+"rf=price:"+minval+"TO"+maxval;
-      }
-      console.log(range_facet_list[facet_name]);
-      
-    }
-    console.log("listurl====",url)
-    ajax_data = { "search_object": { "primary_filter" : facet_list,"range_filter" : range_facet_list }, "listurl": url , "page": page_val}
-    // if( Object.keys(range_facet_list).length>0)
-    //   ajax_data["search_object"]["range_filter"] = range_facet_list
+    ajax_data = { "search_object": { "primary_filter" : facet_list }, "listurl": url , "page": page_val}
+    if( Object.keys(range_facet_list).length>0)
+      ajax_data["search_object"]["range_filter"] = range_facet_list
     
     var data = JSON.stringify(ajax_data);
 
@@ -420,46 +403,22 @@ function constructCategoryUrl(facet_names_arr,search_object,facet_value_slug_arr
     var search_str = "";
     for(item in facet_names_arr){
       var search_cat = "";
-      // console.log("item--"+facet_names_arr[item])
+      console.log("item--"+facet_names_arr[item])
       var itemval = facet_names_arr[item]
-      var config_item = facet_display_data_arr[itemval]
-      // console.log(search_object)
-      // console.log(facet_display_data_arr[itemval])
-      // console.log(search_object[itemval])
+      console.log(search_object)
+      console.log(search_object[itemval])
       if(itemval in search_object){
-        var append_filter_str = ""
-        
-        if(search_str.indexOf("?") !== -1)
-          append_filter_str = "&"
-        else
-          append_filter_str = "?"
-        if(config_item["filter_type"] == "primary_filter")
-          append_filter_str += "pf"
-        if(config_item["filter_type"] == "range_filter")
-          append_filter_str += "rf"
         if(search_object[facet_names_arr[item]].length>1){
           var furl =[]
           for(fitem in search_object[facet_names_arr[item]]){
             furl.push(facet_value_slug_arr[facet_names_arr[item]][search_object[facet_names_arr[item]][fitem]])
           }
-          if(config_item["is_attribute_param"] && config_item["filter_type"] == "primary_filter"){
-            search_cat = furl.join(',');
-            search_str += append_filter_str+"="+config_item["template"]+":"+search_cat;
-          }
-          else{
-            search_cat = furl.join('--');
-            search_str += '/'+search_cat;
-          }
-          
+          search_cat = furl.join('--');
+          search_str += '/'+search_cat;
         }
         else{
           search_cat = search_object[facet_names_arr[item]][0];
-          if(config_item["is_attribute_param"]){
-            search_str += append_filter_str+"="+config_item["template"]+":"+facet_value_slug_arr[facet_names_arr[item]][search_cat];
-          }
-          else
-            search_str += '/'+facet_value_slug_arr[facet_names_arr[item]][search_cat];
-
+          search_str += '/'+facet_value_slug_arr[facet_names_arr[item]][search_cat];
         }
 
       }
@@ -491,10 +450,7 @@ function initializeSlider(fromval,toval){
       onChange: function(data) {
         $('#price-min').val(data.from);
         $('#price-max').val(data.to);
-        
-      },
-      onFinish: function (data) {
         facetCategoryChange($("#price-range"),true,true);
-    },
+      }
   });
 }

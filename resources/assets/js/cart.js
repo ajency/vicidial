@@ -37,8 +37,8 @@ $(document).ready(function(){
         //if($(add_to_cart_element).hasClass('go-to-cart')) {/*Call Angular function*/ return;}
 
         //Show loader
-        $('.cd-add-to-cart .btn-label-initial').addClass('d-none');
-        $('.cd-add-to-cart .btn-label-initial').removeClass('d-flex');
+        $('.cd-add-to-cart .kss-btn__wrapper').addClass('d-none');
+        $('.cd-add-to-cart .kss-btn__wrapper').removeClass('d-flex');
         $('.cd-add-to-cart .btn-icon').show();
         $(add_to_cart_element).addClass('cartLoader');
         
@@ -86,8 +86,8 @@ $(document).ready(function(){
             success: function (data) {
                 $('.cd-add-to-cart .btn-icon').hide();
                 //$('.cd-add-to-cart .btn-label-success').show();
-                $('.cd-add-to-cart .btn-label-initial').addClass('d-flex');
-                $('.cd-add-to-cart .btn-label-initial').removeClass('d-none');
+                $('.cd-add-to-cart .kss-btn__wrapper').addClass('d-flex');
+                $('.cd-add-to-cart .kss-btn__wrapper').removeClass('d-none');
                 //var itemImg = $(add_to_cart_element).closest('.container').find('img').eq(1);
                 //flyToElement($(itemImg), $('.shopping-cart'));
                 document.cookie = "cart_count=" + data.cart_count + ";path=/";
@@ -122,8 +122,8 @@ $(document).ready(function(){
         var error_msg = (request && request.responseJSON && request.responseJSON.message!='') ? request.responseJSON.message : 'Could not add to bag';
         //if(request.responseJSON.message!='') error_msg = request.responseJSON.message
         $('.cd-add-to-cart .btn-icon').hide();
-        $('.cd-add-to-cart .btn-label-initial').addClass('d-flex');
-        $('.cd-add-to-cart .btn-label-initial').removeClass('d-none');
+        $('.cd-add-to-cart .kss-btn__wrapper').addClass('d-flex');
+        $('.cd-add-to-cart .kss-btn__wrapper').removeClass('d-none');
         $('.kss-alert .message').html('<strong>Failed!!!</strong> '+error_msg);
         $('.kss-alert').addClass('kss-alert--failure');
         $('.kss-alert').addClass('is-open');

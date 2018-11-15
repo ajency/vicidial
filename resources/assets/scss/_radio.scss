@@ -74,7 +74,7 @@
         .radio-input:checked+.radio-label{
             color: #777;
             img {
-                box-shadow: 0 0 0 2px theme-color("primary");
+                box-shadow: 0 5px 0 0 theme-color("primary");
             }  
         }
     }

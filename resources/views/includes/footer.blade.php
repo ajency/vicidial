@@ -32,9 +32,9 @@
         <div class="mbr-footer-content col-md-4 mt-4 mt-sm-5 mt-md-0">
           <p class="font-weight-bold"><strong>Subscribe To Our Newsletter</strong></p>
           <form class="">
-            <div class="form-group m-0 d-flex align-items-baseline">
-              <input type="email" class="form-control px-2" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email address">
-              <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="form-group m-0 d-flex align-items-baseline newsletter">
+              <input type="email" class="form-control newsletter__input" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email address">
+              <button type="submit" class="btn btn-primary newsletter__btn">Submit</button>
             </div>
             <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
           </form>

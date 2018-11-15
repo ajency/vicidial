@@ -33,10 +33,8 @@
 	    -body">
 	      @{{#if title}}
 	      <a href="/@{{slug_name}}/buy" class="text-dark">
-	        <h5 class="card-title">
-
+	        <h5 class="section-heading section-heading--list">
 	          @{{title}}
-
 	        </h5>
 	      </a>
 	      @{{/if}}
