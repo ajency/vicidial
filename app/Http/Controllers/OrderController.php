@@ -80,26 +80,7 @@ class OrderController extends Controller
         $user    = User::getUserByToken('Bearer '.$_COOKIE['token']);
         validateOrder($user, $order);
 
-        $sub_orders = array();
-        foreach ($order->subOrders as $subOrder) {
-            $sub_orders[] = $subOrder->getSubOrder();
-        }
-
-        $params = [
-            "order_info"       => $order->getOrderInfo(),
-            "sub_orders"       => $sub_orders,
-            "shipping_address" => $order->address->shippingAddress(),
-            "order_summary"    => $order->aggregateSubOrderData(),
-        ];
-
-        $payment = $order->payments->first();
-        if ($payment!=null) {
-            $params['payment_info'] = [
-                //"payment_mode" => $payment->bankcode,
-                "payment_mode" => json_decode($payment->data)->bankcode,
-                "card_num"     => $payment->cardnum,
-            ];
-        }
+        $params = $order->getOrderDetails();
 
         $params['breadcrumb']            = array();
         $params['breadcrumb']['list']    = array();

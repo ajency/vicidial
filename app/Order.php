@@ -91,6 +91,32 @@ class Order extends Model
         return $order_info;
     }
 
+    public function getOrderDetails()
+    {
+        $sub_orders = array();
+        foreach ($this->subOrders as $subOrder) {
+            $sub_orders[] = $subOrder->getSubOrder();
+        }
+
+        $params = [
+            "order_info"       => $this->getOrderInfo(),
+            "sub_orders"       => $sub_orders,
+            "shipping_address" => $this->address->shippingAddress(),
+            "order_summary"    => $this->aggregateSubOrderData(),
+        ];
+
+        $payment = $this->payments->first();
+        if ($payment != null) {
+            $params['payment_info'] = [
+                //"payment_mode" => $payment->bankcode,
+                "payment_mode" => json_decode($payment->data)->bankcode,
+                "card_num"     => $payment->cardnum,
+            ];
+        }
+
+        return $params;
+    }
+
     public function sendSuccessEmail()
     {
         sendEmail('order-success', [
