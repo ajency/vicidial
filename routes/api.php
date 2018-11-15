@@ -32,4 +32,4 @@ Route::middleware('auth:api')->post('/rest/v1/user/cart/{id}/continue-order', 'O
 Route::middleware('auth:api')->get('/rest/v1/user/cart/mine', 'CartController@getCartID');
 Route::middleware('auth:api')->get('/rest/v1/user/cart/start-fresh', 'CartController@startFresh');
 
-Route::middleware('auth:api')->post('/rest/v1/user/save-user-details', 'ApiLoginController@saveUserDetails');
+Route::middleware('auth:api')->post('/rest/v1/user/save-user-details', 'UserController@saveUserDetails');

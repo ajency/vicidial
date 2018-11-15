@@ -473,3 +473,21 @@ function sanitiseMoveData($moveData, $prefix = '')
 
     return $body;
 }
+
+function generateOTP()
+{
+    $min = str_pad(1, config('otp.length'), 0);
+    $max = str_pad(9, config('otp.length'), 9);
+    $token = random_int($min, $max);
+    return $token;
+}
+
+function createAccessToken($UserObject)
+{
+    $UserObject->createToken('KSS_USER')->accessToken;
+}
+
+function fetchAccessToken($UserObject)
+{
+    return $token = $UserObject->tokens->first();
+}
