@@ -3,7 +3,7 @@
 
 
 @section('headjs')
-	
+	@include('includes.abovethefold.singleproductcss')
 @stop
 
 @section('content')
