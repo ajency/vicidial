@@ -168,7 +168,7 @@ return [
         'product_gender'        => [
             'name'                   => 'Gender',
             'is_singleton'           => false,
-            'is_collapsed'           => true,
+            'is_collapsed'           => false,
             'template'               => 'gender',
             'order'                  => 1,
             'display_count'          => false,
