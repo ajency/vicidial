@@ -1,5 +1,6 @@
 <?php
 
+use App\Defaults;
 use App\User;
 use Carbon\Carbon;
 function valInteger($object, $values)
@@ -133,7 +134,7 @@ function sanitiseVariantData($odooData, $attributeData, $inventoryData)
         $variantData['product_color_name'] = $color['name'];
         $variantData['product_color_html'] = $color['html_color'];
 
-    }else{
+    } else {
         $variantData['product_color_id']   = 0;
         $variantData['product_color_name'] = "";
         $variantData['product_color_html'] = "";
@@ -141,7 +142,7 @@ function sanitiseVariantData($odooData, $attributeData, $inventoryData)
     if ($size) {
         $variantData['variant_size_id']   = $size['id'];
         $variantData['variant_size_name'] = $size['name'];
-    }else{
+    } else {
         $variantData['variant_size_id']   = 0;
         $variantData['variant_size_name'] = "";
     }
@@ -490,4 +491,113 @@ function createAccessToken($UserObject)
 function fetchAccessToken($UserObject)
 {
     return $token = $UserObject->tokens->first();
+}
+
+/**
+ * This function is used to send email for each event
+ * This function will send an email to given recipients
+ * @param data can contain the following extra parameters
+ *   @param template_data
+ *   @param to
+ *   @param cc
+ *   @param bcc
+ *   @param from[id]
+ *   @param from[name]
+ *   @param subject
+ *   @param delay  - @var integer
+ *   @param priority - @var string -> ['low','default','high']
+ *   @param attach - An Array of arrays each containing the following parameters:
+ *           @param file - base64 encoded raw file
+ *           @param as - filename to be given to the attachment
+ *           @param mime - mime of the attachment
+ */
+function sendEmail($event, $data)
+{
+    $email = new \Ajency\Comm\Models\EmailRecipient();
+
+    //From
+    if (isset($data['from'])) {
+        $fromId   = (isset($data['from']['id'])) ? $data['from']['id'] : config('communication.email.from.id');
+        $fromName = (isset($data['from']['name'])) ? $data['from']['name'] : config('communication.email.from.name');
+        $email->setFrom($fromId, $fromName);
+    } else {
+        $email->setFrom(config('communication.email.from.id'), config('communication.email.from.name'));
+    }
+
+    //TO
+    $to = (isset($data['to'])) ? Defaults::getEmailExtras('to', $data['to']) : Defaults::getEmailExtras('to');
+    $email->setTo($to);
+
+    //CC
+    $cc = (isset($data['cc'])) ? Defaults::getEmailExtras('cc', $data['cc']) : Defaults::getEmailExtras('cc');
+    $email->setCc($cc);
+
+    //BCC
+    $bcc = (isset($data['bcc'])) ? Defaults::getEmailExtras('bcc', $data['bcc']) : Defaults::getEmailExtras('bcc');
+    $email->setBcc($bcc);
+
+    //Template Data & Subject
+    $params                  = (isset($data['template_data'])) ? $data['template_data'] : [];
+    $params['email_subject'] = (isset($data['subject'])) ? $data['subject'] : "";
+    $email->setParams($params);
+
+    if (isset($data['attach'])) {
+        $email->setAttachments($data['attach']);
+    }
+
+    $notify = new \Ajency\Comm\Communication\Notification();
+    $notify->setEvent($event);
+    $notify->setRecipientIds([$email]);
+
+    if (isset($data['delay'])) {
+        $notify->setDelay($data['delay']);
+    }
+
+    if (isset($data['priority'])) {
+        $notify->setPriority($data['priority']);
+    }
+
+    \AjComm::sendNotification($notify);
+
+}
+
+/**
+ * This function is used to send sms for each event
+ * This function will send an sms to given recipients
+ * @param data can contain the following extra parameters
+ *   @param to - array
+ *   @param message - string
+ *   @param delay  - @var integer
+ * @param override
+ */
+function sendSMS($event, $data = [], $override = false)
+{
+    if (!isset($data['to']) || !isset($data['message'])) {
+        return false;
+    }
+
+    if (!is_array($data['to'])) {
+        $data['to'] = [$data['to']];
+    }
+
+    $sms = new \Ajency\Comm\Models\SmsRecipient();
+    $sms->setTo($data['to']);
+    $sms->setMessage($data['message']);
+    if ($override) {
+        $sms->setOverride(true);
+    }
+
+    $notify = new \Ajency\Comm\Communication\Notification();
+    $notify->setEvent($event);
+    $notify->setRecipientIds([$sms]);
+    if (isset($data['delay'])) {
+        $notify->setDelay($data['delay']);
+    }
+
+    if (isset($data['priority'])) {
+        $notify->setPriority($data['priority']);
+    }
+
+    \AjComm::sendNotification($notify);
+
 }
