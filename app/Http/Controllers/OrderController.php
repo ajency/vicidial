@@ -89,6 +89,9 @@ class OrderController extends Controller
         }
 
         $order = Order::find($query['orderid']);
+        if(!isset($_COOKIE['token'])) {
+            abort(401);
+        }
         $user    = User::getUserByToken('Bearer '.$_COOKIE['token']);
         validateOrder($user, $order);
 
