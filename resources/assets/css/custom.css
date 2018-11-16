@@ -9064,13 +9064,13 @@ a.text-cancel:hover, a.text-cancel:focus {
   }
 }
 
-.radio-wrap.wo-image .radio-label:hover {
+.radio-wrap.wo-image .radio-input:checked + .radio-label {
   background-color: #004283;
   border-color: #004283;
   color: #fff;
 }
 
-.radio-wrap.wo-image .radio-input:checked + .radio-label {
+.radio-wrap.wo-image .radio-input:not(:disabled) + .radio-label:hover {
   background-color: #004283;
   border-color: #004283;
   color: #fff;
