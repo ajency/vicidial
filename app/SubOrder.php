@@ -21,7 +21,7 @@ class SubOrder extends Model
 
     public function warehouse()
     {
-        return $this->belongsTo('App\Warehouse');
+        return $this->belongsTo('App\Warehouse', 'warehouse_id', 'odoo_id');
     }
 
     public function setItems($items)
