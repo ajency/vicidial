@@ -241,7 +241,7 @@ return [
             'display_count'          => true,
             'disabled_at_zero_count' => false,
             "is_attribute_param"     => true,
-            'attribute_slug'         => 'variant_availability'
+            'attribute_slug'         => 'variant_availability',
             "attribute_param"        => "availability",
             'filter_type'            => 'boolean_filter',
         ],

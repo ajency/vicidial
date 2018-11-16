@@ -190,7 +190,7 @@ function sanitiseFilterdata($result, $params = [])
     foreach ($attributes as $attribute) {
         $filter[$attribute] = config('product.facet_display_data.variant_availability.' . $attribute);
     }
-    $filter['items'] => [
+    $filter['items'] = [
         [
             "display_name" => config('product.facet_display_data.variant_availability.display_name'),
             "facet_value"  => true,
