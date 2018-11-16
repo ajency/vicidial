@@ -60,6 +60,7 @@
   </script>
    <script type="text/javascript" src="{{CDN::mix('/js/productlisting.js') }}"></script>
   @yield('footjs-color')
+  @yield('footjs-availability')
   @yield('footjs-price')
   @yield('footjs-gender')
   @yield('footjs-age')
