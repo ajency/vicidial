@@ -9056,7 +9056,6 @@ a.text-cancel:hover, a.text-cancel:focus {
 
 .radio-wrap.wo-image .radio-label .radio-option {
   font-weight: 600;
-  font-size: 1.05em;
 }
 
 @media (min-width: 320px) and (max-width: 767.98px) {
