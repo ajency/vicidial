@@ -83,13 +83,30 @@
             min-width: 100px;
             padding: 10px;
             text-align: center;
+            border-color: theme-color("secondary");
+            transition: all 0.5s ease;
+            .radio-option{
+                font-weight: 600;
+            }
             @media (min-width: 320px) and (max-width: 767.98px) {
-            min-width: 84px;
+                min-width: 84px;
             }
         }
         .radio-input:checked+.radio-label {
-            border-color: theme-color("primary");
-            color: darken(theme-color("primary"), 10%);
+            background-color: theme-color("secondary");
+            border-color: theme-color("secondary");
+            color: #fff;
+        }
+        .radio-input{
+            &:not(:disabled){
+                & + .radio-label{
+                    &:hover{
+                        background-color: theme-color("secondary");
+                        border-color: theme-color("secondary");
+                        color: #fff;
+                    }
+                }
+            }
         }
     }
     @media (min-width: 320px) and (max-width: 767.98px) {
