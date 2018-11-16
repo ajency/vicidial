@@ -417,7 +417,7 @@ class Product
         $facet_display_data             = config('product.facet_display_data');
         // dd($params);
         foreach ($params["search_object"]["primary_filter"] as $paramk => $paramv) {
-            if ($facet_display_data[$paramk]["is_singleton"] == false) {
+            if ($facet_display_data[$paramk]["is_essential"] == false) {
                 $fields = $paramv;
                 array_push($fields, "all");
                 $filter_params["search_object"]["primary_filter"][$paramk] = $fields;
@@ -431,7 +431,7 @@ class Product
         $filter_params["display_limit"] = $params["display_limit"];
         $filter_params["page"] = $params["page"];
         // print_r($filter_params);
-        //dd($filter_params,$params);
+        // dd($filter_params,$params);
 
         // $params = $filter_params =  ['search_object' =>['primary_filter' => [ 'product_gender' => ['Boys','all']]], 'display_limit' => 20, 'page' => 1] ;
         // $params = $filter_params ;
