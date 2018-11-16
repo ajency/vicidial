@@ -180,6 +180,26 @@ function sanitiseFilterdata($result, $params = [])
     $filter["selected_range"]["end"]   = (isset($params["search_object"]['range_filter']['variant_sale_price'])) ? $params["search_object"]['range_filter']['variant_sale_price']['max'] : $priceFilter['max'];
     // $filter["selected_range"]["end"] = ($filter["selected_range"]["end"] > $filter["bucket_range"]["end"])? $filter["bucket_range"]["end"] : $filter["selected_range"]["end"];
     $response[] = $filter;
+
+    //le availability filter
+    $filter           = [];
+    $filter['header'] = [
+        'facet_name'   => 'variant_availability',
+        'display_name' => config('product.facet_display_data.variant_availability.name'),
+    ];
+    foreach ($attributes as $attribute) {
+        $filter[$attribute] = config('product.facet_display_data.variant_availability.' . $attribute);
+    }
+    $filter['items'] => [
+        [
+            "display_name" => config('product.facet_display_data.variant_availability.display_name'),
+            "facet_value"  => true,
+            "is_selected" => true,
+            "count" => 20,
+        ],
+    ];
+    $filter['attribute_slug'] = config('product.facet_display_data.variant_availability.attribute_slug');
+    $response[] = $filter;
     return $response;
 }
 
@@ -225,7 +245,9 @@ function setElasticFacetFilters($q, $params)
     $must = $q::addToBoolQuery('must', $must);
     $must = hideZeroColorIDProducts($q, $must);
     $must = hideZeroSizeIDProducts($q, $must);
-    $must = hideUnavailableProducts($q, $must);
+    if (isset($params['search_object']['boolean_filter']['variant_availability']) && $params['search_object']['boolean_filter']['variant_availability']) {
+        $must = hideUnavailableProducts($q, $must);
+    }
     return $must;
 }
 

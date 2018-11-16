@@ -150,7 +150,7 @@ return [
             'variant' => ['variant_style_no'],
         ],
     ],
-    "inventory_fields"        => ["warehouse_id", "product_id", "quantity",'location_id'],
+    "inventory_fields"        => ["warehouse_id", "product_id", "quantity", 'location_id'],
     "inventory_max"           => 10,
     'facet_display_data'      => [
         'product_category_type' => [
@@ -162,7 +162,7 @@ return [
             'display_count'          => true,
             'disabled_at_zero_count' => false,
             "is_attribute_param"     => false,
-            "attribute_param"     => null,
+            "attribute_param"        => null,
             'filter_type'            => 'primary_filter',
             "is_essential"          => true
         ],
@@ -175,7 +175,7 @@ return [
             'display_count'          => true,
             'disabled_at_zero_count' => false,
             "is_attribute_param"     => false,
-            "attribute_param"     => null,
+            "attribute_param"        => null,
             'filter_type'            => 'primary_filter',
             "is_essential"          => true
         ],
@@ -188,7 +188,7 @@ return [
             'display_count'          => true,
             'disabled_at_zero_count' => true,
             "is_attribute_param"     => false,
-            "attribute_param"     => null,
+            "attribute_param"        => null,
             'filter_type'            => 'primary_filter',
             "is_essential"          => false
         ],
@@ -201,11 +201,11 @@ return [
             'display_count'          => true,
             'disabled_at_zero_count' => true,
             "is_attribute_param"     => false,
-            "attribute_param"     => null,
+            "attribute_param"        => null,
             'filter_type'            => 'primary_filter',
             "is_essential"          => false
         ],
-        'product_color_html'       => [
+        'product_color_html'    => [
             'name'                   => 'Colour',
             'is_singleton'           => false,
             'is_collapsed'           => true,
@@ -214,7 +214,7 @@ return [
             'display_count'          => true,
             'disabled_at_zero_count' => false,
             "is_attribute_param"     => true,
-            "attribute_param"     => null,
+            "attribute_param"        => null,
             'filter_type'            => 'primary_filter',
             "is_essential"          => false
         ],
@@ -227,29 +227,31 @@ return [
             'display_count'          => false,
             'disabled_at_zero_count' => false,
             "is_attribute_param"     => true,
-            "attribute_param"     => "price",
+            "attribute_param"        => "price",
             'filter_type'            => 'range_filter',
             "is_essential"          => false
         ],
-        'variant_availablity'    => [
+        'variant_availability'  => [
             'name'                   => 'Availability',
+            'display_name'           => 'Exclude Out Of Stock',
             'is_singleton'           => true,
             'is_collapsed'           => true,
             'template'               => 'availability',
-            'order'                  => 4,
+            'order'                  => 6,
             'display_count'          => true,
             'disabled_at_zero_count' => false,
             "is_attribute_param"     => true,
-            "attribute_param"     => "variant_availablity",
+            'attribute_slug'         => 'variant_availability'
+            "attribute_param"        => "availability",
             'filter_type'            => 'boolean_filter',
         ],
     ],
-    'breadcrumb_order'           => [
+    'breadcrumb_order'        => [
         'product_category_type',
         'product_age_group',
         'product_gender',
-        'product_subtype'
-    ],//Used for breadcrumbs on single product page
-    "list_page_display_limit"    => 30,
+        'product_subtype',
+    ], //Used for breadcrumbs on single product page
+    "list_page_display_limit" => 30,
 
 ];
