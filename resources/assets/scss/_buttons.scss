@@ -115,3 +115,10 @@
         }
     }
 }
+
+.btn-size{
+	font-size: 1.15rem !important;
+	@media (max-width: 767px){
+        font-size: 1rem !important;
+    }
+}

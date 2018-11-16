@@ -10593,6 +10593,16 @@ a.text-cancel:hover, a.text-cancel:focus {
   background-color: #f9bc23;
 }
 
+.btn-size {
+  font-size: 1.15rem !important;
+}
+
+@media (max-width: 767px) {
+  .btn-size {
+    font-size: 1rem !important;
+  }
+}
+
 .radio-rounded label {
   min-width: 100px;
   min-height: 100px;
@@ -11996,10 +12006,10 @@ label {
 }
 
 .form-control-number {
-  font-size: 1.5em;
+  font-size: 1.7em;
   padding-left: 5px;
   font-weight: bold;
-  width: 130px;
+  width: 150px;
 }
 
 .form-control-number::-webkit-input-placeholder {
