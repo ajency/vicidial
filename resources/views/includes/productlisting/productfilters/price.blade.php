@@ -8,7 +8,7 @@
       <div id="collapsePrice" class="collapse@{{#if collapsed}}@{{else}} show @{{/if}}" aria-labelledby="headingThree" data-field="price">
         <div class="card-body">
           <div class="priceRange">
-            <input type="text" id="price-range" name="price" value="" data-facet-name="@{{filter_facet_name}}" data-singleton="true" data-slug="@{{slug}}" @{{#if ../disabled_at_zero_count}} @{{#ifEquals count 0 }} disabled = "disabled" @{{/ifEquals}} @{{/if}} data-collapsable="@{{../collapsed}}"/>
+            <input type="text" id="price-range" name="price" value="" class="facet-category" data-minval="@{{minval}}" data-maxval="@{{maxval}}" data-facet-name="@{{filter_facet_name}}" data-singleton="true" data-slug="price" @{{#if disabled_at_zero_count}} @{{#ifEquals count 0 }} disabled = "disabled" @{{/ifEquals}} @{{/if}} data-collapsable="@{{collapsed}}"/>
           </div>
           <div class="row">
             <div class="col-5 col-sm-5">
@@ -59,6 +59,8 @@
    context["items"] = <?= json_encode($items); ?>;
    context["fromval"] = fromval;
    context["toval"] = toval;
+   context["minval"] = minval;
+   context["maxval"] = maxval;
    console.log("filter_facet_name====")
    console.log(context)
    var html    = template(context);
@@ -69,6 +71,31 @@
     // Init ion range slider
     initializeSlider(fromval,toval,minval,maxval)
     facetCategoryChange($("#price-range"),false,true);
+    if($( "input[name='age']:checked" ).length){
+        $.each($("input[name='age']:checked"), function(){            
+            facetCategoryChange($(this),false)
+        });
+    }
+    if($( "input[name='gender']:checked" ).length){
+        $.each($("input[name='gender']:checked"), function(){            
+            facetCategoryChange($(this),false)
+        });
+    }
+    if($( "input[name='category']:checked" ).length){
+        $.each($("input[name='category']:checked"), function(){            
+            facetCategoryChange($(this),false)
+        });
+    }
+    if($( "input[name='subtype']:checked" ).length){
+        $.each($("input[name='subtype']:checked"), function(){            
+            facetCategoryChange($(this),false)
+        });
+    }
+    if($( "input[name='color']:checked" ).length){
+        $.each($("input[name='color']:checked"), function(){            
+            facetCategoryChange($(this),false)
+        });
+    }
   // Function to update price range on change
    priceRangeSlider = $("#price-range").data("ionRangeSlider");
 
