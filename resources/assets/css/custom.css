@@ -9346,8 +9346,6 @@ a.text-cancel:hover, a.text-cancel:focus {
 }
 
 .productGrid .product-card {
-  -webkit-box-shadow: 0 0 5px rgba(6, 6, 6, 0.16);
-          box-shadow: 0 0 5px rgba(6, 6, 6, 0.16);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -9360,6 +9358,11 @@ a.text-cancel:hover, a.text-cancel:focus {
   .productGrid .product-card {
     background-color: #fff;
   }
+}
+
+.productGrid .product-card:hover {
+  -webkit-box-shadow: 0 0 5px rgba(6, 6, 6, 0.16);
+          box-shadow: 0 0 5px rgba(6, 6, 6, 0.16);
 }
 
 .kss_filter {
@@ -10162,7 +10165,7 @@ footer .bl-1 {
     overflow-x: scroll;
     display: grid;
     grid-gap: 10px;
-    grid-template-columns: 5px repeat(8, calc(50% - 40px)) 5px;
+    grid-template-columns: 5px repeat(5, calc(50% - 40px)) 5px;
     grid-template-rows: minmax(150px, 1fr);
   }
   .overflow-m .col-6 {

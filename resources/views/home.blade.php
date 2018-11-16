@@ -129,19 +129,18 @@
                 <ol class="carousel-indicators ">
                   <li data-target="#slider-newarrival" data-slide-to="0" class="active"></li>
                   <li data-target="#slider-newarrival" data-slide-to="1"></li>
-                  <li data-target="#slider-newarrival" data-slide-to="2"></li>
                 </ol>
                 <div class="carousel-inner mt-5">
                   <div class="carousel-item active">
                     <a href="/accessories/others/">
                       <img class="d-block w-100 img-fluid lazyload blur-up"
-                        src="{{CDN::asset('/img/new-arrival/slider-bag-10px.jpg') }}"
-                        data-srcset="{{CDN::asset('/img/new-arrival/slider-bag-large.jpg') }} 813w,
-                                     {{CDN::asset('/img/new-arrival/slider-bag-medium.jpg') }} 542w,
-                                     {{CDN::asset('/img/new-arrival/slider-bag-small.jpg') }} 271w"
+                        src="{{CDN::asset('/img/new-arrival/cup-10px.jpg') }}"
+                        data-srcset="{{CDN::asset('/img/new-arrival/cup-large.jpg') }} 813w,
+                                     {{CDN::asset('/img/new-arrival/cup-medium.jpg') }} 542w,
+                                     {{CDN::asset('/img/new-arrival/cup-small.jpg') }} 271w"
                         data-sizes='(min-width: 1200px) 270px, (min-width: 768px) 22vw,  44vw'
-                        alt="New Arrivals - Accessories"
-                        title="New Arrivals - Accessories"/>
+                        alt="New Arrivals - Jewerly"
+                        title="New Arrivals - Jewerly"/>
                       </a>
                   </div>
                   <div class="carousel-item">
@@ -271,16 +270,16 @@
   <div class="container mt-5">
       <div class="row">
           <div class="col-md-12 text-center">
-            <h2 class="font-weight-bold mb-3">Product of the Day</h2>
+            <h2 class="font-weight-bold mb-3">Trending for Boys</h2>
             <!-- <p>Lorem ipsum dolor sit amet</p> -->
           </div>
       </div>
   </div>
 </section>
-<section id="kss-clothings" class="stripe-bg-top">
+<section id="kss-clothings" class="">
   <div class="container ">
     <div id="card-list" class="overflow-m row productGrid">
-      <div class="col-lg-3 col-md-6 mb-4 col-6  ">
+      <div class="col">
         <div class="card h-100 product-card">
           <a href="/white-cotton-shirt-251-white/buy/">
             <div class="">
@@ -295,7 +294,7 @@
           </a>
         </div>
       </div>
-      <div class="col-lg-3 col-md-6 mb-4 col-6  ">
+      <div class="col">
         <div class="card h-100 product-card">
           <a href="/grey-printed-graphic-t-shirt-1441-grey/buy/">
             <div class="">
@@ -310,11 +309,69 @@
           </a>
         </div>
       </div>
-      <div class="col-lg-3 col-md-6 mb-4 col-6  ">
+      <div class="col">
+        <div class="card h-100 product-card">
+          <a href="/casual-indigo-shorts-210-dark-wash/buy/">
+            <div class="">
+             <img class="d-block w-100 img-fluid lazyload blur-up"
+                  src="{{CDN::asset('/img/product-of-day/denim-shorts-1556-color-dark-wash-3-10px.jpg') }}"
+                  data-srcset="{{CDN::asset('/img/product-of-day/denim-shorts-1556-color-dark-wash-3-large.jpg') }} 697w,
+                              {{CDN::asset('/img/product-of-day/denim-shorts-1556-color-dark-wash-3-medium.jpg') }} 652w,
+                               {{CDN::asset('/img/product-of-day/denim-shorts-1556-color-dark-wash-3-small.jpg') }} 326w"
+                  data-sizes='(min-width: 1200px) 267px, (min-width: 991px) 22vw, 41vw'
+                  title="Casual indigo shorts"
+                  alt="Casual indigo shorts"/>
+           </div>
+          </a>
+        </div>
+      </div>      
+      <div class="col">
+        <div class="card h-100 product-card">
+          <a href="/boys-navy-casual-printed-tshirt-73-navy/buy/">
+            <div class="">
+              <img class="d-block w-100 img-fluid lazyload blur-up"
+                  src="{{CDN::asset('/img/product-of-day/shirt-4-10px.jpg') }}"
+                  data-srcset="{{CDN::asset('/img/product-of-day/shirt-4-large.jpg') }} 810w,
+                               {{CDN::asset('/img/product-of-day/shirt-4-medium.jpg') }} 652w,
+                               {{CDN::asset('/img/product-of-day/shirt-4-small.jpg') }} 326w"
+                  data-sizes='(min-width: 1200px) 267px, (min-width: 991px) 22vw, 41vw'
+                  title="Boys Navy Casual Printed Tshirt"
+                  alt="Boys Navy Casual Printed Tshirt"/>
+           </div>
+          </a>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card h-100 product-card">
+          <a href="/half-sleeves-cotton-shirt-256-blue/buy/">
+            <div class="">
+              <img class="d-block w-100 img-fluid lazyload blur-up"
+                  src="{{CDN::asset('/img/product-of-day/shirt-5-shirt-10px.jpg') }}"
+                  data-srcset="{{CDN::asset('/img/product-of-day/shirt-5-shirt-large.jpg') }} 810w,
+                               {{CDN::asset('/img/product-of-day/shirt-5-shirt-medium.jpg') }} 652w,
+                               {{CDN::asset('/img/product-of-day/shirt-5-shirt-small.jpg') }} 326w"
+                 data-sizes='(min-width: 1200px) 267px, (min-width: 991px) 22vw, 41vw'
+                 title="Half Sleeves Cotton Shirt"
+                 alt="Half Sleeves Cotton Shirt"/>
+            </div>
+          </a>
+        </div>
+      </div>
+  </div>
+
+  <div class="row mt-5">
+      <div class="col-md-12 text-center">
+        <h2 class="font-weight-bold mb-3">Trending for Girls</h2>
+        <!-- <p>Lorem ipsum dolor sit amet</p> -->
+      </div>
+  </div>
+
+<div id="card-list" class="overflow-m row productGrid">
+      <div class="col">
         <div class="card h-100 product-card">
           <a href="/a-line-marigold-embroidered-dress-982-turquoise/buy/">
             <div class="">
-              <img class="d-block w-100 img-fluid lazyload blur-up"
+             <img class="d-block w-100 img-fluid lazyload blur-up"
                   src="{{CDN::asset('/img/product-of-day/171081-a-line-marigold-embroidered-dress-color-turquoise-1-10px.jpg') }}"
                   data-srcset="{{CDN::asset('/img/product-of-day/171081-a-line-marigold-embroidered-dress-color-turquoise-1-large.jpg') }} 810w,
                                {{CDN::asset('/img/product-of-day/171081-a-line-marigold-embroidered-dress-color-turquoise-1-medium.jpg') }} 652w,
@@ -326,7 +383,53 @@
           </a>
         </div>
       </div>
-      <div class="col-lg-3 col-md-6 mb-4 col-6  ">
+      <div class="col">
+        <div class="card h-100 product-card">
+          <a href="/denim-indigo-trouser-1329-dark-blue/buy/">
+            <div class="">
+             <img class="d-block w-100 img-fluid lazyload blur-up"
+                  src="{{CDN::asset('/img/product-of-day/girl-trouser-10px.jpg') }}"
+                  data-srcset="{{CDN::asset('/img/product-of-day/girl-trouser-large.jpg') }} 810w,
+                               {{CDN::asset('/img/product-of-day/girl-trouser-medium.jpg') }} 652w,
+                               {{CDN::asset('/img/product-of-day/girl-trouser-small.jpg') }} 326w"
+                  data-sizes='(min-width: 1200px) 267px, (min-width: 991px) 22vw, 41vw'
+                  title="Denim Indigo Trouser"
+                  alt="Denim Indigo Trouser"/>
+           </div>
+          </a>
+        </div>
+      </div>  
+      <div class="col">
+        <div class="card h-100 product-card">
+          <a href="/grey-circular-knit-graphic-girls-tshirt-1272-grey/buy/">
+            <div class="">
+              <img class="d-block w-100 img-fluid lazyload blur-up"
+                  src="{{CDN::asset('/img/product-of-day/jl-ppg-3-side-girls-hd-hs-top-color-grey-1-10px.jpg') }}"
+                  data-srcset="{{CDN::asset('/img/product-of-day/jl-ppg-3-side-girls-hd-hs-top-color-grey-1-medium.jpg') }} 537w,
+                               {{CDN::asset('/img/product-of-day/jl-ppg-3-side-girls-hd-hs-top-color-grey-1-small.jpg') }} 326w"
+                  data-sizes='(min-width: 1200px) 267px, (min-width: 991px) 22vw, 41vw'
+                  title="Grey circular knit graphic girls tshirt"
+                  alt="Grey circular knit graphic girls tshirt"/>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card h-100 product-card">
+          <a href="/cotton-circular-knit-short-1217-turquoise/buy/">
+            <div class="">
+              <img class="d-block w-100 img-fluid lazyload blur-up"
+                  src="{{CDN::asset('/img/product-of-day/girl-short-10px.jpg') }}"
+                  data-srcset="{{CDN::asset('/img/product-of-day/girl-short-medium.jpg') }} 450w,
+                               {{CDN::asset('/img/product-of-day/girl-short-small.jpg') }} 326w"
+                  data-sizes='(min-width: 1200px) 267px, (min-width: 991px) 22vw, 41vw'
+                  title="Cotton Circular Knit Short"
+                  alt="Cotton Circular Knit Short"/>
+           </div>
+          </a>
+        </div>
+      </div>
+      <div class="col">
         <div class="card h-100 product-card">
           <a href="/chambray-hemla-dress-coral-972-coral/buy/">
             <div class="">
@@ -342,53 +445,86 @@
           </a>
         </div>
       </div>
-      <div class="col-lg-3 col-md-6 mb-4 col-6  ">
+  </div>
+
+  <div class="row mt-5">
+      <div class="col-md-12 text-center">
+        <h2 class="font-weight-bold mb-3">Trending for Infants</h2>
+        <!-- <p>Lorem ipsum dolor sit amet</p> -->
+      </div>
+  </div>
+
+  <div id="card-list" class="overflow-m row productGrid">
+
+      <div class="col">
         <div class="card h-100 product-card">
-          <a href="/casual-indigo-shorts-210-dark-wash/buy/">
+          <a href="/half-sleeves-navy-cotton-tshirt-1034-navy/buy/">
             <div class="">
-             <img class="d-block w-100 img-fluid lazyload blur-up"
-                  src="{{CDN::asset('/img/product-of-day/denim-shorts-1556-color-dark-wash-3-10px.jpg') }}"
-                  data-srcset="{{CDN::asset('/img/product-of-day/denim-shorts-1556-color-dark-wash-3-large.jpg') }} 697w,
-                               {{CDN::asset('/img/product-of-day/denim-shorts-1556-color-dark-wash-3-medium.jpg') }} 652w,
-                               {{CDN::asset('/img/product-of-day/denim-shorts-1556-color-dark-wash-3-small.jpg') }} 326w"
+              <img class="d-block w-100 img-fluid lazyload blur-up"
+                  src="{{CDN::asset('/img/product-of-day/infant-1-10px.jpg') }}"
+                  data-srcset="{{CDN::asset('/img/product-of-day/infant-1-large.jpg') }} 810w,
+                               {{CDN::asset('/img/product-of-day/infant-1-medium.jpg') }} 652w,
+                               {{CDN::asset('/img/product-of-day/infant-1-small.jpg') }} 326w"
                   data-sizes='(min-width: 1200px) 267px, (min-width: 991px) 22vw, 41vw'
-                  title="Casual indigo shorts"
-                  alt="Casual indigo shorts"/>
+                  title="Half Sleeves Navy Cotton Tshirt"
+                  alt="Half Sleeves Navy Cotton Tshirt"/>
            </div>
           </a>
         </div>
       </div>
-      <div class="col-lg-3 col-md-6 mb-4 col-6  ">
+
+      <div class="col">
         <div class="card h-100 product-card">
-          <a href="/circular-knit-boys-graphic-tshirt-1059-blue/buy/">
+          <a href="/red-all-over-printed-dress-with-belt-171-red/buy/">
             <div class="">
               <img class="d-block w-100 img-fluid lazyload blur-up"
-                  src="{{CDN::asset('/img/product-of-day/infant-boys-t-shirt-3070-color-blue-1-10px.jpg') }}"
-                  data-srcset="{{CDN::asset('/img/product-of-day/infant-boys-t-shirt-3070-color-blue-1-medium.jpg') }} 450w,
-                               {{CDN::asset('/img/product-of-day/infant-boys-t-shirt-3070-color-blue-1-small.jpg') }} 326w"
+                  src="{{CDN::asset('/img/product-of-day/infant-2-10px.jpg') }}"
+                  data-srcset="{{CDN::asset('/img/product-of-day/infant-2-large.jpg') }} 810w,
+                               {{CDN::asset('/img/product-of-day/infant-2-medium.jpg') }} 652w,
+                               {{CDN::asset('/img/product-of-day/infant-2-small.jpg') }} 326w"
                   data-sizes='(min-width: 1200px) 267px, (min-width: 991px) 22vw, 41vw'
-                  title="Circular knit boys graphic tshirt"
-                  alt="Circular knit boys graphic tshirt"/>
+                  title="Red All Over Printed Dress With Belt"
+                  alt="Red All Over Printed Dress With Belt"/>
            </div>
           </a>
         </div>
       </div>
-      <div class="col-lg-3 col-md-6 mb-4 col-6  ">
+
+      <div class="col">
         <div class="card h-100 product-card">
-          <a href="/grey-circular-knit-graphic-girls-tshirt-1272-grey/buy/">
+          <a href="/blue-cotton-rompers-1071-navy/buy/">
             <div class="">
               <img class="d-block w-100 img-fluid lazyload blur-up"
-                  src="{{CDN::asset('/img/product-of-day/jl-ppg-3-side-girls-hd-hs-top-color-grey-1-10px.jpg') }}"
-                  data-srcset="{{CDN::asset('/img/product-of-day/jl-ppg-3-side-girls-hd-hs-top-color-grey-1-medium.jpg') }} 537w,
-                               {{CDN::asset('/img/product-of-day/jl-ppg-3-side-girls-hd-hs-top-color-grey-1-small.jpg') }} 326w"
+                  src="{{CDN::asset('/img/product-of-day/infant-3-10px.jpg') }}"
+                  data-srcset="{{CDN::asset('/img/product-of-day/infant-3-large.jpg') }} 810w,
+                               {{CDN::asset('/img/product-of-day/infant-3-medium.jpg') }} 652w,
+                               {{CDN::asset('/img/product-of-day/infant-3-small.jpg') }} 326w"
                   data-sizes='(min-width: 1200px) 267px, (min-width: 991px) 22vw, 41vw'
-                  title="Grey circular knit graphic girls tshirt"
-                  alt="Grey circular knit graphic girls tshirt"/>
-            </div>
+                  title="Blue Cotton Rompers"
+                  alt="Blue Cotton Rompers"/>
+           </div>
           </a>
         </div>
       </div>
-      <div class="col-lg-3 col-md-6 mb-4 col-6  ">
+
+      <div class="col">
+        <div class="card h-100 product-card">
+          <a href="/cobalt-casual-knit-short-1010-cobalt/buy/">
+            <div class="">
+              <img class="d-block w-100 img-fluid lazyload blur-up"
+                  src="{{CDN::asset('/img/product-of-day/infant-4-10px.jpg') }}"
+                  data-srcset="{{CDN::asset('/img/product-of-day/infant-4-large.jpg') }} 810w,
+                               {{CDN::asset('/img/product-of-day/infant-4-medium.jpg') }} 652w,
+                               {{CDN::asset('/img/product-of-day/infant-4-small.jpg') }} 326w"
+                  data-sizes='(min-width: 1200px) 267px, (min-width: 991px) 22vw, 41vw'
+                  title="Cobalt Casual Knit Short"
+                  alt="Cobalt Casual Knit Short"/>
+           </div>
+          </a>
+        </div>
+      </div>      
+
+      <div class="col">
         <div class="card h-100 product-card">
           <a href="/cotton-printed-girls-rompers-1061-white/buy/">
             <div class="">

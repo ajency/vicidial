@@ -93,16 +93,16 @@
 
      <div class="row">
         <div class="col-12">
-             <p class="font-weight-bold mb-3 mt-3"><strong>Kids Online Shopping Made Easy At Kidsuperstore</strong></p>
+             <p class="font-weight-bold mb-3 mt-3"><strong>KidSuperStore.in: Fresh Fashion for your kids. Always!</strong></p>
 
              <p class="mb-5">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                Want to find the latest clothing and accessories for kids? Look no further, KidSuperStore.in brings you the latest and fresh styles of fashion for kids all delivered to your doorstep. Browse through the various styles and categories we have at KidSuperStore.in and have fun planning out various outfit for kids. You can do this all from the comfort of your home while enjoying many online shopping benefits. We offer the irresistible deals and discounts for almost every product on our store. Experience seamless shopping through our beautiful user interface and find the exact product you are thinking of by using our powerful search filters. We hope you have a wonderful time shopping on <a href="http://www.kidsuperstore.in" class="kss-anchor">KidSuperStore.in</a>. Also, do visit our store regularly to check and avail amazing discounts offers!
              </p>
 
-             <p class="font-weight-bold mb-3 "><strong>Kids Online Shopping Made Easy At Kidsuperstore</strong></p>
+             <p class="font-weight-bold mb-3 "><strong>KidSuperStore.in: Fresh Fashion for your kids. Now near you!</strong></p>
 
              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                Not comfortable shopping online? Want to see and try out the clothing before you buy? Don’t worry, we got you covered. We have our stores all over India. You can check out our store section and visit any one of our stores nearest to you. You can experience our different variety of clothes and styles at any of our stores. Our stores are about as fun as they get, it won't even feel like you're shopping!
              </p>
 
 
