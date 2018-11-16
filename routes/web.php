@@ -12,6 +12,10 @@
  */
 $config = config('ajfileupload');
 
+Route::get('/test/order', function () {
+    return view('test');
+});
+
 Route::get('/rest/v1/anonymous/cart/count', 'CartController@guestGetCount');
 Route::post('/rest/v1/anonymous/cart/insert', 'CartController@guestAddItem');
 Route::get('/rest/v1/anonymous/cart/get', 'CartController@guestCartFetch');
