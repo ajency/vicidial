@@ -82,8 +82,9 @@
 							</div>
 
 							<div class="product-price" *ngIf="item.availability">
-								<div>
-									<p class="m-0" [ngClass]="{'text-danger' : item.available_quantity < 6}">Only {{item.available_quantity}} <span *ngIf="item.available_quantity == 1">item</span> <span *ngIf="item.available_quantity > 1">items</span> left in stock</p>
+								<div *ngIf="item.available_quantity">
+									<!-- <p class="m-0" [ngClass]="{'text-danger' : item.available_quantity < 6}">Only {{item.available_quantity}} <span *ngIf="item.available_quantity == 1">item</span> <span *ngIf="item.available_quantity > 1">items</span> left in stock</p> -->
+									<p class="m-0" *ngFor="let array of item.available_quantity"> {{array.warehouse}} :: {{array.location}} :: {{array.quantity}}</p>
 								</div>
 								<div class="kss-price kss-price--smaller">₹{{item.attributes.price_final}} 	  	<small *ngIf="item.attributes.price_final != item.attributes.price_mrp" 		class="kss-original-price text-muted">₹{{item.attributes.price_mrp}}
 								  </small>
