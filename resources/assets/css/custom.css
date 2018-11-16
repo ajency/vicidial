@@ -9049,9 +9049,6 @@ a.text-cancel:hover, a.text-cancel:focus {
   min-width: 100px;
   padding: 10px;
   text-align: center;
-  border-color: #004283;
-  -webkit-transition: all 0.5s ease;
-  transition: all 0.5s ease;
 }
 
 .radio-wrap.wo-image .radio-label .radio-option {
@@ -9065,14 +9062,38 @@ a.text-cancel:hover, a.text-cancel:focus {
 }
 
 .radio-wrap.wo-image .radio-input:checked + .radio-label {
-  background-color: #004283;
-  border-color: #004283;
+  border-color: #f9bc23;
+  color: #e3a406;
+}
+
+.radio-wrap.single-radio .radio-label {
+  min-width: 100px;
+  padding: 10px;
+  text-align: center;
+  border-color: #8e8e92;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+.radio-wrap.single-radio .radio-label .radio-option {
+  font-weight: 600;
+}
+
+@media (min-width: 320px) and (max-width: 767.98px) {
+  .radio-wrap.single-radio .radio-label {
+    min-width: 84px;
+  }
+}
+
+.radio-wrap.single-radio .radio-input:checked + .radio-label {
+  background-color: #8e8e92;
+  border-color: #8e8e92;
   color: #fff;
 }
 
-.radio-wrap.wo-image .radio-input:not(:disabled) + .radio-label:hover {
-  background-color: #004283;
-  border-color: #004283;
+.radio-wrap.single-radio .radio-input:not(:disabled) + .radio-label:hover {
+  background-color: #8e8e92;
+  border-color: #8e8e92;
   color: #fff;
 }
 

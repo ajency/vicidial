@@ -1,4 +1,4 @@
-<div class="radio-wrap d-flex kss_sizes wo-image mb-4">
+<div class="radio-wrap d-flex kss_sizes wo-image mb-4 single-radio">
     @php
     foreach ($params['variant_group']->{$selected_color_id}->variants as $size_set) {
     	if(isset($params['size'])) {
