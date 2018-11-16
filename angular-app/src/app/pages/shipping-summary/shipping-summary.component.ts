@@ -61,7 +61,7 @@ export class ShippingSummaryComponent implements OnInit {
       address_id : this.appservice.selectedAddressId
     };
     body._token = $('meta[name="csrf-token"]').attr('content');
-
+    this.appservice.selectedAddressId = '';
     this.apiservice.request(url, 'post', body , header ).then((response)=>{
       this.shippingDetails = this.getProductUrl(response);
       this.setUserName();
@@ -81,6 +81,11 @@ export class ShippingSummaryComponent implements OnInit {
     let body : any = {
       _token : $('meta[name="csrf-token"]').attr('content')
     };
+
+    if(this.appservice.selectedAddressId){
+      body.address_id = this.appservice.selectedAddressId
+      this.appservice.selectedAddressId = '';
+    }
 
     this.apiservice.request(url, 'post', body , header ).then((response)=>{
       this.shippingDetails = this.getProductUrl(response);
@@ -157,6 +162,13 @@ export class ShippingSummaryComponent implements OnInit {
     $('#user-info').modal('hide');
     $("#cd-cart").css("overflow", "auto");
     $('.modal-backdrop').remove();
+  }
+
+  editShippingAddress(){
+    this.appservice.directNavigationToShippingAddress = true;
+    this.appservice.editAddressFromShippingSummary = true;
+    this.appservice.addressToEdit = this.shippingDetails.address;
+    this.router.navigateByUrl('/shipping-details', { skipLocationChange: true });
   }
 
 }

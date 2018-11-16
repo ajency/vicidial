@@ -22,6 +22,8 @@ export class AppServiceService {
   selectedAddressId : any;
   continueOrder : boolean = false;
   states : any = [];
+  editAddressFromShippingSummary : boolean = false;
+  addressToEdit : any;
   constructor(	private router: Router,
                 private apiservice : ApiServiceService) { 
     this.apiUrl = isDevMode() ? 'http://localhost:8000' : '';
@@ -107,15 +109,13 @@ export class AppServiceService {
     this.clearSessionStorage();
     document.cookie='cart_count=' + 0 + ";path=/";
     this.updateCartCountInUI();
-    let url = this.apiUrl + '/api/rest/v1/user/cart/mine';
-    let header = { Authorization : 'Bearer '+this.getCookie('token') };
 
-    this.apiservice.request(url, 'get', {} , header ).then((response)=>{
-      document.cookie='cart_id=' + response.cart_id + ";path=/";         
+    this.callMineApi().then((response)=>{
+      document.cookie='cart_id=' + response.cart_id + ";path=/";  
     })
     .catch((error)=>{
-      console.log("error ===>", error);
-    })  
+      console.log("error : mine api ==>", error);
+    }) 
   }
 
   clearSessionStorage(){
@@ -140,4 +140,29 @@ export class AppServiceService {
     document.cookie = "cart_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
   }
+
+  isLoggedInUser(){
+    if(this.getCookie('token') && this.getCookie('cart_id'))
+      return true;
+    return false;
+  }
+
+  callMineApi(){
+    let url = this.apiUrl + '/api/rest/v1/user/cart/mine';
+    let header = { Authorization : 'Bearer '+this.getCookie('token') };
+    return this.apiservice.request(url, 'get', {}, header);
+  }
+
+  callFetchCartApi(){
+    let url = this.apiUrl + (this.isLoggedInUser() ? ("/api/rest/v1/user/cart/"+this.getCookie('cart_id')+"/get") : ("/rest/v1/anonymous/cart/get"))
+    let header = this.isLoggedInUser() ? { Authorization : 'Bearer '+this.getCookie('token') } : {}
+    return this.apiservice.request(url, 'get', {}, header);
+  }
+
+  callGetAllAddressesApi(){
+    let url = this.apiUrl + "/api/rest/v1/user/address/all";
+    let header = this.isLoggedInUser() ? { Authorization : 'Bearer '+this.getCookie('token') } : {};
+    return this.apiservice.request(url, 'get', {} , header);
+  }
+
 }

@@ -40,7 +40,7 @@ class OrderController extends Controller
         $cart->type = 'order';
         $cart->save();
 
-        $response = ["items" => getCartData($cart, false), "summary" => $order->aggregateSubOrderData(), "order_id" => $order->id, "address" => $address->address, "message" => 'Order Placed successfully'];
+        $response = ["items" => getCartData($cart, false), "summary" => $order->aggregateSubOrderData(), "order_id" => $order->id, "address" => array_merge($address->address,["id"=>$address->id]), "message" => 'Order Placed successfully'];
 
         $user_info = $user->userInfo();
         if($user_info!=null) {
@@ -52,13 +52,25 @@ class OrderController extends Controller
 
     public function continueOrder($id, Request $request)
     {
+        $params = $request->all();
+
         $user = User::getUserByToken($request->header('Authorization'));
         $cart    = Cart::find($id);
         validateCart($user,$cart, 'order');
-        $order = $cart->order;
-        $address = $order->address;
 
-        $response = ["items" => getCartData($cart, false), "summary" => $order->aggregateSubOrderData(), "order_id" => $order->id, "address" => $address->address, "message" => 'Order Placed successfully'];
+        $order = $cart->order;
+
+        if(isset($params['address_id'])) {
+            $address = Address::find($params["address_id"]);
+            validateAddress($user, $address);
+            $order->address_id = $address->id;
+            $order->save();
+        }
+        else {
+            $address = $order->address;
+        }
+
+        $response = ["items" => getCartData($cart, false), "summary" => $order->aggregateSubOrderData(), "order_id" => $order->id, "address" => array_merge($address->address,["id"=>$address->id]), "message" => 'Order Placed successfully'];
 
         $user_info = $user->userInfo();
         if($user_info!=null) {
