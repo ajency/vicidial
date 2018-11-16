@@ -6,6 +6,7 @@ function build_search_object($params) {
 	$dataArr = [];
 	$facet_display_data = config('product.facet_display_data');
 	$dataArr["search_result"]=[];
+	// dd($params['categories']);
 	foreach($params['categories'] as $param) {
 		$slugs_arr = explode('--', $param);
 		$all_facets = array_merge($slugs_arr, $all_facets);
@@ -16,6 +17,18 @@ function build_search_object($params) {
 				if (strpos($queryv, "color:") !== false) {
 	                $values = str_replace('color:', '', $queryv); 
 	                $all_facets = array_merge($all_facets,(explode(",",$values)));
+	            }
+			}
+			if($queryk == "bf"){
+				if (strpos($queryv, "variant_availablity:") !== false) {
+					$ar = array_filter($facet_display_data, function ($item) {
+					        return $item['attribute_param'] === 'price';
+					    }
+					); 
+					$ar_keys_ar = array_keys($ar);
+	                $values = str_replace('variant_availablity:', '', $queryv); 
+	                $values_arr = explode(",",$values);
+	                $dataArr["search_result"]["boolean_filter"][$ar_keys_ar[0]]=$values_arr[0];
 	            }
 			}
 			if($queryk == "rf"){
@@ -34,6 +47,7 @@ function build_search_object($params) {
 	}
 	else{
 		$dataArr["search_result"]["range_filter"]=[];
+		$dataArr["search_result"]["boolean_filter"]=[];
 	}
 	
 	// dd($all_facets);

@@ -33,6 +33,7 @@ $(function(){
 })
 var facet_list = {}
 var range_facet_list = {}
+var boolean_facet_list = {}
 var filter_tags_list = [] ;
 console.log("facet_value_slug_assoc===")
 console.log(facet_value_slug_assoc)
@@ -142,7 +143,7 @@ $(document).ready(function(){
 });
 
 // $('body').on('change', '.facet-category', function() {
-function facetCategoryChange(thisObj,is_ajax = true,range_filter = false)
+function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean_filter = false)
 {
     // From the other examples
     console.log("change===")
@@ -152,14 +153,23 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false)
     var slug_name = $(thisObj).data('slug')
     console.log(facet_name)
     console.log($(thisObj).prop('checked')+"==="+$(thisObj).val());
+    var final_facet_list = facet_list
+    var thisval = $(thisObj).val()
+    if(boolean_filter == true){
+      final_facet_list = boolean_facet_list
+      thisval = ($(thisObj).val() == "true")?true:false;
+    }
     if(range_filter == false){
       if($(thisObj).prop('checked')){
-          if(facet_list.hasOwnProperty(facet_name)){
-            if(facet_list[facet_name].indexOf($(thisObj).val()) == -1){
+          if(final_facet_list.hasOwnProperty(facet_name)){
+            if(final_facet_list[facet_name].indexOf($(thisObj).val()) == -1){
               console.log("singleton=="+singleton)
               if(singleton == false){
                   console.log("RAT1=====")
-                facet_list[facet_name].push($(thisObj).val())
+                if(boolean_filter == true)
+                  final_facet_list[facet_name]= thisval
+                else
+                  final_facet_list[facet_name].push(thisval)
                 var fil_index = filter_tags_list.findIndex(obj => obj.slug==slug_name);
                 if(fil_index == -1)
                   filter_tags_list.push({"slug":slug_name, "value":$(thisObj).val(), "group":facet_name})
@@ -167,7 +177,10 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false)
               }
               else{
                   console.log("RAT2=====")
-                facet_list[facet_name] = [$(thisObj).val()]
+                if(boolean_filter == true)
+                  final_facet_list[facet_name] = thisval
+                else
+                  final_facet_list[facet_name] = [thisval]
                 var fil_index = filter_tags_list.findIndex(obj => obj.slug==slug_name);
                 var fil_grp_index = filter_tags_list.findIndex(obj => obj.group==facet_name);
                 if(fil_index == -1){
@@ -185,7 +198,10 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false)
           }
           else{
               console.log("RAT4=====")
-            facet_list[facet_name] = [$(thisObj).val()]
+            if(boolean_filter == true)
+              final_facet_list[facet_name] = thisval
+            else
+              final_facet_list[facet_name] = [thisval]
             var fil_index = filter_tags_list.findIndex(obj => obj.slug==slug_name);
             if(singleton == true){
               var fil_grp_index = filter_tags_list.findIndex(obj => obj.group==facet_name);
@@ -210,19 +226,19 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false)
       }
       else{
           console.log("else==")
-          if(facet_list.hasOwnProperty(facet_name)){
+          if(final_facet_list.hasOwnProperty(facet_name)){
               console.log("RAT5=====")
-            console.log("hasproperty=="+$(thisObj).val()+"====="+facet_list[facet_name].indexOf($(thisObj).val()))
-            console.log(facet_list[facet_name])
-            if(facet_list[facet_name].indexOf($(thisObj).val()) > -1){
-              console.log("len=="+facet_list[facet_name].length)
-              if(facet_list[facet_name].length == 1){
-                delete facet_list[facet_name];
+            console.log("hasproperty=="+$(thisObj).val()+"====="+final_facet_list[facet_name].indexOf($(thisObj).val()))
+            console.log(final_facet_list[facet_name])
+            if(final_facet_list[facet_name].indexOf($(thisObj).val()) > -1){
+              console.log("len=="+final_facet_list[facet_name].length)
+              if(final_facet_list[facet_name].length == 1){
+                delete final_facet_list[facet_name];
                 call_ajax = true;
               }
               else{
-                  var index = facet_list[facet_name].indexOf($(thisObj).val());
-                  if (index !== -1) facet_list[facet_name].splice(index, 1);
+                  var index = final_facet_list[facet_name].indexOf($(thisObj).val());
+                  if (index !== -1) final_facet_list[facet_name].splice(index, 1);
                   call_ajax = true;
                 }
                 var fil_index = filter_tags_list.findIndex(obj => obj.slug==slug_name);
@@ -264,7 +280,7 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false)
     console.log(range_facet_list)
     // console.log("min==="+range_facet_list[facet_name]["min"])
 
-    var url = constructCategoryUrl(config_facet_names_arr,facet_list,facet_value_slug_assoc);
+    var url = constructCategoryUrl(config_facet_names_arr,facet_list,facet_value_slug_assoc,"");
     console.log("listurl====",url)
     if(url.indexOf("?") !== -1)
       append_filter_str = "&"
@@ -280,8 +296,15 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false)
       console.log(range_facet_list[facet_name]);
       
     }
+    console.log("boolean_facet_list==")
+    console.log(boolean_facet_list)
+    if( Object.keys(boolean_facet_list).length>0){
+      var boolean_url = constructCategoryUrl(config_facet_names_arr,boolean_facet_list,facet_value_slug_assoc,url);
+      console.log("boolean_url=="+boolean_url)
+      url = boolean_url
+    }
     console.log("listurl====",url)
-    ajax_data = { "search_object": { "primary_filter" : facet_list,"range_filter" : range_facet_list }, "listurl": url , "page": page_val}
+    ajax_data = { "search_object": { "primary_filter" : facet_list,"range_filter" : range_facet_list,"boolean_filter" : boolean_facet_list }, "listurl": url , "page": page_val}
     // if( Object.keys(range_facet_list).length>0)
     //   ajax_data["search_object"]["range_filter"] = range_facet_list
     
@@ -328,15 +351,21 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false)
                       console.log("template=="+template)
                      var source   = document.getElementById("filter-"+templateval+"-template").innerHTML;
                      var template = Handlebars.compile(source);
-                     var singleton = vval.is_singleton;
+                     
                      console.log("collapsable_load_values   1111 ======")
                      console.log(collapsable_load_values)
                      var collapsed = collapsable_load_values[vval.header.facet_name];
                      var filter_display_name = vval.header.display_name;
                      var filter_facet_name = vval.header.facet_name;
                      var context = {};
+                     if(vval.filter_type != "boolean_filter"){
+                      var singleton = vval.is_singleton;
+                      context["singleton"] = singleton;
+                     }
+                     else{
+                      context["attribute_slug"] = vval.attribute_slug
+                     }
                      
-                     context["singleton"] = singleton;
                      context["filter_type"] = (vval.filter_type != undefined)?vval.filter_type:"primary_filter";
                      context["display_count"] = (vval.display_count != undefined)?vval.display_count:false;
                      context["is_attribute_param"] = (vval.is_attribute_param != undefined)?vval.is_attribute_param:false;
@@ -454,19 +483,23 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false)
 // $( "input[name='category']" ).trigger( "change" );
 // $( "input[name='subtype']" ).trigger( "change" );
 
-function constructCategoryUrl(facet_names_arr,search_object,facet_value_slug_arr){
-    var search_str = "";
+function constructCategoryUrl(facet_names_arr,search_object,facet_value_slug_arr,search_str){
+    // var search_str = "";
     for(item in facet_names_arr){
       var search_cat = "";
       // console.log("item--"+facet_names_arr[item])
       var itemval = facet_names_arr[item]
       var config_item = facet_display_data_arr[itemval]
-      // console.log(search_object)
+      console.log(config_item)
+      console.log(search_object)
+      console.log("lem----"+Object.keys(search_object).length)
+      console.log("itemval=="+itemval)
+      console.log(facet_value_slug_arr)
       // console.log(facet_display_data_arr[itemval])
       // console.log(search_object[itemval])
       if(itemval in search_object){
         var append_filter_str = ""
-        
+        console.log("search_object===")
         if(search_str.indexOf("?") !== -1)
           append_filter_str = "&"
         else
@@ -475,14 +508,29 @@ function constructCategoryUrl(facet_names_arr,search_object,facet_value_slug_arr
           append_filter_str += "pf"
         if(config_item["filter_type"] == "range_filter")
           append_filter_str += "rf"
+        if(config_item["filter_type"] == "boolean_filter")
+          append_filter_str += "bf"
         if(search_object[facet_names_arr[item]].length>1){
+          console.log("facet_names_arr===")
           var furl =[]
-          for(fitem in search_object[facet_names_arr[item]]){
-            furl.push(facet_value_slug_arr[facet_names_arr[item]][search_object[facet_names_arr[item]][fitem]])
+          if(config_item["filter_type"] == "primary_filter"){
+            for(fitem in search_object[facet_names_arr[item]]){
+              furl.push(facet_value_slug_arr[facet_names_arr[item]][search_object[facet_names_arr[item]][fitem]])
+            }
           }
-          if(config_item["is_attribute_param"] && config_item["filter_type"] == "primary_filter"){
+          if(config_item["filter_type"] == "boolean_filter"){
+            for(fitem in search_object[facet_names_arr[item]]){
+              furl.push(search_object[facet_names_arr[item]][fitem])
+            }
+          }
+          
+          if(config_item["is_attribute_param"] && (config_item["filter_type"] == "primary_filter")){
             search_cat = furl.join(',');
             search_str += append_filter_str+"="+config_item["template"]+":"+search_cat;
+          }
+          if(config_item["is_attribute_param"] && config_item["filter_type"] == "boolean_filter"){
+            search_cat = furl.join(',');
+            search_str += append_filter_str+"="+search_cat+":"+config_item["attribute_param"];
           }
           else{
             search_cat = furl.join('--');
@@ -491,12 +539,22 @@ function constructCategoryUrl(facet_names_arr,search_object,facet_value_slug_arr
           
         }
         else{
-          search_cat = search_object[facet_names_arr[item]][0];
+          console.log("facet_names_arr else===")
+          
+          var slugvalue="";
+          if(config_item["filter_type"] == "boolean_filter"){
+            search_cat = search_object[facet_names_arr[item]];
+            slugvalue = config_item["attribute_param"]
+          }
+          else{
+            search_cat = search_object[facet_names_arr[item]][0];
+            slugvalue = facet_value_slug_arr[facet_names_arr[item]][search_cat]
+          }
           if(config_item["is_attribute_param"]){
-            search_str += append_filter_str+"="+config_item["template"]+":"+facet_value_slug_arr[facet_names_arr[item]][search_cat];
+            search_str += append_filter_str+"="+slugvalue+":"+search_cat;
           }
           else
-            search_str += '/'+facet_value_slug_arr[facet_names_arr[item]][search_cat];
+            search_str += '/'+slugvalue;
 
         }
 
@@ -504,6 +562,8 @@ function constructCategoryUrl(facet_names_arr,search_object,facet_value_slug_arr
 
 
     }
+
+    console.log("search_str=="+search_str)
     return search_str;
 }
 
