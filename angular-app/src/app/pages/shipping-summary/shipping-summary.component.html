@@ -38,7 +38,8 @@
 					<label class="w-100 border-bottom text-left">
 						<div class="d-flex align-items-start address-block review-section">
 							<div class="text-left pl-2 flex-fill">
-								<h3 class="kss-title font-weight-bold d-flex align-items-center w-100">{{shippingDetails.address.name}}</h3>
+								<h3 class="kss-title font-weight-bold d-flex align-items-center w-100">{{shippingDetails.address.name}} 
+								<i class="fas fa-pencil-alt number-edit cursor-pointer ml-2 mt-1" (click)="editShippingAddress()"></i></h3>
 								<p class="h6 line-height-5">
 									{{shippingDetails.address.address}}, {{shippingDetails.address.city}}, {{shippingDetails.address.state}} {{shippingDetails.address.pincode}}
 								</p>

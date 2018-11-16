@@ -22,6 +22,8 @@ export class AppServiceService {
   selectedAddressId : any;
   continueOrder : boolean = false;
   states : any = [];
+  editAddressFromShippingSummary : boolean = false;
+  addressToEdit : any;
   constructor(	private router: Router,
                 private apiservice : ApiServiceService) { 
     this.apiUrl = isDevMode() ? 'http://localhost:8000' : '';

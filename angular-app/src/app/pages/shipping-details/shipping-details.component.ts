@@ -28,6 +28,7 @@ export class ShippingDetailsComponent implements OnInit {
   selectedAddressId : any;
   states : any = [];
   hideDefaultAddressField : boolean = false;
+  cart : any;
   constructor( private router : Router,
                private appservice : AppServiceService,
                private apiservice : ApiServiceService
@@ -52,6 +53,11 @@ export class ShippingDetailsComponent implements OnInit {
       this.addAddress = true;
       this.initSelectPicker(); 
     }
+    else if(this.appservice.editAddressFromShippingSummary){
+      this.appservice.editAddressFromShippingSummary = false;
+      let address = this.addresses.find((add)=>{ return add.id == this.appservice.addressToEdit.id})
+      this.editAddress(address);
+    }
     this.addresses.forEach((address)=> {if(address.default == true) this.selectedAddressId=address.id});
   }
 
@@ -71,27 +77,28 @@ export class ShippingDetailsComponent implements OnInit {
     else{
       this.appservice.showLoader();
       this.appservice.callFetchCartApi().then((response)=>{
-         let cartItemOutOfStock = false;
-         response.items.forEach((item)=>{
+        this.cart = response;
+        let cartItemOutOfStock = false;
+        response.items.forEach((item)=>{
            if(!item.availability){
              cartItemOutOfStock = true;
            }
-         })
-         document.cookie = "cart_count=" + response.cart_count + ";path=/";
-         this.appservice.updateCartCountInUI();
+        })
+        document.cookie = "cart_count=" + response.cart_count + ";path=/";
+        this.appservice.updateCartCountInUI();
 
-         if(!cartItemOutOfStock && response.items.length && response.cart_type == "cart"){
+        if(!cartItemOutOfStock && response.items.length){
            this.getAddress();
-         }
-         else{
+        }
+        else{
           this.router.navigateByUrl('/cartpage', { skipLocationChange: true });
-         }
-         this.appservice.removeLoader(); 
+        }
+        this.appservice.removeLoader(); 
       })
       .catch((error)=>{
-         console.log("error ===>", error);
-         this.appservice.removeLoader();
-         this.router.navigateByUrl('/cartpage', { skipLocationChange: true });
+        console.log("error ===>", error);
+        this.appservice.removeLoader();
+        this.router.navigateByUrl('/cartpage', { skipLocationChange: true });
       })
     }
   }
@@ -101,6 +108,7 @@ export class ShippingDetailsComponent implements OnInit {
     this.appservice.callGetAllAddressesApi().then((response)=>{
       this.addresses = response.addresses;
       this.checkAddresses();
+      this.updateUrl();
       this.appservice.shippingAddresses = response.addresses;
       this.appservice.removeLoader();
     })
@@ -216,6 +224,8 @@ export class ShippingDetailsComponent implements OnInit {
 
   navigateToShippingPage(){
     this.appservice.selectedAddressId = this.selectedAddressId;
+    if (this.cart && this.cart.cart_type == "order")
+      this.appservice.continueOrder = true;
     this.router.navigateByUrl('/shipping-summary', { skipLocationChange: true });      
   }
 
