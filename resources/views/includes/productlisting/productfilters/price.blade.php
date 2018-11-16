@@ -96,11 +96,6 @@
             facetCategoryChange($(this),false)
         });
     }
-    if($( "input[name='availability']:checked" ).length){
-        $.each($("input[name='availability']:checked"), function(){            
-            facetCategoryChange($(this),false,false,true)
-        });
-    }
   // Function to update price range on change
    priceRangeSlider = $("#price-range").data("ionRangeSlider");
 

@@ -15,13 +15,7 @@
       usort($items, function($a, $b) { 
           return $a["sequence"] > $b["sequence"] ? 1 : -1; 
       }); 
-      $filter_parameters = ['items' => $items,'collapsed'=>($filter["is_collapsed"] == true?1:0),'header'=>$filter["header"],"filter_type" => $filter["filter_type"], "display_count"=> $filter["display_count"], "is_attribute_param"=> $filter["is_attribute_param"], "disabled_at_zero_count"=> $filter["disabled_at_zero_count"]];
-      if(isset($filter["is_singleton"])){
-        $filter_parameters['singleton'] = ($filter["is_singleton"] == true?1:0);
-      }
-      if($filter["filter_type"] == "boolean_filter"){
-        $filter_parameters["attribute_slug"]=$filter["attribute_slug"];
-      }
+      $filter_parameters = ['items' => $items,'singleton'=>($filter["is_singleton"] == true?1:0),'collapsed'=>($filter["is_collapsed"] == true?1:0),'header'=>$filter["header"],"filter_type" => $filter["filter_type"], "display_count"=> $filter["display_count"], "is_attribute_param"=> $filter["is_attribute_param"], "disabled_at_zero_count"=> $filter["disabled_at_zero_count"]];
       if($filter["filter_type"] == "range_filter"){
         $filter_parameters["bucket_range"] = $filter["bucket_range"];
         $filter_parameters["selected_range"] = $filter["selected_range"];
