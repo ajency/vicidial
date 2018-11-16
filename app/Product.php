@@ -316,6 +316,8 @@ class Product
         }
         if( isset($params["search_object"]["range_filter"]))
             $filter_params["search_object"]["range_filter"] = $params["search_object"]["range_filter"];
+        if( isset($params["search_object"]["boolean_filter"]))
+            $filter_params["search_object"]["boolean_filter"] = $params["search_object"]["boolean_filter"];
         $filter_params["display_limit"] = $params["display_limit"];
         $filter_params["page"] = $params["page"];
         // print_r($filter_params);

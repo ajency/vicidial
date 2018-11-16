@@ -6,7 +6,8 @@ function build_search_object($params) {
 	$dataArr = [];
 	$facet_display_data = config('product.facet_display_data');
 	$dataArr["search_result"]=[];
-	// dd($params['categories']);
+	$dataArr["search_result"]["boolean_filter"]=[];
+	// dd($params);
 	foreach($params['categories'] as $param) {
 		$slugs_arr = explode('--', $param);
 		$all_facets = array_merge($slugs_arr, $all_facets);
@@ -20,7 +21,9 @@ function build_search_object($params) {
 	            }
 			}
 			if($queryk == "bf"){
-				if (strpos($queryv, "variant_availablity:") !== false) {
+				// dd("gdgfd");
+				if (strpos($queryv, "variant_availability:") !== false) {
+
 					$ar = array_filter($facet_display_data, function ($item) {
 					        return $item['attribute_param'] === 'price';
 					    }

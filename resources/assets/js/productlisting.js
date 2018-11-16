@@ -228,22 +228,33 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
           console.log("else==")
           if(final_facet_list.hasOwnProperty(facet_name)){
               console.log("RAT5=====")
-            console.log("hasproperty=="+$(thisObj).val()+"====="+final_facet_list[facet_name].indexOf($(thisObj).val()))
+            // console.log("hasproperty=="+$(thisObj).val()+"====="+final_facet_list[facet_name].indexOf(thisval))
             console.log(final_facet_list[facet_name])
-            if(final_facet_list[facet_name].indexOf($(thisObj).val()) > -1){
+            if(boolean_filter == true){
+              if(final_facet_list[facet_name] == thisval){
+                delete final_facet_list[facet_name];
+                call_ajax = true;
+                var fil_index = filter_tags_list.findIndex(obj => obj.slug==slug_name);
+                filter_tags_list.splice(fil_index, 1);
+              }
+            }
+            else{
+              if(final_facet_list[facet_name].indexOf(thisval) > -1){
               console.log("len=="+final_facet_list[facet_name].length)
               if(final_facet_list[facet_name].length == 1){
                 delete final_facet_list[facet_name];
                 call_ajax = true;
               }
               else{
-                  var index = final_facet_list[facet_name].indexOf($(thisObj).val());
+                  var index = final_facet_list[facet_name].indexOf(thisval);
                   if (index !== -1) final_facet_list[facet_name].splice(index, 1);
                   call_ajax = true;
                 }
                 var fil_index = filter_tags_list.findIndex(obj => obj.slug==slug_name);
                 filter_tags_list.splice(fil_index, 1);
               }
+            }
+            
           }
       }
     }

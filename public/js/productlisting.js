@@ -213,10 +213,22 @@ function facetCategoryChange(thisObj) {
             if (index !== -1) facet_list[facet_name].splice(index, 1);
             call_ajax = true;
           }
-          var fil_index = filter_tags_list.findIndex(function (obj) {
-            return obj.slug == slug_name;
-          });
-          filter_tags_list.splice(fil_index, 1);
+        } else {
+          if (final_facet_list[facet_name].indexOf(thisval) > -1) {
+            console.log("len==" + final_facet_list[facet_name].length);
+            if (final_facet_list[facet_name].length == 1) {
+              delete final_facet_list[facet_name];
+              call_ajax = true;
+            } else {
+              var index = final_facet_list[facet_name].indexOf(thisval);
+              if (index !== -1) final_facet_list[facet_name].splice(index, 1);
+              call_ajax = true;
+            }
+            var fil_index = filter_tags_list.findIndex(function (obj) {
+              return obj.slug == slug_name;
+            });
+            filter_tags_list.splice(fil_index, 1);
+          }
         }
       }
     }
