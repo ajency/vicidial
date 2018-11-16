@@ -53,7 +53,7 @@ class ProductColor extends Model
                 break;
             }
         }
-        $result = self::saveToElastic($elastic_id, $elastic_data);
+        $result = self::saveToElastic($elastic_data['id'], $elastic_data);
         return $result;
     }
 }
