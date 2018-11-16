@@ -194,7 +194,7 @@ function sanitiseFilterdata($result, $params = [])
         [
             "display_name" => config('product.facet_display_data.variant_availability.display_name'),
             "facet_value"  => true,
-            "is_selected" => true,
+            "is_selected" => isset($params['search_object']['boolean_filter']['variant_availability']) && $params['search_object']['boolean_filter']['variant_availability'],
             "count" => 20,
         ],
     ];
