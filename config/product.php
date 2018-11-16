@@ -164,6 +164,7 @@ return [
             "is_attribute_param"     => false,
             "attribute_param"     => null,
             'filter_type'            => 'primary_filter',
+            "is_essential"          => true
         ],
         'product_gender'        => [
             'name'                   => 'Gender',
@@ -176,6 +177,7 @@ return [
             "is_attribute_param"     => false,
             "attribute_param"     => null,
             'filter_type'            => 'primary_filter',
+            "is_essential"          => true
         ],
         'product_age_group'     => [
             'name'                   => 'Age Group',
@@ -184,10 +186,11 @@ return [
             'template'               => 'age',
             'order'                  => 2,
             'display_count'          => false,
-            'disabled_at_zero_count' => false,
+            'disabled_at_zero_count' => true,
             "is_attribute_param"     => false,
             "attribute_param"     => null,
             'filter_type'            => 'primary_filter',
+            "is_essential"          => false
         ],
         'product_subtype'       => [
             'name'                   => 'Sub Type',
@@ -196,10 +199,11 @@ return [
             'template'               => 'subtype',
             'order'                  => 3,
             'display_count'          => false,
-            'disabled_at_zero_count' => false,
+            'disabled_at_zero_count' => true,
             "is_attribute_param"     => false,
             "attribute_param"     => null,
             'filter_type'            => 'primary_filter',
+            "is_essential"          => false
         ],
         'product_color_html'       => [
             'name'                   => 'Colour',
@@ -208,10 +212,11 @@ return [
             'template'               => 'color',
             'order'                  => 5,
             'display_count'          => false,
-            'disabled_at_zero_count' => false,
+            'disabled_at_zero_count' => true,
             "is_attribute_param"     => true,
             "attribute_param"     => null,
             'filter_type'            => 'primary_filter',
+            "is_essential"          => false
         ],
         'variant_sale_price'    => [
             'name'                   => 'Price Range',
@@ -220,10 +225,11 @@ return [
             'template'               => 'price',
             'order'                  => 4,
             'display_count'          => true,
-            'disabled_at_zero_count' => false,
+            'disabled_at_zero_count' => true,
             "is_attribute_param"     => true,
             "attribute_param"     => "price",
             'filter_type'            => 'range_filter',
+            "is_essential"          => false
         ],
     ],
     'breadcrumb_order'           => [

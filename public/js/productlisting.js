@@ -39,31 +39,6 @@ console.log(config_facet_names_arr);
 $(document).ready(function () {
   var page_no = $.url().param('page');
   if (page_no != undefined) page_val = page_no;
-  if ($("input[name='age']:checked").length) {
-    $.each($("input[name='age']:checked"), function () {
-      facetCategoryChange($(this), false);
-    });
-  }
-  if ($("input[name='gender']:checked").length) {
-    $.each($("input[name='gender']:checked"), function () {
-      facetCategoryChange($(this), false);
-    });
-  }
-  if ($("input[name='category']:checked").length) {
-    $.each($("input[name='category']:checked"), function () {
-      facetCategoryChange($(this), false);
-    });
-  }
-  if ($("input[name='subtype']:checked").length) {
-    $.each($("input[name='subtype']:checked"), function () {
-      facetCategoryChange($(this), false);
-    });
-  }
-  if ($("input[name='color']:checked").length) {
-    $.each($("input[name='color']:checked"), function () {
-      facetCategoryChange($(this), false);
-    });
-  }
 
   $('.pl-loader').fadeOut('fast', function () {
     $('body').removeClass('overflow-h');
@@ -218,6 +193,8 @@ function facetCategoryChange(thisObj) {
         } else {
           if (fil_index == -1) filter_tags_list.push({ "slug": slug_name, "value": $(thisObj).val(), "group": facet_name });
         }
+        console.log("filter_tags_list rat4====");
+        console.log(filter_tags_list);
         call_ajax = true;
       }
     } else {
@@ -246,13 +223,30 @@ function facetCategoryChange(thisObj) {
   } else {
     var min_max_val = $(thisObj).val();
     var min_max_arr = min_max_val.split(";");
+    var filter_tag_str = $(thisObj).val().replace(";", "-");
     console.log(min_max_arr);
     console.log("facet_name===" + facet_name);
     range_facet_list[facet_name] = {};
     range_facet_list[facet_name]["min"] = min_max_arr[0];
     range_facet_list[facet_name]["max"] = min_max_arr[1];
+    console.log("filter_tags_list before====");
+    console.log(filter_tags_list);
+    // var fil_index = filter_tags_list.findIndex(obj => obj.slug=="price");
+
+    console.log("filter_tags_list after====");
+    console.log(filter_tags_list);
+    var filter_tag_exists = false;
+    var filInd = -1;
+    for (fitem in filter_tags_list) {
+      if (filter_tags_list[fitem]["slug"] == "price") filInd = fitem;
+    }
+    filter_tags_list.splice(filInd, 1);
+    // if(filter_tag_exists == false)
+    filter_tags_list.push({ "slug": slug_name, "value": filter_tag_str, "group": facet_name });
     call_ajax = true;
   }
+  console.log("filter_tags_list after====");
+  console.log(filter_tags_list);
   console.log(facet_list);
   console.log("range_facet_list==");
   console.log(range_facet_list);
@@ -281,16 +275,16 @@ function facetCategoryChange(thisObj) {
 
     console.log("filter_tags_list===");
     console.log(filter_tags_list);
-    if (range_filter == false) {
-      var filtersource = document.getElementById("filter-tags-template").innerHTML;
-      var filtertemplate = Handlebars.compile(filtersource);
-      var filtercontext = {};
-      filtercontext["filter_tags_list"] = filter_tags_list;
-      console.log("filter tags====");
-      console.log(filtercontext);
-      var filterhtml = filtertemplate(filtercontext);
-      document.getElementById("filter-tags-template-content").innerHTML = filterhtml;
-    }
+    // if(range_filter == false){
+    var filtersource = document.getElementById("filter-tags-template").innerHTML;
+    var filtertemplate = Handlebars.compile(filtersource);
+    var filtercontext = {};
+    filtercontext["filter_tags_list"] = filter_tags_list;
+    console.log("filter tags====");
+    console.log(filtercontext);
+    var filterhtml = filtertemplate(filtercontext);
+    document.getElementById("filter-tags-template-content").innerHTML = filterhtml;
+    // }
     if (is_ajax == true) {
 
       $.ajax({
@@ -343,6 +337,8 @@ function facetCategoryChange(thisObj) {
                 var maxval = vval.bucket_range["end"];
                 context["fromval"] = fromval;
                 context["toval"] = toval;
+                context["minval"] = minval;
+                context["maxval"] = maxval;
               }
 
               Handlebars.registerHelper('ifEquals', function (arg1, arg2, options) {
@@ -482,12 +478,20 @@ function constructCategoryUrl(facet_names_arr, search_object, facet_value_slug_a
 
 function removeFilterTag(slug) {
   var elm = $("input[data-slug='" + slug + "'].facet-category");
-  var singleton = elm.data("singleton");
+  // var singleton = elm.data("singleton")
   // if(singleton == true)
-  elm.removeAttr("checked");
+
   console.log(elm);
   console.log("single===" + slug);
-  elm.trigger("change");
+  if (slug == "price") {
+    // var fil_index = filter_tags_list.findIndex(obj => obj.slug==slug);
+    // filter_tags_list.splice(fil_index, 1);
+    elm.val(elm.data("minval") + ";" + elm.data("maxval"));
+    facetCategoryChange(elm, true, true);
+  } else {
+    elm.removeAttr("checked");
+    elm.trigger("change");
+  }
 }
 
 function initializeSlider(fromval, toval, minval, maxval) {
