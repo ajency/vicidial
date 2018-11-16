@@ -319,7 +319,7 @@ footer .bl-1{
         overflow-x:scroll;
         display: grid;
         grid-gap: 10px;
-        grid-template-columns: 5px repeat(8, calc(50% - 40px)) 5px;
+        grid-template-columns: 5px repeat(5, calc(50% - 40px)) 5px;
         grid-template-rows: minmax(150px, 1fr);
         .col-6{
             max-width: 100%;
