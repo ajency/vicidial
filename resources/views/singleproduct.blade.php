@@ -55,7 +55,7 @@
 
 				<div class="row">
 
-					<div class="col-sm-12 col-md-12 col-12 mobile-fixed pb-2 add-bag-btn">
+					<div class="col-sm-12 col-md-12 col-12 mobile-fixed pb-0 pb-sm-2 add-bag-btn visible">
 
 						<!-- <div class="row"> -->
 							<!-- <div class="col-6 col-sm-6 col-md-6 col-xl-6 pr-1">

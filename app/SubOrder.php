@@ -96,9 +96,9 @@ class SubOrder extends Model
             }
             $odoo_order  = self::createOrderParams($lines);
             $id = $this->createOdooOrder($odoo_order);
-            $order = $this->getSaleOrder($id);
+            //$order = $this->getSaleOrder($id);
             
-            $this->odoo_id   = $order["id"];
+            $this->odoo_id   = $id;
             $this->odoo_status = 'draft';
             $this->save();
         }
@@ -191,14 +191,19 @@ class SubOrder extends Model
         $model = "sale.order";
         $odoo  = new OdooConnect;
         $out   = $odoo->defaultExec($model, 'create', [$params], null);
-        return $out[0];
+        try{
+            return $out[0];
+        }
+        catch(\Exception $e){
+            throw new \Exception($out);
+        }
     }
 
-    public function getSaleOrder(int $id)
+    /*public function getSaleOrder(int $id)
     {
         $model = "sale.order";
         $odoo  = new OdooConnect;
         $out   = $odoo->defaultExec($model, "read", [$id]);
         return $out[0];
-    }
+    }*/
 }
