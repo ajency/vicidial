@@ -319,7 +319,7 @@ class Variant extends Model
         if (isset($this->inventory)) {
             foreach ($this->inventory as $inventory) {
                 if ($inventory["quantity"] > 0) {
-                    $location = Location::where('odoo_id', $inventory["warehouse_id"])->first();
+                    $location = Location::where('odoo_id', $inventory["location_id"])->first();
                     $quantity_arr[] = array('warehouse' => $location->warehouse->name, 'location' => $location->name, 'quantity' => $inventory["quantity"]);
                 }
             }
