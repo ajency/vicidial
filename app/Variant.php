@@ -4,6 +4,7 @@ namespace App;
 
 use App\Elastic\ElasticQuery;
 use Illuminate\Database\Eloquent\Model;
+use App\Warehouse;
 
 class Variant extends Model
 {
@@ -152,7 +153,7 @@ class Variant extends Model
         }
 
         if ($current_quantity) {
-            $item['available_quantity'] = $this->getQuantity();
+            $item['available_quantity'] = $this->getQuantityStoreWise();
         }
 
         return $item;
@@ -304,6 +305,29 @@ class Variant extends Model
             }
         }
         return $total;
+    }
+
+    /**
+     * Get Variant Quantity StoreWise
+     *
+     * @return int
+     */
+    public function getQuantityStoreWise()
+    {
+        $quantity_arr = array();
+        $location_arr = array();
+        if (isset($this->inventory)) {
+            foreach ($this->inventory as $inventory) {
+                if ($inventory["quantity"] >= 0) {
+                    $warehouse = Warehouse::where('odoo_id', $inventory["warehouse_id"])->first();
+                    foreach ($warehouse->locations as $location) {
+                        $location_arr[] = $location->name;
+                    }
+                    $quantity_arr[] = array('warehouse' => $warehouse->name, 'location' => implode('||', $location_arr), 'quantity' => $inventory["quantity"]);
+                }
+            }
+        }
+        return $quantity_arr;
     }
 
     public function getDiscount()

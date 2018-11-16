@@ -11,6 +11,11 @@ class Warehouse extends Model
         'address' => 'array',
     ];
 
+    public function locations()
+    {
+        return $this->hasMany('App\Location', 'warehouse_odoo_id', 'odoo_id');
+    }
+
     public static function getAllWarehousesFromOdoo()
     {
 
