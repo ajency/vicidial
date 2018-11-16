@@ -45,7 +45,7 @@ class ProductMove
         $data          = self::indexElasticData($elastic_data);
         if (config('product.update_inventory')) {
             if ($sanitisedData["move_to_loc"] == "Stock" or $sanitisedData["move_from_loc"] == "Stock") {
-                UpdateVariantInventory::dispatch($product_move)->onQueue('update_inventory');
+                UpdateVariantInventory::dispatch($elastic_data)->onQueue('update_inventory');
             }
         }
 
