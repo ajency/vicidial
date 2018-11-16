@@ -65,14 +65,12 @@ export class ShippingDetailsComponent implements OnInit {
   }
 
   checkCartStatus(){
-    if(!(this.appservice.getCookie('token') && this.appservice.getCookie('cart_id'))){
+    if(!this.appservice.isLoggedInUser()){
        this.router.navigateByUrl('/cartpage', { skipLocationChange: true });
     }
     else{
       this.appservice.showLoader();
-      let url = this.appservice.apiUrl + ("/api/rest/v1/user/cart/"+this.appservice.getCookie('cart_id')+"/get");
-      let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
-      this.apiservice.request(url, 'get', {}, header ).then((response)=>{
+      this.appservice.callFetchCartApi().then((response)=>{
          let cartItemOutOfStock = false;
          response.items.forEach((item)=>{
            if(!item.availability){
@@ -94,25 +92,21 @@ export class ShippingDetailsComponent implements OnInit {
          console.log("error ===>", error);
          this.appservice.removeLoader();
          this.router.navigateByUrl('/cartpage', { skipLocationChange: true });
-         this.appservice.removeLoader(); 
       })
     }
   }
 
   getAddress(){
     this.appservice.showLoader();
-    let url = this.appservice.apiUrl + "/api/rest/v1/user/address/all";
-    let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
-    this.apiservice.request(url, 'get', {} , header ).then((response)=>{
-    this.addresses = response.addresses;
-    this.checkAddresses();
-    this.appservice.shippingAddresses = response.addresses;
-    // this.router.navigateByUrl('/shipping-details', { skipLocationChange: true });
-    this.appservice.removeLoader();
+    this.appservice.callGetAllAddressesApi().then((response)=>{
+      this.addresses = response.addresses;
+      this.checkAddresses();
+      this.appservice.shippingAddresses = response.addresses;
+      this.appservice.removeLoader();
     })
     .catch((error)=>{
-    console.log("error ===>", error);
-    this.appservice.removeLoader();
+      console.log("error ===>", error);
+      this.appservice.removeLoader();
     })
   }
 

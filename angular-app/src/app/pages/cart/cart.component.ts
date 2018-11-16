@@ -127,48 +127,23 @@ export class CartComponent implements OnInit {
 
   fetchCartDataFromServer(){
     this.appservice.showLoader()
-    let url = this.appservice.apiUrl + (this.isLoggedInUser() ? ("/api/rest/v1/user/cart/"+this.appservice.getCookie('cart_id')+"/get") : ("/rest/v1/anonymous/cart/get"))
-    let header = this.isLoggedInUser() ? { Authorization : 'Bearer '+this.appservice.getCookie('token') } : {}
-    this.apiservice.request(url, 'get', {}, header ).then((response)=>{
-      this.cart = this.calculateOffPercenatge(response);
+    this.appservice.callFetchCartApi().then((response)=>{
+      this.cart = this.formattedCartDataForUI(response);
       this.checkCartItemOutOfStock();
-      sessionStorage.setItem('cart_data', JSON.stringify(this.cart));
-      document.cookie = "cart_count=" + this.cart.cart_count + ";path=/";
-      this.appservice.updateCartCountInUI();
+      this.updateLocalDataAndUI(this.cart, this.cart.cart_count);
       this.appservice.removeLoader();
       this.fetchCartFailed = false;
       this.zone.run(() => {});
     })
     .catch((error)=>{
-      if(error.status == 401){
-        this.appservice.userLogout();
-        this.fetchCartDataFromServer();
-        this.fetchCartFailed = false; 
-      }
-      else if((error.status == 400 || error.status == 403) && this.isLoggedInUser() ){
-        this.getNewCartId();
-        this.fetchCartFailed = false; 
-      }
-      else if(error.status == 404){
-        this.cart = {
-          items : []
-        }
-        this.fetchCartFailed = false;
-        this.updateCartCount();
-      }
-      else{
-        this.cart = {};
-        this.fetchCartFailed = true;
-        this.updateCartCount();
-      }
-      this.appservice.removeLoader()
-
+      this.handleFetchCartFailure(error);
+      this.appservice.removeLoader();
       this.zone.run(() => {});
     })
     this.zone.run(() => {});
   }
 
-  calculateOffPercenatge(data){
+  formattedCartDataForUI(data){
     data.items.forEach((item)=>{
       if(item.attributes.price_mrp != item.attributes.price_final)
         item.off_percentage = Math.round(((item.attributes.price_mrp - item.attributes.price_final) / (item.attributes.price_mrp )) * 100) + '% OFF';
@@ -179,12 +154,6 @@ export class CartComponent implements OnInit {
     data.items.sort((a,b)=>{ return a.timestamp - b.timestamp});
     data.items.reverse();
     return data;
-  }
-
-  isLoggedInUser(){
-    if(this.appservice.getCookie('token') && this.appservice.getCookie('cart_id'))
-      return true;
-    return false;
   }
 
   modifyCart(item){
@@ -210,8 +179,8 @@ export class CartComponent implements OnInit {
   deleteItem(item){
     this.appservice.showLoader()
     let body = { variant_id : item.id };
-    let url = this.appservice.apiUrl + (this.isLoggedInUser() ? ("/api/rest/v1/user/cart/"+this.appservice.getCookie('cart_id')+"/delete?") : ("/rest/v1/anonymous/cart/delete?"));
-    let header = this.isLoggedInUser() ? { Authorization : 'Bearer '+this.appservice.getCookie('token') } : {};
+    let url = this.appservice.apiUrl + (this.appservice.isLoggedInUser() ? ("/api/rest/v1/user/cart/"+this.appservice.getCookie('cart_id')+"/delete?") : ("/rest/v1/anonymous/cart/delete?"));
+    let header = this.appservice.isLoggedInUser() ? { Authorization : 'Bearer '+this.appservice.getCookie('token') } : {};
     url = url+$.param(body);
     this.apiservice.request(url, 'get', body, header ).then((response)=>{
       let index = this.cart.items.findIndex(i => i.id == item.id)
@@ -219,9 +188,7 @@ export class CartComponent implements OnInit {
       this.cart.summary = response.summary;
       this.cart.cart_count = response.cart_count;
       this.checkCartItemOutOfStock();
-      document.cookie = "cart_count=" + this.cart.cart_count + ";path=/";
-      sessionStorage.setItem('cart_data', JSON.stringify(this.cart));
-      this.appservice.updateCartCountInUI();
+      this.updateLocalDataAndUI(this.cart, this.cart.cart_count);
       this.appservice.removeLoader()
     })
     .catch((error)=>{
@@ -231,7 +198,7 @@ export class CartComponent implements OnInit {
         this.fetchCartDataFromServer();
         this.fetchCartFailed = false; 
       }
-      else if((error.status == 400 || error.status == 403) && this.isLoggedInUser() ){
+      else if((error.status == 400 || error.status == 403) && this.appservice.isLoggedInUser() ){
         this.getNewCartId();
         this.fetchCartFailed = false; 
       }
@@ -248,11 +215,8 @@ export class CartComponent implements OnInit {
   authenticateUser(){
     this.userValidation.disableSendOtpButton = true;
     this.userValidation.mobileValidationFailed = false;
-    // this.appservice.apiUrl = 'http://demo8558685.mockable.io/';
     let url = this.appservice.apiUrl + '/rest/v1/authenticate/generate_otp?';
-    let body = {
-      phone : this.mobileNumber
-    }
+    let body = { phone : this.mobileNumber };
     url = url+$.param(body);
     this.apiservice.request(url, 'get', body , {}, true).then((response)=>{
       this.userValidation.disableSendOtpButton = false;
@@ -263,7 +227,6 @@ export class CartComponent implements OnInit {
         this.userValidation.mobileValidationFailed = true;
         this.userValidation.mobileValidationErrorMsg = response.message
       }
-
     })
     .catch((error)=>{
       console.log("error ===>", error);
@@ -303,8 +266,7 @@ export class CartComponent implements OnInit {
       console.log("error ===>", error);
       this.userValidation.disableVerifyOtpButton = false;
       this.userValidation.otpVerificationFailed = true;
-    })
-  	
+    })  	
   }
 
   closeCart(){
@@ -314,7 +276,7 @@ export class CartComponent implements OnInit {
   }
 
   modalHandler(){
-    if(this.isLoggedInUser()){
+    if(this.appservice.isLoggedInUser()){
       this.navigateToShippingDetailsPage();
     }
     else{
@@ -355,9 +317,7 @@ export class CartComponent implements OnInit {
   navigateToShippingDetailsPage(){
     if(this.cart.cart_type == "cart"){
       this.appservice.showLoader();
-      let url = this.appservice.apiUrl + "/api/rest/v1/user/address/all";
-      let header = this.isLoggedInUser() ? { Authorization : 'Bearer '+this.appservice.getCookie('token') } : {};
-      this.apiservice.request(url, 'get', {} , header ).then((response)=>{
+      this.appservice.callGetAllAddressesApi().then((response)=>{
         this.appservice.shippingAddresses = response.addresses;
         $("#cd-cart").css("overflow", "auto");
         $('.modal-backdrop').remove();
@@ -405,9 +365,7 @@ export class CartComponent implements OnInit {
 
   getNewCartId(){
     this.appservice.showLoader();
-    let url = this.appservice.apiUrl + '/api/rest/v1/user/cart/mine';
-    let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
-    this.apiservice.request(url, 'get', {} , header ).then((response)=>{
+    this.appservice.callMineApi().then((response)=>{
       if(response.cart_id != this.appservice.getCookie('cart_id')){
         document.cookie='cart_id=' + response.cart_id + ";path=/";
         this.fetchCartDataFromServer();
@@ -418,18 +376,46 @@ export class CartComponent implements OnInit {
       }
     })
     .catch((error)=>{
-      console.log("error ===>", error);
+      console.log("error : mine api===>", error);
       this.appservice.removeLoader();
     })
   }
 
-  updateCartCount(){
-    document.cookie = "cart_count=" + 0 + ";path=/";
-    this.appservice.updateCartCountInUI(); 
-  }
-
   shopNow(){
     window.location.href = '/shop'
+  }
+
+  updateLocalDataAndUI(cart : any = null, cart_count = 0){
+    if(cart)
+      sessionStorage.setItem('cart_data', JSON.stringify(cart));
+    else
+      this.appservice.clearSessionStorage();
+    document.cookie = "cart_count=" + cart_count + ";path=/";
+    this.appservice.updateCartCountInUI();
+  }
+
+  handleFetchCartFailure(error){
+    if(error.status == 401){
+      this.appservice.userLogout();
+      this.fetchCartDataFromServer();
+      this.fetchCartFailed = false; 
+    }
+    else if((error.status == 400 || error.status == 403) && this.appservice.isLoggedInUser() ){
+      this.getNewCartId();
+      this.fetchCartFailed = false; 
+    }
+    else if(error.status == 404){
+      this.cart = {
+        items : []
+      }
+      this.fetchCartFailed = false;
+      this.updateLocalDataAndUI();
+    }
+    else{
+      this.cart = {};
+      this.fetchCartFailed = true;
+      this.updateLocalDataAndUI();
+    }
   }
   
 }
