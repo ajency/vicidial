@@ -43,14 +43,6 @@ $(function(){
         $('.variant-wrapper,.product-color--single').tooltip('disable');
         $('.colorOptions__trigger').click();
 
-        $(window).scroll(function() {
-            if ($(this).scrollTop() > 200) {
-                $('.mobile-fixed').show();
-                jQuery(".mobile-fixed").addClass("visible");
-            } else {
-                $('.mobile-fixed').hide();
-            }
-        });
     }
 
 })
