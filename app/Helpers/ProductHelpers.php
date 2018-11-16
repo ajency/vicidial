@@ -224,6 +224,7 @@ function setElasticFacetFilters($q, $params)
     }
     $must = $q::addToBoolQuery('must', $must);
     $must = hideZeroColorIDProducts($q, $must);
+    $must = hideZeroSizeIDProducts($q, $must);
     $must = hideUnavailableProducts($q, $must);
     return $must;
 }
@@ -275,3 +276,22 @@ function hideZeroColorIDProducts($q, $must)
     return $must;
 
 }
+
+/**
+ * Query to hide Products with Size ID equalling 0
+ *
+ * @return elastic params
+ */
+function hideZeroSizeIDProducts($q, $must)
+{
+    $nested     = [];
+    $facetName  = $q::createTerm("search_data.number_facet.facet_name", "variant_size_id");
+    $facetValue = $q::createTerm("search_data.number_facet.facet_value", 0);
+    $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
+    $nested[]   = $q::createNested('search_data.number_facet', $filter);
+    $nested2    = $q::createNested("search_data", $nested);
+    $must       = $q::addToBoolQuery('must_not', $nested2, $must);
+    return $must;
+
+}
+
