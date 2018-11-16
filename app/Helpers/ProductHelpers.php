@@ -176,9 +176,9 @@ function sanitiseFilterdata($result, $params = [])
     $filter["bucket_range"]["end"]     = $priceFilter['max'];
     $filter["selected_range"]          = [];
     $filter["selected_range"]["start"] = (isset($params["search_object"]['range_filter']['variant_sale_price'])) ? $params["search_object"]['range_filter']['variant_sale_price']['min'] : $priceFilter['min'];
-    $filter["selected_range"]["start"] = ($filter["selected_range"]["start"] < $filter["bucket_range"]["start"])? $filter["bucket_range"]["start"] : $filter["selected_range"]["start"];
+    // $filter["selected_range"]["start"] = ($filter["selected_range"]["start"] < $filter["bucket_range"]["start"])? $filter["bucket_range"]["start"] : $filter["selected_range"]["start"];
     $filter["selected_range"]["end"]   = (isset($params["search_object"]['range_filter']['variant_sale_price'])) ? $params["search_object"]['range_filter']['variant_sale_price']['max'] : $priceFilter['max'];
-    $filter["selected_range"]["end"] = ($filter["selected_range"]["end"] > $filter["bucket_range"]["end"])? $filter["bucket_range"]["end"] : $filter["selected_range"]["end"];
+    // $filter["selected_range"]["end"] = ($filter["selected_range"]["end"] > $filter["bucket_range"]["end"])? $filter["bucket_range"]["end"] : $filter["selected_range"]["end"];
     $response[] = $filter;
     return $response;
 }
@@ -191,4 +191,87 @@ function getProductThumbImages($variantId){
         return $default_imgs["variant-thumb"];
     else
         return $default_imgs;
+}
+
+function setElasticFacetFilters($q, $params)
+{
+    $filters = makeQueryfromParams($params["search_object"]);
+    $must    = [];
+    foreach ($filters as $path => $data) {
+        foreach ($data as $facet => $data2) {
+            foreach ($data2 as $field => $values) {
+                $should = [];
+                $nested = [];
+                if ($values['type'] == 'enum') {
+                    foreach ($values['value'] as $value) {
+                        $facetName  = $q::createTerm($path . "." . $facet . '.facet_name', $field);
+                        $facetValue = $q::createTerm($path . "." . $facet . '.facet_value', $value);
+                        $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
+                        $nested[]   = $q::createNested($path . '.' . $facet, $filter);
+                        $should     = $q::addToBoolQuery('should', $nested, $should);
+                    }
+                } else if ($values['type'] == 'range') {
+                    $facetValue = $q::createRange($path . "." . $facet . '.facet_value', ['lte' => $values['value']['max'], 'gte' => $values['value']['min']]);
+                    $facetName  = $q::createTerm($path . "." . $facet . '.facet_name', $field);
+                    $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
+                    $nested[]   = $q::createNested($path . '.' . $facet, $filter);
+                    $should     = $q::addToBoolQuery('should', $nested, $should);
+                }
+                $nested2 = $q::createNested($path, $should);
+                $must[]  = $nested2;
+            }
+        }
+    }
+    $must = $q::addToBoolQuery('must', $must);
+    $must = hideZeroColorIDProducts($q, $must);
+    $must = hideUnavailableProducts($q, $must);
+    return $must;
+}
+
+function priceFilter($q, $must, $min, $max)
+{
+    $nested     = [];
+    $facetName  = $q::createTerm("search_data.number_facet.facet_name", "variant_sale_price");
+    $facetValue = $q::createRange("search_data.number_facet.facet_value", ['lte' => $max, 'gte' => $min]);
+    $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
+    $nested[]   = $q::createNested('search_data.number_facet', $filter);
+    $nested2    = $q::createNested('search_data', $nested);
+    $must       = $q::addToBoolQuery('filter', $nested2, $must);
+    return $must;
+
+}
+
+/**
+ * Query to hide Products which are not available
+ *
+ * @return array
+ */
+function hideUnavailableProducts($q, $must)
+{
+    $nested     = [];
+    $facetName  = $q::createTerm("search_data.boolean_facet.facet_name", "variant_availability");
+    $facetValue = $q::createTerm("search_data.boolean_facet.facet_value", true);
+    $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
+    $nested[]   = $q::createNested('search_data.boolean_facet', $filter);
+    $nested2    = $q::createNested("search_data", $nested);
+    $must       = $q::addToBoolQuery('filter', $nested2, $must);
+    return $must;
+}
+
+/**
+ * Query to hide Products with Color ID equalling 0
+ *
+ * @return elastic params
+ */
+function hideZeroColorIDProducts($q, $must)
+{
+    $nested     = [];
+    $facetName  = $q::createTerm("search_data.number_facet.facet_name", "product_color_id");
+    $facetValue = $q::createTerm("search_data.number_facet.facet_value", 0);
+    $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
+    $nested[]   = $q::createNested('search_data.number_facet', $filter);
+    $nested2    = $q::createNested("search_data", $nested);
+    $must       = $q::addToBoolQuery('must_not', $nested2, $must);
+    return $must;
+
 }
