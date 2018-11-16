@@ -136,12 +136,12 @@
                   </ul>
                 </div>
             </li> -->
-            <li class="list-inline-item">
+<!--             <li class="list-inline-item">
                 <a href="#">
                     <i class="kss_icon profile-icon">
                    </i>
                 </a>
-            </li>
+            </li> -->
             <li class="list-inline-item pr-0 ">
                 <div id="cd-cart-trigger" class="shopping-cart position-relative">
                 <!-- <a id="cd-cart-trigger-test" href="#" class="shopping-cart"> -->

@@ -36,7 +36,7 @@
                         <img src="{{$image_1x}}" class="lazyload img-fit" data-srcset="{{$image_1x}} 50w, {{$image_2x}} 100w, {{$image_3x}} 150w" sizes="50px">
 					</div>
 					<div class="product-detail">
-						<div class="product-name text-truncate">
+						<div class="product-name text-truncate text-capitalize">
 							{{$item['title']}}
 						</div>
 						<div class="product-size text-muted mb-1">

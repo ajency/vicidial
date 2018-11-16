@@ -67,7 +67,7 @@
 				      </div>
 				      <div class="product-detail">
 				      	<a href="{{item.href}}" class="d-inline-flex section-title text-black">
-					        <label class="m-0 cursor-pointer">
+					        <label class="m-0 cursor-pointer text-capitalize">
 					          {{item.attributes.title}}
 					        </label>
 					    </a>
@@ -142,7 +142,7 @@
 			<div *ngIf="!showUserInfoModal" class="fixed-bottom d-show pl-3 pr-3">
 			  <div class="row no-gutters px-2 py-2">
 		      <div class="col-12 text-center">
-		          <button id="payment-details" type="button" class=" btn btn-lg btn-block btn-primary mt-1 mb-1 d-flex align-items-center justify-content-center" (click)="navigateToPaymentPage()">Pay ₹{{shippingDetails.summary.final_price}}  <img src="/img/pay-u-icon.png" class="ml-2" width="50"></button>
+		          <button id="payment-details" type="button" class=" btn btn-lg btn-block btn-primary mt-1 mb-1 d-flex align-items-center justify-content-center btn-size" (click)="navigateToPaymentPage()">Pay ₹{{shippingDetails.summary.final_price}}  <img src="/img/pay-u-icon.png" class="ml-2" width="50"></button>
 		      </div>
 			  </div>
 			</div>
@@ -176,8 +176,8 @@
 			            </div>
 			          </form>
 			          <div id="kss_cart" class="pt-3 d-flex align-items-center justify-content-between">
-						<button *ngIf="showCancelButton" id="cancel" class="btn btn-outline-secondary btn-lg btn-block mr-3" (click)="hideModal()" >Cancel</button>
-						<button id="save" class="btn btn-primary btn-lg btn-block mt-0" [disabled]="!userInfo.valid" (click)="saveUserInfo()" >Save</button>
+						<button *ngIf="showCancelButton" id="cancel" class="btn btn-outline-secondary btn-lg btn-block mr-3 btn-size" (click)="hideModal()" >Cancel</button>
+						<button id="save" class="btn btn-primary btn-lg btn-block mt-0 btn-size" [disabled]="!userInfo.valid" (click)="saveUserInfo()" >Save</button>
 					</div>
 			        </div>
 
