@@ -99,11 +99,9 @@ class ListingController extends Controller
         
         foreach($params as $param){      
             if($param != ""){
-                if (strpos($param, "pf=color:") !== false) 
+                if (strpos($pvals, "pf=color:") !== false) 
                     $p_val = preg_replace("/(\?.*)/", "", $param);
-                else if (strpos($param, "rf=price:") !== false) 
-                    $p_val = preg_replace("/(\?.*)/", "", $param);
-                else if (strpos($param, "bf=variant_availablity:") !== false) 
+                else if (strpos($pvals, "rf=price:") !== false) 
                     $p_val = preg_replace("/(\?.*)/", "", $param);
                 else
                     $p_val = $param;
