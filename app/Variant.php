@@ -4,7 +4,7 @@ namespace App;
 
 use App\Elastic\ElasticQuery;
 use Illuminate\Database\Eloquent\Model;
-use App\Warehouse;
+use App\Location;
 
 class Variant extends Model
 {
@@ -318,12 +318,9 @@ class Variant extends Model
         $location_arr = array();
         if (isset($this->inventory)) {
             foreach ($this->inventory as $inventory) {
-                if ($inventory["quantity"] >= 0) {
-                    $warehouse = Warehouse::where('odoo_id', $inventory["warehouse_id"])->first();
-                    foreach ($warehouse->locations as $location) {
-                        $location_arr[] = $location->name;
-                    }
-                    $quantity_arr[] = array('warehouse' => $warehouse->name, 'location' => implode('||', $location_arr), 'quantity' => $inventory["quantity"]);
+                if ($inventory["quantity"] > 0) {
+                    $location = Location::where('odoo_id', $inventory["warehouse_id"])->first();
+                    $quantity_arr[] = array('warehouse' => $location->warehouse->name, 'location' => $location->name, 'quantity' => $inventory["quantity"]);
                 }
             }
         }
