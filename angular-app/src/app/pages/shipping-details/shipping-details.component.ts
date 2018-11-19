@@ -259,9 +259,7 @@ export class ShippingDetailsComponent implements OnInit {
   }
 
   removeLoader(){
-    console.log("removeLoader function");
     if(this.states && this.addresses){
-      console.log("removeing loader");
       this.appservice.removeLoader();
     }
   }
