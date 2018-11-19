@@ -30,7 +30,7 @@
                   
                     <div align="center" class="img-container center  autowidth  " style="padding-right: 0px;  padding-left: 0px;">
 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr style="line-height:0px;line-height:0px;"><td style="padding-right: 0px; padding-left: 0px;" align="center"><![endif]-->
-  <img class="center  autowidth " align="center" border="0" src="https://d15k2d11r6t6rl.cloudfront.net/public/users/Integrators/8c0598b1-aca3-4fb5-b862-82c999e7ba74/test1-clientside/unnamed_1.gif" alt="Image" title="Image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: 0;height: auto;float: none;width: 100%;max-width: 136px" width="136" />
+  <img class="center  autowidth " align="center" border="0" src="/img/truck.gif" alt="Image" title="Image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: 0;height: auto;float: none;width: 100%;max-width: 136px" width="136" />
 <!--[if mso]></td></tr></table><![endif]-->
 </div>
 

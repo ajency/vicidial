@@ -8,7 +8,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width" />
     <!--[if !mso]><!--><meta http-equiv="X-UA-Compatible" content="IE=edge" /><!--<![endif]-->
-    <title>Template Base</title>
+    <title>Kss</title>
     <!--[if !mso]><!-- -->
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css" />
 	<!--<![endif]-->
@@ -254,11 +254,12 @@ a[x-apple-data-detectors=true] {
 
                   
                     <div align="center" class="img-container center fixedwidth " style="padding-right: 0px;  padding-left: 0px;">
-<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr style="line-height:0px;line-height:0px;"><td style="padding-right: 0px; padding-left: 0px;" align="center"><![endif]-->
-  <img class="center fixedwidth" align="center" border="0" src="https://d15k2d11r6t6rl.cloudfront.net/public/users/Integrators/8c0598b1-aca3-4fb5-b862-82c999e7ba74/test1-clientside/logo_17.png" alt="Image" title="Image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: 0;height: auto;float: none;width: 100%;max-width: 250px" width="250" />
-<!--[if mso]></td></tr></table><![endif]-->
-</div>
-
+				<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr style="line-height:0px;line-height:0px;"><td style="padding-right: 0px; padding-left: 0px;" align="center"><![endif]-->
+					<a href="https://www.kidsuperstore.in" title="Kidsuperstore">
+					  	<img class="center fixedwidth" align="center" border="0" src="/img/email-logo.png" alt="Image" title="Image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: 0;height: auto;float: none;width: 100%;max-width: 250px" width="250" />
+					  </a>
+					<!--[if mso]></td></tr></table><![endif]-->
+					</div>
                   
               <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
               </div>
@@ -268,7 +269,9 @@ a[x-apple-data-detectors=true] {
       </div>
     </div>
 
+
 	@yield('content')
+
    
     <div style="background-color:transparent;">
       <div style="Margin: 0 auto;min-width: 320px;max-width: 625px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #FFFFFF;" class="block-grid ">
@@ -326,7 +329,7 @@ a[x-apple-data-detectors=true] {
                     <div class="">
 	<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;"><![endif]-->
 	<div style="color:#555555;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;line-height:120%; padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;">	
-		<div style="font-size:12px;line-height:14px;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;color:#555555;text-align:left;"><p style="margin: 0;font-size: 14px;line-height: 17px;text-align: center"><span style="font-size: 22px; line-height: 26px;">Please, follow us on:</span></p></div>	
+		<div style="font-size:12px;line-height:14px;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;color:#555555;text-align:left;"><p style="margin: 0;font-size: 14px;line-height: 17px;text-align: center"><span style="font-size: 22px; line-height: 26px;">Follow us on:</span></p></div>	
 	</div>
 	<!--[if mso]></td></tr></table><![endif]-->
 </div>
@@ -355,8 +358,8 @@ a[x-apple-data-detectors=true] {
   <!--[if (mso)|(IE)]><table width="151" cellpadding="0" cellspacing="0" border="0"><tr><td style="border-collapse:collapse; padding-right: 0px; padding-left: 0px; padding-bottom: 0px;"  align="center"><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse; mso-table-lspace: 0pt;mso-table-rspace: 0pt; width:151px;"><tr><td width="32" style="width:32px; padding-right: 5px;" valign="top"><![endif]-->
     <table align="left" border="0" cellspacing="0" cellpadding="0" width="32" height="32" style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;Margin-right: 5px">
       <tbody><tr style="vertical-align: top"><td align="left" valign="middle" style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
-        <a href="https://www.facebook.com/" title="Facebook" target="_blank">
-          <img src="https://d2fi4ri5dhpqd1.cloudfront.net/public/resources/social-networks-icon-sets/blue/facebook@2x.png" alt="Facebook" title="Facebook" width="32" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important" />
+        <a href="https://www.facebook.com/kidsuperstore" title="Facebook" target="_blank">
+          <img src="/img/fb-icon.png" alt="Facebook" title="Facebook" width="32" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important" />
         </a>
       <div style="line-height:5px;font-size:1px">&#160;</div>
       </td></tr>
@@ -364,22 +367,12 @@ a[x-apple-data-detectors=true] {
       <!--[if (mso)|(IE)]></td><td width="32" style="width:32px; padding-right: 5px;" valign="top"><![endif]-->
     <table align="left" border="0" cellspacing="0" cellpadding="0" width="32" height="32" style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;Margin-right: 5px">
       <tbody><tr style="vertical-align: top"><td align="left" valign="middle" style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
-        <a href="https://twitter.com/" title="Twitter" target="_blank">
-          <img src="https://d2fi4ri5dhpqd1.cloudfront.net/public/resources/social-networks-icon-sets/blue/twitter@2x.png" alt="Twitter" title="Twitter" width="32" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important" />
+        <a href="https://www.instagram.com/kidsuperstore.in/" title="Instagram" target="_blank">
+          <img src="/img/insta-icon.png" alt="Instagram" title="Instagram" width="32" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important" />
         </a>
       <div style="line-height:5px;font-size:1px">&#160;</div>
       </td></tr>
     </tbody></table>
-      <!--[if (mso)|(IE)]></td><td width="32" style="width:32px; padding-right: 0;" valign="top"><![endif]-->
-    <table align="left" border="0" cellspacing="0" cellpadding="0" width="32" height="32" style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;Margin-right: 0">
-      <tbody><tr style="vertical-align: top"><td align="left" valign="middle" style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
-        <a href="https://plus.google.com/" title="Google+" target="_blank">
-          <img src="https://d2fi4ri5dhpqd1.cloudfront.net/public/resources/social-networks-icon-sets/blue/googleplus@2x.png" alt="Google+" title="Google+" width="32" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important" />
-        </a>
-      <div style="line-height:5px;font-size:1px">&#160;</div>
-      </td></tr>
-    </tbody></table>
-    <!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
   </div>
 </div>
                   
