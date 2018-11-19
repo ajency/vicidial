@@ -70,7 +70,8 @@ export class ShippingSummaryComponent implements OnInit {
     })
     .catch((error)=>{
       console.log("error ===>", error);
-      this.appservice.removeLoader();
+      this.router.navigateByUrl('/cartpage', { skipLocationChange: true });
+      this.appservice.removeLoader();      
     })  
   }
 
@@ -95,6 +96,7 @@ export class ShippingSummaryComponent implements OnInit {
     })
     .catch((error)=>{
       console.log("error ===>", error);
+      this.router.navigateByUrl('/cartpage', { skipLocationChange: true });
       this.appservice.removeLoader();
     })  
   }
