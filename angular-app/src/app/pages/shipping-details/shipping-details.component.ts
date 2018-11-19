@@ -26,7 +26,7 @@ export class ShippingDetailsComponent implements OnInit {
     type : ''
   };
   selectedAddressId : any;
-  states : any = [];
+  states : any;
   hideDefaultAddressField : boolean = false;
   cart : any;
   constructor( private router : Router,
@@ -94,7 +94,6 @@ export class ShippingDetailsComponent implements OnInit {
         else{
           this.router.navigateByUrl('/cartpage', { skipLocationChange: true });
         }
-        this.appservice.removeLoader(); 
       })
       .catch((error)=>{
         console.log("error ===>", error);
@@ -111,11 +110,12 @@ export class ShippingDetailsComponent implements OnInit {
       this.checkAddresses();
       this.updateUrl();
       this.appservice.shippingAddresses = response.addresses;
-      this.appservice.removeLoader();
+      this.removeLoader();
     })
     .catch((error)=>{
       console.log("error ===>", error);
-      this.appservice.removeLoader();
+      this.addresses = [];
+      this.removeLoader();
     })
   }
 
@@ -241,16 +241,28 @@ export class ShippingDetailsComponent implements OnInit {
   }
 
   getAllStates(){    
+    this.appservice.showLoader();
     let url = this.appservice.apiUrl + "/rest/v1/anonymous/states/all";
     this.apiservice.request(url, 'get', {}, {} ).then((response)=>{
       this.appservice.states = response;
       this.states = response;
       this.initSelectPicker();
+      this.removeLoader();
       return response;
     })
     .catch((error)=>{
       console.log("error ===>", error);
+      this.states = [];
+      this.removeLoader();
       return [];
     })
+  }
+
+  removeLoader(){
+    console.log("removeLoader function");
+    if(this.states && this.addresses){
+      console.log("removeing loader");
+      this.appservice.removeLoader();
+    }
   }
 }
