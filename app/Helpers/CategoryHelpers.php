@@ -6,6 +6,8 @@ function build_search_object($params) {
 	$dataArr = [];
 	$facet_display_data = config('product.facet_display_data');
 	$dataArr["search_result"]=[];
+	$dataArr["search_result"]["boolean_filter"]=[];
+	// dd($params);
 	foreach($params['categories'] as $param) {
 		$slugs_arr = explode('--', $param);
 		$all_facets = array_merge($slugs_arr, $all_facets);
@@ -16,6 +18,24 @@ function build_search_object($params) {
 				if (strpos($queryv, "color:") !== false) {
 	                $values = str_replace('color:', '', $queryv); 
 	                $all_facets = array_merge($all_facets,(explode(",",$values)));
+	            }
+			}
+			if($queryk == "bf"){
+				if (strpos($queryv, "variant_availability:") !== false) {
+
+					$ar = array_filter($facet_display_data, function ($item) {
+					        return $item['attribute_param'] === 'variant_availability';
+					    }
+					); 
+					$ar_keys_ar = array_keys($ar);
+	                $values = str_replace('variant_availability:', '', $queryv); 
+	                $values_arr = explode(",",$values);
+	                $bool_val=false;
+	                if(is_string($values_arr[0]))
+	                	$bool_val =($values_arr[0] == "true")?true:false;
+	                else
+	                	$bool_val =$values_arr[0];
+	                $dataArr["search_result"]["boolean_filter"][$ar_keys_ar[0]]=$bool_val;
 	            }
 			}
 			if($queryk == "rf"){
@@ -34,6 +54,7 @@ function build_search_object($params) {
 	}
 	else{
 		$dataArr["search_result"]["range_filter"]=[];
+		$dataArr["search_result"]["boolean_filter"]=[];
 	}
 	
 	// dd($all_facets);
