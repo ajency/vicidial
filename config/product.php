@@ -150,7 +150,7 @@ return [
             'variant' => ['variant_style_no'],
         ],
     ],
-    "inventory_fields"        => ["warehouse_id", "product_id", "quantity", 'location_id'],
+    "inventory_fields"        => ["product_id", "quantity",'location_id'],
     "inventory_max"           => 10,
     'facet_display_data'      => [
         'product_category_type' => [

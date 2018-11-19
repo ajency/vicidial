@@ -1,6 +1,7 @@
 <?php
 
 use App\Defaults;
+use App\Location;
 use App\User;
 use Carbon\Carbon;
 function valInteger($object, $values)
@@ -186,30 +187,33 @@ function buildProductIndexFromOdooData($productData, $variantData)
         'id'          => $productData['product_id'] . '.' . $variantData->first()['product_color_id'],
         'search_data' => [],
     ];
+    $product_title = ($productData['product_att_magento_display_name'] && $productData['product_att_magento_display_name']!='') ? $productData['product_att_magento_display_name'] : $productData['product_name'];
     $indexData['search_result_data'] = [
-        'product_id'                  => $productData['product_id'],
-        "product_title"               => $productData['product_att_magento_display_name'],
-        "product_slug"                => $productData['product_slug'],
-        "product_style"               => $productData['product_style_no'],
-        "product_description"         => $productData['product_description_sale'],
-        "product_att_sleeves"         => $productData['product_att_sleeves'],
-        "product_att_fashionability"  => $productData['product_att_fashionability'],
-        "product_att_material"        => $productData['product_att_material'],
-        "product_att_occasion"        => $productData['product_att_occasion'],
-        "product_att_wash"            => $productData['product_att_wash'],
-        "product_att_fabric_type"     => $productData['product_att_fabric_type'],
-        "product_att_product_type"    => $productData['product_att_product_type'],
-        "product_att_other_attribute" => $productData['product_att_other_attribute'],
-        "product_category_type"       => $productData['product_category_type'],
-        "product_gender"              => $productData['product_gender'],
-        "product_age_group"           => $productData['product_age_group'],
-        "product_subtype"             => $productData['product_subtype'],
-        "product_vendor"              => $productData['product_vendor'],
-        "product_color_id"            => $variantData->first()['product_color_id'],
-        "product_color_slug"          => str_slug($variantData->first()['product_color_name']),
-        "product_color_name"          => $variantData->first()['product_color_name'],
-        "product_color_html"          => $variantData->first()['product_color_html'],
-        "product_images"              => [],
+        'product_id'                        => $productData['product_id'],
+        "product_title"                     => $product_title,
+        "product_att_magento_display_name"  => $productData['product_att_magento_display_name'],
+        "product_name"                      => $productData['product_name'],
+        "product_slug"                      => $productData['product_slug'],
+        "product_style"                     => $productData['product_style_no'],
+        "product_description"               => $productData['product_description_sale'],
+        "product_att_sleeves"               => $productData['product_att_sleeves'],
+        "product_att_fashionability"        => $productData['product_att_fashionability'],
+        "product_att_material"              => $productData['product_att_material'],
+        "product_att_occasion"              => $productData['product_att_occasion'],
+        "product_att_wash"                  => $productData['product_att_wash'],
+        "product_att_fabric_type"           => $productData['product_att_fabric_type'],
+        "product_att_product_type"          => $productData['product_att_product_type'],
+        "product_att_other_attribute"       => $productData['product_att_other_attribute'],
+        "product_category_type"             => $productData['product_category_type'],
+        "product_gender"                    => $productData['product_gender'],
+        "product_age_group"                 => $productData['product_age_group'],
+        "product_subtype"                   => $productData['product_subtype'],
+        "product_vendor"                    => $productData['product_vendor'],
+        "product_color_id"                  => $variantData->first()['product_color_id'],
+        "product_color_slug"                => str_slug($variantData->first()['product_color_name']),
+        "product_color_name"                => $variantData->first()['product_color_name'],
+        "product_color_html"                => $variantData->first()['product_color_html'],
+        "product_images"                    => [],
     ];
     $indexData["variants"] = [];
     foreach ($variantData as $variant) {
@@ -294,17 +298,16 @@ function sanitiseInventoryData($inventoryData)
     $inventory = [];
     foreach ($inventoryData as $connectionData) {
         foreach ($connectionData as $invtry) {
-            $temp = [
-                "location_id" => $invtry["location_id"][0],
-                "location_name" => $invtry["location_id"][1],
-                "warehouse_name" => $invtry["warehouse_id"][1],
-                "warehouse_id"   => $invtry["warehouse_id"][0],
-                "quantity"       => intval($invtry["quantity"]),
-            ];
-            if (is_null($temp["warehouse_id"])) {
+            $location = Location::where('odoo_id', $invtry["location_id"][0])->first();
+            if ($location == null || $location->use_in_inventory == false) {
                 continue;
             }
-            $inventory[$invtry["product_id"][0]][$temp["warehouse_id"]] = $temp;
+            $temp = [
+                "location_id"   => $invtry["location_id"][0],
+                "location_name" => $invtry["location_id"][1],
+                "quantity"      => intval($invtry["quantity"]),
+            ];
+            $inventory[$invtry["product_id"][0]][$temp["location_id"]] = $temp;
 
         }
     }
@@ -350,60 +353,51 @@ function generateVariantImageName($product_name, $color_name, $colors, $index)
 
 }
 
-function getWarehousesForCart($cart)
+function generateSubordersData($cartItems, $locations)
 {
-    $allItems   = collect();
-    $warehouses = [];
-    foreach ($cart->getItems() as $cartItem) {
-        foreach ($cartItem['item']->inventory as $warehouseData) {
-            $warehouses[] = $warehouseData['warehouse_id'];
-        }
-    }
-    $warehouses = array_unique($warehouses);
-    return $warehouses;
-}
-
-function generateSubordersData($cartItems, $warehouses)
-{
-    $finalCart      = [];
-    $warehousesData = $warehouses->combine($warehouses->map(function ($item, $key) {
+    $finalCart     = [];
+    $locationsData = $locations->combine($locations->map(function ($item, $key) {
         return ['id' => $item, 'items' => collect(), 'remaining_items' => collect()];
     }));
     foreach ($cartItems as $cartItem) {
-        $processedWarehouses = [];
-        foreach ($cartItem['item']->inventory as $warehouseData) {
-            if (array_search($warehouseData['warehouse_id'], $warehouses->toArray()) === false) {
+        $processedLocations = [];
+        foreach ($cartItem['item']->inventory as $locationData) {
+            if (array_search($locationData['location_id'], $locations->toArray()) === false) {
                 continue;
             }
-            $transferQty = ($cartItem['quantity'] < $warehouseData['quantity']) ? $cartItem['quantity'] : $warehouseData['quantity'];
-            $warehousesData[$warehouseData['warehouse_id']]['items']->push([
+            $transferQty = ($cartItem['quantity'] < $locationData['quantity']) ? $cartItem['quantity'] : $locationData['quantity'];
+            $locationsData[$locationData['location_id']]['items']->push([
                 'variant'  => $cartItem['item'],
                 'quantity' => $transferQty,
             ]);
-            $processedWarehouses[] = $warehouseData['warehouse_id'];
+            $processedLocations[] = $locationData['location_id'];
             if ($transferQty < $cartItem['quantity']) {
-                $warehousesData[$warehouseData['warehouse_id']]['remaining_items']->push([
+                $locationsData[$locationData['location_id']]['remaining_items']->push([
                     'item'     => $cartItem['item'],
-                    'quantity' => $transferQty,
+                    'quantity' => $cartItem['quantity'] - $transferQty,
                 ]);
             }
         }
-        foreach ($warehouses as $warehouseID) {
-            if (array_search($warehouseID, $processedWarehouses) === false) {
-                $warehousesData[$warehouseID]['remaining_items']->push($cartItem);
+        foreach ($locations as $warehouseID) {
+            if (array_search($warehouseID, $processedLocations) === false) {
+                $locationsData[$warehouseID]['remaining_items']->push($cartItem);
             }
         }
     }
-    $selectedWarehouse = $warehousesData->sortByDesc(function ($product, $key) {
+
+    //start function which chooses the location
+    $selectedLocation = $locationsData->sortByDesc(function ($product, $key) {
         return $product['items']->count();
     })->first();
-    $key = $selectedWarehouse['id'];
-    if ($selectedWarehouse['remaining_items']->count() != 0) {
-        $otherOrders       = generateSubordersData($selectedWarehouse['remaining_items'], $warehouses->diff([$key]));
-        $otherOrders[$key] = $selectedWarehouse['items'];
+    //end function that chooses the location
+
+    $key = $selectedLocation['id'];
+    if ($selectedLocation['remaining_items']->count() != 0) {
+        $otherOrders       = generateSubordersData($selectedLocation['remaining_items'], $locations->diff([$key]));
+        $otherOrders[$key] = $selectedLocation['items'];
         return $otherOrders;
     } else {
-        return [$key => $selectedWarehouse['items']];
+        return [$key => $selectedLocation['items']];
     }
 }
 
@@ -479,8 +473,8 @@ function sanitiseMoveData($moveData, $prefix = '')
 
 function generateOTP()
 {
-    $min = str_pad(1, config('otp.length'), 0);
-    $max = str_pad(9, config('otp.length'), 9);
+    $min   = str_pad(1, config('otp.length'), 0);
+    $max   = str_pad(9, config('otp.length'), 9);
     $token = random_int($min, $max);
     return $token;
 }

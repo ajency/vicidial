@@ -92,17 +92,6 @@ class Product
         } catch (\Exception $e) {
             \Log::warning($e->getMessage());
         }
-        foreach ($inventory['inventory'] as $inventoryData) {
-            try{
-                $loc = new Location;
-                $loc->odoo_id = $inventoryData['location_id'];
-                $loc->name = $inventoryData['location_name'];
-                $loc->warehouse_odoo_id = $inventoryData['warehouse_id'];
-                $loc->save();
-            }catch (\Exception $e) {
-                \Log::warning($e->getMessage());
-            }
-        }
         $facets = ['product_category_type', 'product_gender', 'product_age_group', 'product_subtype'];
         foreach ($facets as $facet) {
             try {
