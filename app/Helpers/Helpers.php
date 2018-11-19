@@ -1,6 +1,7 @@
 <?php
 
 use App\Defaults;
+use App\Location;
 use App\User;
 use Carbon\Carbon;
 function valInteger($object, $values)
@@ -294,10 +295,14 @@ function sanitiseInventoryData($inventoryData)
     $inventory = [];
     foreach ($inventoryData as $connectionData) {
         foreach ($connectionData as $invtry) {
+            $location = Location::where('odoo_id', $invtry["location_id"][0])->first();
+            if ($location == null || $location->use_in_inventory == false) {
+                continue;
+            }
             $temp = [
-                "location_id" => $invtry["location_id"][0],
+                "location_id"   => $invtry["location_id"][0],
                 "location_name" => $invtry["location_id"][1],
-                "quantity"       => intval($invtry["quantity"]),
+                "quantity"      => intval($invtry["quantity"]),
             ];
             $inventory[$invtry["product_id"][0]][$temp["location_id"]] = $temp;
 
@@ -345,10 +350,9 @@ function generateVariantImageName($product_name, $color_name, $colors, $index)
 
 }
 
-
 function generateSubordersData($cartItems, $locations)
 {
-    $finalCart      = [];
+    $finalCart     = [];
     $locationsData = $locations->combine($locations->map(function ($item, $key) {
         return ['id' => $item, 'items' => collect(), 'remaining_items' => collect()];
     }));
@@ -377,9 +381,13 @@ function generateSubordersData($cartItems, $locations)
             }
         }
     }
+
+    //start function which chooses the location
     $selectedLocation = $locationsData->sortByDesc(function ($product, $key) {
         return $product['items']->count();
     })->first();
+    //end function that chooses the location
+
     $key = $selectedLocation['id'];
     if ($selectedLocation['remaining_items']->count() != 0) {
         $otherOrders       = generateSubordersData($selectedLocation['remaining_items'], $locations->diff([$key]));
@@ -462,8 +470,8 @@ function sanitiseMoveData($moveData, $prefix = '')
 
 function generateOTP()
 {
-    $min = str_pad(1, config('otp.length'), 0);
-    $max = str_pad(9, config('otp.length'), 9);
+    $min   = str_pad(1, config('otp.length'), 0);
+    $max   = str_pad(9, config('otp.length'), 9);
     $token = random_int($min, $max);
     return $token;
 }
