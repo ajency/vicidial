@@ -265,42 +265,7 @@ class Product
     {
 
         $q = self::buildBaseQuery();
-
-        $filters = makeQueryfromParams($params["search_object"]);
-
-        $must = [];
-        foreach ($filters as $path => $data) {
-            foreach ($data as $facet => $data2) {
-                foreach ($data2 as $field => $values) {
-                    $should = [];
-                    $nested = [];
-                    if ($values['type'] == 'enum') {
-                        foreach ($values['value'] as $value) {
-                            $facetName  = $q::createTerm($path . "." . $facet . '.facet_name', $field);
-                            $facetValue = $q::createTerm($path . "." . $facet . '.facet_value', $value);
-                            $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
-                            $nested[]   = $q::createNested($path . '.' . $facet, $filter);
-                            $should     = $q::addToBoolQuery('should', $nested, $should);
-                        }} else if ($values['type'] == 'range') {
-                        $facetValue = $q::createRange($path . "." . $facet . '.facet_value', ['lte' => $values['value']['max'], 'gte' => $values['value']['min']]);
-                        $facetName  = $q::createTerm($path . "." . $facet . '.facet_name', $field);
-                        $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
-                        $nested[]   = $q::createNested($path . '.' . $facet, $filter);
-                        $should     = $q::addToBoolQuery('should', $nested, $should);
-                    }
-                    $nested2 = $q::createNested($path, $should);
-                    $must[]  = $nested2;
-                }
-            }
-        }
-
-        $must = $q::addToBoolQuery('must', $must);
-
-
-        $must = self::hideZeroColorIDProducts($q, $must);
-        $must = self::hideUnavailableProducts($q, $must);
-        
-
+        $must = setElasticFacetFilters($q,$params);
         $q->setQuery($must);
         $response = $q->search();
         return sanitiseFilterdata($response, $params);
@@ -318,95 +283,18 @@ class Product
      * 
      * @return array
      */
-    public static function getItemsWithFilters($params){
-        $size = $params["display_limit"];
-        $offset = ($params["page"] - 1) * $size;
-
-        $index = config('elastic.indexes.product');
-        $q     = new ElasticQuery;
-        $q->setIndex($index);
-        $filters = makeQueryfromParams($params["search_object"]);
-        $must    = [];
-        foreach ($filters as $path => $data) {
-            foreach ($data as $facet => $data2) {
-                foreach ($data2 as $field => $values) {
-                    $should = [];
-                    $nested = [];
-                    if ($values['type'] == 'enum') {
-                        foreach ($values['value'] as $value) {
-                            $facetName  = $q::createTerm($path . "." . $facet . '.facet_name', $field);
-                            $facetValue = $q::createTerm($path . "." . $facet . '.facet_value', $value);
-                            $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
-                            $nested[]   = $q::createNested($path . '.' . $facet, $filter);
-                            $should     = $q::addToBoolQuery('should', $nested, $should);
-                        }} else if ($values['type'] == 'range') {
-                        $facetValue = $q::createRange($path . "." . $facet . '.facet_value', ['lte' => $values['value']['max'], 'gte' => $values['value']['min']]);
-                        $facetName  = $q::createTerm($path . "." . $facet . '.facet_name', $field);
-                        $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
-                        $nested[]   = $q::createNested($path . '.' . $facet, $filter);
-                        $should     = $q::addToBoolQuery('should', $nested, $should);
-                    }
-                    $nested2 = $q::createNested($path, $should);
-                    $must[]  = $nested2;
-
-                }
-            }
-        }
-        $must = $q::addToBoolQuery('must', $must);
-
-
-        $must = self::hideZeroColorIDProducts($q, $must);
-        $must = self::hideUnavailableProducts($q, $must);
-        $q->setQuery($must)
-        ->setSource(["search_result_data", "variants"])
-        ->setSize($size)->setFrom($offset);
-        return formatItems($q->search(), $params);
-    }
-
-    /**
-     * Query to hide Products which are not available
-     * 
-     * @return array
-     */
-    public static function hideUnavailableProducts($q, $must){
-        $nested = [];
-        $facetName  = $q::createTerm( "search_data.boolean_facet.facet_name", "variant_availability");
-        $facetValue = $q::createTerm("search_data.boolean_facet.facet_value", true);
-        $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
-        $nested[]   = $q::createNested('search_data.boolean_facet', $filter);
-        $nested2 = $q::createNested("search_data", $nested);
-        $must = $q::addToBoolQuery('filter',$nested2, $must);
-        return $must;
-    }
-
-    /**
-     * Query to hide Products with Color ID equalling 0
-     * 
-     * @return void
-     */
-    public static function hideZeroColorIDProducts($q, $must){
-        $nested = [];
-        $facetName  = $q::createTerm( "search_data.number_facet.facet_name", "product_color_id");
-        $facetValue = $q::createTerm("search_data.number_facet.facet_value", 0);
-        $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
-        $nested[]   = $q::createNested('search_data.number_facet', $filter);
-        $nested2 = $q::createNested("search_data", $nested);
-        $must = $q::addToBoolQuery('must_not',$nested2, $must);
-        return $must;
-
-    }
-
-    public static function priceFilter($q, $must, $min, $max)
+    public static function getItemsWithFilters($params)
     {
-        $nested     = [];
-        $facetName  = $q::createTerm("search_data.number_facet.facet_name", "variant_sale_price");
-        $facetValue = $q::createRange("search_data.number_facet.facet_value", ['lte' => $max, 'gte' => $min]);
-        $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
-        $nested[]   = $q::createNested('search_data.number_facet', $filter);
-        $nested2    = $q::createNested('search_data', $nested);
-        $must       = $q::addToBoolQuery('filter', $nested2, $must);
-        return $must;
-
+        $size   = $params["display_limit"];
+        $offset = ($params["page"] - 1) * $size;
+        $index  = config('elastic.indexes.product');
+        $q      = new ElasticQuery;
+        $q->setIndex($index);
+        $must = setElasticFacetFilters($q, $params);
+        $q->setQuery($must)
+            ->setSource(["search_result_data", "variants"])
+            ->setSize($size)->setFrom($offset);
+        return formatItems($q->search(), $params);
     }
 
     public static function productListPage($params, $slug_value_search_result, $slug_search_result, $slugs_result, $title = "")
@@ -428,6 +316,8 @@ class Product
         }
         if( isset($params["search_object"]["range_filter"]))
             $filter_params["search_object"]["range_filter"] = $params["search_object"]["range_filter"];
+        if( isset($params["search_object"]["boolean_filter"]))
+            $filter_params["search_object"]["boolean_filter"] = $params["search_object"]["boolean_filter"];
         $filter_params["display_limit"] = $params["display_limit"];
         $filter_params["page"] = $params["page"];
         // print_r($filter_params);
