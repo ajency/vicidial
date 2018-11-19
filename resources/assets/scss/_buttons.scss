@@ -86,6 +86,16 @@
     &:hover{
         background-color: darken(theme-color("primary"),15%);
     }
+    &--secondary{
+    	background-color: theme-color("primary");
+    	border-color: theme-color("primary");
+    	&:hover{
+        	background-color: darken(theme-color("secondary"),15%);
+    	}
+    }
+    &--outline-secondary{
+    	
+    }
     &--big{
         font-size: 1.15rem;
         padding: 0.9rem 1rem;
@@ -94,6 +104,9 @@
             padding: 0.75rem 1rem;
             border-radius: 0;
         }
+    }
+    &--big-alternate{
+    	text-transform: capitalize;
     }
     &--fab{
         position: fixed;
