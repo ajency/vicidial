@@ -109,5 +109,10 @@ class OrderController extends Controller
 
         return view('orderdetails')->with('params', $params);
     }
+
+    public function testEmail()
+    {
+        return view('/email/order-success');
+    }
 }
 
