@@ -1,14 +1,12 @@
 @extends('layouts.email')
 @section('content')
 @php
-  $order = \App\Order::find(18); 
 	$orderDetails = $order->getOrderDetails();
-  $order_info = $orderDetails['order_info'];
-  $shipping_address = $orderDetails['shipping_address']; 
-  $sub_orders = $orderDetails['sub_orders'];
-  $order_summary = $orderDetails['order_summary'];
-  $user_name = $order->cart->user->name;
-	//print_r($orderDetails);
+	  $order_info = $orderDetails['order_info'];
+	  $shipping_address = $orderDetails['shipping_address']; 
+	  $sub_orders = $orderDetails['sub_orders'];
+	  $order_summary = $orderDetails['order_summary'];
+	  $user_name = $order->cart->user->name;
 @endphp
 
 

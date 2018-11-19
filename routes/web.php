@@ -30,8 +30,6 @@ Route::get('/rest/v1/authenticate/generate_otp', 'UserController@sendSMS');
 
 Route::get('/test/productlist', 'ProductListTestController@index')->name('productListTest');
 
-Route::get('/test/order-summary-email', 'OrderController@testEmail')->name('testEmail');
-
 Route::get('/shop', 'ListingController@shop')->name('shoplisting');
 
 Route::get('/', 'HomeController@index')->name('home');
