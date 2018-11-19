@@ -539,7 +539,7 @@ function constructCategoryUrl(facet_names_arr,search_object,facet_value_slug_arr
             search_cat = furl.join(',');
             search_str += append_filter_str+"="+config_item["template"]+":"+search_cat;
           }
-          if(config_item["is_attribute_param"] && config_item["filter_type"] == "boolean_filter"){
+          else if(config_item["is_attribute_param"] && config_item["filter_type"] == "boolean_filter"){
             search_cat = furl.join(',');
             search_str += append_filter_str+"="+search_cat+":"+config_item["attribute_param"];
           }
@@ -553,8 +553,15 @@ function constructCategoryUrl(facet_names_arr,search_object,facet_value_slug_arr
           console.log("facet_names_arr else===")
           
           var slugvalue="";
-          if(config_item["filter_type"] == "boolean_filter"){
-            search_cat = search_object[facet_names_arr[item]];
+          if(config_item["is_attribute_param"]){
+            if (config_item["filter_type"] == "primary_filter"){
+              
+              search_cat = facet_value_slug_arr[facet_names_arr[item]][search_object[facet_names_arr[item]]]
+            }
+            else{
+              search_cat = search_object[facet_names_arr[item]];
+            }
+            
             slugvalue = config_item["attribute_param"]
           }
           else{
