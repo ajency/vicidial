@@ -33,9 +33,6 @@
    var source   = document.getElementById("filter-price-template").innerHTML;
    var template = Handlebars.compile(source);
    var priceRangeSlider;
-   Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
-      return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
-  });
    var singleton = (<?= $singleton ?> == 1)?true:false;
    var collapsed = (<?= $collapsed ?> == 1)?true:false;
    var fromval =  <?= ($selected_range["start"])?($selected_range["start"]):0 ?>;

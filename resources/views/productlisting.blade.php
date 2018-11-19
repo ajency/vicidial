@@ -43,20 +43,25 @@
 @section('footjs')
   <?php
     $facet_display_data = config('product.facet_display_data');
-
-    // usort($facet_display_data, function($a, $b) {
-    //       return $a["order"] > $b["order"] ? 1 : -1;
-    //   });
-
     $config_facet_names_arr = array_keys($facet_display_data);
     $facet_value_slug_assoc = json_encode($params->search_result_assoc);
     $facet_display_data_arr = json_encode($facet_display_data);
+    $checkboxTemplate = View::make('includes.productlisting.productfilters.common.checkbox');
+    $radioTemplate = View::make('includes.productlisting.productfilters.common.radio');
   ?>
   <script type="text/javascript">
       var config_facet_names_arr = <?= json_encode($config_facet_names_arr);?>;
       var facet_value_slug_assoc = <?= $facet_value_slug_assoc ?>;
       var facet_display_data_arr = <?= $facet_display_data_arr ?>;
       var product_list_items = {};
+      Handlebars.registerPartial(
+        'checkboxTemplate', '<?= $checkboxTemplate ?>'
+        
+      ); 
+      Handlebars.registerPartial(
+        'radioTemplate', '<?= $radioTemplate ?>'
+        
+      );
   </script>
    <script type="text/javascript" src="{{CDN::mix('/js/productlisting.js') }}"></script>
   @yield('footjs-color')

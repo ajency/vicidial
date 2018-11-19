@@ -12,14 +12,14 @@
              @{{#if singleton }}
              @{{#each items}}
               <li>
-              <input type="radio" name="color" id="@{{facet_value}}" class="facet-category" value="@{{facet_value}}" onChange="facetCategoryChange(this);" @{{#if is_selected }} checked = "checked" @{{/if}} data-facet-name="@{{../filter_facet_name}}" data-singleton="true" data-slug="@{{slug}}" @{{#if ../disabled_at_zero_count}} @{{#ifEquals count 0 }} disabled = "disabled" @{{/ifEquals}} @{{/if}} data-collapsable="@{{../collapsed}}"/>
+              @{{> radioTemplate template=../template facet_value=facet_value is_selected=is_selected filter_facet_name=../filter_facet_name slug=slug disabled_at_zero_count=../disabled_at_zero_count count=count collapsed=../collapsed changeEvent="facetCategoryChange(this);" attribute_slug="" }}
               <label for="@{{facet_value}}" style="background-color:@{{facet_value}};"></label>
               </li>
               @{{/each}}
               @{{else}}
               @{{#each items}}
               <li>
-              <input type="checkbox" name="color" id="@{{facet_value}}" class="facet-category" value="@{{facet_value}}" onChange="facetCategoryChange(this);" @{{#if is_selected }} checked = "checked" @{{/if}} data-facet-name="@{{../filter_facet_name}}" data-singleton="false" data-slug="@{{slug}}" @{{#if ../disabled_at_zero_count}} @{{#ifEquals count 0 }} disabled = "disabled" @{{/ifEquals}} @{{/if}} data-collapsable="@{{../collapsed}}"/>
+              @{{> checkboxTemplate template=../template facet_value=facet_value is_selected=is_selected filter_facet_name=../filter_facet_name slug=slug disabled_at_zero_count=../disabled_at_zero_count count=count collapsed=../collapsed changeEvent="facetCategoryChange(this);" attribute_slug="" }}
               <label for="@{{facet_value}}" style="background-color:@{{facet_value}};"></label>
               </li>
               @{{/each}}
@@ -36,9 +36,6 @@
    // require('handlebars');
    var source   = document.getElementById("filter-color-template").innerHTML;
    var template = Handlebars.compile(source);
-   Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
-      return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
-  });
    var singleton = (<?= $singleton ?> == 1)?true:false;
    var collapsed = (<?= $collapsed ?> == 1)?true:false;
    var filter_display_name = '<?= $header["display_name"] ?>';
@@ -48,6 +45,7 @@
    var is_attribute_param = <?= json_encode($is_attribute_param) ?>;
    console.log("color----"+<?= $singleton ?>)
    var context = {};
+   context["template"] = '<?= $template ?>';
    context["singleton"] = singleton;
    context["collapsed"] = collapsed;
    context["display_count"] = display_count;

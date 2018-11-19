@@ -303,6 +303,7 @@ class Product
         $filter_params                  = [];
         $filter_params["search_object"] = [];
         $facet_display_data             = config('product.facet_display_data');
+        // dd($facet_display_data);
         // dd($params);
         foreach ($params["search_object"]["primary_filter"] as $paramk => $paramv) {
             if ($facet_display_data[$paramk]["is_essential"] == false) {
