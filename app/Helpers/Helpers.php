@@ -297,14 +297,9 @@ function sanitiseInventoryData($inventoryData)
             $temp = [
                 "location_id" => $invtry["location_id"][0],
                 "location_name" => $invtry["location_id"][1],
-                "warehouse_name" => $invtry["warehouse_id"][1],
-                "warehouse_id"   => $invtry["warehouse_id"][0],
                 "quantity"       => intval($invtry["quantity"]),
             ];
-            if (is_null($temp["warehouse_id"])) {
-                continue;
-            }
-            $inventory[$invtry["product_id"][0]][$temp["warehouse_id"]] = $temp;
+            $inventory[$invtry["product_id"][0]][$temp["location_id"]] = $temp;
 
         }
     }
