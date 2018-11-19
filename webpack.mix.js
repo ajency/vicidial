@@ -25,9 +25,10 @@ mix.babel([
 	'resources/assets/js/plugins/lazysizes.min.js',
 	'resources/assets/js/plugins/bootstrap-select.min.js',
 	'resources/assets/js/plugins/jquery.autocomplete.js',
-   'resources/assets/js/plugins/ion.rangeSlider.min.js',
+  'resources/assets/js/plugins/ion.rangeSlider.min.js',
+  'resources/assets/js/plugins/picturefill.min.js',
 	'resources/assets/js/custom.js'
-	], 'public/js/all.js')
+	], 'public/js/kss.js')
    .sass('resources/assets/scss/custom.scss', '../resources/assets/css')
    .options({
       processCssUrls: false
@@ -35,7 +36,7 @@ mix.babel([
    .styles([
    	'resources/assets/css/plugins/*.css',
    	'resources/assets/css/custom.css'
-   	], 'public/css/all.css')
+   	], 'public/css/kss.css')
    .copyDirectory('resources/assets/img', 'public/img')
    .copyDirectory('resources/assets/fonts', 'public/fonts')
    .babel('resources/assets/js/cart.js', 'public/js/cart.js')

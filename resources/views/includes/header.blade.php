@@ -95,11 +95,12 @@
                     Other Links
                 </a>
                 <ul class="">
-                  <li><a class="dropdown-item" href="#">Contact Us</a></li>
-                  <li><a class="dropdown-item" href="#">FAQ</a></li>
-                  <li><a class="dropdown-item" href="#">Terms of Use</a></li>
-                  <li><a class="dropdown-item" href="#">Track Orders</a></li>
-                  <li><a class="dropdown-item" href="#">Cancellation Policy</a></li>
+                  <li><a class="dropdown-item" href="/about-us">About Us</a></li>
+                  <li><a class="dropdown-item" href="/contact">Contact Us</a></li>
+                  <li><a class="dropdown-item" href="/faq">FAQ</a></li>
+                  <li><a class="dropdown-item" href="/terms-and-conditions">Terms of Use</a></li>
+                  <li><a class="dropdown-item" href="/privacy-policy">Privacy Policy</a></li>
+                  <li><a class="dropdown-item" href="http://ideas.kidsuperstore.in/">Blog</a></li>
                 </ul>
             </li>
         </ul>
