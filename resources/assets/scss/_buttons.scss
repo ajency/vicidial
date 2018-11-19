@@ -94,7 +94,25 @@
     	}
     }
     &--outline-secondary{
-    	
+    	background-color: transparent;
+    	border-color: theme-color("secondary");
+    	color: theme-color("secondary");
+    	&:hover{
+    		color: #fff;
+		    background-color: theme-color("secondary");
+		    border-color: theme-color("secondary");
+    	}
+    }
+    &--link{
+    	background-color: transparent;
+    	border-color: transparent;
+    	color: #707279;
+    	&:hover{
+    		background-color: transparent;
+    		border-color: transparent;
+    		color: #707279;
+    		text-decoration: underline;
+    	}
     }
     &--big{
         font-size: 1.15rem;

@@ -164,7 +164,7 @@
 							</label>
 						</div>
 					</div>
-					<button type="button" id="add-address" class="btn btn-outline-secondary btn-lg btn-block btn-size" (click)="addNewAddress()">Add A New Address</button>
+					<button type="button" id="add-address" class="btn kss-btn kss-btn--outline-secondary kss-btn--big kss-btn--big-alternate" (click)="addNewAddress()">Add A New Address</button>
 				</div>
 
 				<div class="seperator mt-2 mb-2"></div>
@@ -172,7 +172,7 @@
 				<div class="fixed-bottom d-block pl-3 pr-3">
 					<div *ngIf="addAddress" class="row no-gutters px-2 py-2 shipping-state-1" style="display: flex;">
 						<div class="col-6 text-center">
-							<button [disabled]="!addresses.length" type="button" class="shipping-details-save btn btn-lg btn-block btn-link text-dark mt-1 mb-1 ml-auto mr-auto btn-size" (click)="addAddress = false" >Cancel </button>
+							<button [disabled]="!addresses.length" type="button" class="shipping-details-save btn kss-btn kss-btn--link kss-btn--big kss-btn--big-alternate mt-1 mb-1 ml-auto mr-auto" (click)="addAddress = false" >Cancel </button>
 						</div>
 						<div class="col-6 text-center">
 							<button [disabled]="!myForm.valid"  type="button" class="shipping-details-save btn kss-btn kss-btn--big kss-btn--alternate mt-1 mb-1 ml-auto mr-auto" (click)="saveNewAddress()"> Save </button>

@@ -174,7 +174,7 @@
 		<div class="seperator mb-5"></div>
 
 		<div id="kss_cart" class="p-3 fixed-bottom d-flex align-items-center justify-content-between">
-			<button *ngIf="cart.cart_type =='order'" id="checkout" class="btn btn-outline-secondary btn-lg btn-block mr-3 btn-size" (click)="editBag()" >Edit Bag</button>
+			<button *ngIf="cart.cart_type =='order'" id="checkout" class="btn kss-btn kss-btn--outline-secondary kss-btn--big kss-btn--big-alternate mr-3" (click)="editBag()" >Edit Bag</button>
 			<button  id="checkout" class="btn kss-btn kss-btn--big kss-btn--big-alternate mt-0" [ngClass]="{'disabled' : cartItemOutOfStock}" (click)="modalHandler()" >Checkout</button>
 		</div>
 	</div>	
