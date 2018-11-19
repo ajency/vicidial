@@ -51,7 +51,8 @@ export class ShippingDetailsComponent implements OnInit {
   checkAddresses(){
     if(!this.addresses.length){
       this.addAddress = true;
-      this.initSelectPicker(); 
+      if(this.states && this.states.length) 
+        this.initSelectPicker(); 
     }
     else if(this.appservice.editAddressFromShippingSummary){
       this.appservice.editAddressFromShippingSummary = false;
