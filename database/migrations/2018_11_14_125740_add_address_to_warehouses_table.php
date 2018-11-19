@@ -16,6 +16,10 @@ class AddAddressToWarehousesTable extends Migration
         Schema::table('warehouses', function (Blueprint $table) {
             $table->json('address')->nullable();
             $table->string('code')->nullable();
+            $table->double('carpet_area')->nullable();
+            $table->double('retail_area')->nullable();
+            $table->double('latitude')->nullable();
+            $table->double('longitude')->nullable();
         });
     }
 
@@ -27,7 +31,7 @@ class AddAddressToWarehousesTable extends Migration
     public function down()
     {
         Schema::table('warehouses', function (Blueprint $table) {
-            $table->dropColumn(['address', 'code']);
+            $table->dropColumn(['address', 'code', 'carpet_area','retail_area','latitude','longitude']);
         });
     }
 }

@@ -26,7 +26,16 @@ return [
             "zip",
             "store_code",
         ],
-        'warehouses' => [],
+        'warehouse' => [
+            'name',
+            'code',
+            'company_id',
+            'carpet_area',
+            'retail_area',
+            'latitude',
+            'longitude',
+
+        ],
         'states'     => [],
     ],
 ];
