@@ -1,6 +1,6 @@
 @isset($delaycss)
 <noscript id="deferred-styles">
-	<link rel="stylesheet" type="text/css" href="{{CDN::mix('/css/all.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{CDN::mix('/css/kss.css') }}">
 </noscript>
 <script>
   var loadDeferredStyles = function() {
@@ -33,5 +33,5 @@
 </script>
 
 
-<script type="text/javascript" src="{{CDN::mix('/js/all.js') }}"></script>
+<script type="text/javascript" src="{{CDN::mix('/js/kss.js') }}"></script>
 

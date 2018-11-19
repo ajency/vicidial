@@ -10,14 +10,14 @@
                     <li><a href="#" class="text-gray">Infants</a></li>
                     <li><a href="#" class="text-gray">Accessories</a></li>
                   </ul>
-              </div>            
+              </div>
               <div class="mbr-footer-content col-12">
                   <p class="font-weight-bold"><strong>Useful Links</strong></p>
                   <ul class="list-unstyled d-flex flex-wrap footer-link-separator">
                       <li><a href="/about-us" class="text-gray">About Us</a></li>
                       <li><a href="/contact" class="text-gray">Contact Us</a></li>
                       <li><a href="/faq" class="text-gray">FAQ</a></li>
-                      <li><a href="/terms-and-conditions" class="text-gray">Term of Use</a></li>
+                      <li><a href="/terms-and-conditions" class="text-gray">Terms of Use</a></li>
                       <li><a href="/privacy-policy" class="text-gray">Privacy Policy</a></li>
                       <!-- <li><a href="#" class="text-gray">Track Orders</a></li> -->
                       <li><a href="/terms-and-conditions#cancellation" class="text-gray">Cancellation</a></li>
