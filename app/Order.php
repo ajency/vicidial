@@ -33,8 +33,8 @@ class Order extends Model
     public function setSubOrders()
     {
         $cart       = Cart::find($this->cart_id);
-        $warehouses = getWarehousesForCart($cart);
-        $suborders  = generateSubordersData($cart->getItems(), collect($warehouses));
+        $locations = Location::where('use_in_inventory',true)->pluck('odoo_id');
+        $suborders  = generateSubordersData($cart->getItems(), $locations);
         // print_r($suborders);
         foreach ($suborders as $warehouseID => $items) {
             $subOrder               = new SubOrder;

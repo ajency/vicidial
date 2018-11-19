@@ -345,60 +345,48 @@ function generateVariantImageName($product_name, $color_name, $colors, $index)
 
 }
 
-function getWarehousesForCart($cart)
-{
-    $allItems   = collect();
-    $warehouses = [];
-    foreach ($cart->getItems() as $cartItem) {
-        foreach ($cartItem['item']->inventory as $warehouseData) {
-            $warehouses[] = $warehouseData['warehouse_id'];
-        }
-    }
-    $warehouses = array_unique($warehouses);
-    return $warehouses;
-}
 
-function generateSubordersData($cartItems, $warehouses)
+function generateSubordersData($cartItems, $locations)
 {
     $finalCart      = [];
-    $warehousesData = $warehouses->combine($warehouses->map(function ($item, $key) {
+    $locationsData = $locations->combine($locations->map(function ($item, $key) {
         return ['id' => $item, 'items' => collect(), 'remaining_items' => collect()];
     }));
     foreach ($cartItems as $cartItem) {
-        $processedWarehouses = [];
-        foreach ($cartItem['item']->inventory as $warehouseData) {
-            if (array_search($warehouseData['warehouse_id'], $warehouses->toArray()) === false) {
+        $processedLocations = [];
+        foreach ($cartItem['item']->inventory as $locationData) {
+            if (array_search($locationData['location_id'], $locations->toArray()) === false) {
                 continue;
             }
-            $transferQty = ($cartItem['quantity'] < $warehouseData['quantity']) ? $cartItem['quantity'] : $warehouseData['quantity'];
-            $warehousesData[$warehouseData['warehouse_id']]['items']->push([
+            $transferQty = ($cartItem['quantity'] < $locationData['quantity']) ? $cartItem['quantity'] : $locationData['quantity'];
+            $locationsData[$locationData['location_id']]['items']->push([
                 'variant'  => $cartItem['item'],
                 'quantity' => $transferQty,
             ]);
-            $processedWarehouses[] = $warehouseData['warehouse_id'];
+            $processedLocations[] = $locationData['location_id'];
             if ($transferQty < $cartItem['quantity']) {
-                $warehousesData[$warehouseData['warehouse_id']]['remaining_items']->push([
+                $locationsData[$locationData['location_id']]['remaining_items']->push([
                     'item'     => $cartItem['item'],
-                    'quantity' => $transferQty,
+                    'quantity' => $cartItem['quantity'] - $transferQty,
                 ]);
             }
         }
-        foreach ($warehouses as $warehouseID) {
-            if (array_search($warehouseID, $processedWarehouses) === false) {
-                $warehousesData[$warehouseID]['remaining_items']->push($cartItem);
+        foreach ($locations as $warehouseID) {
+            if (array_search($warehouseID, $processedLocations) === false) {
+                $locationsData[$warehouseID]['remaining_items']->push($cartItem);
             }
         }
     }
-    $selectedWarehouse = $warehousesData->sortByDesc(function ($product, $key) {
+    $selectedLocation = $locationsData->sortByDesc(function ($product, $key) {
         return $product['items']->count();
     })->first();
-    $key = $selectedWarehouse['id'];
-    if ($selectedWarehouse['remaining_items']->count() != 0) {
-        $otherOrders       = generateSubordersData($selectedWarehouse['remaining_items'], $warehouses->diff([$key]));
-        $otherOrders[$key] = $selectedWarehouse['items'];
+    $key = $selectedLocation['id'];
+    if ($selectedLocation['remaining_items']->count() != 0) {
+        $otherOrders       = generateSubordersData($selectedLocation['remaining_items'], $locations->diff([$key]));
+        $otherOrders[$key] = $selectedLocation['items'];
         return $otherOrders;
     } else {
-        return [$key => $selectedWarehouse['items']];
+        return [$key => $selectedLocation['items']];
     }
 }
 
