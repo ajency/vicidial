@@ -29,7 +29,7 @@ function build_search_object($params) {
 					    }
 					); 
 					$ar_keys_ar = array_keys($ar);
-	                $values = str_replace('variant_availablity:', '', $queryv); 
+	                $values = str_replace('variant_availability:', '', $queryv); 
 	                $values_arr = explode(",",$values);
 	                $dataArr["search_result"]["boolean_filter"][$ar_keys_ar[0]]=$values_arr[0];
 	            }
