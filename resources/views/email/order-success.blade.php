@@ -1,13 +1,13 @@
 @extends('layouts.email')
 @section('content')
 @php
-  $order = \App\Order::find(18); 
+  //$order = \App\Order::find(6); 
 	$orderDetails = $order->getOrderDetails();
   $order_info = $orderDetails['order_info'];
   $shipping_address = $orderDetails['shipping_address']; 
   $sub_orders = $orderDetails['sub_orders'];
   $order_summary = $orderDetails['order_summary'];
-  $user_name = $order->cart->user->name
+  $user_name = $order->cart->user->name;
 	//print_r($orderDetails);
 @endphp
 
@@ -290,7 +290,7 @@
                     <div class="">
 	<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 0px; padding-left: 0px; padding-top: 0px; padding-bottom: 0px;"><![endif]-->
 	<div style="color:#555555;line-height:120%;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif; padding-right: 10px; padding-left: 10px; padding-bottom: 10px;">	
-		<div style="font-size:12px;line-height:14px;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;color:#555555;text-align:left;"><p style="margin: 0;font-size: 12px;line-height: 14px"><a href="/{{$item['product_slug']}}/buy?size={{$item['size']}}" style="text-decoration: none;color: #004283;font-weight: 600;"><span style="font-size: 17px; line-height: 20px;text-transform: capitalize;">{{$item['title']}}</span></a></p><p style="margin: 0;font-size: 12px;line-height: 14px"><span style="font-size: 15px; line-height: 18px;">Size:&#160;{{$item['size']}}</span><br /><span style="font-size: 15px; line-height: 18px;">Qty:&#160;{{$item['quantity']}}</span></p><p style="margin: 0;font-size: 12px;line-height: 14px"><span style="font-size: 15px; line-height: 18px;">Item Price: <strong>₹ ₹{{$item['price_final']}}</strong> <small style="text-decoration: line-through;">₹1309</small><small style="color: #ff353b;padding-left: 5px;">20% OFF</small></span></p></div>	
+		<div style="font-size:12px;line-height:14px;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;color:#555555;text-align:left;"><p style="margin: 0;font-size: 12px;line-height: 14px"><a href="/{{$item['product_slug']}}/buy?size={{$item['size']}}" style="text-decoration: none;color: #004283;font-weight: 600;"><span style="font-size: 17px; line-height: 20px;text-transform: capitalize;">{{$item['title']}}</span></a></p><p style="margin: 0;font-size: 12px;line-height: 14px"><span style="font-size: 15px; line-height: 18px;">Size:&#160;{{$item['size']}}</span><br /><span style="font-size: 15px; line-height: 18px;">Qty:&#160;{{$item['quantity']}}</span></p><p style="margin: 0;font-size: 12px;line-height: 14px"><span style="font-size: 15px; line-height: 18px;">Item Price: <strong>₹{{$item['price_final']}}</strong>@if($item['price_final'] != $item['price_mrp'])<small style="text-decoration: line-through;">   ₹{{$item['price_mrp']}}</small><small style="color: #ff353b;padding-left: 5px;">{{ calculate_discount( $item['price_mrp'],$item['price_final']) }}% OFF</small>@endif</span></p></div>	
 	</div>
 	<!--[if mso]></td></tr></table><![endif]-->
 </div>
