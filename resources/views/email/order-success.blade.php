@@ -1,7 +1,7 @@
 @extends('layouts.email')
 @section('content')
 @php
-  //$order = \App\Order::find(6); 
+  $order = \App\Order::find(18); 
 	$orderDetails = $order->getOrderDetails();
   $order_info = $orderDetails['order_info'];
   $shipping_address = $orderDetails['shipping_address']; 
@@ -269,10 +269,9 @@
               <!--[if (!mso)&(!IE)]><!--><div style="border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;"><!--<![endif]-->
 
                   
-                    <div align="center" class="img-container center fixedwidth " style="padding-right: 0px;  padding-left: 0px;">
+                    <div align="center" class="img-container center fixedwidth " style="padding-right: 0px;  padding-left: 0px; @php if(count((array)$item['images'])==0) { @endphp height: 84px; @php } @endphp">
 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr style="line-height:0px;line-height:0px;"><td style="padding-right: 0px; padding-left: 0px;" align="center"><![endif]-->
-  <a href="/{{$item['product_slug']}}/buy?size={{$item['size']}}"><img class="center fixedwidth" align="center" border="0" src="{{$image_1x}}" alt="Image" title="Image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: 0;height: auto;float: none;width: 100%;max-width: 41.6666666666667px; margin-left: auto;
-    padding-right: 20px;" width="41.6666666666667" />
+  <a href="/{{$item['product_slug']}}/buy?size={{$item['size']}}"><img class="center fixedwidth" align="center" border="0" src="{{$image_1x}}" alt="Image" title="Image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: 0;height: auto;float: none;width: 100%;max-width: 41.6666666666667px; margin-left: auto;padding-right: 20px;@php if(count((array)$item['images'])==0) { @endphp background-color: #f9f9f9;margin-right: 20px;padding-right: 0;max-width: 60px;height:100%; @php } @endphp" width="41.6666666666667" />
   </a>
 <!--[if mso]></td></tr></table><![endif]-->
 </div>
