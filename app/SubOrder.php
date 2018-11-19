@@ -19,9 +19,9 @@ class SubOrder extends Model
         return $this->belongsTo('App\Order');
     }
 
-    public function warehouse()
+    public function location()
     {
-        return $this->belongsTo('App\Warehouse', 'warehouse_id', 'odoo_id');
+        return $this->belongsTo('App\Location', 'location_id', 'odoo_id');
     }
 
     public function setItems($items)
@@ -70,7 +70,7 @@ class SubOrder extends Model
         if ($this->odoo_id == null) {
             $items = $this->getItems();
             foreach ($items as $itemData) {
-                if ($itemData['quantity'] > $itemData['item']->inventory[$this->warehouse_id]['quantity']) {
+                if ($itemData['quantity'] > $itemData['item']->inventory[$this->location_id]['quantity']) {
                     abort(410, 'Items no longer available in store');
                 }
             }
@@ -116,7 +116,7 @@ class SubOrder extends Model
             $itemsData[]            = $item;
         }
         $sub_order = array('suborder_id' => $this->id, 'total' => $this->odoo_data['total'] + $this->odoo_data['shipping_fee'], 'number_of_items' => count($this->item_data), 'items' => $itemsData);
-        $store_address = $this->warehouse->getAddress();
+        $store_address = $this->location->warehouse->getAddress();
         if($store_address!=null) {
             $sub_order['store_address'] = $store_address;
         }
@@ -170,14 +170,14 @@ class SubOrder extends Model
     {
         $date_order = new Carbon;
         $address = $this->order->address->odoo_id;
-        $generated_name = $this->warehouse->name.$date_order->toDateTimeString().random_int(1000, 9999);
+        $generated_name = $this->location->display_name.'/'.$date_order->toDateTimeString().random_int(1000, 9999);
         $options    = array_merge(config('orders.odoo_order_defaults'),
         [
             'partner_id'               => $this->order->cart->user->odoo_id,
             'partner_invoice_id'       => $address,
             'partner_shipping_id'      => $address,
-            'warehouse_id'             => $this->warehouse_id,
-            'company_id'               => $this->warehouse->company_id,
+            'warehouse_id'             => $this->location->warehouse->odoo_id,
+            'company_id'               => $this->location->company_odoo_id,
             'date_order'               => $date_order->toDateTimeString(),
             'origin'                   => $generated_name,
             "name"                     => $generated_name,
@@ -190,6 +190,7 @@ class SubOrder extends Model
     {
         $model = "sale.order";
         $odoo  = new OdooConnect;
+        dd($params);
         $out   = $odoo->defaultExec($model, 'create', [$params], null);
         try{
             return $out[0];

@@ -36,10 +36,10 @@ class Order extends Model
         $locations = Location::where('use_in_inventory',true)->pluck('odoo_id');
         $suborders  = generateSubordersData($cart->getItems(), $locations);
         // print_r($suborders);
-        foreach ($suborders as $warehouseID => $items) {
+        foreach ($suborders as $locationID => $items) {
             $subOrder               = new SubOrder;
             $subOrder->order_id     = $this->id;
-            $subOrder->warehouse_id = $warehouseID;
+            $subOrder->location_id = $locationID;
             $subOrder->setItems($items);
             $subOrder->aggregateData();
             $subOrder->save();
