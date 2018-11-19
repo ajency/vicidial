@@ -54,9 +54,9 @@
   @{{/each}}
   </div>
   <div class="text-center mt-3 @{{#if show_more }} @{{else}} d-none @{{/if}}">
-  	<button class="btn btn-primary btn-lg" id="showMoreProductsBtn">
-		<i class="load-icon-cls align-middle fa-circle-notch fa-lg fa-spin fas mr-1 d-none"></i> Show more products
-	</button>
+  	<a href="javascript:void(0);" class="more-link d-flex align-items-center justify-content-center" id="showMoreProductsBtn">
+		<i class="load-icon-cls align-middle fa-circle-notch fa-lg fa-spin fas mr-2 d-none"></i> Show more products <i class="fas fa-chevron-down arrow-down"></i>
+	</a>
   </div>
 </script>
 <div id="products-list-template-content"></div>

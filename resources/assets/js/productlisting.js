@@ -75,7 +75,7 @@ $(document).ready(function(){
       
   $('body').on('click',"#showMoreProductsBtn",function(){
     $(this).find('.load-icon-cls').removeClass('d-none')
-    $(this).prop('disabled', true);
+    $(this).addClass('disabled');
     var page = $.url().param('page');
     var url = window.location.href
     console.log("page==="+page)
