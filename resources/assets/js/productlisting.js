@@ -6,7 +6,21 @@ var ajax_data = {}
 
 var page_val = 1;
 var collapsable_load_values = {}
+Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
+  return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+});
 
+Handlebars.registerHelper('assign', function (varName, varValue, options) {
+  if (!options.data.root) {
+    options.data.root = {};
+  }
+  options.data.root[varName] = varValue;
+});
+
+Handlebars.registerHelper('ifImagesExist', function (arg1, options) {
+  var count = Object.keys(arg1).length;
+  return count > 0 ? options.fn(this) : options.inverse(this);
+});
 $(function(){
 
     $('.kss_sizes .radio-input').prop('checked',false);
@@ -28,7 +42,8 @@ $(function(){
         buttn.html('<i class="kss_icon bag-icon-fill icon-sm"></i> Add To Bag');
     });
 
-    
+
+
 
 })
 var facet_list = {}
@@ -105,20 +120,7 @@ $(document).ready(function(){
         });
         var source = document.getElementById("products-list-template").innerHTML;
         var template = Handlebars.compile(source);
-        Handlebars.registerHelper('assign', function (varName, varValue, options) {
-          if (!options.data.root) {
-            options.data.root = {};
-          }
-          options.data.root[varName] = varValue;
-        });
-        Handlebars.registerHelper('ifEquals', function (arg1, arg2, options) {
-          return arg1 == arg2 ? options.fn(this) : options.inverse(this);
-        });
-        Handlebars.registerHelper('ifImagesExist', function (arg1, options) {
-          console.log(arg1);
-          var count = Object.keys(arg1).length;
-          return count > 0 ? options.fn(this) : options.inverse(this);
-        });
+        
         var context = {};
         var list_count = Object.keys(product_list_items).length;
         for (var vkey in product_list_context.products) {
@@ -376,7 +378,7 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                      else{
                       context["attribute_slug"] = vval.attribute_slug
                      }
-                     
+                     context["template"] = templateval
                      context["filter_type"] = (vval.filter_type != undefined)?vval.filter_type:"primary_filter";
                      context["display_count"] = (vval.display_count != undefined)?vval.display_count:false;
                      context["is_attribute_param"] = (vval.is_attribute_param != undefined)?vval.is_attribute_param:false;
@@ -395,9 +397,7 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                         context["maxval"] = maxval;
                      }
                      
-                     Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
-                          return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
-                      });
+                     
                      var items = $.map(vval.items, function(el) { return el });
                      items.sort(function(obj1, obj2) {
                       // Ascending: first age less than the previous
@@ -434,20 +434,7 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                 });
                 var source = document.getElementById("products-list-template").innerHTML;
                 var template = Handlebars.compile(source);
-                Handlebars.registerHelper('assign', function (varName, varValue, options) {
-                  if (!options.data.root) {
-                    options.data.root = {};
-                  }
-                  options.data.root[varName] = varValue;
-                });
-                Handlebars.registerHelper('ifEquals', function (arg1, arg2, options) {
-                  return arg1 == arg2 ? options.fn(this) : options.inverse(this);
-                });
-                Handlebars.registerHelper('ifImagesExist', function (arg1, options) {
-                  console.log(arg1);
-                  var count = Object.keys(arg1).length;
-                  return count > 0 ? options.fn(this) : options.inverse(this);
-                });
+                
                 var context = {};
                 context["products"] = product_list_context.products;
                 context["show_more"] = product_list_context.page.has_next

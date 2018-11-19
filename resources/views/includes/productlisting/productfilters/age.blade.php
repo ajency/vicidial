@@ -6,12 +6,13 @@
         </label>
       </div>
       <div id="collapseAge" class="collapse@{{#if collapsed}}@{{else}} show @{{/if}}" aria-labelledby="headingTwo" data-field="age">
+
         <div class="card-body pt-2">
           @{{#if singleton }}
           @{{#each items}}
-          @include('includes.productlisting.productfilters.common.checkbox', [])
+         
           <div class="custom-radio custom-control">
-            <input type="radio" class="facet-category custom-control-input" onChange="facetCategoryChange(this);" name="age" value="@{{facet_value}}" @{{#if is_selected }} checked = "checked" @{{/if}} data-facet-name="@{{../filter_facet_name}}" data-singleton="true" data-slug="@{{slug}}" @{{#if ../disabled_at_zero_count}} @{{#ifEquals count 0 }} disabled = "disabled" @{{/ifEquals}} @{{/if}} data-collapsable="@{{../collapsed}}">
+             @{{> radioTemplate template=../template facet_value=facet_value is_selected=is_selected filter_facet_name=../filter_facet_name slug=slug disabled_at_zero_count=../disabled_at_zero_count count=count collapsed=../collapsed changeEvent="facetCategoryChange(this);" attribute_slug="" }}
             <label for="@{{display_name}}" class="custom-control-label f-w-4">@{{display_name}} 
             @{{#if ../display_count }}
               <span class="sub-text">(@{{count}})</span>
@@ -22,7 +23,7 @@
           @{{else}}
           @{{#each items}}
           <div class="custom-control custom-checkbox" data-val="@{{display_count_val}}" >
-            <input type="checkbox" class="facet-category custom-control-input" onChange="facetCategoryChange(this);" name="age" value="@{{facet_value}}" @{{#if is_selected }} checked = "checked" @{{/if}} data-facet-name="@{{../filter_facet_name}}" data-singleton="false" data-slug="@{{slug}}" @{{#if ../disabled_at_zero_count}} @{{#ifEquals count 0 }} disabled = "disabled" @{{/ifEquals}} @{{/if}} data-collapsable="@{{../collapsed}}">
+            @{{> checkboxTemplate template=../template facet_value=facet_value is_selected=is_selected filter_facet_name=../filter_facet_name slug=slug disabled_at_zero_count=../disabled_at_zero_count count=count collapsed=../collapsed changeEvent="facetCategoryChange(this);" attribute_slug="" }}
             <label class="custom-control-label f-w-4" for="@{{display_name}}">@{{display_name}} 
             @{{#if ../display_count }}
             <span class="sub-text">(@{{count}})</span>
@@ -41,17 +42,6 @@
    // require('handlebars');
    var source   = document.getElementById("filter-age-template").innerHTML;
    var template = Handlebars.compile(source);
-   Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
-    console.log("arg1=="+arg1+"===="+arg2)
-      return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
-  });
-   Handlebars.registerHelper('assign', function (varName, varValue, options) {
-    console.log("varval=="+varValue)
-    if (!options.data.root) {
-      options.data.root = {};
-    }
-    options.data.root[varName] = varValue;
-  });
    var singleton = (<?= $singleton ?> == 1)?true:false;
    var collapsed = (<?= $collapsed ?> == 1)?true:false;
    var filter_display_name = '<?= $header["display_name"] ?>';
@@ -61,6 +51,7 @@
    var is_attribute_param = <?= json_encode($is_attribute_param) ?>;
    console.log("age----"+<?= $singleton ?>)
    var context = {};
+   context["template"] = '<?= $template ?>';
    context["singleton"] = singleton;
    context["collapsed"] = collapsed;
    context["display_count"] = display_count;

@@ -17,7 +17,7 @@
           @{{#if singleton }}
           @{{#each items}}
           <div class="custom-radio custom-control">
-            <input type="radio" class="facet-category custom-control-input" onChange="facetCategoryChange(this);" name="category" value="@{{facet_value}}" @{{#if is_selected }} checked = "checked" @{{/if}} data-facet-name="@{{../filter_facet_name}}" data-singleton="true" data-slug="@{{slug}}" @{{#if ../disabled_at_zero_count}} @{{#ifEquals count 0 }} disabled = "disabled" @{{/ifEquals}} @{{/if}} data-collapsable="@{{../collapsed}}">
+            @{{> radioTemplate template=../template facet_value=facet_value is_selected=is_selected filter_facet_name=../filter_facet_name slug=slug disabled_at_zero_count=../disabled_at_zero_count count=count collapsed=../collapsed changeEvent="facetCategoryChange(this);" attribute_slug="" }}
             <label for="@{{display_name}}" class="custom-control-label f-w-4">@{{display_name}} 
               @{{#if ../display_count }}
               <span class="sub-text">(@{{count}})</span>
@@ -28,7 +28,7 @@
           @{{else}}
           @{{#each items}}
           <div class="custom-control custom-checkbox" >
-            <input type="checkbox" class="facet-category custom-control-input" onChange="facetCategoryChange(this);" name="category" value="@{{facet_value}}" @{{#if is_selected }} checked = "checked" @{{/if}} data-facet-name="@{{../filter_facet_name}}" data-singleton="false" data-slug="@{{slug}}" @{{#if ../disabled_at_zero_count}} @{{#ifEquals count 0 }} disabled = "disabled" @{{/ifEquals}} @{{/if}} data-collapsable="@{{../collapsed}}">
+            @{{> checkboxTemplate template=../template facet_value=facet_value is_selected=is_selected filter_facet_name=../filter_facet_name slug=slug disabled_at_zero_count=../disabled_at_zero_count count=count collapsed=../collapsed changeEvent="facetCategoryChange(this);" attribute_slug="" }}
             <label class="custom-control-label f-w-4" for="@{{display_name}}">@{{display_name}} 
             @{{#if ../display_count }}
               <span class="sub-text">(@{{count}})</span>
@@ -49,15 +49,13 @@
    var template = Handlebars.compile(source);
    var singleton = (<?= $singleton ?> == 1)?true:false;
    var collapsed = (<?= $collapsed ?> == 1)?true:false;
-   Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
-      return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
-  });
    var filter_display_name = '<?= $header["display_name"] ?>';
    var filter_facet_name = '<?= $header["facet_name"] ?>';
    var context = {};
    var display_count = <?= json_encode($display_count) ?>;
    var disabled_at_zero_count = <?= json_encode($disabled_at_zero_count) ?>;
    var is_attribute_param = <?= json_encode($is_attribute_param) ?>;
+   context["template"] = '<?= $template ?>';
    context["display_count"] = display_count;
    context["disabled_at_zero_count"] = disabled_at_zero_count;
    context["is_attribute_param"] = is_attribute_param;
