@@ -21,17 +21,21 @@ function build_search_object($params) {
 	            }
 			}
 			if($queryk == "bf"){
-				// dd("gdgfd");
 				if (strpos($queryv, "variant_availability:") !== false) {
 
 					$ar = array_filter($facet_display_data, function ($item) {
-					        return $item['attribute_param'] === 'price';
+					        return $item['attribute_param'] === 'variant_availability';
 					    }
 					); 
 					$ar_keys_ar = array_keys($ar);
 	                $values = str_replace('variant_availability:', '', $queryv); 
 	                $values_arr = explode(",",$values);
-	                $dataArr["search_result"]["boolean_filter"][$ar_keys_ar[0]]=$values_arr[0];
+	                $bool_val=false;
+	                if(is_string($values_arr[0]))
+	                	$bool_val =($values_arr[0] == "true")?true:false;
+	                else
+	                	$bool_val =$values_arr[0];
+	                $dataArr["search_result"]["boolean_filter"][$ar_keys_ar[0]]=$bool_val;
 	            }
 			}
 			if($queryk == "rf"){

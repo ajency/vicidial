@@ -212,7 +212,7 @@ return [
             'template'               => 'color',
             'order'                  => 5,
             'display_count'          => true,
-            'disabled_at_zero_count' => true,
+            'disabled_at_zero_count' => false,
             "is_attribute_param"     => true,
             "attribute_param"        => null,
             'filter_type'            => 'primary_filter',
