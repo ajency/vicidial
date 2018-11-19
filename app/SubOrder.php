@@ -170,7 +170,7 @@ class SubOrder extends Model
     {
         $date_order = new Carbon;
         $address = $this->order->address->odoo_id;
-        $generated_name = $this->location->display_name.'/'.$date_order->toDateTimeString().random_int(1000, 9999);
+        $generated_name = $this->location->location_name.'/'.$date_order->toDateTimeString().random_int(1000, 9999);
         $options    = array_merge(config('orders.odoo_order_defaults'),
         [
             'partner_id'               => $this->order->cart->user->odoo_id,
