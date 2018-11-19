@@ -6,6 +6,8 @@ use App\Defaults;
 use App\Elastic\ElasticQuery;
 use App\Elastic\OdooConnect;
 use App\Jobs\CreateMoveJobs;
+use App\Jobs\IndexMove;
+use App\Jobs\IndexProduct;
 use App\Jobs\UpdateVariantInventory;
 
 class ProductMove
@@ -41,8 +43,16 @@ class ProductMove
         $odoo          = new OdooConnect;
         $moveData      = $odoo->defaultExec('stock.move.line', 'read', [[$move_id]], ['fields' => config('product.move_fields')])->first();
         $sanitisedData = sanitiseMoveData($moveData, 'move_');
-        $elastic_data  = array_merge($sanitisedData, Variant::where('odoo_id', $sanitisedData['move_product_id'])->first()->getVariantData('all', 'variant_'));
-        $data          = self::indexElasticData($elastic_data);
+        $variant       = Variant::where('odoo_id', $sanitisedData['move_product_id'])->first();
+        if ($variant == null) {
+            \Log::notice('chaining product Move ' . $move_id . ' as variant ' . $sanitisedData['move_product_id'] . ' is not found in DB');
+            IndexProduct::withChain([
+                new IndexMove($move_id),
+            ])->dispatch(Variant::getVariantProductIdFromOdoo($sanitisedData['move_product_id']))->onQueue('process_product');
+            return;
+        }
+        $elastic_data = array_merge($sanitisedData, $variant->getVariantData('all', 'variant_'));
+        $data         = self::indexElasticData($elastic_data);
         if (config('product.update_inventory')) {
             if ($sanitisedData["move_to_loc"] == "Stock" or $sanitisedData["move_from_loc"] == "Stock") {
                 UpdateVariantInventory::dispatch($elastic_data)->onQueue('update_inventory');
