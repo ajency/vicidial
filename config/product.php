@@ -214,7 +214,7 @@ return [
             'display_count'          => true,
             'disabled_at_zero_count' => false,
             "is_attribute_param"     => true,
-            "attribute_param"        => null,
+            "attribute_param"        => "color",
             'filter_type'            => 'primary_filter',
             "is_essential"          => false
         ],
