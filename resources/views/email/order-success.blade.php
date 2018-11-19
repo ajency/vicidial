@@ -7,6 +7,7 @@
   $shipping_address = $orderDetails['shipping_address']; 
   $sub_orders = $orderDetails['sub_orders'];
   $order_summary = $orderDetails['order_summary'];
+  $user_name = $order->cart->user->name
 	//print_r($orderDetails);
 @endphp
 
@@ -44,7 +45,7 @@
                     <div class="">
 	<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;"><![endif]-->
 	<div style="color:#555555;line-height:120%;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif; padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;">	
-		<div style="font-size:12px;line-height:14px;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;color:#000000;text-align:left;"><p style="margin: 0;font-size: 12px;line-height: 14px;text-align: center"><span style="font-size: 16px; line-height: 19px;">Hi <strong>{{$shipping_address['name']}}</strong>, we've received order No: <strong>{{$order_info['txn_no']}}</strong> and are working on it now.</span></p><p style="margin: 0;font-size: 12px;line-height: 14px;text-align: center"><span style="font-size: 16px; line-height: 19px;">We'll email you an update when we've shipped it.</span></p></div>	
+		<div style="font-size:12px;line-height:14px;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;color:#000000;text-align:left;"><p style="margin: 0;font-size: 12px;line-height: 14px;text-align: center"><span style="font-size: 16px; line-height: 19px;">Hi <strong>{{$user_name}}</strong>, we've received order No: <strong>{{$order_info['txn_no']}}</strong> and are working on it now.</span></p><p style="margin: 0;font-size: 12px;line-height: 14px;text-align: center"><span style="font-size: 16px; line-height: 19px;">We'll email you an update when we've shipped it.</span></p></div>	
 	</div>
 	<!--[if mso]></td></tr></table><![endif]-->
 </div>
