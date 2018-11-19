@@ -9,6 +9,7 @@
         <div class="card-body pt-2">
           @{{#if singleton }}
           @{{#each items}}
+          @include('includes.productlisting.productfilters.common.checkbox', [])
           <div class="custom-radio custom-control">
             <input type="radio" class="facet-category custom-control-input" onChange="facetCategoryChange(this);" name="age" value="@{{facet_value}}" @{{#if is_selected }} checked = "checked" @{{/if}} data-facet-name="@{{../filter_facet_name}}" data-singleton="true" data-slug="@{{slug}}" @{{#if ../disabled_at_zero_count}} @{{#ifEquals count 0 }} disabled = "disabled" @{{/ifEquals}} @{{/if}} data-collapsable="@{{../collapsed}}">
             <label for="@{{display_name}}" class="custom-control-label f-w-4">@{{display_name}} 
