@@ -436,3 +436,21 @@ footer .bl-1{
         color: $flash-info-color;
     }
 }
+
+.disabled{
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.more-link{
+    font-size: 1.2em;
+    font-weight: 600;
+    color: theme-color("secondary");
+    &:hover{
+        color: darken(theme-color("secondary"),20%);
+    }
+    .arrow-down{
+        padding-left: 8px;
+        font-size: 1.1em;
+    }
+}
