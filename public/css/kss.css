@@ -13010,7 +13010,7 @@ select.custom::-ms-expand {
   transition: all 0.5s ease;
   z-index: 99999;
   height: 100vh;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   top: 0px;
 }

@@ -55,8 +55,8 @@ class SubOrder extends Model
         $total = 0;
         $savings = 0;
         foreach ($items as $itemData) {
-            $total += $itemData['item']->getSalePrice();
-            $savings += $itemData['item']->getSavings();
+            $total += $itemData['quantity']*$itemData['item']->getSalePrice();
+            $savings += $itemData['quantity']*$itemData['item']->getSavings();
         }
         $this->odoo_data = [
             'total'        => $total,

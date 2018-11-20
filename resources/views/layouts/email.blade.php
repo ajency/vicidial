@@ -255,8 +255,8 @@ a[x-apple-data-detectors=true] {
                   
                     <div align="center" class="img-container center fixedwidth " style="padding-right: 0px;  padding-left: 0px;">
 				<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr style="line-height:0px;line-height:0px;"><td style="padding-right: 0px; padding-left: 0px;" align="center"><![endif]-->
-					<a href="https://www.kidsuperstore.in" title="Kidsuperstore">
-					  	<img class="center fixedwidth" align="center" border="0" src="/img/email-logo.png" alt="Image" title="Image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: 0;height: auto;float: none;width: 100%;max-width: 250px" width="250" />
+					<a href="{{url('/')}}" title="Kidsuperstore">
+					  	<img class="center fixedwidth" align="center" border="0" src="{{CDN::asset('/img/email-logo.png') }}" alt="Image" title="Image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: 0;height: auto;float: none;width: 100%;max-width: 250px" width="250" />
 					  </a>
 					<!--[if mso]></td></tr></table><![endif]-->
 					</div>
@@ -359,7 +359,7 @@ a[x-apple-data-detectors=true] {
     <table align="left" border="0" cellspacing="0" cellpadding="0" width="32" height="32" style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;Margin-right: 5px">
       <tbody><tr style="vertical-align: top"><td align="left" valign="middle" style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
         <a href="https://www.facebook.com/kidsuperstore" title="Facebook" target="_blank">
-          <img src="/img/fb-icon.png" alt="Facebook" title="Facebook" width="32" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important" />
+          <img src="{{CDN::asset('/img/fb-icon.png') }}" alt="Facebook" title="Facebook" width="32" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important" />
         </a>
       <div style="line-height:5px;font-size:1px">&#160;</div>
       </td></tr>
@@ -368,7 +368,7 @@ a[x-apple-data-detectors=true] {
     <table align="left" border="0" cellspacing="0" cellpadding="0" width="32" height="32" style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;Margin-right: 5px">
       <tbody><tr style="vertical-align: top"><td align="left" valign="middle" style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
         <a href="https://www.instagram.com/kidsuperstore.in/" title="Instagram" target="_blank">
-          <img src="/img/insta-icon.png" alt="Instagram" title="Instagram" width="32" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important" />
+          <img src="{{CDN::asset('/img/insta-icon.png') }}" alt="Instagram" title="Instagram" width="32" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important" />
         </a>
       <div style="line-height:5px;font-size:1px">&#160;</div>
       </td></tr>
