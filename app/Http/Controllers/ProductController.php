@@ -40,13 +40,6 @@ class ProductController extends Controller
 
         setSEO('product', $params);
 
-        $search_object = [
-          "boolean_filter" => [],
-          "primary_filter" => [
-            "product_category_type" => ["Apparels"]
-          ]
-        ];
-
         $similar_cat_params=[];
         $facets = Facet::select('slug')->whereIn('facet_value', array_values((array)$params["category"]))->get()->toArray();
         $similar_cat_params['categories'] = array_column($facets, 'slug');
