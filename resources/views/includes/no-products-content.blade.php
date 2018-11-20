@@ -4,7 +4,7 @@
             <img src="/img/empty_troly.png" class="img-fluid lazyload " width="400px" />
             @isset($sectionnotfound)
             	<h2 class="my-4">Sorry, no results found!</h2>
-				<a href="#">
+				<a href="javascript:window.history.back();location.reload();">
 	          		<button type="button" class="btn btn-outline-dark btn-lg m-auto d-block">Go back</button>
 	        	</a>
             @else
