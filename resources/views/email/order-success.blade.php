@@ -1,12 +1,12 @@
 @extends('layouts.email')
 @section('content')
 @php
-	$orderDetails = $order->getOrderDetails();
-	  $order_info = $orderDetails['order_info'];
-	  $shipping_address = $orderDetails['shipping_address']; 
-	  $sub_orders = $orderDetails['sub_orders'];
-	  $order_summary = $orderDetails['order_summary'];
-	  $user_name = $order->cart->user->name;
+  $orderDetails = $order->getOrderDetails();
+  $order_info = $orderDetails['order_info'];
+  $shipping_address = $orderDetails['shipping_address']; 
+  $sub_orders = $orderDetails['sub_orders'];
+  $order_summary = $orderDetails['order_summary'];
+  $user_name = $order->cart->user->name;
 @endphp
 
 
@@ -34,7 +34,7 @@
                   
                     <div align="center" class="img-container center  autowidth  " style="padding-right: 0px;  padding-left: 0px;">
 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr style="line-height:0px;line-height:0px;"><td style="padding-right: 0px; padding-left: 0px;" align="center"><![endif]-->
-  <img class="center  autowidth " align="center" border="0" src="/img/truck.gif" alt="Image" title="Image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: 0;height: auto;float: none;width: 100%;max-width: 136px" width="136" />
+  <img class="center  autowidth " align="center" border="0" src="{{CDN::asset('/img/truck.gif') }}" alt="Image" title="Image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: 0;height: auto;float: none;width: 100%;max-width: 136px" width="136" />
 <!--[if mso]></td></tr></table><![endif]-->
 </div>
 

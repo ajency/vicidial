@@ -11,8 +11,8 @@
     transition: all 0.5s ease;
     z-index: 99999;
     height:100vh;
-    overflow-y:scroll;
-     overflow-x:hidden;
+    overflow-y: auto;
+    overflow-x:hidden;
     top: 0px;
 @media (min-width: 360px) and (max-width: 767.98px) {
     width: 100%;
