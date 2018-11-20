@@ -109,6 +109,7 @@ function sanitiseProductData($odooData)
         $index[$category] = (isset($product_categories[$i])) ? trim($product_categories[$i]) : 'Others';
         $i++;
     }
+    if($index['product_gender'] == 'Others') $index['product_gender'] = 'Unisex';
     return $index;
 }
 
@@ -215,9 +216,6 @@ function buildProductIndexFromOdooData($productData, $variantData)
         "product_color_html"                => $variantData->first()['product_color_html'],
         "product_images"                    => [],
     ];
-    if($productData['product_gender'] == 'Others'){
-        $indexData['search_result_data']['product_gender'] = 'Unisex';
-    }
     $indexData["variants"] = [];
     foreach ($variantData as $variant) {
         $indexData['variants'][] = [
@@ -241,9 +239,10 @@ function buildProductIndexFromOdooData($productData, $variantData)
         $facets = ['string_facet', 'number_facet', 'boolean_facet'];
         foreach ($facets as $facet) {
             foreach (config('product.facets.' . $facet . '.product') as $value) {
-                if($value == 'product_gender' && $productData[$value] == 'Others'){
+                if($value == 'product_gender' && $productData[$value] == 'Unisex'){
                     $search_data[$facet][] =['facet_name' => $value, 'facet_value'=> 'Girls', 'facet_slug'=>'girls'];
                     $search_data[$facet][] =['facet_name' => $value, 'facet_value'=> 'Boys', 'facet_slug'=>'boys'];
+                    $search_data[$facet][] =['facet_name' => $value, 'facet_value'=> 'Unisex', 'facet_slug'=>'unisex'];
                     continue;
                 }
                 $facetObj = [
