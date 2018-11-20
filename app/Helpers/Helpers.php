@@ -215,6 +215,9 @@ function buildProductIndexFromOdooData($productData, $variantData)
         "product_color_html"                => $variantData->first()['product_color_html'],
         "product_images"                    => [],
     ];
+    if($productData['product_gender'] == 'Others'){
+        $indexData['search_result_data']['product_gender'] = 'Unisex';
+    }
     $indexData["variants"] = [];
     foreach ($variantData as $variant) {
         $indexData['variants'][] = [
