@@ -28,7 +28,6 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->job(new ImageSync, 'create_jobs')->daily();
-        $schedule->job(new ProductSync, 'create_jobs')->daily();
         $schedule->job(new ProductMoveSync, 'create_jobs')->everyMinute();
 
     }
