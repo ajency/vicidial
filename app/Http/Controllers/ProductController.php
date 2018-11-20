@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\ProductColor;
+use App\Product;
 use App\Facet;
 use Illuminate\Http\Request;
 
@@ -38,7 +39,34 @@ class ProductController extends Controller
 
         setSEO('product', $params);
 
-        return view('singleproduct')->with('params', $params);
+        $search_object = [
+          "boolean_filter" => [],
+          "primary_filter" => [
+            "product_category_type" => ["Apparels"]
+          ]
+        ];
+        // dd($params);
+        $similar_cat_params=[];
+        $similar_cat_params['categories'] = ["apparels"];
+        $search_object_arr = build_search_object($similar_cat_params);
+        // dd($search_object_arr);
+        // $search_object = ($search_obj == null)?(build_search_object($params)):$search_obj;
+        $search_results = [];
+
+        $search_object = $search_object_arr["search_result"];
+
+        $search_results["slug_search_result"] = $search_object_arr["slug_search_result"];
+        $search_results["slug_value_search_result"] = $search_object_arr["slug_value_search_result"];
+        $search_results["slugs_result"] = $search_object_arr["slugs_result"];
+        $search_results["title"] = $search_object_arr["title"];
+        $similar_products_display_limit = config('product.similar_products_display_limit');
+        // echo "similar_products_display_limit==".$similar_products_display_limit;
+        $parameters = Product::productListPage(["search_object" => $search_object,"display_limit"=> ($similar_products_display_limit+1),"page" =>1],$search_results["slug_value_search_result"],$search_results["slug_search_result"],$search_results["slugs_result"],$search_results["title"]);
+
+        // dd($parameters);
+        $similar_data_params= json_decode(json_encode($parameters,JSON_FORCE_OBJECT));
+
+        return view('singleproduct')->with('params', $params)->with('similar_data_params', $similar_data_params);
     }
 
     public function getImage($photo_id, $preset, $depth, $filename)
