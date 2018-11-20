@@ -62,7 +62,7 @@ paste this
 ```
 [program:newsite_product_sync]
 process_name=%(program_name)s_%(process_num)02d
-command=php /var/www/newsite/artisan queue:work --queue=update_inventory,process_move,odoo_order,process_product,process_product_images,create_jobs --sleep=3 --tries=3
+command=php /var/www/newsite/artisan queue:work --queue=update_inventory,process_move,process_product,process_product_images,create_jobs --sleep=3 --tries=3
 autostart=true
 autorestart=true
 user=root
@@ -142,6 +142,9 @@ Add the following to crontab
 
 ### Get all warehouses from odoo
 `php artisan odoo:warehouses` 
+
+### Get all locations from odoo
+`php artisan odoo:locations` 
 
 ### Get all states from odoo
 `php artisan odoo:states` 
