@@ -100,7 +100,7 @@
 
 			</div>
 		</div>
-		@include('includes.similar-products',["items"=>$similar_data_params->items]) 
+		@include('includes.similar-products',["items"=>$similar_data_params]) 
 
 	</div>
 
