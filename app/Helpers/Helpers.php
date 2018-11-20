@@ -138,15 +138,15 @@ function sanitiseVariantData($odooData, $attributeData, $inventoryData)
 
     } else {
         $variantData['product_color_id']   = 0;
-        $variantData['product_color_name'] = "";
-        $variantData['product_color_html'] = "";
+        $variantData['product_color_name'] = "Not Applicable";
+        $variantData['product_color_html'] = "#4166F5";
     }
     if ($size) {
         $variantData['variant_size_id']   = $size['id'];
         $variantData['variant_size_name'] = $size['name'];
     } else {
         $variantData['variant_size_id']   = 0;
-        $variantData['variant_size_name'] = "";
+        $variantData['variant_size_name'] = "Miscellaneous";
     }
 
     return $variantData;

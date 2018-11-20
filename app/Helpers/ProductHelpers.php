@@ -249,8 +249,8 @@ function setElasticFacetFilters($q, $params)
         }
     }
     $must = $q::addToBoolQuery('must', $must);
-    $must = hideZeroColorIDProducts($q, $must);
-    $must = hideZeroSizeIDProducts($q, $must);
+    // $must = hideZeroColorIDProducts($q, $must);
+    // $must = hideZeroSizeIDProducts($q, $must);
     if (isset($params['search_object']['boolean_filter']['variant_availability']) && $params['search_object']['boolean_filter']['variant_availability']) {
         $must = hideUnavailableProducts($q, $must);
     }
