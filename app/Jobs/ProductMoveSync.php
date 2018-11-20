@@ -12,7 +12,7 @@ use App\ProductMove;
 class ProductMoveSync implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
+    public $timeout = 1800;
     /**
      * Create a new job instance.
      *
