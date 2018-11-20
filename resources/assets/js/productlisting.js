@@ -137,7 +137,7 @@ $(document).ready(function(){
         console.log(product_list_items);
         var html = template(context);
         document.getElementById("products-list-template-content").innerHTML = html;
-       window.history.replaceState('categoryPageUrl', 'Category page', url);
+       window.history.pushState('categoryPageUrl', 'Category page', url);
       });
     
   })
@@ -457,7 +457,7 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                 console.log(config_facet_names_arr);
                 console.log(facet_list)
 
-                window.history.replaceState('categoryPage', 'Category', url);
+                window.history.pushState('categoryPage', 'Category', url);
             });
         }
         else{

@@ -182,7 +182,7 @@ return [
         'product_age_group'     => [
             'name'                   => 'Age Group',
             'is_singleton'           => false,
-            'is_collapsed'           => true,
+            'is_collapsed'           => false,
             'template'               => 'age',
             'order'                  => 2,
             'display_count'          => true,
@@ -195,7 +195,7 @@ return [
         'product_subtype'       => [
             'name'                   => 'Sub Type',
             'is_singleton'           => false,
-            'is_collapsed'           => true,
+            'is_collapsed'           => false,
             'template'               => 'subtype',
             'order'                  => 3,
             'display_count'          => true,
@@ -254,5 +254,6 @@ return [
     ], //Used for breadcrumbs on single product page
     "list_page_display_limit" => 30,
     "similar_products_display_limit" => 5,
+    "price_filter_bucket_range" => ["min"=>0,"max"=>2000],
 
 ];

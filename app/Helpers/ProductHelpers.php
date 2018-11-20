@@ -157,7 +157,8 @@ function sanitiseFilterdata($result, $params = [])
         foreach ($attributes as $attribute) {
             $filter[$attribute] = config('product.facet_display_data.' . $facetName . '.' . $attribute);
         }
-        $filter["is_collapsed"] = !boolval($is_collapsed);
+        //change made by Tanvi to is_collapsed value
+        $filter["is_collapsed"] = (!boolval($is_collapsed) == true)?(config('product.facet_display_data.' . $facetName . '.is_collapsed')):!boolval($is_collapsed);
         $response[]             = $filter;
     }
     //le price filter
@@ -172,12 +173,17 @@ function sanitiseFilterdata($result, $params = [])
     $filter["items"]                   = [];
     $filter["is_collapsed"]            = false;
     $filter["bucket_range"]            = [];
-    $filter["bucket_range"]["start"]   = $priceFilter['min'];
-    $filter["bucket_range"]["end"]     = $priceFilter['max'];
+    // $filter["bucket_range"]["start"]   = $priceFilter['min'];
+    // $filter["bucket_range"]["end"]     = $priceFilter['max'];
+    
+    /** change made by Tanvi to bucket range as a workaround to handle price filters **/
+    $filter["bucket_range"]["start"]   = config('product.price_filter_bucket_range.min');
+    $filter["bucket_range"]["end"]     = config('product.price_filter_bucket_range.max');
+    /** change made by Tanvi to bucket range as a workaround to handle price filters **/
     $filter["selected_range"]          = [];
-    $filter["selected_range"]["start"] = (isset($params["search_object"]['range_filter']['variant_sale_price'])) ? $params["search_object"]['range_filter']['variant_sale_price']['min'] : $priceFilter['min'];
+    $filter["selected_range"]["start"] = (isset($params["search_object"]['range_filter']['variant_sale_price'])) ? $params["search_object"]['range_filter']['variant_sale_price']['min'] : $filter["bucket_range"]["start"];
     // $filter["selected_range"]["start"] = ($filter["selected_range"]["start"] < $filter["bucket_range"]["start"])? $filter["bucket_range"]["start"] : $filter["selected_range"]["start"];
-    $filter["selected_range"]["end"]   = (isset($params["search_object"]['range_filter']['variant_sale_price'])) ? $params["search_object"]['range_filter']['variant_sale_price']['max'] : $priceFilter['max'];
+    $filter["selected_range"]["end"]   = (isset($params["search_object"]['range_filter']['variant_sale_price'])) ? $params["search_object"]['range_filter']['variant_sale_price']['max'] : $filter["bucket_range"]["end"];
     // $filter["selected_range"]["end"] = ($filter["selected_range"]["end"] > $filter["bucket_range"]["end"])? $filter["bucket_range"]["end"] : $filter["selected_range"]["end"];
     $response[] = $filter;
 
