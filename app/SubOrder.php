@@ -83,16 +83,14 @@ class SubOrder extends Model
             $this->checkInventory();
             $order_lines = [];
             $itemsData   = [];
-            $i           = 0;
             foreach ($this->item_data as $itemData) {
                 $variant            = Variant::find($itemData['id']);
                 $item               = $variant->getItemAttributes();
                 $item['quantity']   = $itemData['quantity'];
                 $item['variant_id'] = $itemData['id'];
                 $itemsData[]        = $item;
-                $order_line = self::createOrderLine($i, $variant, $itemData['quantity']);
+                $order_line = self::createOrderLine($variant, $itemData['quantity']);
                 $lines[]    = $order_line;
-                $i++;
             }
             $odoo_order  = self::createOrderParams($lines);
             $id = $this->createOdooOrder($odoo_order);
@@ -116,7 +114,7 @@ class SubOrder extends Model
             $itemsData[]            = $item;
         }
         $sub_order = array('suborder_id' => $this->id, 'total' => $this->odoo_data['total'] + $this->odoo_data['shipping_fee'], 'number_of_items' => count($this->item_data), 'items' => $itemsData);
-        $store_address = $this->location->warehouse->getAddress();
+        $store_address = $this->location->getAddress();
         if($store_address!=null) {
             $sub_order['store_address'] = $store_address;
         }
@@ -149,11 +147,11 @@ class SubOrder extends Model
     //     parent::save($options);
     // }
 
-    public function createOrderLine($i, Variant $variant, int $quantity)
+    public function createOrderLine(Variant $variant, int $quantity)
     {
         $order_line = [
-            $i,
-            "virtual_" . $variant->id,
+            0,
+            0,
             array_merge(config('orders.odoo_orderline_defaults'),
             [
                 "product_id"         => $variant->odoo_id,
@@ -170,7 +168,7 @@ class SubOrder extends Model
     {
         $date_order = new Carbon;
         $address = $this->order->address->odoo_id;
-        $generated_name = $this->location->location_name.'/'.$date_order->toDateTimeString().random_int(1000, 9999);
+        $generated_name = $this->location->location_name.'/'.$this->order->txnid;
         $options    = array_merge(config('orders.odoo_order_defaults'),
         [
             'partner_id'               => $this->order->cart->user->odoo_id,
@@ -190,7 +188,6 @@ class SubOrder extends Model
     {
         $model = "sale.order";
         $odoo  = new OdooConnect;
-        dd($params);
         $out   = $odoo->defaultExec($model, 'create', [$params], null);
         try{
             return $out[0];
