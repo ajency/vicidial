@@ -125,6 +125,9 @@ $(document).ready(function () {
       if (Object.keys(product_list_items).length <= 0) {
         $(".productlist__row").addClass('d-none');
         $(".productlist__na").removeClass('d-none');
+      } else {
+        $(".productlist__row").removeClass('d-none');
+        $(".productlist__na").addClass('d-none');
       }
       context["show_more"] = product_list_context.page.has_next;
       console.log("product_list_items======");
@@ -408,6 +411,9 @@ function facetCategoryChange(thisObj) {
             if (Object.keys(values).length <= 0) {
               $(".productlist__row").addClass('d-none');
               $(".productlist__na").removeClass('d-none');
+            } else {
+              $(".productlist__row").removeClass('d-none');
+              $(".productlist__na").addClass('d-none');
             }
           }
         });
