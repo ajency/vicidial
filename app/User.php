@@ -80,7 +80,7 @@ class User extends Authenticatable
 
     private function getOdooIdFromOdoo()
     {
-        $odoo  = new OdooConnect;
+        $odoo = new OdooConnect;
         return $odoo->defaultExec($this->odooModel, 'search_read', [[
             ['phone', '=', $this->phone],
             ['customer', '=', true],
@@ -93,7 +93,7 @@ class User extends Authenticatable
 
     private function writeNewCustomerToOdoo()
     {
-        $odoo  = new OdooConnect;
+        $odoo = new OdooConnect;
         return $odoo->defaultExec($this->odooModel, 'create', [[
             "customer"   => true,
             "name"       => $this->name,
@@ -102,6 +102,20 @@ class User extends Authenticatable
             "type"       => "contact",
             "is_company" => false,
         ]], null)->first();
+    }
+
+    private function updateCustomerOnOdoo()
+    {
+        $odoo = new OdooConnect;
+        $odoo->defaultExec($this->odooModel, 'write', [[$this->odoo_id], [
+            "customer"   => true,
+            "name"       => $this->name,
+            "phone"      => $this->phone,
+            "email"      => ($this->email) ? $this->email : "",
+            "type"       => "contact",
+            "is_company" => false,
+
+        ]], null);
     }
 
     private function odooSync()
@@ -129,10 +143,9 @@ class User extends Authenticatable
 
     public function userInfo()
     {
-        if($this->email==null) {
+        if ($this->email == null) {
             return null;
-        }
-        else {
+        } else {
             return array('name' => $this->name, 'email' => $this->email);
         }
     }

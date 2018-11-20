@@ -83,16 +83,14 @@ class SubOrder extends Model
             $this->checkInventory();
             $order_lines = [];
             $itemsData   = [];
-            $i           = 0;
             foreach ($this->item_data as $itemData) {
                 $variant            = Variant::find($itemData['id']);
                 $item               = $variant->getItemAttributes();
                 $item['quantity']   = $itemData['quantity'];
                 $item['variant_id'] = $itemData['id'];
                 $itemsData[]        = $item;
-                $order_line = self::createOrderLine($i, $variant, $itemData['quantity']);
+                $order_line = self::createOrderLine($variant, $itemData['quantity']);
                 $lines[]    = $order_line;
-                $i++;
             }
             $odoo_order  = self::createOrderParams($lines);
             $id = $this->createOdooOrder($odoo_order);
@@ -149,11 +147,11 @@ class SubOrder extends Model
     //     parent::save($options);
     // }
 
-    public function createOrderLine($i, Variant $variant, int $quantity)
+    public function createOrderLine(Variant $variant, int $quantity)
     {
         $order_line = [
-            $i,
-            "virtual_" . $variant->id,
+            0,
+            0,
             array_merge(config('orders.odoo_orderline_defaults'),
             [
                 "product_id"         => $variant->odoo_id,
