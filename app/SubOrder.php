@@ -114,7 +114,7 @@ class SubOrder extends Model
             $itemsData[]            = $item;
         }
         $sub_order = array('suborder_id' => $this->id, 'total' => $this->odoo_data['total'] + $this->odoo_data['shipping_fee'], 'number_of_items' => count($this->item_data), 'items' => $itemsData);
-        $store_address = $this->location->warehouse->getAddress();
+        $store_address = $this->location->getAddress();
         if($store_address!=null) {
             $sub_order['store_address'] = $store_address;
         }
@@ -168,7 +168,7 @@ class SubOrder extends Model
     {
         $date_order = new Carbon;
         $address = $this->order->address->odoo_id;
-        $generated_name = $this->location->location_name.'/'.$date_order->toDateTimeString().random_int(1000, 9999);
+        $generated_name = $this->location->location_name.'/'.$this->order->txnid;
         $options    = array_merge(config('orders.odoo_order_defaults'),
         [
             'partner_id'               => $this->order->cart->user->odoo_id,
