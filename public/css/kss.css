@@ -14466,6 +14466,20 @@ body #cd-cart .modal.show .modal-dialog {
   border-right: 0;
 }
 
+.similar-products__col {
+  max-width: 20%;
+  -ms-flex-preferred-size: 20%;
+      flex-basis: 20%;
+}
+
+@media (max-width: 767px) {
+  .similar-products__col {
+    max-width: 50%;
+    -ms-flex-preferred-size: 50%;
+        flex-basis: 50%;
+  }
+}
+
 nav.navbar {
   z-index: 20;
 }

@@ -1,12 +1,12 @@
 <div id="similar" class="container">
 	<hr class="mt-5">
 	<h3 class="text-left my-4 font-weight-bold">Similar Products</h3>
-   <div id="card-list" class="row">
+   <div id="card-list" class="row similar-products">
           @php
           foreach ($items as $product) {
           $url = create_url([$product->slug_name, 'buy']);
           @endphp
-          <div class="col">
+          <div class="col similar-products__col">
             <div class="card h-100 product-card">
             	<!-- <i class="fas fa-heart kss_heart"></i> -->
               <a href="{{$url}}" >

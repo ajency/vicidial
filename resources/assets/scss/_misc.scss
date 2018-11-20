@@ -174,4 +174,16 @@
 	}
 }
 
+// Similar products
+
+.similar-products{
+	&__col{
+		max-width: 20%;
+		flex-basis: 20%;
+		@media (max-width: 767px){
+			max-width: 50%;
+			flex-basis: 50%;
+		}
+	}
+}
 
