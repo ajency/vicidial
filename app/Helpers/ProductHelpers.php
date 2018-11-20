@@ -157,7 +157,8 @@ function sanitiseFilterdata($result, $params = [])
         foreach ($attributes as $attribute) {
             $filter[$attribute] = config('product.facet_display_data.' . $facetName . '.' . $attribute);
         }
-        $filter["is_collapsed"] = !boolval($is_collapsed);
+        //change made by Tanvi to is_collapsed value
+        $filter["is_collapsed"] = (!boolval($is_collapsed) == true)?(config('product.facet_display_data.' . $facetName . '.is_collapsed')):!boolval($is_collapsed);
         $response[]             = $filter;
     }
     //le price filter

@@ -182,7 +182,7 @@ return [
         'product_age_group'     => [
             'name'                   => 'Age Group',
             'is_singleton'           => false,
-            'is_collapsed'           => true,
+            'is_collapsed'           => false,
             'template'               => 'age',
             'order'                  => 2,
             'display_count'          => true,
@@ -195,7 +195,7 @@ return [
         'product_subtype'       => [
             'name'                   => 'Sub Type',
             'is_singleton'           => false,
-            'is_collapsed'           => true,
+            'is_collapsed'           => false,
             'template'               => 'subtype',
             'order'                  => 3,
             'display_count'          => true,
