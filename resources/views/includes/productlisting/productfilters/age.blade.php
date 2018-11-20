@@ -12,7 +12,7 @@
           @{{#each items}}
          
           <div class="custom-radio custom-control">
-             @{{> radioTemplate template=../template facet_value=facet_value is_selected=is_selected filter_facet_name=../filter_facet_name slug=slug disabled_at_zero_count=../disabled_at_zero_count count=count collapsed=../collapsed changeEvent="facetCategoryChange(this);" attribute_slug="" }}
+             @{{> radioTemplate template=../template facet_value=facet_value is_selected=is_selected filter_facet_name=../filter_facet_name slug=slug disabled_at_zero_count=../disabled_at_zero_count count=count collapsed=../collapsed changeEvent="facetCategoryChange(this);" attribute_slug="" display_name=display_name }}
             <label for="@{{display_name}}" class="custom-control-label f-w-4">@{{display_name}} 
             @{{#if ../display_count }}
               <span class="sub-text">(@{{count}})</span>
@@ -23,7 +23,7 @@
           @{{else}}
           @{{#each items}}
           <div class="custom-control custom-checkbox" data-val="@{{display_count_val}}" >
-            @{{> checkboxTemplate template=../template facet_value=facet_value is_selected=is_selected filter_facet_name=../filter_facet_name slug=slug disabled_at_zero_count=../disabled_at_zero_count count=count collapsed=../collapsed changeEvent="facetCategoryChange(this);" attribute_slug="" }}
+            @{{> checkboxTemplate template=../template facet_value=facet_value is_selected=is_selected filter_facet_name=../filter_facet_name slug=slug disabled_at_zero_count=../disabled_at_zero_count count=count collapsed=../collapsed changeEvent="facetCategoryChange(this);" attribute_slug="" display_name=display_name }}
             <label class="custom-control-label f-w-4" for="@{{display_name}}">@{{display_name}} 
             @{{#if ../display_count }}
             <span class="sub-text">(@{{count}})</span>
