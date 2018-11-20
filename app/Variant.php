@@ -339,6 +339,6 @@ class Variant extends Model
 
     public static function getVariantProductIdFromOdoo($variant_id){
         $odoo = new Elastic\OdooConnect;
-        return $odoo->defaultExec('product.product','read',[[60]],['fields'=>['product_tmpl_id']])->first()['product_tmpl_id'][0];
+        return $odoo->defaultExec('product.product','read',[[$variant_id]],['fields'=>['product_tmpl_id']])->first()['product_tmpl_id'][0];
     }
 }

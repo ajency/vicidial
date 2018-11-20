@@ -43,11 +43,12 @@ class ProductMove
         $odoo          = new OdooConnect;
         $moveData      = $odoo->defaultExec('stock.move.line', 'read', [[$move_id]], ['fields' => config('product.move_fields')])->first();
         $sanitisedData = sanitiseMoveData($moveData, 'move_');
+        // dd($sanitisedData);
         $variant       = Variant::where('odoo_id', $sanitisedData['move_product_id'])->first();
         if ($variant == null) {
             \Log::notice('chaining product Move ' . $move_id . ' as variant ' . $sanitisedData['move_product_id'] . ' is not found in DB');
             IndexProduct::withChain([
-                new IndexMove($move_id),
+                (new IndexMove($move_id))->onQueue('process_move'),
             ])->dispatch(Variant::getVariantProductIdFromOdoo($sanitisedData['move_product_id']))->onQueue('process_product');
             return;
         }
