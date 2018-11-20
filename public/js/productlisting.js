@@ -41,6 +41,10 @@ $(function () {
     buttn.addClass("justify-content-center");
     buttn.html('<i class="kss_icon bag-icon-fill icon-sm"></i> Add To Bag');
   });
+
+  $(window).bind('popstate', function () {
+    window.location.href = window.location.href;
+  });
 });
 var facet_list = {};
 var range_facet_list = {};

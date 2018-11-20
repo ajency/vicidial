@@ -293,6 +293,9 @@ class Product
         $facet_display_data             = config('product.facet_display_data');
         // dd($facet_display_data);
         // dd($params);
+        if(count($params["search_object"]["boolean_filter"]) == 0)
+            unset($params["search_object"]["boolean_filter"]);
+
         foreach ($params["search_object"]["primary_filter"] as $paramk => $paramv) {
             if ($facet_display_data[$paramk]["is_essential"] == false) {
                 $fields = $paramv;
@@ -310,6 +313,7 @@ class Product
         if (isset($params["search_object"]["boolean_filter"])) {
             $filter_params["search_object"]["boolean_filter"] = $params["search_object"]["boolean_filter"];
         }
+
 
         $filter_params["display_limit"] = $params["display_limit"];
         $filter_params["page"]          = $params["page"];
