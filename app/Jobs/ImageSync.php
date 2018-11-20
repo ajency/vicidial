@@ -12,7 +12,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 class ImageSync implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
+    public $timeout = 900;
     /**
      * Create a new job instance.
      *
