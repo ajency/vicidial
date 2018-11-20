@@ -109,5 +109,6 @@ class OrderController extends Controller
 
         return view('orderdetails')->with('params', $params);
     }
+
 }
 
