@@ -130,8 +130,8 @@ class User extends Authenticatable
                 $this->odoo_id = $odoo_id;
             }
         } else {
-            //TODO
             //update the customer if the customer already exists
+            $this->updateCustomerOnOdoo();
         }
     }
 

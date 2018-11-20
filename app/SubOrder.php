@@ -188,7 +188,6 @@ class SubOrder extends Model
     {
         $model = "sale.order";
         $odoo  = new OdooConnect;
-        dd($params);
         $out   = $odoo->defaultExec($model, 'create', [$params], null);
         try{
             return $out[0];
