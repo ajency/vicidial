@@ -9629,12 +9629,19 @@ label {
   font-size: 1.1em;
 }
 
+.kss-price--medium {
+  font-size: 1.35em;
+}
+
 @media (max-width: 575.98px) {
   .kss-price {
     font-size: 1.4rem;
   }
   .kss-price--smaller {
     font-size: 1.1em;
+  }
+  .kss-price--medium {
+    font-size: 1.2em;
   }
 }
 
@@ -11196,6 +11203,97 @@ select.custom::-ms-expand {
 
 .trend-focus-wrapper .trend-box:first-child {
   margin-top: 0px;
+}
+
+.productGrid .kss-price {
+  margin-top: -1em;
+  position: absolute;
+  bottom: 3px;
+  left: 15px;
+}
+
+@media (max-width: 767px) {
+  .productGrid .kss-price {
+    width: 100%;
+    text-align: center;
+    margin: 0 -15px;
+  }
+}
+
+@media (min-width: 768px) {
+  .productGrid .product-card {
+    border: 2px solid #f5f5f5;
+    -webkit-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+  }
+}
+
+@media (max-width: 767px) {
+  .productGrid .product-card:hover {
+    -webkit-box-shadow: none;
+            box-shadow: none;
+  }
+}
+
+.product-collection {
+  background-color: #f3f3f3;
+}
+
+.product-collection .category-col {
+  margin-bottom: 6px;
+  height: 260px;
+}
+
+.product-collection .category-col:nth-child(odd) {
+  padding-right: 3px;
+}
+
+.product-collection .category-col:nth-child(even) {
+  padding-left: 3px;
+}
+
+.product-collection .product-card {
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+.product-collection .product-card:hover {
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.21);
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.21);
+}
+
+.product-collection .product-card > a {
+  height: 100%;
+}
+
+@media (max-width: 767px) {
+  .product-collection .product-card {
+    background-color: #fff;
+  }
+}
+
+.product-collection .img-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: 100%;
+}
+
+.product-collection .center-col {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.product-collection .trending-subtitle {
+  font-size: 1.5em;
+  font-weight: 600;
+  margin-top: 0.2em;
 }
 
 .kss_share {

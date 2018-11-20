@@ -42,10 +42,16 @@ label {
     &--smaller{
       font-size: 1.1em;
     }
+    &--medium{
+        font-size: 1.35em;
+    }
     @media (max-width: 575.98px) {
         font-size: 1.4rem;
         &--smaller{
           font-size: 1.1em;
+        }
+        &--medium{
+            font-size: 1.2em;
         }
     }
 }
