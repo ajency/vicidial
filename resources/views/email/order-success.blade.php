@@ -249,7 +249,7 @@
 <!-- Order 1 -->
 @foreach( $sub_order['items'] as $item)
 @php
-  $image_1x = $image_2x = $image_3x = '/img/placeholder.svg';
+  $image_1x = $image_2x = $image_3x = url('/').'/img/placeholder.svg';
   if(count((array)$item['images'])>0){
     $image_1x = $item['images']->{'1x'};
     $image_2x = $item['images']->{'2x'};
