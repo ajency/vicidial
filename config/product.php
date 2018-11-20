@@ -253,5 +253,6 @@ return [
         'product_subtype',
     ], //Used for breadcrumbs on single product page
     "list_page_display_limit" => 30,
+    "similar_products_display_limit" => 5,
 
 ];
