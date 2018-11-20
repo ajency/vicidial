@@ -255,7 +255,7 @@ a[x-apple-data-detectors=true] {
                   
                     <div align="center" class="img-container center fixedwidth " style="padding-right: 0px;  padding-left: 0px;">
 				<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr style="line-height:0px;line-height:0px;"><td style="padding-right: 0px; padding-left: 0px;" align="center"><![endif]-->
-					<a href="https://www.kidsuperstore.in" title="Kidsuperstore">
+					<a href="{{url('/')}}" title="Kidsuperstore">
 					  	<img class="center fixedwidth" align="center" border="0" src="{{CDN::asset('/img/email-logo.png') }}" alt="Image" title="Image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: 0;height: auto;float: none;width: 100%;max-width: 250px" width="250" />
 					  </a>
 					<!--[if mso]></td></tr></table><![endif]-->
