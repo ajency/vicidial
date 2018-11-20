@@ -4,9 +4,9 @@
             <img src="/img/empty_troly.png" class="img-fluid lazyload " width="400px" />
             @isset($sectionnotfound)
             	<h2 class="my-4">Sorry, no results found!</h2>
-				<a href="javascript:window.history.back();location.reload();">
+<!-- 				<a href="javascript:window.history.back();location.reload();">
 	          		<button type="button" class="btn btn-outline-dark btn-lg m-auto d-block">Go back</button>
-	        	</a>
+	        	</a> -->
             @else
             	<h2 class="mx-4">No products available!</h2>
             	<p>Please check the spelling or try searching something else</p>
