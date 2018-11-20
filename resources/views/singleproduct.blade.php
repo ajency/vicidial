@@ -1,5 +1,7 @@
 @extends('layouts.default')
 
+
+
 @section('headjs')
 	@include('includes.abovethefold.singleproductcss')
 @stop
@@ -19,18 +21,14 @@
 			</div>
 			<div class="col-sm-12 col-lg-5">
 				<!-- Breadcrumbs -->
-				@include('includes.breadcrumbs', ['breadcrumbs' => $params['breadcrumb']])
+				@include('includes.breadcrumbs', ['breadcrumbs' => $params['breadcrumb'], 'shop' => true])
 
 				<!-- Product Title & Prices Section -->
 				@include('includes.singleproduct.producttitle', ['params' => $params, 'selected_color_id' => $selected_color_id])
 
-				<hr>
+				<hr class="my-2">
 
-
-
-
-
-				<div class="d-flex justify-content-between mt-4">
+				<div class="d-flex justify-content-between mt-3">
 					<label class="">Select Size (Age Group)</label>
 					<!-- Product Size Chart -->
 					<!-- <a href="#sizeModal" class="font-weight-bold kss-link" data-toggle="modal" data-target="#sizeModal">Size Chart</a>
@@ -57,7 +55,7 @@
 
 				<div class="row">
 
-					<div class="col-sm-12 col-md-12 col-12 mobile-fixed pb-2 add-bag-btn">
+					<div class="col-sm-12 col-md-12 col-12 mobile-fixed pb-0 pb-sm-2 add-bag-btn visible">
 
 						<!-- <div class="row"> -->
 							<!-- <div class="col-6 col-sm-6 col-md-6 col-xl-6 pr-1">
@@ -68,8 +66,8 @@
 								</button>
 							</div> -->
 							<!-- <div class="col-6 col-sm-6 col-md-6 col-xl-6 pl-1"> -->
-								<button id="cd-add-to-cart" class="btn btn-primary btn-lg btn-block cd-add-to-cart" disabled>
-									<div class="btn-label-initial d-flex align-items-center justify-content-center">Select Size</div>
+								<button id="cd-add-to-cart" class="btn kss-btn kss-btn--big cd-add-to-cart" disabled>
+									<div class="kss-btn__wrapper d-flex align-items-center justify-content-center">SELECT SIZE</div>
 								</button>
 							<!-- </div> -->
 						<!-- </div> -->
@@ -102,19 +100,10 @@
 
 			</div>
 		</div>
+		@include('includes.similar-products',["items"=>$similar_data_params]) 
+
 	</div>
 
-	<!-- Similar Products -->
-	@include('includes.similar-products')
-
-
-	<div class="alert kss-alert sticky-alert d-inline-flex align-items-baseline px-sm-4 py-sm-4 px-3 py-3 fade show" role="alert">
-	  <i class="fas fa-check pr-sm-3 pr-2 icon"></i>
-	  <div class="message"></div>
-	  <button type="button" class="close" aria-label="Close">
-	    <span aria-hidden="true">&times;</span>
-	  </button>
-	</div>
 
 @stop
 

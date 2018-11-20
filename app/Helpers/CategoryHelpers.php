@@ -1,63 +1,69 @@
 <?php
-use App\Category;
 use App\Facet;
-
-//Function to insert category in DB
-function insert_category($elastic_name, $type, $slug){
-	$category = new Category;
-    $category->elastic_name = $elastic_name;
-    $category->type = $type;
-    $category->slug = $slug;
-    $category->save();
-}
-
-//Function to fetch Elastic category name from slug
-function fetch_elastic_category($slug, $type){
-	$category = Category::where('slug', '=', $slug)->where('type', '=', $type)->first();
-	if($category) {
-		return $category->elastic_name;
-	}
-	else {
-		return false;
-	}
-}
-
-//Generate search object from url params
-function create_search_object($parameters){
-	$search_object = new stdClass;
-	foreach ($parameters['categories'] as $type => $slugs) {
-		$search_object->{$type} = array();
-		$slugs_arr = explode('--', $slugs);
-		foreach ($slugs_arr as $slug) {
-			$elastic_name = fetch_elastic_category($slug, $type);
-			if($elastic_name == false){
-				$search_object->error = true;
-				$search_object->error_string = $type;
-				return $search_object;
-			}
-			else {
-				$search_object->{$type}[] = $elastic_name;
-			}
-		}
-
-	}
-
-	return $search_object;
-}
-
 
 function build_search_object($params) {
 	$all_facets = [];
+	$dataArr = [];
+	$facet_display_data = config('product.facet_display_data');
+	$dataArr["search_result"]=[];
+	$dataArr["search_result"]["boolean_filter"]=[];
+	// dd($params);
 	foreach($params['categories'] as $param) {
 		$slugs_arr = explode('--', $param);
 		$all_facets = array_merge($slugs_arr, $all_facets);
 	}
+	if(isset($params["query"])){
+		foreach($params["query"] as $queryk => $queryv){
+			if($queryk == "pf"){
+				if (strpos($queryv, "color:") !== false) {
+	                $values = str_replace('color:', '', $queryv); 
+	                $all_facets = array_merge($all_facets,(explode(",",$values)));
+	            }
+			}
+			if($queryk == "bf"){
+				if (strpos($queryv, "variant_availability:") !== false) {
 
+					$ar = array_filter($facet_display_data, function ($item) {
+					        return $item['attribute_param'] === 'variant_availability';
+					    }
+					); 
+					$ar_keys_ar = array_keys($ar);
+	                $values = str_replace('variant_availability:', '', $queryv); 
+	                $values_arr = explode(",",$values);
+	                $bool_val=false;
+	                if(is_string($values_arr[0]))
+	                	$bool_val =($values_arr[0] == "true")?true:false;
+	                else
+	                	$bool_val =$values_arr[0];
+	                $dataArr["search_result"]["boolean_filter"][$ar_keys_ar[0]]=$bool_val;
+	            }
+			}
+			if($queryk == "rf"){
+				if (strpos($queryv, "price:") !== false) {
+					$ar = array_filter($facet_display_data, function ($item) {
+					        return $item['attribute_param'] === 'price';
+					    }
+					); 
+					$ar_keys_ar = array_keys($ar);
+	                $values = str_replace('price:', '', $queryv); 
+	                $min_max_arr =explode("TO",$values);
+	                $dataArr["search_result"]["range_filter"][$ar_keys_ar[0]]=["min"=>$min_max_arr[0],"max"=>$min_max_arr[1]];
+	            }
+			}
+		}
+	}
+	else{
+		$dataArr["search_result"]["range_filter"]=[];
+		$dataArr["search_result"]["boolean_filter"]=[];
+	}
+	
+	// dd($all_facets);
 	$facets_count = Facet::select('facet_value',DB::raw('count(id) as "count",group_concat(facet_name) as "names"'))->whereIn('slug', $all_facets)->groupBy('facet_value')->get();
 	// dd(array_column($facets_count, 'count', 'facet_value'));
 	// $facets_count_link = array_column($facets_count, 'count', 'facet_value');
 	$facets_count_link = [];
-	$facet_display_data = config('product.facet_display_data');
+	
+	
 	$facet_display_data_keys = array_keys($facet_display_data);
 	foreach($facets_count as $focuntv){
 		$focuntv_names = explode(",",$focuntv->names);
@@ -97,10 +103,10 @@ function build_search_object($params) {
 	// $facets_arr   = json_decode($facets, true);
 	// $search_result = array_column($facets_arr, 'values',"facet_name");
 	
-	$dataArr = [];
+	
 	$dataArr["slug_search_result"] =$slug_search_result;
 	$dataArr["slug_value_search_result"] =$slug_value_search_result;
-	$dataArr["search_result"] =$search_result;
+	$dataArr["search_result"]["primary_filter"]=$search_result;
 	$dataArr["slugs_result"] =$slugs_result;
 	$dataArr["title"] = generateProductListTitle($params['categories'],$slug_value_search_result);
 	return $dataArr;
@@ -207,4 +213,22 @@ function generateProductListTitle($categories,$slug_name_value_arr){
 	}
 
 	return $titile;
+}
+
+
+function getFacetValueSlugPairs(){
+	$facets = Facet::select('facet_name',DB::raw('group_concat(concat(facet_value,"$$$",slug)) as "values"'))->groupBy('facet_name')->get();
+    $search_result_assoc = [];
+    foreach($facets as $facet){
+        $comb = explode(",", $facet->values);
+        $facet_values = [];
+        $facet_value_slug_pairs = [];
+        foreach($comb as $combv){
+            $cmbvalue = explode("$$$", $combv);
+            array_push($facet_values, $cmbvalue[0]);
+            $facet_value_slug_pairs[$cmbvalue[0]]=$cmbvalue[1];
+        }
+        $search_result_assoc[$facet->facet_name] = $facet_value_slug_pairs;
+    }
+    return $search_result_assoc;
 }

@@ -17,39 +17,45 @@ class CartController extends Controller
         $cart = Cart::find($id);
         if ($cart !== null) {
             // \Log::debug('cart = '.$cart);
-            $cart->abortNotCart();
+            $cart->abortNotCart('cart');
             return response()->json(['cart_count' => $cart->itemCount()]);
         } else {
             return abort('404', "Cart not found for this session");
         }
     }
 
+    public function startFresh(Request $request){
+        $user = User::getUserByToken($request->header('Authorization'));
+        $cart = $user->newCart(true);
+        return response()->json(['cart_id' => $cart->id]);
+    }
+
     public function userAddItem($id, Request $request)
     {
-        $params  = $request->all();
-        $cart = Cart::find($id);
+        $request->validate(['variant_id' => 'required|exists:variants,odoo_id', 'variant_quantity' => 'required']);
+        $params = $request->all();
+        $cart   = Cart::find($id);
         if ($cart == null) {
-            abort(404, "Requested Cart not found");
+            abort(400, "Invalid Cart");
         }
-        $cart->abortNotCart();
-        checkUserCart($request->header('Authorization'),$cart);
+        $user    = User::getUserByToken($request->header('Authorization'));
+        validateCart($user, $cart, 'cart');
         $variant = Variant::where('odoo_id', $params['variant_id'])->first();
-        $item    = $variant->getItem();
+        $item    = $variant->getItem(true, (config('app.env')=='production')? false : true);
         if ($item) {
             $qty = $params['variant_quantity'];
             if ($cart->itemExists($item)) {
                 $qty += $cart->cart_data[$item["id"]]["quantity"];
             }
 
-            if($variant->getQuantity()>=$qty) {
+            if ($variant->getQuantity() >= $qty) {
                 $cart->insertItem(["id" => $variant->id, "quantity" => $qty]);
                 $cart->save();
                 $message = "Item added successfully";
-            }
-            else {
+            } else {
                 abort(404, "Quantity not available");
             }
-            $item["quantity"] = intval($cart->cart_data[$item["id"]]["quantity"]);
+            $item["quantity"]  = intval($cart->cart_data[$item["id"]]["quantity"]);
             $item["timestamp"] = intval($cart->cart_data[$item["id"]]["timestamp"]);
         }
         $summary = $cart->getSummary();
@@ -58,28 +64,28 @@ class CartController extends Controller
 
     public function guestAddItem(Request $request)
     {
-        $params  = $request->all();
-        $id      = $request->session()->get('active_cart_id', false);
-        $cart    = ($id) ? Cart::find($id) : new Cart;
-        $cart->abortNotCart();
+        $request->validate(['variant_id' => 'required|exists:variants,odoo_id', 'variant_quantity' => 'required']);
+        $params = $request->all();
+        $id     = $request->session()->get('active_cart_id', false);
+        $cart   = ($id) ? Cart::find($id) : new Cart;
+        $cart->abortNotCart('cart');
         $variant = Variant::where('odoo_id', $params['variant_id'])->first();
-        $item    = $variant->getItem();
+        $item    = $variant->getItem(true, (config('app.env')=='production')? false : true);
         if ($item) {
             $qty = $params['variant_quantity'];
             if ($cart->itemExists($item)) {
                 $qty += $cart->cart_data[$item["id"]]["quantity"];
             }
 
-            if($variant->getQuantity()>=$qty) {
+            if ($variant->getQuantity() >= $qty) {
                 $cart->insertItem(["id" => $variant->id, "quantity" => $qty]);
                 $cart->save();
-                $message          = "Item added successfully";
-            }
-            else {
+                $message = "Item added successfully";
+            } else {
                 abort(404, "Quantity not available");
             }
             $request->session()->put('active_cart_id', $cart->id);
-            $item["quantity"] = intval($cart->cart_data[$item["id"]]["quantity"]);
+            $item["quantity"]  = intval($cart->cart_data[$item["id"]]["quantity"]);
             $item["timestamp"] = intval($cart->cart_data[$item["id"]]["timestamp"]);
         }
         $summary = $cart->getSummary();
@@ -90,16 +96,16 @@ class CartController extends Controller
     {
         $cart = Cart::find($id);
         if ($cart == null) {
-            abort(404, "Requested Cart not found");
+            abort(400, "Invalid Cart");
         }
-        $cart->abortNotCart();
-        checkUserCart($request->header('Authorization'),$cart);
-        
-        $items = getCartData($cart);
+        checkUserCart($request->header('Authorization'), $cart);
+        if($cart->type == 'order-complete') abort(400);
+
+        $items = getCartData($cart, true, (config('app.env')=='production')? false : true);
 
         $summary = $cart->getSummary();
         $code    = ["code" => "NEWUSER", "applied" => true];
-        return response()->json(['cart_count' => $cart->itemCount(), 'items' => $items, "summary" => $summary, "code" => $code]);
+        return response()->json(['cart_count' => $cart->itemCount(), 'cart_type' => $cart->type, 'items' => $items, "summary" => $summary, "code" => $code]);
     }
 
     public function guestCartFetch(Request $request)
@@ -109,16 +115,17 @@ class CartController extends Controller
         if ($cart == null) {
             abort(404, "Cart not found for this session");
         }
-        $cart->abortNotCart();
-        $items = getCartData($cart);
+        if($cart->type == 'order-complete') abort(400);
+        $items = getCartData($cart, true, (config('app.env')=='production')? false : true);
 
         $summary = $cart->getSummary();
         $code    = ["code" => "NEWUSER", "applied" => true];
-        return response()->json(['cart_count' => $cart->itemCount(), 'items' => $items, "summary" => $summary, "code" => $code]);
+        return response()->json(['cart_count' => $cart->itemCount(), 'cart_type' => $cart->type, 'items' => $items, "summary" => $summary, "code" => $code]);
     }
 
     public function guestCartDelete(Request $request)
     {
+        $request->validate(['variant_id' => 'required|exists:variants,id']);
         $id     = $request->session()->get('active_cart_id', false);
         $params = $request->all();
 
@@ -126,7 +133,7 @@ class CartController extends Controller
         if ($cart == null) {
             abort(404, "Cart not found for this session");
         }
-        $cart->abortNotCart();
+        $cart->abortNotCart('cart');
         $cart->removeItem($params["variant_id"]);
         $cart->save();
         $message = "Item deleted successfully";
@@ -136,14 +143,15 @@ class CartController extends Controller
 
     public function userCartDelete($id, Request $request)
     {
+        $request->validate(['variant_id' => 'required|exists:variants,id']);
         $params = $request->all();
 
         $cart = Cart::find($id);
         if ($cart == null) {
             abort(404, "Requested Cart ID not found");
         }
-        $cart->abortNotCart();
-        checkUserCart($request->header('Authorization'),$cart);
+        $user    = User::getUserByToken($request->header('Authorization'));
+        validateCart($user, $cart, 'cart');
         $cart->removeItem($params["variant_id"]);
         $cart->save();
         $message = "Item deleted successfully";
@@ -151,7 +159,8 @@ class CartController extends Controller
         return response()->json(['cart_count' => $cart->itemCount(), 'message' => $message, "summary" => $summary]);
     }
 
-    public function getCartID(Request $request){
+    public function getCartID(Request $request)
+    {
         $user = User::getUserByToken($request->header('Authorization'));
         return response()->json(["cart_id" => $user->cart_id]);
     }

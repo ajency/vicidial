@@ -4,6 +4,7 @@ namespace App;
 
 use App\Elastic\ElasticQuery;
 use Illuminate\Database\Eloquent\Model;
+use App\Location;
 
 class Variant extends Model
 {
@@ -111,10 +112,12 @@ class Variant extends Model
     public function getPrimaryImageSrcset()
     {
         $default_imgs = $this->productColor->getDefaultImage(["variant-thumb"]);
-        if(isset($default_imgs["variant-thumb"]))
+        if (isset($default_imgs["variant-thumb"])) {
             return $default_imgs["variant-thumb"];
-        else
+        } else {
             return $default_imgs;
+        }
+
     }
 
     public function getRelatedItems()
@@ -135,18 +138,24 @@ class Variant extends Model
         return $related_items;
     }
 
-    public function getItem($related_items=true)
+    public function getItem($related_items = true, $current_quantity = false)
     {
         $item = array(
-            'product_slug'  => $this->getProductSlug(),
-            'availability'  => $this->getAvailability(),
-            'message'       => $this->getMessage(),
-            'attributes'    => $this->getItemAttributes(),
-            "id"            => $this->id,
+            'product_slug' => $this->getProductSlug(),
+            'availability' => $this->getAvailability(),
+            'message'      => $this->getMessage(),
+            'attributes'   => $this->getItemAttributes(),
+            "id"           => $this->id,
         );
 
-        if($related_items) $item['related_items'] = $this->getRelatedItems();
-        
+        if ($related_items) {
+            $item['related_items'] = $this->getRelatedItems();
+        }
+
+        if ($current_quantity) {
+            $item['available_quantity'] = $this->getQuantityStoreWise();
+        }
+
         return $item;
 
     }
@@ -154,11 +163,11 @@ class Variant extends Model
     {
 
         return array(
-            'title'            => $this->getName(),
-            'images'           => $this->getPrimaryImageSrcset(),
-            'size'             => $this->getSize(),
-            'price_mrp'        => $this->getLstPrice(),
-            'price_final'      => $this->getSalePrice(),
+            'title'       => $this->getName(),
+            'images'      => $this->getPrimaryImageSrcset(),
+            'size'        => $this->getSize(),
+            'price_mrp'   => $this->getLstPrice(),
+            'price_final' => $this->getSalePrice(),
         );
     }
 
@@ -193,6 +202,16 @@ class Variant extends Model
     }
 
     /**
+     * Get Variant Savings
+     *
+     * @return double
+     */
+    public function getSavings()
+    {
+        return $this->variant["variant_sale_price"] - $this->variant["variant_list_price"];
+    }
+
+    /**
      * Get variant color id
      *
      * @return int
@@ -203,13 +222,38 @@ class Variant extends Model
     }
 
     /**
+     * Get Elastic ProductColor Data
+     *
+     * @return string
+     */
+    public function getParentElasticData()
+    {
+        return $this->elastic_data;
+    }
+
+    /**
      * Get Elastic variant Data
      *
      * @return string
      */
-    public function getVariantData()
+    public function getVariantData($mode,$prefix = '', $data = [])
     {
-        return $this->elastic_data;
+        $productData = $this->elastic_data["search_result_data"];
+        $variantData = collect($this->elastic_data['variants'])->where('variant_id', $this->odoo_id)->first();
+        $data        = array_merge($productData, $variantData);
+        if ($mode == 'all') {
+            $filteredData = [];
+            foreach ($data as $key => $value) {
+               $filteredData[$prefix.$key] = $value;
+            }
+            return $filteredData;
+        } elseif ($mode == 'only') {
+            $filteredData = [];
+            foreach ($data as $key) {
+                $filteredData[$key] = $data[$key];
+            }
+            return $filteredData;
+        }
     }
 
     /**
@@ -255,7 +299,7 @@ class Variant extends Model
         $total = 0;
         if (isset($this->inventory)) {
             foreach ($this->inventory as $inventory) {
-                if($inventory["quantity"] >= 0) {
+                if ($inventory["quantity"] >= 0) {
                     $total += $inventory["quantity"];
                 }
             }
@@ -263,12 +307,38 @@ class Variant extends Model
         return $total;
     }
 
+    /**
+     * Get Variant Quantity StoreWise
+     *
+     * @return int
+     */
+    public function getQuantityStoreWise()
+    {
+        $quantity_arr = array();
+        $location_arr = array();
+        if (isset($this->inventory)) {
+            foreach ($this->inventory as $inventory) {
+                if ($inventory["quantity"] > 0) {
+                    $location = Location::where('odoo_id', $inventory["location_id"])->first();
+                    $quantity_arr[] = array('warehouse' => $location->warehouse->name, 'location' => $location->name, 'quantity' => $inventory["quantity"]);
+                }
+            }
+        }
+        return $quantity_arr;
+    }
+
     public function getDiscount()
     {
         return $this->getLstPrice() - $this->getSalePrice();
     }
 
-    public function getProductSlug(){
+    public function getProductSlug()
+    {
         return $this->elastic_data["search_result_data"]["product_slug"];
+    }
+
+    public static function getVariantProductIdFromOdoo($variant_id){
+        $odoo = new Elastic\OdooConnect;
+        return $odoo->defaultExec('product.product','read',[[$variant_id]],['fields'=>['product_tmpl_id']])->first()['product_tmpl_id'][0];
     }
 }

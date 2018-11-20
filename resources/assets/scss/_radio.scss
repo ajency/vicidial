@@ -74,7 +74,7 @@
         .radio-input:checked+.radio-label{
             color: #777;
             img {
-                box-shadow: 0 0 0 2px theme-color("primary");
+                box-shadow: 0 5px 0 0 theme-color("primary");
             }  
         }
     }
@@ -83,8 +83,11 @@
             min-width: 100px;
             padding: 10px;
             text-align: center;
+            .radio-option{
+                font-weight: 600;
+            }
             @media (min-width: 320px) and (max-width: 767.98px) {
-            min-width: 84px;
+                min-width: 84px;
             }
         }
         .radio-input:checked+.radio-label {
@@ -92,6 +95,37 @@
             color: darken(theme-color("primary"), 10%);
         }
     }
+    &.single-radio {
+        .radio-label {
+            min-width: 100px;
+            padding: 10px;
+            text-align: center;
+            border-color: #8e8e92;
+            transition: all 0.5s ease;
+            .radio-option{
+                font-weight: 600;
+            }
+            @media (min-width: 320px) and (max-width: 767.98px) {
+                min-width: 84px;
+            }
+        }
+        .radio-input:checked+.radio-label {
+            background-color: #8e8e92;
+            border-color: #8e8e92;
+            color: #fff;
+        }
+        .radio-input{
+            &:not(:disabled){
+                & + .radio-label{
+                    &:hover{
+                        background-color: #8e8e92;
+                        border-color: #8e8e92;
+                        color: #fff;
+                    }
+                }
+            }
+        }
+    }    
     @media (min-width: 320px) and (max-width: 767.98px) {
         overflow: scroll;
         div {
@@ -107,8 +141,8 @@
 }
 
 .custom-control {
-    line-height: 28px;
-    margin-bottom: 6px;
+    line-height: 22px;
+    margin-bottom: 10px;
     .custom-control-label {
         padding-left: 7px;
     }
@@ -127,6 +161,18 @@
     height: 1.3rem;
     background-size: 59% 100%;
 }
+
+.custom-radio{
+    .custom-control{
+        &-label{
+            &:after{
+                background-size: 52% 100%;
+                top: 0.22rem;
+            }
+        }
+    }
+}
+
 .kss_sizes{
     display:block !important;
     .radio-option{

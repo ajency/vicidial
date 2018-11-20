@@ -125,6 +125,8 @@ return [
 
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
+    'run_cron' => env('RUN_CRON',false),
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

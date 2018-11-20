@@ -15,19 +15,20 @@ class PaymentController extends Controller
     	$cart = $order->cart;
     	$user = $cart->user;
 
+    	$order->checkInventoryForSuborders();
+
     	$attributes = [
-		    'txnid' => strtoupper(str_random(8)).str_pad($order->id, 6, '0', STR_PAD_LEFT), # Transaction ID.
+		    'txnid' => $order->txnid, # Transaction ID.
 		    'amount' => $order->aggregateSubOrderData()['final_price'], # Amount to be charged.
 		    'productinfo' => $order->id,
-		    'firstname' => "", # Payee Name.
-		    'email' => "", # Payee Email Address.
+		    'firstname' => $user->name, # Payee Name.
+		    'email' => $user->email, # Payee Email Address.
 		    'phone' => $user->phone, # Payee Phone Number.
 		];
 
     	$order->status = 'payment-in-progress';
     	$expires_at = Carbon::now()->addMinutes(config('orders.payu_expiry'));
         $order->expires_at = $expires_at->timestamp;
-        $order->txnid = $attributes['txnid'];
     	$order->save();
 
 		return Payment::with($order)->make($attributes, function ($then) use ($orderid) {
@@ -38,15 +39,21 @@ class PaymentController extends Controller
     public function status($orderid)
     {
     	$payment = Payment::capture();
-
 		$order = Order::find($orderid);
+		if ($order->status != 'payment-in-progress') abort(400);
 
-		if($payment->isCaptured() && $order->status == 'payment-in-progress') {
+		if($payment->isCaptured()) {
 			$order->status = 'payment-successful';
 			$order->save();
+			$order->placeOrderOnOdoo();
 			request()->session()->flash('payment', "success");
-		}
-		elseif($order->status == 'payment-in-progress') {
+			$cart = $order->cart;
+			$cart->type = 'order-complete';
+			$cart->save();
+			$order->cart->user->newCart();
+			$order->sendSuccessEmail();
+			$order->sendSuccessSMS();
+		}else{
 			$order->status = 'payment-failed';
 			$order->save();
 			request()->session()->flash('payment', "failure");

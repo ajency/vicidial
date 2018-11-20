@@ -25,7 +25,7 @@ class ProductColor extends Model
         return $q->index();
     }
 
-    public static function updateElasticInventory(int $variant_id, array $elastic_data, boolean $availability)
+    public static function updateElasticInventory(int $variant_id, array $elastic_data,  $availability)
     {
         foreach ($elastic_data["variants"] as &$variant) {
             if ($variant["variant_id"] == $variant_id) {
@@ -53,7 +53,7 @@ class ProductColor extends Model
                 break;
             }
         }
-        $result = self::saveToElastic($elastic_id, $elastic_data);
+        $result = self::saveToElastic($elastic_data['id'], $elastic_data);
         return $result;
     }
 }

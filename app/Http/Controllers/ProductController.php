@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\ProductColor;
+use App\Product;
+use App\Facet;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -12,6 +14,7 @@ class ProductController extends Controller
     {
         $json = json_decode(singleproduct($product_slug));
         $params =  (array) $json;
+        // dd($params);
 
         $query  = $request->all();
 
@@ -25,16 +28,43 @@ class ProductController extends Controller
 
         $params['breadcrumb']           = array();
         $params['breadcrumb']['list']   = array();
-        $params['breadcrumb']['list'][] = ['name' => $params['category']->type, 'href' => '#'];
-        $params['breadcrumb']['list'][] = ['name' => $params['category']->age_group, 'href' => '#'];
-        $params['breadcrumb']['list'][] = ['name' => $params['category']->gender, 'href' => '#'];
-        $params['breadcrumb']['list'][] = ['name' => $params['category']->sub_type, 'href' => '#'];
+        $url = array();
+        $breadcrumb = config('product.breadcrumb_order');
+        foreach ($breadcrumb as $category) {
+            $facet = Facet::where('facet_name', '=', $category)->where('facet_value', '=', $params['category']->{$category})->first();
+            $url[] = $facet->slug;
+            $params['breadcrumb']['list'][] = ['name' => $facet->display_name, 'href' => create_url($url)];
+        }
 
         $params['breadcrumb']['current'] = '';
 
         setSEO('product', $params);
 
-        return view('singleproduct')->with('params', $params);
+        $similar_cat_params=[];
+        $facets = Facet::select('slug')->whereIn('facet_value', array_values((array)$params["category"]))->get()->toArray();
+        $similar_cat_params['categories'] = array_column($facets, 'slug');
+        $search_object_arr = build_search_object($similar_cat_params);
+
+        $search_results = [];
+
+        $search_object = $search_object_arr["search_result"];
+
+        $search_results["slug_search_result"] = $search_object_arr["slug_search_result"];
+        $search_results["slug_value_search_result"] = $search_object_arr["slug_value_search_result"];
+        $search_results["slugs_result"] = $search_object_arr["slugs_result"];
+        $search_results["title"] = $search_object_arr["title"];
+        $similar_products_display_limit = config('product.similar_products_display_limit');
+        $parameters = Product::productListPage(["search_object" => $search_object,"display_limit"=> ($similar_products_display_limit+1),"page" =>1],$search_results["slug_value_search_result"],$search_results["slug_search_result"],$search_results["slugs_result"],$search_results["title"]);
+
+        // dd($parameters);
+        $similar_data_params= json_decode(json_encode($parameters,JSON_FORCE_OBJECT));
+        $similar_products = [];
+        foreach($similar_data_params->items as $similar_item){
+            if($similar_item->product_id != $params["parent_id"] && count($similar_products)<$similar_products_display_limit)
+                array_push($similar_products, $similar_item);
+        }
+
+        return view('singleproduct')->with('params', $params)->with('similar_data_params', $similar_products);
     }
 
     public function getImage($photo_id, $preset, $depth, $filename)

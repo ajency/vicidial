@@ -5,11 +5,11 @@
   <div class="col-lg-4 col-md-6 mb-sm-4 col-6  ">
 
 	  <div class="card h-100 product-card">
-	  
+
 	  	<!-- Wishlist -->
 	    <!-- <i class="fas fa-heart kss_heart"></i> -->
 	    <!-- Product Image Display -->
-	    <a href="/@{{slug_name}}/buy" class="position-relative">
+	    <a href="/@{{slug_name}}/buy" class="position-relative" title="@{{title}}">
 	      <div class="product-card__wrapper loading d-flex align-items-center justify-content-center mb-2 mb-sm-3">
 	        <div class="overlay"></div>
 	        @{{assign "image_1x" '/img/placeholder.svg'}}
@@ -24,20 +24,18 @@
 		        @{{assign "load_10x" images.load }}
 		        @{{assign "default_placeholder_cls" "" }}
 	        @{{/ifImagesExist}}
-	        <img src="/img/placeholder-10x.jpg" data-srcset="@{{@root.image_1x}} 270w, @{{@root.image_2x}} 540w, @{{@root.image_3x}} 810w" sizes="(min-width: 992px) 33.33vw,50vw" class="lazyload card-img-top blur-up @{{@root.default_placeholder_cls}}" />
+	        <img src="/img/placeholder-10x.jpg" data-srcset="@{{@root.image_1x}} 270w, @{{@root.image_2x}} 540w, @{{@root.image_3x}} 810w" sizes="(min-width: 1200px) 270px,(min-width: 992px) 22vw,(min-width: 768px) 33vw, 45vw" class="lazyload card-img-top blur-up @{{@root.default_placeholder_cls}}"  title="@{{title}}" alt="@{{title}}" />
 
-	      </div>      
+	      </div>
 	    </a>
 	    <!-- Product Info -->
 	    <div class="
 	    -body">
 	      @{{#if title}}
 	      <a href="/@{{slug_name}}/buy" class="text-dark">
-	        <h5 class="card-title">
-	          
+	        <h5 class="section-heading section-heading--list">
 	          @{{title}}
-
-	        </h5>      
+	        </h5>
 	      </a>
 	      @{{/if}}
 	      <!-- Calculate & Display Price -->
@@ -55,13 +53,17 @@
 	</div>
   @{{/each}}
   </div>
-  <div class="text-center mt-3 d-none">
-  	<button class="btn btn-primary btn-lg">
-		<i class="align-middle fa-circle-notch fa-lg fa-spin fas mr-1 d-none"></i> Show more products
-	</button>
+  <div class="text-center mt-3 @{{#if show_more }} @{{else}} d-none @{{/if}}">
+  	<a href="javascript:void(0);" class="more-link d-flex align-items-center justify-content-center" id="showMoreProductsBtn">
+		<i class="load-icon-cls align-middle fa-circle-notch fa-lg fa-spin fas mr-2 d-none"></i> Show more products <i class="fas fa-chevron-down arrow-down"></i>
+	</a>
   </div>
 </script>
-<div id="products-list-template-content"></div>
+
+<div id="products-list-template-content" class="productlist__row"></div>
+<div class="@if(count((array)$items)>0) d-none @endif productlist__na">
+  @include('includes.no-products-content')
+</div>
 
 @section('footjs-products-list')
   <script type="text/javascript" >
@@ -83,6 +85,10 @@
 	});
    var context = {};
    context["products"] = <?= json_encode($items); ?>;
+   product_list_items = $.extend(product_list_items, context["products"]);
+   console.log("product_list_items====")
+   console.log(product_list_items) 
+   context["show_more"] = <?= json_encode($page->has_next) ?>;
    console.log(context)
    var html    = template(context);
    document.getElementById("products-list-template-content").innerHTML = html;

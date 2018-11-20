@@ -1,5 +1,5 @@
 <div id="cd-cart" class="angular-app h-100">
-	<div class="kss_shipping slide-out slide-show">
+	<div *ngIf="addAddress || (addresses && addresses.length)" class="kss_shipping slide-out slide-show">
 		<div class="scroll-container">
 			<nav class="navbar navbar-dark bg-dark pt-3 pb-3 ">
 				<div class="d-flex align-items-center w-100">
@@ -33,7 +33,7 @@
 						<h3 class="modal-title font-weight-bold" id="exampleModalLabel">Ship To</h3>
 					</div>
 					<div class="col-4 text-right">
-						<h6 class="text-muted mt-2">STEP: 1 / 3</h6>
+						<h6 class="text-muted mt-2">STEP: 1 / 2</h6>
 					</div>
 				</div>
 				<hr>
@@ -98,9 +98,9 @@
 									<label class="control-label">State<span class="pl-1 text-danger">*</span></label>
 								</div> -->
 								<div class="form-group custom-bs-select">
-									<select name="" id="state" class="form-control form-control-lg has-value"  name="state" data-style="form-control" [(ngModel)]="newAddress.state" required data-live-search="true">
+									<select name="" id="state" class="form-control form-control-lg has-value"  name="state" data-style="form-control" [(ngModel)]="newAddress.state_id" required data-live-search="true">
 										<option value="">--Select--</option>
-										<option *ngFor="let state of states" value="{{state}}">{{state}}</option>
+										<option *ngFor="let state of states" value="{{state.id}}">{{state.state}}</option>
 									</select>
 									<label class="control-label">State <span class="pl-1 text-danger">*</span></label>
 								</div>
@@ -164,7 +164,7 @@
 							</label>
 						</div>
 					</div>
-					<button type="button" id="add-address" class="btn btn-outline-secondary btn-lg btn-block" (click)="addNewAddress()">Add A New Address</button>
+					<button type="button" id="add-address" class="btn kss-btn kss-btn--outline-secondary kss-btn--big kss-btn--big-alternate" (click)="addNewAddress()">Add A New Address</button>
 				</div>
 
 				<div class="seperator mt-2 mb-2"></div>
@@ -172,15 +172,15 @@
 				<div class="fixed-bottom d-block pl-3 pr-3">
 					<div *ngIf="addAddress" class="row no-gutters px-2 py-2 shipping-state-1" style="display: flex;">
 						<div class="col-6 text-center">
-							<button [disabled]="!addresses.length" type="button" class="shipping-details-save btn btn-lg btn-block btn-link text-dark mt-1 mb-1 ml-auto mr-auto" (click)="addAddress = false" >Cancel </button>
+							<button [disabled]="!addresses.length" type="button" class="shipping-details-save btn kss-btn kss-btn--link kss-btn--big kss-btn--big-alternate mt-1 mb-1 ml-auto mr-auto" (click)="addAddress = false" >Cancel </button>
 						</div>
 						<div class="col-6 text-center">
-							<button [disabled]="!myForm.valid"  type="button" class="shipping-details-save btn btn-lg btn-block btn-primary mt-1 mb-1 ml-auto mr-auto" (click)="saveNewAddress()"> Save </button>
+							<button [disabled]="!myForm.valid"  type="button" class="shipping-details-save btn kss-btn kss-btn--big kss-btn--alternate mt-1 mb-1 ml-auto mr-auto" (click)="saveNewAddress()"> Save </button>
 						</div>
 					</div>
 					 <div *ngIf="!addAddress && addresses" class="row no-gutters px-2 py-2 shipping-state-2" style="display: flex;">
 						<div class="col-12 text-center">
-							<button id="shipping-summary" type="button" class=" btn btn-lg btn-block btn-primary mt-1 mb-1" (click)="navigateToShippingPage()">Proceed</button>
+							<button id="shipping-summary" type="button" class=" btn kss-btn kss-btn--big kss-btn--big-alternate mt-1 mb-1" (click)="navigateToShippingPage()">Proceed</button>
 						</div>
 					</div>
 				</div>

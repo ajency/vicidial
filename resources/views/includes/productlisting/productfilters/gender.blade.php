@@ -2,26 +2,34 @@
 <script id="filter-gender-template" type="text/x-handlebars-template">
    <div class="kss_filter-list">
       <div id="headingOne">
-        <label class="w-100 mb-0 pb-2 cursor-pointer @{{#if collapsed}} collapsed @{{/if}}" data-toggle="collapse" data-target="#collapseGender" aria-expanded="true" aria-controls="collapseGender">
+        <label class="w-100 mb-0 pb-3 cursor-pointer @{{#if collapsed}} collapsed @{{/if}}" data-toggle="collapse" data-target="#collapseGender" aria-expanded="true" aria-controls="collapseGender">
             @{{filter_display_name}} <i class="fas fa-angle-up float-right"></i>
         </label>
       </div>
 
-      <div id="collapseGender" class="collapse @{{#if collapsed}} @{{else}} show @{{/if}}" aria-labelledby="headingOne" data-parent="#accordion">
-        <div class="card-body">
+      <div id="collapseGender" class="collapse@{{#if collapsed}}@{{else}} show @{{/if}}" aria-labelledby="headingOne" data-parent="#accordion" data-field="gender">
+        <div class="card-body pt-2">
           
           @{{#if singleton }}
           @{{#each items}}
           <div class="custom-radio custom-control">
-            <input type="radio" class="facet-category custom-control-input" onChange="facetCategoryChange(this);"  name="gender" value="@{{facet_value}}" @{{#if is_selected }} checked = "checked" @{{/if}} data-facet-name="@{{../filter_facet_name}}" data-singleton="true" data-slug="@{{slug}}" @{{#ifEquals count 0 }} disabled = "disabled" @{{/ifEquals}}>
-            <label for="@{{display_name}}" class="custom-control-label f-w-4">@{{display_name}} <span class="sub-text">(@{{count}})</span></label>
+            @{{> radioTemplate template=../template facet_value=facet_value is_selected=is_selected filter_facet_name=../filter_facet_name slug=slug disabled_at_zero_count=../disabled_at_zero_count count=count collapsed=../collapsed changeEvent="facetCategoryChange(this);" attribute_slug="" display_name=display_name }}
+            <label for="@{{display_name}}" class="custom-control-label f-w-4">@{{display_name}} 
+              @{{#if ../display_count }}
+              <span class="sub-text">(@{{count}})</span>
+            @{{/if}}
+            </label>
           </div>
           @{{/each}}
           @{{else}}
           @{{#each items}}
           <div class="custom-control custom-checkbox" >
-            <input type="checkbox" class="facet-category custom-control-input" onChange="facetCategoryChange(this);" name="gender" value="@{{facet_value}}" @{{#if is_selected }} checked = "checked" @{{/if}} data-facet-name="@{{../filter_facet_name}}" data-singleton="false" data-slug="@{{slug}}" @{{#ifEquals count 0 }} disabled = "disabled" @{{/ifEquals}}>
-            <label class="custom-control-label f-w-4" for="@{{display_name}}">@{{display_name}} <span class="sub-text">(@{{count}})</span></label>
+            @{{> checkboxTemplate template=../template facet_value=facet_value is_selected=is_selected filter_facet_name=../filter_facet_name slug=slug disabled_at_zero_count=../disabled_at_zero_count count=count collapsed=../collapsed changeEvent="facetCategoryChange(this);" attribute_slug="" display_name=display_name }}
+            <label class="custom-control-label f-w-4" for="@{{display_name}}">@{{display_name}} 
+              @{{#if ../display_count }}
+              <span class="sub-text">(@{{count}})</span>
+            @{{/if}}
+            </label>
           </div> 
           @{{/each}}    
           @{{/if}}
@@ -40,12 +48,16 @@
    var template = Handlebars.compile(source);
    var singleton = (<?= $singleton ?> == 1)?true:false;
    var collapsed = (<?= $collapsed ?> == 1)?true:false;
-   Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
-      return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
-  });
+   var display_count = <?= json_encode($display_count) ?>;
+   var disabled_at_zero_count = <?= json_encode($disabled_at_zero_count) ?>;
+   var is_attribute_param = <?= json_encode($is_attribute_param) ?>;
    var filter_display_name = '<?= $header["display_name"] ?>';
    var filter_facet_name = '<?= $header["facet_name"] ?>';
    var context = {};
+   context["template"] = '<?= $template ?>';
+   context["display_count"] = display_count;
+   context["disabled_at_zero_count"] = disabled_at_zero_count;
+   context["is_attribute_param"] = is_attribute_param;
    context["singleton"] = singleton;
    context["collapsed"] = collapsed;
    context["filter_display_name"] = filter_display_name;

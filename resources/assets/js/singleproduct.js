@@ -5,7 +5,7 @@
 
 $(function(){
 
-    var customHtml = '<div class="btn-label-initial d-flex align-items-center justify-content-center"><i class="kss_icon bag-icon-fill icon-sm"></i> Add to Bag</div><div class="btn-label-success"><i class="fas fa-arrow-right"></i> Go to Bag</div><div class="btn-icon"><i class="fas fa-circle-notch fa-spin fa-lg"></i></div>';
+    var customHtml = '<div class="kss-btn__wrapper d-flex align-items-center justify-content-center"><i class="kss_icon bag-icon-fill icon-sm"></i> Add to Bag</div><div class="btn-label-success"><i class="fas fa-arrow-right"></i> Go to Bag</div><div class="btn-icon"><i class="fas fa-circle-notch fa-spin fa-lg"></i></div>';
 
     var buttn = $('.add-bag-btn .cd-add-to-cart');
 
@@ -41,12 +41,9 @@ $(function(){
 
         // Disable tooltip in mobile
         $('.variant-wrapper,.product-color--single').tooltip('disable');
+        $('.colorOptions__trigger').click();
+
     }
-
-    setTimeout(function () {
-        $('.prod-slides').addClass('center-aligned');
-    }, 500);
-
 
 })
 

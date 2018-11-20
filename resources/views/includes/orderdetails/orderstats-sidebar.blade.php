@@ -1,6 +1,6 @@
 <!-- Order Details sidebar start -->
 <div class="col-12 col-xl-4 col-lg-4">
-   @if($payment_info['payment_mode'] and $payment_info['card_num'])
+   @if(!empty($payment_info) and $payment_info['payment_mode'] and $payment_info['card_num'])
       <label class="">Payment Information</label>
 
       <!-- Payment Info/Mode -->
@@ -18,7 +18,7 @@
       <div class="card-body">
          <h3 class="kss-title font-weight-bold text-muted">{{$shipping_address['name']}}</h3>
          <p class="text-muted">
-            {{$shipping_address['address']}}, {{$shipping_address['locality']}}, {{$shipping_address['landmark']}}, {{$shipping_address['city']}}, {{$shipping_address['state']}} {{$shipping_address['pincode']}}
+            {{$shipping_address['address']}}, {{$shipping_address['locality']}}, @if($shipping_address['landmark']!=""){{$shipping_address['landmark']}},@endif {{$shipping_address['city']}}, {{$shipping_address['state']}} {{$shipping_address['pincode']}}
          </p>
          <p class="text-muted">
             Mobile: <b class="font-weight-bold">+91 {{$shipping_address['phone']}}</b>
@@ -98,10 +98,11 @@
    </div>
 
    <!-- Total savings -->
-   <div class="card shadow-sm mt-3">
-      <div class="card-body text-success d-flex">
-         <strong>Your Total Savings on this Order is <i class="fas fa-rupee-sign sm-font pl-1"></i></span> {{$order_summary['savings']}}</strong>
+   @if($order_summary['savings'] != 0)
+      <div class="card shadow-sm mt-3">
+         <div class="card-body text-success d-flex">
+            <strong>Your Total Savings on this Order is <i class="fas fa-rupee-sign sm-font pl-1"></i></span> {{$order_summary['savings']}}</strong>
+         </div>
       </div>
-   </div>
-
+   @endif
 </div>

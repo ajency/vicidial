@@ -66,10 +66,10 @@ function productseo($params) {
         $default_price = set_default_price($params['variant_group']->{$selected_color_id}->variants);
     }
 
-    $product_subtype = $params['category']->sub_type;
-    $product_gender = $params['category']->gender;
-    $product_age_group = $params['category']->age_group;
-    $product_department = $params['category']->type;
+    $product_subtype = $params['category']->product_subtype;
+    $product_gender = $params['category']->product_gender;
+    $product_age_group = $params['category']->product_age_group;
+    $product_department = $params['category']->product_category_type;
 
     SEOMeta::setTitle($product_name.' - '.$product_color.' - '.$product_subtype.' - Kidsuperstore.in', false);
     SEOMeta::setDescription('Buy '.$product_name.' - '.$product_color.' - only at ₹'.$default_price['sale_price'].' - '.$product_subtype.' for '.$product_gender.'  -  KidSuperStore.in');

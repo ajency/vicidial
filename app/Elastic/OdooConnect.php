@@ -38,44 +38,58 @@ class OdooConnect
         return $this->connections[0];
     }
 
-    public function defaultExec($model, $method, $filters, $attributes = [])
+    public function defaultExec($model, $method, $params, $attributes = [])
     {
-        if (!isset($attributes['limit']) && $method != 'read') {
+        if (!isset($attributes['limit']) && ($method == 'search' || $method == 'search_read')) {
             $attributes['limit'] = config('odoo.limit');
         }
 
-        \Log::info($filters);
+        \Log::info($params);
         \Log::info($attributes);
         $data = collect($this->models->execute_kw(
             $this->DB,
             $this->defaultConn()['user_id'],
             $this->defaultConn()['password'],
-            $model, $method, $filters, $attributes
+            $model, $method, $params, $attributes
         ));
 
         \Log::info('odoo data from ' . $model . ' with user ' . $this->defaultConn()['username'] . ': ' . $data);
         return $data;
     }
 
-    public function multiExec($model, $method, $filters, $attributes = [])
+    public function multiExec($model, $method, $params, $attributes = [])
     {
-        if (!isset($attributes['limit']) && $method != 'read') {
+        if (!isset($attributes['limit']) && ($method == 'search' || $method == 'search_read')) {
             $attributes['limit'] = config('odoo.limit');
         }
 
-        \Log::info($filters);
+        \Log::info($params);
         \Log::info($attributes);
         $data = collect();
         foreach ($this->connections as $connection) {
+            if ( $connection == $this->defaultConn()) continue;
             $data->put($connection['username'], $this->models->execute_kw(
                 $this->DB,
                 $connection['user_id'],
                 $connection['password'],
-                $model, $method, $filters, $attributes
+                $model, $method, $params, $attributes
             ));
             \Log::info('odoo data from ' . $model . ' with user ' . $connection['username'] . ': ' . collect($data[$connection['username']]));
         }
         return $data;
+    }
+
+    public static function odooFilter($filters)
+    {
+        if (isset($filters['id'])) {
+            return [[['id', '>', $filters['id']]]];
+        } elseif (isset($filters['created'])) {
+            return [[['create_date', '>', $filters['created']]]];
+        } elseif (isset($filters['updated'])) {
+            return [[['__last_update', '>', $filters['updated']]]];
+        } elseif (isset($filters['write'])) {
+            return [[['write_date', '>', $filters['write']]]];
+        }
     }
 
 }

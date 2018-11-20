@@ -262,10 +262,77 @@
         background: #fff;
         padding: 5px;
         break-inside: avoid-column;
+        page-break-inside: avoid;
         margin-top: 20px;
         &:first-child {
             margin-top:0px;
         }
     }
 
+}
+
+.productGrid{
+    .kss-price{
+        margin-top: -1em;
+        position: absolute;
+        bottom: 3px;
+        left: 15px;
+        @media (max-width: 767px){
+            width: 100%;
+            text-align: center;
+            margin: 0 -15px;
+        }
+    }
+    .product-card{
+        @media (min-width: 768px){
+            border: 2px solid #f5f5f5;
+            transition: all 0.5s ease;
+        }
+        @media (max-width: 767px){
+            &:hover{
+                box-shadow: none;
+            }
+        }
+    }
+}
+
+.product-collection{
+    background-color: #f3f3f3;
+    .category-col{
+        margin-bottom: 6px;
+        height: 260px;
+        &:nth-child(odd){
+            padding-right: 3px;
+        }
+        &:nth-child(even){
+            padding-left: 3px;
+        }
+    }
+    .product-card{
+        transition: all 0.5s ease;
+        &:hover{
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.21);
+        }
+        & > a{
+            height: 100%
+        }
+        @media (max-width: 767px){
+            background-color: #fff;
+        }
+    }
+    .img-container{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+    }
+    .center-col{
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+    .trending-subtitle{
+        font-size: 1.5em;
+        font-weight: 600;
+        margin-top: 0.2em;
+    }
 }

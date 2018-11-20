@@ -10,14 +10,23 @@
 | contains the "web" middleware group. Now create something great!
 |
  */
-$config        = config('ajfileupload');
-Route::get('/rest/anonymous/cart/count', 'CartController@guestGetCount');
-Route::post('/rest/anonymous/cart/insert', 'CartController@guestAddItem');
-Route::get('/rest/anonymous/cart/get', 'CartController@guestCartFetch');
-Route::get('/rest/anonymous/cart/delete', 'CartController@guestCartDelete');
+$config = config('ajfileupload');
 
-Route::get('/rest/v1/authenticate/login', 'ApiLoginController@verifyOTP');
-Route::get('/rest/v1/authenticate/generate_otp', 'SMSController@sendSMS');
+Route::get('/rest/v1/anonymous/cart/count', 'CartController@guestGetCount');
+Route::post('/rest/v1/anonymous/cart/insert', 'CartController@guestAddItem');
+Route::get('/rest/v1/anonymous/cart/get', 'CartController@guestCartFetch');
+Route::get('/rest/v1/anonymous/cart/delete', 'CartController@guestCartDelete');
+Route::get('/rest/v1/anonymous/states/all', 'AddressController@fetchStates');
+
+Route::get('/contact-us', 'StaticController@contact');
+Route::get('/contact', 'StaticController@contactnew');
+Route::get('/faq', 'StaticController@faq');
+Route::get('/about-us', 'StaticController@about');
+Route::get('/terms-and-conditions', 'StaticController@tc');
+Route::get('/privacy-policy', 'StaticController@privacy');
+
+Route::get('/rest/v1/authenticate/login', 'UserController@verifyOTP');
+Route::get('/rest/v1/authenticate/generate_otp', 'UserController@sendSMS');
 
 Route::get('/test/productlist', 'ProductListTestController@index')->name('productListTest');
 
@@ -31,7 +40,7 @@ Route::get('/user/order/{orderid}/payment/payu/status', 'PaymentController@statu
 
 Route::get('/my/order/details', 'OrderController@getOrderDetails')->name('orderDetails');
 
-Route::get('/shop/{static_page}', 'ShopStaticController@index')->name('shopstatic');
+Route::get('/shop/{static_page}', 'StaticController@index')->name('shopstatic');
 
 Route::get('/{product_slug}/buy', 'ProductController@index')->name('product');
 

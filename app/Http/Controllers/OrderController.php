@@ -2,106 +2,113 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use Carbon\Carbon;
-use App\Cart;
 use App\Address;
+use App\Cart;
 use App\Order;
 use App\User;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    public function userCreateOrder($cart_id, Request $request)
+    public function userCreateOrder($id, Request $request)
     {
+        $request->validate(['address_id' => 'required|exists:addresses,id']);
         $params = $request->all();
-        $user_id = User::getUserByToken($request->header('Authorization'))->id;
 
+        $user    = User::getUserByToken($request->header('Authorization'));
         $address = Address::find($params["address_id"]);
-        $cart = Cart::find($cart_id);
+        $cart    = Cart::find($id);
 
-        if($address==null || $address->user_id != $user_id || $cart==null || $cart->user_id != $user_id) abort(403);
-
+        validateCart($user, $cart, 'cart');
+        validateAddress($user, $address);
         $cart->checkCartAvailability();
 
-        $order = $this->newOrder($cart, $address);
+        $order = Order::create([
+            'cart_id'    => $cart->id,
+            'address_id' => $address->id,
+            'expires_at' => Carbon::now()->addMinutes(config('orders.expiry'))->timestamp,
+        ]);
 
-        $this->setUserCart($user_id);
+        $dateInd = Carbon::now();
+        $dateInd->setTimezone('Asia/Kolkata');
 
-        return response()->json(["items"=>getCartData($cart, false), "summary"=>$order->aggregateSubOrderData(), "order_id"=>$order->id, "address"=>$address->address, "message"=> 'Order Placed successfully']);
-
-    }
-
-    public function newOrder($cart, $address)
-    {
-        if($cart->type == 'order') abort(400,'invalid cart');
-        $order = new Order;
-        $order->cart_id = $cart->id;
-        $order->address_id = $address->id;
-        $expires_at = Carbon::now()->addMinutes(config('orders.expiry'));
-        $order->expires_at = $expires_at->timestamp;
+        $order->txnid = strtoupper($dateInd->format('Mjy')).str_pad($order->id, 8, '0', STR_PAD_LEFT);
         $order->save();
+
         $order->setSubOrders();
         $cart->type = 'order';
         $cart->save();
 
-        return $order;
+        $response = ["items" => getCartData($cart, false), "summary" => $order->aggregateSubOrderData(), "order_id" => $order->id, "address" => array_merge($address->address,["id"=>$address->id]), "message" => 'Order Placed successfully'];
+
+        $user_info = $user->userInfo();
+        if($user_info!=null) {
+            $response['user_info'] = $user_info;
+        }
+
+        return response()->json($response);
     }
 
-    public function setUserCart($user_id)
+    public function continueOrder($id, Request $request)
     {
-        $user = User::find($user_id);
+        $params = $request->all();
 
-        $cart = new Cart;
-        $cart->user_id = $user->id;
-        $cart->save();
+        $user = User::getUserByToken($request->header('Authorization'));
+        $cart    = Cart::find($id);
+        validateCart($user,$cart, 'order');
 
-        $user->cart_id = $cart->id;
-        $user->save();
+        $order = $cart->order;
+
+        if(isset($params['address_id'])) {
+            $address = Address::find($params["address_id"]);
+            validateAddress($user, $address);
+            $order->address_id = $address->id;
+            $order->save();
+        }
+        else {
+            $address = $order->address;
+        }
+
+        $response = ["items" => getCartData($cart, false), "summary" => $order->aggregateSubOrderData(), "order_id" => $order->id, "address" => array_merge($address->address,["id"=>$address->id]), "message" => 'Order Placed successfully'];
+
+        $user_info = $user->userInfo();
+        if($user_info!=null) {
+            $response['user_info'] = $user_info;
+        }
+
+        return response()->json($response);
     }
 
     public function getOrderDetails(Request $request)
     {
-        $query  = $request->all();
+        $query = $request->all();
 
-        if(!isset($query['orderid'])) {
-            return view('error404');
+        if (!isset($query['orderid'])) {
+            abort(404);
         }
 
         $order = Order::find($query['orderid']);
-        if($order == null) {
-            return view('error404');
+        if(!isset($_COOKIE['token'])) {
+            abort(401);
         }
+        $user    = User::getUserByToken('Bearer '.$_COOKIE['token']);
+        validateOrder($user, $order);
 
-        $sub_orders = array();
-        foreach ($order->subOrders as $subOrder) {
-            $sub_orders[] = $subOrder->getSubOrder();
-        }
+        $params = $order->getOrderDetails();
 
-        $payment = $order->payments->first();
-
-        $params = [
-            "order_info"=>$order->getOrderInfo(),
-            "sub_orders"=>$sub_orders,
-            "payment_info"=>[
-                //"payment_mode" => $payment->bankcode,
-                "payment_mode" => json_decode($payment->data)->bankcode,
-                "card_num" => $payment->cardnum,
-            ],
-            "shipping_address" => $order->address->shippingAddress(),
-            "order_summary" => $order->aggregateSubOrderData()
-        ];
-
-        $params['breadcrumb']           = array();
-        $params['breadcrumb']['list']   = array();
-        $params['breadcrumb']['list'][] = ['name' => "Account", 'href' => '#'];
-        $params['breadcrumb']['list'][] = ['name' => "Order", 'href' => '#'];
+        $params['breadcrumb']            = array();
+        $params['breadcrumb']['list']    = array();
+        $params['breadcrumb']['list'][]  = ['name' => "Account", 'href' => '#'];
+        $params['breadcrumb']['list'][]  = ['name' => "Order", 'href' => '#'];
         $params['breadcrumb']['current'] = 'Order Details';
 
-        if(request()->session()->get('payment', false)) {
+        if (request()->session()->get('payment', false)) {
             $params['payment_status'] = request()->session()->get('payment');
         }
 
-        return view('orderdetails')->with('params',$params);
+        return view('orderdetails')->with('params', $params);
     }
+
 }
+

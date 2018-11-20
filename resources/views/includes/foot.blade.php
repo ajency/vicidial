@@ -1,5 +1,6 @@
+@isset($delaycss)
 <noscript id="deferred-styles">
-	<link rel="stylesheet" type="text/css" href="{{CDN::mix('/css/all.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{CDN::mix('/css/kss.css') }}">
 </noscript>
 <script>
   var loadDeferredStyles = function() {
@@ -14,12 +15,16 @@
   if (raf) raf(function() { window.setTimeout(loadDeferredStyles, 0); });
   else window.addEventListener('load', loadDeferredStyles);
 </script>
+@endisset
+
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-url-parser/2.3.1/purl.min.js"></script>
 <script src="https://apis.google.com/js/platform.js"></script>
 <script src="https://unpkg.com/popper.js@1.14.4/dist/umd/popper.js"></script>
+<script type="text/javascript" src="{{CDN::mix('/js/cart.js') }}"></script>
 
 @yield('footjs')
 <script type="text/javascript">
@@ -28,6 +33,5 @@
 </script>
 
 
-<script type="text/javascript" src="{{CDN::mix('/js/all.js') }}"></script>
+<script type="text/javascript" src="{{CDN::mix('/js/kss.js') }}"></script>
 
-<script type="text/javascript" src="{{CDN::mix('/js/cart.js') }}"></script>

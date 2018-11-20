@@ -29,6 +29,9 @@ footer .bl-1{
 .bg-black{
     background:#000;
 }
+.bg-lightgray{
+    background-color: #f9f9f9;
+}
 .overflow-h{
     overflow: hidden;
 }
@@ -71,14 +74,16 @@ footer .bl-1{
     letter-spacing: 5px;
 }
 .kss_icon {
-    background: url(../img/sprite.png)no-repeat;
+    background-image: url(../img/sprite.png);
+    background-repeat: no-repeat;
     width: 30px;
     height: 33px;
     display: inline-block;
     margin-bottom: -4px;
 }
 .kss-ico{
-      background: url(../img/sprite.png)no-repeat;
+    background-image: url(../img/sprite.png);
+    background-repeat: no-repeat;
 }
 .icon-truck-sm{
     @extend .kss-ico;
@@ -202,6 +207,7 @@ footer .bl-1{
     width: 50px;
     height: 50px;
     background-position: -223px -119px;
+    margin: 0 auto;
 }
 .price-l {
     background-position: -240px -10px;
@@ -225,7 +231,7 @@ footer .bl-1{
     right: 2em;
     text-decoration: none;
     text-align: center;
-    font-size: 12px;
+    font-size: 1em;
     display: none;
     padding: 1em;
     z-index: 1;
@@ -245,22 +251,19 @@ footer .bl-1{
         border-color: #71a764;
     }
     &--failure{
-        background-color: #d96246;
-        border-color: #d96246;
+        background-color: #bc6760;
+        border-color: #bc6760;
     }
     @media (min-width: 768px){
         width: 350px;
         .icon{
-            font-size: 1.2em;
+            font-size: 1.8em;
         }
         .message{
             font-size: 1.15em;
         }
     }
-    .close{
-        position: absolute;
-        right: 5px;
-        top: 5px;
+    .alert-close{
         text-shadow: none;
         color: #fff;
         opacity: 1;
@@ -268,16 +271,28 @@ footer .bl-1{
     }
     &.sticky-alert{
         position: fixed;
-        bottom: 6.5em;
+        top: 0;
         z-index: 10;
-        left: 0;
-        transform: translateX(-500px);
+        right: 0;
+        width: calc(80% - 1rem);
+        transform: translateY(-500px);
         transition: all 0.5s ease;
-        @media (max-width: 768px){
-            bottom: 4em;
+        @media (min-width: 768px) {
+            width: calc(400px - 1rem);
+        }
+        @media (min-width: 360px) and (max-width: 767.98px) {
+            width: calc(100% - 1rem);
+            font-size: 1.1em;
+        }
+        @media (min-width: 992px) and (min-width: 1199.98px) {
+            width: calc(40% - 1rem) !important;
+        }
+        @media (min-width: 1300px) {
+            width: calc(30% - 1rem) !important;
         }
     }
     &.is-open{
+        pointer-events: auto;
         transform: translateX(0);
     }
 }
@@ -304,7 +319,7 @@ footer .bl-1{
         overflow-x:scroll;
         display: grid;
         grid-gap: 10px;
-        grid-template-columns: 5px repeat(8, calc(50% - 40px)) 5px;
+        grid-template-columns: 5px repeat(5, calc(50% - 40px)) 5px;
         grid-template-rows: minmax(150px, 1fr);
         .col-6{
             max-width: 100%;
@@ -314,6 +329,18 @@ footer .bl-1{
         &::after {
           content: '';
         }
+    }
+}
+
+@media (max-width: 767px){
+    .one-em{
+        font-size: 1em;
+    }
+    .fz-sm{
+        font-size: 1.1em;
+    }
+    .no-shadow-mobile{
+        box-shadow: none !important;
     }
 }
 
@@ -338,4 +365,92 @@ footer .bl-1{
 .blur-up.lazyloaded {
     -webkit-filter: blur(0);
     filter: blur(0);
+}
+
+.white-space-normal{
+    white-space: normal;
+}
+
+.line-height-5{
+    line-height: 1.5;
+    @media (max-width: 767px){
+        line-height: 1.3;
+    }
+}
+
+.lower-roman{
+    list-style-type: lower-roman;
+}
+
+.custom-table{
+    tr{
+        th,td{
+            padding: 11px 10px;
+        }
+        th{
+            border: 1px solid #cacaca;
+        }
+        td{
+            border: 1px solid #cacaca;
+        }
+    }
+}
+
+.img-fit{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.section-title{
+    font-size: 1.1rem;
+    @media (max-width: 600px){
+        font-size: .9rem;
+    }
+}
+
+.newsletter{
+    .form-control.newsletter__input{
+        background-color: #fff;
+        padding: 10px;
+    }
+    &__btn{
+        border-radius: 0;
+        border: 0;
+        padding: 10px 0.75rem;
+    }
+}
+
+.kss-input-small{
+    width: 35%; 
+}
+
+.kss-flash{
+    padding: 0.8em;
+    margin: 0.8em 0;
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.4;
+    &--info{
+        background-color: $flash-info-bg;    
+        color: $flash-info-color;
+    }
+}
+
+.disabled{
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.more-link{
+    font-size: 1.2em;
+    font-weight: 600;
+    color: theme-color("secondary");
+    &:hover{
+        color: darken(theme-color("secondary"),20%);
+    }
+    .arrow-down{
+        padding-left: 8px;
+        font-size: 1.1em;
+    }
 }

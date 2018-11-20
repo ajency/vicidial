@@ -1,6 +1,10 @@
-<nav aria-label="breadcrumb" class="d-none d-md-block">
+<nav aria-label="breadcrumb" class="">
 	<ol class="breadcrumb mb-1 bg-transparent p-0">
-	   	<li class="breadcrumb-item"><a href="#">Home</a></li>
+	@if(isset($shop))
+		<li class="breadcrumb-item"><a href="/shop">Shop</a></li>
+	@else
+		<li class="breadcrumb-item"><a href="/">Home</a></li>
+	@endif
 	@php foreach ($breadcrumbs['list'] as $item) { @endphp
 	    <li class="breadcrumb-item"><a href="{{$item['href']}}">{{$item['name']}}</a></li>
     @php } @endphp

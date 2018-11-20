@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('headjs')
-	@include('includes.abovethefold.orderdetailscss')
+
 @stop
 
 @section('content')
@@ -52,14 +52,14 @@
 
 				<div class="d-flex  align-self-center mb-4">
 					<label>
-						<i class="fas fa-question-circle fa-1x "></i> Need help with this order? <a href="#">Visit our help center</a>
+						Need help with this order? <a href="#" class="kss-anchor">Visit our help center</a>
 					</label>
 				</div>
 
 			</div>
 
 			<!-- Order Info sidebar -->
-			@include('includes.orderdetails.orderstats-sidebar', ['payment_info' => $params['payment_info'], 'shipping_address' => $params['shipping_address'], 'order_summary' => $params['order_summary'] ])
+			@include('includes.orderdetails.orderstats-sidebar', ['payment_info' => (!empty($params['payment_info']))? $params['payment_info'] : [], 'shipping_address' => $params['shipping_address'], 'order_summary' => $params['order_summary'] ])
 
 		</div>
 
@@ -68,4 +68,7 @@
 	<!-- Similar Products -->
 	{{-- @include('includes.similar-products') --}}
 
+@stop
+@section('footjs')
+	@yield('order-msg')
 @stop

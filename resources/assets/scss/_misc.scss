@@ -38,7 +38,7 @@
     	height: 100%;
     	width: 100%;
     	object-fit: cover;
-    	border-radius:3px;
+    	// border-radius:3px;
     }
 }
 
@@ -60,6 +60,7 @@
 	}
 	.kss-title{
 		min-height: 35px;
+		font-size: 1.1rem;
 	}
 	.product-delete{
 		.delete{
@@ -67,6 +68,12 @@
     		width: 34px;
     		margin: 0;
 		}
+	}
+}
+
+.review-section{
+	.kss-title{
+		min-height: auto;
 	}
 }
 
@@ -134,3 +141,49 @@
     	font-size: .9rem;
 	}
 }
+
+//productlist loader
+.pl-loader{
+	height: calc(100vh - 60px);
+    position: fixed;
+    width: 100%;
+    z-index: 999;
+    top: 60px;
+    left: 0;
+    // @media (max-width: 767px){
+    // 	height: calc(100vh - 90px);
+    // }
+}
+
+// about us 
+.kss-care{
+	@media (min-width: 768px){
+		margin-bottom: -65px;
+	}
+}
+
+.footer-link-separator{
+	margin-left: -0.5em;
+	li{
+		padding: 0 0.5em;
+		margin-bottom: 0.7em;
+		border-right: 1px solid #b1b1b1;
+		&:last-child{
+			border-right: 0;
+		}
+	}
+}
+
+// Similar products
+
+.similar-products{
+	&__col{
+		max-width: 20%;
+		flex-basis: 20%;
+		@media (max-width: 767px){
+			max-width: 50%;
+			flex-basis: 50%;
+		}
+	}
+}
+

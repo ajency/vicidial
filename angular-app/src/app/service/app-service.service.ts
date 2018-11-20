@@ -13,19 +13,25 @@ export class AppServiceService {
   apiUrl = '';
   private addToCart = new Subject<any>();
   private openCart = new Subject<any>();
-  shippingAddresses : any;
+  private closeModal = new Subject<any>();
+  private openModal = new Subject<any>();
+  shippingAddresses = [];
   shippingDetails : any;
+  userVerificationComplete : boolean = false;
+  directNavigationToShippingAddress : boolean = false;
+  selectedAddressId : any;
+  continueOrder : boolean = false;
+  states : any = [];
+  editAddressFromShippingSummary : boolean = false;
+  addressToEdit : any;
   constructor(	private router: Router,
-                private apiservice : ApiServiceService, ) { 
-    console.log("isDevMode ==>",isDevMode());
+                private apiservice : ApiServiceService) { 
     this.apiUrl = isDevMode() ? 'http://localhost:8000' : '';
     var self = this;
     $('.cd-add-to-cart').on('click',function(){
-      console.warn("appservice ==========> add to cart clicked");
       self.addToCartClicked();
     });
     $("#cd-cart-trigger").on('click',function(){
-      console.warn("appservice ==========> open to cart clicked");
       self.openCartClicked();
     });
   }
@@ -41,16 +47,22 @@ export class AppServiceService {
       document.getElementById('cd-shadow-layer').classList.remove('is-visible');
     if(document.getElementsByClassName("modal-backdrop")[0])
 	    document.getElementsByClassName("modal-backdrop")[0].remove();
-    this.router.navigateByUrl('/', { skipLocationChange: true });
   }
 
   addToCartClicked() {
-    console.log("triggerEvent");
     this.addToCart.next();
   }
 
   openCartClicked() {
     this.openCart.next();
+  }
+
+  closeVerificationModal() {
+    this.closeModal.next();
+  }
+
+  openVerificationModal(){
+    this.openModal.next();
   }
 
   listenToAddToCartEvent(): Observable<any> {
@@ -59,6 +71,14 @@ export class AppServiceService {
 
   listenToOpenCartEvent() : Observable<any> {
     return this.openCart.asObservable();
+  }
+
+  listenToCloseModal() : Observable<any> {
+    return this.closeModal.asObservable();
+  }
+
+  listenToOpenModal() : Observable<any> {
+    return this.openModal.asObservable();
   }
 
   getCookie(cname) {
@@ -89,16 +109,13 @@ export class AppServiceService {
     this.clearSessionStorage();
     document.cookie='cart_count=' + 0 + ";path=/";
     this.updateCartCountInUI();
-    let url = this.apiUrl + '/api/rest/v1/user/cart/mine';
-    let header = { Authorization : 'Bearer '+this.getCookie('token') };
 
-    this.apiservice.request(url, 'get', {} , header ).then((response)=>{
-      console.log("response ==>", response);
-      document.cookie='cart_id=' + response.cart_id + ";path=/";         
+    this.callMineApi().then((response)=>{
+      document.cookie='cart_id=' + response.cart_id + ";path=/";  
     })
     .catch((error)=>{
-      console.log("error ===>", error);
-    })  
+      console.log("error : mine api ==>", error);
+    }) 
   }
 
   clearSessionStorage(){
@@ -109,7 +126,6 @@ export class AppServiceService {
     //Check if cart count in Session storage
     var cart_count = this.getCookie( "cart_count" );
     if(cart_count && cart_count != "0"){
-      //Scroll to top if cart icon is hidden on top
       $(".cart-counter").removeClass('d-none'), 100;
       $(".cart-counter").addClass('d-block'), 100;
       $('#output').html(function(i, val) { return cart_count });
@@ -119,4 +135,34 @@ export class AppServiceService {
       $(".cart-counter").removeClass('d-block'), 100;
     }
   }
+
+  userLogout(){
+    document.cookie = "cart_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  }
+
+  isLoggedInUser(){
+    if(this.getCookie('token') && this.getCookie('cart_id'))
+      return true;
+    return false;
+  }
+
+  callMineApi(){
+    let url = this.apiUrl + '/api/rest/v1/user/cart/mine';
+    let header = { Authorization : 'Bearer '+this.getCookie('token') };
+    return this.apiservice.request(url, 'get', {}, header);
+  }
+
+  callFetchCartApi(){
+    let url = this.apiUrl + (this.isLoggedInUser() ? ("/api/rest/v1/user/cart/"+this.getCookie('cart_id')+"/get") : ("/rest/v1/anonymous/cart/get"))
+    let header = this.isLoggedInUser() ? { Authorization : 'Bearer '+this.getCookie('token') } : {}
+    return this.apiservice.request(url, 'get', {}, header);
+  }
+
+  callGetAllAddressesApi(){
+    let url = this.apiUrl + "/api/rest/v1/user/address/all";
+    let header = this.isLoggedInUser() ? { Authorization : 'Bearer '+this.getCookie('token') } : {};
+    return this.apiservice.request(url, 'get', {} , header);
+  }
+
 }

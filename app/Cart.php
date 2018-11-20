@@ -9,14 +9,15 @@ use Illuminate\Database\Eloquent\Model;
 class Cart extends Model
 {
     const ITEM_FIELDS = ['id', 'quantity'];
+    protected $fillable = ['user_id', 'active', 'type'];
 
     protected $casts = [
         'cart_data' => 'array',
     ];
 
-    public function orders()
+    public function order()
     {
-        return $this->hasMany('App\Order');
+        return $this->hasOne('App\Order');
     }
 
     public function user()
@@ -85,15 +86,17 @@ class Cart extends Model
         return $this;
     }
 
-    public function getItem(int $variant_id, $fetch_related=true)
+    public function getItem(int $variant_id, $fetch_related = true, $current_quantity = false)
     {
-        $variant           = Variant::find($variant_id);
-        if($variant == null)
+        $variant = Variant::find($variant_id);
+        if ($variant == null) {
             abort(404);
-        $item              = $variant->getItem($fetch_related);
-        $item["quantity"]  = intval($this->cart_data[$item["id"]]["quantity"]);
-        $item["timestamp"] = intval($this->cart_data[$item["id"]]["timestamp"]);
-        $item["availability"] = ($variant->getQuantity()>=$item["quantity"]);
+        }
+
+        $item                 = $variant->getItem($fetch_related, $current_quantity);
+        $item["quantity"]     = intval($this->cart_data[$item["id"]]["quantity"]);
+        $item["timestamp"]    = intval($this->cart_data[$item["id"]]["timestamp"]);
+        $item["availability"] = ($variant->getQuantity() >= $item["quantity"]);
 
         return $item;
     }
@@ -114,12 +117,18 @@ class Cart extends Model
     {
         foreach ($this->cart_data as $cart_item) {
             $item = $this->getItem($cart_item['id']);
-            if(!$item["availability"]) abort(404, "One or more items are Out of Stock");
+            if (!$item["availability"]) {
+                abort(404, "One or more items are Out of Stock");
+            }
+
         }
     }
 
-    public function abortNotCart(){
-        if($this->type == "order"){
+    public function abortNotCart($type)
+    {
+        if($this->type==null && $type=='cart') return;
+        
+        if ($this->type != $type) {
             abort(403);
         }
     }

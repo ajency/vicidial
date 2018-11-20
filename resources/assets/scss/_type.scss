@@ -37,15 +37,21 @@ label {
 
 // Price
 .kss-price {
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     font-weight: bold;
     &--smaller{
       font-size: 1.1em;
+    }
+    &--medium{
+        font-size: 1.35em;
     }
     @media (max-width: 575.98px) {
         font-size: 1.4rem;
         &--smaller{
           font-size: 1.1em;
+        }
+        &--medium{
+            font-size: 1.2em;
         }
     }
 }
@@ -69,4 +75,76 @@ label {
     color:#000;
     border-bottom:1px solid #F9BC22;
     text-decoration:none !important;
+}
+
+
+// Default anchor styling
+
+.kss-anchor{
+    color: darken(theme-color("primary"),20%);
+    &:hover{
+        color: theme-color("primary");
+    }
+}
+
+.socialIcon-size{
+    font-size: 1.15em;
+    @media (max-width: 767px){
+        font-size: 1.1em;
+    }
+}
+
+.social-title{
+    margin-left: 5px;
+    margin-bottom: 0;
+    font-size: 1.2em;
+    @media (max-width: 767px){
+        font-size: 1.1em;
+    }
+}
+
+.section-heading{
+    font-size: 1rem;
+    color: #000;
+    margin-bottom: 0.5rem;
+    &--single{
+        font-size: 1.2rem;
+        text-transform: capitalize;
+        width: 100%;
+        @media (max-width: 767px){
+            font-size: 1.05rem;
+        }
+    }
+    &--list{
+        font-weight: 400;
+        font-size: 1rem;
+        margin-bottom: 0.75rem;
+        color: #707279;
+    }    
+}
+
+.group-title{
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: theme-color("secondary");
+    margin-top: 1rem;
+    &--black{
+        color: #000;
+    }
+    &--lighter{
+        font-weight: 400;
+    }
+    @media (max-width: 767px){
+        font-size: 1rem;
+    }
+}
+
+.group-body{
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #495057;
+    margin-top: 1rem;
+    @media (max-width: 767px){
+        line-height: 1.3;
+    }
 }

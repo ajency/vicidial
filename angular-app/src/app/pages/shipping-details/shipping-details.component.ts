@@ -21,14 +21,14 @@ export class ShippingDetailsComponent implements OnInit {
     locality : '',
     landmark : '',
     city : '',
-    state : '',
+    state_id : '',
     default : false,
     type : ''
   };
   selectedAddressId : any;
-  states = [ 'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh', 'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jammu and Kashmir', 'Jharkhand', 'Karnataka', 'Kerala', 'Madhya Pradesh', 'Maharashtra', 'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Orissa', 'Punjab', 'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura', 'Uttaranchal', 'Uttar Pradesh','West Bengal'
-  ]
+  states : any;
   hideDefaultAddressField : boolean = false;
+  cart : any;
   constructor( private router : Router,
                private appservice : AppServiceService,
                private apiservice : ApiServiceService
@@ -36,18 +36,88 @@ export class ShippingDetailsComponent implements OnInit {
             ) { }
 
   ngOnInit() {
-    this.addresses = this.appservice.shippingAddresses;
-    if(!this.addresses.length){
-      this.addAddress = true;
-      this.initSelectPicker(); 
+    this.states = this.appservice.states.length ? this.appservice.states : this.getAllStates();
+    if(this.appservice.directNavigationToShippingAddress){
+      this.checkCartStatus();
+      this.appservice.directNavigationToShippingAddress = false;
     }
-    this.addresses.forEach((address)=> {if(address.default == true) this.selectedAddressId=address.id});
-    
+    else{
+      this.addresses = this.appservice.shippingAddresses;
+      this.updateUrl();
+      this.checkAddresses();
+    }    
   }
 
-  // ngAfterViewInit(){
-  //   $('#state').selectpicker();
-  // }
+  checkAddresses(){
+    if(!this.addresses.length){
+      this.addAddress = true;
+      if(this.states && this.states.length) 
+        this.initSelectPicker(); 
+    }
+    else if(this.appservice.editAddressFromShippingSummary){
+      this.appservice.editAddressFromShippingSummary = false;
+      let address = this.addresses.find((add)=>{ return add.id == this.appservice.addressToEdit.id})
+      this.editAddress(address);
+    }
+    this.addresses.forEach((address)=> {if(address.default == true) this.selectedAddressId=address.id});
+  }
+
+  updateUrl(){
+    let url = window.location.href.split("#")[0] + '#shipping-address';
+    console.log("check url ==>", url);
+    if(!window.location.href.endsWith('#shipping-address')){
+      this.appservice.userVerificationComplete ? history.replaceState({cart : true}, 'cart', url) : history.pushState({cart : true}, 'cart', url);
+      this.appservice.userVerificationComplete = false;
+    }      
+  }
+
+  checkCartStatus(){
+    if(!this.appservice.isLoggedInUser()){
+       this.router.navigateByUrl('/cartpage', { skipLocationChange: true });
+    }
+    else{
+      this.appservice.showLoader();
+      this.appservice.callFetchCartApi().then((response)=>{
+        this.cart = response;
+        let cartItemOutOfStock = false;
+        response.items.forEach((item)=>{
+           if(!item.availability){
+             cartItemOutOfStock = true;
+           }
+        })
+        document.cookie = "cart_count=" + response.cart_count + ";path=/";
+        this.appservice.updateCartCountInUI();
+
+        if(!cartItemOutOfStock && response.items.length){
+           this.getAddress();
+        }
+        else{
+          this.router.navigateByUrl('/cartpage', { skipLocationChange: true });
+        }
+      })
+      .catch((error)=>{
+        console.log("error ===>", error);
+        this.appservice.removeLoader();
+        this.router.navigateByUrl('/cartpage', { skipLocationChange: true });
+      })
+    }
+  }
+
+  getAddress(){
+    this.appservice.showLoader();
+    this.appservice.callGetAllAddressesApi().then((response)=>{
+      this.addresses = response.addresses;
+      this.checkAddresses();
+      this.updateUrl();
+      this.appservice.shippingAddresses = response.addresses;
+      this.removeLoader();
+    })
+    .catch((error)=>{
+      console.log("error ===>", error);
+      this.addresses = [];
+      this.removeLoader();
+    })
+  }
 
   saveNewAddress(){
     this.appservice.showLoader();
@@ -58,7 +128,6 @@ export class ShippingDetailsComponent implements OnInit {
     body._token = $('meta[name="csrf-token"]').attr('content');
 
     this.apiservice.request(url, 'post', body , header ).then((response)=>{
-      console.log("response ==>", response);
       if(this.newAddress.id){
        this.addresses = this.addresses.map((address)=> {
         var a = address;
@@ -113,19 +182,19 @@ export class ShippingDetailsComponent implements OnInit {
     this.newAddress = {};
     this.newAddress.default = false;
     this.newAddress.type = "";
-    this.newAddress.state="";
+    this.newAddress.state_id="";
     this.newAddress.landmark = "";
     this.initSelectPicker();
   }
 
   initSelectPicker(){
+    $(".kss_shipping").scrollTop(0);
     setTimeout(()=>{
       $('#state').selectpicker();
     },100); 
   }
 
   deleteAddress(id){
-    console.log(id);
     let change_selected_address = (id == this.selectedAddressId) ? true : false;
     let old_id = this.selectedAddressId;
     this.appservice.showLoader();
@@ -134,7 +203,6 @@ export class ShippingDetailsComponent implements OnInit {
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     url = url+$.param(body);
     this.apiservice.request(url, 'get', body, header ).then((response)=>{
-      console.log("response ==>", response);
       let index = this.addresses.findIndex(i => i.id == id);
       this.addresses.splice(index,1);
       if(!this.addresses.length){
@@ -156,32 +224,43 @@ export class ShippingDetailsComponent implements OnInit {
   }
 
   navigateToShippingPage(){
-    console.log(this.selectedAddressId);
-    this.appservice.showLoader();
-    let url = this.appservice.apiUrl + '/api/rest/v1/user/cart/' + this.appservice.getCookie('cart_id') + '/create-order'
-    let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
-    let body : any = {
-      address_id : this.selectedAddressId
-    };
-    body._token = $('meta[name="csrf-token"]').attr('content');
-
-    this.apiservice.request(url, 'post', body , header ).then((response)=>{
-      console.log("response ==>", response);
-      this.appservice.shippingDetails = response;
-      this.appservice.removeLoader();
-      this.router.navigateByUrl('/shipping-summary', { skipLocationChange: true });      
-    })
-    .catch((error)=>{
-      console.log("error ===>", error);
-      this.appservice.removeLoader();
-    })  
+    this.appservice.selectedAddressId = this.selectedAddressId;
+    if (this.cart && this.cart.cart_type == "order")
+      this.appservice.continueOrder = true;
+    this.router.navigateByUrl('/shipping-summary', { skipLocationChange: true });      
   }
 
   closeCart(){
-    this.appservice.closeCart();
+    let url = window.location.href.split("#")[0];
+    history.pushState({cart : false}, 'cart', url);
+    window.location.reload();
   }
 
   navigateBack(){
-    this.router.navigateByUrl('/', {skipLocationChange: true});
+    history.back();
+  }
+
+  getAllStates(){    
+    this.appservice.showLoader();
+    let url = this.appservice.apiUrl + "/rest/v1/anonymous/states/all";
+    this.apiservice.request(url, 'get', {}, {} ).then((response)=>{
+      this.appservice.states = response;
+      this.states = response;
+      this.initSelectPicker();
+      this.removeLoader();
+      return response;
+    })
+    .catch((error)=>{
+      console.log("error ===>", error);
+      this.states = [];
+      this.removeLoader();
+      return [];
+    })
+  }
+
+  removeLoader(){
+    if(this.states && this.addresses){
+      this.appservice.removeLoader();
+    }
   }
 }

@@ -62,7 +62,7 @@ paste this
 ```
 [program:newsite_product_sync]
 process_name=%(program_name)s_%(process_num)02d
-command=php /var/www/newsite/artisan queue:work --queue=process_product,create_jobs --sleep=3 --tries=3
+command=php /var/www/newsite/artisan queue:work --queue=update_inventory,process_move,process_product,process_product_images,create_jobs --sleep=3 --tries=3
 autostart=true
 autorestart=true
 user=root
@@ -70,15 +70,15 @@ numprocs=1
 redirect_stderr=true
 stdout_logfile=/var/log/laravel/product_sync.log
 
-[program:newsite_photo_sync]
+[program:newsite_order_sync]
 process_name=%(program_name)s_%(process_num)02d
-command=php /var/www/newsite/artisan queue:work --queue=process_product_images --tries=3
+command=php /var/www/newsite/artisan queue:work --queue=odoo_order --tries=5
 autostart=true
 autorestart=true
 user=root
 numprocs=1
 redirect_stderr=true
-stdout_logfile=/var/log/laravel/photo_sync.log
+stdout_logfile=/var/log/laravel/order_sync.log
 
 [program:newsite_comm]
 process_name=%(program_name)s_%(process_num)02d
@@ -135,9 +135,19 @@ Add the following to crontab
 
 `cp .env.example .env`
 
-### Create an elastic index for products
+### Create an elastic index for products and product moves
 
-`php artisan elastic:create_index products` 
+`php artisan elastic:create_index products`
+`php artisan elastic:create_index product_moves`
+
+### Get all warehouses from odoo
+`php artisan odoo:warehouses` 
+
+### Get all locations from odoo
+`php artisan odoo:locations` 
+
+### Get all states from odoo
+`php artisan odoo:states` 
 
 ### create passport keys for API to work
 `php artisan passport:client --personal`
@@ -149,6 +159,3 @@ Add the following to crontab
 
 `Spatie\Permission\Models\Role::create(['name' => 'customer'])`
 
-#### In the tinker console run the following command to sync product data from odoo to elasticsearch
-
-`Product::startSync();`
