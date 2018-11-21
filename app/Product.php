@@ -8,6 +8,7 @@ use App\Jobs\CreateProductJobs;
 use App\Jobs\FetchProductImages;
 use App\ProductColor;
 use App\Variant;
+use Carbon\Carbon;
 
 class Product
 {
@@ -24,6 +25,15 @@ class Product
 
         $products = $odoo->defaultExec('product.template', 'search', $odooFilter, $attributes);
         return $products;
+    }
+
+    public static updateSync(){
+        $offset = 0;
+        do{
+            $products = self::getProductIDs(['write' => Carbon::now()->subDay()->startOfDay()->toDateTimeString()], $offset);
+            CreateProductJobs::dispatch($products)->onQueue('create_jobs');
+            $offset = $offset + $products->count();
+        }while ($products->count() == config('odoo.limit'));
     }
 
     public static function startSync()

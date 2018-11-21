@@ -2,7 +2,7 @@
 
 namespace App\Console;
 
-use App\Jobs\ImageSync;
+use App\Jobs\ProductSync;
 use App\Jobs\ProductMoveSync;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -27,7 +27,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         if (config('app.run_cron')) {
-            $schedule->job(new ImageSync, 'create_jobs')->daily();
+            $schedule->job(new ProductSync, 'create_jobs')->daily();
             $schedule->job(new ProductMoveSync, 'create_jobs')->everyMinute();
         }
     }
