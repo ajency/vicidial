@@ -14,18 +14,16 @@ use Illuminate\Queue\SerializesModels;
 class UpdateVariantInventory implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    protected $variant_id;
-    protected $product_move;
+    protected $variant_ids;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($product_move)
+    public function __construct($variant_ids)
     {
-        $this->product_move = $product_move;
-        $this->variant_id   = $product_move["move_product_id"];
+        $this->variant_ids   = $variant_ids;
     }
 
     /**
@@ -35,11 +33,13 @@ class UpdateVariantInventory implements ShouldQueue
      */
     public function handle()
     {
-        $inventory      = Product::getVariantInventory([$this->variant_id]);
-        $var            = Variant::where(["odoo_id" => $this->variant_id])->firstOrFail();
-        $var->inventory = $inventory[$this->variant_id]["inventory"];
-        $var->save();
-        $result = ProductColor::updateElasticInventory($this->variant_id, $var->getParentElasticData(), $var->getAvailability());
-        \Log::info($result);
+        $inventory      = Product::getVariantInventory($this->variant_ids);
+        foreach ($this->variant_ids as $variant_id) {
+            $var            = Variant::where(["odoo_id" => $variant_id])->firstOrFail();
+            $var->inventory = $inventory[$variant_id]["inventory"];
+            $var->save();
+            $result = ProductColor::updateElasticInventory($variant_id, $var->getParentElasticData(), $var->getAvailability());
+            \Log::info($result);
+        }
     }
 }

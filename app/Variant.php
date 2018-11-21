@@ -33,7 +33,8 @@ class Variant extends Model
     {
 
         $model = parent::newFromBuilder($attributes, $connection);
-        $model->fetchElasticData();
+        if(isset($this->productColor))
+            $model->fetchElasticData();
         return $model;
     }
 
@@ -340,5 +341,14 @@ class Variant extends Model
     public static function getVariantProductIdFromOdoo($variant_id){
         $odoo = new Elastic\OdooConnect;
         return $odoo->defaultExec('product.product','read',[[$variant_id]],['fields'=>['product_tmpl_id']])->first()['product_tmpl_id'][0];
+    }
+
+    public static function addUpdateInventoryJobs()
+    {
+        $variants = Variant::select('odoo_id')->get()->pluck('odoo_id')->toarray();
+        $job_sets = array_chunk($variants,config('odoo.limit'));
+        foreach ($job_sets as $job_set) {
+            UpdateVariantInventory::dispatch($job_set)->onQueue('update_inventory');
+        }
     }
 }
