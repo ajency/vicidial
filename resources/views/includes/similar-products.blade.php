@@ -12,7 +12,7 @@
               <a href="{{$url}}" >
                 <div class="image oh loading loading-01">
                   @php
-                    $image_1x = $image_2x = $image_3x = '/img/placeholder.svg';
+                    $image_1x = $image_2x = $image_3x = CDN::asset('/img/placeholder.svg');
                     $load_10x = '/img/placeholder-10x.jpg';
                     if(count((array)$product->images)>0){
                       $load_10x = $product->images->{'load'};
