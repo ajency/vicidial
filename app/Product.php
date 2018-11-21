@@ -27,7 +27,7 @@ class Product
         return $products;
     }
 
-    public static updateSync(){
+    public static function updateSync(){
         $offset = 0;
         do{
             $products = self::getProductIDs(['write' => Carbon::now()->subDay()->startOfDay()->toDateTimeString()], $offset);
@@ -144,16 +144,16 @@ class Product
             $query->addToBulkIndexing($item['id'], $item);
         });
         $responses = $query->bulk();
-        $updated   = 0;
         foreach ($responses['items'] as $response) {
-            switch ($response['create']['status']) {
-                case 201:
-                    $updated++;
-                    \Log::info("Product {$response['create']['_id']} indexed");
+            switch ($response['index']['result']) {
+                case 'created':
+                    \Log::info("Product {$response['index']['_id']} created");
                     break;
-
+                case 'updated':
+                    \Log::info("Product {$response['index']['_id']} updated");
+                    break;
                 default:
-                    \Log::notice("Product {$response['create']['_id']} status {$response['create']['status']}");
+                    \Log::notice("Product {$response['index']['_id']} status {$response['index']['result']}");
                     break;
             }
         }
