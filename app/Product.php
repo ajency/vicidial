@@ -59,6 +59,8 @@ class Product
         $productData = $odoo->defaultExec('product.template', 'read', [[$product_id]], ['fields' => config('product.template_fields')])->first();
         $products    = self::indexVariants($productData['product_variant_ids'], sanitiseProductData($productData));
         self::bulkIndexProducts($products);
+        //create update job for $productData['product_variant_ids']
+        //create photo job for $product_id 
     }
 
     public static function indexVariants($variant_ids, $productData)
@@ -67,11 +69,11 @@ class Product
         $odoo             = new OdooConnect;
         $variants         = collect();
         $variantsData     = $odoo->defaultExec("product.product", 'read', [$variant_ids], ['fields' => config('product.variant_fields')]);
-        $variantInventory = self::getVariantInventory($variant_ids);
+        // $variantInventory = self::getVariantInventory($variant_ids);
         foreach ($variantsData as $variantData) {
             $attributeValues = $odoo->defaultExec('product.attribute.value', 'read', [$variantData['attribute_value_ids']], ['fields' => config('product.attribute_fields')]);
-            $sanitisedData   = sanitiseVariantData($variantData, $attributeValues, $variantInventory[$variantData['id']]);
-            self::storeVariantData($sanitisedData, $productData, $variantInventory[$variantData['id']]);
+            $sanitisedData   = sanitiseVariantData($variantData, $attributeValues);
+            self::storeVariantData($sanitisedData, $productData);
             $variants->push($sanitisedData);
         }
         $colorvariants = $variants->groupBy('product_color_id');
@@ -82,7 +84,7 @@ class Product
         return $products;
     }
 
-    public static function storeVariantData($variant, $product, $inventory)
+    public static function storeVariantData($variant, $product)
     {
 
         try {
@@ -98,7 +100,7 @@ class Product
         try {
             $object                   = new Variant;
             $object->odoo_id          = $variant['variant_id'];
-            $object->inventory        = $inventory['inventory'];
+            $object->inventory        = [];
             $object->product_color_id = $elastic->id;
             $object->save();
         } catch (\Exception $e) {
