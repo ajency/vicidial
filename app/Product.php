@@ -6,6 +6,7 @@ use App\Elastic\OdooConnect;
 use App\Facet;
 use App\Jobs\CreateProductJobs;
 use App\Jobs\FetchProductImages;
+use App\Jobs\UpdateVariantInventory;
 use App\ProductColor;
 use App\Variant;
 use Carbon\Carbon;
@@ -51,16 +52,13 @@ class Product
     public static function indexProduct($product_id)
     {
         $odoo = new OdooConnect;
-        // if (ProductColor::where('product_id', $product_id)->count() > 0) {
-        //     \Log::notice('Product '.$product_id.' already indexed');
-        //     return;
-        // }
-
         $productData = $odoo->defaultExec('product.template', 'read', [[$product_id]], ['fields' => config('product.template_fields')])->first();
         $products    = self::indexVariants($productData['product_variant_ids'], sanitiseProductData($productData));
         self::bulkIndexProducts($products);
         //create update job for $productData['product_variant_ids']
-        //create photo job for $product_id 
+        UpdateVariantInventory::dispatch([$elastic_data["move_product_id"]])->onQueue('update_inventory');
+        //create photo job for $product_id
+        FetchProductImages::dispatch($product_id)->onQueue('process_product_images')
     }
 
     public static function indexVariants($variant_ids, $productData)
@@ -69,7 +67,6 @@ class Product
         $odoo             = new OdooConnect;
         $variants         = collect();
         $variantsData     = $odoo->defaultExec("product.product", 'read', [$variant_ids], ['fields' => config('product.variant_fields')]);
-        // $variantInventory = self::getVariantInventory($variant_ids);
         foreach ($variantsData as $variantData) {
             $attributeValues = $odoo->defaultExec('product.attribute.value', 'read', [$variantData['attribute_value_ids']], ['fields' => config('product.attribute_fields')]);
             $sanitisedData   = sanitiseVariantData($variantData, $attributeValues);
