@@ -9523,6 +9523,36 @@ a.text-cancel:hover, a.text-cancel:focus {
   color: #a4a4a4;
 }
 
+.color-filter .color-box {
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+  border: 1px solid #eee;
+}
+
+.more-color {
+  display: none;
+}
+
+.color-wrapper .card-body {
+  height: 243px;
+  overflow: hidden;
+}
+
+.color-wrapper .card-body.is-open {
+  height: auto;
+}
+
+.color-wrapper .more-color {
+  display: block;
+  color: #004283;
+  font-weight: 600;
+  cursor: pointer;
+  padding-bottom: 10px;
+  padding-left: 34px;
+  font-size: 1.05em;
+}
+
 .kss_banner {
   width: 100%;
   height: 400px;

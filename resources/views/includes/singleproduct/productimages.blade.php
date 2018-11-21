@@ -33,7 +33,7 @@
 			} else  {
 			@endphp
 				<li class="mb-3 w-100">
-					<img src="/img/placeholder.svg" class="lazyload" alt="No image" title="No image">
+					<img src="{{CDN::asset('/img/placeholder.svg') }}" class="lazyload" alt="No image" title="No image">
 				</li>
 			@php
 			}
