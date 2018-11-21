@@ -6,8 +6,10 @@ use App\Elastic\OdooConnect;
 use App\Facet;
 use App\Jobs\CreateProductJobs;
 use App\Jobs\FetchProductImages;
+use App\Jobs\UpdateVariantInventory;
 use App\ProductColor;
 use App\Variant;
+use Carbon\Carbon;
 
 class Product
 {
@@ -26,6 +28,15 @@ class Product
         return $products;
     }
 
+    public static function updateSync(){
+        $offset = 0;
+        do{
+            $products = self::getProductIDs(['write' => Carbon::now()->subDay()->startOfDay()->toDateTimeString()], $offset);
+            CreateProductJobs::dispatch($products)->onQueue('create_jobs');
+            $offset = $offset + $products->count();
+        }while ($products->count() == config('odoo.limit'));
+    }
+
     public static function startSync()
     {
         $first_id = ProductColor::max('product_id');
@@ -41,14 +52,13 @@ class Product
     public static function indexProduct($product_id)
     {
         $odoo = new OdooConnect;
-        if (ProductColor::where('product_id', $product_id)->count() > 0) {
-            \Log::notice('Product '.$product_id.' already indexed');
-            return;
-        }
-
         $productData = $odoo->defaultExec('product.template', 'read', [[$product_id]], ['fields' => config('product.template_fields')])->first();
         $products    = self::indexVariants($productData['product_variant_ids'], sanitiseProductData($productData));
         self::bulkIndexProducts($products);
+        //create update job for $productData['product_variant_ids']
+        UpdateVariantInventory::dispatch($productData['product_variant_ids'])->onQueue('update_inventory');
+        //create photo job for $product_id
+        FetchProductImages::dispatch($product_id)->onQueue('process_product_images');
     }
 
     public static function indexVariants($variant_ids, $productData)
@@ -57,11 +67,10 @@ class Product
         $odoo             = new OdooConnect;
         $variants         = collect();
         $variantsData     = $odoo->defaultExec("product.product", 'read', [$variant_ids], ['fields' => config('product.variant_fields')]);
-        $variantInventory = self::getVariantInventory($variant_ids);
         foreach ($variantsData as $variantData) {
             $attributeValues = $odoo->defaultExec('product.attribute.value', 'read', [$variantData['attribute_value_ids']], ['fields' => config('product.attribute_fields')]);
-            $sanitisedData   = sanitiseVariantData($variantData, $attributeValues, $variantInventory[$variantData['id']]);
-            self::storeVariantData($sanitisedData, $productData, $variantInventory[$variantData['id']]);
+            $sanitisedData   = sanitiseVariantData($variantData, $attributeValues);
+            self::storeVariantData($sanitisedData, $productData);
             $variants->push($sanitisedData);
         }
         $colorvariants = $variants->groupBy('product_color_id');
@@ -72,7 +81,7 @@ class Product
         return $products;
     }
 
-    public static function storeVariantData($variant, $product, $inventory)
+    public static function storeVariantData($variant, $product)
     {
 
         try {
@@ -88,7 +97,7 @@ class Product
         try {
             $object                   = new Variant;
             $object->odoo_id          = $variant['variant_id'];
-            $object->inventory        = $inventory['inventory'];
+            $object->inventory        = [];
             $object->product_color_id = $elastic->id;
             $object->save();
         } catch (\Exception $e) {
@@ -131,19 +140,19 @@ class Product
         $query->setIndex(config('elastic.indexes.product'));
         $query->initializeBulkIndexing();
         $products->each(function ($item, $key) use ($query) {
-            $query->addToBulkIndexing($item['id'], $item, ['op_type' => "create"]);
+            $query->addToBulkIndexing($item['id'], $item);
         });
         $responses = $query->bulk();
-        $updated   = 0;
         foreach ($responses['items'] as $response) {
-            switch ($response['create']['status']) {
-                case 201:
-                    $updated++;
-                    \Log::info("Product {$response['create']['_id']} indexed");
+            switch ($response['index']['result']) {
+                case 'created':
+                    \Log::info("Product {$response['index']['_id']} created");
                     break;
-
+                case 'updated':
+                    \Log::info("Product {$response['index']['_id']} updated");
+                    break;
                 default:
-                    \Log::notice("Product {$response['create']['_id']} status {$response['create']['status']}");
+                    \Log::notice("Product {$response['index']['_id']} status {$response['index']['result']}");
                     break;
             }
         }
