@@ -11035,11 +11035,11 @@ select.custom::-ms-expand {
 }
 
 .bg-gift.store-locator {
-  background-image: url("/img/store-location.png");
+  background-image: url("../img/store-location.png");
 }
 
 .bg-gift.shipping-img {
-  background-image: url("/img/shipping.png");
+  background-image: url("../img/shipping.png");
 }
 
 .bg-toy {
