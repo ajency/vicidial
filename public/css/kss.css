@@ -12020,6 +12020,19 @@ footer .bl-1 {
   font-size: 1.1em;
 }
 
+.viewall-link {
+  display: inline-block;
+  font-size: 1.4em;
+  color: #004283;
+  font-weight: 600;
+  padding: 10px 5px 2px 5px;
+  border-bottom: 2px solid;
+}
+
+.viewall-link:hover {
+  color: #000f1d;
+}
+
 /* Custom Select */
 .kss-custom-select {
   position: relative;
