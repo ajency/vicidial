@@ -606,3 +606,17 @@ function sendSMS($event, $data = [], $override = false)
     \AjComm::sendNotification($notify);
 
 }
+
+function saveTxnid($order)
+{
+    $dateInd = Carbon::now();
+    $dateInd->setTimezone('Asia/Kolkata');
+    
+    try{
+        $order->txnid = strtoupper($dateInd->format('Mjy')).random_int(str_pad(1, 8, 0), str_pad(9, 8, 9));
+        $order->save();
+    }
+    catch(\Exception $e){
+        saveTxnid($order);
+    }
+}

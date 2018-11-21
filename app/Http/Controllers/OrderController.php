@@ -30,11 +30,7 @@ class OrderController extends Controller
             'expires_at' => Carbon::now()->addMinutes(config('orders.expiry'))->timestamp,
         ]);
 
-        $dateInd = Carbon::now();
-        $dateInd->setTimezone('Asia/Kolkata');
-
-        $order->txnid = strtoupper($dateInd->format('Mjy')).str_pad($order->id, 8, '0', STR_PAD_LEFT);
-        $order->save();
+        saveTxnid($order);
 
         $order->setSubOrders();
         $cart->type = 'order';
@@ -88,7 +84,7 @@ class OrderController extends Controller
             abort(404);
         }
 
-        $order = Order::find($query['orderid']);
+        $order = Order::where('txnid', $query['orderid'])->first();
         if(!isset($_COOKIE['token'])) {
             abort(401);
         }
