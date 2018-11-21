@@ -1,6 +1,7 @@
 <?php
 namespace App;
 
+use App\Defaults;
 use App\Elastic\ElasticQuery;
 use App\Elastic\OdooConnect;
 use App\Facet;
@@ -9,7 +10,6 @@ use App\Jobs\FetchProductImages;
 use App\Jobs\UpdateVariantInventory;
 use App\ProductColor;
 use App\Variant;
-use Carbon\Carbon;
 
 class Product
 {
@@ -28,13 +28,15 @@ class Product
         return $products;
     }
 
-    public static function updateSync(){
+    public static function updateSync()
+    {
         $offset = 0;
-        do{
-            $products = self::getProductIDs(['write' => Carbon::now()->subDay()->startOfDay()->toDateTimeString()], $offset);
+        do {
+            $products = self::getProductIDs(['write' => Defaults::getLastProductSync()], $offset);
             CreateProductJobs::dispatch($products)->onQueue('create_jobs');
             $offset = $offset + $products->count();
-        }while ($products->count() == config('odoo.limit'));
+        } while ($products->count() == config('odoo.limit'));
+        Defaults::setLastProductSync();
     }
 
     public static function startSync()
@@ -51,7 +53,7 @@ class Product
 
     public static function indexProduct($product_id)
     {
-        $odoo = new OdooConnect;
+        $odoo        = new OdooConnect;
         $productData = $odoo->defaultExec('product.template', 'read', [[$product_id]], ['fields' => config('product.template_fields')])->first();
         $products    = self::indexVariants($productData['product_variant_ids'], sanitiseProductData($productData));
         self::bulkIndexProducts($products);
@@ -63,10 +65,10 @@ class Product
 
     public static function indexVariants($variant_ids, $productData)
     {
-        $products         = collect();
-        $odoo             = new OdooConnect;
-        $variants         = collect();
-        $variantsData     = $odoo->defaultExec("product.product", 'read', [$variant_ids], ['fields' => config('product.variant_fields')]);
+        $products     = collect();
+        $odoo         = new OdooConnect;
+        $variants     = collect();
+        $variantsData = $odoo->defaultExec("product.product", 'read', [$variant_ids], ['fields' => config('product.variant_fields')]);
         foreach ($variantsData as $variantData) {
             $attributeValues = $odoo->defaultExec('product.attribute.value', 'read', [$variantData['attribute_value_ids']], ['fields' => config('product.attribute_fields')]);
             $sanitisedData   = sanitiseVariantData($variantData, $attributeValues);
@@ -302,8 +304,9 @@ class Product
         $facet_display_data             = config('product.facet_display_data');
         // dd($facet_display_data);
         // dd($params);
-        if(count($params["search_object"]["boolean_filter"]) == 0)
+        if (count($params["search_object"]["boolean_filter"]) == 0) {
             unset($params["search_object"]["boolean_filter"]);
+        }
 
         foreach ($params["search_object"]["primary_filter"] as $paramk => $paramv) {
             if ($facet_display_data[$paramk]["is_essential"] == false) {
@@ -322,7 +325,6 @@ class Product
         if (isset($params["search_object"]["boolean_filter"])) {
             $filter_params["search_object"]["boolean_filter"] = $params["search_object"]["boolean_filter"];
         }
-
 
         $filter_params["display_limit"] = $params["display_limit"];
         $filter_params["page"]          = $params["page"];

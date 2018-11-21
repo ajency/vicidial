@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Elastic\OdooConnect;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Defaults extends Model
@@ -51,6 +52,27 @@ class Defaults extends Model
             $move->meta_data = ['id' => $id];
             $move->save();
         }
+    }
+
+    public static function getLastProductSync()
+    {
+        $sync = self::where('type', 'sync')->where('label', 'product')->first();
+        if ($sync == null) {
+            $sync            = new self;
+            $sync->type      = 'sync';
+            $sync->label     = 'product';
+            $sync->meta_data = ['time' => Carbon::now()->subDay()->startOfDay()->toDateTimeString()];
+            $sync->save();
+        }
+        return $sync->meta_data['time'];
+
+    }
+
+    public static function setLastProductSync()
+    {
+        $sync            = self::where('type', 'sync')->where('label', 'product')->first();
+        $sync->meta_data = ['time' => Carbon::now()->toDateTimeString()];
+        $sync->save();
     }
 
     public static function getEmailExtras($type, $orig = [])
