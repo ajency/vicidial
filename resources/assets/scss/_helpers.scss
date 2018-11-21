@@ -32,6 +32,9 @@ footer .bl-1{
 .bg-lightgray{
     background-color: #f9f9f9;
 }
+.bg-brown{
+    background-color: #fdf5e7;
+}
 .overflow-h{
     overflow: hidden;
 }
@@ -422,7 +425,7 @@ footer .bl-1{
 }
 
 .kss-input-small{
-    width: 35%; 
+    width: 35%;
 }
 
 .kss-flash{
@@ -432,7 +435,7 @@ footer .bl-1{
     font-size: 1rem;
     line-height: 1.4;
     &--info{
-        background-color: $flash-info-bg;    
+        background-color: $flash-info-bg;
         color: $flash-info-color;
     }
     &--error{

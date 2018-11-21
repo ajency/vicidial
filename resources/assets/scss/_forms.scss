@@ -94,6 +94,7 @@ label{
 }
 .form-control:focus{
   outline : none;
+  background-color: transparent;
   background-image:linear-gradient(#f9bc23, #f9bc23), linear-gradient(#D2D2D2, #D2D2D2);
       background-size: 100% 2px , 100% 1px;
 }
@@ -102,7 +103,7 @@ label{
     top: -20px;
     left: 0px;
     font-size: 12px;
-  
+
 }
 .control-label{
   position : absolute;
@@ -130,8 +131,8 @@ input[type=number]::-webkit-outer-spin-button {
   margin: 0px;
   text-align: left;
   &--single{
-    transform: scale(0.7);  
-    z-index: 1; 
+    transform: scale(0.7);
+    z-index: 1;
     li{
       input{
         &:checked{
@@ -150,7 +151,7 @@ input[type=number]::-webkit-outer-spin-button {
           opacity: 0.5;
           &:after{
             display: none;
-          } 
+          }
         }
       }
     }
@@ -164,7 +165,7 @@ input[type=number]::-webkit-outer-spin-button {
           opacity: 1;
           font-size: 1.25em;
           top: 40%;
-        } 
+        }
       }
     }
   }
@@ -286,7 +287,7 @@ select.custom::-ms-expand {
           @media (min-width: 320px) and (max-width: 767.98px) {
             top: 74px;
           }
-         } 
+         }
 .recent-search{
     position: absolute;
     right: 7%;

@@ -13,6 +13,7 @@
       <h4 class="font-weight-bold d-none d-sm-block">Want to see our clothes in real life? Now you can! Visit any one of our stores and experience our different variety of clothes and styles. Our stores are about as fun as they get, it won't even feel like you're shopping!</h4>
    </div>
 </div>
+
 <div class="container mt-3">
    <div class="row">
       <div class="col-12">
@@ -21,7 +22,7 @@
 
          <div class="row justify-content-around">
             <div class="col-12 col-md-6">
-               <div class="card shadow mb-5">
+               <div class="card shadow-sm mb-5">
                   <img class="card-img-top lazyload blur-up"
                       src="{{CDN::asset('/img/stores/surat1-10px.jpg') }}"
                       data-srcset="{{CDN::asset('/img/stores/surat1-large.jpg') }} 1280w,
@@ -44,7 +45,7 @@
                </div>
             </div>
             <div class="col-12 col-md-6">
-               <div class="card shadow mb-5">
+               <div class="card shadow-sm mb-5">
                   <img class="card-img-top lazyload blur-up"
                       src="{{CDN::asset('/img/stores/coimbatore1-10px.jpg') }}"
                       data-srcset="{{CDN::asset('/img/stores/coimbatore1-medium.jpg') }} 640w,
@@ -66,7 +67,7 @@
                </div>
             </div>
             <div class="col-12 col-md-6">
-               <div class="card shadow mb-5">
+               <div class="card shadow-sm mb-5">
                   <img class="card-img-top lazyload blur-up"
                       src="{{CDN::asset('/img/stores/hyderabad1-10px.jpg') }}"
                       data-srcset="{{CDN::asset('/img/stores/hyderabad1-large.jpg') }} 1275w,
@@ -93,6 +94,21 @@
    </div>
 </div>
 
+<div class="container-fluid py-4 mt-4 bg-brown" style="margin-bottom: -50px;">
+   <img class="mx-auto d-block pt-4"
+         src="{{CDN::asset('/img/store_location.png') }}"
+         title="Store location marker"
+         alt="Store location marker"/>
+   <h2 class="font-weight-bold mt-3 text-center text-black">We are expanding rapidly! More stores coming soon.</h2>
+   <h4 class="text-center my-3">Be the first to know when we launch in your area</h4>
 
+   <form class="form-inline justify-content-center my-5">
+      <input type="text" class="form-control mr-sm-4 mb-3" id="inlineFormInputName2" placeholder="Pincode">
+
+      <input type="text" class="form-control mr-sm-4 mb-3" id="inlineFormInputGroupUsername2" placeholder="Email">
+
+      <button type="submit" class="btn btn-primary mb-3">Submit</button>
+   </form>
+</div>
 
 @stop
