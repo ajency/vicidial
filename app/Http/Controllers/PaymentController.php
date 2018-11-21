@@ -59,6 +59,6 @@ class PaymentController extends Controller
 			request()->session()->flash('payment', "failure");
 		}
 
-		return redirect()->route('orderDetails', ['orderid' => $orderid]);
+		return redirect()->route('orderDetails', ['orderid' => $order->txnid]);
     }
 }

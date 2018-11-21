@@ -84,7 +84,7 @@ class OrderController extends Controller
             abort(404);
         }
 
-        $order = Order::find($query['orderid']);
+        $order = Order::where('txnid', $query['orderid'])->first();
         if(!isset($_COOKIE['token'])) {
             abort(401);
         }
