@@ -41,10 +41,10 @@ class Product
     public static function indexProduct($product_id)
     {
         $odoo = new OdooConnect;
-        if (ProductColor::where('product_id', $product_id)->count() > 0) {
-            \Log::notice('Product '.$product_id.' already indexed');
-            return;
-        }
+        // if (ProductColor::where('product_id', $product_id)->count() > 0) {
+        //     \Log::notice('Product '.$product_id.' already indexed');
+        //     return;
+        // }
 
         $productData = $odoo->defaultExec('product.template', 'read', [[$product_id]], ['fields' => config('product.template_fields')])->first();
         $products    = self::indexVariants($productData['product_variant_ids'], sanitiseProductData($productData));
@@ -131,7 +131,7 @@ class Product
         $query->setIndex(config('elastic.indexes.product'));
         $query->initializeBulkIndexing();
         $products->each(function ($item, $key) use ($query) {
-            $query->addToBulkIndexing($item['id'], $item, ['op_type' => "create"]);
+            $query->addToBulkIndexing($item['id'], $item);
         });
         $responses = $query->bulk();
         $updated   = 0;
