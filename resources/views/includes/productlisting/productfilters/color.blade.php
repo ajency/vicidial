@@ -5,28 +5,33 @@
             @{{filter_display_name}}<i class="fas fa-angle-up float-right"></i>
           </label>
         </div>
-        <div id="collapseColor" class="collapse@{{#if collapsed}}@{{else}} show @{{/if}}" aria-labelledby="headingThree" data-field="color">
-          <div class="card-body pt-2">
-         
-            <ul class="product-color product-color--filter p-0">
+        <div id="collapseColor" class="collapse color-wrapper @{{#if collapsed}}@{{else}} show @{{/if}}" aria-labelledby="headingThree" data-field="color">
+          <div class="card-body pt-2 pb-2">
              @{{#if singleton }}
              @{{#each items}}
-              <li>
+              <div class="custom-control custom-radio color-filter d-flex">
               @{{> radioTemplate template=../template facet_value=facet_value is_selected=is_selected filter_facet_name=../filter_facet_name slug=slug disabled_at_zero_count=../disabled_at_zero_count count=count collapsed=../collapsed changeEvent="facetCategoryChange(this);" attribute_slug="" display_name=display_name }}
-              <label for="@{{facet_value}}" style="background-color:@{{facet_value}};"></label>
-              </li>
+                <label class="custom-control-label f-w-4 d-flex align-items-center" for="@{{facet_value}}">
+                  <span class="color-box" style="background-color:@{{facet_value}};"></span>
+                  <span class="color-name pl-2 text-capitalize">@{{display_name}}</span>
+                  <!-- <span class="sub-text filter-count pl-1">(150)</span> -->
+                </label>
+              </div>
               @{{/each}}
               @{{else}}
               @{{#each items}}
-              <li>
-              @{{> checkboxTemplate template=../template facet_value=facet_value is_selected=is_selected filter_facet_name=../filter_facet_name slug=slug disabled_at_zero_count=../disabled_at_zero_count count=count collapsed=../collapsed changeEvent="facetCategoryChange(this);" attribute_slug="" display_name=display_name }}
-              <label for="@{{facet_value}}" style="background-color:@{{facet_value}};"></label>
-              </li>
+              <div class="custom-control custom-checkbox color-filter d-flex">
+                @{{> checkboxTemplate template=../template facet_value=facet_value is_selected=is_selected filter_facet_name=../filter_facet_name slug=slug disabled_at_zero_count=../disabled_at_zero_count count=count collapsed=../collapsed changeEvent="facetCategoryChange(this);" attribute_slug="" display_name=display_name }}
+                <label class="custom-control-label f-w-4 d-flex align-items-center" for="@{{facet_value}}">
+                  <span class="color-box" style="background-color:@{{facet_value}};"></span>
+                  <span class="color-name pl-2 text-capitalize">@{{display_name}}</span>
+                  <!-- <span class="sub-text filter-count pl-1">(150)</span> -->
+                </label>
+              </div>
               @{{/each}}
               @{{/if}}
-            </ul>
-
           </div>
+          <span class="more-color">+ more</span>
         </div>
     </div>
 </script>
