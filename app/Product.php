@@ -56,9 +56,9 @@ class Product
         $products    = self::indexVariants($productData['product_variant_ids'], sanitiseProductData($productData));
         self::bulkIndexProducts($products);
         //create update job for $productData['product_variant_ids']
-        UpdateVariantInventory::dispatch([$elastic_data["move_product_id"]])->onQueue('update_inventory');
+        UpdateVariantInventory::dispatch($productData['product_variant_ids'])->onQueue('update_inventory');
         //create photo job for $product_id
-        FetchProductImages::dispatch($product_id)->onQueue('process_product_images')
+        FetchProductImages::dispatch($product_id)->onQueue('process_product_images');
     }
 
     public static function indexVariants($variant_ids, $productData)
