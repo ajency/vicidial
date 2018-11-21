@@ -348,7 +348,7 @@ class Variant extends Model
         $variants = Variant::select('odoo_id')->skip(1030)->limit(30)->get()->pluck('odoo_id')->toarray();
         $job_sets = array_chunk($variants,config('odoo.limit'));
         foreach ($job_sets as $job_set) {
-            UpdateVariantInventory::dispatch($job_set])->onQueue('update_inventory');
+            UpdateVariantInventory::dispatch($job_set)->onQueue('update_inventory');
         }
     }
 }
