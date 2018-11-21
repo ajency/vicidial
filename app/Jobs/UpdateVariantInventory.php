@@ -14,6 +14,7 @@ use Illuminate\Queue\SerializesModels;
 class UpdateVariantInventory implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    public $tries = 3;
     protected $variant_ids;
 
     /**
