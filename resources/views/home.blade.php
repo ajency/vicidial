@@ -554,7 +554,7 @@
           </div>
         </div> 
     </div>
-    <div class="text-center mt-4">
+    <div class="text-center mt-3">
       <a href="/shop" class="viewall-link">View All</a>
     </div>
   </div>
@@ -794,7 +794,7 @@
                   Visit any of our nearest stores to feel and try our amazing products and avail special store discounts.
                 </p>
               </div>
-              <div class="bg-gift ml-auto"></div>
+              <div class="bg-gift ml-auto home-coupon store-locator"></div>
             </div>
           </div>
           <div class="col-md-6">
@@ -807,7 +807,7 @@
                   We provide free shipping on all our products. No minimum checkout value.
                 </p>
               </div>
-              <div class="bg-gift ml-auto"></div>
+              <div class="bg-gift ml-auto home-coupon shipping-img"></div>
             </div>
           </div>
       </div>

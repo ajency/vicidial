@@ -12599,6 +12599,12 @@ select.custom::-ms-expand {
   background: url(../img/bg-stripe-top.jpg);
 }
 
+@media (max-width: 767px) {
+  .stripe-bg-top {
+    background-image: none;
+  }
+}
+
 #slider-newarrival {
   margin-top: -5px;
 }
@@ -12654,6 +12660,19 @@ select.custom::-ms-expand {
   .bg-gift {
     margin-top: 10px;
   }
+}
+
+.bg-gift.home-coupon {
+  background-position: 0 0;
+  background-size: contain;
+}
+
+.bg-gift.store-locator {
+  background-image: url("/img/store-location.png");
+}
+
+.bg-gift.shipping-img {
+  background-image: url("/img/shipping.png");
 }
 
 .bg-toy {
@@ -12893,6 +12912,7 @@ select.custom::-ms-expand {
     width: 100%;
     text-align: center;
     margin: 0 -15px;
+    bottom: -5px;
   }
 }
 
