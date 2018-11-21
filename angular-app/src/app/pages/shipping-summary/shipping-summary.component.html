@@ -23,10 +23,10 @@
 		               <img (click)="navigateBack()" class="btn-back kss_highlight" src="/img/left-arrow.png" style="width:20px;">
 		             </h3>
 		           </div> -->
-					<div class="col-9">
+					<div class="col-8">
 						<h3 class="modal-title font-weight-bold" id="exampleModalLabel">Review your order</h3>
 					</div>
-					<div class="col-3 text-right">
+					<div class="col-4 text-right">
 						<h6 class="text-muted mt-2">STEP: 2 / 2</h6>
 					</div>
 				</div>
@@ -142,7 +142,7 @@
 			<div *ngIf="!showUserInfoModal" class="fixed-bottom d-show pl-3 pr-3">
 			  <div class="row no-gutters px-2 py-2">
 		      <div class="col-12 text-center">
-		          <button id="payment-details" type="button" class=" btn kss-btn kss-btn--big kss-btn-alternate mt-1 mb-1 d-flex align-items-center justify-content-center" (click)="navigateToPaymentPage()">Pay ₹{{shippingDetails.summary.final_price}}  <img src="/img/pay-u-icon.png" class="ml-2" width="50"></button>
+		          <button id="payment-details" type="button" class=" btn kss-btn kss-btn--big mt-1 mb-1 d-flex align-items-center justify-content-center" (click)="navigateToPaymentPage()">Pay ₹{{shippingDetails.summary.final_price}}  <img src="/img/pay-u-icon.png" class="ml-2" width="50"></button>
 		      </div>
 			  </div>
 			</div>
@@ -176,8 +176,8 @@
 			            </div>
 			          </form>
 			          <div id="kss_cart" class="pt-3 d-flex align-items-center justify-content-between">
-						<button *ngIf="showCancelButton" id="cancel" class="btn kss-btn kss-btn--outline-secondary kss-btn--big kss-btn--big-alternate mr-3" (click)="hideModal()" >Cancel</button>
-						<button id="save" class="btn kss-btn kss-btn--big kss-btn--alternate mt-0" [disabled]="!userInfo.valid" (click)="saveUserInfo()" >Save</button>
+						<button *ngIf="showCancelButton" id="cancel" class="btn kss-btn kss-btn--outline-secondary kss-btn--big mr-3" (click)="hideModal()" >Cancel</button>
+						<button id="save" class="btn kss-btn kss-btn--big mt-0" [disabled]="!userInfo.valid" (click)="saveUserInfo()" >Save</button>
 					</div>
 			        </div>
 

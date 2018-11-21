@@ -454,3 +454,15 @@ footer .bl-1{
         font-size: 1.1em;
     }
 }
+
+.viewall-link{
+    display: inline-block;
+    font-size: 1.4em;
+    color: theme-color("secondary");
+    font-weight: 600;
+    padding: 10px 5px 2px 5px;
+    border-bottom: 2px solid;
+    &:hover{
+        color: darken(theme-color("secondary"),20%);
+    }
+}

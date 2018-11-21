@@ -554,13 +554,16 @@
           </div>
         </div> 
     </div>
+    <div class="text-center mt-3">
+      <a href="/shop" class="viewall-link">View All</a>
+    </div>
   </div>
 </section>
 
 
 <!-- Trending looks -->
 
-<section class="mt-5 product-collection py-3">
+<!-- <section class="mt-5 product-collection py-3">
   <div class="container mb-3">
     <div class="row my-4">
         <div class="col-md-12 text-center">
@@ -773,7 +776,7 @@
       </div>
     </div>
   </div>
-</section>
+</section> -->
 
 
 <!-- Advt section -->
@@ -782,27 +785,29 @@
   <div class="container mt-5">
       <div class="row">
           <div class="col-md-6 mb-3 mb-sm-0">
-             <div class=" d-flex border-0 text-left p-4" style="background-color:#FBF6D4;">
+             <div class=" d-flex align-items-center border-0 text-left p-4" style="background-color: #fbf5d5;">
               <div class="w-50">
                 <h2 class="font-weight-bold mt-3">
-                  Give your child something special
+                  Visit us!
                 </h2>
-                 <p class="text-muted mt-1">Shop from us for amazing deals all year round.</p>
+                <p class="text-muted mt-1">
+                  Visit any of our nearest stores to feel and try our amazing products and avail special store discounts.
+                </p>
               </div>
-                <div class="bg-gift ml-auto">
-                </div>
+              <div class="bg-gift ml-auto home-coupon store-locator"></div>
             </div>
           </div>
           <div class="col-md-6">
-            <div class="d-flex border-0 text-left p-4" style="background-color:#F4E6DC;">
+            <div class="d-flex align-items-center border-0 text-left p-4" style="background-color: #f2e6de;">
               <div class="w-50">
                 <h2 class="font-weight-bold mt-3">
-                 Extra 10% off On your first purchase
+                 Free shipping!
                 </h2>
-                 <p class="text-muted mt-1">Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet</p>
+                <p class="text-muted mt-1">
+                  We provide free shipping on all our products. No minimum checkout value.
+                </p>
               </div>
-              <div class="bg-gift ml-auto">
-              </div>
+              <div class="bg-gift ml-auto home-coupon shipping-img"></div>
             </div>
           </div>
       </div>

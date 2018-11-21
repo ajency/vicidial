@@ -5770,7 +5770,7 @@ button.close {
   margin-left: 3px;
   text-indent: -999px;
   cursor: pointer;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(112, 114, 121, 0.5);
 }
 
 .carousel-indicators li::before {
@@ -5794,7 +5794,7 @@ button.close {
 }
 
 .carousel-indicators .active {
-  background-color: #fff;
+  background-color: #707279;
 }
 
 .carousel-caption {
@@ -10387,6 +10387,19 @@ footer .bl-1 {
   font-size: 1.1em;
 }
 
+.viewall-link {
+  display: inline-block;
+  font-size: 1.4em;
+  color: #004283;
+  font-weight: 600;
+  padding: 10px 5px 2px 5px;
+  border-bottom: 2px solid;
+}
+
+.viewall-link:hover {
+  color: #000f1d;
+}
+
 /* Custom Select */
 .kss-custom-select {
   position: relative;
@@ -10953,6 +10966,12 @@ select.custom::-ms-expand {
   background: url(../img/bg-stripe-top.jpg);
 }
 
+@media (max-width: 767px) {
+  .stripe-bg-top {
+    background-image: none;
+  }
+}
+
 #slider-newarrival {
   margin-top: -5px;
 }
@@ -11008,6 +11027,19 @@ select.custom::-ms-expand {
   .bg-gift {
     margin-top: 10px;
   }
+}
+
+.bg-gift.home-coupon {
+  background-position: 0 0;
+  background-size: contain;
+}
+
+.bg-gift.store-locator {
+  background-image: url("/img/store-location.png");
+}
+
+.bg-gift.shipping-img {
+  background-image: url("/img/shipping.png");
 }
 
 .bg-toy {
@@ -11247,6 +11279,7 @@ select.custom::-ms-expand {
     width: 100%;
     text-align: center;
     margin: 0 -15px;
+    bottom: -5px;
   }
 }
 

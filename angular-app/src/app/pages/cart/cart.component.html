@@ -174,15 +174,15 @@
 		<div class="seperator mb-5"></div>
 
 		<div id="kss_cart" class="p-3 fixed-bottom d-flex align-items-center justify-content-between">
-			<button *ngIf="cart.cart_type =='order'" id="checkout" class="btn kss-btn kss-btn--outline-secondary kss-btn--big kss-btn--big-alternate mr-3" (click)="editBag()" >Edit Bag</button>
-			<button  id="checkout" class="btn kss-btn kss-btn--big kss-btn--big-alternate mt-0" [ngClass]="{'disabled' : cartItemOutOfStock}" (click)="modalHandler()" >Checkout</button>
+			<button *ngIf="cart.cart_type =='order'" id="checkout" class="btn kss-btn kss-btn--outline-secondary kss-btn--big mr-3" (click)="editBag()" >Edit Bag</button>
+			<button  id="checkout" class="btn kss-btn kss-btn--big mt-0" [ngClass]="{'disabled' : cartItemOutOfStock}" (click)="modalHandler()" >Checkout</button>
 		</div>
 	</div>	
 
 	<div *ngIf="cart.items && cart.items.length == 0" class="empty-cart text-center d-flex align-items-center justify-content-center flex-column">
 		<i class="fas fa-shopping-cart empty-cart__icon"></i>
 		<h4 class="py-4 mb-0">Your bag is currently empty</h4>
-		<button class="btn kss-btn kss-btn--big kss-btn-alternate btn-pay d-inline-flex align-items-center justify-content-center" (click)="shopNow()" style="min-width: 130px;">
+		<button class="btn kss-btn kss-btn--big btn-pay d-inline-flex align-items-center justify-content-center" (click)="shopNow()" style="min-width: 130px;">
 			Shop now
 		</button>
 	</div>
@@ -192,7 +192,7 @@
 	<div *ngIf="fetchCartFailed" class="empty-cart text-center d-flex align-items-center justify-content-center flex-column">
 		<img src="/img/bag-bg.png" class="image-fluid" width="80">
 		<h4 class="py-4 mb-0 text-muted">Oops! Unable to view your bag. <br> Please reload the page and try again</h4>
-		<button class="btn kss-btn kss--btn-big kss-btn--alternate btn-pay d-inline-flex align-items-center justify-content-center" style="min-width: 130px;" (click)="reloadPage()">
+		<button class="btn kss-btn kss--btn-big btn-pay d-inline-flex align-items-center justify-content-center" style="min-width: 130px;" (click)="reloadPage()">
 			Retry Again
 		</button>
 	</div>
@@ -230,7 +230,7 @@
 	            </div>
 	          </form>
 	          <div class="mt-3">
-	            <button [disabled]="!mobileForm.valid || userValidation.disableSendOtpButton" type="button" class="btn kss-btn kss-btn--big kss-btn-alternate btn-signin is-enter" (click)="authenticateUser()"><span> Send OTP <i class="fas fa-circle-notch fa-spin fa-lg ml-1" [ngClass]="{'d-none' : !userValidation.disableSendOtpButton}"></i> </span> <i class="fas fa-angle-right mt-2 position-absolute r-0"></i></button>
+	            <button [disabled]="!mobileForm.valid || userValidation.disableSendOtpButton" type="button" class="btn kss-btn kss-btn--big btn-signin is-enter" (click)="authenticateUser()"><span> Send OTP <i class="fas fa-circle-notch fa-spin fa-lg ml-1" [ngClass]="{'d-none' : !userValidation.disableSendOtpButton}"></i> </span> <i class="fas fa-angle-right mt-2 position-absolute r-0"></i></button>
 	          </div>
 	        </div>
 
@@ -265,7 +265,7 @@
 	            </div>
 	          </form>
 	          <div class="mt-3">
-	            <button (click)="verifyMobile()" id="shipping-details" [disabled]="!otpForm.valid || userValidation.disableVerifyOtpButton" type="button" class="btn kss-btn kss-btn--big kss-btn--alternate btn-verify is-enter" data-toggle="modal" data-target="#checkout-flow"><span>Verify <i class="fas fa-circle-notch fa-spin fa-lg ml-1" [ngClass]="{'d-none' : !userValidation.disableVerifyOtpButton}"></i> </span> <i class="fas fa-angle-right position-absolute r-0 mt-2"></i></button>
+	            <button (click)="verifyMobile()" id="shipping-details" [disabled]="!otpForm.valid || userValidation.disableVerifyOtpButton" type="button" class="btn kss-btn kss-btn--big btn-verify is-enter" data-toggle="modal" data-target="#checkout-flow"><span>Verify <i class="fas fa-circle-notch fa-spin fa-lg ml-1" [ngClass]="{'d-none' : !userValidation.disableVerifyOtpButton}"></i> </span> <i class="fas fa-angle-right position-absolute r-0 mt-2"></i></button>
 	          </div>
 	        </div>
 
