@@ -127,14 +127,22 @@ function sanitiseFilterdata($result, $params = [])
     $priceFilter["max"] = (int) ceil($priceFilter["max"] / 100) * 100;
     $attributes         = ['is_singleton', 'is_collapsed', 'template', 'order', 'display_count', 'disabled_at_zero_count', 'is_attribute_param', 'filter_type'];
     $response           = [];
-    foreach ($filterResponse as $facetName => $facetValues) {
+
+
+    $facetNames =  ["product_category_type", "product_gender", "product_subtype", "product_age_group", "product_color_html"];
+    // dd($facetNames);
+    foreach ($facetNames as $f) {
         $filter           = [];
+        $facetName = $f;
+        $facetValues = isset($filterResponse[$facetName])? $filterResponse[$facetName]:null;
         $facets           = Facet::where('facet_name', $facetName)->get();
+        
         $filter['header'] = [
             'facet_name'   => $facetName,
             'display_name' => config('product.facet_display_data.' . $facetName . '.name'),
         ];
         $filter['items'] = [];
+
         $is_collapsed    = 0;
         foreach ($facets as $facet) {
             if (isset($params["search_object"]['primary_filter'][$facet->facet_name])) {
@@ -153,14 +161,15 @@ function sanitiseFilterdata($result, $params = [])
             ];
             $is_collapsed += $is_selected;
         }
-        
         foreach ($attributes as $attribute) {
             $filter[$attribute] = config('product.facet_display_data.' . $facetName . '.' . $attribute);
         }
         //change made by Tanvi to is_collapsed value
         $filter["is_collapsed"] = (!boolval($is_collapsed) == true)?(config('product.facet_display_data.' . $facetName . '.is_collapsed')):!boolval($is_collapsed);
-        $response[]             = $filter;
+        $response[] = $filter;
+        
     }
+
     //le price filter
     $filter           = [];
     $filter['header'] = [
@@ -206,6 +215,7 @@ function sanitiseFilterdata($result, $params = [])
     ];
     $filter['attribute_slug'] = config('product.facet_display_data.variant_availability.attribute_slug');
     $response[] = $filter;
+
     return $response;
 }
 

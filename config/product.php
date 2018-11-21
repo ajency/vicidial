@@ -238,7 +238,7 @@ return [
             'is_collapsed'           => true,
             'template'               => 'availability',
             'order'                  => 6,
-            'display_count'          => true,
+            'display_count'          => false,
             'disabled_at_zero_count' => true,
             "is_attribute_param"     => true,
             "attribute_param"        => "variant_availability",
