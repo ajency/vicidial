@@ -34,7 +34,17 @@ export class ShippingSummaryComponent implements OnInit {
   }
 
   navigateToPaymentPage(){
-    window.location.href = "/user/order/" + this.shippingDetails.order_id +"/payment/payu";
+    this.appservice.showLoader();
+    let url = this.appservice.apiUrl + '/api/rest/v1/user/order/' + this.shippingDetails.order_id + '/check-inventory'
+    let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
+    this.apiservice.request(url, 'get', {} , header ).then((response)=>{
+      window.location.href = "/user/order/" + this.shippingDetails.order_id +"/payment/payu";
+    })
+    .catch((error)=>{
+      console.log("error ===>", error);
+      this.router.navigateByUrl('/cartpage', { skipLocationChange: true });
+      this.appservice.removeLoader();      
+    })      
   }
   
   closeCart(){
