@@ -299,14 +299,18 @@ export class CartComponent implements OnInit {
       this.navigateToShippingDetailsPage();
     }
     else{
-      let url = window.location.href +'/user-verification';
-      if(!window.location.href.endsWith('#bag/user-verification'))
-        history.pushState({cart : true}, 'cart', url);
-      $('#signin').modal('show');
-      $("#cd-cart").css("overflow", "hidden");
-      $('.modal-backdrop').appendTo('#cd-cart');
-      $('body').addClass('hide-scroll');
+      this.callCheckCartStatusApi();
     }      
+  }
+
+  displayModal(){
+    let url = window.location.href +'/user-verification';
+    if(!window.location.href.endsWith('#bag/user-verification'))
+      history.pushState({cart : true}, 'cart', url);
+    $('#signin').modal('show');
+    $("#cd-cart").css("overflow", "hidden");
+    $('.modal-backdrop').appendTo('#cd-cart');
+    $('body').addClass('hide-scroll');
   }
 
   next(event: KeyboardEvent,el1,el2) {
@@ -369,6 +373,7 @@ export class CartComponent implements OnInit {
       .catch((error)=>{
         console.log("error ===>", error);
         this.appservice.removeLoader();
+        this.fetchCartDataFromServer();
       })
     }
     else{
@@ -458,6 +463,20 @@ export class CartComponent implements OnInit {
       this.fetchCartFailed = true;
       this.updateLocalDataAndUI();
     }
+  }
+
+  callCheckCartStatusApi(){
+    this.appservice.showLoader();
+    let url = this.appservice.apiUrl + '/rest/v1/anonymous/cart/check-status';
+    this.apiservice.request(url, 'get', {} , {} ).then((response)=>{
+      this.appservice.removeLoader();
+      this.displayModal();
+    })
+    .catch((error)=>{
+      console.log("error ===>", error);
+      this.appservice.removeLoader();
+      this.fetchCartDataFromServer()
+    })
   }
   
 }

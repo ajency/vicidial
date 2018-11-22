@@ -160,7 +160,7 @@ export class AppServiceService {
   }
 
   callGetAllAddressesApi(){
-    let url = this.apiUrl + "/api/rest/v1/user/address/all";
+    let url = this.apiUrl + "/api/rest/v1/user/address/all?cart_id="+this.getCookie('cart_id');
     let header = this.isLoggedInUser() ? { Authorization : 'Bearer '+this.getCookie('token') } : {};
     return this.apiservice.request(url, 'get', {} , header);
   }
