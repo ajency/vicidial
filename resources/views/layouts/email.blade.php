@@ -256,7 +256,7 @@ a[x-apple-data-detectors=true] {
                     <div align="center" class="img-container center fixedwidth " style="padding-right: 0px;  padding-left: 0px;">
 				<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr style="line-height:0px;line-height:0px;"><td style="padding-right: 0px; padding-left: 0px;" align="center"><![endif]-->
 					<a href="{{url('/')}}" title="Kidsuperstore">
-					  	<img class="center fixedwidth" align="center" border="0" src="{{CDN::asset('/img/email-logo.png') }}" alt="Image" title="Image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: 0;height: auto;float: none;width: 100%;max-width: 250px" width="250" />
+					  	<img class="center fixedwidth" align="center" border="0" src="{{CDN::asset('/img/email-logo.png') }}" alt="" title="" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: 0;height: auto;float: none;width: 100%;max-width: 250px" width="250" />
 					  </a>
 					<!--[if mso]></td></tr></table><![endif]-->
 					</div>
@@ -341,6 +341,9 @@ a[x-apple-data-detectors=true] {
         </div>
       </div>
     </div>
+
+
+
     <div style="background-color:transparent;">
       <div style="Margin: 0 auto;min-width: 320px;max-width: 625px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #FFFFFF;" class="block-grid ">
         <div style="border-collapse: collapse;display: table;width: 100%;background-color:#FFFFFF;">
@@ -383,6 +386,10 @@ a[x-apple-data-detectors=true] {
         </div>
       </div>
     </div>
+
+
+
+
     <div style="background-color:transparent;">
       <div style="Margin: 0 auto;min-width: 320px;max-width: 625px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #FFFFFF;" class="block-grid ">
         <div style="border-collapse: collapse;display: table;width: 100%;background-color:#FFFFFF;">
@@ -409,6 +416,32 @@ a[x-apple-data-detectors=true] {
         </div>
       </div>
     </div>
+
+
+
+<div style="background-color:#DADADA;">
+      <div style="Margin: 0 auto;min-width: 320px;max-width: 625px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #FFFFFF;padding-top: 20px;" class="block-grid ">
+      
+       <div style="font-size:12px;line-height:14px;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;color:#555555;text-align:left;float: left;width: 36%;padding-left: 10px;">
+          <img src="call-icon.png" alt="contact" title="contact" width="38" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;margin-left: auto;padding-right: 15px;">
+        </div>
+
+      <div style="font-size: 15px;line-height:14px;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;color:#555555;text-align: left;float: left;width: 48%;padding-right: 5px;">
+          <p style="margin-top: 0;margin-bottom: 8px;">
+            <strong>Need help? Get in touch</strong>
+          </p>
+          <p style="margin-top: 5px;line-height: 20px;">
+            We are happy to help you. For any assistance <a href="{{url('/')}}/contact" style="color: #b18005;">Contact us</a>
+          </p>
+        </div>
+      <b style="clear: both;display: table;"></b>
+      </div>
+      </div>
+
+
+
+
+
     <div style="background-color:#DADADA;">
       <div style="Margin: 0 auto;min-width: 320px;max-width: 625px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #FFFFFF;" class="block-grid ">
         <div style="border-collapse: collapse;display: table;width: 100%;background-color:#FFFFFF;">
@@ -441,11 +474,11 @@ a[x-apple-data-detectors=true] {
                   
                   
                     <div class="">
-	<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;"><![endif]-->
-	<div style="color:#555555;font-family:Verdana, Geneva, sans-serif;line-height:120%; padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;">	
-		<div style="font-size:12px;line-height:14px;font-family:Verdana, Geneva, sans-serif;color:#555555;text-align:left;"><p style="margin: 0;font-size: 12px;line-height: 14px;text-align: center"><span style="color: rgb(128, 128, 128); font-size: 10px; line-height: 12px;">No longer to receive these emails? You can <span style="text-decoration: underline; line-height: 12px; font-size: 10px;"><span style="color: rgb(255, 102, 0); text-decoration: underline; line-height: 12px; font-size: 10px;">unsubscribe here</span></span>.</span></p></div>	
-	</div>
-	<!--[if mso]></td></tr></table><![endif]-->
+  <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;"><![endif]-->
+  <div style="color:#555555;font-family:Verdana, Geneva, sans-serif;line-height:120%; padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;"> 
+    <div style="font-size:12px;line-height:14px;font-family:Verdana, Geneva, sans-serif;color:#555555;text-align:left;"><p style="margin: 0;font-size: 12px;line-height: 14px;text-align: center"><span style="color: rgb(128, 128, 128); font-size: 10px; line-height: 12px;">This email was send from a notification only, address that cannot accept incoming email. Please do not reply to this message</span></p></div>  
+  </div>
+  <!--[if mso]></td></tr></table><![endif]-->
 </div>
                   
               <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
@@ -456,7 +489,7 @@ a[x-apple-data-detectors=true] {
       </div>
     </div>
    <!--[if (mso)|(IE)]></td></tr></table><![endif]-->
-		</td>
+    </td>
   </tr>
   </tbody>
   </table>
