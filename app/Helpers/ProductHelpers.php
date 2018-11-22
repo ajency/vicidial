@@ -350,3 +350,21 @@ function hideZeroSizeIDProducts($q, $must)
 
 }
 
+
+/**
+ * Query to hide Products not having images
+ *
+ * @return array
+ */
+function hideProductWithoutImages($q, $must)
+{
+    $nested     = [];
+    $facetName  = $q::createTerm("search_data.boolean_facet.facet_name", "variant_image_available");
+    $facetValue = $q::createTerm("search_data.boolean_facet.facet_value", true);
+    $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
+    $nested[]   = $q::createNested('search_data.boolean_facet', $filter);
+    $nested2    = $q::createNested("search_data", $nested);
+    $must       = $q::addToBoolQuery('filter', $nested2, $must);
+    return $must;
+}
+
