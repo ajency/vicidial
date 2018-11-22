@@ -327,6 +327,7 @@ export class CartComponent implements OnInit {
     $("#cd-cart").css("overflow", "auto");
     this.mobileNumberEntered = false;
     this.otp = null;
+    this.otpCode.otp1 =''; this.otpCode.otp2 = ''; this.otpCode.otp3 = ''; this.otpCode.otp4 = ''; this.otpCode.otp5 = ''; this.otpCode.otp6='';
     this.userValidation.otpVerificationErrorMsg = '';
   }
 
