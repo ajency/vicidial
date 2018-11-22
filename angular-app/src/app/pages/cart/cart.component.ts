@@ -5,6 +5,8 @@ import { ApiServiceService } from '../../service/api-service.service';
 import { Subscription } from 'rxjs/Subscription';
 // import * as $ from 'jquery';
 declare var $: any;
+declare var add_to_cart_failed: any;
+declare var add_to_cart_failure_message: any;
 
 @Component({
   selector: 'app-cart',
@@ -36,6 +38,8 @@ export class CartComponent implements OnInit {
   cartItemOutOfStock : boolean = false;
   fetchCartFailed : boolean = false;
   isCartTypeFailure : boolean = false;
+  addToCartFailureMessage = '';
+  addToCartFailed : boolean = false;
   constructor( private router: Router,
                private appservice : AppServiceService,
                private apiservice : ApiServiceService,
@@ -127,11 +131,21 @@ export class CartComponent implements OnInit {
   }
 
   fetchCartDataFromServer(){
+    this.addToCartFailureMessage = '';
+    this.addToCartFailed = false;
     this.appservice.showLoader()
     this.appservice.callFetchCartApi().then((response)=>{
       this.cart = this.formattedCartDataForUI(response);      
       this.checkCartItemOutOfStock();
       this.updateLocalDataAndUI(this.cart, this.cart.cart_count);
+      console.log(add_to_cart_failed);
+      if(add_to_cart_failed){
+        console.log("add_to_cart_failed", add_to_cart_failure_message);
+        this.addToCartFailureMessage = add_to_cart_failure_message;
+        this.addToCartFailed = true;
+        add_to_cart_failed = false;
+        add_to_cart_failure_message = '';
+      }
       this.appservice.removeLoader();
       if(this.cart.cart_type == 'failure'){
         this.editBag();
