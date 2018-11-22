@@ -331,6 +331,8 @@ class Product
 
         $filter_params["display_limit"] = $params["display_limit"];
         $filter_params["page"]          = $params["page"];
+        if(isset($params["sort_on"]))
+            $filter_params["sort_on"]          = $params["sort_on"];
         // print_r($filter_params);
         // dd($filter_params,$params);
 

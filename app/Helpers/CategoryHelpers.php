@@ -76,6 +76,10 @@ function build_search_object($params) {
 		$dataArr["search_result"]["range_filter"]=[];
 		$dataArr["search_result"]["boolean_filter"]=[];
 	}
+
+	if(isset($params["sort_on"]))
+		$dataArr["sort_on"]=$params["sort_on"];
+
 	
 	// dd($all_facets);
 	$facets_count = Facet::select('facet_value',DB::raw('count(id) as "count",facet_name'))->whereIn('slug', $all_facets)->groupBy('facet_value','facet_name')->get();
