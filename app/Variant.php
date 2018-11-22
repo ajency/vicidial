@@ -5,6 +5,7 @@ namespace App;
 use App\Elastic\ElasticQuery;
 use App\Location;
 use Illuminate\Database\Eloquent\Model;
+use App\Jobs\UpdateVariantInventory;
 
 class Variant extends Model
 {
