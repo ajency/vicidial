@@ -280,7 +280,7 @@ footer .bl-1{
         @media (min-width: 768px) {
             width: calc(400px - 1rem);
         }
-        @media (min-width: 360px) and (max-width: 767.98px) {
+        @media (max-width: 767.98px) {
             width: calc(100% - 1rem);
             font-size: 1.1em;
         }
@@ -434,6 +434,10 @@ footer .bl-1{
     &--info{
         background-color: $flash-info-bg;    
         color: $flash-info-color;
+    }
+    &--error{
+        background-color: $flash-error-bg;    
+        color: $flash-error-color;   
     }
 }
 

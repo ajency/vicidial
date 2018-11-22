@@ -296,23 +296,30 @@ export class CartComponent implements OnInit {
   }
 
   next(event: KeyboardEvent,el1,el2) {
-    if(event.which > 47 && event.which < 58)
+    if(event.which > 47 && event.which < 58){
       el2.focus();
-    else if(event.which == 8)
+      console.log('next funtion call el2');
+    }
+    else if(event.which == 8){
       el1.focus();
-
+      console.log('next funtion call el1');
+    }
     if (event.keyCode === 13) {
+      console.log('enter keycode');
       $('.is-enter').click();
     }
   }
 
   prev(event: KeyboardEvent,el1,el2) {
-     if(event.key=="Backspace")
+     if(event.key=="Backspace"){
        el1.focus();
+       console.log('prev funtion call el1');
+     }
     // else
     //   el2.focus();
     if (event.keyCode === 13) {
       $('.is-enter').click();
+      console.log('enter keycode');
     }
    }
 
@@ -327,6 +334,7 @@ export class CartComponent implements OnInit {
     $("#cd-cart").css("overflow", "auto");
     this.mobileNumberEntered = false;
     this.otp = null;
+    this.otpCode.otp1 =''; this.otpCode.otp2 = ''; this.otpCode.otp3 = ''; this.otpCode.otp4 = ''; this.otpCode.otp5 = ''; this.otpCode.otp6='';
     this.userValidation.otpVerificationErrorMsg = '';
   }
 
