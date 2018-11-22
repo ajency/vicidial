@@ -408,7 +408,14 @@ function facetCategoryChange(thisObj) {
                 // Ascending: first age less than the previous
                 if (vval.sort_order == "asc") return obj1[vval.sort_on] - obj2[vval.sort_on];else return obj2[vval.sort_on] - obj1[vval.sort_on];
               });
+              var max_selected_index = -1;
+              var show_more_limit = 10;
+              for (itemk in items) {
+                if (items[itemk]["is_selected"] == true) max_selected_index = itemk;
+              }
+              var show_more = show_more_limit > max_selected_index ? true : false;
               context["items"] = items;
+              context["show_more"] = show_more;
               console.log(context);
               var html = template(context);
               console.log(document.getElementById("filter-" + templateval + "-template-content"));

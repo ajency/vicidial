@@ -5,7 +5,7 @@
             @{{filter_display_name}}<i class="fas fa-angle-up float-right"></i>
           </label>
         </div>
-        <div id="collapseColor" class="collapse color-wrapper @{{#if collapsed}}@{{else}} show @{{/if}}" aria-labelledby="headingThree" data-field="color">
+        <div id="collapseColor" class="collapse@{{#if show_more}} color-wrapper @{{/if}} @{{#if collapsed}}@{{else}} show @{{/if}}" aria-labelledby="headingThree" data-field="color">
           <div class="card-body pt-2 pb-2">
              @{{#if singleton }}
              @{{#each items}}
@@ -37,6 +37,14 @@
 </script>
 <div id="filter-color-template-content"></div>
 @section('footjs-color')
+<?php
+  $selected_colors = array_column($items, 'is_selected');
+  $show_more_limit = 10;
+  $max_selected_index = array_search(true, array_reverse($selected_colors,true))+1;
+  $show_more = ($show_more_limit > $max_selected_index)?true:false;
+  // dd($show_more);
+  // dd($selected_colors,array_search(true, array_reverse($selected_colors,true)));
+?>
 <script type="text/javascript" >
    // require('handlebars');
    var source   = document.getElementById("filter-color-template").innerHTML;
@@ -54,6 +62,7 @@
    context["singleton"] = singleton;
    context["collapsed"] = collapsed;
    context["display_count"] = display_count;
+   context["show_more"] = <?= json_encode($show_more);?>;
    context["disabled_at_zero_count"] = disabled_at_zero_count;
    context["is_attribute_param"] = is_attribute_param;
    context["filter_display_name"] = filter_display_name;

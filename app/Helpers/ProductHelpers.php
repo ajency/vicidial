@@ -125,7 +125,7 @@ function sanitiseFilterdata($result, $params = [])
     ];
     $priceFilter["min"] = (int) floor($priceFilter["min"] / 100) * 100;
     $priceFilter["max"] = (int) ceil($priceFilter["max"] / 100) * 100;
-    $attributes         = ['is_singleton', 'is_collapsed', 'template', 'order', 'display_count', 'disabled_at_zero_count', 'is_attribute_param', 'filter_type','sort_on','sort_order'];
+    $attributes         = ['is_singleton', 'is_collapsed', 'template', 'order', 'display_count', 'disabled_at_zero_count', 'is_attribute_param', 'filter_type','sort_on','sort_order','custom_attributes'];
     $response           = [];
 
 
