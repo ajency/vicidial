@@ -354,4 +354,8 @@ class Variant extends Model
             UpdateVariantInventory::dispatch($job_set)->onQueue('update_inventory');
         }
     }
+
+    public function updateInventory(){
+         UpdateVariantInventory::dispatch([$this->odoo_id])->onQueue('update_inventory');
+    }
 }

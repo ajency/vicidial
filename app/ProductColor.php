@@ -30,21 +30,15 @@ class ProductColor extends Model
         if ($is_variant) {
             foreach ($elastic_data["variants"] as &$variant) {
                 if ($variant["variant_id"] == $variant_id) {
-                    foreach ($change as $facet_name => $attributes) {
-                        foreach ($attributes as $key => $attribute) {
-                            if ($attribute['result']) {
-                                $variant[$key] = $attribute['value'];
-                            }
-                        }
+                    foreach ($change as $key => $value) {
+                        $variant[$key] = $value;
                     }
-                    break;
                 }
+                break;
             }
         } else {
-            foreach ($change as $facet_name => $attributes) {
-                foreach ($attributes as $key => $value) {
-                    $elastic_data['search_result_data'][$key] = $value;
-                }
+            foreach ($change as $key => $value) {
+                $elastic_data['search_result_data'][$key] = $value;
             }
         }
         return $elastic_data;
@@ -52,7 +46,7 @@ class ProductColor extends Model
 
     public static function updateElasticSearchData($elastic_data, $change, $is_variant, $variant_id)
     {
-        foreach ($elastic_data["search_data"] as &$variant) {
+        foreach ($elastic_data['search_data'] as &$variant) {
             $flag = false;
             if ($is_variant) {
                 foreach ($variant["number_facet"] as $facet) {
@@ -66,13 +60,14 @@ class ProductColor extends Model
             }
             if ($flag) {
                 foreach ($change as $facet_name => $attributes) {
-                    if ($attribute['search']) {
-                        foreach ($variant[$facet_name] as &$facet) {
-                            foreach ($attributes as $key => $value) {
-                                if ($facet["facet_name"] == $key) {
-                                    $facet["facet_value"] = $availability;
-                                    break;
-                                }
+                    foreach ($variant[$facet_name] as &$facet) {
+                        if (isset($attributes[$facet["facet_name"]])) {
+                            $facet["facet_value"] = $attributes[$facet["facet_name"]];
+                        }
+                        foreach ($attributes as $key => $value) {
+                            if ($facet["facet_name"] == $key) {
+                                $facet["facet_value"] = $value;
+                                break;
                             }
                         }
                     }
@@ -84,8 +79,12 @@ class ProductColor extends Model
 
     public static function updateElasticData(array $elastic_data, array $change, $is_variant = true, $variant_id = null)
     {
-        $elastic_data = self::upateElasticResultData($elastic_data, $change, $is_variant, $variant_id);
-        $elastic_data = self::updateElasticSearchData($elastic_data, $change, $is_variant, $variant_id);
+        if (isset($change['result'])) {
+            $elastic_data = self::upateElasticResultData($elastic_data, $change['result'], $is_variant, $variant_id);
+        }
+        if (isset($change['search'])) {
+            $elastic_data = self::updateElasticSearchData($elastic_data, $change['search'], $is_variant, $variant_id);
+        }
         dd($elastic_data);
         $result = self::saveToElastic($elastic_data['id'], $elastic_data);
         return $result;
