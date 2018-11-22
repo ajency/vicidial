@@ -378,4 +378,26 @@ class Product
         return $output;
     }
 
+    public static function updateImageFacets($product_id)
+    {
+        $products = ProductColor::where('product_id', $product_id)->get();
+        foreach ($products as $product) {
+            $images = $product->getAllImages(array_keys(config('ajfileupload.presets')));
+            if (count($images) > 0) {
+                $changes = [
+                    'search' => [
+                        'boolean_facet' => [
+                            'product_image_available' => true,
+                        ],
+                    ],
+                    'result' => [
+                        'product_image_available' => true,
+                        // 'product_images' => $images,
+                    ],
+                ];
+                ProductColor::updateElasticData($product->getElasticData(), $changes, false);
+            }
+        }
+    }
+
 }
