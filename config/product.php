@@ -272,6 +272,19 @@ return [
             "sort_order"             => "asc",
             "custom_attributes"      => [],
         ],
+        'product_image_available'  => [
+            'name'                   => '',
+            'is_singleton'           => true,
+            'is_collapsed'           => true,
+            'template'               => null,
+            'order'                  => 6,
+            'display_count'          => false,
+            'disabled_at_zero_count' => true,
+            "is_attribute_param"     => true,
+            "attribute_param"        => "product_image_available",
+            'filter_type'            => 'boolean_filter',
+            "is_essential"          => false
+        ],
     ],
     'breadcrumb_order'               => [
         'product_category_type',
