@@ -50,7 +50,7 @@ class ProductMove
             //     (new IndexMove($move_id))->onQueue('process_move'),
             // ])->dispatch(Variant::getVariantProductIdFromOdoo($sanitisedData['move_product_id']))->onQueue('process_product');
             // return;
-            throw new \Exception("Variant ".$sanitisedData['move_product_id']." not indexed. Failed to index Product Move "$move_id, 1);
+            throw new \Exception("Variant ".$sanitisedData['move_product_id']." not indexed. Failed to index Product Move ".$move_id, 1);
             
         }
         $elastic_data = array_merge($sanitisedData, $variant->getVariantData('all', 'variant_'));
