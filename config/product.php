@@ -230,7 +230,7 @@ return [
             'filter_type'            => 'primary_filter',
             "is_essential"          => false,
             "sort_on"               => "count",
-            "sort_order"            => "asc"
+            "sort_order"            => "desc"
         ],
         'variant_sale_price'    => [
             'name'                   => 'Price Range',

@@ -141,6 +141,10 @@ $(document).ready(function(){
           $(".productlist__row").addClass('d-none');
           $(".productlist__na").removeClass('d-none');
         }
+        else{   
+           $(".productlist__row").removeClass('d-none');   
+           $(".productlist__na").addClass('d-none');   
+         }
         context["show_more"] = product_list_context.page.has_next
         console.log("product_list_items======")
         console.log(product_list_items);
@@ -162,6 +166,7 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
     var facet_name = $(thisObj).data('facet-name')
     var singleton = $(thisObj).data('singleton')
     var slug_name = $(thisObj).data('slug')
+    var display_name = $(thisObj).data('display-name')
     console.log(facet_name)
     console.log($(thisObj).prop('checked')+"==="+$(thisObj).val());
     var final_facet_list = facet_list
@@ -183,7 +188,7 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                   final_facet_list[facet_name].push(thisval)
                 var fil_index = filter_tags_list.findIndex(obj => obj.slug==slug_name);
                 if(fil_index == -1)
-                  filter_tags_list.push({"slug":slug_name, "value":$(thisObj).val(), "group":facet_name})
+                  filter_tags_list.push({"slug":slug_name, "value":display_name, "group":facet_name})
                 call_ajax = true;
               }
               else{
@@ -196,10 +201,10 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                 var fil_grp_index = filter_tags_list.findIndex(obj => obj.group==facet_name);
                 if(fil_index == -1){
                   if(fil_grp_index == -1)
-                    filter_tags_list.push({"slug":slug_name, "value":$(thisObj).val(), "group":facet_name})
+                    filter_tags_list.push({"slug":slug_name, "value":display_name, "group":facet_name})
                   else{
                     filter_tags_list.splice(fil_grp_index, 1);
-                    filter_tags_list.push({"slug":slug_name, "value":$(thisObj).val(), "group":facet_name})
+                    filter_tags_list.push({"slug":slug_name, "value":display_name, "group":facet_name})
                   }
                 }
                 call_ajax = true;
@@ -218,16 +223,16 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
               var fil_grp_index = filter_tags_list.findIndex(obj => obj.group==facet_name);
               if(fil_index == -1){
                 if(fil_grp_index == -1)
-                  filter_tags_list.push({"slug":slug_name, "value":$(thisObj).val(), "group":facet_name})
+                  filter_tags_list.push({"slug":slug_name, "value":display_name, "group":facet_name})
                 else{
                   filter_tags_list.splice(fil_grp_index, 1);
-                  filter_tags_list.push({"slug":slug_name, "value":$(thisObj).val(), "group":facet_name})
+                  filter_tags_list.push({"slug":slug_name, "value":display_name, "group":facet_name})
                 }
               }
             }
             else{
               if(fil_index == -1)
-                filter_tags_list.push({"slug":slug_name, "value":$(thisObj).val(), "group":facet_name})
+                filter_tags_list.push({"slug":slug_name, "value":display_name, "group":facet_name})
             }
             console.log("filter_tags_list rat4====")
             console.log(filter_tags_list)
@@ -410,7 +415,10 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                      var items = $.map(vval.items, function(el) { return el });
                      items.sort(function(obj1, obj2) {
                       // Ascending: first age less than the previous
-                      return obj1.sequence - obj2.sequence;
+                      if(vval.sort_order == "asc")
+                        return obj1[vval.sort_on] - obj2[vval.sort_on];
+                      else
+                        return obj2[vval.sort_on] - obj1[vval.sort_on];
                     });
                      context["items"] = items;
                      console.log(context)
@@ -438,6 +446,10 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                       $(".productlist__row").addClass('d-none');
                       $(".productlist__na").removeClass('d-none');
                     }
+                    else{   
+                       $(".productlist__row").removeClass('d-none');   
+                       $(".productlist__na").addClass('d-none');   
+                     }
 
                   }
                 });
