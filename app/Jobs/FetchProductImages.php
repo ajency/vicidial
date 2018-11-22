@@ -75,8 +75,8 @@ class FetchProductImages implements ShouldQueue
             }
             $pc->mapImage($image_id, $type);
             // \Storage::disk('local')->delete($subfilepath);
-
         }
+        Product::updateImageFacets($this->productId);
         
     }
 }

@@ -5,16 +5,17 @@ namespace App;
 use Ajency\FileUpload\FileUpload;
 use App\Elastic\ElasticQuery;
 use Illuminate\Database\Eloquent\Model;
+use App\Jobs\FetchProductImages;
 
 class ProductColor extends Model
 {
     use FileUpload;
 
-    public static function getElasticData(string $id)
+    public function getElasticData()
     {
         $q = new ElasticQuery();
         $q->setIndex(config("elastic.indexes.product"));
-        return $q->get($id);
+        return $q->get($this->elastic_id)['_source'];
     }
 
     public static function saveToElastic(string $id, array $data)

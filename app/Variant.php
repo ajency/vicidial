@@ -348,7 +348,7 @@ class Variant extends Model
 
     public static function addUpdateInventoryJobs()
     {
-        $variants = Variant::select('odoo_id')->get()->pluck('odoo_id')->toarray();
+        $variants = self::select('odoo_id')->get()->pluck('odoo_id')->toarray();
         $job_sets = array_chunk($variants, config('odoo.limit'));
         foreach ($job_sets as $job_set) {
             UpdateVariantInventory::dispatch($job_set)->onQueue('update_inventory');
