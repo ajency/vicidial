@@ -71,8 +71,8 @@ class SubOrder extends Model
             $items = $this->getItems();
             foreach ($items as $itemData) {
                 if ($itemData['quantity'] > $itemData['item']->inventory[$this->location_id]['quantity']) {
-                    $this->cart->type = 'failure';
-                    $this->cart->save();
+                    $this->order->cart->type = 'failure';
+                    $this->order->cart->save();
                     if($abort) {
                         abort(410, 'Items no longer available in store');
                     }
