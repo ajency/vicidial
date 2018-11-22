@@ -423,7 +423,7 @@ a[x-apple-data-detectors=true] {
       <div style="Margin: 0 auto;min-width: 320px;max-width: 625px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #FFFFFF;padding-top: 20px;" class="block-grid ">
       
        <div style="font-size:12px;line-height:14px;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;color:#555555;text-align:left;float: left;width: 36%;padding-left: 10px;">
-          <img src="call-icon.png" alt="contact" title="contact" width="38" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;margin-left: auto;padding-right: 15px;">
+          <img src="{{CDN::asset('/img/call-icon.png') }}" alt="contact" title="contact" width="38" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;margin-left: auto;padding-right: 15px;">
         </div>
 
       <div style="font-size: 15px;line-height:14px;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;color:#555555;text-align: left;float: left;width: 48%;padding-right: 5px;">

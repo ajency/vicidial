@@ -35,7 +35,7 @@
                   
                     <div align="center" class="img-container center  autowidth  " style="padding-right: 0px;  padding-left: 0px;">
 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr style="line-height:0px;line-height:0px;"><td style="padding-right: 0px; padding-left: 0px;" align="center"><![endif]-->
-  <img class="center  autowidth " align="center" border="0" src="{{CDN::asset('/img/prder-placed.png') }}" alt="Image" title="Image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: 0;height: auto;float: none;" />
+  <img class="center  autowidth " align="center" border="0" src="{{CDN::asset('/img/order-placed.png') }}" alt="Image" title="Image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: 0;height: auto;float: none;" />
 <!--[if mso]></td></tr></table><![endif]-->
 </div>
 
@@ -106,9 +106,9 @@
   <div style="color:#555555;line-height:120%;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif; padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;">  
     <div style="font-size:12px;line-height:14px;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;color:#555555;text-align:left;"><p style="margin: 0;font-size: 12px;line-height: 14px;margin-bottom: 5px;"><span style="font-size: 17px;line-height: 18px;display: block;margin-bottom: 10px;"><strong> Order Details</strong></span></p>
 
-    <p style="margin: 0;font-size: 12px;line-height: 14px;margin-bottom: 5px;"><span style="font-size: 15px; line-height: 18px;">Order No: <strong><a href="#" style="color: #ab8030;text-decoration: underline;"> {{$order_info['txn_no']}}</a></strong></span></p><p style="margin: 0;font-size: 12px;line-height: 14px;;margin-bottom: 5px;"><span style="font-size: 15px; line-height: 18px;">Placed On:<strong>&nbsp;{{$order_info['order_date']}}</strong></span></p><p style="margin: 0;font-size: 12px;line-height: 14px;;margin-bottom: 5px;"><span style="font-size: 15px; line-height: 18px;">Total amount: <strong>₹{{$order_info['total_amount']}}</strong></span></p>
+    <p style="margin: 0;font-size: 12px;line-height: 14px;margin-bottom: 5px;"><span style="font-size: 15px; line-height: 18px;">Order No: <strong><a href="{{url('/')}}/my/order/details?orderid={{$order_info['txn_no']}}" style="color: #ab8030;text-decoration: underline;"> {{$order_info['txn_no']}}</a></strong></span></p><p style="margin: 0;font-size: 12px;line-height: 14px;;margin-bottom: 5px;"><span style="font-size: 15px; line-height: 18px;">Placed On:<strong>&nbsp;{{$order_info['order_date']}}</strong></span></p><p style="margin: 0;font-size: 12px;line-height: 14px;;margin-bottom: 5px;"><span style="font-size: 15px; line-height: 18px;">Total amount: <strong>₹{{$order_info['total_amount']}}</strong></span></p>
     <p style="margin: 0;font-size: 12px;line-height: 14px;margin-top: 5px;">
-    <a href="#" style="color: #b18005;padding: 5px 0;text-decoration: underline;border-radius: 4px;font-size: 1.3em;display: inline-block;">Manage your order</a></p>
+    <a href="{{url('/')}}/my/order/details?orderid={{$order_info['txn_no']}}" style="color: #b18005;padding: 5px 0;text-decoration: underline;border-radius: 4px;font-size: 1.3em;display: inline-block;">Manage your order</a></p>
     </div> 
   </div>
   <!--[if mso]></td></tr></table><![endif]-->
@@ -198,7 +198,7 @@
 
 <!-- Shipment 1  -->
 @foreach ($sub_orders as $sub_order)
-
+<div>
 <div style="background-color: transparent;">
       <div style="Margin: 0 auto;min-width: 320px;max-width: 625px;/* overflow-wrap: break-word; *//* word-wrap: break-word; *//* word-break: break-word; */background-color: #FFFFFF;/* margin-bottom: 10px; */width: 100% !important;/* padding-left: 10px; */" class="block-grid two-up ">
     
@@ -240,6 +240,7 @@
     $image_3x = $item['images']->{'3x'};
   }
 @endphp
+
    <div style="background-color:transparent;">
       <div style="Margin: 0 auto;min-width: 320px;max-width: 625px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #FFFFFF;" class="block-grid mixed-two-up ">
         <div style="border-collapse: collapse;display: table;width: 100%;background-color:#FFFFFF;">
@@ -303,10 +304,6 @@
 <!-- Shipment 2 ends -->
 
 
-
-
-
-
     <div style="background-color:transparent;">
       <div style="Margin: 0 auto;min-width: 320px;max-width: 625px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #FFFFFF;" class="block-grid ">
         <div style="border-collapse: collapse;display: table;width: 100%;background-color:#FFFFFF;">
@@ -361,9 +358,9 @@
                     <div class="">
   <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 0px; padding-left: 0px; padding-top: 0px; padding-bottom: 0px;"><![endif]-->
   <div style="color:#555555;line-height:120%;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif; padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;">  
-    <div style="font-size:12px;line-height:14px;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;color:#555555;text-align:right;padding-right: 10px;">
-    <p style="margin: 0;font-size: 20px;line-height: 25px;font-weight: 600;">Billing details</p>
-    <p style="margin: 0;font-size: 12px;line-height: 14px;margin-top: 5px;margin-bottom: 5px;padding-top: 10px;/* padding-bottom: 3px; */border-top: 1px solid #ddd;"><span style="font-size: 17px; line-height: 28px;">Subtotal:&nbsp; &nbsp;₹{{$order_summary['total']}}</span><br><span style="font-size: 17px; line-height: 28px;">Shipping:&nbsp; ₹{{$order_summary['shipping_fee']}}</span><br></p><p style="margin-top: 4px;font-weight: 600;padding-top: 10px;margin-bottom: 0;border-top: 1px solid #ddd;"><span style="font-size: 20px;line-height: 26px;">Total:&nbsp; &nbsp;₹{{$order_summary['final_price']}}</span></p></div> 
+    <div style="font-size:12px;line-height:14px;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;color:#555555;text-align:left;padding-right: 10px;padding-left: 15px;">
+    <p style="margin: 0;font-size: 18px;line-height: 25px;font-weight: 600;">Billing details</p>
+    <p style="margin: 0;font-size: 12px;line-height: 14px;margin-top: 5px;margin-bottom: 5px;padding-top: 10px;/* padding-bottom: 3px; */border-top: 1px solid #ddd;"><span style="font-size: 17px; line-height: 28px;">Subtotal:&nbsp; &nbsp;₹{{$order_summary['total']}}</span><br><span style="font-size: 17px; line-height: 28px;">Shipping:&nbsp; ₹{{$order_summary['shipping_fee']}}</span><br></p><p style="margin-top: 4px;font-weight: 600;padding-top: 10px;margin-bottom: 0;border-top: 1px solid #ddd;"><span style="font-size: 18px;line-height: 26px;">Total:&nbsp; &nbsp;₹{{$order_summary['final_price']}}</span></p></div> 
   </div>
   <!--[if mso]></td></tr></table><![endif]-->
 </div>
