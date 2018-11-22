@@ -169,6 +169,8 @@ return [
             "attribute_param"        => null,
             'filter_type'            => 'primary_filter',
             "is_essential"           => true,
+            "sort_on"               => "sequence",
+            "sort_order"            => "asc"
         ],
         'product_gender'        => [
             'name'                   => 'Gender',
@@ -182,6 +184,8 @@ return [
             "attribute_param"        => null,
             'filter_type'            => 'primary_filter',
             "is_essential"           => true,
+            "sort_on"               => "sequence",
+            "sort_order"            => "asc"
         ],
         'product_age_group'     => [
             'name'                   => 'Age Group',
@@ -195,6 +199,8 @@ return [
             "attribute_param"        => null,
             'filter_type'            => 'primary_filter',
             "is_essential"           => false,
+            "sort_on"               => "sequence",
+            "sort_order"            => "asc"
         ],
         'product_subtype'       => [
             'name'                   => 'Sub Type',
@@ -207,7 +213,9 @@ return [
             "is_attribute_param"     => false,
             "attribute_param"        => null,
             'filter_type'            => 'primary_filter',
-            "is_essential"           => false,
+            "is_essential"          => false,
+            "sort_on"               => "sequence",
+            "sort_order"            => "asc"
         ],
         'product_color_html'    => [
             'name'                   => 'Colour',
@@ -220,7 +228,9 @@ return [
             "is_attribute_param"     => true,
             "attribute_param"        => "color",
             'filter_type'            => 'primary_filter',
-            "is_essential"           => false,
+            "is_essential"          => false,
+            "sort_on"               => "count",
+            "sort_order"            => "asc"
         ],
         'variant_sale_price'    => [
             'name'                   => 'Price Range',
@@ -234,6 +244,8 @@ return [
             "attribute_param"        => "price",
             'filter_type'            => 'range_filter',
             "is_essential"           => false,
+            "sort_on"               => "sequence",
+            "sort_order"            => "asc"
         ],
         'variant_availability'  => [
             'name'                   => 'Availability',
@@ -248,6 +260,8 @@ return [
             "attribute_param"        => "variant_availability",
             'filter_type'            => 'boolean_filter',
             "is_essential"           => false,
+            "sort_on"               => "sequence",
+            "sort_order"            => "asc"
         ],
     ],
     'breadcrumb_order'               => [

@@ -12,8 +12,10 @@
       <?php 
       $file_name = 'includes.productlisting.productfilters.' . $filter["template"]; 
       $items = $filter["items"];
-      usort($items, function($a, $b) { 
-          return $a["sequence"] > $b["sequence"] ? 1 : -1; 
+      // dd($filter["sort_on"]);
+      $sort_on = $filter["sort_on"];
+      usort($items, function($a, $b) use ($sort_on){ 
+          return $a[$sort_on] > $b[$sort_on] ? 1 : -1; 
       }); 
       $filter_parameters = ['items' => $items,'collapsed'=>($filter["is_collapsed"] == true?1:0),'header'=>$filter["header"],"filter_type" => $filter["filter_type"], "display_count"=> $filter["display_count"], "is_attribute_param"=> $filter["is_attribute_param"], "disabled_at_zero_count"=> $filter["disabled_at_zero_count"],'template'=>$filter["template"]];
       if(isset($filter["is_singleton"])){
