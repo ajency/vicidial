@@ -604,3 +604,15 @@ function replaceURLParameter(paramName, paramValue)
 }
 
 $('.home-slider').slick();
+
+$('#storeSlider').lightSlider({
+    loop:true,
+    item:1,
+    thumbItem:4,
+    slideMargin:0,
+    gallery:true,
+    currentPagerPosition:'left',
+    onSliderLoad: function() {
+        $('#storeSlider').removeClass('cS-hidden');
+    }
+});

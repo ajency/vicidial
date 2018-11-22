@@ -63,4 +63,10 @@ class StaticController extends Controller
         return view('stores')->with('params', $this->params);
     }
 
+    public function singlestore(Request $request)
+    {
+        $this->params['breadcrumb']['current'] = 'Store';
+        return view('store-single')->with('params', $this->params);
+    }
+
 }
