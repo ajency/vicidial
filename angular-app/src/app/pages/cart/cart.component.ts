@@ -35,6 +35,7 @@ export class CartComponent implements OnInit {
   openModalSubscription : Subscription;
   cartItemOutOfStock : boolean = false;
   fetchCartFailed : boolean = false;
+  isCartTypeFailure : boolean = false;
   constructor( private router: Router,
                private appservice : AppServiceService,
                private apiservice : ApiServiceService,
@@ -128,10 +129,14 @@ export class CartComponent implements OnInit {
   fetchCartDataFromServer(){
     this.appservice.showLoader()
     this.appservice.callFetchCartApi().then((response)=>{
-      this.cart = this.formattedCartDataForUI(response);
+      this.cart = this.formattedCartDataForUI(response);      
       this.checkCartItemOutOfStock();
       this.updateLocalDataAndUI(this.cart, this.cart.cart_count);
       this.appservice.removeLoader();
+      if(this.cart.cart_type == 'failure'){
+        this.editBag();
+        this.isCartTypeFailure = true;
+      }
       this.fetchCartFailed = false;
       this.zone.run(() => {});
     })

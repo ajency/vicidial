@@ -56,6 +56,8 @@ class OrderController extends Controller
 
         $order = $cart->order;
 
+        checkOrderInventory($order);
+
         if(isset($params['address_id'])) {
             $address = Address::find($params["address_id"]);
             validateAddress($user, $address);
@@ -74,6 +76,18 @@ class OrderController extends Controller
         }
 
         return response()->json($response);
+    }
+
+    public function checkSubOrderInventory($id, Request $request)
+    {
+        $user   = User::getUserByToken($request->header('Authorization'));
+        $order  = Order::find($id);
+        $cart   = $order->cart;
+        validateCart($user,$cart, 'order');
+
+        checkOrderInventory($order);
+
+        return response()->json(["message" => 'Items are available in store', 'success'=> true]);
     }
 
     public function getOrderDetails(Request $request)

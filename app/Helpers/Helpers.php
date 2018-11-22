@@ -620,3 +620,10 @@ function saveTxnid($order)
         saveTxnid($order);
     }
 }
+
+function checkOrderInventory($order, $abort = true)
+{
+    foreach ($order->subOrders as $subOrder) {
+        return $subOrder->checkInventory($abort);
+    }
+}

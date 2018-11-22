@@ -65,13 +65,20 @@ class SubOrder extends Model
         ];
     }
 
-    public function checkInventory()
+    public function checkInventory($abort = true)
     {
         if ($this->odoo_id == null) {
             $items = $this->getItems();
             foreach ($items as $itemData) {
                 if ($itemData['quantity'] > $itemData['item']->inventory[$this->location_id]['quantity']) {
-                    abort(410, 'Items no longer available in store');
+                    $this->order->cart->type = 'failure';
+                    $this->order->cart->save();
+                    if($abort) {
+                        abort(410, 'Items no longer available in store');
+                    }
+                    else {
+                        return 'failure';
+                    }
                 }
             }
         }
@@ -80,7 +87,6 @@ class SubOrder extends Model
     public function placeOrder()
     {
         if ($this->odoo_id == null) {
-            $this->checkInventory();
             $order_lines = [];
             $itemsData   = [];
             foreach ($this->item_data as $itemData) {
