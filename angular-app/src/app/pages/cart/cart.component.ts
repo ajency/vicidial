@@ -244,7 +244,7 @@ export class CartComponent implements OnInit {
     this.userValidation.disableVerifyOtpButton = true;
     this.userValidation.otpVerificationFailed = false;
     let url = this.appservice.apiUrl + '/rest/v1/authenticate/login?';
-    // this.otp=this.otpCode.otp1+this.otpCode.otp2+this.otpCode.otp3+this.otpCode.otp4+this.otpCode.otp5+this.otpCode.otp6
+    this.otp=this.otpCode.otp1+this.otpCode.otp2+this.otpCode.otp3+this.otpCode.otp4+this.otpCode.otp5+this.otpCode.otp6
     let body = {
       otp : this.otp,
       phone : this.mobileNumber
@@ -296,11 +296,26 @@ export class CartComponent implements OnInit {
   }
 
   next(event: KeyboardEvent,el1,el2) {
-    if(event.key=="Backspace")
-      el1.focus();
-    else
+    if(event.which > 47 && event.which < 58)
       el2.focus();
+    else if(event.which == 8)
+      el1.focus();
+
+    if (event.keyCode === 13) {
+      $('.is-enter').click();
+    }
   }
+
+  prev(event: KeyboardEvent,el1,el2) {
+     if(event.key=="Backspace")
+       el1.focus();
+    // else
+    //   el2.focus();
+    if (event.keyCode === 13) {
+      $('.is-enter').click();
+    }
+   }
+
 
   check_OTP(){
     if(this.otpCode.otp1=='' || this.otpCode.otp2=='' || this.otpCode.otp3=='' || this.otpCode.otp4=='' || this.otpCode.otp5=='' || this.otpCode.otp6=='')
