@@ -16,6 +16,7 @@ yarn-error.log
 
 # angular compiled output
 /angular-app/dist
+/angular-app/dist2
 /angular-app/tmp
 /angular-app/out-tsc
 /my-account-app
