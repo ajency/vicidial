@@ -44,7 +44,9 @@
 	  </button>
 	</a>
 	</div> -->
-
+	<div *ngIf="addToCartFailed" class="kss-flash kss-flash--error">
+	 	{{addToCartFailureMessage}}
+	</div>
 	 <div *ngIf="cartItemOutOfStock" class="kss-flash kss-flash--error">
 	 	It looks like some of the items in your bag are out of stock. Please edit your bag items to checkout.
 	</div>
@@ -53,9 +55,6 @@
 	</div>
 	<div *ngIf="!cartItemOutOfStock && isCartTypeFailure" class="kss-flash kss-flash--error">
 	 	Due to the high volume of orders, your current order could not be processed. Please try placing your order again.
-	</div>
-	<div *ngIf="addToCartFailed" class="kss-flash kss-flash--info">
-	 	{{addToCartFailureMessage}}
 	</div>
 
 	<hr *ngIf="cartItemOutOfStock || (!cartItemOutOfStock && cart.cart_type == 'order') || (!cartItemOutOfStock && isCartTypeFailure) || addToCartFailed" class="m-0" />

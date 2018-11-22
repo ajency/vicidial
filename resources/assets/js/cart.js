@@ -126,7 +126,7 @@ $(document).ready(function(){
         var error_msg = (request && request.responseJSON && request.responseJSON.message!='') ? request.responseJSON.message : 'Could not add to bag';
         //if(request.responseJSON.message!='') error_msg = request.responseJSON.message
         add_to_cart_failed = true;
-        add_to_cart_failure_message = error_msg=='Quantity not available' ? 'Could not add selected item to bag as it is out of stock' : 'Due to the high traffic, there was an issue adding your item to cart. Please try adding the item again';
+        add_to_cart_failure_message = error_msg=='Quantity not available' ? 'Could not add '+ $('.section-heading--single').text() +' to bag as it is out of stock' : 'Due to the high traffic, there was an issue adding your item to cart. Please try adding the item again';
 
         $('.cd-add-to-cart .btn-icon').hide();
         $('.cd-add-to-cart .kss-btn__wrapper').addClass('d-flex');
