@@ -296,11 +296,19 @@ export class CartComponent implements OnInit {
   }
 
   next(event: KeyboardEvent,el1,el2) {
-    if(event.key=="Backspace")
-      el1.focus();
-    else
-      el2.focus();
-  }
++    if(event.which > 47 && event.which < 58)
++      el2.focus();
++    else if(event.which == 8)
++      el1.focus();
++  }
++
++  prev(event: KeyboardEvent,el1,el2) {
+     if(event.key=="Backspace")
+       el1.focus();
+-    else
+-      el2.focus();
+   }
+
 
   check_OTP(){
     if(this.otpCode.otp1=='' || this.otpCode.otp2=='' || this.otpCode.otp3=='' || this.otpCode.otp4=='' || this.otpCode.otp5=='' || this.otpCode.otp6=='')
