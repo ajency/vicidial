@@ -272,7 +272,7 @@ footer .bl-1{
     &.sticky-alert{
         position: fixed;
         top: 0;
-        z-index: 10;
+        z-index: 99;
         right: 0;
         width: calc(80% - 1rem);
         transform: translateY(-500px);

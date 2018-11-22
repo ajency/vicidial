@@ -300,6 +300,10 @@ export class CartComponent implements OnInit {
       el2.focus();
     else if(event.which == 8)
       el1.focus();
+
+    if (event.keyCode === 13) {
+      $('.is-enter').click();
+    }
   }
 
   prev(event: KeyboardEvent,el1,el2) {
@@ -307,6 +311,9 @@ export class CartComponent implements OnInit {
        el1.focus();
     // else
     //   el2.focus();
+    if (event.keyCode === 13) {
+      $('.is-enter').click();
+    }
    }
 
 

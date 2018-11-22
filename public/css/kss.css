@@ -11807,7 +11807,7 @@ footer .bl-1 {
 .kss-alert.sticky-alert {
   position: fixed;
   top: 0;
-  z-index: 10;
+  z-index: 99;
   right: 0;
   width: calc(80% - 1rem);
   -webkit-transform: translateY(-500px);
@@ -13813,6 +13813,10 @@ body #cd-cart .modal.show .modal-dialog {
   font-weight: 100;
   font-size: 1.6em;
   color: rgba(82, 82, 82, 0.55);
+}
+
+.cart-step1-header {
+  margin: -10px -20px 0 -20px;
 }
 
 .prod-slides .carousel-image {
