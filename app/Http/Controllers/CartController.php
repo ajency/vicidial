@@ -167,4 +167,23 @@ class CartController extends Controller
         $user = User::getUserByToken($request->header('Authorization'));
         return response()->json(["cart_id" => $user->cart_id]);
     }
+
+    public function checkStatus(Request $request)
+    {
+        $id     = $request->session()->get('active_cart_id', false);
+        $cart = Cart::find($id);
+        if ($cart == null) {
+            abort(404, "Cart not found for this session");
+        }
+        $cart->abortNotCart('cart');
+
+        foreach ($cart->cart_data as $variant_id => $variant_details) {
+            $variant = Variant::find($variant_id);
+            if ($variant->getQuantity() < $variant_details['quantity']) {
+                abort(404, "Quantity not available");
+            }
+        }
+
+        return response()->json(["message" => 'Items are available in store', 'success'=> true]);
+    }
 }

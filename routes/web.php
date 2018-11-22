@@ -17,6 +17,7 @@ Route::post('/rest/v1/anonymous/cart/insert', 'CartController@guestAddItem');
 Route::get('/rest/v1/anonymous/cart/get', 'CartController@guestCartFetch');
 Route::get('/rest/v1/anonymous/cart/delete', 'CartController@guestCartDelete');
 Route::get('/rest/v1/anonymous/states/all', 'AddressController@fetchStates');
+Route::get('/rest/v1/anonymous/cart/check-status', 'CartController@checkStatus');
 
 Route::get('/contact-us', 'StaticController@contact');
 Route::get('/contact', 'StaticController@contactnew');
