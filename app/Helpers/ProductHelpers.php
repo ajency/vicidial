@@ -283,28 +283,18 @@ function priceFilter($q, $must, $min, $max)
 
 /**
  * Query to filter Products which have active variants
- * if both product_active and variant_active are true for a variant then product is displayed
  *
  * @return array
  */
 function filterActiveProducts($q, $must)
 {
     $nested     = [];
-
-    $facetName  = $q::createTerm("search_data.boolean_facet.facet_name", "variant_active");
+    $facetName  = $q::createTerm("search_data.boolean_facet.facet_name", "product_att_ecom_sales");
     $facetValue = $q::createTerm("search_data.boolean_facet.facet_value", true);
-    $bool       = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
-    $nested[]   = $q::createNested('search_data.boolean_facet', $bool);
-
-    $facetName  = $q::createTerm("search_data.boolean_facet.facet_name", "product_active");
-    $facetValue = $q::createTerm("search_data.boolean_facet.facet_value", true);
-    $bool       = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
-    $nested[]   = $q::createNested('search_data.boolean_facet', $bool);
-    
-    $bool2      = $q::addToBoolQuery('filter', $nested);
-    $nested2    = $q::createNested("search_data", $bool2);
+    $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
+    $nested[]   = $q::createNested('search_data.boolean_facet', $filter);
+    $nested2    = $q::createNested("search_data", $nested);
     $must       = $q::addToBoolQuery('filter', $nested2, $must);
-
     return $must;
 }
 /**
