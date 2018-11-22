@@ -275,9 +275,14 @@ function facetCategoryChange(thisObj) {
     for (fitem in filter_tags_list) {
       if (filter_tags_list[fitem]["slug"] == "price") filInd = fitem;
     }
-    filter_tags_list.splice(filInd, 1);
-    // if(filter_tag_exists == false)
-    filter_tags_list.push({ "slug": slug_name, "value": filter_tag_str, "group": facet_name });
+    if (filInd != -1) filter_tags_list.splice(filInd, 1);
+    if (range_facet_list[facet_name]["min"] == $(thisObj).data("minval") && range_facet_list[facet_name]["max"] == $(thisObj).data("maxval")) {
+      filter_tag_exists = false;
+    } else {
+
+      filter_tags_list.push({ "slug": slug_name, "value": filter_tag_str, "group": facet_name });
+    }
+
     call_ajax = true;
   }
   console.log("filter_tags_list after====");
@@ -295,10 +300,18 @@ function facetCategoryChange(thisObj) {
     for (ritem in range_facet_list) {
       var minval = range_facet_list[ritem]["min"];
       var maxval = range_facet_list[ritem]["max"];
-      url += append_filter_str + "rf=price:" + minval + "TO" + maxval;
+      var noURlChange = false;
+      console.log(".facet-category===" + $("input[data-facet-name='" + ritem + "'].facet-category"));
+      console.log($("input[data-facet-name='" + ritem + "'].facet-category"));
+      if (minval == $("input[data-facet-name='" + ritem + "'].facet-category").data("minval") && maxval == $("input[data-facet-name='" + ritem + "'].facet-category").data("maxval")) {
+        noURlChange = true;
+      } else {
+        url += append_filter_str + "rf=price:" + minval + "TO" + maxval;
+      }
     }
     console.log(range_facet_list[facet_name]);
   }
+
   console.log("boolean_facet_list==");
   console.log(boolean_facet_list);
   if (Object.keys(boolean_facet_list).length > 0) {
