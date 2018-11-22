@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'template_fields'         => [
+    'template_fields'                => [
         "name",
         "id",
         "article_desc",
@@ -39,7 +39,7 @@ return [
         // "discount_amt",
         // "color",
     ],
-    'variant_fields'          => [
+    'variant_fields'                 => [
         'id',
         'product_tmpl_id',
         'barcode',
@@ -62,7 +62,7 @@ return [
         // "supplier_taxes_id", # Vendor Tax
 
     ],
-    'move_fields'             => [
+    'move_fields'                    => [
         "id",
         "location_dest_id",
         "location_id",
@@ -85,14 +85,14 @@ return [
         "is_locked",
         "lot_name",
     ],
-    'update_inventory'        => env('UPDATE_INVENTORY', false),
-    'attribute_fields'        => [
+    'update_inventory'               => env('UPDATE_INVENTORY', false),
+    'attribute_fields'               => [
         'id',
         'name',
         'html_color',
         'attribute_id',
     ],
-    'facets'                  => [
+    'facets'                         => [
         "string_facet"  => [
             'product' => [
                 'product_slug',
@@ -114,8 +114,12 @@ return [
         "boolean_facet" => [
             'product' => [
                 'product_active',
+                'product_image_available',
             ],
-            'variant' => ['variant_active', 'variant_availability'],
+            'variant' => [
+                'variant_active',
+                'variant_availability',
+            ],
         ],
         "number_facet"  => [
             'product' => ['product_id'],
@@ -150,9 +154,9 @@ return [
             'variant' => ['variant_style_no'],
         ],
     ],
-    "inventory_fields"        => ["product_id", "quantity",'location_id'],
-    "inventory_max"           => 10,
-    'facet_display_data'      => [
+    "inventory_fields"               => ["product_id", "quantity", 'location_id'],
+    "inventory_max"                  => 10,
+    'facet_display_data'             => [
         'product_category_type' => [
             'name'                   => 'Category',
             'is_singleton'           => false,
@@ -164,7 +168,7 @@ return [
             "is_attribute_param"     => false,
             "attribute_param"        => null,
             'filter_type'            => 'primary_filter',
-            "is_essential"          => true
+            "is_essential"           => true,
         ],
         'product_gender'        => [
             'name'                   => 'Gender',
@@ -177,7 +181,7 @@ return [
             "is_attribute_param"     => false,
             "attribute_param"        => null,
             'filter_type'            => 'primary_filter',
-            "is_essential"          => true
+            "is_essential"           => true,
         ],
         'product_age_group'     => [
             'name'                   => 'Age Group',
@@ -190,7 +194,7 @@ return [
             "is_attribute_param"     => false,
             "attribute_param"        => null,
             'filter_type'            => 'primary_filter',
-            "is_essential"          => false
+            "is_essential"           => false,
         ],
         'product_subtype'       => [
             'name'                   => 'Sub Type',
@@ -203,7 +207,7 @@ return [
             "is_attribute_param"     => false,
             "attribute_param"        => null,
             'filter_type'            => 'primary_filter',
-            "is_essential"          => false
+            "is_essential"           => false,
         ],
         'product_color_html'    => [
             'name'                   => 'Colour',
@@ -216,7 +220,7 @@ return [
             "is_attribute_param"     => true,
             "attribute_param"        => "color",
             'filter_type'            => 'primary_filter',
-            "is_essential"          => false
+            "is_essential"           => false,
         ],
         'variant_sale_price'    => [
             'name'                   => 'Price Range',
@@ -229,7 +233,7 @@ return [
             "is_attribute_param"     => true,
             "attribute_param"        => "price",
             'filter_type'            => 'range_filter',
-            "is_essential"          => false
+            "is_essential"           => false,
         ],
         'variant_availability'  => [
             'name'                   => 'Availability',
@@ -243,17 +247,17 @@ return [
             "is_attribute_param"     => true,
             "attribute_param"        => "variant_availability",
             'filter_type'            => 'boolean_filter',
-            "is_essential"          => false
+            "is_essential"           => false,
         ],
     ],
-    'breadcrumb_order'        => [
+    'breadcrumb_order'               => [
         'product_category_type',
         'product_age_group',
         'product_gender',
         'product_subtype',
     ], //Used for breadcrumbs on single product page
-    "list_page_display_limit" => 30,
+    "list_page_display_limit"        => 30,
     "similar_products_display_limit" => 5,
-    "price_filter_bucket_range" => ["min"=>0,"max"=>2000],
+    "price_filter_bucket_range"      => ["min" => 0, "max" => 2000],
 
 ];
