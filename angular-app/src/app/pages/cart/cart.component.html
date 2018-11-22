@@ -45,13 +45,13 @@
 	</a>
 	</div> -->
 
-	 <div *ngIf="cartItemOutOfStock" class="kss-flash kss-flash--info">
+	 <div *ngIf="cartItemOutOfStock" class="kss-flash kss-flash--error">
 	 	It looks like some of the items in your bag are out of stock. Please edit your bag items to checkout.
 	</div>
 	<div *ngIf="!cartItemOutOfStock && cart.cart_type == 'order'" class="kss-flash kss-flash--info">
 	 	Hey! It looks like you were interrupted during your last checkout process. You can continue from where you left off.
 	</div>
-	<div *ngIf="!cartItemOutOfStock && isCartTypeFailure" class="kss-flash kss-flash--info">
+	<div *ngIf="!cartItemOutOfStock && isCartTypeFailure" class="kss-flash kss-flash--error">
 	 	Due to the high volume of orders, your current order could not be processed. Please try placing your order again.
 	</div>
 
