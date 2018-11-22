@@ -65,7 +65,7 @@ class SubOrder extends Model
         ];
     }
 
-    public function checkInventory()
+    public function checkInventory($abort = true)
     {
         if ($this->odoo_id == null) {
             $items = $this->getItems();
@@ -73,7 +73,12 @@ class SubOrder extends Model
                 if ($itemData['quantity'] > $itemData['item']->inventory[$this->location_id]['quantity']) {
                     $this->cart->type = 'failure';
                     $this->cart->save();
-                    abort(410, 'Items no longer available in store');
+                    if($abort) {
+                        abort(410, 'Items no longer available in store');
+                    }
+                    else {
+                        return 'failure';
+                    }
                 }
             }
         }

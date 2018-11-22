@@ -621,9 +621,9 @@ function saveTxnid($order)
     }
 }
 
-function checkOrderInventory($order)
+function checkOrderInventory($order, $abort = true)
 {
     foreach ($order->subOrders as $subOrder) {
-        $subOrder->checkInventory();
+        return $subOrder->checkInventory($abort);
     }
 }

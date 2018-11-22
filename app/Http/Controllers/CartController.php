@@ -101,7 +101,7 @@ class CartController extends Controller
         checkUserCart($request->header('Authorization'), $cart);
         if($cart->type == 'order-complete') abort(400);
         if($cart->type == 'order') {
-            checkOrderInventory($cart->order);
+            $cart->type = (checkOrderInventory($cart->order, false) == 'failure') ? 'failure' : 'order';
         }
 
         $items = getCartData($cart, true, (config('app.env')=='production')? false : true);
