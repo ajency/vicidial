@@ -25,34 +25,66 @@ class ProductColor extends Model
         return $q->index();
     }
 
-    public static function updateElasticInventory(int $variant_id, array $elastic_data,  $availability)
+    private static function upateElasticResultData($elastic_data, $change, $is_variant, $variant_id)
     {
-        foreach ($elastic_data["variants"] as &$variant) {
-            if ($variant["variant_id"] == $variant_id) {
-                $variant["variant_availability"] = $availability;
-                break;
-            }
-        }
-
-        foreach ($elastic_data["search_data"] as &$variant) {
-            $flag = false;
-            foreach ($variant["number_facet"] as $facet) {
-                if ($facet["facet_name"] == "variant_id" and $facet["facet_value"] == $variant_id) {
-                    $flag = true;
+        if ($is_variant) {
+            foreach ($elastic_data["variants"] as &$variant) {
+                if ($variant["variant_id"] == $variant_id) {
+                    foreach ($change as $facet_name => $attributes) {
+                        foreach ($attributes as $key => $value) {
+                            $variant[$key] = $value;
+                        }
+                    }
                     break;
                 }
             }
-            if ($flag) {
+        } else {
+            foreach ($change as $facet_name => $attributes) {
+                foreach ($attributes as $key => $value) {
+                    $elastic_data['search_result_data'][$key] = $value;
+                }
+            }
+        }
+        return $elastic_data;
+    }
 
-                foreach ($variant["boolean_facet"] as &$facet) {
-                    if ($facet["facet_name"] == "variant_availability") {
-                        $facet["facet_value"] = $availability;
+    public static function updateElasticSearchData($elastic_data, $change, $is_variant, $variant_id)
+    {
+        foreach ($elastic_data["search_data"] as &$variant) {
+            $flag = false;
+            if ($is_variant) {
+                foreach ($variant["number_facet"] as $facet) {
+                    if ($facet["facet_name"] == "variant_id" and $facet["facet_value"] == $variant_id) {
+                        $flag = true;
                         break;
                     }
                 }
-                break;
+            } else {
+                $flag = true;
+            }
+            if ($flag) {
+                foreach ($change as $facet_name => $attributes) {
+                    foreach ($variant[$facet_name] as &$facet) {
+                        foreach ($attributes as $key => $value) {
+                            if ($facet["facet_name"] == $key) {
+                                $facet["facet_value"] = $availability;
+                                break;
+                            }
+                        }
+                    }
+                }
             }
         }
+        return $elastic_data;
+    }
+
+    public static function updateElasticData(array $elastic_data, array $change, $skip_result = false, $is_variant = true, $variant_id = null)
+    {
+        if (!$skip_result) {
+            $elastic_data = self::upateElasticResultData($elastic_data, $change, $is_variant, $variant_id);
+        }
+        $elastic_data = self::updateElasticSearchData($elastic_data, $change, $is_variant, $variant_id);
+        dd($elastic_data);
         $result = self::saveToElastic($elastic_data['id'], $elastic_data);
         return $result;
     }

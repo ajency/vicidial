@@ -39,7 +39,13 @@ class UpdateVariantInventory implements ShouldQueue
             $var            = Variant::where(["odoo_id" => $variant_id])->firstOrFail();
             $var->inventory = $inventory[$variant_id]["inventory"];
             $var->save();
-            $result = ProductColor::updateElasticInventory($variant_id, $var->getParentElasticData(), $var->getAvailability());
+            $changes = [
+                'boolean_facet' => [
+                    'variant_availability' => $var->getAvailability(),
+                ],
+            ];
+            $result = ProductColor::updateElasticData($var->getParentElasticData(), $changes, false, true, $variant_id);
+            // $result = ProductColor::updateElasticInventory($variant_id, $var->getParentElasticData(), $var->getAvailability());
             \Log::info($result);
         }
     }

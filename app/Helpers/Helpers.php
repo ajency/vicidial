@@ -102,6 +102,7 @@ function sanitiseProductData($odooData)
         "product_att_product_type"         => $odooData["att_product_type"],
         "product_att_other_attribute"      => $odooData["att_val_add1"],
         "product_vendor"                   => ($odooData["vendor_id"]) ? $odooData["vendor_id"][1] : null,
+        'product_image_available'          => false,
     ];
     $product_categories = explode('/', $index['product_categories']);
     $categories         = ['product_category_type', 'product_gender', 'product_age_group', 'product_subtype'];
@@ -119,17 +120,16 @@ function sanitiseProductData($odooData)
 function sanitiseVariantData($odooData, $attributeData)
 {
     $variantData = [
-        'variant_id'              => $odooData['id'],
-        'variant_type'            => 'variant',
-        'variant_barcode'         => $odooData['barcode'],
-        'variant_standard_price'  => floatval($odooData['standard_price']),
-        'variant_lst_price'       => $odooData['lst_price'],
-        'variant_sale_price'      => $odooData['sale_price'],
-        'variant_product_own'     => ($odooData['product_own']) ? 'private' : 'not private',
-        'variant_style_no'        => $odooData['style_no'],
-        'variant_active'          => $odooData['active'],
-        'variant_availability'    => false,
-        'variant_image_available' => false,
+        'variant_id'             => $odooData['id'],
+        'variant_type'           => 'variant',
+        'variant_barcode'        => $odooData['barcode'],
+        'variant_standard_price' => floatval($odooData['standard_price']),
+        'variant_lst_price'      => $odooData['lst_price'],
+        'variant_sale_price'     => $odooData['sale_price'],
+        'variant_product_own'    => ($odooData['product_own']) ? 'private' : 'not private',
+        'variant_style_no'       => $odooData['style_no'],
+        'variant_active'         => $odooData['active'],
+        'variant_availability'   => false,
     ];
     $variantData['variant_discount']         = $odooData['lst_price'] - $odooData['sale_price'];
     $variantData['variant_discount_percent'] = ($odooData['lst_price'] > 0) ? $variantData['variant_discount'] / $odooData['lst_price'] * 100 : 0;
@@ -219,6 +219,7 @@ function buildProductIndexFromOdooData($productData, $variantData)
         "product_color_name"               => $variantData->first()['product_color_name'],
         "product_color_html"               => $variantData->first()['product_color_html'],
         "product_images"                   => [],
+        "product_image_available"          => $productData['product_image_available'],
     ];
     $indexData["variants"] = [];
     foreach ($variantData as $variant) {

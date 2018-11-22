@@ -114,11 +114,11 @@ return [
         "boolean_facet" => [
             'product' => [
                 'product_active',
+                'product_image_available',
             ],
             'variant' => [
                 'variant_active',
                 'variant_availability',
-                'variant_image_available',
             ],
         ],
         "number_facet"  => [
