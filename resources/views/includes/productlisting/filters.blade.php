@@ -12,10 +12,18 @@
       <?php 
       $file_name = 'includes.productlisting.productfilters.' . $filter["template"]; 
       $items = $filter["items"];
-      usort($items, function($a, $b) { 
-          return $a["sequence"] > $b["sequence"] ? 1 : -1; 
+      // dd($filter["sort_on"]);
+      $sort_on = $filter["sort_on"];
+      $sort_order = $filter["sort_order"];
+      usort($items, function($a, $b) use ($sort_on,$sort_order){ 
+          if($sort_on == "asc")
+            return $a[$sort_on] > $b[$sort_on] ? 1 : -1; 
+          else
+            return $a[$sort_on] > $b[$sort_on] ? -1 : 1; 
       }); 
-      $filter_parameters = ['items' => $items,'collapsed'=>($filter["is_collapsed"] == true?1:0),'header'=>$filter["header"],"filter_type" => $filter["filter_type"], "display_count"=> $filter["display_count"], "is_attribute_param"=> $filter["is_attribute_param"], "disabled_at_zero_count"=> $filter["disabled_at_zero_count"],'template'=>$filter["template"]];
+      // if($filter["template"] == "color")
+      //   dd($items);
+      $filter_parameters = ['items' => $items,'collapsed'=>($filter["is_collapsed"] == true?1:0),'header'=>$filter["header"],"filter_type" => $filter["filter_type"], "display_count"=> $filter["display_count"], "is_attribute_param"=> $filter["is_attribute_param"], "disabled_at_zero_count"=> $filter["disabled_at_zero_count"],'template'=>$filter["template"],'custom_attributes'=>$filter["custom_attributes"]];
       if(isset($filter["is_singleton"])){
         $filter_parameters['singleton'] = ($filter["is_singleton"] == true?1:0);
       }
