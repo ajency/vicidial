@@ -26,6 +26,7 @@ return [
         "att_fabric_type",
         "att_product_type",
         "att_val_add1",
+        "att_ecom_sales",
         // "product_own", #private/non private
         "vendor_id", #Vendor
         "brand_ids", #Brand
@@ -115,6 +116,7 @@ return [
             'product' => [
                 'product_active',
                 'product_image_available',
+                'product_att_ecom_sales',
             ],
             'variant' => [
                 'variant_active',
@@ -169,9 +171,9 @@ return [
             "attribute_param"        => null,
             'filter_type'            => 'primary_filter',
             "is_essential"           => true,
-            "sort_on"               => "sequence",
-            "sort_order"            => "asc",
-            "custom_attributes"     =>[]
+            "sort_on"                => "sequence",
+            "sort_order"             => "asc",
+            "custom_attributes"      => [],
         ],
         'product_gender'        => [
             'name'                   => 'Gender',
@@ -185,9 +187,9 @@ return [
             "attribute_param"        => null,
             'filter_type'            => 'primary_filter',
             "is_essential"           => true,
-            "sort_on"               => "sequence",
-            "sort_order"            => "asc",
-            "custom_attributes"     =>[]
+            "sort_on"                => "sequence",
+            "sort_order"             => "asc",
+            "custom_attributes"      => [],
         ],
         'product_age_group'     => [
             'name'                   => 'Age Group',
@@ -201,9 +203,9 @@ return [
             "attribute_param"        => null,
             'filter_type'            => 'primary_filter',
             "is_essential"           => false,
-            "sort_on"               => "sequence",
-            "sort_order"            => "asc",
-            "custom_attributes"     =>[]
+            "sort_on"                => "sequence",
+            "sort_order"             => "asc",
+            "custom_attributes"      => [],
         ],
         'product_subtype'       => [
             'name'                   => 'Sub Type',
@@ -216,10 +218,10 @@ return [
             "is_attribute_param"     => false,
             "attribute_param"        => null,
             'filter_type'            => 'primary_filter',
-            "is_essential"          => false,
-            "sort_on"               => "sequence",
-            "sort_order"            => "asc",
-            "custom_attributes"     =>[]
+            "is_essential"           => false,
+            "sort_on"                => "sequence",
+            "sort_order"             => "asc",
+            "custom_attributes"      => [],
         ],
         'product_color_html'    => [
             'name'                   => 'Colour',
@@ -232,10 +234,10 @@ return [
             "is_attribute_param"     => true,
             "attribute_param"        => "color",
             'filter_type'            => 'primary_filter',
-            "is_essential"          => false,
-            "sort_on"               => "count",
-            "sort_order"            => "desc",
-            "custom_attributes"     =>["show_more_limit"=>10]
+            "is_essential"           => false,
+            "sort_on"                => "count",
+            "sort_order"             => "desc",
+            "custom_attributes"      => ["show_more_limit" => 10],
         ],
         'variant_sale_price'    => [
             'name'                   => 'Price Range',
@@ -249,13 +251,13 @@ return [
             "attribute_param"        => "price",
             'filter_type'            => 'range_filter',
             "is_essential"           => false,
-            "sort_on"               => "sequence",
-            "sort_order"            => "asc",
-            "custom_attributes"     =>[]
+            "sort_on"                => "sequence",
+            "sort_order"             => "asc",
+            "custom_attributes"      => [],
         ],
         'variant_availability'  => [
             'name'                   => 'Availability',
-            'display_name'           => 'Exclude Out Of Stock',
+            'item_display_name'      => 'Exclude Out Of Stock',
             'is_singleton'           => true,
             'is_collapsed'           => true,
             'template'               => 'availability',
@@ -266,9 +268,9 @@ return [
             "attribute_param"        => "variant_availability",
             'filter_type'            => 'boolean_filter',
             "is_essential"           => false,
-            "sort_on"               => "sequence",
-            "sort_order"            => "asc",
-            "custom_attributes"     =>[]
+            "sort_on"                => "sequence",
+            "sort_order"             => "asc",
+            "custom_attributes"      => [],
         ],
     ],
     'breadcrumb_order'               => [

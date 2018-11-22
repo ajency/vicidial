@@ -59,16 +59,10 @@ class ProductColor extends Model
                 $flag = true;
             }
             if ($flag) {
-                foreach ($change as $facet_name => $attributes) {
-                    foreach ($variant[$facet_name] as &$facet) {
+                foreach ($change as $facet_type => $attributes) {
+                    foreach ($variant[$facet_type] as $facet_key => $facet) {
                         if (isset($attributes[$facet["facet_name"]])) {
-                            $facet["facet_value"] = $attributes[$facet["facet_name"]];
-                        }
-                        foreach ($attributes as $key => $value) {
-                            if ($facet["facet_name"] == $key) {
-                                $facet["facet_value"] = $value;
-                                break;
-                            }
+                            $variant[$facet_type][$facet_key]["facet_value"] = $attributes[$facet["facet_name"]];
                         }
                     }
                 }
@@ -85,7 +79,7 @@ class ProductColor extends Model
         if (isset($change['search'])) {
             $elastic_data = self::updateElasticSearchData($elastic_data, $change['search'], $is_variant, $variant_id);
         }
-        dd($elastic_data);
+        \Log::debug($elastic_data);
         $result = self::saveToElastic($elastic_data['id'], $elastic_data);
         return $result;
     }
