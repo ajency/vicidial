@@ -26,6 +26,7 @@ return [
         "att_fabric_type",
         "att_product_type",
         "att_val_add1",
+        "att_ecom_sales",
         // "product_own", #private/non private
         "vendor_id", #Vendor
         "brand_ids", #Brand
@@ -115,6 +116,7 @@ return [
             'product' => [
                 'product_active',
                 'product_image_available',
+                'product_att_ecom_sales',
             ],
             'variant' => [
                 'variant_active',

@@ -101,6 +101,7 @@ function sanitiseProductData($odooData)
         "product_att_fabric_type"          => $odooData["att_fabric_type"],
         "product_att_product_type"         => $odooData["att_product_type"],
         "product_att_other_attribute"      => $odooData["att_val_add1"],
+        "product_att_ecom_sales"           => ($odooData["att_ecom_sales"] == "yes")? true : false,
         "product_vendor"                   => ($odooData["vendor_id"]) ? $odooData["vendor_id"][1] : null,
         'product_image_available'          => false,
     ];
@@ -214,6 +215,7 @@ function buildProductIndexFromOdooData($productData, $variantData)
         "product_age_group"                => $productData['product_age_group'],
         "product_subtype"                  => $productData['product_subtype'],
         "product_vendor"                   => $productData['product_vendor'],
+        "product_att_ecom_sales"           => $productData['product_att_ecom_sales'],
         "product_color_id"                 => $variantData->first()['product_color_id'],
         "product_color_slug"               => str_slug($variantData->first()['product_color_name']),
         "product_color_name"               => $variantData->first()['product_color_name'],
