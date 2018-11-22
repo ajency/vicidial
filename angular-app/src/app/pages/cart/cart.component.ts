@@ -373,6 +373,7 @@ export class CartComponent implements OnInit {
       .catch((error)=>{
         console.log("error ===>", error);
         this.appservice.removeLoader();
+        this.fetchCartDataFromServer();
       })
     }
     else{
