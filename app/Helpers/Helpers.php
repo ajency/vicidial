@@ -109,23 +109,27 @@ function sanitiseProductData($odooData)
         $index[$category] = (isset($product_categories[$i])) ? trim($product_categories[$i]) : 'Others';
         $i++;
     }
-    if($index['product_gender'] == 'Others') $index['product_gender'] = 'Unisex';
+    if ($index['product_gender'] == 'Others') {
+        $index['product_gender'] = 'Unisex';
+    }
+
     return $index;
 }
 
 function sanitiseVariantData($odooData, $attributeData)
 {
     $variantData = [
-        'variant_id'             => $odooData['id'],
-        'variant_type'           => 'variant',
-        'variant_barcode'        => $odooData['barcode'],
-        'variant_standard_price' => floatval($odooData['standard_price']),
-        'variant_lst_price'      => $odooData['lst_price'],
-        'variant_sale_price'     => $odooData['sale_price'],
-        'variant_product_own'    => ($odooData['product_own']) ? 'private' : 'not private',
-        'variant_style_no'       => $odooData['style_no'],
-        'variant_active'         => $odooData['active'],
-        'variant_availability'   => false,
+        'variant_id'              => $odooData['id'],
+        'variant_type'            => 'variant',
+        'variant_barcode'         => $odooData['barcode'],
+        'variant_standard_price'  => floatval($odooData['standard_price']),
+        'variant_lst_price'       => $odooData['lst_price'],
+        'variant_sale_price'      => $odooData['sale_price'],
+        'variant_product_own'     => ($odooData['product_own']) ? 'private' : 'not private',
+        'variant_style_no'        => $odooData['style_no'],
+        'variant_active'          => $odooData['active'],
+        'variant_availability'    => false,
+        'variant_image_available' => false,
     ];
     $variantData['variant_discount']         = $odooData['lst_price'] - $odooData['sale_price'];
     $variantData['variant_discount_percent'] = ($odooData['lst_price'] > 0) ? $variantData['variant_discount'] / $odooData['lst_price'] * 100 : 0;
@@ -188,33 +192,33 @@ function buildProductIndexFromOdooData($productData, $variantData)
         'id'          => $productData['product_id'] . '.' . $variantData->first()['product_color_id'],
         'search_data' => [],
     ];
-    $product_title = ($productData['product_att_magento_display_name'] && $productData['product_att_magento_display_name']!='') ? $productData['product_att_magento_display_name'] : $productData['product_name'];
+    $product_title                   = ($productData['product_att_magento_display_name'] && $productData['product_att_magento_display_name'] != '') ? $productData['product_att_magento_display_name'] : $productData['product_name'];
     $indexData['search_result_data'] = [
-        'product_id'                        => $productData['product_id'],
-        "product_title"                     => $product_title,
-        "product_att_magento_display_name"  => $productData['product_att_magento_display_name'],
-        "product_name"                      => $productData['product_name'],
-        "product_slug"                      => $productData['product_slug'],
-        "product_style"                     => $productData['product_style_no'],
-        "product_description"               => $productData['product_description_sale'],
-        "product_att_sleeves"               => $productData['product_att_sleeves'],
-        "product_att_fashionability"        => $productData['product_att_fashionability'],
-        "product_att_material"              => $productData['product_att_material'],
-        "product_att_occasion"              => $productData['product_att_occasion'],
-        "product_att_wash"                  => $productData['product_att_wash'],
-        "product_att_fabric_type"           => $productData['product_att_fabric_type'],
-        "product_att_product_type"          => $productData['product_att_product_type'],
-        "product_att_other_attribute"       => $productData['product_att_other_attribute'],
-        "product_category_type"             => $productData['product_category_type'],
-        "product_gender"                    => $productData['product_gender'],
-        "product_age_group"                 => $productData['product_age_group'],
-        "product_subtype"                   => $productData['product_subtype'],
-        "product_vendor"                    => $productData['product_vendor'],
-        "product_color_id"                  => $variantData->first()['product_color_id'],
-        "product_color_slug"                => str_slug($variantData->first()['product_color_name']),
-        "product_color_name"                => $variantData->first()['product_color_name'],
-        "product_color_html"                => $variantData->first()['product_color_html'],
-        "product_images"                    => [],
+        'product_id'                       => $productData['product_id'],
+        "product_title"                    => $product_title,
+        "product_att_magento_display_name" => $productData['product_att_magento_display_name'],
+        "product_name"                     => $productData['product_name'],
+        "product_slug"                     => $productData['product_slug'],
+        "product_style"                    => $productData['product_style_no'],
+        "product_description"              => $productData['product_description_sale'],
+        "product_att_sleeves"              => $productData['product_att_sleeves'],
+        "product_att_fashionability"       => $productData['product_att_fashionability'],
+        "product_att_material"             => $productData['product_att_material'],
+        "product_att_occasion"             => $productData['product_att_occasion'],
+        "product_att_wash"                 => $productData['product_att_wash'],
+        "product_att_fabric_type"          => $productData['product_att_fabric_type'],
+        "product_att_product_type"         => $productData['product_att_product_type'],
+        "product_att_other_attribute"      => $productData['product_att_other_attribute'],
+        "product_category_type"            => $productData['product_category_type'],
+        "product_gender"                   => $productData['product_gender'],
+        "product_age_group"                => $productData['product_age_group'],
+        "product_subtype"                  => $productData['product_subtype'],
+        "product_vendor"                   => $productData['product_vendor'],
+        "product_color_id"                 => $variantData->first()['product_color_id'],
+        "product_color_slug"               => str_slug($variantData->first()['product_color_name']),
+        "product_color_name"               => $variantData->first()['product_color_name'],
+        "product_color_html"               => $variantData->first()['product_color_html'],
+        "product_images"                   => [],
     ];
     $indexData["variants"] = [];
     foreach ($variantData as $variant) {
@@ -239,10 +243,10 @@ function buildProductIndexFromOdooData($productData, $variantData)
         $facets = ['string_facet', 'number_facet', 'boolean_facet'];
         foreach ($facets as $facet) {
             foreach (config('product.facets.' . $facet . '.product') as $value) {
-                if($value == 'product_gender' && $productData[$value] == 'Unisex'){
-                    $search_data[$facet][] =['facet_name' => $value, 'facet_value'=> 'Girls', 'facet_slug'=>'girls'];
-                    $search_data[$facet][] =['facet_name' => $value, 'facet_value'=> 'Boys', 'facet_slug'=>'boys'];
-                    $search_data[$facet][] =['facet_name' => $value, 'facet_value'=> 'Unisex', 'facet_slug'=>'unisex'];
+                if ($value == 'product_gender' && $productData[$value] == 'Unisex') {
+                    $search_data[$facet][] = ['facet_name' => $value, 'facet_value' => 'Girls', 'facet_slug' => 'girls'];
+                    $search_data[$facet][] = ['facet_name' => $value, 'facet_value' => 'Boys', 'facet_slug' => 'boys'];
+                    $search_data[$facet][] = ['facet_name' => $value, 'facet_value' => 'Unisex', 'facet_slug' => 'unisex'];
                     continue;
                 }
                 $facetObj = [
@@ -611,12 +615,10 @@ function saveTxnid($order)
 {
     $dateInd = Carbon::now();
     $dateInd->setTimezone('Asia/Kolkata');
-    
-    try{
-        $order->txnid = strtoupper($dateInd->format('Mjy')).random_int(str_pad(1, 8, 0), str_pad(9, 8, 9));
+    try {
+        $order->txnid = strtoupper($dateInd->format('Mjy')) . random_int(str_pad(1, 8, 0), str_pad(9, 8, 9));
         $order->save();
-    }
-    catch(\Exception $e){
+    } catch (\Exception $e) {
         saveTxnid($order);
     }
 }
