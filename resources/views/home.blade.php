@@ -288,7 +288,7 @@
                   src="{{CDN::asset('/img/product-of-day/boys-shirt-op06-color-white-1-10px.jpg') }}"
                   data-srcset="{{CDN::asset('/img/product-of-day/boys-shirt-op06-color-white-1-medium.jpg') }} 370w,
                                {{CDN::asset('/img/product-of-day/boys-shirt-op06-color-white-1-small.jpg') }} 326w"
-                  data-sizes='(min-width: 1200px) 20vw, (min-width: 991px) 22vw, 41vw'
+                  data-sizes='(min-width: 1200px) 266px, (min-width: 991px) 22vw, 41vw'
                   title="White Cotton Shirt"
                   alt="White Cotton Shirt"/>
            </div>
@@ -304,7 +304,7 @@
                   src="{{CDN::asset('/img/product-of-day/jl-ppg-3-side-girls-hd-hs-top-color-grey-1-10px.jpg') }}"
                   data-srcset="{{CDN::asset('/img/product-of-day/jl-ppg-3-side-girls-hd-hs-top-color-grey-1-medium.jpg') }} 537w,
                                {{CDN::asset('/img/product-of-day/jl-ppg-3-side-girls-hd-hs-top-color-grey-1-small.jpg') }} 326w"
-                  data-sizes='(min-width: 1200px) 20vw, (min-width: 991px) 22vw, 41vw'
+                  data-sizes='(min-width: 1200px) 266px, (min-width: 991px) 22vw, 41vw'
                   title="Grey circular knit graphic girls tshirt"
                   alt="Grey circular knit graphic girls tshirt"/>
             </div>
@@ -320,7 +320,7 @@
                   src="{{CDN::asset('/img/product-of-day/new-born-3009-color-white-1-10px.jpg') }}"
                   data-srcset="{{CDN::asset('/img/product-of-day/new-born-3009-color-white-1-medium.jpg') }} 448w,
                                {{CDN::asset('/img/product-of-day/new-born-3009-color-white-1-small.jpg') }} 326w"
-                  data-sizes='(min-width: 1200px) 20vw, (min-width: 991px) 22vw, 41vw'
+                  data-sizes='(min-width: 1200px) 266px, (min-width: 991px) 22vw, 41vw'
                   title="Cotton printed girls rompers"
                   alt="Cotton printed girls rompers"/>
            </div>
@@ -354,7 +354,7 @@
                   data-srcset="{{CDN::asset('/img/product-of-day/infant-3-large.jpg') }} 978w,
                                {{CDN::asset('/img/product-of-day/infant-3-medium.jpg') }} 652w,
                                {{CDN::asset('/img/product-of-day/infant-3-small.jpg') }} 326w"
-                  data-sizes='(min-width: 1200px) 20vw, (min-width: 991px) 22vw, 41vw'
+                  data-sizes='(min-width: 1200px) 266px, (min-width: 991px) 22vw, 41vw'
                   title="Blue Cotton Rompers"
                   alt="Blue Cotton Rompers"/>
            </div>
@@ -380,7 +380,7 @@
                       data-srcset="{{CDN::asset('/img/product-of-day/171081-a-line-marigold-embroidered-dress-color-turquoise-1-large.jpg') }} 810w,
                                    {{CDN::asset('/img/product-of-day/171081-a-line-marigold-embroidered-dress-color-turquoise-1-medium.jpg') }} 652w,
                                    {{CDN::asset('/img/product-of-day/171081-a-line-marigold-embroidered-dress-color-turquoise-1-small.jpg') }} 326w"
-                      data-sizes='(min-width: 1200px) 20vw, (min-width: 991px) 22vw, 41vw'
+                      data-sizes='(min-width: 1200px) 266px, (min-width: 991px) 22vw, 41vw'
                       title="A-line Marigold Embroidered Dress"
                       alt="A-line Marigold Embroidered Dress"/>
                </div>
@@ -413,7 +413,7 @@
                       src="{{CDN::asset('/img/product-of-day/pc-29028-black-panther-printed-tshirt-color-grey-1-10px.jpg') }}"
                       data-srcset="{{CDN::asset('/img/product-of-day/pc-29028-black-panther-printed-tshirt-color-grey-1-medium.jpg') }} 400w,
                                    {{CDN::asset('/img/product-of-day/pc-29028-black-panther-printed-tshirt-color-grey-1-small.jpg') }} 326w"
-                      data-sizes='(min-width: 1200px) 20vw, (min-width: 991px) 22vw, 41vw'
+                      data-sizes='(min-width: 1200px) 266px, (min-width: 991px) 22vw, 41vw'
                       title="Grey printed graphic t-shirt"
                       alt="Grey printed graphic t-shirt"/>
                </div>
@@ -430,7 +430,7 @@
                       data-srcset="{{CDN::asset('/img/product-of-day/girl-short-large.jpg') }} 978w,
                                   {{CDN::asset('/img/product-of-day/girl-short-medium.jpg') }} 450w,
                                    {{CDN::asset('/img/product-of-day/girl-short-small.jpg') }} 326w"
-                      data-sizes='(min-width: 1200px) 20vw, (min-width: 991px) 22vw, 41vw'
+                      data-sizes='(min-width: 1200px) 266px, (min-width: 991px) 22vw, 41vw'
                       title="Cotton Circular Knit Short"
                       alt="Cotton Circular Knit Short"/>
                </div>
@@ -447,7 +447,7 @@
                       data-srcset="{{CDN::asset('/img/product-of-day/161025-chambray-hemla-dress-coral-color-coral-1-large.jpg') }} 810w,
                                    {{CDN::asset('/img/product-of-day/161025-chambray-hemla-dress-coral-color-coral-1-medium.jpg') }} 652w,
                                    {{CDN::asset('/img/product-of-day/161025-chambray-hemla-dress-coral-color-coral-1-small.jpg') }} 326w"
-                     data-sizes='(min-width: 1200px) 20vw, (min-width: 991px) 22vw, 41vw'
+                     data-sizes='(min-width: 1200px) 266px, (min-width: 991px) 22vw, 41vw'
                      title="Chambray Hemla Dress Coral"
                      alt="Chambray Hemla Dress Coral"/>
                 </div>
@@ -474,7 +474,7 @@
                     data-srcset="{{CDN::asset('/img/product-of-day/infant-1-large.jpg') }} 978w,
                                  {{CDN::asset('/img/product-of-day/infant-1-medium.jpg') }} 652w,
                                  {{CDN::asset('/img/product-of-day/infant-1-small.jpg') }} 326w"
-                    data-sizes='(min-width: 1200px) 20vw, (min-width: 991px) 22vw, 41vw'
+                    data-sizes='(min-width: 1200px) 266px, (min-width: 991px) 22vw, 41vw'
                     title="Half Sleeves Navy Cotton Tshirt"
                     alt="Half Sleeves Navy Cotton Tshirt"/>
              </div>
@@ -510,7 +510,7 @@
                     data-srcset="{{CDN::asset('/img/product-of-day/shirt-5-shirt-large.jpg') }} 978w,
                                  {{CDN::asset('/img/product-of-day/shirt-5-shirt-medium.jpg') }} 652w,
                                  {{CDN::asset('/img/product-of-day/shirt-5-shirt-small.jpg') }} 326w"
-                   data-sizes='(min-width: 1200px) 20vw, (min-width: 991px) 22vw, 41vw'
+                   data-sizes='(min-width: 1200px) 266px, (min-width: 991px) 22vw, 41vw'
                    title="Half Sleeves Cotton Shirt"
                    alt="Half Sleeves Cotton Shirt"/>
               </div>
@@ -528,7 +528,7 @@
                     data-srcset="{{CDN::asset('/img/product-of-day/infant-4-large.jpg') }} 978w,
                                  {{CDN::asset('/img/product-of-day/infant-4-medium.jpg') }} 652w,
                                  {{CDN::asset('/img/product-of-day/infant-4-small.jpg') }} 326w"
-                    data-sizes='(min-width: 1200px) 20vw, (min-width: 991px) 22vw, 41vw'
+                    data-sizes='(min-width: 1200px) 266px, (min-width: 991px) 22vw, 41vw'
                     title="Cobalt Casual Knit Short"
                     alt="Cobalt Casual Knit Short"/>
              </div>
@@ -545,7 +545,7 @@
                     data-srcset="{{CDN::asset('/img/product-of-day/denim-shorts-1556-color-dark-wash-3-large.jpg') }} 697w,
                                 {{CDN::asset('/img/product-of-day/denim-shorts-1556-color-dark-wash-3-medium.jpg') }} 652w,
                                  {{CDN::asset('/img/product-of-day/denim-shorts-1556-color-dark-wash-3-small.jpg') }} 326w"
-                    data-sizes='(min-width: 1200px) 20vw, (min-width: 991px) 22vw, 41vw'
+                    data-sizes='(min-width: 1200px) 266px, (min-width: 991px) 22vw, 41vw'
                     title="Casual indigo shorts"
                     alt="Casual indigo shorts"/>
              </div>
