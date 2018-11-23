@@ -605,16 +605,18 @@ function replaceURLParameter(paramName, paramValue)
 
 $('.home-slider').slick();
 
-$('#storeSlider').lightSlider({
-    loop:true,
-    item:1,
-    thumbItem:4,
-    slideMargin:0,
-    gallery:true,
-    galleryMargin: 20,
-    thumbMargin: 20,
-    currentPagerPosition:'left',
-    onSliderLoad: function() {
-        $('#storeSlider').removeClass('cs-hidden');
-    }
-});
+if( $('#storeSlider').length ) {
+    $('#storeSlider').lightSlider({
+        loop:true,
+        item:1,
+        thumbItem:4,
+        slideMargin:0,
+        gallery:true,
+        galleryMargin: 20,
+        thumbMargin: 20,
+        currentPagerPosition:'left',
+        onSliderLoad: function() {
+            $('#storeSlider').removeClass('cs-hidden');
+        }
+    });
+}

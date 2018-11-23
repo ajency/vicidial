@@ -311,7 +311,7 @@
           </a>
           <div class="kss-price kss-price--medium">₹299</div>
         </div>
-      </div>      
+      </div>
       <div class="col-lg-3 col-md-6 col-6">
         <div class="card h-100 product-card position-relative">
           <a href="/cotton-printed-girls-rompers-1061-white/buy/">
@@ -327,7 +327,7 @@
           </a>
           <div class="kss-price kss-price--medium">₹249</div>
         </div>
-      </div>     
+      </div>
 <!--       <div class="col">
         <div class="card h-100 product-card position-relative">
           <a href="/boys-navy-casual-printed-tshirt-73-navy/buy/">
@@ -361,7 +361,7 @@
           </a>
           <div class="kss-price kss-price--medium">₹799</div>
         </div>
-      </div>      
+      </div>
     </div>
 
     <!-- <div class="row mt-5">
@@ -404,7 +404,7 @@
               </a>
               <div class="kss-price kss-price--medium">₹729</div>
             </div>
-          </div>  --> 
+          </div>  -->
           <div class="col-lg-3 col-md-6 col-6">
             <div class="card h-100 product-card position-relative position-relative">
               <a href="/grey-printed-graphic-t-shirt-1441-grey/buy/">
@@ -535,7 +535,7 @@
             </a>
             <div class="kss-price kss-price--medium">₹269</div>
           </div>
-        </div>      
+        </div>
         <div class="col-lg-3 col-md-6 col-6">
           <div class="card h-100 product-card position-relative">
             <a href="/casual-indigo-shorts-210-dark-wash/buy/">
@@ -552,7 +552,7 @@
             </a>
             <div class="kss-price kss-price--medium">₹699</div>
           </div>
-        </div> 
+        </div>
     </div>
     <div class="text-center mt-3">
       <a href="/shop" class="viewall-link">View All</a>
@@ -569,7 +569,7 @@
         <div class="col-md-12 text-center">
           <h2 class="font-weight-bold mb-2">Trending Looks</h2>
         </div>
-    </div>  
+    </div>
     <div class="row">
       <div class="col-sm-4 mt-2 mt-sm-0 d-flex flex-column-reverse d-sm-block">
         <div class="row product-collection__wrapper">
@@ -634,7 +634,7 @@
                 </div>
               </a>
             </div>
-          </div>          
+          </div>
         </div>
         <p class="trending-subtitle text-center text-sm-left">Boys</p>
       </div>
@@ -671,7 +671,7 @@
                </div>
               </a>
             </div>
-          </div>  
+          </div>
           <div class="col-6 category-col">
             <div class="card h-100 product-card">
               <a href="/grey-circular-knit-graphic-girls-tshirt-1272-grey/buy/">
@@ -702,7 +702,7 @@
                 </div>
               </a>
             </div>
-          </div>                    
+          </div>
         </div>
         <p class="trending-subtitle text-center text-sm-left">Girls</p>
       </div>
@@ -723,7 +723,7 @@
                </div>
               </a>
             </div>
-          </div>  
+          </div>
           <div class="col-6 category-col">
             <div class="card h-100 product-card">
               <a href="/blue-cotton-rompers-1071-navy/buy/">
@@ -755,7 +755,7 @@
                </div>
               </a>
             </div>
-          </div>      
+          </div>
           <div class="col-6 category-col">
             <div class="card h-100 product-card">
               <a href="/cotton-printed-girls-rompers-1061-white/buy/">
@@ -770,7 +770,7 @@
                </div>
               </a>
             </div>
-          </div>                  
+          </div>
         </div>
         <p class="trending-subtitle text-center text-sm-left">Infants</p>
       </div>
@@ -819,15 +819,28 @@
       <div class="row">
         <div class="col-sm-12">
           <div class="store-banner postion-relative">
-            <img class="img-fluid"
-              src="{{CDN::asset('/img/store-banner.jpg') }}"
-              title="Store Banner"
-              alt="Store Banner"/>            
+            <picture>
+               <source media="(orientation: landscape)"
+                      data-srcset="{{CDN::asset('/img/stores/banner/store-banner-large.jpg') }} 2000w,
+                                  {{CDN::asset('/img/stores/banner/store-banner-medium.jpg') }} 1200w,
+                                  {{CDN::asset('/img/stores/banner/store-banner-small.jpg') }} 700w"
+                      sizes="100vw">
+
+               <source media="(orientation: portrait)"
+                      data-srcset="{{CDN::asset('/img/stores/banner/store-banner-mo-large.jpg') }} 1200w,
+                                  {{CDN::asset('/img/stores/banner/store-banner-mo-medium.jpg') }} 700w,
+                                  {{CDN::asset('/img/stores/banner/store-banner-mo-small.jpg') }} 400w"
+                      sizes="100vw">
+
+               <img src="{{CDN::asset('/img/stores/banner/store-banner-20px.jpg') }}"
+                   data-sizes="100vw"
+                   class="img-fluid lazyload blur-up" alt="Visit our store" title="Visit our store">
+            </picture>
             <div class="contentWrapper text-center d-flex align-items-center">
               <div>
                 <p class="store-banner__title mb-0">Want to see our clothes in real life?</p>
                 <span class="store-banner__caption">Just visit any one of stores near you!</span>
-                <a href="#" class="btn kss-btn kss-btn--small">Visit our store</a>
+                <a href="/stores" class="btn kss-btn kss-btn--small">Visit our store</a>
               </div>
             </div>
           </div>
