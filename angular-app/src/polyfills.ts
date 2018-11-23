@@ -73,6 +73,6 @@ import 'zone.js/dist/zone';  // Included with Angular CLI.
 
 
 // Fix for IE
-if (!Element.prototype.matches) {
-  Element.prototype.matches = Element.prototype.msMatchesSelector;
-}
+// if (!Element.prototype.matches) {
+//   Element.prototype.matches = Element.prototype.msMatchesSelector;
+// }
