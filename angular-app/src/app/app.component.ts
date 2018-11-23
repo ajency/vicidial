@@ -6,7 +6,7 @@ declare var $: any;
 declare var openCart: any;
 
 @Component({
-  selector: 'app-root',
+  selector: 'cart-app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
   encapsulation: ViewEncapsulation.None
