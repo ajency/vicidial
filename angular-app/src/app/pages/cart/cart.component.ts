@@ -363,7 +363,7 @@ export class CartComponent implements OnInit {
   navigateToShippingDetailsPage(){
     if(this.cart.cart_type == "cart"){
       this.appservice.showLoader();
-      this.appservice.callGetAllAddressesApi().then((response)=>{
+      this.appservice.callGetAllAddressesApi(true).then((response)=>{
         this.appservice.shippingAddresses = response.addresses;
         $("#cd-cart").css("overflow", "auto");
         $('.modal-backdrop').remove();
