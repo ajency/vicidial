@@ -9,6 +9,11 @@ $(function(){
     $carousel.on( 'lazyLoad.flickity', function() {
         // Remove loader on Flickity init
         $(".loader").fadeOut(1000);
+        // Hide navigation if length equals 1
+        var flkty = new Flickity('.carousel');
+        if(flkty.slides.length == 1){
+            $('.flickity-button').hide();
+        }
     });
     $carousel.flickity({
       // options
