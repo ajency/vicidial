@@ -74,6 +74,10 @@ $(document).ready(function(){
     jQuery("#cd-cart-trigger").click(function() {
       openCart();             
     });
+    
+    jQuery("#cd-my-account-trigger").click(function() {
+      openMyAccountPage();             
+    });
 
     function addToCart(){
         var var_id = $('input[type=radio][name=kss-sizes]:checked')[0].dataset['variant_id'];
@@ -214,6 +218,14 @@ function openCart(){
     $("body").addClass("hide-scroll");
 }
 
+function openMyAccountPage(){
+    loadMyAccountApp();
+    $('#main-nav').removeClass('speed-in');
+    $('#cd-my-account').addClass("speed-in");
+    $('#cd-shadow-layer').addClass('is-visible');
+    $("body").addClass("hide-scroll");
+}
+
 function updateCartCountInUI() {
     //Check cart count in cookie
     var cart_count = getCookie( "cart_count" );
@@ -234,16 +246,16 @@ loaded = false;
 
 function loadAngularApp(){
     if(!loaded){
-        $.getScript("/views/my-account/inline.bundle.js")
+        $.getScript("/views/cart/inline.bundle.js")
             .done(function(script, textStatus){
                 console.log(textStatus);
-                $.getScript("/views/my-account/vendor.bundle.js")
+                $.getScript("/views/cart/vendor.bundle.js")
                     .done(function(script2, textStatus2){
                         console.log(textStatus2);
-                        $.getScript("/views/my-account/polyfills.bundle.js")
+                        $.getScript("/views/cart/polyfills.bundle.js")
                             .done(function(script3, textStatus3){
                                 console.log(textStatus3);
-                                $.getScript("/views/my-account/main.bundle.js")
+                                $.getScript("/views/cart/main.bundle.js")
                                     .done(function(script4,textStatus4){
                                         console.log(textStatus4);
                                         loaded = true;
@@ -314,4 +326,38 @@ function fbTrackInitiateCheckout(order_total){
     // });
 }
 
-
+function loadMyAccountApp(){
+    $.getScript("/views/my-account/inline.bundle.js")
+        .done(function(script, textStatus){
+            console.log(textStatus);
+            $.getScript("/views/my-account/vendor.bundle.js")
+                .done(function(script2, textStatus2){
+                    console.log(textStatus2);
+                    $.getScript("/views/my-account/polyfills.bundle.js")
+                        .done(function(script3, textStatus3){
+                            console.log(textStatus3);
+                            $.getScript("/views/my-account/main.bundle.js")
+                                .done(function(script4,textStatus4){
+                                    console.log(textStatus4);
+                                    loaded = true;
+                                })
+                                .fail(function(jqxhr, settings, exception){
+                                    console.log("angular load failed")
+                                    // loadAngularApp();
+                                })
+                        })
+                        .fail(function(jqxhr, settings, exception){
+                            console.log("angular load failed")
+                            // loadAngularApp();
+                        })
+                })
+                .fail(function(jqxhr, settings, exception){
+                    console.log("angular load failed")
+                    // loadAngularApp();
+                })
+        })
+        .fail(function(jqxhr, settings, exception){
+            console.log("angular load failed")
+            // loadAngularApp();
+    })
+}

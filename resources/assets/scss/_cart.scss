@@ -50,7 +50,7 @@ $L : 1200px;
 @mixin border-radius($radius:.25em) {
     border-radius: $radius;
 }
-#cd-cart {
+#cd-cart, #cd-my-account {
 
   position: fixed;
   top: 0;
@@ -85,7 +85,7 @@ $L : 1200px;
 
 
 }
-#cd-cart {
+#cd-cart, #cd-my-account {
     right: -100%;
     background: #FFF;
     @include transition(right .5s ease);
