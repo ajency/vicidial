@@ -352,7 +352,7 @@ $L : 1200px;
         @media (min-width: 1200px) and (max-width: 1299px) {
             width: 40%;
         }
-        @media (min-width: 360px) and (max-width: 767px) {
+        @media (max-width: 767px) {
             width:100%;
         }
     }
