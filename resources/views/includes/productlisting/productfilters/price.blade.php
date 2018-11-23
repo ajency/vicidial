@@ -111,7 +111,7 @@
       });
     };
 
-   $(document).on('change', '.price-change', function() {
+   $('body').on('change', '.price-change', function() {
     console.log("price-change===")
       var from, to;
       from = $('#price-min').val();

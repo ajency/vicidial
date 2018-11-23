@@ -67,6 +67,7 @@ class FetchProductImages implements ShouldQueue
             $attributes = $prodImage;
             unset($attributes['image']);
             \Log::debug("upload image");
+            \Log::debug($prodImage);
             $image_id = $pc->uploadImage($filepath, false, true, true, '', '', "", $filepath, $extension, $imageName, $attributes);
             $type     = "";
             if (!in_array($prodImage["color_id"], $default_color_ids)) {

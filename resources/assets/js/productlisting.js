@@ -457,6 +457,16 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                      document.getElementById("filter-"+templateval+"-template-content").innerHTML = html;
                      if(vval.filter_type == "range_filter"){
                         initializeSlider(fromval,toval,minval,maxval)
+                        priceRangeSlider = $("#price-range").data("ionRangeSlider");
+                        initPriceBar = function(from, to) {
+                          console.log("initPriceBar=="+from+"==="+to)
+                          return priceRangeSlider.update({
+                            type: 'double',
+                            from: from,
+                            to: to,
+                            prefix: '<i class="fas fa-rupee-sign" aria-hidden="true"></i> '
+                          });
+                        };
                      }
                        
                    });
