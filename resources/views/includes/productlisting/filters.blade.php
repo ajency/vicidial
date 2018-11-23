@@ -16,7 +16,7 @@
       $sort_on = $filter["sort_on"];
       $sort_order = $filter["sort_order"];
       usort($items, function($a, $b) use ($sort_on,$sort_order){ 
-          if($sort_on == "asc")
+          if($sort_order == "asc")
             return $a[$sort_on] > $b[$sort_on] ? 1 : -1; 
           else
             return $a[$sort_on] > $b[$sort_on] ? -1 : 1; 
