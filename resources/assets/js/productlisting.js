@@ -370,6 +370,7 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
         console.log(filtercontext)
         var filterhtml    = filtertemplate(filtercontext);
         document.getElementById("filter-tags-template-content").innerHTML = filterhtml;
+        $("#filter_head_count").text(filter_tags_list.length)
         // }
         if(is_ajax == true) {
 

@@ -4,7 +4,7 @@
         <div class="d-flex">
           <div class="filter-head">
             <h4 class="mt-0">Filter</h4>
-            <p class="filter-head__caption">@{{filter_count}} Filters Applied</p>
+            <p class="filter-head__caption"><span id="filter_head_count">@{{filter_count}}</span> Filters Applied</p>
           </div>
           <div class="ml-auto"> <h3 id="kss_hide-filter" class="m-0 kss_highlight btn-pay"><span aria-hidden="true">&times;</span></h3></div>
         </div>
