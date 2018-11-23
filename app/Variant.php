@@ -209,9 +209,9 @@ class Variant extends Model
      *
      * @return double
      */
-    public function getSavings()
+    public function getDiscount()
     {
-        return $this->variant["variant_sale_price"] - $this->variant["variant_list_price"];
+        return $this->variant["variant_list_price"] - $this->variant["variant_sale_price"];
     }
 
     /**
@@ -328,11 +328,6 @@ class Variant extends Model
             }
         }
         return $quantity_arr;
-    }
-
-    public function getDiscount()
-    {
-        return $this->getLstPrice() - $this->getSalePrice();
     }
 
     public function getProductSlug()
