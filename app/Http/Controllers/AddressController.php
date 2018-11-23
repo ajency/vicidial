@@ -67,12 +67,11 @@ class AddressController extends Controller
         if(isset($params['cart_id'])) {
             $cart = Cart::find($params['cart_id']);
             validateCart($user, $cart, 'cart');
-        }
-
-        foreach ($cart->cart_data as $variant_id => $variant_details) {
-            $variant = Variant::find($variant_id);
-            if ($variant->getQuantity() < $variant_details['quantity']) {
-                abort(404, "Quantity not available");
+            foreach ($cart->cart_data as $variant_id => $variant_details) {
+                $variant = Variant::find($variant_id);
+                if ($variant->getQuantity() < $variant_details['quantity']) {
+                    abort(404, "Quantity not available");
+                }
             }
         }
 
