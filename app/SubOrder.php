@@ -28,6 +28,7 @@ class SubOrder extends Model
     {
         $itemsData = [];
         foreach ($items as $itemData) {
+            $variant = Variant::find($itemData['variant']->id);
             $itemsData[] = [
                 'id'            => $itemData['variant']->id,
                 'quantity'      => $itemData['quantity'],
