@@ -4,6 +4,7 @@ use App\Defaults;
 use App\Location;
 use App\User;
 use Carbon\Carbon;
+use App\Jobs\FetchProductImages;
 function valInteger($object, $values)
 {
     if (empty($object) || empty($values)) {
@@ -605,4 +606,8 @@ function sendSMS($event, $data = [], $override = false)
 
     \AjComm::sendNotification($notify);
 
+}
+
+function addProductImageToQueue($product_id){
+    FetchProductImages::dispatch($product_id)->onQueue('process_product_images');
 }
