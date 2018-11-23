@@ -1,0 +1,53 @@
+<div *ngIf="orders" class="col-sm-9 col-lg-10 d-none d-md-block">
+	<div class=" p-md-4 p-0">
+		<h4 class="font-weight-bold m-0">My Orders</h4>
+		<hr>
+		<div *ngFor="let order of orders">
+			<h6 class="font-weight-bold mt-4">Order No. {{order.order_info.txn_no}}</h6>
+			<h6 class="mb-3">Placed on {{order.order_info.order_date}}</h6>
+				<ul class="cd-cart-items list-unstyled">
+					<div *ngFor="let sub_order of order.sub_orders">
+						<li *ngFor="let item of sub_order.items"  class="p-md-3 p-2 mb-3 card shadow-sm ">
+							<div class="row primary-info">
+								<div class="col-md-7 col-xl-6">
+									<a class="text-black">
+										<div class="product-img">
+									           <div class="img"></div>
+									    </div>
+										<div class="product-detail ">
+											<div class="product-name text-truncate">
+												{{item.title}}
+											</div>
+											<div class="product-size text-muted mb-1">
+												<span>Size: {{item.size}}</span> <span>|</span> <span>Qty: {{item.quantity}}</span>
+											</div>
+											<div class="product-price">
+												<div class="retail-price">
+													<span class="rs-symbol"><i class="fas fa-rupee-sign sm-font"></i></span> <span class="price">{{item.price}}</span>
+												</div>
+											</div>
+										</div>
+									</a>
+								</div>
+								<!-- <div class="col-md-4 col-xl-6">
+									<div class="retail-price mt-2 mt-md-0">
+												<i class="fas fa-inbox mr-1 text-muted"></i><span class="text-success font-weight-bold">In Transit</span>
+												<span class="font-weight-bold">(Arriving 30 Aug)</span>
+									</div>
+									
+								</div> -->
+								<div class="dropdown">
+									<i class="cursor-pointer fas fa-ellipsis-v fa-2x text-light" id="card-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+									  <div class="dropdown-menu dropdown-menu-right shadow-lg" aria-labelledby="card-menu">
+									    <button class="dropdown-item" type="button">Track Item</button>
+									    <button class="dropdown-item cancel-trigger" type="button"  >Cancel Item</button>
+									    <button class="dropdown-item" type="button"> <a href="/kss/account/orders-details/" class="text-black">View Order Details</a></button>
+									  </div>
+								</div>
+							</div>
+						</li>
+					</div>
+				</ul>
+		</div>
+	</div>
+</div>
