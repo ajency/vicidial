@@ -49,7 +49,7 @@
                   <button type="button" class=" btn btn-lg btn-block btn-link text-dark mt-1 mb-1">Clear All</button>
                 </div> -->
                 <div class="col-12 text-center d-flex">
-                    <button type="button" id="kss_hide-filter" class="btn kss-btn kss-btn--big">Apply</button>
+                    <button type="button" id="kss_hide-filter" class="btn kss-btn kss-btn--big">Close</button>
                 </div>
             </div>
         </div>

@@ -63,10 +63,37 @@
         font-size: 0.9rem;
     }
 }
+.sticky-mob-filter{
+    position: fixed;
+    width: 100%;
+    background-color: #fff;
+    z-index: 1;
+    left: 100%;
+    top: 0;
+    padding: 15px 15px 10px 15px;
+    transition: all 0.5s ease;
+    .filter-head{
+        &__caption{
+            margin-bottom: 0;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+    }
+}
+.sticky-space{
+    display: none;
+}
 .kss_filter_mobile {
     left: 0px;
     .fixed-bottom {
         display: block;
+    }
+    .sticky-mob-filter{
+        left: 0;
+    }
+    .sticky-space{
+        display: block;
+        margin-top: 70px;
     }
 }
 .fixed-bottom {

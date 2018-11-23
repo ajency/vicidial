@@ -9,6 +9,11 @@ $(function(){
     $carousel.on( 'lazyLoad.flickity', function() {
         // Remove loader on Flickity init
         $(".loader").fadeOut(1000);
+        // Hide navigation if length equals 1
+        var flkty = new Flickity('.prod-slides');
+        if(flkty.slides.length == 1){
+            $('.flickity-button').hide();
+        }
     });
     $carousel.flickity({
       // options
@@ -67,7 +72,7 @@ $(document).ready(function() {
 
     // ------------------ Start Filter For Mobile ------------------//
     jQuery("#filter").click(function() {
-            jQuery(".kss_filter").addClass("kss_filter_mobile");
+        jQuery(".kss_filter").addClass("kss_filter_mobile");
     });
     jQuery(".clear-filter").click(function() {
             jQuery(".filter-selection").attr("style", "display: none !important");
@@ -75,6 +80,7 @@ $(document).ready(function() {
     jQuery(document).on('click', '#kss_hide-filter', function() {
         jQuery(".kss_filter").removeClass("kss_filter_mobile");
     });
+
     // ------------------ End Filter For Mobile ------------------//
 
 
