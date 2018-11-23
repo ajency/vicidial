@@ -13,7 +13,11 @@ class Order extends Model
 {
     use Payable;
 
-    protected $fillable = ['cart_id', 'address_id', 'expires_at'];
+    protected $casts = [
+        'address' => 'array',
+    ];
+
+    protected $fillable = ['cart_id', 'address_id', 'address', 'expires_at'];
 
     public function subOrders()
     {

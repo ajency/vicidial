@@ -14,8 +14,7 @@ class ChangeOrderAddressIdToAddress extends Migration
     public function up()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->json('address')->after('cart_id');
-            $table->dropColumn('address_id');
+            $table->json('address')->after('address_id');
         });
     }
 
@@ -28,7 +27,6 @@ class ChangeOrderAddressIdToAddress extends Migration
     {
         Schema::table('orders', function (Blueprint $table) {
             $table->dropColumn('address');
-            $table->integer('address_id')->after('cart_id');
         });
     }
 }
