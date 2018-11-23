@@ -17,7 +17,7 @@ $size: 20px;
             top: 0px;
             z-index: 1;
             height: 100%;
-            @media (min-width: 320px) and (max-width: 767.98px) {
+            @media (max-width: 767.98px) {
             display:none;
          }
         }
@@ -44,7 +44,7 @@ $size: 20px;
                 }
            }
          }
-         @media (min-width: 320px) and (max-width: 767.98px) {
+         @media (max-width: 767.98px) {
             display:none;
          }
         }
@@ -65,7 +65,7 @@ $size: 20px;
 .card {
   &.product-card{
     border: 0px;
-    @media (min-width: 320px) and (max-width: 767.98px) {
+    @media (max-width: 767.98px) {
         background:none;
     }
     .card-title {
@@ -104,7 +104,7 @@ $size: 20px;
   }
 
 }
-@media (min-width: 320px) and (max-width: 767.98px) {
+@media (max-width: 767.98px) {
     .kss_mobile-list {
         display: flex;
         overflow: scroll;

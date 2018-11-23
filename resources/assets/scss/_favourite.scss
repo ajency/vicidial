@@ -7,7 +7,7 @@
     // text-shadow: 0 0 2px $gray-600;
     cursor: pointer;
     display: block;
-    @media (min-width: 320px) and (max-width: 767.98px) {
+    @media (max-width: 767.98px) {
         font-size:25px;
     }
 }
@@ -52,7 +52,7 @@
     border: 1px solid #ccc;
     z-index: 99;
     color: #FFC107;
-    @media (min-width: 320px) and (max-width: 767.98px) {
+    @media (max-width: 767.98px) {
        right: 65px;
     }
 }

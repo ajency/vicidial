@@ -313,7 +313,27 @@ $(document).ready(function() {
             scrollTop: 0
         }, 300);
     })
+
+    // Input to accept numbers only
+
+    function validateNumber(event) {
+        var key = window.event ? event.keyCode : event.which;
+        if (event.keyCode === 8 || event.keyCode === 46) {
+            return true;
+        } else if ( key < 48 || key > 57 ) {
+            return false;
+        } else {
+            return true;
+        }
+    };
+
+    $(document).on('keypress', function(e) {
+        $('.validate-number').keypress(validateNumber);
+    });
+
 });
+
+
 
 $('.close').click(function() {
     $("body").removeClass("hide-scroll");
