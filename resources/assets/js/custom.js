@@ -611,8 +611,10 @@ $('#storeSlider').lightSlider({
     thumbItem:4,
     slideMargin:0,
     gallery:true,
+    galleryMargin: 20,
+    thumbMargin: 20,
     currentPagerPosition:'left',
     onSliderLoad: function() {
-        $('#storeSlider').removeClass('cS-hidden');
+        $('#storeSlider').removeClass('cs-hidden');
     }
 });

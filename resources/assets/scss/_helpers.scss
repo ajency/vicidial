@@ -439,8 +439,8 @@ footer .bl-1{
         color: $flash-info-color;
     }
     &--error{
-        background-color: $flash-error-bg;    
-        color: $flash-error-color;   
+        background-color: $flash-error-bg;
+        color: $flash-error-color;
     }
 }
 
@@ -472,4 +472,11 @@ footer .bl-1{
     &:hover{
         color: darken(theme-color("secondary"),20%);
     }
+}
+
+.cs-hidden {
+    height: 1px;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    overflow: hidden;
 }

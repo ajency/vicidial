@@ -26,7 +26,9 @@ Route::get('/about-us', 'StaticController@about');
 Route::get('/terms-and-conditions', 'StaticController@tc');
 Route::get('/privacy-policy', 'StaticController@privacy');
 Route::get('/stores', 'StaticController@stores');
-Route::get('/store-single', 'StaticController@singlestore');
+Route::get('/stores/surat', 'StaticController@singlestore');
+Route::get('/stores/hyderabad', 'StaticController@singlestore');
+Route::get('/stores/coimbatore', 'StaticController@singlestore');
 
 Route::get('/rest/v1/authenticate/login', 'UserController@verifyOTP');
 Route::get('/rest/v1/authenticate/generate_otp', 'UserController@sendSMS');

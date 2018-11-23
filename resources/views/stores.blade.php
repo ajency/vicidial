@@ -18,16 +18,16 @@
    <div class="row">
       <div class="col-12">
 
-         <h2 class="font-weight-bold my-5 text-center">Check Out Out Existing Stores In Below Localities</h2>
+         <h2 class="font-weight-bold my-5 text-center">Check Out Our Existing Stores In The Below Localities</h2>
 
          <div class="row justify-content-around">
             <div class="col-12 col-md-6">
                <div class="card shadow-sm mb-5">
                   <img class="card-img-top lazyload blur-up"
-                      src="{{CDN::asset('/img/stores/surat1-10px.jpg') }}"
-                      data-srcset="{{CDN::asset('/img/stores/surat1-large.jpg') }} 1280w,
-                                   {{CDN::asset('/img/stores/surat1-medium.jpg') }} 640w,
-                                   {{CDN::asset('/img/stores/surat1-small.jpg') }} 320w"
+                      src="{{CDN::asset('/img/stores/surat/surat8-10px.jpg') }}"
+                      data-srcset="{{CDN::asset('/img/stores/surat/surat8-large.jpg') }} 1200w,
+                                   {{CDN::asset('/img/stores/surat/surat8-medium.jpg') }} 770w,
+                                   {{CDN::asset('/img/stores/surat/surat8-small.jpg') }} 480w"
                       data-sizes='(min-width: 1200px) 568px, (min-width: 768px) 46vw,  94vw'
                       title="Adajan, Surat"
                       alt="Adajan, Surat"/>
@@ -38,7 +38,7 @@
                            <h6 class="font-weight-bold text-muted">Gujarat</h6>
                         </div>
                         <div class=" text-right">
-                           <a href="#" class="btn btn-outline-dark btn-lg">View Details</a>
+                           <a href="/stores/surat" class="btn btn-outline-dark btn-lg">View Details</a>
                         </div>
                      </div>
                   </div>
@@ -47,9 +47,10 @@
             <div class="col-12 col-md-6">
                <div class="card shadow-sm mb-5">
                   <img class="card-img-top lazyload blur-up"
-                      src="{{CDN::asset('/img/stores/coimbatore1-10px.jpg') }}"
-                      data-srcset="{{CDN::asset('/img/stores/coimbatore1-medium.jpg') }} 640w,
-                                   {{CDN::asset('/img/stores/coimbatore1-small.jpg') }} 320w"
+                      src="{{CDN::asset('/img/stores/coimbatore/coimbatore1-10px.jpg') }}"
+                      data-srcset="{{CDN::asset('/img/stores/coimbatore/coimbatore1-large.jpg') }} 1200w,
+                                   {{CDN::asset('/img/stores/coimbatore/coimbatore1-medium.jpg') }} 770w,
+                                   {{CDN::asset('/img/stores/coimbatore/coimbatore1-small.jpg') }} 480w"
                       data-sizes='(min-width: 1200px) 568px, (min-width: 768px) 46vw,  94vw'
                       title="R.S. Puram, Coimbatore"
                       alt="R.S. Puram, Coimbatore"/>
@@ -60,7 +61,7 @@
                            <h6 class="font-weight-bold text-muted">Tamil Nadu</h6>
                         </div>
                         <div class=" text-right">
-                           <a href="#" class="btn btn-outline-dark btn-lg">View Details</a>
+                           <a href="/stores/coimbatore" class="btn btn-outline-dark btn-lg">View Details</a>
                         </div>
                      </div>
                   </div>
@@ -69,10 +70,10 @@
             <div class="col-12 col-md-6">
                <div class="card shadow-sm mb-5">
                   <img class="card-img-top lazyload blur-up"
-                      src="{{CDN::asset('/img/stores/hyderabad1-10px.jpg') }}"
-                      data-srcset="{{CDN::asset('/img/stores/hyderabad1-large.jpg') }} 1275w,
-                                   {{CDN::asset('/img/stores/hyderabad1-medium.jpg') }} 637w,
-                                   {{CDN::asset('/img/stores/hyderabad1-small.jpg') }} 319w"
+                      src="{{CDN::asset('/img/stores/hyderabad/hyderabad3-10px.jpg') }}"
+                      data-srcset="{{CDN::asset('/img/stores/hyderabad/hyderabad3-large.jpg') }} 1200w,
+                                   {{CDN::asset('/img/stores/hyderabad/hyderabad3-medium.jpg') }} 770w,
+                                   {{CDN::asset('/img/stores/hyderabad/hyderabad3-small.jpg') }} 480w"
                       data-sizes='(min-width: 1200px) 568px, (min-width: 768px) 46vw,  94vw'
                       title="Kothapet, Hyderabad"
                       alt="Kothapet, Hyderabad"/>
@@ -83,7 +84,7 @@
                            <h6 class="font-weight-bold text-muted">Telangana</h6>
                         </div>
                         <div class=" text-right">
-                           <a href="#" class="btn btn-outline-dark btn-lg">View Details</a>
+                           <a href="/stores/hyderabad" class="btn btn-outline-dark btn-lg">View Details</a>
                         </div>
                      </div>
                   </div>
