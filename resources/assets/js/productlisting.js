@@ -75,6 +75,7 @@ $(document).ready(function(){
     collapsable_load_values[$("input[name='"+$(this).data("field")+"']").data("facet-name")] = true
   })
 
+
   $(document).on('click',".more-color",function(){
     $('.color-wrapper .card-body').toggleClass('is-open');
     $(this).text(function(i, v){
@@ -412,6 +413,7 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                       context["attribute_slug"] = vval.attribute_slug
                      }
                      context["template"] = templateval
+                     context["filter_count"] = filter_tags_list.length;
                      context["filter_type"] = (vval.filter_type != undefined)?vval.filter_type:"primary_filter";
                      context["display_count"] = (vval.display_count != undefined)?vval.display_count:false;
                      context["is_attribute_param"] = (vval.is_attribute_param != undefined)?vval.is_attribute_param:false;
