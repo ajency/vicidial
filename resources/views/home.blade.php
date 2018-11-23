@@ -272,7 +272,7 @@
   <div class="container mt-5">
       <div class="row">
           <div class="col-md-12 text-center">
-            <h2 class="font-weight-bold mb-4">Product of the Day</h2>
+            <h2 class="font-weight-bold mb-4">Trending Looks</h2>
           </div>
       </div>
   </div>
@@ -280,7 +280,7 @@
 <section id="kss-clothings" class="stripe-bg-top">
   <div class="container ">
     <div id="card-list" class="overflow-m row productGrid">
-      <div class="col">
+      <div class="col-lg-3 col-md-6 col-6">
         <div class="card h-100 product-card position-relative">
           <a href="/white-cotton-shirt-251-white/buy/">
             <div class="">
@@ -296,7 +296,7 @@
           <div class="kss-price kss-price--medium">₹699</div>
         </div>
       </div>
-      <div class="col">
+      <div class="col-lg-3 col-md-6 col-6">
         <div class="card h-100 product-card position-relative">
           <a href="/grey-circular-knit-graphic-girls-tshirt-1272-grey/buy/">
             <div class="">
@@ -312,7 +312,7 @@
           <div class="kss-price kss-price--medium">₹299</div>
         </div>
       </div>      
-      <div class="col">
+      <div class="col-lg-3 col-md-6 col-6">
         <div class="card h-100 product-card position-relative">
           <a href="/cotton-printed-girls-rompers-1061-white/buy/">
             <div class="">
@@ -328,7 +328,7 @@
           <div class="kss-price kss-price--medium">₹249</div>
         </div>
       </div>     
-      <div class="col">
+<!--       <div class="col">
         <div class="card h-100 product-card position-relative">
           <a href="/boys-navy-casual-printed-tshirt-73-navy/buy/">
             <div class="">
@@ -344,8 +344,8 @@
           </a>
           <div class="kss-price kss-price--medium">₹195</div>
         </div>
-      </div>
-      <div class="col">
+      </div> -->
+      <div class="col-lg-3 col-md-6 col-6">
         <div class="card h-100 product-card position-relative">
           <a href="/blue-cotton-rompers-1071-navy/buy/">
             <div class="">
@@ -371,7 +371,7 @@
     </div> -->
 
     <div id="card-list" class="overflow-m row productGrid mt-2">
-          <div class="col">
+          <div class="col-lg-3 col-md-6 col-6">
             <div class="card h-100 product-card position-relative position-relative">
               <a href="/a-line-marigold-embroidered-dress-982-turquoise/buy/">
                 <div class="">
@@ -388,7 +388,7 @@
               <div class="kss-price kss-price--medium">₹695</div>
             </div>
           </div>
-          <div class="col">
+<!--           <div class="col">
             <div class="card h-100 product-card position-relative position-relative">
               <a href="/denim-indigo-trouser-1329-dark-blue/buy/">
                 <div class="">
@@ -404,8 +404,8 @@
               </a>
               <div class="kss-price kss-price--medium">₹729</div>
             </div>
-          </div>  
-          <div class="col">
+          </div>  --> 
+          <div class="col-lg-3 col-md-6 col-6">
             <div class="card h-100 product-card position-relative position-relative">
               <a href="/grey-printed-graphic-t-shirt-1441-grey/buy/">
                 <div class="">
@@ -421,7 +421,7 @@
               <div class="kss-price kss-price--medium">₹395</div>
             </div>
           </div>
-          <div class="col">
+          <div class="col-lg-3 col-md-6 col-6">
             <div class="card h-100 product-card position-relative">
               <a href="/cotton-circular-knit-short-1217-turquoise/buy/">
                 <div class="">
@@ -438,7 +438,7 @@
               <div class="kss-price kss-price--medium">₹295</div>
             </div>
           </div>
-          <div class="col">
+          <div class="col-lg-3 col-md-6 col-6">
             <div class="card h-100 product-card position-relative">
               <a href="/chambray-hemla-dress-coral-972-coral/buy/">
                 <div class="">
@@ -465,7 +465,7 @@
 
     <div id="card-list" class="overflow-m row productGrid mt-2">
 
-        <div class="col">
+        <div class="col-lg-3 col-md-6 col-6">
           <div class="card h-100 product-card position-relative position-relative">
             <a href="/half-sleeves-navy-cotton-tshirt-1034-navy/buy/">
               <div class="">
@@ -483,7 +483,7 @@
           </div>
         </div>
 
-        <div class="col">
+<!--         <div class="col-lg-3 col-md-6 col-6">
           <div class="card h-100 product-card position-relative">
             <a href="/red-all-over-printed-dress-with-belt-171-red/buy/">
               <div class="">
@@ -499,9 +499,9 @@
             </a>
             <div class="kss-price kss-price--medium">₹1299</div>
           </div>
-        </div>
+        </div> -->
 
-        <div class="col">
+        <div class="col-lg-3 col-md-6 col-6">
           <div class="card h-100 product-card position-relative">
             <a href="/half-sleeves-cotton-shirt-256-blue/buy/">
               <div class="">
@@ -519,7 +519,7 @@
           </div>
         </div>
 
-        <div class="col">
+        <div class="col-lg-3 col-md-6 col-6">
           <div class="card h-100 product-card position-relative">
             <a href="/cobalt-casual-knit-short-1010-cobalt/buy/">
               <div class="">
@@ -536,7 +536,7 @@
             <div class="kss-price kss-price--medium">₹269</div>
           </div>
         </div>      
-        <div class="col">
+        <div class="col-lg-3 col-md-6 col-6">
           <div class="card h-100 product-card position-relative">
             <a href="/casual-indigo-shorts-210-dark-wash/buy/">
               <div class="">
@@ -783,28 +783,28 @@
 
 <section>
   <div class="container mt-5">
-      <div class="row">
+      <div class="row add-info-row">
           <div class="col-md-6 mb-3 mb-sm-0">
-             <div class=" d-flex align-items-center border-0 text-left p-4" style="background-color: #fbf5d5;">
-              <div class="w-50">
+             <div class=" d-flex align-items-center justify-content-between flex-column-reverse flex-sm-row border-0 text-left p-2 p-sm-4" style="background-color: #fbf5d5;">
+              <div class="text-center text-sm-left pr-0 pr-sm-3">
                 <h2 class="font-weight-bold mt-3">
-                  Visit us!
+                  Fresh and Latest
                 </h2>
-                <p class="text-muted mt-1">
-                  Visit any of our nearest stores to feel and try our amazing products and avail special store discounts.
+                <p class="text-muted mt-1 captions">
+                  We always find the latest clothing and accessories for kids.
                 </p>
               </div>
-              <div class="bg-gift ml-auto home-coupon store-locator"></div>
+              <div class="bg-gift ml-auto home-coupon latest-trend"></div>
             </div>
           </div>
           <div class="col-md-6">
-            <div class="d-flex align-items-center border-0 text-left p-4" style="background-color: #f2e6de;">
-              <div class="w-50">
+            <div class="d-flex align-items-center justify-content-between flex-column-reverse flex-sm-row border-0 text-left p-2 p-sm-4" style="background-color: #f2e6de;">
+              <div class="text-center text-sm-left pr-0 pr-sm-3">
                 <h2 class="font-weight-bold mt-3">
-                 Free shipping!
+                 Give your child something special
                 </h2>
-                <p class="text-muted mt-1">
-                  We provide free shipping on all our products. No minimum checkout value.
+                <p class="text-muted mt-1 captions">
+                  Shop from us for amazing deals all year around.
                 </p>
               </div>
               <div class="bg-gift ml-auto home-coupon shipping-img"></div>
@@ -813,5 +813,26 @@
       </div>
   </div>
 </section>
+
+<section>
+  <div class="container mt-5">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="store-banner postion-relative">
+            <img class="img-fluid"
+              src="{{CDN::asset('/img/store-banner.jpg') }}"
+              title="Store Banner"
+              alt="Store Banner"/>            
+            <div class="contentWrapper text-center">
+              <p class="store-banner__title mb-0">Want to see our clothes in real life?</p>
+              <span class="store-banner__caption">Just visit any one of stores near you!</span>
+              <a href="#" class="btn kss-btn kss-btn--small">Visit our store</a>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</section>
+
 
 @stop

@@ -98,9 +98,11 @@
     &.home-coupon{
         background-position: 0 0;
         background-size: contain;
+        width: 185px;
+        height: 154px;
     }
-    &.store-locator{
-        background-image: url('../img/store-location.png');
+    &.latest-trend{
+        background-image: url('../img/latest-trend.png');
     }
     &.shipping-img{
         background-image: url('../img/shipping.png');
@@ -348,5 +350,52 @@
         font-size: 1.5em;
         font-weight: 600;
         margin-top: 0.2em;
+    }
+}
+
+.add-info-row{
+    .captions{
+        font-size: 1.25em;
+    }
+    .bg-gift{
+        float: none;
+        margin: 0 auto;
+        @media (max-width: 767px){
+            width: 155px;
+        }
+    }
+}
+
+.store-banner{
+    .contentWrapper{
+        position: absolute;
+        top: 26%;
+        right: 50px;
+        color: #fff;
+        width: 400px;
+    }
+    &__title{
+        font-size: 2.5em;
+        font-weight: 600;
+        line-height: 1.3;
+    }
+    &__caption{
+        font-size: 1.6em;
+        display: inline-block;
+        margin: 20px 0;
+    }
+    @media (max-width: 767px){
+        .contentWrapper{
+            top: 0;
+            right: 0;
+            width: 100%;
+            padding: 0 20px;
+        }
+        &__title{
+            font-size: 1.8em;
+        }
+        &__caption{
+            font-size: 1.3em;   
+        }
     }
 }
