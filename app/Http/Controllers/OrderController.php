@@ -25,10 +25,10 @@ class OrderController extends Controller
         $cart->checkCartAvailability();
 
         $order = Order::create([
-            'cart_id'    => $cart->id,
-            'address_id' => $address->id,
-            'address'    => array_merge($address->address,["id"=>$address->id]),
-            'expires_at' => Carbon::now()->addMinutes(config('orders.expiry'))->timestamp,
+            'cart_id'       => $cart->id,
+            'address_id'    => $address->id,
+            'address_data'  => array_merge($address->address,["id"=>$address->id]),
+            'expires_at'    => Carbon::now()->addMinutes(config('orders.expiry'))->timestamp,
         ]);
 
         saveTxnid($order);
@@ -37,7 +37,7 @@ class OrderController extends Controller
         $cart->type = 'order';
         $cart->save();
 
-        $response = ["items" => getCartData($cart, false), "summary" => $order->aggregateSubOrderData(), "order_id" => $order->id, "address" => $order->address, "message" => 'Order Placed successfully'];
+        $response = ["items" => getCartData($cart, false), "summary" => $order->aggregateSubOrderData(), "order_id" => $order->id, "address" => $order->address_data, "message" => 'Order Placed successfully'];
 
         $user_info = $user->userInfo();
         if($user_info!=null) {
@@ -62,15 +62,15 @@ class OrderController extends Controller
         if(isset($params['address_id'])) {
             $address = Address::find($params["address_id"]);
             validateAddress($user, $address);
-            $order->address_id  = $address->id;
-            $order->address     = array_merge($address->address,["id"=>$address->id]);
+            $order->address_id      = $address->id;
+            $order->address_data    = array_merge($address->address,["id"=>$address->id]);
             $order->save();
         }
         else {
             $address = $order->address;
         }
 
-        $response = ["items" => getCartData($cart, false), "summary" => $order->aggregateSubOrderData(), "order_id" => $order->id, "address" => $order->address, "message" => 'Order Placed successfully'];
+        $response = ["items" => getCartData($cart, false), "summary" => $order->aggregateSubOrderData(), "order_id" => $order->id, "address" => $order->address_data, "message" => 'Order Placed successfully'];
 
         $user_info = $user->userInfo();
         if($user_info!=null) {
