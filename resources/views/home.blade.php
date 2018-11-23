@@ -823,10 +823,12 @@
               src="{{CDN::asset('/img/store-banner.jpg') }}"
               title="Store Banner"
               alt="Store Banner"/>            
-            <div class="contentWrapper text-center">
-              <p class="store-banner__title mb-0">Want to see our clothes in real life?</p>
-              <span class="store-banner__caption">Just visit any one of stores near you!</span>
-              <a href="#" class="btn kss-btn kss-btn--small">Visit our store</a>
+            <div class="contentWrapper text-center d-flex align-items-center">
+              <div>
+                <p class="store-banner__title mb-0">Want to see our clothes in real life?</p>
+                <span class="store-banner__caption">Just visit any one of stores near you!</span>
+                <a href="#" class="btn kss-btn kss-btn--small">Visit our store</a>
+              </div>
             </div>
           </div>
         </div>
