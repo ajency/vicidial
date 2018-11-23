@@ -95,7 +95,7 @@
    </div>
 </div>
 
-<div class="container-fluid py-4 mt-4 bg-brown" style="margin-bottom: -50px;">
+<!-- <div class="container-fluid py-4 mt-4 bg-brown" style="margin-bottom: -50px;">
    <img class="mx-auto d-block pt-4"
          src="{{CDN::asset('/img/store_location.png') }}"
          title="Store location marker"
@@ -110,6 +110,6 @@
 
       <button type="submit" class="btn btn-primary mb-3">Submit</button>
    </form>
-</div>
+</div> -->
 
 @stop

@@ -5,10 +5,10 @@
               <div class="mbr-footer-content col-12">
                 <p class="font-weight-bold"><strong>Online Shopping</strong></p>
                   <ul class="list-unstyled d-flex footer-link-separator">
-                    <li><a href="#" class="text-gray">Boys</a></li>
-                    <li><a href="#" class="text-gray">Girls</a></li>
-                    <li><a href="#" class="text-gray">Infants</a></li>
-                    <li><a href="#" class="text-gray">Accessories</a></li>
+                    <li><a href="/boys/" class="text-gray">Boys</a></li>
+                    <li><a href="/girls/" class="text-gray">Girls</a></li>
+                    <li><a href="/infant-0-2-years/" class="text-gray">Infants</a></li>
+                    <li><a href="/accessories/" class="text-gray">Accessories</a></li>
                   </ul>
               </div>
               <div class="mbr-footer-content col-12">

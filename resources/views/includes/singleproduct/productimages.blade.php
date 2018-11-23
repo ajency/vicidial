@@ -24,9 +24,9 @@
 					$image_thumb = $image_set->{'thumb'}->{'1x'};
 			@endphp
 				<li class="carousel-cell">
-					<a href="{{$image_zoom}}" class="custom-selector" title="{{$params['title']}}">
+					<!-- <a href="{{$image_zoom}}" class="custom-selector" title="{{$params['title']}}"> -->
 						<img data-flickity-lazyload-src="{{$image_thumb}}" class="carousel-image" data-flickity-lazyload-srcset="{{$image_1x}} 1x, {{$image_2x}} 2x, {{$image_3x}} 3x" alt="{{$params['title']}}" title="{{$params['title']}}">
-					</a>
+					<!-- </a> -->
 				</li>
 			@php
 			}
