@@ -233,11 +233,9 @@
 <!-- Order 1 -->
 @foreach( $sub_order['items'] as $item)
 @php
-  $image_1x = $image_2x = $image_3x = CDN::asset('/img/img-placeholder.png');
+  $image_1x = CDN::asset('/img/img-placeholder.png');
   if(count((array)$item['images'])>0){
     $image_1x = $item['images']->{'1x'};
-    $image_2x = $item['images']->{'2x'};
-    $image_3x = $item['images']->{'3x'};
   }
 @endphp
 
