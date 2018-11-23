@@ -155,6 +155,11 @@ export class CartComponent implements OnInit {
       this.zone.run(() => {});
     })
     .catch((error)=>{
+      if(add_to_cart_failed){
+        console.log("add_to_cart_failed", add_to_cart_failure_message);
+        add_to_cart_failed = false;
+        add_to_cart_failure_message = '';
+      }
       this.handleFetchCartFailure(error);
       this.appservice.removeLoader();
       this.zone.run(() => {});
