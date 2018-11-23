@@ -2,6 +2,7 @@
 use App\Facet;
 use App\ProductColor;
 use App\Variant;
+use App\Elastic\ElasticQuery;
 //Calculate Discount from price
 function calculate_discount($list_price, $sale_price){
 	$discount_amt = $list_price - $sale_price;
@@ -258,6 +259,9 @@ function setElasticFacetFilters($q, $params)
             }
         }
     }
+    if (isset($params['search_object']['search_string'])) {
+        $must[] = textSearch($q, $params['search_object']['search_string']);
+    }
     $must = $q::addToBoolQuery('must', $must);
     // $must = hideZeroColorIDProducts($q, $must);
     // $must = hideZeroSizeIDProducts($q, $must);
@@ -268,8 +272,16 @@ function setElasticFacetFilters($q, $params)
     if (isset($params['search_object']['boolean_filter']['variant_availability']) && $params['search_object']['boolean_filter']['variant_availability']) {
         $nested3[] = hideUnavailableProducts($q, $must);
     }
+
     $must = $q::addToBoolQuery('filter', $nested3, $must);
     return $must;
+}
+
+function textSearch(ElasticQuery $q, string $text)
+{
+    $match    = $q::createMatch("search_data.full_text", $text);
+    $nested  = $q::createNested("search_data", $match);
+    return $nested;
 }
 
 function priceFilter($q, $must, $min, $max)

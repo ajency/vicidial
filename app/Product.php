@@ -293,6 +293,7 @@ class Product
         $q->setQuery($must)
             ->setSource(["search_result_data", "variants"])
             ->setSize($size)->setFrom($offset);
+        // dd($q->getJSON());
         return formatItems($q->search(), $params);
     }
 
