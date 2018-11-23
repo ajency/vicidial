@@ -13,7 +13,11 @@ class Order extends Model
 {
     use Payable;
 
-    protected $fillable = ['cart_id', 'address_id', 'expires_at'];
+    protected $casts = [
+        'address_data' => 'array',
+    ];
+
+    protected $fillable = ['cart_id', 'address_id', 'address_data', 'expires_at'];
 
     public function subOrders()
     {
@@ -101,7 +105,7 @@ class Order extends Model
         $params = [
             "order_info"       => $this->getOrderInfo(),
             "sub_orders"       => $sub_orders,
-            "shipping_address" => $this->address->shippingAddress(),
+            "shipping_address" => $this->address_data,
             "order_summary"    => $this->aggregateSubOrderData(),
         ];
 
