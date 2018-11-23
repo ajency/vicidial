@@ -10,7 +10,7 @@
     ?>
     @foreach($filters_arr as $filter)
       <?php 
-      $file_name = 'includes.productlisting.productfilters.' . $filter["template"]; 
+      $file_name = ($filter["template"] != null)?'includes.productlisting.productfilters.' . $filter["template"]:''; 
       $items = $filter["items"];
       // dd($filter["sort_on"]);
       $sort_on = $filter["sort_on"];
@@ -34,9 +34,13 @@
         $filter_parameters["bucket_range"] = $filter["bucket_range"];
         $filter_parameters["selected_range"] = $filter["selected_range"];
       }
+      if($filter["template"] != null)
+      {
       ?>
-
       @include($file_name,$filter_parameters)
+      <?php
+      }
+      ?>
 
     @endforeach
       <div class="fixed-bottom d-none footer-filter">

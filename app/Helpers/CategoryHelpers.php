@@ -21,22 +21,42 @@ function build_search_object($params) {
 	            }
 			}
 			if($queryk == "bf"){
-				if (strpos($queryv, "variant_availability:") !== false) {
+				$queryval = explode("|",$queryv);
+				foreach($queryval as $queryvalv){
+					if (strpos($queryvalv, "variant_availability:") !== false) {
 
-					$ar = array_filter($facet_display_data, function ($item) {
-					        return $item['attribute_param'] === 'variant_availability';
-					    }
-					); 
-					$ar_keys_ar = array_keys($ar);
-	                $values = str_replace('variant_availability:', '', $queryv); 
-	                $values_arr = explode(",",$values);
-	                $bool_val=false;
-	                if(is_string($values_arr[0]))
-	                	$bool_val =($values_arr[0] == "true")?true:false;
-	                else
-	                	$bool_val =$values_arr[0];
-	                $dataArr["search_result"]["boolean_filter"][$ar_keys_ar[0]]=$bool_val;
-	            }
+						$ar = array_filter($facet_display_data, function ($item) {
+						        return $item['attribute_param'] === 'variant_availability';
+						    }
+						); 
+						$ar_keys_ar = array_keys($ar);
+		                $values = str_replace('variant_availability:', '', $queryvalv); 
+		                $values_arr = explode(",",$values);
+		                $bool_val=false;
+		                if(is_string($values_arr[0]))
+		                	$bool_val =($values_arr[0] == "true")?true:false;
+		                else
+		                	$bool_val =$values_arr[0];
+		                $dataArr["search_result"]["boolean_filter"][$ar_keys_ar[0]]=$bool_val;
+		            }
+		            else if (strpos($queryvalv, "product_image_available:") !== false) {
+
+						$ar = array_filter($facet_display_data, function ($item) {
+						        return $item['attribute_param'] === 'product_image_available';
+						    }
+						); 
+						$ar_keys_ar = array_keys($ar);
+		                $values = str_replace('product_image_available:', '', $queryvalv); 
+		                $values_arr = explode(",",$values);
+		                $bool_val=false;
+		                if(is_string($values_arr[0]))
+		                	$bool_val =($values_arr[0] == "true")?true:false;
+		                else
+		                	$bool_val =$values_arr[0];
+		                $dataArr["search_result"]["boolean_filter"][$ar_keys_ar[0]]=$bool_val;
+		            }
+				}
+				
 			}
 			if($queryk == "rf"){
 				if (strpos($queryv, "price:") !== false) {
