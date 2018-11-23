@@ -261,7 +261,10 @@ function setElasticFacetFilters($q, $params)
     $must = $q::addToBoolQuery('must', $must);
     // $must = hideZeroColorIDProducts($q, $must);
     // $must = hideZeroSizeIDProducts($q, $must);
-    $nested3[] = filterActiveProducts($q, $must);
+    $must = filterActiveProducts($q, $must);
+    if (isset($params['search_object']['boolean_filter']['product_image_available']) && $params['search_object']['boolean_filter']['product_image_available']) {
+        $must = hideProductWithoutImages($q, $must);
+    }
     if (isset($params['search_object']['boolean_filter']['variant_availability']) && $params['search_object']['boolean_filter']['variant_availability']) {
         $nested3[] = hideUnavailableProducts($q, $must);
     }
@@ -359,7 +362,7 @@ function hideZeroSizeIDProducts($q, $must)
 function hideProductWithoutImages($q, $must)
 {
     $nested     = [];
-    $facetName  = $q::createTerm("search_data.boolean_facet.facet_name", "variant_image_available");
+    $facetName  = $q::createTerm("search_data.boolean_facet.facet_name", "product_image_available");
     $facetValue = $q::createTerm("search_data.boolean_facet.facet_value", true);
     $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
     $nested[]   = $q::createNested('search_data.boolean_facet', $filter);
