@@ -12,13 +12,13 @@
           </div>
           <div class="row">
             <div class="col-5 col-sm-5">
-              <input class="form-control form-control-lg text-muted price-change validate-number" value="@{{fromval}}" id="price-min" type="text" placeholder="Min">
+              <input class="form-control form-control-lg text-muted price-change validate-number" value="@{{fromval}}" id="price-min" type="number" placeholder="Min">
             </div>
             <div class="col-2 col-sm-2 text-center">
               <h6 class="align-self-center mt-4">to</h6>
             </div>
             <div class="col-5 col-sm-5">
-              <input class="form-control form-control-lg text-muted price-change validate-number" value="@{{toval}}" id="price-max" type="text" placeholder="Max">
+              <input class="form-control form-control-lg text-muted price-change validate-number" value="@{{toval}}" id="price-max" type="number" placeholder="Max">
             </div>
           </div> 
         </div>
