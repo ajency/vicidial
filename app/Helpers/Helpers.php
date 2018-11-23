@@ -1,6 +1,7 @@
 <?php
 
 use App\Defaults;
+use App\Jobs\FetchProductImages;
 use App\Location;
 use App\User;
 use Carbon\Carbon;
@@ -631,4 +632,8 @@ function checkOrderInventory($order, $abort = true)
     foreach ($order->subOrders as $subOrder) {
         return $subOrder->checkInventory($abort);
     }
+}
+function addProductImageToQueue($product_id)
+{
+    FetchProductImages::dispatch($product_id)->onQueue('process_product_images');
 }

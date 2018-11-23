@@ -34,8 +34,11 @@ class FetchProductImages implements ShouldQueue
     public function handle()
     {
         $prod_images = Product::fetchProductImages($this->productId);
-        \Log::debug("product images");
-        \Log::debug($prod_images);
+        \Log::debug("debugging for processing images from odoo");
+        \Log::debug("count of images from odoo for product id");
+        \Log::debug($this->productId);
+        \Log::debug("=");
+        \Log::debug(count($prod_images));
 
         if($prod_images->count() == 0) {
             ProductColor::where('product_id', $this->productId)->update(['no_image'=>true]);
@@ -51,6 +54,7 @@ class FetchProductImages implements ShouldQueue
         $prod_images_arr   = json_decode($prod_images, true);
         $colors            = array_column($prod_images_arr, "color_name");
         $default_color_ids = [];
+        $db_image_ids=[];
         foreach ($prod_images as $pIndex => $prodImage) {
             $pc            = ProductColor::where([['product_id', $this->productId], ['color_id', $prodImage["color_id"]]])->first();
             $image         = $prodImage['image'];
@@ -74,10 +78,15 @@ class FetchProductImages implements ShouldQueue
                 $type = "default";
                 array_push($default_color_ids, $prodImage["color_id"]);
             }
+            array_push($db_image_ids, $image_id);
             $pc->mapImage($image_id, $type);
             // \Storage::disk('local')->delete($subfilepath);
         }
         Product::updateImageFacets($this->productId);
+        \Log::debug("count of images after processing to DB for product id");
+        \Log::debug($this->productId);
+        \Log::debug("=");
+        \Log::debug($db_image_ids);
         
     }
 }
