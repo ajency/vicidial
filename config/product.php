@@ -295,5 +295,15 @@ return [
     "list_page_display_limit"        => 30,
     "similar_products_display_limit" => 5,
     "price_filter_bucket_range"      => ["min" => 0, "max" => 2000],
+    "sort"                           => [
+        'price_asc'  => ['field' => 'number_sort.variant_sale_price', "order" => 'asc'],
+        'price_desc' => ['field' => 'number_sort.variant_sale_price', "order" => 'desc'],
+    ],
+    "sort_on"                        => [
+
+        ["name" => "Price Low to High", "value" => "price_asc", "is_selected" => false],
+        ["name" => "Price High to Low", "value" => "price_desc", "is_selected" => false],
+
+    ],
 
 ];

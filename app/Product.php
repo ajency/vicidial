@@ -296,6 +296,10 @@ class Product
         $q->setQuery($must)
             ->setSource(["search_result_data", "variants"])
             ->setSize($size)->setFrom($offset);
+        if (isset($params['sort_on'])) {
+            $sort = config('product.sort.' . $params['sort_on']);
+            $q->setSort([$sort['field'] => ['order' => $sort['order']]]);
+        }
         return formatItems($q->search(), $params);
     }
 
@@ -331,8 +335,10 @@ class Product
 
         $filter_params["display_limit"] = $params["display_limit"];
         $filter_params["page"]          = $params["page"];
-        if(isset($params["sort_on"]))
-            $filter_params["sort_on"]          = $params["sort_on"];
+        if (isset($params["sort_on"])) {
+            $filter_params["sort_on"] = $params["sort_on"];
+        }
+
         // print_r($filter_params);
         // dd($filter_params,$params);
 
@@ -376,9 +382,17 @@ class Product
         $output["items"]         = $results["items"];
         $output["results_found"] = $results["results_found"];
         $output["headers"]       = ["page_title" => $title, "product_count" => $results["page"]["total_item_count"]];
-        $output["sort_on"]       = [["name" => "Latest Products", "value" => "latest", "is_selected" => false], ["name" => "Popularity", "value" => "popular", "is_selected" => true], ["name" => "Price Low to High", "value" => "price_asc", "is_selected" => false], ["name" => "Price High to Low", "value" => "price_dsc", "is_selected" => false], ["name" => "Discount Low to High", "value" => "discount_asc", "is_selected" => false], ["name" => "Discount High to Low", "value" => "discount_dsc", "is_selected" => false]];
-        $output["breadcrumbs"]   = $bread['breadcrumb'];
-        $output["search"]        = ["params" => ["genders" => ["men"], "l1_categories" => ["clothing"]], "pattern" => [["key" => "genders", "slugs" => ["men"]], ["key" => "l1_categories", "slugs" => ["clothing"]]], "is_valid" => true, "domain" => "https=>//newsite.stage.kidsuperstore.in", "type" => "product-list", "query" => ["page" => ["2"], "page_size" => ["20"]]];
+        $output["sort_on"]       = config("product.sort_on");
+        if (isset($params['sort_on'])) {
+            foreach ($output["sort_on"] as &$value) {
+                if ($value['value'] == $params['sort_on']) {
+                    $value['is_selected'] = true;
+                }
+            }
+        }
+        // dd($output['sort_on']);
+        $output["breadcrumbs"] = $bread['breadcrumb'];
+        $output["search"]      = ["params" => ["genders" => ["men"], "l1_categories" => ["clothing"]], "pattern" => [["key" => "genders", "slugs" => ["men"]], ["key" => "l1_categories", "slugs" => ["clothing"]]], "is_valid" => true, "domain" => "https=>//newsite.stage.kidsuperstore.in", "type" => "product-list", "query" => ["page" => ["2"], "page_size" => ["20"]]];
         // dd($output);
         return $output;
     }
