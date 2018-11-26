@@ -125,12 +125,23 @@ class OrderController extends Controller
     public function listOrders(Request $request){
         // dd($_SESSION);
         $data = $request->all();
-        $data["search_object"] = (isset($data["search_object"]))?$data["search_object"]:[];
-        $data["sort_on"] = (isset($data["sort_on"]))?$data["sort_on"]:"date";
-        $data["sort_by"] = (isset($data["sort_by"]))?$data["sort_by"]:"DESC";
-        $data["display_limit"] = (isset($data["display_limit"]))?$data["display_limit"]:10;
-        $data["page"] = (isset($data["page"]))?$data["page"]:1;
-        return response()->json(["message" => 'Items are available in store', 'success'=> true]);
+        $search_object = (isset($data["search_object"]))?$data["search_object"]:[];
+        $sort_on = (isset($data["sort_on"]))?$data["sort_on"]:"created_at";
+        $sort_by = (isset($data["sort_by"]))?$data["sort_by"]:"desc";
+        $length = (isset($data["display_limit"]))?$data["display_limit"]:10;
+        $page = (isset($data["page"]))?$data["page"]:1;
+        $start=($page==1)?($page-1):((($page-1)*$length));
+        
+        $user   = User::getUserByToken($request->header('Authorization'));
+        $orders = Order::join('carts', 'carts.id', '=', 'orders.cart_id')->where('carts.user_id',$user->id)->orderBy("orders.".$sort_on,$sort_by)->skip($start)->take($length)->get();
+        $order_details=[];
+        foreach($orders as $order){
+            array_push($order_details,  $order->getOrderDetails());
+
+        }
+        // dd($order_details);
+        
+        return response()->json(["message" => 'Order items received successfully', 'success'=> true,'data'=>$order_details]);
     }
 
 }
