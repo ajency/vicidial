@@ -25,9 +25,9 @@
 				@php
 				$image_1x = $image_2x = $image_3x = CDN::asset('/img/placeholder.svg');
 		    	if(count((array)$item['images'])>0){
-		    		$image_1x = $item['images']->{'1x'};
-		    		$image_2x = $item['images']->{'2x'};
-		    		$image_3x = $item['images']->{'3x'};
+		    		$image_1x = $item['images']['1x'];
+		    		$image_2x = $item['images']['2x'];
+		    		$image_3x = $item['images']['3x'];
 		    	}
 		    	@endphp
 				<a href="/{{$item['product_slug']}}/buy?size={{$item['size']}}" class="text-black">
