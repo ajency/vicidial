@@ -3,7 +3,7 @@
 return [
     'email' => [
         'from' => [
-            'id'   => 'website@kidsuperstore.in',
+            'id'   => 'order-update@kidsuperstore.in',
             'name' => 'Kid Super Store',
         ],
         
