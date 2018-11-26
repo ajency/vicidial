@@ -35,4 +35,8 @@ Route::middleware('auth:api')->get('/rest/v1/user/cart/start-fresh', 'CartContro
 Route::middleware('auth:api')->post('/rest/v1/user/save-user-details', 'UserController@saveUserDetails');
 
 Route::middleware('auth:api')->get('/rest/v1/user/order/{id}/check-inventory', 'OrderController@checkSubOrderInventory');
-// Route::get('/rest/v1/product-with-missing-images', 'ProductController@productMissingImages');
+
+Route::get('/rest/v1/product-with-missing-images', 'ProductController@productMissingImages');
+
+Route::middleware('auth:api')->post('/rest/v1/user/orders', 'OrderController@listOrders');
+

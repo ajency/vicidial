@@ -122,5 +122,16 @@ class OrderController extends Controller
         return view('orderdetails')->with('params', $params);
     }
 
+    public function listOrders(Request $request){
+        // dd($_SESSION);
+        $data = $request->all();
+        $data["search_object"] = (isset($data["search_object"]))?$data["search_object"]:[];
+        $data["sort_on"] = (isset($data["sort_on"]))?$data["sort_on"]:"date";
+        $data["sort_by"] = (isset($data["sort_by"]))?$data["sort_by"]:"DESC";
+        $data["display_limit"] = (isset($data["display_limit"]))?$data["display_limit"]:10;
+        $data["page"] = (isset($data["page"]))?$data["page"]:1;
+        return response()->json(["message" => 'Items are available in store', 'success'=> true]);
+    }
+
 }
 
