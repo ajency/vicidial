@@ -18,6 +18,7 @@ export class AppComponent {
 		this.location.onPopState((event)=>{
 			console.log("location.onPopState triggered");
 			this.appservice.closeWidget();
+			window.location.reload();
 		})
 	}
 }

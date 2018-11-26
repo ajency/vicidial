@@ -16,10 +16,12 @@ $(document).ready(function(){
         console.log("opening cart from vanilla js");
         openCart();
      }
+     if(window.location.href.endsWith('#/my-orders'))
+        openMyAccountPage();
     }
 
     if(window.location.href.endsWith('#/my-orders'))
-        loadMyAccountApp();
+        openMyAccountPage();
 
     var kss_alert_timeout;
 
