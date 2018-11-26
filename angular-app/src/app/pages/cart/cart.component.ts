@@ -318,23 +318,28 @@ export class CartComponent implements OnInit {
     $('body').addClass('hide-scroll');
   }
 
-  next(event: KeyboardEvent,el1,el2) {
-    if(event.which > 47 && event.which < 58){
+  next(event: KeyboardEvent,el1,el2,value) {
+    console.log(value);
+    if(event.which > 47 && event.which < 58 && value){
       el2.focus();
       console.log('next funtion call el2');
     }
-    else if(event.which == 8){
-      el1.focus();
-      console.log('next funtion call el1');
-    }
+    // else if(event.which == 8){
+    //   el1.focus();
+    //   console.log('next funtion call el1');
+    // }
     if (event.keyCode === 13) {
       console.log('enter keycode');
       $('.is-enter').click();
     }
   }
 
-  prev(event: KeyboardEvent,el1,el2) {
-     if(event.key=="Backspace"){
+  prev(event: KeyboardEvent,el1,el2, value) {
+    if(event.which > 47 && event.which < 58 && value){
+      el2.focus();
+      console.log('next funtion call el2');
+    }
+    if(event.key=="Backspace"){
        el1.focus();
        console.log('prev funtion call el1');
      }
