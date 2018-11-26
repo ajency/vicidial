@@ -37,7 +37,7 @@ export class MyOrdersComponent implements OnInit {
     // };
 
     this.apiservice.request(url, 'get', {} , {} ).then((response)=>{
-    	this.orders = response.data;
+    	this.orders = this.formattedCartDataForUI(response.data);
     	console.log("orders ==>", this.orders);
       this.appservice.removeLoader();
     })
@@ -45,6 +45,20 @@ export class MyOrdersComponent implements OnInit {
       console.log("error ===>", error);
       this.appservice.removeLoader();
     }) 
+  }
+
+  formattedCartDataForUI(data){
+    data.forEach((order)=>{
+      order.sub_orders.forEach((sub_order)=>{
+        sub_order.items.forEach((item)=>{
+          if(item.price_mrp != item.price_final)
+            item.off_percentage = Math.round(((item.price_mrp - item.price_final) / (item.price_mrp )) * 100) + '% OFF';
+          item.href = '/' + item.product_slug +'/buy?size='+item.size;
+          item.images = Array.isArray(item.images) ? ['/img/placeholder.svg', '/img/placeholder.svg', '/img/placeholder.svg'] : Object.values(item.images);
+        })
+      })
+    })
+    return data;
   }
 
 }

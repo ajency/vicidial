@@ -12,12 +12,16 @@
 								<div class="col-12">
 									<a class="text-black d-flex">
 										<div class="product-img">
-									           <div class="img"></div>
+									           <a href="{{item.href}}" [ngClass]="{'variant-placeholder' : item.images[0]=='/img/placeholder.svg'}">
+													<img src="{{item.images[0]}}" class="lazyload img-fit" data-srcset="{{item.images[0]}} 50w, {{item.images[1]}} 100w, {{item.images[2]}} 150w" sizes="50px">
+												</a>
 									    </div>
 										<div class="product-detail ">
-											<div class="product-name text-truncate">
-												{{item.title}}
-											</div>
+											<a href="{{item.href}}">
+												<div class="product-name text-truncate">
+													{{item.title}}
+												</div>
+											</a>
 											<div class="product-size text-muted mb-1">
 												<span>Size: {{item.size}}</span> <span>|</span> <span>Qty: {{item.quantity}}</span>
 											</div>
