@@ -154,7 +154,7 @@ $(document).ready(function () {
                 //     addToCart();
                 // }
                 document.cookie = "cart_id=" + data.cart_id + ";path=/";
-                if (data.cart_type == 'cart') startFresh(request);else showErrorPopup(request);
+                if (data.cart_type == 'order') startFresh(request);else showErrorPopup(request);
             },
             error: function error(request, status, _error2) {
                 showErrorPopup(request);

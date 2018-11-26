@@ -163,7 +163,7 @@ $(document).ready(function(){
                 //     addToCart();
                 // }
                 document.cookie = "cart_id=" + data.cart_id + ";path=/";
-                if(data.cart_type == 'cart')
+                if(data.cart_type == 'order')
                     startFresh(request)                    
                 else
                     showErrorPopup(request)                
