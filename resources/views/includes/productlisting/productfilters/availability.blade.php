@@ -1,22 +1,22 @@
 <script id="filter-availability-template" type="text/x-handlebars-template">
-  <div class="kss_filter-list">
-      <div id="headingTwo">
+  <div class="kss_filter-list" data-filter="availability">
+      <div class="filter-heading">
         <label class=" w-100 mb-0 pb-3 cursor-pointer @{{#if collapsed}} collapsed @{{/if}}" data-toggle="collapse" data-target="#collapseAvailability" aria-expanded="false" aria-controls="collapseAvailability">
          @{{filter_display_name}} <i class="fas fa-angle-up float-right"></i>
         </label>
       </div>
-      <div id="collapseAvailability" class="collapse@{{#if collapsed}}@{{else}} show @{{/if}}" aria-labelledby="headingTwo" data-field="availability">
+      <div id="collapseAvailability" class="collapse@{{#if collapsed}}@{{else}} show @{{/if}}" data-field="availability">
         <div class="card-body pt-2">
           @{{#each items}}
           <div class="custom-control custom-checkbox" data-val="@{{display_count_val}}" >
             @{{> checkboxTemplate template=../template facet_value=facet_value is_selected=is_selected filter_facet_name=../filter_facet_name slug=slug disabled_at_zero_count=../disabled_at_zero_count count=count collapsed=../collapsed changeEvent="facetCategoryChange(this,true,false,true);" attribute_slug=attribute_slug display_name=display_name }}
-            <label class="custom-control-label f-w-4" for="@{{display_name}}">@{{display_name}} 
+            <label class="custom-control-label f-w-4" for="@{{display_name}}">@{{display_name}}
             @{{#if ../display_count }}
             <span class="sub-text">(@{{count}})</span>
             @{{/if}}
             </label>
-          </div> 
-          @{{/each}}    
+          </div>
+          @{{/each}}
         </div>
       </div>
     </div>
