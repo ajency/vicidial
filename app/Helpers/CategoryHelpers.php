@@ -78,7 +78,7 @@ function build_search_object($params) {
 	}
 	
 	// dd($all_facets);
-	$facets_count = Facet::select('facet_value',DB::raw('count(id) as "count",group_concat(facet_name) as "names"'))->whereIn('slug', $all_facets)->groupBy('facet_value')->get();
+	$facets_count = Facet::select('facet_value',DB::raw('count(id) as "count",facet_name'))->whereIn('slug', $all_facets)->groupBy('facet_value','facet_name')->get();
 	// dd(array_column($facets_count, 'count', 'facet_value'));
 	// $facets_count_link = array_column($facets_count, 'count', 'facet_value');
 	$facets_count_link = [];
@@ -86,14 +86,11 @@ function build_search_object($params) {
 	
 	$facet_display_data_keys = array_keys($facet_display_data);
 	foreach($facets_count as $focuntv){
-		$focuntv_names = explode(",",$focuntv->names);
-		$f_arr = [];
-		foreach($focuntv_names as $fcname){
-			$fval = array_search($fcname,$facet_display_data_keys);
-			array_push($f_arr, $fval);
-		}
-
-		$facets_count_link[$focuntv->facet_value] = $facet_display_data_keys[$f_arr[0]];
+		$fval = array_search($focuntv->facet_name,$facet_display_data_keys);
+		if(!isset($facets_count_link[$focuntv->facet_value]))
+			$facets_count_link[$focuntv->facet_value] = [$facet_display_data_keys[$fval]];
+		else
+			array_push($facets_count_link[$focuntv->facet_value] , $facet_display_data_keys[$fval]);
 	}
 	
 	// dd($facets_count_link);
@@ -105,7 +102,7 @@ function build_search_object($params) {
 	foreach($facets as $facet){
 		$fvalues = explode(",", $facet->values);
 		foreach($fvalues as $fvaluesv){
-			if($facets_count_link[$fvaluesv] != $facet->facet_name ){
+			if(!in_array($facet->facet_name, $facets_count_link[$fvaluesv])){
 				$ind = array_search($fvaluesv, $fvalues);
 				unset($fvalues[$ind]);
 			}
