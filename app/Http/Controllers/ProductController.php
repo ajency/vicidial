@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\ProductColor;
 use App\Product;
 use App\Facet;
+use App\Variant;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -85,5 +86,21 @@ class ProductController extends Controller
         }
         return \Redirect::to(url($imageurl), 301);
 
+    }
+
+
+    public function productMissingImages(){
+        $variants = Variant::leftJoin('fileupload_mapping', function ($join) {
+           $join->on('variants.product_color_id', '=', 'fileupload_mapping.object_id');
+           $join->where('fileupload_mapping.object_type', '=', "App\ProductColor");
+        })->where('fileupload_mapping.id', null)->get();
+
+        $odoo_ids=[];
+        foreach ($variants as $variant) {
+          if($variant->getAvailability()) {
+           array_push($odoo_ids,$variant->odoo_id);
+          }
+        }
+        return response()->json($odoo_ids,200);
     }
 }
