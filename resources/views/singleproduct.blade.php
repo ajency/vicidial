@@ -68,9 +68,14 @@
 								</button>
 							</div> -->
 							<!-- <div class="col-6 col-sm-6 col-md-6 col-xl-6 pl-1"> -->
+								@if ($params['show_button']) 
 								<button id="cd-add-to-cart" class="btn kss-btn kss-btn--big cd-add-to-cart" disabled>
 									<div class="kss-btn__wrapper d-flex align-items-center justify-content-center">SELECT SIZE</div>
 								</button>
+								@else
+								    <div class="h3" style="color:red">Out of Stock!</div>
+								@endif
+								
 							<!-- </div> -->
 						<!-- </div> -->
 					</div>
