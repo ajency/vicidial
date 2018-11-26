@@ -33,3 +33,5 @@ Route::middleware('auth:api')->get('/rest/v1/user/cart/mine', 'CartController@ge
 Route::middleware('auth:api')->get('/rest/v1/user/cart/start-fresh', 'CartController@startFresh');
 
 Route::middleware('auth:api')->post('/rest/v1/user/save-user-details', 'UserController@saveUserDetails');
+
+Route::get('/rest/v1/product-with-missing-images', 'ProductController@productMissingImages');
