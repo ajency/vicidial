@@ -163,10 +163,10 @@ $(document).ready(function(){
                 //     addToCart();
                 // }
                 document.cookie = "cart_id=" + data.cart_id + ";path=/";
-                if(data.cart_type == 'order')
-                    startFresh(request)                    
+                if(data.cart_type == 'cart')
+                    addToCart(); 
                 else
-                    showErrorPopup(request)                
+                    startFresh(request)                    
             },
             error: function (request, status, error) {
                 showErrorPopup(request)
