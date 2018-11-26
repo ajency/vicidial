@@ -339,7 +339,6 @@ function loadMyAccountApp(){
                             $.getScript("/views/my-account/main.bundle.js")
                                 .done(function(script4,textStatus4){
                                     console.log(textStatus4);
-                                    loaded = true;
                                 })
                                 .fail(function(jqxhr, settings, exception){
                                     console.log("angular load failed")
