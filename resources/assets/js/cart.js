@@ -18,6 +18,9 @@ $(document).ready(function(){
      }
     }
 
+    if(window.location.href.endsWith('#/my-orders'))
+        loadMyAccountApp();
+
     var kss_alert_timeout;
 
     function setTimeoutVariable() {
