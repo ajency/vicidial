@@ -147,12 +147,36 @@ $(document).ready(function () {
             data: {},
             dataType: 'JSON',
             success: function success(data) {
-                if (data.cart_id == getCookie('cart_id')) showErrorPopup(request);else {
-                    document.cookie = "cart_id=" + data.cart_id + ";path=/";
-                    addToCart();
-                }
+                // if(data.cart_id == getCookie('cart_id'))
+                //     showErrorPopup(request)
+                // else{
+                //     document.cookie = "cart_id=" + data.cart_id + ";path=/";
+                //     addToCart();
+                // }
+                document.cookie = "cart_id=" + data.cart_id + ";path=/";
+                if (data.cart_type == 'cart') addToCart();else startFresh(request);
             },
             error: function error(request, status, _error2) {
+                showErrorPopup(request);
+            }
+        });
+    }
+
+    function startFresh(request) {
+        var url = '/api/rest/v1/user/cart/start-fresh';
+        $.ajax({
+            url: url,
+            type: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + getCookie('token')
+            },
+            data: {},
+            dataType: 'JSON',
+            success: function success(data) {
+                document.cookie = "cart_id=" + data.cart_id + ";path=/";
+                addToCart();
+            },
+            error: function error(request, status, _error3) {
                 showErrorPopup(request);
             }
         });

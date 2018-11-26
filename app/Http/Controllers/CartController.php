@@ -165,7 +165,8 @@ class CartController extends Controller
     public function getCartID(Request $request)
     {
         $user = User::getUserByToken($request->header('Authorization'));
-        return response()->json(["cart_id" => $user->cart_id]);
+        $cart = Cart::find($user->cart_id);
+        return response()->json(["cart_id" => $user->cart_id, "cart_type" => $cart->type]);
     }
 
     public function checkStatus(Request $request)
