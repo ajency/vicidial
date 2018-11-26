@@ -72,8 +72,8 @@ $L : 1200px;
     width: 400px;
   }
 
-@media (min-width: 360px) and (max-width: 767.98px) {
-    width: 100%;
+@media (max-width: 767.98px) {
+    width: 100% !important;
     padding-bottom: 68px;
   }
 @media (min-width: 992px) and (min-width: 1199.98px) {
@@ -106,7 +106,7 @@ $L : 1200px;
     }
     .cd-cart-items {
         padding: 0;
-        @media (min-width: 360px) and (max-width: 767.98px) {
+        @media (max-width: 767.98px) {
             .secondary-info {
                 margin-top:20px !important;
             }
@@ -116,7 +116,7 @@ $L : 1200px;
             padding: 1em;
             border-bottom: 1px solid $gray-300;
             list-style: none;
-            @media (min-width: 360px) and (max-width: 767.98px) {
+            @media (max-width: 767.98px) {
                 padding: 2em 1em;
             }
             &:last-child {
@@ -178,7 +178,7 @@ $L : 1200px;
     &.is-visible {
         display: block; // @include animation(cd-fade-in .3s);
     }
-    @media (min-width: 360px) and (max-width: 767.98px) {
+    @media (max-width: 767.98px) {
         display: none !important;
     }
 }
@@ -249,7 +249,7 @@ $L : 1200px;
             // overflow: hidden;
             // text-overflow: ellipsis;
             // white-space: nowrap;
-            @media (min-width: 360px) and (max-width: 767.98px) {
+            @media (max-width: 767.98px) {
                 font-size:14px;
             }
         }
@@ -268,7 +268,7 @@ $L : 1200px;
     input {
         background: none;
         border: 0px;
-        @media (min-width: 360px) and (max-width: 767.98px) {
+        @media (max-width: 767.98px) {
             width:65%;
             display: inline-block;
         }
@@ -352,7 +352,7 @@ $L : 1200px;
         @media (min-width: 1200px) and (max-width: 1299px) {
             width: 40%;
         }
-        @media (min-width: 360px) and (max-width: 767px) {
+        @media (max-width: 767px) {
             width:100%;
         }
     }
@@ -365,7 +365,7 @@ body #cd-cart .modal.show .modal-dialog {
 }
 #cd-cart .modal, #cd-cart .modal-backdrop {
     position: absolute !important;
-    @media (min-width: 360px) and (max-width: 767.98px) {
+    @media (max-width: 767.98px) {
         position: fixed !important;
     }
 }
@@ -373,7 +373,7 @@ body #cd-cart .modal.show .modal-dialog {
     position: inherit;
     overflow-y: hidden;
 }
-@media (min-width: 360px) and (max-width: 767.98px) {
+@media (max-width: 767.98px) {
     #modal_pincode {
         .radio-label {
             min-width: 150px;
@@ -413,4 +413,14 @@ body #cd-cart .modal.show .modal-dialog {
         background: rgba(255, 255, 255, 0.83) url('../img/loader_818e.gif') center center no-repeat;
         z-index: 99999;
     }
+}
+
+.modal-close-icon{
+    font-weight: 100;
+    font-size: 1.6em;
+    color: rgba(82, 82, 82, 0.55);
+}
+
+.cart-step1-header{
+    margin: -10px -20px 0 -20px;
 }

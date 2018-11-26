@@ -3,8 +3,9 @@
 namespace App;
 
 use App\Elastic\ElasticQuery;
-use Illuminate\Database\Eloquent\Model;
 use App\Location;
+use Illuminate\Database\Eloquent\Model;
+use App\Jobs\UpdateVariantInventory;
 
 class Variant extends Model
 {
@@ -31,9 +32,11 @@ class Variant extends Model
 
     public function newFromBuilder($attributes = [], $connection = null)
     {
-
         $model = parent::newFromBuilder($attributes, $connection);
-        $model->fetchElasticData();
+        $arr = (array)$attributes;
+        if (isset($arr['product_color_id'])) {
+            $model->fetchElasticData();
+        }
         return $model;
     }
 
@@ -206,9 +209,9 @@ class Variant extends Model
      *
      * @return double
      */
-    public function getSavings()
+    public function getDiscount()
     {
-        return $this->variant["variant_sale_price"] - $this->variant["variant_list_price"];
+        return $this->variant["variant_list_price"] - $this->variant["variant_sale_price"];
     }
 
     /**
@@ -236,7 +239,7 @@ class Variant extends Model
      *
      * @return string
      */
-    public function getVariantData($mode,$prefix = '', $data = [])
+    public function getVariantData($mode, $prefix = '', $data = [])
     {
         $productData = $this->elastic_data["search_result_data"];
         $variantData = collect($this->elastic_data['variants'])->where('variant_id', $this->odoo_id)->first();
@@ -244,7 +247,7 @@ class Variant extends Model
         if ($mode == 'all') {
             $filteredData = [];
             foreach ($data as $key => $value) {
-               $filteredData[$prefix.$key] = $value;
+                $filteredData[$prefix . $key] = $value;
             }
             return $filteredData;
         } elseif ($mode == 'only') {
@@ -319,7 +322,7 @@ class Variant extends Model
         if (isset($this->inventory)) {
             foreach ($this->inventory as $inventory) {
                 if ($inventory["quantity"] > 0) {
-                    $location = Location::where('odoo_id', $inventory["location_id"])->first();
+                    $location       = Location::where('odoo_id', $inventory["location_id"])->first();
                     $quantity_arr[] = array('warehouse' => $location->warehouse->name, 'location' => $location->name, 'quantity' => $inventory["quantity"]);
                 }
             }
@@ -327,18 +330,27 @@ class Variant extends Model
         return $quantity_arr;
     }
 
-    public function getDiscount()
-    {
-        return $this->getLstPrice() - $this->getSalePrice();
-    }
-
     public function getProductSlug()
     {
         return $this->elastic_data["search_result_data"]["product_slug"];
     }
 
-    public static function getVariantProductIdFromOdoo($variant_id){
+    public static function getVariantProductIdFromOdoo($variant_id)
+    {
         $odoo = new Elastic\OdooConnect;
-        return $odoo->defaultExec('product.product','read',[[$variant_id]],['fields'=>['product_tmpl_id']])->first()['product_tmpl_id'][0];
+        return $odoo->defaultExec('product.product', 'read', [[$variant_id]], ['fields' => ['product_tmpl_id']])->first()['product_tmpl_id'][0];
+    }
+
+    public static function addUpdateInventoryJobs()
+    {
+        $variants = self::select('odoo_id')->get()->pluck('odoo_id')->toarray();
+        $job_sets = array_chunk($variants, config('odoo.limit'));
+        foreach ($job_sets as $job_set) {
+            UpdateVariantInventory::dispatch($job_set)->onQueue('update_inventory');
+        }
+    }
+
+    public function updateInventory(){
+         UpdateVariantInventory::dispatch([$this->odoo_id])->onQueue('update_inventory');
     }
 }

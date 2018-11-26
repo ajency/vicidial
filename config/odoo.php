@@ -6,12 +6,12 @@ for ($conn = 1; $conn <= intval($conn_cnt); $conn++) {
 }
 
 return [
-    'url'          => env('ODOO_URL', ''),
-    'db'           => env('ODOO_DB', ''),
-    'limit'        => intval(env('ODOO_LIMIT', '')),
-    'connections'  => $connections,
+    'url'           => env('ODOO_URL', ''),
+    'db'            => env('ODOO_DB', ''),
+    'limit'         => intval(env('ODOO_LIMIT', '')),
+    'connections'   => $connections,
 
-    'model_fields' => [
+    'model_fields'  => [
         'location'   => [
             'name',//
             'company_id',//
@@ -26,7 +26,7 @@ return [
             "zip",
             "store_code",
         ],
-        'warehouse' => [
+        'warehouse'  => [
             'name',
             'code',
             'company_id',

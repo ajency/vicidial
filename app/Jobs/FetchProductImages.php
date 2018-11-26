@@ -71,6 +71,7 @@ class FetchProductImages implements ShouldQueue
             $attributes = $prodImage;
             unset($attributes['image']);
             \Log::debug("upload image");
+            \Log::debug($prodImage);
             $image_id = $pc->uploadImage($filepath, false, true, true, '', '', "", $filepath, $extension, $imageName, $attributes);
             $type     = "";
             if (!in_array($prodImage["color_id"], $default_color_ids)) {
@@ -80,8 +81,8 @@ class FetchProductImages implements ShouldQueue
             array_push($db_image_ids, $image_id);
             $pc->mapImage($image_id, $type);
             // \Storage::disk('local')->delete($subfilepath);
-
         }
+        Product::updateImageFacets($this->productId);
         \Log::debug("count of images after processing to DB for product id");
         \Log::debug($this->productId);
         \Log::debug("=");

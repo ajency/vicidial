@@ -100,6 +100,9 @@ class CartController extends Controller
         }
         checkUserCart($request->header('Authorization'), $cart);
         if($cart->type == 'order-complete') abort(400);
+        if($cart->type == 'order') {
+            $cart->type = (checkOrderInventory($cart->order, false) == 'failure') ? 'failure' : 'order';
+        }
 
         $items = getCartData($cart, true, (config('app.env')=='production')? false : true);
 
@@ -162,6 +165,26 @@ class CartController extends Controller
     public function getCartID(Request $request)
     {
         $user = User::getUserByToken($request->header('Authorization'));
-        return response()->json(["cart_id" => $user->cart_id]);
+        $cart = Cart::find($user->cart_id);
+        return response()->json(["cart_id" => $user->cart_id, "cart_type" => $cart->type]);
+    }
+
+    public function checkStatus(Request $request)
+    {
+        $id     = $request->session()->get('active_cart_id', false);
+        $cart = Cart::find($id);
+        if ($cart == null) {
+            abort(404, "Cart not found for this session");
+        }
+        $cart->abortNotCart('cart');
+
+        foreach ($cart->cart_data as $variant_id => $variant_details) {
+            $variant = Variant::find($variant_id);
+            if ($variant->getQuantity() < $variant_details['quantity']) {
+                abort(404, "Quantity not available");
+            }
+        }
+
+        return response()->json(["message" => 'Items are available in store', 'success'=> true]);
     }
 }

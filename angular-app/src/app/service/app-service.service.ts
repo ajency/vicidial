@@ -159,8 +159,8 @@ export class AppServiceService {
     return this.apiservice.request(url, 'get', {}, header);
   }
 
-  callGetAllAddressesApi(){
-    let url = this.apiUrl + "/api/rest/v1/user/address/all";
+  callGetAllAddressesApi(send_cart_id : boolean = false){
+    let url = send_cart_id ? this.apiUrl + "/api/rest/v1/user/address/all?cart_id="+this.getCookie('cart_id') : this.apiUrl + "/api/rest/v1/user/address/all";
     let header = this.isLoggedInUser() ? { Authorization : 'Bearer '+this.getCookie('token') } : {};
     return this.apiservice.request(url, 'get', {} , header);
   }

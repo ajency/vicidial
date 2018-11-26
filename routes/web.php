@@ -17,6 +17,7 @@ Route::post('/rest/v1/anonymous/cart/insert', 'CartController@guestAddItem');
 Route::get('/rest/v1/anonymous/cart/get', 'CartController@guestCartFetch');
 Route::get('/rest/v1/anonymous/cart/delete', 'CartController@guestCartDelete');
 Route::get('/rest/v1/anonymous/states/all', 'AddressController@fetchStates');
+Route::get('/rest/v1/anonymous/cart/check-status', 'CartController@checkStatus');
 
 Route::get('/contact-us', 'StaticController@contact');
 Route::get('/contact', 'StaticController@contactnew');
@@ -24,6 +25,10 @@ Route::get('/faq', 'StaticController@faq');
 Route::get('/about-us', 'StaticController@about');
 Route::get('/terms-and-conditions', 'StaticController@tc');
 Route::get('/privacy-policy', 'StaticController@privacy');
+Route::get('/stores', 'StaticController@stores');
+Route::get('/stores/surat', 'StaticController@singlestore');
+Route::get('/stores/hyderabad', 'StaticController@singlestore');
+Route::get('/stores/coimbatore', 'StaticController@singlestore');
 
 Route::get('/rest/v1/authenticate/login', 'UserController@verifyOTP');
 Route::get('/rest/v1/authenticate/generate_otp', 'UserController@sendSMS');

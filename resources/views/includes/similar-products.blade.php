@@ -10,9 +10,9 @@
             <div class="card h-100 product-card">
             	<!-- <i class="fas fa-heart kss_heart"></i> -->
               <a href="{{$url}}" >
-                <div class="image oh loading loading-01">
+                <div class="product-card__wrapper d-flex align-items-center justify-content-center">
                   @php
-                    $image_1x = $image_2x = $image_3x = '/img/placeholder.svg';
+                    $image_1x = $image_2x = $image_3x = CDN::asset('/img/placeholder.svg');
                     $load_10x = '/img/placeholder-10x.jpg';
                     if(count((array)$product->images)>0){
                       $load_10x = $product->images->{'load'};
@@ -21,18 +21,18 @@
                       $image_3x = $product->images->{'3x'};
                     }
                   @endphp
-                	<img src="{{$load_10x}}" data-srcset="{{$image_1x}} 270w, {{$image_2x}} 540w, {{$image_3x}} 978w" class="lazyload card-img-top blur-up @php if(empty((array)$product->images)){ @endphp placeholder-img @php } @endphp" sizes="(min-width: 992px) 25vw,50vw" alt="Cotton Rich Super Skinny Fit Jeans" title="Cotton Rich Super Skinny Fit Jeans" />
+                	<img src="{{$load_10x}}" data-srcset="{{$image_1x}} 270w, {{$image_2x}} 540w, {{$image_3x}} 978w" class="lazyload card-img-top blur-up @php if(empty((array)$product->images)){ @endphp placeholder-img @php } @endphp" sizes="(min-width: 992px) 25vw,50vw" alt="{{$product->title}}" title="{{$product->title}}" />
                </div>
               </a>
               <div class="card-body">
-                <a href="/kss/product/" class="text-dark">
+                <a href="{{$url}}" class="text-dark">
                   <h5 class="card-title">
                     {{$product->title}}
                   </h5>
                 </a>
                 @php
                   $default_price = set_default_price($product->variants);
-                  if($default_price['list_price'] == $default_price['sale_price']) { 
+                  if($default_price['list_price'] == $default_price['sale_price']) {
                 @endphp
                 <div id="kss-price-{{$product->product_id}}-{{$product->color_id}}" class="kss-price kss-price--smaller">₹{{$default_price['sale_price']}}</div>
                 @php } else { @endphp

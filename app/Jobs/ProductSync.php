@@ -31,6 +31,6 @@ class ProductSync implements ShouldQueue
     public function handle()
     {
         \Log::notice('Scheduled Product Sync');
-        Product::startSync();
+        Product::updateSync();
     }
 }

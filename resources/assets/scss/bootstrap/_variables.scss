@@ -264,11 +264,15 @@ $display1-size:               6rem !default;
 $display2-size:               5.5rem !default;
 $display3-size:               4.5rem !default;
 $display4-size:               3.5rem !default;
+$display5-size:               3rem !default;
+$display6-size:               2.5rem !default;
 
 $display1-weight:             300 !default;
 $display2-weight:             300 !default;
 $display3-weight:             300 !default;
 $display4-weight:             300 !default;
+$display5-weight:             300 !default;
+$display6-weight:             300 !default;
 $display-line-height:         $headings-line-height !default;
 
 $lead-font-size:              ($font-size-base * 1.25) !default;
@@ -889,7 +893,7 @@ $carousel-control-opacity:          .5 !default;
 $carousel-indicator-width:          30px !default;
 $carousel-indicator-height:         3px !default;
 $carousel-indicator-spacer:         3px !default;
-$carousel-indicator-active-bg:      $white !default;
+$carousel-indicator-active-bg:      theme-color('dark') !default;
 
 $carousel-caption-width:            70% !default;
 $carousel-caption-color:            $white !default;

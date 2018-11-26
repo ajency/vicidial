@@ -1,12 +1,15 @@
 <script id="filter-category-template" type="text/x-handlebars-template"> 
   <div class="kss_filter-list mt-1">
-      <div class="d-md-none d-block">
+      <div class="d-md-none d-block sticky-mob-filter">
         <div class="d-flex">
-          <div><h4 class="mt-0">Filter By</h4></div>
+          <div class="filter-head">
+            <h4 class="mt-0">Filter</h4>
+            <p class="filter-head__caption"><span id="filter_head_count">@{{filter_count}}</span> Filters Applied</p>
+          </div>
           <div class="ml-auto"> <h3 id="kss_hide-filter" class="m-0 kss_highlight btn-pay"><span aria-hidden="true">&times;</span></h3></div>
         </div>
-        <hr>
       </div>
+      <hr class="sticky-space">
       <div id="headingTwo">
         <label class=" w-100 mb-0 pb-3 cursor-pointer @{{#if collapsed}} collapsed @{{/if}}" data-toggle="collapse" data-target="#collapseCategory" aria-expanded="false" aria-controls="collapseCategory">
          @{{filter_display_name}} <i class="fas fa-angle-up float-right"></i>
@@ -56,6 +59,7 @@
    var disabled_at_zero_count = <?= json_encode($disabled_at_zero_count) ?>;
    var is_attribute_param = <?= json_encode($is_attribute_param) ?>;
    context["template"] = '<?= $template ?>';
+   context["filter_count"] = filter_tags_list.length;
    context["display_count"] = display_count;
    context["disabled_at_zero_count"] = disabled_at_zero_count;
    context["is_attribute_param"] = is_attribute_param;

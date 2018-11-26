@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Address;
 use App\User;
 use App\Defaults;
+use App\Variant;
+use App\Cart;
 
 class AddressController extends Controller
 {
@@ -59,9 +61,21 @@ class AddressController extends Controller
 
     public function userFetchAddresses(Request $request)
     {
-        $user_id = User::getUserByToken($request->header('Authorization'))->id;
+        $user = User::getUserByToken($request->header('Authorization'));
 
-        $addresses = Address::where('user_id', '=', $user_id)->where('active', '=', true)->get();
+        $params  = $request->all();
+        if(isset($params['cart_id'])) {
+            $cart = Cart::find($params['cart_id']);
+            validateCart($user, $cart, 'cart');
+            foreach ($cart->cart_data as $variant_id => $variant_details) {
+                $variant = Variant::find($variant_id);
+                if ($variant->getQuantity() < $variant_details['quantity']) {
+                    abort(404, "Quantity not available");
+                }
+            }
+        }
+
+        $addresses = Address::where('user_id', '=', $user->id)->where('active', '=', true)->get();
 
         $address_data = array();
 

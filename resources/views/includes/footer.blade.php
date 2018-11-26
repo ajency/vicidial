@@ -5,10 +5,10 @@
               <div class="mbr-footer-content col-12">
                 <p class="font-weight-bold"><strong>Online Shopping</strong></p>
                   <ul class="list-unstyled d-flex footer-link-separator">
-                    <li><a href="#" class="text-gray">Boys</a></li>
-                    <li><a href="#" class="text-gray">Girls</a></li>
-                    <li><a href="#" class="text-gray">Infants</a></li>
-                    <li><a href="#" class="text-gray">Accessories</a></li>
+                    <li><a href="/boys/" class="text-gray">Boys</a></li>
+                    <li><a href="/girls/" class="text-gray">Girls</a></li>
+                    <li><a href="/infant-0-2-years/" class="text-gray">Infants</a></li>
+                    <li><a href="/accessories/" class="text-gray">Accessories</a></li>
                   </ul>
               </div>
               <div class="mbr-footer-content col-12">
@@ -75,21 +75,21 @@
     <div class="border-bottom border-gray mt-4 mb-4 op-1">
     </div>
 
-   <!-- <div class="row">
+   <div class="row">
       <div class="col-12">
-         <p class="font-weight-bold mt-4"><strong>Our Leading Categories</strong></p>
+         <p class="font-weight-bold mt-2"><strong>Our Leading Categories</strong></p>
 
-         <strong>Boys Clothings:</strong>  <a href="#" class="text-dark">T-Shirts </a> |  <a href="#" class="text-dark"> Shirts</a>  |   <a href="#" class="text-dark">Jeans & Trousers</a>  |    <a href="#" class="text-dark">Shorts & Dungarees</a>  |   <a href="#" class="text-dark">Track Pants & Pyjamas</a>  |   <a href="#" class="text-dark">Clothing Sets</a>   |    <a href="#" class="text-dark">Indian Wear</a>   |    <a href="#" class="text-dark">Jackets</a>   |   <a href="#" class="text-dark">Shorts & Dungarees</a>  |   <a href="#" class="text-dark">Track Pants & Pyjamas</a>
+         <strong>Boys Clothings: </strong>  <a href="/apparels/boys/bottoms" class="text-dark">Bottoms </a> |  <a href="/apparels/boys/ethnic" class="text-dark"> Ethnic </a>  |   <a href="/apparels/boys/formal-pant" class="text-dark">Formal Pant</a>  |    <a href="/apparels/boys/jeans" class="text-dark">Jeans</a>  |   <a href="/apparels/boys/shirt" class="text-dark">Shirt</a>  |   <a href="/shoes/boys" class="text-dark">Shoes</a>   |    <a href="/apparels/boys/short" class="text-dark">Short</a>   |    <a href="/apparels/boys/sweatshirt" class="text-dark">Sweatshirt</a>   |   <a href="/apparels/boys/tshirt" class="text-dark">Tshirt</a>
           <br>
-         <strong>Girls Clothings:</strong>  <a href="#" class="text-dark">T-Shirts </a> |  <a href="#" class="text-dark"> Shirts</a>  |   <a href="#" class="text-dark">Jeans & Trousers</a>  |    <a href="#" class="text-dark">Shorts & Dungarees</a>  |   <a href="#" class="text-dark">Track Pants & Pyjamas</a>  |   <a href="#" class="text-dark">Clothing Sets</a>   |    <a href="#" class="text-dark">Indian Wear</a>   |    <a href="#" class="text-dark">Jackets</a>   |   <a href="#" class="text-dark">Shorts & Dungarees</a>  |   <a href="#" class="text-dark">Track Pants & Pyjamas</a>
+         <strong>Girls Clothings: </strong>  <a href="/apparels/girls/bottoms" class="text-dark">Bottoms </a> |  <a href="/apparels/girls/dress" class="text-dark"> Dress </a>  |   <a href="/apparels/girls/ethnic" class="text-dark">Ethnic</a>  |    <a href="/apparels/girls/jeans" class="text-dark">Jeans</a>  |   <a href="/shoes/girls" class="text-dark">Shoes</a>  |   <a href="/apparels/girls/short" class="text-dark">Short</a>   |    <a href="/apparels/girls/skirt" class="text-dark">Skirt</a>   |    <a href="/apparels/girls/sweatshirt" class="text-dark">Sweatshirt</a>   |   <a href="/apparels/girls/tshirt" class="text-dark">Tshirt</a>   |   <a href="/apparels/girls/woven-tops" class="text-dark">Woven Tops</a>
           <br>
-          <strong>Infants Clothings:</strong>  <a href="#" class="text-dark">T-Shirts </a> |  <a href="#" class="text-dark"> Shirts</a>  |   <a href="#" class="text-dark">Jeans & Trousers</a>  |    <a href="#" class="text-dark">Shorts & Dungarees</a>  |   <a href="#" class="text-dark">Track Pants & Pyjamas</a>  |   <a href="#" class="text-dark">Clothing Sets</a>   |    <a href="#" class="text-dark">Indian Wear</a>   |    <a href="#" class="text-dark">Jackets</a>   |   <a href="#" class="text-dark">Shorts & Dungarees</a>
+          <strong>Infants Clothings: </strong>  <a href="/apparels/infant-0-2-years/bottoms" class="text-dark">Bottoms </a> |  <a href="/apparels/infant-0-2-years/dress" class="text-dark"> Dress </a>  |   <a href="/apparels/infant-0-2-years/infant-utility" class="text-dark">Infant Utility</a>  |    <a href="/apparels/infant-0-2-years/jeans" class="text-dark">Jeans</a>  |   <a href="/apparels/infant-0-2-years/shirt" class="text-dark">Shirt</a>  |   <a href="/shoes/infant-0-2-years" class="text-dark">Shoes</a>  |   <a href="/apparels/infant-0-2-years/short" class="text-dark">Short</a>   |   <a href="/apparels/infant-0-2-years/tshirt" class="text-dark">Tshirt</a>   |   <a href="/apparels/infant-0-2-years/woven-tops" class="text-dark">Woven Tops</a>
            <br>
-          <strong>Kids Accessories:</strong>  <a href="#" class="text-dark">T-Shirts </a> |  <a href="#" class="text-dark"> Shirts</a>  |   <a href="#" class="text-dark">Jeans & Trousers</a>  |    <a href="#" class="text-dark">Shorts & Dungarees</a>  |   <a href="#" class="text-dark">Track Pants & Pyjamas</a>  |   <a href="#" class="text-dark">Clothing Sets</a>   |    <a href="#" class="text-dark">Indian Wear</a>   |    <a href="#" class="text-dark">Jackets</a>   |   <a href="#" class="text-dark">Shorts & Dungarees</a>
+          <strong>Kids Accessories: </strong>  <a href="/accessories/boys/miscellaneous" class="text-dark">Boys </a> |  <a href="/accessories/girls/miscellaneous" class="text-dark"> Girls</a>  |   <a href="/accessories/others/miscellaneous" class="text-dark">Others</a>
       </div>
    </div>
 
-   <div class="border-bottom border-gray mt-4 mb-4 op-1"></div> -->
+   <div class="border-bottom border-gray mt-4 mb-4 op-1"></div>
 
      <div class="row">
         <div class="col-12">

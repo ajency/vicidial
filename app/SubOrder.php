@@ -27,11 +27,14 @@ class SubOrder extends Model
     public function setItems($items)
     {
         $itemsData = [];
-        // print_r($items);
         foreach ($items as $itemData) {
+            $variant = Variant::find($itemData['variant']->id);
             $itemsData[] = [
-                'id'       => $itemData['variant']->id,
-                'quantity' => $itemData['quantity'],
+                'id'            => $itemData['variant']->id,
+                'quantity'      => $itemData['quantity'],
+                'price_mrp'     => $variant->getLstPrice(),
+                'price_final'   => $variant->getSalePrice(),
+                'discount'      => $variant->getDiscount(),
             ];
         }
         $this->item_data = $itemsData;
@@ -56,7 +59,7 @@ class SubOrder extends Model
         $savings = 0;
         foreach ($items as $itemData) {
             $total += $itemData['quantity']*$itemData['item']->getSalePrice();
-            $savings += $itemData['quantity']*$itemData['item']->getSavings();
+            $savings += $itemData['quantity']*$itemData['item']->getDiscount();
         }
         $this->odoo_data = [
             'total'        => $total,
@@ -65,13 +68,20 @@ class SubOrder extends Model
         ];
     }
 
-    public function checkInventory()
+    public function checkInventory($abort = true)
     {
         if ($this->odoo_id == null) {
             $items = $this->getItems();
             foreach ($items as $itemData) {
                 if ($itemData['quantity'] > $itemData['item']->inventory[$this->location_id]['quantity']) {
-                    abort(410, 'Items no longer available in store');
+                    $this->order->cart->type = 'failure';
+                    $this->order->cart->save();
+                    if($abort) {
+                        abort(410, 'Items no longer available in store');
+                    }
+                    else {
+                        return 'failure';
+                    }
                 }
             }
         }
@@ -80,7 +90,6 @@ class SubOrder extends Model
     public function placeOrder()
     {
         if ($this->odoo_id == null) {
-            $this->checkInventory();
             $order_lines = [];
             $itemsData   = [];
             foreach ($this->item_data as $itemData) {
@@ -89,7 +98,7 @@ class SubOrder extends Model
                 $item['quantity']   = $itemData['quantity'];
                 $item['variant_id'] = $itemData['id'];
                 $itemsData[]        = $item;
-                $order_line = self::createOrderLine($variant, $itemData['quantity']);
+                $order_line = self::createOrderLine($variant, $itemData);
                 $lines[]    = $order_line;
             }
             $odoo_order  = self::createOrderParams($lines);
@@ -147,7 +156,7 @@ class SubOrder extends Model
     //     parent::save($options);
     // }
 
-    public function createOrderLine(Variant $variant, int $quantity)
+    public function createOrderLine(Variant $variant, array $itemData)
     {
         $order_line = [
             0,
@@ -155,9 +164,9 @@ class SubOrder extends Model
             array_merge(config('orders.odoo_orderline_defaults'),
             [
                 "product_id"         => $variant->odoo_id,
-                "product_uom_qty"    => $quantity,
-                "price_unit"         => $variant->getSalePrice(),
-                "discount"           => $variant->getDiscount(),
+                "product_uom_qty"    => $itemData['quantity'],
+                "price_unit"         => $itemData['price_final'],
+                "discount"           => $itemData['discount'],
                 "name"               => $variant->getName(),
             ]),
         ];

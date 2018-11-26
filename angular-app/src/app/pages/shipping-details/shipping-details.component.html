@@ -1,4 +1,4 @@
-<div id="cd-cart" class="angular-app h-100">
+<div id="cd-cart" class="angular-app h-100" style="right: 0">
 	<div *ngIf="addAddress || (addresses && addresses.length)" class="kss_shipping slide-out slide-show">
 		<div class="scroll-container">
 			<nav class="navbar navbar-dark bg-dark pt-3 pb-3 ">
@@ -124,7 +124,7 @@
 								</div>
 							</div>							
 						</div>
-						<div *ngIf="!hideDefaultAddressField && addresses.length" class="row mt-4">
+						<div *ngIf="!hideDefaultAddressField && addresses.length" class="row mt-4 mb-3">
 							<div class="col-md-12">
 								<div class="custom-control custom-checkbox">
 									<input type="checkbox" class="custom-control-input" id="customCheck1" name="default" [(ngModel)]="newAddress.default">
@@ -146,7 +146,7 @@
 									 	<i class="fas fa-check-circle"></i>
 									</div>
 									<div class="text-left pl-2 flex-fill">
-										<h3 class="kss-title font-weight-bold d-flex align-items-center w-100">{{address.name}} <span *ngIf="address.default" class="pl-2">(Default)  </span> <i class="fas fa-pencil-alt number-edit ml-2" (click)="editAddress(address)"></i></h3>
+										<h3 class="kss-title font-weight-bold d-flex align-items-center w-100">{{address.name}} <span *ngIf="address.default" class="pl-2">(Default)  </span> <!-- <i class="fas fa-pencil-alt number-edit ml-2" (click)="editAddress(address)"></i> --></h3>
 
 										<p class="w-75">
 											{{address.address}}, {{address.city}}, {{address.state}} {{address.pincode}}
@@ -164,7 +164,7 @@
 							</label>
 						</div>
 					</div>
-					<button type="button" id="add-address" class="btn kss-btn kss-btn--outline-secondary kss-btn--big kss-btn--big-alternate" (click)="addNewAddress()">Add A New Address</button>
+					<button type="button" id="add-address" class="btn kss-btn kss-btn--outline-secondary kss-btn--big" (click)="addNewAddress()">Add A New Address</button>
 				</div>
 
 				<div class="seperator mt-2 mb-2"></div>
@@ -172,15 +172,15 @@
 				<div class="fixed-bottom d-block pl-3 pr-3">
 					<div *ngIf="addAddress" class="row no-gutters px-2 py-2 shipping-state-1" style="display: flex;">
 						<div class="col-6 text-center">
-							<button [disabled]="!addresses.length" type="button" class="shipping-details-save btn kss-btn kss-btn--link kss-btn--big kss-btn--big-alternate mt-1 mb-1 ml-auto mr-auto" (click)="addAddress = false" >Cancel </button>
+							<button [disabled]="!addresses.length" type="button" class="shipping-details-save btn kss-btn kss-btn--link kss-btn--big mt-1 mb-1 ml-auto mr-auto" (click)="addAddress = false" >Cancel </button>
 						</div>
 						<div class="col-6 text-center">
-							<button [disabled]="!myForm.valid"  type="button" class="shipping-details-save btn kss-btn kss-btn--big kss-btn--alternate mt-1 mb-1 ml-auto mr-auto" (click)="saveNewAddress()"> Save </button>
+							<button [disabled]="!myForm.valid"  type="button" class="shipping-details-save btn kss-btn kss-btn--big mt-1 mb-1 ml-auto mr-auto" (click)="saveNewAddress()"> Save </button>
 						</div>
 					</div>
 					 <div *ngIf="!addAddress && addresses" class="row no-gutters px-2 py-2 shipping-state-2" style="display: flex;">
 						<div class="col-12 text-center">
-							<button id="shipping-summary" type="button" class=" btn kss-btn kss-btn--big kss-btn--big-alternate mt-1 mb-1" (click)="navigateToShippingPage()">Proceed</button>
+							<button id="shipping-summary" type="button" class=" btn kss-btn kss-btn--big mt-1 mb-1" (click)="navigateToShippingPage()">Proceed</button>
 						</div>
 					</div>
 				</div>

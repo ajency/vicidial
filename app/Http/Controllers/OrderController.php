@@ -25,22 +25,19 @@ class OrderController extends Controller
         $cart->checkCartAvailability();
 
         $order = Order::create([
-            'cart_id'    => $cart->id,
-            'address_id' => $address->id,
-            'expires_at' => Carbon::now()->addMinutes(config('orders.expiry'))->timestamp,
+            'cart_id'       => $cart->id,
+            'address_id'    => $address->id,
+            'address_data'  => array_merge($address->address,["id"=>$address->id]),
+            'expires_at'    => Carbon::now()->addMinutes(config('orders.expiry'))->timestamp,
         ]);
 
-        $dateInd = Carbon::now();
-        $dateInd->setTimezone('Asia/Kolkata');
-
-        $order->txnid = strtoupper($dateInd->format('Mjy')).str_pad($order->id, 8, '0', STR_PAD_LEFT);
-        $order->save();
+        saveTxnid($order);
 
         $order->setSubOrders();
         $cart->type = 'order';
         $cart->save();
 
-        $response = ["items" => getCartData($cart, false), "summary" => $order->aggregateSubOrderData(), "order_id" => $order->id, "address" => array_merge($address->address,["id"=>$address->id]), "message" => 'Order Placed successfully'];
+        $response = ["items" => getCartData($cart, false), "summary" => $order->aggregateSubOrderData(), "order_id" => $order->id, "address" => $order->address_data, "message" => 'Order Placed successfully'];
 
         $user_info = $user->userInfo();
         if($user_info!=null) {
@@ -60,17 +57,20 @@ class OrderController extends Controller
 
         $order = $cart->order;
 
+        checkOrderInventory($order);
+
         if(isset($params['address_id'])) {
             $address = Address::find($params["address_id"]);
             validateAddress($user, $address);
-            $order->address_id = $address->id;
+            $order->address_id      = $address->id;
+            $order->address_data    = array_merge($address->address,["id"=>$address->id]);
             $order->save();
         }
         else {
             $address = $order->address;
         }
 
-        $response = ["items" => getCartData($cart, false), "summary" => $order->aggregateSubOrderData(), "order_id" => $order->id, "address" => array_merge($address->address,["id"=>$address->id]), "message" => 'Order Placed successfully'];
+        $response = ["items" => getCartData($cart, false), "summary" => $order->aggregateSubOrderData(), "order_id" => $order->id, "address" => $order->address_data, "message" => 'Order Placed successfully'];
 
         $user_info = $user->userInfo();
         if($user_info!=null) {
@@ -78,6 +78,18 @@ class OrderController extends Controller
         }
 
         return response()->json($response);
+    }
+
+    public function checkSubOrderInventory($id, Request $request)
+    {
+        $user   = User::getUserByToken($request->header('Authorization'));
+        $order  = Order::find($id);
+        $cart   = $order->cart;
+        validateCart($user,$cart, 'order');
+
+        checkOrderInventory($order);
+
+        return response()->json(["message" => 'Items are available in store', 'success'=> true]);
     }
 
     public function getOrderDetails(Request $request)
@@ -88,7 +100,7 @@ class OrderController extends Controller
             abort(404);
         }
 
-        $order = Order::find($query['orderid']);
+        $order = Order::where('txnid', $query['orderid'])->first();
         if(!isset($_COOKIE['token'])) {
             abort(401);
         }

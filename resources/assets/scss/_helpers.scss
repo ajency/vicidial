@@ -32,6 +32,9 @@ footer .bl-1{
 .bg-lightgray{
     background-color: #f9f9f9;
 }
+.bg-brown{
+    background-color: #fdf5e7;
+}
 .overflow-h{
     overflow: hidden;
 }
@@ -272,7 +275,7 @@ footer .bl-1{
     &.sticky-alert{
         position: fixed;
         top: 0;
-        z-index: 10;
+        z-index: 99;
         right: 0;
         width: calc(80% - 1rem);
         transform: translateY(-500px);
@@ -280,7 +283,7 @@ footer .bl-1{
         @media (min-width: 768px) {
             width: calc(400px - 1rem);
         }
-        @media (min-width: 360px) and (max-width: 767.98px) {
+        @media (max-width: 767.98px) {
             width: calc(100% - 1rem);
             font-size: 1.1em;
         }
@@ -319,7 +322,7 @@ footer .bl-1{
         overflow-x:scroll;
         display: grid;
         grid-gap: 10px;
-        grid-template-columns: 5px repeat(5, calc(50% - 40px)) 5px;
+        grid-template-columns: 5px repeat(4, calc(50% - 40px)) 5px;
         grid-template-rows: minmax(150px, 1fr);
         .col-6{
             max-width: 100%;
@@ -422,7 +425,7 @@ footer .bl-1{
 }
 
 .kss-input-small{
-    width: 35%; 
+    width: 35%;
 }
 
 .kss-flash{
@@ -432,8 +435,12 @@ footer .bl-1{
     font-size: 1rem;
     line-height: 1.4;
     &--info{
-        background-color: $flash-info-bg;    
+        background-color: $flash-info-bg;
         color: $flash-info-color;
+    }
+    &--error{
+        background-color: $flash-error-bg;
+        color: $flash-error-color;
     }
 }
 
@@ -453,4 +460,23 @@ footer .bl-1{
         padding-left: 8px;
         font-size: 1.1em;
     }
+}
+
+.viewall-link{
+    display: inline-block;
+    font-size: 1.4em;
+    color: theme-color("secondary");
+    font-weight: 600;
+    padding: 10px 5px 2px 5px;
+    border-bottom: 2px solid;
+    &:hover{
+        color: darken(theme-color("secondary"),20%);
+    }
+}
+
+.cs-hidden {
+    height: 1px;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    overflow: hidden;
 }

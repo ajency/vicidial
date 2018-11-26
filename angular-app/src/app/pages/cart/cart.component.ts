@@ -5,6 +5,8 @@ import { ApiServiceService } from '../../service/api-service.service';
 import { Subscription } from 'rxjs/Subscription';
 // import * as $ from 'jquery';
 declare var $: any;
+declare var add_to_cart_failed: any;
+declare var add_to_cart_failure_message: any;
 
 @Component({
   selector: 'app-cart',
@@ -35,6 +37,9 @@ export class CartComponent implements OnInit {
   openModalSubscription : Subscription;
   cartItemOutOfStock : boolean = false;
   fetchCartFailed : boolean = false;
+  isCartTypeFailure : boolean = false;
+  addToCartFailureMessage = '';
+  addToCartFailed : boolean = false;
   constructor( private router: Router,
                private appservice : AppServiceService,
                private apiservice : ApiServiceService,
@@ -126,16 +131,35 @@ export class CartComponent implements OnInit {
   }
 
   fetchCartDataFromServer(){
+    this.addToCartFailureMessage = '';
+    this.addToCartFailed = false;
     this.appservice.showLoader()
     this.appservice.callFetchCartApi().then((response)=>{
-      this.cart = this.formattedCartDataForUI(response);
+      this.cart = this.formattedCartDataForUI(response);      
       this.checkCartItemOutOfStock();
       this.updateLocalDataAndUI(this.cart, this.cart.cart_count);
+      console.log(add_to_cart_failed);
+      if(add_to_cart_failed){
+        console.log("add_to_cart_failed", add_to_cart_failure_message);
+        this.addToCartFailureMessage = add_to_cart_failure_message;
+        this.addToCartFailed = true;
+        add_to_cart_failed = false;
+        add_to_cart_failure_message = '';
+      }
       this.appservice.removeLoader();
+      if(this.cart.cart_type == 'failure'){
+        this.editBag();
+        this.isCartTypeFailure = true;
+      }
       this.fetchCartFailed = false;
       this.zone.run(() => {});
     })
     .catch((error)=>{
+      if(add_to_cart_failed){
+        console.log("add_to_cart_failed", add_to_cart_failure_message);
+        add_to_cart_failed = false;
+        add_to_cart_failure_message = '';
+      }
       this.handleFetchCartFailure(error);
       this.appservice.removeLoader();
       this.zone.run(() => {});
@@ -239,7 +263,7 @@ export class CartComponent implements OnInit {
     this.userValidation.disableVerifyOtpButton = true;
     this.userValidation.otpVerificationFailed = false;
     let url = this.appservice.apiUrl + '/rest/v1/authenticate/login?';
-    // this.otp=this.otpCode.otp1+this.otpCode.otp2+this.otpCode.otp3+this.otpCode.otp4+this.otpCode.otp5+this.otpCode.otp6
+    this.otp=this.otpCode.otp1+this.otpCode.otp2+this.otpCode.otp3+this.otpCode.otp4+this.otpCode.otp5+this.otpCode.otp6
     let body = {
       otp : this.otp,
       phone : this.mobileNumber
@@ -280,22 +304,53 @@ export class CartComponent implements OnInit {
       this.navigateToShippingDetailsPage();
     }
     else{
-      let url = window.location.href +'/user-verification';
-      if(!window.location.href.endsWith('#bag/user-verification'))
-        history.pushState({cart : true}, 'cart', url);
-      $('#signin').modal('show');
-      $("#cd-cart").css("overflow", "hidden");
-      $('.modal-backdrop').appendTo('#cd-cart');
-      $('body').addClass('hide-scroll');
+      this.callCheckCartStatusApi();
     }      
   }
 
-  next(event: KeyboardEvent,el1,el2) {
-    if(event.key=="Backspace")
-      el1.focus();
-    else
-      el2.focus();
+  displayModal(){
+    let url = window.location.href +'/user-verification';
+    if(!window.location.href.endsWith('#bag/user-verification'))
+      history.pushState({cart : true}, 'cart', url);
+    $('#signin').modal('show');
+    $("#cd-cart").css("overflow", "hidden");
+    $('.modal-backdrop').appendTo('#cd-cart');
+    $('body').addClass('hide-scroll');
   }
+
+  next(event: KeyboardEvent,el1,el2,value) {
+    console.log(value);
+    if(event.which > 47 && event.which < 58 && value){
+      el2.focus();
+      console.log('next funtion call el2');
+    }
+    // else if(event.which == 8){
+    //   el1.focus();
+    //   console.log('next funtion call el1');
+    // }
+    if (event.keyCode === 13) {
+      console.log('enter keycode');
+      $('.is-enter').click();
+    }
+  }
+
+  prev(event: KeyboardEvent,el1,el2, value) {
+    if(event.which > 47 && event.which < 58 && value){
+      el2.focus();
+      console.log('next funtion call el2');
+    }
+    if(event.key=="Backspace"){
+       el1.focus();
+       console.log('prev funtion call el1');
+     }
+    // else
+    //   el2.focus();
+    if (event.keyCode === 13) {
+      $('.is-enter').click();
+      console.log('enter keycode');
+    }
+   }
+
 
   check_OTP(){
     if(this.otpCode.otp1=='' || this.otpCode.otp2=='' || this.otpCode.otp3=='' || this.otpCode.otp4=='' || this.otpCode.otp5=='' || this.otpCode.otp6=='')
@@ -307,6 +362,7 @@ export class CartComponent implements OnInit {
     $("#cd-cart").css("overflow", "auto");
     this.mobileNumberEntered = false;
     this.otp = null;
+    this.otpCode.otp1 =''; this.otpCode.otp2 = ''; this.otpCode.otp3 = ''; this.otpCode.otp4 = ''; this.otpCode.otp5 = ''; this.otpCode.otp6='';
     this.userValidation.otpVerificationErrorMsg = '';
   }
 
@@ -317,7 +373,7 @@ export class CartComponent implements OnInit {
   navigateToShippingDetailsPage(){
     if(this.cart.cart_type == "cart"){
       this.appservice.showLoader();
-      this.appservice.callGetAllAddressesApi().then((response)=>{
+      this.appservice.callGetAllAddressesApi(true).then((response)=>{
         this.appservice.shippingAddresses = response.addresses;
         $("#cd-cart").css("overflow", "auto");
         $('.modal-backdrop').remove();
@@ -327,6 +383,7 @@ export class CartComponent implements OnInit {
       .catch((error)=>{
         console.log("error ===>", error);
         this.appservice.removeLoader();
+        this.fetchCartDataFromServer();
       })
     }
     else{
@@ -416,6 +473,20 @@ export class CartComponent implements OnInit {
       this.fetchCartFailed = true;
       this.updateLocalDataAndUI();
     }
+  }
+
+  callCheckCartStatusApi(){
+    this.appservice.showLoader();
+    let url = this.appservice.apiUrl + '/rest/v1/anonymous/cart/check-status';
+    this.apiservice.request(url, 'get', {} , {} ).then((response)=>{
+      this.appservice.removeLoader();
+      this.displayModal();
+    })
+    .catch((error)=>{
+      console.log("error ===>", error);
+      this.appservice.removeLoader();
+      this.fetchCartDataFromServer()
+    })
   }
   
 }

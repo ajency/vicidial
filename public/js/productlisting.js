@@ -71,6 +71,13 @@ $(document).ready(function () {
     collapsable_load_values[$("input[name='" + $(this).data("field") + "']").data("facet-name")] = true;
   });
 
+  $(document).on('click', ".more-color", function () {
+    $('.color-wrapper .card-body').toggleClass('is-open');
+    $(this).text(function (i, v) {
+      return v === '+ more' ? '- less' : '+ more';
+    });
+  });
+
   $('body').on('click', "#showMoreProductsBtn", function () {
     $(this).find('.load-icon-cls').removeClass('d-none');
     $(this).addClass('disabled');
@@ -268,9 +275,14 @@ function facetCategoryChange(thisObj) {
     for (fitem in filter_tags_list) {
       if (filter_tags_list[fitem]["slug"] == "price") filInd = fitem;
     }
-    filter_tags_list.splice(filInd, 1);
-    // if(filter_tag_exists == false)
-    filter_tags_list.push({ "slug": slug_name, "value": filter_tag_str, "group": facet_name });
+    if (filInd != -1) filter_tags_list.splice(filInd, 1);
+    if (range_facet_list[facet_name]["min"] == $(thisObj).data("minval") && range_facet_list[facet_name]["max"] == $(thisObj).data("maxval")) {
+      filter_tag_exists = false;
+    } else {
+
+      filter_tags_list.push({ "slug": slug_name, "value": filter_tag_str, "group": facet_name });
+    }
+
     call_ajax = true;
   }
   console.log("filter_tags_list after====");
@@ -288,10 +300,18 @@ function facetCategoryChange(thisObj) {
     for (ritem in range_facet_list) {
       var minval = range_facet_list[ritem]["min"];
       var maxval = range_facet_list[ritem]["max"];
-      url += append_filter_str + "rf=price:" + minval + "TO" + maxval;
+      var noURlChange = false;
+      console.log(".facet-category===" + $("input[data-facet-name='" + ritem + "'].facet-category"));
+      console.log($("input[data-facet-name='" + ritem + "'].facet-category"));
+      if (minval == $("input[data-facet-name='" + ritem + "'].facet-category").data("minval") && maxval == $("input[data-facet-name='" + ritem + "'].facet-category").data("maxval")) {
+        noURlChange = true;
+      } else {
+        url += append_filter_str + "rf=price:" + minval + "TO" + maxval;
+      }
     }
     console.log(range_facet_list[facet_name]);
   }
+
   console.log("boolean_facet_list==");
   console.log(boolean_facet_list);
   if (Object.keys(boolean_facet_list).length > 0) {
@@ -319,6 +339,7 @@ function facetCategoryChange(thisObj) {
     console.log(filtercontext);
     var filterhtml = filtertemplate(filtercontext);
     document.getElementById("filter-tags-template-content").innerHTML = filterhtml;
+    $("#filter_head_count").text(filter_tags_list.length);
     // }
     if (is_ajax == true) {
 
@@ -363,6 +384,7 @@ function facetCategoryChange(thisObj) {
                 context["attribute_slug"] = vval.attribute_slug;
               }
               context["template"] = templateval;
+              context["filter_count"] = filter_tags_list.length;
               context["filter_type"] = vval.filter_type != undefined ? vval.filter_type : "primary_filter";
               context["display_count"] = vval.display_count != undefined ? vval.display_count : false;
               context["is_attribute_param"] = vval.is_attribute_param != undefined ? vval.is_attribute_param : false;
@@ -386,15 +408,32 @@ function facetCategoryChange(thisObj) {
               });
               items.sort(function (obj1, obj2) {
                 // Ascending: first age less than the previous
-                return obj1.sequence - obj2.sequence;
+                if (vval.sort_order == "asc") return obj1[vval.sort_on] - obj2[vval.sort_on];else return obj2[vval.sort_on] - obj1[vval.sort_on];
               });
+              var max_selected_index = -1;
+              var show_more_limit = 10;
+              for (itemk in items) {
+                if (items[itemk]["is_selected"] == true) max_selected_index = itemk;
+              }
+              var show_more = show_more_limit > max_selected_index ? true : false;
               context["items"] = items;
+              context["show_more"] = show_more;
               console.log(context);
               var html = template(context);
               console.log(document.getElementById("filter-" + templateval + "-template-content"));
               document.getElementById("filter-" + templateval + "-template-content").innerHTML = html;
               if (vval.filter_type == "range_filter") {
                 initializeSlider(fromval, toval, minval, maxval);
+                priceRangeSlider = $("#price-range").data("ionRangeSlider");
+                initPriceBar = function initPriceBar(from, to) {
+                  console.log("initPriceBar==" + from + "===" + to);
+                  return priceRangeSlider.update({
+                    type: 'double',
+                    from: from,
+                    to: to,
+                    prefix: '<i class="fas fa-rupee-sign" aria-hidden="true"></i> '
+                  });
+                };
               }
             });
           }
