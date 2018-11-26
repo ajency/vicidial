@@ -235,7 +235,7 @@
 @php
   $image_1x = CDN::asset('/img/img-placeholder.png');
   if(count((array)$item['images'])>0){
-    $image_1x = $item['images']->{'1x'};
+    $image_1x = $item['images']['1x'];
   }
 @endphp
 
