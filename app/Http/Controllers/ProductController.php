@@ -19,13 +19,12 @@ class ProductController extends Controller
         $query  = $request->all();
 
         $params['show_button'] = false;
-        if (isset($query['size'])) {
-            foreach ($params['variant_group']->{$params['selected_color_id']}->variants as $size_set) {
-                if ($query['size'] == $size_set->size->name && $size_set->inventory_available) {
-                    $params['size'] = $query['size'];
-                }
-                $params['show_button'] = ($params['show_button'] or $size_set->inventory_available);
+
+        foreach ($params['variant_group']->{$params['selected_color_id']}->variants as $size_set) {
+            if (isset($query['size']) and $query['size'] == $size_set->size->name && $size_set->inventory_available) {
+                $params['size'] = $query['size'];
             }
+            $params['show_button'] = ($params['show_button'] or $size_set->inventory_available);
         }
 
         $params['breadcrumb']           = array();
