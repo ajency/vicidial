@@ -296,7 +296,7 @@ class Product
         $q->setQuery($must)
             ->setSource(["search_result_data", "variants"])
             ->setSize($size)->setFrom($offset);
-        if (isset($params['sort_on'])) {
+        if (isset($params['sort_on']) and $params['sort_on'] != "") {
             $sort = config('product.sort.' . $params['sort_on']);
             $q->setSort([$sort['field'] => ['order' => $sort['order']]]);
         }
@@ -385,12 +385,9 @@ class Product
         $output["sort_on"]       = config("product.sort_on");
         if (isset($params['sort_on'])) {
             foreach ($output["sort_on"] as &$value) {
-                if ($value['value'] == $params['sort_on']) {
-                    $value['is_selected'] = true;
-                }
+                $value['is_selected'] = ($value['value'] == $params['sort_on']);
             }
         }
-        // dd($output['sort_on']);
         $output["breadcrumbs"] = $bread['breadcrumb'];
         $output["search"]      = ["params" => ["genders" => ["men"], "l1_categories" => ["clothing"]], "pattern" => [["key" => "genders", "slugs" => ["men"]], ["key" => "l1_categories", "slugs" => ["clothing"]]], "is_valid" => true, "domain" => "https=>//newsite.stage.kidsuperstore.in", "type" => "product-list", "query" => ["page" => ["2"], "page_size" => ["20"]]];
         // dd($output);

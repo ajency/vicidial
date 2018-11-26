@@ -300,7 +300,7 @@ return [
         'price_desc' => ['field' => 'number_sort.variant_sale_price', "order" => 'desc'],
     ],
     "sort_on"                        => [
-
+        ["name" => "Recommended", "value" => "", "is_selected" => true],
         ["name" => "Price Low to High", "value" => "price_asc", "is_selected" => false],
         ["name" => "Price High to Low", "value" => "price_desc", "is_selected" => false],
 
