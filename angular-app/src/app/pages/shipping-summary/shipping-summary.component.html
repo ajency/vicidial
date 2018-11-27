@@ -1,7 +1,7 @@
 <div id="cd-shadow-layer"></div>
 
 <div id="cd-cart" style="right: 0">
-	<div class="kss_shipping_summary slide-out slide-show">
+	<div class="kss_shipping_summary slide-out slide-show custom-padding">
 		<div *ngIf="shippingDetails" class="scroll-container">
 			<nav class="navbar navbar-dark bg-dark pt-3 pb-3 ">
 				<div class="d-flex align-items-center w-100">
@@ -140,9 +140,9 @@
 			</div>
 
 			<div *ngIf="!showUserInfoModal" class="fixed-bottom d-show pl-3 pr-3">
-			  <div class="row no-gutters px-2 py-2">
+			  <div class="row no-gutters py-2">
 		      <div class="col-12 text-center">
-		          <button id="payment-details" type="button" class=" btn kss-btn kss-btn--big mt-1 mb-1 d-flex align-items-center justify-content-center" (click)="navigateToPaymentPage()">Pay ₹{{shippingDetails.summary.final_price}}  <img src="/img/pay-u-icon.png" class="ml-2" width="50"> <i class="fas fa-angle-right position-absolute r-0"></i></button>
+		          <button id="payment-details" type="button" class=" btn kss-btn kss-btn--big mt-1 mb-1 d-flex align-items-center justify-content-center" (click)="navigateToPaymentPage()">Pay ₹{{shippingDetails.summary.final_price}}  <img src="/img/pay-u-icon.png" class="ml-2" width="50"> <i class="fas fa-angle-right position-absolute r-0 mt-i-1"></i></button>
 		      </div>
 			  </div>
 			</div>

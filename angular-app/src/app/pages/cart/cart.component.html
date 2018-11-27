@@ -201,7 +201,7 @@
 	<div *ngIf="cart.items && cart.items.length == 0" class="empty-cart text-center d-flex align-items-center justify-content-center flex-column">
 		<i class="fas fa-shopping-cart empty-cart__icon"></i>
 		<h4 class="py-4 mb-0">Your bag is currently empty</h4>
-		<button class="btn kss-btn kss-btn--big btn-pay d-inline-flex align-items-center justify-content-center" (click)="shopNow()" style="min-width: 130px;">
+		<button class="btn kss-btn kss-btn--big btn-pay" (click)="shopNow()" style="min-width: 130px;">
 			Shop now
 		</button>
 	</div>
@@ -298,7 +298,7 @@
 	  </div>
 	</div>
 
-	<div class="slide-out" id="cd-coupon" [ngClass]="{'slide-show' : enterCoupon}">
+	<div class="slide-out pb-4" id="cd-coupon" [ngClass]="{'slide-show' : enterCoupon}">
 		<div class="d-flex pt-2 ">
 				<div class="pr-3 align-items-center">
 						<h3 class="modal-title font-weight-bold">
