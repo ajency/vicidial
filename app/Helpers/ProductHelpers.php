@@ -136,7 +136,7 @@ function sanitiseFilterdata($result, $params = [])
         $filter           = [];
         $facetName = $f;
         $facetValues = isset($filterResponse[$facetName])? $filterResponse[$facetName]:null;
-        $facets           = Facet::where('facet_name', $facetName)->get();
+        $facets           = Facet::where('facet_name', $facetName)->where("display",true)->get();
         
         $filter['header'] = [
             'facet_name'   => $facetName,
