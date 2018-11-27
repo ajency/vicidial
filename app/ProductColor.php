@@ -26,7 +26,7 @@ class ProductColor extends Model
         return $q->index();
     }
 
-    private static function upateElasticResultData($elastic_data, $change, $is_variant, $variant_id)
+    private static function updateElasticResultData($elastic_data, $change, $is_variant, $variant_id)
     {
         if ($is_variant) {
             foreach ($elastic_data["variants"] as &$variant) {
@@ -34,8 +34,8 @@ class ProductColor extends Model
                     foreach ($change as $key => $value) {
                         $variant[$key] = $value;
                     }
+                    break;
                 }
-                break;
             }
         } else {
             foreach ($change as $key => $value) {
@@ -75,7 +75,7 @@ class ProductColor extends Model
     public static function updateElasticData(array $elastic_data, array $change, $is_variant = true, $variant_id = null)
     {
         if (isset($change['result'])) {
-            $elastic_data = self::upateElasticResultData($elastic_data, $change['result'], $is_variant, $variant_id);
+            $elastic_data = self::updateElasticResultData($elastic_data, $change['result'], $is_variant, $variant_id);
         }
         if (isset($change['search'])) {
             $elastic_data = self::updateElasticSearchData($elastic_data, $change['search'], $is_variant, $variant_id);
