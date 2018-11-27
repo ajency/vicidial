@@ -603,7 +603,9 @@ function replaceURLParameter(paramName, paramValue)
     window.history.replaceState( {} , 'Kidsuperstore.in', url + hash );
 }
 
-$('.home-slider').slick();
+$('.home-slider').slick({
+    autoplay: true
+});
 
 if( $('#storeSlider').length ) {
     $('#storeSlider').lightSlider({
