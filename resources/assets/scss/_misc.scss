@@ -238,3 +238,9 @@
 		padding-bottom: 100px;
 	}
 }
+
+.mt-i-1{
+	@media (max-width: 340px){
+		margin-top: 5px;
+	}
+}

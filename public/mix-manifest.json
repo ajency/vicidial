@@ -1,8 +1,8 @@
 {
-    "/../resources/assets/css/custom.css": "/../resources/assets/css/custom.css",
-    "/js/kss.js": "/js/kss.js",
-    "/css/kss.css": "/css/kss.css",
-    "/js/cart.js": "/js/cart.js",
-    "/js/productlisting.js": "/js/productlisting.js",
-    "/js/singleproduct.js": "/js/singleproduct.js"
+    "/../resources/assets/css/custom.css": "/../resources/assets/css/custom.css?id=80e73f8b24b0ef7feac2",
+    "/js/kss.js": "/js/kss.js?id=e509747a0df7b596caea",
+    "/css/kss.css": "/css/kss.css?id=3e56cd0673d85379fd64",
+    "/js/cart.js": "/js/cart.js?id=5a932a364d8e677bbeb9",
+    "/js/productlisting.js": "/js/productlisting.js?id=fc7b46b1b25be9557c3d",
+    "/js/singleproduct.js": "/js/singleproduct.js?id=bb5449ba6d613c228552"
 }
