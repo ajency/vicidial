@@ -114,3 +114,13 @@
         <div class="mr-auto p-2 bd-highlight">© Copyright 2018 Kidsuperstore. All rights reserved.</div>
     </div>
 </div>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id={{config('analytics.id')}}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', "{{config('analytics.id')}}");
+</script>
