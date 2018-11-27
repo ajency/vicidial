@@ -73,9 +73,13 @@ $(document).ready(function() {
     // ------------------ Start Filter For Mobile ------------------//
     jQuery("#filter").click(function() {
         jQuery(".kss_filter").addClass("kss_filter_mobile");
+        jQuery(".kss_filter_mobile--left .nav-item").removeClass("active");
+        jQuery(".kss_filter_mobile--left .nav-item:first-child").addClass("active");
+        jQuery('.kss_filter-list').addClass('d-none');
+        jQuery('.kss_filter-list[data-filter="category"]').removeClass('d-none');
     });
     jQuery(".clear-filter").click(function() {
-            jQuery(".filter-selection").attr("style", "display: none !important");
+        jQuery(".filter-selection").attr("style", "display: none !important");
     });
     jQuery(document).on('click', '#kss_hide-filter', function() {
         jQuery(".kss_filter").removeClass("kss_filter_mobile");

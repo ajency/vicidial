@@ -9,7 +9,7 @@
 </div>
 
 <ul class="nav flex-column kss_filter_mobile--left">
-  <li class="nav-item active" data-target="category">
+  <li class="nav-item" data-target="category">
     Category
     <small class="filter-count">1</small>
   </li>

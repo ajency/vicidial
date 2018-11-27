@@ -109,7 +109,7 @@
         }
         &--left{
             margin-top: 74px;
-            border-right: 1px solid lighten($gray-400, 8%);
+            // border-right: 1px solid lighten($gray-400, 8%);
             height: calc(100vh - 128px);
             overflow-y: auto;
             overflow-x: hidden;
