@@ -25,6 +25,7 @@
                   <li><a class="dropdown-item" href="/jeans/">Jeans</a></li>
                   <li><a class="dropdown-item" href="/others/">Others</a></li>
                   <li><a class="dropdown-item" href="/shirt/">Shirt</a></li>
+                  <li><a class="dropdown-item" href="/shoes/">Shoes</a></li>
                   <li><a class="dropdown-item" href="/short/">Short</a></li>
                   <li><a class="dropdown-item" href="/skirt/">Skirt</a></li>
                   <li><a class="dropdown-item" href="/sweatshirt/">Sweatshirt</a></li>
@@ -43,6 +44,7 @@
                   <li><a class="dropdown-item" href="/boys/junior-7-14-years--toddler-2-7-years/jeans/">Jeans</a></li>
                   <li><a class="dropdown-item" href="/boys/junior-7-14-years--toddler-2-7-years/others/">Others</a></li>
                   <li><a class="dropdown-item" href="/boys/junior-7-14-years--toddler-2-7-years/shirt/">Shirt</a></li>
+                  <li><a class="dropdown-item" href="/shoes/boys/">Shoes</a></li>
                   <li><a class="dropdown-item" href="/boys/junior-7-14-years--toddler-2-7-years/short/">Short</a></li>
                   <li><a class="dropdown-item" href="/boys/junior-7-14-years--toddler-2-7-years/tshirt/">Tshirt</a></li>
                 </ul>
@@ -58,6 +60,7 @@
                   <li><a class="dropdown-item" href="/girls/junior-7-14-years--toddler-2-7-years/formal-pant/">Formal Pant</a></li>
                   <li><a class="dropdown-item" href="/girls/junior-7-14-years--toddler-2-7-years/jeans/">Jeans</a></li>
                   <li><a class="dropdown-item" href="/girls/junior-7-14-years--toddler-2-7-years/others/">Others</a></li>
+                  <li><a class="dropdown-item" href="/shoes/girls/">Shoes</a></li>
                   <li><a class="dropdown-item" href="/girls/junior-7-14-years--toddler-2-7-years/short/">Short</a></li>
                   <li><a class="dropdown-item" href="/girls/junior-7-14-years--toddler-2-7-years/skirt/">Skirt</a></li>
                   <li><a class="dropdown-item" href="/girls/junior-7-14-years--toddler-2-7-years/tops/">Tops</a></li>
@@ -74,6 +77,7 @@
                   <li><a class="dropdown-item" href="/infant-0-2-years/dress/">Dress</a></li>
                   <li><a class="dropdown-item" href="/infant-0-2-years/infant-utility/">Infant Utility</a></li>
                   <li><a class="dropdown-item" href="/infant-0-2-years/shirt/">Shirt</a></li>
+                  <li><a class="dropdown-item" href="/shoes/infants/">Shoes</a></li>
                   <li><a class="dropdown-item" href="/infant-0-2-years/short/">Short</a></li>
                   <li><a class="dropdown-item" href="/infant-0-2-years/tshirt/">Tshirt</a></li>
                   <li><a class="dropdown-item" href="/infant-0-2-years/woven-tops/">Woven Tops</a></li>
