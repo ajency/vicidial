@@ -20,12 +20,17 @@ class Address extends Model
         return $this->belongsTo('App\User');
     }
 
-    public function shippingAddress()
+    public function shippingAddress($unset = false)
     {
         $address_data            = $this->address;
         $address_data["id"]      = $this->id;
-        $address_data["type"]    = $this->type;
         $address_data["default"] = $this->default;
+
+        if($unset) {
+            unset($address_data['state']);
+        }
+
+        unset($address_data['state_odoo_id']);
 
         return $address_data;
     }
