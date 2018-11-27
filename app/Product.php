@@ -10,6 +10,7 @@ use App\Jobs\FetchProductImages;
 use App\Jobs\UpdateVariantInventory;
 use App\ProductColor;
 use App\Variant;
+use Illuminate\Support\Facades\DB;
 
 class Product
 {
@@ -234,9 +235,11 @@ class Product
 
         $q = new ElasticQuery;
 
+        $max_count = Facet::groupBy('facet_name')->select('facet_name', DB::raw('count(*) as total'))->pluck('total')->max();
+
         $required          = ["product_category_type", "product_gender", "product_subtype", "product_age_group", "product_color_html"];
         $aggs_facet_name   = $q::createAggTerms("facet_name", "search_data.string_facet.facet_name", ["include" => $required]);
-        $aggs_facet_value  = $q::createAggTerms("facet_value", "search_data.string_facet.facet_value");
+        $aggs_facet_value  = $q::createAggTerms("facet_value", "search_data.string_facet.facet_value",["size" => $max_count]);
         $aggs_facet_value  = $q::addToAggregation($aggs_facet_value, $q::createAggReverseNested('count'));
         $aggs_facet_name   = $q::addToAggregation($aggs_facet_name, $aggs_facet_value);
         $aggs_string_facet = $q::createAggNested("agg_string_facet", "search_data.string_facet");
@@ -293,7 +296,6 @@ class Product
         $q->setQuery($must)
             ->setSource(["search_result_data", "variants"])
             ->setSize($size)->setFrom($offset);
-        // dd($q->getJSON());
         return formatItems($q->search(), $params);
     }
 
