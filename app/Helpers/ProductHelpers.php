@@ -265,7 +265,7 @@ function setElasticFacetFilters($q, $params)
     $must = $q::addToBoolQuery('must', $must);
     // $must = hideZeroColorIDProducts($q, $must);
     // $must = hideZeroSizeIDProducts($q, $must);
-    $nested3[] = filterActiveProducts($q, $must);
+    // $nested3[] = filterActiveProducts($q, $must);
     if (showProductsWithImages($params)) {
         $nested3[] = hideProductWithoutImages($q, $must);
     }
