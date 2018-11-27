@@ -51,6 +51,9 @@ RUN rm -f /etc/nginx/sites-enabled/default
 RUN rm -f /etc/nginx/nginx.conf
 COPY nginx.conf /etc/nginx/nginx.conf
 RUN chown -R www-data:www-data /var/www/html
+RUN find /var/www/html -type f -exec chmod 644 {} \;
+RUN find /var/www/html -type d -exec chmod 755 {} \;
+RUN chmod -R ug+rwx /var/www/html/storage /var/www/html/bootstrap/cache
 EXPOSE 80
 
 RUN chmod +x /var/www/html/run.sh
