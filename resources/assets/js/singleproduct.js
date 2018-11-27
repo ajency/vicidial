@@ -33,6 +33,10 @@ $(function(){
 
     });   
     
+    
+    // $('.kss_sizes.wo-image .radio-label').tooltip('disable');
+
+
     if ($(window).width() < 767) {
         // Detaching color option in mobile
         var coloroption = $('.colorOptions').detach();
@@ -41,6 +45,8 @@ $(function(){
 
         // Disable tooltip in mobile
         $('.variant-wrapper,.product-color--single').tooltip('disable');
+
+        // $('.kss_sizes.wo-image .radio-label').tooltip('enable');
         $('.colorOptions__trigger').click();
 
     }
