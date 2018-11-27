@@ -22,8 +22,7 @@ export class ShippingDetailsComponent implements OnInit {
     landmark : '',
     city : '',
     state_id : '',
-    default : false,
-    type : ''
+    default : false
   };
   selectedAddressId : any;
   states : any;
@@ -181,7 +180,6 @@ export class ShippingDetailsComponent implements OnInit {
     this.addAddress = true;
     this.newAddress = {};
     this.newAddress.default = false;
-    this.newAddress.type = "";
     this.newAddress.state_id="";
     this.newAddress.landmark = "";
     this.initSelectPicker();
@@ -262,5 +260,12 @@ export class ShippingDetailsComponent implements OnInit {
     if(this.states && this.addresses){
       this.appservice.removeLoader();
     }
+  }
+
+  getStateName(id){
+    if(this.states){
+      let state_obj = this.states.find((state)=>{ return id == state.id});
+      return state_obj.state;
+    }    
   }
 }
