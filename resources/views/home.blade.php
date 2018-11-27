@@ -11,7 +11,7 @@
 @section('content')
 <div id="home-slider" class="home-slider">
     <div  class="home-slide-item">
-      <a href="#">
+      <a href="/shop?rf=price:0TO999/">
         <picture>
            <source media="(orientation: landscape)"
                   data-srcset="{{CDN::asset('/img/home-banner/home-banner-large.jpg') }} 2000w,
@@ -78,7 +78,7 @@
   <div class="container mb-3">
       <div class="row">
           <div class="col-md-3 col-6 mb-md-0 mb-3">
-            <a href="/infant-0-2-years/dress/" class="card link-card border-0 text-center pt-3" style="background-color:#EEFAFC;">
+            <a href="/infant-0-2-years/" class="card link-card border-0 text-center pt-3" style="background-color:#EEFAFC;">
                 <label class="font-weight-bold m-0 link-card_text">0-2 YEARS</label>
                 <h4 class="font-weight-bold link-card_text">Infants</h4>
                 <hr class="w-25 m-auto border-dark">
