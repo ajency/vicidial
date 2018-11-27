@@ -231,3 +231,16 @@
  	overflow: auto !important;
  	}
 }
+
+.custom-padding{
+	padding-bottom: 30px !important;
+	@media (max-width: 340px){
+		padding-bottom: 100px !important;
+	}
+}
+
+.mt-i-1{
+	@media (max-width: 340px){
+		margin-top: 5px;
+	}
+}

@@ -555,7 +555,7 @@
         </div>
     </div>
     <div class="text-center mt-3">
-      <a href="/shop" class="viewall-link">View All</a>
+      <a href="/shop" class="viewall-link">View More <i class="fas fa-chevron-right"></i></a>
     </div>
   </div>
 </section>
@@ -801,10 +801,10 @@
             <div class="d-flex align-items-center justify-content-between flex-column-reverse flex-sm-row border-0 text-left p-2 p-sm-4" style="background-color: #f2e6de;">
               <div class="text-center text-sm-left pr-0 pr-sm-3">
                 <h2 class="font-weight-bold mt-3">
-                 Give your child something special
+                  Free shipping!
                 </h2>
                 <p class="text-muted mt-1 captions">
-                  Shop from us for amazing deals all year around.
+                  We provide free shipping on all our products. No minimum checkout value.
                 </p>
               </div>
               <div class="bg-gift ml-auto home-coupon shipping-img"></div>

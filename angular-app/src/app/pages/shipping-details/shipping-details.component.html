@@ -1,5 +1,5 @@
 <div id="cd-cart" class="angular-app h-100" style="right: 0">
-	<div *ngIf="addAddress || (addresses && addresses.length)" class="kss_shipping slide-out slide-show">
+	<div *ngIf="addAddress || (addresses && addresses.length)" class="kss_shipping slide-out slide-show custom-padding">
 		<div class="scroll-container">
 			<nav class="navbar navbar-dark bg-dark pt-3 pb-3 ">
 				<div class="d-flex align-items-center w-100">
@@ -107,13 +107,13 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-md-6">
+							<div class="col-md-12">
 								<div class="form-group ">
 									<input type="text" class="form-control form-control-lg" id="landmark" name="landmark" [(ngModel)]="newAddress.landmark" [ngClass]="{'has-value' : newAddress.landmark}">
 									<label class="control-label">Landmark</label>
 								</div>
 							</div>
-							<div class="col-md-6">
+						<!-- 	<div class="col-md-6">
 								<div class="form-group custom-select-drop">
 									<select name="type" id="address_type" class="form-control form-control-lg has-value" [(ngModel)]="newAddress.type" required>
 										<option value="">--Select--</option>
@@ -122,7 +122,7 @@
 									</select>
 									<label class="control-label">Type of address <span class="pl-1 text-danger">*</span></label>
 								</div>
-							</div>							
+							</div>	 -->						
 						</div>
 						<div *ngIf="!hideDefaultAddressField && addresses.length" class="row mt-4 mb-3">
 							<div class="col-md-12">
@@ -149,7 +149,7 @@
 										<h3 class="kss-title font-weight-bold d-flex align-items-center w-100">{{address.name}} <span *ngIf="address.default" class="pl-2">(Default)  </span> <!-- <i class="fas fa-pencil-alt number-edit ml-2" (click)="editAddress(address)"></i> --></h3>
 
 										<p class="w-75">
-											{{address.address}}, {{address.city}}, {{address.state}} {{address.pincode}}
+											{{address.address}}, {{address.city}}, {{getStateName(address.state_id)}} {{address.pincode}}
 										</p>
 										<p class="w-75">
 											Mobile: <b class="font-weight-bold">{{address.phone}}</b>

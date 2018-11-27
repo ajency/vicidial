@@ -27,7 +27,7 @@ class OrderController extends Controller
         $order = Order::create([
             'cart_id'       => $cart->id,
             'address_id'    => $address->id,
-            'address_data'  => array_merge($address->address,["id"=>$address->id]),
+            'address_data'  => $address->shippingAddress(),
             'expires_at'    => Carbon::now()->addMinutes(config('orders.expiry'))->timestamp,
         ]);
 
@@ -63,7 +63,7 @@ class OrderController extends Controller
             $address = Address::find($params["address_id"]);
             validateAddress($user, $address);
             $order->address_id      = $address->id;
-            $order->address_data    = array_merge($address->address,["id"=>$address->id]);
+            $order->address_data    = $address->shippingAddress();
             $order->save();
         }
         else {

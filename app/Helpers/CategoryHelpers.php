@@ -234,18 +234,17 @@ function generateProductListTitle($categories,$slug_name_value_arr){
 
 
 function getFacetValueSlugPairs(){
-	$facets = Facet::select('facet_name',DB::raw('group_concat(concat(facet_value,"$$$",slug)) as "values"'))->groupBy('facet_name')->get();
+	$facets = Facet::select('facet_name',DB::raw('group_concat(facet_value) as "facet_values",group_concat(slug) as "slugs"'))->groupBy('facet_name')->get();
     $search_result_assoc = [];
     foreach($facets as $facet){
-        $comb = explode(",", $facet->values);
-        $facet_values = [];
+        $facet_values = explode(",", $facet->facet_values);
+        $facet_slugs = explode(",", $facet->slugs);
         $facet_value_slug_pairs = [];
-        foreach($comb as $combv){
-            $cmbvalue = explode("$$$", $combv);
-            array_push($facet_values, $cmbvalue[0]);
-            $facet_value_slug_pairs[$cmbvalue[0]]=$cmbvalue[1];
+        foreach($facet_values as $facet_valuesk => $facet_valuesv){
+            $facet_value_slug_pairs[$facet_valuesv]=$facet_slugs[$facet_valuesk];
         }
         $search_result_assoc[$facet->facet_name] = $facet_value_slug_pairs;
     }
+    // dd($search_result_assoc);
     return $search_result_assoc;
 }
