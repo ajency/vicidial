@@ -350,10 +350,10 @@
           <a href="/blue-cotton-rompers-1071-navy/buy/">
             <div class="">
               <img class="d-block w-100 img-fluid lazyload blur-up"
-                  src="{{CDN::asset('/img/product-of-day/infant-3-10px.jpg') }}"
-                  data-srcset="{{CDN::asset('/img/product-of-day/infant-3-large.jpg') }} 978w,
-                               {{CDN::asset('/img/product-of-day/infant-3-medium.jpg') }} 652w,
-                               {{CDN::asset('/img/product-of-day/infant-3-small.jpg') }} 326w"
+                  src="{{CDN::asset('/img/product-of-day/infant-2-10px.jpg') }}"
+                  data-srcset="{{CDN::asset('/img/product-of-day/infant-2-large.jpg') }} 978w,
+                               {{CDN::asset('/img/product-of-day/infant-2-medium.jpg') }} 652w,
+                               {{CDN::asset('/img/product-of-day/infant-2-small.jpg') }} 326w"
                   data-sizes='(min-width: 1200px) 266px, (min-width: 991px) 22vw, 41vw'
                   title="Blue Cotton Rompers"
                   alt="Blue Cotton Rompers"/>
@@ -524,10 +524,10 @@
             <a href="/cobalt-casual-knit-short-1010-cobalt/buy/">
               <div class="">
                 <img class="d-block w-100 img-fluid lazyload blur-up"
-                    src="{{CDN::asset('/img/product-of-day/infant-4-10px.jpg') }}"
-                    data-srcset="{{CDN::asset('/img/product-of-day/infant-4-large.jpg') }} 978w,
-                                 {{CDN::asset('/img/product-of-day/infant-4-medium.jpg') }} 652w,
-                                 {{CDN::asset('/img/product-of-day/infant-4-small.jpg') }} 326w"
+                    src="{{CDN::asset('/img/product-of-day/infant-3-10px.jpg') }}"
+                    data-srcset="{{CDN::asset('/img/product-of-day/infant-3-large.jpg') }} 978w,
+                               {{CDN::asset('/img/product-of-day/infant-3-medium.jpg') }} 652w,
+                               {{CDN::asset('/img/product-of-day/infant-3-small.jpg') }} 326w"
                     data-sizes='(min-width: 1200px) 266px, (min-width: 991px) 22vw, 41vw'
                     title="Cobalt Casual Knit Short"
                     alt="Cobalt Casual Knit Short"/>
