@@ -23,7 +23,7 @@
                   <li><a class="dropdown-item" href="/formal-pant/">Formal Pant</a></li>
                   <li><a class="dropdown-item" href="/infant-utility/">Infant Utility</a></li>
                   <li><a class="dropdown-item" href="/jeans/">Jeans</a></li>
-                  <li><a class="dropdown-item" href="/others/">Others</a></li>
+                  <!-- <li><a class="dropdown-item" href="/others/">Others</a></li> -->
                   <li><a class="dropdown-item" href="/shirt/">Shirt</a></li>
                   <li><a class="dropdown-item" href="/shoes/">Shoes</a></li>
                   <li><a class="dropdown-item" href="/short/">Short</a></li>
