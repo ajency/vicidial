@@ -30,15 +30,15 @@
         </div>
 
         <div class="mbr-footer-content col-md-4 mt-4 mt-sm-5 mt-md-0">
-          <p class="font-weight-bold"><strong>Subscribe To Our Newsletter</strong></p>
+<!--           <p class="font-weight-bold"><strong>Subscribe To Our Newsletter</strong></p>
           <form class="">
             <div class="form-group m-0 d-flex align-items-baseline newsletter">
               <input type="email" class="form-control newsletter__input" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email address">
               <button type="submit" class="btn btn-primary newsletter__btn">Submit</button>
             </div>
             <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-          </form>
-          <p class="font-weight-bold mt-4"><strong>Keep In Touch (Social Connect)</strong></p>
+          </form> -->
+          <p class="font-weight-bold"><strong>Keep In Touch (Social Connect)</strong></p>
           <ul class="list-inline">
             <li class="list-inline-item"><a href="https://www.facebook.com/kidsuperstore" class="text-dark" target="_blank"><i class="fab fa-facebook-f socialIcon-size"></i><span class="social-title">Facebook</span></a></li>
             <!-- <li class="list-inline-item"><a href="#" class="text-gray"><h3><i class="fab fa-twitter"></i></h3></a></li>
