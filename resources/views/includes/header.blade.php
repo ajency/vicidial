@@ -41,11 +41,13 @@
                 <ul class="">
                   <li><a class="dropdown-item" href="/boys/junior-7-14-years--toddler-2-7-years/bottoms/">Bottoms</a></li>
                   <li><a class="dropdown-item" href="/boys/junior-7-14-years--toddler-2-7-years/ethnic/">Ethnic</a></li>
+                  <li><a class="dropdown-item" href="/boys/junior-7-14-years--toddler-2-7-years/formal-pant/">Formal Pants</a></li>
                   <li><a class="dropdown-item" href="/boys/junior-7-14-years--toddler-2-7-years/jeans/">Jeans</a></li>
                   <!-- <li><a class="dropdown-item" href="/boys/junior-7-14-years--toddler-2-7-years/others/">Others</a></li> -->
                   <li><a class="dropdown-item" href="/boys/junior-7-14-years--toddler-2-7-years/shirt/">Shirt</a></li>
-                  <li><a class="dropdown-item" href="/shoes/boys/">Shoes</a></li>
+                  <li><a class="dropdown-item" href="/shoes/boys/toddler-2-7-years--junior-7-14-years/">Shoes</a></li>
                   <li><a class="dropdown-item" href="/boys/junior-7-14-years--toddler-2-7-years/short/">Short</a></li>
+                  <li><a class="dropdown-item" href="/boys/junior-7-14-years--toddler-2-7-years/sweatshirt/">Sweatshirt</a></li>
                   <li><a class="dropdown-item" href="/boys/junior-7-14-years--toddler-2-7-years/tshirt/">Tshirt</a></li>
                 </ul>
             </li>
@@ -57,13 +59,11 @@
                   <li><a class="dropdown-item" href="/girls/junior-7-14-years--toddler-2-7-years/bottoms/">Bottoms</a></li>
                   <li><a class="dropdown-item" href="/girls/junior-7-14-years--toddler-2-7-years/dress/">Dress</a></li>
                   <li><a class="dropdown-item" href="/girls/junior-7-14-years--toddler-2-7-years/ethnic/">Ethnic</a></li>
-                  <li><a class="dropdown-item" href="/girls/junior-7-14-years--toddler-2-7-years/formal-pant/">Formal Pant</a></li>
                   <li><a class="dropdown-item" href="/girls/junior-7-14-years--toddler-2-7-years/jeans/">Jeans</a></li>
                   <!-- <li><a class="dropdown-item" href="/girls/junior-7-14-years--toddler-2-7-years/others/">Others</a></li> -->
-                  <li><a class="dropdown-item" href="/shoes/girls/">Shoes</a></li>
+                  <li><a class="dropdown-item" href="/shoes/girls/toddler-2-7-years--junior-7-14-years/">Shoes</a></li>
                   <li><a class="dropdown-item" href="/girls/junior-7-14-years--toddler-2-7-years/short/">Short</a></li>
                   <li><a class="dropdown-item" href="/girls/junior-7-14-years--toddler-2-7-years/skirt/">Skirt</a></li>
-                  <li><a class="dropdown-item" href="/girls/junior-7-14-years--toddler-2-7-years/tops/">Tops</a></li>
                   <li><a class="dropdown-item" href="/girls/junior-7-14-years--toddler-2-7-years/tshirt/">Tshirt</a></li>
                   <li><a class="dropdown-item" href="/girls/junior-7-14-years--toddler-2-7-years/woven-tops/">Woven Tops</a></li>
                 </ul>

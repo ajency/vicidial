@@ -1,9 +1,6 @@
 <div class="row center" >
 
 	<div class="col-12 order-2 col-sm-12 col-md-12 order-sm-1 px-0 item">
-		@php if(count((array)$params['images'])>0) { @endphp
-		<img src="/img/arrow.png" class="swipe-arrow d-block d-md-none" alt="Swipe arrow">
-		@php } @endphp
 		<div class="loader"></div>
 			@php  if(count((array)$params['images'])>0) {
 				$divclass = 'prod-slides';

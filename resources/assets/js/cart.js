@@ -1,5 +1,7 @@
 var add_to_cart_failed = false;
 var add_to_cart_failure_message = '';
+var add_to_cart_clicked = false;
+var add_to_cart_completed = false;
 
 $(document).ready(function(){
     //Set crt count on page load
@@ -45,7 +47,7 @@ $(document).ready(function(){
         $(add_to_cart_element).addClass('cartLoader');
         
         // for angular app 
-        sessionStorage.setItem( "add_to_cart_clicked", "true");
+        add_to_cart_clicked = true;
         openCart();
 
         if($('input[type=radio][name=kss-sizes]:checked').length == 0){
@@ -95,7 +97,7 @@ $(document).ready(function(){
                 //var itemImg = $(add_to_cart_element).closest('.container').find('img').eq(1);
                 //flyToElement($(itemImg), $('.shopping-cart'));
                 document.cookie = "cart_count=" + data.cart_count + ";path=/";
-                sessionStorage.setItem( "addded_to_cart", "true");
+                add_to_cart_completed = true;
                 // set_cart_data(data.item);
                 updateCartCountInUI();
                 // $('.kss-alert .message').html('<strong>Success!!!</strong> Added to bag');
@@ -126,6 +128,7 @@ $(document).ready(function(){
         var error_msg = (request && request.responseJSON && request.responseJSON.message!='') ? request.responseJSON.message : 'Could not add to bag';
         //if(request.responseJSON.message!='') error_msg = request.responseJSON.message
         add_to_cart_failed = true;
+        add_to_cart_completed = true;
         console.log("error_msg",error_msg);
         add_to_cart_failure_message = error_msg=='Quantity not available' ? 'Could not add '+ $('.section-heading--single').text() +' to bag as it is out of stock' : (error_msg == "invalid cart" ? 'Hey, before you add your item to bag it looks like you were interrupted during your last checkout. You can place this existing order or edit bag to add more items.' : 'Due to the high traffic, there was an issue adding your item to bag. Please try adding the item again' );
 
@@ -138,7 +141,6 @@ $(document).ready(function(){
         $('#cd-cart').css('pointer-events','none');
         $('.cd-add-to-cart').removeClass('cartLoader');
         setTimeoutVariable();
-        sessionStorage.setItem( "addded_to_cart", "false");
     }
     function userLogout(request){
         document.cookie = "cart_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
@@ -211,7 +213,7 @@ function openCart(){
 }
 
 function updateCartCountInUI() {
-    //Check if cart count in Session storage
+    //Check cart count in cookie
     var cart_count = getCookie( "cart_count" );
     if(cart_count && cart_count != "0")
     {
@@ -226,31 +228,7 @@ function updateCartCountInUI() {
     }
 }
 
-
-function set_cart_data(json) {
-    //Check if cart json in Session storage
-    var cart_data = sessionStorage.getItem( "cart_data" );
-    var found = 0;
-    if(cart_data) {
-        cart_data = JSON.parse(cart_data);
-        // cart_data.forEach(function(item) {
-        //   if(item.id == json.id) {
-        //     found = 1;
-        //     break;
-        //   };
-        // });
-    }
-    else {
-        var cart_data = new Array();
-    }
-
-    if(found == 0) {
-        cart_data.push(json);
-        sessionStorage.setItem( "cart_data", JSON.stringify(cart_data) );
-    }
-}
-
-  loaded = false;
+loaded = false;
 
 function loadAngularApp(){
     if(!loaded){
