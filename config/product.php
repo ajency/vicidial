@@ -260,7 +260,7 @@ return [
             'item_display_name'      => 'Include Out Of Stock',
             'is_singleton'           => true,
             'is_collapsed'           => true,
-            'template'               => "availability",
+            'template'               => null,//"availability",
             'order'                  => 6,
             'display_count'          => false,
             'disabled_at_zero_count' => true,

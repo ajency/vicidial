@@ -210,7 +210,7 @@ function sanitiseFilterdata($result, $params = [])
         [
             "display_name" => config('product.facet_display_data.variant_availability.item_display_name'),
             "facet_value"  => false,
-            "is_selected" => (isset($params['search_object']['boolean_filter']['variant_availability']) or $params['search_object']['boolean_filter']['variant_availability']),
+            "is_selected" => (isset($params['search_object']['boolean_filter']['variant_availability']) and $params['search_object']['boolean_filter']['variant_availability']),
             "count" => 20,
         ],
     ];
@@ -285,10 +285,10 @@ function showProductsWithImages($params){
 }
 
 function showProductsWithInventory($params){
-    if(isset($params['search_object']['boolean_filter']['variant_availability']) && !$params['search_object']['boolean_filter']['variant_availability']){
-        return false;
+    if(isset($params['search_object']['boolean_filter']['variant_availability']) && $params['search_object']['boolean_filter']['variant_availability']){
+        return true;
     }
-    return true;
+    return false;
 }
 
 function textSearch(ElasticQuery $q, string $text)
