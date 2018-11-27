@@ -13,7 +13,7 @@ class AddressController extends Controller
 {
     public function userAddAddress(Request $request)
     {
-    	$request->validate(['default' => 'required', 'name' => 'required', 'phone' => 'required|digits:10', 'pincode' => 'required|digits:6', 'state_id' => 'required|numeric', 'address' => 'required', 'locality' => 'required', 'landmark' => 'present', 'city' => 'required', 'type' => 'required']);
+    	$request->validate(['default' => 'required', 'name' => 'required', 'phone' => 'required|digits:10', 'pincode' => 'required|digits:6', 'state_id' => 'required|numeric', 'address' => 'required', 'locality' => 'required', 'landmark' => 'present', 'city' => 'required']);
     	$params  = $request->all();
     	$user_id = User::getUserByToken($request->header('Authorization'))->id;
 
@@ -24,19 +24,16 @@ class AddressController extends Controller
 
     	$address = new Address;
         $address->address = ["name" => $params["name"], "phone" => $params["phone"], "pincode" => $params["pincode"], "state_id" => $state->id, "state_odoo_id" => $state->meta_data['odoo_id'], "state" => $state->label, "address" => $params["address"], "locality" => $params["locality"], "landmark" => $params["landmark"], "city" => $params["city"]];
-        $address->type = $params["type"];
         $address->default = $default;
         $address->user_id = $user_id;
         $address->save();
 
-        $address_data = $this->addressObj($address);
-
-        return json_encode(["address"=> $address_data, "message"=> "Address Added successfully", 'success'=> true]);
+        return json_encode(["address"=> $address->shippingAddress(true), "message"=> "Address Added successfully", 'success'=> true]);
     }
 
     public function userEditAddress(Request $request)
     {
-        $request->validate(['default' => 'required', 'name' => 'required', 'phone' => 'required|digits:10', 'pincode' => 'required|digits:6', 'state_id' => 'required|numeric', 'address' => 'required', 'locality' => 'required', 'landmark' => 'present', 'city' => 'required', 'type' => 'required']);
+        $request->validate(['default' => 'required', 'name' => 'required', 'phone' => 'required|digits:10', 'pincode' => 'required|digits:6', 'state_id' => 'required|numeric', 'address' => 'required', 'locality' => 'required', 'landmark' => 'present', 'city' => 'required']);
         $params  = $request->all();
         $user_id = User::getUserByToken($request->header('Authorization'))->id;
 
@@ -49,14 +46,11 @@ class AddressController extends Controller
         $default = $this->defaultAddressSet($user_id, $params["default"], $address->id);
 
         $address->address = ["name" => $params["name"], "phone" => $params["phone"], "pincode" => $params["pincode"], "state_id" => $state->id, "state_odoo_id" => $state->meta_data['odoo_id'], "state" => $state->label, "address" => $params["address"], "locality" => $params["locality"], "landmark" => $params["landmark"], "city" => $params["city"]];
-        $address->type = $params["type"];
         $address->default = $default;
         $address->user_id = $user_id;
         $address->save();
 
-        $address_data = $this->addressObj($address);
-
-        return json_encode(["address"=> $address_data, "message"=> "Address Updated successfully", 'success'=> true]);
+        return json_encode(["address"=> $address->shippingAddress(true), "message"=> "Address Updated successfully", 'success'=> true]);
     }
 
     public function userFetchAddresses(Request $request)
@@ -80,7 +74,7 @@ class AddressController extends Controller
         $address_data = array();
 
         foreach ($addresses as $address) {
-            $address_data[] = $this->addressObj($address);
+            $address_data[] = $address->shippingAddress(true);
         }
 
         return json_encode(["addresses"=> $address_data]);
@@ -135,19 +129,6 @@ class AddressController extends Controller
         }
 
         return $address->id;
-    }
-
-    public function addressObj($address)
-    {
-        $address_data = $address->address;
-        $address_data["id"] = $address->id;
-        $address_data["type"] = $address->type;
-        $address_data["default"] = $address->default;
-
-        unset($address_data['state']);
-        unset($address_data['state_odoo_id']);
-
-        return $address_data;
     }
 
     public function fetchStates(Request $request)
