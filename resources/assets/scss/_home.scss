@@ -53,6 +53,9 @@
 #slider-newarrival{
     margin-top:-5px;
 }
+.carousel-indicators{
+    bottom: 0;
+}
 .sketch-boy{
     background: url(../img/sprite.png)no-repeat;
     width: 110px;
@@ -396,7 +399,7 @@
             font-size: 1.6em;
         }
         &__caption{
-            font-size: 1.3em;   
+            font-size: 1.3em;
         }
     }
 }

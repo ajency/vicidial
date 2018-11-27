@@ -134,13 +134,13 @@
                   <div class="carousel-item active">
                     <a href="/accessories/others/">
                       <img class="d-block w-100 img-fluid lazyload blur-up"
-                        src="{{CDN::asset('/img/new-arrival/cup-10px.jpg') }}"
-                        data-srcset="{{CDN::asset('/img/new-arrival/cup-large.jpg') }} 813w,
-                                     {{CDN::asset('/img/new-arrival/cup-medium.jpg') }} 542w,
-                                     {{CDN::asset('/img/new-arrival/cup-small.jpg') }} 271w"
+                        src="{{CDN::asset('/img/new-arrival/kids-accessories-10px.jpg') }}"
+                        data-srcset="{{CDN::asset('/img/new-arrival/kids-accessories-large.jpg') }} 813w,
+                                     {{CDN::asset('/img/new-arrival/kids-accessories-medium.jpg') }} 542w,
+                                     {{CDN::asset('/img/new-arrival/kids-accessories-small.jpg') }} 271w"
                         data-sizes='(min-width: 1200px) 270px, (min-width: 768px) 22vw,  44vw'
-                        alt="New Arrivals - Jewerly"
-                        title="New Arrivals - Jewerly"/>
+                        alt="New Arrivals - Accessories"
+                        title="New Arrivals - Accessories"/>
                       </a>
                   </div>
                   <div class="carousel-item">
