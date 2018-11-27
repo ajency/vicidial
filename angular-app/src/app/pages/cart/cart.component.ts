@@ -201,6 +201,7 @@ export class CartComponent implements OnInit {
   }
 
   deleteItem(item){
+    this.addToCartFailed = false;
     this.appservice.showLoader()
     let body = { variant_id : item.id };
     let url = this.appservice.apiUrl + (this.appservice.isLoggedInUser() ? ("/api/rest/v1/user/cart/"+this.appservice.getCookie('cart_id')+"/delete?") : ("/rest/v1/anonymous/cart/delete?"));
@@ -300,6 +301,7 @@ export class CartComponent implements OnInit {
   }
 
   modalHandler(){
+    this.addToCartFailed = false;
     if(this.appservice.isLoggedInUser()){
       this.navigateToShippingDetailsPage();
     }
@@ -318,11 +320,11 @@ export class CartComponent implements OnInit {
     $('body').addClass('hide-scroll');
   }
 
-  next(event: KeyboardEvent,el1,el2,value) {
-    console.log(value);
-    if(event.which > 47 && event.which < 58 && value){
+  onKeyDown(event,el1,el2,value) {
+    console.log("onKeyDown event ",value, event.which, event.keyCode);
+    if( ((event.which > 47 && event.which < 58) || (event.which > 95 && event.which < 106)) && value){
       el2.focus();
-      console.log('next funtion call el2');
+      console.log('onKeyDown funtion call el2');
     }
     // else if(event.which == 8){
     //   el1.focus();
@@ -334,14 +336,15 @@ export class CartComponent implements OnInit {
     }
   }
 
-  prev(event: KeyboardEvent,el1,el2, value) {
-    if(event.which > 47 && event.which < 58 && value){
+  onKeyUp(event,el1,el2, value) {
+    console.log("onKeyUp event ",value, event.which, event.keyCode);
+    if(((event.which > 47 && event.which < 58) || (event.which > 95 && event.which < 106)) && value){
       el2.focus();
-      console.log('next funtion call el2');
+      console.log('onKeyUp funtion call el2');
     }
     if(event.key=="Backspace"){
        el1.focus();
-       console.log('prev funtion call el1');
+       console.log('onKeyUp funtion call el1');
      }
     // else
     //   el2.focus();
