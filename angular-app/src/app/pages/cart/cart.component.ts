@@ -104,7 +104,7 @@ export class CartComponent implements OnInit {
   }
 
   fetchCartDataOnAddToCartSuccess(){    
-    this.appservice.showLoader()
+    this.appservice.showLoader();
     if(sessionStorage.getItem('cart_data')){
       this.cart = JSON.parse(sessionStorage.getItem('cart_data'));
     }
@@ -443,10 +443,13 @@ export class CartComponent implements OnInit {
   }
 
   updateLocalDataAndUI(cart : any = null, cart_count = 0){
-    if(cart)
-      sessionStorage.setItem('cart_data', JSON.stringify(cart));
-    else
-      this.appservice.clearSessionStorage();
+    console.log("isSessionStorageSupported ==>", this.isSessionStorageSupported());
+    if(this.isSessionStorageSupported()){
+      if(cart)
+          sessionStorage.setItem('cart_data', JSON.stringify(cart));
+      else
+        this.appservice.clearSessionStorage();
+    }
     document.cookie = "cart_count=" + cart_count + ";path=/";
     this.appservice.updateCartCountInUI();
   }
@@ -487,6 +490,16 @@ export class CartComponent implements OnInit {
       this.appservice.removeLoader();
       this.fetchCartDataFromServer()
     })
+  }
+
+  isSessionStorageSupported() {
+    try {
+      sessionStorage.setItem('test', 'test');
+      sessionStorage.removeItem('test');    
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
   
 }
