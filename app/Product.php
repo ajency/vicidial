@@ -332,14 +332,16 @@ class Product
         if (isset($params["search_object"]["boolean_filter"])) {
             $filter_params["search_object"]["boolean_filter"] = $params["search_object"]["boolean_filter"];
         }
+        if(isset($params["search_object"]["search_string"])) {
+            $filter_params["search_object"]["search_string"] = $params["search_object"]["search_string"];
+        }
 
         $filter_params["display_limit"] = $params["display_limit"];
         $filter_params["page"]          = $params["page"];
-        if (isset($params["sort_on"])) {
+        if(isset($params["sort_on"])) {
             $filter_params["sort_on"] = $params["sort_on"];
         }
 
-        // print_r($filter_params);
         // dd($filter_params,$params);
 
         // $params = $filter_params =  ['search_object' =>['primary_filter' => [ 'product_gender' => ['Boys','all']]], 'display_limit' => 20, 'page' => 1] ;

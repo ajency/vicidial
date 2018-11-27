@@ -70,6 +70,9 @@ function build_search_object($params) {
 	                $dataArr["search_result"]["range_filter"][$ar_keys_ar[0]]=["min"=>$min_max_arr[0],"max"=>$min_max_arr[1]];
 	            }
 			}
+			if($queryk == "search_string"){
+				$dataArr["search_result"][$queryk]=$queryv;
+			}
 		}
 	}
 	else{
