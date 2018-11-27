@@ -257,10 +257,10 @@ return [
         ],
         'variant_availability'  => [
             'name'                   => 'Availability',
-            'item_display_name'      => 'Exclude Out Of Stock',
+            'item_display_name'      => 'Include Out Of Stock',
             'is_singleton'           => true,
             'is_collapsed'           => true,
-            'template'               => 'availability',
+            'template'               => "availability",
             'order'                  => 6,
             'display_count'          => false,
             'disabled_at_zero_count' => true,
