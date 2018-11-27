@@ -555,7 +555,7 @@
         </div>
     </div>
     <div class="text-center mt-3">
-      <a href="/shop" class="viewall-link">View All</a>
+      <a href="/shop" class="viewall-link">View More <i class="fas fa-chevron-right"></i></a>
     </div>
   </div>
 </section>

@@ -12166,9 +12166,8 @@ footer .bl-1 {
   display: inline-block;
   font-size: 1.4em;
   color: #004283;
-  font-weight: 600;
+  font-weight: 400;
   padding: 10px 5px 2px 5px;
-  border-bottom: 2px solid;
 }
 
 .viewall-link:hover {
@@ -14024,6 +14023,14 @@ body #cd-cart .modal.show .modal-dialog {
   margin: -10px -20px 0 -20px;
 }
 
+.priceRange .irs-line-left {
+  left: 5px;
+}
+
+.priceRange .irs-line-right {
+  right: 5px;
+}
+
 .prod-slides .carousel-image {
   display: block;
   width: auto !important;
@@ -14892,12 +14899,14 @@ body #cd-cart .modal.show .modal-dialog {
   }
 }
 
-.priceRange .irs-line-left {
-  left: 5px;
+.custom-padding {
+  padding-bottom: 30px;
 }
 
-.priceRange .irs-line-right {
-  right: 5px;
+@media (max-width: 340px) {
+  .custom-padding {
+    padding-bottom: 100px;
+  }
 }
 
 nav.navbar {
