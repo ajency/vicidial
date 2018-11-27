@@ -7,7 +7,8 @@ import { Subscription } from 'rxjs/Subscription';
 declare var $: any;
 declare var add_to_cart_failed: any;
 declare var add_to_cart_failure_message: any;
-
+declare var add_to_cart_clicked: any;
+declare var add_to_cart_completed: any;
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
@@ -58,7 +59,6 @@ export class CartComponent implements OnInit {
     console.log("listened to the add to cart trigger");
     this.cartOpen = true;
     this.fetchCartDataOnAddToCartSuccess();
-    sessionStorage.removeItem('add_to_cart_clicked');
   }
 
   loadCart(){
@@ -81,9 +81,9 @@ export class CartComponent implements OnInit {
       this.updateUrl();
       this.cartOpen = true;
       $('.ng-cart-loader').removeClass('cart-loader')
-      if(sessionStorage.getItem('add_to_cart_clicked')){
+      if(add_to_cart_clicked){
         this.fetchCartDataOnAddToCartSuccess();
-        sessionStorage.removeItem('add_to_cart_clicked');
+        add_to_cart_clicked = false;
       }
       else{
         this.getCartData();
@@ -104,7 +104,7 @@ export class CartComponent implements OnInit {
   }
 
   fetchCartDataOnAddToCartSuccess(){    
-    this.appservice.showLoader()
+    this.appservice.showLoader();
     if(sessionStorage.getItem('cart_data')){
       this.cart = JSON.parse(sessionStorage.getItem('cart_data'));
     }
@@ -112,9 +112,9 @@ export class CartComponent implements OnInit {
       this.cart = {};
     
     this.sessionCheckInterval = setInterval(()=>{
-      if(sessionStorage.getItem('addded_to_cart')){
+      if(add_to_cart_completed){
         this.fetchCartDataFromServer();
-        sessionStorage.removeItem('addded_to_cart');
+        add_to_cart_completed = false;
         clearInterval(this.sessionCheckInterval);
       }
     this.zone.run(() => {});
@@ -443,10 +443,13 @@ export class CartComponent implements OnInit {
   }
 
   updateLocalDataAndUI(cart : any = null, cart_count = 0){
-    if(cart)
-      sessionStorage.setItem('cart_data', JSON.stringify(cart));
-    else
-      this.appservice.clearSessionStorage();
+    console.log("isSessionStorageSupported ==>", this.isSessionStorageSupported());
+    if(this.isSessionStorageSupported()){
+      if(cart)
+          sessionStorage.setItem('cart_data', JSON.stringify(cart));
+      else
+        this.appservice.clearSessionStorage();
+    }
     document.cookie = "cart_count=" + cart_count + ";path=/";
     this.appservice.updateCartCountInUI();
   }
@@ -487,6 +490,16 @@ export class CartComponent implements OnInit {
       this.appservice.removeLoader();
       this.fetchCartDataFromServer()
     })
+  }
+
+  isSessionStorageSupported() {
+    try {
+      sessionStorage.setItem('test', 'test');
+      sessionStorage.removeItem('test');    
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
   
 }
