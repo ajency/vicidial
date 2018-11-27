@@ -266,15 +266,29 @@ function setElasticFacetFilters($q, $params)
     // $must = hideZeroColorIDProducts($q, $must);
     // $must = hideZeroSizeIDProducts($q, $must);
     $nested3[] = filterActiveProducts($q, $must);
-    if (isset($params['search_object']['boolean_filter']['product_image_available']) && $params['search_object']['boolean_filter']['product_image_available']) {
+    if (showProductsWithImages($params)) {
         $nested3[] = hideProductWithoutImages($q, $must);
     }
-    if (isset($params['search_object']['boolean_filter']['variant_availability']) && $params['search_object']['boolean_filter']['variant_availability']) {
+    if (showProductsWithInventory($params)) {
         $nested3[] = hideUnavailableProducts($q, $must);
     }
 
     $must = $q::addToBoolQuery('filter', $nested3, $must);
     return $must;
+}
+
+function showProductsWithImages($params){
+    if(isset($params['search_object']['boolean_filter']['product_image_available']) && !$params['search_object']['boolean_filter']['product_image_available']){
+        return false;
+    }
+    return true;
+}
+
+function showProductsWithInventory($params){
+    if(isset($params['search_object']['boolean_filter']['variant_availability']) && !$params['search_object']['boolean_filter']['variant_availability']){
+        return false;
+    }
+    return true;
 }
 
 function textSearch(ElasticQuery $q, string $text)
