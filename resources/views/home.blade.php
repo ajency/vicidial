@@ -11,7 +11,7 @@
 @section('content')
 <div id="home-slider" class="home-slider">
     <div  class="home-slide-item">
-      <a href="#">
+      <a href="/shop?rf=price:0TO999/">
         <picture>
            <source media="(orientation: landscape)"
                   data-srcset="{{CDN::asset('/img/home-banner/home-banner-large.jpg') }} 2000w,
@@ -78,7 +78,7 @@
   <div class="container mb-3">
       <div class="row">
           <div class="col-md-3 col-6 mb-md-0 mb-3">
-            <a href="/infant-0-2-years/dress/" class="card link-card border-0 text-center pt-3" style="background-color:#EEFAFC;">
+            <a href="/infant-0-2-years/" class="card link-card border-0 text-center pt-3" style="background-color:#EEFAFC;">
                 <label class="font-weight-bold m-0 link-card_text">0-2 YEARS</label>
                 <h4 class="font-weight-bold link-card_text">Infants</h4>
                 <hr class="w-25 m-auto border-dark">
@@ -134,13 +134,13 @@
                   <div class="carousel-item active">
                     <a href="/accessories/others/">
                       <img class="d-block w-100 img-fluid lazyload blur-up"
-                        src="{{CDN::asset('/img/new-arrival/cup-10px.jpg') }}"
-                        data-srcset="{{CDN::asset('/img/new-arrival/cup-large.jpg') }} 813w,
-                                     {{CDN::asset('/img/new-arrival/cup-medium.jpg') }} 542w,
-                                     {{CDN::asset('/img/new-arrival/cup-small.jpg') }} 271w"
+                        src="{{CDN::asset('/img/new-arrival/kids-accessories-10px.jpg') }}"
+                        data-srcset="{{CDN::asset('/img/new-arrival/kids-accessories-large.jpg') }} 813w,
+                                     {{CDN::asset('/img/new-arrival/kids-accessories-medium.jpg') }} 542w,
+                                     {{CDN::asset('/img/new-arrival/kids-accessories-small.jpg') }} 271w"
                         data-sizes='(min-width: 1200px) 270px, (min-width: 768px) 22vw,  44vw'
-                        alt="New Arrivals - Jewerly"
-                        title="New Arrivals - Jewerly"/>
+                        alt="New Arrivals - Accessories"
+                        title="New Arrivals - Accessories"/>
                       </a>
                   </div>
                   <div class="carousel-item">
