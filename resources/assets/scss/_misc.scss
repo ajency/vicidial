@@ -244,3 +244,13 @@
 		margin-top: 5px;
 	}
 }
+
+.out-of-stock{
+	color: #ff353b;
+    font-size: 1.7em;
+    @media (max-width: 767px){
+    	font-size: 1.5em;
+    	text-align: center;
+    	padding: 10px;
+    }
+}

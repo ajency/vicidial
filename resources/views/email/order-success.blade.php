@@ -200,19 +200,61 @@
 @foreach ($sub_orders as $sub_order)
 <div>
 <div style="background-color: transparent;">
-      <div style="Margin: 0 auto;min-width: 320px;max-width: 625px;/* overflow-wrap: break-word; *//* word-wrap: break-word; *//* word-break: break-word; */background-color: #FFFFFF;/* margin-bottom: 10px; */width: 100% !important;/* padding-left: 10px; */" class="block-grid two-up ">
+      <div style="Margin: 0 auto;min-width: 320px;max-width: 625px;overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #FFFFFF;" class="block-grid two-up ">
+
+    <div style="border-collapse: collapse;display: table;width: 100%;background-color:#FFFFFF;">
+          <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="background-color:transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width: 625px;"><tr class="layout-full-width" style="background-color:#FFFFFF;"><![endif]-->
+
+              <!--[if (mso)|(IE)]><td align="center" width="625" style=" width:625px; padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:0px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;" valign="top"><![endif]-->
+            <div class="col num12" style="min-width: 320px;max-width: 625px;display: table-cell;vertical-align: top;">
+              <div style="background-color: transparent; width: 100% !important;">
+              <!--[if (!mso)&(!IE)]><!-->
+              <div style="border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent; padding-top:5px; padding-bottom:0px; padding-right: 0px; padding-left: 0px;">
+    <div style="font-size:12px;line-height:14px;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;color:#555555;text-align:left;float: left;"><p style="margin: 0;font-size: 12px;line-height: 14px;margin-bottom: 5px;"><span style="font-size: 15px; line-height: 18px;">&nbsp;&nbsp;&nbsp;&nbsp;Shipment {{$loop->iteration}}</span></p></div>
     
-    <div style="font-size:12px;line-height:14px;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;color:#555555;text-align:left;float: left;width: 44%;margin-left: 15px;"><p style="margin: 0;font-size: 12px;line-height: 14px;margin-bottom: 5px;"><span style="font-size: 15px; line-height: 18px;">Shipment {{$loop->iteration}}</span></p></div>
-    
-    <div style="font-size:12px;line-height:14px;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;color:#555555;text-align: right;float: left;width: 48%;margin-right: 5px;"><p style="margin: 0;font-size: 12px;line-height: 14px;"><span style="font-size: 15px; line-height: 18px;">Qty: {{$sub_order['number_of_items']}} {{$sub_order['number_of_items'] == 1 ? "Item" : "Items"}}</span></p></div>
+    <div style="font-size:12px;line-height:14px;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;color:#555555;text-align: right;float: right;"><p style="margin: 0;font-size: 12px;line-height: 14px;"><span style="font-size: 15px; line-height: 18px;">Qty: {{$sub_order['number_of_items']}} {{$sub_order['number_of_items'] == 1 ? "Item" : "Items"}}&nbsp;&nbsp;&nbsp;&nbsp;</span></p></div>
     
     <b style="clear: both;display: table;"></b>
     
     
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+  </div>
+
+@if(! empty($sub_order['store_address']))
+<div style="background-color:transparent;">
+      <div style="Margin: 0 auto;min-width: 320px;max-width: 625px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #FFFFFF;" class="block-grid ">
+        <div style="border-collapse: collapse;display: table;width: 100%;background-color:#FFFFFF;">
+          <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="background-color:transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width: 625px;"><tr class="layout-full-width" style="background-color:#FFFFFF;"><![endif]-->
+
+              <!--[if (mso)|(IE)]><td align="center" width="625" style=" width:625px; padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:0px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;" valign="top"><![endif]-->
+            <div class="col num12" style="min-width: 320px;max-width: 625px;display: table-cell;vertical-align: top;">
+              <div style="background-color: transparent; width: 100% !important;">
+              <!--[if (!mso)&(!IE)]><!--><div style="border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent; padding-top:5px; padding-bottom:0px; padding-right: 0px; padding-left: 0px;"><!--<![endif]-->
+
+                  
+                    <div class="">
+  <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;"><![endif]-->
+                      <div class="">
+  <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;"><![endif]-->
+  <div style="color: #7d7d7d;line-height:120%;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;padding-right: 10px;padding-left: 10px;padding-top: 10px;padding-bottom: 10px;font-size: 13px;border-top: 1px solid #d6d6d6;line-height: 16px;">&nbsp;&nbsp;Sold by: {{$sub_order['store_address']['store_name']}} - {{$sub_order['store_address']['locality']}}, {{$sub_order['store_address']['city']}} </div>
+  <!--[if mso]></td></tr></table><![endif]-->
+</div>
+  <!--[if mso]></td></tr></table><![endif]-->
+</div>
+                  
+              <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
+              </div>
+            </div>
+          <!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
+        </div>
       </div>
     </div>
 
-
+  @endif
 
 
 <!-- Shipment separator -->

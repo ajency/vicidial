@@ -73,7 +73,7 @@
 									<div class="kss-btn__wrapper d-flex align-items-center justify-content-center">SELECT SIZE</div>
 								</button>
 								@else
-								    <div class="h3" style="color:red">Out of Stock!</div>
+								    <div class="out-of-stock">Out of Stock!</div>
 								@endif
 								
 							<!-- </div> -->
