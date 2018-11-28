@@ -159,7 +159,7 @@ return [
     "inventory_fields"               => ["product_id", "quantity", 'location_id'],
     "inventory_max"                  => 10,
     'facet_display_data'             => [
-        'product_category_type' => [
+        'product_category_type'   => [
             'name'                   => 'Category',
             'is_singleton'           => false,
             'is_collapsed'           => false,
@@ -174,8 +174,9 @@ return [
             "sort_on"                => "sequence",
             "sort_order"             => "asc",
             "custom_attributes"      => [],
+            "false_facet_value"      => null,
         ],
-        'product_gender'        => [
+        'product_gender'          => [
             'name'                   => 'Gender',
             'is_singleton'           => false,
             'is_collapsed'           => false,
@@ -190,8 +191,9 @@ return [
             "sort_on"                => "sequence",
             "sort_order"             => "asc",
             "custom_attributes"      => [],
+            "false_facet_value"      => null,
         ],
-        'product_age_group'     => [
+        'product_age_group'       => [
             'name'                   => 'Age Group',
             'is_singleton'           => false,
             'is_collapsed'           => false,
@@ -206,8 +208,9 @@ return [
             "sort_on"                => "sequence",
             "sort_order"             => "asc",
             "custom_attributes"      => [],
+            "false_facet_value"      => null,
         ],
-        'product_subtype'       => [
+        'product_subtype'         => [
             'name'                   => 'Sub Type',
             'is_singleton'           => false,
             'is_collapsed'           => false,
@@ -222,8 +225,9 @@ return [
             "sort_on"                => "count",
             "sort_order"             => "desc",
             "custom_attributes"      => [],
+            "false_facet_value"      => null,
         ],
-        'product_color_html'    => [
+        'product_color_html'      => [
             'name'                   => 'Colour',
             'is_singleton'           => false,
             'is_collapsed'           => true,
@@ -238,8 +242,9 @@ return [
             "sort_on"                => "sequence",
             "sort_order"             => "asc",
             "custom_attributes"      => ["show_more_limit" => 10],
+            "false_facet_value"      => null,
         ],
-        'variant_sale_price'    => [
+        'variant_sale_price'      => [
             'name'                   => 'Price Range',
             'is_singleton'           => true,
             'is_collapsed'           => true,
@@ -254,13 +259,14 @@ return [
             "sort_on"                => "sequence",
             "sort_order"             => "asc",
             "custom_attributes"      => [],
+            "false_facet_value"      => null,
         ],
-        'variant_availability'  => [
+        'variant_availability'    => [
             'name'                   => 'Availability',
             'item_display_name'      => 'Include Out Of Stock',
             'is_singleton'           => true,
             'is_collapsed'           => true,
-            'template'               => null,//"availability",
+            'template'               => null, //"availability",
             'order'                  => 6,
             'display_count'          => false,
             'disabled_at_zero_count' => true,
@@ -271,8 +277,9 @@ return [
             "sort_on"                => "sequence",
             "sort_order"             => "asc",
             "custom_attributes"      => [],
+            "false_facet_value"      => true,
         ],
-        'product_image_available'  => [
+        'product_image_available' => [
             'name'                   => '',
             'is_singleton'           => true,
             'is_collapsed'           => true,
@@ -283,7 +290,8 @@ return [
             "is_attribute_param"     => true,
             "attribute_param"        => "product_image_available",
             'filter_type'            => 'boolean_filter',
-            "is_essential"          => false
+            "is_essential"           => false,
+            "false_facet_value"      => true,
         ],
     ],
     'breadcrumb_order'               => [
