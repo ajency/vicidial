@@ -71,6 +71,14 @@ function formatItems($result, $params){
             "color_html" => $data['product_color_html'],
         ];
 
+        //find product_availability
+        $item['product_availability'] = false;
+        foreach ($product["variants"] as $variant) {
+            if($variant['variant_availability']){
+                $item['product_availability']  = true;
+                break;
+            }
+        }
         // find default product by max sale price
         $id         = $product["variants"][0]["variant_id"];
         $sale_price = $product["variants"][0]["variant_sale_price"];
@@ -263,6 +271,7 @@ function setElasticFacetFilters($q, $params)
         $must[] = textSearch($q, $params['search_object']['search_string']);
     }
     $must = $q::addToBoolQuery('must', $must);
+    $nested3 =[];
     // $must = hideZeroColorIDProducts($q, $must);
     // $must = hideZeroSizeIDProducts($q, $must);
     // $nested3[] = filterActiveProducts($q, $must);
