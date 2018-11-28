@@ -573,7 +573,7 @@ function constructCategoryUrl(facet_names_arr,search_object,facet_value_slug_arr
           append_filter_str += "rf"
         if(config_item["filter_type"] == "boolean_filter")
           append_filter_str += "bf"
-        if(search_object[facet_names_arr[item]].length>1){
+        if(search_object[facet_names_arr[item]].constructor === Array && search_object[facet_names_arr[item]].length>1){
           var furl =[]
           if(config_item["filter_type"] == "primary_filter"){
             for(fitem in search_object[facet_names_arr[item]]){
@@ -608,6 +608,7 @@ function constructCategoryUrl(facet_names_arr,search_object,facet_value_slug_arr
               search_cat = facet_value_slug_arr[facet_names_arr[item]][search_object[facet_names_arr[item]]]
             }
             else{
+              console.log("bool==="+search_object[facet_names_arr[item]])
               search_cat = search_object[facet_names_arr[item]];
             }
 
