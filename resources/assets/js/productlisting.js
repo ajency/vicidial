@@ -46,8 +46,13 @@ $(function(){
       window.location.href = window.location.href;
     });
 
+    // Custom search
      $(document).on('click','.search-trigger', function () {  
-        if($(this).closest('.expandSearch').hasClass('showSearch')){
+        if($('.custom-expand-search').val() != ''){
+          $('.expandSearch').addClass('showSearch'); 
+          $('.custom-expand-search').focus();
+        }
+        else if($(this).closest('.expandSearch').hasClass('showSearch')){
           $('.expandSearch').removeClass('showSearch');
         }
         else{
@@ -55,15 +60,23 @@ $(function(){
           $('.custom-expand-search').focus();
         }
      });
-
+     // Click outside handled
+     $(document).mouseup(function(e) {
+        var Click_todo;
+        Click_todo = $('.expandSearch');
+        if (!Click_todo.is(e.target) && Click_todo.has(e.target).length === 0) {
+          if($('.custom-expand-search').val() == ''){
+            return $(Click_todo).removeClass('showSearch');  
+          }
+        }
+      });
+     // If value passed
      if($('.custom-expand-search').length){
        if($('.custom-expand-search').val() != ''){
         $('.expandSearch').addClass('showSearch');
       } 
      }
-     
-
-
+    
 })
 var facet_list = {}
 var range_facet_list = {}

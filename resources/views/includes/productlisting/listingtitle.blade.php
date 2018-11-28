@@ -51,7 +51,7 @@
           </a>
         </div>        
       </div>
-      <div class="d-flex flex-row kss-select-border mt-2">
+      <div class="flex-row kss-select-border mt-2 d-none d-md-block">
         <div class="size-qty align-self-center">
           <h6 class="m-0 f-w-4 sub-text"> Sort By:</h6>
         </div>
@@ -60,10 +60,6 @@
           @{{#each sort_on}}
             <option value="@{{value}}" @{{#if is_selected}} selected="selected" @{{/if}}>@{{name}}</option>
           @{{/each}}
-<!--             <option>Latest</option>
-            <option>Discount</option>
-            <option>Price: High to Low</option>
-            <option>Price: Low to High</option> -->
           </select> 
         </div>
       </div>
