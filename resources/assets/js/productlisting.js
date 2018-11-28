@@ -321,7 +321,20 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
         url += append_filter_str+"search_string="+search_string_filter
     }
 
-    ajax_data = { "search_object": { "primary_filter" : facet_list,"range_filter" : range_facet_list,"boolean_filter" : boolean_facet_list }, "listurl": url , "page": page_val}
+    console.log("listurl====",url)
+
+    var boolean_facet_list_params = Object.assign({}, boolean_facet_list);
+    if(is_ajax == true){
+      for(citem in facet_display_data_arr){
+        console.log(facet_display_data_arr[citem])
+        console.log(facet_display_data_arr[citem]["false_facet_value"]+"==="+(facet_display_data_arr[citem]["false_facet_value"]!=null))
+        if(facet_display_data_arr[citem]["false_facet_value"] != null && boolean_facet_list[citem] == undefined)
+          boolean_facet_list_params[citem] = facet_display_data_arr[citem]["false_facet_value"]
+      }
+      console.log("boolean_facet_list_params====")
+      console.log(boolean_facet_list_params)
+    }
+    ajax_data = { "search_object": { "primary_filter" : facet_list,"range_filter" : range_facet_list,"boolean_filter" : boolean_facet_list_params }, "listurl": url , "page": page_val}
     if(sort_on_filter != "")
       ajax_data["sort_on"]= sort_on_filter
     if(search_string_filter != "")
