@@ -188,6 +188,7 @@ function sanitiseFilterdata($result, $params = [])
 
             $filter['items'][] = [
                 'facet_value'  => $facet->facet_value,
+                "false_facet_value" =>  config('product.facet_display_data.'.$facet->facetName.'.false_facet_value'),
                 'display_name' => $facet->display_name,
                 'slug'         => $facet->slug,
                 'is_selected'  => $is_selected,
@@ -243,16 +244,44 @@ function sanitiseFilterdata($result, $params = [])
     $filter['items'] = [
         [
             "display_name" => config('product.facet_display_data.variant_availability.item_display_name'),
-            "facet_value"  => false,
+            "facet_value"  => "skip",
             "is_selected" => (isset($params['search_object']['boolean_filter']['variant_availability']) and $params['search_object']['boolean_filter']['variant_availability']),
             "count" => 20,
+            "false_facet_value" => config('product.facet_display_data.'."variant_availability".'.false_facet_value'),
         ],
     ];
     $filter['attribute_slug'] = config('product.facet_display_data.variant_availability.attribute_slug');
     $response[] = $filter;
+
     foreach ($response as &$filter) {
         $filter['items'] = sortLHSItems($filter['items'],  $filter['header']['facet_name']);
     }
+
+
+        //le availability filter
+    $filter           = [];
+    $filter['header'] = [
+        'facet_name'   => 'product_image_available',
+        'display_name' => config('product.facet_display_data.product_image_available.name'),
+    ];
+    foreach ($attributes as $attribute) {
+        $filter[$attribute] = config('product.facet_display_data.product_image_available.' . $attribute);
+    }
+    $filter['items'] = [
+        [
+            "display_name" => config('product.facet_display_data.product_image_available.item_display_name'),
+            "facet_value"  => "skip",
+            "is_selected" => (isset($params['search_object']['boolean_filter']['product_image_available']) and $params['search_object']['boolean_filter']['product_image_available']),
+            "count" => 20,
+            "false_facet_value" => config('product.facet_display_data.'."product_image_available".'.false_facet_value'),
+        ],
+    ];
+    $filter['attribute_slug'] = config('product.facet_display_data.product_image_available.attribute_slug');
+    $response[] = $filter;
+
+
+// dd($response);
+
     return $response;
 }
 
