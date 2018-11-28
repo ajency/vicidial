@@ -68,6 +68,8 @@ class ListingController extends Controller
         if(empty((array)$params->filters)) return view('noproducts');
         
         $params->search_result_assoc = getFacetValueSlugPairs();
+        if(isset($parameters['query']['search_string']))
+            $params["show_search"] = $parameters['query']['search_string'];
         // dd($params);
         return view('productlisting')->with('params',$params);
     }
