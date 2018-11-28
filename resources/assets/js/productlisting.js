@@ -397,6 +397,8 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                       console.log(vval)
                       var templateval = vval.template
                       console.log("template=="+template)
+                      if(templateval != null)
+                      {
                      var source   = document.getElementById("filter-"+templateval+"-template").innerHTML;
                      var template = Handlebars.compile(source);
                      
@@ -468,7 +470,7 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                           });
                         };
                      }
-                       
+                      } 
                    });
                   }
                   if(key == "breadcrumbs"){
