@@ -75,7 +75,7 @@ class Cart extends Model
             $total_price += $variant->getSalePrice() * $cart_item["quantity"];
             $discount += $variant->getDiscount() * $cart_item["quantity"];
         }
-        return ["total" => $total_price, "discount" => $discount, "tax" => "", "coupon" => "", "order_total" => $total_price - $discount];
+        return ["total" => $total_price, "discount" => $discount, "tax" => "", "coupon" => "", "order_total" => $total_price];
     }
 
     public function removeItem($variant_id)
