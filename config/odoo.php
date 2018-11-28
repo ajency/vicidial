@@ -10,6 +10,7 @@ return [
     'db'            => env('ODOO_DB', ''),
     'limit'         => intval(env('ODOO_LIMIT', '')),
     'connections'   => $connections,
+    'update_inventory' => env('INV_UPDATE_COUNT',1),
 
     'model_fields'  => [
         'location'   => [
