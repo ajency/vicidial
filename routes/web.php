@@ -12,6 +12,7 @@
  */
 $config = config('ajfileupload');
 
+Route::get('/getWarehouseLevelInventory', "ProductController@allInventory");
 Route::get('/rest/v1/anonymous/cart/count', 'CartController@guestGetCount');
 Route::post('/rest/v1/anonymous/cart/insert', 'CartController@guestAddItem');
 Route::get('/rest/v1/anonymous/cart/get', 'CartController@guestCartFetch');
@@ -52,3 +53,4 @@ Route::get('/{product_slug}/buy', 'ProductController@index')->name('product');
 Route::get('/'.$config['base_root_path']. $config['model']["App\ProductColor"]['base_path'].'/{photo_id}/{preset}/{depth}/{image}', 'ProductController@getImage');
 
 Route::get('/{cat1}/{cat2?}/{cat3?}/{cat4?}', 'ListingController@index')->name('listing');
+
