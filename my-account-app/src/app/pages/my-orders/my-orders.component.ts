@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AppServiceService } from '../../services/app-service.service';
 import { ApiServiceService } from '../../services/api-service.service';
 
+declare var $: any;
 
 @Component({
   selector: 'app-my-orders',
@@ -27,16 +28,14 @@ export class MyOrdersComponent implements OnInit {
 
   getOrders(){
     this.appservice.showLoader();
-    let url = 'https://demo8558685.mockable.io/orders';
-    // let url = this.appservice.apiUrl + '/api/rest/v1/user/save-user-details';
-    // let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
-    // let body : any = {
-    //   _token : $('meta[name="csrf-token"]').attr('content'),
-    //   name : this.shippingDetails.user_info.name,
-    //   email : this.shippingDetails.user_info.email
-    // };
+    // let url = 'https://demo8558685.mockable.io/orders';
+    let url = this.appservice.apiUrl + '/api/rest/v1/user/orders';
+    let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
+    let body : any = {
+      _token : $('meta[name="csrf-token"]').attr('content')
+    };
 
-    this.apiservice.request(url, 'get', {} , {} ).then((response)=>{
+    this.apiservice.request(url, 'post', body , header ).then((response)=>{
     	this.orders = this.formattedCartDataForUI(response.data);
     	console.log("orders ==>", this.orders);
       this.appservice.removeLoader();

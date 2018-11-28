@@ -1,11 +1,13 @@
-import { Injectable } from '@angular/core';
+import { Injectable, isDevMode } from '@angular/core';
 
 declare var $: any;
 
 @Injectable()
 export class AppServiceService {
-
-  constructor() { }
+  apiUrl = '';
+  constructor() { 
+    this.apiUrl = isDevMode() ? 'http://localhost:8000' : '';
+  }
 
 
   showLoader(){
