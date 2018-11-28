@@ -6,6 +6,7 @@ use App\Elastic\ElasticQuery;
 use App\Location;
 use Illuminate\Database\Eloquent\Model;
 use App\Jobs\UpdateVariantInventory;
+use League\Csv\Writer;
 
 class Variant extends Model
 {
@@ -352,5 +353,26 @@ class Variant extends Model
 
     public function updateInventory(){
          UpdateVariantInventory::dispatch([$this->odoo_id])->onQueue('update_inventory');
+    }
+
+    public static function getWarehouseInventory(){
+        $availableVariants = self::select(["odoo_id","inventory"])->where('inventory', 'not like', '[]')->get();
+        $locations = Location::where('use_in_inventory',true)->get()->pluck('display_name','odoo_id');
+        $header = ['variant_odoo_id'];
+        foreach ($locations as $loc_id => $loc_name) {
+            $header[] = $loc_name." (".$loc_id.")";
+        }
+        $variantInventory = collect([$header]);
+        foreach ($availableVariants as $variant) {
+            $inventoryLine = [$variant->odoo_id];
+            foreach ($locations as $loc_id => $loc_name) {
+                $inventoryLine[] = (isset($variant->inventory["$loc_id"]))? $variant->inventory["$loc_id"]['quantity'] : 0;
+            }
+            \Log::debug(collect($inventoryLine));
+            $variantInventory->push($inventoryLine);
+        }
+        $csv = Writer::createFromFileObject(new \SplTempFileObject());
+        $csv->insertAll($variantInventory->toArray());
+        $csv->output('inventory.csv');
     }
 }

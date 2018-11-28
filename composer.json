@@ -35,9 +35,10 @@
         "laravel/passport": "^7.0",
         "laravel/socialite": "^3.1",
         "laravel/tinker": "~1.0",
+        "league/csv": "^9.1",
         "league/flysystem-aws-s3-v3": "^1.0",
-        "spatie/laravel-permission": "^2.23",
         "publiux/laravelcdn": "dev-ajency",
+        "spatie/laravel-permission": "^2.23",
         "tzsk/payu": "dev-ajency"
     },
     "require-dev": {

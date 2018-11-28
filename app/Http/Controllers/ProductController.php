@@ -104,4 +104,8 @@ class ProductController extends Controller
         }
         return response()->json($odoo_ids,200);
     }
+
+    public function allInventory(){
+        Variant::getWarehouseInventory();
+    }
 }
