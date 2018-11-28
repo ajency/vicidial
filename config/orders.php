@@ -1,7 +1,7 @@
 <?php
 return [
-    "expiry"        => env('ORDER_EXPIRY', 15),
-    "payu_expiry"   => env('PAYU_ORDER_EXPIRY', 15),
+    "expiry"        => 15,
+    "payu_expiry"   => 15,
     "odoo_order_defaults" => [
         'update_bool'              => false,
         'company_id_fran'          => 1,
