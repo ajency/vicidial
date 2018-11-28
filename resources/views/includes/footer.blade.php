@@ -52,19 +52,19 @@
         <div class="mbr-footer-content col-md-4 bl-1 mt-4 mt-sm-5 mt-md-0">
           <div class="d-flex flex-row bd-highlight mb-4">
             <div class="bd-highlight mr-4 ml-2">
-              <img width="50" src="/img/tshirt.svg">
+              <img width="50" src="{{CDN::asset('/img/tshirt.svg') }}">
             </div>
             <div class="bd-highlight align-self-center"><h5 class="font-weight-bold mb-0">Fresh and latest</h5>fashion styles for kids</div>
           </div>
           <div class="d-flex flex-row bd-highlight mb-4">
             <div class="bd-highlight mr-4 ml-2">
-              <img width="50" src="/img/truck.svg">
+              <img width="50" src="{{CDN::asset('/img/truck.svg') }}">
             </div>
             <div class="bd-highlight align-self-center"><h5 class="font-weight-bold mb-0">Free shipping</h5>for every order</div>
           </div>
           <div class="d-flex flex-row bd-highlight mb-4">
             <div class="bd-highlight mr-4 ml-2">
-              <img width="50" src="/img/returns.svg">
+              <img width="50" src="{{CDN::asset('/img/returns.svg') }}">
             </div>
             <div class="bd-highlight align-self-center"><h5 class="font-weight-bold mb-0">Hassle free returns</h5>after receiving your order</div>
           </div>

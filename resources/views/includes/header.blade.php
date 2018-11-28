@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand-lg better-bootstrap-nav-left pl-1 pr-1 pb-0 pt-0">
 
     <a href="/" class="header-logo">
-        <img src="/img/logo-kss.png" xpreview="/img/logo-kss.png" class=" img-fluid m-0 kss-logo" width="180px">
+        <img src="{{CDN::asset('/img/logo-kss.png') }}" class=" img-fluid m-0 kss-logo" width="180px">
     </a>
 
     <div class="stellarnav header-menu ml-lg-4" id="">

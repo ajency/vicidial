@@ -11,7 +11,7 @@
 @section('content')
 <div id="home-slider" class="home-slider">
     <div  class="home-slide-item">
-      <a href="/shop?rf=price:0TO999/">
+      <a href="/shop?rf=price:0TO999">
         <picture>
            <source media="(orientation: landscape)"
                   data-srcset="{{CDN::asset('/img/home-banner/home-banner-large.jpg') }} 2000w,
