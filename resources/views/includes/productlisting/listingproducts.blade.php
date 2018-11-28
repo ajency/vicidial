@@ -41,11 +41,16 @@
 	      <!-- Calculate & Display Price -->
 	        @{{#each variants}}
 		        @{{#if is_default}}
-		        	@{{#ifEquals list_price sale_price }}
-		        		<div id="kss-price-@{{../product_id}}-@{{../color_id}}" class="kss-price kss-price--smaller">₹@{{sale_price}}</div>
-		        	@{{else}}
-		        		<div id="kss-price-@{{../product_id}}-@{{../color_id}}" class="kss-price kss-price--smaller">₹@{{sale_price}} <small class="kss-original-price text-muted">₹@{{list_price}}</small></div>
-		        	@{{/ifEquals}}
+		        	<div class="d-sm-flex">
+			        	@{{#ifEquals list_price sale_price }}
+			        		<div id="kss-price-@{{../product_id}}-@{{../color_id}}" class="kss-price kss-price--smaller">₹@{{sale_price}}</div>
+			        	@{{else}}
+			        		<div id="kss-price-@{{../product_id}}-@{{../color_id}}" class="kss-price kss-price--smaller">₹@{{sale_price}} <small class="kss-original-price text-muted">₹@{{list_price}}</small><span class="kss-discount text-danger">@{{discount_per}}% OFF</span></div>
+			        	@{{/ifEquals}}
+			        	@{{#ifEquals ../product_availability false}}
+			        	<div class="out-of-stock out-of-stock--list pl-0 pl-sm-2 pt-2 pt-sm-0 text-left">Out of Stock</div>
+			        	@{{/ifEquals}}
+		        	</div>
 		        @{{/if}}
 	        @{{/each}}
 	    </div>
@@ -85,6 +90,8 @@
 	});
    var context = {};
    context["products"] = <?= json_encode($items); ?>;
+   console.log("products====")
+   console.log(context["products"])
    product_list_items = $.extend(product_list_items, context["products"]);
    console.log("product_list_items====")
    console.log(product_list_items) 
