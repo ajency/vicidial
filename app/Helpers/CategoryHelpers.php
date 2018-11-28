@@ -33,7 +33,7 @@ function build_search_object($params) {
 		                $values = str_replace('variant_availability:', '', $queryvalv); 
 		                $values_arr = explode(",",$values);
 		                $bool_val=false;
-		                if(is_string($values_arr[0]))
+		                if(is_string($values_arr[0]) && $values_arr[0] != "skip")
 		                	$bool_val =($values_arr[0] == "true")?true:false;
 		                else
 		                	$bool_val =$values_arr[0];
@@ -49,7 +49,7 @@ function build_search_object($params) {
 		                $values = str_replace('product_image_available:', '', $queryvalv); 
 		                $values_arr = explode(",",$values);
 		                $bool_val=false;
-		                if(is_string($values_arr[0]))
+		                if(is_string($values_arr[0]) && $values_arr[0] != "skip")
 		                	$bool_val =($values_arr[0] == "true")?true:false;
 		                else
 		                	$bool_val =$values_arr[0];
