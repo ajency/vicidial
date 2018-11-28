@@ -1,7 +1,7 @@
 <div class="container mt-3">
   <div class="row">
       <div class="col-12 text-center my-4">
-            <img src="/img/empty_troly.png" class="img-fluid lazyload " width="400px" />
+            <img data-src="{{CDN::asset('/img/empty_troly.png') }}" class="img-fluid lazyload" width="400px" />
             @isset($sectionnotfound)
             	<h2 class="my-4">Sorry, no results found!</h2>
 <!-- 				<a href="javascript:window.history.back();location.reload();">
