@@ -303,30 +303,17 @@ function setElasticFacetFilters($q, $params)
     // $must = hideZeroColorIDProducts($q, $must);
     // $must = hideZeroSizeIDProducts($q, $must);
     // $nested3[] = filterActiveProducts($q, $must);
-    if (showProductsWithImages($params)) {
-        $nested3[] = hideProductWithoutImages($q, $must);
+    if(isset($params['search_object']['boolean_filter']['product_image_available'])){
+        $nested3[] = listViewImageFilter($q, $params['search_object']['boolean_filter']['product_image_available']);
     }
-    if (showProductsWithInventory($params)) {
-        $nested3[] = hideUnavailableProducts($q, $must);
+    if(isset($params['search_object']['boolean_filter']['variant_availability'])){
+        $nested3[] = availabilityFilter($q, $params['search_object']['boolean_filter']['variant_availability']);
     }
 
     $must = $q::addToBoolQuery('filter', $nested3, $must);
     return $must;
 }
 
-function showProductsWithImages($params){
-    if(isset($params['search_object']['boolean_filter']['product_image_available']) && !$params['search_object']['boolean_filter']['product_image_available']){
-        return false;
-    }
-    return true;
-}
-
-function showProductsWithInventory($params){
-    if(isset($params['search_object']['boolean_filter']['variant_availability']) && $params['search_object']['boolean_filter']['variant_availability']){
-        return true;
-    }
-    return false;
-}
 
 function textSearch(ElasticQuery $q, string $text)
 {
@@ -369,11 +356,11 @@ function filterActiveProducts($q, $must)
  *
  * @return array
  */
-function hideUnavailableProducts($q, $must)
+function availabilityFilter($q, bool $show)
 {
     $nested     = [];
     $facetName  = $q::createTerm("search_data.boolean_facet.facet_name", "variant_availability");
-    $facetValue = $q::createTerm("search_data.boolean_facet.facet_value", true);
+    $facetValue = $q::createTerm("search_data.boolean_facet.facet_value", $show);
     $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
     $nested[]   = $q::createNested('search_data.boolean_facet', $filter);
     $nested2    = $q::createNested("search_data", $nested);
@@ -422,14 +409,13 @@ function hideZeroSizeIDProducts($q, $must)
  *
  * @return array
  */
-function hideProductWithoutImages($q, $must)
+function listViewImageFilter($q, bool $show)
 {
     $nested     = [];
     $facetName  = $q::createTerm("search_data.boolean_facet.facet_name", "product_image_available");
-    $facetValue = $q::createTerm("search_data.boolean_facet.facet_value", true);
+    $facetValue = $q::createTerm("search_data.boolean_facet.facet_value", $show);
     $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
     $nested[]   = $q::createNested('search_data.boolean_facet', $filter);
     $nested2    = $q::createNested("search_data", $nested);
     return $nested2;
 }
-
