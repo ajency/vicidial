@@ -5,6 +5,8 @@ use App\Variant;
 use App\Elastic\ElasticQuery;
 //Calculate Discount from price
 function calculate_discount($list_price, $sale_price){
+    if($list_price == 0 or $sale_price == 0)
+        return 0;
 	$discount_amt = $list_price - $sale_price;
 	return $discount_per = round($discount_amt/$list_price * 100);
 }
