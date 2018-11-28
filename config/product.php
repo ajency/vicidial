@@ -278,6 +278,7 @@ return [
             "sort_order"             => "asc",
             "custom_attributes"      => [],
             "false_facet_value"      => true,
+            "facet_value"            => "skip",
         ],
         'product_image_available' => [
             'name'                   => '',
@@ -292,6 +293,7 @@ return [
             'filter_type'            => 'boolean_filter',
             "is_essential"           => false,
             "false_facet_value"      => true,
+            "facet_value"            => "skip",
         ],
     ],
     'breadcrumb_order'               => [

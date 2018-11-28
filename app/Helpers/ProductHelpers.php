@@ -244,7 +244,7 @@ function sanitiseFilterdata($result, $params = [])
     $filter['items'] = [
         [
             "display_name" => config('product.facet_display_data.variant_availability.item_display_name'),
-            "facet_value"  => "skip",
+            "facet_value"  => config('product.facet_display_data.variant_availability.facet_value'),
             "is_selected" => (isset($params['search_object']['boolean_filter']['variant_availability']) and $params['search_object']['boolean_filter']['variant_availability']),
             "count" => 20,
             "false_facet_value" => config('product.facet_display_data.'."variant_availability".'.false_facet_value'),
@@ -270,7 +270,7 @@ function sanitiseFilterdata($result, $params = [])
     $filter['items'] = [
         [
             "display_name" => config('product.facet_display_data.product_image_available.item_display_name'),
-            "facet_value"  => "skip",
+            "facet_value"  => config('product.facet_display_data.product_image_available.facet_value'),
             "is_selected" => (isset($params['search_object']['boolean_filter']['product_image_available']) and $params['search_object']['boolean_filter']['product_image_available']),
             "count" => 20,
             "false_facet_value" => config('product.facet_display_data.'."product_image_available".'.false_facet_value'),
