@@ -99,6 +99,7 @@ function formatItems($result, $params){
                 ],
                 "inventory_available" => $variant["variant_availability"],
                 "variant_id" => $variant["variant_id"],
+                "discount_per" => calculate_discount($variant["variant_list_price"],$variant["variant_sale_price"])
             ];
         }
         $items[] = $item;
