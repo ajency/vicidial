@@ -46,6 +46,23 @@ $(function(){
       window.location.href = window.location.href;
     });
 
+     $(document).on('click','.search-trigger', function () {  
+        if($(this).closest('.expandSearch').hasClass('showSearch')){
+          $('.expandSearch').removeClass('showSearch');
+        }
+        else{
+          $('.expandSearch').addClass('showSearch'); 
+          $('.custom-expand-search').focus();
+        }
+     });
+
+     if($('.custom-expand-search').length){
+       if($('.custom-expand-search').val() != ''){
+        $('.expandSearch').addClass('showSearch');
+      } 
+     }
+     
+
 
 })
 var facet_list = {}
