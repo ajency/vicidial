@@ -138,7 +138,7 @@ $(document).ready(function(){
         // $('.kss-alert .message').html('<strong>Failed!!!</strong> '+error_msg);
         // $('.kss-alert').addClass('kss-alert--failure');
         // $('.kss-alert').addClass('is-open');
-        $('#cd-cart').css('pointer-events','none');
+        // $('#cd-cart').css('pointer-events','none');
         $('.cd-add-to-cart').removeClass('cartLoader');
         setTimeoutVariable();
     }

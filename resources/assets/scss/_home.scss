@@ -286,6 +286,12 @@
             margin-top:0px;
         }
     }
+    @media (max-width: 664px){
+        columns: auto;
+        .trend-box {
+            break-inside: auto;
+        }
+    }
 
 }
 
