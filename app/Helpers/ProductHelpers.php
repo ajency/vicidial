@@ -234,7 +234,7 @@ function sanitiseFilterdata($result, $params = [])
 
     //le availability filter
     
-    $response[] = boolFilterResponse("variant_availability", $attributes);
+    $response[] = boolFilterResponse("variant_availability", $attributes, $params);
 
     foreach ($response as &$filter) {
         $filter['items'] = sortLHSItems($filter['items'],  $filter['header']['facet_name']);
@@ -243,33 +243,44 @@ function sanitiseFilterdata($result, $params = [])
     // image availability filter
 
         // image availability filter
-    $response[] = boolFilterResponse("product_image_available", $attributes);
+    $response[] = boolFilterResponse("product_image_available", $attributes, $params);
     
     return $response;
 }
 
-function boolFilterResponse($facet_name, $attributes){
 
+function boolFilterResponse($facet_name, $attributes, $params){
     $filter           = [];
     $filter['header'] = [
         'facet_name'   => $facet_name,
-        'display_name' => config('product.facet_display_data.$facet_name.name'),
+        'display_name' => config('product.facet_display_data.'.$facet_name.'.name'),
     ];
     foreach ($attributes as $attribute) {
-        $filter[$attribute] = config('product.facet_display_data.$facet_name.' . $attribute);
+        $filter[$attribute] = config('product.facet_display_data.'.$facet_name.'.'.$attribute);
     }
-    $config = config('product.facet_display_data.$facet_name');
+    $config = config('product.facet_display_data.'.$facet_name);
     $filter['items'] = [
         [
             "display_name" => $config['item_display_name'],
             "facet_value"  => $config['facet_value'],
-            "is_selected"  => $config['facet_value'],
+            "is_selected"  => selectBool($params, $facet_name, $config['facet_value']),
             "count" => 20,
             "false_facet_value" => $config['false_facet_value'],
         ],
     ];
-    $filter['attribute_slug'] = config('product.facet_display_data.$facet_name.attribute_slug');
+    $filter['attribute_slug'] = config('product.facet_display_data.'.$facet_name.'attribute_slug');
     return $filter;
+}
+
+
+function selectBool($params, $name, $value){
+    if(isset($params['search_object']['boolean_filter'][$name])){
+        if ($params['search_object']['boolean_filter'][$name] == $value)
+            return true;
+        else
+            return false;
+    }
+    return true;
 }
 
 function getProductThumbImages($variantId){
@@ -325,8 +336,9 @@ function setElasticFacetFilters($q, $params)
     else{
         $img_filter = $params['search_object']['boolean_filter']['product_image_available'];
     }
-    if($img_filter != "skip" and is_bool($img_filter)){
-        $nested3[] = listViewImageFilter($q, $params['search_object']['boolean_filter']['product_image_available']);
+
+    if($img_filter !== "skip" ){
+        $nested3[] = listViewImageFilter($q, $img_filter);
     }
 
     if(!isset($params['search_object']['boolean_filter']['variant_availability'])){
@@ -335,7 +347,8 @@ function setElasticFacetFilters($q, $params)
     else{
         $availability_filter = $params['search_object']['boolean_filter']['variant_availability'];
     }
-    if($img_filter != "skip" and is_bool($img_filter)){
+
+    if($availability_filter !== "skip"){
         $nested3[] =  availabilityFilter($q, $availability_filter);
     }
 
