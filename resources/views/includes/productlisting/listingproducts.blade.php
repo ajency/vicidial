@@ -42,13 +42,14 @@
 	        @{{#each variants}}
 		        @{{#if is_default}}
 		        	<div class="d-sm-flex align-items-sm-center">
-			        	@{{#ifEquals list_price sale_price }}
-			        		<div id="kss-price-@{{../product_id}}-@{{../color_id}}" class="kss-price kss-price--smaller">₹@{{sale_price}}</div>
-			        	@{{else}}
-			        		<div id="kss-price-@{{../product_id}}-@{{../color_id}}" class="kss-price kss-price--smaller">₹@{{sale_price}} <small class="kss-original-price text-muted">₹@{{list_price}}</small><span class="kss-discount text-danger">@{{discount_per}}% OFF</span></div>
-			        	@{{/ifEquals}}
-			        	@{{#ifEquals ../product_availability false}}
-			        	<div class="out-of-stock out-of-stock--list pl-0 pl-sm-2 pt-2 pt-sm-0 text-left">Out of Stock</div>
+		        		@{{#ifEquals ../product_availability false}}
+		        			<div class="out-of-stock out-of-stock--list p-0 text-left">Currently unavailable</div>
+		        		@{{else}}
+				        	@{{#ifEquals list_price sale_price }}
+				        		<div id="kss-price-@{{../product_id}}-@{{../color_id}}" class="kss-price kss-price--smaller">₹@{{sale_price}}</div>
+				        	@{{else}}
+				        		<div id="kss-price-@{{../product_id}}-@{{../color_id}}" class="kss-price kss-price--smaller">₹@{{sale_price}} <small class="kss-original-price text-muted">₹@{{list_price}}</small><span class="kss-discount text-danger">@{{discount_per}}% OFF</span></div>
+				        	@{{/ifEquals}}
 			        	@{{/ifEquals}}
 		        	</div>
 		        @{{/if}}
