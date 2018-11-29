@@ -241,14 +241,14 @@ function sanitiseFilterdata($result, $params = [])
     foreach ($attributes as $attribute) {
         $filter[$attribute] = config('product.facet_display_data.variant_availability.' . $attribute);
     }
-
+    $config =config('product.facet_display_data.variant_availability');
     $filter['items'] = [
         [
-            "display_name" => config('product.facet_display_data.variant_availability.item_display_name'),
-            "facet_value"  => config('product.facet_display_data.variant_availability.facet_value'),
-            "is_selected" => selectBool($params,"variant_availability"),
+            "display_name" => $config['item_display_name'],
+            "facet_value"  => $config['facet_value'],
+            "is_selected"  => $config['facet_value'],,
             "count" => 20,
-            "false_facet_value" => config('product.facet_display_data.'."variant_availability".'.false_facet_value'),
+            "false_facet_value" => $config['false_facet_value'],
         ],
     ];
     $filter['attribute_slug'] = config('product.facet_display_data.variant_availability.attribute_slug');
@@ -267,33 +267,22 @@ function sanitiseFilterdata($result, $params = [])
     foreach ($attributes as $attribute) {
         $filter[$attribute] = config('product.facet_display_data.product_image_available.' . $attribute);
     }
+    $config =config('product.facet_display_data.variant_availability');
     $filter['items'] = [
         [
-            "display_name" => config('product.facet_display_data.product_image_available.item_display_name'),
-            "facet_value"  => config('product.facet_display_data.product_image_available.facet_value'),
-            "is_selected" => selectBool($params,"product_image_available"),
+            "display_name" => $config['item_display_name'],
+            "facet_value"  => $config['facet_value'],
+            "is_selected"  => $config['facet_value'],,
             "count" => 20,
-            "false_facet_value" => config('product.facet_display_data.'."product_image_available".'.false_facet_value'),
+            "false_facet_value" => $config['false_facet_value'],
         ],
     ];
     $filter['attribute_slug'] = config('product.facet_display_data.product_image_available.attribute_slug');
     $response[] = $filter;
 
-
-// dd($response);
-
     return $response;
 }
 
-function selectBool($params, $name){
-    if(isset($params['search_object']['boolean_filter'][$name])){
-        if ($params['search_object']['boolean_filter'][$name] === "skip")
-            return true;
-        else
-            return false;
-    }
-    return true;
-}
 function getProductThumbImages($variantId){
     $variant = Variant::find($variantId);
     $default_imgs = $variant->productColor->getDefaultImage(["variant-thumb"]);
