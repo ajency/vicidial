@@ -41,7 +41,7 @@
 	      <!-- Calculate & Display Price -->
 	        @{{#each variants}}
 		        @{{#if is_default}}
-		        	<div class="d-sm-flex">
+		        	<div class="d-sm-flex align-items-sm-center">
 			        	@{{#ifEquals list_price sale_price }}
 			        		<div id="kss-price-@{{../product_id}}-@{{../color_id}}" class="kss-price kss-price--smaller">₹@{{sale_price}}</div>
 			        	@{{else}}
