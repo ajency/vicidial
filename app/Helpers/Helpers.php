@@ -537,7 +537,7 @@ function sendEmail($event, $data)
 
     //TO
     $to = (isset($data['to'])) ? Defaults::getEmailExtras('to', $data['to']) : Defaults::getEmailExtras('to');
-    $to = Default::getEmailExtras($event, $to,'to');
+    $to = Defaults::getEmailExtras($event, $to,'to');
     $email->setTo($to);
 
     //CC
