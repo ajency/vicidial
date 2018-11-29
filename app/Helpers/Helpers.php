@@ -537,14 +537,17 @@ function sendEmail($event, $data)
 
     //TO
     $to = (isset($data['to'])) ? Defaults::getEmailExtras('to', $data['to']) : Defaults::getEmailExtras('to');
+    $to = Default::getEmailExtras($event, $to,'to');
     $email->setTo($to);
 
     //CC
     $cc = (isset($data['cc'])) ? Defaults::getEmailExtras('cc', $data['cc']) : Defaults::getEmailExtras('cc');
+    $cc =  Defaults::getEmailExtras($event,$cc,'cc');
     $email->setCc($cc);
 
     //BCC
     $bcc = (isset($data['bcc'])) ? Defaults::getEmailExtras('bcc', $data['bcc']) : Defaults::getEmailExtras('bcc');
+    $bcc = Defaults::getEmailExtras($event,$bcc,'bcc');
     $email->setBcc($bcc);
 
     //Template Data
