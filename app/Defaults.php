@@ -75,7 +75,7 @@ class Defaults extends Model
         $sync->save();
     }
 
-    public static function getEmailExtras($type, $orig = [])
+    public static function getEmailExtras($type, $orig = [], $for = null)
     {
         if (!is_array($orig)) {
             $orig = [$orig];
@@ -84,11 +84,18 @@ class Defaults extends Model
         if ($extras == null) {
             return $orig;
         }
-
-        foreach ($extras->meta_data as $email) {
-            $orig[] = $email;
+        if ($for == null) {
+            foreach ($extras->meta_data as $email) {
+                $orig[] = $email;
+            }
+        } else {
+            if (isset($extras->meta_data[$for])) {
+                foreach ($extras->meta_data[$for] as $email) {
+                    $orig[] = $email;
+                }
+            }
         }
-        return $orig;
+        return array_unique($orig);
     }
 
 }
