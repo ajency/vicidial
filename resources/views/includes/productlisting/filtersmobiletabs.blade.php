@@ -9,11 +9,14 @@
 </div>
 
 <ul class="nav flex-column kss_filter_mobile--left">
-  <li class="nav-item" data-target="category">
+  @foreach($filters_arr as $filter)
+    @include('includes.productlisting.productfilters.common.filtermobileheader', ['filter' => $filter])
+  @endforeach
+<!--   <li class="nav-item" data-target="category">
     Category
     <small class="filter-count">1</small>
-  </li>
-  <li class="nav-item" data-target="gender">
+  </li> -->
+  <!-- <li class="nav-item" data-target="gender">
     Gender
   </li>
   <li class="nav-item" data-target="age">
@@ -30,5 +33,5 @@
   </li>
   <li class="nav-item" data-target="availability">
     Availability
-  </li>
+  </li> -->
 </ul>

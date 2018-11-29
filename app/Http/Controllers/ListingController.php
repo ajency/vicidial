@@ -129,7 +129,7 @@ class ListingController extends Controller
             $page_params["display_limit"] = $data["display_limit"];
         if(isset($data["sort_on"]))
             $page_params["sort_on"] = $data["sort_on"];
-        if($data['exclude_in_response'])
+        if(isset($data['exclude_in_response']))
             $page_params["exclude_in_response"]=$data['exclude_in_response'];
         $page_params["page"] = $data["page"];
         $response = $this->search_object($parameters,$page_params,$data["search_object"]);

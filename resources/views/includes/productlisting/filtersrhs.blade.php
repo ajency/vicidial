@@ -1,12 +1,6 @@
 <div class="kss_filter_mobile--right">
         <!--     <%= filters %> -->
-        <?php
-          $filters_arr = json_decode(json_encode($filters),true);
-          usort($filters_arr, function($a, $b) {
-                return $a["order"] > $b["order"] ? 1 : -1;
-            });
-          // dd($filters_arr);
-          ?>
+        
           @foreach($filters_arr as $filter)
             <?php
             $file_name = ($filter["template"] != null)?'includes.productlisting.productfilters.' . $filter["template"]:'';
