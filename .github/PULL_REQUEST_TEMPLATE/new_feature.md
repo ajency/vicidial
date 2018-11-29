@@ -2,7 +2,10 @@
 
 Please include a summary of the change and which issue is fixed. Please provide the motivation for why this change is necessary at this stage of the product development cycle.
 
-Fixes # (issue)
+Following issues are fixed in the Merge Request. 
+- [ ] #(issue1)
+- [ ] #(issue2)
+- [ ] #(issue3)
 
 ## Customer Impact
 
