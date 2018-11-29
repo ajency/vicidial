@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Queue;
+use Illuminate\Queue\Events\JobFailed;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +21,21 @@ class AppServiceProvider extends ServiceProvider
            \Illuminate\Support\Facades\URL::forceScheme('https');
            Schema::defaultStringLength(191);
         }
+
+        Queue::failing(function (JobFailed $event) {
+            \Log::notice('Job failed');
+            \Log::notice('Queue : '.$event->job->getQueue());
+            \Log::notice('Job : '.$event->job->resolveName());
+            sendEmail('failed-job', [
+                'from'          => config('communication.failed-job.from'),
+                'subject'       => 'Failed Job : '.$event->job->getQueue(),
+                'template_data' => [
+                    'queue' => $event->job->getQueue(),
+                    'job' => $event->job->resolveName(),
+                ],
+                'priority'      => 'default',
+            ]);
+        });
     }
 
     /**
