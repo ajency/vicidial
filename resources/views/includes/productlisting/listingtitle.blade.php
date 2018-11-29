@@ -22,8 +22,8 @@
 	</div>
 </div>
 <script id="filter-header-template" type="text/x-handlebars-template">
-  <div class="d-flex">
-    <div>
+  <div class="d-flex align-items-sm-center">
+    <div class="flex-fill-full">
 <!--             <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-1 bg-transparent p-0">
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
@@ -40,9 +40,9 @@
         </h1>
     </div>
 
-    <div class="ml-auto d-flex">
-      <div class="d-flex align-items-center position-relative">
-        <div class="expandSearch d-flex align-items-center justify-content-end">
+    <div class="ml-sm-auto d-flex flex-fill-full justify-content-end">
+      <div class="d-flex align-items-sm-center position-relative">
+        <div class="expandSearch d-flex align-items-sm-center justify-content-sm-end">
           <input type="search" class="custom-expand-search form-control" placeholder="Search for Product" title="Search for:">
           <a href="javascript:void(0);" class="search-trigger d-inline-flex">
             <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20px" height="20px" viewBox="375.045 607.885 30.959 30.33" enable-background="new 375.045 607.885 30.959 30.33" xml:space="preserve">
@@ -51,7 +51,7 @@
           </a>
         </div>        
       </div>
-      <div class="flex-row kss-select-border mt-2 d-none d-md-block">
+      <div class="kss-select-border mt-2 d-none d-md-flex">
         <div class="size-qty align-self-center">
           <h6 class="m-0 f-w-4 sub-text"> Sort By:</h6>
         </div>
