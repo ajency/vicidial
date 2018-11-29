@@ -328,7 +328,7 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
       for(citem in facet_display_data_arr){
         console.log(facet_display_data_arr[citem])
         console.log(facet_display_data_arr[citem]["false_facet_value"]+"==="+(facet_display_data_arr[citem]["false_facet_value"]!=null))
-        if(facet_display_data_arr[citem]["false_facet_value"] != null && boolean_facet_list[citem] == undefined)
+        if(facet_display_data_arr[citem]["false_facet_value"] != null && boolean_facet_list[citem] == undefined && facet_display_data_arr[citem]["template"] != null)
           boolean_facet_list_params[citem] = facet_display_data_arr[citem]["false_facet_value"]
       }
       console.log("boolean_facet_list_params====")
@@ -507,9 +507,13 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                 var html    = template(context);
                 document.getElementById("filter-header-template-content").innerHTML = html;
                 searchFilter(false);
-
-                 if (isMobile == false)
-                   window.history.pushState('categoryPage', 'Category', url);
+                 if (isMobile == false){
+                   if (window.location.href.match("/shop") && url == "") {
+                      window.history.pushState('categoryPage', 'Category', '/shop'+url);
+                    }
+                    else
+                      window.history.pushState('categoryPage', 'Category', url);
+                 }
                  if (is_ajax == true && isMobile == true) {
                    $('.kss_filter-list').addClass('d-none');
                    var filter_val = $(thisObj).closest('.kss_filter-list').data('filter')
