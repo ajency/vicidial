@@ -33,7 +33,7 @@
 	    -body">
 	      @{{#if title}}
 	      <a href="/@{{slug_name}}/buy" class="text-dark">
-	        <h5 class="section-heading section-heading--list">
+	        <h5 class="section-heading section-heading--list mb-1 mb-sm-2">
 	          @{{title}}
 	        </h5>
 	      </a>
@@ -41,7 +41,7 @@
 	      <!-- Calculate & Display Price -->
 	        @{{#each variants}}
 		        @{{#if is_default}}
-		        	<div class="d-sm-flex align-items-sm-center">
+		        	<div class="d-sm-flex align-items-sm-center mb-2 mb-sm-0">
 		        		@{{#ifEquals ../product_availability false}}
 		        			<div class="out-of-stock out-of-stock--list p-0 text-left">Currently unavailable</div>
 		        		@{{else}}

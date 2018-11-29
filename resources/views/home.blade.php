@@ -834,7 +834,7 @@
 
                <img src="{{CDN::asset('/img/stores/banner/store-banner-20px.jpg') }}"
                    data-sizes="100vw"
-                   class="img-fluid lazyload blur-up" alt="Visit our store" title="Visit our store">
+                   class="img-fluid lazyload blur-up w-100" alt="Visit our store" title="Visit our store">
             </picture>
             <div class="contentWrapper text-center d-flex align-items-center">
               <div>
