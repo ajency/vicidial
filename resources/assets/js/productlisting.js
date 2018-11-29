@@ -106,6 +106,30 @@ $(document).ready(function(){
         pageVal = (parseInt(page)+1);
     }
     console.log("ul==="+url)
+    var url_params = new window.URLSearchParams(window.location.search);
+    console.log("url_params===")
+    console.log(url_params.entries())
+    var facet_display_data_keys = Object.keys(facet_display_data_arr)
+    var facet_display_data_values = Object.values(facet_display_data_arr)
+    for(pair of url_params.entries()) { 
+      console.log(pair[0]+"===="+ pair[1]);
+      if(pair[0] == "bf"){
+        var filters_arr = pair[1].split("|");
+        for(filters_item of filters_arr){
+          var filter_pair = filters_item.split(":");
+          console.log(filter_pair[0]+"===="+filter_pair[1])
+          console.log("boolean_facet_list pir==="+boolean_facet_list[filter_pair[0]])
+          var bool_item_key = searchItemInArray(facet_display_data_values, filter_pair[0]); 
+
+          // var bool_item_key = facet_display_data_values.filter(function (facet) { return facet.attribute_param == filter_pair[0] }); 
+          if( facet_display_data_keys[bool_item_key] != undefined ){
+            if(boolean_facet_list[facet_display_data_keys[bool_item_key]] == undefined )
+              ajax_data["search_object"]["boolean_filter"][facet_display_data_keys[bool_item_key]] = JSON.parse(filter_pair[1])
+          }
+          
+        }
+      } 
+    }
     ajax_data["page"] = pageVal
     console.log("ajax_data=====")
     console.log(ajax_data)
@@ -674,3 +698,18 @@ function initializeSlider(fromval,toval,minval,maxval){
   });
 }
 
+
+
+function searchItemInArray(obj, search_item) {
+    var returnKey = -1;
+
+    $.each(obj, function(key, info) {
+        if (info.attribute_param == search_item) {
+           returnKey = key;
+           return false; 
+        };   
+    });
+
+    return returnKey;       
+
+}
