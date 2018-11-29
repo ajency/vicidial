@@ -283,6 +283,7 @@ return [
         ],
         'product_image_available' => [
             'name'                   => '',
+            'item_display_name'      => '',
             'is_singleton'           => true,
             'is_collapsed'           => true,
             'template'               => null,
