@@ -2,7 +2,11 @@
 
 Please include a summary of the change and which issue is fixed. Please also include relevant motivation and context. List any dependencies that are required for this change.
 
-Fixes # (issue)
+Following issues are fixed in the Merge Request. 
+- [ ] #(issue1)
+- [ ] #(issue2)
+- [ ] #(issue3)
+
 
 ## Type of change
 
@@ -23,6 +27,8 @@ Please describe the tests that you ran to verify your changes. Provide instructi
 
 
 # Checklist:
+
+Please delete options that are not relevant.
 
 - [ ] My code follows the style guidelines of this project
 - [ ] I have performed a self-review of my own code
