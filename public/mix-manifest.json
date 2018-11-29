@@ -1,16 +1,8 @@
 {
-<<<<<<< 25090a9341b55f3a982ac986d6154e3f6e2e85b9
-    "/../resources/assets/css/custom.css": "/../resources/assets/css/custom.css?id=685faacfc98bdb014dc2",
+    "/../resources/assets/css/custom.css": "/../resources/assets/css/custom.css?id=9a56da8f8fc38277e4fd",
     "/js/kss.js": "/js/kss.js?id=cd5a9e224f21d39c2436",
-    "/css/kss.css": "/css/kss.css?id=d75dc38d744d739f2db7",
+    "/css/kss.css": "/css/kss.css?id=df6e583519ccc72686bd",
     "/js/cart.js": "/js/cart.js?id=19cffa057deb7ac2f5aa",
-    "/js/productlisting.js": "/js/productlisting.js?id=5ae4fa058daeec31b7eb",
-=======
-    "/../resources/assets/css/custom.css": "/../resources/assets/css/custom.css?id=e50b3421b37528dab746",
-    "/js/kss.js": "/js/kss.js?id=cd0311bb58bc43d76c0e",
-    "/css/kss.css": "/css/kss.css?id=ac3f38c1a64c9056582a",
-    "/js/cart.js": "/js/cart.js?id=d6bc789529a80d864c11",
-    "/js/productlisting.js": "/js/productlisting.js?id=f6e9bc9cf7460efd8169",
->>>>>>> listing search bar handled in mobile
+    "/js/productlisting.js": "/js/productlisting.js?id=b9e34dd29583ccb0cad5",
     "/js/singleproduct.js": "/js/singleproduct.js?id=5251de98cfc9d0869c58"
 }

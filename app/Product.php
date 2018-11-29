@@ -380,6 +380,7 @@ class Product
             }
 
         }
+        $output["search_string"]          = "grey";
         $output["page"]          = $results["page"];
         $output["items"]         = $results["items"];
         $output["results_found"] = $results["results_found"];

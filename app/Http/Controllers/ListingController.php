@@ -68,8 +68,8 @@ class ListingController extends Controller
         if(empty((array)$params->filters)) return view('noproducts');
         
         $params->search_result_assoc = getFacetValueSlugPairs();
-        if(isset($parameters['query']['search_string']))
-            $params["show_search"] = $parameters['query']['search_string'];
+        
+        $params->show_search = (isset($parameters['query']['show_search']) && $parameters['query']['show_search'] == "true" )?true:false;
         // dd($params);
         return view('productlisting')->with('params',$params);
     }
@@ -86,7 +86,9 @@ class ListingController extends Controller
 
         $params = $this->search_object($parameters,$page_params);
         $params->search_result_assoc = getFacetValueSlugPairs();
+        $params->show_search = (isset($parameters['query']['show_search']) && $parameters['query']['show_search'] == "true")?true:false;
 
+        // dd($params);
         return view('productlisting')->with('params',$params);
     }
 
@@ -117,6 +119,8 @@ class ListingController extends Controller
                 else if (strpos($param, "bf=variant_availability:") !== false) 
                     $p_val = preg_replace("/(\?.*)/", "", $param);
                 else if (strpos($param, "sort_on=") !== false) 
+                    $p_val = preg_replace("/(\?.*)/", "", $param);
+                else if (strpos($param, "search_string=") !== false) 
                     $p_val = preg_replace("/(\?.*)/", "", $param);
                 else
                     $p_val = $param;
