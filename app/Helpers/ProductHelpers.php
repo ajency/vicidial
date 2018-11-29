@@ -121,6 +121,8 @@ function formatItems($result, $params){
 
     if(isset($params['search_object']['search_string']))
         $response['search_string'] = $params['search_object']['search_string'];
+    else
+        $response['search_string'] = null;
     return $response;
 }
 

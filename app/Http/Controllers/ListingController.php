@@ -122,6 +122,8 @@ class ListingController extends Controller
                     $p_val = preg_replace("/(\?.*)/", "", $param);
                 else if (strpos($param, "search_string=") !== false) 
                     $p_val = preg_replace("/(\?.*)/", "", $param);
+                else if (strpos($param, "show_search=") !== false) 
+                    $p_val = preg_replace("/(\?.*)/", "", $param);
                 else
                     $p_val = $param;
                 array_push($parameters['categories'], $p_val);
