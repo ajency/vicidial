@@ -32,6 +32,8 @@ class AppServiceProvider extends ServiceProvider
                 'template_data' => [
                     'queue' => $event->job->getQueue(),
                     'job' => $event->job->resolveName(),
+                    'exception' => $event->exception->getMessage(),
+                    'trace' => $event->exception->getTraceAsString(),
                 ],
                 'priority'      => 'default',
             ]);
