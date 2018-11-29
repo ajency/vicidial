@@ -340,13 +340,20 @@ function setElasticFacetFilters($q, $params)
     // $must = hideZeroColorIDProducts($q, $must);
     // $must = hideZeroSizeIDProducts($q, $must);
     // $nested3[] = filterActiveProducts($q, $must);
-    if(isset($params['search_object']['boolean_filter']['product_image_available']) and  $params['search_object']['boolean_filter']['product_image_available'] !=="skip"){
-        $nested3[] = listViewImageFilter($q, $params['search_object']['boolean_filter']['product_image_available']);
-    }
    
-    if(isset($params['search_object']['boolean_filter']['variant_availability']) and $params['search_object']['boolean_filter']['variant_availability'] !== "skip"){
-        $nested3[] = availabilityFilter($q, $params['search_object']['boolean_filter']['variant_availability']);
+    if(isset($params['search_object']['boolean_filter']['product_image_available'])){
+        if ($params['search_object']['boolean_filter']['product_image_available'] !== "skip")
+            $nested3[] = listViewImageFilter($q, $params['search_object']['boolean_filter']['product_image_available']);
 
+    }else{
+        $nested3[] = listViewImageFilter($q, config('product.facet_display_data.product_image_available.default_filter'));
+    }
+    if(isset($params['search_object']['boolean_filter']['variant_availability'])){
+        if ($params['search_object']['boolean_filter']['variant_availability'] !== "skip")
+            $nested3[] = availabilityFilter($q, $params['search_object']['boolean_filter']['variant_availability']);
+
+    }else{
+        $nested3[] = availabilityFilter($q, config('product.facet_display_data.variant_availability.default_filter'));
     }
     $must = $q::addToBoolQuery('filter', $nested3, $must);
     return $must;

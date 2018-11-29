@@ -279,6 +279,7 @@ return [
             "custom_attributes"      => [],
             "false_facet_value"      => true,
             "facet_value"            => "skip",
+            "default_filter"         => true,
         ],
         'product_image_available' => [
             'name'                   => '',
@@ -294,6 +295,7 @@ return [
             "is_essential"           => false,
             "false_facet_value"      => true,
             "facet_value"            => "skip",
+            "default_filter"         => true,
         ],
     ],
     'breadcrumb_order'               => [
