@@ -241,11 +241,12 @@ function sanitiseFilterdata($result, $params = [])
     foreach ($attributes as $attribute) {
         $filter[$attribute] = config('product.facet_display_data.variant_availability.' . $attribute);
     }
+
     $filter['items'] = [
         [
             "display_name" => config('product.facet_display_data.variant_availability.item_display_name'),
             "facet_value"  => config('product.facet_display_data.variant_availability.facet_value'),
-            "is_selected" => (isset($params['search_object']['boolean_filter']['variant_availability']) and $params['search_object']['boolean_filter']['variant_availability']),
+            "is_selected" => selectBool($params,"variant_availability"),
             "count" => 20,
             "false_facet_value" => config('product.facet_display_data.'."variant_availability".'.false_facet_value'),
         ],
@@ -257,8 +258,7 @@ function sanitiseFilterdata($result, $params = [])
         $filter['items'] = sortLHSItems($filter['items'],  $filter['header']['facet_name']);
     }
 
-
-        //le availability filter
+    // image availability filter
     $filter           = [];
     $filter['header'] = [
         'facet_name'   => 'product_image_available',
@@ -271,7 +271,7 @@ function sanitiseFilterdata($result, $params = [])
         [
             "display_name" => config('product.facet_display_data.product_image_available.item_display_name'),
             "facet_value"  => config('product.facet_display_data.product_image_available.facet_value'),
-            "is_selected" => (isset($params['search_object']['boolean_filter']['product_image_available']) and $params['search_object']['boolean_filter']['product_image_available']),
+            "is_selected" => selectBool($params,"product_image_available"),
             "count" => 20,
             "false_facet_value" => config('product.facet_display_data.'."product_image_available".'.false_facet_value'),
         ],
@@ -285,7 +285,15 @@ function sanitiseFilterdata($result, $params = [])
     return $response;
 }
 
-
+function selectBool($params, $name){
+    if(isset($params['search_object']['boolean_filter'][$name])){
+        if ($params['search_object']['boolean_filter'][$name] === "skip")
+            return true;
+        else
+            return false;
+    }
+    return true;
+}
 function getProductThumbImages($variantId){
     $variant = Variant::find($variantId);
     $default_imgs = $variant->productColor->getDefaultImage(["variant-thumb"]);
@@ -332,13 +340,14 @@ function setElasticFacetFilters($q, $params)
     // $must = hideZeroColorIDProducts($q, $must);
     // $must = hideZeroSizeIDProducts($q, $must);
     // $nested3[] = filterActiveProducts($q, $must);
-    if(isset($params['search_object']['boolean_filter']['product_image_available'])){
+    if(isset($params['search_object']['boolean_filter']['product_image_available']) and  $params['search_object']['boolean_filter']['product_image_available'] !=="skip"){
         $nested3[] = listViewImageFilter($q, $params['search_object']['boolean_filter']['product_image_available']);
     }
-    if(isset($params['search_object']['boolean_filter']['variant_availability'])){
+   
+    if(isset($params['search_object']['boolean_filter']['variant_availability']) and $params['search_object']['boolean_filter']['variant_availability'] !== "skip"){
         $nested3[] = availabilityFilter($q, $params['search_object']['boolean_filter']['variant_availability']);
-    }
 
+    }
     $must = $q::addToBoolQuery('filter', $nested3, $must);
     return $must;
 }
