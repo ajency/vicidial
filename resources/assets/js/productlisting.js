@@ -136,7 +136,6 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
       if(sort_on == false){
         if(boolean_filter == true){
           final_facet_list = boolean_facet_list
-          thisval = ($(thisObj).val() == "true")?true:false;
         }
         if(range_filter == false){
           if($(thisObj).prop('checked')){
@@ -169,7 +168,6 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                     }
                     call_ajax = true;
                   }
-
                 }
               }
               else{
