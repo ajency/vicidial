@@ -800,7 +800,7 @@ function searchFilter(call_facet_change_evt = true){
     if(call_facet_change_evt)
       facetCategoryChange($('#searchStringInp'),true,false,false,false,true); 
   }
-  else if($(this).closest('.expandSearch').hasClass('showSearch')){
+  else if($('.search-trigger').closest('.expandSearch').hasClass('showSearch')){
     $('.expandSearch').removeClass('showSearch');
   }
   else{
