@@ -747,3 +747,86 @@ form{
 .link-underline{
     text-decoration: underline !important;
 }
+
+
+.kss-progress-bar{
+    width: 220px;
+    background-color: #eaeaea;
+    height: 2px;
+    margin: 0 auto;
+    position: relative;
+    &__loader{
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        background-color: theme-color("primary");
+    }
+}
+
+.rotate-svg {
+  animation: rotation 1.3s infinite linear;
+  transform-origin: 30px 30px;
+  animation-timing-function:linear;
+}
+
+@-webkit-keyframes rotation {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@-moz-keyframes rotation {
+  from {
+    -moz-transform: rotate(0deg);
+  }
+  to {
+    -moz-transform: rotate(360deg);
+  }
+}
+
+@-ms-keyframes rotation {
+  from {
+    -ms-transform: rotate(0deg);
+  }
+  to {
+    -ms-transform: rotate(360deg);
+  }
+}
+
+@-o-keyframes rotation {
+  from {
+    -o-transform: rotate(0deg);
+  }
+  to {
+    -o-transform: rotate(360deg);
+  }
+}
+
+@keyframes rotation {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+.custom-sort-loader{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.85);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    &.shown{
+        display: flex;
+    }
+}
