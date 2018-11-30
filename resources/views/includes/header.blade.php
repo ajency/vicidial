@@ -38,29 +38,33 @@
         </ul>
 
         <ul class="nav megamenu--right">
+            <!-- All -->
             <li>
                 <a href="#" class="d-none d-lg-block">All</a>
                 <div class="megamenu-wrapper" data-menu="all">
                     <div class="nav-column">
-                        <div class="nav-column--heading">Home</div>
                         <ul class="list-unstyled">
                           <li><a class="megamenu-link" href="/bottoms/">Bottoms</a></li>
                           <li><a class="megamenu-link" href="/dress/">Dress</a></li>
                           <li><a class="megamenu-link" href="/ethnic/">Ethnic</a></li>
                           <li><a class="megamenu-link" href="/formal-pant/">Formal Pant</a></li>
                           <li><a class="megamenu-link" href="/infant-utility/">Infant Utility</a></li>
-                          <li><a class="megamenu-link" href="/jeans/">Jeans</a></li>
                         </ul>
                     </div>
 
                     <div class="nav-column">
-                        <div class="nav-column--heading">Home</div>
                         <ul class="list-unstyled">
+                          <li><a class="megamenu-link" href="/jeans/">Jeans</a></li>
                           <!-- <li><a class="megamenu-link" href="/others/">Others</a></li> -->
                           <li><a class="megamenu-link" href="/shirt/">Shirt</a></li>
                           <li><a class="megamenu-link" href="/shoes/">Shoes</a></li>
                           <li><a class="megamenu-link" href="/short/">Short</a></li>
                           <li><a class="megamenu-link" href="/skirt/">Skirt</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="nav-column">
+                        <ul class="list-unstyled">
                           <li><a class="megamenu-link" href="/sweatshirt/">Sweatshirt</a></li>
                           <li><a class="megamenu-link" href="/tops/">Tops</a></li>
                           <li><a class="megamenu-link" href="/tshirt/">Tshirt</a></li>
@@ -69,37 +73,107 @@
                     </div>
 
                     <div class="nav-column">
-                        <div class="nav-column--heading">Home</div>
+                        <div class="nav-column--heading mb-1">Popular Categories</div>
                         <ul class="list-unstyled">
-                          <li><a class="megamenu-link" href="/bottoms/">Bottoms</a></li>
-                          <li><a class="megamenu-link" href="/dress/">Dress</a></li>
-                          <li><a class="megamenu-link" href="/ethnic/">Ethnic</a></li>
-                          <li><a class="megamenu-link" href="/formal-pant/">Formal Pant</a></li>
-                          <li><a class="megamenu-link" href="/infant-utility/">Infant Utility</a></li>
-                          <li><a class="megamenu-link" href="/jeans/">Jeans</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="nav-column">
-                        <div class="nav-column--heading">Related Categories</div>
-                        <ul class="list-unstyled">
-                          <!-- <li><a class="megamenu-link" href="/others/">Others</a></li> -->
                           <li><a class="megamenu-link" href="/shirt/">Shirt</a></li>
-                          <li><a class="megamenu-link" href="/shoes/">Shoes</a></li>
-                          <li><a class="megamenu-link" href="/short/">Short</a></li>
                           <li><a class="megamenu-link" href="/skirt/">Skirt</a></li>
-                          <li><a class="megamenu-link" href="/sweatshirt/">Sweatshirt</a></li>
                           <li><a class="megamenu-link" href="/tops/">Tops</a></li>
                           <li><a class="megamenu-link" href="/tshirt/">Tshirt</a></li>
-                          <li><a class="megamenu-link" href="/woven-tops/">Woven Tops</a></li>
                         </ul>
                     </div>
                 </div>
             </li>
+
+            <!-- Boys -->
             <li>
                 <a href="#" class="d-none d-lg-block">Boys</a>
+                <div class="megamenu-wrapper" data-menu="boys">
+                    <div class="nav-column">
+                        <ul class="list-unstyled">
+                          <li><a class="megamenu-link" href="/boys/junior-7-14-years--toddler-2-7-years/bottoms/">Bottoms</a></li>
+                          <li><a class="megamenu-link" href="/boys/junior-7-14-years--toddler-2-7-years/ethnic/">Ethnic</a></li>
+                          <li><a class="megamenu-link" href="/boys/junior-7-14-years--toddler-2-7-years/formal-pant/">Formal Pants</a></li>
+                          <li><a class="megamenu-link" href="/boys/junior-7-14-years--toddler-2-7-years/jeans/">Jeans</a></li>
+                          <!-- <li><a class="megamenu-link" href="/boys/junior-7-14-years--toddler-2-7-years/others/">Others</a></li> -->
+                          <li><a class="megamenu-link" href="/boys/junior-7-14-years--toddler-2-7-years/shirt/">Shirt</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="nav-column">
+                        <ul class="list-unstyled">
+                          <li><a class="megamenu-link" href="/shoes/boys/toddler-2-7-years--junior-7-14-years/">Shoes</a></li>
+                          <li><a class="megamenu-link" href="/boys/junior-7-14-years--toddler-2-7-years/short/">Short</a></li>
+                          <li><a class="megamenu-link" href="/boys/junior-7-14-years--toddler-2-7-years/sweatshirt/">Sweatshirt</a></li>
+                          <li><a class="megamenu-link" href="/boys/junior-7-14-years--toddler-2-7-years/tshirt/">Tshirt</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="nav-column">
+                        <div class="nav-column--heading mb-1">Age Groups</div>
+                        <ul class="list-unstyled">
+                          <li><a class="megamenu-link" href="#">0-2 yrs</a></li>
+                          <li><a class="megamenu-link" href="#">2-7 yrs</a></li>
+                          <li><a class="megamenu-link" href="#">7-14 yrs</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="nav-column">
+                        <img class="d-block w-100 img-fluid lazyload blur-up"
+                             src="{{CDN::asset('/img/gender/boy-10px.jpg') }}"
+                             data-srcset="{{CDN::asset('/img/gender/boy-large.jpg') }} 813w,
+                                          {{CDN::asset('/img/gender/boy-medium.jpg') }} 542w,
+                                          {{CDN::asset('/img/gender/boy-small.jpg') }} 271w"
+                             data-sizes='(min-width: 1200px) 270px, (min-width: 768px) 22vw,  44vw'
+                             title="Boys 2-14 years"
+                             alt="Boys 2-14 years"/>
+                    </div>
+                </div>
             </li>
-            <li><a href="#" class="d-none d-lg-block">Girls</a></li>
+
+            <!-- Girls -->
+            <li>
+              <a href="#" class="d-none d-lg-block">Girls</a>
+              <div class="megamenu-wrapper" data-menu="girls">
+                  <div class="nav-column">
+                      <ul class="list-unstyled">
+                        <li><a class="megamenu-link" href="/girls/junior-7-14-years--toddler-2-7-years/bottoms/">Bottoms</a></li>
+                        <li><a class="megamenu-link" href="/girls/junior-7-14-years--toddler-2-7-years/dress/">Dress</a></li>
+                        <li><a class="megamenu-link" href="/girls/junior-7-14-years--toddler-2-7-years/ethnic/">Ethnic</a></li>
+                        <li><a class="megamenu-link" href="/girls/junior-7-14-years--toddler-2-7-years/jeans/">Jeans</a></li>
+                        <li><a class="megamenu-link" href="/shoes/girls/toddler-2-7-years--junior-7-14-years/">Shoes</a></li>
+                      </ul>
+                  </div>
+
+                  <div class="nav-column">
+                      <ul class="list-unstyled">
+                        <li><a class="megamenu-link" href="/girls/junior-7-14-years--toddler-2-7-years/short/">Short</a></li>
+                        <li><a class="megamenu-link" href="/girls/junior-7-14-years--toddler-2-7-years/skirt/">Skirt</a></li>
+                        <li><a class="megamenu-link" href="/girls/junior-7-14-years--toddler-2-7-years/tshirt/">Tshirt</a></li>
+                        <li><a class="megamenu-link" href="/girls/junior-7-14-years--toddler-2-7-years/woven-tops/">Woven Tops</a></li>
+                      </ul>
+                  </div>
+
+                  <div class="nav-column">
+                      <div class="nav-column--heading mb-1">Age Groups</div>
+                      <ul class="list-unstyled">
+                        <li><a class="megamenu-link" href="#">0-2 yrs</a></li>
+                        <li><a class="megamenu-link" href="#">2-7 yrs</a></li>
+                        <li><a class="megamenu-link" href="#">7-14 yrs</a></li>
+                      </ul>
+                  </div>
+
+                  <div class="nav-column">
+                      <img class="d-block w-100 img-fluid lazyload blur-up"
+                           src="{{CDN::asset('/img/gender/girl-10px.jpg') }}"
+                           data-srcset="{{CDN::asset('/img/gender/girl-large.jpg') }} 813w,
+                                        {{CDN::asset('/img/gender/girl-medium.jpg') }} 542w,
+                                        {{CDN::asset('/img/gender/girl-small.jpg') }} 271w"
+                           data-sizes='(min-width: 1200px) 270px, (min-width: 768px) 22vw,  44vw'
+                           title="Boys 2-14 years"
+                           alt="Boys 2-14 years"/>
+                  </div>
+              </div>
+            </li>
             <li><a href="#" class="d-none d-lg-block">Infants</a></li>
             <li><a href="#" class="d-none d-lg-block">Kids Accessories</a></li>
         </ul>
@@ -214,7 +288,7 @@
 --}}
 
     <div class="my-lg-0 ml-auto header-actions">
-        <ul class="list-inline mb-2 pt-3">
+        <ul class="list-inline mb-2 pt-2">
             <!-- <li class="list-inline-item">
                 <i class="kss_icon search-icon cursor-pointer"></i>
                 <form class="search-input" style="width: 22rem; display:none;">

@@ -541,8 +541,8 @@
      });
  }
 
- // Mega menu
- $(document).on('click', '.megamenu--left .nav-item', function(){
+// Mega menu
+$(document).on('click', '.megamenu--left .nav-item', function(){
   var menuTab = $(this);
   menuTab.addClass('active').siblings().removeClass('active');
   var mobMenuName = menuTab.data('target');
@@ -551,6 +551,9 @@
 });
 $(document).on('click', '.megamenu-open', function(){
 	$('.megamenu').addClass('active');
+	$('.megamenu--left .nav-item:first-child').addClass('active');
+	$('.megamenu--right li .megamenu-wrapper').addClass('d-none');
+	$('.megamenu--right li:first-child .megamenu-wrapper').removeClass('d-none');
 });
 
 if( $('#storeSlider').length ) {
@@ -576,6 +579,9 @@ $(document).on('click',".footer-more",function(){
        return v === 'Fresh Fashion for your kids' ? 'Less' : 'Fresh Fashion for your kids'
     })
 });
+
 $(document).on('click', '.megamenu-close', function(){
 	$('.megamenu').removeClass('active');
+	$('.megamenu--left .nav-item').removeClass('active');
+	$('.megamenu-wrapper').addClass('d-none');
 });
