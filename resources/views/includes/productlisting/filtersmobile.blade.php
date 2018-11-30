@@ -65,3 +65,4 @@
    document.getElementById("mobile-filter-sort-template-content").innerHTML = html;
   </script>
 @endsection
+
