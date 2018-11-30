@@ -303,7 +303,6 @@ return [
             "custom_attributes"      => [],
             "false_facet_value"      => true,
             "facet_value"            => "skip",
-            "default_filter"         => true,
             "implicit_filter"        => [
                 'skip'          => false,
                 'default_value' => true,
@@ -324,7 +323,6 @@ return [
             "is_essential"           => false,
             "false_facet_value"      => true,
             "facet_value"            => "skip",
-            "default_filter"         => true,
             "implicit_filter"        => [
                 'skip'          => false,
                 'default_value' => true,

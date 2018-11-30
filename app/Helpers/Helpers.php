@@ -40,6 +40,8 @@ function makeQueryfromParams($searchObject)
         'product_subtype'       => 'search_data.string_facet.product_subtype',
         'product_color_html'    => 'search_data.string_facet.product_color_html',
         'variant_sale_price'    => 'search_data.number_facet.variant_sale_price',
+        'variant_availability'  => 'search_data.boolean_facet.variant_availability',
+        'product_image_available'  => 'search_data.boolean_facet.product_image_available',
     ];
 
     foreach ($searchObject as $filterType => $params) {
@@ -61,6 +63,13 @@ function makeQueryfromParams($searchObject)
                 foreach ($elasticMapping as $param => $map) {
                     if (array_has($params, $param)) {
                         array_set($queryParams, $map, ["type" => "range", "value" => $params[$param]]);
+                    }
+                }
+                break;
+            case 'boolean_filter':
+                foreach ($elasticMapping as $param => $map) {
+                    if (array_has($params, $param) and $params[$param] !== 'skip') {
+                        array_set($queryParams, $map, ["type" => "enum", "value" => [$params[$param]]]);
                     }
                 }
                 break;
