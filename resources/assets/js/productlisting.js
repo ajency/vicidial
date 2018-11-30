@@ -384,6 +384,10 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
       ajax_data["search_object"]["search_string"]= search_string_filter
     // if( Object.keys(range_facet_list).length>0)
     //   ajax_data["search_object"]["range_filter"] = range_facet_list
+    if ($(window).width() < 767) {
+      ajax_data["exclude_in_response"] = ["items"];
+    }
+
 
     var data = JSON.stringify(ajax_data);
 
@@ -516,15 +520,18 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
 
                   }
                 });
-                var source = document.getElementById("products-list-template").innerHTML;
-                var template = Handlebars.compile(source);
 
-                var context = {};
-                context["products"] = product_list_context.products;
-                context["show_more"] = product_list_context.page.has_next
-                var html = template(context);
-                document.getElementById("products-list-template-content").innerHTML = html;
-                product_list_items = $.extend({}, product_list_context.products);
+                if(Object.keys(product_list_context).length>0){
+                  var source = document.getElementById("products-list-template").innerHTML;
+                  var template = Handlebars.compile(source);
+
+                  var context = {};
+                  context["products"] = product_list_context.products;
+                  context["show_more"] = product_list_context.page.has_next
+                  var html = template(context);
+                  document.getElementById("products-list-template-content").innerHTML = html;
+                  product_list_items = $.extend({}, product_list_context.products);
+                }
 
                 var source   = document.getElementById("filter-header-template").innerHTML;
                 var template = Handlebars.compile(source);
@@ -551,6 +558,8 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
         }
 
     }
+
+
 }
 // });
 

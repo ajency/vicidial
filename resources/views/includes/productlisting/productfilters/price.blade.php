@@ -1,11 +1,11 @@
 <script id="filter-price-template" type="text/x-handlebars-template">
-    <div class="kss_filter-list" data-filter="price">
+    <div class="kss_filter-list" data-filter="@{{template}}">
       <div class="filter-heading">
         <label class="w-100 mb-0 pb-3 cursor-pointer @{{#if collapsed}} collapsed @{{/if}}" data-toggle="collapse" data-target="#collapsePrice" aria-expanded="false" aria-controls="collapsePrice">
           @{{filter_display_name}}<i class="fas fa-angle-up float-right"></i>
         </label>
       </div>
-      <div id="collapsePrice" class="collapse@{{#if collapsed}}@{{else}} show @{{/if}}" data-field="price">
+      <div id="collapsePrice" class="collapse@{{#if collapsed}}@{{else}} show @{{/if}}" data-field="@{{template}}">
         <div class="card-body">
           <div class="priceRange">
             <input type="text" id="price-range" name="price" value="" class="facet-category" data-minval="@{{minval}}" data-maxval="@{{maxval}}" data-facet-name="@{{filter_facet_name}}" data-singleton="true" data-slug="price" @{{#if disabled_at_zero_count}} @{{#ifEquals count 0 }} disabled = "disabled" @{{/ifEquals}} @{{/if}} data-collapsable="@{{collapsed}}" data-display-name="@{{filter_display_name}}"/>

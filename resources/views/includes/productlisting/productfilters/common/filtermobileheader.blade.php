@@ -6,5 +6,5 @@
 	    return $v == true;
 	}, ARRAY_FILTER_USE_BOTH);
 	?>
-	@if (count($out)>0)<small class="filter-count">{{count($out)}}</small> @endif
+	<small class="filter-count @if(count($out)<=0) d-none @endif" >{{count($out)}}</small> 
 </li>

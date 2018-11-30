@@ -8,14 +8,15 @@
         <div class="ml-auto"> <h3 id="kss_hide-filter" class="m-0 kss_highlight btn-pay"><span aria-hidden="true">&times;</span></h3></div>
       </div>
     </div>
-    <hr class="sticky-space">
-  <div class="kss_filter-list mt-1" data-filter="category">
+
+    <hr class="sticky-space"> 
+  <div class="kss_filter-list mt-1" data-filter="@{{template}}">
       <div class="filter-heading">
         <label class=" w-100 mb-0 pb-3 cursor-pointer @{{#if collapsed}} collapsed @{{/if}}" data-toggle="collapse" data-target="#collapseCategory" aria-expanded="false" aria-controls="collapseCategory">
          @{{filter_display_name}} <i class="fas fa-angle-up float-right"></i>
         </label>
       </div>
-      <div id="collapseCategory" class="collapse@{{#if collapsed}}@{{else}} show @{{/if}}" data-field="category">
+      <div id="collapseCategory" class="collapse@{{#if collapsed}}@{{else}} show @{{/if}}" data-field="@{{template}}">
         <div class="card-body pt-2">
           @{{#if singleton }}
           @{{#each items}}

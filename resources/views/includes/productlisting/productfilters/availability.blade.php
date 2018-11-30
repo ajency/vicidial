@@ -1,11 +1,11 @@
 <script id="filter-availability-template" type="text/x-handlebars-template">
-  <div class="kss_filter-list" data-filter="availability">
+  <div class="kss_filter-list" data-filter="@{{template}}">
       <div class="filter-heading">
         <label class=" w-100 mb-0 pb-3 cursor-pointer @{{#if collapsed}} collapsed @{{/if}}" data-toggle="collapse" data-target="#collapseAvailability" aria-expanded="false" aria-controls="collapseAvailability">
          @{{filter_display_name}} <i class="fas fa-angle-up float-right"></i>
         </label>
       </div>
-      <div id="collapseAvailability" class="collapse@{{#if collapsed}}@{{else}} show @{{/if}}" data-field="availability">
+      <div id="collapseAvailability" class="collapse@{{#if collapsed}}@{{else}} show @{{/if}}" data-field="@{{template}}">
         <div class="card-body pt-2">
           @{{#each items}}
           <div class="custom-control custom-checkbox" data-val="@{{display_count_val}}" >
