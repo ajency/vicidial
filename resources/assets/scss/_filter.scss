@@ -228,10 +228,25 @@
 }
 
 .list-sort{
+    .modal-header{
+        border-bottom: 0;
+        padding: 0.8rem 1rem;
+    }
     &__element{
         li{
-            border-bottom: 1px solid #f2f2f2;
-            padding: 0;
+            border-top: 1px solid #f2f2f2;
+            padding: 0 10px;
+            border-radius: 0 !important;
+            border-bottom: 0;
+             &.is-active{
+                box-shadow: inset 4px 0px 0px theme-color("primary");
+                a{
+                    color: theme-color("primary");
+                }
+            }
+            &:first-child{
+                border-top: 0;
+            }
         }
         a{
             color: #707279;
