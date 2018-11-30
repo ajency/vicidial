@@ -1,4 +1,4 @@
-<div *ngIf="orders" class="col-12 d-none d-md-block">
+<div *ngIf="orders" class="col-12 d-none d-md-block p-0">
 	<div class="">
 		<h4 class="font-weight-bold m-0">My Orders</h4>
 		<hr>
@@ -10,14 +10,14 @@
 						<li *ngFor="let item of sub_order.items"  class="p-md-3 p-2 mb-3 card shadow-sm ">
 							<div class="row primary-info">
 								<div class="col-12">
-									<a class="text-black d-flex">
-										<div class="product-img">
-									           <a href="{{item.href}}" [ngClass]="{'variant-placeholder' : item.images[0]=='/img/placeholder.svg'}">
+									<div class="d-flex order-card">
+									    <a href="{{item.href}}" [ngClass]="{'variant-placeholder' : item.images[0]=='/img/placeholder.svg'}" class="order-card__image">
+									        <div class="product-img">
 													<img src="{{item.images[0]}}" class="lazyload img-fit" data-srcset="{{item.images[0]}} 50w, {{item.images[1]}} 100w, {{item.images[2]}} 150w" sizes="50px">
-												</a>
-									    </div>
-										<div class="product-detail ">
-											<a href="{{item.href}}">
+											</div>
+										</a>
+										<div class="product-detail order-card__detail">
+											<a href="{{item.href}}" class="text-dark">
 												<div class="product-name text-truncate">
 													{{item.title}}
 												</div>
@@ -31,7 +31,7 @@
 												</div>
 											</div>
 										</div>
-									</a>
+									</div>
 								</div>
 								<!-- <div class="col-md-4 col-xl-6">
 									<div class="retail-price mt-2 mt-md-0">

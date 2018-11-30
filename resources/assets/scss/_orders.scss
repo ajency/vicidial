@@ -142,3 +142,12 @@
 .status-wrap:last-child{
   align-items: flex-end;
 }
+
+.order-card{
+  &__detail{
+    width: 60%;
+  }
+  .product-name{
+    width: auto;
+  }
+}
