@@ -28,7 +28,7 @@ class Kernel extends ConsoleKernel
     {
         if (config('app.run_cron')) {
             if (config('app.env') == 'production') {
-                $schedule->job(new ProductSync, 'create_jobs')->daily();
+                $schedule->job(new ProductSync, 'create_jobs')->hourly();
                 $schedule->job(new ProductMoveSync, 'create_jobs')->everyMinute();
             } else {
                 $schedule->job(new ProductSync, 'create_jobs')->everyTenMinutes();

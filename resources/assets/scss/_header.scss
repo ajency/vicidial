@@ -27,9 +27,9 @@
         }
         img {
             width: 144px;
-            position: absolute;
-            left: 40px;
-            top: 26px;
+            // position: absolute;
+            // left: 40px;
+            // top: 26px;
         }
     }
 }
@@ -102,12 +102,12 @@
             a{
                 border: 0;
             }
-            .dd-toggle{
-                width: 100%;
-                i{
-                    left: auto;
-                    right: 15px;
-                }
+        }
+        .dd-toggle{
+            width: 100%;
+            i{
+                left: auto;
+                right: 15px;
             }
         }
     }

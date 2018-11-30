@@ -77,7 +77,7 @@
                   <li><a class="dropdown-item" href="/infant-0-2-years/dress/">Dress</a></li>
                   <li><a class="dropdown-item" href="/infant-0-2-years/infant-utility/">Infant Utility</a></li>
                   <li><a class="dropdown-item" href="/infant-0-2-years/shirt/">Shirt</a></li>
-                  <li><a class="dropdown-item" href="/shoes/infants/">Shoes</a></li>
+                  <li><a class="dropdown-item" href="/shoes/infant-0-2-years/">Shoes</a></li>
                   <li><a class="dropdown-item" href="/infant-0-2-years/short/">Short</a></li>
                   <li><a class="dropdown-item" href="/infant-0-2-years/tshirt/">Tshirt</a></li>
                   <li><a class="dropdown-item" href="/infant-0-2-years/woven-tops/">Woven Tops</a></li>

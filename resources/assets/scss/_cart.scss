@@ -402,26 +402,36 @@ body #cd-cart .modal.show .modal-dialog {
     }
 }
 
-.cart-loader{
+.cart-loader.speed-in{
     .cart-loader__wrapper{
-        display: block;
-        top: 0;
-        left: 0;
-        position: absolute;
-        z-index: 999999;
         display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100%;
-        width: 100%;
-        text-align: center;
-        margin: 0 auto;
-        background-color: rgba(255, 255, 255, 0.83);
+        overflow: hidden;
     }
 }
 
 .cart-loader__wrapper{
     display: none;
+    top: 0;
+    position: fixed;
+    z-index: 999999;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    height: 100%;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.93);
+    @include MQ(M) {
+        width: 400px;
+    }
+    @media (max-width: 767.98px) {
+        width: 100% !important;
+    }
+    @media (min-width: 992px) and (min-width: 1199.98px) {
+        width: 40% !important;
+    }
+    @media (min-width: 1300px) {
+        width: 30% !important;
+    }    
 }
 
 .modal-close-icon{

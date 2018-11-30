@@ -7,4 +7,7 @@ return [
         'laravel'    => 'email.order-success',
         'smsgupshup' => "",
     ],
+    "failed-job" => [
+        'laravel'    => 'email.failed-job',
+    ],
 ];

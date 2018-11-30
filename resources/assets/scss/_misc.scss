@@ -155,7 +155,7 @@
     // }
 }
 
-// about us 
+// about us
 .kss-care{
 	@media (min-width: 768px){
 		margin-bottom: -65px;
@@ -188,10 +188,10 @@
 }
 
 /* ----------- iPhone X ----------- */
-@media only screen 
- and (min-device-width: 375px) 
- and (max-device-width: 812px) 
- and (-webkit-min-device-pixel-ratio: 3) { 
+@media only screen
+ and (min-device-width: 375px)
+ and (max-device-width: 812px)
+ and (-webkit-min-device-pixel-ratio: 3) {
  	html,body{
  	-webkit-overflow-scrolling : touch !important;
  	height: 100%  !important;
@@ -199,10 +199,10 @@
  	}
 }
 /* ----------- iPhone 6+, 7+ and 8+ ----------- */
-@media only screen 
- and (min-device-width: 414px) 
- and (max-device-width: 736px) 
- and (-webkit-min-device-pixel-ratio: 3) { 
+@media only screen
+ and (min-device-width: 414px)
+ and (max-device-width: 736px)
+ and (-webkit-min-device-pixel-ratio: 3) {
  	html,body{
  	-webkit-overflow-scrolling : touch !important;
  	height: 100%  !important;
@@ -210,10 +210,10 @@
  	}
 }
 /* ----------- iPhone 6, 6S, 7 and 8 ----------- */
-@media only screen 
- and (min-device-width: 375px) 
- and (max-device-width: 667px) 
- and (-webkit-min-device-pixel-ratio: 2) { 
+@media only screen
+ and (min-device-width: 375px)
+ and (max-device-width: 667px)
+ and (-webkit-min-device-pixel-ratio: 2) {
  	html,body{
  	-webkit-overflow-scrolling : touch !important;
  	height: 100%  !important;
@@ -221,8 +221,8 @@
  	}
 }
 /* ----------- iPhone 5, 5S, 5C and 5SE ----------- */
-@media only screen 
- and (min-device-width: 320px) 
+@media only screen
+ and (min-device-width: 320px)
  and (max-device-width: 568px)
  and (-webkit-min-device-pixel-ratio: 2) {
  	html,body{
@@ -234,7 +234,7 @@
 
 .custom-padding{
 	padding-bottom: 30px !important;
-	@media (max-width: 340px){
+	@media (max-width: 767px){
 		padding-bottom: 100px !important;
 	}
 }
@@ -246,7 +246,7 @@
 }
 
 .out-of-stock{
-	color: #ff353b;
+	color: rgba(10, 0, 0, 0.63);
     font-size: 1.7em;
     @media (max-width: 767px){
     	font-size: 1.5em;
