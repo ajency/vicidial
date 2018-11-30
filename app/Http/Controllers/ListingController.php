@@ -41,8 +41,8 @@ class ListingController extends Controller
         // dd($params_arr);
         $params = Product::productListPage($params_arr,$search_results["slug_value_search_result"],$search_results["slug_search_result"],$search_results["slugs_result"],$search_results["title"]);
 
-
-        return json_decode(json_encode($params,JSON_FORCE_OBJECT));
+        // dd($params);
+        return ["result"=>json_decode(json_encode($params,JSON_FORCE_OBJECT)),"slug_value_search_result"=>$search_results["slug_value_search_result"]];
     }
 
     public function index($cat1, $cat2 = null, $cat3 = null, $cat4 = null, Request $request)
@@ -61,7 +61,10 @@ class ListingController extends Controller
         if(isset($parameters['query']['exclude_in_response']))
             $page_params["exclude_in_response"]=$parameters['query']['exclude_in_response'];
         // dd($page_params);
-    	$params = $this->search_object($parameters,$page_params);
+        $search_data = $this->search_object($parameters,$page_params);
+    	$params = $search_data["result"];
+        $params->slug_value_search_result = $search_data["slug_value_search_result"];
+         // dd($params);
         if($params == false) return view('error404');
         if(empty((array)$params->filters)) return view('noproducts');
 
@@ -86,7 +89,9 @@ class ListingController extends Controller
         if(isset($parameters['query']['exclude_in_response']))
             $page_params["exclude_in_response"]=$parameters['query']['exclude_in_response'];
 
-        $params = $this->search_object($parameters,$page_params);
+        $search_data = $this->search_object($parameters,$page_params);
+        $params = $search_data["result"];
+        $params->slug_value_search_result = $search_data["slug_value_search_result"];
         $params->search_result_assoc = getFacetValueSlugPairs();
 
         if(isset($parameters['query']['show_search']))
@@ -113,13 +118,19 @@ class ListingController extends Controller
             }
         }
 
-        foreach($params as $param){
+        $bool_filters = array_filter(config('product.facet_display_data'), function ($value) {
+            return ($value['filter_type'] == 'boolean_filter');
+        });
+
+        $attr_param_arr = array_column($bool_filters,"attribute_param");
+        
+        foreach($params as $param){      
             if($param != ""){
                 if (strpos($param, "pf=color:") !== false)
                     $p_val = preg_replace("/(\?.*)/", "", $param);
                 else if (strpos($param, "rf=price:") !== false)
                     $p_val = preg_replace("/(\?.*)/", "", $param);
-                else if (strpos($param, "bf=variant_availability:") !== false)
+                else if (strpos($param, "bf=") !== false) 
                     $p_val = preg_replace("/(\?.*)/", "", $param);
                 else if (strpos($param, "sort_on=") !== false)
                     $p_val = preg_replace("/(\?.*)/", "", $param);
@@ -127,8 +138,17 @@ class ListingController extends Controller
                     $p_val = preg_replace("/(\?.*)/", "", $param);
                 else if (strpos($param, "show_search=") !== false) 
                     $p_val = preg_replace("/(\?.*)/", "", $param);
-                else
-                    $p_val = $param;
+                else{
+                    $case_done = false;
+                    foreach($attr_param_arr as $attr_param){
+                        if (strpos($param, $attr_param.":") !== false) {
+                            $p_val = preg_replace("/(\?.*)/", "", $param);
+                            $case_done = true;
+                        }
+                    }
+                    if(!$case_done)
+                        $p_val = $param;
+                }
                 array_push($parameters['categories'], $p_val);
             }
          }
@@ -140,8 +160,9 @@ class ListingController extends Controller
         if(isset($data['exclude_in_response']))
             $page_params["exclude_in_response"]=$data['exclude_in_response'];
         $page_params["page"] = $data["page"];
-        // dd($parameters);
-        $response = $this->search_object($parameters,$page_params,$data["search_object"]);
+        $search_data = $this->search_object($parameters,$page_params,$data["search_object"]);
+        $response = $search_data["result"];
+        // dd($response);
         return response()->json($response,200);
     }
 

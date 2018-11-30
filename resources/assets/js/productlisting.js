@@ -116,7 +116,6 @@ $(document).ready(function(){
     $(this).find('.load-icon-cls').removeClass('d-none')
     $(this).addClass('disabled');
     loadProductListing();
-
   })
 
 
@@ -760,6 +759,21 @@ function loadProductListing(pageval=-1,mobile_view = false){
 
         }
       }
+      else if(pair[0] == "pf"){
+        var ind_pair = pair[1].split(':')
+        getPrimaryFiltersInfo(ind_pair[1],",")
+      } 
+      else if(pair[0] == "rf"){
+        var ind_pair = pair[1].split(':')
+        var price_val = ind_pair[1].split('TO')
+        var bool_item_key = searchItemInArray(facet_display_data_values, filter_pair[0]); 
+        if(range_facet_list[facet_display_data_keys[bool_item_key]] == undefined){
+          ajax_data["search_object"]["range_filter"][facet_display_data_keys[bool_item_key]] = {}
+          ajax_data["search_object"]["range_filter"][facet_display_data_keys[bool_item_key]]["min"] = price_val[0]
+          ajax_data["search_object"]["range_filter"][facet_display_data_keys[bool_item_key]]["max"] = price_val[1]
+        }
+
+      }
     }
     ajax_data["page"] = pageVal
     if(isMobile){
@@ -771,7 +785,6 @@ function loadProductListing(pageval=-1,mobile_view = false){
         data: JSON.stringify(ajax_data),
         dataType: "json",
         contentType: "application/json"
-
       }).done(function (response) {
         var product_list_context = {};
         var header_context = {};
@@ -837,6 +850,26 @@ function loadProductListing(pageval=-1,mobile_view = false){
       });
 }
 
+
+function getPrimaryFiltersInfo(url_pfilter,separator="--"){
+  if(url_pfilter != ""){
+    var all_pairs = url_pfilter.split(separator)
+    for(single_pair of all_pairs){
+      var slug_value_pair = slug_value_search_result[single_pair]
+      if(facet_list[slug_value_pair["facet_name"]] != undefined){
+        console.log( "val=="+slug_value_pair["facet_value"])
+        console.log( facet_list[slug_value_pair["facet_name"]])
+        console.log("inarray=="+facet_list[slug_value_pair["facet_name"]].includes(slug_value_pair["facet_value"]) )
+        if(($.isArray(facet_list[slug_value_pair["facet_name"]])) && (facet_list[slug_value_pair["facet_name"]].includes(slug_value_pair["facet_value"]) == false ))
+          ajax_data["search_object"]["primary_filter"][slug_value_pair["facet_name"]].push(slug_value_pair["facet_value"])
+      }
+      else{
+        ajax_data["search_object"]["primary_filter"][slug_value_pair["facet_name"]] = [slug_value_pair["facet_value"]]
+      }
+    }
+    
+  }
+}
 
 function resetFilter(){
   facet_list = {}
