@@ -315,7 +315,7 @@ function setDefaultFilters(array $params){
 
 function setElasticFacetFilters($q, $params)
 {
-    $search_object = setDefaultFilters($params);
+    $search_object = $params['search_object'];
     $filters = makeQueryfromParams($search_object);
     $must    = [];
     foreach ($filters as $path => $data) {
