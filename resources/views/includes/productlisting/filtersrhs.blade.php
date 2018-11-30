@@ -1,6 +1,6 @@
-<div class="kss_filter_mobile--right">
+<div class="kss_filter_mobile--right w-100">
         <!--     <%= filters %> -->
-        
+
           @foreach($filters_arr as $filter)
             <?php
             $file_name = ($filter["template"] != null)?'includes.productlisting.productfilters.' . $filter["template"]:'';
