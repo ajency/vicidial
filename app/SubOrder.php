@@ -166,7 +166,7 @@ class SubOrder extends Model
                 "product_id"         => $variant->odoo_id,
                 "product_uom_qty"    => $itemData['quantity'],
                 "price_unit"         => $itemData['price_final'],
-                "discount"           => $itemData['discount'],
+                "discount"           => 0,
                 "name"               => $variant->getName(),
             ]),
         ];
