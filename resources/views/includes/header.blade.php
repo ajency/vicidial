@@ -1,10 +1,112 @@
 <div class="container pl-2 pl-sm-0 pr-2 pr-sm-0">
 <nav class="navbar navbar-expand-lg better-bootstrap-nav-left pl-1 pr-1 pb-0 pt-0">
 
+    <div class="megamenu-open menu-toggle pr-3 py-2 d-block d-lg-none">
+      <i class="fas fa-bars"></i>
+    </div>
+
     <a href="/" class="header-logo">
-        <img src="{{CDN::asset('/img/logo-kss.png') }}" class=" img-fluid m-0 kss-logo" width="180px">
+      <img src="{{CDN::asset('/img/logo-kss.png') }}" class=" img-fluid m-0 kss-logo" width="180px">
     </a>
 
+    <div class="megamenu">
+
+      <div class="d-flex d-lg-none justify-content-between align-items-center border-bottom border-cancel">
+        <img src="{{CDN::asset('/img/logo-kss.png') }}" class=" img-fluid m-3 d-block d-lg-none" width="180px">
+        <div class="megamenu-close menu-toggle p-3">
+          <i class="fas fa-times"></i>
+        </div>
+      </div>
+
+      <div class="d-flex">
+        <ul class="nav flex-column megamenu--left d-block d-lg-none">
+          <li class="nav-item" data-target="all">
+            All
+          </li>
+          <li class="nav-item" data-target="boys">
+            Boys
+          </li>
+          <li class="nav-item" data-target="girls">
+            Girls
+          </li>
+          <li class="nav-item" data-target="infants">
+            Infants
+          </li>
+          <li class="nav-item" data-target="accessories">
+            Kids Accessories
+          </li>
+        </ul>
+
+        <ul class="nav megamenu--right">
+            <li>
+                <a href="#" class="d-none d-lg-block">All</a>
+                <div class="megamenu-wrapper" data-menu="all">
+                    <div class="nav-column">
+                        <div class="nav-column--heading">Home</div>
+                        <ul class="list-unstyled">
+                          <li><a class="megamenu-link" href="/bottoms/">Bottoms</a></li>
+                          <li><a class="megamenu-link" href="/dress/">Dress</a></li>
+                          <li><a class="megamenu-link" href="/ethnic/">Ethnic</a></li>
+                          <li><a class="megamenu-link" href="/formal-pant/">Formal Pant</a></li>
+                          <li><a class="megamenu-link" href="/infant-utility/">Infant Utility</a></li>
+                          <li><a class="megamenu-link" href="/jeans/">Jeans</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="nav-column">
+                        <div class="nav-column--heading">Home</div>
+                        <ul class="list-unstyled">
+                          <!-- <li><a class="megamenu-link" href="/others/">Others</a></li> -->
+                          <li><a class="megamenu-link" href="/shirt/">Shirt</a></li>
+                          <li><a class="megamenu-link" href="/shoes/">Shoes</a></li>
+                          <li><a class="megamenu-link" href="/short/">Short</a></li>
+                          <li><a class="megamenu-link" href="/skirt/">Skirt</a></li>
+                          <li><a class="megamenu-link" href="/sweatshirt/">Sweatshirt</a></li>
+                          <li><a class="megamenu-link" href="/tops/">Tops</a></li>
+                          <li><a class="megamenu-link" href="/tshirt/">Tshirt</a></li>
+                          <li><a class="megamenu-link" href="/woven-tops/">Woven Tops</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="nav-column">
+                        <div class="nav-column--heading">Home</div>
+                        <ul class="list-unstyled">
+                          <li><a class="megamenu-link" href="/bottoms/">Bottoms</a></li>
+                          <li><a class="megamenu-link" href="/dress/">Dress</a></li>
+                          <li><a class="megamenu-link" href="/ethnic/">Ethnic</a></li>
+                          <li><a class="megamenu-link" href="/formal-pant/">Formal Pant</a></li>
+                          <li><a class="megamenu-link" href="/infant-utility/">Infant Utility</a></li>
+                          <li><a class="megamenu-link" href="/jeans/">Jeans</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="nav-column">
+                        <div class="nav-column--heading">Related Categories</div>
+                        <ul class="list-unstyled">
+                          <!-- <li><a class="megamenu-link" href="/others/">Others</a></li> -->
+                          <li><a class="megamenu-link" href="/shirt/">Shirt</a></li>
+                          <li><a class="megamenu-link" href="/shoes/">Shoes</a></li>
+                          <li><a class="megamenu-link" href="/short/">Short</a></li>
+                          <li><a class="megamenu-link" href="/skirt/">Skirt</a></li>
+                          <li><a class="megamenu-link" href="/sweatshirt/">Sweatshirt</a></li>
+                          <li><a class="megamenu-link" href="/tops/">Tops</a></li>
+                          <li><a class="megamenu-link" href="/tshirt/">Tshirt</a></li>
+                          <li><a class="megamenu-link" href="/woven-tops/">Woven Tops</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <a href="#" class="d-none d-lg-block">Boys</a>
+            </li>
+            <li><a href="#" class="d-none d-lg-block">Girls</a></li>
+            <li><a href="#" class="d-none d-lg-block">Infants</a></li>
+            <li><a href="#" class="d-none d-lg-block">Kids Accessories</a></li>
+        </ul>
+      </div>
+    </div>
+
+{{--
     <div class="stellarnav header-menu ml-lg-4" id="">
         <ul class="">
             <li class="d-lg-none">
@@ -109,8 +211,9 @@
             </li>
         </ul>
     </div>
+--}}
 
-    <div class="my-2 my-lg-0 ml-auto header-actions">
+    <div class="my-lg-0 ml-auto header-actions">
         <ul class="list-inline mb-2 pt-3">
             <!-- <li class="list-inline-item">
                 <i class="kss_icon search-icon cursor-pointer"></i>
