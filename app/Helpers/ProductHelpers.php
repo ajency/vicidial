@@ -292,6 +292,25 @@ function getProductThumbImages($variantId){
         return $default_imgs;
 }
 
+function setDefaultFilters(array $params){
+    // load default parms
+    $facet_display_data = config('product.facet_display_data');
+    $search_object = [];
+    foreach ($facet_display_data as $facet_name => $data) {
+        if($data['implicit_filter']['skip']== false){
+            $search_object[$data['filter_type']][$facet_name] = $data['implicit_filter']['default_value'];
+        }
+    }
+    //add request params
+    foreach ($params['search_object'] as $filter_type => $facet) {
+        foreach ($facet as $facet_name => $values) {
+            $search_object[$filter_type][$facet_name] = $values;
+        }
+    }
+
+    return $search_object;
+}
+
 function setElasticFacetFilters($q, $params)
 {
     $filters = makeQueryfromParams($params["search_object"]);

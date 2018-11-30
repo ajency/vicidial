@@ -175,6 +175,10 @@ return [
             "sort_order"             => "asc",
             "custom_attributes"      => [],
             "false_facet_value"      => null,
+            "implicit_filter"        => [
+                'skip'          => true,
+                'default_value' => [],
+            ],
         ],
         'product_gender'          => [
             'name'                   => 'Gender',
@@ -192,6 +196,10 @@ return [
             "sort_order"             => "asc",
             "custom_attributes"      => [],
             "false_facet_value"      => null,
+            "implicit_filter"        => [
+                'skip'          => true,
+                'default_value' => [],
+            ],
         ],
         'product_age_group'       => [
             'name'                   => 'Age Group',
@@ -209,6 +217,10 @@ return [
             "sort_order"             => "asc",
             "custom_attributes"      => [],
             "false_facet_value"      => null,
+            "implicit_filter"        => [
+                'skip'          => true,
+                'default_value' => [],
+            ],
         ],
         'product_subtype'         => [
             'name'                   => 'Sub Type',
@@ -226,6 +238,10 @@ return [
             "sort_order"             => "desc",
             "custom_attributes"      => [],
             "false_facet_value"      => null,
+            "implicit_filter"        => [
+                'skip'          => true,
+                'default_value' => [],
+            ],
         ],
         'product_color_html'      => [
             'name'                   => 'Colour',
@@ -243,6 +259,10 @@ return [
             "sort_order"             => "asc",
             "custom_attributes"      => ["show_more_limit" => 10],
             "false_facet_value"      => null,
+            "implicit_filter"        => [
+                'skip'          => true,
+                'default_value' => [],
+            ],
         ],
         'variant_sale_price'      => [
             'name'                   => 'Price Range',
@@ -260,6 +280,10 @@ return [
             "sort_order"             => "asc",
             "custom_attributes"      => [],
             "false_facet_value"      => null,
+            "implicit_filter"        => [
+                'skip'          => true,
+                'default_value' => [],
+            ],
         ],
         'variant_availability'    => [
             'name'                   => 'Availability',
@@ -280,6 +304,10 @@ return [
             "false_facet_value"      => true,
             "facet_value"            => "skip",
             "default_filter"         => true,
+            "implicit_filter"        => [
+                'skip'          => false,
+                'default_value' => true,
+            ],
         ],
         'product_image_available' => [
             'name'                   => '',
@@ -297,6 +325,10 @@ return [
             "false_facet_value"      => true,
             "facet_value"            => "skip",
             "default_filter"         => true,
+            "implicit_filter"        => [
+                'skip'          => false,
+                'default_value' => true,
+            ],
         ],
     ],
     'breadcrumb_order'               => [
