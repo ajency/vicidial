@@ -34,13 +34,13 @@
  }
  lazy();
  // ------------------ End Image Load ------------------//
- $('.stellarnav').stellarNav({
-     position: "left",
-     breakpoint: 992,
-     menuLabel: " ",
-     closingDelay: 150,
-     mobileMode: true
- });
+ // $('.stellarnav').stellarNav({
+ //     position: "left",
+ //     breakpoint: 992,
+ //     menuLabel: " ",
+ //     closingDelay: 150,
+ //     mobileMode: true
+ // });
  // ------------------ Start Image Loader ------------------//
  $(document).ready(function() {
      $(function() {
