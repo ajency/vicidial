@@ -247,6 +247,9 @@
             &:first-child{
                 border-top: 0;
             }
+            &:hover{
+                z-index: inherit;
+            }
         }
         a{
             color: #707279;

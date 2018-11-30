@@ -72,6 +72,14 @@ $(function(){
      $(document).on('click','.search-trigger', function () {  
         searchFilter(($('.custom-expand-search').val() != '')? true : false);
      });
+     
+    if($('.list-sort').length){
+      $('.list-sort__element li').each(function(){
+        $(this).click(function(){
+          $(this).addClass('is-active').siblings().removeClass('is-active');
+        })
+      });
+    }
 
      $(document).on('keypress','#searchStringInp', function (e) {  
         if (e.keyCode == 13) 
