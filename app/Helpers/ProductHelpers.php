@@ -318,6 +318,7 @@ function setElasticFacetFilters($q, $params)
     $search_object = $params['search_object'];
     $filters = makeQueryfromParams($search_object);
     $must    = [];
+    $must_not = [];
     foreach ($filters as $path => $data) {
         foreach ($data as $facet => $data2) {
             foreach ($data2 as $field => $values) {
@@ -327,6 +328,9 @@ function setElasticFacetFilters($q, $params)
                     foreach ($values['value'] as $value) {
                         $facetName  = $q::createTerm($path . "." . $facet . '.facet_name', $field);
                         $facetValue = $q::createTerm($path . "." . $facet . '.facet_value', $value);
+                        if($facet === "boolean_facet" and $value === false){   
+                            $facetValue = $q::createTerm($path . "." . $facet . '.facet_value', !$value);
+                        }
                         $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
                         $nested[]   = $q::createNested($path . '.' . $facet, $filter);
                         $should     = $q::addToBoolQuery('should', $nested, $should);
@@ -339,18 +343,21 @@ function setElasticFacetFilters($q, $params)
                     $should     = $q::addToBoolQuery('should', $nested, $should);
                 }
                 $nested2 = $q::createNested($path, $should);
-                $must[]  = $nested2;
+                if($facet === "boolean_facet"  and $value === false){
+                    $must_not[] = $nested2;
+                }
+                else{
+                    $must[]  = $nested2;
+                }
             }
         }
     }
     if (isset($search_object['search_string'])) {
         $must[] = textSearch($q, $search_object['search_string']);
     }
-    $must = $q::addToBoolQuery('must', $must);
-    $nested3 =[];
-
-    $must = $q::addToBoolQuery('filter', $nested3, $must);
-    return $must;
+    $bool = $q::addToBoolQuery('must', $must);
+    $bool = $q::addToBoolQuery('must_not', $must_not, $bool);
+    return $bool;
 }
 
 
