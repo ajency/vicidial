@@ -69,4 +69,8 @@ export class MyOrdersComponent implements OnInit {
     return this.appservice.isLoggedInUser();
   }
 
+  closeWidget(){
+    this.appservice.closeWidget();
+  }
+
 }

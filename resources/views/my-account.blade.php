@@ -1,4 +1,4 @@
-<div id="cd-shadow-layer"></div>
+<!-- <div id="cd-shadow-layer"></div> -->
 <div id="cd-my-account" class="cart-loader ng-cart-loader">
 
 	<div class="alert kss-alert sticky-alert d-inline-flex align-items-center px-sm-4 px-3 py-4 fade show shadow rounded m-2" role="alert">
