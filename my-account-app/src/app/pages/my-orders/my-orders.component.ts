@@ -19,7 +19,12 @@ export class MyOrdersComponent implements OnInit {
 
   ngOnInit() {
   	// this.appservice.removeLoader();
-  	this.getOrders();
+    if(this.appservice.isLoggedInUser()){
+    	this.getOrders();      
+    }
+    else
+      this.appservice.removeLoader();
+
   }
 
   navigateToBlank(){
@@ -58,6 +63,10 @@ export class MyOrdersComponent implements OnInit {
       })
     })
     return data;
+  }
+
+  isLoggedIn(){
+    return this.appservice.isLoggedInUser();
   }
 
 }

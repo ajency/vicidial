@@ -45,4 +45,10 @@ export class AppServiceService {
     if(document.getElementsByClassName("modal-backdrop")[0])
       document.getElementsByClassName("modal-backdrop")[0].remove();
   }
+
+  isLoggedInUser(){
+    if(this.getCookie('token') && this.getCookie('cart_id'))
+      return true;
+    return false;
+  }
 }
