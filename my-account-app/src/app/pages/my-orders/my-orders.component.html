@@ -12,14 +12,14 @@
 		</div>
 	</nav>
 </div>
-<div class="col-12 p-0 h-100 mt-3">
+<div class="col-12 p-0 mt-3 myorder-wrapper">
 	<div class="h-100">
 		<h4 class="font-weight-bold m-0">My Orders</h4>
 		<hr>
 		<div *ngIf="isLoggedIn()">
 			<div *ngIf="orders && orders.length">
 				<div *ngFor="let order of orders; let last = last">
-					<div class="d-flex row mb-3">
+					<div class="d-flex row mb-3 order-header">
 						<div class="col-7">
 							<p class="m-0">Order No. <strong>{{order.order_info.txn_no}}</strong></p>
 							<p class="m-0">Placed on. <strong>{{order.order_info.order_date}}</strong></p>
@@ -99,8 +99,8 @@
 					<hr *ngIf="!last">
 				</div>
 			</div>
-			<div *ngIf="orders && !orders.length">
-				<div class="myorder-login text-center d-flex align-items-center justify-content-center flex-column">
+			<div *ngIf="orders && !orders.length" class="myorder-wrapper d-flex align-items-center justify-content-center">
+				<div class="text-center d-flex align-items-center justify-content-center flex-column">
 					<img src="/img/no-order-login.png" class="img-fluid" width="150">
 					<!-- <h4>Can't see all your orders?</h4> -->
 					<h4 class="py-4 mb-0">You havent placed any orders yet.</h4>
@@ -111,8 +111,8 @@
 			</div>	
 		</div>
 
-		<div *ngIf="!isLoggedIn()">
-			<div class="myorder-login text-center d-flex align-items-center justify-content-center flex-column">
+		<div *ngIf="!isLoggedIn()" class="myorder-wrapper d-flex align-items-center justify-content-center">
+			<div class="text-center d-flex align-items-center justify-content-center flex-column">
 				<img src="/img/no-order-login.png" class="img-fluid" width="150">
 				<!-- <h4>Can't see all your orders?</h4> -->
 				<h4 class="py-4 mb-0">Please login to see all your orders</h4>

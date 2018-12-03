@@ -152,8 +152,8 @@
   }
 }
 
-.myorder-login{
-  height: calc(100% - 66px);
+.myorder-wrapper{
+  height: calc(100% - 80px);
 }
 
 .order-no-row{
@@ -163,4 +163,8 @@
   .col-right{
     flex-basis: 30%;
   }
+}
+.order-header{
+    background-color: #fbfbfb;
+    padding: 1.8em 0;
 }
