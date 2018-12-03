@@ -76,11 +76,13 @@ $(document).ready(function(){
     });
 
     function addToCart(){
+        var var_id = $('input[type=radio][name=kss-sizes]:checked')[0].dataset['variant_id'];
+        fbTrackAddToCart(var_id);
         console.log("add_to_cart_failed ==>",add_to_cart_failed);
         console.log("add_to_cart_failure_message ==>", add_to_cart_failure_message);
         var url = isLoggedInUser() ? ("/api/rest/v1/user/cart/"+getCookie('cart_id')+"/insert") : ("/rest/v1/anonymous/cart/insert")
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-        var data = {_token: CSRF_TOKEN,"variant_id": $('input[type=radio][name=kss-sizes]:checked')[0].dataset['variant_id'],"variant_quantity": 1};
+        var data = {_token: CSRF_TOKEN,"variant_id": var_id,"variant_quantity": 1};
         $.ajax({
             url: url,
             type: 'POST',
@@ -290,3 +292,31 @@ function getCookie(cname) {
     }
     return "";
 }
+
+function fbTrackuserRegistration(){
+    console.log("fb pixel userRegistrationSuccess");
+    fbq('track', 'CompleteRegistration');
+}
+
+function fbTrackAddToCart(var_id){
+    console.log(var_id, variants);
+    console.log("check =", Object.keys(variants)[0]);
+    var variant = variants[Object.keys(variants)[0]].variants.find((variant)=> {return variant.id == var_id});
+    console.log(variant);
+    fbq('track', 'AddToCart', {
+        value: variant.sale_price,
+        currency: 'INR',
+        content_ids: var_id,
+        content_type: 'product',
+    });
+}
+
+function fbTrackInitiateCheckout(order_total){
+    console.log(order_total);
+    fbq('track', 'InitiateCheckout', {
+        value: order_total,
+        currency: 'INR',
+    });
+}
+
+
