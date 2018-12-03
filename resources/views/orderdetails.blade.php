@@ -52,7 +52,7 @@
 							fbq('track', 'Purchase', {
 							    value: total,
 							    currency: 'INR',
-							    content_ids: {{implode(",",$variant_ids)}},
+							    content_ids: '{{implode(",",$variant_ids)}}',
 							    content_type: 'product',
 							});
 						</script>
