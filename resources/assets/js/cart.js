@@ -16,11 +16,11 @@ $(document).ready(function(){
         console.log("opening cart from vanilla js");
         openCart();
      }
-     if(window.location.href.endsWith('#/my-orders'))
+     if(window.location.href.endsWith('#/account/my-orders') || window.location.href.endsWith('#/account'))
         openMyAccountPage();
     }
 
-    if(window.location.href.endsWith('#/my-orders'))
+    if(window.location.href.endsWith('#/account/my-orders') || window.location.href.endsWith('#/account'))
         openMyAccountPage();
 
     var kss_alert_timeout;

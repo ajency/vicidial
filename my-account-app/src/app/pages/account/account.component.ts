@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AppServiceService } from '../../services/app-service.service';
 
 @Component({
   selector: 'app-account',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccountComponent implements OnInit {
 
-  constructor() { }
+  constructor(private appservice : AppServiceService) { }
 
   ngOnInit() {
+  	this.appservice.removeLoader();
   }
 
 }
