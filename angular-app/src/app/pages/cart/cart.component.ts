@@ -9,6 +9,8 @@ declare var add_to_cart_failed: any;
 declare var add_to_cart_failure_message: any;
 declare var add_to_cart_clicked: any;
 declare var add_to_cart_completed: any;
+
+declare var fbTrackuserRegistration : any;
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
@@ -277,6 +279,7 @@ export class CartComponent implements OnInit {
         document.cookie='token='+ response.token + ";path=/";
         document.cookie='cart_id=' + response.user.active_cart_id + ";path=/";
         this.appservice.userVerificationComplete = true;
+        fbTrackuserRegistration();
         // this.updateOtpModal(false);
         $('body').removeClass('modal-open')
         this.navigateToShippingDetailsPage();        

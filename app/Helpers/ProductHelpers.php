@@ -24,8 +24,7 @@ function get_price_set($size_set, $size = null){
 	elseif ($size != null && $size == $size_set->size->name) {
 		$checked="checked";
     }
-
-	return ['list_price'=> $list_price, 'sale_price'=> $sale_price, 'discount_per'=> calculate_discount($list_price, $sale_price), 'disabled'=> $disabled, 'checked'=> $checked];
+	return ['id' => $size_set->id ,'list_price'=> $list_price, 'sale_price'=> $sale_price, 'discount_per'=> calculate_discount($list_price, $sale_price), 'disabled'=> $disabled, 'checked'=> $checked];
 }
 
 //Set price to be displayed
