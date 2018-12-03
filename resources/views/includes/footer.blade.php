@@ -93,22 +93,26 @@
 
      <div class="row">
         <div class="col-12">
-             <p class="font-weight-bold mb-3 mt-3"><strong>KidSuperStore.in: Fresh Fashion for your kids. Always!</strong></p>
 
-             <p class="mb-5">
-                Want to find the latest clothing and accessories for kids? Look no further, <a href="http://www.kidsuperstore.in" class="kss-anchor">KidSuperStore.in</a> brings you the latest and fresh styles of fashion for kids all delivered to your doorstep. Browse through the various styles and categories we have at <a href="http://www.kidsuperstore.in" class="kss-anchor">KidSuperStore.in</a> and have fun planning out various outfit for kids. You can do this all from the comfort of your home while enjoying many online shopping benefits. We offer the irresistible deals and discounts for almost every product on our store. Experience seamless shopping through our beautiful user interface and find the exact product you are thinking of by using our powerful search filters. We hope you have a wonderful time shopping on <a href="http://www.kidsuperstore.in" class="kss-anchor">KidSuperStore.in</a>. Also, do visit our store regularly to check and avail amazing discounts offers!
-             </p>
+            <div class="collapse hidden-footer-section" id="moreFooter">
+               <p class="font-weight-bold mb-3 mt-0 mt-sm-3"><strong>KidSuperStore.in: Fresh Fashion for your kids. Always!</strong></p>
 
-             <p class="font-weight-bold mb-3 "><strong>KidSuperStore.in: Fresh Fashion for your kids. Now near you!</strong></p>
+               <p class="mb-5">
+                  Want to find the latest clothing and accessories for kids? Look no further, <a href="http://www.kidsuperstore.in" class="kss-anchor">KidSuperStore.in</a> brings you the latest and fresh styles of fashion for kids all delivered to your doorstep. Browse through the various styles and categories we have at <a href="http://www.kidsuperstore.in" class="kss-anchor">KidSuperStore.in</a> and have fun planning out various outfit for kids. You can do this all from the comfort of your home while enjoying many online shopping benefits. We offer the irresistible deals and discounts for almost every product on our store. Experience seamless shopping through our beautiful user interface and find the exact product you are thinking of by using our powerful search filters. We hope you have a wonderful time shopping on <a href="http://www.kidsuperstore.in" class="kss-anchor">KidSuperStore.in</a>. Also, do visit our store regularly to check and avail amazing discounts offers!
+               </p>
 
-             <p>
-                Not comfortable shopping online? Want to see and try out the clothing before you buy? Don’t worry, we got you covered. We have our stores all over India. You can check out our store section and visit any one of our stores nearest to you. You can experience our different variety of clothes and styles at any of our stores. Our stores are about as fun as they get, it won't even feel like you're shopping!
-             </p>
+               <p class="font-weight-bold mb-3 "><strong>KidSuperStore.in: Fresh Fashion for your kids. Now near you!</strong></p>
 
+               <p>
+                  Not comfortable shopping online? Want to see and try out the clothing before you buy? Don’t worry, we got you covered. We have our stores all over India. You can check out our store section and visit any one of our stores nearest to you. You can experience our different variety of clothes and styles at any of our stores. Our stores are about as fun as they get, it won't even feel like you're shopping!
+               </p>
+               <div class="border-bottom border-gray mt-4 mb-4 op-1">
+               </div>
 
+            </div>
+
+            <p class="font-weight-bold mb-3 d-block d-sm-none footer-more collapsed" data-toggle="collapse" href="#moreFooter"><strong><span class="footer-more__title"">Fresh Fashion for your kids</span> <i class="fas fa-angle-down icon-down"></i></strong></p>
         </div>
-   </div>
-   <div class="border-bottom border-gray mt-4 mb-4 op-1">
    </div>
     <div class="d-flex bd-highlight mb-3">
         <div class="mr-auto p-2 bd-highlight">© Copyright 2018 Kidsuperstore. All rights reserved.</div>
