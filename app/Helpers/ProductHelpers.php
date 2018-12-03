@@ -244,6 +244,8 @@ function sanitiseFilterdata($result, $params = [])
 
         // image availability filter
     $response[] = boolFilterResponse("product_image_available", $attributes, $params);
+    // ecomm filter
+    $response[] = boolFilterResponse("product_att_ecom_sales", $attributes, $params);
     
     return $response;
 }
