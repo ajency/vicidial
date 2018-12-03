@@ -13,7 +13,7 @@ export class AppComponent {
 	constructor(private router : Router,
 				private location : PlatformLocation,
 				private appservice : AppServiceService){
-		this.router.navigateByUrl('/my-orders');
+		// this.router.navigateByUrl('account/my-orders');
 
 		this.location.onPopState((event)=>{
 			console.log("location.onPopState triggered");

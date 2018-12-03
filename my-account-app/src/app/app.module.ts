@@ -7,17 +7,17 @@ import {HashLocationStrategy, Location, LocationStrategy} from '@angular/common'
 
 import { AppRoutingModule }     from './app-routing.module';
 import { MyOrdersComponent } from './pages/my-orders/my-orders.component';
-import { BlankComponent } from './pages/blank/blank.component';
 
 import { ApiServiceService } from './services/api-service.service';
 import { AppServiceService } from './services/app-service.service';
+import { AccountComponent } from './pages/account/account.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     MyOrdersComponent,
-    BlankComponent
+    AccountComponent
   ],
   imports: [
     BrowserModule,
