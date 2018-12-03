@@ -89,6 +89,17 @@
                 <a href="#" class="d-none d-lg-block">Boys</a>
                 <div class="megamenu-wrapper" data-menu="boys">
                     <div class="nav-column">
+                        <div class="nav-column--heading mb-1">Shop by Category</div>
+                        <ul class="list-unstyled">
+                          <li><a class="megamenu-link" href="">Clothing</a></li>
+                          <li><a class="megamenu-link" href="">Shoes</a></li>
+                          <li><a class="megamenu-link" href="">Accessories</a></li>
+                          <li><a class="megamenu-link megamenu-link--primary" href="#">View all products</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="nav-column">
+                        <div class="nav-column--heading mb-1">Shop by Clothing</div>
                         <ul class="list-unstyled">
                           <li><a class="megamenu-link" href="/boys/junior-7-14-years--toddler-2-7-years/bottoms/">Bottoms</a></li>
                           <li><a class="megamenu-link" href="/boys/junior-7-14-years--toddler-2-7-years/ethnic/">Ethnic</a></li>
@@ -96,11 +107,6 @@
                           <li><a class="megamenu-link" href="/boys/junior-7-14-years--toddler-2-7-years/jeans/">Jeans</a></li>
                           <!-- <li><a class="megamenu-link" href="/boys/junior-7-14-years--toddler-2-7-years/others/">Others</a></li> -->
                           <li><a class="megamenu-link" href="/boys/junior-7-14-years--toddler-2-7-years/shirt/">Shirt</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="nav-column">
-                        <ul class="list-unstyled">
                           <li><a class="megamenu-link" href="/shoes/boys/toddler-2-7-years--junior-7-14-years/">Shoes</a></li>
                           <li><a class="megamenu-link" href="/boys/junior-7-14-years--toddler-2-7-years/short/">Short</a></li>
                           <li><a class="megamenu-link" href="/boys/junior-7-14-years--toddler-2-7-years/sweatshirt/">Sweatshirt</a></li>
@@ -109,23 +115,69 @@
                     </div>
 
                     <div class="nav-column">
-                        <div class="nav-column--heading mb-1">Age Groups</div>
+                        <div class="nav-column--heading mb-1">Shop by Price</div>
                         <ul class="list-unstyled">
-                          <li><a class="megamenu-link" href="#">0-2 yrs</a></li>
-                          <li><a class="megamenu-link" href="#">2-7 yrs</a></li>
-                          <li><a class="megamenu-link" href="#">7-14 yrs</a></li>
+                          <li><a class="megamenu-link" href="#">Below Rs.500</a></li>
+                          <li><a class="megamenu-link" href="#">Rs.500 to Rs.999</a></li>
+                          <li><a class="megamenu-link" href="#">Rs.1000 to Rs.1499</a></li>
+                          <li><a class="megamenu-link" href="#">Rs.1500 to Rs.1999</a></li>
+                          <li><a class="megamenu-link" href="#">Above Rs.2000</a></li>
+                        </ul>
+
+                        <div class="nav-column--heading mb-1">Shop by Age Group</div>
+                        <ul class="list-unstyled">
+                          <li><a class="megamenu-link" href="#">2-7 years</a></li>
+                          <li><a class="megamenu-link" href="#">7-14 years</a></li>
                         </ul>
                     </div>
 
                     <div class="nav-column">
-                        <img class="d-block w-100 img-fluid lazyload blur-up"
-                             src="{{CDN::asset('/img/gender/boy-10px.jpg') }}"
-                             data-srcset="{{CDN::asset('/img/gender/boy-large.jpg') }} 813w,
-                                          {{CDN::asset('/img/gender/boy-medium.jpg') }} 542w,
-                                          {{CDN::asset('/img/gender/boy-small.jpg') }} 271w"
-                             data-sizes='(min-width: 1200px) 270px, (min-width: 768px) 22vw,  44vw'
+                        <div class="nav-column--heading mb-1">Boys Offers</div>
+                        <ul class="list-unstyled">
+                          <li>
+                            <a class="" href="#">
+                              <img class="d-block w-100 img-fluid offer-img"
+                                 src="{{CDN::asset('/img/menu/boy-dummy1.png') }}"
+                                 width="200"
+                                 title="Offer 1"
+                                 alt="Offer 1"/>
+                            </a>
+                          </li>
+                          <li>
+                            <a class="" href="#">
+                              <img class="d-block w-100 img-fluid offer-img"
+                                 src="{{CDN::asset('/img/menu/boy-dummy2.png') }}"
+                                 width="200"
+                                 title="Offer 1"
+                                 alt="Offer 1"/>
+                            </a>
+                          </li>
+                          <li>
+                            <a class="" href="#">
+                              <img class="d-block w-100 img-fluid offer-img"
+                                 src="{{CDN::asset('/img/menu/boy-dummy3.png') }}"
+                                 width="200"
+                                 title="Offer 1"
+                                 alt="Offer 1"/>
+                            </a>
+                          </li>
+                        </ul>
+                    </div>
+
+                    <div class="nav-column">
+                        <img class="d-block w-100 img-fluid"
+                             src="{{CDN::asset('/img/gender/boy-small.jpg') }}"
                              title="Boys 2-14 years"
                              alt="Boys 2-14 years"/>
+                        <div class="row align-items-center mt-2">
+                            <div class="col-7">
+                              <div class="h5 text-primary font-weight-bold">Spotlight on</div>
+                              <div class="text-white">Boys shirts</div>
+                            </div>
+                            <div class="col-5">
+                              <a href="#" class="btn kss-btn kss-btn--mini">Shop now</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </li>

@@ -26,6 +26,7 @@ nav{
 			>div {
 				position: absolute;
 				display: flex;
+				justify-content: space-between;
 				width: 100%;
 				top: 54px;
 				left: 0;
@@ -35,7 +36,7 @@ nav{
 				background: $gray-800;
 				border-radius: 0 0 3px 3px;
 				transition: all .15s ease;
-				max-width: 1000px;
+				// max-width: 1000px;
 			}
 			&:hover {
 				background-color: $gray-800;
@@ -47,15 +48,17 @@ nav{
 			}
 		}
 		.nav-column {
-			float: left;
-			width: 25%;
-			padding: 2.5%;
+			// width: 20%;
+			padding: 2%;
+			border-left: 1px solid #4a4a4a;
 			&--heading {
 				line-height: 18px;
 				font-weight: bold;
-				font-size: 14px;
+				font-size: 12px;
 				color: theme-color("primary");
 				text-transform: uppercase;
+				padding-bottom: 10px;
+				box-shadow: 0px 2px 0px 0px #585858;
 			}
 			> ul{
 				margin-bottom: 30px;
@@ -64,16 +67,26 @@ nav{
 				}
 			}
 			li {
-				a {
+				.megamenu-link {
 					display: block;
 					line-height: 28px;
 					font-weight: bold;
 					font-size: 13px;
 					color: white;
+					&--large{
+						font-size: 14px;
+					}
+					&--primary{
+						color: theme-color("primary");
+					}
 					&:hover{
 						color: darken(#fcfcfc, 15%);
 					}
 				}
+			}
+			.offer-img{
+				max-width: 220px;
+				padding: 5px 0;
 			}
 		}
 
