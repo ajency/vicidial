@@ -115,6 +115,10 @@
     </div>
 </div>
 
+<!-- sentry code -->
+<script src="https://browser.sentry-cdn.com/4.4.1/bundle.min.js" crossorigin="anonymous"></script>
+<script>Sentry.init({ dsn: '{{config("analytics.js_dsn")}}', environment : '{{config("app.env")}}' });</script>
+
 <!-- Facebook Pixel Code -->
 <script>
   !function(f,b,e,v,n,t,s)
@@ -132,7 +136,6 @@
   src="https://www.facebook.com/tr?id={{config('analytics.pixel_id')}}&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Facebook Pixel Code -->
-
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id={{config('analytics.google_id')}}"></script>
