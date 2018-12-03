@@ -4,17 +4,24 @@
 		<hr>
 		<div *ngIf="orders;else no_order_session">
 			<div *ngFor="let order of orders">
-				<h6 class="font-weight-bold mt-4">Order No. {{order.order_info.txn_no}}</h6>
-				<h6 class="mb-3">Placed on {{order.order_info.order_date}}</h6>
+					<div class="d-flex row">
+						<div class="pr-2 col-8">
+							<p class="m-0">Order No. <strong>{{order.order_info.txn_no}}</strong></p>
+							<p class="m-0">Placed on. <strong>{{order.order_info.order_date}}</strong></p>
+						</div>
+						<div class="col-4 text-right">
+							<a href="#" class="btn btn-outline-secondary">Order Details</a>
+						</div>
+					</div>
 					<ul class="cd-cart-items list-unstyled">
-						<div *ngFor="let sub_order of order.sub_orders; let i = index">
-							<div class="d-flex bd-highlight">
-								<div class="pb-2 pr-2">
+						<div *ngFor="let sub_order of order.sub_orders; let i = index" class="mt-3">
+							<div class="d-flex bd-highlight row">
+								<div class="pb-2 pr-2 col-9">
 									<label class="d-block m-0">Shipment {{i+1}}</label>					
 										<span *ngIf="sub_order.store_address">Sold by: {{sub_order.store_address.store_name}} - {{sub_order.store_address.locality}} {{sub_order.store_address.city}}</span>							
 									<!-- <i class="fas fa-clipboard-check mr-1 text-muted"></i> <span class="text-success font-weight-bold">Order Processed</span> -->
 								</div>
-								<div class="pb-2 ml-auto">
+								<div class="pb-2 ml-auto col-3">
 							<!-- 		Total:
 									<h6 class="mt-1"><span class="rs-symbol"><i class="fas fa-rupee-sign sm-font"></i></span> {{$sub_order['total']}} for {{$sub_order['number_of_items']}} {{$sub_order['number_of_items'] == 1 ? "Item" : "Items"}}</h6> -->
 									<h6 class="mt-1">{{sub_order.number_of_items}} <span *ngIf="sub_order.number_of_items == 1">Item</span> <span *ngIf="sub_order.number_of_items > 1">Items</span></h6>
@@ -61,14 +68,14 @@
 										</div>
 										
 									</div> -->
-									<div class="dropdown">
+									<!-- <div class="dropdown">
 										<i class="cursor-pointer fas fa-ellipsis-v fa-2x text-light" id="card-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
 										  <div class="dropdown-menu dropdown-menu-right shadow-lg" aria-labelledby="card-menu">
 										    <button class="dropdown-item" type="button">Track Item</button>
 										    <button class="dropdown-item cancel-trigger" type="button"  >Cancel Item</button>
 										    <button class="dropdown-item" type="button"> <a href="/kss/account/orders-details/" class="text-black">View Order Details</a></button>
 										  </div>
-									</div>
+									</div> -->
 								</div>
 							</li>
 						</div>

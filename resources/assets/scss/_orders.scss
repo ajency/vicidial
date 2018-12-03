@@ -155,3 +155,12 @@
 .myorder-login{
   height: calc(100% - 66px);
 }
+
+.order-no-row{
+  .col-left{
+    flex-basis: 60%;
+  }
+  .col-right{
+    flex-basis: 30%;
+  }
+}
