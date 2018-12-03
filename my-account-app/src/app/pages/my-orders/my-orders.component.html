@@ -1,77 +1,89 @@
-<div *ngIf="orders" class="col-12 p-0">
-	<div class="">
+<div class="col-12 p-0 h-100">
+	<div class="h-100">
 		<h4 class="font-weight-bold m-0">My Orders</h4>
 		<hr>
-		<div *ngFor="let order of orders">
-			<h6 class="font-weight-bold mt-4">Order No. {{order.order_info.txn_no}}</h6>
-			<h6 class="mb-3">Placed on {{order.order_info.order_date}}</h6>
-				<ul class="cd-cart-items list-unstyled">
-					<div *ngFor="let sub_order of order.sub_orders; let i = index">
-						<div class="d-flex bd-highlight">
-							<div class="pb-2 pr-2">
-								<label class="d-block m-0">Shipment {{i+1}}</label>					
-									<span *ngIf="sub_order.store_address">Sold by: {{sub_order.store_address.store_name}} - {{sub_order.store_address.locality}} {{sub_order.store_address.city}}</span>							
-								<!-- <i class="fas fa-clipboard-check mr-1 text-muted"></i> <span class="text-success font-weight-bold">Order Processed</span> -->
+		<ng-template *ngIf="orders;else no_order_session">
+			<div *ngFor="let order of orders">
+				<h6 class="font-weight-bold mt-4">Order No. {{order.order_info.txn_no}}</h6>
+				<h6 class="mb-3">Placed on {{order.order_info.order_date}}</h6>
+					<ul class="cd-cart-items list-unstyled">
+						<div *ngFor="let sub_order of order.sub_orders; let i = index">
+							<div class="d-flex bd-highlight">
+								<div class="pb-2 pr-2">
+									<label class="d-block m-0">Shipment {{i+1}}</label>					
+										<span *ngIf="sub_order.store_address">Sold by: {{sub_order.store_address.store_name}} - {{sub_order.store_address.locality}} {{sub_order.store_address.city}}</span>							
+									<!-- <i class="fas fa-clipboard-check mr-1 text-muted"></i> <span class="text-success font-weight-bold">Order Processed</span> -->
+								</div>
+								<div class="pb-2 ml-auto">
+							<!-- 		Total:
+									<h6 class="mt-1"><span class="rs-symbol"><i class="fas fa-rupee-sign sm-font"></i></span> {{$sub_order['total']}} for {{$sub_order['number_of_items']}} {{$sub_order['number_of_items'] == 1 ? "Item" : "Items"}}</h6> -->
+									<h6 class="mt-1">{{sub_order.number_of_items}} <span *ngIf="sub_order.number_of_items == 1">Item</span> <span *ngIf="sub_order.number_of_items > 1">Items</span></h6>
+								</div>
 							</div>
-							<div class="pb-2 ml-auto">
-						<!-- 		Total:
-								<h6 class="mt-1"><span class="rs-symbol"><i class="fas fa-rupee-sign sm-font"></i></span> {{$sub_order['total']}} for {{$sub_order['number_of_items']}} {{$sub_order['number_of_items'] == 1 ? "Item" : "Items"}}</h6> -->
-								<h6 class="mt-1">{{sub_order.number_of_items}} <span *ngIf="sub_order.number_of_items == 1">Item</span> <span *ngIf="sub_order.number_of_items > 1">Items</span></h6>
-							</div>
-						</div>
-						<li *ngFor="let item of sub_order.items"  class="p-md-3 p-2 mb-3 card shadow-sm ">
-							<div class="row primary-info">
-								<div class="col-12">
-									<div class="d-flex order-card">
-									    <a href="{{item.href}}" [ngClass]="{'variant-placeholder' : item.images[0]=='/img/placeholder.svg'}" class="order-card__image">
-									        <div class="product-img">
-													<img src="{{item.images[0]}}" class="lazyload img-fit" data-srcset="{{item.images[0]}} 50w, {{item.images[1]}} 100w, {{item.images[2]}} 150w" sizes="50px">
-											</div>
-										</a>
-										<div class="product-detail order-card__detail">
-											<a href="{{item.href}}" class="text-dark">
-												<div class="product-name text-truncate">
-													{{item.title}}
+							<li *ngFor="let item of sub_order.items"  class="p-md-3 p-2 mb-3 card shadow-sm ">
+								<div class="row primary-info">
+									<div class="col-12">
+										<div class="d-flex order-card">
+										    <a href="{{item.href}}" [ngClass]="{'variant-placeholder' : item.images[0]=='/img/placeholder.svg'}" class="order-card__image">
+										        <div class="product-img">
+														<img src="{{item.images[0]}}" class="lazyload img-fit" data-srcset="{{item.images[0]}} 50w, {{item.images[1]}} 100w, {{item.images[2]}} 150w" sizes="50px">
 												</div>
 											</a>
-											<div class="product-size text-muted mb-1">
-												<span>Size: {{item.size}}</span> <span>|</span> <span>Qty: {{item.quantity}}</span>
-											</div>
-											<!-- <div class="product-price">
-												<div class="retail-price">
-													<span class="rs-symbol"><i class="fas fa-rupee-sign sm-font"></i></span> <span class="price">{{item.price}}</span>
+											<div class="product-detail order-card__detail">
+												<a href="{{item.href}}" class="text-dark">
+													<div class="product-name text-truncate">
+														{{item.title}}
+													</div>
+												</a>
+												<div class="product-size text-muted mb-1">
+													<span>Size: {{item.size}}</span> <span>|</span> <span>Qty: {{item.quantity}}</span>
 												</div>
-											</div> -->
-											<div class="product-price">
-												<div class="kss-price kss-price--smaller">
-													₹{{item.price_final}}
-													<small *ngIf="item.price_final != item.price_mrp" class="kss-original-price text-muted">₹{{$item.price_mrp}}
-												  	</small>
-												  	<span *ngIf="item.price_final != item.price_mrp" class="kss-discount text-danger"> {{item.off_percentage}}</span>
+												<!-- <div class="product-price">
+													<div class="retail-price">
+														<span class="rs-symbol"><i class="fas fa-rupee-sign sm-font"></i></span> <span class="price">{{item.price}}</span>
+													</div>
+												</div> -->
+												<div class="product-price">
+													<div class="kss-price kss-price--smaller">
+														₹{{item.price_final}}
+														<small *ngIf="item.price_final != item.price_mrp" class="kss-original-price text-muted">₹{{$item.price_mrp}}
+													  	</small>
+													  	<span *ngIf="item.price_final != item.price_mrp" class="kss-discount text-danger"> {{item.off_percentage}}</span>
+													</div>
 												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-								<!-- <div class="col-md-4 col-xl-6">
-									<div class="retail-price mt-2 mt-md-0">
-												<i class="fas fa-inbox mr-1 text-muted"></i><span class="text-success font-weight-bold">In Transit</span>
-												<span class="font-weight-bold">(Arriving 30 Aug)</span>
+									<!-- <div class="col-md-4 col-xl-6">
+										<div class="retail-price mt-2 mt-md-0">
+													<i class="fas fa-inbox mr-1 text-muted"></i><span class="text-success font-weight-bold">In Transit</span>
+													<span class="font-weight-bold">(Arriving 30 Aug)</span>
+										</div>
+										
+									</div> -->
+									<div class="dropdown">
+										<i class="cursor-pointer fas fa-ellipsis-v fa-2x text-light" id="card-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+										  <div class="dropdown-menu dropdown-menu-right shadow-lg" aria-labelledby="card-menu">
+										    <button class="dropdown-item" type="button">Track Item</button>
+										    <button class="dropdown-item cancel-trigger" type="button"  >Cancel Item</button>
+										    <button class="dropdown-item" type="button"> <a href="/kss/account/orders-details/" class="text-black">View Order Details</a></button>
+										  </div>
 									</div>
-									
-								</div> -->
-								<div class="dropdown">
-									<i class="cursor-pointer fas fa-ellipsis-v fa-2x text-light" id="card-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
-									  <div class="dropdown-menu dropdown-menu-right shadow-lg" aria-labelledby="card-menu">
-									    <button class="dropdown-item" type="button">Track Item</button>
-									    <button class="dropdown-item cancel-trigger" type="button"  >Cancel Item</button>
-									    <button class="dropdown-item" type="button"> <a href="/kss/account/orders-details/" class="text-black">View Order Details</a></button>
-									  </div>
 								</div>
-							</div>
-						</li>
-					</div>
-				</ul>
-		</div>
+							</li>
+						</div>
+					</ul>
+			</div>
+		</ng-template>
+		<ng-template #no_order_session>
+			<div class="myorder-login text-center d-flex align-items-center justify-content-center flex-column">
+				<img src="/img/no-order-login.png" class="img-fluid" width="150">
+				<!-- <h4>Can't see all your orders?</h4> -->
+				<h4 class="py-4 mb-0">Please login to see all your orders</h4>
+				<!-- <button class="btn kss-btn kss-btn--big">
+					Login
+				</button> -->
+			</div>
+		</ng-template>		
 	</div>
 </div>
