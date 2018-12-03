@@ -19,10 +19,7 @@
       </div>
 
       <div class="d-flex">
-        <ul class="nav flex-column megamenu--left d-block d-lg-none">
-          <li class="nav-item" data-target="all">
-            All
-          </li>
+        <ul class="nav flex-column megamenu--left d-flex d-lg-none">
           <li class="nav-item" data-target="boys">
             Boys
           </li>
@@ -32,61 +29,15 @@
           <li class="nav-item" data-target="infants">
             Infants
           </li>
-          <li class="nav-item" data-target="accessories">
-            Kids Accessories
-          </li>
+          <!-- <li class="nav-item" data-target="other">
+            Other links
+          </li> -->
         </ul>
 
         <ul class="nav megamenu--right">
-            <!-- All -->
-            <li>
-                <a href="#" class="d-none d-lg-block">All</a>
-                <div class="megamenu-wrapper" data-menu="all">
-                    <div class="nav-column">
-                        <ul class="list-unstyled">
-                          <li><a class="megamenu-link" href="/bottoms/">Bottoms</a></li>
-                          <li><a class="megamenu-link" href="/dress/">Dress</a></li>
-                          <li><a class="megamenu-link" href="/ethnic/">Ethnic</a></li>
-                          <li><a class="megamenu-link" href="/formal-pant/">Formal Pant</a></li>
-                          <li><a class="megamenu-link" href="/infant-utility/">Infant Utility</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="nav-column">
-                        <ul class="list-unstyled">
-                          <li><a class="megamenu-link" href="/jeans/">Jeans</a></li>
-                          <!-- <li><a class="megamenu-link" href="/others/">Others</a></li> -->
-                          <li><a class="megamenu-link" href="/shirt/">Shirt</a></li>
-                          <li><a class="megamenu-link" href="/shoes/">Shoes</a></li>
-                          <li><a class="megamenu-link" href="/short/">Short</a></li>
-                          <li><a class="megamenu-link" href="/skirt/">Skirt</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="nav-column">
-                        <ul class="list-unstyled">
-                          <li><a class="megamenu-link" href="/sweatshirt/">Sweatshirt</a></li>
-                          <li><a class="megamenu-link" href="/tops/">Tops</a></li>
-                          <li><a class="megamenu-link" href="/tshirt/">Tshirt</a></li>
-                          <li><a class="megamenu-link" href="/woven-tops/">Woven Tops</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="nav-column">
-                        <div class="nav-column--heading mb-1">Popular Categories</div>
-                        <ul class="list-unstyled">
-                          <li><a class="megamenu-link" href="/shirt/">Shirt</a></li>
-                          <li><a class="megamenu-link" href="/skirt/">Skirt</a></li>
-                          <li><a class="megamenu-link" href="/tops/">Tops</a></li>
-                          <li><a class="megamenu-link" href="/tshirt/">Tshirt</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </li>
-
             <!-- Boys -->
             <li>
-                <a href="#" class="d-none d-lg-block">Boys</a>
+                <a href="javascript:void(0)" class="d-none d-lg-block">Boys</a>
                 <div class="megamenu-wrapper" data-menu="boys">
                     <div class="nav-column">
                         <div class="nav-column--heading mb-1">Shop by Category</div>
@@ -131,7 +82,7 @@
                         </ul>
                     </div>
 
-                    <div class="nav-column">
+                    <!-- <div class="nav-column">
                         <div class="nav-column--heading mb-1">Boys Offers</div>
                         <ul class="list-unstyled">
                           <li>
@@ -162,14 +113,15 @@
                             </a>
                           </li>
                         </ul>
-                    </div>
+                    </div> -->
 
-                    <div class="nav-column">
-                        <img class="d-block w-100 img-fluid"
-                             src="{{CDN::asset('/img/gender/boy-small.jpg') }}"
-                             title="Boys 2-14 years"
-                             alt="Boys 2-14 years"/>
-                        <div class="row align-items-center mt-2">
+                    <div class="nav-column nav-column--wide">
+                        <img class="d-block w-100 img-fluid offer-img mt-4 mt-lg-0"
+                           src="{{CDN::asset('/img/menu/boy-dummy4.jpg') }}"
+                           width="200"
+                           title="Offer 1"
+                           alt="Offer 1"/>
+                        <div class="row align-items-center mt-2 mb-4 mb-lg-0">
                             <div class="col-7">
                               <div class="h5 text-primary font-weight-bold">Spotlight on</div>
                               <div class="text-white">Boys shirts</div>
@@ -227,7 +179,21 @@
               </div>
             </li>
             <li><a href="#" class="d-none d-lg-block">Infants</a></li>
-            <li><a href="#" class="d-none d-lg-block">Kids Accessories</a></li>
+
+            <!-- <li class="d-lg-none align-self-end">
+              <div class="megamenu-wrapper" data-menu="other">
+                <div class="nav-column mb-0">
+                  <ul class="list-unstyled">
+                    <li><a class="megamenu-link" href="/about-us">About Us</a></li>
+                    <li><a class="megamenu-link" href="/contact">Contact Us</a></li>
+                    <li><a class="megamenu-link" href="/faq">FAQ</a></li>
+                    <li><a class="megamenu-link" href="/terms-and-conditions">Terms of Use</a></li>
+                    <li><a class="megamenu-link" href="/privacy-policy">Privacy Policy</a></li>
+                    <li><a class="megamenu-link" href="http://ideas.kidsuperstore.in/">Blog</a></li>
+                  </ul>
+                </div>
+              </div>
+            </li> -->
         </ul>
       </div>
     </div>
