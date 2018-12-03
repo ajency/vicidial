@@ -6,7 +6,19 @@
 			<h6 class="font-weight-bold mt-4">Order No. {{order.order_info.txn_no}}</h6>
 			<h6 class="mb-3">Placed on {{order.order_info.order_date}}</h6>
 				<ul class="cd-cart-items list-unstyled">
-					<div *ngFor="let sub_order of order.sub_orders">
+					<div *ngFor="let sub_order of order.sub_orders; let i = index">
+						<div class="d-flex bd-highlight">
+							<div class="pb-2 pr-2">
+								<label class="d-block m-0">Shipment {{i+1}}</label>					
+									<span *ngIf="sub_order.store_address">Sold by: {{sub_order.store_address.store_name}} - {{sub_order.store_address.locality}} {{sub_order.store_address.city}}</span>							
+								<!-- <i class="fas fa-clipboard-check mr-1 text-muted"></i> <span class="text-success font-weight-bold">Order Processed</span> -->
+							</div>
+							<div class="pb-2 ml-auto">
+						<!-- 		Total:
+								<h6 class="mt-1"><span class="rs-symbol"><i class="fas fa-rupee-sign sm-font"></i></span> {{$sub_order['total']}} for {{$sub_order['number_of_items']}} {{$sub_order['number_of_items'] == 1 ? "Item" : "Items"}}</h6> -->
+								<h6 class="mt-1">{{sub_order.number_of_items}} <span *ngIf="sub_order.number_of_items == 1">Item</span> <span *ngIf="sub_order.number_of_items > 1">Items</span></h6>
+							</div>
+						</div>
 						<li *ngFor="let item of sub_order.items"  class="p-md-3 p-2 mb-3 card shadow-sm ">
 							<div class="row primary-info">
 								<div class="col-12">
