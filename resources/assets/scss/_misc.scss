@@ -257,3 +257,21 @@
     	font-size: 1.05em;
     }
 }
+
+.hidden-footer-section.collapse:not(.show){
+	@media (min-width: 768px){
+		display: block;
+	}
+}
+
+.footer-more{
+	.icon-down{
+		transform: rotate(180deg);
+		transition: transform 0.5s ease;
+	}
+	&.collapsed{
+		.icon-down{
+			transform: rotate(0deg);
+		}
+	}
+}
