@@ -30,7 +30,7 @@
             Infants
           </li>
           <li class="flex-grow-1 disabled"></li>
-          <li class="nav-item" data-target="other">
+          <li class="nav-item" data-target="otherlinks">
             Other links
           </li>
         </ul>
@@ -137,7 +137,7 @@
 
             <!-- Girls -->
             <li>
-              <a href="#" class="d-none d-lg-block">Girls</a>
+              <a href="javascript:void(0)" class="d-none d-lg-block">Girls</a>
               <div class="megamenu-wrapper" data-menu="girls">
                   <div class="nav-column">
                       <div class="nav-column--heading mb-1">Shop by Category</div>
@@ -202,7 +202,7 @@
 
             <!-- Infants -->
             <li>
-              <a href="#" class="d-none d-lg-block">Infants</a>
+              <a href="javascript:void(0)" class="d-none d-lg-block">Infants</a>
               <div class="megamenu-wrapper" data-menu="infants">
                   <div class="nav-column">
                       <div class="nav-column--heading mb-1">Shop by Category</div>
@@ -258,8 +258,9 @@
               </div>
             </li>
 
+            <!-- Other links -->
             <li class="d-lg-none align-self-end">
-              <div class="megamenu-wrapper" data-menu="other">
+              <div class="megamenu-wrapper" data-menu="otherlinks">
                 <div class="nav-column mb-0">
                   <ul class="list-unstyled">
                     <li><a class="megamenu-link" href="/about-us">About Us</a></li>

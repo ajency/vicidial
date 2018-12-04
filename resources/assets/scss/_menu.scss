@@ -20,7 +20,7 @@ nav{
 				line-height: 54px;
 				font-weight: bold;
 				color: #fcfcfc;
-				transition: all .3s ease;
+				transition: all 0.3s ease-out;
 			}
 			>div {
 				position: absolute;
@@ -34,7 +34,7 @@ nav{
 				overflow: hidden;
 				background: $gray-800;
 				border-radius: 0 0 3px 3px;
-				transition: all .15s ease;
+				transition: all 0.3s ease-out;
 				// max-width: 1000px;
 			}
 			&:hover {
