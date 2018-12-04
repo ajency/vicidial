@@ -12,7 +12,10 @@ declare var $: any;
 })
 export class MyOrdersComponent implements OnInit {
 
-	orders : any;
+	orders : any = [];
+  order_params = { page : 1, display_limit : 10 }
+  displayShowMore : boolean = true;
+  apiCallComplete : boolean = false;
   constructor(private router: Router,
 						private appservice : AppServiceService,
 						private apiservice : ApiServiceService,) { }
@@ -39,11 +42,17 @@ export class MyOrdersComponent implements OnInit {
     let body : any = {
       _token : $('meta[name="csrf-token"]').attr('content')
     };
+    body.page = this.order_params.page;
+    body.display_limit = this.order_params.display_limit;
 
     this.apiservice.request(url, 'post', body , header ).then((response)=>{
-    	this.orders = this.formattedCartDataForUI(response.data);
+      if(!response.data.length)
+        this.displayShowMore = false;
+      let formatted_data = this.formattedCartDataForUI(response.data);
+    	this.orders = this.orders.concat(formatted_data);
     	console.log("orders ==>", this.orders);
       this.appservice.removeLoader();
+      this.apiCallComplete = true;
     })
     .catch((error)=>{
       console.log("error ===>", error);
@@ -74,6 +83,12 @@ export class MyOrdersComponent implements OnInit {
     history.replaceState({}, 'account', url);
     this.appservice.closeWidget();
     window.location.reload();
+  }
+
+  updateOrderParams(){
+    this.order_params.page = this.order_params.page + 1;
+    this.order_params.display_limit = this.order_params.page * 10;
+    this.getOrders();
   }
 
 }
