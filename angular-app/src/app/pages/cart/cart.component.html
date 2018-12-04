@@ -199,14 +199,14 @@
 	</div>	
 
 	<div *ngIf="cart.items && cart.items.length == 0" class="empty-cart text-center d-flex align-items-center justify-content-center flex-column">
-		<img src="/img/empty-cart-icon.png" class="img-fluid py-2" width="150">
-		<h5 class="py-4 mb-0">Your shopping bag is currently empty</h5>
-		<div class="my-2">
+		<img src="/img/empty-cart-icon.png" class="img-fluid pt-2" width="150">
+		<h5 class="py-4 mb-0" style="line-height: 1.5;">Your shopping bag is currently <br> empty.</h5>
+		<div class="mb-4">
 			<button class="btn kss-btn kss-btn--secondary-link btn-pay" (click)="shopNow()">
 				Continue Shopping <i class="fas fa-chevron-right"></i>
 			</button>
 		</div>
-		<ul class="helper-links list-inline mt-2">
+		<ul class="helper-links list-inline mt-sm-3">
 			<li class="py-3">
 				<a href="/infant-0-2-years/" class="font-weight-bold">Shop Infants</a>
 			</li>
