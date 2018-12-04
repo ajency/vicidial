@@ -486,3 +486,19 @@ footer .bl-1{
 .filter-grayscale{
     filter: grayscale(100%);
 }
+
+.product-view{
+    font-size: 1.15em;
+    color: #afaeae;
+}
+
+.helper-links{
+    a{
+        color: #000;
+        font-size: 1.25em;
+        border-bottom: 2px solid theme-color("primary");
+        &:hover{
+            color: #545454;
+        }
+    }
+}

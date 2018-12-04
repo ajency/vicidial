@@ -71,7 +71,7 @@
   <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;"><![endif]-->
                       <div class="">
   <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;"><![endif]-->
-  <div style="color:#555555;line-height:120%;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif; padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;">  
+  <div style="color:#555555;line-height:120%;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif; padding-right: 20px; padding-left: 20px; padding-top: 10px; padding-bottom: 10px;">  
     <div style="font-size:12px;line-height:14px;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;color:#000000;text-align:left;">
       <p style="margin: 0;font-size: 15px;line-height: 14px;text-align: left;margin-top: 10px;"><span style="font-size: 18px;line-height: 19px;">Hi <strong>{{$user_name}}</strong>, your order has been successfully placed.</span></p>
       </div> 
@@ -103,7 +103,7 @@
                   
                     <div class="">
   <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;"><![endif]-->
-  <div style="color:#555555;line-height:120%;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif; padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;">  
+  <div style="color:#555555;line-height:120%;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif; padding-right: 20px; padding-left: 20px; padding-top: 10px; padding-bottom: 10px;">  
     <div style="font-size:12px;line-height:14px;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;color:#555555;text-align:left;"><p style="margin: 0;font-size: 12px;line-height: 14px;margin-bottom: 5px;"><span style="font-size: 17px;line-height: 18px;display: block;margin-bottom: 10px;"><strong> Order Details</strong></span></p>
 
     <p style="margin: 0;font-size: 12px;line-height: 14px;margin-bottom: 5px;"><span style="font-size: 15px; line-height: 18px;">Order No: <strong>{{$order_info['txn_no']}}</strong></span></p><p style="margin: 0;font-size: 12px;line-height: 14px;;margin-bottom: 5px;"><span style="font-size: 15px; line-height: 18px;">Placed On:<strong>&nbsp;{{$order_info['order_date']}}</strong></span></p><p style="margin: 0;font-size: 12px;line-height: 14px;;margin-bottom: 5px;"><span style="font-size: 15px; line-height: 18px;">Total amount: <strong>₹{{$order_info['total_amount']}}</strong></span></p>
@@ -123,7 +123,7 @@
                   
                     <div class="">
   <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;"><![endif]-->
-  <div style="color:#555555;line-height:120%;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif; padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;">  
+  <div style="color:#555555;line-height:120%;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif; padding-right: 20px; padding-left: 20px; padding-top: 10px; padding-bottom: 10px;">  
     <div style="font-size:12px;line-height:14px;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;color:#555555;text-align:left;"><p style="margin: 0;font-size: 12px;line-height: 14px;margin-bottom: 5px;"><span style="font-size: 17px;line-height: 18px;display: block;margin-bottom: 10px;"><strong>Delivery Address</strong></span></p>
 
 <p style="margin: 0;font-size: 12px;line-height: 22px;margin-bottom: 5px;"><span style="font-size: 15px; line-height: 18px;">{{$shipping_address['name']}}, {{$shipping_address['address']}}, {{$shipping_address['locality']}}, @if($shipping_address['landmark']!=""){{$shipping_address['landmark']}},@endif {{$shipping_address['city']}}, {{$shipping_address['state']}} {{$shipping_address['pincode']}}</span></p><p style="margin: 0;font-size: 12px;line-height: 14px;margin-bottom: 5px;"><span style="font-size: 15px; line-height: 18px;">Mobile: <strong> +91 {{$shipping_address['phone']}}</strong></span></p></div> 
@@ -208,9 +208,9 @@
               <div style="background-color: transparent; width: 100% !important;">
               <!--[if (!mso)&(!IE)]><!-->
               <div style="border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent; padding-top:5px; padding-bottom:0px; padding-right: 0px; padding-left: 0px;">
-    <div style="font-size:12px;line-height:14px;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;color:#555555;text-align:left;float: left;"><p style="margin: 0;font-size: 12px;line-height: 14px;margin-bottom: 5px;"><span style="font-size: 15px; line-height: 18px;">&nbsp;&nbsp;&nbsp;&nbsp;Shipment {{$loop->iteration}}</span></p></div>
+    <div style="font-size:12px;line-height:14px;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;color:#555555;text-align:left;float: left;"><p style="margin: 0;font-size: 12px;line-height: 14px;margin-bottom: 5px;"><span style="font-size: 15px; line-height: 18px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Shipment {{$loop->iteration}}</span></p></div>
     
-    <div style="font-size:12px;line-height:14px;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;color:#555555;text-align: right;float: right;"><p style="margin: 0;font-size: 12px;line-height: 14px;"><span style="font-size: 15px; line-height: 18px;">Qty: {{$sub_order['number_of_items']}} {{$sub_order['number_of_items'] == 1 ? "Item" : "Items"}}&nbsp;&nbsp;&nbsp;&nbsp;</span></p></div>
+    <div style="font-size:12px;line-height:14px;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;color:#555555;text-align: right;float: right;"><p style="margin: 0;font-size: 12px;line-height: 14px;"><span style="font-size: 15px; line-height: 18px;">Qty: {{$sub_order['number_of_items']}} {{$sub_order['number_of_items'] == 1 ? "Item" : "Items"}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p></div>
     
     <b style="clear: both;display: table;"></b>
     
@@ -238,7 +238,7 @@
   <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;"><![endif]-->
                       <div class="">
   <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;"><![endif]-->
-  <div style="color: #7d7d7d;line-height:120%;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;padding-right: 10px;padding-left: 10px;padding-top: 10px;padding-bottom: 10px;font-size: 13px;border-top: 1px solid #d6d6d6;line-height: 16px;">&nbsp;&nbsp;Sold by: {{$sub_order['store_address']['store_name']}} - {{$sub_order['store_address']['locality']}}, {{$sub_order['store_address']['city']}} </div>
+  <div style="color: #7d7d7d;line-height:120%;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;padding-right: 20px;padding-left: 20px;padding-top: 10px;padding-bottom: 10px;font-size: 13px;border-top: 1px solid #d6d6d6;line-height: 18px;"><strong>Sold by:</strong> {{$sub_order['store_address']['store_name']}} - {{$sub_order['store_address']['locality']}}, {{$sub_order['store_address']['city']}} </div>
   <!--[if mso]></td></tr></table><![endif]-->
 </div>
   <!--[if mso]></td></tr></table><![endif]-->
@@ -291,7 +291,7 @@
                   
                     <div class="">
   <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 0px; padding-left: 0px; padding-top: 0px; padding-bottom: 0px;"><![endif]-->
-  <div style="color:#555555;line-height:120%;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif; padding-right: 10px; padding-left: 10px; padding-bottom: 10px;"> 
+  <div style="color:#555555;line-height:120%;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif; padding-right: 20px; padding-left: 20px; padding-bottom: 10px;"> 
     <a href="{{url('/')}}/{{$item['product_slug']}}/buy?size={{$item['size']}}">
   <img class="center fixedwidth" align="center" border="0" src="{{$image_1x}}" alt="Image" title="Image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: 0;height: auto;float: left;width: 100%; margin-left: auto;margin-right: 20px;max-width: 60px;@php if(count((array)$item['images'])==0) { @endphp background-color: #f9f9f9;max-width: 55px; @php } @endphp" width="41.6666666666667" />
   </a>
@@ -396,7 +396,7 @@
                     <div class="">
   <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 0px; padding-left: 0px; padding-top: 0px; padding-bottom: 0px;"><![endif]-->
   <div style="color:#555555;line-height:120%;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif; padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;">  
-    <div style="font-size:12px;line-height:14px;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;color:#555555;text-align:left;padding-right: 10px;padding-left: 15px;">
+    <div style="font-size:12px;line-height:14px;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;color:#555555;text-align:left;padding-right: 10px;padding-left: 10px;">
     <p style="margin: 0;font-size: 18px;line-height: 25px;font-weight: 600;">Billing details</p>
     <p style="margin: 0;font-size: 12px;line-height: 14px;margin-top: 5px;margin-bottom: 5px;padding-top: 10px;/* padding-bottom: 3px; */border-top: 1px solid #ddd;"><span style="font-size: 17px; line-height: 28px;">Subtotal:&nbsp; &nbsp;₹{{$order_summary['total']}}</span><br><span style="font-size: 17px; line-height: 28px;">Shipping:&nbsp; ₹{{$order_summary['shipping_fee']}}</span><br></p><p style="margin-top: 4px;font-weight: 600;padding-top: 10px;margin-bottom: 0;border-top: 1px solid #ddd;"><span style="font-size: 18px;line-height: 26px;">Total:&nbsp; &nbsp;₹{{$order_summary['final_price']}}</span></p></div> 
   </div>

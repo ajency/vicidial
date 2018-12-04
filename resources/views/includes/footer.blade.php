@@ -112,6 +112,7 @@
             </div>
 
             <a class="font-weight-bold mb-3 d-block d-sm-none footer-more collapsed" data-toggle="collapse" href="#moreFooter"><strong><span class="footer-more__title"">Fresh Fashion for your kids</span> <i class="fas fa-angle-down icon-down"></i></strong></a>
+
         </div>
    </div>
     <div class="d-flex bd-highlight mb-3">

@@ -199,11 +199,27 @@
 	</div>	
 
 	<div *ngIf="cart.items && cart.items.length == 0" class="empty-cart text-center d-flex align-items-center justify-content-center flex-column">
-		<i class="fas fa-shopping-cart empty-cart__icon"></i>
-		<h4 class="py-4 mb-0">Your bag is currently empty</h4>
-		<button class="btn kss-btn kss-btn--big btn-pay" (click)="shopNow()" style="min-width: 130px;">
-			Shop now
-		</button>
+		<img src="/img/empty-cart-icon.png" class="img-fluid pt-2" width="150">
+		<h5 class="py-4 mb-0" style="line-height: 1.5;">Your shopping bag is currently <br> empty.</h5>
+		<div class="mb-4">
+			<button class="btn kss-btn kss-btn--secondary-link btn-pay" (click)="shopNow()">
+				Continue Shopping <i class="fas fa-chevron-right"></i>
+			</button>
+		</div>
+		<ul class="helper-links list-inline mt-sm-3">
+			<li class="py-3">
+				<a href="/infant-0-2-years/" class="font-weight-bold">Shop Infants</a>
+			</li>
+			<li class="py-3">
+				<a href="/boys/junior-7-14-years--toddler-2-7-years/" class="font-weight-bold">Shop Boys</a>
+			</li>
+			<li class="py-3">
+				<a href="/shoes/" class="font-weight-bold">Shop Shoes</a>
+			</li>
+			<li class="py-3">
+				<a href="/girls/junior-7-14-years--toddler-2-7-years/" class="font-weight-bold">Shop Girls</a>
+			</li>
+		</ul>
 	</div>
 
 	<!-- No connection -->
