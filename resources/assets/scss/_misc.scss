@@ -265,6 +265,11 @@
 }
 
 .footer-more{
+	color: #000;
+	&:hover,&:focus,&:active{
+		color: #000;
+		outline: 0;
+	}
 	.icon-down{
 		transform: rotate(180deg);
 		transition: transform 0.5s ease;
