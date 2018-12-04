@@ -3,8 +3,13 @@ const path = require('path');
 var fs_extra = require("fs-extra");
 
 var rootDir = path.resolve(__dirname, '../');
-var buildDir = path.resolve(__dirname, './dist');
-var destDir = path.resolve(rootDir, 'public/views/cart');
+
+// var buildDir = path.resolve(__dirname, './dist'); // buildDir for cart app
+var buildDir = path.resolve(__dirname, './dist2'); // buildDir for account app
+
+// var destDir = path.resolve(rootDir, 'public/views/cart'); // destDir for cart app
+var destDir = path.resolve(rootDir, 'public/views/my-account'); //destDir for account app
+
 let src = path.join(buildDir, 'main.bundle.js');
 
 let filesnames = ['main.bundle.js', 'polyfills.bundle.js', 'styles.bundle.css', 'vendor.bundle.js', 'inline.bundle.js'];
