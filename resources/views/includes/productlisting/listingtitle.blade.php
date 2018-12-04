@@ -40,7 +40,7 @@
         </h1>
     </div>
 
-    <div class="ml-auto">
+    <div class="ml-auto d-none">
       <div class="d-flex flex-row kss-select-border mt-2">
         <div class="size-qty align-self-center">
           <h6 class="m-0 f-w-4 sub-text"> Sort By:</h6>
