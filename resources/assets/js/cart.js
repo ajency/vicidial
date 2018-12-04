@@ -299,10 +299,7 @@ function fbTrackuserRegistration(){
 }
 
 function fbTrackAddToCart(var_id){
-    console.log(var_id, variants);
-    console.log("check =", Object.keys(variants)[0]);
-    var variant = variants[Object.keys(variants)[0]].variants.find((variant)=> {return variant.id == var_id});
-    console.log(variant);
+    var variant = variants[selected_color_id].variants.find((variant)=> {return variant.id == var_id});
     fbq('track', 'AddToCart', {
         value: variant.sale_price,
         currency: 'INR',
