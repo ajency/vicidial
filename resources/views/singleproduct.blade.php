@@ -117,7 +117,8 @@
 @section('footjs')
 
 	<script type="text/javascript">
-	    window.variants = @php echo json_encode($params['variant_group']); @endphp
+	    window.variants = @php echo json_encode($params['variant_group']); @endphp;
+	    var selected_color_id = {{$selected_color_id}};
 	</script>
 
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
