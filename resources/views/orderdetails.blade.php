@@ -82,12 +82,12 @@
 					@endforeach
 				@endforeach
 
-				fbq('track', 'Purchase', {
-				    value: total,
-				    currency: 'INR',
-				    content_ids: '{{implode(",",$variant_ids)}}',
-				    content_type: 'variant',
-				});
+				// fbq('track', 'Purchase', {
+				//     value: total,
+				//     currency: 'INR',
+				//     content_ids: '{{implode(",",$variant_ids)}}',
+				//     content_type: 'variant',
+				// });
 			</script>
 		@endif	
 	@endif

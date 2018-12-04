@@ -129,11 +129,11 @@
 	<script type="text/javascript" src="{{CDN::mix('/js/singleproduct.js') }}"></script>
 
 	<script type="text/javascript">
-        fbq('track', 'ViewContent', {
-            value: default_price,
-            currency: 'INR',
-            content_ids: '{{$parent_id}}.{{$selected_color_id}}',
-            content_type: 'product_color',
-        });
+        // fbq('track', 'ViewContent', {
+            // value: default_price,
+            // currency: 'INR',
+            // content_ids: '{{$parent_id}}.{{$selected_color_id}}',
+            // content_type: 'product_color',
+        // });
     </script>
 @stop
