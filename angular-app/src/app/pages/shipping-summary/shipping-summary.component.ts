@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router'
 import { AppServiceService } from '../../service/app-service.service';
 import { ApiServiceService } from '../../service/api-service.service';
 declare var $: any;
-declare var fbTrackInitiateCheckout : any;
+// declare var fbTrackInitiateCheckout : any;
 
 @Component({
   selector: 'app-shipping-summary',
@@ -76,7 +76,7 @@ export class ShippingSummaryComponent implements OnInit {
       this.shippingDetails = this.getProductUrl(response);
       this.setUserName();
       this.appservice.removeLoader();
-      fbTrackInitiateCheckout(this.shippingDetails.summary.final_price);
+      // fbTrackInitiateCheckout(this.shippingDetails.summary.final_price);
       // this.appservice.updateCartId();
     })
     .catch((error)=>{
@@ -103,7 +103,7 @@ export class ShippingSummaryComponent implements OnInit {
       this.shippingDetails = this.getProductUrl(response);
       this.setUserName();
       this.appservice.removeLoader();
-      fbTrackInitiateCheckout(this.shippingDetails.summary.final_price);
+      // fbTrackInitiateCheckout(this.shippingDetails.summary.final_price);
       // this.appservice.updateCartId();
     })
     .catch((error)=>{
