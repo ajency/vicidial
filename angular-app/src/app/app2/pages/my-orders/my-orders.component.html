@@ -1,0 +1,133 @@
+
+
+<div class="cart-step1-header">
+	<nav class="navbar navbar-dark bg-dark pt-3 pb-3 ">
+		<div class="d-flex align-items-center w-100">
+			<div class="">
+				<a>
+					<img _ngcontent-c1="" class=" img-fluid m-0" src="/img/logo-kss.png" width="180px" xpreview="/img/logo-kss.png">
+			 	</a>
+			</div>
+			<div class="ml-auto align-self-center">
+				<h3 class="m-0 text-white kss_highlight btn-pay" (click)="closeWidget()"><span aria-hidden="true">×</span></h3>
+			</div>
+		</div>
+	</nav>
+</div>
+<div class="col-12 p-0 mt-3 myorder-wrapper">
+	<div class="h-100">
+		<h4 class="font-weight-bold m-0">My Orders</h4>
+		<hr>
+		<div *ngIf="isLoggedIn()">
+			<div *ngIf="orders && orders.length">
+				<div *ngFor="let order of orders; let last = last">
+					<div class="d-flex row mb-3 order-header">
+						<div class="col-7">
+							<p class="m-0">Order No. <strong>{{order.order_info.txn_no}}</strong></p>
+							<p class="m-0">Placed on. <strong>{{order.order_info.order_date}}</strong></p>
+							<p class="m-0">Total amount: <strong>{{order.order_info.total_amount}}</strong> </p>
+						</div>
+						<div class="col-5 text-right">
+							<a href="/my/order/details?orderid={{order.order_info.txn_no}}" class="btn btn-outline-secondary">Order Details</a>
+						</div>
+					</div>
+					<div *ngFor="let sub_order of order.sub_orders; let i = index" class="my-4">
+						<div class="d-flex bd-highlight row mb-3">
+							<div class="pb-2 pr-2 col-9">
+								<label class="d-block m-0">Shipment {{i+1}}</label>					
+									<span *ngIf="sub_order.store_address">Sold by: {{sub_order.store_address.store_name}} - {{sub_order.store_address.locality}} {{sub_order.store_address.city}}</span>							
+								<!-- <i class="fas fa-clipboard-check mr-1 text-muted"></i> <span class="text-success font-weight-bold">Order Processed</span> -->
+							</div>
+							<div class="pb-2 ml-auto col-3 text-right">
+						<!-- 		Total:
+								<h6 class="mt-1"><span class="rs-symbol"><i class="fas fa-rupee-sign sm-font"></i></span> {{$sub_order['total']}} for {{$sub_order['number_of_items']}} {{$sub_order['number_of_items'] == 1 ? "Item" : "Items"}}</h6> -->
+								<h6 class="mt-1">{{sub_order.number_of_items}} <span *ngIf="sub_order.number_of_items == 1">Item</span> <span *ngIf="sub_order.number_of_items > 1">Items</span></h6>
+							</div>
+						</div>
+						<div class="p-md-3 p-2 mb-3 card shadow-sm">
+							<div *ngFor="let item of sub_order.items; let last = last">
+								<div class="row primary-info">
+									<div class="col-12">
+										<div class="d-flex order-card">
+										    <a href="{{item.href}}" [ngClass]="{'variant-placeholder' : item.images[0]=='/img/placeholder.svg'}" class="order-card__image">
+										        <div class="product-img">
+														<img src="{{item.images[0]}}" class="lazyload img-fit" data-srcset="{{item.images[0]}} 50w, {{item.images[1]}} 100w, {{item.images[2]}} 150w" sizes="50px">
+												</div>
+											</a>
+											<div class="product-detail order-card__detail">
+												<a href="{{item.href}}" class="text-dark">
+													<div class="product-name text-truncate">
+														{{item.title}}
+													</div>
+												</a>
+												<div class="product-size text-muted mb-1">
+													<span>Size: {{item.size}}</span> <span>|</span> <span>Qty: {{item.quantity}}</span>
+												</div>
+												<!-- <div class="product-price">
+													<div class="retail-price">
+														<span class="rs-symbol"><i class="fas fa-rupee-sign sm-font"></i></span> <span class="price">{{item.price}}</span>
+													</div>
+												</div> -->
+												<div class="product-price">
+													<div class="kss-price kss-price--smaller">
+														₹{{item.price_final}}
+														<small *ngIf="item.price_final != item.price_mrp" class="kss-original-price text-muted">₹{{$item.price_mrp}}
+													  	</small>
+													  	<span *ngIf="item.price_final != item.price_mrp" class="kss-discount text-danger"> {{item.off_percentage}}</span>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- <div class="col-md-4 col-xl-6">
+										<div class="retail-price mt-2 mt-md-0">
+													<i class="fas fa-inbox mr-1 text-muted"></i><span class="text-success font-weight-bold">In Transit</span>
+													<span class="font-weight-bold">(Arriving 30 Aug)</span>
+										</div>
+										
+									</div> -->
+									<!-- <div class="dropdown">
+										<i class="cursor-pointer fas fa-ellipsis-v fa-2x text-light" id="card-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+										  <div class="dropdown-menu dropdown-menu-right shadow-lg" aria-labelledby="card-menu">
+										    <button class="dropdown-item" type="button">Track Item</button>
+										    <button class="dropdown-item cancel-trigger" type="button"  >Cancel Item</button>
+										    <button class="dropdown-item" type="button"> <a href="/kss/account/orders-details/" class="text-black">View Order Details</a></button>
+										  </div>
+									</div> -->
+								</div>
+								<hr *ngIf="!last">
+							</div>
+						</div>
+					</div>
+					<hr *ngIf="!last">
+				</div>
+			</div>
+			<div *ngIf="orders && displayShowMore && apiCallComplete" class="text-center my-3">
+				<button (click)="updateOrderParams()" class="btn btn-outline-cancel py-2"><i class="align-middle fa-circle-notch fa-lg fa-spin fas load-icon-cls mb-1 mr-1 d-none"></i> Show more</button>
+			</div>
+			<div *ngIf="apiCallComplete && orders && !orders.length" class="myorder-wrapper d-flex align-items-center justify-content-center">
+				<div class="text-center d-flex align-items-center justify-content-center flex-column">
+					<img src="/img/no-order-login.png" class="img-fluid" width="150">
+					<!-- <h4>Can't see all your orders?</h4> -->
+					<h4 class="py-4 mb-0">You havent placed any orders yet.</h4>
+					<!-- <button class="btn kss-btn kss-btn--big">
+						Login
+					</button> -->
+				</div>
+			</div>
+		</div>
+
+		<div *ngIf="!isLoggedIn()" class="myorder-wrapper d-flex align-items-center justify-content-center">
+			<div class="text-center d-flex align-items-center justify-content-center flex-column">
+				<img src="/img/no-order-login.png" class="img-fluid" width="150">
+				<!-- <h4>Can't see all your orders?</h4> -->
+				<h4 class="py-4 mb-0">Please login to see all your orders</h4>
+				<button class="btn kss-btn kss-btn--big" (click)="displayModal()">
+					Login
+				</button>
+			</div>
+		</div>		
+	</div>
+
+	<app-login-component (loginSuccess)="loginSucessTriggered()"> </app-login-component> 
+</div>
