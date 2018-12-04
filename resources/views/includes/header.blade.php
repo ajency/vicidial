@@ -118,7 +118,7 @@
 
                     <div class="nav-column nav-column--wide">
                         <img class="d-block w-100 img-fluid offer-img mt-4 mt-lg-0"
-                           src="{{CDN::asset('/img/menu/boy-dummy4.jpg') }}"
+                           src="{{CDN::asset('/img/collection/shirt-medium.jpg') }}"
                            width="200"
                            title="Offer 1"
                            alt="Offer 1"/>
@@ -183,7 +183,7 @@
 
                   <div class="nav-column nav-column--wide">
                       <img class="d-block w-100 img-fluid offer-img mt-4 mt-lg-0"
-                         src="{{CDN::asset('/img/menu/girl-dummy1.jpg') }}"
+                         src="{{CDN::asset('/img/collection/ethnic-medium.jpg') }}"
                          width="200"
                          title="Offer 1"
                          alt="Offer 1"/>
@@ -241,7 +241,7 @@
 
                   <div class="nav-column nav-column--wide">
                       <img class="d-block w-100 img-fluid offer-img mt-4 mt-lg-0"
-                         src="{{CDN::asset('/img/menu/infants-dummy1.jpg') }}"
+                         src="{{CDN::asset('/img/collection/infant-accessories-medium.jpg') }}"
                          width="200"
                          title="Offer 1"
                          alt="Offer 1"/>
