@@ -82,6 +82,16 @@ class Address extends Model
     public function save(array $options = [])
     {
         $this->odooSync();
+        $address = implode(", ", [
+            $this->address["address"],
+            $this->address["locality"],
+            $this->address["city"],
+            $this->address["state"],
+            'India'
+        ]);
+        $coordinates = app('geocoder')->geocode($address)->get()->first()->getCoordinates();
+        $this->latitude = $coordinates->getLatitude();
+        $this->longitude = $coordinates->getLongitude();
         parent::save($options);
     }
 }

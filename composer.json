@@ -39,6 +39,7 @@
         "league/flysystem-aws-s3-v3": "^1.0",
         "publiux/laravelcdn": "dev-ajency",
         "spatie/laravel-permission": "^2.23",
+        "toin0u/geocoder-laravel": "^4.0",
         "tzsk/payu": "dev-ajency"
     },
     "require-dev": {
