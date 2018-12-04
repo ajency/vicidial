@@ -403,6 +403,9 @@ body #cd-cart .modal.show .modal-dialog {
     @media (max-width: 480px){
         height: calc(100% - 55px);
     }
+    @media (max-width: 320px){
+        height: auto;
+    }
 }
 
 .cart-loader.speed-in{
