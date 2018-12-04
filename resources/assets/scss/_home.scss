@@ -56,6 +56,9 @@
 .carousel-indicators{
     bottom: 0;
 }
+.carousel-inner{
+    will-change: transform;
+}
 .sketch-boy{
     background: url(../img/sprite.png)no-repeat;
     width: 110px;
@@ -406,6 +409,11 @@
         }
         &__caption{
             font-size: 1.3em;
+        }
+    }
+    @media (orientation:portrait){
+        img{
+            min-height: 77vw;
         }
     }
 }

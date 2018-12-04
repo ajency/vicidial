@@ -238,6 +238,7 @@ footer .bl-1{
     display: none;
     padding: 1em;
     z-index: 1;
+    will-change: transform;
     @media (min-width: 320px) and (max-width: 767.98px) {
         bottom: 5em;
         right: 0em;
@@ -320,10 +321,14 @@ footer .bl-1{
  @media (min-width: 320px) and (max-width: 992px) {
     .overflow-m{
         overflow-x:scroll;
+        overflow-y:hidden;
         display: grid;
         grid-gap: 10px;
         grid-template-columns: 5px repeat(4, calc(50% - 40px)) 5px;
         grid-template-rows: minmax(150px, 1fr);
+        scroll-behavior: smooth;
+        transform: translateZ(0);
+        will-change: transform;
         .col-6{
             max-width: 100%;
             padding: 0;
@@ -331,6 +336,9 @@ footer .bl-1{
         &::before,
         &::after {
           content: '';
+        }
+        &::-webkit-scrollbar {
+            display: none;
         }
     }
 }
@@ -362,14 +370,16 @@ footer .bl-1{
 .blur-up {
     -webkit-filter: blur(5px);
     filter: blur(5px);
-    transition: filter 500ms ease-in;
+    transition: filter 150ms ease-in;
+    backface-visibility: hidden;
+    -webkit-transform: translateZ(0);
+    will-change: transform;
+    perspective: 1000;
 }
 
 .blur-up.lazyloaded {
     -webkit-filter: blur(0);
     filter: blur(0);
-    -webkit-backface-visibility: hidden;
-    -webkit-transform: translate3d(0,0,0);
 }
 
 .white-space-normal{
