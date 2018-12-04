@@ -1,5 +1,8 @@
 .header {
     background-color: theme-color("dark");
+    position: sticky;
+    top: 0;
+    z-index: 99;
     a {
         color: white;
     }
@@ -27,101 +30,7 @@
         }
         img {
             width: 144px;
-            // position: absolute;
-            // left: 40px;
-            // top: 26px;
         }
     }
 }
 
-
-@media(max-width: 991px) {
-    .header-logo{
-        order: 2;
-    }
-    .header-menu{
-        order: 1;
-    }
-    .header-actions{
-        order: 3;
-    }
-}
-
-
-.stellarnav{
-    width: auto;
-    ul{
-        li{
-            a{
-                padding: 10px 15px;
-                color: white;
-            }
-        }
-        ul{
-            background-color: theme-color("dark");
-            top: 35px;
-        }
-    }
-    &>ul{
-        &>li{
-            &>a{
-                padding: 0 20px;
-                color: white;
-            }
-            &.has-sub{
-                &>a:after{
-                    font-family: "Font Awesome 5 Free";
-                }
-            }
-        }
-    }
-    .menu-toggle{
-        padding: 0 15px 0 5px;
-    }
-    .fa-bars{
-        color: white;
-        font-size: 1.2rem;
-    }
-    &.mobile{
-        &.left>ul, &.right>ul{
-            background-color: darken(theme-color("dark"), 5%);
-            box-shadow: 5px 0 0px 800px rgba(0, 0, 0, 0.4);
-            ul{
-                top: 0;
-                background-color: darken(theme-color("dark"), 10%);
-            }
-        }
-        .other-links{
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            max-width: 280px;
-            background-color: darken(theme-color("dark"), 12%);
-            z-index: 9999;
-            a{
-                border: 0;
-            }
-        }
-        .dd-toggle{
-            width: 100%;
-            i{
-                left: auto;
-                right: 15px;
-            }
-        }
-    }
-    .close-menu{
-        span{
-            display: none;
-        }
-        .fa-close{
-            color: white;
-            font-size: 1.2rem;
-            &:before{
-                content: "\f00d";
-            }
-        }
-    }
-
-}

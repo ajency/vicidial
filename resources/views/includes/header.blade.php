@@ -29,9 +29,10 @@
           <li class="nav-item" data-target="infants">
             Infants
           </li>
-          <!-- <li class="nav-item" data-target="other">
+          <li class="flex-grow-1 disabled"></li>
+          <li class="nav-item" data-target="other">
             Other links
-          </li> -->
+          </li>
         </ul>
 
         <ul class="nav megamenu--right">
@@ -42,9 +43,9 @@
                     <div class="nav-column">
                         <div class="nav-column--heading mb-1">Shop by Category</div>
                         <ul class="list-unstyled">
-                          <li><a class="megamenu-link" href="">Clothing</a></li>
-                          <li><a class="megamenu-link" href="">Shoes</a></li>
-                          <li><a class="megamenu-link" href="">Accessories</a></li>
+                          <li><a class="megamenu-link" href="#">Clothing</a></li>
+                          <li><a class="megamenu-link" href="#">Shoes</a></li>
+                          <li><a class="megamenu-link" href="#">Accessories</a></li>
                           <li><a class="megamenu-link megamenu-link--primary" href="#">View all products</a></li>
                         </ul>
                     </div>
@@ -139,17 +140,23 @@
               <a href="#" class="d-none d-lg-block">Girls</a>
               <div class="megamenu-wrapper" data-menu="girls">
                   <div class="nav-column">
+                      <div class="nav-column--heading mb-1">Shop by Category</div>
+                      <ul class="list-unstyled">
+                        <li><a class="megamenu-link" href="#">Clothing</a></li>
+                        <li><a class="megamenu-link" href="#">Shoes</a></li>
+                        <li><a class="megamenu-link" href="#">Accessories</a></li>
+                        <li><a class="megamenu-link megamenu-link--primary" href="#">View all products</a></li>
+                      </ul>
+                  </div>
+
+                  <div class="nav-column">
+                      <div class="nav-column--heading mb-1">Shop by Clothing</div>
                       <ul class="list-unstyled">
                         <li><a class="megamenu-link" href="/girls/junior-7-14-years--toddler-2-7-years/bottoms/">Bottoms</a></li>
                         <li><a class="megamenu-link" href="/girls/junior-7-14-years--toddler-2-7-years/dress/">Dress</a></li>
                         <li><a class="megamenu-link" href="/girls/junior-7-14-years--toddler-2-7-years/ethnic/">Ethnic</a></li>
                         <li><a class="megamenu-link" href="/girls/junior-7-14-years--toddler-2-7-years/jeans/">Jeans</a></li>
                         <li><a class="megamenu-link" href="/shoes/girls/toddler-2-7-years--junior-7-14-years/">Shoes</a></li>
-                      </ul>
-                  </div>
-
-                  <div class="nav-column">
-                      <ul class="list-unstyled">
                         <li><a class="megamenu-link" href="/girls/junior-7-14-years--toddler-2-7-years/short/">Short</a></li>
                         <li><a class="megamenu-link" href="/girls/junior-7-14-years--toddler-2-7-years/skirt/">Skirt</a></li>
                         <li><a class="megamenu-link" href="/girls/junior-7-14-years--toddler-2-7-years/tshirt/">Tshirt</a></li>
@@ -158,29 +165,100 @@
                   </div>
 
                   <div class="nav-column">
-                      <div class="nav-column--heading mb-1">Age Groups</div>
+                      <div class="nav-column--heading mb-1">Shop by Price</div>
                       <ul class="list-unstyled">
-                        <li><a class="megamenu-link" href="#">0-2 yrs</a></li>
-                        <li><a class="megamenu-link" href="#">2-7 yrs</a></li>
-                        <li><a class="megamenu-link" href="#">7-14 yrs</a></li>
+                        <li><a class="megamenu-link" href="#">Below Rs.500</a></li>
+                        <li><a class="megamenu-link" href="#">Rs.500 to Rs.999</a></li>
+                        <li><a class="megamenu-link" href="#">Rs.1000 to Rs.1499</a></li>
+                        <li><a class="megamenu-link" href="#">Rs.1500 to Rs.1999</a></li>
+                        <li><a class="megamenu-link" href="#">Above Rs.2000</a></li>
+                      </ul>
+
+                      <div class="nav-column--heading mb-1">Shop by Age Group</div>
+                      <ul class="list-unstyled">
+                        <li><a class="megamenu-link" href="#">2-7 years</a></li>
+                        <li><a class="megamenu-link" href="#">7-14 years</a></li>
+                      </ul>
+                  </div>
+
+                  <div class="nav-column nav-column--wide">
+                      <img class="d-block w-100 img-fluid offer-img mt-4 mt-lg-0"
+                         src="{{CDN::asset('/img/menu/girl-dummy1.jpg') }}"
+                         width="200"
+                         title="Offer 1"
+                         alt="Offer 1"/>
+                      <div class="row align-items-center mt-2 mb-4 mb-lg-0">
+                          <div class="col-7">
+                            <div class="h5 text-primary font-weight-bold">Spotlight on</div>
+                            <div class="text-white">Girls skirts</div>
+                          </div>
+                          <div class="col-5">
+                            <a href="#" class="btn kss-btn kss-btn--mini">Shop now</a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            </li>
+
+            <!-- Infants -->
+            <li>
+              <a href="#" class="d-none d-lg-block">Infants</a>
+              <div class="megamenu-wrapper" data-menu="infants">
+                  <div class="nav-column">
+                      <div class="nav-column--heading mb-1">Shop by Category</div>
+                      <ul class="list-unstyled">
+                        <li><a class="megamenu-link" href="#">Clothing</a></li>
+                        <li><a class="megamenu-link" href="#">Shoes</a></li>
+                        <li><a class="megamenu-link" href="#">Accessories</a></li>
+                        <li><a class="megamenu-link megamenu-link--primary" href="#">View all products</a></li>
                       </ul>
                   </div>
 
                   <div class="nav-column">
-                      <img class="d-block w-100 img-fluid lazyload blur-up"
-                           src="{{CDN::asset('/img/gender/girl-10px.jpg') }}"
-                           data-srcset="{{CDN::asset('/img/gender/girl-large.jpg') }} 813w,
-                                        {{CDN::asset('/img/gender/girl-medium.jpg') }} 542w,
-                                        {{CDN::asset('/img/gender/girl-small.jpg') }} 271w"
-                           data-sizes='(min-width: 1200px) 270px, (min-width: 768px) 22vw,  44vw'
-                           title="Boys 2-14 years"
-                           alt="Boys 2-14 years"/>
+                      <div class="nav-column--heading mb-1">Shop by Clothing</div>
+                      <ul class="list-unstyled">
+                        <li><a class="megamenu-link" href="/infant-0-2-years/bottoms/">Bottoms</a></li>
+                        <li><a class="megamenu-link" href="/infant-0-2-years/dress/">Dress</a></li>
+                        <li><a class="megamenu-link" href="/infant-0-2-years/infant-utility/">Infant Utility</a></li>
+                        <li><a class="megamenu-link" href="/infant-0-2-years/shirt/">Shirt</a></li>
+                        <li><a class="megamenu-link" href="/shoes/infant-0-2-years/">Shoes</a></li>
+                        <li><a class="megamenu-link" href="/infant-0-2-years/short/">Short</a></li>
+                        <li><a class="megamenu-link" href="/infant-0-2-years/tshirt/">Tshirt</a></li>
+                        <li><a class="megamenu-link" href="/infant-0-2-years/woven-tops/">Woven Tops</a></li>
+                      </ul>
+                  </div>
+
+                  <div class="nav-column">
+                      <div class="nav-column--heading mb-1">Shop by Price</div>
+                      <ul class="list-unstyled">
+                        <li><a class="megamenu-link" href="#">Below Rs.500</a></li>
+                        <li><a class="megamenu-link" href="#">Rs.500 to Rs.999</a></li>
+                        <li><a class="megamenu-link" href="#">Rs.1000 to Rs.1499</a></li>
+                        <li><a class="megamenu-link" href="#">Rs.1500 to Rs.1999</a></li>
+                        <li><a class="megamenu-link" href="#">Above Rs.2000</a></li>
+                      </ul>
+                  </div>
+
+                  <div class="nav-column nav-column--wide">
+                      <img class="d-block w-100 img-fluid offer-img mt-4 mt-lg-0"
+                         src="{{CDN::asset('/img/menu/infants-dummy1.jpg') }}"
+                         width="200"
+                         title="Offer 1"
+                         alt="Offer 1"/>
+                      <div class="row align-items-center mt-2 mb-4 mb-lg-0">
+                          <div class="col-7">
+                            <div class="h5 text-primary font-weight-bold">Spotlight on</div>
+                            <div class="text-white">Infants dress</div>
+                          </div>
+                          <div class="col-5">
+                            <a href="#" class="btn kss-btn kss-btn--mini">Shop now</a>
+                          </div>
+                      </div>
                   </div>
               </div>
             </li>
-            <li><a href="#" class="d-none d-lg-block">Infants</a></li>
 
-            <!-- <li class="d-lg-none align-self-end">
+            <li class="d-lg-none align-self-end">
               <div class="megamenu-wrapper" data-menu="other">
                 <div class="nav-column mb-0">
                   <ul class="list-unstyled">
@@ -193,7 +271,7 @@
                   </ul>
                 </div>
               </div>
-            </li> -->
+            </li>
         </ul>
       </div>
     </div>
