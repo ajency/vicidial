@@ -61,9 +61,9 @@
   </div>
   <p class="my-4 product-view text-center d-none">You've viewed 42 of 45 products</p>
   <div class="text-center mt-3 @{{#if show_more }} @{{else}} d-none @{{/if}}">
-  	<a href="javascript:void(0);" class="more-link d-flex align-items-center justify-content-center" id="showMoreProductsBtn">
-		<i class="load-icon-cls align-middle fa-circle-notch fa-lg fa-spin fas mr-2 d-none"></i> Show more products <i class="fas fa-chevron-down arrow-down"></i>
-	</a>
+  	<button href="javascript:void(0);" class="d-flex align-items-center justify-content-center btn more-products-btn m-auto" id="showMoreProductsBtn">
+		<i class="load-icon-cls align-middle fa-circle-notch fa-lg fa-spin fas mr-2 d-none"></i> Show more products 
+	</button>
   </div>
 </script>
 

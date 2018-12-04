@@ -400,6 +400,9 @@ body #cd-cart .modal.show .modal-dialog {
         font-size: 5em;
         color: #d2d2d2;
     }
+    @media (max-width: 480px){
+        height: calc(100% - 55px);
+    }
 }
 
 .cart-loader.speed-in{

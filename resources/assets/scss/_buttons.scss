@@ -115,6 +115,17 @@
     		text-decoration: underline;
     	}
     }
+    &--secondary-link{
+        font-size: 1.25em;
+        background-color: transparent;
+        border: 0;
+        text-transform: capitalize;
+        font-weight: normal;
+        color: theme-color("secondary");
+        &:hover{
+            background-color: transparent;
+        }
+    }
     &--big{
         font-size: 1.15rem;
         padding: 0.9rem 1rem;
@@ -176,5 +187,18 @@
 	font-size: 1.15rem !important;
 	@media (max-width: 767px){
         font-size: 1rem !important;
+    }
+}
+
+.more-products-btn{
+    background-color: transparent;
+    border-color: theme-color("secondary");
+    font-size: 1.1em;
+    padding: 0.8em 1.2em;
+    color: theme-color("secondary");
+    font-weight: 600;
+    text-transform: uppercase;
+    @media (max-width: 480px) {
+        font-size: 1.05em;
     }
 }

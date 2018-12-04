@@ -491,3 +491,14 @@ footer .bl-1{
     font-size: 1.15em;
     color: #afaeae;
 }
+
+.helper-links{
+    a{
+        color: #000;
+        font-size: 1.25em;
+        border-bottom: 2px solid theme-color("primary");
+        &:hover{
+            color: #545454;
+        }
+    }
+}
