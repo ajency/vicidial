@@ -19,7 +19,7 @@ class StaticController extends Controller
     	$params['page'] = $static_page;
     	$params['query'] = $request->all();
         if(view()->exists('shop.'.$params['page']))
-            return view('shop')->with('params',$params);
+            return view('shop.'.$params['page'])->with('params',$params);
         else
             abort(404);
     }
