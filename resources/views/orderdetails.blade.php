@@ -86,7 +86,7 @@
 				    value: total,
 				    currency: 'INR',
 				    content_ids: '{{implode(",",$variant_ids)}}',
-				    content_type: 'product',
+				    content_type: 'variant',
 				});
 			</script>
 		@endif	
