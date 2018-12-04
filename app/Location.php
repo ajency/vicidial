@@ -63,4 +63,23 @@ class Location extends Model
             return array('store_name' => $this->warehouse_name, 'locality' => $this->address['street2'], 'city' => $this->address['city'].', '.$this->address['state'].' - '.$this->address['zip']);
         }
     }
+
+    public function warehouseCoordinates()
+    {
+        return $this->belongsTo('App\Warehouse', 'warehouse_odoo_id', 'odoo_id')->select(['latitude', 'longitude']);
+    }
+
+    public static function getLocationDistances($latitude, $longitude)
+    {
+        $destination       = implode(',', [$latitude, $longitude]);
+        $locations         = Location::where('use_in_inventory', true)->get();
+        $mappedCoordinates = $locations->map(function ($item, $key) {
+            $coor = $item->warehouseCoordinates;
+            return implode(',', [$coor->latitude, $coor->longitude]);
+        });
+        $distanceMatrix = array_dot(array_only(json_decode(\GoogleMaps::load('distancematrix')->setParamByKey('destinations', $destination)->setParamByKey('origins', $mappedCoordinates->toArray())->get(),true),['rows']));
+        $filtered = array_where($distanceMatrix, function ($value, $key) { return strpos($key,'distance.value') !== false; });
+        return $locations->pluck('odoo_id')->combine(collect(range(0,$locations->count()-1))->map(function($item,$key)use($filtered){return isset($filtered['rows.'.$item.'.elements.0.distance.value'])?$filtered['rows.'.$item.'.elements.0.distance.value']:10000000000; }));
+    }
+
 }
