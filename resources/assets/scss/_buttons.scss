@@ -119,7 +119,7 @@
         font-size: 1.25em;
         background-color: transparent;
         border: 0;
-        text-transform: capitalize;
+        text-transform: inherit;
         font-weight: normal;
         color: theme-color("secondary");
         &:hover{
