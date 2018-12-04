@@ -157,6 +157,14 @@
             border-radius: 0;
         }
     }
+    &--mini{
+        // width: 150px;
+        font-size: 12px;
+        padding: 4px 5px;
+        @media (max-width: 767px){
+            border-radius: 0;
+        }
+    }
     &:disabled{
         &:hover{
             background-color: theme-color("primary");

@@ -1,11 +1,11 @@
 <script id="filter-price-template" type="text/x-handlebars-template">
-    <div class="kss_filter-list">
-      <div id="headingThree">
+    <div class="kss_filter-list" data-filter="price">
+      <div class="filter-heading">
         <label class="w-100 mb-0 pb-3 cursor-pointer @{{#if collapsed}} collapsed @{{/if}}" data-toggle="collapse" data-target="#collapsePrice" aria-expanded="false" aria-controls="collapsePrice">
           @{{filter_display_name}}<i class="fas fa-angle-up float-right"></i>
         </label>
       </div>
-      <div id="collapsePrice" class="collapse@{{#if collapsed}}@{{else}} show @{{/if}}" aria-labelledby="headingThree" data-field="price">
+      <div id="collapsePrice" class="collapse@{{#if collapsed}}@{{else}} show @{{/if}}" data-field="price">
         <div class="card-body">
           <div class="priceRange">
             <input type="text" id="price-range" name="price" value="" class="facet-category" data-minval="@{{minval}}" data-maxval="@{{maxval}}" data-facet-name="@{{filter_facet_name}}" data-singleton="true" data-slug="price" @{{#if disabled_at_zero_count}} @{{#ifEquals count 0 }} disabled = "disabled" @{{/ifEquals}} @{{/if}} data-collapsable="@{{collapsed}}" data-display-name="@{{filter_display_name}}"/>
@@ -20,7 +20,7 @@
             <div class="col-5 col-sm-5">
               <input class="form-control form-control-lg text-muted price-change validate-number" value="@{{toval}}" id="price-max" type="number" placeholder="Max">
             </div>
-          </div> 
+          </div>
         </div>
       </div>
     </div>
@@ -69,32 +69,32 @@
     initializeSlider(fromval,toval,minval,maxval)
     facetCategoryChange($("#price-range"),false,true);
     if($( "input[name='age']:checked" ).length){
-        $.each($("input[name='age']:checked"), function(){            
+        $.each($("input[name='age']:checked"), function(){
             facetCategoryChange($(this),false)
         });
     }
     if($( "input[name='gender']:checked" ).length){
-        $.each($("input[name='gender']:checked"), function(){            
+        $.each($("input[name='gender']:checked"), function(){
             facetCategoryChange($(this),false)
         });
     }
     if($( "input[name='category']:checked" ).length){
-        $.each($("input[name='category']:checked"), function(){            
+        $.each($("input[name='category']:checked"), function(){
             facetCategoryChange($(this),false)
         });
     }
     if($( "input[name='subtype']:checked" ).length){
-        $.each($("input[name='subtype']:checked"), function(){            
+        $.each($("input[name='subtype']:checked"), function(){
             facetCategoryChange($(this),false)
         });
     }
     if($( "input[name='color']:checked" ).length){
-        $.each($("input[name='color']:checked"), function(){            
+        $.each($("input[name='color']:checked"), function(){
             facetCategoryChange($(this),false)
         });
     }
     if($( "input[name='availability']:checked" ).length){
-        $.each($("input[name='availability']:checked"), function(){            
+        $.each($("input[name='availability']:checked"), function(){
             facetCategoryChange($(this),false,false,true)
         });
     }
@@ -116,7 +116,7 @@
       var from, to;
       from = $('#price-min').val();
       to = $('#price-max').val();
-      initPriceBar(from, to); 
+      initPriceBar(from, to);
       return facetCategoryChange($("#price-range"),true,true);
   });
 
