@@ -43,10 +43,10 @@
                     <div class="nav-column">
                         <div class="nav-column--heading mb-1">Shop by Category</div>
                         <ul class="list-unstyled">
-                          <li><a class="megamenu-link" href="#">Clothing</a></li>
-                          <li><a class="megamenu-link" href="#">Shoes</a></li>
-                          <li><a class="megamenu-link" href="#">Accessories</a></li>
-                          <li><a class="megamenu-link megamenu-link--primary" href="#">View all products</a></li>
+                          <li><a class="megamenu-link" href="/apparels/boys">Clothing</a></li>
+                          <li><a class="megamenu-link" href="/shoes/boys">Shoes</a></li>
+                          <li><a class="megamenu-link" href="/accessories/boys">Accessories</a></li>
+                          <li><a class="megamenu-link megamenu-link--primary" href="/boys">View all products</a></li>
                         </ul>
                     </div>
 
@@ -69,17 +69,17 @@
                     <div class="nav-column">
                         <div class="nav-column--heading mb-1">Shop by Price</div>
                         <ul class="list-unstyled">
-                          <li><a class="megamenu-link" href="#">Below Rs.500</a></li>
-                          <li><a class="megamenu-link" href="#">Rs.500 to Rs.999</a></li>
-                          <li><a class="megamenu-link" href="#">Rs.1000 to Rs.1499</a></li>
-                          <li><a class="megamenu-link" href="#">Rs.1500 to Rs.1999</a></li>
-                          <li><a class="megamenu-link" href="#">Above Rs.2000</a></li>
+                          <li><a class="megamenu-link" href="/boys?rf=price:0TO500">Below Rs.500</a></li>
+                          <li><a class="megamenu-link" href="/boys?rf=price:500TO999">Rs.500 to Rs.999</a></li>
+                          <li><a class="megamenu-link" href="/boys?rf=price:1000TO1499">Rs.1000 to Rs.1499</a></li>
+                          <li><a class="megamenu-link" href="/boys?rf=price:1500TO1999">Rs.1500 to Rs.1999</a></li>
+                          <!-- <li><a class="megamenu-link" href="#">Above Rs.2000</a></li> -->
                         </ul>
 
                         <div class="nav-column--heading mb-1">Shop by Age Group</div>
                         <ul class="list-unstyled">
-                          <li><a class="megamenu-link" href="#">2-7 years</a></li>
-                          <li><a class="megamenu-link" href="#">7-14 years</a></li>
+                          <li><a class="megamenu-link" href="/boys/toddler-2-7-years">2-7 years</a></li>
+                          <li><a class="megamenu-link" href="/boys/junior-7-14-years">7-14 years</a></li>
                         </ul>
                     </div>
 
@@ -116,19 +116,20 @@
                         </ul>
                     </div> -->
 
-                    <div class="nav-column nav-column--wide">
-                        <img class="d-block w-100 img-fluid offer-img mt-4 mt-lg-0"
-                           src="{{CDN::asset('/img/collection/shirt-medium.jpg') }}"
-                           width="200"
-                           title="Offer 1"
-                           alt="Offer 1"/>
+                    <div class="nav-column nav-column--wide d-none d-lg-block">
+                         <img class="d-block w-100 img-fluid lazyload offer-img mt-4 mt-lg-0"
+                             src="{{CDN::asset('/img/collection/shirt-10px.jpg') }}"
+                             data-srcset="{{CDN::asset('/img/collection/shirt-large.jpg') }} 2x,
+                                          {{CDN::asset('/img/collection/shirt-medium.jpg') }} 1x"
+                             alt="Spotlight on Boys Shirts"
+                             title="Spotlight on Boys Shirts"/>
                         <div class="row align-items-center mt-2 mb-4 mb-lg-0">
                             <div class="col-7">
                               <div class="h5 text-primary font-weight-bold">Spotlight on</div>
                               <div class="text-white">Boys shirts</div>
                             </div>
                             <div class="col-5">
-                              <a href="#" class="btn kss-btn kss-btn--mini">Shop now</a>
+                              <a href="/boys/shirt" class="btn kss-btn kss-btn--mini">Shop now</a>
                             </div>
                         </div>
                     </div>
@@ -142,10 +143,10 @@
                   <div class="nav-column">
                       <div class="nav-column--heading mb-1">Shop by Category</div>
                       <ul class="list-unstyled">
-                        <li><a class="megamenu-link" href="#">Clothing</a></li>
-                        <li><a class="megamenu-link" href="#">Shoes</a></li>
-                        <li><a class="megamenu-link" href="#">Accessories</a></li>
-                        <li><a class="megamenu-link megamenu-link--primary" href="#">View all products</a></li>
+                        <li><a class="megamenu-link" href="/apparels/girls">Clothing</a></li>
+                        <li><a class="megamenu-link" href="/shoes/girls">Shoes</a></li>
+                        <li><a class="megamenu-link" href="/accessories/girls">Accessories</a></li>
+                        <li><a class="megamenu-link megamenu-link--primary" href="/girls">View all products</a></li>
                       </ul>
                   </div>
 
@@ -167,33 +168,34 @@
                   <div class="nav-column">
                       <div class="nav-column--heading mb-1">Shop by Price</div>
                       <ul class="list-unstyled">
-                        <li><a class="megamenu-link" href="#">Below Rs.500</a></li>
-                        <li><a class="megamenu-link" href="#">Rs.500 to Rs.999</a></li>
-                        <li><a class="megamenu-link" href="#">Rs.1000 to Rs.1499</a></li>
-                        <li><a class="megamenu-link" href="#">Rs.1500 to Rs.1999</a></li>
-                        <li><a class="megamenu-link" href="#">Above Rs.2000</a></li>
+                        <li><a class="megamenu-link" href="/girls?rf=price:0TO500">Below Rs.500</a></li>
+                        <li><a class="megamenu-link" href="/girls?rf=price:500TO999">Rs.500 to Rs.999</a></li>
+                        <li><a class="megamenu-link" href="/girls?rf=price:1000TO1499">Rs.1000 to Rs.1499</a></li>
+                        <li><a class="megamenu-link" href="/girls?rf=price:1500TO1999">Rs.1500 to Rs.1999</a></li>
+                        <!-- <li><a class="megamenu-link" href="#">Above Rs.2000</a></li> -->
                       </ul>
 
                       <div class="nav-column--heading mb-1">Shop by Age Group</div>
                       <ul class="list-unstyled">
-                        <li><a class="megamenu-link" href="#">2-7 years</a></li>
-                        <li><a class="megamenu-link" href="#">7-14 years</a></li>
+                        <li><a class="megamenu-link" href="/girls/toddler-2-7-years">2-7 years</a></li>
+                        <li><a class="megamenu-link" href="/girls/junior-7-14-years">7-14 years</a></li>
                       </ul>
                   </div>
 
-                  <div class="nav-column nav-column--wide">
-                      <img class="d-block w-100 img-fluid offer-img mt-4 mt-lg-0"
-                         src="{{CDN::asset('/img/collection/ethnic-medium.jpg') }}"
-                         width="200"
-                         title="Offer 1"
-                         alt="Offer 1"/>
+                  <div class="nav-column nav-column--wide d-none d-lg-block">
+                      <img class="d-block w-100 img-fluid lazyload offer-img mt-4 mt-lg-0"
+                           src="{{CDN::asset('/img/collection/ethnic-10px.jpg') }}"
+                           data-srcset="{{CDN::asset('/img/collection/ethnic-large.jpg') }} 2x,
+                                        {{CDN::asset('/img/collection/ethnic-medium.jpg') }} 1x"
+                           alt="Spotlight on Girls Ethnic wear"
+                           title="Spotlight on Girls Ethnic wear"/>
                       <div class="row align-items-center mt-2 mb-4 mb-lg-0">
                           <div class="col-7">
                             <div class="h5 text-primary font-weight-bold">Spotlight on</div>
-                            <div class="text-white">Girls skirts</div>
+                            <div class="text-white">Girls Ethnic wear</div>
                           </div>
                           <div class="col-5">
-                            <a href="#" class="btn kss-btn kss-btn--mini">Shop now</a>
+                            <a href="/girls/ethnic" class="btn kss-btn kss-btn--mini">Shop now</a>
                           </div>
                       </div>
                   </div>
@@ -207,10 +209,10 @@
                   <div class="nav-column">
                       <div class="nav-column--heading mb-1">Shop by Category</div>
                       <ul class="list-unstyled">
-                        <li><a class="megamenu-link" href="#">Clothing</a></li>
-                        <li><a class="megamenu-link" href="#">Shoes</a></li>
-                        <li><a class="megamenu-link" href="#">Accessories</a></li>
-                        <li><a class="megamenu-link megamenu-link--primary" href="#">View all products</a></li>
+                        <li><a class="megamenu-link" href="/apparels/infant-0-2-years">Clothing</a></li>
+                        <li><a class="megamenu-link" href="/shoes/infant-0-2-years">Shoes</a></li>
+                        <li><a class="megamenu-link" href="/accessories/infant-0-2-years">Accessories</a></li>
+                        <li><a class="megamenu-link megamenu-link--primary" href="/infant-0-2-years">View all products</a></li>
                       </ul>
                   </div>
 
@@ -231,27 +233,28 @@
                   <div class="nav-column">
                       <div class="nav-column--heading mb-1">Shop by Price</div>
                       <ul class="list-unstyled">
-                        <li><a class="megamenu-link" href="#">Below Rs.500</a></li>
-                        <li><a class="megamenu-link" href="#">Rs.500 to Rs.999</a></li>
-                        <li><a class="megamenu-link" href="#">Rs.1000 to Rs.1499</a></li>
-                        <li><a class="megamenu-link" href="#">Rs.1500 to Rs.1999</a></li>
-                        <li><a class="megamenu-link" href="#">Above Rs.2000</a></li>
+                        <li><a class="megamenu-link" href="/infant-0-2-years?rf=price:0TO500">Below Rs.500</a></li>
+                        <li><a class="megamenu-link" href="/infant-0-2-years?rf=price:500TO999">Rs.500 to Rs.999</a></li>
+                        <li><a class="megamenu-link" href="/infant-0-2-years?rf=price:1000TO1499">Rs.1000 to Rs.1499</a></li>
+                        <li><a class="megamenu-link" href="/infant-0-2-years?rf=price:1500TO1999">Rs.1500 to Rs.1999</a></li>
+                        <!-- <li><a class="megamenu-link" href="#">Above Rs.2000</a></li> -->
                       </ul>
                   </div>
 
-                  <div class="nav-column nav-column--wide">
-                      <img class="d-block w-100 img-fluid offer-img mt-4 mt-lg-0"
-                         src="{{CDN::asset('/img/collection/infant-accessories-medium.jpg') }}"
-                         width="200"
-                         title="Offer 1"
-                         alt="Offer 1"/>
+                  <div class="nav-column nav-column--wide d-none d-lg-block">
+                      <img class="d-block w-100 img-fluid lazyload offer-img mt-4 mt-lg-0"
+                           src="{{CDN::asset('/img/collection/infant-accessories-10px.jpg') }}"
+                           data-srcset="{{CDN::asset('/img/collection/infant-accessories-large.jpg') }} 2x,
+                                        {{CDN::asset('/img/collection/infant-accessories-medium.jpg') }} 1x"
+                           alt="Spotlight on Infant Utility"
+                           title="Spotlight on Infant Utility"/>
                       <div class="row align-items-center mt-2 mb-4 mb-lg-0">
                           <div class="col-7">
                             <div class="h5 text-primary font-weight-bold">Spotlight on</div>
                             <div class="text-white">Infants dress</div>
                           </div>
                           <div class="col-5">
-                            <a href="#" class="btn kss-btn kss-btn--mini">Shop now</a>
+                            <a href="/infant-0-2-years/dress" class="btn kss-btn kss-btn--mini">Shop now</a>
                           </div>
                       </div>
                   </div>

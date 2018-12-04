@@ -30,6 +30,7 @@
 <script type="text/javascript">
 	window.lazySizesConfig = window.lazySizesConfig || {};
 	lazySizesConfig.loadMode = 3;
+  lazySizesConfig.loadHidden = false;
 </script>
 
 
