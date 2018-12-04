@@ -16,7 +16,10 @@
 				<!-- Product Images -->
 				@include('includes.singleproduct.productimages', ['params' => $params])
 
-				@php $selected_color_id = $params['selected_color_id']; @endphp
+				@php 
+					$selected_color_id = $params['selected_color_id']; 
+					$parent_id = $params['parent_id']; 
+				@endphp
 
 				<!-- Product Color-selection Section -->
 				@include('includes.singleproduct.productcolorselection', ['params' => $params, 'selected_color_id' => $selected_color_id])
@@ -121,7 +124,16 @@
 	    var selected_color_id = {{$selected_color_id}};
 	</script>
 
+	
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
 	<script type="text/javascript" src="{{CDN::mix('/js/singleproduct.js') }}"></script>
 
+	<script type="text/javascript">
+        fbq('track', 'ViewContent', {
+            value: default_price,
+            currency: 'INR',
+            content_ids: '{{$parent_id}}.{{$selected_color_id}}',
+            content_type: 'product_color',
+        });
+    </script>
 @stop

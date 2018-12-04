@@ -39,24 +39,6 @@
 				<!-- Order Message -->
 				@if(! empty($params['payment_status']))
 					@include('includes.orderdetails.ordermessage', ['status' => $params['payment_status']])
-					@if($params['payment_status'] == 'success')
-						<script type="text/javascript">
-							var total = {{$params['order_info']['total_amount']}};
-							@php $variant_ids = []; @endphp
-							@foreach($params['sub_orders'] as $sub_order)
-								@foreach($sub_order['items'] as $item)
-									@php $variant_ids[] = $item['variant_id'] @endphp
-								@endforeach
-							@endforeach
-
-							fbq('track', 'Purchase', {
-							    value: total,
-							    currency: 'INR',
-							    content_ids: '{{implode(",",$variant_ids)}}',
-							    content_type: 'product',
-							});
-						</script>
-					@endif	
 				@endif
 
 				<hr class="mb-4">
@@ -89,4 +71,24 @@
 @stop
 @section('footjs')
 	@yield('order-msg')
+	@if(! empty($params['payment_status']))
+		@if($params['payment_status'] == 'success')
+			<script type="text/javascript">
+				var total = {{$params['order_info']['total_amount']}};
+				@php $variant_ids = []; @endphp
+				@foreach($params['sub_orders'] as $sub_order)
+					@foreach($sub_order['items'] as $item)
+						@php $variant_ids[] = $item['variant_id'] @endphp
+					@endforeach
+				@endforeach
+
+				fbq('track', 'Purchase', {
+				    value: total,
+				    currency: 'INR',
+				    content_ids: '{{implode(",",$variant_ids)}}',
+				    content_type: 'product',
+				});
+			</script>
+		@endif	
+	@endif
 @stop

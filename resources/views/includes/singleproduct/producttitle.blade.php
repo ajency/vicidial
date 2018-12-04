@@ -21,12 +21,7 @@
 
     </div>
     <script type="text/javascript">
-        fbq('track', 'ViewContent', {
-            value: {{$default_price['sale_price']}},
-            currency: 'INR',
-            content_ids: '{{$default_price['id']}}',
-            content_type: 'product',
-        });
+        var default_price = {{$default_price['sale_price']}};
     </script>
 
 </div>

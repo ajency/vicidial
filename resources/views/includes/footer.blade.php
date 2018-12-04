@@ -120,16 +120,4 @@
     </div>
 </div>
 
-<!-- sentry code -->
-<script src="https://browser.sentry-cdn.com/4.4.1/bundle.min.js" crossorigin="anonymous"></script>
-<script>Sentry.init({ dsn: '{{config("analytics.js_dsn")}}', environment : '{{config("app.env")}}' });</script>
 
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id={{config('analytics.google_id')}}"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', "{{config('analytics.google_id')}}");
-</script>
