@@ -70,7 +70,7 @@ export class MyOrdersComponent implements OnInit {
   }
 
   closeWidget(){
-    this.appservice.closeWidget();
+    history.back();
   }
 
 }
