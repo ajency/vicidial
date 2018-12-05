@@ -25,7 +25,7 @@ export class AppComponent {
 		}
 
 		this.location.onPopState((event)=>{
-			console.log("location.onPopState triggered");
+			console.log("location.onPopState triggered", window.location.href);
 		  	if(window.location.href.endsWith('#/account')){
 			  	this.appservice.closeVerificationModal();			  	
 			}

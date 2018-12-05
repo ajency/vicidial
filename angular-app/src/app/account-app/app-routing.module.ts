@@ -8,6 +8,7 @@ import { AccountComponent } from './pages/account/account.component';
 const routes: Routes = [
 	{ path: 'account', component: AccountComponent},
 	{ path: 'account/my-orders', component: MyOrdersComponent },
+	{ path: '**' , redirectTo: 'account'}
 	// { path: '', redirectTo: 'account/my-orders', pathMatch: 'full' }
 ];
 
