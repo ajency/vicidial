@@ -149,6 +149,12 @@ Add the following to crontab
 ### Get all states from odoo
 `php artisan odoo:states` 
 
+### Get all size attributes from odoo
+`php artisan odoo:attribute size` 
+
+### Get all color attributes from odoo
+`php artisan odoo:attribute color` 
+
 ### create passport keys for API to work
 `php artisan passport:client --personal`
 

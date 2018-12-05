@@ -12,7 +12,7 @@ class updateAttribute extends Command
      *
      * @var string
      */
-    protected $signature = 'odoo:update_attribute {attribute}';
+    protected $signature = 'odoo:attribute {attribute}';
 
     /**
      * The console command description.
