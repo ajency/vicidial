@@ -15,6 +15,9 @@
                   <span class="color-box" style="background-color:@{{facet_value}};"></span>
                   <span class="color-name pl-2 text-capitalize">@{{display_name}}</span>
                   <!-- <span class="sub-text filter-count pl-1">(150)</span> -->
+                  @{{#if ../display_count }}
+                    <span class="sub-text filter-count pl-1">(@{{count}})</span>
+                  @{{/if}}
                 </label>
               </div>
               @{{/each}}
@@ -26,6 +29,9 @@
                   <span class="color-box" style="background-color:@{{facet_value}};"></span>
                   <span class="color-name pl-2 text-capitalize">@{{display_name}}</span>
                   <!-- <span class="sub-text filter-count pl-1">(150)</span> -->
+                  @{{#if ../display_count }}
+                    <span class="sub-text filter-count pl-1">(@{{count}})</span>
+                  @{{/if}}
                 </label>
               </div>
               @{{/each}}
