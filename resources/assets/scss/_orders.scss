@@ -164,7 +164,39 @@
     flex-basis: 30%;
   }
 }
+
 .order-header{
-    // background-color: #fbfbfb;
     padding: 1em 0;
+}
+
+// my order
+
+.my-order-card{
+    box-shadow: 0 0 5px rgb(241, 241, 241);
+    padding: 0 8px;
+    background-color: #fff;
+    cursor: pointer;
+    .arrow-down{
+      transform: rotate(0deg);
+      transition: all 0.5s ease;
+    }
+    .collapsed{
+      .arrow-down{
+        transform: rotate(180deg);
+      }
+    }
+    .ordercollapse-trigger{
+      padding: 5px 10px 5px 0;
+    }
+    .collapse{
+      border-top: 1px solid #e8e8e8;
+      padding: 10px 8px;
+    }
+}
+
+.my-order-bg{
+    margin: 0 -20px;
+    padding: 0 20px;
+    background-color: #efefef;
+    padding-top: 20px;
 }
