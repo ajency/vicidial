@@ -133,7 +133,7 @@ class OrderController extends Controller
         $start=($page==1)?($page-1):((($page-1)*$length));
         
         $user   = User::getUserByToken($request->header('Authorization'));
-        $orderObj = Order::join('carts', 'carts.id', '=', 'orders.cart_id')->where('carts.user_id',$user->id)->orderBy("orders.".$sort_on,$sort_by);
+        $orderObj = Order::join('carts', 'carts.id', '=', 'orders.cart_id')->where('carts.user_id',$user->id)->orderBy("orders.".$sort_on,$sort_by)->select("orders.*");
         if($length == 0)
             $orders = $orderObj->get();
         else
