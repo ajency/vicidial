@@ -374,7 +374,10 @@ function generateSubordersData($cartItems, $locations)
         abort(500, 'empty location collection sent to generateSubordersData');
     }
     $locationsData = $locations->keys()->combine($locations->map(function ($item, $key) {
-        return ['id' => $key, 'items' => collect(), 'remaining_items' => collect(), 'distance' => $item, 'tcount' => 0];
+        return ['id' => $key, 'items' => collect(), 'remaining_items' => collect(), 'distance' => $item];
+    }));
+    $count = $locations->keys()->combine($locations->map(function ($item, $key) {
+        return 0;
     }));
     foreach ($cartItems as $cartItem) {
         $processedLocations = [];
@@ -387,9 +390,7 @@ function generateSubordersData($cartItems, $locations)
                 'variant'  => $cartItem['item'],
                 'quantity' => $transferQty,
             ]);
-            $newqty = $locationsData[$locationData['location_id']]['tcount'] + $transferQty;
-            // dd($locationsData->$locationData['location_id']);
-            // $locationsData->$locationData['location_id']['tcount'] = $newqty;
+            $count[$locationData['location_id']] += $transferQty;
             $processedLocations[] = $locationData['location_id'];
             if ($transferQty < $cartItem['quantity']) {
                 $locationsData[$locationData['location_id']]['remaining_items']->push([
@@ -398,6 +399,7 @@ function generateSubordersData($cartItems, $locations)
                 ]);
             }
         }
+
         foreach ($locations->keys() as $locationID) {
             if (array_search($locationID, $processedLocations) === false) {
                 $locationsData[$locationID]['remaining_items']->push($cartItem);
@@ -406,15 +408,17 @@ function generateSubordersData($cartItems, $locations)
     }
 
     //start function which chooses the location
-    $selectedLocation = $locationsData->where('count', $locationsData->max('count'))->sortBy('distance')->values()->first();
+    $max = collect($count)->max();
+    $selectedLocation = $locationsData->filter(function ($value, $key) use ($count, $max) {
+        return $count[$key] == $max;
+    })->sortBy('distance')->values()->first();
     //end function that chooses the location
 
     $key = $selectedLocation['id'];
     if ($key == null) {
-        \Log::error('GenerateSubOrder: something went wrong for '.$cartItems.' in '.$locations);
+        \Log::error('GenerateSubOrder: something went wrong for ' . $cartItems . ' in ' . $locations);
         abort(500);
     }
-
     if ($selectedLocation['remaining_items']->count() != 0) {
         unset($locations[$key]);
         $otherOrders       = generateSubordersData($selectedLocation['remaining_items'], $locations);
