@@ -12,7 +12,9 @@
     <div class="megamenu">
 
       <div class="d-flex d-lg-none justify-content-between align-items-center border-bottom border-cancel header-close-trigger">
-        <img src="{{CDN::asset('/img/logo-kss.png') }}" class=" img-fluid m-3 d-block d-lg-none" width="180px">
+        <a href="/">
+          <img src="{{CDN::asset('/img/logo-kss.png') }}" class=" img-fluid m-3 d-block d-lg-none" width="180px">
+        </a>
         <div class="megamenu-close menu-toggle p-3">
           <i class="fas fa-times"></i>
         </div>
