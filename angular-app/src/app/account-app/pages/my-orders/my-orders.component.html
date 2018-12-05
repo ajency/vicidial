@@ -22,7 +22,7 @@
 			<hr>
 			<div *ngIf="isLoggedIn()" class="my-order-parent accordion" id="accordionExample">
 				<div *ngIf="orders && orders.length" class="my-order-child">
-					<div *ngFor="let order of orders; let last = last; let first = first; let getindex = index" class="child-2 my-order-card">
+					<div *ngFor="let order of orders; let lastindex = last; let first = first; let getindex = index" class="child-2 my-order-card">
 						<div class="d-flex row mb-3 order-header collapsed" data-toggle="collapse" [attr.data-target]="'#collapse-' + getindex" aria-expanded="true" [attr.aria-controls]="'collapse-' + getindex">
 							<div class="col-7">
 								<p class="m-0">Order No. <strong>{{order.order_info.txn_no}}</strong></p>
@@ -35,7 +35,7 @@
 								<a href="/my/order/details?orderid={{order.order_info.txn_no}}" class="btn text-secondary pb-0 pr-0">Order Details <i class="fas fa-chevron-right"></i></a>
 							</div>
 						</div>
-						<div *ngFor="let sub_order of order.sub_orders; let i = index" class="my-2 collapse" [ngClass]="{'show': first == last}" id=collapse-{{getindex}} data-parent="#accordionExample">
+						<div *ngFor="let sub_order of order.sub_orders; let i = index" class="my-2 collapse" [ngClass]="{'show': orders.length == 1}" id=collapse-{{getindex}} data-parent="#accordionExample">
 							<div class="d-flex bd-highlight row mb-3">
 								<div class="pb-2 pr-2 col-9">
 									<label class="d-block m-0">Shipment {{i+1}}</label>					
