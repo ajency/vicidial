@@ -56,7 +56,6 @@
    var display_count = <?= json_encode($display_count) ?>;
    var disabled_at_zero_count = <?= json_encode($disabled_at_zero_count) ?>;
    var is_attribute_param = <?= json_encode($is_attribute_param) ?>;
-   console.log("color----"+<?= $singleton ?>)
    var context = {};
    context["template"] = '<?= $template ?>';
    context["singleton"] = singleton;
@@ -68,7 +67,6 @@
    context["filter_display_name"] = filter_display_name;
    context["filter_facet_name"] = filter_facet_name;
    context["items"] = <?= json_encode($items); ?>;
-   console.log(context)
    var html    = template(context);
    document.getElementById("filter-color-template-content").innerHTML = html;
  </script>

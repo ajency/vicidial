@@ -1,7 +1,3 @@
-
-console.log("productlisting===")
-console.log(config_facet_names_arr)
-
 var ajax_data = {}
 
 var page_val = 1;
@@ -46,17 +42,39 @@ $(function(){
       window.location.href = window.location.href;
     });
 
+    // Custom search
+     $(document).on('click','.search-trigger', function () {  
+        searchFilter();
+     });
 
+     $(document).on('keypress','#searchStringInp', function (e) {  
+        if (e.keyCode == 13) 
+          searchFilter();
+     });
+     // Click outside handled
+     $(document).mouseup(function(e) {
+        var Click_todo;
+        Click_todo = $('.expandSearch');
+        if (!Click_todo.is(e.target) && Click_todo.has(e.target).length === 0) {
+          if($('.custom-expand-search').val() == ''){
+            return $(Click_todo).removeClass('showSearch');  
+          }
+        }
+      });
+     // If value passed
+     if($('.custom-expand-search').length){
+       if($('.custom-expand-search').val() != ''){
+        $('.expandSearch').addClass('showSearch');
+      } 
+     }
+    
 })
 var facet_list = {}
 var range_facet_list = {}
 var boolean_facet_list = {}
 var sort_on_filter = ""
+var search_string_filter = ""
 var filter_tags_list = [] ;
-console.log("facet_value_slug_assoc===")
-console.log(facet_value_slug_assoc)
-console.log("facet array===")
-console.log(config_facet_names_arr)
 
 $(document).ready(function(){
     var page_no = $.url().param('page');
@@ -89,8 +107,6 @@ $(document).ready(function(){
     $(this).addClass('disabled');
     var page = $.url().param('page');
     var url = window.location.href
-    console.log("page==="+page)
-    console.log(url.split("?"))
     var url_arr = url.split("?")
     var appendStr = ""
     if(url_arr.length > 1)
@@ -106,21 +122,15 @@ $(document).ready(function(){
         url = url.replace(/page=\d+/, "page="+(parseInt(page)+1));
         pageVal = (parseInt(page)+1);
     }
-    console.log("ul==="+url)
     var url_params = new window.URLSearchParams(window.location.search);
-    console.log("url_params===")
-    console.log(url_params.entries())
     var facet_display_data_keys = Object.keys(facet_display_data_arr)
     var facet_display_data_values = Object.values(facet_display_data_arr)
-    for(pair of url_params.entries()) {
-      console.log(pair[0]+"===="+ pair[1]);
+    for(pair of url_params.entries()) { 
       if(pair[0] == "bf"){
         var filters_arr = pair[1].split("|");
         for(filters_item of filters_arr){
           var filter_pair = filters_item.split(":");
-          console.log(filter_pair[0]+"===="+filter_pair[1])
-          console.log("boolean_facet_list pir==="+boolean_facet_list[filter_pair[0]])
-          var bool_item_key = searchItemInArray(facet_display_data_values, filter_pair[0]);
+          var bool_item_key = searchItemInArray(facet_display_data_values, filter_pair[0]); 
 
           // var bool_item_key = facet_display_data_values.filter(function (facet) { return facet.attribute_param == filter_pair[0] });
           if( facet_display_data_keys[bool_item_key] != undefined ){
@@ -132,8 +142,6 @@ $(document).ready(function(){
       }
     }
     ajax_data["page"] = pageVal
-    console.log("ajax_data=====")
-    console.log(ajax_data)
     $.ajax({
         method: "POST",
         url: "/api/rest/v1/product-list",
@@ -142,8 +150,6 @@ $(document).ready(function(){
         contentType: "application/json"
 
       }).done(function (response) {
-        // alert( "Data Saved: " + msg );
-        console.log(response);
         var product_list_context = {};
         $.each(response, function (key, values) {
           if (key == "page") {
@@ -172,8 +178,6 @@ $(document).ready(function(){
            $(".productlist__na").addClass('d-none');
          }
         context["show_more"] = product_list_context.page.has_next
-        console.log("product_list_items======")
-        console.log(product_list_items);
         var html = template(context);
         document.getElementById("products-list-template-content").innerHTML = html;
        window.history.pushState('categoryPageUrl', 'Category page', url);
@@ -184,47 +188,62 @@ $(document).ready(function(){
 });
 
 // $('body').on('change', '.facet-category', function() {
-function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean_filter = false,sort_on=false)
+function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean_filter = false,sort_on=false,search_string=false)
 {
-    // From the other examples
-    console.log("change===")
     var call_ajax = false;
     var facet_name = $(thisObj).data('facet-name')
     var singleton = $(thisObj).data('singleton')
     var slug_name = $(thisObj).data('slug')
     var display_name = $(thisObj).data('display-name')
-    console.log(facet_name)
-    console.log($(thisObj).prop('checked')+"==="+$(thisObj).val());
     var final_facet_list = facet_list
     var thisval = $(thisObj).val()
-    if(sort_on == false){
-      if(boolean_filter == true){
-        final_facet_list = boolean_facet_list
-        thisval = ($(thisObj).val() == "true")?true:false;
-      }
-      if(range_filter == false){
-        if($(thisObj).prop('checked')){
-            if(final_facet_list.hasOwnProperty(facet_name)){
-              if(final_facet_list[facet_name].indexOf($(thisObj).val()) == -1){
-                console.log("singleton=="+singleton)
-                if(singleton == false){
-                    console.log("RAT1=====")
-                  if(boolean_filter == true)
-                    final_facet_list[facet_name]= thisval
-                  else
-                    final_facet_list[facet_name].push(thisval)
-                  var fil_index = filter_tags_list.findIndex(obj => obj.slug==slug_name);
-                  if(fil_index == -1)
-                    filter_tags_list.push({"slug":slug_name, "value":display_name, "group":facet_name})
-                  call_ajax = true;
+    if(search_string == false){
+      if(sort_on == false){
+        if(boolean_filter == true){
+          final_facet_list = boolean_facet_list
+          thisval = ($(thisObj).val() == "true")?true:false;
+        }
+        if(range_filter == false){
+          if($(thisObj).prop('checked')){
+              if(final_facet_list.hasOwnProperty(facet_name)){
+                if(final_facet_list[facet_name].indexOf($(thisObj).val()) == -1){
+                  if(singleton == false){
+                    if(boolean_filter == true)
+                      final_facet_list[facet_name]= thisval
+                    else
+                      final_facet_list[facet_name].push(thisval)
+                    var fil_index = filter_tags_list.findIndex(obj => obj.slug==slug_name);
+                    if(fil_index == -1)
+                      filter_tags_list.push({"slug":slug_name, "value":display_name, "group":facet_name})
+                    call_ajax = true;
+                  }
+                  else{
+                    if(boolean_filter == true)
+                      final_facet_list[facet_name] = thisval
+                    else
+                      final_facet_list[facet_name] = [thisval]
+                    var fil_index = filter_tags_list.findIndex(obj => obj.slug==slug_name);
+                    var fil_grp_index = filter_tags_list.findIndex(obj => obj.group==facet_name);
+                    if(fil_index == -1){
+                      if(fil_grp_index == -1)
+                        filter_tags_list.push({"slug":slug_name, "value":display_name, "group":facet_name})
+                      else{
+                        filter_tags_list.splice(fil_grp_index, 1);
+                        filter_tags_list.push({"slug":slug_name, "value":display_name, "group":facet_name})
+                      }
+                    }
+                    call_ajax = true;
+                  }
+
                 }
-                else{
-                    console.log("RAT2=====")
-                  if(boolean_filter == true)
-                    final_facet_list[facet_name] = thisval
-                  else
-                    final_facet_list[facet_name] = [thisval]
-                  var fil_index = filter_tags_list.findIndex(obj => obj.slug==slug_name);
+              }
+              else{
+                if(boolean_filter == true)
+                  final_facet_list[facet_name] = thisval
+                else
+                  final_facet_list[facet_name] = [thisval]
+                var fil_index = filter_tags_list.findIndex(obj => obj.slug==slug_name);
+                if(singleton == true){
                   var fil_grp_index = filter_tags_list.findIndex(obj => obj.group==facet_name);
                   if(fil_index == -1){
                     if(fil_grp_index == -1)
@@ -234,134 +253,98 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                       filter_tags_list.push({"slug":slug_name, "value":display_name, "group":facet_name})
                     }
                   }
-                  call_ajax = true;
-                }
-
-              }
-            }
-            else{
-                console.log("RAT4=====")
-              if(boolean_filter == true)
-                final_facet_list[facet_name] = thisval
-              else
-                final_facet_list[facet_name] = [thisval]
-              var fil_index = filter_tags_list.findIndex(obj => obj.slug==slug_name);
-              if(singleton == true){
-                var fil_grp_index = filter_tags_list.findIndex(obj => obj.group==facet_name);
-                if(fil_index == -1){
-                  if(fil_grp_index == -1)
-                    filter_tags_list.push({"slug":slug_name, "value":display_name, "group":facet_name})
-                  else{
-                    filter_tags_list.splice(fil_grp_index, 1);
-                    filter_tags_list.push({"slug":slug_name, "value":display_name, "group":facet_name})
-                  }
-                }
-              }
-              else{
-                if(fil_index == -1)
-                  filter_tags_list.push({"slug":slug_name, "value":display_name, "group":facet_name})
-              }
-              console.log("filter_tags_list rat4====")
-              console.log(filter_tags_list)
-              call_ajax = true;
-            }
-
-        }
-        else{
-            console.log("else==")
-            if(final_facet_list.hasOwnProperty(facet_name)){
-                console.log("RAT5=====")
-              // console.log("hasproperty=="+$(thisObj).val()+"====="+final_facet_list[facet_name].indexOf(thisval))
-              console.log(final_facet_list[facet_name])
-              if(boolean_filter == true){
-                if(final_facet_list[facet_name] == thisval){
-                  delete final_facet_list[facet_name];
-                  call_ajax = true;
-                  var fil_index = filter_tags_list.findIndex(obj => obj.slug==slug_name);
-                  filter_tags_list.splice(fil_index, 1);
-                }
-              }
-              else{
-                if(final_facet_list[facet_name].indexOf(thisval) > -1){
-                console.log("len=="+final_facet_list[facet_name].length)
-                if(final_facet_list[facet_name].length == 1){
-                  delete final_facet_list[facet_name];
-                  call_ajax = true;
                 }
                 else{
-                    var index = final_facet_list[facet_name].indexOf(thisval);
-                    if (index !== -1) final_facet_list[facet_name].splice(index, 1);
-                    call_ajax = true;
-                  }
-                  var fil_index = filter_tags_list.findIndex(obj => obj.slug==slug_name);
-                  filter_tags_list.splice(fil_index, 1);
+                  if(fil_index == -1)
+                    filter_tags_list.push({"slug":slug_name, "value":display_name, "group":facet_name})
                 }
+                call_ajax = true;
               }
 
-            }
+          }
+          else{
+              if(final_facet_list.hasOwnProperty(facet_name)){
+                if(boolean_filter == true){
+                  if(final_facet_list[facet_name] == thisval){
+                    delete final_facet_list[facet_name];
+                    call_ajax = true;
+                    var fil_index = filter_tags_list.findIndex(obj => obj.slug==slug_name);
+                    filter_tags_list.splice(fil_index, 1);
+                  }
+                }
+                else{
+                  if(final_facet_list[facet_name].indexOf(thisval) > -1){
+                  if(final_facet_list[facet_name].length == 1){
+                    delete final_facet_list[facet_name];
+                    call_ajax = true;
+                  }
+                  else{
+                      var index = final_facet_list[facet_name].indexOf(thisval);
+                      if (index !== -1) final_facet_list[facet_name].splice(index, 1);
+                      call_ajax = true;
+                    }
+                    var fil_index = filter_tags_list.findIndex(obj => obj.slug==slug_name);
+                    filter_tags_list.splice(fil_index, 1);
+                  }
+                }
+                
+              }
+          }
+        }
+        else{
+          var min_max_val = $(thisObj).val()
+          var min_max_arr = min_max_val.split(";")
+          var filter_tag_str = $(thisObj).val().replace(";", "-")
+          range_facet_list[facet_name]={}
+          range_facet_list[facet_name]["min"] = min_max_arr[0];
+          range_facet_list[facet_name]["max"] = min_max_arr[1];
+          // var fil_index = filter_tags_list.findIndex(obj => obj.slug=="price");
+          var filter_tag_exists = false
+          let filInd = -1
+          for(fitem in filter_tags_list){
+            if(filter_tags_list[fitem]["slug"] == "price")
+              filInd = fitem
+          }
+          if(filInd != -1)
+            filter_tags_list.splice(filInd, 1);
+          if(range_facet_list[facet_name]["min"] == $(thisObj).data("minval") && range_facet_list[facet_name]["max"] == $(thisObj).data("maxval"))
+          {
+            filter_tag_exists = false  
+          }
+          else{
+            
+            filter_tags_list.push({"slug":slug_name, "value":filter_tag_str, "group":facet_name})
+          }
+          
+          call_ajax = true;
         }
       }
       else{
-        var min_max_val = $(thisObj).val()
-        var min_max_arr = min_max_val.split(";")
-        var filter_tag_str = $(thisObj).val().replace(";", "-")
-        console.log(min_max_arr)
-        console.log("facet_name==="+facet_name)
-        range_facet_list[facet_name]={}
-        range_facet_list[facet_name]["min"] = min_max_arr[0];
-        range_facet_list[facet_name]["max"] = min_max_arr[1];
-        console.log("filter_tags_list before====")
-        console.log(filter_tags_list)
-        // var fil_index = filter_tags_list.findIndex(obj => obj.slug=="price");
-
-        console.log("filter_tags_list after====")
-        console.log(filter_tags_list)
-        var filter_tag_exists = false
-        let filInd = -1
-        for(fitem in filter_tags_list){
-          if(filter_tags_list[fitem]["slug"] == "price")
-            filInd = fitem
-        }
-        if(filInd != -1)
-          filter_tags_list.splice(filInd, 1);
-        if(range_facet_list[facet_name]["min"] == $(thisObj).data("minval") && range_facet_list[facet_name]["max"] == $(thisObj).data("maxval"))
-        {
-          filter_tag_exists = false
-        }
-        else{
-
-          filter_tags_list.push({"slug":slug_name, "value":filter_tag_str, "group":facet_name})
-        }
-
+        sort_on_filter = $(thisObj).val()
         call_ajax = true;
       }
     }
     else{
-      sort_on_filter = $(thisObj).val()
+      search_string_filter = $(thisObj).val()
       call_ajax = true;
     }
 
-    console.log("filter_tags_list after====")
-      console.log(filter_tags_list)
-    console.log(facet_list);
-    console.log("range_facet_list==")
-    console.log(range_facet_list)
-    // console.log("min==="+range_facet_list[facet_name]["min"])
-
     var url = constructCategoryUrl(config_facet_names_arr,facet_list,facet_value_slug_assoc,"");
-    console.log("listurl====",url)
     if(url.indexOf("?") !== -1)
       append_filter_str = "&"
     else
       append_filter_str = "?"
+
+    var url_params = new window.URLSearchParams(window.location.search);
+    if(url_params.get('show_search') != undefined){
+      url += append_filter_str+"show_search="+url_params.get('show_search')
+    }
+
     if( Object.keys(range_facet_list).length>0){
-      console.log(facet_name);
       for(ritem in range_facet_list){
         var minval = range_facet_list[ritem]["min"]
         var maxval = range_facet_list[ritem]["max"]
         var noURlChange = false
-        console.log(".facet-category==="+$("input[data-facet-name='"+ritem+"'].facet-category"))
-        console.log($("input[data-facet-name='"+ritem+"'].facet-category"))
         if(minval == $("input[data-facet-name='"+ritem+"'].facet-category").data("minval") && maxval == $("input[data-facet-name='"+ritem+"'].facet-category").data("maxval"))
         {
           noURlChange = true
@@ -371,15 +354,11 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
           url += append_filter_str+"rf=price:"+minval+"TO"+maxval;
         }
       }
-      console.log(range_facet_list[facet_name]);
-
+      
     }
 
-    console.log("boolean_facet_list==")
-    console.log(boolean_facet_list)
     if( Object.keys(boolean_facet_list).length>0){
       var boolean_url = constructCategoryUrl(config_facet_names_arr,boolean_facet_list,facet_value_slug_assoc,url);
-      console.log("boolean_url=="+boolean_url)
       url = boolean_url
     }
 
@@ -390,26 +369,30 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
         append_filter_str = "?"
       url += append_filter_str+"sort_on="+sort_on_filter
     }
-    console.log("listurl====",url)
+    if(search_string == true){
+      if(url.indexOf("?") !== -1)
+        append_filter_str = "&"
+      else
+        append_filter_str = "?"
+      url += append_filter_str+"search_string="+search_string_filter
+    }
+
     ajax_data = { "search_object": { "primary_filter" : facet_list,"range_filter" : range_facet_list,"boolean_filter" : boolean_facet_list }, "listurl": url , "page": page_val}
     if(sort_on_filter != "")
       ajax_data["sort_on"]= sort_on_filter
+    if(search_string_filter != "")
+      ajax_data["search_object"]["search_string"]= search_string_filter
     // if( Object.keys(range_facet_list).length>0)
     //   ajax_data["search_object"]["range_filter"] = range_facet_list
 
     var data = JSON.stringify(ajax_data);
 
     if(call_ajax == true){
-
-        console.log("filter_tags_list===")
-        console.log(filter_tags_list)
         // if(range_filter == false){
         var filtersource   = document.getElementById("filter-tags-template").innerHTML;
         var filtertemplate = Handlebars.compile(filtersource);
         var filtercontext = {};
         filtercontext["filter_tags_list"] = filter_tags_list;
-        console.log("filter tags====")
-        console.log(filtercontext)
         var filterhtml    = filtertemplate(filtercontext);
         document.getElementById("filter-tags-template-content").innerHTML = filterhtml;
         $("#filter_head_count").text(filter_tags_list.length)
@@ -423,8 +406,6 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                 dataType: "json",
                 contentType: "application/json"
             }).done(function( response ) {
-                // alert( "Data Saved: " + msg );
-                console.log(response);
                 var header_context = {};
                 var product_list_context = {};
 
@@ -436,16 +417,11 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                       return obj1.order - obj2.order;
                     });
                     $.each(values, function(vkey,vval){
-                      console.log(vval)
                       var templateval = vval.template
-                      console.log("template=="+template)
                       if(templateval != null)
                       {
                      var source   = document.getElementById("filter-"+templateval+"-template").innerHTML;
                      var template = Handlebars.compile(source);
-
-                     console.log("collapsable_load_values   1111 ======")
-                     console.log(collapsable_load_values)
                      var collapsed = collapsable_load_values[vval.header.facet_name];
                      var filter_display_name = vval.header.display_name;
                      var filter_facet_name = vval.header.facet_name;
@@ -495,15 +471,12 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                      var show_more = (show_more_limit > max_selected_index)?true:false;
                      context["items"] = items;
                      context["show_more"] = show_more;
-                     console.log(context)
                      var html    = template(context);
-                     console.log(document.getElementById("filter-"+templateval+"-template-content"))
                      document.getElementById("filter-"+templateval+"-template-content").innerHTML = html;
                      if(vval.filter_type == "range_filter"){
                         initializeSlider(fromval,toval,minval,maxval)
                         priceRangeSlider = $("#price-range").data("ionRangeSlider");
                         initPriceBar = function(from, to) {
-                          console.log("initPriceBar=="+from+"==="+to)
                           return priceRangeSlider.update({
                             type: 'double',
                             from: from,
@@ -523,6 +496,9 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                   }
                   if(key == "sort_on"){
                     header_context.sort_on = values ;
+                  }
+                  if(key == "search_string"){
+                    header_context.search_string = values ;
                   }
                   if (key == "page") {
                     product_list_context.page = values;
@@ -546,13 +522,9 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                 var context = {};
                 context["products"] = product_list_context.products;
                 context["show_more"] = product_list_context.page.has_next
-                console.log(context);
                 var html = template(context);
                 document.getElementById("products-list-template-content").innerHTML = html;
                 product_list_items = $.extend({}, product_list_context.products);
-                console.log("product_list_items====")
-                console.log(product_list_items)
-
 
                 var source   = document.getElementById("filter-header-template").innerHTML;
                 var template = Handlebars.compile(source);
@@ -560,12 +532,12 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                 context["breadcrumbs"] = header_context.breadcrumbs ;
                 context["headers"] = header_context.headers ;
                 context["sort_on"] = header_context.sort_on ;
+                context["search_string"] = header_context.search_string;
+
+                context["show_search"] = (url_params.get('show_search') != undefined)?url_params.get('show_search'):false;
                 var html    = template(context);
                 document.getElementById("filter-header-template-content").innerHTML = html;
-
-                console.log(config_facet_names_arr);
-                console.log(facet_list)
-
+                searchFilter(false);
                 window.history.pushState('categoryPage', 'Category', url);
             });
         }
@@ -576,8 +548,6 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
           collapsable_load_values[$("input[name='gender']").data("facet-name")] = $("input[name='gender']").data("collapsable")
           collapsable_load_values[$("input[name='price']").data("facet-name")] = $("input[name='price']").data("collapsable")
           collapsable_load_values[$("input[name='subtype']").data("facet-name")] = $("input[name='subtype']").data("collapsable")
-          console.log("collapsable_load_values===")
-          console.log(collapsable_load_values)
         }
 
     }
@@ -594,19 +564,10 @@ function constructCategoryUrl(facet_names_arr,search_object,facet_value_slug_arr
     // var search_str = "";
     for(item in facet_names_arr){
       var search_cat = "";
-      // console.log("item--"+facet_names_arr[item])
       var itemval = facet_names_arr[item]
       var config_item = facet_display_data_arr[itemval]
-      console.log(config_item)
-      console.log(search_object)
-      console.log("lem----"+Object.keys(search_object).length)
-      console.log("itemval=="+itemval)
-      console.log(facet_value_slug_arr)
-      // console.log(facet_display_data_arr[itemval])
-      // console.log(search_object[itemval])
       if(itemval in search_object){
         var append_filter_str = ""
-        console.log("search_object===")
         if(search_str.indexOf("?") !== -1)
           append_filter_str = "&"
         else
@@ -618,7 +579,6 @@ function constructCategoryUrl(facet_names_arr,search_object,facet_value_slug_arr
         if(config_item["filter_type"] == "boolean_filter")
           append_filter_str += "bf"
         if(search_object[facet_names_arr[item]].length>1){
-          console.log("facet_names_arr===")
           var furl =[]
           if(config_item["filter_type"] == "primary_filter"){
             for(fitem in search_object[facet_names_arr[item]]){
@@ -645,9 +605,7 @@ function constructCategoryUrl(facet_names_arr,search_object,facet_value_slug_arr
           }
 
         }
-        else{
-          console.log("facet_names_arr else===")
-
+        else{        
           var slugvalue="";
           if(config_item["is_attribute_param"]){
             if (config_item["filter_type"] == "primary_filter"){
@@ -676,8 +634,6 @@ function constructCategoryUrl(facet_names_arr,search_object,facet_value_slug_arr
 
 
     }
-
-    console.log("search_str=="+search_str)
     return search_str;
 }
 
@@ -685,9 +641,6 @@ function removeFilterTag(slug){
     var elm = $("input[data-slug='"+slug+"'].facet-category")
     // var singleton = elm.data("singleton")
     // if(singleton == true)
-
-    console.log(elm)
-    console.log("single==="+slug)
     if(slug == "price"){
       // var fil_index = filter_tags_list.findIndex(obj => obj.slug==slug);
       // filter_tags_list.splice(fil_index, 1);
@@ -720,8 +673,6 @@ function initializeSlider(fromval,toval,minval,maxval){
   });
 }
 
-
-
 function searchItemInArray(obj, search_item) {
     var returnKey = -1;
 
@@ -735,6 +686,7 @@ function searchItemInArray(obj, search_item) {
     return returnKey;
 
 }
+
 $(document).on('click', '.kss_filter_mobile--left .nav-item', function(){
   var filterTab = $(this);
   filterTab.addClass('active').siblings().removeClass('active');
@@ -743,4 +695,23 @@ $(document).on('click', '.kss_filter_mobile--left .nav-item', function(){
   $('.kss_filter-list[data-filter="'+mobfilterName+'"]').removeClass('d-none');
   $('.kss_filter-list[data-filter="'+mobfilterName+'"] .collapse').collapse('show');
 })
+
+
+function searchFilter(call_facet_change_evt = true){
+  if($('.custom-expand-search').val() != ''){
+    $('.expandSearch').addClass('showSearch'); 
+    $('.custom-expand-search').focus();
+    if(call_facet_change_evt)
+      facetCategoryChange($('#searchStringInp'),true,false,false,false,true); 
+  }
+  else if($('.search-trigger').closest('.expandSearch').hasClass('showSearch')){
+    $('.expandSearch').removeClass('showSearch');
+  }
+  else{
+    $('.expandSearch').addClass('showSearch'); 
+    $('.custom-expand-search').focus();
+  }
+}
+
+
 

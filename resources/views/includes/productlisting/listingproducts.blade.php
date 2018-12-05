@@ -92,13 +92,8 @@
 	});
    var context = {};
    context["products"] = <?= json_encode($items); ?>;
-   console.log("products====")
-   console.log(context["products"])
    product_list_items = $.extend(product_list_items, context["products"]);
-   console.log("product_list_items====")
-   console.log(product_list_items) 
    context["show_more"] = <?= json_encode($page->has_next) ?>;
-   console.log(context)
    var html    = template(context);
    document.getElementById("products-list-template-content").innerHTML = html;
  </script>

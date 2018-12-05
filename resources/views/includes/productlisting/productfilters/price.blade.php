@@ -44,7 +44,6 @@
    var display_count = <?= json_encode($display_count) ?>;
    var disabled_at_zero_count = <?= json_encode($disabled_at_zero_count) ?>;
    var is_attribute_param = <?= json_encode($is_attribute_param) ?>;
-   console.log("price----"+<?= $singleton ?>)
    var context = {};
    context["display_count"] = display_count;
    context["disabled_at_zero_count"] = disabled_at_zero_count;
@@ -58,12 +57,8 @@
    context["toval"] = toval;
    context["minval"] = minval;
    context["maxval"] = maxval;
-   console.log("filter_facet_name====")
-   console.log(context)
    var html    = template(context);
    document.getElementById("filter-price-template-content").innerHTML = html;
-   console.log("fromval==="+fromval)
-   console.log("toval==="+toval)
    $(function(){
     // Init ion range slider
     initializeSlider(fromval,toval,minval,maxval)
@@ -102,7 +97,6 @@
    priceRangeSlider = $("#price-range").data("ionRangeSlider");
 
     initPriceBar = function(from, to) {
-      console.log("initPriceBar=="+from+"==="+to)
       return priceRangeSlider.update({
         type: 'double',
         from: from,
@@ -112,7 +106,6 @@
     };
 
    $('body').on('change', '.price-change', function() {
-    console.log("price-change===")
       var from, to;
       from = $('#price-min').val();
       to = $('#price-max').val();

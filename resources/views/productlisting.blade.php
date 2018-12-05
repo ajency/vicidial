@@ -25,7 +25,7 @@
     	  @include('includes.productlisting.filters', ['filters' => $params->filters])
     	  <div class="col-sm-12 col-md-9 bl-1">
     	    <!-- Title, breadcrumbs, sort Blade -->
-    	  	@include('includes.productlisting.listingtitle', ['headers' => $params->headers, 'breadcrumbs' => $params->breadcrumbs, 'sort_on' => $params->sort_on])
+    	  	@include('includes.productlisting.listingtitle', ['headers' => $params->headers, 'breadcrumbs' => $params->breadcrumbs, 'sort_on' => $params->sort_on, 'show_search' => $params->show_search, 'search_string' => $params->search_string ])
 
     	    <!-- List of products Blade -->
             @include('includes.productlisting.listingproducts', ['items' => $params->items,'page' => $params->page])
