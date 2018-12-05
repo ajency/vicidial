@@ -68,11 +68,19 @@ function getUnSelectedVariants(int $product_id, int $selected_color_id)
     return $color_groups;
 }
 
+function sort_sizes($variant_a, $variant_b)
+{
+    return ($variant_a['sequence'] > $variant_b['sequence']) ? 1 : 0;
+}
+
 function fetchProduct($product)
 {
 
     $product    = $product["_source"];
     $variants   = [];
+
+    $size_facet_values = getFacetValueSize();
+
     $id         = $product["variants"][0]["variant_id"];
     $sale_price = $product["variants"][0]["variant_sale_price"];
     foreach ($product["variants"] as $key => $variant) {
@@ -80,7 +88,13 @@ function fetchProduct($product)
             $id         = $variant["variant_id"];
             $sale_price = $variant["variant_sale_price"];
         }
+        $product["variants"][$key]["display_name"] = $size_facet_values[$variant["variant_size_name"]]["display_name"];
+        $product["variants"][$key]["slug"] = $size_facet_values[$variant["variant_size_name"]]["slug"];
+        $product["variants"][$key]["sequence"] = $size_facet_values[$variant["variant_size_name"]]["sequence"];
     }
+
+    usort($product["variants"],"sort_sizes");
+
     foreach ($product["variants"] as $key => $variant) {
         $variants[] = [
             "id"                  => $variant["variant_id"],
@@ -90,6 +104,9 @@ function fetchProduct($product)
             "size"                => [
                 "id"   => $variant["variant_size_id"],
                 "name" => $variant["variant_size_name"],
+                "display_name" => $variant["display_name"],
+                "slug" => $variant["slug"],
+                "sequence" => $variant["sequence"],
             ],
             "inventory_available" => $variant["variant_availability"],
 

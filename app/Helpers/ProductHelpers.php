@@ -21,7 +21,7 @@ function get_price_set($size_set, $size = null){
 	if(!$size_set->inventory_available) {
 		$disabled = "disabled";
 	}
-	elseif ($size != null && $size == $size_set->size->name) {
+	elseif ($size != null && $size == $size_set->size->slug) {
 		$checked="checked";
     }
 	return ['list_price'=> $list_price, 'sale_price'=> $sale_price, 'discount_per'=> calculate_discount($list_price, $sale_price), 'disabled'=> $disabled, 'checked'=> $checked];
@@ -31,7 +31,7 @@ function get_price_set($size_set, $size = null){
 function set_default_price($variants, $size = null){
 	foreach ($variants as $size_set) {
 	    if($size != null) {
-		    if($size == $size_set->size->name && $size_set->inventory_available) {
+		    if($size == $size_set->size->slug && $size_set->inventory_available) {
 	        	return get_price_set($size_set, $size);
 	        }
         }

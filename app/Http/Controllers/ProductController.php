@@ -15,14 +15,13 @@ class ProductController extends Controller
     {
         $json = json_decode(singleproduct($product_slug));
         $params =  (array) $json;
-        // dd($params);
 
         $query  = $request->all();
 
         $params['show_button'] = false;
 
         foreach ($params['variant_group']->{$params['selected_color_id']}->variants as $size_set) {
-            if (isset($query['size']) and $query['size'] == $size_set->size->name && $size_set->inventory_available) {
+            if (isset($query['size']) and $query['size'] == $size_set->size->slug && $size_set->inventory_available) {
                 $params['size'] = $query['size'];
             }
             $params['show_button'] = ($params['show_button'] or $size_set->inventory_available);
