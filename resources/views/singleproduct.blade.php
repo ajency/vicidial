@@ -110,7 +110,7 @@
 
 			</div>
 		</div>
-		@include('includes.similar-products',["items"=>$similar_data_params]) 
+		
 
 	</div>
 
