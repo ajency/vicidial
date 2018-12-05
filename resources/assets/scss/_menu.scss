@@ -170,6 +170,13 @@
 }
 
 @media(max-width: 991px){
+	.header-close-trigger{
+		position: absolute;
+	    top: 0;
+	    left: 0;
+	    width: 100%;
+	    z-index: 9;
+	}
 	.megamenu{
 		position: fixed;
 		height: 100vh;
@@ -185,9 +192,12 @@
 		&.active{
 			transform: translateX(0);
 		}
+		&__contents{
+			padding-top: 62px;
+    		height: calc(100vh - 62px);
+		}
 		&--left{
 		    // border-right: 1px solid lighten($gray-400, 8%);
-		    height: calc(100vh - 122px);
 		    overflow-y: auto;
 		    overflow-x: hidden;
 		    background-color: lighten($gray-800, 12%);
@@ -209,10 +219,10 @@
 		}
 		&--right{
 		    flex: 1;
-		    max-height: calc(100vh - 122px);
 		    overflow: auto;
 		}
 	}
+
 }
 
 .menu-toggle{
