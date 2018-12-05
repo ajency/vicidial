@@ -115,6 +115,7 @@ class Product
                 $facetObj->display_name = $product[$facet];
                 $facetObj->slug         = str_slug($product[$facet]);
                 $facetObj->sequence     = 10000;
+                $facetObj->display      = false;
                 $facetObj->save();
             } catch (\Exception $e) {
                 \Log::warning($e->getMessage());
@@ -129,6 +130,7 @@ class Product
                 $facetObj->display_name = ($facet == 'product_color_html') ? $variant['product_color_name'] : $variant[$facet];
                 $facetObj->slug         = str_slug($variant[$facet]);
                 $facetObj->sequence     = 10000;
+                $facetObj->display      = false;
                 $facetObj->save();
             } catch (\Exception $e) {
                 \Log::warning($e->getMessage());
