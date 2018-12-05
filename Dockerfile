@@ -54,7 +54,7 @@ RUN find /var/www/html -type f -exec chmod 644 {} \;
 RUN find /var/www/html -type d -exec chmod 755 {} \;
 RUN chmod -R ug+rwx /var/www/html/storage /var/www/html/bootstrap/cache
 EXPOSE 80
-sed -i 's/memory_limit = .*/memory_limit = '2048M'/' /etc/php/7.2/fpm/php.ini
+RUN sed -i 's/memory_limit = .*/memory_limit = '2048M'/' /etc/php/7.2/fpm/php.ini
 
 RUN chmod +x /var/www/html/run.sh
 ENTRYPOINT ["/var/www/html/run.sh"]
