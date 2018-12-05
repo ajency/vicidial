@@ -302,6 +302,7 @@ export class CartComponent implements OnInit {
   closeCart(){
     let url = window.location.href.split("#")[0];
     history.pushState({cart : false}, 'cart', url);
+    this.reloadPage();
     this.appservice.closeCart();
   }
 
