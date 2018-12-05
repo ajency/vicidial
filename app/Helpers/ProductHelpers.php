@@ -126,6 +126,23 @@ function formatItems($result, $params){
     return $response;
 }
 
+
+/**
+ * Function to sort Items in LHS response
+ * 
+ */
+function sortLHSItems($items, $facet_name){
+    $items = collect($items);
+    $sort_on = config('product.'.$facet_name.".sort_on");
+    $sort_order = config('product.'.$facet_name.".sort_order");
+    if($sort_order == 'asc'){
+        $items = $items->sortBy($sort_on);    
+    }elseif ($sort_order == "desc") {
+        $items = $items->sortByDesc($sort_on);        
+    }
+    return $items->values()->all();
+}
+
 function sanitiseFilterdata($result, $params = [])
 {
     $filterResponse = [];
@@ -231,7 +248,9 @@ function sanitiseFilterdata($result, $params = [])
     ];
     $filter['attribute_slug'] = config('product.facet_display_data.variant_availability.attribute_slug');
     $response[] = $filter;
-
+    foreach ($response as &$filter) {
+        $filter['items'] = sortLHSItems($filter['items'],  $filter['header']['facet_name']);
+    }
     return $response;
 }
 
