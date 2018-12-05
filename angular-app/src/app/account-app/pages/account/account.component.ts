@@ -42,7 +42,7 @@ export class AccountComponent implements OnInit {
     if(!window.location.href.endsWith('#/account/user-verification'))
       history.pushState({cart : true}, 'cart', url);
     $('#signin').modal('show');
-    $('.modal-backdrop').appendTo('#cd-cart');
+    $('.modal-backdrop').appendTo('#cd-my-account');
     $('body').addClass('hide-scroll');
   }
 

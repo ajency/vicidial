@@ -359,14 +359,14 @@ $L : 1200px;
 }
 body{
     #cd-cart,#cd-my-account{
-        .modal.show{
-            .modal-dialog{
-                transform: translate(0, 0);
-            }
-        }
         .modal.fade{
             .modal-dialog{
                 transform: translate(0, 25%);
+            }
+        }
+        .modal.show{
+            .modal-dialog{
+                transform: translate(0, 0);
             }
         }
         .modal,.modal-backdrop{
