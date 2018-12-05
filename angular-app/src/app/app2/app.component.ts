@@ -28,6 +28,10 @@ export class AppComponent {
 				this.appservice.openVerificationModal();
 		  	}
 
+		  	else if(window.location.href.endsWith('#/account')){
+		  		// Do nothing -- to be handled later
+		  	}
+
 		  	else{		  		
 				this.appservice.closeWidget();
 				window.location.reload();

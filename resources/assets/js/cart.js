@@ -6,22 +6,26 @@ var add_to_cart_completed = false;
 $(document).ready(function(){
     //Set crt count on page load
     updateCartCountInUI();
-    console.log("window.location.href ==>",window.location.href)
+    // console.log("window.location.href ==>",window.location.href)
     if(window.location.href.endsWith('#bag') || window.location.href.endsWith('#bag/user-verification') || window.location.href.endsWith('#shipping-address') || window.location.href.endsWith('#shipping-summary'))
         openCart();
 
     window.onhashchange = function() { 
-     console.log("hash changed");
+     // console.log("hash changed");
      if(!$('#cd-cart').hasClass("speed-in") && (window.location.href.endsWith('#bag') || window.location.href.endsWith('#bag/user-verification') || window.location.href.endsWith('#shipping-address') || window.location.href.endsWith('#shipping-summary')) ){
-        console.log("opening cart from vanilla js");
+        // console.log("opening cart from vanilla js");
         openCart();
      }
-     if(window.location.href.endsWith('#/account/my-orders') || window.location.href.endsWith('#/account'))
-        openMyAccountPage();
+     openAccountAppOnUrlChange();
     }
 
-    if(window.location.href.endsWith('#/account/my-orders') || window.location.href.endsWith('#/account'))
-        openMyAccountPage();
+    openAccountAppOnUrlChange();
+    
+
+    function openAccountAppOnUrlChange(){
+        if(!$('#cd-my-account').hasClass("speed-in") && (window.location.href.endsWith('#/account/my-orders') || window.location.href.endsWith('#/account')))
+            openMyAccountPage();
+    }
 
     var kss_alert_timeout;
 
@@ -87,8 +91,6 @@ $(document).ready(function(){
     function addToCart(){
         var var_id = $('input[type=radio][name=kss-sizes]:checked')[0].dataset['variant_id'];
         fbTrackAddToCart(var_id);
-        console.log("add_to_cart_failed ==>",add_to_cart_failed);
-        console.log("add_to_cart_failure_message ==>", add_to_cart_failure_message);
         var url = isLoggedInUser() ? ("/api/rest/v1/user/cart/"+getCookie('cart_id')+"/insert") : ("/rest/v1/anonymous/cart/insert")
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         var data = {_token: CSRF_TOKEN,"variant_id": var_id,"variant_quantity": 1};
@@ -120,7 +122,7 @@ $(document).ready(function(){
                         
             },
             error: function (request, status, error) {
-                console.log("Check ==>",request);
+                // console.log("Check ==>",request);
                 if(request.status == 401)
                     userLogout(request);
                 else if(!isLoggedInUser() || request.status == 0)
@@ -140,7 +142,7 @@ $(document).ready(function(){
         //if(request.responseJSON.message!='') error_msg = request.responseJSON.message
         add_to_cart_failed = true;
         add_to_cart_completed = true;
-        console.log("error_msg",error_msg);
+        // console.log("error_msg",error_msg);
         add_to_cart_failure_message = error_msg=='Quantity not available' ? 'Could not add '+ $('.section-heading--single').text() +' to bag as it is out of stock' : (error_msg == "invalid cart" ? 'Hey, before you add your item to bag it looks like you were interrupted during your last checkout. You can place this existing order or edit bag to add more items.' : 'Due to the high traffic, there was an issue adding your item to bag. Please try adding the item again' );
 
         $('.cd-add-to-cart .btn-icon').hide();
@@ -253,35 +255,35 @@ function loadAngularApp(){
     if(!loaded){
         $.getScript("/views/cart/inline.bundle.js")
             .done(function(script, textStatus){
-                console.log(textStatus);
+                // console.log(textStatus);
                 $.getScript("/views/cart/vendor.bundle.js")
                     .done(function(script2, textStatus2){
-                        console.log(textStatus2);
+                        // console.log(textStatus2);
                         $.getScript("/views/cart/polyfills.bundle.js")
                             .done(function(script3, textStatus3){
-                                console.log(textStatus3);
+                                // console.log(textStatus3);
                                 $.getScript("/views/cart/main.bundle.js")
                                     .done(function(script4,textStatus4){
-                                        console.log(textStatus4);
+                                        // console.log(textStatus4);
                                         loaded = true;
                                     })
                                     .fail(function(jqxhr, settings, exception){
-                                        console.log("angular load failed")
+                                        // console.log("angular load failed")
                                         // loadAngularApp();
                                     })
                             })
                             .fail(function(jqxhr, settings, exception){
-                                console.log("angular load failed")
+                                // console.log("angular load failed")
                                 // loadAngularApp();
                             })
                     })
                     .fail(function(jqxhr, settings, exception){
-                        console.log("angular load failed")
+                        // console.log("angular load failed")
                         // loadAngularApp();
                     })
             })
             .fail(function(jqxhr, settings, exception){
-                console.log("angular load failed")
+                // console.log("angular load failed")
                 // loadAngularApp();
             })
     }
@@ -334,34 +336,34 @@ function fbTrackInitiateCheckout(order_total){
 function loadMyAccountApp(){
     $.getScript("/views/my-account/inline.bundle.js")
         .done(function(script, textStatus){
-            console.log(textStatus);
+            // console.log(textStatus);
             $.getScript("/views/my-account/vendor.bundle.js")
                 .done(function(script2, textStatus2){
-                    console.log(textStatus2);
+                    // console.log(textStatus2);
                     $.getScript("/views/my-account/polyfills.bundle.js")
                         .done(function(script3, textStatus3){
-                            console.log(textStatus3);
+                            // console.log(textStatus3);
                             $.getScript("/views/my-account/main.bundle.js")
                                 .done(function(script4,textStatus4){
-                                    console.log(textStatus4);
+                                    // console.log(textStatus4);
                                 })
                                 .fail(function(jqxhr, settings, exception){
-                                    console.log("angular load failed")
+                                    // console.log("angular load failed")
                                     // loadAngularApp();
                                 })
                         })
                         .fail(function(jqxhr, settings, exception){
-                            console.log("angular load failed")
+                            // console.log("angular load failed")
                             // loadAngularApp();
                         })
                 })
                 .fail(function(jqxhr, settings, exception){
-                    console.log("angular load failed")
+                    // console.log("angular load failed")
                     // loadAngularApp();
                 })
         })
         .fail(function(jqxhr, settings, exception){
-            console.log("angular load failed")
+            // console.log("angular load failed")
             // loadAngularApp();
     })
 }
