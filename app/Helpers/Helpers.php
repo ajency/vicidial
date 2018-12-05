@@ -404,7 +404,7 @@ function generateSubordersData($cartItems, $locations)
     }
 
     //start function which chooses the location
-    $maxCountLocation = $locationsData->where('count', $locationsData->max('count'))->sortBy('distance')->values()->first();
+    $selectedLocation = $locationsData->where('count', $locationsData->max('count'))->sortBy('distance')->values()->first();
     //end function that chooses the location
 
     $key = $selectedLocation['id'];
