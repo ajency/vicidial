@@ -11,14 +11,14 @@
 
     <div class="megamenu">
 
-      <div class="d-flex d-lg-none justify-content-between align-items-center border-bottom border-cancel">
+      <div class="d-flex d-lg-none justify-content-between align-items-center border-bottom border-cancel header-close-trigger">
         <img src="{{CDN::asset('/img/logo-kss.png') }}" class=" img-fluid m-3 d-block d-lg-none" width="180px">
         <div class="megamenu-close menu-toggle p-3">
           <i class="fas fa-times"></i>
         </div>
       </div>
 
-      <div class="d-flex">
+      <div class="d-flex megamenu__contents">
         <ul class="nav flex-column megamenu--left d-flex d-lg-none">
           <li class="nav-item" data-target="boys">
             Boys
@@ -83,46 +83,15 @@
                         </ul>
                     </div>
 
-                    <!-- <div class="nav-column">
-                        <div class="nav-column--heading mb-1">Boys Offers</div>
-                        <ul class="list-unstyled">
-                          <li>
-                            <a class="" href="#">
-                              <img class="d-block w-100 img-fluid offer-img"
-                                 src="{{CDN::asset('/img/menu/boy-dummy1.png') }}"
-                                 width="200"
-                                 title="Offer 1"
-                                 alt="Offer 1"/>
-                            </a>
-                          </li>
-                          <li>
-                            <a class="" href="#">
-                              <img class="d-block w-100 img-fluid offer-img"
-                                 src="{{CDN::asset('/img/menu/boy-dummy2.png') }}"
-                                 width="200"
-                                 title="Offer 1"
-                                 alt="Offer 1"/>
-                            </a>
-                          </li>
-                          <li>
-                            <a class="" href="#">
-                              <img class="d-block w-100 img-fluid offer-img"
-                                 src="{{CDN::asset('/img/menu/boy-dummy3.png') }}"
-                                 width="200"
-                                 title="Offer 1"
-                                 alt="Offer 1"/>
-                            </a>
-                          </li>
-                        </ul>
-                    </div> -->
-
                     <div class="nav-column nav-column--wide d-none d-lg-block">
-                         <img class="d-block w-100 img-fluid lazyload offer-img mt-4 mt-lg-0"
+                        <a href="/boys/shirt" class="d-block">
+                          <img class="d-block w-100 img-fluid lazyload offer-img mt-4 mt-lg-0"
                              src="{{CDN::asset('/img/collection/shirt-10px.jpg') }}"
                              data-srcset="{{CDN::asset('/img/collection/shirt-large.jpg') }} 2x,
                                           {{CDN::asset('/img/collection/shirt-medium.jpg') }} 1x"
                              alt="Spotlight on Boys Shirts"
                              title="Spotlight on Boys Shirts"/>
+                        </a>
                         <div class="row align-items-center mt-2 mb-4 mb-lg-0">
                             <div class="col-7">
                               <div class="h5 text-primary font-weight-bold">Spotlight on</div>
@@ -183,12 +152,14 @@
                   </div>
 
                   <div class="nav-column nav-column--wide d-none d-lg-block">
-                      <img class="d-block w-100 img-fluid lazyload offer-img mt-4 mt-lg-0"
+                      <a href="/girls/ethnic" class="d-block">
+                        <img class="d-block w-100 img-fluid lazyload offer-img mt-4 mt-lg-0"
                            src="{{CDN::asset('/img/collection/ethnic-10px.jpg') }}"
                            data-srcset="{{CDN::asset('/img/collection/ethnic-large.jpg') }} 2x,
                                         {{CDN::asset('/img/collection/ethnic-medium.jpg') }} 1x"
                            alt="Spotlight on Girls Ethnic wear"
                            title="Spotlight on Girls Ethnic wear"/>
+                      </a>
                       <div class="row align-items-center mt-2 mb-4 mb-lg-0">
                           <div class="col-7">
                             <div class="h5 text-primary font-weight-bold">Spotlight on</div>
@@ -242,12 +213,14 @@
                   </div>
 
                   <div class="nav-column nav-column--wide d-none d-lg-block">
-                      <img class="d-block w-100 img-fluid lazyload offer-img mt-4 mt-lg-0"
+                      <a href="/infant-0-2-years/dress" class="d-block">
+                        <img class="d-block w-100 img-fluid lazyload offer-img mt-4 mt-lg-0"
                            src="{{CDN::asset('/img/collection/infant-accessories-10px.jpg') }}"
                            data-srcset="{{CDN::asset('/img/collection/infant-accessories-large.jpg') }} 2x,
                                         {{CDN::asset('/img/collection/infant-accessories-medium.jpg') }} 1x"
                            alt="Spotlight on Infant Utility"
                            title="Spotlight on Infant Utility"/>
+                      </a>
                       <div class="row align-items-center mt-2 mb-4 mb-lg-0">
                           <div class="col-7">
                             <div class="h5 text-primary font-weight-bold">Spotlight on</div>
