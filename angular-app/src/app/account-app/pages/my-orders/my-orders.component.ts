@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppServiceService } from '../../services/app-service.service';
 import { ApiServiceService } from '../../services/api-service.service';
-import { Subscription } from 'rxjs/Subscription';
 
-import { LoginComponentComponent } from '../../../shared-components/login/login-component/login-component.component';
+// import { LoginComponentComponent } from '../../../shared-components/login/login-component/login-component.component';
 
 declare var $: any;
 
@@ -20,17 +19,13 @@ export class MyOrdersComponent implements OnInit {
   displayShowMore : boolean = true;
   apiCallComplete : boolean = false;
 
-  closeModalSubscription: Subscription;
-  openModalSubscription : Subscription;
   constructor(private router: Router,
 						private appservice : AppServiceService,
 						private apiservice : ApiServiceService,) { 
-
-        this.closeModalSubscription = this.appservice.listenToCloseModal().subscribe(()=>{ this.updateOtpModal(false)});
-        this.openModalSubscription = this.appservice.listenToOpenModal().subscribe(()=>{ this.modalHandler()});
   }
 
   ngOnInit() {
+    console.log("ngOnInit my-orders");
   	// this.appservice.removeLoader();
     if(this.appservice.isLoggedInUser()){
     	this.getOrders();      
@@ -38,11 +33,6 @@ export class MyOrdersComponent implements OnInit {
     else
       this.appservice.removeLoader();
 
-  }
-
-  ngOnDestroy(){
-    this.closeModalSubscription.unsubscribe();
-    this.openModalSubscription.unsubscribe();
   }
 
   navigateToBlank(){
@@ -103,34 +93,6 @@ export class MyOrdersComponent implements OnInit {
   updateOrderParams(){
     this.order_params.page = this.order_params.page + 1;
     this.order_params.display_limit = this.order_params.page * 10;
-    this.getOrders();
-  }
-
-  displayModal(){
-    let url = window.location.href +'/user-verification';
-    if(!window.location.href.endsWith('#bag/user-verification'))
-      history.pushState({cart : true}, 'cart', url);
-    $('#signin').modal('show');
-    $('.modal-backdrop').appendTo('#cd-cart');
-    $('body').addClass('hide-scroll');
-  }
-
-  updateOtpModal(updateHistory : boolean = true){
-    $('#signin').modal('hide');
-    $("#cd-cart").css("overflow", "auto");
-    // this.mobileNumberEntered = false;
-    // this.otp = null;
-    // this.otpCode.otp1 =''; this.otpCode.otp2 = ''; this.otpCode.otp3 = ''; this.otpCode.otp4 = ''; this.otpCode.otp5 = ''; this.otpCode.otp6='';
-    // this.userValidation.otpVerificationErrorMsg = '';
-  }
-  modalHandler(){
-    if(!this.appservice.isLoggedInUser())
-      this.displayModal();    
-  }
-
-  loginSucessTriggered(){
-    console.log("loginSucessTriggered");
-    history.back();
     this.getOrders();
   }
 

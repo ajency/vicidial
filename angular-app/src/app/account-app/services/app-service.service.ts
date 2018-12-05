@@ -7,7 +7,7 @@ declare var $: any;
 @Injectable()
 export class AppServiceService {
   apiUrl = '';
-
+  redirectUrl : any = '';
   private closeModal = new Subject<any>();
   private openModal = new Subject<any>();
   constructor() { 
@@ -15,6 +15,7 @@ export class AppServiceService {
   }
 
   closeVerificationModal() {
+    console.log("AppServiceService closeVerificationModal");
     this.closeModal.next();
   }
 

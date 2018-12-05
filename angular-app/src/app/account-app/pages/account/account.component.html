@@ -1,3 +1,7 @@
-<p>
+<p *ngIf="isLoggedIn()">
   account page
 </p>
+
+<div>
+	<app-login-component (loginSuccess)="loginSucessTriggered()"> </app-login-component> 
+</div>

@@ -14,21 +14,27 @@ export class AppComponent {
 				private location : PlatformLocation,
 				private appservice : AppServiceService){
 
-		if(!window.location.href.endsWith('#/account')){
-			this.router.navigateByUrl('account/my-orders');
+		if(this.appservice.isLoggedInUser()){
+			if(!window.location.href.endsWith('#/account')){
+				this.router.navigateByUrl('account/my-orders');
+			}
+		}
+		else{
+			this.appservice.redirectUrl = window.location.href;
+			this.router.navigateByUrl('account');
 		}
 
 		this.location.onPopState((event)=>{
 			console.log("location.onPopState triggered");
-		  	if(window.location.href.endsWith('#/account/my-orders')){
+		  	if(window.location.href.endsWith('#/account')){
 			  	this.appservice.closeVerificationModal();			  	
 			}
 
-		  	else if(window.location.href.endsWith('#/account/my-orders/user-verification')){
+		  	else if(window.location.href.endsWith('#/account/user-verification')){
 				this.appservice.openVerificationModal();
 		  	}
 
-		  	else if(window.location.href.endsWith('#/account')){
+		  	else if(window.location.href.endsWith('#/account/my-orders')){
 		  		// Do nothing -- to be handled later
 		  	}
 
