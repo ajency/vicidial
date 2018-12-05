@@ -133,12 +133,14 @@ function formatItems($result, $params){
  */
 function sortLHSItems($items, $facet_name){
     $items = collect($items);
-    $sort_on = config('product.'.$facet_name.".sort_on");
-    $sort_order = config('product.'.$facet_name.".sort_order");
-    if($sort_order == 'asc'){
-        $items = $items->sortBy($sort_on);    
-    }elseif ($sort_order == "desc") {
-        $items = $items->sortByDesc($sort_on);        
+    $sort_on = config('product.facet_display_data.'.$facet_name.".sort_on");
+    $sort_order = config('product.facet_display_data.'.$facet_name.".sort_order");
+    
+    if($sort_order === 'asc'){
+        $items = $items->sortBy($sort_on);  
+    }elseif ($sort_order === "desc") {
+        $items = $items->sortByDesc($sort_on);  
+
     }
     return $items->values()->all();
 }
