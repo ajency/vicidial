@@ -370,7 +370,6 @@ function generateVariantImageName($product_name, $color_name, $colors, $index)
 
 function generateSubordersData($cartItems, $locations)
 {
-    \Log::notice($locations);
     if ($locations->count() == 0) {
         abort(500, 'empty location collection sent to generateSubordersData');
     }
@@ -405,7 +404,7 @@ function generateSubordersData($cartItems, $locations)
             }
         }
     }
-    \Log::notice($locationsData->where('count', $locationsData->max('count'))->sortBy('distance')->values());
+
     //start function which chooses the location
     $selectedLocation = $locationsData->where('count', $locationsData->max('count'))->sortBy('distance')->values()->first();
     //end function that chooses the location
