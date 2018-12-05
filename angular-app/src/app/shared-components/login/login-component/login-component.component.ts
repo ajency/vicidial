@@ -72,9 +72,7 @@ export class LoginComponentComponent implements OnInit {
         document.cookie='token='+ response.token + ";path=/";
         document.cookie='cart_id=' + response.user.active_cart_id + ";path=/";
         this.appservice.userVerificationComplete = true;
-        // this.updateOtpModal(false);
         $('body').removeClass('modal-open')
-        // this.navigateToShippingDetailsPage();
         this.loginSuccess.emit();        
       }
       else{
@@ -91,36 +89,23 @@ export class LoginComponentComponent implements OnInit {
   }
 
   onKeyDown(event,el1,el2,value) {
-    console.log("onKeyDown event ",value, event.which, event.keyCode);
     if( ((event.which > 47 && event.which < 58) || (event.which > 95 && event.which < 106)) && value){
       el2.focus();
-      console.log('onKeyDown funtion call el2');
     }
-    // else if(event.which == 8){
-    //   el1.focus();
-    //   console.log('next funtion call el1');
-    // }
     if (event.keyCode === 13) {
-      console.log('enter keycode');
       $('.is-enter').click();
     }
   }
 
   onKeyUp(event,el1,el2, value) {
-    console.log("onKeyUp event ",value, event.which, event.keyCode);
     if(((event.which > 47 && event.which < 58) || (event.which > 95 && event.which < 106)) && value){
       el2.focus();
-      console.log('onKeyUp funtion call el2');
     }
     if(event.key=="Backspace"){
        el1.focus();
-       console.log('onKeyUp funtion call el1');
      }
-    // else
-    //   el2.focus();
     if (event.keyCode === 13) {
       $('.is-enter').click();
-      console.log('enter keycode');
     }
    }
 

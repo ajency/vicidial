@@ -10,7 +10,6 @@ import { AppComponent } from './app.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { ShippingDetailsComponent } from './pages/shipping-details/shipping-details.component';
 import { ShippingSummaryComponent } from './pages/shipping-summary/shipping-summary.component';
-import { PaymentComponent } from './pages/payment/payment.component';
 
 import { AppServiceService } from './service/app-service.service';
 import { ApiServiceService } from './service/api-service.service';
@@ -26,7 +25,6 @@ import { LoginModule } from './shared-components/login/login.module';
     CartComponent,
     ShippingDetailsComponent,
     ShippingSummaryComponent,
-    PaymentComponent,
     NumbersDirective
   ],
   imports: [
