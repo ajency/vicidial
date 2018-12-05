@@ -57,8 +57,8 @@ export class MyOrdersComponent implements OnInit {
     let body : any = {
       _token : $('meta[name="csrf-token"]').attr('content')
     };
-    body.page = this.order_params.page;
-    body.display_limit = this.order_params.display_limit;
+    // body.page = this.order_params.page;
+    // body.display_limit = this.order_params.display_limit;
 
     this.apiservice.request(url, 'post', body , header ).then((response)=>{
       if(!response.data.length)
