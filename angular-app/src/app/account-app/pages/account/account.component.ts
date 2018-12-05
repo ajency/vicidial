@@ -70,4 +70,11 @@ export class AccountComponent implements OnInit {
       this.displayModal();    
   }
 
+  closeWidget(){
+  	let url = window.location.href.split("#")[0];
+    history.replaceState({}, 'account', url);
+    this.appservice.closeWidget();
+    window.location.reload();
+  }
+
 }
