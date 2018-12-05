@@ -2,6 +2,9 @@ var ajax_data = {}
 
 var page_val = 1;
 var collapsable_load_values = {}
+
+var isMobile = isMobileScreen()
+
 Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
   return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
 });
@@ -309,7 +312,7 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
     // if( Object.keys(range_facet_list).length>0)
     //   ajax_data["search_object"]["range_filter"] = range_facet_list
 
-    if ($(window).width() < 767) {
+    if (isMobile) {
       ajax_data["exclude_in_response"] = ["items"];
     }
 
@@ -472,15 +475,11 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                 document.getElementById("filter-header-template-content").innerHTML = html;
                 searchFilter(false);
 
-                console.log(config_facet_names_arr);
-                console.log(facet_list)
-
-                 if ($(window).width() >= 767)
+                 if (isMobile == false)
                    window.history.pushState('categoryPage', 'Category', url);
-                 if (is_ajax == true && $(window).width() < 767) {
+                 if (is_ajax == true && isMobile == true) {
                    $('.kss_filter-list').addClass('d-none');
                    var filter_val = $(thisObj).closest('.kss_filter-list').data('filter')
-                   console.log("data-filter=="+$(thisObj).closest('.kss_filter-list').data('filter'))
 
                    $('.kss_filter-list[data-filter="'+filter_val+'"]').removeClass('d-none');
                    if($('.nav-item.active').find('.filter-count').hasClass('d-none'))
@@ -674,6 +673,7 @@ function searchFilter(call_facet_change_evt = true){
     $('.expandSearch').addClass('showSearch'); 
     $('.custom-expand-search').focus();
   }
+  return;
 }
 
 function loadProductListing(pageval=0){
@@ -767,5 +767,13 @@ function resetFilter(){
   $('.facet-category').prop('checked',false);
   $('#price-range').val($('#price-range').data("minval")+";"+$('#price-range').data("maxval"))
   initPriceBar($('#price-range').data("minval"), $('#price-range').data("maxval"));
+}
+
+
+function isMobileScreen(){
+  if ($(window).width() < 767)
+    return true
+  else
+    return false
 }
 
