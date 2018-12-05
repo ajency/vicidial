@@ -119,7 +119,7 @@ function formatItems($result, $params){
         "total_item_count" => $total_items,
     ];
 
-    if(isset($params['search_object']['search_string']))
+    if(isset($params['search_object']) && isset($params['search_object']['search_string']))
         $response['search_string'] = $params['search_object']['search_string'];
     else
         $response['search_string'] = null;

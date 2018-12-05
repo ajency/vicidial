@@ -92,8 +92,6 @@
    context["sort_on"] = <?= json_encode($sort_on) ?> ;
    context["show_search"] = <?= json_encode($show_search) ?> ;
    context["search_string"] = <?= json_encode($search_string) ?> ;
-   console.log("filter head====")
-   console.log(context)
    var html    = template(context);
    document.getElementById("filter-header-template-content").innerHTML = html;
   </script>

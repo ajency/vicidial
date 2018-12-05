@@ -63,7 +63,6 @@
    context["filter_display_name"] = filter_display_name;
    context["filter_facet_name"] = filter_facet_name;
    context["items"] = <?= json_encode($items); ?>;
-   console.log(context)
    var html    = template(context);
    document.getElementById("filter-gender-template-content").innerHTML = html;
  </script>

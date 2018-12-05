@@ -19,8 +19,6 @@ class ListingController extends Controller
         }
         
         $search_object_arr = build_search_object($params);
-        // dd($search_object_arr);
-        // $search_object = ($search_obj == null)?(build_search_object($params)):$search_obj;
         $search_results = [];
         if($search_obj == null){
             $search_object = $search_object_arr["search_result"];
@@ -32,17 +30,15 @@ class ListingController extends Controller
         $search_results["slug_value_search_result"] = $search_object_arr["slug_value_search_result"];
         $search_results["slugs_result"] = $search_object_arr["slugs_result"];
         $search_results["title"] = $search_object_arr["title"];
-        // $search_object=["product_age_group" =>["Others"]];
-               // dd($search_object);
         if(!isset($page_params["display_limit"]))
             $page_params["display_limit"] = config('product.list_page_display_limit');
         $params_arr = ["search_object" => $search_object,"display_limit"=> $page_params["display_limit"],"page" =>$page_params["page"]];
         if(isset($page_params["sort_on"]))
             $params_arr["sort_on"]=$page_params["sort_on"];
-        // dd($params_arr);
+
         $params = Product::productListPage($params_arr,$search_results["slug_value_search_result"],$search_results["slug_search_result"],$search_results["slugs_result"],$search_results["title"]);
 
-        // dd($params);
+
         return json_decode(json_encode($params,JSON_FORCE_OBJECT));
     }
 
@@ -55,22 +51,17 @@ class ListingController extends Controller
         if($cat3 != null ) array_push($parameters['categories'], $cat3);
         if($cat4 != null ) array_push($parameters['categories'], $cat4);
     	$parameters['query'] = $request->all();
-
-        // dd($parameters);
         $page_params = [];
         $page_params["page"] = (isset($parameters['query']['page']))?$parameters['query']['page']:1;
         if(isset($parameters['query']['sort_on']))
             $page_params["sort_on"] = $parameters['query']['sort_on'];
-        // dd($page_params);
     	$params = $this->search_object($parameters,$page_params);
-         // dd($params);
         if($params == false) return view('error404');
         if(empty((array)$params->filters)) return view('noproducts');
         
         $params->search_result_assoc = getFacetValueSlugPairs();
         
         $params->show_search = (isset($parameters['query']['show_search']) && $parameters['query']['show_search'] == "true" )?true:false;
-        // dd($params);
         return view('productlisting')->with('params',$params);
     }
 
@@ -87,19 +78,15 @@ class ListingController extends Controller
         $params = $this->search_object($parameters,$page_params);
         $params->search_result_assoc = getFacetValueSlugPairs();
         $params->show_search = (isset($parameters['query']['show_search']) && $parameters['query']['show_search'] == "true")?true:false;
-
-        // dd($params);
         return view('productlisting')->with('params',$params);
     }
 
     public function productList(Request $request)
     {
         $data = $request->json()->all();
-        // dd($data);
         $parameters = array();
         $params = explode("/",$data["listurl"]);
         $parameters['categories'] = array();
-         // dd($params);
         $parseurl=parse_url($data["listurl"], PHP_URL_QUERY);
         $parsed_arr = explode("&", $parseurl);
         $page_params = [];
@@ -130,15 +117,12 @@ class ListingController extends Controller
             }
          }
         
-       // dd($parameters);
-        
         if(isset($data["display_limit"]))
             $page_params["display_limit"] = $data["display_limit"];
         if(isset($data["sort_on"]))
             $page_params["sort_on"] = $data["sort_on"];
         $page_params["page"] = $data["page"];
         $response = $this->search_object($parameters,$page_params,$data["search_object"]);
-        // dd($response);
         return response()->json($response,200);
     }
 
