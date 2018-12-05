@@ -39,7 +39,7 @@ export class AccountComponent implements OnInit {
 
   displayModal(){
     let url = window.location.href +'/user-verification';
-    if(!window.location.href.endsWith('#bag/user-verification'))
+    if(!window.location.href.endsWith('#/account/user-verification'))
       history.pushState({cart : true}, 'cart', url);
     $('#signin').modal('show');
     $('.modal-backdrop').appendTo('#cd-cart');

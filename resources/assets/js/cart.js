@@ -23,7 +23,7 @@ $(document).ready(function(){
     
 
     function openAccountAppOnUrlChange(){
-        if(!$('#cd-my-account').hasClass("speed-in") && (window.location.href.endsWith('#/account/my-orders') || window.location.href.endsWith('#/account')))
+        if(!$('#cd-my-account').hasClass("speed-in") && (window.location.href.endsWith('#/account/my-orders') || window.location.href.endsWith('#/account') || window.location.href.endsWith('#/account/user-verification') ))
             openMyAccountPage();
     }
 
