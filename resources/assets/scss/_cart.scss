@@ -173,7 +173,7 @@ $L : 1200px;
     top: 0;
     left: 0;
     background: rgba($gray-500, .6);
-    z-index: 99;
+    z-index: 9999;
     display: none;
     &.is-visible {
         display: block; // @include animation(cd-fade-in .3s);
