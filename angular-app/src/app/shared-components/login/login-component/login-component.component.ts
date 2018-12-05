@@ -122,6 +122,16 @@ export class LoginComponentComponent implements OnInit {
 
   closeOtpModal(){
     history.back();
+    this.mobileNumber = '';
+    this.resetOTP();
+  }
+
+  resetOTP(){
+    console.log("resetOTP updated");    
+    this.mobileNumberEntered = false;
+    this.otp = null;
+    this.otpCode.otp1 =''; this.otpCode.otp2 = ''; this.otpCode.otp3 = ''; this.otpCode.otp4 = ''; this.otpCode.otp5 = ''; this.otpCode.otp6='';
+    this.userValidation.otpVerificationErrorMsg = '';
   }
 
 }

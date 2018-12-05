@@ -52,7 +52,7 @@ export class AccountComponent implements OnInit {
 
    closeLoginModal(){   	
     $('#signin').modal('hide');
-    $("#cd-cart").css("overflow", "auto");
+    $("#cd-my-account").css("overflow", "auto");
     if(this.appservice.redirectUrl.endsWith('/my-orders') && this.appservice.isLoggedInUser()){
     	console.log("navigate to my-orders");
   		// this.router.navigateByUrl('account/my-orders');

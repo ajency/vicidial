@@ -49,7 +49,7 @@
 
 	          <form class="mt-0" #otpForm="ngForm">
 	            <div class="form-group mb-0 mt-3">
-	              <p >Enter the OTP sent to your number</p><h4 class="font-weight-bold m-0">{{mobileNumber}} <i class="fas fa-pencil-alt number-edit ml-2 cursor-pointer" (click)="mobileNumberEntered = false"></i></h4>
+	              <p >Enter the OTP sent to your number</p><h4 class="font-weight-bold m-0">{{mobileNumber}} <i class="fas fa-pencil-alt number-edit ml-2 cursor-pointer" (click)="resetOTP()"></i></h4>
 	             <!--  <input type="tel" class="form-control form-control-number form-control-lg mb-2 letter-spacing-5" (keyup)="enterclick($event)" [ngClass]="{'has-error' : userValidation.otpVerificationFailed}"  aria-describedby="emailHelp" [(ngModel)]="otp" name="otp" placeholder="" required pattern="\d{6}$" minlength = "6" maxlength = "6" inputmode="numeric" appNumbers placeholder="Enter OTP" [ngClass]="{'has-value' : otp}"> -->
 
 		             <div class="otp-fields d-flex align-items-center justify-content-center">
