@@ -370,11 +370,12 @@ function generateVariantImageName($product_name, $color_name, $colors, $index)
 
 function generateSubordersData($cartItems, $locations)
 {
+    \Log::notice($locations);
     if ($locations->count() == 0) {
         abort(500, 'empty location collection sent to generateSubordersData');
     }
     $locationsData = $locations->keys()->combine($locations->map(function ($item, $key) {
-        return ['id' => $key, 'items' => collect(), 'remaining_items' => collect(), 'distance' => $item, 'count' => 0];
+        return ['id' => $key, 'items' => collect(), 'remaining_items' => collect(), 'distance' => $item, 'tcount' => 0];
     }));
     foreach ($cartItems as $cartItem) {
         $processedLocations = [];
@@ -387,7 +388,9 @@ function generateSubordersData($cartItems, $locations)
                 'variant'  => $cartItem['item'],
                 'quantity' => $transferQty,
             ]);
-            $locationsData[$locationData['location_id']]['count'] += $transferQty;
+            $newqty = $locationsData[$locationData['location_id']]['tcount'] + $transferQty;
+            // dd($locationsData->$locationData['location_id']);
+            // $locationsData->$locationData['location_id']['tcount'] = $newqty;
             $processedLocations[] = $locationData['location_id'];
             if ($transferQty < $cartItem['quantity']) {
                 $locationsData[$locationData['location_id']]['remaining_items']->push([
@@ -402,14 +405,14 @@ function generateSubordersData($cartItems, $locations)
             }
         }
     }
-
+    \Log::notice($locationsData->where('count', $locationsData->max('count'))->sortBy('distance')->values());
     //start function which chooses the location
     $selectedLocation = $locationsData->where('count', $locationsData->max('count'))->sortBy('distance')->values()->first();
     //end function that chooses the location
 
     $key = $selectedLocation['id'];
     if ($key == null) {
-        \Log::error('GenerateSubOrder: something went wrong for '.$cartItems.' in '$locations);
+        \Log::error('GenerateSubOrder: something went wrong for '.$cartItems.' in '.$locations);
         abort(500);
     }
 
