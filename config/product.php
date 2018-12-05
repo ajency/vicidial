@@ -219,8 +219,8 @@ return [
             "attribute_param"        => null,
             'filter_type'            => 'primary_filter',
             "is_essential"           => false,
-            "sort_on"                => "sequence",
-            "sort_order"             => "asc",
+            "sort_on"                => "count",
+            "sort_order"             => "desc",
             "custom_attributes"      => [],
         ],
         'product_color_html'    => [
@@ -235,8 +235,8 @@ return [
             "attribute_param"        => "color",
             'filter_type'            => 'primary_filter',
             "is_essential"           => false,
-            "sort_on"                => "count",
-            "sort_order"             => "desc",
+            "sort_on"                => "sequence",
+            "sort_order"             => "asc",
             "custom_attributes"      => ["show_more_limit" => 10],
         ],
         'variant_sale_price'    => [

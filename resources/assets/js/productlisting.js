@@ -453,15 +453,15 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                         context["maxval"] = maxval;
                      }
 
-
-                     var items = $.map(vval.items, function(el) { return el });
-                     items.sort(function(obj1, obj2) {
-                      // Ascending: first age less than the previous
-                      if(vval.sort_order == "asc")
-                        return obj1[vval.sort_on] - obj2[vval.sort_on];
-                      else
-                        return obj2[vval.sort_on] - obj1[vval.sort_on];
-                    });
+                    var items = vval.items
+                    //  var items = $.map(vval.items, function(el) { return el });
+                    //  items.sort(function(obj1, obj2) {
+                    //   // Ascending: first age less than the previous
+                    //   if(vval.sort_order == "asc")
+                    //     return obj1[vval.sort_on] - obj2[vval.sort_on];
+                    //   else
+                    //     return obj2[vval.sort_on] - obj1[vval.sort_on];
+                    // });
                      var max_selected_index = -1;
                      var show_more_limit = 10;
                      for(itemk in items){
