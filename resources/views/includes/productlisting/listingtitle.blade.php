@@ -46,12 +46,14 @@
           <h6 class="m-0 f-w-4 sub-text"> Sort By:</h6>
         </div>
         <div class="pl-2 align-self-center">
-          <select class="size form-control  form-control-sm br-0  border-dark custom"  >
-            <option>Popularity</option>
-            <option>Latest</option>
+          <select class="size form-control  form-control-sm br-0  border-dark custom"  onChange="facetCategoryChange(this,true,false,false,true);">
+          @{{#each sort_on}}
+            <option value="@{{value}}" @{{#if is_selected}} selected="selected" @{{/if}}>@{{name}}</option>
+          @{{/each}}
+<!--             <option>Latest</option>
             <option>Discount</option>
             <option>Price: High to Low</option>
-            <option>Price: Low to High</option>
+            <option>Price: Low to High</option> -->
           </select> 
         </div>
       </div>
@@ -79,6 +81,7 @@
    var context = {};
    context["breadcrumbs"] = <?= json_encode($breadcrumbs) ?> ;
    context["headers"] = <?= json_encode($headers) ?> ;
+   context["sort_on"] = <?= json_encode($sort_on) ?> ;
    console.log("filter tags====")
    console.log(context)
    var html    = template(context);

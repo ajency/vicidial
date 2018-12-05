@@ -1,27 +1,27 @@
-<script id="filter-category-template" type="text/x-handlebars-template"> 
-  <div class="kss_filter-list mt-1">
-      <div class="d-md-none d-block sticky-mob-filter">
-        <div class="d-flex">
-          <div class="filter-head">
-            <h4 class="mt-0">Filter</h4>
-            <p class="filter-head__caption"><span id="filter_head_count">@{{filter_count}}</span> Filters Applied</p>
-          </div>
-          <div class="ml-auto"> <h3 id="kss_hide-filter" class="m-0 kss_highlight btn-pay"><span aria-hidden="true">&times;</span></h3></div>
+<script id="filter-category-template" type="text/x-handlebars-template">
+    <div class="d-md-none d-block sticky-mob-filter">
+      <div class="d-flex">
+        <div class="filter-head">
+          <h4 class="mt-0">Filter</h4>
+          <p class="filter-head__caption"><span id="filter_head_count">@{{filter_count}}</span> Filters Applied</p>
         </div>
+        <div class="ml-auto"> <h3 id="kss_hide-filter" class="m-0 kss_highlight btn-pay"><span aria-hidden="true">&times;</span></h3></div>
       </div>
-      <hr class="sticky-space">
-      <div id="headingTwo">
+    </div>
+    <hr class="sticky-space">
+  <div class="kss_filter-list mt-1" data-filter="category">
+      <div class="filter-heading">
         <label class=" w-100 mb-0 pb-3 cursor-pointer @{{#if collapsed}} collapsed @{{/if}}" data-toggle="collapse" data-target="#collapseCategory" aria-expanded="false" aria-controls="collapseCategory">
          @{{filter_display_name}} <i class="fas fa-angle-up float-right"></i>
         </label>
       </div>
-      <div id="collapseCategory" class="collapse@{{#if collapsed}}@{{else}} show @{{/if}}" aria-labelledby="headingTwo" data-field="category">
+      <div id="collapseCategory" class="collapse@{{#if collapsed}}@{{else}} show @{{/if}}" data-field="category">
         <div class="card-body pt-2">
           @{{#if singleton }}
           @{{#each items}}
           <div class="custom-radio custom-control">
             @{{> radioTemplate template=../template facet_value=facet_value is_selected=is_selected filter_facet_name=../filter_facet_name slug=slug disabled_at_zero_count=../disabled_at_zero_count count=count collapsed=../collapsed changeEvent="facetCategoryChange(this);" attribute_slug="" display_name=display_name }}
-            <label for="@{{display_name}}" class="custom-control-label f-w-4">@{{display_name}} 
+            <label for="@{{display_name}}" class="custom-control-label f-w-4">@{{display_name}}
               @{{#if ../display_count }}
               <span class="sub-text">(@{{count}})</span>
             @{{/if}}
@@ -32,13 +32,13 @@
           @{{#each items}}
           <div class="custom-control custom-checkbox" >
             @{{> checkboxTemplate template=../template facet_value=facet_value is_selected=is_selected filter_facet_name=../filter_facet_name slug=slug disabled_at_zero_count=../disabled_at_zero_count count=count collapsed=../collapsed changeEvent="facetCategoryChange(this);" attribute_slug="" display_name=display_name }}
-            <label class="custom-control-label f-w-4" for="@{{display_name}}">@{{display_name}} 
+            <label class="custom-control-label f-w-4" for="@{{display_name}}">@{{display_name}}
             @{{#if ../display_count }}
               <span class="sub-text">(@{{count}})</span>
             @{{/if}}
             </label>
-          </div> 
-          @{{/each}}    
+          </div>
+          @{{/each}}
           @{{/if}}
         </div>
       </div>

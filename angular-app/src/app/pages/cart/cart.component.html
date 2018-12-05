@@ -199,11 +199,27 @@
 	</div>	
 
 	<div *ngIf="cart.items && cart.items.length == 0" class="empty-cart text-center d-flex align-items-center justify-content-center flex-column">
-		<i class="fas fa-shopping-cart empty-cart__icon"></i>
-		<h4 class="py-4 mb-0">Your bag is currently empty</h4>
-		<button class="btn kss-btn kss-btn--big btn-pay" (click)="shopNow()" style="min-width: 130px;">
-			Shop now
-		</button>
+		<img src="/img/empty-cart-icon.png" class="img-fluid pt-2" width="150">
+		<h5 class="pt-4 pb-2 mb-0" style="line-height: 1.5;">There is nothing in your <br>bag.</h5>
+		<div class="mb-4">
+			<button class="btn kss-btn kss-btn--secondary-link btn-pay" (click)="shopNow()">
+				Let's do some shopping <i class="fas fa-chevron-right"></i>
+			</button>
+		</div>
+		<ul class="d-flex flex-wrap d-sm-inline-block helper-links list-inline mt-sm-3">
+			<li class="py-3 col-6 col-sm-12">
+				<a href="/boys/junior-7-14-years--toddler-2-7-years/" class="font-weight-bold">Shop Boys</a>
+			</li>
+			<li class="py-3 col-6 col-sm-12">
+				<a href="/girls/junior-7-14-years--toddler-2-7-years/" class="font-weight-bold">Shop Girls</a>
+			</li>
+			<li class="py-3 col-6 col-sm-12">
+				<a href="/infant-0-2-years/" class="font-weight-bold">Shop Infants</a>
+			</li>
+			<li class="py-3 col-6 col-sm-12">
+				<a href="/shoes/" class="font-weight-bold">Shop Shoes</a>
+			</li>
+		</ul>
 	</div>
 
 	<!-- No connection -->

@@ -115,6 +115,17 @@
     		text-decoration: underline;
     	}
     }
+    &--secondary-link{
+        font-size: 1.25em;
+        background-color: transparent;
+        border: 0;
+        text-transform: inherit;
+        font-weight: normal;
+        color: theme-color("secondary");
+        &:hover{
+            background-color: transparent;
+        }
+    }
     &--big{
         font-size: 1.15rem;
         padding: 0.9rem 1rem;
@@ -140,6 +151,12 @@
         box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
         color: #fff;
         font-size: 1.5em;
+        &:hover,&:focus{
+            background-color: theme-color("secondary");
+            border-color: theme-color("secondary");
+            outline: 0;
+            color: #fff;
+        }
     }
     &--small{
         width: 230px;
@@ -148,6 +165,14 @@
         @media (max-width: 767px){
             font-size: 1rem;
             padding: 0.75rem 1rem;
+            border-radius: 0;
+        }
+    }
+    &--mini{
+        // width: 150px;
+        font-size: 12px;
+        padding: 4px 5px;
+        @media (max-width: 767px){
             border-radius: 0;
         }
     }
@@ -162,5 +187,18 @@
 	font-size: 1.15rem !important;
 	@media (max-width: 767px){
         font-size: 1rem !important;
+    }
+}
+
+.more-products-btn{
+    background-color: transparent;
+    border-color: theme-color("secondary");
+    font-size: 1.1em;
+    padding: 0.8em 1.2em;
+    color: theme-color("secondary");
+    font-weight: 600;
+    text-transform: uppercase;
+    @media (max-width: 480px) {
+        font-size: 1.05em;
     }
 }
