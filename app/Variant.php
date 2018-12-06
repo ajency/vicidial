@@ -184,7 +184,7 @@ class Variant extends Model
     public function getSize()
     {
         $facet = Facet::where('facet_value', $this->variant["variant_size_name"])->first();
-        return $facet['display_name'];
+        return (isset($facet['display_name'])) ? $facet['display_name'] : $this->variant["variant_size_name"];
     }
 
     /**

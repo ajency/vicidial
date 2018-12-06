@@ -258,17 +258,12 @@ function getFacetValueSlugPairs(){
 
 
 function getFacetValueSize(){
-	$facets = Facet::select('facet_name',DB::raw('group_concat(facet_value) as "facet_values",group_concat(display_name) as "display_names",group_concat(slug) as "slugs",group_concat(sequence) as "sequence"'))->where('facet_name','variant_size_name')->groupBy('facet_name')->get();
+	$facets = Facet::select(['facet_value', 'display_name', 'slug', 'sequence'])->where('facet_name','variant_size_name')->get();
     $search_result_assoc = [];
+    $facet_value_slug_pairs = [];
     foreach($facets as $facet){
-        $facet_values = explode(",", $facet->facet_values);
-        $facet_slugs = explode(",", $facet->slugs);
-        $facet_display_names = explode(",", $facet->display_names);
-        $sequence = explode(",", $facet->sequence);
-        $facet_value_slug_pairs = [];
-        foreach($facet_values as $facet_valuesk => $facet_valuesv){
-            $facet_value_slug_pairs[$facet_valuesv] = array('display_name' => $facet_display_names[$facet_valuesk], 'slug' => $facet_slugs[$facet_valuesk], 'sequence' => $sequence[$facet_valuesk]);
-        }
+        $facet_value_slug_pairs[$facet['facet_value']] = array('display_name' => $facet['display_name'], 'slug' => $facet['slug'], 'sequence' => $facet['sequence']);
     }
+    
     return $facet_value_slug_pairs;
 }

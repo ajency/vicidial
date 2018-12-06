@@ -88,9 +88,16 @@ function fetchProduct($product)
             $id         = $variant["variant_id"];
             $sale_price = $variant["variant_sale_price"];
         }
-        $product["variants"][$key]["display_name"] = $size_facet_values[$variant["variant_size_name"]]["display_name"];
-        $product["variants"][$key]["slug"] = $size_facet_values[$variant["variant_size_name"]]["slug"];
-        $product["variants"][$key]["sequence"] = $size_facet_values[$variant["variant_size_name"]]["sequence"];
+        if(isset($size_facet_values[$variant["variant_size_name"]])) {
+            $product["variants"][$key]["display_name"] = $size_facet_values[$variant["variant_size_name"]]["display_name"];
+            $product["variants"][$key]["slug"] = $size_facet_values[$variant["variant_size_name"]]["slug"];
+            $product["variants"][$key]["sequence"] = $size_facet_values[$variant["variant_size_name"]]["sequence"];
+        }
+        else  {
+            $product["variants"][$key]["display_name"] = $variant["variant_size_name"];
+            $product["variants"][$key]["slug"] = str_slug($variant["variant_size_name"]);
+            $product["variants"][$key]["sequence"] = 10000;
+        }
     }
 
     usort($product["variants"],"sort_sizes");
