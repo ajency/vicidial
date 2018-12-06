@@ -266,6 +266,9 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
     if(url_params.get('show_search') != undefined){
       url += append_filter_str+"show_search="+url_params.get('show_search')
     }
+    if(url_params.get('search_string') != undefined && search_string == false){
+      url += append_filter_str+"search_string="+url_params.get('search_string')
+    }
 
     if( Object.keys(range_facet_list).length>0){
       for(ritem in range_facet_list){
@@ -473,7 +476,7 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                 context["sort_on"] = header_context.sort_on ;
                 context["search_string"] = header_context.search_string;
 
-                context["show_search"] = (url_params.get('show_search') != undefined)?url_params.get('show_search'):false;
+                context["show_search"] = (url_params.get('show_search') != undefined)?url_params.get('show_search'):show_search_box;
                 var html    = template(context);
                 document.getElementById("filter-header-template-content").innerHTML = html;
                 searchFilter(false);
