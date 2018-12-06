@@ -74,7 +74,7 @@
 													<div class="product-price">
 														<div class="kss-price kss-price--smaller">
 															₹{{item.price_final}}
-															<small *ngIf="item.price_final != item.price_mrp" class="kss-original-price text-muted">₹{{$item.price_mrp}}
+															<small *ngIf="item.price_final != item.price_mrp" class="kss-original-price text-muted">₹{{item.price_mrp}}
 														  	</small>
 														  	<span *ngIf="item.price_final != item.price_mrp" class="kss-discount text-danger"> {{item.off_percentage}}</span>
 														</div>
