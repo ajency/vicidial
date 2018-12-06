@@ -304,7 +304,7 @@ return [
             "false_facet_value"      => true,
             "facet_value"            => "skip",
             "implicit_filter"        => [
-                'skip'          => false,
+                'skip'          => true,
                 'default_value' => true,
             ],
         ],
@@ -324,7 +324,7 @@ return [
             "false_facet_value"      => true,
             "facet_value"            => "skip",
             "implicit_filter"        => [
-                'skip'          => false,
+                'skip'          => true,
                 'default_value' => true,
             ],
         ],
@@ -344,7 +344,7 @@ return [
             "false_facet_value"      => true,
             "facet_value"            => "skip",
             "implicit_filter"        => [
-                'skip'          => false,
+                'skip'          => true,
                 'default_value' => true,
             ],
         ],
