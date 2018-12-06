@@ -395,7 +395,7 @@ class ElasticQuery
         return $this->elastic_client->indices()->create($this->params);
     }
 
-    public function createDeleteIndexParams(string $index)
+    public function deleteIndex(string $index)
     {
         $this->params = ["index" => $index];
         return $this->elastic_client->indices()->delete($this->params);
