@@ -21,9 +21,9 @@ yarn-error.log
 /angular-app/tmp
 /angular-app/out-tsc
 
-/my-account-app/dist
-/my-account-app/tmp
-/my-account-app/out-tsc
+# /my-account-app/dist
+# /my-account-app/tmp
+# /my-account-app/out-tsc
 
 # angular misc
 /angular-app/.sass-cache
