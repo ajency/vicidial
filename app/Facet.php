@@ -37,9 +37,7 @@ class Facet extends Model
                         $facetObj->save();
                     } catch (\Exception $e) {
                         \Log::warning($e->getMessage());
-                        $facetObj_existing          = self::where('facet_name', $facets[$attribute])->where('facet_value', $facet_value)->first();
-                        $facetObj_existing->odoo_id = $attributeData['id'];
-                        $facetObj_existing->save();
+                        $facetObj_existing          = self::where('facet_name', $facets[$attribute])->where('facet_value', $facet_value)->update(['odoo_id' => $attributeData['id']]);
                     }
                 }
             }
