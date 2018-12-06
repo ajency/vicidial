@@ -35,7 +35,7 @@ class UpdateSearchText implements ShouldQueue
     public function handle()
     {
         $elastic = new ElasticQuery;
-        $data = $elastic->setIndex($this->index)->mget($this->productIDs);
+        $data = $elastic->setIndex($this->index)->mget($this->products);
         $updatedData = [];
         foreach ($data['docs'] as $productData) {
             $updatedData[$productData["_id"]] = Product::elasticSearchtext($productData['_source']);
