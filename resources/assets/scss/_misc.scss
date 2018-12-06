@@ -287,15 +287,26 @@
 	@media (min-width: 768px){
 		position: absolute;
     	right: 15px;
-    	top: 10px;
+    	top: 0;
 	}
     &.showSearch{
     	.custom-expand-search{
-    		width: 200px;
+    		width: 220px;
+    		padding-right: 30px;
     	}
+    	.clear-search{
+			position: absolute;
+		    right: 38px;
+		    color: #c1c1c1;
+		    font-size: 1.1em;
+		    cursor: pointer;
+		}
+    }
+    .clear-search{
+    	
     }
     .custom-expand-search{
-    	transition: all 0.5s ease;
+    	/*transition: all 0.5s ease;*/
 	    width: 0;
 	    margin-right: 5px;
     }
