@@ -255,3 +255,15 @@ function getFacetValueSlugPairs(){
     // dd($search_result_assoc);
     return $search_result_assoc;
 }
+
+
+function getFacetValueSize(){
+	$facets = Facet::select(['facet_value', 'display_name', 'slug', 'sequence'])->where('facet_name','variant_size_name')->get();
+    $search_result_assoc = [];
+    $facet_value_slug_pairs = [];
+    foreach($facets as $facet){
+        $facet_value_slug_pairs[$facet['facet_value']] = array('display_name' => $facet['display_name'], 'slug' => $facet['slug'], 'sequence' => $facet['sequence']);
+    }
+    
+    return $facet_value_slug_pairs;
+}

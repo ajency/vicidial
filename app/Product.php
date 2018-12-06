@@ -112,15 +112,16 @@ class Product
                 $facetObj               = new Facet;
                 $facetObj->facet_name   = $facet;
                 $facetObj->facet_value  = $product[$facet];
-                $facetObj->display_name = ($facet == 'product_color_html') ? $product['product_color_name'] : $product[$facet];
+                $facetObj->display_name = $product[$facet];
                 $facetObj->slug         = str_slug($product[$facet]);
                 $facetObj->sequence     = 10000;
+                $facetObj->display      = false;
                 $facetObj->save();
             } catch (\Exception $e) {
                 \Log::warning($e->getMessage());
             }
         }
-        $facets = ['product_color_html'];
+        $facets = ['product_color_html', 'variant_size_name'];
         foreach ($facets as $facet) {
             try {
                 $facetObj               = new Facet;
@@ -129,6 +130,7 @@ class Product
                 $facetObj->display_name = ($facet == 'product_color_html') ? $variant['product_color_name'] : $variant[$facet];
                 $facetObj->slug         = str_slug($variant[$facet]);
                 $facetObj->sequence     = 10000;
+                $facetObj->display      = false;
                 $facetObj->save();
             } catch (\Exception $e) {
                 \Log::warning($e->getMessage());

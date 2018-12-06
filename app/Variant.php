@@ -7,6 +7,7 @@ use App\Location;
 use Illuminate\Database\Eloquent\Model;
 use App\Jobs\UpdateVariantInventory;
 use League\Csv\Writer;
+use App\Facet;
 
 class Variant extends Model
 {
@@ -182,7 +183,8 @@ class Variant extends Model
      */
     public function getSize()
     {
-        return $this->variant["variant_size_name"];
+        $facet = Facet::where('facet_value', $this->variant["variant_size_name"])->first();
+        return (isset($facet['display_name'])) ? $facet['display_name'] : $this->variant["variant_size_name"];
     }
 
     /**
