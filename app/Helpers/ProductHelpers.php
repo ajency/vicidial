@@ -298,6 +298,7 @@ function getProductThumbImages($variantId){
 
 function setDefaultFilters(array $params){
     // load default parms
+
     $facet_display_data = config('product.facet_display_data');
     $search_object = [];
     foreach ($facet_display_data as $facet_name => $data) {
@@ -305,6 +306,7 @@ function setDefaultFilters(array $params){
             $search_object[$data['filter_type']][$facet_name] = $data['implicit_filter']['default_value'];
         }
     }
+    
     //add request params
     foreach ($params['search_object'] as $filter_type => $facet) {
         foreach ($facet as $facet_name => $values) {
