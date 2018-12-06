@@ -293,6 +293,12 @@
     	.custom-expand-search{
     		width: 200px;
     	}
+    	.clear-search{
+    		position: absolute;
+		    right: 28px;
+		    color: #c1c1c1;
+		    font-size: 1.1em;
+    	}
     }
     .custom-expand-search{
     	transition: all 0.5s ease;
