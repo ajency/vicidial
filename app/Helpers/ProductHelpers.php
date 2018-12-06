@@ -309,8 +309,13 @@ function setDefaultFilters(array $params){
     
     //add request params
     foreach ($params['search_object'] as $filter_type => $facet) {
-        foreach ($facet as $facet_name => $values) {
-            $search_object[$filter_type][$facet_name] = $values;
+        if(is_array($facet)){
+            foreach ($facet as $facet_name => $values) {
+                $search_object[$filter_type][$facet_name] = $values;
+            }
+        }
+        else{
+            $search_object[$filter_type] = $facet;
         }
     }
 
