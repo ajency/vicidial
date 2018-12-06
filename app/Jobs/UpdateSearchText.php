@@ -19,10 +19,10 @@ class UpdateSearchText implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($productIDs,$indexName)
+    public function __construct($input)
     {
-        $this->index = $indexName;
-        $this->products = $productIDs;
+        $this->index = $input['indexName'];
+        $this->products = $input['productIDs'];
     }
 
     /**
