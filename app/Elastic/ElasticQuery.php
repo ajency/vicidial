@@ -301,7 +301,7 @@ class ElasticQuery
      */
     public function bulk()
     {
-        if ($this->alternate) {
+        // if ($this->alternate) {
         //     $indexes = Defaults::getElasticAlternateIndexes($this->index);
         //     foreach ($indexes as $index) {
         //         $this->params["index"] = $index;
