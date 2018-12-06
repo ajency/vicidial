@@ -32,10 +32,9 @@
 							</div>
 							<div class="col-5 text-right d-flex flex-column justify-content-between">
 								<span class="ordercollapse-trigger"><i class="fas fa-chevron-up arrow-down"></i></span>
-								<a href="/my/order/details?orderid={{order.order_info.txn_no}}" class="btn text-secondary pb-0 pr-0">Order Details <i class="fas fa-chevron-right"></i></a>
 							</div>
 						</div>
-						<div *ngFor="let sub_order of order.sub_orders; let i = index" class="my-2 collapse my-order-collapse" [ngClass]="{'show': orders.length == 1}" id=collapse-{{getindex}} data-parent="#accordionExample">
+						<div *ngFor="let sub_order of order.sub_orders; let i = index" class="mb-2 collapse my-order-collapse" [ngClass]="{'show': orders.length == 1}" id=collapse-{{getindex}} data-parent="#accordionExample">
 							<div class="d-flex bd-highlight row mb-3">
 								<div class="pb-2 pr-2 col-9">
 									<label class="d-block m-0">Shipment {{i+1}}</label>					
@@ -100,6 +99,9 @@
 										</div> -->
 									</div>
 									<hr *ngIf="!last">
+								</div>
+								<div class="border-top mt-4 py-1 text-center">
+									<a href="/my/order/details?orderid={{order.order_info.txn_no}}" class="btn text-secondary pb-0 pr-0 order-details-btn">Order Details <i class="fas fa-chevron-right"></i></a>
 								</div>
 							</div>
 						</div>
