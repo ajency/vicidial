@@ -78,7 +78,9 @@ $(document).ready(function(){
     });
 
     // Tooltip init
-    $('[data-toggle="tooltip"]').tooltip();
+    if ($('[data-toggle="tooltip"]').length) {
+        $('[data-toggle="tooltip"]').tooltip();
+    }
 
     jQuery("#cd-cart-trigger").click(function() {
       openCart();             

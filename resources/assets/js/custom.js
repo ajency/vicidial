@@ -557,21 +557,6 @@ $('.megamenu-open').click(function(){
 	$('body').addClass('overflow-h');
 });
 
-if( $('#storeSlider').length ) {
-    $('#storeSlider').lightSlider({
-        loop:true,
-        item:1,
-        thumbItem:4,
-        slideMargin:0,
-        gallery:true,
-        galleryMargin: 20,
-        thumbMargin: 20,
-        currentPagerPosition:'left',
-        onSliderLoad: function() {
-            $('#storeSlider').removeClass('cs-hidden');
-        }
-    });
-}
 
 // Footer mobile more section
 

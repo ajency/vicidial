@@ -156,6 +156,11 @@
   height: calc(100% - 80px);
 }
 
+
+.no-order-wrapper{
+  min-height: calc(100vh - 148px);
+}
+
 .order-no-row{
   .col-left{
     flex-basis: 60%;
