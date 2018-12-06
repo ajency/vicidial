@@ -13,7 +13,7 @@ import { AppServiceService } from './services/app-service.service';
 import { AccountComponent } from './pages/account/account.component';
 
 import { LoginModule } from '../shared-components/login/login.module';
-
+import { AuthGuardService } from './services/auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -32,7 +32,8 @@ import { LoginModule } from '../shared-components/login/login.module';
      Location, 
      {provide: LocationStrategy, useClass: HashLocationStrategy},
      ApiServiceService,
-     AppServiceService
+     AppServiceService,
+     AuthGuardService
   ],
   bootstrap: [AppComponent]
 })
