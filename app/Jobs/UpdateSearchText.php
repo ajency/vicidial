@@ -43,7 +43,7 @@ class UpdateSearchText implements ShouldQueue
         $query->initializeBulkIndexing();
         foreach ($updatedData as $productID => $elasticData) {
             $query->addToBulkIndexing($productID, $elasticData);
-        });
+        }
         $responses = $query->bulk();
     }
 }
