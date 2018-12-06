@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Defaults;
+use App\Elastic\ElasticQuery;
 use Illuminate\Console\Command;
 
 class AlternateIndex extends Command
@@ -41,7 +42,7 @@ class AlternateIndex extends Command
         $index    = $this->argument('index');
         $path     = config_path() . "/indexes/{$index}.json";
         $params   = json_decode(file_get_contents($path), true);
-        $index    = config("elastic.prefix") . $index . '_' . str_random(5);
+        $index    = config("elastic.prefix") . $index . '_' . strtolower(str_random(5));
         $q        = new ElasticQuery();
         $response = $q->createIndex($index, $params);
         if ($response["acknowledged"]) {

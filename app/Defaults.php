@@ -106,8 +106,19 @@ class Defaults extends Model
             $indexes->label = $index;
             $indexes->meta_data = [];
         }
-        $indexes->meta_data[] = $name;
+        $names = $indexes->meta_data;
+        $names[] = $name;
+        $indexes->meta_data = array_unique($names);
         $indexes->save();
+    }
+
+    public static function getElasticAlternateIndexes($index){
+        $indexes = self::where('type', 'index')->where('label', $index)->first();
+        if($indexes == null){
+            return [];
+        }else{
+            return $indexes->meta_data;
+        }
     }
 
 }

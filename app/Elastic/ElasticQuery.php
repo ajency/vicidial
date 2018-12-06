@@ -5,10 +5,11 @@ use Elasticsearch\ClientBuilder;
 
 class ElasticQuery
 {
-    protected $params = [];
-    protected $index  = "";
+    protected $params    = [];
+    protected $index     = "";
+    protected $alternate = false;
 
-    public function __construct()
+    public function __construct($alternate = false)
     {
         $hosts = [
             [
@@ -20,11 +21,11 @@ class ElasticQuery
 
             ],
         ];
+        $this->alternate = $alternate;
         \Log::debug(json_encode($hosts, true));
         $this->elastic_client = ClientBuilder::create()
             ->setHosts($hosts)
             ->build();
-        // $this->elastic_client = ClientBuilder::create()->build();
     }
 
     public function reset()
@@ -41,8 +42,13 @@ class ElasticQuery
      */
     public function setIndex(string $index)
     {
-        $this->index           = config('elastic.prefix') . $index;
-        $this->params["index"] = config('elastic.prefix') . $index;
+        if ($this->alternate) {
+            $this->index = $index;
+        } else {
+            $this->index           = config('elastic.prefix') . $index;
+            $this->params["index"] = config('elastic.prefix') . $index;
+        }
+
         return $this;
     }
 
@@ -171,10 +177,12 @@ class ElasticQuery
 
     public static function addToBoolQuery(string $type, array $filters, array $query = [])
     {
-        if(in_array($type, ["must", "must_not", "filter", "should"]))
-        if (!isset($query["bool"][$type])) {
-            $query["bool"][$type] = [];
+        if (in_array($type, ["must", "must_not", "filter", "should"])) {
+            if (!isset($query["bool"][$type])) {
+                $query["bool"][$type] = [];
+            }
         }
+
         $query["bool"][$type] = $filters + $query["bool"][$type];
         return $query;
     }
@@ -293,9 +301,19 @@ class ElasticQuery
      */
     public function bulk()
     {
-        \Log::debug($this->params);
-        $responses = $this->elastic_client->bulk($this->params);
-        \Log::debug($responses);
+        if ($this->alternate) {
+            $indexes = Defaults::getElasticAlternateIndexes($this->index);
+            foreach ($indexes as $index) {
+                $this->params["index"] = $index;
+                \Log::debug($this->params);
+                $responses = $this->elastic_client->bulk($this->params);
+                \Log::debug($responses);
+            }
+        } else {
+            \Log::debug($this->params);
+            $responses = $this->elastic_client->bulk($this->params);
+            \Log::debug($responses);
+        }
         return $responses;
     }
 
@@ -398,12 +416,12 @@ class ElasticQuery
         return [$name => ["sum" => ["field" => $field]]];
     }
 
-    public static function createAggTerms(string $name, string $field, array $params=[])
+    public static function createAggTerms(string $name, string $field, array $params = [])
     {
         return [
             $name => [
-                "terms" => ["field" => $field ] + $params,
-            ]
+                "terms" => ["field" => $field] + $params,
+            ],
         ];
     }
 
@@ -412,7 +430,7 @@ class ElasticQuery
         return [
             $name => [
                 "reverse_nested" => new \StdClass(),
-            ]
+            ],
         ];
     }
 
@@ -447,7 +465,8 @@ class ElasticQuery
         return $this;
     }
 
-    public function getJSON(){
+    public function getJSON()
+    {
         return json_encode($this->getParams()["body"], true);
     }
 }
