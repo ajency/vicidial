@@ -14,6 +14,8 @@ class UpdateSearchText implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    protected $index;
+    protected $products;
     /**
      * Create a new job instance.
      *

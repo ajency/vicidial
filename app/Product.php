@@ -437,7 +437,7 @@ class Product
         $products = ProductColor::select('elastic_id')->get()->pluck('elastic_id')->toArray();
         $job_sets = array_chunk($products, config('odoo.update_products'));
         foreach ($job_sets as $job_set) {
-            UpdateSearchText::dispatch(['productIDs'=> $job_set,'indexName'=> $indexname)->onQueue('search_text');
+            UpdateSearchText::dispatch(['productIDs'=> $job_set,'indexName'=> $indexname])->onQueue('search_text');
         }
     }
 
