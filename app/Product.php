@@ -348,9 +348,11 @@ class Product
 
         // $params = $filter_params =  ['search_object' =>['primary_filter' => [ 'product_gender' => ['Boys','all']]], 'display_limit' => 20, 'page' => 1] ;
         // $params = $filter_params ;
-        $output["filters"] = self::getProductCategoriesWithFilter($filter_params);
+        if((!isset($params["exclude_in_response"])) || (isset($params["exclude_in_response"]) && !in_array("filters", $params["exclude_in_response"])))
+            $output["filters"] = self::getProductCategoriesWithFilter($filter_params);
         // dd($output["filters"]);
-        $results             = self::getItemsWithFilters($params);
+        if((!isset($params["exclude_in_response"])) || (isset($params["exclude_in_response"]) && !in_array("items", $params["exclude_in_response"])))
+            $results             = self::getItemsWithFilters($params);
         $facet_names         = array_keys($facet_display_data);
         $bread               = [];
         $bread['breadcrumb'] = array("list" => [], "current" => "");
@@ -382,19 +384,28 @@ class Product
             }
 
         }
-        $output["search_string"] = $results['search_string'];
-        $output["page"]          = $results["page"];
-        $output["items"]         = $results["items"];
-        $output["results_found"] = $results["results_found"];
-        $output["headers"]       = ["page_title" => $title, "product_count" => $results["page"]["total_item_count"]];
+        
+        if((!isset($params["exclude_in_response"])) || (isset($params["exclude_in_response"]) && !in_array("items", $params["exclude_in_response"]))){
+            if((!isset($params["exclude_in_response"])) || (isset($params["exclude_in_response"]) &&!in_array("search_string", $params["exclude_in_response"])))
+                $output["search_string"] = $results['search_string'];
+            if((!isset($params["exclude_in_response"])) || (isset($params["exclude_in_response"]) &&!in_array("page", $params["exclude_in_response"])))
+                $output["page"]          = $results["page"];
+            $output["items"]         = $results["items"];
+            if((!isset($params["exclude_in_response"])) || (isset($params["exclude_in_response"]) &&!in_array("results_found", $params["exclude_in_response"])))
+                $output["results_found"] = $results["results_found"];
+            if((!isset($params["exclude_in_response"])) || (isset($params["exclude_in_response"]) &&!in_array("headers", $params["exclude_in_response"])))
+                $output["headers"]       = ["page_title" => $title, "product_count" => $results["page"]["total_item_count"]];
+        }
         $output["sort_on"]       = config("product.sort_on");
         if (isset($params['sort_on'])) {
             foreach ($output["sort_on"] as &$value) {
                 $value['is_selected'] = ($value['value'] == $params['sort_on']);
             }
         }
-        $output["breadcrumbs"] = $bread['breadcrumb'];
-        $output["search"]      = ["params" => ["genders" => ["men"], "l1_categories" => ["clothing"]], "pattern" => [["key" => "genders", "slugs" => ["men"]], ["key" => "l1_categories", "slugs" => ["clothing"]]], "is_valid" => true, "domain" => "https=>//newsite.stage.kidsuperstore.in", "type" => "product-list", "query" => ["page" => ["2"], "page_size" => ["20"]]];
+        if((!isset($params["exclude_in_response"])) || (isset($params["exclude_in_response"]) &&!in_array("breadcrumbs", $params["exclude_in_response"])))
+            $output["breadcrumbs"]   = $bread['breadcrumb'];
+        if((!isset($params["exclude_in_response"])) || (isset($params["exclude_in_response"]) &&!in_array("search", $params["exclude_in_response"])))
+            $output["search"]        = ["params" => ["genders" => ["men"], "l1_categories" => ["clothing"]], "pattern" => [["key" => "genders", "slugs" => ["men"]], ["key" => "l1_categories", "slugs" => ["clothing"]]], "is_valid" => true, "domain" => "https=>//newsite.stage.kidsuperstore.in", "type" => "product-list", "query" => ["page" => ["2"], "page_size" => ["20"]]];
         // dd($output);
         return $output;
     }

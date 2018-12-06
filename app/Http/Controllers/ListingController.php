@@ -17,7 +17,7 @@ class ListingController extends Controller
                 return $valid;
             }
         }
-        
+
         $search_object_arr = build_search_object($params);
         $search_results = [];
         if($search_obj == null){
@@ -32,10 +32,13 @@ class ListingController extends Controller
         $search_results["title"] = $search_object_arr["title"];
         if(!isset($page_params["display_limit"]))
             $page_params["display_limit"] = config('product.list_page_display_limit');
+
         $params_arr = ["search_object" => $search_object,"display_limit"=> $page_params["display_limit"],"page" =>$page_params["page"]];
         if(isset($page_params["sort_on"]))
             $params_arr["sort_on"]=$page_params["sort_on"];
-
+        if(isset($page_params["exclude_in_response"]))
+            $params_arr["exclude_in_response"] = $page_params["exclude_in_response"];
+        // dd($params_arr);
         $params = Product::productListPage($params_arr,$search_results["slug_value_search_result"],$search_results["slug_search_result"],$search_results["slugs_result"],$search_results["title"]);
 
 
@@ -55,10 +58,13 @@ class ListingController extends Controller
         $page_params["page"] = (isset($parameters['query']['page']))?$parameters['query']['page']:1;
         if(isset($parameters['query']['sort_on']))
             $page_params["sort_on"] = $parameters['query']['sort_on'];
+        if(isset($parameters['query']['exclude_in_response']))
+            $page_params["exclude_in_response"]=$parameters['query']['exclude_in_response'];
+        // dd($page_params);
     	$params = $this->search_object($parameters,$page_params);
         if($params == false) return view('error404');
         if(empty((array)$params->filters)) return view('noproducts');
-        
+
         $params->search_result_assoc = getFacetValueSlugPairs();
         
         $params->show_search = (isset($parameters['query']['show_search']) && $parameters['query']['show_search'] == "true" )?true:false;
@@ -74,6 +80,8 @@ class ListingController extends Controller
         $page_params["page"] = (isset($parameters['query']['page']))?$parameters['query']['page']:1;
         if(isset($parameters['query']['sort_on']))
             $page_params["sort_on"] = $parameters['query']['sort_on'];
+        if(isset($parameters['query']['exclude_in_response']))
+            $page_params["exclude_in_response"]=$parameters['query']['exclude_in_response'];
 
         $params = $this->search_object($parameters,$page_params);
         $params->search_result_assoc = getFacetValueSlugPairs();
@@ -92,20 +100,20 @@ class ListingController extends Controller
         $page_params = [];
         foreach($parsed_arr as $pvals){
             if (strpos($pvals, "pf=color:") !== false) {
-                $values = str_replace('pf=color:', '', $pvals); 
+                $values = str_replace('pf=color:', '', $pvals);
                 $parameters['categories'] = array_merge($parameters['categories'],(explode(",",$values)));
             }
         }
-        
-        foreach($params as $param){      
+
+        foreach($params as $param){
             if($param != ""){
-                if (strpos($param, "pf=color:") !== false) 
+                if (strpos($param, "pf=color:") !== false)
                     $p_val = preg_replace("/(\?.*)/", "", $param);
-                else if (strpos($param, "rf=price:") !== false) 
+                else if (strpos($param, "rf=price:") !== false)
                     $p_val = preg_replace("/(\?.*)/", "", $param);
-                else if (strpos($param, "bf=variant_availability:") !== false) 
+                else if (strpos($param, "bf=variant_availability:") !== false)
                     $p_val = preg_replace("/(\?.*)/", "", $param);
-                else if (strpos($param, "sort_on=") !== false) 
+                else if (strpos($param, "sort_on=") !== false)
                     $p_val = preg_replace("/(\?.*)/", "", $param);
                 else if (strpos($param, "search_string=") !== false) 
                     $p_val = preg_replace("/(\?.*)/", "", $param);
@@ -116,12 +124,15 @@ class ListingController extends Controller
                 array_push($parameters['categories'], $p_val);
             }
          }
-        
+
         if(isset($data["display_limit"]))
             $page_params["display_limit"] = $data["display_limit"];
         if(isset($data["sort_on"]))
             $page_params["sort_on"] = $data["sort_on"];
+        if(isset($data['exclude_in_response']))
+            $page_params["exclude_in_response"]=$data['exclude_in_response'];
         $page_params["page"] = $data["page"];
+        // dd($parameters);
         $response = $this->search_object($parameters,$page_params,$data["search_object"]);
         return response()->json($response,200);
     }
