@@ -270,6 +270,20 @@ class ElasticQuery
         return $this->elastic_client->get($this->params);
     }
 
+    public function mget(array $ids)
+    {
+        $params['body']["docs"] = [];
+        $params['index'] = $this->index;
+        foreach ($ids as $id) {
+            $param = [
+                "_type"  => "_doc",
+                "_id"    => $id,
+            ];
+            $params['body']["docs"][] = $param;
+        }
+        return $this->elastic_client->mget($params);
+    }
+
     /**
      * Elastic Update function
      * Can be use for Updating specific fields in documents
@@ -399,6 +413,17 @@ class ElasticQuery
     {
         $this->params = ["index" => $index];
         return $this->elastic_client->indices()->delete($this->params);
+    }
+
+    public function reindex(string $src, string $dest)
+    {
+        $this->params = [
+            "body" => [
+                "source" => ["index" => $src],
+                "dest"   => ["index" => $dest],
+            ],
+        ];
+        return $this->elastic_client->reindex($this->params);
     }
 
     public static function createAggMax(string $name, string $field)
