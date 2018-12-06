@@ -122,5 +122,32 @@ class OrderController extends Controller
         return view('orderdetails')->with('params', $params);
     }
 
+    public function listOrders(Request $request){
+        // dd($_SESSION);
+        $data = $request->all();
+        $search_object = (isset($data["search_object"]))?$data["search_object"]:[];
+        $sort_on = (isset($data["sort_on"]))?$data["sort_on"]:"created_at";
+        $sort_by = (isset($data["sort_by"]))?$data["sort_by"]:"desc";
+        $length = (isset($data["display_limit"]))?$data["display_limit"]:0;
+        $page = (isset($data["page"]))?$data["page"]:1;
+        $start=($page==1)?($page-1):((($page-1)*$length));
+        
+        $user   = User::getUserByToken($request->header('Authorization'));
+        $orderObj = Order::join('carts', 'carts.id', '=', 'orders.cart_id')->where('carts.user_id',$user->id)->orderBy("orders.".$sort_on,$sort_by)->select("orders.*");
+        if($length == 0)
+            $orders = $orderObj->get();
+        else
+            $orders = $orderObj->skip($start)->take($length)->get();
+        // dd($orders);
+        $order_details=[];
+        foreach($orders as $order){
+            array_push($order_details,  $order->getOrderDetails());
+
+        }
+        // dd($order_details);
+        
+        return response()->json(["message" => 'Order items received successfully', 'success'=> true,'data'=>$order_details]);
+    }
+
 }
 

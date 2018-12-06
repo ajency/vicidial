@@ -394,7 +394,7 @@
                 </div>
             </li> -->
 <!--             <li class="list-inline-item">
-                <a href="#">
+                <a class="cursor-pointer" id="cd-my-account-trigger">
                     <i class="kss_icon profile-icon">
                    </i>
                 </a>

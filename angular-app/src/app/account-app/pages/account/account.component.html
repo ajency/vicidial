@@ -1,0 +1,32 @@
+<div class="cart-step1-header">
+	<nav class="navbar navbar-dark bg-dark pt-3 pb-3 ">
+		<div class="d-flex align-items-center w-100">
+			<div class="">
+				<a>
+					<img _ngcontent-c1="" class=" img-fluid m-0" src="/img/logo-kss.png" width="180px" xpreview="/img/logo-kss.png">
+			 	</a>
+			</div>
+			<div class="ml-auto align-self-center">
+				<h3 class="m-0 text-white kss_highlight btn-pay" (click)="closeWidget()"><span aria-hidden="true">×</span></h3>
+			</div>
+		</div>
+	</nav>
+</div>
+
+
+<p *ngIf="isLoggedIn()">
+  Account page
+</p>
+
+
+<div *ngIf="!isLoggedIn()">
+	<h4 class="font-weight-bold mt-3 mb-0">My Orders</h4>
+	<hr>
+	<div class="mt-4 pt-4 kss-flash kss-flash--info py-3">
+		Can't see all your orders? <a href="javascript:void(0);" (click)="displayModal()" class="text-secondary font-weight-bold">Sign In</a>
+	</div>
+</div>
+
+<div>
+	<app-login-component (loginSuccess)="loginSucessTriggered()"> </app-login-component> 
+</div>

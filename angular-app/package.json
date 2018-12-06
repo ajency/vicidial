@@ -5,11 +5,13 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod --output-hashing none",
+    "build:cart_app": "ng build --prod --app app1 --output-hashing none && npm run postbuild",
+    "build:account_app": "ng build --prod --app app2 --output-hashing none && npm run postbuild_account",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "postbuild": "node post_build_script.js"
+    "postbuild": "node post_build_script.js",
+    "postbuild_account": "node post_build_script_account_app.js"
   },
   "private": true,
   "dependencies": {

@@ -142,3 +142,71 @@
 .status-wrap:last-child{
   align-items: flex-end;
 }
+
+.order-card{
+  &__detail{
+    width: 60%;
+  }
+  .product-name{
+    width: auto;
+  }
+}
+
+.myorder-wrapper{
+  height: calc(100% - 80px);
+}
+
+.order-no-row{
+  .col-left{
+    flex-basis: 60%;
+  }
+  .col-right{
+    flex-basis: 30%;
+  }
+}
+
+.order-header{
+    padding: 1em 0;
+}
+
+// my order
+
+.my-order-card{
+    box-shadow: 0 0 5px rgb(241, 241, 241);
+    padding: 0 8px;
+    background-color: #fff;
+    cursor: pointer;
+    margin-top: 20px;
+    .arrow-down{
+      transform: rotate(0deg);
+      transition: all 0.5s ease;
+    }
+    .collapsed{
+      .arrow-down{
+        transform: rotate(180deg);
+      }
+    }
+    .ordercollapse-trigger{
+      padding: 5px 10px 5px 0;
+    }
+    .my-order-collapse{
+      border-top: 1px solid #e8e8e8;
+      padding: 10px 8px;
+    }
+}
+
+.my-order-bg{
+    margin: 0 -20px;
+    padding: 0 20px;
+    background-color: #efefef;
+    padding-top: 20px;
+}
+
+.no-order-login{
+  font-size: 1.3em;
+  text-align: center;
+}
+
+.order-details-btn{
+  font-size: 1.1em;
+}

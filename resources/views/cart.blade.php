@@ -27,5 +27,5 @@
 		</div>
 	</div>
 	<!--Angular app-->
-	<app-root id="angular-app" class="h-100 d-block"></app-root>
+	<cart-app-root id="angular-app" class="h-100 d-block"></cart-app-root>
 </div>
