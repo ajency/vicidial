@@ -53,16 +53,17 @@ export class AccountComponent implements OnInit {
    closeLoginModal(){   	
     $('#signin').modal('hide');
     $("#cd-my-account").css("overflow", "auto");
-    if(this.appservice.redirectUrl.endsWith('/my-orders') && this.appservice.isLoggedInUser()){
-    	console.log("navigate to my-orders");
-  		// this.router.navigateByUrl('account/my-orders');
-  		this.router.navigate(['account/my-orders']);
-  		this.appservice.redirectUrl = '';
-    }
-    // this.mobileNumberEntered = false;
-    // this.otp = null;
-    // this.otpCode.otp1 =''; this.otpCode.otp2 = ''; this.otpCode.otp3 = ''; this.otpCode.otp4 = ''; this.otpCode.otp5 = ''; this.otpCode.otp6='';
-    // this.userValidation.otpVerificationErrorMsg = '';
+
+    // To be added back once account page is ready
+    // if(this.appservice.redirectUrl.endsWith('/my-orders') && this.appservice.isLoggedInUser()){
+    // 	console.log("navigate to my-orders");
+  		// // this.router.navigateByUrl('account/my-orders');
+  		// this.router.navigate(['account/my-orders']);
+  		// this.appservice.redirectUrl = '';
+    // }
+
+    // Temporary fix for not letting user see account page on history back
+    history.back();
   }
 
   modalHandler(){
