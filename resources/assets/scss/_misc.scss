@@ -291,14 +291,20 @@
 	}
     &.showSearch{
     	.custom-expand-search{
-    		width: 200px;
+    		width: 220px;
+    		padding-right: 30px;
     	}
     	.clear-search{
-    		position: absolute;
-		    right: 28px;
+			position: absolute;
+		    right: 38px;
 		    color: #c1c1c1;
 		    font-size: 1.1em;
-    	}
+		    cursor: pointer;
+		    display: block;
+		}
+    }
+    .clear-search{
+    	display: none;
     }
     .custom-expand-search{
     	transition: all 0.5s ease;
