@@ -713,7 +713,7 @@ function loadProductListing(pageval=-1){
           // var bool_item_key = facet_display_data_values.filter(function (facet) { return facet.attribute_param == filter_pair[0] });
           if( facet_display_data_keys[bool_item_key] != undefined ){
             if(boolean_facet_list[facet_display_data_keys[bool_item_key]] == undefined && ajax_data["search_object"]["boolean_filter"] != undefined )
-              ajax_data["search_object"]["boolean_filter"][facet_display_data_keys[bool_item_key]] = JSON.parse(filter_pair[1])
+              ajax_data["search_object"]["boolean_filter"][facet_display_data_keys[bool_item_key]] = (filter_pair[1] == "true" || filter_pair[1] == "false")?JSON.parse(filter_pair[1]):filter_pair[1];
           }
 
         }
@@ -773,8 +773,8 @@ function resetFilter(){
   boolean_facet_list = {}
   ajax_data = { "search_object": [],"listurl":'/' }
   product_list_items = {}
-  $('.nav-item.active').find('.filter-count').text(0)
-  $('.nav-item.active').find('.filter-count').addClass('d-none')
+  $('.nav-item').find('.filter-count').text(0)
+  $('.nav-item').find('.filter-count').addClass('d-none')
   $('.facet-category').prop('checked',false);
   $('#price-range').val($('#price-range').data("minval")+";"+$('#price-range').data("maxval"))
   initPriceBar($('#price-range').data("minval"), $('#price-range').data("maxval"));
