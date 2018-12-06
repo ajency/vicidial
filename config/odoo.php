@@ -38,5 +38,13 @@ return [
 
         ],
         'states'     => [],
+        'attributes'  => [
+            'attribute_id',
+            'html_color',
+            'name',
+            'product_ids',
+            'id',
+
+        ],
     ],
 ];
