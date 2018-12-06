@@ -20,7 +20,7 @@
 		<div class="h-100">
 			<h4 class="font-weight-bold m-0">My Orders</h4>
 			<hr>
-			<div *ngIf="isLoggedIn()" class="my-order-parent accordion" id="accordionExample">
+			<div *ngIf="isLoggedIn()" class="my-order-parent accordion mb-4" id="accordionExample">
 				<div *ngIf="orders && orders.length" class="my-order-child">
 					<div *ngFor="let order of orders; let lastindex = last; let first = first; let getindex = index" class="child-2 my-order-card">
 						<div class="d-flex row mb-3 order-header collapsed" data-toggle="collapse" [attr.data-target]="'#collapse-' + getindex" aria-expanded="true" [attr.aria-controls]="'collapse-' + getindex">
@@ -34,75 +34,77 @@
 								<span class="ordercollapse-trigger"><i class="fas fa-chevron-up arrow-down"></i></span>
 							</div>
 						</div>
-						<div *ngFor="let sub_order of order.sub_orders; let i = index" class="mb-2 collapse my-order-collapse" [ngClass]="{'show': orders.length == 1}" id=collapse-{{getindex}} data-parent="#accordionExample">
-							<div class="d-flex bd-highlight row mb-3">
-								<div class="pb-2 pr-2 col-9">
-									<label class="d-block m-0">Shipment {{i+1}}</label>					
-										<span *ngIf="sub_order.store_address">Sold by: {{sub_order.store_address.store_name}} - {{sub_order.store_address.locality}} {{sub_order.store_address.city}}</span>							
-									<!-- <i class="fas fa-clipboard-check mr-1 text-muted"></i> <span class="text-success font-weight-bold">Order Processed</span> -->
+						<div class="collapse" [ngClass]="{'show': orders.length == 1}" id=collapse-{{getindex}} data-parent="#accordionExample">
+							<div *ngFor="let sub_order of order.sub_orders; let i = index" class="mb-2 my-order-collapse">
+								<div class="d-flex bd-highlight row mb-3">
+									<div class="pb-2 pr-2 col-9">
+										<label class="d-block m-0">Shipment {{i+1}}</label>					
+											<span *ngIf="sub_order.store_address">Sold by: {{sub_order.store_address.store_name}} - {{sub_order.store_address.locality}} {{sub_order.store_address.city}}</span>							
+										<!-- <i class="fas fa-clipboard-check mr-1 text-muted"></i> <span class="text-success font-weight-bold">Order Processed</span> -->
+									</div>
+									<div class="pb-2 ml-auto col-3 text-right">
+								<!-- 		Total:
+										<h6 class="mt-1"><span class="rs-symbol"><i class="fas fa-rupee-sign sm-font"></i></span> {{$sub_order['total']}} for {{$sub_order['number_of_items']}} {{$sub_order['number_of_items'] == 1 ? "Item" : "Items"}}</h6> -->
+										<h6 class="mt-1">{{sub_order.number_of_items}} <span *ngIf="sub_order.number_of_items == 1">Item</span> <span *ngIf="sub_order.number_of_items > 1">Items</span></h6>
+									</div>
 								</div>
-								<div class="pb-2 ml-auto col-3 text-right">
-							<!-- 		Total:
-									<h6 class="mt-1"><span class="rs-symbol"><i class="fas fa-rupee-sign sm-font"></i></span> {{$sub_order['total']}} for {{$sub_order['number_of_items']}} {{$sub_order['number_of_items'] == 1 ? "Item" : "Items"}}</h6> -->
-									<h6 class="mt-1">{{sub_order.number_of_items}} <span *ngIf="sub_order.number_of_items == 1">Item</span> <span *ngIf="sub_order.number_of_items > 1">Items</span></h6>
-								</div>
-							</div>
-							<div class="p-md-3 p-2 mb-3 card shadow-sm">
-								<div *ngFor="let item of sub_order.items; let last = last">
-									<div class="row primary-info">
-										<div class="col-12">
-											<div class="d-flex order-card">
-											    <a href="{{item.href}}" [ngClass]="{'variant-placeholder' : item.images[0]=='/img/placeholder.svg'}" class="order-card__image">
-											        <div class="product-img">
-															<img src="{{item.images[0]}}" class="lazyload img-fit" data-srcset="{{item.images[0]}} 50w, {{item.images[1]}} 100w, {{item.images[2]}} 150w" sizes="50px">
-													</div>
-												</a>
-												<div class="product-detail order-card__detail">
-													<a href="{{item.href}}" class="text-dark">
-														<div class="product-name text-truncate">
-															{{item.title}}
+								<div class="p-md-3 p-2 mb-3 card shadow-sm">
+									<div *ngFor="let item of sub_order.items; let last = last">
+										<div class="row primary-info">
+											<div class="col-12">
+												<div class="d-flex order-card">
+												    <a href="{{item.href}}" [ngClass]="{'variant-placeholder' : item.images[0]=='/img/placeholder.svg'}" class="order-card__image">
+												        <div class="product-img">
+																<img src="{{item.images[0]}}" class="lazyload img-fit" data-srcset="{{item.images[0]}} 50w, {{item.images[1]}} 100w, {{item.images[2]}} 150w" sizes="50px">
 														</div>
 													</a>
-													<div class="product-size text-muted mb-1">
-														<span>Size: {{item.size}}</span> <span>|</span> <span>Qty: {{item.quantity}}</span>
-													</div>
-													<!-- <div class="product-price">
-														<div class="retail-price">
-															<span class="rs-symbol"><i class="fas fa-rupee-sign sm-font"></i></span> <span class="price">{{item.price}}</span>
+													<div class="product-detail order-card__detail">
+														<a href="{{item.href}}" class="text-dark">
+															<div class="product-name text-truncate">
+																{{item.title}}
+															</div>
+														</a>
+														<div class="product-size text-muted mb-1">
+															<span>Size: {{item.size}}</span> <span>|</span> <span>Qty: {{item.quantity}}</span>
 														</div>
-													</div> -->
-													<div class="product-price">
-														<div class="kss-price kss-price--smaller">
-															₹{{item.price_final}}
-															<small *ngIf="item.price_final != item.price_mrp" class="kss-original-price text-muted">₹{{$item.price_mrp}}
-														  	</small>
-														  	<span *ngIf="item.price_final != item.price_mrp" class="kss-discount text-danger"> {{item.off_percentage}}</span>
+														<!-- <div class="product-price">
+															<div class="retail-price">
+																<span class="rs-symbol"><i class="fas fa-rupee-sign sm-font"></i></span> <span class="price">{{item.price}}</span>
+															</div>
+														</div> -->
+														<div class="product-price">
+															<div class="kss-price kss-price--smaller">
+																₹{{item.price_final}}
+																<small *ngIf="item.price_final != item.price_mrp" class="kss-original-price text-muted">₹{{item.price_mrp}}
+															  	</small>
+															  	<span *ngIf="item.price_final != item.price_mrp" class="kss-discount text-danger"> {{item.off_percentage}}</span>
+															</div>
 														</div>
 													</div>
 												</div>
 											</div>
+											<!-- <div class="col-md-4 col-xl-6">
+												<div class="retail-price mt-2 mt-md-0">
+															<i class="fas fa-inbox mr-1 text-muted"></i><span class="text-success font-weight-bold">In Transit</span>
+															<span class="font-weight-bold">(Arriving 30 Aug)</span>
+												</div>
+												
+											</div> -->
+											<!-- <div class="dropdown">
+												<i class="cursor-pointer fas fa-ellipsis-v fa-2x text-light" id="card-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+												  <div class="dropdown-menu dropdown-menu-right shadow-lg" aria-labelledby="card-menu">
+												    <button class="dropdown-item" type="button">Track Item</button>
+												    <button class="dropdown-item cancel-trigger" type="button"  >Cancel Item</button>
+												    <button class="dropdown-item" type="button"> <a href="/kss/account/orders-details/" class="text-black">View Order Details</a></button>
+												  </div>
+											</div> -->
 										</div>
-										<!-- <div class="col-md-4 col-xl-6">
-											<div class="retail-price mt-2 mt-md-0">
-														<i class="fas fa-inbox mr-1 text-muted"></i><span class="text-success font-weight-bold">In Transit</span>
-														<span class="font-weight-bold">(Arriving 30 Aug)</span>
-											</div>
-											
-										</div> -->
-										<!-- <div class="dropdown">
-											<i class="cursor-pointer fas fa-ellipsis-v fa-2x text-light" id="card-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
-											  <div class="dropdown-menu dropdown-menu-right shadow-lg" aria-labelledby="card-menu">
-											    <button class="dropdown-item" type="button">Track Item</button>
-											    <button class="dropdown-item cancel-trigger" type="button"  >Cancel Item</button>
-											    <button class="dropdown-item" type="button"> <a href="/kss/account/orders-details/" class="text-black">View Order Details</a></button>
-											  </div>
-										</div> -->
+										<hr *ngIf="!last">
 									</div>
-									<hr *ngIf="!last">
 								</div>
-								<div class="border-top mt-4 py-1 text-center">
-									<a href="/my/order/details?orderid={{order.order_info.txn_no}}" class="btn text-secondary pb-0 pr-0 order-details-btn">Order Details <i class="fas fa-chevron-right"></i></a>
-								</div>
+							</div>
+							<div class="border-top mt-2 mb-4 pt-2 pb-3 text-center">
+								<a href="/my/order/details?orderid={{order.order_info.txn_no}}" class="btn text-secondary pb-0 pr-0 order-details-btn">Order Details <i class="fas fa-chevron-right"></i></a>
 							</div>
 						</div>
 						<!-- <hr *ngIf="!last"> -->
