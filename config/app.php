@@ -182,7 +182,6 @@ return [
         Laravel\Socialite\SocialiteServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Ajency\Comm\CommServiceProvider::class,
-        GoogleMaps\ServiceProvider\GoogleMapsServiceProvider::class,
 
     ],
 
@@ -235,7 +234,6 @@ return [
         'AjFileUpload' => Ajency\FileUpload\FileUploadServiceProvider::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'AjComm' => Ajency\Comm\CommServiceProvider::class,
-        'GoogleMaps' => GoogleMaps\Facade\GoogleMapsFacade::class,
 
     ],
 

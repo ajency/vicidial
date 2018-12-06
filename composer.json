@@ -26,7 +26,6 @@
         "php": ">=7.1.3",
         "ajency/comm": "dev-kss-release",
         "ajency/file-upload": "dev-tanvi/v3",
-        "alexpechkarev/google-maps": "1.0.9",
         "artesaos/seotools": "^0.12.1",
         "darkaonline/ripcord": "^0.1.6",
         "elasticsearch/elasticsearch": "~6.0",
@@ -40,7 +39,6 @@
         "league/flysystem-aws-s3-v3": "^1.0",
         "publiux/laravelcdn": "dev-ajency",
         "spatie/laravel-permission": "^2.23",
-        "toin0u/geocoder-laravel": "^4.0",
         "tzsk/payu": "dev-ajency"
     },
     "require-dev": {
