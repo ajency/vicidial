@@ -8,6 +8,7 @@ use App\Facet;
 use App\Jobs\CreateProductJobs;
 use App\Jobs\FetchProductImages;
 use App\Jobs\UpdateVariantInventory;
+use App\Jobs\UpdateSearchText;
 use App\ProductColor;
 use App\Variant;
 use Illuminate\Support\Facades\DB;
