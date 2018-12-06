@@ -300,14 +300,13 @@
 		    color: #c1c1c1;
 		    font-size: 1.1em;
 		    cursor: pointer;
-		    display: block;
 		}
     }
     .clear-search{
-    	display: none;
+    	
     }
     .custom-expand-search{
-    	transition: all 0.5s ease;
+    	/*transition: all 0.5s ease;*/
 	    width: 0;
 	    margin-right: 5px;
     }
