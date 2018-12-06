@@ -132,6 +132,7 @@ class ListingController extends Controller
         if(isset($data['exclude_in_response']))
             $page_params["exclude_in_response"]=$data['exclude_in_response'];
         $page_params["page"] = $data["page"];
+        // dd($parameters);
         $response = $this->search_object($parameters,$page_params,$data["search_object"]);
         return response()->json($response,200);
     }

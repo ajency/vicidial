@@ -461,6 +461,9 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                   document.getElementById("products-list-template-content").innerHTML = html;
                   product_list_items = $.extend({}, product_list_context.products);
                 }
+                else{
+                  product_list_items = {};
+                }
 
                 var source   = document.getElementById("filter-header-template").innerHTML;
                 var template = Handlebars.compile(source);
@@ -676,8 +679,8 @@ function searchFilter(call_facet_change_evt = true){
   return;
 }
 
-function loadProductListing(pageval=0){
-    if(pageval == 0)
+function loadProductListing(pageval=-1){
+    if(pageval == -1)
       var page = $.url().param('page');
     else
       var page = pageval;
@@ -709,7 +712,7 @@ function loadProductListing(pageval=0){
 
           // var bool_item_key = facet_display_data_values.filter(function (facet) { return facet.attribute_param == filter_pair[0] });
           if( facet_display_data_keys[bool_item_key] != undefined ){
-            if(boolean_facet_list[facet_display_data_keys[bool_item_key]] == undefined )
+            if(boolean_facet_list[facet_display_data_keys[bool_item_key]] == undefined && ajax_data["search_object"]["boolean_filter"] != undefined )
               ajax_data["search_object"]["boolean_filter"][facet_display_data_keys[bool_item_key]] = JSON.parse(filter_pair[1])
           }
 
@@ -717,6 +720,9 @@ function loadProductListing(pageval=0){
       }
     }
     ajax_data["page"] = pageVal
+    if(isMobile){
+      delete ajax_data["exclude_in_response"];
+    }
     $.ajax({
         method: "POST",
         url: "/api/rest/v1/product-list",
@@ -743,6 +749,7 @@ function loadProductListing(pageval=0){
             product_list_items[list_count+vkey] = product_list_context.products[vkey];
         }
         // product_list_items = $.extend(product_list_items, values);
+        console.log(product_list_items)
         context["products"] = product_list_items;
         if(Object.keys(product_list_items).length<=0){
           $(".productlist__row").addClass('d-none');
@@ -764,6 +771,10 @@ function resetFilter(){
   facet_list = {}
   range_facet_list = {}
   boolean_facet_list = {}
+  ajax_data = { "search_object": [],"listurl":'/' }
+  product_list_items = {}
+  $('.nav-item.active').find('.filter-count').text(0)
+  $('.nav-item.active').find('.filter-count').addClass('d-none')
   $('.facet-category').prop('checked',false);
   $('#price-range').val($('#price-range').data("minval")+";"+$('#price-range').data("maxval"))
   initPriceBar($('#price-range').data("minval"), $('#price-range').data("maxval"));
