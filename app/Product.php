@@ -432,4 +432,22 @@ class Product
         }
     }
 
+    public static function updateAllSearchtext($indexname){
+        $products = ProductColor::select('elastic_id')->get()->pluck('elastic_id')->toArray();
+        $job_sets = array_chunk($products, config('odoo.update_products'));
+        foreach ($job_sets as $job_set) {
+            UpdateSearchText::dispatch($job_set,$indexname)->onQueue('search_text');
+        }
+    }
+
+    public static function elasticSearchtext($elasticData){
+        $searchResult = $elasticData['search_result_data'];
+        $productId = $searchResult['product_id'];
+        $productdisplayName = $searchResult['product_att_magento_display_name'];
+        foreach ($elasticData['search_data'] as &$variant) {
+            $variant['full_text'] = implode(' ',[$variant['full_text'],$productId,$productdisplayName]);
+            $variant['full_text_boosted'] = implode(' ',[$variant['full_text'],$productId,$productdisplayName]);
+        }
+        return $elasticData;
+    }
 }

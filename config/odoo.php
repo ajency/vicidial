@@ -11,6 +11,7 @@ return [
     'limit'         => intval(env('ODOO_LIMIT', '')),
     'connections'   => $connections,
     'update_inventory' => env('INV_UPDATE_COUNT',1),
+    'update_products' => env('PROD_UPDATE_COUNT',20),
 
     'model_fields'  => [
         'location'   => [
