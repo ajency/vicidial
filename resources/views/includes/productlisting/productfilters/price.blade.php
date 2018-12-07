@@ -94,6 +94,11 @@
             facetCategoryChange($(this),false,false,true)
         });
     }
+
+    var sort_filter_val = $('#sort_filter_selectbox').val()
+    if(sort_filter_val != ""){
+      facetCategoryChange($('#sort_filter_selectbox'),false,false,false,true);
+    }
   // Function to update price range on change
    priceRangeSlider = $("#price-range").data("ionRangeSlider");
 

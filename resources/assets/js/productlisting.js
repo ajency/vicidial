@@ -118,8 +118,6 @@ $(document).ready(function(){
     loadProductListing();
   })
 
-
-
 });
 
 // $('body').on('change', '.facet-category', function() {
@@ -772,6 +770,11 @@ function loadProductListing(pageval=-1,mobile_view = false){
         }
 
       }
+    }
+    var url_pfilter_arr = window.location.pathname.split('/')
+    for(url_pfilter of url_pfilter_arr){
+      if(url_pfilter != "shop")
+        getPrimaryFiltersInfo(url_pfilter)
     }
     ajax_data["page"] = pageVal
     if(isMobile){
