@@ -2,9 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-
 use App\Elastic\ElasticQuery;
+use Illuminate\Console\Command;
 
 class deleteIndex extends Command
 {

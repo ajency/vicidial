@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Elastic\ElasticQuery;
 use Illuminate\Console\Command;
 
 class alterAlias extends Command
@@ -11,14 +12,14 @@ class alterAlias extends Command
      *
      * @var string
      */
-    protected $signature = 'elastic:alter_alias';
+    protected $signature = 'elastic:alter_alias {alias} {old_index} {new_index}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Points an alias to new index from old index';
 
     /**
      * Create a new command instance.
@@ -37,6 +38,11 @@ class alterAlias extends Command
      */
     public function handle()
     {
-        //
+        $alias    = $this->argument('alias');
+        $old_index    = $this->argument('old_index');
+        $new_index    = $this->argument('new_index');
+        $q        = new ElasticQuery;
+        $response = $q->alterAlias($alias, $old_index, $new_index);
+        print_r($response);
     }
 }

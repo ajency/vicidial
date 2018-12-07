@@ -273,11 +273,11 @@ class ElasticQuery
     public function mget(array $ids)
     {
         $params['body']["docs"] = [];
-        $params['index'] = $this->index;
+        $params['index']        = $this->index;
         foreach ($ids as $id) {
             $param = [
-                "_type"  => "_doc",
-                "_id"    => $id,
+                "_type" => "_doc",
+                "_id"   => $id,
             ];
             $params['body']["docs"][] = $param;
         }
@@ -324,9 +324,9 @@ class ElasticQuery
         //         \Log::debug($responses);
         //     }
         // } else {
-            \Log::debug($this->params);
-            $responses = $this->elastic_client->bulk($this->params);
-            \Log::debug($responses);
+        \Log::debug($this->params);
+        $responses = $this->elastic_client->bulk($this->params);
+        \Log::debug($responses);
         // }
         return $responses;
     }
@@ -413,6 +413,19 @@ class ElasticQuery
     {
         $this->params = ["index" => $index];
         return $this->elastic_client->indices()->delete($this->params);
+    }
+
+    public function alterAlias(string $alias, string $old_index, string $new_index)
+    {
+        $this->params = [
+            "body" => [
+                "actions" => [
+                    ['remove' => ['index' => $old_index, 'alias' => $alias]],
+                    ['add' => ['index' => $new_index, 'alias' => $alias]],
+                ],
+            ],
+        ];
+        return $this->elastic_client->indices()->updateAliases($this->params);
     }
 
     public function reindex(string $src, string $dest)
