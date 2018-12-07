@@ -3,7 +3,7 @@
     <div class="filter-head">
       <h4 class="mt-0">Filters</h4>
     </div>
-    <div class="ml-auto"> <h3 id="kss_hide-filter-close" class="m-0 kss_highlight btn-pay"><span aria-hidden="true">&times;</span></h3></div>
+    <div class="ml-auto"> <h3 id="kss_hide-filter-close" class="m-0 kss_highlight btn-pay pl-3"><span aria-hidden="true">&times;</span></h3></div>
   </div>
 </div>
 

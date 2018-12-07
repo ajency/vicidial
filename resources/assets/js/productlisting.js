@@ -725,8 +725,13 @@ $('.kss_filter_mobile--left .nav-item').click(function(){
 function searchFilter(call_facet_change_evt = true){
   if($('.custom-expand-search').val() != ''){
     // $('.expandSearch').addClass('showSearch'); 
-    $('.custom-expand-search').focus();
+    // $('.custom-expand-search').focus();
     $('.clear-search').removeClass('d-none')
+    var el = $('.custom-expand-search').get(0);
+    var elemLen = el.value.length;
+    el.selectionStart = elemLen;
+    el.selectionEnd = elemLen;
+    el.focus();
   }
   // else if($('.search-trigger').closest('.expandSearch').hasClass('showSearch')){
   //   // $('.expandSearch').removeClass('showSearch');
@@ -735,7 +740,12 @@ function searchFilter(call_facet_change_evt = true){
   // }
   else{
     // $('.expandSearch').addClass('showSearch'); 
-    $('.custom-expand-search').focus();
+    // $('.custom-expand-search').focus();
+    var el = $('.custom-expand-search').get(0);
+    var elemLen = el.value.length;
+    el.selectionStart = elemLen;
+    el.selectionEnd = elemLen;
+    el.focus();    
     if($('.clear-search').hasClass('d-none') == false)
       $('.clear-search').addClass('d-none')
   }
