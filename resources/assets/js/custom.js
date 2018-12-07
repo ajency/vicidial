@@ -71,8 +71,10 @@
      jQuery(".clear-filter").click(function() {
          jQuery(".filter-selection").attr("style", "display: none !important");
      });
-     jQuery(document).on('click', '#kss_hide-filter', function() {
-        console.log("enters111");
+     jQuery(document).on('click', '#kss_hide-filter-close', function() {
+         jQuery(".kss_filter").removeClass("kss_filter_mobile");
+     });
+    jQuery(document).on('click', '#kss_hide-filter', function() {
          jQuery(".kss_filter").removeClass("kss_filter_mobile");
          loadProductListing(0,true);
      });
