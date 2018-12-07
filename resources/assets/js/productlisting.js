@@ -281,7 +281,6 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
     else{
       
       url = removeParam("search_string", url);
-      console.log("cleared!!!==="+url)
     }
 
     if( Object.keys(range_facet_list).length>0){
@@ -704,7 +703,7 @@ function searchFilter(call_facet_change_evt = true){
   return;
 }
 
-function loadProductListing(pageval=-1){
+function loadProductListing(pageval=-1,mobile_view = false){
     if(pageval == -1)
       var page = $.url().param('page');
     else
@@ -757,12 +756,25 @@ function loadProductListing(pageval=-1){
 
       }).done(function (response) {
         var product_list_context = {};
+        var header_context = {};
         $.each(response, function (key, values) {
           if (key == "page") {
             product_list_context.page = values;
           }
           if (key == "items") {
             product_list_context.products = values;
+          }
+          if(key == "breadcrumbs"){
+             header_context.breadcrumbs = values ;
+          }
+          if(key == "headers"){
+            header_context.headers = values ;
+          }
+          if(key == "sort_on"){
+            header_context.sort_on = values ;
+          }
+          if(key == "search_string"){
+            header_context.search_string = values ;
           }
         });
         var source = document.getElementById("products-list-template").innerHTML;
@@ -787,6 +799,22 @@ function loadProductListing(pageval=-1){
         context["show_more"] = product_list_context.page.has_next
         var html = template(context);
         document.getElementById("products-list-template-content").innerHTML = html;
+
+        if(mobile_view){
+          var source   = document.getElementById("filter-header-template").innerHTML;
+          var template = Handlebars.compile(source);
+          var context = {};
+          context["breadcrumbs"] = header_context.breadcrumbs ;
+          context["headers"] = header_context.headers ;
+          context["sort_on"] = header_context.sort_on ;
+          context["search_string"] = header_context.search_string;
+
+          context["show_search"] = (url_params.get('show_search') != undefined)?url_params.get('show_search'):show_search_box;
+          var html    = template(context);
+          document.getElementById("filter-header-template-content").innerHTML = html;
+        }
+        
+
        window.history.pushState('categoryPageUrl', 'Category page', url);
       });
 }

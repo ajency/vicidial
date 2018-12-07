@@ -74,7 +74,7 @@
      jQuery(document).on('click', '#kss_hide-filter', function() {
         console.log("enters111");
          jQuery(".kss_filter").removeClass("kss_filter_mobile");
-         loadProductListing(0);
+         loadProductListing(0,true);
      });
      // ------------------ End Filter For Mobile ------------------//
      // ------------------ Start Disable Arrow on single product ------------------//

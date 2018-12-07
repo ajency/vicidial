@@ -46,6 +46,7 @@
    var is_attribute_param = <?= json_encode($is_attribute_param) ?>;
    var context = {};
    context["display_count"] = display_count;
+   context["template"] = '<?= $template ?>';
    context["disabled_at_zero_count"] = disabled_at_zero_count;
    context["is_attribute_param"] = is_attribute_param;
    context["singleton"] = singleton;
