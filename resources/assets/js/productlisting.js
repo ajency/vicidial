@@ -270,12 +270,44 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
     if(url_params.get('show_search') != undefined){
       url += append_filter_str+"show_search="+url_params.get('show_search')
     }
+    if(url.indexOf("?") !== -1)
+      append_filter_str = "&"
+    else
+      append_filter_str = "?"
     if(url_params.get('search_string') != undefined && search_string == false && url_params.get('search_string').trim() != ""){
       url += append_filter_str+"search_string="+url_params.get('search_string')
     }
     else{
       
       url = removeParam("search_string", url);
+    }
+    if(url.indexOf("?") !== -1)
+      append_filter_str = "&"
+    else
+      append_filter_str = "?"
+    if(url_params.get('sort_on') != undefined && sort_on == false && url_params.get('sort_on').trim() != ""){
+      url += append_filter_str+"sort_on="+url_params.get('sort_on')
+    }
+    if(url.indexOf("?") !== -1)
+      append_filter_str = "&"
+    else
+      append_filter_str = "?"
+    if(url_params.get('bf') != undefined && url_params.get('bf').trim() != ""){
+      url += append_filter_str+"bf="+url_params.get('bf')
+    }
+    if(url.indexOf("?") !== -1)
+      append_filter_str = "&"
+    else
+      append_filter_str = "?"
+    if(url_params.get('rf') != undefined && url_params.get('rf').trim() != ""){
+      url += append_filter_str+"rf="+url_params.get('bf')
+    }
+    if(url.indexOf("?") !== -1)
+      append_filter_str = "&"
+    else
+      append_filter_str = "?"
+    if(url_params.get('pf') != undefined && url_params.get('pf').trim() != ""){
+      url += append_filter_str+"pf="+url_params.get('pf')
     }
 
     if( Object.keys(range_facet_list).length>0){
