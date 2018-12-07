@@ -5,6 +5,8 @@ var collapsable_load_values = {}
 
 var isMobile = isMobileScreen()
 
+var updated_list_url = "";
+
 Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
   return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
 });
@@ -347,7 +349,7 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
       if(search_string_filter.trim() !="")
         url += append_filter_str+"search_string="+search_string_filter
     }
-
+    updated_list_url = url
     // console.log("listurl====",url)
 
     var boolean_facet_list_params = Object.assign({}, boolean_facet_list);
@@ -518,7 +520,6 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                   product_list_items = {};
                 }
                 if(header_context.hasOwnProperty('headers')){
-                  console.log("enters222")
                   var source   = document.getElementById("filter-header-template").innerHTML;
                   var template = Handlebars.compile(source);
                   var context = {};
@@ -759,7 +760,10 @@ function loadProductListing(pageval=-1,mobile_view = false){
       var page = $.url().param('page');
     else
       var page = pageval;
-    var url = window.location.href
+    if(mobile_view == false)
+      var url = window.location.href
+    else
+      var url = updated_list_url
     var url_arr = url.split("?")
     var appendStr = ""
     if(url_arr.length > 1)
@@ -893,14 +897,18 @@ function getPrimaryFiltersInfo(url_pfilter,separator="--"){
   if(url_pfilter != ""){
     var all_pairs = url_pfilter.split(separator)
     for(single_pair of all_pairs){
-      var slug_value_pair = slug_value_search_result[single_pair]
-      if(facet_list[slug_value_pair["facet_name"]] != undefined){
-        if(($.isArray(facet_list[slug_value_pair["facet_name"]])) && (facet_list[slug_value_pair["facet_name"]].includes(slug_value_pair["facet_value"]) == false ))
-          ajax_data["search_object"]["primary_filter"][slug_value_pair["facet_name"]].push(slug_value_pair["facet_value"])
+      if(slug_value_search_result[single_pair] != undefined)
+      {
+        var slug_value_pair = slug_value_search_result[single_pair]
+        if(facet_list[slug_value_pair["facet_name"]] != undefined){
+          if(($.isArray(facet_list[slug_value_pair["facet_name"]])) && (facet_list[slug_value_pair["facet_name"]].includes(slug_value_pair["facet_value"]) == false ))
+            ajax_data["search_object"]["primary_filter"][slug_value_pair["facet_name"]].push(slug_value_pair["facet_value"])
+        }
+        else{
+          ajax_data["search_object"]["primary_filter"][slug_value_pair["facet_name"]] = [slug_value_pair["facet_value"]]
+        }
       }
-      else{
-        ajax_data["search_object"]["primary_filter"][slug_value_pair["facet_name"]] = [slug_value_pair["facet_value"]]
-      }
+      
     }
     
   }
