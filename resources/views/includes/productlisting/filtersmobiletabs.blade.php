@@ -1,9 +1,9 @@
-<div class="d-md-none d-block sticky-mob-filter">
-  <div class="d-flex">
+<div class="d-md-none d-block sticky-mob-filter py-0">
+  <div class="d-flex align-items-center">
     <div class="filter-head">
-      <h4 class="mt-0">Filters</h4>
+      <h4 class="my-0" style="padding: 14px 0;">Filters</h4>
     </div>
-    <div class="ml-auto"> <h3 id="kss_hide-filter-close" class="m-0 kss_highlight btn-pay pl-3"><span aria-hidden="true">&times;</span></h3></div>
+    <div class="ml-auto"> <h3 id="kss_hide-filter-close" class="m-0 kss_highlight btn-pay pl-3 py-2"><span aria-hidden="true">&times;</span></h3></div>
   </div>
 </div>
 
