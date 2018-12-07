@@ -9,6 +9,8 @@
 
 <ul class="nav flex-column kss_filter_mobile--left">
   @foreach($filters_arr as $filter)
-    @include('includes.productlisting.productfilters.common.filtermobileheader', ['filter' => $filter])
+	  @if($filter["template"] != null)
+	    @include('includes.productlisting.productfilters.common.filtermobileheader', ['filter' => $filter])
+	  @endif
   @endforeach
 </ul>
