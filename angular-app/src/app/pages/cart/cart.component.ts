@@ -306,6 +306,13 @@ export class CartComponent implements OnInit {
     this.appservice.closeCart();
   }
 
+  closeOrder(){
+      let url = window.location.href.split("#")[0];
+      this.appservice.closeCart();
+      history.pushState({cart : false}, 'cart', url + '#/account/my-orders');
+      this.reloadPage();
+  }
+
   modalHandler(){
     this.addToCartFailed = false;
     if(this.appservice.isLoggedInUser()){
