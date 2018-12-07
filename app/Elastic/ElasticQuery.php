@@ -415,16 +415,16 @@ class ElasticQuery
         return $this->elastic_client->indices()->delete($this->params);
     }
 
-    public function alterAlias(string $alias, string $old_index, string $new_index)
+    public function alterAlias(string $alias, string $new_index)
     {
-        $this->params = [
-            "body" => [
-                "actions" => [
-                    ['remove' => ['index' => $old_index, 'alias' => $alias]],
-                    ['add' => ['index' => $new_index, 'alias' => $alias]],
-                ],
-            ],
-        ];
+
+        $this->params['body']['actions']  = collect($this->elastic_client->cat()->aliases(['name' => $alias]))
+            ->pluck('index')
+            ->map(function ($item, $key) use ($alias) {
+                return ['remove' => ['index' => $item, 'alias' => $alias]];
+            })->toArray();
+        
+        $this->params['body']['actions'][] = ['add' => ['index' => $new_index, 'alias' => $alias]];
         return $this->elastic_client->indices()->updateAliases($this->params);
     }
 
