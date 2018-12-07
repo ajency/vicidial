@@ -289,6 +289,9 @@
     	right: 15px;
     	top: 0;
 	}
+	&.no-sort{
+		top: -18px;
+	}
     &.showSearch{
     	.custom-expand-search{
     		width: 220px;
