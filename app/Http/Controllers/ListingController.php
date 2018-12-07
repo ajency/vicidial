@@ -67,8 +67,10 @@ class ListingController extends Controller
 
         $params->search_result_assoc = getFacetValueSlugPairs();
         
-        // $params->show_search = (isset($parameters['query']['show_search']) && $parameters['query']['show_search'] == "true" )?true:false;
-        $params->show_search = config('product.show_list_search');
+        if(isset($parameters['query']['show_search']))
+            $params->show_search = (isset($parameters['query']['show_search']) && $parameters['query']['show_search'] == "true" )?true:false;
+        else
+            $params->show_search = config('product.show_list_search');
         return view('productlisting')->with('params',$params);
     }
 
@@ -86,8 +88,12 @@ class ListingController extends Controller
 
         $params = $this->search_object($parameters,$page_params);
         $params->search_result_assoc = getFacetValueSlugPairs();
-        // $params->show_search = (isset($parameters['query']['show_search']) && $parameters['query']['show_search'] == "true")?true:false;
-        $params->show_search = config('product.show_list_search');
+
+        if(isset($parameters['query']['show_search']))
+            $params->show_search = (isset($parameters['query']['show_search']) && $parameters['query']['show_search'] == "true" )?true:false;
+        else
+            $params->show_search = config('product.show_list_search');
+
         return view('productlisting')->with('params',$params);
     }
 
