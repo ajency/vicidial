@@ -669,7 +669,7 @@ function searchItemInArray(obj, search_item) {
 
 }
 
-$(document).on('click', '.kss_filter_mobile--left .nav-item', function(){
+$('.kss_filter_mobile--left .nav-item').click(function(){
   var filterTab = $(this);
   filterTab.addClass('active').siblings().removeClass('active');
   var mobfilterName = filterTab.data('target');

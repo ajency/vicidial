@@ -95,7 +95,8 @@
 @media(max-width: 767px){
     .kss_filter_mobile {
         left: 0px;
-        height: calc(100vh - 50px);
+        // height: calc(100vh - 50px);
+        height: 100vh;
         padding-bottom: 0;
         .fixed-bottom {
             display: block;
