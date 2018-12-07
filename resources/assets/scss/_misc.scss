@@ -294,7 +294,7 @@
 	}
     &.showSearch{
     	.custom-expand-search{
-    		width: 220px;
+    		width: 230px;
     		padding-right: 30px;
     	}
     	.clear-search{
@@ -311,7 +311,7 @@
     .custom-expand-search{
     	/*transition: all 0.5s ease;*/
 	    width: 0;
-	    margin-right: 5px;
+	    // margin-right: 5px;
     }
     .search-trigger{
     	.search-path{
@@ -344,6 +344,9 @@
     			width: 120px;
     		}
     	}
+    }
+    @media (max-width: 767px){
+    	display: none !important;
     }
 }
 
