@@ -341,7 +341,7 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
     }
     if(search_string == true){
       append_filter_str = (url.indexOf("?") == (url.length-1))?"":((url.indexOf("?") !== -1)?"&":"?")
-      if(search_string_filter.trim() !="")
+      if(search_string_filter !="")
         url += append_filter_str+"search_string="+search_string_filter
     }
     updated_list_url = url

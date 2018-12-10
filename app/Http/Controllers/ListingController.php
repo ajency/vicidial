@@ -149,10 +149,11 @@ class ListingController extends Controller
                     if(!$case_done)
                         $p_val = $param;
                 }
-                array_push($parameters['categories'], $p_val);
+                if (strpos($param, "search_string=") === false) 
+                    array_push($parameters['categories'], $p_val);
             }
          }
-
+        // dd($parameters);
         if(isset($data["display_limit"]))
             $page_params["display_limit"] = $data["display_limit"];
         if(isset($data["sort_on"]))

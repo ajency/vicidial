@@ -368,6 +368,6 @@ return [
         ["name" => "Price High to Low", "value" => "price_desc", "is_selected" => false],
 
     ],
-    "show_list_search" => false
+    "show_list_search" => true
 
 ];
