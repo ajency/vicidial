@@ -306,11 +306,10 @@ export class CartComponent implements OnInit {
     this.appservice.closeCart();
   }
 
-  closeOrder(){
-      let url = window.location.href.split("#")[0];
+  viewOrders(){
+      let url = window.location.href.split("#")[0] + '#/account/my-orders';
       this.appservice.closeCart();
-      history.pushState({cart : false}, 'cart', url + '#/account/my-orders');
-      this.reloadPage();
+      window.location.href = url;
   }
 
   modalHandler(){
