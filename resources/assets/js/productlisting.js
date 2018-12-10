@@ -923,6 +923,8 @@ function resetFilter(){
   $('.nav-item').find('.filter-count').addClass('d-none')
   $('.facet-category').prop('checked',false);
   $('#price-range').val($('#price-range').data("minval")+";"+$('#price-range').data("maxval"))
+  $("#price-min").val($('#price-range').data("minval"))
+  $("#price-max").val($('#price-range').data("maxval"))
   initPriceBar($('#price-range').data("minval"), $('#price-range').data("maxval"));
 }
 
@@ -980,11 +982,15 @@ function setFiltersRequired(){
         if(copy_filters["range_facet_list"][item]["max"] != undefined){
 
           $('#price-range').val(copy_filters["range_facet_list"][item]["min"]+";"+copy_filters["range_facet_list"][item]["max"])
+          $("#price-min").val(copy_filters["range_facet_list"][item]["min"])
+          $("#price-max").val(copy_filters["range_facet_list"][item]["max"])
           initPriceBar(copy_filters["range_facet_list"][item]["min"], copy_filters["range_facet_list"][item]["max"]);
         }
         else{
           if(range_facet_list[item]["max"] != undefined){
             $('#price-range').val(range_facet_list[item]["min"]+";"+range_facet_list[item]["max"])
+            $("#price-min").val(range_facet_list[item]["min"])
+            $("#price-max").val(range_facet_list[item]["max"])
             initPriceBar(range_facet_list[item]["min"], range_facet_list[item]["max"]);
           }
         }
