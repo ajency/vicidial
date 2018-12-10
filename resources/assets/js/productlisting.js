@@ -717,9 +717,9 @@ $('.kss_filter_mobile--left .nav-item').click(function(){
   var mobfilterName = filterTab.data('target');
   $('.kss_filter-list').addClass('d-none');
   $('.kss_filter-list[data-filter="'+mobfilterName+'"]').removeClass('d-none');
-  $('.kss_filter-list[data-filter="'+mobfilterName+'"] .color-wrapper .card-body').addClass('is-open');
+  // $('.kss_filter-list[data-filter="'+mobfilterName+'"] .color-wrapper .card-body').addClass('is-open');
   $('.kss_filter-list[data-filter="'+mobfilterName+'"] .collapse').collapse('show');
-  $('.kss_filter-list[data-filter="'+mobfilterName+'"] .color-wrapper .more-color').remove();
+  // $('.kss_filter-list[data-filter="'+mobfilterName+'"] .color-wrapper .more-color').remove();
 })
 
 
