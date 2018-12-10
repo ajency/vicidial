@@ -60,7 +60,7 @@ class CartController extends Controller
             $item["timestamp"] = intval($cart->cart_data[$item["id"]]["timestamp"]);
         }
         $summary = $cart->getSummary();
-        return response()->json(['cart_count' => $cart->itemCount(), "message" => $message, "item" => $item, "summary" => $summary]);
+        return response()->json(['cart_count' => $cart->itemCount(), "message" => $message, "item" => $item,'promo_applied' => $cart->promotion_id, "summary" => $summary]);
     }
 
     public function guestAddItem(Request $request)
@@ -90,7 +90,7 @@ class CartController extends Controller
             $item["timestamp"] = intval($cart->cart_data[$item["id"]]["timestamp"]);
         }
         $summary = $cart->getSummary();
-        return response()->json(['cart_count' => $cart->itemCount(), "message" => $message, "item" => $item, "summary" => $summary]);
+        return response()->json(['cart_count' => $cart->itemCount(), "message" => $message, "item" => $item, 'promo_applied' => $cart->promotion_id, "summary" => $summary]);
     }
 
     public function userCartFetch($id, Request $request)
@@ -110,7 +110,7 @@ class CartController extends Controller
         $summary = $cart->getSummary();
         $code    = ["code" => "NEWUSER", "applied" => true];
         $promotions = Promotion::getAllPromotions($cart,'web');
-        return response()->json(['cart_count' => $cart->itemCount(), 'cart_type' => $cart->type, 'items' => $items,"promotions" => $promotions, "summary" => $summary, "code" => $code]);
+        return response()->json(['cart_count' => $cart->itemCount(), 'cart_type' => $cart->type, 'items' => $items,'promo_applied' => $cart->promotion_id, "promotions" => $promotions, "summary" => $summary, "code" => $code]);
     }
 
     public function guestCartFetch(Request $request)
@@ -126,7 +126,7 @@ class CartController extends Controller
         $summary = $cart->getSummary();
         $code    = ["code" => "NEWUSER", "applied" => true];
         $promotions = Promotion::getAllPromotions($cart,'web');
-        return response()->json(['cart_count' => $cart->itemCount(), 'cart_type' => $cart->type, 'items' => $items, "summary" => $summary, "promotions" => $promotions, "code" => $code]);
+        return response()->json(['cart_count' => $cart->itemCount(), 'cart_type' => $cart->type, 'items' => $items,'promo_applied' => $cart->promotion_id, "summary" => $summary, "promotions" => $promotions, "code" => $code]);
     }
 
     public function guestCartDelete(Request $request)
@@ -144,7 +144,7 @@ class CartController extends Controller
         $cart->save();
         $message = "Item deleted successfully";
         $summary = $cart->getSummary();
-        return response()->json(['cart_count' => $cart->itemCount(), 'message' => $message, "summary" => $summary]);
+        return response()->json(['cart_count' => $cart->itemCount(), 'message' => $message,'promo_applied' => $cart->promotion_id, "summary" => $summary]);
     }
 
     public function userCartDelete($id, Request $request)
@@ -162,7 +162,7 @@ class CartController extends Controller
         $cart->save();
         $message = "Item deleted successfully";
         $summary = $cart->getSummary();
-        return response()->json(['cart_count' => $cart->itemCount(), 'message' => $message, "summary" => $summary]);
+        return response()->json(['cart_count' => $cart->itemCount(), 'message' => $message,'promo_applied' => $cart->promotion_id, "summary" => $summary]);
     }
 
     public function getCartID(Request $request)

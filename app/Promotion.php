@@ -47,7 +47,7 @@ class Promotion extends Model
                 'valid_from'     => $promo->start,
                 'valid_till'     => $promo->expire,
             ];
-            $response[] = $promo_res;
+            $response[$promo->id] = $promo_res;
         }
         return $response;
     }
