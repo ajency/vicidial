@@ -974,17 +974,20 @@ function setFiltersRequired(){
   for(item in facet_display_data_arr){
     if(facet_display_data_arr[item]["filter_type"] == "range_filter")
     {
-      if(copy_filters["range_facet_list"][item]["max"] != undefined){
+      if(copy_filters["range_facet_list"][item] != undefined){
+        if(copy_filters["range_facet_list"][item]["max"] != undefined){
 
-        $('#price-range').val(copy_filters["range_facet_list"][item]["min"]+";"+copy_filters["range_facet_list"][item]["max"])
-        initPriceBar(copy_filters["range_facet_list"][item]["min"], copy_filters["range_facet_list"][item]["max"]);
-      }
-      else{
-        if(range_facet_list[item]["max"] != undefined){
-          $('#price-range').val(range_facet_list[item]["min"]+";"+range_facet_list[item]["max"])
-          initPriceBar(range_facet_list[item]["min"], range_facet_list[item]["max"]);
+          $('#price-range').val(copy_filters["range_facet_list"][item]["min"]+";"+copy_filters["range_facet_list"][item]["max"])
+          initPriceBar(copy_filters["range_facet_list"][item]["min"], copy_filters["range_facet_list"][item]["max"]);
+        }
+        else{
+          if(range_facet_list[item]["max"] != undefined){
+            $('#price-range').val(range_facet_list[item]["min"]+";"+range_facet_list[item]["max"])
+            initPriceBar(range_facet_list[item]["min"], range_facet_list[item]["max"]);
+          }
         }
       }
+      
     }
   }
   
