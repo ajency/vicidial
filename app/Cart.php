@@ -42,6 +42,7 @@ class Cart extends Model
             $cart_data              = $this->cart_data;
             $cart_data[$item["id"]] = ["id" => $item["id"], "quantity" => intval($item["quantity"]), 'timestamp' => Carbon::now()->timestamp];
             $this->cart_data        = $cart_data;
+            $this->applyPromotion();
             // \Log::info($this->cart_data);
         } else {
             return false;
@@ -64,6 +65,24 @@ class Cart extends Model
             $total += $item["quantity"];
         }
         return $total;
+    }
+
+    public function getCartSalePriceTotal(){
+        $total_price = 0;
+        foreach ($this->cart_data as $cart_item) {
+            $variant = Variant::find($cart_item['id']);
+            $total_price += $variant->getSalePrice() * $cart_item["quantity"];
+        }
+        return $total_price;
+    }
+
+    public function getCartMrpPriceTotal(){
+        $total_price = 0;
+        foreach ($this->cart_data as $cart_item) {
+            $variant = Variant::find($cart_item['id']);
+            $total_price += $variant->getLstPrice() * $cart_item["quantity"];
+        }
+        return $total_price;
     }
 
     public function getSummary()
@@ -131,5 +150,9 @@ class Cart extends Model
         if ($this->type != $type) {
             abort(403);
         }
+    }
+
+    public function applyPromotion(){
+
     }
 }

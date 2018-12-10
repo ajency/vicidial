@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Cart;
 use App\User;
 use App\Variant;
+use App\Promotion;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -108,7 +109,8 @@ class CartController extends Controller
 
         $summary = $cart->getSummary();
         $code    = ["code" => "NEWUSER", "applied" => true];
-        return response()->json(['cart_count' => $cart->itemCount(), 'cart_type' => $cart->type, 'items' => $items, "summary" => $summary, "code" => $code]);
+        $promotions = Promotion::getAllPromotions($cart,'web');
+        return response()->json(['cart_count' => $cart->itemCount(), 'cart_type' => $cart->type, 'items' => $items,"promotions" => $promotions, "summary" => $summary, "code" => $code]);
     }
 
     public function guestCartFetch(Request $request)
@@ -123,7 +125,8 @@ class CartController extends Controller
 
         $summary = $cart->getSummary();
         $code    = ["code" => "NEWUSER", "applied" => true];
-        return response()->json(['cart_count' => $cart->itemCount(), 'cart_type' => $cart->type, 'items' => $items, "summary" => $summary, "code" => $code]);
+        $promotions = Promotion::getAllPromotions($cart,'web');
+        return response()->json(['cart_count' => $cart->itemCount(), 'cart_type' => $cart->type, 'items' => $items, "summary" => $summary, "promotions" => $promotions, "code" => $code]);
     }
 
     public function guestCartDelete(Request $request)

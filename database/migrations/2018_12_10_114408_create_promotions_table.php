@@ -23,8 +23,12 @@ class CreatePromotionsTable extends Migration
             $table->string('step_quantity');
             $table->timestamp('start')->useCurrent();
             $table->timestamp('expire')->useCurrent();
+            $table->longtext('description')->nullable();
             $table->string('priority');
             $table->timestamps();
+        });
+        Schema::table('carts', function (Blueprint $table) {
+            $table->integer('promotion_id')->nullable();
         });
     }
 
@@ -36,5 +40,8 @@ class CreatePromotionsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('promotions');
+        Schema::table('carts', function (Blueprint $table) {
+            $table->dropColumn('promotion_id');
+        });
     }
 }

@@ -31,4 +31,24 @@ class Promotion extends Model
             $offset 	= $offset + $discounts->count();
         } while ($discounts->count() == config('odoo.limit'));
     }
+    
+    public static function getAllPromotions($cart, $source = 'web')
+    {
+        $promotions = self::get();
+        $response   = [];
+        foreach ($promotions as $promo) {
+            $promo_res = [
+                'promotion_id'   => $promo->id,
+                'display_title'  => $promo->title,
+                'description'    => $promo->description,
+                'min_cart_value' => $promo->step_quantity,
+                'discount_value' => $promo->value,
+                'discount_type'  => $promo->discount_type,
+                'valid_from'     => $promo->start,
+                'valid_till'     => $promo->expire,
+            ];
+            $response[] = $promo_res;
+        }
+        return $response;
+    }
 }
