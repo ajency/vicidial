@@ -548,6 +548,8 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                      filter_count +=1
                    else
                      filter_count -=1
+                   if($(thisObj).data('template') == "price")
+                    filter_count = 1
                    if(filter_count<0)
                      filter_count = 0
                    $('.nav-item.active').find('.filter-count').text(filter_count)
