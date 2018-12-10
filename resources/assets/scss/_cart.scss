@@ -411,7 +411,7 @@ body{
         color: #d2d2d2;
     }
     @media (max-width: 480px){
-        height: calc(100vh - 55px);
+        height: calc(100% - 55px);
     }
     @media (max-width: 320px){
         height: auto;
