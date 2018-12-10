@@ -288,13 +288,13 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
     }
 
     var url = constructCategoryUrl(config_facet_names_arr,facet_list,facet_value_slug_assoc,"");
-    append_filter_str = (url.indexOf("?") == (url.length-1))?"":((url.indexOf("?") !== -1)?"&":"?")
+    append_filter_str = ((url.indexOf("?") !== -1) && (url.indexOf("?") == (url.length-1)))?"":((url.indexOf("?") !== -1)?"&":"?")
 
     var url_params = new window.URLSearchParams(window.location.search);
     if(url_params.get('show_search') != undefined){
       url += append_filter_str+"show_search="+url_params.get('show_search')
     }
-    append_filter_str = (url.indexOf("?") == (url.length-1))?"":((url.indexOf("?") !== -1)?"&":"?")
+    append_filter_str = ((url.indexOf("?") !== -1) && (url.indexOf("?") == (url.length-1)))?"":((url.indexOf("?") !== -1)?"&":"?")
     if(url_params.get('search_string') != undefined && search_string == false && url_params.get('search_string').trim() != ""){
       url += append_filter_str+"search_string="+url_params.get('search_string')
     }
@@ -302,13 +302,13 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
       
       url = removeParam("search_string", url);
     }
-    append_filter_str = (url.indexOf("?") == (url.length-1))?"":((url.indexOf("?") !== -1)?"&":"?")
+    append_filter_str = ((url.indexOf("?") !== -1) && (url.indexOf("?") == (url.length-1)))?"":((url.indexOf("?") !== -1)?"&":"?")
     if(url_params.get('sort_on') != undefined && sort_on == false && url_params.get('sort_on').trim() != ""){
       url += append_filter_str+"sort_on="+url_params.get('sort_on')
     }
     if(url_params.get('rf') != undefined && url_params.get('rf').trim() != ""){
-      url = removeParam("rf", url);
-      append_filter_str = (url.indexOf("?") == (url.length-1))?"":((url.indexOf("?") !== -1)?"&":"?")
+      // url = removeParam("rf", url);
+      append_filter_str = ((url.indexOf("?") !== -1) && (url.indexOf("?") == (url.length-1)))?"":((url.indexOf("?") !== -1)?"&":"?")
       url += append_filter_str+"rf="+url_params.get('rf')
     }
     if( Object.keys(range_facet_list).length>0){
@@ -323,7 +323,7 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
         else
         {
           url = removeParam("rf", url);
-          append_filter_str = (url.indexOf("?") == (url.length-1))?"":((url.indexOf("?") !== -1)?"&":"?")
+          append_filter_str = ((url.indexOf("?") !== -1) && (url.indexOf("?") == (url.length-1)))?"":((url.indexOf("?") !== -1)?"&":"?")
           url += append_filter_str+"rf=price:"+minval+"TO"+maxval;
         }
       }
@@ -336,11 +336,11 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
     }
 
     if(sort_on == true){
-      append_filter_str = (url.indexOf("?") == (url.length-1))?"":((url.indexOf("?") !== -1)?"&":"?")
+      append_filter_str = ((url.indexOf("?") !== -1) && (url.indexOf("?") == (url.length-1)))?"":((url.indexOf("?") !== -1)?"&":"?")
       url += append_filter_str+"sort_on="+sort_on_filter
     }
     if(search_string == true){
-      append_filter_str = (url.indexOf("?") == (url.length-1))?"":((url.indexOf("?") !== -1)?"&":"?")
+      append_filter_str = ((url.indexOf("?") !== -1) && (url.indexOf("?") == (url.length-1)))?"":((url.indexOf("?") !== -1)?"&":"?")
       if(search_string_filter !="")
         url += append_filter_str+"search_string="+search_string_filter
     }
