@@ -26,12 +26,7 @@ export class ShippingSummaryComponent implements OnInit {
   					) { }
 
   ngOnInit() {
-    if(this.appservice.continueOrder){
-      this.appservice.continueOrder = false;
-      this.callContinueOrderApi();
-    }
-    else
-      this.callCreateOrderApi();
+    this.callOrderApi();
     this.updateUrl();
   }
 
@@ -65,15 +60,19 @@ export class ShippingSummaryComponent implements OnInit {
     history.pushState({cart : true}, 'cart', url);      
   }
 
-  callCreateOrderApi(){
+
+  callOrderApi(){
     this.appservice.showLoader();
-    let url = this.appservice.apiUrl + '/api/rest/v1/user/cart/' + this.appservice.getCookie('cart_id') + '/create-order'
+    let url = this.getRequestUrl();
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     let body : any = {
-      address_id : this.appservice.selectedAddressId
+      _token : $('meta[name="csrf-token"]').attr('content')
     };
-    body._token = $('meta[name="csrf-token"]').attr('content');
+    if(this.appservice.selectedAddressId){
+      body.address_id = this.appservice.selectedAddressId;      
+    }
     this.appservice.selectedAddressId = '';
+
     this.apiservice.request(url, 'post', body , header ).then((response)=>{
       this.shippingDetails = this.getProductUrl(response);
       this.setUserName();
@@ -88,31 +87,16 @@ export class ShippingSummaryComponent implements OnInit {
     })  
   }
 
-  callContinueOrderApi(){
-    this.appservice.showLoader();
-    let url = this.appservice.apiUrl + '/api/rest/v1/user/cart/' + this.appservice.getCookie('cart_id') + '/continue-order';
-    let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
-    let body : any = {
-      _token : $('meta[name="csrf-token"]').attr('content')
-    };
-
-    if(this.appservice.selectedAddressId){
-      body.address_id = this.appservice.selectedAddressId
-      this.appservice.selectedAddressId = '';
+  getRequestUrl(){
+    if(this.appservice.continueOrder){
+      console.log("continue-order");
+      this.appservice.continueOrder = false;
+      return (this.appservice.apiUrl + '/api/rest/v1/user/cart/' + this.appservice.getCookie('cart_id') + '/continue-order');
     }
-
-    this.apiservice.request(url, 'post', body , header ).then((response)=>{
-      this.shippingDetails = this.getProductUrl(response);
-      this.setUserName();
-      this.appservice.removeLoader();
-      // fbTrackInitiateCheckout(this.shippingDetails.summary.final_price);
-      // this.appservice.updateCartId();
-    })
-    .catch((error)=>{
-      console.log("error ===>", error);
-      this.router.navigateByUrl('/cartpage', { skipLocationChange: true });
-      this.appservice.removeLoader();
-    })  
+    else{
+      console.log("create-order");
+      return (this.appservice.apiUrl + '/api/rest/v1/user/cart/' + this.appservice.getCookie('cart_id') + '/create-order');
+    }    
   }
 
   getProductUrl(data){
