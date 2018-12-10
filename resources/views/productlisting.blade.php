@@ -11,6 +11,7 @@
 
 @section('headjs')
   @include('includes.abovethefold.productlistingcss')
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.min.js"></script>
 @stop
 
 @section('content')
@@ -43,7 +44,6 @@
 @stop
 
 @section('footjs')
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.min.js"></script>
   <?php
     $facet_display_data = config('product.facet_display_data');
     $config_facet_names_arr = array_keys($facet_display_data);
