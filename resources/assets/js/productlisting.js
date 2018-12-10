@@ -89,14 +89,13 @@ $(function(){
         jQuery(".kss_filter_mobile--left .nav-item:first-child").addClass("active");
         jQuery('.kss_filter-list').addClass('d-none');
         jQuery('.kss_filter-list[data-filter="category"]').removeClass('d-none');
+        copy_filters = {}
         copy_filters = { "facet_list" : JSON.parse(JSON.stringify(facet_list)) , "range_facet_list" : JSON.parse(JSON.stringify(range_facet_list)) , "boolean_facet_list" : JSON.parse(JSON.stringify(boolean_facet_list)) , "sort_on_filter" : sort_on_filter , "search_string_filter" : search_string_filter  }
-        console.log(copy_filters)
         setFiltersRequired()
    });
 
    jQuery(document).on('click', '#kss_hide-filter-close', function() {
          jQuery(".kss_filter").removeClass("kss_filter_mobile");
-         console.log(copy_filters)
          facet_list = copy_filters["facet_list"]
          range_facet_list = copy_filters["range_facet_list"]
          boolean_facet_list = copy_filters["boolean_facet_list"]
@@ -106,11 +105,9 @@ $(function(){
 
    jQuery(document).on('click', '#kss_hide-filter', function() {
          jQuery(".kss_filter").removeClass("kss_filter_mobile");
-         loadProductListing(0,true);
-         console.log("facet_list===")
-         console.log(facet_list)
+         copy_filters = {}
          copy_filters = { "facet_list" : JSON.parse(JSON.stringify(facet_list)) , "range_facet_list" : JSON.parse(JSON.stringify(range_facet_list)) , "boolean_facet_list" : JSON.parse(JSON.stringify(boolean_facet_list)) , "sort_on_filter" : sort_on_filter , "search_string_filter" : search_string_filter  }
-         console.log(copy_filters)
+         loadProductListing(0,true);
      });
     
 })
@@ -309,14 +306,10 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
     if(url_params.get('sort_on') != undefined && sort_on == false && url_params.get('sort_on').trim() != ""){
       url += append_filter_str+"sort_on="+url_params.get('sort_on')
     }
-    console.log("rf====")
-    console.log(url_params.get('rf'))
     if(url_params.get('rf') != undefined && url_params.get('rf').trim() != ""){
       url = removeParam("rf", url);
       append_filter_str = (url.indexOf("?") == (url.length-1))?"":((url.indexOf("?") !== -1)?"&":"?")
-      console.log("rf url ==="+url)
       url += append_filter_str+"rf="+url_params.get('rf')
-      console.log("rf url after==="+url)
     }
     if( Object.keys(range_facet_list).length>0){
       for(ritem in range_facet_list){
@@ -330,10 +323,8 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
         else
         {
           url = removeParam("rf", url);
-          console.log("rfin url ==="+url+"----"+url.indexOf("?")+"==="+url.length)
           append_filter_str = (url.indexOf("?") == (url.length-1))?"":((url.indexOf("?") !== -1)?"&":"?")
           url += append_filter_str+"rf=price:"+minval+"TO"+maxval;
-          console.log("rfin url after ==="+url)
         }
       }
       
@@ -354,7 +345,6 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
         url += append_filter_str+"search_string="+search_string_filter
     }
     updated_list_url = url
-    console.log("listurl====",url)
 
     var boolean_facet_list_params = Object.assign({}, boolean_facet_list);
     if(is_ajax == true){
@@ -786,44 +776,44 @@ function loadProductListing(pageval=-1,mobile_view = false){
     var url_params = new window.URLSearchParams(window.location.search);
     var facet_display_data_keys = Object.keys(facet_display_data_arr)
     var facet_display_data_values = Object.values(facet_display_data_arr)
-    for(pair of url_params.entries()) { 
-      if(pair[0] == "bf"){
-        var filters_arr = pair[1].split("|");
-        for(filters_item of filters_arr){
-          var filter_pair = filters_item.split(":");
-          var bool_item_key = searchItemInArray(facet_display_data_values, filter_pair[0]); 
+    if(mobile_view == false){
+      for(pair of url_params.entries()) { 
+        if(pair[0] == "bf"){
+          var filters_arr = pair[1].split("|");
+          for(filters_item of filters_arr){
+            var filter_pair = filters_item.split(":");
+            var bool_item_key = searchItemInArray(facet_display_data_values, filter_pair[0]); 
 
-          // var bool_item_key = facet_display_data_values.filter(function (facet) { return facet.attribute_param == filter_pair[0] });
-          if( facet_display_data_keys[bool_item_key] != undefined ){
-            if(boolean_facet_list[facet_display_data_keys[bool_item_key]] == undefined && ajax_data["search_object"]["boolean_filter"] != undefined )
-              ajax_data["search_object"]["boolean_filter"][facet_display_data_keys[bool_item_key]] = (filter_pair[1] == "true" || filter_pair[1] == "false")?JSON.parse(filter_pair[1]):filter_pair[1];
+            // var bool_item_key = facet_display_data_values.filter(function (facet) { return facet.attribute_param == filter_pair[0] });
+            if( facet_display_data_keys[bool_item_key] != undefined ){
+              if(boolean_facet_list[facet_display_data_keys[bool_item_key]] == undefined && ajax_data["search_object"]["boolean_filter"] != undefined )
+                ajax_data["search_object"]["boolean_filter"][facet_display_data_keys[bool_item_key]] = (filter_pair[1] == "true" || filter_pair[1] == "false")?JSON.parse(filter_pair[1]):filter_pair[1];
+            }
+
+          }
+        }
+        else if(pair[0] == "pf"){
+          var ind_pair = pair[1].split(':')
+          getPrimaryFiltersInfo(ind_pair[1],",")
+        } 
+        else if(pair[0] == "rf"){
+          var ind_pair = pair[1].split(':')
+          var price_val = ind_pair[1].split('TO')
+
+          var bool_item_key = searchItemInArray(facet_display_data_values, ind_pair[0]); 
+          if(range_facet_list[facet_display_data_keys[bool_item_key]] == undefined){
+            ajax_data["search_object"]["range_filter"][facet_display_data_keys[bool_item_key]] = {}
+            ajax_data["search_object"]["range_filter"][facet_display_data_keys[bool_item_key]]["min"] = price_val[0]
+            ajax_data["search_object"]["range_filter"][facet_display_data_keys[bool_item_key]]["max"] = price_val[1]
           }
 
         }
       }
-      else if(pair[0] == "pf"){
-        var ind_pair = pair[1].split(':')
-        getPrimaryFiltersInfo(ind_pair[1],",")
-      } 
-      else if(pair[0] == "rf"){
-        var ind_pair = pair[1].split(':')
-        console.log(ind_pair)
-        var price_val = ind_pair[1].split('TO')
-        console.log(facet_display_data_values)
-
-        var bool_item_key = searchItemInArray(facet_display_data_values, ind_pair[0]); 
-        if(range_facet_list[facet_display_data_keys[bool_item_key]] == undefined){
-          ajax_data["search_object"]["range_filter"][facet_display_data_keys[bool_item_key]] = {}
-          ajax_data["search_object"]["range_filter"][facet_display_data_keys[bool_item_key]]["min"] = price_val[0]
-          ajax_data["search_object"]["range_filter"][facet_display_data_keys[bool_item_key]]["max"] = price_val[1]
-        }
-
+      var url_pfilter_arr = window.location.pathname.split('/')
+      for(url_pfilter of url_pfilter_arr){
+        if(url_pfilter != "shop")
+          getPrimaryFiltersInfo(url_pfilter)
       }
-    }
-    var url_pfilter_arr = window.location.pathname.split('/')
-    for(url_pfilter of url_pfilter_arr){
-      if(url_pfilter != "shop")
-        getPrimaryFiltersInfo(url_pfilter)
     }
     ajax_data["page"] = pageVal
     if(isMobile){
@@ -971,17 +961,12 @@ function setFiltersRequired(){
       $("input[data-facet-name='"+item+"']").prop("checked",false)
   }
   for(item in copy_filters["facet_list"]){
-    console.log(item)
     for(elems of copy_filters["facet_list"][item]){
-      console.log("elems=="+elems)
       $("input[data-facet-name='"+item+"'][value='"+elems+"']").prop("checked",true)
     }
     
   }
   for(item in copy_filters["boolean_facet_list"]){
-    console.log(item)
-    console.log("itttthhnjnj====")
-    console.log(copy_filters["boolean_facet_list"][item])
     if(copy_filters["boolean_facet_list"][item] != undefined){
       $("input[data-facet-name='"+item+"'][value='"+copy_filters["boolean_facet_list"][item]+"']").prop("checked",true)
     }
@@ -993,11 +978,8 @@ function setFiltersRequired(){
 
         $('#price-range').val(copy_filters["range_facet_list"][item]["min"]+";"+copy_filters["range_facet_list"][item]["max"])
         initPriceBar(copy_filters["range_facet_list"][item]["min"], copy_filters["range_facet_list"][item]["max"]);
-        console.log("val==="+$('#price-range').val())
       }
       else{
-        console.log("range_facet_list===")
-        console.log(range_facet_list)
         if(range_facet_list[item]["max"] != undefined){
           $('#price-range').val(range_facet_list[item]["min"]+";"+range_facet_list[item]["max"])
           initPriceBar(range_facet_list[item]["min"], range_facet_list[item]["max"]);
