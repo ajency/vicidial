@@ -45,7 +45,17 @@ return [
             'name',
             'product_ids',
             'id',
-
+        ],
+        'discounts'  => [
+            'discount_rule',
+            'id',
+            'name',
+            'discount_amt',
+            'apply1',
+            'qty_step',
+            'from_date1',
+            'to_date1',
+            'priority1',
         ],
     ],
 ];

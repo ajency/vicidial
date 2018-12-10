@@ -21,8 +21,8 @@ class CreatePromotionsTable extends Migration
             $table->integer('value');
             $table->string('discount_type');
             $table->string('step_quantity');
-            $table->timestamp('start');
-            $table->timestamp('expire');
+            $table->timestamp('start')->useCurrent();
+            $table->timestamp('expire')->useCurrent();
             $table->string('priority');
             $table->timestamps();
         });
