@@ -421,6 +421,12 @@ body{
     }
 }
 
+.cart-bag-img{
+    @media (max-width: 767px){
+        width: 120px;
+    }
+}
+
 .cart-loader.speed-in{
     .cart-loader__wrapper{
         display: flex;
