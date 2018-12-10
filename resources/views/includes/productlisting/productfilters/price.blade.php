@@ -8,7 +8,7 @@
       <div id="collapsePrice" class="collapse@{{#if collapsed}}@{{else}} show @{{/if}}" data-field="@{{template}}">
         <div class="card-body">
           <div class="priceRange">
-            <input type="text" id="price-range" name="price" value="" class="facet-category" data-minval="@{{minval}}" data-maxval="@{{maxval}}" data-facet-name="@{{filter_facet_name}}" data-singleton="true" data-slug="price" @{{#if disabled_at_zero_count}} @{{#ifEquals count 0 }} disabled = "disabled" @{{/ifEquals}} @{{/if}} data-collapsable="@{{collapsed}}" data-display-name="@{{filter_display_name}}"/>
+            <input type="text" id="price-range" name="price" value="" class="facet-category" data-minval="@{{minval}}" data-maxval="@{{maxval}}" data-facet-name="@{{filter_facet_name}}" data-singleton="true" data-slug="price" @{{#if disabled_at_zero_count}} @{{#ifEquals count 0 }} disabled = "disabled" @{{/ifEquals}} @{{/if}} data-collapsable="@{{collapsed}}" data-display-name="@{{filter_display_name}}" data-template="@{{template}}"/>
           </div>
           <div class="row">
             <div class="col-5 col-sm-5">
@@ -98,6 +98,9 @@
     var sort_filter_val = $('#sort_filter_selectbox').val()
     if(sort_filter_val != ""){
       facetCategoryChange($('#sort_filter_selectbox'),false,false,false,true);
+    }
+    if($("#searchStringInp").val() != ""){
+      facetCategoryChange($('#searchStringInp'),false,false,false,false,true); 
     }
   // Function to update price range on change
    priceRangeSlider = $("#price-range").data("ionRangeSlider");
