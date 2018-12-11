@@ -930,6 +930,7 @@ function resetFilter(){
   $("#price-max").val($('#price-range').data("maxval"))
   updated_list_url = "/shop";
   initPriceBar($('#price-range').data("minval"), $('#price-range').data("maxval"));
+  facetCategoryChange($('#price-range'),true,true)
 }
 
 
