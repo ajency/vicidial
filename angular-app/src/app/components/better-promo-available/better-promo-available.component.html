@@ -1,0 +1,16 @@
+<!-- <div *ngIf="promoApplied && promo">
+	Better promo available
+	<div class="pr-4">
+		<p class="mb-1">{{promo.display_title}}</p>
+		<p class="text-gray f-w-4 m-0 d-block">
+			Save <span class="text-success">₹{{promo.actual_discount}}</span>
+		</p>
+	</div>
+</div> -->
+
+<div *ngIf="promoApplied && promo" class="promotion-alert d-flex align-items-baseline promotion-alert px-1 text-muted">
+	<i class="fas fa-info-circle pr-1 text-secondary info-circle"></i>
+	<div> 
+	Better promo available -- {{promo.display_title}}
+	</div>
+</div>
