@@ -28,13 +28,14 @@ class SubOrder extends Model
     {
         $itemsData = [];
         foreach ($items as $itemData) {
-            $variant = Variant::find($itemData['variant']->id);
+            $variant     = Variant::find($itemData['variant']->id);
             $itemsData[] = [
-                'id'            => $itemData['variant']->id,
-                'quantity'      => $itemData['quantity'],
-                'price_mrp'     => $variant->getLstPrice(),
-                'price_final'   => $variant->getSalePrice(),
-                'discount'      => $variant->getDiscount(),
+                'id'               => $itemData['variant']->id,
+                'quantity'         => $itemData['quantity'],
+                'price_mrp'        => $variant->getLstPrice(),
+                'price_final'      => $variant->getSalePrice(),
+                'discount'         => $variant->getDiscount(),
+                'price_discounted' => $this->$order->$cart->getDiscountedPrice($variant),
             ];
         }
         $this->item_data = $itemsData;
@@ -165,7 +166,7 @@ class SubOrder extends Model
             [
                 "product_id"         => $variant->odoo_id,
                 "product_uom_qty"    => $itemData['quantity'],
-                "price_unit"         => $itemData['price_final'],
+                "price_unit"         => $itemData['price_discounted'],
                 "discount"           => 0,
                 "name"               => $variant->getName(),
             ]),

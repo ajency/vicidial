@@ -26,6 +26,11 @@ class Cart extends Model
         return $this->belongsTo('App\User');
     }
 
+    public function promotion()
+    {
+        return $this->hasOne('App\Promotion', 'id', 'promotion_id');
+    }
+
     public function __construct()
     {
         if ($this->cart_data == null) {
@@ -88,10 +93,16 @@ class Cart extends Model
         return $total_price;
     }
 
+    public function getCartDiscount()
+    {
+        $discount = 0;
+        return $discount;
+    }
+
     public function getSummary()
     {
         $spt      = $this->getCartSalePriceTotal();
-        $discount = 0;
+        $discount = $this->getCartDiscount();
         return [
             "mrp_total"        => $this->getCartMrpPriceTotal(),
             "sale_price_total" => $spt,
@@ -197,5 +208,12 @@ class Cart extends Model
             return false;
         }
         return true;
+    }
+
+    public function getDiscountedPrice($variant)
+    {
+        $discount_ratio         = $this->getCartDiscount() / $this->getCartSalePriceTotal();
+        $variant_discount_price = $variant->getSalePrice() * (1 - $discount_ratio);
+        return $variant_discount_price;
     }
 }
