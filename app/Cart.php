@@ -93,16 +93,25 @@ class Cart extends Model
         return $total_price;
     }
 
-    public function getCartDiscount()
+    public function getCartDiscount($spt)
     {
-        $discount = 0;
+        if ($this->promotion != null) {
+            if ($this->promotion->discount_type == "cart_fixed") {
+                $discount = $this->promotion->value;
+            } elseif ($this->promotion->discount_type == "by_percent") {
+                $discount = ($spt * $this->promotion->value / 100.0);
+            }
+        } else {
+            $discount = 0;
+        }
+
         return $discount;
     }
 
     public function getSummary()
     {
         $spt      = $this->getCartSalePriceTotal();
-        $discount = $this->getCartDiscount();
+        $discount = $this->getCartDiscount($spt);
         return [
             "mrp_total"        => $this->getCartMrpPriceTotal(),
             "sale_price_total" => $spt,
@@ -212,7 +221,8 @@ class Cart extends Model
 
     public function getDiscountedPrice($variant)
     {
-        $discount_ratio         = $this->getCartDiscount() / $this->getCartSalePriceTotal();
+        $spt                    = $this->getCartSalePriceTotal();
+        $discount_ratio         = $this->getCartDiscount($spt) / floatval($spt);
         $variant_discount_price = $variant->getSalePrice() * (1 - $discount_ratio);
         return $variant_discount_price;
     }
