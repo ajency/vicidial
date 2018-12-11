@@ -190,4 +190,42 @@ class CartController extends Controller
 
         return response()->json(["message" => 'Items are available in store', 'success'=> true]);
     }
+
+    public function userCartPromotion($id, Request $request){
+        $request->validate(['promotion_id' => 'required|exists:promotions,id']);
+        $params = $request->all();
+
+        $cart = Cart::find($id);
+        if ($cart == null) {
+            abort(404, "Requested Cart ID not found");
+        }
+        $cart->abortNotCart('cart');
+        $user    = User::getUserByToken($request->header('Authorization'));
+        validateCart($user, $cart, 'cart');
+        if($cart->isPromotionApplicable($params['promotion_id'])){
+            $cart->applyPromotion($params['promotion_id']);
+            retuen response()->json(["cart_count"=>$cart->itemCount(), "summary" => $cart->getSummary(), "message" => "promotion applied successfully", "promo_applied" => $promotion_id]);
+        }else{
+            abort(400, "Promo cannot be applied");
+        }
+    }
+
+    public function guestCartDelete(Request $request)
+    {
+        $request->validate(['promotion_id' => 'required|exists:promotions,id']);
+        $id     = $request->session()->get('active_cart_id', false);
+        $params = $request->all();
+
+        $cart = Cart::find($id);
+        if ($cart == null) {
+            abort(404, "Cart not found for this session");
+        }
+        $cart->abortNotCart('cart');
+        if($cart->isPromotionApplicable($params['promotion_id'])){
+            $cart->applyPromotion($params['promotion_id']);
+            retuen response()->json(["cart_count"=>$cart->itemCount(), "summary" => $cart->getSummary(), "message" => "promotion applied successfully", "promo_applied" => $promotion_id]);
+        }else{
+            abort(400, "Promo cannot be applied");
+        }
+    }
 }
