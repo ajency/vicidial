@@ -324,7 +324,7 @@ return [
             "false_facet_value"      => true,
             "facet_value"            => "skip",
             "implicit_filter"        => [
-                'skip'          => true,
+                'skip'          => false,
                 'default_value' => true,
             ],
         ],
