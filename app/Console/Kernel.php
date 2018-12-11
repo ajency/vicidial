@@ -27,7 +27,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         if (config('app.run_cron')) {
-            if (config('app.env') == 'production') {
+            if (!isNotProd()) {
                 $schedule->job(new ProductSync, 'create_jobs')->hourly();
                 $schedule->job(new ProductMoveSync, 'create_jobs')->everyMinute();
             } else {
