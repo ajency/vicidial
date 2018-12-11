@@ -146,9 +146,23 @@ class OrderController extends Controller
         $length = (isset($data["display_limit"]))?$data["display_limit"]:0;
         $page = (isset($data["page"]))?$data["page"]:1;
         $start=($page==1)?($page-1):((($page-1)*$length));
-        
-        $user   = User::getUserByToken($request->header('Authorization'));
-        $orderObj = Order::join('carts', 'carts.id', '=', 'orders.cart_id')->where('carts.user_id',$user->id)->where('orders.status','payment-successful')->orderBy("orders.".$sort_on,$sort_by)->select("orders.*");
+        $user_id = 0;
+        if(isset($search_object["user_id"])){
+            $user_id = $search_object["user_id"];
+        }
+        else{
+            $user   = User::getUserByToken($request->header('Authorization'));
+            $user_id = $user->id;
+        }
+        // dd($user_id);
+        $order_status = (isset($search_object["status"]))?$search_object["status"]:'payment-successful';
+        $orderObj = Order::join('carts', 'carts.id', '=', 'orders.cart_id')->where('carts.user_id',$user_id)->where('orders.status',$order_status)->orderBy("orders.".$sort_on,$sort_by)->select("orders.*");
+
+        if(isset($search_object["order_date"]) && isset($search_object["order_date"]["start"]) && isset($search_object["order_date"]["end"])){
+            $from = date($search_object["order_date"]["start"]);
+            $to = date($search_object["order_date"]["end"]);
+            $orderObj = $orderObj->whereBetween('orders.created_at', [$from, $to]);
+        }
         if($length == 0)
             $orders = $orderObj->get();
         else
