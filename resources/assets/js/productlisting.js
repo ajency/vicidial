@@ -13,6 +13,7 @@ var sort_on_filter = ""
 var search_string_filter = ""
 var filter_tags_list = [] ;
 var copy_filters ={}
+var has_reset_filter = false
 
 Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
   return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
@@ -92,6 +93,12 @@ $(function(){
         copy_filters = {}
         copy_filters = { "facet_list" : JSON.parse(JSON.stringify(facet_list)) , "range_facet_list" : JSON.parse(JSON.stringify(range_facet_list)) , "boolean_facet_list" : JSON.parse(JSON.stringify(boolean_facet_list)) , "sort_on_filter" : sort_on_filter , "search_string_filter" : search_string_filter  }
         setFiltersRequired()
+        if(has_reset_filter == true){
+          facetCategoryChange($('#price-range'),true,true)
+
+          has_reset_filter = false
+        }
+
    });
 
    jQuery(document).on('click', '#kss_hide-filter-close', function() {
@@ -101,6 +108,7 @@ $(function(){
          boolean_facet_list = copy_filters["boolean_facet_list"]
          sort_on_filter = copy_filters["sort_on_filter"]
          search_string_filter = copy_filters["search_string_filter"]
+         // has_reset_filter = false
      });
 
    jQuery(document).on('click', '#kss_hide-filter', function() {
@@ -148,7 +156,7 @@ $(document).ready(function(){
 });
 
 // $('body').on('change', '.facet-category', function() {
-function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean_filter = false,sort_on=false,search_string=false)
+function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean_filter = false,sort_on=false,search_string=false,updated_url_reset=false)
 {
     var call_ajax = false;
     var facet_name = $(thisObj).data('facet-name')
@@ -344,7 +352,12 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
       if(search_string_filter !="")
         url += append_filter_str+"search_string="+search_string_filter
     }
-    updated_list_url = url
+    if(updated_url_reset == false){
+      updated_list_url = url
+    }
+    else{
+      updated_list_url = "/shop";
+    }
 
     var boolean_facet_list_params = Object.assign({}, boolean_facet_list);
     if(is_ajax == true){
@@ -557,6 +570,8 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                    //   $('.nav-item.active').find('.filter-count').addClass('d-none')
                    // else
                    //   $('.nav-item.active').find('.filter-count').removeClass('d-none')
+                   if(has_reset_filter == true)
+                    $('li.nav-item.active').trigger('click')
                  }
                  // if(search_string == true)
                  //  $('.clear-search').removeClass('d-none')
@@ -928,9 +943,9 @@ function resetFilter(){
   $('#price-range').val($('#price-range').data("minval")+";"+$('#price-range').data("maxval"))
   $("#price-min").val($('#price-range').data("minval"))
   $("#price-max").val($('#price-range').data("maxval"))
-  updated_list_url = "/shop";
   initPriceBar($('#price-range').data("minval"), $('#price-range').data("maxval"));
-  facetCategoryChange($('#price-range'),true,true)
+  facetCategoryChange($('#price-range'),true,true,false,false,false,true)
+  has_reset_filter = true
 }
 
 
