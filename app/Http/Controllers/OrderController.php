@@ -34,10 +34,13 @@ class OrderController extends Controller
         saveTxnid($order);
 
         $order->setSubOrders();
+        $order->aggregateSubOrderData();
+        $order->save();
+
         $cart->type = 'order';
         $cart->save();
 
-        $response = ["items" => getCartData($cart, false), "summary" => $order->aggregateSubOrderData(), "order_id" => $order->id, "address" => $order->address_data, "message" => 'Order Placed successfully'];
+        $response = ["items" => getCartData($cart, false), "summary" => $order->subOrderData(), "order_id" => $order->id, "address" => $order->address_data, "message" => 'Order Placed successfully'];
 
         $user_info = $user->userInfo();
         if($user_info!=null) {
@@ -70,7 +73,7 @@ class OrderController extends Controller
             $address = $order->address;
         }
 
-        $response = ["items" => getCartData($cart, false), "summary" => $order->aggregateSubOrderData(), "order_id" => $order->id, "address" => $order->address_data, "message" => 'Order Placed successfully'];
+        $response = ["items" => getCartData($cart, false), "summary" => $order->subOrderData(), "order_id" => $order->id, "address" => $order->address_data, "message" => 'Order Placed successfully'];
 
         $user_info = $user->userInfo();
         if($user_info!=null) {

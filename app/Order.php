@@ -15,6 +15,7 @@ class Order extends Model
 
     protected $casts = [
         'address_data' => 'array',
+        'aggregate_data' => 'array',
     ];
 
     protected $fillable = ['cart_id', 'address_id', 'address_data', 'expires_at'];
@@ -65,12 +66,18 @@ class Order extends Model
         }
     }
 
+    public function subOrderData()
+    {
+        return $this->aggregate_data;
+    }
+
     public function aggregateSubOrderData()
     {
         $total = [
-            'total'        => 0,
-            'shipping_fee' => 0,
-            'savings'   => 0,
+            'mrp_total'        => 0,
+            'sale_price_total' => 0,
+            'you_pay'          => 0,
+            'cart_discount'    => 0,
         ];
         $subOrders = $this->subOrders;
 
@@ -80,9 +87,7 @@ class Order extends Model
             }
         }
 
-        $total['final_price'] = $total['total'] + $total['shipping_fee'];
-
-        return $total;
+        $this->aggregate_data = $total;
     }
 
     public function getOrderInfo()
@@ -90,7 +95,7 @@ class Order extends Model
         $dateInd = Carbon::createFromFormat('Y-m-d H:i:s', $this->created_at, 'UTC');
         $dateInd->setTimezone('Asia/Kolkata');
 
-        $order_info = array('order_id' => $this->id, 'txn_no' => $this->txnid, 'total_amount' => $this->aggregateSubOrderData()['final_price'], 'order_date' => $dateInd->format('j M Y'), 'no_of_items' => count($this->cart->getItems()));
+        $order_info = array('order_id' => $this->id, 'txn_no' => $this->txnid, 'total_amount' => $this->subOrderData()['you_pay'], 'order_date' => $dateInd->format('j M Y'), 'no_of_items' => count($this->cart->getItems()));
 
         return $order_info;
     }
@@ -106,7 +111,7 @@ class Order extends Model
             "order_info"       => $this->getOrderInfo(),
             "sub_orders"       => $sub_orders,
             "shipping_address" => $this->address_data,
-            "order_summary"    => $this->aggregateSubOrderData(),
+            "order_summary"    => $this->subOrderData(),
         ];
 
         $payment = $this->payments->first();
@@ -138,7 +143,7 @@ class Order extends Model
     {
         sendSMS('order-success', [
             'to'      => $this->cart->user->phone,
-            'message' => "Your order with order id {$this->txnid} for Rs. {$this->aggregateSubOrderData()['final_price']} has been placed successfully on KidSuperStore.in.",
+            'message' => "Your order with order id {$this->txnid} for Rs. {$this->subOrderData()['you_pay']} has been placed successfully on KidSuperStore.in.",
         ]);
     }
 }
