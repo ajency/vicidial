@@ -41,7 +41,7 @@ export class CartComponent implements OnInit {
                private apiservice : ApiServiceService,
                private zone : NgZone
               ) { 
-    this.createDummyPromotions();
+    // this.createDummyPromotions();
     this.reloadSubscription = this.appservice.listenToAddToCartEvent().subscribe(()=> { this.reloadCart() });
     this.loadSubscription = this.appservice.listenToOpenCartEvent().subscribe(()=> { this.loadCart() });
 
@@ -131,7 +131,9 @@ export class CartComponent implements OnInit {
     this.addToCartFailed = false;
     this.appservice.showLoader()
     this.appservice.callFetchCartApi().then((response)=>{
+      this.promotions = Object.keys(response.promotions).map((k)=>{ return response.promotions[k] });
       this.cart = this.formattedCartDataForUI(response);      
+      console.log("promotions ==>", response.promotions);  
       this.checkCartItemOutOfStock();
       this.updateLocalDataAndUI(this.cart, this.cart.cart_count);
       console.log(add_to_cart_failed);

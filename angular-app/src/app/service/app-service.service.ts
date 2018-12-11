@@ -166,7 +166,7 @@ export class AppServiceService {
   }
 
   sortArray(array){
-    array.sort((a,b)=> a.min_cart_value - b.min_cart_value );
+    array.sort((a,b)=>{a.min_cart_value - b.min_cart_value});
     return array;
   }
 

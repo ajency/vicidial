@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges} from '@angular/core';
 import { PromotionComponent } from '../promotion/promotion.component';
 import { AppServiceService } from '../../../service/app-service.service';
 
@@ -7,7 +7,7 @@ import { AppServiceService } from '../../../service/app-service.service';
   templateUrl: './promotions-list.component.html',
   styleUrls: ['./promotions-list.component.css']
 })
-export class PromotionsListComponent implements OnInit {
+export class PromotionsListComponent implements OnInit, OnChanges {
 
 	@Input() promotionsList : any;
 	@Input() orderTotal : any;
@@ -17,8 +17,18 @@ export class PromotionsListComponent implements OnInit {
   constructor(private appservice : AppServiceService) { }
 
   ngOnInit() {
-  	// console.log("ngOnInit", this.promotionsList);
+  	console.log("ngOnInit", this.promotionsList, this.orderTotal);
+	  	this.updatePromotionsData();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log("ngOnChanges", this.promotionsList, this.orderTotal);
+    this.updatePromotionsData();
+  }
+
+  updatePromotionsData(){
   	this.promotionsList =  this.appservice.sortArray(this.promotionsList);
+  	console.log(this.promotionsList);
 		this.calculateAge();
   	let obj = this.appservice.filterArray(this.promotionsList, this.orderTotal);
   	this.applicablePromotions = obj.applicable;
