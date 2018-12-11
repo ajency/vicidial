@@ -55,17 +55,22 @@ class SubOrder extends Model
 
     public function aggregateData()
     {
-        $items = $this->getItems();
-        $total = 0;
-        $savings = 0;
+        $items            = $this->item_data;
+        $mrp_total        = 0;
+        $sale_price_total = 0;
+        $you_pay          = 0;
+        $cart_discount    = 0;
         foreach ($items as $itemData) {
-            $total += $itemData['quantity']*$itemData['item']->getSalePrice();
-            $savings += $itemData['quantity']*$itemData['item']->getDiscount();
+            $mrp_total += $itemData['quantity'] * $itemData['price_mrp'];
+            $sale_price_total += $itemData['quantity'] * $itemData['price_final'];
+            $you_pay += $itemData['quantity'] * $itemData['price_discounted'];
+            $cart_discount += $itemData['quantity'] * ($itemData['price_final'] - $itemData['price_discounted']);
         }
         $this->odoo_data = [
-            'total'        => $total,
-            'shipping_fee' => 0,
-            'savings'      => $savings,
+            'mrp_total'        => $mrp_total,
+            'sale_price_total' => $sale_price_total,
+            'you_pay'          => $you_pay,
+            'cart_discount'    => $cart_discount,
         ];
     }
 
