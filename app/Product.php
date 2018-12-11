@@ -271,6 +271,7 @@ class Product
     {
 
         $q    = self::buildBaseQuery();
+        $params['search_object'] = setDefaultFilters($params);
         $must = setElasticFacetFilters($q, $params);
         $q->setQuery($must);
         $response = $q->search();
@@ -290,6 +291,7 @@ class Product
      */
     public static function getItemsWithFilters($params)
     {
+        $params['search_object'] = setDefaultFilters($params);
         $size   = $params["display_limit"];
         $offset = ($params["page"] - 1) * $size;
         $index  = config('elastic.indexes.product');

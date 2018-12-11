@@ -309,7 +309,9 @@ export class CartComponent implements OnInit {
   viewOrders(){
       let url = window.location.href.split("#")[0] + '#/account/my-orders';
       this.appservice.closeCart();
-      window.location.href = url;
+      history.pushState({cart : false}, 'cart', url);
+      // window.location.href = url;
+      this.reloadPage();
   }
 
   modalHandler(){

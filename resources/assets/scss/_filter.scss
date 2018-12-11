@@ -206,26 +206,22 @@
 }
 
 .color-wrapper{
-    .card-body{
-        height: 243px;
-        overflow: hidden;
-        &.is-open{
-            height: auto;
-        }
-    }
-    .more-color{
-        display: block;
-        color: #004283;
-        font-weight: 600;
-        cursor: pointer;
-        padding-bottom: 10px;
-        padding-left: 34px;
-        font-size: 1.05em;
-    }
-
-    @media(max-width: 767px){
+    @media (min-width: 768px){
         .card-body{
-            height: 265px;
+            height: 243px;
+            overflow: hidden;
+            &.is-open{
+                height: auto;
+            }
+        }
+        .more-color{
+            display: block;
+            color: #004283;
+            font-weight: 600;
+            cursor: pointer;
+            padding-bottom: 10px;
+            padding-left: 34px;
+            font-size: 1.05em;
         }
     }
 }

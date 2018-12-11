@@ -405,7 +405,7 @@ body{
 // Empty cart
 
 .empty-cart{
-    height: calc(100% - 118px);
+    height: calc(100vh - 135px);
     &__icon{
         font-size: 5em;
         color: #d2d2d2;
@@ -418,6 +418,12 @@ body{
     }
     .order-details-btn{
         font-size: 1.2em;
+    }
+}
+
+.cart-bag-img{
+    @media (max-width: 767px){
+        width: 120px;
     }
 }
 
