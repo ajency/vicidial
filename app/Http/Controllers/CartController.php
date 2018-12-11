@@ -109,6 +109,9 @@ class CartController extends Controller
 
         $summary = $cart->getSummary();
         $code    = ["code" => "NEWUSER", "applied" => true];
+        if(!$cart->isPromotionApplicable($cart->promotion_id)){
+            $cart->applyPromotion($cart->getBestPromotion());
+        }
         $promotions = Promotion::getAllPromotions($cart,'web');
         return response()->json(['cart_count' => $cart->itemCount(), 'cart_type' => $cart->type, 'items' => $items,'promo_applied' => $cart->promotion_id, "promotions" => $promotions, "summary" => $summary, "code" => $code]);
     }
@@ -125,6 +128,9 @@ class CartController extends Controller
 
         $summary = $cart->getSummary();
         $code    = ["code" => "NEWUSER", "applied" => true];
+        if(!$cart->isPromotionApplicable($cart->promotion_id)){
+            $cart->applyPromotion($cart->getBestPromotion());
+        }
         $promotions = Promotion::getAllPromotions($cart,'web');
         return response()->json(['cart_count' => $cart->itemCount(), 'cart_type' => $cart->type, 'items' => $items,'promo_applied' => $cart->promotion_id, "summary" => $summary, "promotions" => $promotions, "code" => $code]);
     }
