@@ -210,13 +210,13 @@ class CartController extends Controller
         validateCart($user, $cart, 'cart');
         if($cart->isPromotionApplicable($params['promotion_id'])){
             $cart->applyPromotion($params['promotion_id']);
-            retuen response()->json(["cart_count"=>$cart->itemCount(), "summary" => $cart->getSummary(), "message" => "promotion applied successfully", "promo_applied" => $promotion_id]);
+            return response()->json(["cart_count"=>$cart->itemCount(), "summary" => $cart->getSummary(), "message" => "promotion applied successfully", "promo_applied" => $promotion_id]);
         }else{
             abort(400, "Promo cannot be applied");
         }
     }
 
-    public function guestCartDelete(Request $request)
+    public function guestCartPromotion(Request $request)
     {
         $request->validate(['promotion_id' => 'required|exists:promotions,id']);
         $id     = $request->session()->get('active_cart_id', false);
@@ -229,7 +229,7 @@ class CartController extends Controller
         $cart->abortNotCart('cart');
         if($cart->isPromotionApplicable($params['promotion_id'])){
             $cart->applyPromotion($params['promotion_id']);
-            retuen response()->json(["cart_count"=>$cart->itemCount(), "summary" => $cart->getSummary(), "message" => "promotion applied successfully", "promo_applied" => $promotion_id]);
+            return response()->json(["cart_count"=>$cart->itemCount(), "summary" => $cart->getSummary(), "message" => "promotion applied successfully", "promo_applied" => $promotion_id]);
         }else{
             abort(400, "Promo cannot be applied");
         }
