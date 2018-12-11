@@ -87,14 +87,14 @@ class Cart extends Model
 
     public function getSummary()
     {
-        $total_price = 0;
-        $discount    = 0;
-        foreach ($this->cart_data as $cart_item) {
-            $variant = Variant::find($cart_item['id']);
-            $total_price += $variant->getSalePrice() * $cart_item["quantity"];
-            $discount += $variant->getDiscount() * $cart_item["quantity"];
-        }
-        return ["total" => $total_price, "discount" => $discount, "tax" => "", "coupon" => "", "order_total" => $total_price];
+        $spt = $this->getCartSalePriceTotal();
+        $discount = 0;
+        return [
+            "mrp_total" => $this->getCartMrpPriceTotal(), 
+            "sale_price_total" => $spt, 
+            "discount" => $discount, 
+            "you_pay" => $spt - $discount,
+        ];
     }
 
     public function removeItem($variant_id)
