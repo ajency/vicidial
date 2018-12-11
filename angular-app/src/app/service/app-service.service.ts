@@ -178,7 +178,6 @@ export class AppServiceService {
       else
         ret_obj.non_applicable.push(promotion);
     })
-    console.log(ret_obj);
     return ret_obj;
   }
 
@@ -187,6 +186,15 @@ export class AppServiceService {
     let start = moment(vaild_from);
     let duration = moment.duration(now.diff(start));
     return duration.asSeconds();
+  }
+
+  calculateDiscount(type, value ,order_total){
+    return ( type == 'cart_fixed' ? value : (order_total * value / 100) )
+  }
+
+  sortByDiscount(array){
+    array.sort((a,b)=>{b.actual_discount - a.actual_discount })
+    return array;
   }
 
 }
