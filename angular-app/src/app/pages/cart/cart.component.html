@@ -146,9 +146,9 @@
 				<app-better-promo-available [promoApplied]="1" [promotions]="promotions" [orderTotal]="cart.summary.sale_price_total"></app-better-promo-available>	
 			</div>			
 			<app-upgrade-cart [promotions]="promotions" [orderTotal]="cart.summary.sale_price_total"> </app-upgrade-cart>
+			
+			<hr>
 		</div>
-
-		<hr>
 
 
 		<div *ngIf="promotions && promotions.length">
