@@ -3,11 +3,29 @@
 namespace App;
 
 use App\Elastic\OdooConnect;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Promotion extends Model
 {
     protected $fillable = ['odoo_id'];
+
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'start',
+        'expire',
+    ];
+
+    public function getStartAttribute($value)
+    {
+    	return (new Carbon($value))->setTimezone('Asia/Kolkata')->toDateTimeString();
+    }
+
+     public function getExpireAttribute($value)
+    {
+    	return (new Carbon($value))->setTimezone('Asia/Kolkata')->toDateTimeString();
+    }
 
     public static function getAllDiscountsFromOdoo()
     {
@@ -34,7 +52,7 @@ class Promotion extends Model
 
     public static function getAllPromotions($cart, $source = 'web')
     {
-        $promotions = self::get();
+        $promotions = self::where('active', true)->where('start', '<=', Carbon::now())->where('expire', '>', Carbon::now())->get();
         $response   = [];
         foreach ($promotions as $promo) {
             $promo_res = [
