@@ -22,39 +22,31 @@ function build_search_object($params) {
 			}
 			if($queryk == "bf"){
 				$queryval = explode("|",$queryv);
+				$bool_filters = array_filter($facet_display_data, function ($value) {
+				    return ($value['filter_type'] == 'boolean_filter');
+				});
+
+				$attr_param_arr = array_column($bool_filters,"attribute_param");
 				foreach($queryval as $queryvalv){
-					if (strpos($queryvalv, "variant_availability:") !== false) {
+					$querry_value_pairs = explode(":", $queryvalv);
+					// if (strpos($queryvalv, "variant_availability:") !== false) {
+					if (count($querry_value_pairs)>1 && in_array($querry_value_pairs[0], $attr_param_arr)) {
 
-						$ar = array_filter($facet_display_data, function ($item) {
-						        return $item['attribute_param'] === 'variant_availability';
+						$ar = array_filter($facet_display_data, function ($item) use ($querry_value_pairs) {
+						        return $item['attribute_param'] === $querry_value_pairs[0];
 						    }
 						); 
 						$ar_keys_ar = array_keys($ar);
-		                $values = str_replace('variant_availability:', '', $queryvalv); 
+		                $values = str_replace($querry_value_pairs[0].':', '', $queryvalv); 
 		                $values_arr = explode(",",$values);
 		                $bool_val=false;
-		                if(is_string($values_arr[0]))
+		                if(is_string($values_arr[0]) && $values_arr[0] != "skip")
 		                	$bool_val =($values_arr[0] == "true")?true:false;
 		                else
 		                	$bool_val =$values_arr[0];
 		                $dataArr["search_result"]["boolean_filter"][$ar_keys_ar[0]]=$bool_val;
 		            }
-		            else if (strpos($queryvalv, "product_image_available:") !== false) {
 
-						$ar = array_filter($facet_display_data, function ($item) {
-						        return $item['attribute_param'] === 'product_image_available';
-						    }
-						); 
-						$ar_keys_ar = array_keys($ar);
-		                $values = str_replace('product_image_available:', '', $queryvalv); 
-		                $values_arr = explode(",",$values);
-		                $bool_val=false;
-		                if(is_string($values_arr[0]))
-		                	$bool_val =($values_arr[0] == "true")?true:false;
-		                else
-		                	$bool_val =$values_arr[0];
-		                $dataArr["search_result"]["boolean_filter"][$ar_keys_ar[0]]=$bool_val;
-		            }
 				}
 				
 			}
@@ -254,4 +246,16 @@ function getFacetValueSlugPairs(){
     }
     // dd($search_result_assoc);
     return $search_result_assoc;
+}
+
+
+function getFacetValueSize(){
+	$facets = Facet::select(['facet_value', 'display_name', 'slug', 'sequence'])->where('facet_name','variant_size_name')->get();
+    $search_result_assoc = [];
+    $facet_value_slug_pairs = [];
+    foreach($facets as $facet){
+        $facet_value_slug_pairs[$facet['facet_value']] = array('display_name' => $facet['display_name'], 'slug' => $facet['slug'], 'sequence' => $facet['sequence']);
+    }
+    
+    return $facet_value_slug_pairs;
 }

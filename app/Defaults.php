@@ -98,4 +98,27 @@ class Defaults extends Model
         return array_unique($orig);
     }
 
+    public static function addElasticAlternateIndex($index,$name){
+        $indexes = self::where('type', 'index')->where('label', $index)->first();
+        if($indexes == null){
+            $indexes = new self;
+            $indexes->type = 'index';
+            $indexes->label = $index;
+            $indexes->meta_data = [];
+        }
+        $names = $indexes->meta_data;
+        $names[] = $name;
+        $indexes->meta_data = array_unique($names);
+        $indexes->save();
+    }
+
+    public static function getElasticAlternateIndexes($index){
+        $indexes = self::where('type', 'index')->where('label', $index)->first();
+        if($indexes == null){
+            return [];
+        }else{
+            return $indexes->meta_data;
+        }
+    }
+
 }

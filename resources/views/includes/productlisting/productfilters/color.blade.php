@@ -1,11 +1,11 @@
 <script id="filter-color-template" type="text/x-handlebars-template">
-      <div class="kss_filter-list" data-filter="color">
+      <div class="kss_filter-list" data-filter="@{{template}}">
         <div class="filter-heading">
           <label class="w-100 mb-0 pb-3 cursor-pointer @{{#if collapsed}} collapsed @{{/if}}" data-toggle="collapse" data-target="#collapseColor" aria-expanded="false" aria-controls="collapseColor">
             @{{filter_display_name}}<i class="fas fa-angle-up float-right"></i>
           </label>
         </div>
-        <div id="collapseColor" class="collapse@{{#if show_more}} color-wrapper @{{/if}} @{{#if collapsed}}@{{else}} show @{{/if}}" data-field="color">
+        <div id="collapseColor" class="collapse@{{#if show_more}} color-wrapper @{{/if}} @{{#if collapsed}}@{{else}} show @{{/if}}" data-field="@{{template}}">
           <div class="card-body pt-2 pb-2">
              @{{#if singleton }}
              @{{#each items}}
@@ -15,6 +15,9 @@
                   <span class="color-box" style="background-color:@{{facet_value}};"></span>
                   <span class="color-name pl-2 text-capitalize">@{{display_name}}</span>
                   <!-- <span class="sub-text filter-count pl-1">(150)</span> -->
+                  @{{#if ../display_count }}
+                    <span class="sub-text filter-count pl-1">(@{{count}})</span>
+                  @{{/if}}
                 </label>
               </div>
               @{{/each}}
@@ -26,6 +29,9 @@
                   <span class="color-box" style="background-color:@{{facet_value}};"></span>
                   <span class="color-name pl-2 text-capitalize">@{{display_name}}</span>
                   <!-- <span class="sub-text filter-count pl-1">(150)</span> -->
+                  @{{#if ../display_count }}
+                    <span class="sub-text filter-count pl-1">(@{{count}})</span>
+                  @{{/if}}
                 </label>
               </div>
               @{{/each}}
@@ -56,7 +62,6 @@
    var display_count = <?= json_encode($display_count) ?>;
    var disabled_at_zero_count = <?= json_encode($disabled_at_zero_count) ?>;
    var is_attribute_param = <?= json_encode($is_attribute_param) ?>;
-   console.log("color----"+<?= $singleton ?>)
    var context = {};
    context["template"] = '<?= $template ?>';
    context["singleton"] = singleton;
@@ -68,7 +73,6 @@
    context["filter_display_name"] = filter_display_name;
    context["filter_facet_name"] = filter_facet_name;
    context["items"] = <?= json_encode($items); ?>;
-   console.log(context)
    var html    = template(context);
    document.getElementById("filter-color-template-content").innerHTML = html;
  </script>

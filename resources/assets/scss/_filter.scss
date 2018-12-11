@@ -12,7 +12,7 @@
         top: 0px;
         left: 100%;
         padding: 0;
-        overflow: auto;
+        overflow: hidden;
         padding-bottom: 75px;
     }
     .kss_filter-list {
@@ -42,8 +42,8 @@
         }
         @media (max-width: 767px) {
             padding: 0 15px;
-            // margin: 5px 0px;
-            // border-bottom: 0;
+            margin: 5px 0px;
+            border-bottom: 0;
             .card-body{
                 padding-bottom: 0.5rem;
             }
@@ -95,7 +95,8 @@
 @media(max-width: 767px){
     .kss_filter_mobile {
         left: 0px;
-        height: calc(100vh - 50px);
+        // height: calc(100vh - 50px);
+        height: 100vh;
         padding-bottom: 0;
         .fixed-bottom {
             display: block;
@@ -108,9 +109,9 @@
             margin-top: 70px;
         }
         &--left{
-            margin-top: 74px;
+            margin-top: 52px;
             // border-right: 1px solid lighten($gray-400, 8%);
-            height: calc(100vh - 125px);
+            height: calc(100vh - 103px);
             overflow-y: auto;
             overflow-x: hidden;
             background-color: lighten($gray-400, 12%);
@@ -137,15 +138,15 @@
         }
         &--right{
             flex: 1;
-            // margin-top: 74px;
-            // max-height: calc(100vh - 125px);
-            // overflow: auto;
+            margin-top: 52px;
+            max-height: calc(100vh - 103px);
+            overflow: auto;
             .filter-heading{
-                // display: none;
+                display: none;
             }
             .custom-control{
-                // border-bottom: 1px solid lighten($gray-400, 8%);
-                // padding-bottom: 12px;
+                border-bottom: 1px solid lighten($gray-400, 8%);
+                padding-bottom: 12px;
                 &:last-child{
                     border-bottom-color: transparent;
                 }
@@ -205,26 +206,22 @@
 }
 
 .color-wrapper{
-    .card-body{
-        height: 243px;
-        overflow: hidden;
-        &.is-open{
-            height: auto;
-        }
-    }
-    .more-color{
-        display: block;
-        color: #004283;
-        font-weight: 600;
-        cursor: pointer;
-        padding-bottom: 10px;
-        padding-left: 34px;
-        font-size: 1.05em;
-    }
-
-    @media(max-width: 767px){
+    @media (min-width: 768px){
         .card-body{
-            // height: 265px;
+            height: 243px;
+            overflow: hidden;
+            &.is-open{
+                height: auto;
+            }
+        }
+        .more-color{
+            display: block;
+            color: #004283;
+            font-weight: 600;
+            cursor: pointer;
+            padding-bottom: 10px;
+            padding-left: 34px;
+            font-size: 1.05em;
         }
     }
 }

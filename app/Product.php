@@ -8,6 +8,7 @@ use App\Facet;
 use App\Jobs\CreateProductJobs;
 use App\Jobs\FetchProductImages;
 use App\Jobs\UpdateVariantInventory;
+use App\Jobs\UpdateSearchText;
 use App\ProductColor;
 use App\Variant;
 use Illuminate\Support\Facades\DB;
@@ -112,15 +113,16 @@ class Product
                 $facetObj               = new Facet;
                 $facetObj->facet_name   = $facet;
                 $facetObj->facet_value  = $product[$facet];
-                $facetObj->display_name = ($facet == 'product_color_html') ? $product['product_color_name'] : $product[$facet];
+                $facetObj->display_name = $product[$facet];
                 $facetObj->slug         = str_slug($product[$facet]);
                 $facetObj->sequence     = 10000;
+                $facetObj->display      = false;
                 $facetObj->save();
             } catch (\Exception $e) {
                 \Log::warning($e->getMessage());
             }
         }
-        $facets = ['product_color_html'];
+        $facets = ['product_color_html', 'variant_size_name'];
         foreach ($facets as $facet) {
             try {
                 $facetObj               = new Facet;
@@ -129,6 +131,7 @@ class Product
                 $facetObj->display_name = ($facet == 'product_color_html') ? $variant['product_color_name'] : $variant[$facet];
                 $facetObj->slug         = str_slug($variant[$facet]);
                 $facetObj->sequence     = 10000;
+                $facetObj->display      = false;
                 $facetObj->save();
             } catch (\Exception $e) {
                 \Log::warning($e->getMessage());
@@ -268,6 +271,7 @@ class Product
     {
 
         $q    = self::buildBaseQuery();
+        $params['search_object'] = setDefaultFilters($params);
         $must = setElasticFacetFilters($q, $params);
         $q->setQuery($must);
         $response = $q->search();
@@ -287,6 +291,7 @@ class Product
      */
     public static function getItemsWithFilters($params)
     {
+        $params['search_object'] = setDefaultFilters($params);
         $size   = $params["display_limit"];
         $offset = ($params["page"] - 1) * $size;
         $index  = config('elastic.indexes.product');
@@ -346,9 +351,11 @@ class Product
 
         // $params = $filter_params =  ['search_object' =>['primary_filter' => [ 'product_gender' => ['Boys','all']]], 'display_limit' => 20, 'page' => 1] ;
         // $params = $filter_params ;
-        $output["filters"] = self::getProductCategoriesWithFilter($filter_params);
+        if((!isset($params["exclude_in_response"])) || (isset($params["exclude_in_response"]) && !in_array("filters", $params["exclude_in_response"])))
+            $output["filters"] = self::getProductCategoriesWithFilter($filter_params);
         // dd($output["filters"]);
-        $results             = self::getItemsWithFilters($params);
+        if((!isset($params["exclude_in_response"])) || (isset($params["exclude_in_response"]) && !in_array("items", $params["exclude_in_response"])))
+            $results             = self::getItemsWithFilters($params);
         $facet_names         = array_keys($facet_display_data);
         $bread               = [];
         $bread['breadcrumb'] = array("list" => [], "current" => "");
@@ -380,18 +387,28 @@ class Product
             }
 
         }
-        $output["page"]          = $results["page"];
-        $output["items"]         = $results["items"];
-        $output["results_found"] = $results["results_found"];
-        $output["headers"]       = ["page_title" => $title, "product_count" => $results["page"]["total_item_count"]];
+        
+        if((!isset($params["exclude_in_response"])) || (isset($params["exclude_in_response"]) && !in_array("items", $params["exclude_in_response"]))){
+            if((!isset($params["exclude_in_response"])) || (isset($params["exclude_in_response"]) &&!in_array("search_string", $params["exclude_in_response"])))
+                $output["search_string"] = $results['search_string'];
+            if((!isset($params["exclude_in_response"])) || (isset($params["exclude_in_response"]) &&!in_array("page", $params["exclude_in_response"])))
+                $output["page"]          = $results["page"];
+            $output["items"]         = $results["items"];
+            if((!isset($params["exclude_in_response"])) || (isset($params["exclude_in_response"]) &&!in_array("results_found", $params["exclude_in_response"])))
+                $output["results_found"] = $results["results_found"];
+            if((!isset($params["exclude_in_response"])) || (isset($params["exclude_in_response"]) &&!in_array("headers", $params["exclude_in_response"])))
+                $output["headers"]       = ["page_title" => $title, "product_count" => $results["page"]["total_item_count"]];
+        }
         $output["sort_on"]       = config("product.sort_on");
         if (isset($params['sort_on'])) {
             foreach ($output["sort_on"] as &$value) {
                 $value['is_selected'] = ($value['value'] == $params['sort_on']);
             }
         }
-        $output["breadcrumbs"] = $bread['breadcrumb'];
-        $output["search"]      = ["params" => ["genders" => ["men"], "l1_categories" => ["clothing"]], "pattern" => [["key" => "genders", "slugs" => ["men"]], ["key" => "l1_categories", "slugs" => ["clothing"]]], "is_valid" => true, "domain" => "https=>//newsite.stage.kidsuperstore.in", "type" => "product-list", "query" => ["page" => ["2"], "page_size" => ["20"]]];
+        if((!isset($params["exclude_in_response"])) || (isset($params["exclude_in_response"]) &&!in_array("breadcrumbs", $params["exclude_in_response"])))
+            $output["breadcrumbs"]   = $bread['breadcrumb'];
+        if((!isset($params["exclude_in_response"])) || (isset($params["exclude_in_response"]) &&!in_array("search", $params["exclude_in_response"])))
+            $output["search"]        = ["params" => ["genders" => ["men"], "l1_categories" => ["clothing"]], "pattern" => [["key" => "genders", "slugs" => ["men"]], ["key" => "l1_categories", "slugs" => ["clothing"]]], "is_valid" => true, "domain" => "https=>//newsite.stage.kidsuperstore.in", "type" => "product-list", "query" => ["page" => ["2"], "page_size" => ["20"]]];
         // dd($output);
         return $output;
     }
@@ -418,4 +435,22 @@ class Product
         }
     }
 
+    public static function updateAllSearchtext($indexname){
+        $products = ProductColor::select('elastic_id')->get()->pluck('elastic_id')->toArray();
+        $job_sets = array_chunk($products, config('odoo.update_products'));
+        foreach ($job_sets as $job_set) {
+            UpdateSearchText::dispatch(['productIDs'=> $job_set,'indexName'=> $indexname])->onQueue('search_text');
+        }
+    }
+
+    public static function elasticSearchtext($elasticData){
+        $searchResult = $elasticData['search_result_data'];
+        $productId = $searchResult['product_id'];
+        $productdisplayName = $searchResult['product_att_magento_display_name'];
+        foreach ($elasticData['search_data'] as &$variant) {
+            $variant['full_text'] = implode(' ',[$variant['full_text'],$productId,$productdisplayName]);
+            $variant['full_text_boosted'] = implode(' ',[$variant['full_text'],$productId,$productdisplayName]);
+        }
+        return $elasticData;
+    }
 }

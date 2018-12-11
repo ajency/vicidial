@@ -14,6 +14,7 @@
 
         @yield('content')
 		@include('cart') 
+		@include('my-account')
 </div>
 
 @include('includes.scroll')

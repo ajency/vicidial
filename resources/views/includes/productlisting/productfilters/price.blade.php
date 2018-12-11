@@ -1,14 +1,14 @@
 <script id="filter-price-template" type="text/x-handlebars-template">
-    <div class="kss_filter-list" data-filter="price">
+    <div class="kss_filter-list" data-filter="@{{template}}">
       <div class="filter-heading">
         <label class="w-100 mb-0 pb-3 cursor-pointer @{{#if collapsed}} collapsed @{{/if}}" data-toggle="collapse" data-target="#collapsePrice" aria-expanded="false" aria-controls="collapsePrice">
           @{{filter_display_name}}<i class="fas fa-angle-up float-right"></i>
         </label>
       </div>
-      <div id="collapsePrice" class="collapse@{{#if collapsed}}@{{else}} show @{{/if}}" data-field="price">
+      <div id="collapsePrice" class="collapse@{{#if collapsed}}@{{else}} show @{{/if}}" data-field="@{{template}}">
         <div class="card-body">
           <div class="priceRange">
-            <input type="text" id="price-range" name="price" value="" class="facet-category" data-minval="@{{minval}}" data-maxval="@{{maxval}}" data-facet-name="@{{filter_facet_name}}" data-singleton="true" data-slug="price" @{{#if disabled_at_zero_count}} @{{#ifEquals count 0 }} disabled = "disabled" @{{/ifEquals}} @{{/if}} data-collapsable="@{{collapsed}}" data-display-name="@{{filter_display_name}}"/>
+            <input type="text" id="price-range" name="price" value="" class="facet-category" data-minval="@{{minval}}" data-maxval="@{{maxval}}" data-facet-name="@{{filter_facet_name}}" data-singleton="true" data-slug="price" @{{#if disabled_at_zero_count}} @{{#ifEquals count 0 }} disabled = "disabled" @{{/ifEquals}} @{{/if}} data-collapsable="@{{collapsed}}" data-display-name="@{{filter_display_name}}" data-template="@{{template}}"/>
           </div>
           <div class="row">
             <div class="col-5 col-sm-5">
@@ -44,9 +44,9 @@
    var display_count = <?= json_encode($display_count) ?>;
    var disabled_at_zero_count = <?= json_encode($disabled_at_zero_count) ?>;
    var is_attribute_param = <?= json_encode($is_attribute_param) ?>;
-   console.log("price----"+<?= $singleton ?>)
    var context = {};
    context["display_count"] = display_count;
+   context["template"] = '<?= $template ?>';
    context["disabled_at_zero_count"] = disabled_at_zero_count;
    context["is_attribute_param"] = is_attribute_param;
    context["singleton"] = singleton;
@@ -58,12 +58,8 @@
    context["toval"] = toval;
    context["minval"] = minval;
    context["maxval"] = maxval;
-   console.log("filter_facet_name====")
-   console.log(context)
    var html    = template(context);
    document.getElementById("filter-price-template-content").innerHTML = html;
-   console.log("fromval==="+fromval)
-   console.log("toval==="+toval)
    $(function(){
     // Init ion range slider
     initializeSlider(fromval,toval,minval,maxval)
@@ -98,11 +94,18 @@
             facetCategoryChange($(this),false,false,true)
         });
     }
+
+    var sort_filter_val = $('#sort_filter_selectbox').val()
+    if(sort_filter_val != ""){
+      facetCategoryChange($('#sort_filter_selectbox'),false,false,false,true);
+    }
+    if($("#searchStringInp").val() != ""){
+      facetCategoryChange($('#searchStringInp'),false,false,false,false,true); 
+    }
   // Function to update price range on change
    priceRangeSlider = $("#price-range").data("ionRangeSlider");
 
     initPriceBar = function(from, to) {
-      console.log("initPriceBar=="+from+"==="+to)
       return priceRangeSlider.update({
         type: 'double',
         from: from,
@@ -112,7 +115,6 @@
     };
 
    $('body').on('change', '.price-change', function() {
-    console.log("price-change===")
       var from, to;
       from = $('#price-min').val();
       to = $('#price-max').val();

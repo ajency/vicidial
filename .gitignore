@@ -13,12 +13,17 @@ yarn-error.log
 
 # angular dependencies
 /angular-app/node_modules
+/my-account-app/node_modules
 
 # angular compiled output
 /angular-app/dist
+/angular-app/dist2
 /angular-app/tmp
 /angular-app/out-tsc
-/my-account-app
+
+/my-account-app/dist
+/my-account-app/tmp
+/my-account-app/out-tsc
 
 # angular misc
 /angular-app/.sass-cache

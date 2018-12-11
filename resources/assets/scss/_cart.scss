@@ -50,7 +50,7 @@ $L : 1200px;
 @mixin border-radius($radius:.25em) {
     border-radius: $radius;
 }
-#cd-cart {
+#cd-cart, #cd-my-account {
 
   position: fixed;
   top: 0;
@@ -85,7 +85,7 @@ $L : 1200px;
 
 
 }
-#cd-cart {
+#cd-cart, #cd-my-account {
     right: -100%;
     background: #FFF;
     @include transition(right .5s ease);
@@ -173,7 +173,7 @@ $L : 1200px;
     top: 0;
     left: 0;
     background: rgba($gray-500, .6);
-    z-index: 99;
+    z-index: 9999;
     display: none;
     &.is-visible {
         display: block; // @include animation(cd-fade-in .3s);
@@ -309,7 +309,7 @@ $L : 1200px;
     width: 100%;
     height: 200px;
 }
-#cd-cart {
+#cd-cart,#cd-my-account {
     .product-name{
         width: 250px;
     }
@@ -357,18 +357,28 @@ $L : 1200px;
         }
     }
 }
-body #cd-cart .modal.show .modal-dialog {
-    transform: translate(0, 0);
+body{
+    #cd-cart,#cd-my-account{
+        .modal.fade{
+            .modal-dialog{
+                transform: translate(0, 25%);
+            }
+        }
+        .modal.show{
+            .modal-dialog{
+                transform: translate(0, 0);
+            }
+        }
+        .modal,.modal-backdrop{
+            position: absolute !important;
+            @media (max-width: 767.98px) {
+                position: fixed !important;
+            }
+        }
+    }    
 }
-#cd-cart .modal.fade .modal-dialog {
-    transform: translate(0, 25%);
-}
-#cd-cart .modal, #cd-cart .modal-backdrop {
-    position: absolute !important;
-    @media (max-width: 767.98px) {
-        position: fixed !important;
-    }
-}
+
+
 .hide-scroll {
     position: inherit;
     overflow-y: hidden;
@@ -395,7 +405,7 @@ body #cd-cart .modal.show .modal-dialog {
 // Empty cart
 
 .empty-cart{
-    height: calc(100% - 118px);
+    height: calc(100vh - 135px);
     &__icon{
         font-size: 5em;
         color: #d2d2d2;
@@ -405,6 +415,15 @@ body #cd-cart .modal.show .modal-dialog {
     }
     @media (max-width: 320px){
         height: auto;
+    }
+    .order-details-btn{
+        font-size: 1.2em;
+    }
+}
+
+.cart-bag-img{
+    @media (max-width: 767px){
+        width: 120px;
     }
 }
 

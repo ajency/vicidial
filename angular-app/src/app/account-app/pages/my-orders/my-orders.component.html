@@ -1,0 +1,161 @@
+
+
+<div class="cart-step1-header">
+	<nav class="navbar navbar-dark bg-dark pt-3 pb-3 ">
+		<div class="d-flex align-items-center w-100">
+			<div class="">
+				<a>
+					<img _ngcontent-c1="" class=" img-fluid m-0" src="/img/logo-kss.png" width="180px" xpreview="/img/logo-kss.png">
+			 	</a>
+			</div>
+			<div class="ml-auto align-self-center">
+				<h3 class="m-0 text-white kss_highlight btn-pay" (click)="closeWidget()"><span aria-hidden="true">×</span></h3>
+			</div>
+		</div>
+	</nav>
+</div>
+
+<div [ngClass]="(orders && orders.length) ? 'my-order-bg' : 'mt-3' ">
+	<div class="col-12 p-0 myorder-wrapper">
+		<div class="h-100">
+			<h4 class="font-weight-bold m-0">My Orders</h4>
+			<hr>
+			<div *ngIf="isLoggedIn()" class="my-order-parent accordion mb-4" id="accordionExample">
+				<div *ngIf="orders && orders.length" class="my-order-child">
+					<div *ngFor="let order of orders; let lastindex = last; let first = first; let getindex = index" class="child-2 my-order-card">
+						<div class="d-flex row mb-3 order-header collapsed" data-toggle="collapse" [attr.data-target]="'#collapse-' + getindex" aria-expanded="true" [attr.aria-controls]="'collapse-' + getindex">
+							<div class="col-9">
+								<p class="m-0">Order No. <strong>{{order.order_info.txn_no}}</strong></p>
+								<p class="m-0">Placed on. <strong>{{order.order_info.order_date}}</strong></p>
+								<p class="m-0">Total amount: <strong>₹{{order.order_info.total_amount}}</strong> </p>
+
+							</div>
+							<div class="col-3 text-right d-flex flex-column justify-content-between">
+								<span class="ordercollapse-trigger"><i class="fas fa-chevron-up arrow-down"></i></span>
+							</div>
+						</div>
+						<div class="collapse" [ngClass]="{'show': orders.length == 1}" id=collapse-{{getindex}} data-parent="#accordionExample">
+							<div *ngFor="let sub_order of order.sub_orders; let i = index" class="mb-2 my-order-collapse">
+								<div class="d-flex bd-highlight row mb-3">
+									<div class="pb-2 pr-2 col-9">
+										<label class="d-block m-0">Shipment {{i+1}}</label>					
+											<span *ngIf="sub_order.store_address">Sold by: {{sub_order.store_address.store_name}} - {{sub_order.store_address.locality}} {{sub_order.store_address.city}}</span>							
+										<!-- <i class="fas fa-clipboard-check mr-1 text-muted"></i> <span class="text-success font-weight-bold">Order Processed</span> -->
+									</div>
+									<div class="pb-2 ml-auto col-3 text-right">
+								<!-- 		Total:
+										<h6 class="mt-1"><span class="rs-symbol"><i class="fas fa-rupee-sign sm-font"></i></span> {{$sub_order['total']}} for {{$sub_order['number_of_items']}} {{$sub_order['number_of_items'] == 1 ? "Item" : "Items"}}</h6> -->
+										<h6 class="mt-1">{{sub_order.number_of_items}} <span *ngIf="sub_order.number_of_items == 1">Item</span> <span *ngIf="sub_order.number_of_items > 1">Items</span></h6>
+									</div>
+								</div>
+								<div class="p-md-3 p-2 mb-3 card shadow-sm">
+									<div *ngFor="let item of sub_order.items; let last = last">
+										<div class="row primary-info">
+											<div class="col-12">
+												<div class="d-flex order-card">
+												    <a href="{{item.href}}" [ngClass]="{'variant-placeholder' : item.images[0]=='/img/placeholder.svg'}" class="order-card__image">
+												        <div class="product-img">
+																<img src="{{item.images[0]}}" class="lazyload img-fit" data-srcset="{{item.images[0]}} 50w, {{item.images[1]}} 100w, {{item.images[2]}} 150w" sizes="50px">
+														</div>
+													</a>
+													<div class="product-detail order-card__detail">
+														<a href="{{item.href}}" class="text-dark">
+															<div class="product-name text-truncate">
+																{{item.title}}
+															</div>
+														</a>
+														<div class="product-size text-muted mb-1">
+															<span>Size: {{item.size}}</span> <span>|</span> <span>Qty: {{item.quantity}}</span>
+														</div>
+														<!-- <div class="product-price">
+															<div class="retail-price">
+																<span class="rs-symbol"><i class="fas fa-rupee-sign sm-font"></i></span> <span class="price">{{item.price}}</span>
+															</div>
+														</div> -->
+														<div class="product-price">
+															<div class="kss-price kss-price--smaller">
+																₹{{item.price_final}}
+																<small *ngIf="item.price_final != item.price_mrp" class="kss-original-price text-muted">₹{{item.price_mrp}}
+															  	</small>
+															  	<span *ngIf="item.price_final != item.price_mrp" class="kss-discount text-danger"> {{item.off_percentage}}</span>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<!-- <div class="col-md-4 col-xl-6">
+												<div class="retail-price mt-2 mt-md-0">
+															<i class="fas fa-inbox mr-1 text-muted"></i><span class="text-success font-weight-bold">In Transit</span>
+															<span class="font-weight-bold">(Arriving 30 Aug)</span>
+												</div>
+												
+											</div> -->
+											<!-- <div class="dropdown">
+												<i class="cursor-pointer fas fa-ellipsis-v fa-2x text-light" id="card-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+												  <div class="dropdown-menu dropdown-menu-right shadow-lg" aria-labelledby="card-menu">
+												    <button class="dropdown-item" type="button">Track Item</button>
+												    <button class="dropdown-item cancel-trigger" type="button"  >Cancel Item</button>
+												    <button class="dropdown-item" type="button"> <a href="/kss/account/orders-details/" class="text-black">View Order Details</a></button>
+												  </div>
+											</div> -->
+										</div>
+										<hr *ngIf="!last">
+									</div>
+								</div>
+							</div>
+							<div class="border-top mt-2 mb-4 pt-2 pb-3 text-center">
+								<a href="/my/order/details?orderid={{order.order_info.txn_no}}" class="btn text-secondary pb-0 pr-0 order-details-btn">Order Details <i class="fas fa-chevron-right"></i></a>
+							</div>
+						</div>
+						<!-- <hr *ngIf="!last"> -->
+					</div>
+				</div>
+	<!-- 			<div *ngIf="orders && displayShowMore && apiCallComplete" class="text-center my-3">
+					<button (click)="updateOrderParams()" class="btn btn-outline-cancel py-2"><i class="align-middle fa-circle-notch fa-lg fa-spin fas load-icon-cls mb-1 mr-1 d-none"></i> Show more</button>
+				</div> -->
+				<div *ngIf="apiCallComplete && orders && !orders.length" class="no-order-wrapper d-flex align-items-center justify-content-center">
+					<div class="text-center d-flex align-items-center justify-content-center flex-column">
+						<img src="/img/my-orders.png" class="img-fluid" width="80">
+						<!-- <h4>Can't see all your orders?</h4> -->
+						<h5 class="pt-4 pb-2 mb-0" style="line-height: 1.5;">You havent placed any orders yet.</h5>
+						<div class="mb-4">
+							<a class="btn kss-btn kss-btn--secondary-link btn-pay" href="/shop">
+								Let's do some shopping <i class="fas fa-chevron-right"></i>
+							</a>
+						</div>
+						<ul class="d-flex flex-wrap d-sm-inline-block helper-links list-inline mt-sm-3">
+							<li class="py-3 col-6 col-sm-12">
+								<a href="/boys/junior-7-14-years--toddler-2-7-years/" class="font-weight-bold">Shop Boys</a>
+							</li>
+							<li class="py-3 col-6 col-sm-12">
+								<a href="/girls/junior-7-14-years--toddler-2-7-years/" class="font-weight-bold">Shop Girls</a>
+							</li>
+							<li class="py-3 col-6 col-sm-12">
+								<a href="/infant-0-2-years/" class="font-weight-bold">Shop Infants</a>
+							</li>
+							<li class="py-3 col-6 col-sm-12">
+								<a href="/shoes/" class="font-weight-bold">Shop Shoes</a>
+							</li>
+						</ul>
+						<!-- <button class="btn kss-btn kss-btn--big">
+							Login
+						</button> -->
+					</div>
+				</div>
+			</div>
+
+			<div *ngIf="!isLoggedIn()" class="myorder-wrapper d-flex align-items-center justify-content-center">
+				<div class="text-center d-flex align-items-center justify-content-center flex-column">
+					<img src="/img/no-order-login.png" class="img-fluid" width="150">
+					<!-- <h4>Can't see all your orders?</h4> -->
+					<h4 class="py-4 mb-0">Please login to see all your orders</h4>
+					<!-- <button class="btn kss-btn kss-btn--big" (click)="displayModal()">
+						Login
+					</button> -->
+				</div>
+			</div>		
+		</div>
+</div>
+
+	<!-- <app-login-component (loginSuccess)="loginSucessTriggered()"> </app-login-component>  -->
+</div>

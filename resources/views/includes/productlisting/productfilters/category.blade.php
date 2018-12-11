@@ -1,21 +1,11 @@
 <script id="filter-category-template" type="text/x-handlebars-template">
-    <div class="d-md-none d-block sticky-mob-filter">
-      <div class="d-flex">
-        <div class="filter-head">
-          <h4 class="mt-0">Filter</h4>
-          <p class="filter-head__caption"><span id="filter_head_count">@{{filter_count}}</span> Filters Applied</p>
-        </div>
-        <div class="ml-auto"> <h3 id="kss_hide-filter" class="m-0 kss_highlight btn-pay"><span aria-hidden="true">&times;</span></h3></div>
-      </div>
-    </div>
-    <hr class="sticky-space">
-  <div class="kss_filter-list mt-1" data-filter="category">
+  <div class="kss_filter-list mt-1" data-filter="@{{template}}">
       <div class="filter-heading">
         <label class=" w-100 mb-0 pb-3 cursor-pointer @{{#if collapsed}} collapsed @{{/if}}" data-toggle="collapse" data-target="#collapseCategory" aria-expanded="false" aria-controls="collapseCategory">
          @{{filter_display_name}} <i class="fas fa-angle-up float-right"></i>
         </label>
       </div>
-      <div id="collapseCategory" class="collapse@{{#if collapsed}}@{{else}} show @{{/if}}" data-field="category">
+      <div id="collapseCategory" class="collapse@{{#if collapsed}}@{{else}} show @{{/if}}" data-field="@{{template}}">
         <div class="card-body pt-2">
           @{{#if singleton }}
           @{{#each items}}
@@ -68,7 +58,6 @@
    context["filter_display_name"] = filter_display_name;
    context["filter_facet_name"] = filter_facet_name;
    context["items"] = <?= json_encode($items); ?>;
-   console.log(context)
    var html    = template(context);
    document.getElementById("filter-category-template-content").innerHTML = html;
  </script>

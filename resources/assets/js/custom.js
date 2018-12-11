@@ -61,19 +61,12 @@
      //         share: false
      //  });
      // ------------------ Start Filter For Mobile ------------------//
-     jQuery("#filter").click(function() {
-         jQuery(".kss_filter").addClass("kss_filter_mobile");
-         // jQuery(".kss_filter_mobile--left .nav-item").removeClass("active");
-         // jQuery(".kss_filter_mobile--left .nav-item:first-child").addClass("active");
-         // jQuery('.kss_filter-list').addClass('d-none');
-         // jQuery('.kss_filter-list[data-filter="category"]').removeClass('d-none');
-     });
+     
      jQuery(".clear-filter").click(function() {
          jQuery(".filter-selection").attr("style", "display: none !important");
      });
-     jQuery(document).on('click', '#kss_hide-filter', function() {
-         jQuery(".kss_filter").removeClass("kss_filter_mobile");
-     });
+     
+    
      // ------------------ End Filter For Mobile ------------------//
      // ------------------ Start Disable Arrow on single product ------------------//
      jQuery(".prod-slides img").click(function() {
@@ -557,21 +550,6 @@ $('.megamenu-open').click(function(){
 	$('body').addClass('overflow-h');
 });
 
-if( $('#storeSlider').length ) {
-    $('#storeSlider').lightSlider({
-        loop:true,
-        item:1,
-        thumbItem:4,
-        slideMargin:0,
-        gallery:true,
-        galleryMargin: 20,
-        thumbMargin: 20,
-        currentPagerPosition:'left',
-        onSliderLoad: function() {
-            $('#storeSlider').removeClass('cs-hidden');
-        }
-    });
-}
 
 // Footer mobile more section
 

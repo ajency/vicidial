@@ -76,6 +76,9 @@ footer .bl-1{
 .letter-spacing-5{
     letter-spacing: 5px;
 }
+.flex-1{
+    flex: 1 0 0;
+}
 .kss_icon {
     background-image: url(../img/sprite.png);
     background-repeat: no-repeat;
@@ -493,9 +496,11 @@ footer .bl-1{
     overflow: hidden;
 }
 
+
 .filter-grayscale{
     filter: grayscale(100%);
 }
+
 
 .product-view{
     font-size: 1.15em;
@@ -511,4 +516,8 @@ footer .bl-1{
             color: #545454;
         }
     }
+}
+
+.flex-fill-full{
+    flex: 1;
 }
