@@ -570,7 +570,7 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                    //   $('.nav-item.active').find('.filter-count').addClass('d-none')
                    // else
                    //   $('.nav-item.active').find('.filter-count').removeClass('d-none')
-                   if(has_reset_filter == true)
+                   // if(has_reset_filter == true)
                     $('li.nav-item.active').trigger('click')
                  }
                  // if(search_string == true)
@@ -902,6 +902,8 @@ function loadProductListing(pageval=-1,mobile_view = false){
           context["show_search"] = (url_params.get('show_search') != undefined)?url_params.get('show_search'):show_search_box;
           var html    = template(context);
           document.getElementById("filter-header-template-content").innerHTML = html;
+          if(has_reset_filter == true)
+            $('li.nav-item.active').trigger('click')
         }
         
 
@@ -944,8 +946,9 @@ function resetFilter(){
   $("#price-min").val($('#price-range').data("minval"))
   $("#price-max").val($('#price-range').data("maxval"))
   initPriceBar($('#price-range').data("minval"), $('#price-range').data("maxval"));
-  facetCategoryChange($('#price-range'),true,true,false,false,false,true)
   has_reset_filter = true
+  facetCategoryChange($('#price-range'),true,true,false,false,false,true)
+  
 }
 
 
