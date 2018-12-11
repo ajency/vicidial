@@ -539,24 +539,24 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                    var filter_val = $(thisObj).closest('.kss_filter-list').data('filter')
 
                    $('.kss_filter-list[data-filter="'+filter_val+'"]').removeClass('d-none');
-                   if($('.nav-item.active').find('.filter-count').hasClass('d-none'))
-                     var filter_count = 0
-                   else
-                     var filter_count = parseInt($('.nav-item.active').find('.filter-count').text())
+                   // if($('.nav-item.active').find('.filter-count').hasClass('d-none'))
+                   //   var filter_count = 0
+                   // else
+                   //   var filter_count = parseInt($('.nav-item.active').find('.filter-count').text())
 
-                   if($(thisObj).prop('checked'))
-                     filter_count +=1
-                   else
-                     filter_count -=1
-                   if($(thisObj).data('template') == "price")
-                    filter_count = 1
-                   if(filter_count<0)
-                     filter_count = 0
-                   $('.nav-item.active').find('.filter-count').text(filter_count)
-                   if(filter_count == 0)
-                     $('.nav-item.active').find('.filter-count').addClass('d-none')
-                   else
-                     $('.nav-item.active').find('.filter-count').removeClass('d-none')
+                   // if($(thisObj).prop('checked'))
+                   //   filter_count +=1
+                   // else
+                   //   filter_count -=1
+                   // if($(thisObj).data('template') == "price")
+                   //  filter_count = 1
+                   // if(filter_count<0)
+                   //   filter_count = 0
+                   // $('.nav-item.active').find('.filter-count').text(filter_count)
+                   // if(filter_count == 0)
+                   //   $('.nav-item.active').find('.filter-count').addClass('d-none')
+                   // else
+                   //   $('.nav-item.active').find('.filter-count').removeClass('d-none')
                  }
                  // if(search_string == true)
                  //  $('.clear-search').removeClass('d-none')
@@ -709,6 +709,8 @@ function searchItemInArray(obj, search_item) {
 
 $('.kss_filter_mobile--left .nav-item').click(function(){
   var filterTab = $(this);
+  if(filterTab.hasClass('active') == false)
+    updateFilterCount();
   filterTab.addClass('active').siblings().removeClass('active');
   var mobfilterName = filterTab.data('target');
   $('.kss_filter-list').addClass('d-none');
@@ -716,6 +718,7 @@ $('.kss_filter_mobile--left .nav-item').click(function(){
   // $('.kss_filter-list[data-filter="'+mobfilterName+'"] .color-wrapper .card-body').addClass('is-open');
   $('.kss_filter-list[data-filter="'+mobfilterName+'"] .collapse').collapse('show');
   // $('.kss_filter-list[data-filter="'+mobfilterName+'"] .color-wrapper .more-color').remove();
+
 })
 
 
@@ -999,7 +1002,11 @@ function setFiltersRequired(){
       
     }
   }
+  updateFilterCount();
   
+}
+
+function updateFilterCount(){
   var filter_count = 0;
   for(item in facet_display_data_arr){
     filter_count = 0
@@ -1017,5 +1024,4 @@ function setFiltersRequired(){
     else
       $('.nav-item[data-target="'+facet_display_data_arr[item]["template"]+'"]').find('.filter-count').removeClass('d-none')
   }
-  
 }
