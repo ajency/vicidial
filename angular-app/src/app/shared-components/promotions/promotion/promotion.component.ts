@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { AppServiceService } from '../../../service/app-service.service';
 import * as moment from 'moment';
 
 @Component({
@@ -10,14 +11,10 @@ export class PromotionComponent implements OnInit {
 
 	@Input() coupon : any;
 	@Input() orderTotal : any;
-  constructor() { }
+  constructor(private appservice : AppServiceService) { }
 
   ngOnInit() {
   	// console.log("ngOnInit promotion component ==>", this.coupon);
-  }
-
-  calculateOff(value, type){
-  	return ( type == 'cart_fixed' ? value : (this.orderTotal * value / 100) )
   }
 
   getValidTill(valid_till){

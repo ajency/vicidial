@@ -17,18 +17,18 @@ export class PromotionsListComponent implements OnInit, OnChanges {
   constructor(private appservice : AppServiceService) { }
 
   ngOnInit() {
-  	console.log("ngOnInit", this.promotionsList, this.orderTotal);
+  	// console.log("ngOnInit", this.promotionsList, this.orderTotal);
 	  	this.updatePromotionsData();
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log("ngOnChanges", this.promotionsList, this.orderTotal);
+    // console.log("ngOnChanges", this.promotionsList, this.orderTotal);
     this.updatePromotionsData();
   }
 
   updatePromotionsData(){
   	this.promotionsList =  this.appservice.sortArray(this.promotionsList);
-  	console.log(this.promotionsList);
+  	// console.log(this.promotionsList);
 		this.calculateAge();
   	let obj = this.appservice.filterArray(this.promotionsList, this.orderTotal);
   	this.applicablePromotions = obj.applicable;
@@ -38,7 +38,7 @@ export class PromotionsListComponent implements OnInit, OnChanges {
   calculateAge(){
   	this.promotionsList.forEach((promotion)=>{
   		promotion.age = this.appservice.getAge(promotion.valid_from);
-  		console.log(promotion.age);
+  		// console.log(promotion.age);
   	})
   }
 

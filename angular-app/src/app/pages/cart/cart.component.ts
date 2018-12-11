@@ -6,6 +6,9 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { LoginComponentComponent } from '../../shared-components/login/login-component/login-component.component';
 import { PromotionsListComponent } from '../../shared-components/promotions/promotions-list/promotions-list.component';
+import { AppliedCouponComponent } from '../../components/applied-coupon/applied-coupon.component';
+import { UpgradeCartComponent } from '../../components/upgrade-cart/upgrade-cart.component';
+import { BetterPromoAvailableComponent } from '../../components/better-promo-available/better-promo-available.component';
 
 // import * as $ from 'jquery';
 declare var $: any;
@@ -131,7 +134,7 @@ export class CartComponent implements OnInit {
     this.addToCartFailed = false;
     this.appservice.showLoader()
     this.appservice.callFetchCartApi().then((response)=>{
-      this.promotions = Object.keys(response.promotions).map((k)=>{ return response.promotions[k] });
+      this.formatPromotions(response);      
       this.cart = this.formattedCartDataForUI(response);      
       console.log("promotions ==>", response.promotions);  
       this.checkCartItemOutOfStock();
@@ -460,6 +463,14 @@ export class CartComponent implements OnInit {
         valid_till: "11/08/2018 00:00:00"
     }
     ]
+  }
+
+  formatPromotions(response){
+    let promos = Object.keys(response.promotions).map((k)=>{ return response.promotions[k] });
+    promos.forEach((promo)=>{ 
+      promo.actual_discount = this.appservice.calculateDiscount(promo.discount_type, promo.discount_value, this.cart.summary.sale_price_total)
+    })
+    this.promotions = promos;
   }
   
 }

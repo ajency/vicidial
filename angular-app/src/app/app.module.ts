@@ -17,6 +17,9 @@ import { NumbersDirective } from './directives/numbers.directive';
 
 import { LoginModule } from './shared-components/login/login.module';
 import { PromotionsModule } from './shared-components/promotions/promotions.module';
+import { AppliedCouponComponent } from './components/applied-coupon/applied-coupon.component';
+import { UpgradeCartComponent } from './components/upgrade-cart/upgrade-cart.component';
+import { BetterPromoAvailableComponent } from './components/better-promo-available/better-promo-available.component';
 
 
 
@@ -26,7 +29,10 @@ import { PromotionsModule } from './shared-components/promotions/promotions.modu
     CartComponent,
     ShippingDetailsComponent,
     ShippingSummaryComponent,
-    NumbersDirective
+    NumbersDirective,
+    AppliedCouponComponent,
+    UpgradeCartComponent,
+    BetterPromoAvailableComponent
   ],
   imports: [
     BrowserModule,
