@@ -16,6 +16,7 @@ import { ApiServiceService } from './service/api-service.service';
 import { NumbersDirective } from './directives/numbers.directive';
 
 import { LoginModule } from './shared-components/login/login.module';
+import { PromotionsModule } from './shared-components/promotions/promotions.module';
 
 
 
@@ -32,7 +33,8 @@ import { LoginModule } from './shared-components/login/login.module';
     FormsModule,
     AppRoutingModule,
     HttpModule,
-    LoginModule
+    LoginModule,
+    PromotionsModule
   ],
   providers: [
     {provide: APP_BASE_HREF, useValue: '/'},
