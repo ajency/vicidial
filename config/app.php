@@ -127,6 +127,8 @@ return [
 
     'run_cron' => env('RUN_CRON',false),
 
+    'prod_behaviour' => ['production', 'staging'],
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

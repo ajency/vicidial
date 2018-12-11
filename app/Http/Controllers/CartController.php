@@ -42,7 +42,7 @@ class CartController extends Controller
         $user    = User::getUserByToken($request->header('Authorization'));
         validateCart($user, $cart, 'cart');
         $variant = Variant::where('odoo_id', $params['variant_id'])->first();
-        $item    = $variant->getItem(true, (config('app.env')=='production')? false : true);
+        $item    = $variant->getItem(true, showDebugData());
         if ($item) {
             $qty = $params['variant_quantity'];
             if ($cart->itemExists($item)) {
@@ -71,7 +71,7 @@ class CartController extends Controller
         $cart   = ($id) ? Cart::find($id) : new Cart;
         $cart->abortNotCart('cart');
         $variant = Variant::where('odoo_id', $params['variant_id'])->first();
-        $item    = $variant->getItem(true, (config('app.env')=='production')? false : true);
+        $item    = $variant->getItem(true, showDebugData());
         if ($item) {
             $qty = $params['variant_quantity'];
             if ($cart->itemExists($item)) {
@@ -105,7 +105,7 @@ class CartController extends Controller
             $cart->type = (checkOrderInventory($cart->order, false) == 'failure') ? 'failure' : 'order';
         }
 
-        $items = getCartData($cart, true, (config('app.env')=='production')? false : true);
+        $items = getCartData($cart, true, showDebugData());
 
         $summary = $cart->getSummary();
         $code    = ["code" => "NEWUSER", "applied" => true];
@@ -121,7 +121,7 @@ class CartController extends Controller
             abort(404, "Cart not found for this session");
         }
         if($cart->type == 'order-complete') abort(400);
-        $items = getCartData($cart, true, (config('app.env')=='production')? false : true);
+        $items = getCartData($cart, true, showDebugData());
 
         $summary = $cart->getSummary();
         $code    = ["code" => "NEWUSER", "applied" => true];
