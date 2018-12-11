@@ -358,7 +358,6 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
     else{
       updated_list_url = "/shop";
     }
-
     var boolean_facet_list_params = Object.assign({}, boolean_facet_list);
     if(is_ajax == true){
       for(citem in facet_display_data_arr){
@@ -544,8 +543,13 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                    if (window.location.href.match("/shop") && url == "") {
                       window.history.pushState('categoryPage', 'Category', '/shop'+url);
                     }
-                    else
+                    else{
+                      if(url == ""){
+                        url = "/shop"
+                        updated_list_url = url
+                      }
                       window.history.pushState('categoryPage', 'Category', url);
+                    }
                  }
                  if (is_ajax == true && isMobile == true) {
                    $('.kss_filter-list').addClass('d-none');
@@ -906,7 +910,10 @@ function loadProductListing(pageval=-1,mobile_view = false){
             $('li.nav-item.active').trigger('click')
         }
         
-
+       if(url == ""){
+          url = "/shop"
+          updated_list_url = url
+        }
        window.history.pushState('categoryPageUrl', 'Category page', url);
       });
 }
