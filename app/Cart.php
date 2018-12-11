@@ -4,6 +4,7 @@ namespace App;
 
 use App\Variant;
 use Carbon\Carbon;
+use App\Promotion;
 use Illuminate\Database\Eloquent\Model;
 
 class Cart extends Model
@@ -42,7 +43,7 @@ class Cart extends Model
             $cart_data              = $this->cart_data;
             $cart_data[$item["id"]] = ["id" => $item["id"], "quantity" => intval($item["quantity"]), 'timestamp' => Carbon::now()->timestamp];
             $this->cart_data        = $cart_data;
-            $this->applyPromotion();
+            $this->applyPromotion($this->getBestPromotion());
             // \Log::info($this->cart_data);
         } else {
             return false;
@@ -102,6 +103,7 @@ class Cart extends Model
         $cart_data = $this->cart_data;
         unset($cart_data[$variant_id]);
         $this->cart_data = $cart_data;
+        $this->applyPromotion($this->getBestPromotion());
         return $this;
     }
 
@@ -152,7 +154,23 @@ class Cart extends Model
         }
     }
 
-    public function applyPromotion(){
+    public function getBestPromotion(){
+        return null;
+    }
 
+    public function applyPromotion($promotion_id){
+        $promotion = Promotion::find($promotion_id);
+        if($this->isPromotionApplicable($promotion)){
+            $this->promotion_id = $promotion_id;
+            $this->save();
+        }
+    }
+
+    public function isPromotionApplicable($promotion){
+        if ($promotion == null) return true;
+        if($promotion->step_quantity < $this->getCartSalePriceTotal() || $promotion->start > Carbon::now() || $promotion->expire < Carbon::now()){
+            return false;
+        }
+        return true;
     }
 }

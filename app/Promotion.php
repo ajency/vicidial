@@ -19,12 +19,12 @@ class Promotion extends Model
 
     public function getStartAttribute($value)
     {
-    	return (new Carbon($value))->setTimezone('Asia/Kolkata')->toDateTimeString();
+    	return (new Carbon($value))->setTimezone('Asia/Kolkata');
     }
 
      public function getExpireAttribute($value)
     {
-    	return (new Carbon($value))->setTimezone('Asia/Kolkata')->toDateTimeString();
+    	return (new Carbon($value))->setTimezone('Asia/Kolkata');
     }
 
     public static function getAllDiscountsFromOdoo()
@@ -62,8 +62,8 @@ class Promotion extends Model
                 'min_cart_value' => $promo->step_quantity,
                 'discount_value' => $promo->value,
                 'discount_type'  => $promo->discount_type,
-                'valid_from'     => $promo->start,
-                'valid_till'     => $promo->expire,
+                'valid_from'     => $promo->start->toDateTimeString(),
+                'valid_till'     => $promo->expire->toDateTimeString(),
             ];
             $response[$promo->id] = $promo_res;
         }
