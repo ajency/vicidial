@@ -19,9 +19,17 @@ export class PromotionsListComponent implements OnInit {
   ngOnInit() {
   	// console.log("ngOnInit", this.promotionsList);
   	this.promotionsList =  this.appservice.sortArray(this.promotionsList);
+		this.calculateAge();
   	let obj = this.appservice.filterArray(this.promotionsList, this.orderTotal);
   	this.applicablePromotions = obj.applicable;
   	this.nonApplicablePromotions = obj.non_applicable;
+  }
+
+  calculateAge(){
+  	this.promotionsList.forEach((promotion)=>{
+  		promotion.age = this.appservice.getAge(promotion.valid_from);
+  		console.log(promotion.age);
+  	})
   }
 
 }

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
 import { ApiServiceService } from './api-service.service';
+import * as moment from 'moment';
 
 declare var $: any;
 
@@ -179,6 +180,13 @@ export class AppServiceService {
     })
     console.log(ret_obj);
     return ret_obj;
+  }
+
+  getAge(vaild_from){
+    let now = moemnt.utc(moment().format('YYYY-DD-MM HH:mm:ss'));
+    let start = moment(vaild_from);
+    let duration = moment.duration(now.diff(start));
+    return duration.asSeconds();
   }
 
 }
