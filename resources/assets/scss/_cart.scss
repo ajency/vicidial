@@ -127,6 +127,14 @@ $L : 1200px;
             }
         }
     }
+    .cart-summary-items{
+        li{
+            &:last-child{
+                border-bottom: 0;
+                margin-bottom: 0 !important;
+            }
+        }
+    }
     .cd-qty, .cd-price {
         color: $gray-500;
     }

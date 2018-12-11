@@ -46,7 +46,7 @@
 								<p class="h6 my-3">
 									Mobile: <b class="font-weight-bold">{{shippingDetails.address.phone}}</b>
 								</p>
-								<p *ngIf="userEmail" class="h6 mt-3">
+								<p *ngIf="userEmail" class="h6 mt-3 mb-0">
 									Order Tracking emails will be sent to the following address : <b class="font-weight-bold">{{userEmail}}</b>
 									<i class="fas fa-pencil-alt number-edit cursor-pointer ml-2 mt-1" (click)="editUserInfo()"></i>
 								</p>
@@ -57,8 +57,8 @@
 
 				<hr>
 
-				<ul *ngFor="let item of shippingDetails.items" class="cd-cart-items list-unstyled mt-2 pt-2">
-				  <li class="p-0 pb-3">
+				<ul class="cd-cart-items list-unstyled mt-2 pt-2 cart-summary-items mb-1">
+				  <li class="p-0 pb-3 mb-3" *ngFor="let item of shippingDetails.items">
 				    <div class="primary-info d-flex">
 				      <div class="product-img">
 				      	<a href="{{item.href}}" [ngClass]="{'variant-placeholder' : item.attributes.images[0]=='/img/placeholder.svg'}">
@@ -94,6 +94,8 @@
 				    </div>
 				  </li>
 				</ul>
+
+				<hr class="mt-0">
 
 				<!-- Promotion summary -->
 				<div class="cart-summary mt-4">
