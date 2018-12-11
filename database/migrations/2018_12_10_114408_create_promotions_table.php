@@ -25,6 +25,7 @@ class CreatePromotionsTable extends Migration
             $table->timestamp('expire')->useCurrent();
             $table->longtext('description')->nullable();
             $table->string('priority');
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
         Schema::table('carts', function (Blueprint $table) {

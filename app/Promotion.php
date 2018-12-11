@@ -3,7 +3,6 @@
 namespace App;
 
 use App\Elastic\OdooConnect;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Promotion extends Model
@@ -18,18 +17,13 @@ class Promotion extends Model
             $discounts = $odoo->defaultExec("product.template", 'search_read', [[['type', '=', 'discount'], ['discount_rule', '=', 'cart']]], ['fields' => config('odoo.model_fields.discounts'), 'order' => 'id', 'offset' => $offset]);
 
             foreach ($discounts as $discount) {
-                $from_date1 = Carbon::createFromFormat('Y-m-d H:i:s', $discount['from_date1'], 'UTC');
-                $from_date1->setTimezone('Asia/Kolkata');
-                $to_date1 = Carbon::createFromFormat('Y-m-d H:i:s', $discount['to_date1'], 'UTC');
-                $to_date1->setTimezone('Asia/Kolkata');
-
                 $promotion                = self::firstOrNew(['odoo_id' => $discount['id']]);
                 $promotion->title         = $discount['name'];
                 $promotion->value         = $discount['discount_amt'];
                 $promotion->discount_type = $discount['apply1'];
                 $promotion->step_quantity = $discount['qty_step'];
-                $promotion->start         = $from_date1;
-                $promotion->expire        = $to_date1;
+                $promotion->start         = $discount['from_date1'];
+                $promotion->expire        = $discount['to_date1'];
                 $promotion->priority      = $discount['priority1'];
                 $promotion->save();
             }
