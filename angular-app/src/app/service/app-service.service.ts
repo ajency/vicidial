@@ -164,4 +164,21 @@ export class AppServiceService {
     return this.apiservice.request(url, 'get', {} , header);
   }
 
+  sortArray(array){
+    array.sort((a,b)=> a.min_cart_value - b.min_cart_value );
+    return array;
+  }
+
+  filterArray(array, order_total){
+    let ret_obj = { applicable : [], non_applicable : [] };
+    array.forEach((promotion)=>{
+      if(promotion.min_cart_value <= order_total)
+        ret_obj.applicable.push(promotion);
+      else
+        ret_obj.non_applicable.push(promotion);
+    })
+    console.log(ret_obj);
+    return ret_obj;
+  }
+
 }
