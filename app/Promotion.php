@@ -19,12 +19,12 @@ class Promotion extends Model
 
     public function getStartAttribute($value)
     {
-    	return (new Carbon($value))->setTimezone('Asia/Kolkata');
+        return (new Carbon($value))->setTimezone('Asia/Kolkata');
     }
 
-     public function getExpireAttribute($value)
+    public function getExpireAttribute($value)
     {
-    	return (new Carbon($value))->setTimezone('Asia/Kolkata');
+        return (new Carbon($value))->setTimezone('Asia/Kolkata');
     }
 
     public static function getAllDiscountsFromOdoo()

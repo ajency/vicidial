@@ -2,14 +2,14 @@
 
 namespace App;
 
+use App\Promotion;
 use App\Variant;
 use Carbon\Carbon;
-use App\Promotion;
 use Illuminate\Database\Eloquent\Model;
 
 class Cart extends Model
 {
-    const ITEM_FIELDS = ['id', 'quantity'];
+    const ITEM_FIELDS   = ['id', 'quantity'];
     protected $fillable = ['user_id', 'active', 'type'];
 
     protected $casts = [
@@ -68,7 +68,8 @@ class Cart extends Model
         return $total;
     }
 
-    public function getCartSalePriceTotal(){
+    public function getCartSalePriceTotal()
+    {
         $total_price = 0;
         foreach ($this->cart_data as $cart_item) {
             $variant = Variant::find($cart_item['id']);
@@ -77,7 +78,8 @@ class Cart extends Model
         return $total_price;
     }
 
-    public function getCartMrpPriceTotal(){
+    public function getCartMrpPriceTotal()
+    {
         $total_price = 0;
         foreach ($this->cart_data as $cart_item) {
             $variant = Variant::find($cart_item['id']);
@@ -88,13 +90,13 @@ class Cart extends Model
 
     public function getSummary()
     {
-        $spt = $this->getCartSalePriceTotal();
+        $spt      = $this->getCartSalePriceTotal();
         $discount = 0;
         return [
-            "mrp_total" => $this->getCartMrpPriceTotal(), 
-            "sale_price_total" => $spt, 
-            "discount" => $discount, 
-            "you_pay" => $spt - $discount,
+            "mrp_total"        => $this->getCartMrpPriceTotal(),
+            "sale_price_total" => $spt,
+            "discount"         => $discount,
+            "you_pay"          => $spt - $discount,
         ];
     }
 
@@ -147,28 +149,51 @@ class Cart extends Model
 
     public function abortNotCart($type)
     {
-        if($this->type==null && $type=='cart') return;
-        
+        if ($this->type == null && $type == 'cart') {
+            return;
+        }
+
         if ($this->type != $type) {
             abort(403);
         }
     }
 
-    public function getBestPromotion(){
-        return null;
+    public function getBestPromotion()
+    {
+        $salePrice       = $this->getCartSalePriceTotal();
+        $promotions      = Promotion::where('active', true)->where('step_quantity', '>=', $salePrice)->where('start', '<=', Carbon::now())->where('expire', '>', Carbon::now())->get();
+        $apply_promotion = null;
+        $discSalePrice   = $salePrice;
+        foreach ($promotions as $promotion) {
+            if ($promotion->discount_type == "cart_fixed") {
+                $discountedSalePrice = $salePrice - $promotion->value;
+            } elseif ($promotion->discount_type == "by_percent") {
+                $discountedSalePrice = $salePrice - ($salePrice * $promotion->value / 100.0);
+            }
+            if ($discountedSalePrice < $discSalePrice) {
+                $discSalePrice   = $discountedSalePrice;
+                $apply_promotion = $promotion->id;
+            }
+        }
+        return $applyPromotion;
     }
 
-    public function applyPromotion($promotion_id){
+    public function applyPromotion($promotion_id)
+    {
         $promotion = Promotion::find($promotion_id);
-        if($this->isPromotionApplicable($promotion)){
+        if ($this->isPromotionApplicable($promotion)) {
             $this->promotion_id = $promotion_id;
             $this->save();
         }
     }
 
-    public function isPromotionApplicable($promotion){
-        if ($promotion == null) return true;
-        if($promotion->step_quantity < $this->getCartSalePriceTotal() || $promotion->start > Carbon::now() || $promotion->expire < Carbon::now()){
+    public function isPromotionApplicable($promotion)
+    {
+        if ($promotion == null) {
+            return true;
+        }
+
+        if ($promotion->step_quantity < $this->getCartSalePriceTotal() || $promotion->start > Carbon::now() || $promotion->expire < Carbon::now()) {
             return false;
         }
         return true;
