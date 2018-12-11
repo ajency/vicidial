@@ -183,7 +183,7 @@ export class AppServiceService {
   }
 
   getAge(vaild_from){
-    let now = moment.utc(moment().format('YYYY-DD-MM HH:mm:ss'));
+    let now = moment(moment().format('YYYY-MM-DD HH:mm:ss'));
     let start = moment(vaild_from);
     let duration = moment.duration(now.diff(start));
     return duration.asSeconds();
