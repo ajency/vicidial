@@ -109,7 +109,7 @@ class CartController extends Controller
 
         $summary = $cart->getSummary();
         $code    = ["code" => "NEWUSER", "applied" => true];
-        if(!$cart->isPromotionApplicable($cart->promotion) && $this->type == 'cart'){
+        if(!$cart->isPromotionApplicable($cart->promotion) && $cart->type == 'cart'){
             $cart->applyPromotion($cart->getBestPromotion());
         }
         $promotions = Promotion::getAllPromotions($cart,'web');
@@ -128,7 +128,7 @@ class CartController extends Controller
 
         $summary = $cart->getSummary();
         $code    = ["code" => "NEWUSER", "applied" => true];
-        if(!$cart->isPromotionApplicable($cart->promotion) && $this->type == 'cart'){
+        if(!$cart->isPromotionApplicable($cart->promotion) && $cart->type == 'cart'){
             $cart->applyPromotion($cart->getBestPromotion());
         }
         $promotions = Promotion::getAllPromotions($cart,'web');
