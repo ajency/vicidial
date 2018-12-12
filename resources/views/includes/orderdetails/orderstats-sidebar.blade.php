@@ -45,7 +45,7 @@
             <div>
                <label class="text-muted f-w-4 m-0">Sub Total</label>
             </div>
-            <div class="text-success">
+            <div> 
                <span class="rs-symbol"><i class="fas fa-rupee-sign sm-font"></i></span> {{$order_summary['sale_price_total']}}
             </div>
          </div>
@@ -63,8 +63,8 @@
             <div>
                <label class="text-muted f-w-4 m-0">Shipping</label>
             </div>
-            <div class="text-success">
-               - <span class="rs-symbol"><i class="fas fa-rupee-sign sm-font"></i></span> {{$order_summary['shipping_fee']}}
+            <div> 
+               <span class="rs-symbol"><i class="fas fa-rupee-sign sm-font"></i></span> {{$order_summary['shipping_fee']}}
             </div>
          </div>
 
