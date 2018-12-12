@@ -40,7 +40,6 @@
         </h1>
     </div>
 
-<<<<<<< HEAD
     <div class="ml-sm-auto d-none d-sm-flex flex-fill-full justify-content-end">
       @{{#if show_search}}
       <div class="d-sm-flex align-items-sm-center position-relative">
@@ -55,11 +54,7 @@
         </div>        
       </div>
       @{{/if}}
-      <div class="kss-select-border d-none">
-=======
-    <div class="ml-auto d-none d-sm-block">
       <div class="d-flex flex-row kss-select-border mt-2">
->>>>>>> 1003ad1... css change to hide desktop sort filter in mobile view
         <div class="size-qty align-self-center">
           <h6 class="m-0 f-w-4 sub-text"> Sort By:</h6>
         </div>
