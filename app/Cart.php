@@ -195,7 +195,7 @@ class Cart extends Model
                 $apply_promotion = $promotion->id;
             }
         }
-        return $applyPromotion;
+        return $apply_promotion;
     }
 
     public function applyPromotion($promotion_id)
@@ -212,7 +212,6 @@ class Cart extends Model
         if ($promotion == null) {
             return true;
         }
-
         if ($promotion->step_quantity < $this->getCartSalePriceTotal() || $promotion->start > Carbon::now() || $promotion->expire < Carbon::now()) {
             return false;
         }
