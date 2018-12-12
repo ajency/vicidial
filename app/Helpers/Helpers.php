@@ -653,7 +653,8 @@ function addProductImageToQueue($product_id)
 
 function isNotProd()
 {
-    if (in_array(config('app.env'), config('app.prod_behaviour'))) {
+    $prod_behaviour = (config('app.prod_behaviour') == null) ? [] : config('app.prod_behaviour');
+    if (in_array(config('app.env'), $prod_behaviour)) {
         return false;
     }
     return true;
