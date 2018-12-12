@@ -52,6 +52,7 @@ class CartController extends Controller
             if ($variant->getQuantity() >= $qty) {
                 $cart->insertItem(["id" => $variant->id, "quantity" => $qty]);
                 $cart->save();
+                $cart->refresh();
                 $message = "Item added successfully";
             } else {
                 abort(404, "Quantity not available");
@@ -81,6 +82,7 @@ class CartController extends Controller
             if ($variant->getQuantity() >= $qty) {
                 $cart->insertItem(["id" => $variant->id, "quantity" => $qty]);
                 $cart->save();
+                $cart->refresh();
                 $message = "Item added successfully";
             } else {
                 abort(404, "Quantity not available");
@@ -110,6 +112,7 @@ class CartController extends Controller
         $code    = ["code" => "NEWUSER", "applied" => true];
         if(!$cart->isPromotionApplicable($cart->promotion) && $cart->type == 'cart'){
             $cart->applyPromotion($cart->getBestPromotion());
+            $cart->refresh();
         }
         $summary = $cart->getSummary();
         $promotions = Promotion::getAllPromotions($cart,'web');
@@ -129,6 +132,7 @@ class CartController extends Controller
         $code    = ["code" => "NEWUSER", "applied" => true];
         if(!$cart->isPromotionApplicable($cart->promotion) && $cart->type == 'cart'){
             $cart->applyPromotion($cart->getBestPromotion());
+            $cart->refresh();
         }
         $summary = $cart->getSummary();
         $promotions = Promotion::getAllPromotions($cart,'web');
@@ -148,6 +152,7 @@ class CartController extends Controller
         $cart->abortNotCart('cart');
         $cart->removeItem($params["variant_id"]);
         $cart->save();
+        $cart->refresh();
         $message = "Item deleted successfully";
         $summary = $cart->getSummary();
         return response()->json(['cart_count' => $cart->itemCount(), 'message' => $message,'promo_applied' => $cart->promotion_id, "summary" => $summary]);
@@ -166,6 +171,7 @@ class CartController extends Controller
         validateCart($user, $cart, 'cart');
         $cart->removeItem($params["variant_id"]);
         $cart->save();
+        $cart->refresh();
         $message = "Item deleted successfully";
         $summary = $cart->getSummary();
         return response()->json(['cart_count' => $cart->itemCount(), 'message' => $message,'promo_applied' => $cart->promotion_id, "summary" => $summary]);
@@ -214,6 +220,7 @@ class CartController extends Controller
         validateCart($user, $cart, 'cart');
         if($cart->isPromotionApplicable($params['promotion_id'])){
             $cart->applyPromotion($params['promotion_id']);
+            $cart->refresh();
             return response()->json(["cart_count"=>$cart->itemCount(), "summary" => $cart->getSummary(), "message" => "promotion applied successfully", "promo_applied" => $promotion_id]);
         }else{
             abort(400, "Promo cannot be applied");
@@ -233,6 +240,7 @@ class CartController extends Controller
         $cart->abortNotCart('cart');
         if($cart->isPromotionApplicable($params['promotion_id'])){
             $cart->applyPromotion($params['promotion_id']);
+            $cart->refresh();
             return response()->json(["cart_count"=>$cart->itemCount(), "summary" => $cart->getSummary(), "message" => "promotion applied successfully", "promo_applied" => $promotion_id]);
         }else{
             abort(400, "Promo cannot be applied");
