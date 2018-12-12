@@ -2,6 +2,6 @@
 	<i class="fas fa-info-circle pr-1 text-secondary info-circle"></i>
 	<div> 
 	Shop for Rs. {{upgradeCoupon.min_cart_value - orderTotal}} more to automatically avail the next promotion and save <span *ngIf="upgradeCoupon.discount_type == 'by_percent'" class="text-success pl-1">{{upgradeCoupon.discount_value}} %</span>
-	<span *ngIf="upgradeCoupon.discount_type == 'cart_fixed'" class="text-success pl-1">₹{{upgradeCoupon.actual_discount}}</span>
+	<span *ngIf="upgradeCoupon.discount_type == 'cart_fixed'" class="text-success pl-1">₹{{upgradeCoupon.actual_discount}}</span> on your order.
 	</div>
 </div>
