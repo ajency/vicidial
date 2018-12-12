@@ -181,7 +181,7 @@ class Cart extends Model
     public function getBestPromotion()
     {
         $salePrice       = $this->getCartSalePriceTotal();
-        $promotions      = Promotion::where('active', true)->where('step_quantity', '>=', $salePrice)->where('start', '<=', Carbon::now())->where('expire', '>', Carbon::now())->get();
+        $promotions      = Promotion::where('active', true)->where('step_quantity', '<=', $salePrice)->where('start', '<=', Carbon::now())->where('expire', '>', Carbon::now())->get();
         $apply_promotion = null;
         $discSalePrice   = $salePrice;
         foreach ($promotions as $promotion) {
@@ -212,7 +212,7 @@ class Cart extends Model
         if ($promotion == null) {
             return true;
         }
-        if ($promotion->step_quantity < $this->getCartSalePriceTotal() || $promotion->start > Carbon::now() || $promotion->expire < Carbon::now()) {
+        if ($promotion->step_quantity > $this->getCartSalePriceTotal() || $promotion->start > Carbon::now() || $promotion->expire < Carbon::now()) {
             return false;
         }
         return true;
