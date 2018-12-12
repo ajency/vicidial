@@ -139,14 +139,13 @@
 		</ul>
 
 		<!-- Promotion summary -->
-		<div *ngIf="promotions && promotions.length" class="cart-promotion mt-4">
+		<div *ngIf="promotions && promotions.length && (displayPromo || cart.promo_applied )" class="cart-promotion mt-4">
 			<h4 class="mb-2 font-weight-bold">Promotion Summary</h4>
 			<app-applied-coupon [promoApplied]="cart.promo_applied" [promotions]="promotions"> </app-applied-coupon>
 			<div *ngIf="cart.promo_applied">
 				<app-better-promo-available [promoApplied]="cart.promo_applied" [promotions]="promotions" [orderTotal]="cart.summary.sale_price_total"></app-better-promo-available>	
 			</div>			
-			<app-upgrade-cart [promotions]="promotions" [orderTotal]="cart.summary.sale_price_total"> </app-upgrade-cart>
-			
+			<app-upgrade-cart [promotions]="promotions" [orderTotal]="cart.summary.sale_price_total" (noUpgradePromo)="displayPromo = false"> </app-upgrade-cart>			
 			<hr>
 		</div>
 

@@ -39,6 +39,7 @@ export class CartComponent implements OnInit {
   addToCartFailureMessage = '';
   addToCartFailed : boolean = false;
   promotions = [];
+  displayPromo : boolean = true;
   constructor( private router: Router,
                private appservice : AppServiceService,
                private apiservice : ApiServiceService,
