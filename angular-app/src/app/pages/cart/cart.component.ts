@@ -216,6 +216,7 @@ export class CartComponent implements OnInit {
       this.cart.summary = response.summary;
       this.cart.promo_applied = response.promo_applied;
       this.cart.cart_count = response.cart_count;
+      this.formatPromotions(response);
       this.checkCartItemOutOfStock();
       this.updateLocalDataAndUI(this.cart, this.cart.cart_count);
       this.appservice.removeLoader()
