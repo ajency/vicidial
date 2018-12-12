@@ -138,23 +138,20 @@ class OrderController extends Controller
     }
 
     public function listOrders(Request $request){
-        // dd($_SESSION);
         $data = $request->all();
+        $order_details=[];
         $search_object = (isset($data["search_object"]))?$data["search_object"]:[];
         $sort_on = (isset($data["sort_on"]))?$data["sort_on"]:"created_at";
         $sort_by = (isset($data["sort_by"]))?$data["sort_by"]:"desc";
         $length = (isset($data["display_limit"]))?$data["display_limit"]:0;
         $page = (isset($data["page"]))?$data["page"]:1;
         $start=($page==1)?($page-1):((($page-1)*$length));
-        $user_id = 0;
-        if(isset($search_object["user_id"])){
-            $user_id = $search_object["user_id"];
+        $user   = User::getUserByToken($request->header('Authorization'));
+        $user_id = (isset($search_object["user_id"]))?$search_object["user_id"]:$user->id;
+        if($user_id != $user->id){
+            if($user->hasPermissionTo('see other user orders', 'web') == false)
+                return response()->json(["message" => 'Access denied', 'success'=> false,'data'=>$order_details]); 
         }
-        else{
-            $user   = User::getUserByToken($request->header('Authorization'));
-            $user_id = $user->id;
-        }
-        // dd($user_id);
         $order_status = (isset($search_object["status"]))?$search_object["status"]:'payment-successful';
         $orderObj = Order::join('carts', 'carts.id', '=', 'orders.cart_id')->where('carts.user_id',$user_id)->where('orders.status',$order_status)->orderBy("orders.".$sort_on,$sort_by)->select("orders.*");
 
@@ -168,10 +165,9 @@ class OrderController extends Controller
         else
             $orders = $orderObj->skip($start)->take($length)->get();
         // dd($orders);
-        $order_details=[];
+        
         foreach($orders as $order){
             array_push($order_details,  $order->getOrderDetails());
-
         }
         // dd($order_details);
         
