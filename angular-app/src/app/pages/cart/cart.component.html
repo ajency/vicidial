@@ -140,7 +140,7 @@
 
 		<!-- Promotion summary -->
 		<div *ngIf="promotions && promotions.length" class="cart-promotion mt-4">
-			<h5 class="font-weight-bold">Promotion Summary</h5>
+			<h4 class="mb-2 font-weight-bold">Promotion Summary</h4>
 			<app-applied-coupon [promoApplied]="cart.promo_applied" [promotions]="promotions"> </app-applied-coupon>
 			<div *ngIf="cart.promo_applied">
 				<app-better-promo-available [promoApplied]="cart.promo_applied" [promotions]="promotions" [orderTotal]="cart.summary.sale_price_total"></app-better-promo-available>	
