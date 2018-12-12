@@ -78,6 +78,7 @@ class Order extends Model
             'sale_price_total' => 0,
             'you_pay'          => 0,
             'cart_discount'    => 0,
+            'shipping_fee'     => 0,
         ];
         $subOrders = $this->subOrders;
 

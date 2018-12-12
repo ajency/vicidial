@@ -60,6 +60,7 @@ class SubOrder extends Model
         $sale_price_total = 0;
         $you_pay          = 0;
         $cart_discount    = 0;
+        $shipping_fee     = 0;
         foreach ($items as $itemData) {
             $mrp_total += $itemData['quantity'] * $itemData['price_mrp'];
             $sale_price_total += $itemData['quantity'] * $itemData['price_final'];
@@ -69,8 +70,9 @@ class SubOrder extends Model
         $this->odoo_data = [
             'mrp_total'        => $mrp_total,
             'sale_price_total' => $sale_price_total,
-            'you_pay'          => $you_pay,
+            'you_pay'          => $you_pay + $shipping_fee,
             'cart_discount'    => $cart_discount,
+            'shipping_fee'     => $shipping_fee,
         ];
     }
 
@@ -128,7 +130,7 @@ class SubOrder extends Model
             $item['product_slug']   = $variant->getProductSlug();
             $itemsData[]            = $item;
         }
-        $sub_order = array('suborder_id' => $this->id, 'total' => $this->odoo_data['total'] + $this->odoo_data['shipping_fee'], 'number_of_items' => count($this->item_data), 'items' => $itemsData);
+        $sub_order = array('suborder_id' => $this->id, 'total' => $this->odoo_data['you_pay'], 'number_of_items' => count($this->item_data), 'items' => $itemsData);
         $store_address = $this->location->getAddress();
         if($store_address!=null) {
             $sub_order['store_address'] = $store_address;
