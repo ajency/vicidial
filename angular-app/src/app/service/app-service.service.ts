@@ -166,8 +166,8 @@ export class AppServiceService {
   }
 
   sortArray(array){
-    array.sort((a,b)=>{a.min_cart_value - b.min_cart_value});
-    return array;
+    let return_array = array.sort((a,b)=>{ return(a.min_cart_value - b.min_cart_value)});
+    return return_array;
   }
 
   filterArray(array, order_total){
@@ -193,8 +193,8 @@ export class AppServiceService {
   }
 
   sortByDiscount(array){
-    array.sort((a,b)=>{b.actual_discount - a.actual_discount })
-    return array;
+    let return_array = array.sort((a,b)=>{ return(b.actual_discount - a.actual_discount) })
+    return return_array;
   }
 
 }
