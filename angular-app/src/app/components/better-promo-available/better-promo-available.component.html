@@ -11,7 +11,7 @@
 <div *ngIf="promoApplied && promo" class="promotion-alert d-flex align-items-baseline px-1 text-muted">
 	<i class="fas fa-info-circle pr-1 text-secondary info-circle"></i>
 	<div> 
-	Better promo available -- {{promo.display_title}}
+	Your bag is eligible for the promotion <span class="font-weight-bold">{{promo.display_title}}</span> where you can save <span class="text-success font-weight-bold">₹{{promo.actual_discount}}</span> 
 	</div>
 	<hr>
 </div>
