@@ -84,7 +84,7 @@ class Order extends Model
             }
         }
 
-        $summary = $this->cart->getSummary()
+        $summary = $this->cart->getSummary();
 
         $total['mrp_total']        = $summary['mrp_total'];
         $total['sale_price_total'] = $summary['sale_price_total'];
