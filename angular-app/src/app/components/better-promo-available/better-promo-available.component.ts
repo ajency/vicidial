@@ -27,7 +27,7 @@ export class BetterPromoAvailableComponent implements OnInit, OnChanges {
   		sorted_array.reverse();
 	  	console.log("sorted_array ==>", sorted_array);
 	  	let applied_promo = this.promotions.find((promotion)=>{ return this.promoApplied == promotion.promotion_id});
-	  	if(applied_promo.actual_discount < sorted_array[0].actual_discount){
+	  	if(applied_promo && (applied_promo.actual_discount < sorted_array[0].actual_discount)){
 	  		this.promo = sorted_array[0];
 	  	}
   	}  	
