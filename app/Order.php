@@ -157,6 +157,9 @@ class Order extends Model
         foreach ($orders as $order) {
             SubOrder::rectifyOldSubOrders($order->subOrders);
             $order->aggregateSubOrderData();
+            if ($order->address_data == null && $order->address != null) {
+                $order->address_data = $order->address->shippingAddress();
+            }
             $order->save();
         }
     }
