@@ -88,6 +88,9 @@ class Order extends Model
             }
         }
 
+        $total['you_pay']       = round($total['you_pay']);
+        $total['cart_discount'] = round($total['cart_discount']);
+
         $this->aggregate_data = $total;
     }
 
