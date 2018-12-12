@@ -139,6 +139,7 @@ export class CartComponent implements OnInit {
       this.cart = this.formattedCartDataForUI(response);   
       this.formatPromotions(response);          
       this.checkCartItemOutOfStock();
+      this.appservice.removeLoader();
       this.checkAppliedPromotionValidity();
       this.updateLocalDataAndUI(this.cart, this.cart.cart_count);
       console.log(add_to_cart_failed);
@@ -153,8 +154,7 @@ export class CartComponent implements OnInit {
         this.editBag();
         this.isCartTypeFailure = true;
       }
-      this.fetchCartFailed = false;
-      this.appservice.removeLoader();
+      this.fetchCartFailed = false;      
       this.zone.run(() => {});
     })
     .catch((error)=>{
