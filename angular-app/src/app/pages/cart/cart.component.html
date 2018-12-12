@@ -181,21 +181,7 @@
 		<!-- <hr> -->
 		<div class="cart-summary final-summary mt-4">
 			<h4 class="mb-2 font-weight-bold">Bag Summary</h4>
-			<!-- <p class="sub-text mb-3">Includes GST and all government taxes</p> -->
-
-			<div class="d-flex justify-content-between py-1">
-				<div><label class="text-muted f-w-4 m-0">Total Item Price</label></div>
-				<div> ₹{{cart.summary.mrp_total}} </div>
-			</div>
-			<div class="d-flex justify-content-between py-1">
-				<div><label class="text-muted f-w-4 m-0">Sub Total</label></div>
-				<div class="text-success"> ₹{{cart.summary.sale_price_total}}</div>
-			</div>
-			<div class="d-flex justify-content-between py-1">
-				<div><label class="text-muted f-w-4 m-0">Promotion Discount</label></div>
-				<div class="text-success"> ₹{{cart.summary.cart_discount}}</div>
-			</div>
-
+			<app-bag-summary [summary]="cart.summary"></app-bag-summary>
 		</div>
 		<hr class="dashed">
 		<hr class="dashed d-none">

@@ -9,7 +9,7 @@ import { PromotionsListComponent } from '../../shared-components/promotions/prom
 import { AppliedCouponComponent } from '../../components/applied-coupon/applied-coupon.component';
 import { UpgradeCartComponent } from '../../components/upgrade-cart/upgrade-cart.component';
 import { BetterPromoAvailableComponent } from '../../components/better-promo-available/better-promo-available.component';
-
+import { BagSummaryComponent } from '../../shared-components/bag-summary/bag-summary/bag-summary.component';
 // import * as $ from 'jquery';
 declare var $: any;
 declare var add_to_cart_failed: any;

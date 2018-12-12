@@ -103,6 +103,20 @@
 									</div>
 								</div>
 							</div>
+
+							<label class="mt-4">Order Summary</label>
+							<div class="card shadow-sm">
+							  <div class="card-body">
+							  	<app-bag-summary [summary]="order.order_summary"></app-bag-summary>
+							     <hr class="dashed">
+							     <div class="cd-cart-total pb-0">
+							        <h5 class="font-weight-bold">
+							           Total <span><i class="fas fa-rupee-sign"></i> {{order.order_summary.you_pay}}</span>
+							        </h5>
+							     </div> 
+							  </div>
+							</div>
+
 							<div class="border-top mt-2 mb-4 pt-2 pb-3 text-center">
 								<a href="/my/order/details?orderid={{order.order_info.txn_no}}" class="btn text-secondary pb-0 pr-0 order-details-btn">Order Details <i class="fas fa-chevron-right"></i></a>
 							</div>
