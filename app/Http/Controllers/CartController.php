@@ -155,7 +155,8 @@ class CartController extends Controller
         $cart->refresh();
         $message = "Item deleted successfully";
         $summary = $cart->getSummary();
-        return response()->json(['cart_count' => $cart->itemCount(), 'message' => $message,'promo_applied' => $cart->promotion_id, "summary" => $summary]);
+        $promotions = Promotion::getAllPromotions($cart,'web');
+        return response()->json(['cart_count' => $cart->itemCount(), 'message' => $message,'promo_applied' => $cart->promotion_id, "summary" => $summary, "promotions" => $promotions]);
     }
 
     public function userCartDelete($id, Request $request)
@@ -174,7 +175,8 @@ class CartController extends Controller
         $cart->refresh();
         $message = "Item deleted successfully";
         $summary = $cart->getSummary();
-        return response()->json(['cart_count' => $cart->itemCount(), 'message' => $message,'promo_applied' => $cart->promotion_id, "summary" => $summary]);
+        $promotions = Promotion::getAllPromotions($cart,'web');
+        return response()->json(['cart_count' => $cart->itemCount(), 'message' => $message,'promo_applied' => $cart->promotion_id, "summary" => $summary, "promotions" => $promotions]);
     }
 
     public function getCartID(Request $request)
