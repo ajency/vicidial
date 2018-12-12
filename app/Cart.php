@@ -115,7 +115,7 @@ class Cart extends Model
         return [
             "mrp_total"        => $this->getCartMrpPriceTotal(),
             "sale_price_total" => $spt,
-            "discount"         => $discount,
+            "cart_discount"    => $discount,
             "you_pay"          => $spt - $discount,
         ];
     }
