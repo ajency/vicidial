@@ -134,9 +134,9 @@ export class CartComponent implements OnInit {
     this.addToCartFailed = false;
     this.appservice.showLoader()
     this.appservice.callFetchCartApi().then((response)=>{
-      console.log("promotions ==>", response.promotions);  
-      this.formatPromotions(response);      
-      this.cart = this.formattedCartDataForUI(response);            
+      console.log("promotions ==>", response.promotions);             
+      this.cart = this.formattedCartDataForUI(response);   
+      this.formatPromotions(response);          
       this.checkCartItemOutOfStock();
       this.updateLocalDataAndUI(this.cart, this.cart.cart_count);
       console.log(add_to_cart_failed);
@@ -470,10 +470,15 @@ export class CartComponent implements OnInit {
     console.log(response);
     let promos = Object.keys(response.promotions).map((k)=>{ return response.promotions[k] });
     console.log("promos ==>",promos);
-    promos.forEach((promo)=>{ 
-      promo.actual_discount = this.appservice.calculateDiscount(promo.discount_type, promo.discount_value, this.cart.summary.sale_price_total);
-      console.log(promo.actual_discount);
-    });
+    try{
+      promos.forEach((promo)=>{ 
+        promo.actual_discount = this.appservice.calculateDiscount(promo.discount_type, promo.discount_value, this.cart.summary.sale_price_total);
+        console.log(promo.actual_discount);
+      });
+    }
+    catch(e){
+      console.log("error ==>",e);
+    }
     this.promotions = promos;
   }
   
