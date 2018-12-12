@@ -209,7 +209,7 @@ class Cart extends Model
 
     public function isPromotionApplicable($promotion)
     {
-        if ($promotion == null || $this->type != 'cart') {
+        if ($promotion == null) {
             return true;
         }
         if ($promotion->active == false || $promotion->step_quantity > $this->getCartSalePriceTotal() || $promotion->start > Carbon::now() || $promotion->expire < Carbon::now()) {

@@ -109,7 +109,7 @@ class CartController extends Controller
 
         $summary = $cart->getSummary();
         $code    = ["code" => "NEWUSER", "applied" => true];
-        if(!$cart->isPromotionApplicable($cart->promotion)){
+        if(!$cart->isPromotionApplicable($cart->promotion) && $this->type == 'cart'){
             $cart->applyPromotion($cart->getBestPromotion());
         }
         $promotions = Promotion::getAllPromotions($cart,'web');
@@ -128,7 +128,7 @@ class CartController extends Controller
 
         $summary = $cart->getSummary();
         $code    = ["code" => "NEWUSER", "applied" => true];
-        if(!$cart->isPromotionApplicable($cart->promotion)){
+        if(!$cart->isPromotionApplicable($cart->promotion) && $this->type == 'cart'){
             $cart->applyPromotion($cart->getBestPromotion());
         }
         $promotions = Promotion::getAllPromotions($cart,'web');
@@ -192,6 +192,10 @@ class CartController extends Controller
             if ($variant->getQuantity() < $variant_details['quantity']) {
                 abort(404, "Quantity not available");
             }
+        }
+
+        if(!$cart->isPromotionApplicable($cart->promotion)) {
+            abort(404, "Promotion not applicable");
         }
 
         return response()->json(["message" => 'Items are available in store', 'success'=> true]);

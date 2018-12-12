@@ -24,6 +24,10 @@ class OrderController extends Controller
         validateAddress($user, $address);
         $cart->checkCartAvailability();
 
+        if(!$cart->isPromotionApplicable($cart->promotion)) {
+            abort(404, "Promotion not applicable");
+        }
+
         $order = Order::create([
             'cart_id'       => $cart->id,
             'address_id'    => $address->id,
@@ -62,6 +66,10 @@ class OrderController extends Controller
 
         checkOrderInventory($order);
 
+        if(!$cart->isPromotionApplicable($cart->promotion)) {
+            abort(404, "Promotion not applicable");
+        }
+
         if(isset($params['address_id'])) {
             $address = Address::find($params["address_id"]);
             validateAddress($user, $address);
@@ -91,6 +99,10 @@ class OrderController extends Controller
         validateCart($user,$cart, 'order');
 
         checkOrderInventory($order);
+
+        if(!$cart->isPromotionApplicable($cart->promotion)) {
+            abort(404, "Promotion not applicable");
+        }
 
         return response()->json(["message" => 'Items are available in store', 'success'=> true]);
     }
