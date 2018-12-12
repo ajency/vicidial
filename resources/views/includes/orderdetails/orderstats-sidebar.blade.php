@@ -119,7 +119,7 @@
    @if($order_summary['mrp_total'] != $order_summary['you_pay'])
       <div class="card shadow-sm mt-3">
          <div class="card-body text-success d-flex">
-            <strong>Your Total Savings on this Order is <i class="fas fa-rupee-sign sm-font pl-1"></i></span> {{$order_summary['mrp_total'] - $order_summary['you_pay']}}</strong>
+            <strong>Your Total Savings on this Order is <span> <i class="fas fa-rupee-sign sm-font pl-1"></i></span> {{$order_summary['mrp_total'] - $order_summary['you_pay']}}</strong>
          </div>
       </div>
    @endif
