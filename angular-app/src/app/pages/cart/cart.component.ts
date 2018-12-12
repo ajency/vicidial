@@ -130,14 +130,15 @@ export class CartComponent implements OnInit {
   }
 
   fetchCartDataFromServer(){
+    this.appservice.showLoader();
     this.addToCartFailureMessage = '';
-    this.addToCartFailed = false;
-    this.appservice.showLoader()
+    this.addToCartFailed = false;    
     this.appservice.callFetchCartApi().then((response)=>{
       console.log("promotions ==>", response.promotions);             
       this.cart = this.formattedCartDataForUI(response);   
       this.formatPromotions(response);          
       this.checkCartItemOutOfStock();
+      this.checkAppliedPromotionValidity();
       this.updateLocalDataAndUI(this.cart, this.cart.cart_count);
       console.log(add_to_cart_failed);
       if(add_to_cart_failed){
@@ -146,13 +147,13 @@ export class CartComponent implements OnInit {
         this.addToCartFailed = true;
         add_to_cart_failed = false;
         add_to_cart_failure_message = '';
-      }
-      this.appservice.removeLoader();
+      }      
       if(this.cart.cart_type == 'failure'){
         this.editBag();
         this.isCartTypeFailure = true;
       }
       this.fetchCartFailed = false;
+      this.appservice.removeLoader();
       this.zone.run(() => {});
     })
     .catch((error)=>{
@@ -411,61 +412,6 @@ export class CartComponent implements OnInit {
     }
   }
 
-  createDummyPromotions(){
-    this.promotions = [
-      {
-        promotion_id: 123,
-        display_title: "Buy 2000 Get 250 Off",
-        description: "something something",
-        min_cart_value: 2000,
-        discount_value: 250,
-        discount_type: "value",
-        valid_from: "2018-10-12 10:30:00",
-        valid_till: "11/08/2018 00:00:00"
-    },
-    {
-        promotion_id: 123,
-        display_title: "Buy 2000 Get 250 Off",
-        description: "something something ",
-        min_cart_value: 1000,
-        discount_value: 10,
-        discount_type: "percent",
-        valid_from: "2018-10-12 10:30:00",
-        valid_till: "11/08/2018 00:00:00"
-    },
-    {
-        promotion_id: 123,
-        display_title: "Buy 2000 Get 250 Off",
-        description: "something something ",
-        min_cart_value: 4000,
-        discount_value: 10,
-        discount_type: "percent",
-        valid_from: "2018-10-12 10:30:00",
-        valid_till: "11/08/2018 00:00:00"
-    },
-    {
-        promotion_id: 123,
-        display_title: "Buy 2000 Get 250 Off",
-        description: "something something ",
-        min_cart_value: 3000,
-        discount_value: 10,
-        discount_type: "percent",
-        valid_from: "2018-10-12 10:30:00",
-        valid_till: "11/08/2018 00:00:00"
-    },
-    {
-        promotion_id: 124,
-        display_title: "Buy 2000 Get 250 Off",
-        description: "something something ",
-        min_cart_value: 1000,
-        discount_value: 10,
-        discount_type: "percent",
-        valid_from: "2018-10-12 10:30:00",
-        valid_till: "11/08/2018 00:00:00"
-    }
-    ]
-  }
-
   formatPromotions(response){
     console.log(response);
     let promos = Object.keys(response.promotions).map((k)=>{ return response.promotions[k] });
@@ -480,6 +426,16 @@ export class CartComponent implements OnInit {
       console.log("error ==>",e);
     }
     this.promotions = promos;
+  }
+
+  checkAppliedPromotionValidity(){
+    if(this.cart.promo_applied && this.cart.cart_type == 'order'){
+      let applied_promo = this.promotions.find((promotion)=>{ return this.cart.promo_applied == promotion.promotion_id});
+      console.log("checkAppliedPromotionValidity ==>",applied_promo)
+      if(!applied_promo){
+        this.editBag();
+      }
+    }
   }
   
 }
