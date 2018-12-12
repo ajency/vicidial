@@ -108,6 +108,14 @@
 				    </div>
 				    <div> ₹{{shippingDetails.summary.mrp_total}} </div>
 				  </div>
+  				  <div class="d-flex justify-content-between py-1">
+				    <div><label class="text-muted f-w-4 m-0">Sub Total</label></div>
+				    <div class="">₹{{shippingDetails.summary.sale_price_total}}</div>
+				  </div>
+				  <div class="d-flex justify-content-between py-1">
+				    <div><label class="text-muted f-w-4 m-0">Coupon discount</label></div>
+				    <div class="">₹{{shippingDetails.summary.cart_discount}}</div>
+				  </div>
 				  <div class="d-flex justify-content-between py-1">
 				    <div><label class="text-muted f-w-4 m-0">Shipping Fee</label></div>
 				    <div class="">₹{{shippingDetails.summary.shipping_fee}}</div>
@@ -117,7 +125,7 @@
 
 				<hr class="dashed">
 				<div class="cd-cart-total">
-				  <h5 class="font-weight-bold">Total Payable<span>₹{{shippingDetails.summary.sale_price_total}}</span></h5>
+				  <h5 class="font-weight-bold">Total Payable<span>₹{{shippingDetails.summary.you_pay}}</span></h5>
 				</div>
 				<h5 *ngIf="shippingDetails.summary.mrp_total - shippingDetails.summary.you_pay != 0 " class="font-weight-bold text-success w-50 line-height-5">Your total savings on this order ₹{{shippingDetails.summary.mrp_total - shippingDetails.summary.you_pay}}</h5>
 			</div>
