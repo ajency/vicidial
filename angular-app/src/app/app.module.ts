@@ -21,7 +21,7 @@ import { AppliedCouponComponent } from './components/applied-coupon/applied-coup
 import { UpgradeCartComponent } from './components/upgrade-cart/upgrade-cart.component';
 import { BetterPromoAvailableComponent } from './components/better-promo-available/better-promo-available.component';
 
-
+import { BagSummaryModule } from './shared-components/bag-summary/bag-summary.module';
 
 @NgModule({
   declarations: [
@@ -40,7 +40,8 @@ import { BetterPromoAvailableComponent } from './components/better-promo-availab
     AppRoutingModule,
     HttpModule,
     LoginModule,
-    PromotionsModule
+    PromotionsModule,
+    BagSummaryModule
   ],
   providers: [
     {provide: APP_BASE_HREF, useValue: '/'},
