@@ -99,7 +99,7 @@ class Cart extends Model
             if ($this->promotion->discount_type == "cart_fixed") {
                 $discount = $this->promotion->value;
             } elseif ($this->promotion->discount_type == "by_percent") {
-                $discount = ($spt * $this->promotion->value / 100.0);
+                $discount = round($spt * $this->promotion->value / 100.0,2);
             }
         } else {
             $discount = 0;
