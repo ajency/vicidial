@@ -212,6 +212,7 @@ export class CartComponent implements OnInit {
       let index = this.cart.items.findIndex(i => i.id == item.id)
       this.cart.items.splice(index,1);
       this.cart.summary = response.summary;
+      this.cart.promo_applied = response.promo_applied;
       this.cart.cart_count = response.cart_count;
       this.checkCartItemOutOfStock();
       this.updateLocalDataAndUI(this.cart, this.cart.cart_count);
