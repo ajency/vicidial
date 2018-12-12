@@ -150,4 +150,14 @@ class Order extends Model
             'message' => "Your order with order id {$this->txnid} for Rs. {$this->subOrderData()['you_pay']} has been placed successfully on KidSuperStore.in.",
         ]);
     }
+
+    public static function rectifyOldOrders()
+    {
+        $orders = self::where('aggregate_data', null)->get();
+        foreach ($orders as $order) {
+            SubOrder::rectifyOldSubOrders($order->subOrders);
+            $order->aggregateSubOrderData();
+            $order->save();
+        }
+    }
 }

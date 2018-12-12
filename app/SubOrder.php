@@ -221,4 +221,25 @@ class SubOrder extends Model
         $out   = $odoo->defaultExec($model, "read", [$id]);
         return $out[0];
     }*/
+
+    public static function rectifyOldSubOrders($subOrders)
+    {
+        foreach ($subOrders as $subOrder) {
+            $items     = $subOrder->getItems();
+            $itemsData = [];
+            foreach ($items as $itemData) {
+                $itemsData[] = [
+                    'id'               => $itemData['item']->id,
+                    'quantity'         => $itemData['quantity'],
+                    'price_mrp'        => $itemData['item']->getLstPrice(),
+                    'price_final'      => $itemData['item']->getSalePrice(),
+                    'discount'         => $itemData['item']->getDiscount(),
+                    'price_discounted' => $subOrder->order->cart->getDiscountedPrice($itemData['item']),
+                ];
+            }
+            $subOrder->item_data = $itemsData;
+            $subOrder->aggregateData();
+            $subOrder->save();
+        }
+    }
 }
