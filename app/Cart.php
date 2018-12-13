@@ -179,6 +179,14 @@ class Cart extends Model
         }
     }
 
+    public function anonymousCartCheckUser()
+    {
+        if ($this->user_id != null) {
+            request()->session()->forget('active_cart_id');
+            abort(403);
+        }
+    }
+
     public function getBestPromotion()
     {
         $salePrice       = $this->getCartSalePriceTotal();

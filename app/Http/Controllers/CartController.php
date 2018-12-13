@@ -18,6 +18,7 @@ class CartController extends Controller
         $cart = Cart::find($id);
         if ($cart !== null) {
             // \Log::debug('cart = '.$cart);
+            $cart->anonymousCartCheckUser();
             $cart->abortNotCart('cart');
             return response()->json(['cart_count' => $cart->itemCount()]);
         } else {
@@ -70,6 +71,7 @@ class CartController extends Controller
         $params = $request->all();
         $id     = $request->session()->get('active_cart_id', false);
         $cart   = ($id) ? Cart::find($id) : new Cart;
+        $cart->anonymousCartCheckUser();
         $cart->abortNotCart('cart');
         $variant = Variant::where('odoo_id', $params['variant_id'])->first();
         $item    = $variant->getItem(true, isNotProd());
@@ -126,6 +128,7 @@ class CartController extends Controller
         if ($cart == null) {
             abort(404, "Cart not found for this session");
         }
+        $cart->anonymousCartCheckUser();
         $cart->abortNotCart('cart');
         $items = getCartData($cart, true, isNotProd());
 
@@ -149,6 +152,7 @@ class CartController extends Controller
         if ($cart == null) {
             abort(404, "Cart not found for this session");
         }
+        $cart->anonymousCartCheckUser();
         $cart->abortNotCart('cart');
         $cart->removeItem($params["variant_id"]);
         $cart->save();
@@ -193,6 +197,7 @@ class CartController extends Controller
         if ($cart == null) {
             abort(404, "Cart not found for this session");
         }
+        $cart->anonymousCartCheckUser();
         $cart->abortNotCart('cart');
 
         foreach ($cart->cart_data as $variant_id => $variant_details) {
@@ -239,6 +244,7 @@ class CartController extends Controller
         if ($cart == null) {
             abort(404, "Cart not found for this session");
         }
+        $cart->anonymousCartCheckUser();
         $cart->abortNotCart('cart');
         if($cart->isPromotionApplicable($params['promotion_id'])){
             $cart->applyPromotion($params['promotion_id']);
