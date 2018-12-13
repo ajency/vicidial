@@ -338,6 +338,10 @@ function fbTrackInitiateCheckout(order_total){
     });
 }
 
+function fbTrackAddPaymentInfo(){
+    fbq('track', 'AddPaymentInfo');
+}
+
 function loadMyAccountApp(){
     $.getScript("/views/my-account/inline.bundle.js")
         .done(function(script, textStatus){

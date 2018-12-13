@@ -6,6 +6,7 @@ import { BagSummaryComponent } from '../../shared-components/bag-summary/bag-sum
 
 declare var $: any;
 // declare var fbTrackInitiateCheckout : any;
+declare var fbTrackAddPaymentInfo : any;
 
 @Component({
   selector: 'app-shipping-summary',
@@ -36,6 +37,7 @@ export class ShippingSummaryComponent implements OnInit {
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     this.apiservice.request(url, 'get', {} , header ).then((response)=>{
       window.location.href = "/user/order/" + this.shippingDetails.order_id +"/payment/payu";
+      fbTrackAddPaymentInfo();
     })
     .catch((error)=>{
       console.log("error ===>", error);
