@@ -205,7 +205,7 @@ export class CartComponent implements OnInit {
 
   deleteItem(item){
     this.addToCartFailed = false;
-    this.appservice.showLoader()
+    this.appservice.showLoader();
     let body = { variant_id : item.id };
     let url = this.appservice.apiUrl + (this.appservice.isLoggedInUser() ? ("/api/rest/v1/user/cart/"+this.appservice.getCookie('cart_id')+"/delete?") : ("/rest/v1/anonymous/cart/delete?"));
     let header = this.appservice.isLoggedInUser() ? { Authorization : 'Bearer '+this.appservice.getCookie('token') } : {};
@@ -216,6 +216,7 @@ export class CartComponent implements OnInit {
       this.cart.summary = response.summary;
       this.cart.promo_applied = response.promo_applied;
       this.cart.cart_count = response.cart_count;
+      this.displayPromo = true;
       this.formatPromotions(response);
       this.checkCartItemOutOfStock();
       this.updateLocalDataAndUI(this.cart, this.cart.cart_count);
