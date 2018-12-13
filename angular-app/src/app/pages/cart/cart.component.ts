@@ -372,9 +372,14 @@ export class CartComponent implements OnInit {
       this.fetchCartDataFromServer();
       this.fetchCartFailed = false; 
     }
-    else if((error.status == 400 || error.status == 403) && this.appservice.isLoggedInUser() ){
-      this.getNewCartId();
-      this.fetchCartFailed = false; 
+    else if((error.status == 400 || error.status == 403)){
+      if(this.appservice.isLoggedInUser()){
+        this.getNewCartId();
+        this.fetchCartFailed = false; 
+      }
+      else{
+        this.fetchCartDataFromServer();
+      }        
     }
     else if(error.status == 404){
       this.cart = {
