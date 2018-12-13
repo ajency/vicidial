@@ -5,7 +5,6 @@ import { ApiServiceService } from '../../service/api-service.service';
 import { BagSummaryComponent } from '../../shared-components/bag-summary/bag-summary/bag-summary.component';
 
 declare var $: any;
-// declare var fbTrackInitiateCheckout : any;
 declare var fbTrackAddPaymentInfo : any;
 
 @Component({
@@ -36,8 +35,8 @@ export class ShippingSummaryComponent implements OnInit {
     let url = this.appservice.apiUrl + '/api/rest/v1/user/order/' + this.shippingDetails.order_id + '/check-inventory'
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     this.apiservice.request(url, 'get', {} , header ).then((response)=>{
-      window.location.href = "/user/order/" + this.shippingDetails.order_id +"/payment/payu";
       fbTrackAddPaymentInfo();
+      window.location.href = "/user/order/" + this.shippingDetails.order_id +"/payment/payu";      
     })
     .catch((error)=>{
       console.log("error ===>", error);
@@ -79,8 +78,6 @@ export class ShippingSummaryComponent implements OnInit {
       this.shippingDetails = this.getProductUrl(response);
       this.setUserName();
       this.appservice.removeLoader();
-      // fbTrackInitiateCheckout(this.shippingDetails.summary.final_price);
-      // this.appservice.updateCartId();
     })
     .catch((error)=>{
       console.log("error ===>", error);

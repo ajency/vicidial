@@ -122,18 +122,10 @@
 	<script type="text/javascript">
 	    window.variants = @php echo json_encode($params['variant_group']); @endphp;
 	    var selected_color_id = {{$selected_color_id}};
+	    var parent_id = {{$parent_id}};
 	</script>
 
-	
+	@yield('footjs-title')
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
 	<script type="text/javascript" src="{{CDN::mix('/js/singleproduct.js') }}"></script>
-
-	<script type="text/javascript">
-        // fbq('track', 'ViewContent', {
-            // value: default_price,
-            // currency: 'INR',
-            // content_ids: '{{$parent_id}}.{{$selected_color_id}}',
-            // content_type: 'product_color',
-        // });
-    </script>
 @stop
