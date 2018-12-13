@@ -511,7 +511,12 @@ function createAccessToken($UserObject)
 
 function fetchAccessToken($UserObject)
 {
-    return $token = $UserObject->tokens->first();
+    try {
+        return $token = $UserObject->tokens->firstOrFail();
+    } catch (\Exception $e) {
+        createAccessToken($UserObject);
+        return fetchAccessToken($UserObject);
+    }
 }
 
 /**

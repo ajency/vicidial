@@ -126,7 +126,7 @@ class CartController extends Controller
         if ($cart == null) {
             abort(404, "Cart not found for this session");
         }
-        if($cart->type == 'order-complete') abort(400);
+        $cart->abortNotCart('cart');
         $items = getCartData($cart, true, isNotProd());
 
         $code    = ["code" => "NEWUSER", "applied" => true];

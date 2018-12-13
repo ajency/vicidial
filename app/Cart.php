@@ -174,6 +174,7 @@ class Cart extends Model
         }
 
         if ($this->type != $type) {
+            request()->session()->forget('active_cart_id');
             abort(403);
         }
     }
