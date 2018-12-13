@@ -112,6 +112,7 @@ $(function(){
      });
 
    jQuery(document).on('click', '#kss_hide-filter', function() {
+        $("html, body").animate({scrollTop: 0}, 300);
          jQuery(".kss_filter").removeClass("kss_filter_mobile");
          copy_filters = {}
          copy_filters = { "facet_list" : JSON.parse(JSON.stringify(facet_list)) , "range_facet_list" : JSON.parse(JSON.stringify(range_facet_list)) , "boolean_facet_list" : JSON.parse(JSON.stringify(boolean_facet_list)) , "sort_on_filter" : sort_on_filter , "search_string_filter" : search_string_filter  }
