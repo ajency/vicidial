@@ -95,6 +95,7 @@ class UserController extends Controller
         request()->session()->forget('active_cart_id');
 
         Auth::guard()->login($UserObject);
+        request()->session()->regenerate();
 
         return $UserObject;
     }
