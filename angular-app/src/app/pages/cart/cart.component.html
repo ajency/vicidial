@@ -138,6 +138,22 @@
 			</li>
 		</ul>
 
+		<!-- Promotion summary -->
+		<div *ngIf="promotions && promotions.length && (displayPromo || cart.promo_applied )" class="cart-promotion mt-4">
+			<h4 class="mb-2 font-weight-bold">Promotion Summary</h4>
+			<app-applied-coupon [promoApplied]="cart.promo_applied" [promotions]="promotions"> </app-applied-coupon>
+			<div *ngIf="cart.promo_applied">
+				<app-better-promo-available [promoApplied]="cart.promo_applied" [promotions]="promotions" [orderTotal]="cart.summary.sale_price_total"></app-better-promo-available>	
+			</div>			
+			<app-upgrade-cart [promotions]="promotions" [orderTotal]="cart.summary.sale_price_total" (noUpgradePromo)="displayPromo = false"> </app-upgrade-cart>			
+			<hr>
+		</div>
+
+
+<!-- 		<div *ngIf="promotions && promotions.length">
+			<app-promotions-list  [promotionsList]="promotions" [orderTotal]="cart.summary.sale_price_total"></app-promotions-list>	
+		</div> -->
+		
 		<!-- <div class="row no-gutters">
 			<div class="col-7">
 	   <div class="form-group m-0">
@@ -162,31 +178,14 @@
 			</div>
 		</div> -->
 		<!-- <hr> -->
-<!-- 		<div class="cart-summary mt-4">
-			<h4 class="mb-1 font-weight-bold">Price Summary</h4>
-			<p class="sub-text mb-3">Includes GST and all government taxes</p>
-
-			<div class="d-flex justify-content-between py-1">
-				<div><label class="text-muted f-w-4 m-0">Cart Total</label></div>
-				<div> ₹{{cart.summary.total}} </div>
-			</div>
-			<div class="d-flex justify-content-between py-1">
-				<div><label class="text-muted f-w-4 m-0">Cart Discount</label></div>
-				<div class="text-success">- ₹{{cart.summary.discount}}</div>
-			</div>
-			<div class="d-flex justify-content-between py-1">
-				<div><label class="text-muted f-w-4 m-0">Estimated Tax</label></div>
-				<div>₹{{cart.summary.tax}}</div>
-			</div>
-			<div class="d-flex justify-content-between py-1">
-				<div><label class="text-muted f-w-4 m-0">Coupon Discount</label></div>
-				<div class="text-success">- ₹{{cart.summary.coupon}}</div>
-			</div>
+		<div class="cart-summary final-summary mt-4">
+			<h4 class="mb-2 font-weight-bold">Bag Summary</h4>
+			<app-bag-summary [summary]="cart.summary"></app-bag-summary>
 		</div>
-		<hr class="dashed"> -->
+		<hr class="dashed">
 		<hr class="dashed d-none">
 		<div class="cd-cart-total mt-4 mb-4">
-			<h5 class="font-weight-bold">Bag Total <span>₹{{cart.summary.order_total}}</span></h5>
+			<h5 class="font-weight-bold">Bag Total <span>₹{{cart.summary.you_pay}}</span></h5>
 			<p class="sub-text mb-3">Shipping charges will be added on checkout</p>
 		</div>
 
@@ -236,82 +235,6 @@
 	</div>
 
 	<app-login-component (loginSuccess)="navigateToShippingDetailsPage()"> </app-login-component> 
-
-<!-- 	<div class="modal fade" id="signin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-	  <div class="modal-dialog" role="document">
-	    <div class="modal-content ">
-	      <div class="modal-body">
-
-	        <div *ngIf="!mobileNumberEntered" class="state-1">
-	          <div class="d-flex align-items-center justify-content-between">
-	            <div class="">
-	              <h3 class="modal-title font-weight-bold mt-1" id="exampleModalLabel"> Mobile Number</h3>
-	            </div>
-	            <div class="">
-	              <h3  class="m-0 font-weight-bold kss_highlight" data-dismiss="modal" aria-label="Close">
-	              	<span (click)="closeOtpModal()" class="modal-close-icon cursor-pointer">&times;</span>	           
-	              </h3>
-	            </div>
-	          </div>
-
-	          <p class="sub-text w-75 mt-3">Your Shipping and payment details will be associated with this number</p>
-	          <form #mobileForm="ngForm">
-	            <div class="form-group mb-0">
-	              <input type="tel" class="form-control form-control-number form-control-lg" (keyup)="enterclick($event)" [ngClass]="{'has-error' : userValidation.mobileValidationFailed, 'has-value' : mobileNumber}" id="frm-mobile" name="mobile" [(ngModel)]="mobileNumber" required minlength = "10" maxlength = "10" pattern="^[789]\d{9}$" inputmode="numeric" appNumbers>
-	              <label class="control-label">Enter Mobile Number</label>
-	               <small *ngIf="userValidation.mobileValidationFailed" id="passwordHelpBlock" class="form-text text-danger">
-						{{userValidation.mobileValidationErrorMsg}}
-					</small>
-					<small *ngIf="mobileNumber<7000000000 && mobileNumber.length== 10" id="passwordHelpBlock" class="form-text text-danger">
-						Please enter a valid Indian Mobile Number
-					</small>
-	            </div>
-	          </form>
-	          <div class="mt-3">
-	            <button [disabled]="!mobileForm.valid || userValidation.disableSendOtpButton" type="button" class="btn kss-btn kss-btn--big btn-signin is-enter" (click)="authenticateUser()"><span> Send OTP <i class="fas fa-circle-notch fa-spin fa-lg ml-1" [ngClass]="{'d-none' : !userValidation.disableSendOtpButton}"></i> </span></button>
-	          </div>
-	        </div>
-
-	        <div *ngIf="mobileNumberEntered" class="state-2">
-	          <div class="d-flex align-items-center justify-content-between">
-	            <div class="">
-	             <h3 class="modal-title font-weight-bold mt-1" id="exampleModalLabel">Verify Mobile</h3>
-	            </div>
-	            <div class="">
-	              <h3 class="modal-title font-weight-bold" data-dismiss="modal" aria-label="Close">
-	              	<span (click)="closeOtpModal()" class="modal-close-icon cursor-pointer">&times;</span>
-	              </h3>
-	            </div>
-	          </div>
-
-	          <form class="mt-0" #otpForm="ngForm">
-	            <div class="form-group mb-0 mt-3">
-	              <p >Enter the OTP sent to your number</p><h4 class="font-weight-bold m-0">{{mobileNumber}} <i class="fas fa-pencil-alt number-edit ml-2 cursor-pointer" (click)="mobileNumberEntered = false"></i></h4>
-
-		             <div class="otp-fields d-flex align-items-center justify-content-center">
-						<input type="tel" maxlength="1" size="1" min="0" max="9" pattern="\d*" class="form-control form-control-lg form-control-number mb-2 text-center mx-2" #otp1 (keydown)="onKeyDown($event,otp1,otp2,otpCode['otp1'])" (keyup)="onKeyUp($event,otp1,otp2,otpCode['otp1'])" [(ngModel)]="otpCode['otp1']" name="otp1" appNumbers>
-						<input type="tel" maxlength="1" size="1" min="0" max="9" pattern="\d*" class="form-control form-control-lg form-control-number mb-2 text-center mx-2" #otp2 (keydown)="onKeyDown($event,otp1,otp3,otpCode['otp2'])" (keyup)="onKeyUp($event,otp1,otp3,otpCode['otp2'])" [(ngModel)]="otpCode['otp2']" name="otp1" appNumbers>
-						<input type="tel" maxlength="1" size="1" min="0" max="9" pattern="\d*" class="form-control form-control-lg form-control-number mb-2 text-center mx-2" #otp3 (keydown)="onKeyDown($event,otp2,otp4,otpCode['otp3'])" (keyup)="onKeyUp($event,otp2,otp4,otpCode['otp3'])" [(ngModel)]="otpCode['otp3']" name="otp1" appNumbers>
-						<input type="tel" maxlength="1" size="1" min="0" max="9" pattern="\d*" class="form-control form-control-lg form-control-number mb-2 text-center mx-2" #otp4 (keydown)="onKeyDown($event,otp3,otp5,otpCode['otp4'])" (keyup)="onKeyUp($event,otp3,otp5,otpCode['otp4'])" [(ngModel)]="otpCode['otp4']" name="otp1" appNumbers>
-						<input type="tel" maxlength="1" size="1" min="0" max="9" pattern="\d*" class="form-control form-control-lg form-control-number mb-2 text-center mx-2" #otp5 (keydown)="onKeyDown($event,otp4,otp6,otpCode['otp5'])" (keyup)="onKeyUp($event,otp4,otp6,otpCode['otp5'])" [(ngModel)]="otpCode['otp5']" name="otp1" appNumbers>
-						<input type="tel" maxlength="1" size="1" min="0" max="9" pattern="\d*" class="form-control form-control-lg form-control-number mb-2 text-center mx-2" #otp6 (keydown)="onKeyDown($event,otp5,otp6,otpCode['otp6'])" (keyup)="onKeyUp($event,otp5,otp6,otpCode['otp6'])" [(ngModel)]="otpCode['otp6']" name="otp1" appNumbers>
-					</div>
-
-
-	               <small *ngIf="userValidation.otpVerificationFailed" id="passwordHelpBlock" class="form-text text-danger">
-						{{userValidation.otpVerificationErrorMsg}}
-				</small>
-	            </div>
-	          </form>
-	          <div class="mt-3">
-	            <button (click)="verifyMobile()" id="shipping-details" [disabled]="check_OTP() || userValidation.disableVerifyOtpButton" type="button" class="btn kss-btn kss-btn--big btn-verify is-enter" data-toggle="modal" data-target="#checkout-flow"><span>Verify <i class="fas fa-circle-notch fa-spin fa-lg ml-1" [ngClass]="{'d-none' : !userValidation.disableVerifyOtpButton}"></i> </span></button>
-	          </div>
-	        </div>
-
-	      </div>
-	    </div>
-	  </div>
-	</div> -->
 
 	<div class="slide-out pb-4" id="cd-coupon" [ngClass]="{'slide-show' : enterCoupon}">
 		<div class="d-flex pt-2 ">

@@ -155,6 +155,9 @@ Add the following to crontab
 ### Get all color attributes from odoo
 `php artisan odoo:attribute color` 
 
+### Get all cart discounts from odoo
+`php artisan odoo:discounts` 
+
 ### create passport keys for API to work
 `php artisan passport:client --personal`
 

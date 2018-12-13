@@ -33,19 +33,39 @@
          <div class="d-flex justify-content-between py-1">
             <div>
                <label class="text-muted f-w-4 m-0">
-               Order Total
+               Total Item Price
                </label>
             </div>
             <div> 
-               <span class="rs-symbol"><i class="fas fa-rupee-sign sm-font"></i></span> {{$order_summary['total']}}
+               <span class="rs-symbol"><i class="fas fa-rupee-sign sm-font"></i></span> {{$order_summary['mrp_total']}}
             </div>
          </div>
 
          <div class="d-flex justify-content-between py-1">
             <div>
-               <label class="text-muted f-w-4 m-0">Shipping Fee</label>
+               <label class="text-muted f-w-4 m-0">Sub Total</label>
+            </div>
+            <div> 
+               <span class="rs-symbol"><i class="fas fa-rupee-sign sm-font"></i></span> {{$order_summary['sale_price_total']}}
+            </div>
+         </div>
+
+         @if($order_summary['cart_discount'] > 0)
+         <div class="d-flex justify-content-between py-1">
+            <div>
+               <label class="text-muted f-w-4 m-0">Promotion Discount</label>
             </div>
             <div class="text-success">
+               - <span class="rs-symbol"><i class="fas fa-rupee-sign sm-font"></i></span> {{$order_summary['cart_discount']}}
+            </div>
+         </div>
+         @endif
+
+         <div class="d-flex justify-content-between py-1">
+            <div>
+               <label class="text-muted f-w-4 m-0">Shipping</label>
+            </div>
+            <div> 
                <span class="rs-symbol"><i class="fas fa-rupee-sign sm-font"></i></span> {{$order_summary['shipping_fee']}}
             </div>
          </div>
@@ -91,17 +111,17 @@
          <hr class="dashed">
          <div class="cd-cart-total pb-0">
             <h5 class="font-weight-bold">
-               Total <span><i class="fas fa-rupee-sign"></i> {{$order_summary['final_price']}}</span>
+               Total <span><i class="fas fa-rupee-sign"></i> {{$order_summary['you_pay']}}</span>
             </h5>
          </div>
       </div>
    </div>
 
    <!-- Total savings -->
-   @if($order_summary['savings'] != 0)
+   @if($order_summary['mrp_total'] != $order_summary['you_pay'])
       <div class="card shadow-sm mt-3">
          <div class="card-body text-success d-flex">
-            <strong>Your Total Savings on this Order is <i class="fas fa-rupee-sign sm-font pl-1"></i></span> {{$order_summary['savings']}}</strong>
+            <strong>Your Total Savings on this Order is <span> <i class="fas fa-rupee-sign sm-font pl-1"></i></span> {{$order_summary['mrp_total'] - $order_summary['you_pay']}}</strong>
          </div>
       </div>
    @endif

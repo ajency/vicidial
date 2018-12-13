@@ -1,0 +1,15 @@
+<div>
+	<div>
+		<div>{{coupon.display_title}}</div>
+		<span>{{coupon.description}}</span>
+	</div>
+	<div>
+		<div>
+			You save: Rs. 
+			<span>{{coupon.actual_discount}}</span>
+		</div>
+	</div>
+	<div>
+		valid till {{getValidTill(coupon.valid_till)}}
+	</div>
+</div>

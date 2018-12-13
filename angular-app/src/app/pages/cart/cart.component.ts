@@ -5,7 +5,11 @@ import { ApiServiceService } from '../../service/api-service.service';
 import { Subscription } from 'rxjs/Subscription';
 
 import { LoginComponentComponent } from '../../shared-components/login/login-component/login-component.component';
-
+import { PromotionsListComponent } from '../../shared-components/promotions/promotions-list/promotions-list.component';
+import { AppliedCouponComponent } from '../../components/applied-coupon/applied-coupon.component';
+import { UpgradeCartComponent } from '../../components/upgrade-cart/upgrade-cart.component';
+import { BetterPromoAvailableComponent } from '../../components/better-promo-available/better-promo-available.component';
+import { BagSummaryComponent } from '../../shared-components/bag-summary/bag-summary/bag-summary.component';
 // import * as $ from 'jquery';
 declare var $: any;
 declare var add_to_cart_failed: any;
@@ -21,22 +25,10 @@ declare var add_to_cart_completed: any;
 })
 export class CartComponent implements OnInit {
 
-  // mobileNumberEntered = false;
   enterCoupon = false;
   cart : any = {};
   sessionCheckInterval : any;
   cartOpen = false;
-  // mobileNumber : any;
-  // otp : any;
-  // otpCode = {otp1:"",otp2:"",otp3:"",otp4:"",otp5:"",otp6:""}
-  // userValidation = {
-  //   disableSendOtpButton :  false,
-  //   mobileValidationFailed : false,
-  //   mobileValidationErrorMsg : '',
-  //   disableVerifyOtpButton : false,
-  //   otpVerificationFailed : false,
-  //   otpVerificationErrorMsg : ''
-  // }
   reloadSubscription: Subscription;
   loadSubscription: Subscription;
   closeModalSubscription: Subscription;
@@ -46,11 +38,14 @@ export class CartComponent implements OnInit {
   isCartTypeFailure : boolean = false;
   addToCartFailureMessage = '';
   addToCartFailed : boolean = false;
+  promotions = [];
+  displayPromo : boolean = true;
   constructor( private router: Router,
                private appservice : AppServiceService,
                private apiservice : ApiServiceService,
                private zone : NgZone
               ) { 
+    // this.createDummyPromotions();
     this.reloadSubscription = this.appservice.listenToAddToCartEvent().subscribe(()=> { this.reloadCart() });
     this.loadSubscription = this.appservice.listenToOpenCartEvent().subscribe(()=> { this.loadCart() });
 
@@ -136,12 +131,16 @@ export class CartComponent implements OnInit {
   }
 
   fetchCartDataFromServer(){
+    this.appservice.showLoader();
     this.addToCartFailureMessage = '';
-    this.addToCartFailed = false;
-    this.appservice.showLoader()
+    this.addToCartFailed = false;    
     this.appservice.callFetchCartApi().then((response)=>{
-      this.cart = this.formattedCartDataForUI(response);      
+      console.log("promotions ==>", response.promotions);             
+      this.cart = this.formattedCartDataForUI(response);   
+      this.formatPromotions(response);          
       this.checkCartItemOutOfStock();
+      this.appservice.removeLoader();
+      this.checkAppliedPromotionValidity();
       this.updateLocalDataAndUI(this.cart, this.cart.cart_count);
       console.log(add_to_cart_failed);
       if(add_to_cart_failed){
@@ -150,13 +149,12 @@ export class CartComponent implements OnInit {
         this.addToCartFailed = true;
         add_to_cart_failed = false;
         add_to_cart_failure_message = '';
-      }
-      this.appservice.removeLoader();
+      }      
       if(this.cart.cart_type == 'failure'){
         this.editBag();
         this.isCartTypeFailure = true;
       }
-      this.fetchCartFailed = false;
+      this.fetchCartFailed = false;      
       this.zone.run(() => {});
     })
     .catch((error)=>{
@@ -207,7 +205,7 @@ export class CartComponent implements OnInit {
 
   deleteItem(item){
     this.addToCartFailed = false;
-    this.appservice.showLoader()
+    this.appservice.showLoader();
     let body = { variant_id : item.id };
     let url = this.appservice.apiUrl + (this.appservice.isLoggedInUser() ? ("/api/rest/v1/user/cart/"+this.appservice.getCookie('cart_id')+"/delete?") : ("/rest/v1/anonymous/cart/delete?"));
     let header = this.appservice.isLoggedInUser() ? { Authorization : 'Bearer '+this.appservice.getCookie('token') } : {};
@@ -216,7 +214,10 @@ export class CartComponent implements OnInit {
       let index = this.cart.items.findIndex(i => i.id == item.id)
       this.cart.items.splice(index,1);
       this.cart.summary = response.summary;
+      this.cart.promo_applied = response.promo_applied;
       this.cart.cart_count = response.cart_count;
+      this.displayPromo = true;
+      this.formatPromotions(response);
       this.checkCartItemOutOfStock();
       this.updateLocalDataAndUI(this.cart, this.cart.cart_count);
       this.appservice.removeLoader()
@@ -235,69 +236,6 @@ export class CartComponent implements OnInit {
       this.appservice.removeLoader();
     })
   }
-
-  // enterclick(event){
-  //     if (event.keyCode === 13) {
-  //       $('.is-enter').click();
-  //     }
-  // }
-
-  // authenticateUser(){
-  //   this.userValidation.disableSendOtpButton = true;
-  //   this.userValidation.mobileValidationFailed = false;
-  //   let url = this.appservice.apiUrl + '/rest/v1/authenticate/generate_otp?';
-  //   let body = { phone : this.mobileNumber };
-  //   url = url+$.param(body);
-  //   this.apiservice.request(url, 'get', body , {}, true).then((response)=>{
-  //     this.userValidation.disableSendOtpButton = false;
-  //     if(response.success){
-  //       this.mobileNumberEntered = true;
-  //     }
-  //     else{
-  //       this.userValidation.mobileValidationFailed = true;
-  //       this.userValidation.mobileValidationErrorMsg = response.message
-  //     }
-  //   })
-  //   .catch((error)=>{
-  //     console.log("error ===>", error);
-  //     this.userValidation.disableSendOtpButton = false;
-  //     this.userValidation.mobileValidationFailed = true;
-  //   })
-  // }
-
-  // verifyMobile(){
-  //   this.userValidation.disableVerifyOtpButton = true;
-  //   this.userValidation.otpVerificationFailed = false;
-  //   let url = this.appservice.apiUrl + '/rest/v1/authenticate/login?';
-  //   this.otp=this.otpCode.otp1+this.otpCode.otp2+this.otpCode.otp3+this.otpCode.otp4+this.otpCode.otp5+this.otpCode.otp6
-  //   let body = {
-  //     otp : this.otp,
-  //     phone : this.mobileNumber
-  //   }
-  //   url = url + $.param(body);
-  //   this.apiservice.request(url, 'get', body, {}, true).then((response)=>{
-  //     this.otp = null;
-  //     this.userValidation.disableVerifyOtpButton = false;
-  //     if(response.success){
-  //       document.cookie='token='+ response.token + ";path=/";
-  //       document.cookie='cart_id=' + response.user.active_cart_id + ";path=/";
-  //       this.appservice.userVerificationComplete = true;
-  //       // this.updateOtpModal(false);
-  //       $('body').removeClass('modal-open')
-  //       this.navigateToShippingDetailsPage();        
-  //     }
-  //     else{
-  //       this.userValidation.otpVerificationErrorMsg = response.message;
-  //       this.userValidation.otpVerificationFailed = true;
-  //     }
-
-  //   })
-  //   .catch((error)=>{
-  //     console.log("error ===>", error);
-  //     this.userValidation.disableVerifyOtpButton = false;
-  //     this.userValidation.otpVerificationFailed = true;
-  //   })  	
-  // }
 
   closeCart(){
     let url = window.location.href.split("#")[0];
@@ -334,45 +272,6 @@ export class CartComponent implements OnInit {
     $('body').addClass('hide-scroll');
   }
 
-  // onKeyDown(event,el1,el2,value) {
-  //   console.log("onKeyDown event ",value, event.which, event.keyCode);
-  //   if( ((event.which > 47 && event.which < 58) || (event.which > 95 && event.which < 106)) && value){
-  //     el2.focus();
-  //     console.log('onKeyDown funtion call el2');
-  //   }
-  //   // else if(event.which == 8){
-  //   //   el1.focus();
-  //   //   console.log('next funtion call el1');
-  //   // }
-  //   if (event.keyCode === 13) {
-  //     console.log('enter keycode');
-  //     $('.is-enter').click();
-  //   }
-  // }
-
-  // onKeyUp(event,el1,el2, value) {
-  //   console.log("onKeyUp event ",value, event.which, event.keyCode);
-  //   if(((event.which > 47 && event.which < 58) || (event.which > 95 && event.which < 106)) && value){
-  //     el2.focus();
-  //     console.log('onKeyUp funtion call el2');
-  //   }
-  //   if(event.key=="Backspace"){
-  //      el1.focus();
-  //      console.log('onKeyUp funtion call el1');
-  //    }
-  //   // else
-  //   //   el2.focus();
-  //   if (event.keyCode === 13) {
-  //     $('.is-enter').click();
-  //     console.log('enter keycode');
-  //   }
-  //  }
-
-
-  // check_OTP(){
-  //   if(this.otpCode.otp1=='' || this.otpCode.otp2=='' || this.otpCode.otp3=='' || this.otpCode.otp4=='' || this.otpCode.otp5=='' || this.otpCode.otp6=='')
-  //     return true;
-  // }
 
   updateOtpModal(updateHistory : boolean = true){
     $('#signin').modal('hide');
@@ -382,10 +281,6 @@ export class CartComponent implements OnInit {
     // this.otpCode.otp1 =''; this.otpCode.otp2 = ''; this.otpCode.otp3 = ''; this.otpCode.otp4 = ''; this.otpCode.otp5 = ''; this.otpCode.otp6='';
     // this.userValidation.otpVerificationErrorMsg = '';
   }
-
-  // closeOtpModal(){
-  //   history.back();
-  // }
 
   navigateToShippingDetailsPage(){
     console.log("navigateToShippingDetailsPage");
@@ -478,9 +373,14 @@ export class CartComponent implements OnInit {
       this.fetchCartDataFromServer();
       this.fetchCartFailed = false; 
     }
-    else if((error.status == 400 || error.status == 403) && this.appservice.isLoggedInUser() ){
-      this.getNewCartId();
-      this.fetchCartFailed = false; 
+    else if((error.status == 400 || error.status == 403)){
+      if(this.appservice.isLoggedInUser()){
+        this.getNewCartId();
+        this.fetchCartFailed = false; 
+      }
+      else{
+        this.fetchCartDataFromServer();
+      }        
     }
     else if(error.status == 404){
       this.cart = {
@@ -517,6 +417,32 @@ export class CartComponent implements OnInit {
       return true;
     } catch (e) {
       return false;
+    }
+  }
+
+  formatPromotions(response){
+    console.log(response);
+    let promos = Object.keys(response.promotions).map((k)=>{ return response.promotions[k] });
+    console.log("promos ==>",promos);
+    try{
+      promos.forEach((promo)=>{ 
+        promo.actual_discount = this.appservice.calculateDiscount(promo.discount_type, promo.discount_value, this.cart.summary.sale_price_total);
+        console.log(promo.actual_discount);
+      });
+    }
+    catch(e){
+      console.log("error ==>",e);
+    }
+    this.promotions = promos;
+  }
+
+  checkAppliedPromotionValidity(){
+    if(this.cart.promo_applied && this.cart.cart_type == 'order'){
+      let applied_promo = this.promotions.find((promotion)=>{ return this.cart.promo_applied == promotion.promotion_id});
+      console.log("checkAppliedPromotionValidity ==>",applied_promo)
+      if(!applied_promo){
+        this.editBag();
+      }
     }
   }
   

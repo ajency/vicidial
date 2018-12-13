@@ -16,8 +16,12 @@ import { ApiServiceService } from './service/api-service.service';
 import { NumbersDirective } from './directives/numbers.directive';
 
 import { LoginModule } from './shared-components/login/login.module';
+import { PromotionsModule } from './shared-components/promotions/promotions.module';
+import { AppliedCouponComponent } from './components/applied-coupon/applied-coupon.component';
+import { UpgradeCartComponent } from './components/upgrade-cart/upgrade-cart.component';
+import { BetterPromoAvailableComponent } from './components/better-promo-available/better-promo-available.component';
 
-
+import { BagSummaryModule } from './shared-components/bag-summary/bag-summary.module';
 
 @NgModule({
   declarations: [
@@ -25,14 +29,19 @@ import { LoginModule } from './shared-components/login/login.module';
     CartComponent,
     ShippingDetailsComponent,
     ShippingSummaryComponent,
-    NumbersDirective
+    NumbersDirective,
+    AppliedCouponComponent,
+    UpgradeCartComponent,
+    BetterPromoAvailableComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
     HttpModule,
-    LoginModule
+    LoginModule,
+    PromotionsModule,
+    BagSummaryModule
   ],
   providers: [
     {provide: APP_BASE_HREF, useValue: '/'},

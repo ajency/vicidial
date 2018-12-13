@@ -127,10 +127,13 @@ $(document).ready(function(){
                 // console.log("Check ==>",request);
                 if(request.status == 401)
                     userLogout(request);
-                else if(!isLoggedInUser() || request.status == 0)
+                else if(request.status == 0)
                     showErrorPopup(request);
+                else if(!isLoggedInUser() && request.status == 403){
+                    addToCart();
+                }
                 else{
-                    if(request.status == 400 || request.status == 403)
+                    if(isLoggedInUser() && request.status == 400 || request.status == 403)
                         getNewCartId(request);
                     else
                         showErrorPopup(request);

@@ -127,6 +127,14 @@ $L : 1200px;
             }
         }
     }
+    .cart-summary-items{
+        li{
+            &:last-child{
+                border-bottom: 0;
+                margin-bottom: 0 !important;
+            }
+        }
+    }
     .cd-qty, .cd-price {
         color: $gray-500;
     }
@@ -529,4 +537,17 @@ body{
   to {
     -webkit-transform: rotate(360deg);
   }
+}
+
+.promotion-alert{
+    font-size: 1.05em;
+    .info-circle{
+        font-size: 1.15em;
+    }
+}
+
+.final-summary{
+    label{
+        font-size: 0.9rem;
+    }
 }

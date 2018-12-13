@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
 import { ApiServiceService } from './api-service.service';
+import * as moment from 'moment';
 
 declare var $: any;
 
@@ -162,6 +163,38 @@ export class AppServiceService {
     let url = send_cart_id ? this.apiUrl + "/api/rest/v1/user/address/all?cart_id="+this.getCookie('cart_id') : this.apiUrl + "/api/rest/v1/user/address/all";
     let header = this.isLoggedInUser() ? { Authorization : 'Bearer '+this.getCookie('token') } : {};
     return this.apiservice.request(url, 'get', {} , header);
+  }
+
+  sortArray(array){
+    let return_array = array.sort((a,b)=>{ return(a.min_cart_value - b.min_cart_value)});
+    return return_array;
+  }
+
+  filterArray(array, order_total){
+    let ret_obj = { applicable : [], non_applicable : [] };
+    array.forEach((promotion)=>{
+      if(promotion.min_cart_value <= order_total)
+        ret_obj.applicable.push(promotion);
+      else
+        ret_obj.non_applicable.push(promotion);
+    })
+    return ret_obj;
+  }
+
+  getAge(vaild_from){
+    let now = moment(moment().format('YYYY-MM-DD HH:mm:ss'));
+    let start = moment(vaild_from);
+    let duration = moment.duration(now.diff(start));
+    return duration.asSeconds();
+  }
+
+  calculateDiscount(type, value ,order_total){
+    return ( type == 'cart_fixed' ? value : (order_total * value / 100) )
+  }
+
+  sortByDiscount(array){
+    let return_array = array.sort((a,b)=>{ return(b.actual_discount - a.actual_discount) })
+    return return_array;
   }
 
 }

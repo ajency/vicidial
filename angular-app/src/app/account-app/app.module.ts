@@ -14,6 +14,7 @@ import { AccountComponent } from './pages/account/account.component';
 
 import { LoginModule } from '../shared-components/login/login.module';
 import { AuthGuardService } from './services/auth-guard.service';
+import { BagSummaryModule } from '../shared-components/bag-summary/bag-summary.module';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { AuthGuardService } from './services/auth-guard.service';
     BrowserModule,
     AppRoutingModule,
     HttpModule,
-    LoginModule
+    LoginModule,
+    BagSummaryModule
   ],
   providers: [
      Location, 

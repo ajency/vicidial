@@ -43,6 +43,7 @@ export class AppComponent {
 	  }
 	  else if(!window.location.href.endsWith('#bag')){
 	  	this.appservice.closeCart();
+	  	window.location.reload();
 	  }
 	}
 }
