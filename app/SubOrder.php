@@ -123,16 +123,18 @@ class SubOrder extends Model
     {
         $itemsData = [];
         foreach ($this->item_data as $itemData) {
-            $variant                = Variant::find($itemData['id']);
-            $item                   = $variant->getItemAttributes();
-            $item['quantity']       = $itemData['quantity'];
-            $item['variant_id']     = $itemData['id'];
-            $item['product_slug']   = $variant->getProductSlug();
-            $itemsData[]            = $item;
+            $variant                  = Variant::find($itemData['id']);
+            $item                     = $variant->getItemAttributes();
+            $item['quantity']         = $itemData['quantity'];
+            $item['variant_id']       = $itemData['id'];
+            $item['product_id']       = $variant->getParentId();
+            $item['product_color_id'] = $variant->getVarColorId();
+            $item['product_slug']     = $variant->getProductSlug();
+            $itemsData[]              = $item;
         }
-        $sub_order = array('suborder_id' => $this->id, 'total' => $this->odoo_data['you_pay'], 'number_of_items' => count($this->item_data), 'items' => $itemsData);
+        $sub_order     = array('suborder_id' => $this->id, 'total' => $this->odoo_data['you_pay'], 'number_of_items' => count($this->item_data), 'items' => $itemsData);
         $store_address = $this->location->getAddress();
-        if($store_address!=null) {
+        if ($store_address != null) {
             $sub_order['store_address'] = $store_address;
         }
 
