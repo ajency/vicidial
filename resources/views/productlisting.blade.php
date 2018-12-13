@@ -87,6 +87,7 @@
   @yield('footjs-tag')
   @yield('footjs-filter-tags')
   @yield('footjs-products-list')
+  @yield('footjs-filter-sort-mobile')
 
  
 

@@ -74,11 +74,15 @@ $(function(){
      });
      
     if($('.list-sort').length){
-      $('.list-sort__element li').each(function(){
-        $(this).click(function(){
+        $('body').on('click', '.list-sort__element li',function(){
           $(this).addClass('is-active').siblings().removeClass('is-active');
+          $('#kss_sort').modal('hide');
+          $('.custom-sort-loader').addClass('shown')
+          $("#sort_filter_selectbox option:selected").prop("selected", false)
+          $('#sort_filter_selectbox option[value="'+$(this).data("value")+'"]').prop('selected',true)
+          $('#sort_filter_selectbox').trigger('change')
+          
         })
-      });
     }
 
      $(document).on('keypress','#searchStringInp', function (e) {  
@@ -392,6 +396,7 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
       updated_list_url = url
     }
     else{
+      url = "/"
       updated_list_url = "/shop";
     }
 
@@ -410,7 +415,7 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
     // if( Object.keys(range_facet_list).length>0)
     //   ajax_data["search_object"]["range_filter"] = range_facet_list
 
-    if (isMobile) {
+    if (isMobile && sort_on == false) {
       ajax_data["exclude_in_response"] = ["items"];
     }
 
@@ -582,9 +587,16 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                   context["show_search"] = (url_params.get('show_search') != undefined)?url_params.get('show_search'):show_search_box;
                   var html    = template(context);
                   document.getElementById("filter-header-template-content").innerHTML = html;
+
+                  var source   = document.getElementById("mobile-filter-sort-template").innerHTML;
+                  var template = Handlebars.compile(source);
+                  var context = {};
+                  context["sort_on"] = header_context.sort_on ;
+                  var html    = template(context);
+                  document.getElementById("mobile-filter-sort-template-content").innerHTML = html;
                 }
                 searchFilter(false);
-                 if (isMobile == false){
+                 if (isMobile == false || sort_on == true){
                    if (window.location.href.match("/shop") && url == "") {
                       window.history.pushState('categoryPage', 'Category', '/shop'+url);
                     }
@@ -603,7 +615,8 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
 
                    $('.kss_filter-list[data-filter="'+filter_val+'"]').removeClass('d-none');
                     $('li.nav-item.active').trigger('click')
-                    call_mobile_api = true
+                    call_mobile_api = true;
+                    $('.custom-sort-loader').removeClass('shown');
                  }
             });
         }
@@ -987,6 +1000,8 @@ function resetFilter(){
   facet_list = {}
   range_facet_list = {}
   boolean_facet_list = {}
+  sort_on_filter = ""
+  search_string_filter = ""
   ajax_data = { "search_object": [],"listurl":'/' }
   product_list_items = {}
   $('.nav-item').find('.filter-count').text(0)

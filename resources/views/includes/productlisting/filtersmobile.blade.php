@@ -1,4 +1,5 @@
-<div class="modal fade" id="kss_sort" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<script id="mobile-filter-sort-template" type="text/x-handlebars-template">
+    <div class="modal fade list-sort" id="kss_sort" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
       <div class="modal-dialog m-0 fixed-bottom" role="document">
         <div class="modal-content fixed-bottom">
           <div class="modal-header">
@@ -8,27 +9,19 @@
             </button>
           </div>
           <div class="">
-            <ul class="list-group list-unstyled kss_sort mb-0">
-              <li class="list-group-item pl-2">
-                <a href="#" class="text-dark"><i class="kss_icon popularity"></i> Popularity</a>
+            <ul class="list-group list-unstyled list-sort__element mb-0">
+            @{{#each sort_on}}
+              <li class="list-group-item d-flex align-items-center @{{#if is_selected}}is-active@{{/if}}" data-value="@{{value}}">
+                <a href="javascript:void(0)" class="font-weight-bold d-flex align-items-center"><i class="kss_icon mx-1 @{{class}}"></i> @{{name}}</a>
               </li>
-              <li class="list-group-item pl-2">
-                <a href="#" class="text-dark"><i class="kss_icon latest"></i> Latest</a>
-              </li>
-              <li class="list-group-item pl-2">
-                <a href="#" class="text-dark"><i class="kss_icon discount"></i> Discount</a>
-              </li>
-              <li class="list-group-item pl-2">
-                <a href="#" class="text-dark"><i class="kss_icon price-h"></i> Price: High to Low</a>
-              </li>
-              <li class="list-group-item pl-2">
-                <a href="#" class="text-dark"><i class="kss_icon price-l"></i> Price: Low to High</a>
-              </li>
+            @{{/each}}
             </ul>
           </div>
         </div>
       </div>
     </div>
+</script>
+<div id="mobile-filter-sort-template-content"></div>
 
     <div class="fixed-bottom d-block d-md-none">
         <div class="row no-gutters">
@@ -61,3 +54,14 @@
             </g>
       </svg>
     </div>
+
+@section('footjs-filter-sort-mobile')  
+  <script type="text/javascript" >
+   var source   = document.getElementById("mobile-filter-sort-template").innerHTML;
+   var template = Handlebars.compile(source);
+   var context = {};
+   context["sort_on"] = <?= json_encode($sort_on) ?> ;
+   var html    = template(context);
+   document.getElementById("mobile-filter-sort-template-content").innerHTML = html;
+  </script>
+@endsection
