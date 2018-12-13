@@ -15,6 +15,7 @@
                 <a href="javascript:void(0)" class="font-weight-bold d-flex align-items-center"><i class="kss_icon mx-1 @{{class}}"></i> @{{name}}</a>
               </li>
             @{{/each}}
+
             </ul>
           </div>
         </div>
@@ -65,4 +66,3 @@
    document.getElementById("mobile-filter-sort-template-content").innerHTML = html;
   </script>
 @endsection
-
