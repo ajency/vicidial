@@ -332,10 +332,10 @@ function fbTrackAddToCart(var_id){
 }
 
 function fbTrackInitiateCheckout(order_total){
-    // fbq('track', 'InitiateCheckout', {
-    //     value: order_total,
-    //     currency: 'INR',
-    // });
+    fbq('track', 'InitiateCheckout', {
+        value: order_total,
+        currency: 'INR',
+    });
 }
 
 function loadMyAccountApp(){
