@@ -35,7 +35,7 @@
                 @{{/if}}
             </ol>
           </nav> -->
-        <h1 class="w-100 kss-title m-0 text-gray font-weight-bold">
+        <h1 class="w-100 kss-title my-1 py-1 my-sm-0 py-sm-0 m-0 text-gray font-weight-bold">
             @{{headers.page_title}} <span class="f-w-4 sub-text"> - @{{headers.product_count}} items</span>
         </h1>
     </div>
