@@ -56,7 +56,7 @@ $(function(){
         value: default_price,
         currency: 'INR',
         content_ids: parent_id+'-'+selected_color_id,
-        content_type: 'product_color',
+        content_type: 'product_group',
     });
 
 })
