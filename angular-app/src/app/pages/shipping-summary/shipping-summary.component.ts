@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router'
 import { AppServiceService } from '../../service/app-service.service';
 import { ApiServiceService } from '../../service/api-service.service';
+import { BagSummaryComponent } from '../../shared-components/bag-summary/bag-summary/bag-summary.component';
+
 declare var $: any;
 // declare var fbTrackInitiateCheckout : any;
 

@@ -521,3 +521,17 @@ footer .bl-1{
 .flex-fill-full{
     flex: 1;
 }
+
+.edit-pencil{
+    padding: 8px;
+    background: #efefef;
+    width: 35px;
+    font-size: 17px;
+    height: 35px;
+    border-radius: 100%;
+    color: theme-color("secondary");
+}
+
+.label-size{
+    font-size: 0.9rem;
+}

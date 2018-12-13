@@ -24,6 +24,10 @@ class OrderController extends Controller
         validateAddress($user, $address);
         $cart->checkCartAvailability();
 
+        if(!$cart->isPromotionApplicable($cart->promotion)) {
+            abort(404, "Promotion not applicable");
+        }
+
         $order = Order::create([
             'cart_id'       => $cart->id,
             'address_id'    => $address->id,
@@ -34,10 +38,13 @@ class OrderController extends Controller
         saveTxnid($order);
 
         $order->setSubOrders();
+        $order->aggregateSubOrderData();
+        $order->save();
+
         $cart->type = 'order';
         $cart->save();
 
-        $response = ["items" => getCartData($cart, false), "summary" => $order->aggregateSubOrderData(), "order_id" => $order->id, "address" => $order->address_data, "message" => 'Order Placed successfully'];
+        $response = ["items" => getCartData($cart, false), "summary" => $order->subOrderData(), "order_id" => $order->id, "address" => $order->address_data, "message" => 'Order Placed successfully'];
 
         $user_info = $user->userInfo();
         if($user_info!=null) {
@@ -59,6 +66,10 @@ class OrderController extends Controller
 
         checkOrderInventory($order);
 
+        if(!$cart->isPromotionApplicable($cart->promotion)) {
+            abort(404, "Promotion not applicable");
+        }
+
         if(isset($params['address_id'])) {
             $address = Address::find($params["address_id"]);
             validateAddress($user, $address);
@@ -70,7 +81,7 @@ class OrderController extends Controller
             $address = $order->address;
         }
 
-        $response = ["items" => getCartData($cart, false), "summary" => $order->aggregateSubOrderData(), "order_id" => $order->id, "address" => $order->address_data, "message" => 'Order Placed successfully'];
+        $response = ["items" => getCartData($cart, false), "summary" => $order->subOrderData(), "order_id" => $order->id, "address" => $order->address_data, "message" => 'Order Placed successfully'];
 
         $user_info = $user->userInfo();
         if($user_info!=null) {
@@ -88,6 +99,10 @@ class OrderController extends Controller
         validateCart($user,$cart, 'order');
 
         checkOrderInventory($order);
+
+        if(!$cart->isPromotionApplicable($cart->promotion)) {
+            abort(404, "Promotion not applicable");
+        }
 
         return response()->json(["message" => 'Items are available in store', 'success'=> true]);
     }

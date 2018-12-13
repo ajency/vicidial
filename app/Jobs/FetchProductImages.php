@@ -43,6 +43,8 @@ class FetchProductImages implements ShouldQueue
         if($prod_images->count() == 0) {
             ProductColor::where('product_id', $this->productId)->update(['no_image'=>true]);
             return;
+        }else{
+            ProductColor::where('product_id', $this->productId)->update(['no_image'=>false]);
         }
 
         $extension   = "jpg";

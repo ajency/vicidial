@@ -28,13 +28,14 @@ class SubOrder extends Model
     {
         $itemsData = [];
         foreach ($items as $itemData) {
-            $variant = Variant::find($itemData['variant']->id);
+            $variant     = Variant::find($itemData['variant']->id);
             $itemsData[] = [
-                'id'            => $itemData['variant']->id,
-                'quantity'      => $itemData['quantity'],
-                'price_mrp'     => $variant->getLstPrice(),
-                'price_final'   => $variant->getSalePrice(),
-                'discount'      => $variant->getDiscount(),
+                'id'               => $itemData['variant']->id,
+                'quantity'         => $itemData['quantity'],
+                'price_mrp'        => $variant->getLstPrice(),
+                'price_final'      => $variant->getSalePrice(),
+                'discount'         => $variant->getDiscount(),
+                'price_discounted' => $this->order->cart->getDiscountedPrice($variant),
             ];
         }
         $this->item_data = $itemsData;
@@ -54,17 +55,24 @@ class SubOrder extends Model
 
     public function aggregateData()
     {
-        $items = $this->getItems();
-        $total = 0;
-        $savings = 0;
+        $items            = $this->item_data;
+        $mrp_total        = 0;
+        $sale_price_total = 0;
+        $you_pay          = 0;
+        $cart_discount    = 0;
+        $shipping_fee     = 0;
         foreach ($items as $itemData) {
-            $total += $itemData['quantity']*$itemData['item']->getSalePrice();
-            $savings += $itemData['quantity']*$itemData['item']->getDiscount();
+            $mrp_total += $itemData['quantity'] * $itemData['price_mrp'];
+            $sale_price_total += $itemData['quantity'] * $itemData['price_final'];
+            $you_pay += $itemData['quantity'] * $itemData['price_discounted'];
+            $cart_discount += $itemData['quantity'] * ($itemData['price_final'] - $itemData['price_discounted']);
         }
         $this->odoo_data = [
-            'total'        => $total,
-            'shipping_fee' => 0,
-            'savings'      => $savings,
+            'mrp_total'        => $mrp_total,
+            'sale_price_total' => $sale_price_total,
+            'you_pay'          => $you_pay + $shipping_fee,
+            'cart_discount'    => $cart_discount,
+            'shipping_fee'     => $shipping_fee,
         ];
     }
 
@@ -122,7 +130,7 @@ class SubOrder extends Model
             $item['product_slug']   = $variant->getProductSlug();
             $itemsData[]            = $item;
         }
-        $sub_order = array('suborder_id' => $this->id, 'total' => $this->odoo_data['total'] + $this->odoo_data['shipping_fee'], 'number_of_items' => count($this->item_data), 'items' => $itemsData);
+        $sub_order = array('suborder_id' => $this->id, 'total' => $this->odoo_data['you_pay'], 'number_of_items' => count($this->item_data), 'items' => $itemsData);
         $store_address = $this->location->getAddress();
         if($store_address!=null) {
             $sub_order['store_address'] = $store_address;
@@ -165,7 +173,7 @@ class SubOrder extends Model
             [
                 "product_id"         => $variant->odoo_id,
                 "product_uom_qty"    => $itemData['quantity'],
-                "price_unit"         => $itemData['price_final'],
+                "price_unit"         => $itemData['price_discounted'],
                 "discount"           => 0,
                 "name"               => $variant->getName(),
             ]),
@@ -213,4 +221,25 @@ class SubOrder extends Model
         $out   = $odoo->defaultExec($model, "read", [$id]);
         return $out[0];
     }*/
+
+    public static function rectifyOldSubOrders($subOrders)
+    {
+        foreach ($subOrders as $subOrder) {
+            $items     = $subOrder->getItems();
+            $itemsData = [];
+            foreach ($items as $itemData) {
+                $itemsData[] = [
+                    'id'               => $itemData['item']->id,
+                    'quantity'         => $itemData['quantity'],
+                    'price_mrp'        => $itemData['item']->getLstPrice(),
+                    'price_final'      => $itemData['item']->getSalePrice(),
+                    'discount'         => $itemData['item']->getDiscount(),
+                    'price_discounted' => $subOrder->order->cart->getDiscountedPrice($itemData['item']),
+                ];
+            }
+            $subOrder->item_data = $itemsData;
+            $subOrder->aggregateData();
+            $subOrder->save();
+        }
+    }
 }

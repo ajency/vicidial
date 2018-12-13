@@ -56,13 +56,9 @@ class UserController extends Controller
         $UserObject->api_token = $token->id;
         $UserObject->save();
         
-        $id = request()->session()->get('active_cart_id', false);
-        if($id) {
-            $user = ["id"=> $UserObject->id, 'active_cart_id'=> $id];
-        }
-        else {
-            $user = ["id"=> $UserObject->id];
-        }
+        $id = $UserObject->cart_id;
+        $user = ["id"=> $UserObject->id, 'active_cart_id'=> $id];
+        
         return response()->json(["message"=> 'user login successful', 'user'=> $user, 'token'=> $token->id, 'success'=> true]);
     }
 
@@ -96,9 +92,10 @@ class UserController extends Controller
             createAccessToken($UserObject);
         }
 
-        request()->session()->put('active_cart_id', $cart->id);
+        request()->session()->forget('active_cart_id');
 
         Auth::guard()->login($UserObject);
+        request()->session()->regenerate();
 
         return $UserObject;
     }

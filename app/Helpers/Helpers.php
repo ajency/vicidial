@@ -650,3 +650,12 @@ function addProductImageToQueue($product_id)
 {
     FetchProductImages::dispatch($product_id)->onQueue('process_product_images');
 }
+
+function isNotProd()
+{
+    $prod_behaviour = (config('app.prod_behaviour') == null) ? [] : config('app.prod_behaviour');
+    if (in_array(config('app.env'), $prod_behaviour)) {
+        return false;
+    }
+    return true;
+}

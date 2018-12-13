@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AppServiceService } from '../../services/app-service.service';
 import { ApiServiceService } from '../../services/api-service.service';
 
+import { BagSummaryComponent } from '../../../shared-components/bag-summary/bag-summary/bag-summary.component';
 // import { LoginComponentComponent } from '../../../shared-components/login/login-component/login-component.component';
 
 declare var $: any;

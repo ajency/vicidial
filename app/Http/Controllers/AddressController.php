@@ -67,6 +67,10 @@ class AddressController extends Controller
                     abort(404, "Quantity not available");
                 }
             }
+            
+            if(!$cart->isPromotionApplicable($cart->promotion)) {
+                abort(404, "Promotion not applicable");
+            }
         }
 
         $addresses = Address::where('user_id', '=', $user->id)->where('active', '=', true)->get();
