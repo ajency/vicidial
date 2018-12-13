@@ -322,13 +322,13 @@ function fbTrackuserRegistration(){
 }
 
 function fbTrackAddToCart(var_id){
-    // var variant = variants[selected_color_id].variants.find((variant)=> {return variant.id == var_id});
-    // fbq('track', 'AddToCart', {
-    //     value: variant.sale_price,
-    //     currency: 'INR',
-    //     content_ids: var_id,
-    //     content_type: 'product',
-    // });
+    var variant = variants[selected_color_id].variants.find((variant)=> {return variant.id == var_id});
+    fbq('track', 'AddToCart', {
+        value: variant.sale_price,
+        currency: 'INR',
+        content_ids: var_id,
+        content_type: 'product',
+    });
 }
 
 function fbTrackInitiateCheckout(order_total){
