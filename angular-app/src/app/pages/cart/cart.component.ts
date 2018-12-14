@@ -17,6 +17,7 @@ declare var add_to_cart_failure_message: any;
 declare var add_to_cart_clicked: any;
 declare var add_to_cart_completed: any;
 
+declare var fbTrackInitiateCheckout : any;
 // declare var fbTrackuserRegistration : any;
 @Component({
   selector: 'app-cart',
@@ -253,6 +254,7 @@ export class CartComponent implements OnInit {
   }
 
   modalHandler(){
+    fbTrackInitiateCheckout(this.cart.summary.you_pay);
     this.addToCartFailed = false;
     if(this.appservice.isLoggedInUser()){
       this.navigateToShippingDetailsPage();

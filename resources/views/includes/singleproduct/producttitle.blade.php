@@ -20,8 +20,10 @@
             @php } @endphp
 
     </div>
-    <script type="text/javascript">
-        var default_price = {{$default_price['sale_price']}};
-    </script>
+    @section('footjs-title')
+        <script type="text/javascript">
+            var default_price = {{$default_price['sale_price']}};
+        </script>
+    @stop
 
 </div>

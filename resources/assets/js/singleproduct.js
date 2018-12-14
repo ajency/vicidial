@@ -51,5 +51,13 @@ $(function(){
 
     }
 
+    // FB pixel tracking for view content event
+    fbq('track', 'ViewContent', {
+        value: default_price,
+        currency: 'INR',
+        content_ids: parent_id+'-'+selected_color_id,
+        content_type: 'product_group',
+    });
+
 })
 

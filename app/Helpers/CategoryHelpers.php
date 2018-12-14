@@ -134,7 +134,10 @@ function validate_category_urls($params){
 	$facet_display_data = config('product.facet_display_data');
 	foreach($params['categories'] as $param) {
 		$slugs_arr = explode('--', $param);
-		$facets_data = Facet::select('facet_name',DB::raw('count(id) as "count"'))->whereIn('slug', $slugs_arr)->groupBy('facet_name')->get();
+		$slug_filters = array_filter(config('product.facet_display_data'), function ($value) {
+			return ($value['is_attribute_param'] == false);
+		});
+		$facets_data = Facet::select('facet_name',DB::raw('count(id) as "count"'))->whereIn('slug', $slugs_arr)->whereIn('facet_name', array_keys($slug_filters))->groupBy('facet_name')->get();
 		// print_r($facets_data);
 		$max_count=0;
 		foreach ($facets_data as $key => $facetcont) {

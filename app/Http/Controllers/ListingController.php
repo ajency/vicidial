@@ -10,11 +10,10 @@ class ListingController extends Controller
 {
     public function search_object($params,$page_params,$search_obj = null)
     {
-        // print_r($params);
         if($search_obj == null){
             $valid = validate_category_urls($params);
             if($valid == false){
-                return $valid;
+                abort(404);
             }
         }
 
@@ -38,10 +37,9 @@ class ListingController extends Controller
             $params_arr["sort_on"]=$page_params["sort_on"];
         if(isset($page_params["exclude_in_response"]))
             $params_arr["exclude_in_response"] = $page_params["exclude_in_response"];
-        // dd($params_arr);
+
         $params = Product::productListPage($params_arr,$search_results["slug_value_search_result"],$search_results["slug_search_result"],$search_results["slugs_result"],$search_results["title"]);
 
-        // dd($params);
         return ["result"=>json_decode(json_encode($params,JSON_FORCE_OBJECT)),"slug_value_search_result"=>$search_results["slug_value_search_result"]];
     }
 
@@ -60,12 +58,11 @@ class ListingController extends Controller
             $page_params["sort_on"] = $parameters['query']['sort_on'];
         if(isset($parameters['query']['exclude_in_response']))
             $page_params["exclude_in_response"]=$parameters['query']['exclude_in_response'];
-        // dd($page_params);
+
         $search_data = $this->search_object($parameters,$page_params);
     	$params = $search_data["result"];
         $params->slug_value_search_result = $search_data["slug_value_search_result"];
-         // dd($params);
-        if($params == false) return view('error404');
+
         if(empty((array)$params->filters)) return view('noproducts');
 
         $params->search_result_assoc = getFacetValueSlugPairs();
@@ -153,7 +150,7 @@ class ListingController extends Controller
                     array_push($parameters['categories'], $p_val);
             }
          }
-        // dd($parameters);
+
         if(isset($data["display_limit"]))
             $page_params["display_limit"] = $data["display_limit"];
         if(isset($data["sort_on"]))
@@ -163,7 +160,7 @@ class ListingController extends Controller
         $page_params["page"] = $data["page"];
         $search_data = $this->search_object($parameters,$page_params,$data["search_object"]);
         $response = $search_data["result"];
-        // dd($response);
+
         return response()->json($response,200);
     }
 

@@ -515,10 +515,15 @@
      var url = url.substring(url.indexOf(window.location.pathname));
      window.history.replaceState({}, 'Kidsuperstore.in', url + hash);
  }
- $('.home-slider').slick({
-     autoplay: true,
-     speed: 600
- });
+
+ if ($('.home-slider').length) {
+     $('.home-slider').slick({
+         autoplay: true,
+         autoplaySpeed: 6000,
+         pauseOnFocus: false
+     });
+}
+
  if ($('#storeSlider').length) {
      $('#storeSlider').lightSlider({
          loop: true,
