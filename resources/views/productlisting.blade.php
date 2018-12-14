@@ -78,6 +78,7 @@
   @yield('footjs-subtype')
   @yield('footjs-category')
   @yield('footjs-size')
+  @yield('footjs-tag')
   @yield('footjs-filter-tags')
   @yield('footjs-products-list')
 
