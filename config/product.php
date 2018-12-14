@@ -27,6 +27,7 @@ return [
         "att_product_type",
         "att_val_add1",
         "att_ecom_sales",
+        "metatag_ids",
         // "product_own", #private/non private
         "vendor_id", #Vendor
         "brand_ids", #Brand
@@ -104,6 +105,7 @@ return [
                 'product_age_group',
                 'product_subtype',
                 'product_att_sleeves',
+                'product_metatag',
             ],
             'variant' => [
                 'product_color_name',

@@ -138,6 +138,21 @@ class Product
             }
         }
 
+        foreach ($product['product_metatag'] as $metatag) {
+            try {
+                $facetObj               = new Facet;
+                $facetObj->facet_name   = "product_metatag";
+                $facetObj->facet_value  = $metatag['name'];
+                $facetObj->display_name = $metatag['name'];
+                $facetObj->slug         = str_slug($metatag['name']);
+                $facetObj->sequence     = 10000;
+                $facetObj->display      = false;
+                $facetObj->save();
+            } catch (\Exception $e) {
+                \Log::warning($e->getMessage());
+            }
+        }
+
     }
 
     public static function bulkIndexProducts($products)
