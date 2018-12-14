@@ -5,6 +5,7 @@ use App\Jobs\FetchProductImages;
 use App\Location;
 use App\User;
 use Carbon\Carbon;
+use App\Elastic\OdooConnect;
 function valInteger($object, $values)
 {
     if (empty($object) || empty($values)) {
