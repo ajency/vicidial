@@ -327,7 +327,7 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
         var noURlChange = false
         if(minval == $("input[data-facet-name='"+ritem+"'].facet-category").data("minval") && maxval == $("input[data-facet-name='"+ritem+"'].facet-category").data("maxval"))
         {
-          noURlChange = true
+          url = removeParam("rf", url);
         }
         else
         {
@@ -359,6 +359,7 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
     else{
       updated_list_url = "/shop";
     }
+
     var boolean_facet_list_params = Object.assign({}, boolean_facet_list);
     if(is_ajax == true){
       for(citem in facet_display_data_arr){
