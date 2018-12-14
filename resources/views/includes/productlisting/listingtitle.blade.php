@@ -43,7 +43,7 @@
     <div class="ml-sm-auto d-none d-sm-flex flex-fill-full justify-content-end">
       @{{#if show_search}}
       <div class="d-sm-flex align-items-sm-center position-relative">
-        <div class="expandSearch showSearch d-flex align-items-sm-center justify-content-sm-end no-sort">
+        <div class="expandSearch showSearch d-flex align-items-sm-center justify-content-sm-end">
           <input type="search" id="searchStringInp" class="custom-expand-search form-control" placeholder="Search for Product" title="Search for:" value="@{{search_string}}">
           <i class="fas fa-times-circle clear-search @{{#if search_string }}@{{else}}d-none@{{/if}}" onclick="clearSearch();"></i>
           <a href="javascript:void(0);" class="search-trigger d-inline-flex">
@@ -54,7 +54,7 @@
         </div>        
       </div>
       @{{/if}}
-      <div class="d-flex flex-row kss-select-border mt-2">
+      <div class="d-flex flex-row kss-select-border">
         <div class="size-qty align-self-center">
           <h6 class="m-0 f-w-4 sub-text"> Sort By:</h6>
         </div>
