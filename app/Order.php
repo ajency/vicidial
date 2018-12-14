@@ -38,7 +38,9 @@ class Order extends Model
     public function setSubOrders()
     {
         $cart       = Cart::find($this->cart_id);
-        $locations = Location::where('use_in_inventory',true)->pluck('odoo_id');
+        // $locations = Location::where('use_in_inventory',true)->pluck('odoo_id');
+        $address = $this->address;
+        $locations = Location::getLocationDistances($address->latitude, $address->longitude);
         $suborders  = generateSubordersData($cart->getItems(), $locations);
         // print_r($suborders);
         foreach ($suborders as $locationID => $items) {

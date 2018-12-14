@@ -516,7 +516,8 @@
      window.history.replaceState({}, 'Kidsuperstore.in', url + hash);
  }
  $('.home-slider').slick({
-     autoplay: true
+     autoplay: true,
+     speed: 600
  });
  if ($('#storeSlider').length) {
      $('#storeSlider').lightSlider({

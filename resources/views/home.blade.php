@@ -11,6 +11,27 @@
 @section('content')
 <div id="home-slider" class="home-slider">
     <div  class="home-slide-item">
+      <a href="/shop">
+        <picture>
+           <source media="(orientation: landscape)"
+                  data-srcset="{{CDN::asset('/img/home-banner/home-banner-offer-large.jpg') }} 2000w,
+                              {{CDN::asset('/img/home-banner/home-banner-offer-medium.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/home-banner-offer-small.jpg') }} 700w,"
+                  sizes="100vw">
+
+           <source media="(orientation: portrait)"
+                  data-srcset="{{CDN::asset('/img/home-banner/home-banner-offer-portrait-large.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/home-banner-offer-portrait-medium.jpg') }} 700w,
+                              {{CDN::asset('/img/home-banner/home-banner-offer-portrait-small.jpg') }} 400w"
+                  sizes="100vw">
+
+           <img src="{{CDN::asset('/img/home-banner/home-banner-offer-20px.jpg') }}"
+               data-sizes="100vw"
+               class="img-fluid lazyload blur-up w-100" alt="Kidsuperstore Banner - Shop for Rs.2000 and get products worth Rs.1000" title="Shop for Rs.2000 and get products worth Rs.1000">
+        </picture>
+      </a>
+    </div>
+    <div  class="home-slide-item">
       <a href="/shop?rf=price:0TO999">
         <picture>
            <source media="(orientation: landscape)"
