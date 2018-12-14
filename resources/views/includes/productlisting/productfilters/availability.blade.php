@@ -9,7 +9,7 @@
         <div class="card-body pt-2">
           @{{#each items}}
           <div class="custom-control custom-checkbox" data-val="@{{display_count_val}}" >
-            @{{> checkboxTemplate template=../template facet_value=facet_value is_selected=is_selected filter_facet_name=../filter_facet_name slug=slug disabled_at_zero_count=../disabled_at_zero_count count=count collapsed=../collapsed changeEvent="facetCategoryChange(this,true,false,true);" attribute_slug=attribute_slug display_name=display_name }}
+            @{{> checkboxTemplate template=../template facet_value=facet_value is_selected=is_selected filter_facet_name=../filter_facet_name slug=slug disabled_at_zero_count=../disabled_at_zero_count count=count collapsed=../collapsed changeEvent="facetCategoryChange(this,true,false,true);" attribute_slug=attribute_slug display_name=display_name filter_type=../filter_type }}
             <label class="custom-control-label f-w-4" for="@{{display_name}}">@{{display_name}}
             @{{#if ../display_count }}
             <span class="sub-text">(@{{count}})</span>
@@ -35,6 +35,7 @@
    var is_attribute_param = <?= json_encode($is_attribute_param) ?>;
    var context = {};
    context["template"] = '<?= $template ?>';
+   context["filter_type"] = '<?= $filter_type ?>';
    context["collapsed"] = collapsed;
    context["display_count"] = display_count;
    context["disabled_at_zero_count"] = disabled_at_zero_count;

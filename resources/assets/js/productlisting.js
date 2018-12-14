@@ -557,49 +557,20 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                    var filter_val = $(thisObj).closest('.kss_filter-list').data('filter')
 
                    $('.kss_filter-list[data-filter="'+filter_val+'"]').removeClass('d-none');
-                   // if($('.nav-item.active').find('.filter-count').hasClass('d-none'))
-                   //   var filter_count = 0
-                   // else
-                   //   var filter_count = parseInt($('.nav-item.active').find('.filter-count').text())
-
-                   // if($(thisObj).prop('checked'))
-                   //   filter_count +=1
-                   // else
-                   //   filter_count -=1
-                   // if($(thisObj).data('template') == "price")
-                   //  filter_count = 1
-                   // if(filter_count<0)
-                   //   filter_count = 0
-                   // $('.nav-item.active').find('.filter-count').text(filter_count)
-                   // if(filter_count == 0)
-                   //   $('.nav-item.active').find('.filter-count').addClass('d-none')
-                   // else
-                   //   $('.nav-item.active').find('.filter-count').removeClass('d-none')
-                   // if(has_reset_filter == true)
                     $('li.nav-item.active').trigger('click')
                  }
-                 // if(search_string == true)
-                 //  $('.clear-search').removeClass('d-none')
+
             });
         }
         else{
-          collapsable_load_values[$("input[name='age']").data("facet-name")] = $("input[name='age']").data("collapsable")
-          collapsable_load_values[$("input[name='category']").data("facet-name")] = $("input[name='category']").data("collapsable")
-          collapsable_load_values[$("input[name='color']").data("facet-name")] = $("input[name='color']").data("collapsable")
-          collapsable_load_values[$("input[name='gender']").data("facet-name")] = $("input[name='gender']").data("collapsable")
-          collapsable_load_values[$("input[name='price']").data("facet-name")] = $("input[name='price']").data("collapsable")
-          collapsable_load_values[$("input[name='subtype']").data("facet-name")] = $("input[name='subtype']").data("collapsable")
+          $.each($(".facet-category"), function(key, info) {
+            collapsable_load_values[$(this).data("facet-name")] = $(this).data("collapsable")
+          });
         }
 
     }
 }
-// });
 
-
-// $( "input[name='age']" ).trigger( "change" );
-// $( "input[name='gender']" ).trigger( "change" );
-// $( "input[name='category']" ).trigger( "change" );
-// $( "input[name='subtype']" ).trigger( "change" );
 
 function constructCategoryUrl(facet_names_arr,search_object,facet_value_slug_arr,search_str){
     // var search_str = "";

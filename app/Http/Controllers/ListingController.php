@@ -108,10 +108,30 @@ class ListingController extends Controller
         $parseurl=parse_url($data["listurl"], PHP_URL_QUERY);
         $parsed_arr = explode("&", $parseurl);
         $page_params = [];
+        $primary_filters = array_filter(config('product.facet_display_data'), function ($value) {
+            return ($value['filter_type'] == 'primary_filter');
+        });
+
+        $primary_attr_param_arr = array_column($primary_filters,"attribute_param");
         foreach($parsed_arr as $pvals){
-            if (strpos($pvals, "pf=color:") !== false) {
-                $values = str_replace('pf=color:', '', $pvals);
-                $parameters['categories'] = array_merge($parameters['categories'],(explode(",",$values)));
+            $pfilter = explode("=",$pvals);
+            if($pfilter[0] == "pf"){
+                $queryval = explode("|",$pfilter[1]);
+                foreach($queryval as $queryvalv){
+                    $querry_value_pairs = explode(":", $queryvalv);
+                    if (count($querry_value_pairs)>1 && in_array($querry_value_pairs[0], $primary_attr_param_arr)) {
+
+                        $ar = array_filter(config('product.facet_display_data'), function ($item) use ($querry_value_pairs) {
+                                return $item['attribute_param'] === $querry_value_pairs[0];
+                            }
+                        ); 
+                        $ar_keys_ar = array_keys($ar);
+                        $values = str_replace($querry_value_pairs[0].':', '', $queryvalv); 
+                        $parameters['categories'] = array_merge($parameters['categories'],(explode(",",$values)));
+                    }
+
+                }
+                
             }
         }
 
@@ -121,13 +141,14 @@ class ListingController extends Controller
 
         $attr_param_arr = array_column($bool_filters,"attribute_param");
         
+        
         foreach($params as $param){      
             if($param != ""){
-                if (strpos($param, "pf=color:") !== false)
-                    $p_val = preg_replace("/(\?.*)/", "", $param);
-                else if (strpos($param, "rf=price:") !== false)
+                if (strpos($param, "rf=price:") !== false)
                     $p_val = preg_replace("/(\?.*)/", "", $param);
                 else if (strpos($param, "bf=") !== false) 
+                    $p_val = preg_replace("/(\?.*)/", "", $param);
+                else if (strpos($param, "pf=") !== false) 
                     $p_val = preg_replace("/(\?.*)/", "", $param);
                 else if (strpos($param, "sort_on=") !== false)
                     $p_val = preg_replace("/(\?.*)/", "", $param);
@@ -139,6 +160,12 @@ class ListingController extends Controller
                     $case_done = false;
                     foreach($attr_param_arr as $attr_param){
                         if (strpos($param, $attr_param.":") !== false) {
+                            $p_val = preg_replace("/(\?.*)/", "", $param);
+                            $case_done = true;
+                        }
+                    }
+                    foreach($primary_attr_param_arr as $primary_attr_param){
+                        if (strpos($param, $primary_attr_param.":") !== false) {
                             $p_val = preg_replace("/(\?.*)/", "", $param);
                             $case_done = true;
                         }

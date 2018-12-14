@@ -8,7 +8,7 @@
       <div id="collapsePrice" class="collapse@{{#if collapsed}}@{{else}} show @{{/if}}" data-field="@{{template}}">
         <div class="card-body">
           <div class="priceRange">
-            <input type="text" id="price-range" name="price" value="" class="facet-category" data-minval="@{{minval}}" data-maxval="@{{maxval}}" data-facet-name="@{{filter_facet_name}}" data-singleton="true" data-slug="price" @{{#if disabled_at_zero_count}} @{{#ifEquals count 0 }} disabled = "disabled" @{{/ifEquals}} @{{/if}} data-collapsable="@{{collapsed}}" data-display-name="@{{filter_display_name}}" data-template="@{{template}}"/>
+            <input type="text" id="price-range" name="price" value="" class="facet-category" data-minval="@{{minval}}" data-maxval="@{{maxval}}" data-facet-name="@{{filter_facet_name}}" data-singleton="true" data-slug="price" @{{#if disabled_at_zero_count}} @{{#ifEquals count 0 }} disabled = "disabled" @{{/ifEquals}} @{{/if}} data-collapsable="@{{collapsed}}" data-display-name="@{{filter_display_name}}" data-template="@{{template}}" data-filter-type="@{{filter_type}}"/>
           </div>
           <div class="row">
             <div class="col-5 col-sm-5">
@@ -47,6 +47,7 @@
    var context = {};
    context["display_count"] = display_count;
    context["template"] = '<?= $template ?>';
+   context["filter_type"] = '<?= $filter_type ?>';
    context["disabled_at_zero_count"] = disabled_at_zero_count;
    context["is_attribute_param"] = is_attribute_param;
    context["singleton"] = singleton;
@@ -64,36 +65,18 @@
     // Init ion range slider
     initializeSlider(fromval,toval,minval,maxval)
     facetCategoryChange($("#price-range"),false,true);
-    if($( "input[name='age']:checked" ).length){
-        $.each($("input[name='age']:checked"), function(){
-            facetCategoryChange($(this),false)
-        });
-    }
-    if($( "input[name='gender']:checked" ).length){
-        $.each($("input[name='gender']:checked"), function(){
-            facetCategoryChange($(this),false)
-        });
-    }
-    if($( "input[name='category']:checked" ).length){
-        $.each($("input[name='category']:checked"), function(){
-            facetCategoryChange($(this),false)
-        });
-    }
-    if($( "input[name='subtype']:checked" ).length){
-        $.each($("input[name='subtype']:checked"), function(){
-            facetCategoryChange($(this),false)
-        });
-    }
-    if($( "input[name='color']:checked" ).length){
-        $.each($("input[name='color']:checked"), function(){
-            facetCategoryChange($(this),false)
-        });
-    }
-    if($( "input[name='availability']:checked" ).length){
-        $.each($("input[name='availability']:checked"), function(){
-            facetCategoryChange($(this),false,false,true)
-        });
-    }
+
+    $.each($(".facet-category"), function(key, info) {
+      if($(this).data("filter-type") == "primary_filter"){
+        if($(this). prop("checked") == true)
+          facetCategoryChange($(this),false)
+      }
+      else if($(this).data("filter-type") == "primary_filter"){
+        if($(this). prop("checked") == true)
+          facetCategoryChange($(this),false,false,true)
+      }
+    });
+
 
     var sort_filter_val = $('#sort_filter_selectbox').val()
     if(sort_filter_val != ""){

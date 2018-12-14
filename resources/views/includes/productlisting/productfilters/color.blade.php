@@ -10,7 +10,7 @@
              @{{#if singleton }}
              @{{#each items}}
               <div class="custom-control custom-radio color-filter d-flex">
-              @{{> radioTemplate template=../template facet_value=facet_value is_selected=is_selected filter_facet_name=../filter_facet_name slug=slug disabled_at_zero_count=../disabled_at_zero_count count=count collapsed=../collapsed changeEvent="facetCategoryChange(this);" attribute_slug="" display_name=display_name }}
+              @{{> radioTemplate template=../template facet_value=facet_value is_selected=is_selected filter_facet_name=../filter_facet_name slug=slug disabled_at_zero_count=../disabled_at_zero_count count=count collapsed=../collapsed changeEvent="facetCategoryChange(this);" attribute_slug="" display_name=display_name filter_type=../filter_type }}
                 <label class="custom-control-label f-w-4 d-flex align-items-center" for="@{{facet_value}}">
                   <span class="color-box" style="background-color:@{{facet_value}};"></span>
                   <span class="color-name pl-2 text-capitalize">@{{display_name}}</span>
@@ -24,7 +24,7 @@
               @{{else}}
               @{{#each items}}
               <div class="custom-control custom-checkbox color-filter d-flex">
-                @{{> checkboxTemplate template=../template facet_value=facet_value is_selected=is_selected filter_facet_name=../filter_facet_name slug=slug disabled_at_zero_count=../disabled_at_zero_count count=count collapsed=../collapsed changeEvent="facetCategoryChange(this);" attribute_slug="" display_name=display_name }}
+                @{{> checkboxTemplate template=../template facet_value=facet_value is_selected=is_selected filter_facet_name=../filter_facet_name slug=slug disabled_at_zero_count=../disabled_at_zero_count count=count collapsed=../collapsed changeEvent="facetCategoryChange(this);" attribute_slug="" display_name=display_name filter_type=../filter_type }}
                 <label class="custom-control-label f-w-4 d-flex align-items-center" for="@{{facet_value}}">
                   <span class="color-box" style="background-color:@{{facet_value}};"></span>
                   <span class="color-name pl-2 text-capitalize">@{{display_name}}</span>
@@ -64,6 +64,7 @@
    var is_attribute_param = <?= json_encode($is_attribute_param) ?>;
    var context = {};
    context["template"] = '<?= $template ?>';
+   context["filter_type"] = '<?= $filter_type ?>';
    context["singleton"] = singleton;
    context["collapsed"] = collapsed;
    context["display_count"] = display_count;
