@@ -97,4 +97,12 @@ export class MyOrdersComponent implements OnInit {
     this.getOrders();
   }
 
+  navigateToOrderDetails(order){
+    console.log("Order ==>", order);
+    this.appservice.order = order;
+    // this.router.navigate([OrderDetailsComponent]);
+    let order_route = 'account/my-orders/' + order.order_info.txn_no;
+    this.router.navigate([order_route]);
+  }
+
 }

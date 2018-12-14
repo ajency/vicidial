@@ -10,6 +10,8 @@ export class AppServiceService {
   redirectUrl : any = '';
   private closeModal = new Subject<any>();
   private openModal = new Subject<any>();
+
+  order : any;
   constructor() { 
     this.apiUrl = isDevMode() ? 'http://localhost:8000' : '';
   }

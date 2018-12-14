@@ -1,0 +1,78 @@
+
+<div class="cart-step1-header">
+	<nav class="navbar navbar-dark bg-dark pt-3 pb-3 ">
+		<div class="d-flex align-items-center w-100">
+			<div class="">
+				<a>
+					<img _ngcontent-c1="" class=" img-fluid m-0" src="/img/logo-kss.png" width="180px" xpreview="/img/logo-kss.png">
+			 	</a>
+			</div>
+			<div class="ml-auto align-self-center">
+				<h3 class="m-0 text-white kss_highlight btn-pay" (click)="closeWidget()"><span aria-hidden="true">×</span></h3>
+			</div>
+		</div>
+	</nav>
+</div>
+
+<div class="container mt-3 order-details">
+	<div class="row">
+		<div class="col-12">
+<!-- 			<div class="d-none d-md-block mb-4">
+				 @include('includes.breadcrumbs', ['breadcrumbs' => $params['breadcrumb']])
+             </div> -->
+             <div>
+              <div class="d-flex align-items-top top-navbar">
+				<!--<div class="pr-3">
+	            	<a href="/kss/account/orders/">
+	              <h4 id="back-to-orders" class="m-0 font-weight-bold kss_highlight">
+	                <img class="btn-back kss_highlight" src="https://jeromie.github.io/kss/img/left-arrow.png" style="width:20px;"/>
+	              </h4>
+	          </a>
+	            </div> -->
+	            <div class="">
+	              <h4 class="font-weight-bold m-0">Order Details</h4>
+	            </div>
+	            <!--  <div class="ml-auto d-none d-md-block">
+	              <button type="button" class="btn btn-outline-dark"><i class="fas fa-print"></i> Print Invoice</button>
+	            </div> -->
+	          </div>
+	      </div>
+
+		</div>
+	</div>
+	<div class="row mt-md-2 mt-0">
+
+		<div class="col-12 col-xl-8 col-lg-8">
+			<!-- Order Message -->
+<!-- 			@if(! empty($params['payment_status']))
+				@include('includes.orderdetails.ordermessage', ['status' => $params['payment_status']])
+			@endif
+
+			<hr class="mb-4"> -->
+
+			<!-- Order info -->
+				<!-- @include('includes.orderdetails.orderinfo', ['order_info' => $params['order_info']]) -->
+				<app-order-info [order_info]="order.order_info"></app-order-info>
+			<hr class="mb-4">
+
+			<!-- Product info -->
+			<!-- @include('includes.orderdetails.order', ['sub_orders' => $params['sub_orders']]) -->
+			<app-order [sub_orders]="order.sub_orders"></app-order>
+			<div class="d-flex  align-self-center mb-4">
+				<label>
+					Need help with this order? <a href="#" class="kss-anchor">Visit our help center</a>
+				</label>
+			</div>
+
+		</div>
+
+		<!-- Order Info sidebar -->
+		<div class="col-12 col-xl-4 col-lg-4">
+		<!-- @include('includes.orderdetails.orderstats-sidebar', ['payment_info' => (!empty($params['payment_info']))? $params['payment_info'] : [], 'shipping_address' => $params['shipping_address'], 'order_summary' => $params['order_summary'] ]) -->
+		<app-payment-info [payment_info]="order.payment_info"></app-payment-info>
+		<app-shipping-address [shipping_address]="order.shipping_address"></app-shipping-address>
+		<app-order-summary [order_summary]="order.order_summary"></app-order-summary>
+		</div>
+	</div>
+
+</div>
