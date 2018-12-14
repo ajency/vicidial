@@ -8,6 +8,8 @@ import { OrderSummaryComponent } from '../../components/order-summary/order-summ
 import { AppServiceService } from '../../services/app-service.service';
 import { ApiServiceService } from '../../services/api-service.service';
 
+declare var $: any;
+
 @Component({
   selector: 'app-order-details',
   templateUrl: './order-details.component.html',
@@ -21,6 +23,7 @@ export class OrderDetailsComponent implements OnInit {
   constructor(private appservice : AppServiceService) { }
   
   ngOnInit() {
+    $("#cd-my-account").scrollTop(0);
     this.order =  this.appservice.order;
   }
 
