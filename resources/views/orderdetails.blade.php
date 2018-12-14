@@ -78,16 +78,16 @@
 				@php $variant_ids = []; @endphp
 				@foreach($params['sub_orders'] as $sub_order)
 					@foreach($sub_order['items'] as $item)
-						@php $variant_ids[] = $item['variant_id'] @endphp
+						@php $variant_ids[] = $item['product_id'] . '-' . $item['product_color_id'] @endphp
 					@endforeach
 				@endforeach
-
-				// fbq('track', 'Purchase', {
-				//     value: total,
-				//     currency: 'INR',
-				//     content_ids: '{{implode(",",$variant_ids)}}',
-				//     content_type: 'variant',
-				// });
+				var content_ids = '{{implode(",",$variant_ids)}}';
+				fbq('track', 'Purchase', {
+				    value: total,
+				    currency: 'INR',
+				    content_ids: content_ids,
+				    content_type: 'product_group',
+				});
 			</script>
 		@endif	
 	@endif
