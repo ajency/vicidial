@@ -380,21 +380,27 @@ function generateVariantImageName($product_name, $color_name, $colors, $index)
 
 function generateSubordersData($cartItems, $locations)
 {
-    $finalCart     = [];
-    $locationsData = $locations->combine($locations->map(function ($item, $key) {
-        return ['id' => $item, 'items' => collect(), 'remaining_items' => collect()];
+    if ($locations->count() == 0) {
+        abort(500, 'empty location collection sent to generateSubordersData');
+    }
+    $locationsData = $locations->keys()->combine($locations->map(function ($item, $key) {
+        return ['id' => $key, 'items' => collect(), 'remaining_items' => collect(), 'distance' => $item];
+    }));
+    $count = $locations->keys()->combine($locations->map(function ($item, $key) {
+        return 0;
     }));
     foreach ($cartItems as $cartItem) {
         $processedLocations = [];
         foreach ($cartItem['item']->inventory as $locationData) {
-            if (array_search($locationData['location_id'], $locations->toArray()) === false) {
+            if (array_search($locationData['location_id'], $locations->keys()->toArray()) === false || $locationData['quantity'] < 0) {
                 continue;
             }
-            $transferQty = ($cartItem['quantity'] < $locationData['quantity']) ? $cartItem['quantity'] : $locationData['quantity'];
+            $transferQty = ($cartItem['quantity'] <= $locationData['quantity']) ? $cartItem['quantity'] : $locationData['quantity'];
             $locationsData[$locationData['location_id']]['items']->push([
                 'variant'  => $cartItem['item'],
                 'quantity' => $transferQty,
             ]);
+            $count[$locationData['location_id']] += $transferQty;
             $processedLocations[] = $locationData['location_id'];
             if ($transferQty < $cartItem['quantity']) {
                 $locationsData[$locationData['location_id']]['remaining_items']->push([
@@ -403,22 +409,29 @@ function generateSubordersData($cartItems, $locations)
                 ]);
             }
         }
-        foreach ($locations as $warehouseID) {
-            if (array_search($warehouseID, $processedLocations) === false) {
-                $locationsData[$warehouseID]['remaining_items']->push($cartItem);
+
+        foreach ($locations->keys() as $locationID) {
+            if (array_search($locationID, $processedLocations) === false) {
+                $locationsData[$locationID]['remaining_items']->push($cartItem);
             }
         }
     }
 
     //start function which chooses the location
-    $selectedLocation = $locationsData->sortByDesc(function ($product, $key) {
-        return $product['items']->count();
-    })->first();
+    $max = collect($count)->max();
+    $selectedLocation = $locationsData->filter(function ($value, $key) use ($count, $max) {
+        return $count[$key] == $max;
+    })->sortBy('distance')->values()->first();
     //end function that chooses the location
 
     $key = $selectedLocation['id'];
+    if ($key == null) {
+        \Log::error('GenerateSubOrder: something went wrong for ' . $cartItems . ' in ' . $locations);
+        abort(500);
+    }
     if ($selectedLocation['remaining_items']->count() != 0) {
-        $otherOrders       = generateSubordersData($selectedLocation['remaining_items'], $locations->diff([$key]));
+        unset($locations[$key]);
+        $otherOrders       = generateSubordersData($selectedLocation['remaining_items'], $locations);
         $otherOrders[$key] = $selectedLocation['items'];
         return $otherOrders;
     } else {
@@ -547,17 +560,17 @@ function sendEmail($event, $data)
 
     //TO
     $to = (isset($data['to'])) ? Defaults::getEmailExtras('to', $data['to']) : Defaults::getEmailExtras('to');
-    $to = Defaults::getEmailExtras($event, $to,'to');
+    $to = Defaults::getEmailExtras($event, $to, 'to');
     $email->setTo($to);
 
     //CC
     $cc = (isset($data['cc'])) ? Defaults::getEmailExtras('cc', $data['cc']) : Defaults::getEmailExtras('cc');
-    $cc =  Defaults::getEmailExtras($event,$cc,'cc');
+    $cc = Defaults::getEmailExtras($event, $cc, 'cc');
     $email->setCc($cc);
 
     //BCC
     $bcc = (isset($data['bcc'])) ? Defaults::getEmailExtras('bcc', $data['bcc']) : Defaults::getEmailExtras('bcc');
-    $bcc = Defaults::getEmailExtras($event,$bcc,'bcc');
+    $bcc = Defaults::getEmailExtras($event, $bcc, 'bcc');
     $email->setBcc($bcc);
 
     //Template Data
