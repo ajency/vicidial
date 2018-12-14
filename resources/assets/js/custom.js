@@ -519,7 +519,7 @@
  if ($('.home-slider').length) {
      $('.home-slider').slick({
          autoplay: true,
-         autoplaySpeed: 5000,
+         autoplaySpeed: 6000,
          pauseOnFocus: false
      });
 }
