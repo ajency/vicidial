@@ -4,6 +4,7 @@ import { AppServiceService } from '../../services/app-service.service';
 import { ApiServiceService } from '../../services/api-service.service';
 
 import { BagSummaryComponent } from '../../../shared-components/bag-summary/bag-summary/bag-summary.component';
+import { OrderComponent } from '../../components/order/order.component';
 // import { LoginComponentComponent } from '../../../shared-components/login/login-component/login-component.component';
 
 declare var $: any;
