@@ -15,7 +15,7 @@ export class OrderInfoComponent implements OnInit {
   }
 
   ngOnChanges(){
-  	console.log("order_info ==>", this.order_info)
+  	//console.log("order_info ==>", this.order_info)
   }
 
 }

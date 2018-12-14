@@ -14,7 +14,7 @@ export class ShippingAddressComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(){
-  	console.log("ngOnChanges ShippingAddressComponent ==>", this.shipping_address);
+  	// console.log("ngOnChanges ShippingAddressComponent ==>", this.shipping_address);
   }
 
 }

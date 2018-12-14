@@ -42,29 +42,32 @@ export class MyOrdersComponent implements OnInit {
   }
 
   getOrders(){
-    this.appservice.showLoader();
-    // let url = 'https://demo8558685.mockable.io/orders';
-    let url = this.appservice.apiUrl + '/api/rest/v1/user/orders';
-    let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
-    let body : any = {
-      _token : $('meta[name="csrf-token"]').attr('content')
-    };
-    // body.page = this.order_params.page;
-    // body.display_limit = this.order_params.display_limit;
+    if(this.appservice.myOrders){
+      this.orders = this.appservice.myOrders;
+    }
+    else{
+      this.appservice.showLoader();
+      let url = this.appservice.apiUrl + '/api/rest/v1/user/orders';
+      let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
+      let body : any = {
+        _token : $('meta[name="csrf-token"]').attr('content')
+      };
 
-    this.apiservice.request(url, 'post', body , header ).then((response)=>{
-      if(!response.data.length)
-        this.displayShowMore = false;
-      let formatted_data = this.formattedCartDataForUI(response.data);
-    	this.orders = this.orders.concat(formatted_data);
-    	console.log("orders ==>", this.orders);
-      this.appservice.removeLoader();
-      this.apiCallComplete = true;
-    })
-    .catch((error)=>{
-      console.log("error ===>", error);
-      this.appservice.removeLoader();
-    }) 
+      this.apiservice.request(url, 'post', body , header ).then((response)=>{
+        if(!response.data.length)
+          this.displayShowMore = false;
+        let formatted_data = this.formattedCartDataForUI(response.data);
+        this.orders = this.orders.concat(formatted_data);
+        this.appservice.myOrders = this.orders;
+        console.log("orders ==>", this.orders);
+        this.appservice.removeLoader();
+        this.apiCallComplete = true;
+      })
+      .catch((error)=>{
+        console.log("error ===>", error);
+        this.appservice.removeLoader();
+      }) 
+    }
   }
 
   formattedCartDataForUI(data){

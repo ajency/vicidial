@@ -12,6 +12,7 @@ export class AppServiceService {
   private openModal = new Subject<any>();
 
   order : any;
+  myOrders : any;
   constructor() { 
     this.apiUrl = isDevMode() ? 'http://localhost:8000' : '';
   }

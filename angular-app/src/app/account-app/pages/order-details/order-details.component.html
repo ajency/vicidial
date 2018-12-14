@@ -67,7 +67,7 @@
 		</div>
 
 		<!-- Order Info sidebar -->
-		<div class="col-12">
+		<div class="col-12 mb-4 pb-3">
 		<!-- @include('includes.orderdetails.orderstats-sidebar', ['payment_info' => (!empty($params['payment_info']))? $params['payment_info'] : [], 'shipping_address' => $params['shipping_address'], 'order_summary' => $params['order_summary'] ]) -->
 		<app-payment-info [payment_info]="order.payment_info"></app-payment-info>
 		<app-shipping-address [shipping_address]="order.shipping_address"></app-shipping-address>

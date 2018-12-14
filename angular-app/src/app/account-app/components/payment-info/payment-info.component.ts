@@ -14,11 +14,11 @@ export class PaymentInfoComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(){
-  	console.log("ngOnChanges payment-info component ==>", this.payment_info);
+  	// console.log("ngOnChanges payment-info component ==>", this.payment_info);
   }
 
   getSubstr(string){
-  	console.log("string ==>", string);
+  	// console.log("string ==>", string);
   	return string.substring(12,16);
   }
 

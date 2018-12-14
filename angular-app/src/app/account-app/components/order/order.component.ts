@@ -15,7 +15,6 @@ export class OrderComponent implements OnInit, OnChanges{
   }
 
   ngOnChanges(){
-  	console.log("ngOnChanges OrderComponent ==>", this.sub_orders);
   	this.formatOrdersData();
   }
 

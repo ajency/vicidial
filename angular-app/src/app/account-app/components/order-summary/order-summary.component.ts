@@ -15,7 +15,7 @@ export class OrderSummaryComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(){
-  	console.log("ngOnChanges OrderSummaryComponent ===>", this.order_summary);
+  	// console.log("ngOnChanges OrderSummaryComponent ===>", this.order_summary);
   }
 
 }
