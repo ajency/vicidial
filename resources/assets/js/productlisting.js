@@ -112,6 +112,7 @@ $(function(){
      });
 
    jQuery(document).on('click', '#kss_hide-filter', function() {
+        $("html, body").animate({scrollTop: 0}, 300);
          jQuery(".kss_filter").removeClass("kss_filter_mobile");
          copy_filters = {}
          copy_filters = { "facet_list" : JSON.parse(JSON.stringify(facet_list)) , "range_facet_list" : JSON.parse(JSON.stringify(range_facet_list)) , "boolean_facet_list" : JSON.parse(JSON.stringify(boolean_facet_list)) , "sort_on_filter" : sort_on_filter , "search_string_filter" : search_string_filter  }
@@ -358,7 +359,6 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
     else{
       updated_list_url = "/shop";
     }
-
     var boolean_facet_list_params = Object.assign({}, boolean_facet_list);
     if(is_ajax == true){
       for(citem in facet_display_data_arr){
@@ -544,8 +544,13 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                    if (window.location.href.match("/shop") && url == "") {
                       window.history.pushState('categoryPage', 'Category', '/shop'+url);
                     }
-                    else
+                    else{
+                      if(url == ""){
+                        url = "/shop"
+                        updated_list_url = url
+                      }
                       window.history.pushState('categoryPage', 'Category', url);
+                    }
                  }
                  if (is_ajax == true && isMobile == true) {
                    $('.kss_filter-list').addClass('d-none');
@@ -906,7 +911,10 @@ function loadProductListing(pageval=-1,mobile_view = false){
             $('li.nav-item.active').trigger('click')
         }
         
-
+       if(url == ""){
+          url = "/shop"
+          updated_list_url = url
+        }
        window.history.pushState('categoryPageUrl', 'Category page', url);
       });
 }
