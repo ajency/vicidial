@@ -69,4 +69,8 @@ export class OrderDetailsComponent implements OnInit {
     this.order = this.orders.find((order)=>{ return order.order_info.txn_no == order_id});
   }
 
+  openListOfOrders(){
+    this.router.navigateByUrl('account/my-orders');
+  }
+
 }

@@ -33,7 +33,7 @@
 
 		</div>
 	</div>
-	<div *ngIf="order" class="row mt-md-2 mt-0">
+	<div *ngIf="order;else other_content" class="row mt-md-2 mt-0">
 
 		<div class="col-12">
 
@@ -58,5 +58,13 @@
 		<app-order-summary [order_summary]="order.order_summary"></app-order-summary>
 		</div>
 	</div>
+
+	<ng-template #other_content>
+		Opps, it looks like this order does not exists.
+		<div class="mt-2 mb-4 pt-2 pb-3 text-center">
+			<a class="btn text-secondary pb-0 pr-0 order-details-btn" (click)="openListOfOrders(order)" >
+				Go to My orders <i class="fas fa-chevron-right"></i></a>
+		</div>	
+	</ng-template>
 
 </div>
