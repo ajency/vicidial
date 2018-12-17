@@ -45,6 +45,7 @@ function makeQueryfromParams($searchObject)
         'product_image_available'  => 'search_data.boolean_facet.product_image_available',
         'product_att_ecom_sales'  => 'search_data.boolean_facet.product_att_ecom_sales',
         'product_metatag'  => 'search_data.string_facet.product_metatag',
+        'variant_size_name'  => 'search_data.string_facet.variant_size_name',
     ];
 
     foreach ($searchObject as $filterType => $params) {

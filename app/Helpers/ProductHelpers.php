@@ -164,7 +164,7 @@ function sanitiseFilterdata($result, $params = [])
     $response           = [];
 
 
-    $facetNames =  ["product_category_type", "product_gender", "product_subtype", "product_age_group", "product_color_html", "product_metatag"];
+    $facetNames =  ["product_category_type", "product_gender", "product_subtype", "product_age_group", "product_color_html", "product_metatag", "variant_size_name"];
     // dd($facetNames);
     foreach ($facetNames as $f) {
         $filter           = [];
