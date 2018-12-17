@@ -27,6 +27,14 @@ Handlebars.registerHelper('assign', function (varName, varValue, options) {
   options.data.root[varName] = varValue;
 });
 
+Handlebars.registerHelper('multiply', function (value1, value2, options) {
+  return value1*value2;
+});
+
+Handlebars.registerHelper('percent', function (value1, value2, options) {
+  return (value1/value2)*100;
+});
+
 Handlebars.registerHelper('ifImagesExist', function (arg1, options) {
   var count = Object.keys(arg1).length;
   return count > 0 ? options.fn(this) : options.inverse(this);
@@ -528,7 +536,10 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
 
                   var context = {};
                   context["products"] = product_list_context.products;
-                  context["show_more"] = product_list_context.page.has_next
+                  context["show_more"] = product_list_context.page.has_next;
+                  context["total_item_count"] = product_list_context.page.total_item_count;
+                  context["display_limit"] = product_list_context.page.display_limit;
+                  context["current"] = product_list_context.page.current;
                   var html = template(context);
                   document.getElementById("products-list-template-content").innerHTML = html;
                   product_list_items = $.extend({}, product_list_context.products);
@@ -571,7 +582,6 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                     $('li.nav-item.active').trigger('click')
                     call_mobile_api = true
                  }
-
             });
         }
         else{
@@ -879,6 +889,9 @@ function loadProductListing(pageval=-1,mobile_view = false){
            $(".productlist__na").addClass('d-none');
          }
         context["show_more"] = product_list_context.page.has_next
+        context["total_item_count"] = product_list_context.page.total_item_count;
+        context["display_limit"] = product_list_context.page.display_limit;
+        context["current"] = product_list_context.page.current;
         var html = template(context);
         document.getElementById("products-list-template-content").innerHTML = html;
 

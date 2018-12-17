@@ -74,8 +74,14 @@
 	</div>
   @{{/each}}
   </div>
-  <p class="my-4 product-view text-center">You've viewed 42 of 45 products</p>
-  <div class="d-none" style="width: 20%"></div>
+
+  @{{assign "viewed_products" (multiply display_limit current)}}
+  <p class="my-4 product-view text-center @{{#if show_more }} @{{else}} d-none @{{/if}}">You've viewed @{{viewed_products}} of  @{{total_item_count}} products</p>
+  <!-- progress loader -->
+  <div class="kss-progress-bar @{{#if show_more }} @{{else}} d-none @{{/if}}">
+  	<div class="kss-progress-bar__loader" style="width:@{{percent viewed_products total_item_count}}%;"></div>
+  </div>
+
   <div class="text-center mt-4 mb-0 mb-sm-4 pt-4 pb-0 pb-sm-4 @{{#if show_more }} @{{else}} d-none @{{/if}}">
   	<button href="javascript:void(0);" class="d-flex align-items-center justify-content-center btn more-products-btn m-auto" id="showMoreProductsBtn">
 		<i class="load-icon-cls align-middle fa-circle-notch fa-lg fa-spin fas mr-2 d-none"></i> Show more products 
@@ -110,6 +116,9 @@
    context["products"] = <?= json_encode($items); ?>;
    product_list_items = $.extend(product_list_items, context["products"]);
    context["show_more"] = <?= json_encode($page->has_next) ?>;
+   context["total_item_count"] = <?= json_encode($page->total_item_count) ?>;
+   context["display_limit"] = <?= json_encode($page->display_limit) ?>;
+   context["current"] = <?= json_encode($page->current) ?>;
    var html    = template(context);
    document.getElementById("products-list-template-content").innerHTML = html;
  </script>
