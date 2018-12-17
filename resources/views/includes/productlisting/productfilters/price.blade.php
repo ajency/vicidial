@@ -71,7 +71,7 @@
         if($(this). prop("checked") == true)
           facetCategoryChange($(this),false)
       }
-      else if($(this).data("filter-type") == "primary_filter"){
+      else if($(this).data("filter-type") == "boolean_filter"){
         if($(this). prop("checked") == true)
           facetCategoryChange($(this),false,false,true)
       }
