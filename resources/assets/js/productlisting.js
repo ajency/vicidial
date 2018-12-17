@@ -173,45 +173,40 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
         }
         if(range_filter == false){
           if($(thisObj).prop('checked')){
-              if(final_facet_list.hasOwnProperty(facet_name)){
+              if(final_facet_list.hasOwnProperty(facet_name)){  // IF THE FACETNAME EXISTS IN FACET LIST
                 if(final_facet_list[facet_name].indexOf($(thisObj).val()) == -1){
-                  if(singleton == false){
+                  if(singleton == false){   // FOR MULTIPLE CHECKBOXES
                     if(boolean_filter == true)
                       final_facet_list[facet_name]= thisval
                     else
                       final_facet_list[facet_name].push(thisval)
-                    var fil_index = filter_tags_list.findIndex(obj => obj.slug==slug_name);
+                    var fil_index = filter_tags_list.findIndex(obj => ((obj.slug==slug_name) && (obj.group==facet_name)));
                     if(fil_index == -1)
                       filter_tags_list.push({"slug":slug_name, "value":display_name, "group":facet_name})
                     call_ajax = true;
                   }
-                  else{
+                  else{   // FOR SINGLETON RADIO
                     if(boolean_filter == true)
                       final_facet_list[facet_name] = thisval
                     else
                       final_facet_list[facet_name] = [thisval]
-                    var fil_index = filter_tags_list.findIndex(obj => obj.slug==slug_name);
-                    var fil_grp_index = filter_tags_list.findIndex(obj => obj.group==facet_name);
+                    var fil_index = filter_tags_list.findIndex(obj => ((obj.slug==slug_name) && (obj.group==facet_name)));
                     if(fil_index == -1){
-                      if(fil_grp_index == -1)
-                        filter_tags_list.push({"slug":slug_name, "value":display_name, "group":facet_name})
-                      else{
-                        filter_tags_list.splice(fil_grp_index, 1);
-                        filter_tags_list.push({"slug":slug_name, "value":display_name, "group":facet_name})
-                      }
+                      filter_tags_list.splice(fil_index, 1);
+                      filter_tags_list.push({"slug":slug_name, "value":display_name, "group":facet_name})
                     }
                     call_ajax = true;
                   }
                 }
               }
-              else{
+              else{ // IF THE FACETNAME DOESNT EXISTS IN FACET LIST
                 if(boolean_filter == true)
                   final_facet_list[facet_name] = thisval
                 else
                   final_facet_list[facet_name] = [thisval]
-                var fil_index = filter_tags_list.findIndex(obj => obj.slug==slug_name);
+                var fil_index = filter_tags_list.findIndex(obj => ((obj.slug==slug_name) && (obj.group==facet_name)));
                 if(singleton == true){
-                  var fil_grp_index = filter_tags_list.findIndex(obj => obj.group==facet_name);
+                  var fil_grp_index = filter_tags_list.findIndex(obj => ((obj.slug==slug_name) && (obj.group==facet_name)));
                   if(fil_index == -1){
                     if(fil_grp_index == -1)
                       filter_tags_list.push({"slug":slug_name, "value":display_name, "group":facet_name})
@@ -229,13 +224,13 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
               }
 
           }
-          else{
+          else{ //IF THE CHECKBOX IS UNCHECHECKED
               if(final_facet_list.hasOwnProperty(facet_name)){
                 if(boolean_filter == true){
                   if(final_facet_list[facet_name] == thisval){
                     delete final_facet_list[facet_name];
                     call_ajax = true;
-                    var fil_index = filter_tags_list.findIndex(obj => obj.slug==slug_name);
+                    var fil_index = filter_tags_list.findIndex(obj => ((obj.slug==slug_name) && (obj.group==facet_name)));
                     filter_tags_list.splice(fil_index, 1);
                   }
                 }
@@ -250,7 +245,7 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                       if (index !== -1) final_facet_list[facet_name].splice(index, 1);
                       call_ajax = true;
                     }
-                    var fil_index = filter_tags_list.findIndex(obj => obj.slug==slug_name);
+                    var fil_index = filter_tags_list.findIndex(obj => ((obj.slug==slug_name) && (obj.group==facet_name)));
                     filter_tags_list.splice(fil_index, 1);
                   }
                 }
@@ -258,7 +253,7 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
               }
           }
         }
-        else{
+        else{ //FOR RANGE FILTER
           var min_max_val = $(thisObj).val()
           var min_max_arr = min_max_val.split(";")
           var filter_tag_str = $(thisObj).val().replace(";", "-")
