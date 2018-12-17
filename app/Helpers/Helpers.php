@@ -696,3 +696,16 @@ function isNotProd()
     }
     return true;
 }
+
+function updateProductsWithMetaTags()
+{
+    $odoo   = new OdooConnect;
+    $offset = 0;
+    $limit  = config('odoo.limit');
+    do {
+        $metatags    = $odoo->defaultExec('product.metatag', 'search_read', [[['id', '>', 0]]], ['fields' => ['product_ids'], 'offset' => $offset, 'limit' => $limit]);
+        $product_ids = $metatags->map(function ($item, $key) {return $item['product_ids'];})->flatten()->unique();
+        $product_ids->each(function ($product_id, $key) {IndexProduct::dispatch($product_id)->onQueue('process_product');});
+        $offset += $limit;
+    } while (count($metatags) > 0);
+}
