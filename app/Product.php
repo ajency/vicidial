@@ -256,7 +256,7 @@ class Product
 
         $max_count = Facet::groupBy('facet_name')->select('facet_name', DB::raw('count(*) as total'))->pluck('total')->max();
 
-        $required          = ["product_category_type", "product_gender", "product_subtype", "product_age_group", "product_color_html"];
+        $required          = ["product_category_type", "product_gender", "product_subtype", "product_age_group", "product_color_html", "product_metatag"];
         $aggs_facet_name   = $q::createAggTerms("facet_name", "search_data.string_facet.facet_name", ["include" => $required]);
         $aggs_facet_value  = $q::createAggTerms("facet_value", "search_data.string_facet.facet_value",["size" => $max_count]);
         $aggs_facet_value  = $q::addToAggregation($aggs_facet_value, $q::createAggReverseNested('count'));

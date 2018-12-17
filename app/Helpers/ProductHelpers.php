@@ -164,14 +164,13 @@ function sanitiseFilterdata($result, $params = [])
     $response           = [];
 
 
-    $facetNames =  ["product_category_type", "product_gender", "product_subtype", "product_age_group", "product_color_html"];
+    $facetNames =  ["product_category_type", "product_gender", "product_subtype", "product_age_group", "product_color_html", "product_metatag"];
     // dd($facetNames);
     foreach ($facetNames as $f) {
         $filter           = [];
         $facetName = $f;
         $facetValues = isset($filterResponse[$facetName])? $filterResponse[$facetName]:null;
         $facets           = Facet::where('facet_name', $facetName)->where("display",true)->get();
-        
         $filter['header'] = [
             'facet_name'   => $facetName,
             'display_name' => config('product.facet_display_data.' . $facetName . '.name'),
