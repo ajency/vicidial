@@ -74,7 +74,8 @@
 	</div>
   @{{/each}}
   </div>
-  <p class="my-4 product-view text-center d-none">You've viewed 42 of 45 products</p>
+  <p class="my-4 product-view text-center">You've viewed 42 of 45 products</p>
+  <div class="d-none" style="width: 20%"></div>
   <div class="text-center mt-4 mb-0 mb-sm-4 pt-4 pb-0 pb-sm-4 @{{#if show_more }} @{{else}} d-none @{{/if}}">
   	<button href="javascript:void(0);" class="d-flex align-items-center justify-content-center btn more-products-btn m-auto" id="showMoreProductsBtn">
 		<i class="load-icon-cls align-middle fa-circle-notch fa-lg fa-spin fas mr-2 d-none"></i> Show more products 
