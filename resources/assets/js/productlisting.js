@@ -649,8 +649,8 @@ function constructCategoryUrl(facet_names_arr,search_object,facet_value_slug_arr
     return search_str;
 }
 
-function removeFilterTag(slug){
-    var elm = $("input[data-slug='"+slug+"'].facet-category")
+function removeFilterTag(slug,facet_name){
+    var elm = $("input[data-slug='"+slug+"'][data-facet-name='"+facet_name+"'].facet-category")
     // var singleton = elm.data("singleton")
     // if(singleton == true)
     if(slug == "price"){
