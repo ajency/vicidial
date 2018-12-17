@@ -267,7 +267,7 @@ function boolFilterResponse($facet_name, $attributes, $params){
             "is_selected"  => selectBool($params, $facet_name, $config['facet_value']),
             "count" => 20,
             "false_facet_value" => $config['false_facet_value'],
-            "slug" => str_slug($facet_name." ".$config['facet_value']),
+            "slug" => str_slug($config['facet_value']),
         ],
     ];
     $filter['attribute_slug'] = config('product.facet_display_data.'.$facet_name.'attribute_slug');
