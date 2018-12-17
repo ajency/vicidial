@@ -197,11 +197,100 @@
 
 <section>
   <div class="container">
-  <div class="trend-focus-wrapper">
+    <div class="cat-container">
+      <div class="cat-item cat-1 position-relative">
+        <a href="#">
+          <img class="img-fluid lazyload blur-up"
+            src="{{CDN::asset('/img/home-category/cat-1.jpg') }}"/>
+            <a href="/shop" class="shop-now-btn shop-now-btn--green">Shop Now</a>
+        </a>
+      </div>
+      <div class="cat-item cat-2 position-relative">
+        <a href="#">
+          <img class="img-fluid lazyload blur-up"
+          src="{{CDN::asset('/img/home-category/cat-2.jpg') }}"/>
+          <a href="/shop" class="shop-now-btn shop-now-btn--orange">Shop Now</a>
+        </a>
+      </div>
+      <div class="cat-item cat-3">
+        <a href="#">
+          <img class="img-fluid lazyload blur-up"
+          src="{{CDN::asset('/img/home-category/cat-3.gif') }}"/>
+        </a>
+      </div>
+      <div class="cat-item cat-4 position-relative">
+        <a href="#">
+          <img class="img-fluid lazyload blur-up"
+          src="{{CDN::asset('/img/home-category/cat-4.jpg') }}"/>
+          <a href="/shop" class="shop-now-btn shop-now-btn--red">Shop Now</a>
+        </a>
+      </div>
+      <div class="cat-item cat-5 position-relative">
+        <a href="#">
+          <img class="img-fluid lazyload blur-up"
+          src="{{CDN::asset('/img/home-category/cat-5.jpg') }}"/>
+          <p class="m-0 denim-text">Denim<strong>search!</strong></p>
+        </a>
+      </div>
+      <div class="cat-item cat-6 position-relative">
+        <a href="#" class="d-block">
+          <img class="img-fluid lazyload blur-up"
+          src="{{CDN::asset('/img/home-category/cat-6.jpg') }}"/>
+        </a>
+        <div class="links-wrapper">
+          <a href="/first" class="links-wrapper__first"></a>
+          <a href="/second" class="links-wrapper__second"></a>
+          <a href="/third" class="links-wrapper__third"></a>
+          <a href="/fourth" class="links-wrapper__fourth"></a>
+          <a href="/shop" class="links-wrapper__shop">Shop Now</a>
+        </div>
+      </div>
+      <div class="cat-item cat-7 position-relative">
+        <a href="#">
+          <img class="img-fluid lazyload blur-up"
+          src="{{CDN::asset('/img/home-category/cat-7.jpg') }}"/>
+          <a href="/shop" class="shop-now-btn shop-now-btn--jewelery">Shop Now</a>
+        </a>
+      </div>
+      <div class="cat-item cat-8">
+        <a href="#">
+          <img class="img-fluid lazyload blur-up"
+          src="{{CDN::asset('/img/home-category/cat-8.jpg') }}"/>
+        </a>
+      </div>
+      <div class="cat-item cat-9">
+        <a href="#">
+          <img class="img-fluid lazyload blur-up"
+          src="{{CDN::asset('/img/home-category/cat-9.jpg') }}"/>
+        </a>
+      </div>
+      <div class="cat-item cat-10 position-relative">
+        <a href="#">
+          <img class="img-fluid lazyload blur-up"
+          src="{{CDN::asset('/img/home-category/cat-10.jpg') }}"/>
+          <a href="/shop" class="shop-now-btn shop-now-btn--shoes">Shop Now</a>
+        </a>
+      </div>
+    </div>
+    <div class="cat-container cat-container--bottom">
+      <div class="cat-item cat-11">
+        <a href="#">
+          <img class="img-fluid lazyload blur-up"
+          src="{{CDN::asset('/img/home-category/cat-11.gif') }}"/>
+        </a>
+      </div>
+      <div class="cat-item cat-12">
+        <a href="#">
+          <img class="img-fluid lazyload blur-up"
+          src="{{CDN::asset('/img/home-category/cat-12.jpg') }}"/>
+        </a>
+      </div>
+    </div>
+
+<!--   <div class="trend-focus-wrapper">
     <a href="/apparels/woven-tops/" class="trend-box d-block link-card" style="background-color:#F4D5D3;">
       <div class="p-3">
         <h4 class="font-weight-bold m-0 link-card_text">Woven tops</h4>
-        <!-- <p class="link-card_text">Lorem ipsum dolor sit amet</p> -->
       </div>
       <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
           src="{{CDN::asset('/img/collection/woven-tops-10px.jpg') }}"
@@ -215,7 +304,6 @@
     <a href="/apparels/jeans/" class="trend-box d-block link-card" style="background-color:#feedcf;">
       <div class="p-3">
         <h4 class="font-weight-bold m-0 link-card_text">Jeans</h4>
-        <!-- <p class="link-card_text">Lorem ipsum dolor sit amet</p> -->
       </div>
       <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
           src="{{CDN::asset('/img/collection/jeans-10px.jpg') }}"
@@ -229,7 +317,6 @@
     <a href="/apparels/ethnic/" class="trend-box d-block link-card" style="background-color:#efe665;">
       <div class="p-3">
         <h4 class="font-weight-bold m-0 link-card_text">Ethnic</h4>
-        <!-- <p class="link-card_text">Lorem ipsum dolor sit amet</p> -->
       </div>
       <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
           src="{{CDN::asset('/img/collection/ethnic-10px.jpg') }}"
@@ -243,7 +330,6 @@
     <a href="/apparels/infant-utility/" class="trend-box d-block link-card" style="background-color:#fcfbff;">
       <div class="p-3">
         <h4 class="font-weight-bold m-0 link-card_text">Infant Accessories</h4>
-        <!-- <p class="link-card_text">Lorem ipsum dolor sit amet</p> -->
       </div>
       <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
           src="{{CDN::asset('/img/collection/infant-accessories-10px.jpg') }}"
@@ -257,7 +343,6 @@
     <a href="/apparels/dress/" class="trend-box d-block link-card" style="background-color:#ed8d77;">
       <div class="p-3">
         <h4 class="font-weight-bold m-0 link-card_text">Dresses</h4>
-        <!-- <p class="link-card_text">Lorem ipsum dolor sit amet</p> -->
       </div>
       <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
             src="{{CDN::asset('/img/collection/dresses-10px.jpg') }}"
@@ -271,7 +356,6 @@
     <a href="/shirt/" class="trend-box d-block link-card" style="background-color:#eaeaea;">
       <div class="p-3">
         <h4 class="font-weight-bold m-0 link-card_text">Shirts</h4>
-        <!-- <p class="link-card_text">Lorem ipsum dolor sit amet</p> -->
       </div>
       <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
           src="{{CDN::asset('/img/collection/shirt-10px.jpg') }}"
@@ -282,7 +366,7 @@
           alt="Styles in Focus - Shirts"
           title="Shirts"/>
     </a>
-  </div>
+  </div> -->
 </div>
 </section>
 

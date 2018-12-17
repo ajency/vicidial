@@ -417,3 +417,150 @@
         }
     }
 }
+
+// Home category
+.cat-container{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 30px;
+    grid-template-areas: 
+        "cat-1 cat-2 cat-4"
+        "cat-1 cat-3 cat-4"
+        "cat-5 cat-6 cat-7"
+        "cat-5 cat-6 cat-8"
+        "cat-9 cat-10 cat-10";
+
+    @for $i from 1 through 12 {
+        .cat-#{$i} {
+            grid-area: cat-#{$i};
+        }
+    }
+    &--bottom{
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: 
+            "cat-11 cat-12";
+        margin-top: 30px;
+    }
+    img{
+        border-radius: 10px;
+    }
+    .denim-text{
+        position: absolute;
+        bottom: 18px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        color: #fff;
+        font-size: 1.3em;
+        letter-spacing: 1px;
+    }
+    @media (max-width: 767px){
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+            "cat-1"
+            "cat-4"
+            "cat-2"
+            "cat-3"
+            "cat-5"
+            "cat-10"
+            "cat-6"
+            "cat-7"
+            "cat-8"
+            "cat-9";
+        &--bottom{
+            grid-template-columns: 1fr;
+             grid-template-areas: 
+                "cat-11"
+                "cat-12";
+        }            
+    }
+}
+
+.links-wrapper{
+    position: absolute;
+    top: 68px;
+    bottom: 0;
+    width: 100%;
+    height: 86%;
+    &__first{
+        width: 50%;
+        position: absolute;
+        height: 50%;
+        left: 0;
+    }
+    &__second{
+        width: 50%;
+        position: absolute;
+        height: 50%;
+        right: 0;
+    }
+    &__third{
+        width: 50%;
+        position: absolute;
+        height: 50%;
+        left: 0;
+        top: 50%;
+    }
+    &__fourth{
+        width: 50%;
+        position: absolute;
+        height: 50%;
+        right: 0;
+        top: 50%;
+    }
+    &__shop{
+        position: absolute;
+        width: 80px;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        text-align: center;
+        top: 45%;
+        font-size: 1.3em;
+        color: #000;
+        text-transform: uppercase;
+        &:hover{
+            color: #000;
+        }
+    }
+}
+
+.shop-now-btn{
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    text-align: center;
+    width: 115px;
+    padding: 5px;
+    color: #fff;
+    font-size: 1.1em;
+    &:hover{
+        color: #fff;
+    }
+    &--green{
+        bottom: 15px;
+        background-color: #c8ea43;
+    }
+    &--orange{
+        background-color: #d58f58;
+        right: inherit;
+        top: 45%;
+        bottom: inherit;
+        left: 35px;
+    }
+    &--red{
+        background-color: #d64156;
+    }
+    &--jewelery{
+        background-color: #c2557d;
+        left: inherit;
+        top: 156px;
+        bottom: inherit;
+        right: 8px;
+    }
+    &--shoes{
+        background-color: #dc7145;
+    }
+}
