@@ -42,7 +42,7 @@
                   <td width="60%">
                    <div style="float: left;width: 100%;">
                       <div style="font-weight: bold;text-transform: uppercase;color: #000000;letter-spacing: 1px;">ORDER DETAILS:</div>
-                      <div style="margin-top: 20px;">Order No: <strong style="color: #000000;"><a href="{{url('/')}}/my/order/details?orderid={{$order_info['txn_no']}}" style="color:#004283;">{{$order_info['txn_no']}}</a></strong></div>
+                      <div style="margin-top: 20px;">Order No: <strong style="color: #000000;">{{$order_info['txn_no']}}</strong></div>
                       <div style="margin-top: 10px;">Date: {{$order_info['order_date']}}</div>
                       <div style="margin-top: 10px;">Amount: ₹{{$order_info['total_amount']}}</div>
                       <div style="margin-top: 30px;">
