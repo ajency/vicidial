@@ -454,6 +454,34 @@
         font-size: 1.3em;
         letter-spacing: 1px;
     }
+    @media (min-width: 768px) and (max-width: 992px){
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: 
+            "cat-1 cat-2"
+            "cat-1 cat-3"
+            "cat-4 cat-5"
+            "cat-6 cat-7"
+            "cat-6 cat-8"
+            "cat-10 cat-10";
+            // "cat-9 .";
+        &--bottom{
+            grid-template-columns: 1fr 1fr;
+            grid-template-areas: 
+                "cat-11 cat-12";
+        }
+        .movable-item{
+            display: none;
+        }
+        &--bottom{
+            grid-template-columns: 1fr 1fr;
+            grid-template-areas: 
+            "cat-11 cat-12"
+            "cat-9 .";
+            .cat-9{
+                display: block !important;
+            }
+        }      
+    }
     @media (max-width: 767px){
         grid-template-columns: 1fr;
         grid-template-areas: 

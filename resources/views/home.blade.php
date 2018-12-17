@@ -258,7 +258,7 @@
           src="{{CDN::asset('/img/home-category/cat-8.jpg') }}"/>
         </a>
       </div>
-      <div class="cat-item cat-9">
+      <div class="cat-item cat-9 movable-item">
         <a href="#">
           <img class="img-fluid lazyload blur-up"
           src="{{CDN::asset('/img/home-category/cat-9.jpg') }}"/>
@@ -273,6 +273,12 @@
       </div>
     </div>
     <div class="cat-container cat-container--bottom">
+      <div class="cat-item cat-9 d-none">
+        <a href="#">
+          <img class="img-fluid lazyload blur-up"
+          src="{{CDN::asset('/img/home-category/cat-9.jpg') }}"/>
+        </a>
+      </div>
       <div class="cat-item cat-11">
         <a href="#">
           <img class="img-fluid lazyload blur-up"
