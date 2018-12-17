@@ -1,11 +1,11 @@
 <script id="filter-tag-template" type="text/x-handlebars-template">
   <div class="kss_filter-list mt-1" data-filter="@{{template}}">
       <div class="filter-heading">
-        <label class=" w-100 mb-0 pb-3 cursor-pointer @{{#if collapsed}} collapsed @{{/if}}" data-toggle="collapse" data-target="#collapseCategory" aria-expanded="false" aria-controls="collapseCategory">
+        <label class=" w-100 mb-0 pb-3 cursor-pointer @{{#if collapsed}} collapsed @{{/if}}" data-toggle="collapse" data-target="#collapseTag" aria-expanded="false" aria-controls="collapseTag">
          @{{filter_display_name}} <i class="fas fa-angle-up float-right"></i>
         </label>
       </div>
-      <div id="collapseCategory" class="collapse@{{#if collapsed}}@{{else}} show @{{/if}}" data-field="@{{template}}">
+      <div id="collapseTag" class="collapse@{{#if collapsed}}@{{else}} show @{{/if}}" data-field="@{{template}}">
         <div class="card-body pt-2">
           @{{#if singleton }}
           @{{#each items}}
