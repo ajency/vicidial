@@ -24,7 +24,7 @@ export class OrderDetailsComponent implements OnInit {
   
   order : any;
   orders : any;
-  
+  showBackButton : boolean = false;
   constructor(private appservice : AppServiceService,
               private route: ActivatedRoute,
               private router: Router) { }
@@ -32,7 +32,8 @@ export class OrderDetailsComponent implements OnInit {
   ngOnInit() {
     $("#cd-my-account").scrollTop(0);
     if(this.appservice.order){
-      this.order =  this.appservice.order;  
+      this.order =  this.appservice.order;
+      this.showBackButton = true;
     }
     else{
       this.appservice.showLoader();
@@ -52,7 +53,10 @@ export class OrderDetailsComponent implements OnInit {
   }
 
   closeWidget(){
-    
+    let url = window.location.href.split("#")[0];
+    history.replaceState({}, 'account', url);
+    this.appservice.closeWidget();
+    window.location.reload();
   }
 
   navigateBack(){

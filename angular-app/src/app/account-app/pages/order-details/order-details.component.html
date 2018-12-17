@@ -19,7 +19,7 @@
 		<div class="col-12">
              <div>
 	          	<div class="row no-gutter">
-					<div class="col-1">
+					<div *ngIf="showBackButton" class="col-1">
 		             <h3 class="m-0 font-weight-bold back-to-cart">
 		               <img (click)="navigateBack()" class="btn-back kss_highlight" src="/img/left-arrow.png" style="width:20px;">
 		             </h3>
