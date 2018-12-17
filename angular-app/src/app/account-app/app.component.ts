@@ -34,7 +34,7 @@ export class AppComponent {
 				this.appservice.openVerificationModal();
 		  	}
 
-		  	else if(window.location.href.endsWith('#/account/my-orders')){
+		  	else if(window.location.href.includes('#/account/my-orders')){
 		  		// Do nothing -- to be handled later
 		  	}
 
