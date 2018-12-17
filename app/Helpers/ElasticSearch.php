@@ -136,6 +136,7 @@ function fetchProduct($product)
             "product_subtype"       => $data["product_subtype"],
         ],
         "description"       => $data["product_description"],
+        "metatags"          => (isset($data["product_metatag"])) ? $data["product_metatag"] : [],
         "additional_info"   => [
             "product_age_group" => $data["product_age_group"],
             "product_gender"    => $data["product_gender"],
