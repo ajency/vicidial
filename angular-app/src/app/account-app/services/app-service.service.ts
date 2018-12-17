@@ -1,6 +1,7 @@
 import { Injectable, isDevMode } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs';
+import { ApiServiceService } from './api-service.service';
 
 declare var $: any;
 
@@ -13,7 +14,7 @@ export class AppServiceService {
 
   order : any;
   myOrders : any;
-  constructor() { 
+  constructor(private apiservice : ApiServiceService) { 
     this.apiUrl = isDevMode() ? 'http://localhost:8000' : '';
   }
 
@@ -74,5 +75,28 @@ export class AppServiceService {
     if(this.getCookie('token') && this.getCookie('cart_id'))
       return true;
     return false;
+  }
+
+  getOrders(){
+      let url = this.apiUrl + '/api/rest/v1/user/orders';
+      let header = { Authorization : 'Bearer '+this.getCookie('token') };
+      let body : any = {
+        _token : $('meta[name="csrf-token"]').attr('content')
+      };
+      return this.apiservice.request(url, 'post', body , header );
+  }
+
+  formattedCartDataForUI(data){
+    data.forEach((order)=>{
+      order.sub_orders.forEach((sub_order)=>{
+        sub_order.items.forEach((item)=>{
+          if(item.price_mrp != item.price_final)
+            item.off_percentage = Math.round(((item.price_mrp - item.price_final) / (item.price_mrp )) * 100) + '% OFF';
+          item.href = '/' + item.product_slug +'/buy?size='+item.size;
+          item.images = Array.isArray(item.images) ? ['/img/placeholder.svg', '/img/placeholder.svg', '/img/placeholder.svg'] : Object.values(item.images);
+        })
+      })
+    })
+    return data;
   }
 }

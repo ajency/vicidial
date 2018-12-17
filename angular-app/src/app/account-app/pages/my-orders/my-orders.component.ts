@@ -47,17 +47,10 @@ export class MyOrdersComponent implements OnInit {
     }
     else{
       this.appservice.showLoader();
-      let url = this.appservice.apiUrl + '/api/rest/v1/user/orders';
-      let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
-      let body : any = {
-        _token : $('meta[name="csrf-token"]').attr('content')
-      };
-
-      this.apiservice.request(url, 'post', body , header ).then((response)=>{
-        if(!response.data.length)
-          this.displayShowMore = false;
-        let formatted_data = this.formattedCartDataForUI(response.data);
-        this.orders = this.orders.concat(formatted_data);
+     
+      this.appservice.getOrders().then((response)=>{
+        let formatted_data = this.appservice.formattedCartDataForUI(response.data);
+        this.orders = formatted_data;
         this.appservice.myOrders = this.orders;
         console.log("orders ==>", this.orders);
         this.appservice.removeLoader();
@@ -68,20 +61,6 @@ export class MyOrdersComponent implements OnInit {
         this.appservice.removeLoader();
       }) 
     }
-  }
-
-  formattedCartDataForUI(data){
-    data.forEach((order)=>{
-      order.sub_orders.forEach((sub_order)=>{
-        sub_order.items.forEach((item)=>{
-          if(item.price_mrp != item.price_final)
-            item.off_percentage = Math.round(((item.price_mrp - item.price_final) / (item.price_mrp )) * 100) + '% OFF';
-          item.href = '/' + item.product_slug +'/buy?size='+item.size;
-          item.images = Array.isArray(item.images) ? ['/img/placeholder.svg', '/img/placeholder.svg', '/img/placeholder.svg'] : Object.values(item.images);
-        })
-      })
-    })
-    return data;
   }
 
   isLoggedIn(){

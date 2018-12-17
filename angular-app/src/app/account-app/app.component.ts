@@ -16,7 +16,7 @@ export class AppComponent {
 
 		if(this.appservice.isLoggedInUser()){
 			if(!window.location.href.endsWith('#/account')){
-				this.router.navigateByUrl('account/my-orders');
+				// this.router.navigateByUrl('account/my-orders');
 			}
 		}
 		else{
