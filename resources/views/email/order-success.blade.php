@@ -109,7 +109,7 @@
                             @endif
                         </td>
                         <td class="m_-1366001226154905177m_-6808368826616678290m_8600340093737608931cell-content m_-1366001226154905177m_-6808368826616678290m_8600340093737608931align-right" style="text-align:right">
-                           <strong class="m_-1366001226154905177m_-6808368826616678290m_8600340093737608931price" style="padding-right:8px;">₹{{$item['price_final']}}</strong>
+                           <strong class="m_-1366001226154905177m_-6808368826616678290m_8600340093737608931price" style="padding-right:8px;font-size: 15px;">₹{{$item['price_final']}}</strong>
                         </td>
                      </tr>
                </tbody>
@@ -138,22 +138,22 @@
                          <tr>
                             <td width="30%"></td>
                             <td width="50%">
-                               <div style="color: #777676;margin-bottom: 10px;">Total Item Price :</div>
-                               <div style="color: #777676;margin-bottom: 10px;">Sub-total :</div>
+                               <div style="color: #777676;margin-bottom: 10px;text-align: right;font-size: 15px;">Total Item Price :</div>
+                               <div style="color: #777676;margin-bottom: 10px;text-align: right;font-size: 15px;">Sub-total :</div>
                                @if($order_summary['cart_discount'] > 0)
-                               <div style="color: #777676;margin-bottom:10px;">Promotion Discount :</div>
+                               <div style="color: #777676;margin-bottom:10px;text-align: right;font-size: 15px;">Promotion Discount :</div>
                                @endif
-                               <div style="color: #777676;margin-bottom: 10px;">Shipping :</div>
-                               <div style="margin-top: 20px;"><strong>ORDER TOTAL :</strong></div>
+                               <div style="color: #777676;margin-bottom: 10px;text-align: right;font-size: 15px;">Shipping :</div>
+                               <div style="margin-top: 20px;text-align: right;font-size: 15px;"><strong>ORDER TOTAL :</strong></div>
                             </td>
                             <td width="10%">
-                               <div style="width: 75px;text-align:right;margin-bottom:10px;"><strong style="color: #000000;">₹{{$order_summary['mrp_total']}}</strong></div>
-                               <div style="text-align: right;width: 75px;margin-bottom:10px;"><strong style="color: #000000;">₹{{$order_summary['sale_price_total']}}</strong></div>
+                               <div style="width: 75px;text-align:right;margin-bottom:10px;font-size: 15px;"><strong style="color: #000000;">₹{{$order_summary['mrp_total']}}</strong></div>
+                               <div style="text-align: right;width: 75px;margin-bottom:10px;font-size: 15px;"><strong style="color: #000000;">₹{{$order_summary['sale_price_total']}}</strong></div>
                                @if($order_summary['cart_discount'] > 0)
-                               <div style="text-align: right;width: 75px;margin-bottom: 10px;"><strong style="color: #28a745;">- ₹{{$order_summary['cart_discount']}}</strong></div>
+                               <div style="text-align: right;width: 75px;margin-bottom: 10px;font-size: 15px;"><strong style="color: #28a745;">- ₹{{$order_summary['cart_discount']}}</strong></div>
                                @endif
-                               <div style="text-align: right;width: 75px;"><strong style="color: #000000;">₹{{$order_summary['shipping_fee']}}</strong></div>
-                               <div style="text-align: right;width: 75px;margin-top: 20px;color: #000;"><strong>₹{{$order_summary['you_pay']}}</strong></div>
+                               <div style="text-align: right;width: 75px;font-size: 15px;"><strong style="color: #000000;">₹{{$order_summary['shipping_fee']}}</strong></div>
+                               <div style="text-align: right;width: 75px;margin-top: 20px;color: #000;font-size: 15px;"><strong>₹{{$order_summary['you_pay']}}</strong></div>
                             </td>
                          </tr>
                       </tbody>
