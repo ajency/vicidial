@@ -31,4 +31,8 @@ export class OrderDetailsComponent implements OnInit {
     
   }
 
+  navigateBack(){
+     history.back();
+  }
+
 }
