@@ -535,3 +535,17 @@ footer .bl-1{
 .label-size{
     font-size: 0.9rem;
 }
+
+.kss-tags{
+    li{
+        margin-right: 0.5em;
+        margin-bottom: 0.5em;
+        padding: 5px;
+        background-color: #8e8e92;
+        border-radius: 25px;
+        min-width: 60px;
+        display: inline-block;
+        text-align: center;
+        color: #fff;
+    }
+}

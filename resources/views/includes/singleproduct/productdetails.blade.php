@@ -91,9 +91,11 @@
     </div>
     <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
         <div class="card-body pb-2 px-0">
+          <ul class="list-inline d-flex flex-wrap kss-tags">
             @php foreach($params['metatags'] as $metatag) { @endphp
-              <p>{{$metatag}}</p>
+              <li>{{$metatag}}</li>
             @php } @endphp
+          </ul>
         </div>
     </div>
   </div>
