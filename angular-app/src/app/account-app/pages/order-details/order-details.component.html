@@ -60,10 +60,10 @@
 	</div>
 
 	<ng-template #other_content>
-		Opps, it looks like this order does not exists.
+		<img src="/img/orders-empty.png" class="img-fluid" width="80">
+		<div class="my-3">Opps, it looks like this order does not exists.</div>
 		<div class="mt-2 mb-4 pt-2 pb-3 text-center">
-			<a class="btn text-secondary pb-0 pr-0 order-details-btn" (click)="openListOfOrders(order)" >
-				Go to My orders <i class="fas fa-chevron-right"></i></a>
+			<a class="btn text-secondary pb-0 pr-0 order-details-btn" (click)="openListOfOrders(order)">Go to My orders <i class="fas fa-chevron-right"></i></a>
 		</div>	
 	</ng-template>
 
