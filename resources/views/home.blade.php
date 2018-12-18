@@ -200,16 +200,23 @@
     <div class="cat-container">
       <div class="cat-item cat-1 position-relative">
         <a href="#">
-          <img class="img-fluid lazyload blur-up"
-            src="{{CDN::asset('/img/home-category/cat-1.jpg') }}"/>
-            <a href="/shop" class="shop-now-btn shop-now-btn--green">Shop Now</a>
+            <img class="d-block w-100 img-fluid lazyload blur-up"
+                        src="{{CDN::asset('/img/home-category/category-dresses-10px.jpg') }}"
+                        data-srcset="{{CDN::asset('/img/home-category/category-dresses-large.jpg') }} 818w,
+                                      {{CDN::asset('/img/home-category/category-dresses-medium.jpg') }} 409w,
+                                      {{CDN::asset('/img/home-category/category-dresses-small.jpg') }} 272w"
+                        data-sizes='(min-width: 1200px) 370px, (min-width: 768px) 46vw,  92vw'
+                        alt=""
+                        title=""/>
+            <!-- <a href="/shop" class="shop-now-btn shop-now-btn--green">Shop Now</a> -->
+          <p class="dress-text">Dear <strong>dress</strong>, with <strong class="text-primary">Love.</strong></p>
         </a>
       </div>
       <div class="cat-item cat-2 position-relative">
         <a href="#">
           <img class="img-fluid lazyload blur-up"
           src="{{CDN::asset('/img/home-category/cat-2.jpg') }}"/>
-          <a href="/shop" class="shop-now-btn shop-now-btn--orange">Shop Now</a>
+          <!-- <a href="/shop" class="shop-now-btn shop-now-btn--orange">Shop Now</a> -->
         </a>
       </div>
       <div class="cat-item cat-3">
@@ -227,15 +234,27 @@
       </div>
       <div class="cat-item cat-5 position-relative">
         <a href="#">
-          <img class="img-fluid lazyload blur-up"
-          src="{{CDN::asset('/img/home-category/cat-5.jpg') }}"/>
-          <p class="m-0 denim-text">Denim<strong>search!</strong></p>
+          <img class="d-block w-100 img-fluid lazyload blur-up"
+              src="{{CDN::asset('/img/home-category/category-denim-10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/home-category/category-denim-large.jpg') }} 818w,
+                            {{CDN::asset('/img/home-category/category-denim-medium.jpg') }} 409w,
+                            {{CDN::asset('/img/home-category/category-denim-small.jpg') }} 272w"
+              data-sizes='(min-width: 1200px) 370px, (min-width: 768px) 46vw,  92vw'
+              alt=""
+              title=""/>
+          <!-- <p class="m-0 denim-text">Denim<strong>search!</strong></p> -->
         </a>
       </div>
       <div class="cat-item cat-6 position-relative">
         <a href="#" class="d-block">
-          <img class="img-fluid lazyload blur-up"
-          src="{{CDN::asset('/img/home-category/cat-6.jpg') }}"/>
+          <img class="d-block w-100 img-fluid lazyload blur-up"
+              src="{{CDN::asset('/img/home-category/category-shorts-10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/home-category/category-shorts-large.jpg') }} 818w,
+                            {{CDN::asset('/img/home-category/category-shorts-medium.jpg') }} 409w,
+                            {{CDN::asset('/img/home-category/category-shorts-small.jpg') }} 272w"
+              data-sizes='(min-width: 1200px) 370px, (min-width: 768px) 46vw,  92vw'
+              alt=""
+              title=""/>
         </a>
         <div class="links-wrapper">
           <a href="/first" class="links-wrapper__first"></a>
@@ -249,19 +268,33 @@
         <a href="#">
           <img class="img-fluid lazyload blur-up"
           src="{{CDN::asset('/img/home-category/cat-7.jpg') }}"/>
-          <a href="/shop" class="shop-now-btn shop-now-btn--jewelery">Shop Now</a>
+          <!-- <a href="/shop" class="shop-now-btn shop-now-btn--jewelery">Shop Now</a> -->
         </a>
       </div>
-      <div class="cat-item cat-8">
+      <div class="cat-item cat-8 position-relative">
         <a href="#">
-          <img class="img-fluid lazyload blur-up"
-          src="{{CDN::asset('/img/home-category/cat-8.jpg') }}"/>
+         <img class="d-block w-100 img-fluid lazyload blur-up"
+              src="{{CDN::asset('/img/home-category/category-infant-acc-10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/home-category/category-infant-acc-large.jpg') }} 740w,
+                            {{CDN::asset('/img/home-category/category-infant-acc-medium.jpg') }} 370w,
+                            {{CDN::asset('/img/home-category/category-infant-acc-small.jpg') }} 246w"
+              data-sizes='(min-width: 1200px) 370px, (min-width: 768px) 46vw,  92vw'
+              alt=""
+              title=""/>
+          <p class="text-acc text-uppercase">The cute <strong>accessory</strong> shop</p>
         </a>
       </div>
-      <div class="cat-item cat-9 movable-item">
+      <div class="cat-item cat-9 movable-item position-relative">
         <a href="#">
-          <img class="img-fluid lazyload blur-up"
-          src="{{CDN::asset('/img/home-category/cat-9.jpg') }}"/>
+          <img class="d-block w-100 img-fluid lazyload blur-up"
+              src="{{CDN::asset('/img/home-category/category-first-wardrobe-10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/home-category/category-first-wardrobe-large.jpg') }} 740w,
+                            {{CDN::asset('/img/home-category/category-first-wardrobe-medium.jpg') }} 370w,
+                            {{CDN::asset('/img/home-category/category-first-wardrobe-small.jpg') }} 246w"
+              data-sizes='(min-width: 1200px) 370px, (min-width: 768px) 46vw,  92vw'
+              alt=""
+              title=""/>
+          <p class="text-wardrobe text-uppercase">Their <strong>first wardrobe</strong></p>
         </a>
       </div>
       <div class="cat-item cat-10 position-relative">
@@ -275,25 +308,31 @@
     <div class="cat-container cat-container--bottom">
       <div class="cat-item cat-9 d-none">
         <a href="#">
-          <img class="img-fluid lazyload blur-up"
-          src="{{CDN::asset('/img/home-category/cat-9.jpg') }}"/>
+          <img class="d-block w-100 img-fluid lazyload blur-up"
+              src="{{CDN::asset('/img/home-category/category-first-wardrobe-10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/home-category/category-first-wardrobe-large.jpg') }} 740w,
+                            {{CDN::asset('/img/home-category/category-first-wardrobe-medium.jpg') }} 370w,
+                            {{CDN::asset('/img/home-category/category-first-wardrobe-small.jpg') }} 246w"
+              data-sizes='(min-width: 1200px) 370px, (min-width: 768px) 46vw,  92vw'
+              alt=""
+              title=""/>
         </a>
       </div>
       <div class="cat-item cat-11">
         <a href="#">
-          <img class="img-fluid lazyload blur-up"
+          <img class="d-block img-fluid lazyload blur-up"
           src="{{CDN::asset('/img/home-category/cat-11.gif') }}"/>
         </a>
       </div>
       <div class="cat-item cat-12">
         <a href="#">
-          <img class="img-fluid lazyload blur-up"
+          <img class="d-block img-fluid lazyload blur-up"
           src="{{CDN::asset('/img/home-category/cat-12.jpg') }}"/>
         </a>
       </div>
     </div>
 
-<!--   <div class="trend-focus-wrapper">
+ <!--  <div class="trend-focus-wrapper">
     <a href="/apparels/woven-tops/" class="trend-box d-block link-card" style="background-color:#F4D5D3;">
       <div class="p-3">
         <h4 class="font-weight-bold m-0 link-card_text">Woven tops</h4>

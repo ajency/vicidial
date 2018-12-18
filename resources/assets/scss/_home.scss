@@ -443,6 +443,11 @@
     }
     img{
         border-radius: 10px;
+        transition: all 0.3s;
+        &:hover{
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px 1px rgba(0, 0, 0, 0.15);
+        }
     }
     .denim-text{
         position: absolute;
@@ -453,6 +458,45 @@
         color: #fff;
         font-size: 1.3em;
         letter-spacing: 1px;
+    }
+    .dress-text{
+        position: absolute;
+        bottom: 16px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        font-size: 2.4em;
+        color: #fff;
+        font-weight: 100;
+        strong{
+            font-weight: bold;
+        }
+    }
+    .text-acc{
+        position: absolute;
+        bottom: 4px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        font-size: 1.8em;
+        color: #fff;
+        font-weight: 100;
+        strong{
+            font-weight: bold;
+        }
+    }
+    .text-wardrobe{
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        font-size: 2em;
+        font-weight: 100;
+        text-align: center;
+        color: #4fa7f7;
+        strong{
+            font-weight: bold;
+        }
     }
     @media (min-width: 768px) and (max-width: 992px){
         grid-template-columns: 1fr 1fr;
@@ -549,6 +593,12 @@
         text-transform: uppercase;
         &:hover{
             color: #000;
+        }
+        @media (max-width: 360px){
+            top: 43%;
+        }
+        @media (max-width: 320px){
+            top: 41%;
         }
     }
 }
