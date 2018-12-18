@@ -542,8 +542,9 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                       window.history.pushState('categoryPage', 'Category', '/shop'+url);
                     }
                     else{
-                      if(url == ""){
-                        url = "/shop"
+                      var url_array = url.split("?")
+                      if(url_array[0] == ""){
+                        url = (url_array[1] != undefined)?"/shop?"+url_array[1]:"/shop"
                         updated_list_url = url
                       }
                       window.history.pushState('categoryPage', 'Category', url);
@@ -884,8 +885,9 @@ function loadProductListing(pageval=-1,mobile_view = false){
             $('li.nav-item.active').trigger('click')
         }
         
-       if(url == ""){
-          url = "/shop"
+       var url_array = url.split("?")
+       if(url_array[0] == ""){
+          url = (url_array[1] != undefined)?"/shop?"+url_array[1]:"/shop"
           updated_list_url = url
         }
        window.history.pushState('categoryPageUrl', 'Category page', url);
