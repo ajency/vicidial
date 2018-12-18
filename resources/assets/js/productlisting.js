@@ -14,6 +14,7 @@ var search_string_filter = ""
 var filter_tags_list = [] ;
 var copy_filters ={}
 var has_reset_filter = false
+var call_mobile_api = false
 
 Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
   return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
@@ -554,6 +555,7 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
 
                    $('.kss_filter-list[data-filter="'+filter_val+'"]').removeClass('d-none');
                     $('li.nav-item.active').trigger('click')
+                    call_mobile_api = true
                  }
 
             });
@@ -765,6 +767,10 @@ function loadProductListing(pageval=-1,mobile_view = false){
         url = url.replace(/page=\d+/, "page="+(parseInt(page)+1));
         pageVal = (parseInt(page)+1);
     }
+    if(call_mobile_api == false && mobile_view == true){
+      return;
+    }
+    call_mobile_api = false;
     var url_params = new window.URLSearchParams(window.location.search);
     var facet_display_data_keys = Object.keys(facet_display_data_arr)
     var facet_display_data_values = Object.values(facet_display_data_arr)
