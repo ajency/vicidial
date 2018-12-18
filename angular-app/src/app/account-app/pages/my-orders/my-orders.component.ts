@@ -44,6 +44,7 @@ export class MyOrdersComponent implements OnInit {
   getOrders(){
     if(this.appservice.myOrders){
       this.orders = this.appservice.myOrders;
+      this.apiCallComplete = true;
     }
     else{
       this.appservice.showLoader();
