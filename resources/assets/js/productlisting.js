@@ -349,6 +349,8 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
       if(search_string_filter !="")
         url += append_filter_str+"search_string="+search_string_filter
     }
+    if(url == "?")
+      url = "/"
     if(updated_url_reset == false){
       updated_list_url = url
     }
