@@ -7,8 +7,8 @@ import { ShippingAddressComponent } from '../../components/shipping-address/ship
 import { PaymentInfoComponent } from '../../components/payment-info/payment-info.component';
 import { OrderSummaryComponent } from '../../components/order-summary/order-summary.component';
 
-import { AppServiceService } from '../../services/app-service.service';
-import { ApiServiceService } from '../../services/api-service.service';
+import { AppServiceService } from '../../../service/app-service.service';
+import { ApiServiceService } from '../../../service/api-service.service';
 
 import 'rxjs/add/operator/switchMap';
 

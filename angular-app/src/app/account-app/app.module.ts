@@ -8,8 +8,8 @@ import {HashLocationStrategy, Location, LocationStrategy} from '@angular/common'
 import { AppRoutingModule }     from './app-routing.module';
 import { MyOrdersComponent } from './pages/my-orders/my-orders.component';
 
-import { ApiServiceService } from './services/api-service.service';
-import { AppServiceService } from './services/app-service.service';
+import { ApiServiceService } from '../service/api-service.service';
+import { AppServiceService } from '../service/app-service.service';
 import { AccountComponent } from './pages/account/account.component';
 
 import { LoginModule } from '../shared-components/login/login.module';

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AppServiceService } from '../../services/app-service.service';
-import { ApiServiceService } from '../../services/api-service.service';
+import { AppServiceService } from '../../../service/app-service.service';
+import { ApiServiceService } from '../../../service/api-service.service';
 
 import { BagSummaryComponent } from '../../../shared-components/bag-summary/bag-summary/bag-summary.component';
 import { OrderComponent } from '../../components/order/order.component';

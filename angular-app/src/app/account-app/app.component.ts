@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { PlatformLocation } from '@angular/common';
-import { AppServiceService } from './services/app-service.service';
+import { AppServiceService } from '../service/app-service.service';
 
 @Component({
   selector: 'my-account-app-root',
