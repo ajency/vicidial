@@ -109,6 +109,17 @@ $(function(){
          boolean_facet_list = copy_filters["boolean_facet_list"]
          sort_on_filter = copy_filters["sort_on_filter"]
          search_string_filter = copy_filters["search_string_filter"]
+
+         var temp_ajax_data = ajax_data;
+         ajax_data = { "search_object": { "primary_filter" : facet_list,"range_filter" : range_facet_list,"boolean_filter" : boolean_facet_list } }
+         if(temp_ajax_data.hasOwnProperty('listurl'))
+            ajax_data['listurl'] = temp_ajax_data['listurl'];
+         if(temp_ajax_data.hasOwnProperty('page'))
+            ajax_data['page'] = temp_ajax_data['page'];
+         if(sort_on_filter != "")
+            ajax_data["sort_on"]= sort_on_filter;
+         if(search_string_filter != "")
+            ajax_data["search_object"]["search_string"]= search_string_filter;
          // has_reset_filter = false
      });
 
