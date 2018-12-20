@@ -116,6 +116,7 @@
             overflow-x: hidden;
             background-color: lighten($gray-400, 12%);
             flex-wrap: nowrap;
+            margin-bottom: 1em;
             .nav-item{
                 padding: 15px 20px 15px 15px;
                 margin-right: -1px;

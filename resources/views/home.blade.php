@@ -195,54 +195,72 @@
 </div>
 </section>
 
+<!-- Home category -->
 <section>
   <div class="container">
     <div class="cat-container">
       <div class="cat-item cat-1 position-relative">
-        <a href="#">
+        <a href="/girls/junior-7-14-years--toddler-2-7-years/dress/">
             <img class="d-block w-100 img-fluid lazyload blur-up"
                         src="{{CDN::asset('/img/home-category/category-dresses-10px.jpg') }}"
                         data-srcset="{{CDN::asset('/img/home-category/category-dresses-large.jpg') }} 818w,
                                       {{CDN::asset('/img/home-category/category-dresses-medium.jpg') }} 409w,
                                       {{CDN::asset('/img/home-category/category-dresses-small.jpg') }} 272w"
-                        data-sizes='(min-width: 1200px) 370px, (min-width: 768px) 46vw,  92vw'
-                        alt=""
-                        title=""/>
+                        data-sizes='(min-width: 1200px) 370px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 92vw,  31vw'
+                        alt="Dear dress with love"
+                        title="Dear dress with love"/>
             <!-- <a href="/shop" class="shop-now-btn shop-now-btn--green">Shop Now</a> -->
-          <p class="dress-text">Dear <strong>dress</strong>, with <strong class="text-primary">Love.</strong></p>
+          <p class="custom-text dress-text">Dear <strong>dress</strong>, with <strong class="text-primary">Love.</strong></p>
         </a>
       </div>
       <div class="cat-item cat-2 position-relative">
-        <a href="#">
-          <img class="img-fluid lazyload blur-up"
-          src="{{CDN::asset('/img/home-category/cat-2.jpg') }}"/>
+        <a href="/girls/junior-7-14-years--toddler-2-7-years/woven-tops/">
+          <img class="d-block w-100 img-fluid lazyload blur-up"
+              src="{{CDN::asset('/img/home-category/woven-tops-10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/home-category/woven-tops-large.jpg') }} 740w,
+                            {{CDN::asset('/img/home-category/woven-tops-medium.jpg') }} 370w,
+                            {{CDN::asset('/img/home-category/woven-tops-small.jpg') }} 246w"
+              data-sizes='(min-width: 1200px) 370px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 92vw,  31vw'
+              alt="Woven tops"
+              title="Woven tops"/>
           <!-- <a href="/shop" class="shop-now-btn shop-now-btn--orange">Shop Now</a> -->
         </a>
       </div>
       <div class="cat-item cat-3">
         <a href="#">
           <img class="img-fluid lazyload blur-up"
-          src="{{CDN::asset('/img/home-category/cat-3.gif') }}"/>
+          src="{{CDN::asset('/img/home-category/cat-3.gif') }}" alt="Shop under ₹299" title="Shop under ₹299" />
+          <!-- <div class="shop-under-box d-flex align-items-center justify-content-center">
+            <p class="m-0 shop-under-box__text text-uppercase">Shop Under</p>
+          </div> -->
         </a>
       </div>
       <div class="cat-item cat-4 position-relative">
-        <a href="#">
-          <img class="img-fluid lazyload blur-up"
-          src="{{CDN::asset('/img/home-category/cat-4.jpg') }}"/>
-          <a href="/shop" class="shop-now-btn shop-now-btn--red">Shop Now</a>
+        <a href="/girls/junior-7-14-years--toddler-2-7-years/ethnic/">
+          <img class="d-block w-100 img-fluid lazyload blur-up"
+              src="{{CDN::asset('/img/home-category/category-ethnic-10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/home-category/category-ethnic-large.jpg') }} 818w,
+                            {{CDN::asset('/img/home-category/category-ethnic-medium.jpg') }} 409w,
+                            {{CDN::asset('/img/home-category/category-ethnic-small.jpg') }} 271w"
+              data-sizes='(min-width: 1200px) 370px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 92vw,  31vw'
+              alt="Ethnic wear"
+              title="Ethnic wear"/>
+
+          <p class="custom-text ethnic-text text-uppercase font-weight-bold">Ethnic</p>
+          <!-- <a href="/shop" class="shop-now-btn shop-now-btn--red">Shop Now</a> -->
         </a>
       </div>
       <div class="cat-item cat-5 position-relative">
-        <a href="#">
+        <a href="/boys/junior-7-14-years--toddler-2-7-years/jeans/">
           <img class="d-block w-100 img-fluid lazyload blur-up"
               src="{{CDN::asset('/img/home-category/category-denim-10px.jpg') }}"
               data-srcset="{{CDN::asset('/img/home-category/category-denim-large.jpg') }} 818w,
                             {{CDN::asset('/img/home-category/category-denim-medium.jpg') }} 409w,
-                            {{CDN::asset('/img/home-category/category-denim-small.jpg') }} 272w"
-              data-sizes='(min-width: 1200px) 370px, (min-width: 768px) 46vw,  92vw'
-              alt=""
-              title=""/>
-          <!-- <p class="m-0 denim-text">Denim<strong>search!</strong></p> -->
+                            {{CDN::asset('/img/home-category/category-denim-small.jpg') }} 271w"
+              data-sizes='(min-width: 1200px) 370px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 92vw,  31vw'
+              alt="The Daily Denim"
+              title="The Daily Denim"/>
+          <!-- <p class="m-0 custom-text denim-text">Denim<strong>search!</strong></p> -->
         </a>
       </div>
       <div class="cat-item cat-6 position-relative">
@@ -251,11 +269,12 @@
               src="{{CDN::asset('/img/home-category/category-shorts-10px.jpg') }}"
               data-srcset="{{CDN::asset('/img/home-category/category-shorts-large.jpg') }} 818w,
                             {{CDN::asset('/img/home-category/category-shorts-medium.jpg') }} 409w,
-                            {{CDN::asset('/img/home-category/category-shorts-small.jpg') }} 272w"
-              data-sizes='(min-width: 1200px) 370px, (min-width: 768px) 46vw,  92vw'
+                            {{CDN::asset('/img/home-category/category-shorts-small.jpg') }} 271w"
+              data-sizes='(min-width: 1200px) 370px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 92vw,  31vw'
               alt=""
               title=""/>
         </a>
+        <p class="custom-text text-bottoms text-uppercase"><strong>Playful</strong> Bottoms</p>
         <div class="links-wrapper">
           <a href="/first" class="links-wrapper__first"></a>
           <a href="/second" class="links-wrapper__second"></a>
@@ -265,47 +284,72 @@
         </div>
       </div>
       <div class="cat-item cat-7 position-relative">
-        <a href="#">
-          <img class="img-fluid lazyload blur-up"
-          src="{{CDN::asset('/img/home-category/cat-7.jpg') }}"/>
+        <a href="/accessories/girls">
+          <img class="d-block w-100 img-fluid lazyload blur-up"
+              src="{{CDN::asset('/img/home-category/her-jewellery-10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/home-category/her-jewellery-large.jpg') }} 740w,
+                            {{CDN::asset('/img/home-category/her-jewellery-medium.jpg') }} 370w,
+                            {{CDN::asset('/img/home-category/her-jewellery-small.jpg') }} 246w"
+              data-sizes='(min-width: 1200px) 370px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 92vw,  31vww'
+              alt="Her Jewellery"
+              title="Her Jewellery"/>
+
           <!-- <a href="/shop" class="shop-now-btn shop-now-btn--jewelery">Shop Now</a> -->
         </a>
       </div>
       <div class="cat-item cat-8 position-relative">
-        <a href="#">
+        <a href="/accessories/infant-0-2-years">
          <img class="d-block w-100 img-fluid lazyload blur-up"
               src="{{CDN::asset('/img/home-category/category-infant-acc-10px.jpg') }}"
               data-srcset="{{CDN::asset('/img/home-category/category-infant-acc-large.jpg') }} 740w,
                             {{CDN::asset('/img/home-category/category-infant-acc-medium.jpg') }} 370w,
                             {{CDN::asset('/img/home-category/category-infant-acc-small.jpg') }} 246w"
-              data-sizes='(min-width: 1200px) 370px, (min-width: 768px) 46vw,  92vw'
-              alt=""
-              title=""/>
-          <p class="text-acc text-uppercase">The cute <strong>accessory</strong> shop</p>
+              data-sizes='(min-width: 1200px) 370px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 92vw,  31vw'
+              alt="The Cute Accessory Shop"
+              title="The Cute Accessory Shop"/>
+          <p class="custom-text text-acc text-uppercase">The cute <strong>accessory</strong> shop</p>
         </a>
       </div>
-      <div class="cat-item cat-9 movable-item position-relative">
+      <div class="cat-item cat-9 position-relative">
         <a href="#">
           <img class="d-block w-100 img-fluid lazyload blur-up"
               src="{{CDN::asset('/img/home-category/category-first-wardrobe-10px.jpg') }}"
               data-srcset="{{CDN::asset('/img/home-category/category-first-wardrobe-large.jpg') }} 740w,
                             {{CDN::asset('/img/home-category/category-first-wardrobe-medium.jpg') }} 370w,
                             {{CDN::asset('/img/home-category/category-first-wardrobe-small.jpg') }} 246w"
-              data-sizes='(min-width: 1200px) 370px, (min-width: 768px) 46vw,  92vw'
-              alt=""
-              title=""/>
-          <p class="text-wardrobe text-uppercase">Their <strong>first wardrobe</strong></p>
+              data-sizes='(min-width: 1200px) 370px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 92vw,  31vw'
+              alt="First Wardrobe"
+              title="First Wardrobe" />
+          <p class="custom-text text-wardrobe text-uppercase">Their <strong>first wardrobe</strong></p>
         </a>
       </div>
       <div class="cat-item cat-10 position-relative">
-        <a href="#">
+        <a href="/shoes/boys">
           <img class="img-fluid lazyload blur-up"
-          src="{{CDN::asset('/img/home-category/cat-10.jpg') }}"/>
-          <a href="/shop" class="shop-now-btn shop-now-btn--shoes">Shop Now</a>
+          src="{{CDN::asset('/img/home-category/test.jpg') }}" alt="Shoes" title="Shoes" />
+          <!-- <a href="/shop" class="shop-now-btn shop-now-btn--shoes">Shop Now</a> -->
+        </a>
+      </div>
+      <div class="cat-item cat-11">
+        <a href="#">
+          <img class="d-block img-fluid lazyload blur-up"
+          src="{{CDN::asset('/img/home-category/cat-11.gif') }}"/>
+        </a>
+      </div>
+      <div class="cat-item cat-12">
+        <a href="/boys/junior-7-14-years--toddler-2-7-years/shirt/">
+          <img class="d-block w-100 img-fluid lazyload blur-up"
+              src="{{CDN::asset('/img/home-category/fav-shirts-10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/home-category/fav-shirts-large.jpg') }} 570w,
+                            {{CDN::asset('/img/home-category/fav-shirts-medium.jpg') }} 284w,
+                            {{CDN::asset('/img/home-category/fav-shirts-small.jpg') }} 190w"
+              data-sizes='(min-width: 1200px) 570px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 92vw,  31vw'
+              alt="His Favourite Shirts"
+              title="His Favourite Shirts" />
         </a>
       </div>
     </div>
-    <div class="cat-container cat-container--bottom">
+<!--     <div class="cat-container cat-container--bottom">
       <div class="cat-item cat-9 d-none">
         <a href="#">
           <img class="d-block w-100 img-fluid lazyload blur-up"
@@ -330,9 +374,10 @@
           src="{{CDN::asset('/img/home-category/cat-12.jpg') }}"/>
         </a>
       </div>
-    </div>
+    </div> -->
 
- <!--  <div class="trend-focus-wrapper">
+
+<!--   <div class="trend-focus-wrapper d-none">
     <a href="/apparels/woven-tops/" class="trend-box d-block link-card" style="background-color:#F4D5D3;">
       <div class="p-3">
         <h4 class="font-weight-bold m-0 link-card_text">Woven tops</h4>
@@ -413,6 +458,120 @@
     </a>
   </div> -->
 </div>
+</section>
+
+
+<section class="section">
+  <div class="container mt-5 ">
+      <div class="row">
+          <div class="col-md-12 text-center">
+            <h2 class="font-weight-bold mb-3">Shop By Stories</h2>
+            <!-- <p>Lorem ipsum dolor sit amet</p> -->
+          </div>
+      </div>
+  </div>
+</section>
+
+<!-- Stories -->
+
+<section>
+  <div class="container stories-wrapper">
+    <div class="trend-focus-wrapper">
+        <!-- Grid-1 -->
+        <a href="/apparels/woven-tops/" class="trend-box d-block link-card position-relative" style="order:0;">
+          <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
+              src="{{CDN::asset('/img/stories/story_grid1_10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/stories/story_grid1_large.jpg') }} 818w,
+                           {{CDN::asset('/img/stories/story_grid1_medium.jpg') }} 409w,
+                           {{CDN::asset('/img/stories/story_grid1_small.jpg') }} 272w"
+              data-sizes='(min-width: 1200px) 376px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 90vw,  30vw'
+              alt="Cute Floral"
+              title="Cute Floral"/>
+          <p class="custom-text floral-text text-uppercase">Cute <strong>Florals</strong></p>
+        </a>
+        
+        <!-- Grid-4 -->
+        <a href="/apparels/jeans/" class="trend-box d-block link-card position-relative"  style="order:4;">
+
+          <img class="img-fluid lazyload blur-up" src="{{CDN::asset('/img/stories/story_grid4_10px.gif') }}"
+              data-srcset="{{CDN::asset('/img/stories/story_grid4_large.gif') }}" alt="See spot run" title="See spot run" />
+            <p class="custom-text spot-text text-uppercase">See <strong>Spot</strong> Run</p>
+        </a>
+    
+        <!-- Grid-2 -->
+        <a href="/apparels/ethnic/" class="trend-box d-block link-card tab-append" style="order:1;">
+          <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
+              src="{{CDN::asset('/img/stories/story_grid2_10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/stories/story_grid2_large.jpg') }} 740w,
+                           {{CDN::asset('/img/stories/story_grid2_medium.jpg') }} 370w,
+                           {{CDN::asset('/img/stories/story_grid2_small.jpg') }} 248w"
+              data-sizes='(min-width: 1200px) 376px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 90vw,  30vw'
+              alt="Ho ho ho story"
+              title="Ho ho ho story"/>
+        </a>
+
+        <!-- Grid-5 -->
+        <a href="/apparels/infant-utility/" class="trend-box d-block link-card position-relative" style="order:5;">
+         <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
+              src="{{CDN::asset('/img/stories/story_grid5_10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/stories/story_grid5_large.jpg') }} 818w,
+                           {{CDN::asset('/img/stories/story_grid5_medium.jpg') }} 409w,
+                           {{CDN::asset('/img/stories/story_grid5_small.jpg') }} 272w"
+              data-sizes='(min-width: 1200px) 376px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 90vw,  30vw'
+              alt="Teenage Drama"
+              title="Teenage Drama"/>
+              <p class="custom-text teenage-text text-uppercase">Teenage <strong>Drama</strong></p>
+        </a>
+
+        <!-- Grid-3 -->
+        <a href="/apparels/dress/" class="trend-box d-block link-card" style="order:3;">
+         <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
+              src="{{CDN::asset('/img/stories/story_grid3_10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/stories/story_grid3_large.jpg') }} 818w,
+                           {{CDN::asset('/img/stories/story_grid3_medium.jpg') }} 409w,
+                           {{CDN::asset('/img/stories/story_grid3_small.jpg') }} 272w"
+              data-sizes='(min-width: 1200px) 376px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 90vw,  30vw'
+              alt="T-shirts and Tops"
+              title="T-shirts and Tops"/>
+        </a>
+        
+        <!-- Grid-6 -->
+        <a href="/shirt/" class="trend-box d-block link-card position-relative" style="order:6;">
+          <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
+              src="{{CDN::asset('/img/stories/story_grid6_10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/stories/story_grid6_large.jpg') }} 740w,
+                           {{CDN::asset('/img/stories/story_grid6_medium.jpg') }} 370w,
+                           {{CDN::asset('/img/stories/story_grid6_small.jpg') }} 248w"
+              data-sizes='(min-width: 1200px) 376px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 90vw,  30vw'
+              alt="Party shoes"
+              title="Party shoes"/>
+              <p class="custom-text party-text text-uppercase">Party <strong>Shoes</strong></p>
+        </a>
+    </div>
+     <div class="d-flex align-items-end stories-bottom-row">
+         <a href="/apparels/dress/" class="trend-box d-block link-card col-8 left-col">
+          <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
+            src="{{CDN::asset('/img/stories/story_grid7_10px.jpg') }}"
+            data-srcset="{{CDN::asset('/img/stories/story_grid7_large.jpg') }} 1553w,
+                         {{CDN::asset('/img/stories/story_grid7_medium.jpg') }} 778w,
+                         {{CDN::asset('/img/stories/story_grid7_small.jpg') }} 521w"
+            data-sizes='(min-width: 1200px) 780px, (max-width: 992px) 90vw, 63vw'
+            alt="How I Wounder What You Are"
+            title="How I Wounder What You Are"/>
+        </a>
+        <a href="/shirt/" class="trend-box d-block link-card col-4 right-col position-relative">
+          <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
+              src="{{CDN::asset('/img/stories/story_grid8_10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/stories/story_grid8_large.jpg') }} 740w,
+                           {{CDN::asset('/img/stories/story_grid8_medium.jpg') }} 370w,
+                           {{CDN::asset('/img/stories/story_grid8_small.jpg') }} 248w"
+              data-sizes='(min-width: 1200px) 390px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 90vw,  30vw'
+              alt="Comfy Underwear"
+              title="Comfy Underwear"/>
+          <p class="custom-text comfy-text text-uppercase">Comfy <strong>Underwears</strong></p>
+        </a>
+      </div>
+  </div>
 </section>
 
 
