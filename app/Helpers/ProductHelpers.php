@@ -84,7 +84,7 @@ function formatItems($result, $params){
         $id         = $product["variants"][0]["variant_id"];
         $sale_price = $product["variants"][0]["variant_sale_price"];
         foreach ($product["variants"] as $variant) {
-            if ($sale_price < $variant["variant_sale_price"]) {
+            if ($sale_price > $variant["variant_sale_price"]) {
                 $id         = $variant["variant_id"];
                 $sale_price = $variant["variant_sale_price"];
             }
@@ -353,10 +353,10 @@ function setElasticFacetFilters($q, $params)
                 }
                 $nested2 = $q::createNested($path, $should);
                 if($facet === "boolean_facet"  and $value === false){
-                    $must_not[] = $nested2;
+                    $must_not[] = $should;
                 }
                 else{
-                    $must[]  = $nested2;
+                    $must[]  = $should;
                 }
             }
         }
@@ -366,15 +366,15 @@ function setElasticFacetFilters($q, $params)
     }
     $bool = $q::addToBoolQuery('must', $must);
     $bool = $q::addToBoolQuery('must_not', $must_not, $bool);
+    $bool = $q::createNested($path, $bool);
     return $bool;
 }
 
 
 function textSearch(ElasticQuery $q, string $text)
 {
-    $match    = $q::createMatch("search_data.full_text", $text);
-    $nested  = $q::createNested("search_data", $match);
-    return $nested;
+    $match = $q::createMatch("search_data.full_text", $text);
+    return $match;
 }
 
 /**

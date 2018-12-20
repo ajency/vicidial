@@ -84,7 +84,7 @@ function fetchProduct($product)
     $id         = $product["variants"][0]["variant_id"];
     $sale_price = $product["variants"][0]["variant_sale_price"];
     foreach ($product["variants"] as $key => $variant) {
-        if ($sale_price < $variant["variant_sale_price"]) {
+        if ($sale_price > $variant["variant_sale_price"]) {
             $id         = $variant["variant_id"];
             $sale_price = $variant["variant_sale_price"];
         }
