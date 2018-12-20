@@ -200,7 +200,7 @@
   <div class="container">
     <div class="cat-container">
       <div class="cat-item cat-1 position-relative">
-        <a href="/girls/junior-7-14-years--toddler-2-7-years/dress/">
+        <a href="/girls/dress">
             <img class="d-block w-100 img-fluid lazyload blur-up"
                         src="{{CDN::asset('/img/home-category/category_grid1_10px.jpg') }}"
                         data-srcset="{{CDN::asset('/img/home-category/category_grid1_large.jpg') }} 818w,
@@ -214,7 +214,7 @@
         </a>
       </div>
       <div class="cat-item cat-2 position-relative">
-        <a href="/girls/junior-7-14-years--toddler-2-7-years/woven-tops/">
+        <a href="/girls/tops--woven-tops">
           <img class="d-block w-100 img-fluid lazyload blur-up"
               src="{{CDN::asset('/img/home-category/category_grid2_10px.jpg') }}"
               data-srcset="{{CDN::asset('/img/home-category/category_grid2_large.jpg') }} 740w,
@@ -227,7 +227,7 @@
         </a>
       </div>
       <div class="cat-item cat-3">
-        <a href="#">
+        <a href="/shop?rf=price:0TO299">
           <img class="img-fluid lazyload blur-up" src="{{CDN::asset('/img/home-category/category_grid3_10px.gif') }}"
           data-srcset="{{CDN::asset('/img/home-category/category_grid3_large.gif') }}" alt="Shop under ₹299" title="Shop under ₹299" />
           <!-- <div class="shop-under-box d-flex align-items-center justify-content-center">
@@ -236,7 +236,7 @@
         </a>
       </div>
       <div class="cat-item cat-4 position-relative">
-        <a href="/girls/junior-7-14-years--toddler-2-7-years/ethnic/">
+        <a href="/ethnic">
           <img class="d-block w-100 img-fluid lazyload blur-up"
               src="{{CDN::asset('/img/home-category/category_grid4_10px.jpg') }}"
               data-srcset="{{CDN::asset('/img/home-category/category_grid4_large.jpg') }} 818w,
@@ -251,7 +251,7 @@
         </a>
       </div>
       <div class="cat-item cat-5 position-relative">
-        <a href="/boys/junior-7-14-years--toddler-2-7-years/jeans/">
+        <a href="/jeans">
           <img class="d-block w-100 img-fluid lazyload blur-up"
               src="{{CDN::asset('/img/home-category/category_grid5_10px.jpg') }}"
               data-srcset="{{CDN::asset('/img/home-category/category_grid5_large.jpg') }} 818w,
@@ -264,7 +264,7 @@
         </a>
       </div>
       <div class="cat-item cat-6 position-relative">
-        <a href="#" class="d-block">
+        <a href="/short" class="d-block">
           <img class="d-block w-100 img-fluid lazyload blur-up"
               src="{{CDN::asset('/img/home-category/category_grid6_10px.jpg') }}"
               data-srcset="{{CDN::asset('/img/home-category/category_grid6_large.jpg') }} 818w,
@@ -276,11 +276,11 @@
         </a>
         <p class="custom-text text-bottoms text-uppercase"><strong>Playful</strong> Bottoms</p>
         <div class="links-wrapper">
-          <a href="/first" class="links-wrapper__first"></a>
-          <a href="/second" class="links-wrapper__second"></a>
-          <a href="/third" class="links-wrapper__third"></a>
-          <a href="/fourth" class="links-wrapper__fourth"></a>
-          <a href="/shop" class="links-wrapper__shop">Shop Now</a>
+          <a href="/short" class="links-wrapper__first"></a>
+          <a href="/short" class="links-wrapper__second"></a>
+          <a href="/short" class="links-wrapper__third"></a>
+          <a href="/short" class="links-wrapper__fourth"></a>
+          <a href="/short" class="links-wrapper__shop">Shop Now</a>
         </div>
       </div>
       <div class="cat-item cat-7 position-relative">
@@ -298,7 +298,7 @@
         </a>
       </div>
       <div class="cat-item cat-8 position-relative">
-        <a href="/accessories/infant-0-2-years">
+        <a href="/infant-utility">
          <img class="d-block w-100 img-fluid lazyload blur-up"
               src="{{CDN::asset('/img/home-category/category_grid8_10px.jpg') }}"
               data-srcset="{{CDN::asset('/img/home-category/category_grid8_large.jpg') }} 740w,
@@ -311,7 +311,7 @@
         </a>
       </div>
       <div class="cat-item cat-9 position-relative">
-        <a href="#">
+        <a href="/infant-0-2-years">
           <img class="d-block w-100 img-fluid lazyload blur-up"
               src="{{CDN::asset('/img/home-category/category_grid9_10px.jpg') }}"
               data-srcset="{{CDN::asset('/img/home-category/category_grid9_large.jpg') }} 740w,
@@ -324,7 +324,7 @@
         </a>
       </div>
       <div class="cat-item cat-10 position-relative">
-        <a href="/shoes/boys">
+        <a href="/shoes">
           <img class="d-block w-100 img-fluid lazyload blur-up"
               src="{{CDN::asset('/img/home-category/category_grid10_10px.jpg') }}"
               data-srcset="{{CDN::asset('/img/home-category/category_grid10_large.jpg') }} 1535w,
@@ -337,7 +337,7 @@
         </a>
       </div>
       <div class="cat-item cat-11">
-        <a href="#">
+        <a href="/tshirt">
           <img class="d-block w-100 img-fluid lazyload blur-up"
               src="{{CDN::asset('/img/home-category/category_grid11_10px.gif') }}"
               data-srcset="{{CDN::asset('/img/home-category/category_grid11_large.gif') }}"
@@ -346,7 +346,7 @@
         </a>
       </div>
       <div class="cat-item cat-12">
-        <a href="/boys/junior-7-14-years--toddler-2-7-years/shirt/">
+        <a href="/shirt">
           <img class="d-block w-100 img-fluid lazyload blur-up"
               src="{{CDN::asset('/img/home-category/category_grid12_10px.jpg') }}"
               data-srcset="{{CDN::asset('/img/home-category/category_grid12_large.jpg') }} 570w,
@@ -379,7 +379,7 @@
   <div class="container stories-wrapper">
     <div class="trend-focus-wrapper">
         <!-- Grid-1 -->
-        <a href="/apparels/woven-tops/" class="trend-box d-block link-card position-relative" style="order:0;">
+        <a href="/shop?pf=tag:cute-florals" class="trend-box d-block link-card position-relative" style="order:0;">
           <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
               src="{{CDN::asset('/img/stories/story_grid1_10px.jpg') }}"
               data-srcset="{{CDN::asset('/img/stories/story_grid1_large.jpg') }} 818w,
@@ -392,7 +392,7 @@
         </a>
         
         <!-- Grid-4 -->
-        <a href="/apparels/jeans/" class="trend-box d-block link-card position-relative"  style="order:4;">
+        <a href="/shop?pf=tag:see-spot-run/" class="trend-box d-block link-card position-relative"  style="order:4;">
 
           <img class="img-fluid lazyload blur-up" src="{{CDN::asset('/img/stories/story_grid4_10px.gif') }}"
               data-srcset="{{CDN::asset('/img/stories/story_grid4_large.gif') }}" alt="See spot run" title="See spot run" />
@@ -400,7 +400,7 @@
         </a>
     
         <!-- Grid-2 -->
-        <a href="/apparels/ethnic/" class="trend-box d-block link-card tab-append" style="order:1;">
+        <a href="/shop?pf=tag:ho-ho-ho/" class="trend-box d-block link-card tab-append" style="order:1;">
           <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
               src="{{CDN::asset('/img/stories/story_grid2_10px.jpg') }}"
               data-srcset="{{CDN::asset('/img/stories/story_grid2_large.jpg') }} 740w,
@@ -412,7 +412,7 @@
         </a>
 
         <!-- Grid-5 -->
-        <a href="/apparels/infant-utility/" class="trend-box d-block link-card position-relative" style="order:5;">
+        <a href="/shop?pf=tag:teenage-drama/" class="trend-box d-block link-card position-relative" style="order:5;">
          <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
               src="{{CDN::asset('/img/stories/story_grid5_10px.jpg') }}"
               data-srcset="{{CDN::asset('/img/stories/story_grid5_large.jpg') }} 818w,
@@ -425,7 +425,7 @@
         </a>
 
         <!-- Grid-3 -->
-        <a href="/apparels/dress/" class="trend-box d-block link-card" style="order:3;">
+        <a href="/shop?pf=tag:ice-cream/" class="trend-box d-block link-card" style="order:3;">
          <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
               src="{{CDN::asset('/img/stories/story_grid3_10px.jpg') }}"
               data-srcset="{{CDN::asset('/img/stories/story_grid3_large.jpg') }} 818w,
@@ -437,7 +437,7 @@
         </a>
         
         <!-- Grid-6 -->
-        <a href="/shirt/" class="trend-box d-block link-card position-relative" style="order:6;">
+        <a href="/shop?pf=tag:party-shoes/" class="trend-box d-block link-card position-relative" style="order:6;">
           <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
               src="{{CDN::asset('/img/stories/story_grid6_10px.jpg') }}"
               data-srcset="{{CDN::asset('/img/stories/story_grid6_large.jpg') }} 740w,
@@ -450,7 +450,7 @@
         </a>
     </div>
      <div class="d-flex align-items-end stories-bottom-row">
-         <a href="/apparels/dress/" class="trend-box d-block link-card col-8 left-col">
+         <a href="/shop?pf=tag:how-i-wonder-what-you-are/" class="trend-box d-block link-card col-8 left-col">
           <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
             src="{{CDN::asset('/img/stories/story_grid7_10px.jpg') }}"
             data-srcset="{{CDN::asset('/img/stories/story_grid7_large.jpg') }} 1553w,
@@ -460,7 +460,7 @@
             alt="How I Wounder What You Are"
             title="How I Wounder What You Are"/>
         </a>
-        <a href="/shirt/" class="trend-box d-block link-card col-4 right-col position-relative">
+        <a href="/shop?pf=tag:comfy-underwear/" class="trend-box d-block link-card col-4 right-col position-relative">
           <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
               src="{{CDN::asset('/img/stories/story_grid8_10px.jpg') }}"
               data-srcset="{{CDN::asset('/img/stories/story_grid8_large.jpg') }} 740w,
