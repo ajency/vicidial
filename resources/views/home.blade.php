@@ -392,7 +392,7 @@
         </a>
         
         <!-- Grid-4 -->
-        <a href="/shop?pf=tag:see-spot-run/" class="trend-box d-block link-card position-relative"  style="order:4;">
+        <a href="/shop?pf=tag:see-spot-run" class="trend-box d-block link-card position-relative"  style="order:4;">
 
           <img class="img-fluid lazyload blur-up" src="{{CDN::asset('/img/stories/story_grid4_10px.gif') }}"
               data-srcset="{{CDN::asset('/img/stories/story_grid4_large.gif') }}" alt="See spot run" title="See spot run" />
@@ -400,7 +400,7 @@
         </a>
     
         <!-- Grid-2 -->
-        <a href="/shop?pf=tag:ho-ho-ho/" class="trend-box d-block link-card tab-append" style="order:1;">
+        <a href="/shop?pf=tag:ho-ho-ho" class="trend-box d-block link-card tab-append" style="order:1;">
           <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
               src="{{CDN::asset('/img/stories/story_grid2_10px.jpg') }}"
               data-srcset="{{CDN::asset('/img/stories/story_grid2_large.jpg') }} 740w,
@@ -412,7 +412,7 @@
         </a>
 
         <!-- Grid-5 -->
-        <a href="/shop?pf=tag:teenage-drama/" class="trend-box d-block link-card position-relative" style="order:5;">
+        <a href="/shop?pf=tag:teenage-drama" class="trend-box d-block link-card position-relative" style="order:5;">
          <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
               src="{{CDN::asset('/img/stories/story_grid5_10px.jpg') }}"
               data-srcset="{{CDN::asset('/img/stories/story_grid5_large.jpg') }} 818w,
@@ -425,7 +425,7 @@
         </a>
 
         <!-- Grid-3 -->
-        <a href="/shop?pf=tag:ice-cream/" class="trend-box d-block link-card" style="order:3;">
+        <a href="/shop?pf=tag:ice-cream" class="trend-box d-block link-card" style="order:3;">
          <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
               src="{{CDN::asset('/img/stories/story_grid3_10px.jpg') }}"
               data-srcset="{{CDN::asset('/img/stories/story_grid3_large.jpg') }} 818w,
@@ -437,7 +437,7 @@
         </a>
         
         <!-- Grid-6 -->
-        <a href="/shop?pf=tag:party-shoes/" class="trend-box d-block link-card position-relative" style="order:6;">
+        <a href="/shop?pf=tag:party-shoes" class="trend-box d-block link-card position-relative" style="order:6;">
           <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
               src="{{CDN::asset('/img/stories/story_grid6_10px.jpg') }}"
               data-srcset="{{CDN::asset('/img/stories/story_grid6_large.jpg') }} 740w,
@@ -450,7 +450,7 @@
         </a>
     </div>
      <div class="d-flex align-items-end stories-bottom-row">
-         <a href="/shop?pf=tag:how-i-wonder-what-you-are/" class="trend-box d-block link-card col-8 left-col">
+         <a href="/shop?pf=tag:how-i-wonder-what-you-are" class="trend-box d-block link-card col-8 left-col">
           <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
             src="{{CDN::asset('/img/stories/story_grid7_10px.jpg') }}"
             data-srcset="{{CDN::asset('/img/stories/story_grid7_large.jpg') }} 1553w,
@@ -460,7 +460,7 @@
             alt="How I Wounder What You Are"
             title="How I Wounder What You Are"/>
         </a>
-        <a href="/shop?pf=tag:comfy-underwear/" class="trend-box d-block link-card col-4 right-col position-relative">
+        <a href="/shop?pf=tag:comfy-underwear" class="trend-box d-block link-card col-4 right-col position-relative">
           <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
               src="{{CDN::asset('/img/stories/story_grid8_10px.jpg') }}"
               data-srcset="{{CDN::asset('/img/stories/story_grid8_large.jpg') }} 740w,
