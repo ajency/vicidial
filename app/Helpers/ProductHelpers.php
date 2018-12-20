@@ -328,39 +328,40 @@ function setElasticFacetFilters($q, $params)
     $filters = makeQueryfromParams($search_object);
     $must    = [];
     $must_not = [];
-    foreach ($filters as $path => $data) {
-        foreach ($data as $facet => $data2) {
-            foreach ($data2 as $field => $values) {
-                $should = [];
-                $nested = [];
-                if ($values['type'] == 'enum') {
-                    foreach ($values['value'] as $value) {
-                        $facetName  = $q::createTerm($path . "." . $facet . '.facet_name', $field);
-                        $facetValue = $q::createTerm($path . "." . $facet . '.facet_value', $value);
-                        if($facet === "boolean_facet" and $value === false){   
-                            $facetValue = $q::createTerm($path . "." . $facet . '.facet_value', !$value);
-                        }
-                        $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
-                        $nested[]   = $q::createNested($path . '.' . $facet, $filter);
-                        $should     = $q::addToBoolQuery('should', $nested, $should);
-                    }
-                } else if ($values['type'] == 'range') {
-                    $facetValue = $q::createRange($path . "." . $facet . '.facet_value', ['lte' => $values['value']['max'], 'gte' => $values['value']['min']]);
+    $path = "search_data";
+    $data = $filters[$path];
+    foreach ($data as $facet => $data2) {
+        foreach ($data2 as $field => $values) {
+            $should = [];
+            $nested = [];
+            if ($values['type'] == 'enum') {
+                foreach ($values['value'] as $value) {
                     $facetName  = $q::createTerm($path . "." . $facet . '.facet_name', $field);
+                    $facetValue = $q::createTerm($path . "." . $facet . '.facet_value', $value);
+                    if($facet === "boolean_facet" and $value === false){   
+                        $facetValue = $q::createTerm($path . "." . $facet . '.facet_value', !$value);
+                    }
                     $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
                     $nested[]   = $q::createNested($path . '.' . $facet, $filter);
                     $should     = $q::addToBoolQuery('should', $nested, $should);
                 }
-                $nested2 = $q::createNested($path, $should);
-                if($facet === "boolean_facet"  and $value === false){
-                    $must_not[] = $should;
-                }
-                else{
-                    $must[]  = $should;
-                }
+            } else if ($values['type'] == 'range') {
+                $facetValue = $q::createRange($path . "." . $facet . '.facet_value', ['lte' => $values['value']['max'], 'gte' => $values['value']['min']]);
+                $facetName  = $q::createTerm($path . "." . $facet . '.facet_name', $field);
+                $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
+                $nested[]   = $q::createNested($path . '.' . $facet, $filter);
+                $should     = $q::addToBoolQuery('should', $nested, $should);
+            }
+            $nested2 = $q::createNested($path, $should);
+            if($facet === "boolean_facet"  and $value === false){
+                $must_not[] = $should;
+            }
+            else{
+                $must[]  = $should;
             }
         }
     }
+
     if (isset($search_object['search_string'])) {
         $must[] = textSearch($q, $search_object['search_string']);
     }

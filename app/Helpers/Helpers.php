@@ -33,7 +33,7 @@ function checkUserCart($token, $cart)
 
 function makeQueryfromParams($searchObject)
 {
-    $queryParams    = [];
+    $queryParams    = ['search_data' => []];
     $elasticMapping = [
         'product_category_type' => 'search_data.string_facet.product_category_type',
         'product_gender'        => 'search_data.string_facet.product_gender',
