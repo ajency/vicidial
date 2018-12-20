@@ -431,6 +431,13 @@
 }
 
 .cat-container{
+    display: flex;
+    flex-wrap: wrap;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
     display: -ms-grid;
     display: grid;
     -ms-grid-columns: 1fr 30px 1fr 30px 1fr 30px 1fr 30px 1fr 30px 1fr;
@@ -461,7 +468,12 @@
         transition: all 0.3s;
         &:hover{
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px 1px rgba(0, 0, 0, 0.15);
+            // box-shadow: 0 5px 15px 1px rgba(0, 0, 0, 0.15);
+        }
+    }
+    .cat-item{
+        @media (min-width: 1200px){
+            flex: 1 0 33.33%;
         }
     }
     .denim-text{
@@ -678,7 +690,7 @@
     .floral-text{
         font-weight: 100;
         color: #fff;
-        bottom: 30px;
+        bottom: 35px;
         font-size: 2em;
     }
     .teenage-text{
