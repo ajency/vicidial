@@ -182,6 +182,7 @@
     padding: 0 8px;
     background-color: #fff;
     margin-top: 20px;
+    border: 1px solid #eee;
     .arrow-down{
       transform: rotate(0deg);
       transition: all 0.5s ease;
@@ -203,7 +204,7 @@
 .my-order-bg{
     margin: 0 -20px;
     padding: 0 20px;
-    background-color: #efefef;
+    // background-color: #efefef;
     padding-top: 20px;
 }
 
