@@ -357,7 +357,7 @@ return [
             'name'                   => 'Size',
             'is_singleton'           => false,
             'is_collapsed'           => true,
-            'template'               => 'size',
+            'template'               => null,
             'order'                  => 5,
             'display_count'          => true,
             'disabled_at_zero_count' => false,
