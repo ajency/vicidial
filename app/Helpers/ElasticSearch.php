@@ -84,7 +84,7 @@ function fetchProduct($product)
     $id         = $product["variants"][0]["variant_id"];
     $sale_price = $product["variants"][0]["variant_sale_price"];
     foreach ($product["variants"] as $key => $variant) {
-        if ($sale_price < $variant["variant_sale_price"]) {
+        if ($sale_price > $variant["variant_sale_price"]) {
             $id         = $variant["variant_id"];
             $sale_price = $variant["variant_sale_price"];
         }
@@ -136,6 +136,7 @@ function fetchProduct($product)
             "product_subtype"       => $data["product_subtype"],
         ],
         "description"       => $data["product_description"],
+        "metatags"          => (isset($data["product_metatag"])) ? $data["product_metatag"] : [],
         "additional_info"   => [
             "product_age_group" => $data["product_age_group"],
             "product_gender"    => $data["product_gender"],

@@ -5,6 +5,7 @@ use App\Jobs\FetchProductImages;
 use App\Location;
 use App\User;
 use Carbon\Carbon;
+use App\Elastic\OdooConnect;
 function valInteger($object, $values)
 {
     if (empty($object) || empty($values)) {
@@ -32,7 +33,7 @@ function checkUserCart($token, $cart)
 
 function makeQueryfromParams($searchObject)
 {
-    $queryParams    = [];
+    $queryParams    = ['search_data' => []];
     $elasticMapping = [
         'product_category_type' => 'search_data.string_facet.product_category_type',
         'product_gender'        => 'search_data.string_facet.product_gender',
@@ -43,6 +44,8 @@ function makeQueryfromParams($searchObject)
         'variant_availability'  => 'search_data.boolean_facet.variant_availability',
         'product_image_available'  => 'search_data.boolean_facet.product_image_available',
         'product_att_ecom_sales'  => 'search_data.boolean_facet.product_att_ecom_sales',
+        'product_metatag'  => 'search_data.string_facet.product_metatag',
+        'variant_size_name'  => 'search_data.string_facet.variant_size_name',
     ];
 
     foreach ($searchObject as $filterType => $params) {
@@ -80,8 +83,14 @@ function makeQueryfromParams($searchObject)
     return $queryParams;
 }
 
+function fetchMetaTags($ids){
+    $odoo = new OdooConnect;
+    return    $odoo->defaultExec('product.metatag', 'read', [$ids], ['fields' => ['name', 'metatag']]);
+}
+
 function sanitiseProductData($odooData)
 {
+    $metatags = fetchMetaTags($odooData['metatag_ids']);
     $create_date   = new Carbon($odooData['create_date']);
     $__last_update = new Carbon($odooData['__last_update']);
     $write_date    = new Carbon($odooData['write_date']);
@@ -115,6 +124,7 @@ function sanitiseProductData($odooData)
         "product_att_ecom_sales"           => ($odooData["att_ecom_sales"] == "yes") ? true : false,
         "product_vendor"                   => ($odooData["vendor_id"]) ? $odooData["vendor_id"][1] : null,
         'product_image_available'          => false,
+        'product_metatag'                 => $metatags->map(function ($item, $key){ $item['name'] = trim($item['name']); return $item;})->toArray(),
     ];
     $product_categories = explode('/', $index['product_categories']);
     $categories         = ['product_category_type', 'product_gender', 'product_age_group', 'product_subtype'];
@@ -182,6 +192,7 @@ function generateFullTextForIndexing($productData, $variant)
         $productData['product_gender'],
         $productData['product_age_group'],
         $productData['product_subtype'],
+        implode(collect($productData['product_metatag'])->map(function ($item, $key) {return $item['name'];})->toArray(),  ' '),
         $variant['variant_barcode'],
         $variant['variant_style_no'],
         $variant['product_color_name'],
@@ -233,6 +244,7 @@ function buildProductIndexFromOdooData($productData, $variantData)
         "product_color_html"               => $variantData->first()['product_color_html'],
         "product_images"                   => [],
         "product_image_available"          => $productData['product_image_available'],
+        "product_metatag"                  => collect($productData['product_metatag'])->map(function ($item, $key) {return $item['name'];})->toArray(),
     ];
     $indexData["variants"] = [];
     foreach ($variantData as $variant) {
@@ -257,6 +269,18 @@ function buildProductIndexFromOdooData($productData, $variantData)
         $facets = ['string_facet', 'number_facet', 'boolean_facet'];
         foreach ($facets as $facet) {
             foreach (config('product.facets.' . $facet . '.product') as $value) {
+
+                if ($value == 'product_metatag'){
+                    foreach ($productData[$value] as $metatag) {
+                        $facetObj = [
+                            'facet_name'  => $value,
+                            'facet_value' => $metatag['name'],
+                            'facet_slug'  => str_slug($metatag['name']),
+                        ];
+                        $search_data[$facet][] = $facetObj;
+                    }
+                    continue;
+                }
                 if ($value == 'product_gender' && $productData[$value] == 'Unisex') {
                     $search_data[$facet][] = ['facet_name' => $value, 'facet_value' => 'Girls', 'facet_slug' => 'girls'];
                     $search_data[$facet][] = ['facet_name' => $value, 'facet_value' => 'Boys', 'facet_slug' => 'boys'];
@@ -671,4 +695,17 @@ function isNotProd()
         return false;
     }
     return true;
+}
+
+function updateProductsWithMetaTags()
+{
+    $odoo   = new OdooConnect;
+    $offset = 0;
+    $limit  = config('odoo.limit');
+    do {
+        $metatags    = $odoo->defaultExec('product.metatag', 'search_read', [[['id', '>', 0]]], ['fields' => ['product_ids'], 'offset' => $offset, 'limit' => $limit]);
+        $product_ids = $metatags->map(function ($item, $key) {return $item['product_ids'];})->flatten()->unique();
+        $product_ids->each(function ($product_id, $key) {IndexProduct::dispatch($product_id)->onQueue('process_product');});
+        $offset += $limit;
+    } while (count($metatags) > 0);
 }

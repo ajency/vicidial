@@ -15,10 +15,25 @@ function build_search_object($params) {
 	if(isset($params["query"])){
 		foreach($params["query"] as $queryk => $queryv){
 			if($queryk == "pf"){
-				if (strpos($queryv, "color:") !== false) {
-	                $values = str_replace('color:', '', $queryv); 
-	                $all_facets = array_merge($all_facets,(explode(",",$values)));
-	            }
+				$queryval = explode("|",$queryv);
+				$primary_filters = array_filter($facet_display_data, function ($value) {
+				    return ($value['filter_type'] == 'primary_filter');
+				});
+				$attr_param_arr = array_column($primary_filters,"attribute_param");
+				foreach($queryval as $queryvalv){
+					$querry_value_pairs = explode(":", $queryvalv);
+					if (count($querry_value_pairs)>1 && in_array($querry_value_pairs[0], $attr_param_arr)) {
+
+						$ar = array_filter($facet_display_data, function ($item) use ($querry_value_pairs) {
+						        return $item['attribute_param'] === $querry_value_pairs[0];
+						    }
+						); 
+						$ar_keys_ar = array_keys($ar);
+		                $values = str_replace($querry_value_pairs[0].':', '', $queryvalv); 
+		                $all_facets = array_merge($all_facets,(explode(",",$values)));
+		            }
+
+				}
 			}
 			if($queryk == "bf"){
 				$queryval = explode("|",$queryv);
@@ -29,7 +44,6 @@ function build_search_object($params) {
 				$attr_param_arr = array_column($bool_filters,"attribute_param");
 				foreach($queryval as $queryvalv){
 					$querry_value_pairs = explode(":", $queryvalv);
-					// if (strpos($queryvalv, "variant_availability:") !== false) {
 					if (count($querry_value_pairs)>1 && in_array($querry_value_pairs[0], $attr_param_arr)) {
 
 						$ar = array_filter($facet_display_data, function ($item) use ($querry_value_pairs) {

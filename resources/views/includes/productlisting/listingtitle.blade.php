@@ -74,7 +74,7 @@
   <div class="d-none d-md-block filter-selection">
     <div class="d-flex mt-3 flex-wrap">
       @{{#each filter_tags_list}}
-        <div class="border border-dark p-1 mr-2 mb-2"><span data-slug="@{{slug}}">@{{value}}</span> <span class="ml-1 h6 kss_highlight" aria-hidden="true" onclick="removeFilterTag('@{{slug}}');">&times;</span></div>
+        <div class="border border-dark p-1 mr-2 mb-2"><span data-slug="@{{slug}}">@{{value}}</span> <span class="ml-1 h6 kss_highlight" aria-hidden="true" onclick="removeFilterTag('@{{slug}}','@{{group}}');">&times;</span></div>
       @{{/each}}
       <!-- <div class=" p-1 mr-2"><a href="#" class="font-weight-bold kss-link clear-filter" >Clear All</a></div> -->
     </div>

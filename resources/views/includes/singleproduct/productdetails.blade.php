@@ -79,26 +79,25 @@
     </div>
   </div>
   @php } @endphp
-  <!-- <div class="">
+
+  @php if($params['metatags']) { @endphp
+  <div class="">
     <div class="collapse-head border-bottom mb-0" id="headingThree">
         <button class="btn btn-link btn-block text-left py-3 px-0 br-0 collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
             <label class="mb-0 text-body cursor-pointer">
-                Reviews
+                Tags
             </label>
         </button>
     </div>
     <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-      <div class="card-body pb-2 px-0">
-        <blockquote class="blockquote mb-4">
-          <h6 class="mb-1"><strong>It fits perfect and he loved it.</strong></h6>
-          <footer class="blockquote-footer"><span class="badge badge-success"><i class="fas fa-star"></i> 4.5 </span> Seema Kothrud, Pune <cite title="Source Title">7 Jul, 2018</cite></footer>
-        </blockquote>
-         <blockquote class="blockquote mb-4">
-          <h6 class="mb-1"><strong>I didn't realize you had clothes for 2T and they're super cute and affordable.</strong></h6>
-          <footer class="blockquote-footer"><span class="badge badge-success"><i class="fas fa-star"></i> 4.5 </span> Seema Kothrud, Pune <cite title="Source Title">7 Jul, 2018</cite></footer>
-        </blockquote>
-
-      </div>
+        <div class="card-body pb-2 px-0">
+          <ul class="list-inline d-flex flex-wrap kss-tags">
+            @php foreach($params['metatags'] as $metatag) { @endphp
+              <li>{{$metatag}}</li>
+            @php } @endphp
+          </ul>
+        </div>
     </div>
-  </div> -->
+  </div>
+  @php } @endphp
 </div>

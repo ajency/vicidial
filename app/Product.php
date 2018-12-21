@@ -138,6 +138,22 @@ class Product
             }
         }
 
+        foreach ($product['product_metatag'] as $metatag) {
+            try {
+                $facetObj               = new Facet;
+                $facetObj->facet_name   = "product_metatag";
+                $facetObj->facet_value  = $metatag['name'];
+                $facetObj->display_name = $metatag['name'];
+                $facetObj->description  = $metatag['metatag'];
+                $facetObj->slug         = str_slug($metatag['name']);
+                $facetObj->sequence     = 10000;
+                $facetObj->display      = false;
+                $facetObj->save();
+            } catch (\Exception $e) {
+                \Log::warning($e->getMessage());
+            }
+        }
+
     }
 
     public static function bulkIndexProducts($products)
@@ -240,7 +256,7 @@ class Product
 
         $max_count = Facet::groupBy('facet_name')->select('facet_name', DB::raw('count(*) as total'))->pluck('total')->max();
 
-        $required          = ["product_category_type", "product_gender", "product_subtype", "product_age_group", "product_color_html"];
+        $required          = ["product_category_type", "product_gender", "product_subtype", "product_age_group", "product_color_html", "product_metatag", "variant_size_name"];
         $aggs_facet_name   = $q::createAggTerms("facet_name", "search_data.string_facet.facet_name", ["include" => $required]);
         $aggs_facet_value  = $q::createAggTerms("facet_value", "search_data.string_facet.facet_value",["size" => $max_count]);
         $aggs_facet_value  = $q::addToAggregation($aggs_facet_value, $q::createAggReverseNested('count'));

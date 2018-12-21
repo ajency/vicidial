@@ -84,7 +84,7 @@ function formatItems($result, $params){
         $id         = $product["variants"][0]["variant_id"];
         $sale_price = $product["variants"][0]["variant_sale_price"];
         foreach ($product["variants"] as $variant) {
-            if ($sale_price < $variant["variant_sale_price"]) {
+            if ($sale_price > $variant["variant_sale_price"]) {
                 $id         = $variant["variant_id"];
                 $sale_price = $variant["variant_sale_price"];
             }
@@ -164,14 +164,13 @@ function sanitiseFilterdata($result, $params = [])
     $response           = [];
 
 
-    $facetNames =  ["product_category_type", "product_gender", "product_subtype", "product_age_group", "product_color_html"];
+    $facetNames =  ["product_category_type", "product_gender", "product_subtype", "product_age_group", "product_color_html", "product_metatag", "variant_size_name"];
     // dd($facetNames);
     foreach ($facetNames as $f) {
         $filter           = [];
         $facetName = $f;
         $facetValues = isset($filterResponse[$facetName])? $filterResponse[$facetName]:null;
         $facets           = Facet::where('facet_name', $facetName)->where("display",true)->get();
-        
         $filter['header'] = [
             'facet_name'   => $facetName,
             'display_name' => config('product.facet_display_data.' . $facetName . '.name'),
@@ -268,6 +267,7 @@ function boolFilterResponse($facet_name, $attributes, $params){
             "is_selected"  => selectBool($params, $facet_name, $config['facet_value']),
             "count" => 20,
             "false_facet_value" => $config['false_facet_value'],
+            "slug" => str_slug($config['facet_value']),
         ],
     ];
     $filter['attribute_slug'] = config('product.facet_display_data.'.$facet_name.'attribute_slug');
@@ -328,53 +328,54 @@ function setElasticFacetFilters($q, $params)
     $filters = makeQueryfromParams($search_object);
     $must    = [];
     $must_not = [];
-    foreach ($filters as $path => $data) {
-        foreach ($data as $facet => $data2) {
-            foreach ($data2 as $field => $values) {
-                $should = [];
-                $nested = [];
-                if ($values['type'] == 'enum') {
-                    foreach ($values['value'] as $value) {
-                        $facetName  = $q::createTerm($path . "." . $facet . '.facet_name', $field);
-                        $facetValue = $q::createTerm($path . "." . $facet . '.facet_value', $value);
-                        if($facet === "boolean_facet" and $value === false){   
-                            $facetValue = $q::createTerm($path . "." . $facet . '.facet_value', !$value);
-                        }
-                        $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
-                        $nested[]   = $q::createNested($path . '.' . $facet, $filter);
-                        $should     = $q::addToBoolQuery('should', $nested, $should);
-                    }
-                } else if ($values['type'] == 'range') {
-                    $facetValue = $q::createRange($path . "." . $facet . '.facet_value', ['lte' => $values['value']['max'], 'gte' => $values['value']['min']]);
+    $path = "search_data";
+    $data = $filters[$path];
+    foreach ($data as $facet => $data2) {
+        foreach ($data2 as $field => $values) {
+            $should = [];
+            $nested = [];
+            if ($values['type'] == 'enum') {
+                foreach ($values['value'] as $value) {
                     $facetName  = $q::createTerm($path . "." . $facet . '.facet_name', $field);
+                    $facetValue = $q::createTerm($path . "." . $facet . '.facet_value', $value);
+                    if($facet === "boolean_facet" and $value === false){   
+                        $facetValue = $q::createTerm($path . "." . $facet . '.facet_value', !$value);
+                    }
                     $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
                     $nested[]   = $q::createNested($path . '.' . $facet, $filter);
                     $should     = $q::addToBoolQuery('should', $nested, $should);
                 }
-                $nested2 = $q::createNested($path, $should);
-                if($facet === "boolean_facet"  and $value === false){
-                    $must_not[] = $nested2;
-                }
-                else{
-                    $must[]  = $nested2;
-                }
+            } else if ($values['type'] == 'range') {
+                $facetValue = $q::createRange($path . "." . $facet . '.facet_value', ['lte' => $values['value']['max'], 'gte' => $values['value']['min']]);
+                $facetName  = $q::createTerm($path . "." . $facet . '.facet_name', $field);
+                $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
+                $nested[]   = $q::createNested($path . '.' . $facet, $filter);
+                $should     = $q::addToBoolQuery('should', $nested, $should);
+            }
+            $nested2 = $q::createNested($path, $should);
+            if($facet === "boolean_facet"  and $value === false){
+                $must_not[] = $should;
+            }
+            else{
+                $must[]  = $should;
             }
         }
     }
+
     if (isset($search_object['search_string'])) {
         $must[] = textSearch($q, $search_object['search_string']);
     }
     $bool = $q::addToBoolQuery('must', $must);
     $bool = $q::addToBoolQuery('must_not', $must_not, $bool);
+    $bool = $q::createNested($path, $bool);
     return $bool;
 }
 
 
 function textSearch(ElasticQuery $q, string $text)
 {
-    $match    = $q::createMatch("search_data.full_text", $text);
-    $nested  = $q::createNested("search_data", $match);
-    return $nested;
+    $match = $q::createMatch("search_data.full_text", $text);
+    return $match;
 }
 
 /**
