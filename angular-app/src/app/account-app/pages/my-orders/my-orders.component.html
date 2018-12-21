@@ -36,19 +36,19 @@
 						</div>
 						<div class="collapse" [ngClass]="{'show': orders.length == 1}" id=collapse-{{getindex}} data-parent="#accordionExample">
 							<app-order [sub_orders]="order.sub_orders"></app-order>
-							<label class="mt-4">Order Summary</label>
-							<div class="card shadow-sm">
-							  <div class="card-body">
+							<label class="pl-2">Order Summary</label>
+							<div class="card shadow-sm mx-2">
+							  <div class="card-body p-3 orderSummary">
 							  	<app-bag-summary [summary]="order.order_summary"></app-bag-summary>
 							     <hr class="dashed">
 							     <div class="cd-cart-total pb-0">
-							        <h5 class="font-weight-bold">
+							        <h5 class="font-weight-bold mb-0">
 							           Total <span><i class="fas fa-rupee-sign"></i> {{order.order_summary.you_pay}}</span>
 							        </h5>
 							     </div> 
 							  </div>
 							</div>
-						  	<div *ngIf="order.order_summary.mrp_total != order.order_summary.you_pay" class="card shadow-sm mt-3">
+						  	<div *ngIf="order.order_summary.mrp_total != order.order_summary.you_pay" class="card shadow-sm mt-3 mx-2">
 						        <div class="card-body text-success d-flex">
 						            <strong>Your Total Savings on this Order is <span> <i class="fas fa-rupee-sign sm-font pl-1"></i></span> {{order.order_summary.mrp_total - order.order_summary.you_pay}}</strong>
 						         </div>
@@ -57,7 +57,7 @@
 							<!-- <div class="border-top mt-2 mb-4 pt-2 pb-3 text-center">
 								<a href="/my/order/details?orderid={{order.order_info.txn_no}}" class="btn text-secondary pb-0 pr-0 order-details-btn">Order Details <i class="fas fa-chevron-right"></i></a>
 							</div> -->
-							<div class="border-top mt-2 mb-4 pt-2 pb-3 text-center">
+							<div class="mt-2 mb-4 pt-2 pb-3 text-center">
 								<a class="btn text-secondary pb-0 pr-0 order-details-btn" (click)="navigateToOrderDetails(order)" >Order Details <i class="fas fa-chevron-right"></i></a>
 							</div>
 						</div>

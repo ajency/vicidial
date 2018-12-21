@@ -14,7 +14,7 @@
 	</nav>
 </div>
 
-<div class="container mt-3 order-details">
+<div class="container mt-3 order-details p-0">
 	<div class="row">
 		<div class="col-12">
              <div>
@@ -38,7 +38,8 @@
 		<div class="col-12">
 
 			<!-- Order info -->
-				<app-order-info [order_info]="order.order_info"></app-order-info>
+			<app-order-info [order_info]="order.order_info"></app-order-info>
+
 			<hr class="mb-4">
 
 			<!-- Product info -->			
@@ -53,9 +54,9 @@
 
 		<!-- Order Info sidebar -->
 		<div class="col-12 mb-4 pb-3">
-		<app-payment-info [payment_info]="order.payment_info"></app-payment-info>
-		<app-shipping-address [shipping_address]="order.shipping_address"></app-shipping-address>
-		<app-order-summary [order_summary]="order.order_summary"></app-order-summary>
+			<app-payment-info [payment_info]="order.payment_info"></app-payment-info>
+			<app-shipping-address [shipping_address]="order.shipping_address"></app-shipping-address>
+			<app-order-summary [order_summary]="order.order_summary"></app-order-summary>
 		</div>
 	</div>
 
