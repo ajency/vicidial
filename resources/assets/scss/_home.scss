@@ -587,6 +587,25 @@
         //         "cat-12";
         // }            
     }
+    @media (max-width: 320px){
+        .dress-text{
+            font-size: 2em;
+            bottom: 8px;
+        }
+        .text-acc{
+            font-size: 1.5em;
+            bottom: 0;
+        }
+        .text-wardrobe{
+            font-size: 1.6em;
+        }
+        .ethnic-text,.text-bottoms{
+            font-size: 1.8em;
+        }
+        .links-wrapper__shop{
+            font-size: 1.2em;
+        }
+    }
 }
 
 .links-wrapper{
@@ -730,6 +749,22 @@
         .trend-focus-wrapper{
             display: flex;
             flex-direction: column;
+        }
+    }
+    @media (max-width: 320px){
+        .floral-text{
+            bottom: 25px;
+            font-size: 1.8em;
+        }
+        .teenage-text{
+            top: 20px;
+            font-size: 1.8em;
+        }
+        .party-text{
+            top: 8px;
+        }
+        .comfy-text{
+            top: 0;
         }
     }
 }

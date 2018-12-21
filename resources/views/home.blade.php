@@ -236,17 +236,17 @@
         </a>
       </div>
       <div class="cat-item cat-4 position-relative">
-        <a href="/ethnic">
+        <a href="/toys">
           <img class="d-block w-100 img-fluid lazyload blur-up"
               src="{{CDN::asset('/img/home-category/category_grid4_10px.jpg') }}"
               data-srcset="{{CDN::asset('/img/home-category/category_grid4_large.jpg') }} 818w,
                             {{CDN::asset('/img/home-category/category_grid4_medium.jpg') }} 409w,
                             {{CDN::asset('/img/home-category/category_grid4_small.jpg') }} 271w"
               data-sizes='(min-width: 1200px) 370px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 92vw,  31vw'
-              alt="Ethnic wear"
-              title="Ethnic wear"/>
+              alt="The Super Toy Store"
+              title="The Super Toy Store"/>
 
-          <p class="custom-text ethnic-text text-uppercase font-weight-bold">Ethnic</p>
+          <!-- <p class="custom-text ethnic-text text-uppercase font-weight-bold">Ethnic</p> -->
           <!-- <a href="/shop" class="shop-now-btn shop-now-btn--red">Shop Now</a> -->
         </a>
       </div>
