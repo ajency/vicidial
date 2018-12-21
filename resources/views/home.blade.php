@@ -10,7 +10,7 @@
 
 @section('content')
 <div id="home-slider" class="home-slider">
-    <div  class="home-slide-item">
+    <div class="home-slide-item">
       <a href="/shop">
         <picture>
            <source media="(orientation: landscape)"
@@ -31,6 +31,27 @@
         </picture>
       </a>
     </div>
+    <div class="home-slide-item">
+      <a href="/toys">
+        <picture>
+           <source media="(orientation: landscape)"
+                  data-srcset="{{CDN::asset('/img/home-banner/banner2_large.jpg') }} 2000w,
+                              {{CDN::asset('/img/home-banner/banner2_medium.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/banner2_small.jpg') }} 700w,"
+                  sizes="100vw">
+
+           <source media="(orientation: portrait)"
+                  data-srcset="{{CDN::asset('/img/home-banner/banner2_portrait_large.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/banner2_portrait_medium.jpg') }} 700w,
+                              {{CDN::asset('/img/home-banner/banner2_portrait_small.jpg') }} 400w"
+                  sizes="100vw">
+
+           <img src="{{CDN::asset('/img/home-banner/banner2_20px.jpg') }}"
+               data-sizes="100vw"
+               class="img-fluid lazyload blur-up w-100" alt="Kidsuperstore Banner - The Super Toy Store" title="The Super Toy Store">
+        </picture>
+      </a>
+    </div>    
     <div  class="home-slide-item">
       <a href="/shop?rf=price:0TO999">
         <picture>
