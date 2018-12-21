@@ -46,7 +46,7 @@
                       <div style="margin-top: 10px;">Date: {{$order_info['order_date']}}</div>
                       <div style="margin-top: 10px;">Amount: ₹{{$order_info['total_amount']}}</div>
                       <div style="margin-top: 30px;">
-                         <a href="{{url('/#/account/my-orders/')}}" style="text-transform: uppercase;padding: 10px;text-decoration: none;background-color: #f9bc23;color: #000;font-size: 13px;">MANAGE YOUR ORDERS</a>
+                         <a href="{{url('/#/account/my-orders/')}}" style="text-transform: uppercase;padding: 10px;text-decoration: none;background-color: #f9bc23;color: #000;font-size: 13px;">MANAGE ORDERS</a>
                       </div>
                    </div>
                 </td>

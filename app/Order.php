@@ -137,7 +137,7 @@ class Order extends Model
         sendEmail('order-success', [
             'to'            => $this->cart->user->email,
             'from'          => config('communication.order-success.from'),
-            'subject'       => 'Order placed successfully on Kid Super Store',
+            'subject'       => 'Thank you for your order at Kidsuperstore.in',
             'template_data' => [
                 'order' => $this,
             ],
