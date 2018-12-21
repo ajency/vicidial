@@ -315,7 +315,7 @@ return [
             'item_display_name'      => 'Include no images',
             'is_singleton'           => true,
             'is_collapsed'           => true,
-            'template'               => (isNotProd()) ? "image" : null,
+            'template'               => null,
             'order'                  => 7,
             'display_count'          => false,
             'disabled_at_zero_count' => true,
