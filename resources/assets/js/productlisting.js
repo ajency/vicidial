@@ -14,6 +14,7 @@ var search_string_filter = ""
 var filter_tags_list = [] ;
 var copy_filters ={}
 var has_reset_filter = false
+var call_mobile_api = false
 
 Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
   return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
@@ -108,6 +109,17 @@ $(function(){
          boolean_facet_list = copy_filters["boolean_facet_list"]
          sort_on_filter = copy_filters["sort_on_filter"]
          search_string_filter = copy_filters["search_string_filter"]
+
+         var temp_ajax_data = ajax_data;
+         ajax_data = { "search_object": { "primary_filter" : facet_list,"range_filter" : range_facet_list,"boolean_filter" : boolean_facet_list } }
+         if(temp_ajax_data.hasOwnProperty('listurl'))
+            ajax_data['listurl'] = temp_ajax_data['listurl'];
+         if(temp_ajax_data.hasOwnProperty('page'))
+            ajax_data['page'] = temp_ajax_data['page'];
+         if(sort_on_filter != "")
+            ajax_data["sort_on"]= sort_on_filter;
+         if(search_string_filter != "")
+            ajax_data["search_object"]["search_string"]= search_string_filter;
          // has_reset_filter = false
      });
 
@@ -173,45 +185,40 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
         }
         if(range_filter == false){
           if($(thisObj).prop('checked')){
-              if(final_facet_list.hasOwnProperty(facet_name)){
+              if(final_facet_list.hasOwnProperty(facet_name)){  // IF THE FACETNAME EXISTS IN FACET LIST
                 if(final_facet_list[facet_name].indexOf($(thisObj).val()) == -1){
-                  if(singleton == false){
+                  if(singleton == false){   // FOR MULTIPLE CHECKBOXES
                     if(boolean_filter == true)
                       final_facet_list[facet_name]= thisval
                     else
                       final_facet_list[facet_name].push(thisval)
-                    var fil_index = filter_tags_list.findIndex(obj => obj.slug==slug_name);
+                    var fil_index = filter_tags_list.findIndex(obj => ((obj.slug==slug_name) && (obj.group==facet_name)));
                     if(fil_index == -1)
                       filter_tags_list.push({"slug":slug_name, "value":display_name, "group":facet_name})
                     call_ajax = true;
                   }
-                  else{
+                  else{   // FOR SINGLETON RADIO
                     if(boolean_filter == true)
                       final_facet_list[facet_name] = thisval
                     else
                       final_facet_list[facet_name] = [thisval]
-                    var fil_index = filter_tags_list.findIndex(obj => obj.slug==slug_name);
-                    var fil_grp_index = filter_tags_list.findIndex(obj => obj.group==facet_name);
+                    var fil_index = filter_tags_list.findIndex(obj => ((obj.slug==slug_name) && (obj.group==facet_name)));
                     if(fil_index == -1){
-                      if(fil_grp_index == -1)
-                        filter_tags_list.push({"slug":slug_name, "value":display_name, "group":facet_name})
-                      else{
-                        filter_tags_list.splice(fil_grp_index, 1);
-                        filter_tags_list.push({"slug":slug_name, "value":display_name, "group":facet_name})
-                      }
+                      filter_tags_list.splice(fil_index, 1);
+                      filter_tags_list.push({"slug":slug_name, "value":display_name, "group":facet_name})
                     }
                     call_ajax = true;
                   }
                 }
               }
-              else{
+              else{ // IF THE FACETNAME DOESNT EXISTS IN FACET LIST
                 if(boolean_filter == true)
                   final_facet_list[facet_name] = thisval
                 else
                   final_facet_list[facet_name] = [thisval]
-                var fil_index = filter_tags_list.findIndex(obj => obj.slug==slug_name);
+                var fil_index = filter_tags_list.findIndex(obj => ((obj.slug==slug_name) && (obj.group==facet_name)));
                 if(singleton == true){
-                  var fil_grp_index = filter_tags_list.findIndex(obj => obj.group==facet_name);
+                  var fil_grp_index = filter_tags_list.findIndex(obj => ((obj.slug==slug_name) && (obj.group==facet_name)));
                   if(fil_index == -1){
                     if(fil_grp_index == -1)
                       filter_tags_list.push({"slug":slug_name, "value":display_name, "group":facet_name})
@@ -229,13 +236,13 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
               }
 
           }
-          else{
+          else{ //IF THE CHECKBOX IS UNCHECHECKED
               if(final_facet_list.hasOwnProperty(facet_name)){
                 if(boolean_filter == true){
                   if(final_facet_list[facet_name] == thisval){
                     delete final_facet_list[facet_name];
                     call_ajax = true;
-                    var fil_index = filter_tags_list.findIndex(obj => obj.slug==slug_name);
+                    var fil_index = filter_tags_list.findIndex(obj => ((obj.slug==slug_name) && (obj.group==facet_name)));
                     filter_tags_list.splice(fil_index, 1);
                   }
                 }
@@ -250,7 +257,7 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                       if (index !== -1) final_facet_list[facet_name].splice(index, 1);
                       call_ajax = true;
                     }
-                    var fil_index = filter_tags_list.findIndex(obj => obj.slug==slug_name);
+                    var fil_index = filter_tags_list.findIndex(obj => ((obj.slug==slug_name) && (obj.group==facet_name)));
                     filter_tags_list.splice(fil_index, 1);
                   }
                 }
@@ -258,7 +265,7 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
               }
           }
         }
-        else{
+        else{ //FOR RANGE FILTER
           var min_max_val = $(thisObj).val()
           var min_max_arr = min_max_val.split(";")
           var filter_tag_str = $(thisObj).val().replace(";", "-")
@@ -327,7 +334,7 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
         var noURlChange = false
         if(minval == $("input[data-facet-name='"+ritem+"'].facet-category").data("minval") && maxval == $("input[data-facet-name='"+ritem+"'].facet-category").data("maxval"))
         {
-          noURlChange = true
+          url = removeParam("rf", url);
         }
         else
         {
@@ -353,12 +360,15 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
       if(search_string_filter !="")
         url += append_filter_str+"search_string="+search_string_filter
     }
+    if(url == "?")
+      url = "/"
     if(updated_url_reset == false){
       updated_list_url = url
     }
     else{
       updated_list_url = "/shop";
     }
+
     var boolean_facet_list_params = Object.assign({}, boolean_facet_list);
     if(is_ajax == true){
       for(citem in facet_display_data_arr){
@@ -545,8 +555,9 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                       window.history.pushState('categoryPage', 'Category', '/shop'+url);
                     }
                     else{
-                      if(url == ""){
-                        url = "/shop"
+                      var url_array = url.split("?")
+                      if(url_array[0] == ""){
+                        url = (url_array[1] != undefined)?"/shop?"+url_array[1]:"/shop"
                         updated_list_url = url
                       }
                       window.history.pushState('categoryPage', 'Category', url);
@@ -557,49 +568,21 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                    var filter_val = $(thisObj).closest('.kss_filter-list').data('filter')
 
                    $('.kss_filter-list[data-filter="'+filter_val+'"]').removeClass('d-none');
-                   // if($('.nav-item.active').find('.filter-count').hasClass('d-none'))
-                   //   var filter_count = 0
-                   // else
-                   //   var filter_count = parseInt($('.nav-item.active').find('.filter-count').text())
-
-                   // if($(thisObj).prop('checked'))
-                   //   filter_count +=1
-                   // else
-                   //   filter_count -=1
-                   // if($(thisObj).data('template') == "price")
-                   //  filter_count = 1
-                   // if(filter_count<0)
-                   //   filter_count = 0
-                   // $('.nav-item.active').find('.filter-count').text(filter_count)
-                   // if(filter_count == 0)
-                   //   $('.nav-item.active').find('.filter-count').addClass('d-none')
-                   // else
-                   //   $('.nav-item.active').find('.filter-count').removeClass('d-none')
-                   // if(has_reset_filter == true)
                     $('li.nav-item.active').trigger('click')
+                    call_mobile_api = true
                  }
-                 // if(search_string == true)
-                 //  $('.clear-search').removeClass('d-none')
+
             });
         }
         else{
-          collapsable_load_values[$("input[name='age']").data("facet-name")] = $("input[name='age']").data("collapsable")
-          collapsable_load_values[$("input[name='category']").data("facet-name")] = $("input[name='category']").data("collapsable")
-          collapsable_load_values[$("input[name='color']").data("facet-name")] = $("input[name='color']").data("collapsable")
-          collapsable_load_values[$("input[name='gender']").data("facet-name")] = $("input[name='gender']").data("collapsable")
-          collapsable_load_values[$("input[name='price']").data("facet-name")] = $("input[name='price']").data("collapsable")
-          collapsable_load_values[$("input[name='subtype']").data("facet-name")] = $("input[name='subtype']").data("collapsable")
+          $.each($(".facet-category"), function(key, info) {
+            collapsable_load_values[$(this).data("facet-name")] = $(this).data("collapsable")
+          });
         }
 
     }
 }
-// });
 
-
-// $( "input[name='age']" ).trigger( "change" );
-// $( "input[name='gender']" ).trigger( "change" );
-// $( "input[name='category']" ).trigger( "change" );
-// $( "input[name='subtype']" ).trigger( "change" );
 
 function constructCategoryUrl(facet_names_arr,search_object,facet_value_slug_arr,search_str){
     // var search_str = "";
@@ -677,8 +660,8 @@ function constructCategoryUrl(facet_names_arr,search_object,facet_value_slug_arr
     return search_str;
 }
 
-function removeFilterTag(slug){
-    var elm = $("input[data-slug='"+slug+"'].facet-category")
+function removeFilterTag(slug,facet_name){
+    var elm = $("input[data-slug='"+slug+"'][data-facet-name='"+facet_name+"'].facet-category")
     // var singleton = elm.data("singleton")
     // if(singleton == true)
     if(slug == "price"){
@@ -798,6 +781,10 @@ function loadProductListing(pageval=-1,mobile_view = false){
         url = url.replace(/page=\d+/, "page="+(parseInt(page)+1));
         pageVal = (parseInt(page)+1);
     }
+    if(call_mobile_api == false && mobile_view == true){
+      return;
+    }
+    call_mobile_api = false;
     var url_params = new window.URLSearchParams(window.location.search);
     var facet_display_data_keys = Object.keys(facet_display_data_arr)
     var facet_display_data_values = Object.values(facet_display_data_arr)
@@ -911,8 +898,9 @@ function loadProductListing(pageval=-1,mobile_view = false){
             $('li.nav-item.active').trigger('click')
         }
         
-       if(url == ""){
-          url = "/shop"
+       var url_array = url.split("?")
+       if(url_array[0] == ""){
+          url = (url_array[1] != undefined)?"/shop?"+url_array[1]:"/shop"
           updated_list_url = url
         }
        window.history.pushState('categoryPageUrl', 'Category page', url);

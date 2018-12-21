@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AppServiceService } from '../../services/app-service.service';
-import { ApiServiceService } from '../../services/api-service.service';
+import { AppServiceService } from '../../../service/app-service.service';
+import { ApiServiceService } from '../../../service/api-service.service';
 
 import { BagSummaryComponent } from '../../../shared-components/bag-summary/bag-summary/bag-summary.component';
+import { OrderComponent } from '../../components/order/order.component';
 // import { LoginComponentComponent } from '../../../shared-components/login/login-component/login-component.component';
 
 declare var $: any;
@@ -41,43 +42,26 @@ export class MyOrdersComponent implements OnInit {
   }
 
   getOrders(){
-    this.appservice.showLoader();
-    // let url = 'https://demo8558685.mockable.io/orders';
-    let url = this.appservice.apiUrl + '/api/rest/v1/user/orders';
-    let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
-    let body : any = {
-      _token : $('meta[name="csrf-token"]').attr('content')
-    };
-    // body.page = this.order_params.page;
-    // body.display_limit = this.order_params.display_limit;
-
-    this.apiservice.request(url, 'post', body , header ).then((response)=>{
-      if(!response.data.length)
-        this.displayShowMore = false;
-      let formatted_data = this.formattedCartDataForUI(response.data);
-    	this.orders = this.orders.concat(formatted_data);
-    	console.log("orders ==>", this.orders);
-      this.appservice.removeLoader();
+    if(this.appservice.myOrders){
+      this.orders = this.appservice.myOrders;
       this.apiCallComplete = true;
-    })
-    .catch((error)=>{
-      console.log("error ===>", error);
-      this.appservice.removeLoader();
-    }) 
-  }
-
-  formattedCartDataForUI(data){
-    data.forEach((order)=>{
-      order.sub_orders.forEach((sub_order)=>{
-        sub_order.items.forEach((item)=>{
-          if(item.price_mrp != item.price_final)
-            item.off_percentage = Math.round(((item.price_mrp - item.price_final) / (item.price_mrp )) * 100) + '% OFF';
-          item.href = '/' + item.product_slug +'/buy?size='+item.size;
-          item.images = Array.isArray(item.images) ? ['/img/placeholder.svg', '/img/placeholder.svg', '/img/placeholder.svg'] : Object.values(item.images);
-        })
+    }
+    else{
+      this.appservice.showLoader();
+     
+      this.appservice.getOrders().then((response)=>{
+        let formatted_data = this.appservice.formattedCartDataForUI(response.data);
+        this.orders = formatted_data;
+        this.appservice.myOrders = this.orders;
+        console.log("orders ==>", this.orders);
+        this.appservice.removeLoader();
+        this.apiCallComplete = true;
       })
-    })
-    return data;
+      .catch((error)=>{
+        console.log("error ===>", error);
+        this.appservice.removeLoader();
+      }) 
+    }
   }
 
   isLoggedIn(){
@@ -95,6 +79,14 @@ export class MyOrdersComponent implements OnInit {
     this.order_params.page = this.order_params.page + 1;
     this.order_params.display_limit = this.order_params.page * 10;
     this.getOrders();
+  }
+
+  navigateToOrderDetails(order){
+    console.log("Order ==>", order);
+    this.appservice.order = order;
+    // this.router.navigate([OrderDetailsComponent]);
+    let order_route = 'account/my-orders/' + order.order_info.txn_no;
+    this.router.navigate([order_route]);
   }
 
 }

@@ -417,3 +417,382 @@
         }
     }
 }
+
+// Home category
+
+.custom-text{
+    position: absolute;
+    text-align: center;
+    left: 0;
+    right: 0;
+    strong{
+        font-weight: bold;
+    }
+}
+
+.cat-container{
+    display: flex;
+    flex-wrap: wrap;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: 1fr 30px 1fr 30px 1fr 30px 1fr 30px 1fr 30px 1fr;
+    grid-template-columns: repeat(6, 1fr) ;
+    grid-gap: 30px;
+    -ms-grid-rows: auto 30px auto 30px auto 30px auto 30px auto 30px auto;
+    grid-template-areas: 
+        "cat-1 cat-1 cat-2 cat-2 cat-4 cat-4"
+        "cat-1 cat-1 cat-3 cat-3 cat-4 cat-4"
+        "cat-5 cat-5 cat-6 cat-6 cat-7 cat-7"
+        "cat-5 cat-5 cat-6 cat-6 cat-8 cat-8"
+        "cat-9 cat-9 cat-10 cat-10 cat-10 cat-10"
+        "cat-11 cat-11 cat-11 cat-12 cat-12 cat-12";
+    // Naming areas
+    @for $i from 1 through 12 {
+        .cat-#{$i} {
+            grid-area: cat-#{$i};
+        }
+    }
+    // &--bottom{
+    //     grid-template-columns: 1fr 1fr;
+    //     grid-template-areas: 
+    //         "cat-11 cat-12";
+    //     margin-top: 30px;
+    // }
+    img{
+        border-radius: 10px;
+        transition: all 0.3s;
+        &:hover{
+            transform: translateY(-2px);
+            // box-shadow: 0 5px 15px 1px rgba(0, 0, 0, 0.15);
+        }
+    }
+    .cat-item{
+        @media (min-width: 1200px){
+            flex: 1 0 33.33%;
+        }
+    }
+    .denim-text{
+        bottom: 18px;
+        color: #fff;
+        font-size: 1.3em;
+        letter-spacing: 1px;
+    }
+    .dress-text{
+        bottom: 16px;
+        font-size: 2.4em;
+        color: #fff;
+        font-weight: 100;
+    }
+    .text-acc{
+        bottom: 4px;
+        font-size: 1.8em;
+        color: #fff;
+        font-weight: 100;
+    }
+    .text-wardrobe{
+        bottom: 0;
+        font-size: 2em;
+        font-weight: 100;
+        color: #4fa7f7;
+    }
+    .text-bottoms{
+        top: 9px;
+        height: 46px;
+        font-size: 2em;
+        color: #fce447;
+        padding-top: 5px;
+        font-weight: 100;
+        background-color: #81acc2;
+    }
+    .ethnic-text{
+        bottom: 0;
+        left: 50%;
+        color: #000;
+        font-size: 2.2em;
+        letter-spacing: 2px;
+    }
+    .shop-under-box{
+        min-height: 280px;
+        background-color: #d3e56c;
+        border-radius: 10px;
+        &__text{
+            font-weight: bold;
+            color: #fff;
+            font-size: 2.8em;
+            letter-spacing: 1px;
+        }
+        @media (min-width: 768px) and (max-width: 1024px){
+            min-height: 265px;
+        }
+    }
+    @media (min-width: 768px) and (max-width: 992px){
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: 
+            "cat-1 cat-2"
+            "cat-1 cat-3"
+            "cat-4 cat-5"
+            "cat-6 cat-7"
+            "cat-6 cat-8"
+            "cat-10 cat-10"
+            "cat-9 cat-12"
+            "cat-11 cat-11";
+            // "cat-9 .";
+        // &--bottom{
+        //     grid-template-columns: 1fr 1fr;
+        //     grid-template-areas: 
+        //         "cat-11 cat-12";
+        // }
+        // .movable-item{
+        //     display: none;
+        // }
+        // &--bottom{
+        //     grid-template-columns: 1fr 1fr;
+        //     grid-template-areas: 
+        //     "cat-11 cat-12"
+        //     "cat-9 .";
+        //     .cat-9{
+        //         display: block !important;
+        //     }
+        // } 
+        .cat-12{
+            img{
+                height: 100%;
+            }
+        }    
+    }
+    @media (max-width: 767px){
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+            "cat-1"
+            "cat-4"
+            "cat-2"
+            "cat-3"
+            "cat-5"
+            "cat-10"
+            "cat-6"
+            "cat-7"
+            "cat-8"
+            "cat-9"
+            "cat-11"
+            "cat-12";
+        // &--bottom{
+        //     grid-template-columns: 1fr;
+        //      grid-template-areas: 
+        //         "cat-11"
+        //         "cat-12";
+        // }            
+    }
+    @media (max-width: 320px){
+        .dress-text{
+            font-size: 2em;
+            bottom: 8px;
+        }
+        .text-acc{
+            font-size: 1.5em;
+            bottom: 0;
+        }
+        .text-wardrobe{
+            font-size: 1.6em;
+        }
+        .ethnic-text,.text-bottoms{
+            font-size: 1.8em;
+        }
+        .links-wrapper__shop{
+            font-size: 1.2em;
+        }
+    }
+}
+
+.links-wrapper{
+    position: absolute;
+    top: 68px;
+    bottom: 0;
+    width: 100%;
+    height: 86%;
+    &__first{
+        width: 50%;
+        position: absolute;
+        height: 50%;
+        left: 0;
+    }
+    &__second{
+        width: 50%;
+        position: absolute;
+        height: 50%;
+        right: 0;
+    }
+    &__third{
+        width: 50%;
+        position: absolute;
+        height: 50%;
+        left: 0;
+        top: 50%;
+    }
+    &__fourth{
+        width: 50%;
+        position: absolute;
+        height: 50%;
+        right: 0;
+        top: 50%;
+    }
+    &__shop{
+        position: absolute;
+        width: 80px;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        text-align: center;
+        top: 45%;
+        font-size: 1.3em;
+        color: #000;
+        text-transform: uppercase;
+        &:hover{
+            color: #000;
+        }
+        @media (max-width: 360px){
+            top: 43%;
+        }
+        @media (max-width: 320px){
+            top: 41%;
+        }
+    }
+}
+
+.shop-now-btn{
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    text-align: center;
+    width: 115px;
+    padding: 5px;
+    color: #fff;
+    font-size: 1.1em;
+    &:hover{
+        color: #fff;
+    }
+    &--green{
+        bottom: 15px;
+        background-color: #c8ea43;
+    }
+    &--orange{
+        background-color: #d58f58;
+        right: inherit;
+        top: 45%;
+        bottom: inherit;
+        left: 35px;
+    }
+    &--red{
+        background-color: #d64156;
+    }
+    &--jewelery{
+        background-color: #c2557d;
+        left: inherit;
+        top: 156px;
+        bottom: inherit;
+        right: 8px;
+    }
+    &--shoes{
+        background-color: #dc7145;
+    }
+}
+
+// stories
+
+.stories-wrapper{
+    .floral-text{
+        font-weight: 100;
+        color: #fff;
+        bottom: 35px;
+        font-size: 2em;
+    }
+    .teenage-text{
+        font-weight: 100;
+        color: #fff;
+        top: 30px;
+        font-size: 2em;
+    }
+    .spot-text{
+        bottom: -6px;
+        color: #fff;
+        font-size: 1.8em;
+    }
+    .party-text{
+        color: #fff;
+        top: 12px;
+        font-size: 1.8em;
+        strong{
+            color: #ea3e2b;
+        }
+    }
+    .comfy-text{
+        top: 10px;
+        font-size: 1.8em;
+        color: #d5de43;
+    }
+    @media (min-width: 768px) and (max-width: 992px){
+        .right-col{
+            padding: 0;
+            max-width: 100%;
+            flex: 1;
+            width: 100%;
+            padding-bottom: 30px;
+        }
+    }
+    @media (max-width: 767px){
+        .trend-focus-wrapper{
+            display: flex;
+            flex-direction: column;
+        }
+    }
+    @media (max-width: 320px){
+        .floral-text{
+            bottom: 25px;
+            font-size: 1.8em;
+        }
+        .teenage-text{
+            top: 20px;
+            font-size: 1.8em;
+        }
+        .party-text{
+            top: 8px;
+        }
+        .comfy-text{
+            top: 0;
+        }
+    }
+}
+
+.stories-bottom-row{
+    .left-col{
+        padding-right: 15px;
+        padding-left: 5px;
+    }
+    .right-col{
+        padding-left: 15px;
+        padding-right: 5px;
+    }
+    @media (max-width: 992px){
+        flex-direction: column;
+        .left-col,.right-col{
+            padding: 0;
+            max-width: 100%;
+            flex: 1;
+            width: 100%;
+        }
+    }
+    @media (max-width: 767px){
+        .left-col{
+            padding: 20px 5px;
+        }
+        .right-col{
+            padding: 0 5px;
+        }
+    }
+}

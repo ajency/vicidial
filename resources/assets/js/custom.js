@@ -571,3 +571,11 @@ $('.megamenu-close').click(function(){
 	$('.megamenu-wrapper').addClass('d-none');
 	$('body').removeClass('overflow-h');
 });
+
+// detach stories
+
+if ($(window).width() >= 768 && $(window).width() <= 992 ) {
+    var story_detach = $('.stories-bottom-row .right-col').detach();
+    $('.tab-append').after(story_detach);
+}
+
