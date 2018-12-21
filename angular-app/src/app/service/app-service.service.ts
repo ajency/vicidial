@@ -24,9 +24,16 @@ export class AppServiceService {
   states : any = [];
   editAddressFromShippingSummary : boolean = false;
   addressToEdit : any;
+
+  order : any; // used to pass data to order-details page
+  myOrders : any; //used to store list of orders in my-orders page
+  redirectUrl : any = '';
+
+
   constructor(	private router: Router,
                 private apiservice : ApiServiceService) { 
     this.apiUrl = isDevMode() ? 'http://localhost:8000' : '';
+
     var self = this;
     $('.cd-add-to-cart').on('click',function(){
       self.addToCartClicked();
@@ -47,6 +54,19 @@ export class AppServiceService {
       document.getElementById('cd-shadow-layer').classList.remove('is-visible');
     if(document.getElementsByClassName("modal-backdrop")[0])
 	    document.getElementsByClassName("modal-backdrop")[0].remove();
+  }
+
+  closeWidget(){
+    console.log('inside closeWidget');
+    if(document.getElementsByTagName("body")){
+      document.getElementsByTagName("body")[0].classList.remove("hide-scroll");
+    }
+    if(document.getElementById('cd-my-account'))
+      document.getElementById('cd-my-account').classList.remove("speed-in");
+    if(document.getElementById('cd-shadow-layer'))
+      document.getElementById('cd-shadow-layer').classList.remove('is-visible');
+    if(document.getElementsByClassName("modal-backdrop")[0])
+      document.getElementsByClassName("modal-backdrop")[0].remove();
   }
 
   addToCartClicked() {
@@ -195,6 +215,29 @@ export class AppServiceService {
   sortByDiscount(array){
     let return_array = array.sort((a,b)=>{ return(b.actual_discount - a.actual_discount) })
     return return_array;
+  }
+
+  getOrders(){
+      let url = this.apiUrl + '/api/rest/v1/user/orders';
+      let header = { Authorization : 'Bearer '+this.getCookie('token') };
+      let body : any = {
+        _token : $('meta[name="csrf-token"]').attr('content')
+      };
+      return this.apiservice.request(url, 'post', body , header );
+  }
+
+  formattedCartDataForUI(data){
+    data.forEach((order)=>{
+      order.sub_orders.forEach((sub_order)=>{
+        sub_order.items.forEach((item)=>{
+          if(item.price_mrp != item.price_final)
+            item.off_percentage = Math.round(((item.price_mrp - item.price_final) / (item.price_mrp )) * 100) + '% OFF';
+          item.href = '/' + item.product_slug +'/buy?size='+item.size;
+          item.images = Array.isArray(item.images) ? ['/img/placeholder.svg', '/img/placeholder.svg', '/img/placeholder.svg'] : Object.values(item.images);
+        })
+      })
+    })
+    return data;
   }
 
 }

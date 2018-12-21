@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { PlatformLocation } from '@angular/common';
-import { AppServiceService } from './services/app-service.service';
+import { AppServiceService } from '../service/app-service.service';
 
 @Component({
   selector: 'my-account-app-root',
@@ -16,7 +16,7 @@ export class AppComponent {
 
 		if(this.appservice.isLoggedInUser()){
 			if(!window.location.href.endsWith('#/account')){
-				this.router.navigateByUrl('account/my-orders');
+				// this.router.navigateByUrl('account/my-orders');
 			}
 		}
 		else{
@@ -34,7 +34,7 @@ export class AppComponent {
 				this.appservice.openVerificationModal();
 		  	}
 
-		  	else if(window.location.href.endsWith('#/account/my-orders')){
+		  	else if(window.location.href.includes('#/account/my-orders')){
 		  		// Do nothing -- to be handled later
 		  	}
 

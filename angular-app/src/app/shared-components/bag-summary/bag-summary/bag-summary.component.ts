@@ -15,7 +15,7 @@ export class BagSummaryComponent implements  OnInit, OnChanges {
   }
 
   ngOnChanges(){
-  	 console.log("ngOnChanges bag-summary component ==>", this.summary);
+  	 // console.log("ngOnChanges bag-summary component ==>", this.summary);
   }
 
 }

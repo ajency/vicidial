@@ -10,8 +10,8 @@
     <!--[if !mso]><!--><meta http-equiv="X-UA-Compatible" content="IE=edge" /><!--<![endif]-->
     <title>Kss</title>
     <!--[if !mso]><!-- -->
-	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css" />
-	<!--<![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css" />
+  <!--<![endif]-->
     
     <style type="text/css" id="media-query">
       body {
@@ -44,7 +44,7 @@ a[x-apple-data-detectors=true] {
   vertical-align: top; }
 
 .ie-browser .num12, .ie-browser .block-grid, [owa] .num12, [owa] .block-grid {
-  width: 625px !important; }
+  width: 400px !important; }
 
 .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {
   line-height: 100%; }
@@ -90,11 +90,11 @@ a[x-apple-data-detectors=true] {
 
 @media only screen and (min-width: 645px) {
   .block-grid {
-    width: 625px !important; }
+    width: 400px !important; }
   .block-grid .col {
     vertical-align: top; }
     .block-grid .col.num12 {
-      width: 625px !important; }
+      width: 400px !important; }
   .block-grid.mixed-two-up .col.num4 {
     width: 208px !important; }
   .block-grid.mixed-two-up .col.num8 {
@@ -182,28 +182,28 @@ a[x-apple-data-detectors=true] {
       img.fullwidth {
         max-width: 100%!important;
       }
-			img.fullwidthOnMobile {
+      img.fullwidthOnMobile {
         max-width: 100%!important;
       }
       .no-stack .col {
-				min-width: 0!important;
-				display: table-cell!important;
-			}
-			.no-stack.two-up .col {
-				width: 50%!important;
-			}
-			.no-stack.mixed-two-up .col.num4 {
-				width: 33%!important;
-			}
-			.no-stack.mixed-two-up .col.num8 {
-				width: 66%!important;
-			}
-			.no-stack.three-up .col.num4 {
-				width: 33%!important;
-			}
-			.no-stack.four-up .col.num3 {
-				width: 25%!important;
-			}
+        min-width: 0!important;
+        display: table-cell!important;
+      }
+      .no-stack.two-up .col {
+        width: 50%!important;
+      }
+      .no-stack.mixed-two-up .col.num4 {
+        width: 33%!important;
+      }
+      .no-stack.mixed-two-up .col.num8 {
+        width: 66%!important;
+      }
+      .no-stack.three-up .col.num4 {
+        width: 33%!important;
+      }
+      .no-stack.four-up .col.num3 {
+        width: 25%!important;
+      }
       .mobile_hide {
         min-height: 0px!important;
         max-height: 0px!important;
@@ -214,286 +214,97 @@ a[x-apple-data-detectors=true] {
       }
     }
   </style>
-  <!--[if IE]><div class="ie-browser"><![endif]-->
-  <!--[if mso]><div class="mso-container"><![endif]-->
-  <table class="nl-container" style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;min-width: 320px;Margin: 0 auto;background-color: #DADADA;width: 100%" cellpadding="0" cellspacing="0">
-	<tbody>
-	<tr style="vertical-align: top">
-		<td style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
-    <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td align="center" style="background-color: #DADADA;"><![endif]-->
+  <table border="0" cellpadding="10" cellspacing="0" style=
+  "background-color: #FFFFFF" width="100%">
+    <tr>
+      <td>
+        <!--[if (gte mso 9)|(IE)]>
+      <table width="600" align="center" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td>
+    <![endif]-->
 
-    <div style="background-color:transparent;">
-      <div style="Margin: 0 auto;min-width: 320px;max-width: 625px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;" class="block-grid ">
-        <div style="border-collapse: collapse;display: table;width: 100%;background-color:transparent;">
-          <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="background-color:transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width: 625px;"><tr class="layout-full-width" style="background-color:transparent;"><![endif]-->
+  <table border="0" cellspacing="0" cellpadding="0" style="padding:20px 0;font-family:Arial,Helvetica,sans-serif;max-width:650px;margin:0 auto;color:#000">
+   <tbody>
+      <!-- header -->
+      <tr>
+       <td style="text-align:center;padding-top:10px;padding-bottom:10px;background-color: #707279;">
+        <table class="m_-1366001226154905177m_-6808368826616678290m_8600340093737608931table-totals" cellpadding="0" cellspacing="0" border="0" width="100%" style="">
+           <tbody>
+              <tr>
+                 <td width="50%">
+                    <div style="float:left;text-align: left;width:100%;">
+                       <div style="padding-top: 5px;padding-bottom: 5px;padding-right:0px;padding-left:0px;">
+                          <div class="m_-5779165486225210281img-container m_-5779165486225210281center m_-5779165486225210281fixedwidth" style="padding-right:0px;padding-left:8px">
+                             <a href="{{url('/')}}" title="Kidsuperstore" target="_blank">
+                                <img class="m_-5779165486225210281center m_-5779165486225210281fixedwidth CToWUd" align="center" border="0" src="{{CDN::asset('/img/logo-kss.png') }}" alt="" title="" style="outline:none;text-decoration:none;clear:both;border:0;height:auto;float:none;" width="170">
+                               </a>
+                          </div>
+                         </div>
+                    </div>
+                  </td>
+                  <td width="48%">
+                    <div style="float:left;text-align: right;width: 100%;color: #fff;padding-top: 8px;font-size: 11px;text-transform: uppercase;font-weight:bold;"><img src="{{CDN::asset('/img/shopping-bag.png') }}" width="20" style="vertical-align: text-bottom;padding-right: 2px;">
+                       <span style="float: right;padding-top: 5px;padding-right: 10px;">Order Placed</span>
+                       <div style="clear: both;display: table;"></div>
+                    </div>
+                    <div style="clear: both;display: table;"></div>
+                 </td>
+               </tr>
+             </tbody>
+          </table>
+        </td>
+      </tr>
 
-              <!--[if (mso)|(IE)]><td align="center" width="625" style=" width:625px; padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;" valign="top"><![endif]-->
-            <div class="col num12" style="min-width: 320px;max-width: 625px;display: table-cell;vertical-align: top;">
-              <div style="background-color: transparent; width: 100% !important;">
-              <!--[if (!mso)&(!IE)]><!--><div style="border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;"><!--<![endif]-->
 
-                  
-                    &#160;
-                  
-              <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
+  @yield('content')
+
+
+   <!-- Need help -->
+      <tr style="border-top: 4px double #efb947;">
+       <td>
+            <p style="font-size:16px;font-weight:bold;letter-spacing:1px;padding-top: 5px;">NEED HELP? WRITE TO US AT</p>
+               <p style="line-height:25px;font-size: 15px;color: #777676;">Email: <a href="mailto:care@kidsuperstore.in" style="color: #004283;font-weight: bold;" target="_blank">care@kidsuperstore.in</a> <br>
+               We are happy to help you. For any assistance <a href="{{url('/')}}/contact" style="color: #004283;font-weight: bold;">Contact us</a>
+            </p>
+         </td>
+      </tr>
+      <!-- need help ends -->
+      <!-- follow us -->
+    <tr>
+          <td>
+             <p style="font-size:15px;font-weight:bold;letter-spacing:1px;text-transform:uppercase;display:inline-block;vertical-align:middle">Follow Us</p>
+              <div style="display:inline-block;vertical-align:middle;padding-left:10px">
+               <a href="https://www.facebook.com/kidsuperstore" style="width:30px;height:30px;display:inline-block;margin-right:10px" target="_blank">
+               <img src="{{CDN::asset('/img/fb-icon.png') }}" width="30" title="Facebook" alt="Facebook" class="CToWUd">
+               </a>
+               
+               <a href="https://www.instagram.com/kidsuperstore.in/" style="width:30px;height:30px;display:inline-block;margin-right:5px" target="_blank">
+               <img src="{{CDN::asset('/img/insta-icon.png') }}" title="Instagram" alt="Instagram" class="CToWUd" width="30">
+               </a>
+               
               </div>
-            </div>
-          <!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
-        </div>
-      </div>
-    </div>
-    <div style="background-color:transparent;">
-      <div style="Margin: 0 auto;min-width: 320px;max-width: 625px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #FFFFFF;" class="block-grid ">
-        <div style="border-collapse: collapse;display: table;width: 100%;background-color:#FFFFFF;">
-          <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="background-color:transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width: 625px;"><tr class="layout-full-width" style="background-color:#FFFFFF;"><![endif]-->
+          </td>
+       </tr>
+       <tr>
+          <td>
+             <div style="color: #777676;font-size: 14px;line-height: 20px;border-top: 4px double #efb947;margin-top: 10px;padding-top: 10px;margin-bottom: 20px;">
+                This email was send from a notification only, address that cannot accept incoming email. Please do not reply to this message.
+             </div>
+          </td>
+       </tr>
 
-              <!--[if (mso)|(IE)]><td align="center" width="625" style=" width:625px; padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:10px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;" valign="top"><![endif]-->
-            <div class="col num12" style="min-width: 320px;max-width: 625px;display: table-cell;vertical-align: top;">
-              <div style="background-color: transparent; width: 100% !important;">
-              <!--[if (!mso)&(!IE)]><!--><div style="border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent; padding-top:20px; padding-bottom:20px; padding-right: 0px; padding-left: 0px;"><!--<![endif]-->
+</tbody>
 
-                  
-                    <div align="center" class="img-container center fixedwidth " style="padding-right: 0px;  padding-left: 0px;">
-				<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr style="line-height:0px;line-height:0px;"><td style="padding-right: 0px; padding-left: 0px;" align="center"><![endif]-->
-					<a href="{{url('/')}}" title="Kidsuperstore">
-					  	<img class="center fixedwidth" align="center" border="0" src="{{CDN::asset('/img/email-logo.png') }}" alt="" title="" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: 0;height: auto;float: none;width: 100%;max-width: 250px" width="250" />
-					  </a>
-					<!--[if mso]></td></tr></table><![endif]-->
-					</div>
-                  
-              <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
-              </div>
-            </div>
-          <!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
-        </div>
-      </div>
-    </div>
-
-
-	@yield('content')
-
-   
-    <div style="background-color:transparent;">
-      <div style="Margin: 0 auto;min-width: 320px;max-width: 625px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #FFFFFF;" class="block-grid ">
-        <div style="border-collapse: collapse;display: table;width: 100%;background-color:#FFFFFF;">
-          <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="background-color:transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width: 625px;"><tr class="layout-full-width" style="background-color:#FFFFFF;"><![endif]-->
-
-              <!--[if (mso)|(IE)]><td align="center" width="625" style=" width:625px; padding-right: 0px; padding-left: 0px; padding-top:10px; padding-bottom:5px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;" valign="top"><![endif]-->
-            <div class="col num12" style="min-width: 320px;max-width: 625px;display: table-cell;vertical-align: top;">
-              <div style="background-color: transparent; width: 100% !important;">
-              <!--[if (!mso)&(!IE)]><!--><div style="border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent; padding-top:10px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;"><!--<![endif]-->
-
-                  
-                    
-<table border="0" cellpadding="0" cellspacing="0" width="100%" class="divider " style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;min-width: 100%;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
-    <tbody>
-        <tr style="vertical-align: top">
-            <td class="divider_inner" style="word-break: break-word;border-collapse: collapse !important;vertical-align: top;padding-right: 0px;padding-left: 0px;padding-top: 0px;padding-bottom: 0px;min-width: 100%;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
-                <table class="divider_content" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;border-top: 1px solid #d3dbe3;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
-                    <tbody>
-                        <tr style="vertical-align: top">
-                            <td style="word-break: break-word;border-collapse: collapse !important;vertical-align: top;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
-                                <span></span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </td>
-        </tr>
-    </tbody>
 </table>
-                  
-              <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
-              </div>
-            </div>
-          <!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
-        </div>
-      </div>
-    </div>
 
-
-
-
-
-    <div style="background-color:transparent;">
-      <div style="Margin: 0 auto;min-width: 320px;max-width: 625px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #FFFFFF;" class="block-grid ">
-        <div style="border-collapse: collapse;display: table;width: 100%;background-color:#FFFFFF;">
-          <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="background-color:transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width: 625px;"><tr class="layout-full-width" style="background-color:#FFFFFF;"><![endif]-->
-
-              <!--[if (mso)|(IE)]><td align="center" width="625" style=" width:625px; padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;" valign="top"><![endif]-->
-            <div class="col num12" style="min-width: 320px;max-width: 625px;display: table-cell;vertical-align: top;">
-              <div style="background-color: transparent; width: 100% !important;">
-              <!--[if (!mso)&(!IE)]><!--><div style="border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;"><!--<![endif]-->
-
-                  
-                    <div class="">
-	<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;"><![endif]-->
-	<div style="color:#555555;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;line-height:120%; padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;">	
-		<div style="font-size:12px;line-height:14px;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;color:#555555;text-align:left;"><p style="margin: 0;font-size: 14px;line-height: 17px;text-align: center"><span style="font-size: 22px; line-height: 26px;">Follow us on:</span></p></div>	
-	</div>
-	<!--[if mso]></td></tr></table><![endif]-->
-</div>
-                  
-              <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
-              </div>
-            </div>
-          <!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
-        </div>
-      </div>
-    </div>
-
-
-
-    <div style="background-color:transparent;">
-      <div style="Margin: 0 auto;min-width: 320px;max-width: 625px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #FFFFFF;" class="block-grid ">
-        <div style="border-collapse: collapse;display: table;width: 100%;background-color:#FFFFFF;">
-          <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="background-color:transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width: 625px;"><tr class="layout-full-width" style="background-color:#FFFFFF;"><![endif]-->
-
-              <!--[if (mso)|(IE)]><td align="center" width="625" style=" width:625px; padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;" valign="top"><![endif]-->
-            <div class="col num12" style="min-width: 320px;max-width: 625px;display: table-cell;vertical-align: top;">
-              <div style="background-color: transparent; width: 100% !important;">
-              <!--[if (!mso)&(!IE)]><!--><div style="border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;"><!--<![endif]-->
-
-                  
-                    
-<div align="center" style="padding-right: 0px; padding-left: 0px; padding-bottom: 0px;" class="">
-  <div style="display: table; max-width:151px;">
-  <!--[if (mso)|(IE)]><table width="151" cellpadding="0" cellspacing="0" border="0"><tr><td style="border-collapse:collapse; padding-right: 0px; padding-left: 0px; padding-bottom: 0px;"  align="center"><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse; mso-table-lspace: 0pt;mso-table-rspace: 0pt; width:151px;"><tr><td width="32" style="width:32px; padding-right: 5px;" valign="top"><![endif]-->
-    <table align="left" border="0" cellspacing="0" cellpadding="0" width="32" height="32" style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;Margin-right: 5px">
-      <tbody><tr style="vertical-align: top"><td align="left" valign="middle" style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
-        <a href="https://www.facebook.com/kidsuperstore" title="Facebook" target="_blank">
-          <img src="{{CDN::asset('/img/fb-icon.png') }}" alt="Facebook" title="Facebook" width="32" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important" />
-        </a>
-      <div style="line-height:5px;font-size:1px">&#160;</div>
-      </td></tr>
-    </tbody></table>
-      <!--[if (mso)|(IE)]></td><td width="32" style="width:32px; padding-right: 5px;" valign="top"><![endif]-->
-    <table align="left" border="0" cellspacing="0" cellpadding="0" width="32" height="32" style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;Margin-right: 5px">
-      <tbody><tr style="vertical-align: top"><td align="left" valign="middle" style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
-        <a href="https://www.instagram.com/kidsuperstore.in/" title="Instagram" target="_blank">
-          <img src="{{CDN::asset('/img/insta-icon.png') }}" alt="Instagram" title="Instagram" width="32" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important" />
-        </a>
-      <div style="line-height:5px;font-size:1px">&#160;</div>
-      </td></tr>
-    </tbody></table>
-  </div>
-</div>
-                  
-              <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
-              </div>
-            </div>
-          <!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
-        </div>
-      </div>
-    </div>
-
-
-
-
-    <div style="background-color:transparent;">
-      <div style="Margin: 0 auto;min-width: 320px;max-width: 625px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #FFFFFF;" class="block-grid ">
-        <div style="border-collapse: collapse;display: table;width: 100%;background-color:#FFFFFF;">
-          <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="background-color:transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width: 625px;"><tr class="layout-full-width" style="background-color:#FFFFFF;"><![endif]-->
-
-              <!--[if (mso)|(IE)]><td align="center" width="625" style=" width:625px; padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;" valign="top"><![endif]-->
-            <div class="col num12" style="min-width: 320px;max-width: 625px;display: table-cell;vertical-align: top;">
-              <div style="background-color: transparent; width: 100% !important;">
-              <!--[if (!mso)&(!IE)]><!--><div style="border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;"><!--<![endif]-->
-
-                  
-                    <div class="">
-	<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 0px; padding-left: 0px; padding-top: 0px; padding-bottom: 0px;"><![endif]-->
-	<div style="color:#555555;font-family:'Open Sans', Helvetica, Arial, sans-serif;line-height:120%; padding-right: 0px; padding-left: 0px; padding-top: 0px; padding-bottom: 0px;">	
-		<div style="font-size:12px;line-height:14px;color:#555555;font-family:'Open Sans', Helvetica, Arial, sans-serif;text-align:left;"><p style="margin: 0;font-size: 14px;line-height: 17px;text-align: center"><span style="font-size: 11px; line-height: 13px;">Omni Edge Retail Pvt. Ltd. 309, Autumn Grove, Lokhandwala Township, Kandivali (East), Mumbai 400101</span><br /><span style="font-size: 11px; line-height: 13px;">© 2018 Kidsuperstore.com, LLC. All Rights Reserved</span></p></div>	
-	</div>
-	<!--[if mso]></td></tr></table><![endif]-->
-</div>
-                  
-              <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
-              </div>
-            </div>
-          <!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
-        </div>
-      </div>
-    </div>
-
-
-
-<div style="background-color:#DADADA;">
-      <div style="Margin: 0 auto;min-width: 320px;max-width: 625px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #FFFFFF;padding-top: 20px;" class="block-grid ">
-      
-       <div style="font-size:12px;line-height:14px;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;color:#555555;text-align:left;float: left;width: 36%;padding-left: 10px;">
-          <img src="{{CDN::asset('/img/call-icon.png') }}" alt="contact" title="contact" width="38" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;margin-left: auto;padding-right: 15px;">
-        </div>
-
-      <div style="font-size: 15px;line-height:14px;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;color:#555555;text-align: left;float: left;width: 48%;padding-right: 5px;">
-          <p style="margin-top: 0;margin-bottom: 8px;">
-            <strong>Need help? Get in touch</strong>
-          </p>
-          <p style="margin-top: 5px;line-height: 20px;">
-            We are happy to help you. For any assistance <a href="{{url('/')}}/contact" style="color: #b18005;">Contact us</a>
-          </p>
-        </div>
-      <b style="clear: both;display: table;"></b>
-      </div>
-      </div>
-
-
-
-
-
-    <div style="background-color:#DADADA;">
-      <div style="Margin: 0 auto;min-width: 320px;max-width: 625px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #FFFFFF;" class="block-grid ">
-        <div style="border-collapse: collapse;display: table;width: 100%;background-color:#FFFFFF;">
-          <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="background-color:#DADADA;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width: 625px;"><tr class="layout-full-width" style="background-color:#FFFFFF;"><![endif]-->
-
-              <!--[if (mso)|(IE)]><td align="center" width="625" style=" width:625px; padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;" valign="top"><![endif]-->
-            <div class="col num12" style="min-width: 320px;max-width: 625px;display: table-cell;vertical-align: top;">
-              <div style="background-color: transparent; width: 100% !important;">
-              <!--[if (!mso)&(!IE)]><!--><div style="border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;"><!--<![endif]-->
-
-                  
-                    
-<table border="0" cellpadding="0" cellspacing="0" width="100%" class="divider " style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;min-width: 100%;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
-    <tbody>
-        <tr style="vertical-align: top">
-            <td class="divider_inner" style="word-break: break-word;border-collapse: collapse !important;vertical-align: top;padding-right: 10px;padding-left: 10px;padding-top: 10px;padding-bottom: 10px;min-width: 100%;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
-                <table class="divider_content" height="0px" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;border-top: 1px solid #E7E7E7;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
-                    <tbody>
-                        <tr style="vertical-align: top">
-                            <td style="word-break: break-word;border-collapse: collapse !important;vertical-align: top;font-size: 0px;line-height: 0px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
-                                <span>&#160;</span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </td>
+<!--[if (gte mso 9)|(IE)]>
+        </td>
         </tr>
-    </tbody>
-</table>
-                  
-                  
-                    <div class="">
-  <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;"><![endif]-->
-  <div style="color:#555555;font-family:Verdana, Geneva, sans-serif;line-height:120%; padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;"> 
-    <div style="font-size:12px;line-height:14px;font-family:Verdana, Geneva, sans-serif;color:#555555;text-align:left;"><p style="margin: 0;font-size: 12px;line-height: 14px;text-align: center"><span style="color: rgb(128, 128, 128); font-size: 10px; line-height: 12px;">This email was send from a notification only, address that cannot accept incoming email. Please do not reply to this message</span></p></div>  
-  </div>
-  <!--[if mso]></td></tr></table><![endif]-->
-</div>
-                  
-              <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
-              </div>
-            </div>
-          <!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
-        </div>
-      </div>
-    </div>
-   <!--[if (mso)|(IE)]></td></tr></table><![endif]-->
-    </td>
-  </tr>
-  </tbody>
+    </table>
+    <![endif]-->
+      </td>
+    </tr>
   </table>
-  <!--[if (mso)|(IE)]></div><![endif]-->
-
 
 </body></html>
