@@ -273,7 +273,6 @@ class Product
 
 
         $required = ["variant_size_name"];
-        $variant_availability = true;
         $facet_names = [];
         foreach ($required as $facet_name) {
             $facet_names = $facet_names + $q::createAggTerms($facet_name, "variants.".$facet_name);
@@ -305,7 +304,7 @@ class Product
         $available = "skip";
         if(isset($params['search_object']['boolean_filter']['variant_availability']))
             $available = $params['search_object']['boolean_filter']['variant_availability'];
-        $q    = self::buildBaseQuery(true);
+        $q    = self::buildBaseQuery($available);
         $must = setElasticFacetFilters($q, $params);
         $q->setQuery($must);
         $response = $q->search();
