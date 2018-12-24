@@ -274,9 +274,14 @@ class Product
 
         $required = ["variant_size_name"];
         $facet_names = [];
+        
         foreach ($required as $facet_name) {
-            $facet_names = $facet_names + $q::createAggTerms($facet_name, "variants.".$facet_name);
+            $reverse = $q::createAggReverseNested('count');
+            $size = $q::createAggTerms($facet_name, "variants.".$facet_name, ["size" => $max_count]);
+            $aggs_facet_value  = $q::addToAggregation($size, $reverse);
+            $facet_names = $facet_names + $aggs_facet_value;
         }
+
         if($variant_availability==="skip")
             $filterAgg  = $q::createAggFilter("available", ["match_all" => new \stdClass()]);
         else
@@ -307,6 +312,7 @@ class Product
         $q    = self::buildBaseQuery($available);
         $must = setElasticFacetFilters($q, $params);
         $q->setQuery($must);
+        // dd($q->getJSON());
         $response = $q->search();
         return sanitiseFilterdata($response, $params);
     }

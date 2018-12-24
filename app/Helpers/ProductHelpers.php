@@ -158,7 +158,7 @@ function sanitiseFilterdata($result, $params = [])
     $variant_facets = ['variant_size_name'];
     foreach ($variant_facets as $facet_name) {
         foreach ($result["aggregations"]['variant_aggregation']['available'][$facet_name]['buckets'] as $data) {
-            $filterResponse[$facet_name][$data["key"]] = $data["doc_count"];
+            $filterResponse[$facet_name][$data["key"]] = $data['count']["doc_count"];
         }
     }
 
