@@ -278,7 +278,7 @@ class Product
         foreach ($required as $facet_name) {
             $facet_names = $facet_names + $q::createAggTerms($facet_name, "variants.".$facet_name);
         }
-        if($variant_availability=="skip")
+        if($variant_availability==="skip")
             $filterAgg  = $q::createAggFilter("available", ["match_all" => new \stdClass()]);
         else
             $filterAgg  = $q::createAggFilter("available", ["term" => [ "variants.variant_availability"=> $variant_availability ]]);
@@ -300,10 +300,12 @@ class Product
      * @return array
      */
     public static function getProductCategoriesWithFilter($params)
-    {
-
-        $q    = self::buildBaseQuery();
+    {   
         $params['search_object'] = setDefaultFilters($params);
+        $available = "skip";
+        if(isset($params['search_object']['boolean_filter']['variant_availability']))
+            $available = $params['search_object']['boolean_filter']['variant_availability'];
+        $q    = self::buildBaseQuery(true);
         $must = setElasticFacetFilters($q, $params);
         $q->setQuery($must);
         $response = $q->search();
