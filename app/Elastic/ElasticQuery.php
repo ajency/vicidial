@@ -464,6 +464,11 @@ class ElasticQuery
         return [$name => ["nested" => ["path" => $path]]];
     }
 
+    public static function createAggFilter(string $name, array $filter)
+    {
+        return [$name => ["filter" => $filter ]];
+    }
+
     public static function addToAggregation(array $aggs, array $new_aggs)
     {
         $aggs[current(array_keys($aggs))]["aggs"] = $new_aggs;

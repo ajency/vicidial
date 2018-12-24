@@ -249,14 +249,14 @@ class Product
      *
      * @return ElasticQuery
      */
-    public static function buildBaseQuery()
+    public static function buildBaseQuery($variant_availability="skip")
     {
 
         $q = new ElasticQuery;
 
         $max_count = Facet::groupBy('facet_name')->select('facet_name', DB::raw('count(*) as total'))->pluck('total')->max();
 
-        $required          = ["product_category_type", "product_gender", "product_subtype", "product_age_group", "product_color_html", "product_metatag", "variant_size_name"];
+        $required          = ["product_category_type", "product_gender", "product_subtype", "product_age_group", "product_color_html", "product_metatag"];
         $aggs_facet_name   = $q::createAggTerms("facet_name", "search_data.string_facet.facet_name", ["include" => $required]);
         $aggs_facet_value  = $q::createAggTerms("facet_value", "search_data.string_facet.facet_value",["size" => $max_count]);
         $aggs_facet_value  = $q::addToAggregation($aggs_facet_value, $q::createAggReverseNested('count'));
@@ -271,8 +271,24 @@ class Product
         $aggsPrice     = $q::createAggNested("agg_price", "search_data.number_facet");
         $priceQ        = $q::addToAggregation($aggsPrice, $minMax);
 
+
+        $required = ["variant_size_name"];
+        $variant_availability = true;
+        $facet_names = [];
+        foreach ($required as $facet_name) {
+            $facet_names = $facet_names + $q::createAggTerms($facet_name, "variants.".$facet_name);
+        }
+        if($variant_availability=="skip")
+            $filterAgg  = $q::createAggFilter("available", ["match_all" => new \stdClass()]);
+        else
+            $filterAgg  = $q::createAggFilter("available", ["term" => [ "variants.variant_availability"=> $variant_availability ]]);
+        // $filterAgg  = $q::createAggFilter("available", ['bool' =>['must_not' =>[["term" => [ "variants.variant_availability"=> true ]]]]]);
+        $facet_name = $q::addToAggregation($filterAgg, $facet_names  );
+        $nestedAgg   = $q::createAggNested("variant_aggregation", "variants");
+        $aggs = $q::addToAggregation($nestedAgg,$facet_name );
+        
         $q->setIndex(config('elastic.indexes.product'))
-            ->initAggregation()->setAggregation(array_merge($priceQ, $aggs_string_facet))
+            ->initAggregation()->setAggregation(array_merge($priceQ, $aggs_string_facet,$aggs ))
             ->setSize(0);
 
         return $q;
