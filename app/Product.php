@@ -465,7 +465,7 @@ class Product
         $productdisplayName = $searchResult['product_att_magento_display_name'];
         foreach ($elasticData['search_data'] as &$variant) {
             $variant['full_text'] = implode(' ',[$variant['full_text'],$productId,$productdisplayName]);
-            $variant['full_text_boosted'] = implode(' ',[$variant['full_text'],$productId,$productdisplayName]);
+            $variant['full_text_boosted'] = implode(' ',[$variant['full_text_boosted'],$productId,$productdisplayName]);
         }
         return $elasticData;
     }
