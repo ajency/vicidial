@@ -220,6 +220,30 @@
 <section>
   <div class="container">
     <div class="cat-container">
+      <div class="cat-item cat-13">
+        <a href="/shop">
+          <img class="d-block w-100 img-fluid lazyload blur-up"
+              src="{{CDN::asset('/img/home-category/category_grid13_10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/home-category/category_grid13_large.jpg') }} 740w,
+                            {{CDN::asset('/img/home-category/category_grid13_medium.jpg') }} 370w,
+                            {{CDN::asset('/img/home-category/category_grid13_small.jpg') }} 248w"
+              data-sizes='(min-width: 1200px) 570px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 92vw,  31vw'
+              alt="New Year Super Sale - Flat 50% off"
+              title="New Year Super Sale - Flat 50% off" />
+        </a>
+      </div>
+      <div class="cat-item cat-14">
+        <a href="/stationary">
+          <img class="d-block w-100 img-fluid lazyload blur-up"
+              src="{{CDN::asset('/img/home-category/category_grid14_10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/home-category/category_grid14_large.jpg') }} 740w,
+                            {{CDN::asset('/img/home-category/category_grid14_medium.jpg') }} 370w,
+                            {{CDN::asset('/img/home-category/category_grid14_small.jpg') }} 248w"
+              data-sizes='(min-width: 1200px) 570px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 92vw,  31vw'
+              alt="Bag To School"
+              title="Bag To School" />
+        </a>
+      </div>
       <div class="cat-item cat-1 position-relative">
         <a href="/girls/dress">
             <img class="d-block w-100 img-fluid lazyload blur-up"
