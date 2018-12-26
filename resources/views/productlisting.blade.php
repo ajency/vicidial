@@ -46,6 +46,7 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.min.js"></script>
   <?php
     $facet_display_data = config('product.facet_display_data');
+    $price_bucket_config = config('product.price_bucket');
     $config_facet_names_arr = array_keys($facet_display_data);
     $facet_value_slug_assoc = json_encode($params->search_result_assoc);
     $facet_display_data_arr = json_encode($facet_display_data);
@@ -57,6 +58,7 @@
       var config_facet_names_arr = <?= json_encode($config_facet_names_arr);?>;
       var facet_value_slug_assoc = <?= $facet_value_slug_assoc ?>;
       var facet_display_data_arr = <?= $facet_display_data_arr ?>;
+      var price_bucket_config_arr = <?= json_encode($price_bucket_config) ?>;
       var show_search_box = <?= json_encode($params->show_search) ?>;
       var slug_value_search_result = <?= $slug_value_search_result ?>;
       var product_list_items = {};

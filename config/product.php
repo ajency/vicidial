@@ -415,6 +415,8 @@ return [
         ["name" => "Price High to Low", "value" => "price_desc", "is_selected" => false],
 
     ],
-    "show_list_search" => true
-
+    "show_list_search" => true,
+    "price_bucket" => [
+        ["name" => "Price Between 0 and 300", "min" => 0,"max" => 300]
+    ]
 ];
