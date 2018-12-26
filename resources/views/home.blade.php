@@ -27,7 +27,7 @@
 
            <img src="{{CDN::asset('/img/home-banner/banner1_20px.jpg') }}"
                data-sizes="100vw"
-               class="img-fluid lazyload blur-up w-100" alt="Kidsuperstore Banner - Shop for Rs.2000 and get products worth Rs.1000" title="Shop for Rs.2000 and get products worth Rs.1000">
+               class="img-fluid lazyload blur-up w-100" alt="New Year Super Sale - Flat 50% off" title="New Year Super Sale - Flat 50% off">
         </picture>
       </a>
     </div>
