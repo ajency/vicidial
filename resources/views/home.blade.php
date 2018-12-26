@@ -294,8 +294,8 @@
               data-sizes='(min-width: 1200px) 370px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 92vw,  31vw'
               alt=""
               title=""/>
+          <p class="custom-text text-bottoms text-uppercase"><strong>Playful</strong> Bottoms</p>
         </a>
-        <p class="custom-text text-bottoms text-uppercase"><strong>Playful</strong> Bottoms</p>
         <div class="links-wrapper">
           <a href="/short" class="links-wrapper__first"></a>
           <a href="/short" class="links-wrapper__second"></a>
@@ -421,15 +421,15 @@
         </a>
     
         <!-- Grid-2 -->
-        <a href="/shop?pf=tag:ho-ho-ho" class="trend-box d-block link-card tab-append" style="order:1;">
+        <a href="/shop?pf=tag:baby-mornings" class="trend-box d-block link-card tab-append" style="order:1;">
           <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
               src="{{CDN::asset('/img/stories/story_grid2_10px.jpg') }}"
               data-srcset="{{CDN::asset('/img/stories/story_grid2_large.jpg') }} 740w,
                            {{CDN::asset('/img/stories/story_grid2_medium.jpg') }} 370w,
                            {{CDN::asset('/img/stories/story_grid2_small.jpg') }} 248w"
               data-sizes='(min-width: 1200px) 376px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 90vw,  30vw'
-              alt="Ho ho ho story"
-              title="Ho ho ho story"/>
+              alt="Baby Mornings"
+              title="Baby Mornings"/>
         </a>
 
         <!-- Grid-5 -->
