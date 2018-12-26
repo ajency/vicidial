@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 
 import { AppServiceService } from './service/app-service.service';
 import { ApiServiceService } from './service/api-service.service';
+import { AuthGuardService } from './service/auth-guard.service';
 import { NumbersDirective } from './directives/numbers.directive';
 
 import { LoginModule } from './shared-components/login/login.module';
@@ -39,7 +40,8 @@ import { BagSummaryModule } from './shared-components/bag-summary/bag-summary.mo
   providers: [
     {provide: LocationStrategy, useClass: HashLocationStrategy},
     AppServiceService,
-    ApiServiceService
+    ApiServiceService,
+    AuthGuardService
   ],
   bootstrap: [AppComponent]
 })

@@ -12,7 +12,7 @@ var destDir = path.resolve(rootDir, 'public/views/cart'); // destDir for cart ap
 
 let src = path.join(buildDir, 'main.bundle.js');
 
-let filesnames = ['main.bundle.js', 'polyfills.bundle.js', 'styles.bundle.css', 'vendor.bundle.js', 'inline.bundle.js'];
+let filesnames = ['main.bundle.js', 'polyfills.bundle.js', 'styles.bundle.css', 'vendor.bundle.js', 'inline.bundle.js', '0.chunk.js', '1.chunk.js', '2.chunk.js'];
 
 console.log("rootDir ==>", rootDir);
 console.log("buildDir ==>", buildDir);
