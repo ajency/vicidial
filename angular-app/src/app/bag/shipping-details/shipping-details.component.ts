@@ -231,7 +231,8 @@ export class ShippingDetailsComponent implements OnInit {
   closeCart(){
     let url = window.location.href.split("#")[0];
     history.pushState({cart : false}, 'cart', url);
-    window.location.reload();
+    this.appservice.closeCart();
+    // window.location.reload();
   }
 
   navigateBack(){

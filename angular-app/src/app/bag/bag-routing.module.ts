@@ -8,7 +8,8 @@ import { BagViewComponent } from './bag-view/bag-view.component';
 const routes: Routes = [
 	{ path: '', component: BagViewComponent },
 	{ path: 'shipping-address', component: ShippingDetailsComponent },
-	{ path: 'shipping-summary', component: ShippingSummaryComponent }
+	{ path: 'shipping-summary', component: ShippingSummaryComponent },
+	{ path: '**', redirectTo : 'bag'}
 ];
 
 @NgModule({

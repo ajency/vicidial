@@ -246,11 +246,12 @@ export class BagViewComponent implements OnInit {
   }
 
   viewOrders(){
-      let url = window.location.href.split("#")[0] + '#/account/my-orders';
-      this.appservice.closeCart();
-      history.pushState({cart : false}, 'cart', url);
+      // let url = window.location.href.split("#")[0] + '#/account/my-orders';
+      // this.appservice.closeCart();
+      // history.pushState({cart : false}, 'cart', url);
       // window.location.href = url;
       // this.reloadPage();
+      this.router.navigateByUrl('account/my-orders');
   }
 
   modalHandler(){
