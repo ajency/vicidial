@@ -27,7 +27,7 @@
 
            <img src="{{CDN::asset('/img/home-banner/banner1_20px.jpg') }}"
                data-sizes="100vw"
-               class="img-fluid lazyload blur-up w-100" alt="Kidsuperstore Banner - Shop for Rs.2000 and get products worth Rs.1000" title="Shop for Rs.2000 and get products worth Rs.1000">
+               class="img-fluid lazyload blur-up w-100" alt="New Year Super Sale - Flat 50% off" title="New Year Super Sale - Flat 50% off">
         </picture>
       </a>
     </div>
@@ -220,6 +220,30 @@
 <section>
   <div class="container">
     <div class="cat-container">
+      <div class="cat-item cat-13">
+        <a href="/shop">
+          <img class="d-block w-100 img-fluid lazyload blur-up"
+              src="{{CDN::asset('/img/home-category/category_grid13_10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/home-category/category_grid13_large.jpg') }} 740w,
+                            {{CDN::asset('/img/home-category/category_grid13_medium.jpg') }} 370w,
+                            {{CDN::asset('/img/home-category/category_grid13_small.jpg') }} 248w"
+              data-sizes='(min-width: 1200px) 570px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 92vw,  31vw'
+              alt="New Year Super Sale - Flat 50% off"
+              title="New Year Super Sale - Flat 50% off" />
+        </a>
+      </div>
+      <div class="cat-item cat-14">
+        <a href="/stationary">
+          <img class="d-block w-100 img-fluid lazyload blur-up"
+              src="{{CDN::asset('/img/home-category/category_grid14_10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/home-category/category_grid14_large.jpg') }} 740w,
+                            {{CDN::asset('/img/home-category/category_grid14_medium.jpg') }} 370w,
+                            {{CDN::asset('/img/home-category/category_grid14_small.jpg') }} 248w"
+              data-sizes='(min-width: 1200px) 570px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 92vw,  31vw'
+              alt="Bag To School"
+              title="Bag To School" />
+        </a>
+      </div>
       <div class="cat-item cat-1 position-relative">
         <a href="/girls/dress">
             <img class="d-block w-100 img-fluid lazyload blur-up"
@@ -294,8 +318,8 @@
               data-sizes='(min-width: 1200px) 370px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 92vw,  31vw'
               alt=""
               title=""/>
+          <p class="custom-text text-bottoms text-uppercase"><strong>Playful</strong> Bottoms</p>
         </a>
-        <p class="custom-text text-bottoms text-uppercase"><strong>Playful</strong> Bottoms</p>
         <div class="links-wrapper">
           <a href="/short" class="links-wrapper__first"></a>
           <a href="/short" class="links-wrapper__second"></a>
@@ -421,15 +445,15 @@
         </a>
     
         <!-- Grid-2 -->
-        <a href="/shop?pf=tag:ho-ho-ho" class="trend-box d-block link-card tab-append" style="order:1;">
+        <a href="/shop?pf=tag:baby-mornings" class="trend-box d-block link-card tab-append" style="order:1;">
           <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
               src="{{CDN::asset('/img/stories/story_grid2_10px.jpg') }}"
               data-srcset="{{CDN::asset('/img/stories/story_grid2_large.jpg') }} 740w,
                            {{CDN::asset('/img/stories/story_grid2_medium.jpg') }} 370w,
                            {{CDN::asset('/img/stories/story_grid2_small.jpg') }} 248w"
               data-sizes='(min-width: 1200px) 376px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 90vw,  30vw'
-              alt="Ho ho ho story"
-              title="Ho ho ho story"/>
+              alt="Baby Mornings"
+              title="Baby Mornings"/>
         </a>
 
         <!-- Grid-5 -->

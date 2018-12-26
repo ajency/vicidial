@@ -404,7 +404,7 @@ return [
     ], //Used for breadcrumbs on single product page
     "list_page_display_limit"        => 30,
     "similar_products_display_limit" => 5,
-    "price_filter_bucket_range"      => ["min" => 0, "max" => 2000],
+    "price_filter_bucket_range"      => ["min" => 0, "max" => 7000],
     "sort"                           => [
         'price_asc'  => ['field' => 'number_sort.variant_sale_price', "order" => 'asc'],
         'price_desc' => ['field' => 'number_sort.variant_sale_price', "order" => 'desc'],
@@ -416,5 +416,4 @@ return [
 
     ],
     "show_list_search" => true
-
 ];
