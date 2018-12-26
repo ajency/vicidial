@@ -16,6 +16,7 @@
                   <ul class="list-unstyled d-flex flex-wrap footer-link-separator">
                       <li><a href="/about-us" class="text-gray">About Us</a></li>
                       <li><a href="/contact" class="text-gray">Contact Us</a></li>
+                      <li><a href="https://cutshort.io/company/omni-edge-retail-private-ltd?career_page=true" class="text-gray">Careers</a></li>
                       <li><a href="/faq" class="text-gray">FAQ</a></li>
                       <li><a href="/terms-and-conditions" class="text-gray">Terms of Use</a></li>
                       <li><a href="/privacy-policy" class="text-gray">Privacy Policy</a></li>
