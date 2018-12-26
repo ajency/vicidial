@@ -154,6 +154,14 @@ function sanitiseFilterdata($result, $params = [])
             $filterResponse[$facet_name["key"]][$value["key"]] = $value["count"]["doc_count"];
         }
     }
+
+    $variant_facets = ['variant_size_name'];
+    foreach ($variant_facets as $facet_name) {
+        foreach ($result["aggregations"]['variant_aggregation']['available'][$facet_name]['buckets'] as $data) {
+            $filterResponse[$facet_name][$data["key"]] = $data['count']["doc_count"];
+        }
+    }
+
     $priceFilter = [
         "max" => (isset($result["aggregations"]["agg_price"]["facet_name"]["buckets"][0])) ? $result["aggregations"]["agg_price"]["facet_name"]["buckets"][0]['facet_value_max']['value'] : null,
         "min" => (isset($result["aggregations"]["agg_price"]["facet_name"]["buckets"][0])) ? $result["aggregations"]["agg_price"]["facet_name"]["buckets"][0]['facet_value_min']['value'] : null,

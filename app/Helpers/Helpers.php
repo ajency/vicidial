@@ -1,11 +1,11 @@
 <?php
 
 use App\Defaults;
+use App\Elastic\OdooConnect;
 use App\Jobs\FetchProductImages;
 use App\Location;
 use App\User;
 use Carbon\Carbon;
-use App\Elastic\OdooConnect;
 function valInteger($object, $values)
 {
     if (empty($object) || empty($values)) {
@@ -35,17 +35,17 @@ function makeQueryfromParams($searchObject)
 {
     $queryParams    = ['search_data' => []];
     $elasticMapping = [
-        'product_category_type' => 'search_data.string_facet.product_category_type',
-        'product_gender'        => 'search_data.string_facet.product_gender',
-        'product_age_group'     => 'search_data.string_facet.product_age_group',
-        'product_subtype'       => 'search_data.string_facet.product_subtype',
-        'product_color_html'    => 'search_data.string_facet.product_color_html',
-        'variant_sale_price'    => 'search_data.number_facet.variant_sale_price',
-        'variant_availability'  => 'search_data.boolean_facet.variant_availability',
-        'product_image_available'  => 'search_data.boolean_facet.product_image_available',
+        'product_category_type'   => 'search_data.string_facet.product_category_type',
+        'product_gender'          => 'search_data.string_facet.product_gender',
+        'product_age_group'       => 'search_data.string_facet.product_age_group',
+        'product_subtype'         => 'search_data.string_facet.product_subtype',
+        'product_color_html'      => 'search_data.string_facet.product_color_html',
+        'variant_sale_price'      => 'search_data.number_facet.variant_sale_price',
+        'variant_availability'    => 'search_data.boolean_facet.variant_availability',
+        'product_image_available' => 'search_data.boolean_facet.product_image_available',
         'product_att_ecom_sales'  => 'search_data.boolean_facet.product_att_ecom_sales',
-        'product_metatag'  => 'search_data.string_facet.product_metatag',
-        'variant_size_name'  => 'search_data.string_facet.variant_size_name',
+        'product_metatag'         => 'search_data.string_facet.product_metatag',
+        'variant_size_name'       => 'search_data.string_facet.variant_size_name',
     ];
 
     foreach ($searchObject as $filterType => $params) {
@@ -83,14 +83,15 @@ function makeQueryfromParams($searchObject)
     return $queryParams;
 }
 
-function fetchMetaTags($ids){
+function fetchMetaTags($ids)
+{
     $odoo = new OdooConnect;
-    return    $odoo->defaultExec('product.metatag', 'read', [$ids], ['fields' => ['name', 'metatag']]);
+    return $odoo->defaultExec('product.metatag', 'read', [$ids], ['fields' => ['name', 'metatag']]);
 }
 
 function sanitiseProductData($odooData)
 {
-    $metatags = fetchMetaTags($odooData['metatag_ids']);
+    $metatags      = fetchMetaTags($odooData['metatag_ids']);
     $create_date   = new Carbon($odooData['create_date']);
     $__last_update = new Carbon($odooData['__last_update']);
     $write_date    = new Carbon($odooData['write_date']);
@@ -124,7 +125,7 @@ function sanitiseProductData($odooData)
         "product_att_ecom_sales"           => ($odooData["att_ecom_sales"] == "yes") ? true : false,
         "product_vendor"                   => ($odooData["vendor_id"]) ? $odooData["vendor_id"][1] : null,
         'product_image_available'          => false,
-        'product_metatag'                 => $metatags->map(function ($item, $key){ $item['name'] = trim($item['name']); return $item;})->toArray(),
+        'product_metatag'                  => $metatags->map(function ($item, $key) {$item['name'] = trim($item['name']);return $item;})->toArray(),
     ];
     $product_categories = explode('/', $index['product_categories']);
     $categories         = ['product_category_type', 'product_gender', 'product_age_group', 'product_subtype'];
@@ -192,12 +193,14 @@ function generateFullTextForIndexing($productData, $variant)
         $productData['product_gender'],
         $productData['product_age_group'],
         $productData['product_subtype'],
-        implode(collect($productData['product_metatag'])->map(function ($item, $key) {return $item['name'];})->toArray(),  ' '),
+        implode(collect($productData['product_metatag'])->map(function ($item, $key) {return $item['name'];})->toArray(), ' '),
         $variant['variant_barcode'],
         $variant['variant_style_no'],
         $variant['product_color_name'],
         $variant['product_color_html'],
         $variant['variant_size_name'],
+        $productData['product_id'],
+        $productData['product_att_magento_display_name'],
     ];
     return implode(' ', $textComponents);
 }
@@ -270,7 +273,7 @@ function buildProductIndexFromOdooData($productData, $variantData)
         foreach ($facets as $facet) {
             foreach (config('product.facets.' . $facet . '.product') as $value) {
 
-                if ($value == 'product_metatag'){
+                if ($value == 'product_metatag') {
                     foreach ($productData[$value] as $metatag) {
                         $facetObj = [
                             'facet_name'  => $value,
@@ -442,7 +445,7 @@ function generateSubordersData($cartItems, $locations)
     }
 
     //start function which chooses the location
-    $max = collect($count)->max();
+    $max              = collect($count)->max();
     $selectedLocation = $locationsData->filter(function ($value, $key) use ($count, $max) {
         return $count[$key] == $max;
     })->sortBy('distance')->values()->first();

@@ -31,6 +31,12 @@
           <li class="nav-item" data-target="infants">
             Infants
           </li>
+          <li class="nav-item" data-target="toys">
+            Toys
+          </li>
+          <li class="nav-item" data-target="stationary">
+            Stationary
+          </li>
           <li class="flex-grow-1 disabled"></li>
           <li class="nav-item" data-target="otherlinks">
             Other links
@@ -88,9 +94,9 @@
                     <div class="nav-column nav-column--wide d-none d-lg-block">
                         <a href="/boys/shirt" class="d-block">
                           <img class="d-block w-100 img-fluid lazyload offer-img mt-4 mt-lg-0"
-                             src="{{CDN::asset('/img/collection/shirt-10px.jpg') }}"
-                             data-srcset="{{CDN::asset('/img/collection/shirt-large.jpg') }} 2x,
-                                          {{CDN::asset('/img/collection/shirt-medium.jpg') }} 1x"
+                             src="{{CDN::asset('/img/menu/mm_boys_onecolumn_10px.jpg') }}"
+                             data-srcset="{{CDN::asset('/img/menu/mm_boys_onecolumn_medium.jpg') }} 2x,
+                                          {{CDN::asset('/img/menu/mm_boys_onecolumn_small.jpg') }} 1x"
                              alt="Spotlight on Boys Shirts"
                              title="Spotlight on Boys Shirts"/>
                         </a>
@@ -156,9 +162,9 @@
                   <div class="nav-column nav-column--wide d-none d-lg-block">
                       <a href="/girls/ethnic" class="d-block">
                         <img class="d-block w-100 img-fluid lazyload offer-img mt-4 mt-lg-0"
-                           src="{{CDN::asset('/img/collection/ethnic-10px.jpg') }}"
-                           data-srcset="{{CDN::asset('/img/collection/ethnic-large.jpg') }} 2x,
-                                        {{CDN::asset('/img/collection/ethnic-medium.jpg') }} 1x"
+                           src="{{CDN::asset('/img/menu/mm_girls_onecolumn_10px.jpg') }}"
+                           data-srcset="{{CDN::asset('/img/menu/mm_girls_onecolumn_medium.jpg') }} 2x,
+                                        {{CDN::asset('/img/menu/mm_girls_onecolumn_small.jpg') }} 1x"
                            alt="Spotlight on Girls Ethnic wear"
                            title="Spotlight on Girls Ethnic wear"/>
                       </a>
@@ -217,9 +223,9 @@
                   <div class="nav-column nav-column--wide d-none d-lg-block">
                       <a href="/infant-0-2-years/dress" class="d-block">
                         <img class="d-block w-100 img-fluid lazyload offer-img mt-4 mt-lg-0"
-                           src="{{CDN::asset('/img/collection/infant-accessories-10px.jpg') }}"
-                           data-srcset="{{CDN::asset('/img/collection/infant-accessories-large.jpg') }} 2x,
-                                        {{CDN::asset('/img/collection/infant-accessories-medium.jpg') }} 1x"
+                           src="{{CDN::asset('/img/menu/mm_infants_onecolumn_10px.jpg') }}"
+                           data-srcset="{{CDN::asset('/img/menu/mm_infants_onecolumn_medium.jpg') }} 2x,
+                                        {{CDN::asset('/img/menu/mm_infants_onecolumn_small.jpg') }} 1x"
                            alt="Spotlight on Infant Utility"
                            title="Spotlight on Infant Utility"/>
                       </a>
@@ -235,6 +241,117 @@
                   </div>
               </div>
             </li>
+
+
+            <!-- Toys -->
+            <li>
+              <a href="javascript:void(0)" class="d-none d-lg-block">Toys</a>
+              <div class="megamenu-wrapper" data-menu="toys">
+                  <div class="nav-column">
+                      <div class="nav-column--heading mb-1">Shop by Sub-Types</div>
+                      <ul class="list-unstyled">
+                        <li><a class="megamenu-link" href="/toys/baby-toys">Baby Toys</a></li>
+                        <li><a class="megamenu-link" href="/toys/plush">Plush</a></li>
+                        <!-- <li><a class="megamenu-link" href="/bedsheets">Bedsheets</a></li> -->
+                        <li><a class="megamenu-link megamenu-link--primary" href="/toys">View all products</a></li>
+                      </ul>
+                  </div>
+
+                  <div class="nav-column">
+                      <div class="nav-column--heading mb-1">Shop by Price</div>
+                      <ul class="list-unstyled">
+                        <li><a class="megamenu-link" href="/toys?rf=price:0TO499">Below Rs.500</a></li>
+                        <li><a class="megamenu-link" href="/toys?rf=price:500TO999">Rs.500 to Rs.999</a></li>
+                        <li><a class="megamenu-link" href="/toys?rf=price:1000TO1499">Rs.1000 to Rs.1499</a></li>
+                        <li><a class="megamenu-link" href="/toys?rf=price:1500TO7000">Above Rs.1500</a></li>
+                      </ul>
+
+                      <div class="nav-column--heading mb-1">Shop by Gender</div>
+                      <ul class="list-unstyled">
+                        <li><a class="megamenu-link" href="/toys/boys">Boys</a></li>
+                        <li><a class="megamenu-link" href="/toys/girls">Girls</a></li>
+                        <li><a class="megamenu-link" href="/toys/unisex">Unisex</a></li>
+                      </ul>
+                  </div>
+
+                  <div class="nav-column nav-column--wide d-none d-lg-block">
+                      <a href="/toys" class="d-block">
+                        <img class="d-block w-100 img-fluid lazyload mt-4 mt-lg-0"
+                           src="{{CDN::asset('/img/menu/mm_toys_twocolumn_10px.jpg') }}"
+                           data-srcset="{{CDN::asset('/img/menu/mm_toys_twocolumn_medium.jpg') }} 2x,
+                                        {{CDN::asset('/img/menu/mm_toys_twocolumn_small.jpg') }} 1x"
+                           alt="The Super Toy Store"
+                           title="The Super Toy Store"/>
+                      </a><!-- 
+                      <div class="row align-items-center mt-2 mb-4 mb-lg-0">
+                          <div class="col-7">
+                            <div class="h5 text-primary font-weight-bold">Spotlight on</div>
+                            <div class="text-white">Infants dress</div>
+                          </div>
+                          <div class="col-5">
+                            <a href="/infant-0-2-years/dress" class="btn kss-btn kss-btn--mini">Shop now</a>
+                          </div>
+                      </div> -->
+                  </div>
+              </div>
+            </li>
+
+
+            <!-- Stationary -->
+            <li>
+              <a href="javascript:void(0)" class="d-none d-lg-block">Stationary</a>
+              <div class="megamenu-wrapper" data-menu="stationary">
+                  <div class="nav-column">
+                      <div class="nav-column--heading mb-1">Shop by Sub-Types</div>
+                      <ul class="list-unstyled">
+                        <li><a class="megamenu-link" href="/bags">Bags</a></li>
+                        <li><a class="megamenu-link" href="/water-bottles">Water Bottles</a></li>
+                        <li><a class="megamenu-link" href="/boxes?search_string=box">Lunch Box/Pencil Case</a></li>
+                        <li><a class="megamenu-link" href="/boxes?search_string=birthday">Birthday Decoration</a></li>
+                        <li><a class="megamenu-link megamenu-link--primary" href="/stationary">View all products</a></li>
+                      </ul>
+                  </div>
+
+                  <div class="nav-column">
+                      <div class="nav-column--heading mb-1">Shop by Price</div>
+                      <ul class="list-unstyled">
+                        <li><a class="megamenu-link" href="/stationary?rf=price:0TO499">Below Rs.500</a></li>
+                        <li><a class="megamenu-link" href="/stationary?rf=price:500TO999">Rs.500 to Rs.999</a></li>
+                        <li><a class="megamenu-link" href="/stationary?rf=price:1000TO1499">Rs.1000 to Rs.1499</a></li>
+                        <li><a class="megamenu-link" href="/stationary?rf=price:1500TO3000">Above Rs.1500</a></li>
+                        <!-- <li><a class="megamenu-link" href="#">Above Rs.2000</a></li> -->
+                      </ul>
+
+                      <div class="nav-column--heading mb-1">Shop by Gender</div>
+                      <ul class="list-unstyled">
+                        <li><a class="megamenu-link" href="/stationary/boys">Boys</a></li>
+                        <li><a class="megamenu-link" href="/stationary/girls">Girls</a></li>
+                        <li><a class="megamenu-link" href="/stationary/unisex">Unisex</a></li>
+                      </ul>
+                  </div>
+
+                  <div class="nav-column nav-column--wide d-none d-lg-block">
+                      <a href="/stationary" class="d-block">
+                        <img class="d-block w-100 img-fluid lazyload mt-4 mt-lg-0"
+                           src="{{CDN::asset('/img/menu/mm_stationary_twocolumn_10px.jpg') }}"
+                           data-srcset="{{CDN::asset('/img/menu/mm_stationary_twocolumn_medium.jpg') }} 2x,
+                                        {{CDN::asset('/img/menu/mm_stationary_twocolumn_small.jpg') }} 1x"
+                           alt="Bag To School"
+                           title="Bag To School"/>
+                      </a><!-- 
+                      <div class="row align-items-center mt-2 mb-4 mb-lg-0">
+                          <div class="col-7">
+                            <div class="h5 text-primary font-weight-bold">Spotlight on</div>
+                            <div class="text-white">Infants dress</div>
+                          </div>
+                          <div class="col-5">
+                            <a href="/infant-0-2-years/dress" class="btn kss-btn kss-btn--mini">Shop now</a>
+                          </div>
+                      </div> -->
+                  </div>
+              </div>
+            </li>
+
 
             <!-- Other links -->
             <li class="d-lg-none align-self-end">
