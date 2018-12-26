@@ -263,7 +263,7 @@
                         <li><a class="megamenu-link" href="/toys?rf=price:0TO499">Below Rs.500</a></li>
                         <li><a class="megamenu-link" href="/toys?rf=price:500TO999">Rs.500 to Rs.999</a></li>
                         <li><a class="megamenu-link" href="/toys?rf=price:1000TO1499">Rs.1000 to Rs.1499</a></li>
-                        <li><a class="megamenu-link" href="/toys?rf=price:1500TO2000">Above Rs.1500</a></li>
+                        <li><a class="megamenu-link" href="/toys?rf=price:1500TO7000">Above Rs.1500</a></li>
                       </ul>
 
                       <div class="nav-column--heading mb-1">Shop by Gender</div>
@@ -318,7 +318,7 @@
                         <li><a class="megamenu-link" href="/stationary?rf=price:0TO499">Below Rs.500</a></li>
                         <li><a class="megamenu-link" href="/stationary?rf=price:500TO999">Rs.500 to Rs.999</a></li>
                         <li><a class="megamenu-link" href="/stationary?rf=price:1000TO1499">Rs.1000 to Rs.1499</a></li>
-                        <li><a class="megamenu-link" href="/stationary?rf=price:1500TO2000">Above Rs.1500</a></li>
+                        <li><a class="megamenu-link" href="/stationary?rf=price:1500TO3000">Above Rs.1500</a></li>
                         <!-- <li><a class="megamenu-link" href="#">Above Rs.2000</a></li> -->
                       </ul>
 
