@@ -1,0 +1,73 @@
+
+<div class="cart-step1-header">
+	<nav class="navbar navbar-dark bg-dark pt-3 pb-3 ">
+		<div class="d-flex align-items-center w-100">
+			<div class="">
+				<a>
+					<img _ngcontent-c1="" class=" img-fluid m-0" src="/img/logo-kss.png" width="180px" xpreview="/img/logo-kss.png">
+			 	</a>
+			</div>
+			<div class="ml-auto align-self-center">
+				<h3 class="m-0 text-white kss_highlight btn-pay" (click)="closeWidget()"><span aria-hidden="true">×</span></h3>
+			</div>
+		</div>
+	</nav>
+</div>
+
+<div class="container mt-3 order-details p-0">
+	<div class="row">
+		<div class="col-12">
+             <div>
+	          	<div class="row no-gutter">
+					<div *ngIf="showBackButton" class="col-1">
+		             <h3 class="m-0 font-weight-bold back-to-cart">
+		               <img (click)="navigateBack()" class="btn-back kss_highlight" src="/img/left-arrow.png" style="width:20px;">
+		             </h3>
+		           </div>
+					<div class="col-10">
+						<h3 class="modal-title font-weight-bold" id="exampleModalLabel">Order Details</h3>
+					</div>
+				</div>
+				<hr>
+	      </div>
+
+		</div>
+	</div>
+	<div *ngIf="order;else other_content" class="row mt-md-2 mt-0">
+
+		<div class="col-12">
+
+			<!-- Order info -->
+			<app-order-info [order_info]="order.order_info"></app-order-info>
+
+			<hr class="mb-4">
+
+			<!-- Product info -->			
+			<app-order [sub_orders]="order.sub_orders"></app-order>
+<!-- 			<div class="d-flex  align-self-center mb-4">
+				<label>
+					Need help with this order? <a href="#" class="kss-anchor">Visit our help center</a>
+				</label>
+			</div> -->
+
+		</div>
+
+		<!-- Order Info sidebar -->
+		<div class="col-12 mb-4 pb-3">
+			<app-payment-info [payment_info]="order.payment_info"></app-payment-info>
+			<app-shipping-address [shipping_address]="order.shipping_address"></app-shipping-address>
+			<app-order-summary [order_summary]="order.order_summary"></app-order-summary>
+		</div>
+	</div>
+
+	<ng-template #other_content>
+		<div class="no-order-details d-flex align-items-center flex-column justify-content-center text-center">
+			<img src="/img/orders-empty.png" class="img-fluid" width="80">
+			<h5 _ngcontent-c1="" class="pt-4 pb-2 mb-0" style="line-height: 1.5;">Opps, it looks like this order does not exists.</h5>
+			<div class="mt-2 mb-4 pt-2 pb-3 text-center">
+				<a href="javascript:void(0);" class="btn kss-btn kss-btn--secondary-link" (click)="openListOfOrders(order)">Go to My orders <i class="fas fa-chevron-right"></i></a>
+			</div>	
+		</div>
+	</ng-template>
+
+</div>
