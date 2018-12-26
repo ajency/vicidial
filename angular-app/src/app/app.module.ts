@@ -3,13 +3,11 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {APP_BASE_HREF} from '@angular/common';
 import { HttpModule }    from '@angular/http';
+import {HashLocationStrategy, Location, LocationStrategy} from '@angular/common';
 
 import { AppRoutingModule }     from './app-routing.module';
 
 import { AppComponent } from './app.component';
-import { CartComponent } from './pages/cart/cart.component';
-import { ShippingDetailsComponent } from './pages/shipping-details/shipping-details.component';
-import { ShippingSummaryComponent } from './pages/shipping-summary/shipping-summary.component';
 
 import { AppServiceService } from './service/app-service.service';
 import { ApiServiceService } from './service/api-service.service';
@@ -17,22 +15,17 @@ import { NumbersDirective } from './directives/numbers.directive';
 
 import { LoginModule } from './shared-components/login/login.module';
 import { PromotionsModule } from './shared-components/promotions/promotions.module';
-import { AppliedCouponComponent } from './components/applied-coupon/applied-coupon.component';
-import { UpgradeCartComponent } from './components/upgrade-cart/upgrade-cart.component';
-import { BetterPromoAvailableComponent } from './components/better-promo-available/better-promo-available.component';
+// import { AppliedCouponComponent } from './components/applied-coupon/applied-coupon.component';
+// import { UpgradeCartComponent } from './components/upgrade-cart/upgrade-cart.component';
+// import { BetterPromoAvailableComponent } from './components/better-promo-available/better-promo-available.component';
 
 import { BagSummaryModule } from './shared-components/bag-summary/bag-summary.module';
+// import { BagModule } from './bag/bag.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CartComponent,
-    ShippingDetailsComponent,
-    ShippingSummaryComponent,
-    NumbersDirective,
-    AppliedCouponComponent,
-    UpgradeCartComponent,
-    BetterPromoAvailableComponent
+    NumbersDirective
   ],
   imports: [
     BrowserModule,
@@ -44,7 +37,7 @@ import { BagSummaryModule } from './shared-components/bag-summary/bag-summary.mo
     BagSummaryModule
   ],
   providers: [
-    {provide: APP_BASE_HREF, useValue: '/'},
+    {provide: LocationStrategy, useClass: HashLocationStrategy},
     AppServiceService,
     ApiServiceService
   ],
