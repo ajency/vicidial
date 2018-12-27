@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit, NgZone, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppServiceService } from '../../service/app-service.service';
 import { ApiServiceService } from '../../service/api-service.service';
@@ -26,6 +26,8 @@ declare var fbTrackInitiateCheckout : any;
 })
 export class BagViewComponent implements OnInit {
 
+  @Input() userLoggedIn : any;
+
   enterCoupon = false;
   cart : any = {};
   sessionCheckInterval : any;
@@ -41,6 +43,10 @@ export class BagViewComponent implements OnInit {
   addToCartFailed : boolean = false;
   promotions = [];
   displayPromo : boolean = true;
+  showLoginPopup : boolean = true;
+
+  loginSuccessSub : Subscription;
+  loginCheckTimer : any;
   constructor( private router: Router,
                private appservice : AppServiceService,
                private apiservice : ApiServiceService,
@@ -50,8 +56,13 @@ export class BagViewComponent implements OnInit {
     this.reloadSubscription = this.appservice.listenToAddToCartEvent().subscribe(()=> { this.reloadCart() });
     this.loadSubscription = this.appservice.listenToOpenCartEvent().subscribe(()=> { this.loadCart() });
 
-    this.closeModalSubscription = this.appservice.listenToCloseModal().subscribe(()=>{ this.updateOtpModal(false)});
+    this.closeModalSubscription = this.appservice.listenToCloseModal().subscribe(()=>{ console.log("loginSuccess event received") });
     this.openModalSubscription = this.appservice.listenToOpenModal().subscribe(()=>{ this.modalHandler()});
+
+
+  if(!this.appservice.isLoggedInUser()){
+
+  }
 
   }
 
@@ -70,15 +81,52 @@ export class BagViewComponent implements OnInit {
   }
 
   ngOnDestroy() {
+    console.log("bag-view ngOnDestroy");
   // unsubscribe to ensure no memory leaks
+    this.clearLoginTimerInterval();
     this.reloadSubscription.unsubscribe();
     this.loadSubscription.unsubscribe();
     this.closeModalSubscription.unsubscribe();
     this.openModalSubscription.unsubscribe();
   }
 
+  clearLoginTimerInterval(){
+    if(this.loginCheckTimer)
+      clearInterval(this.loginCheckTimer);
+  }
+
+  ngOnChanges(){
+    console.log("bag-view ngOnChanges", this.userLoggedIn);
+  }
+
+  ngDoCheck(){
+    // console.log("bag-view ngDoCheck");
+  }
+
+  ngAfterContentInit(){
+    console.log("bag-view ngAfterContentInit");
+  }
+
+  ngAfterContentChecked(){
+    // console.log("bag-view ngAfterContentChecked");
+  }
+
+  // ngAfterViewInit(){
+  //   console.log("bag-view ngAfterViewInit");
+  // }
+
+  ngAfterViewChecked(){
+    // console.log("bag-view ngAfterViewChecked");
+  }
+
   ngOnInit() {
     console.log("ngOnInit cart component");        
+
+    this.loginSuccessSub = this.appservice.listenToLoginSuccess().subscribe(()=> {
+      console.log("bag view loginSuccess event fired");
+      this.loginSuccess();
+    })
+
       this.updateUrl();
       this.cartOpen = true;
       $('.ng-cart-loader').removeClass('cart-loader')
@@ -92,8 +140,9 @@ export class BagViewComponent implements OnInit {
   }
 
   ngAfterViewInit(){
-    if(window.location.href.endsWith('/user-verification'))
-      this.modalHandler();
+    console.log("bag-view ngAfterViewInit");
+    // if(window.location.href.endsWith('/user-verification'))
+    //   this.modalHandler();
   }
 
   updateUrl(){
@@ -266,17 +315,21 @@ export class BagViewComponent implements OnInit {
   }
 
   displayModal(){
-    let url = window.location.href +'/user-verification';
-    if(!window.location.href.endsWith('#bag/user-verification'))
-      history.pushState({cart : true}, 'cart', url);
-    $('#signin').modal('show');
-    $("#cd-cart").css("overflow", "hidden");
-    $('.modal-backdrop').appendTo('#cd-cart');
-    $('body').addClass('hide-scroll');
+    this.checkLoginTimer();
+    this.router.navigate([{ outlets: { popup: ['user-login'] }}]);
+    // this.showLoginPopup = true;
+    // let url = window.location.href +'/user-verification';
+    // if(!window.location.href.endsWith('#bag/user-verification'))
+    //   history.pushState({cart : true}, 'cart', url);
+    // $('#signin').modal('show');
+    // $("#cd-cart").css("overflow", "hidden");
+    // $('.modal-backdrop').appendTo('#cd-cart');
+    // $('body').addClass('hide-scroll');
   }
 
 
-  updateOtpModal(updateHistory : boolean = true){
+  removeModal(updateHistory : boolean = true){
+    this.showLoginPopup = false;
     $('#signin').modal('hide');
     $("#cd-cart").css("overflow", "auto");
     // this.mobileNumberEntered = false;
@@ -286,6 +339,7 @@ export class BagViewComponent implements OnInit {
   }
 
   navigateToShippingDetailsPage(){
+    this.removeModal();
     console.log("navigateToShippingDetailsPage");
     if(this.cart.cart_type == "cart"){
       this.appservice.showLoader();
@@ -293,8 +347,12 @@ export class BagViewComponent implements OnInit {
         this.appservice.shippingAddresses = response.addresses;
         $("#cd-cart").css("overflow", "auto");
         $('.modal-backdrop').remove();
-        this.router.navigateByUrl('bag/shipping-address');
-        // this.router.navigate(['shipping-details']);
+        if(this.appservice.userVerificationComplete){
+          this.appservice.userVerificationComplete = false;
+          this.router.navigateByUrl('bag/shipping-address', { replaceUrl: true });
+        }
+        else
+          this.router.navigateByUrl('bag/shipping-address');
         this.appservice.removeLoader();
       })
       .catch((error)=>{
@@ -449,6 +507,22 @@ export class BagViewComponent implements OnInit {
         this.editBag();
       }
     }
+  }
+
+  loginSuccess(){
+    console.log("loginSuccess navigateToShippingDetailsPage")
+    this.navigateToShippingDetailsPage();
+  }
+
+  checkLoginTimer(){
+    this.clearLoginTimerInterval();
+    console.log("inside checkLoginTimer function");
+    this.loginCheckTimer = setInterval(()=>{
+      if(this.appservice.isLoggedInUser()){
+        this.loginSuccess();
+        this.clearLoginTimerInterval();
+      }
+    },100)
   }
   
 }
