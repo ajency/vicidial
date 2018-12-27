@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 use App\Jobs\FetchProductImages;
 use SoapBox\Formatter\Formatter;
 use Illuminate\Support\Facades\Storage;
+use App\Elastic\OdooConnect;
+use Illuminate\Support\Facades\DB;
+use App\Jobs\IndexProduct;
+use Carbon\Carbon;
 
 class ProductColor extends Model
 {
@@ -163,5 +167,38 @@ class ProductColor extends Model
         $xml       = $formatter->toXml();
 
         Storage::disk('s3')->put(config('ajfileupload.doc_base_root_path').'/products.xml', $xml);
+    }
+
+    public static function getProductsFromOdooDiscounts()
+    {
+        $variant_ids  = array();
+        $offset       = 0;
+        $current_date = Carbon::now()->toDateTimeString();
+        do {
+            $odoo      = new OdooConnect;
+            $discounts = $odoo->defaultExec("product.template", 'search_read', [[['type', '=', 'discount'], ['discount_rule', '=', 'catalog'], ['from_date', '<', $current_date], ['to_date', '>', $current_date]]], ['fields' => config('odoo.model_fields.discounts'), 'order' => 'id', 'offset' => $offset]);
+
+            foreach ($discounts as $discount) {
+                $offset_p = 0;
+                do {
+                    $odoo_p   = new OdooConnect;
+                    $products = $odoo_p->defaultExec('prod_discount', 'read', [$discount['condition_id']], ['fields' => config('odoo.model_fields.discount_products')]);
+
+                    foreach ($products as $product_ids) {
+                        $variant_ids = array_merge($variant_ids, $product_ids['product_ids']);
+                    }
+
+                    $offset_p = $offset_p + $products->count();
+                } while ($products->count() == config('odoo.limit'));
+            }
+
+            $offset = $offset + $discounts->count();
+        } while ($discounts->count() == config('odoo.limit'));
+
+        $productIds = DB::select(DB::raw('SELECT DISTINCT product_id FROM product_colors where product_colors.id in (SELECT product_color_id from variants where variants.odoo_id in (' . implode(',', $variant_ids) . '))'));
+
+        foreach ($productIds as $productId) {
+            IndexProduct::dispatch($productId->product_id)->onQueue('process_product');
+        }
     }
 }

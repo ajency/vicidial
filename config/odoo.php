@@ -56,6 +56,10 @@ return [
             'from_date1',
             'to_date1',
             'priority1',
+            'condition_id',
+        ],
+        'discount_products'  => [
+            'product_ids',
         ],
     ],
 ];
