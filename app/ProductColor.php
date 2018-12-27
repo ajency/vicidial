@@ -134,7 +134,7 @@ class ProductColor extends Model
                     $params['sale_price'] = $variant["variant_sale_price"];
                     $params['price']      = $variant["variant_list_price"];
                 }
-                if ($params['availability'] == true || $variant['variant_availability'] == true) {
+                if ($params['availability'] == "in stock" || $variant['variant_availability'] == true) {
                     $params['availability'] = "in stock";
                 }
                 array_push($sizes, $variant["variant_size_name"]);
