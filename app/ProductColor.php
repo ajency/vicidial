@@ -108,7 +108,7 @@ class ProductColor extends Model
                 'color'             => $productColorData['search_result_data']['product_color_name'],
                 'gender'            => $productColorData['search_result_data']['product_gender'],
                 'identifier_exists' => 'no',
-                'link'              => url('/') . $productColorData['search_result_data']['product_slug'] . "/buy",
+                'link'              => url('/') . "/" . $productColorData['search_result_data']['product_slug'] . "/buy",
             ];
 
             if ($productColorData['search_result_data']['product_description'] != false) {
@@ -125,7 +125,7 @@ class ProductColor extends Model
 
             $params['sale_price']   = $productColorData["variants"][0]["variant_sale_price"];
             $params['price']        = $productColorData["variants"][0]["variant_list_price"];
-            $params['availability'] = false;
+            $params['availability'] = "out of stock";
             $params['size']         = "";
             $sizes                  = array();
 
@@ -135,7 +135,7 @@ class ProductColor extends Model
                     $params['price']      = $variant["variant_list_price"];
                 }
                 if ($params['availability'] == true || $variant['variant_availability'] == true) {
-                    $params['availability'] = true;
+                    $params['availability'] = "in stock";
                 }
                 array_push($sizes, $variant["variant_size_name"]);
             }
