@@ -173,16 +173,15 @@ class ProductColor extends Model
     {
         $variant_ids  = array();
         $offset       = 0;
+        $odoo         = new OdooConnect;
         $current_date = Carbon::now()->toDateTimeString();
         do {
-            $odoo      = new OdooConnect;
             $discounts = $odoo->defaultExec("product.template", 'search_read', [[['type', '=', 'discount'], ['discount_rule', '=', 'catalog'], ['from_date', '<', $current_date], ['to_date', '>', $current_date]]], ['fields' => config('odoo.model_fields.discounts'), 'order' => 'id', 'offset' => $offset]);
 
             foreach ($discounts as $discount) {
                 $offset_p = 0;
                 do {
-                    $odoo_p   = new OdooConnect;
-                    $products = $odoo_p->defaultExec('prod_discount', 'read', [$discount['condition_id']], ['fields' => config('odoo.model_fields.discount_products')]);
+                    $products = $odoo->defaultExec('prod_discount', 'read', [$discount['condition_id']], ['fields' => config('odoo.model_fields.discount_products')]);
 
                     foreach ($products as $product_ids) {
                         $variant_ids = array_merge($variant_ids, $product_ids['product_ids']);
