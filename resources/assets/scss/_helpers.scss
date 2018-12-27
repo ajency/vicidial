@@ -591,6 +591,21 @@ footer .bl-1{
     }
 }
 
+.web-wp{
+    display: none !important;
+    @media (min-width: 992px){
+        display: flex !important;
+    }
+}
+
+.mobile-wp{
+    display: none !important;
+    @media (max-width: 991px){
+        display: flex !important;
+    }
+}
+
+
 .align-self-normal{
     align-self: normal;
 }
