@@ -7,6 +7,7 @@ use App\Elastic\ElasticQuery;
 use Illuminate\Database\Eloquent\Model;
 use App\Jobs\FetchProductImages;
 use SoapBox\Formatter\Formatter;
+use Illuminate\Support\Facades\Storage;
 
 class ProductColor extends Model
 {
@@ -142,9 +143,11 @@ class ProductColor extends Model
             $params['size'] = implode('/', $sizes);
 
             array_push($xmlData, $params);
-
-            $formatter = Formatter::make($xmlData, Formatter::ARR);
-            $xml       = $formatter->toXml();
         }
+
+        $formatter = Formatter::make($xmlData, Formatter::ARR);
+        $xml       = $formatter->toXml();
+
+        Storage::disk('s3')->put(config('ajfileupload.doc_base_root_path').'/products.xml', $xml);
     }
 }
