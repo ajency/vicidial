@@ -75,7 +75,9 @@ class StaticController extends Controller
 
     public function productXML(Request $request)
     {
-        return Storage::disk('s3')->get(config('ajfileupload.doc_base_root_path').'/products.xml');
+        return response(Storage::disk('s3')->get(config('ajfileupload.doc_base_root_path').'/products.xml'), 200, [
+            'Content-Type' => 'application/xml'
+        ]);
     }
 
 }
