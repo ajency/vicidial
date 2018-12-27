@@ -25,31 +25,47 @@ export class OrderDetailsComponent implements OnInit {
   order : any;
   orders : any;
   showBackButton : boolean = false;
+
+  loginCheckTimer : any;
   constructor(private appservice : AppServiceService,
               private route: ActivatedRoute,
               private router: Router) { }
   
   ngOnInit() {
+    this.appservice.removeLoader();
     $("#cd-my-account").scrollTop(0);
     if(this.appservice.order){
       this.order =  this.appservice.order;
       this.showBackButton = true;
     }
     else{
-      this.appservice.showLoader();
-      this.appservice.getOrders().then((response)=>{
-        let formatted_data = this.appservice.formattedCartDataForUI(response.data);
-        this.orders = formatted_data;
-        this.appservice.myOrders = formatted_data;
-        this.findCurrentOrder();
-        console.log("orders ==>", this.orders);
-        this.appservice.removeLoader();
-      })
-      .catch((error)=>{
-        console.log("error ===>", error);
-        this.appservice.removeLoader();
-      }) 
+      if(this.appservice.isLoggedInUser()){
+        this.getOrders();
+      }
+      else{
+        this.displayModal();
+      } 
     }    
+  }
+
+  ngOnDestroy(){
+    this.clearLoginTimerInterval();
+  }
+
+  getOrders(){
+    this.appservice.showLoader();
+    this.appservice.getOrders().then((response)=>{
+      let formatted_data = this.appservice.formattedCartDataForUI(response.data);
+      this.orders = formatted_data;
+      this.appservice.myOrders = formatted_data;
+      this.findCurrentOrder();
+      console.log("orders ==>", this.orders);
+      this.appservice.removeLoader();
+    })
+    .catch((error)=>{
+      console.log("error ===>", error);
+      this.appservice.removeLoader();
+    })
   }
 
   closeWidget(){
@@ -71,6 +87,31 @@ export class OrderDetailsComponent implements OnInit {
 
   openListOfOrders(){
     this.router.navigateByUrl('account/my-orders');
+  }
+
+  isLoggedIn(){
+    return this.appservice.isLoggedInUser();
+  }
+
+  displayModal(){
+    this.checkLoginTimer();
+    this.router.navigate([{ outlets: { popup: ['user-login'] }}], { replaceUrl: true });
+  }
+
+  checkLoginTimer(){
+    this.clearLoginTimerInterval();
+    console.log("inside checkLoginTimer function");
+    this.loginCheckTimer = setInterval(()=>{
+      if(this.appservice.isLoggedInUser()){
+        this.getOrders();
+        this.clearLoginTimerInterval();
+      }
+    },100)
+  }
+
+  clearLoginTimerInterval(){
+    if(this.loginCheckTimer)
+      clearInterval(this.loginCheckTimer);
   }
 
 }

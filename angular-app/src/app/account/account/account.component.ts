@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AppServiceService } from '../../service/app-service.service';
 import { LoginComponentComponent } from '../../shared-components/login/login-component/login-component.component';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute} from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
 declare var $: any;
@@ -15,14 +15,18 @@ export class AccountComponent implements OnInit {
 
 	closeModalSubscription: Subscription;
   openModalSubscription : Subscription;
-
+  returnUrl: string;
+  loginCheckTimer : any;
   constructor(private appservice : AppServiceService,
-  			  private router : Router) {
-  	        this.closeModalSubscription = this.appservice.listenToCloseModal().subscribe(()=>{ this.closeLoginModal()});
+      			  private router : Router,
+              private route: ActivatedRoute) {
+  	      this.closeModalSubscription = this.appservice.listenToCloseModal().subscribe(()=>{ this.closeLoginModal()});
 	        this.openModalSubscription = this.appservice.listenToOpenModal().subscribe(()=>{ this.modalHandler()});
   	}
 
   ngOnInit() {
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    console.log("this.returnUrl ==>", this.returnUrl);
   	this.appservice.removeLoader();
   	if(!this.appservice.isLoggedInUser())
   		this.displayModal();
@@ -31,6 +35,7 @@ export class AccountComponent implements OnInit {
   ngOnDestroy(){
     this.closeModalSubscription.unsubscribe();
     this.openModalSubscription.unsubscribe();
+    this.clearLoginTimerInterval();
   }
 
   isLoggedIn(){
@@ -38,21 +43,24 @@ export class AccountComponent implements OnInit {
   }
 
   displayModal(){
-    let url = window.location.href +'/user-verification';
-    if(!window.location.href.endsWith('#/account/user-verification'))
-      history.pushState({cart : true}, 'cart', url);
-    $('#signin').modal('show');
-    $('.modal-backdrop').appendTo('#cd-my-account');
-    $('body').addClass('hide-scroll');
+    this.checkLoginTimer();
+    this.router.navigate([{ outlets: { popup: ['user-login'] }}], { replaceUrl: true });
+    // let url = window.location.href +'/user-verification';
+    // if(!window.location.href.endsWith('#/account/user-verification'))
+    //   history.replaceState({cart : true}, 'cart', url);
+    // $('#signin').modal('show');
+    // $('.modal-backdrop').appendTo('#cd-my-account');
+    // $('body').addClass('hide-scroll');
   }
 
   loginSucessTriggered(){
-  	history.back();
+  	// history.back();
+    // this.closeLoginModal();
   }
 
    closeLoginModal(){   	
-    $('#signin').modal('hide');
-    $("#cd-my-account").css("overflow", "auto");
+    // $('#signin').modal('hide');
+    // $("#cd-my-account").css("overflow", "auto");
 
     // To be added back once account page is ready
     // if(this.appservice.redirectUrl.endsWith('/my-orders') && this.appservice.isLoggedInUser()){
@@ -63,7 +71,8 @@ export class AccountComponent implements OnInit {
     // }
 
     // Temporary fix for not letting user see account page on history back
-    history.back();
+    // history.back();
+    this.router.navigateByUrl(this.returnUrl, { replaceUrl: true });
   }
 
   modalHandler(){
@@ -76,6 +85,22 @@ export class AccountComponent implements OnInit {
     history.replaceState({}, 'account', url);
     this.appservice.closeWidget();
     window.location.reload();
+  }
+
+  checkLoginTimer(){
+    this.clearLoginTimerInterval();
+    console.log("inside checkLoginTimer function");
+    this.loginCheckTimer = setInterval(()=>{
+      if(this.appservice.isLoggedInUser()){
+        this.closeLoginModal();
+        this.clearLoginTimerInterval();
+      }
+    },100)
+  }
+
+  clearLoginTimerInterval(){
+    if(this.loginCheckTimer)
+      clearInterval(this.loginCheckTimer);
   }
 
 }

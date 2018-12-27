@@ -20,7 +20,7 @@ export class MyOrdersComponent implements OnInit {
   order_params = { page : 1, display_limit : 10 }
   displayShowMore : boolean = true;
   apiCallComplete : boolean = false;
-
+  loginCheckTimer : any;
   constructor(private router: Router,
 						private appservice : AppServiceService,
 						private apiservice : ApiServiceService,) { 
@@ -28,13 +28,19 @@ export class MyOrdersComponent implements OnInit {
 
   ngOnInit() {
     console.log("ngOnInit my-orders");
-  	// this.appservice.removeLoader();
+  	this.appservice.removeLoader();
     if(this.appservice.isLoggedInUser()){
     	this.getOrders();      
     }
-    else
+    else{
       this.appservice.removeLoader();
+      this.displayModal();
+    }
 
+  }
+
+  ngOnDestroy(){
+    this.clearLoginTimerInterval();
   }
 
   navigateToBlank(){
@@ -87,6 +93,27 @@ export class MyOrdersComponent implements OnInit {
     // this.router.navigate([OrderDetailsComponent]);
     let order_route = 'account/my-orders/' + order.order_info.txn_no;
     this.router.navigate([order_route]);
+  }
+
+  displayModal(){
+    this.checkLoginTimer();
+    this.router.navigate([{ outlets: { popup: ['user-login'] }}], { replaceUrl: true });
+  }
+
+  checkLoginTimer(){
+    this.clearLoginTimerInterval();
+    console.log("inside checkLoginTimer function");
+    this.loginCheckTimer = setInterval(()=>{
+      if(this.appservice.isLoggedInUser()){
+        this.getOrders();
+        this.clearLoginTimerInterval();
+      }
+    },100)
+  }
+
+  clearLoginTimerInterval(){
+    if(this.loginCheckTimer)
+      clearInterval(this.loginCheckTimer);
   }
 
 }

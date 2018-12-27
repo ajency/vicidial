@@ -98,14 +98,18 @@
 				</div>
 			</div>
 
-			<div *ngIf="!isLoggedIn()" class="myorder-wrapper d-flex align-items-center justify-content-center">
+<!-- 			<div *ngIf="!isLoggedIn()" class="myorder-wrapper d-flex align-items-center justify-content-center">
 				<div class="text-center d-flex align-items-center justify-content-center flex-column">
 					<img src="/img/no-order-login.png" class="img-fluid" width="150">
-					<!-- <h4>Can't see all your orders?</h4> -->
-					<h4 class="py-4 mb-0">Please login to see all your orders</h4>
-					<!-- <button class="btn kss-btn kss-btn--big" (click)="displayModal()">
-						Login
-					</button> -->
+					<h4 class="py-4 mb-0">Please login to see all your orders</h4>					
+				</div>
+			</div> -->
+			
+			<div *ngIf="!isLoggedIn()">
+				<!-- <h4 class="font-weight-bold mt-3 mb-0">My Orders</h4> -->
+				<!-- <hr> -->
+				<div class="mt-4 kss-flash kss-flash--info py-3">
+					Can't see all your orders? <a href="javascript:void(0);" (click)="displayModal()" class="text-secondary font-weight-bold">Sign In</a>
 				</div>
 			</div>		
 		</div>
