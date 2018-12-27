@@ -19,6 +19,7 @@ export class ShippingSummaryComponent implements OnInit {
   showCancelButton : boolean = false;
   userName : any;
   userEmail : any;
+  widgetOpen : boolean = true;
   constructor(private router : Router,
   			   		private appservice : AppServiceService,
               private apiservice : ApiServiceService,
@@ -48,8 +49,9 @@ export class ShippingSummaryComponent implements OnInit {
   closeCart(){
     let url = window.location.href.split("#")[0];
     history.pushState({cart : false}, 'cart', url);
-    // this.appservice.closeCart();
-    window.location.reload();
+    this.widgetOpen = false;
+    this.appservice.closeCart();
+    // window.location.reload();
   }
 
   navigateBack(){

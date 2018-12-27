@@ -28,6 +28,8 @@ export class ShippingDetailsComponent implements OnInit {
   states : any;
   hideDefaultAddressField : boolean = false;
   cart : any;
+
+  widgetOpen : boolean = true;
   constructor( private router : Router,
                private appservice : AppServiceService,
                private apiservice : ApiServiceService
@@ -231,8 +233,9 @@ export class ShippingDetailsComponent implements OnInit {
   closeCart(){
     let url = window.location.href.split("#")[0];
     history.pushState({cart : false}, 'cart', url);
-    // this.appservice.closeCart();
-    window.location.reload();
+    this.widgetOpen = false;
+    this.appservice.closeCart();
+    // window.location.reload();
   }
 
   navigateBack(){
