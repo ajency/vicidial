@@ -6,26 +6,16 @@ var add_to_cart_completed = false;
 $(document).ready(function(){
     //Set crt count on page load
     updateCartCountInUI();
-    // console.log("window.location.href ==>",window.location.href)
-    if(window.location.href.endsWith('#bag') || window.location.href.endsWith('#bag/user-verification') || window.location.href.endsWith('#shipping-address') || window.location.href.endsWith('#shipping-summary'))
+
+    if(window.location.href.includes('#/bag') || window.location.href.includes('#/account'))
         openCart();
 
     window.onhashchange = function() { 
-     // console.log("hash changed");
-     if(!$('#cd-cart').hasClass("speed-in") && (window.location.href.endsWith('#bag') || window.location.href.endsWith('#bag/user-verification') || window.location.href.endsWith('#shipping-address') || window.location.href.endsWith('#shipping-summary')) ){
-        // console.log("opening cart from vanilla js");
+     console.log("hash changed");
+     if(!$('#cd-cart').hasClass("speed-in") && (window.location.href.includes('#/bag') || window.location.href.includes('#/account')) ){
         openCart();
      }
-     openAccountAppOnUrlChange();
-    }
-
-    openAccountAppOnUrlChange();
-    
-
-    function openAccountAppOnUrlChange(){
-        if(!$('#cd-my-account').hasClass("speed-in") && (window.location.href.includes('#/account/my-orders') || window.location.href.includes('#/account') || window.location.href.includes('#/account/user-verification') ))
-            openMyAccountPage();
-    }
+    }    
 
     var kss_alert_timeout;
 
@@ -57,6 +47,9 @@ $(document).ready(function(){
         
         // for angular app 
         add_to_cart_clicked = true;
+        let url = window.location.href.split("#")[0] + '#/bag';
+        // history.pushState({}, 'cart', url);
+        window.location = url;
         openCart();
 
         if($('input[type=radio][name=kss-sizes]:checked').length == 0){
@@ -82,14 +75,13 @@ $(document).ready(function(){
         $('[data-toggle="tooltip"]').tooltip();
     }
 
-    jQuery("#cd-cart-trigger").click(function() {
-      openCart();             
+    jQuery("#cd-cart-trigger").click(function() {      
+        let url = window.location.href.split("#")[0] + '#/bag';
+        // history.pushState({}, 'cart', url);
+        window.location = url;
+        openCart();   
     });
     
-    jQuery("#cd-my-account-trigger").click(function() {
-      openMyAccountPage();             
-    });
-
     function addToCart(){
         var var_id = $('input[type=radio][name=kss-sizes]:checked')[0].dataset['variant_id'];
         fbTrackAddToCart(var_id);
@@ -292,7 +284,7 @@ function loadAngularApp(){
                 // loadAngularApp();
             })
     }
-  }
+}
 
 function isLoggedInUser(){
     if(getCookie('token') && getCookie('cart_id'))
@@ -340,39 +332,4 @@ function fbTrackInitiateCheckout(order_total){
 
 function fbTrackAddPaymentInfo(){
     fbq('track', 'AddPaymentInfo');
-}
-
-function loadMyAccountApp(){
-    $.getScript("/views/my-account/inline.bundle.js")
-        .done(function(script, textStatus){
-            // console.log(textStatus);
-            $.getScript("/views/my-account/vendor.bundle.js")
-                .done(function(script2, textStatus2){
-                    // console.log(textStatus2);
-                    $.getScript("/views/my-account/polyfills.bundle.js")
-                        .done(function(script3, textStatus3){
-                            // console.log(textStatus3);
-                            $.getScript("/views/my-account/main.bundle.js")
-                                .done(function(script4,textStatus4){
-                                    // console.log(textStatus4);
-                                })
-                                .fail(function(jqxhr, settings, exception){
-                                    // console.log("angular load failed")
-                                    // loadAngularApp();
-                                })
-                        })
-                        .fail(function(jqxhr, settings, exception){
-                            // console.log("angular load failed")
-                            // loadAngularApp();
-                        })
-                })
-                .fail(function(jqxhr, settings, exception){
-                    // console.log("angular load failed")
-                    // loadAngularApp();
-                })
-        })
-        .fail(function(jqxhr, settings, exception){
-            // console.log("angular load failed")
-            // loadAngularApp();
-    })
 }
