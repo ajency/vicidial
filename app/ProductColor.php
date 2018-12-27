@@ -104,7 +104,7 @@ class ProductColor extends Model
             $params = [
                 'id'                => $productColorData['id'],
                 'title'             => $productColorData['search_result_data']['product_title'],
-                'age_group'         => $productColorData['search_result_data']['product_age_group'],
+                'age_group'         => ($productColorData['search_result_data']['product_age_group'] == 'Boys') ? 'male' : (($productColorData['search_result_data']['product_age_group'] == 'Girls') ? 'female' : 'unisex'),
                 'color'             => $productColorData['search_result_data']['product_color_name'],
                 'gender'            => $productColorData['search_result_data']['product_gender'],
                 'identifier_exists' => 'no',
