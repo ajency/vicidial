@@ -66,6 +66,7 @@ export class MyOrdersComponent implements OnInit {
       .catch((error)=>{
         console.log("error ===>", error);
         this.appservice.removeLoader();
+        this.apiCallComplete = true;
       }) 
     }
   }

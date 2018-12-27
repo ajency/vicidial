@@ -24,13 +24,13 @@ import { OrderSummaryComponent } from './components/order-summary/order-summary.
   ],
   declarations: [
   	AccountComponent, 
-	MyOrdersComponent, 
-	OrderDetailsComponent,
-	OrderInfoComponent,
-	OrderComponent,
-	ShippingAddressComponent,
-	PaymentInfoComponent,
-	OrderSummaryComponent
+  	MyOrdersComponent, 
+  	OrderDetailsComponent,
+  	OrderInfoComponent,
+  	OrderComponent,
+  	ShippingAddressComponent,
+  	PaymentInfoComponent,
+  	OrderSummaryComponent
   ]
 })
 export class AccountModule { }
