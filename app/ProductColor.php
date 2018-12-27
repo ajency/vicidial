@@ -6,6 +6,7 @@ use Ajency\FileUpload\FileUpload;
 use App\Elastic\ElasticQuery;
 use Illuminate\Database\Eloquent\Model;
 use App\Jobs\FetchProductImages;
+use SoapBox\Formatter\Formatter;
 
 class ProductColor extends Model
 {
@@ -141,6 +142,9 @@ class ProductColor extends Model
             $params['size'] = implode('/', $sizes);
 
             array_push($xmlData, $params);
+
+            $formatter = Formatter::make($xmlData, Formatter::ARR);
+            $xml       = $formatter->toXml();
         }
     }
 }
