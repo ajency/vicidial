@@ -7,6 +7,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use App\Product;
 
 class IndexInactiveProducts implements ShouldQueue
 {
@@ -29,6 +30,6 @@ class IndexInactiveProducts implements ShouldQueue
      */
     public function handle()
     {
-        //
+        Product::startInactiveSync();
     }
 }
