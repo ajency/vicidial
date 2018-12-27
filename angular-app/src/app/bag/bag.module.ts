@@ -14,7 +14,7 @@ import { AppliedCouponComponent } from '../components/applied-coupon/applied-cou
 import { UpgradeCartComponent } from '../components/upgrade-cart/upgrade-cart.component';
 import { BetterPromoAvailableComponent } from '../components/better-promo-available/better-promo-available.component';
 
-import { LoginModule } from '../shared-components/login/login.module';
+// import { LoginModule } from '../shared-components/login/login.module';
 
 @NgModule({
   imports: [
@@ -22,8 +22,7 @@ import { LoginModule } from '../shared-components/login/login.module';
     BagRoutingModule,
     FormsModule,
     BagSummaryModule,
-    PromotionsModule,
-    LoginModule
+    PromotionsModule
   ],
   declarations: [ShippingDetailsComponent, 
   				ShippingSummaryComponent, 

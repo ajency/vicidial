@@ -20,7 +20,7 @@ import { NumbersDirective } from './directives/numbers.directive';
 // import { UpgradeCartComponent } from './components/upgrade-cart/upgrade-cart.component';
 // import { BetterPromoAvailableComponent } from './components/better-promo-available/better-promo-available.component';
 
-import { BagSummaryModule } from './shared-components/bag-summary/bag-summary.module';
+// import { BagSummaryModule } from './shared-components/bag-summary/bag-summary.module';
 import { LoginComponent } from './login/login.component';
 // import { BagModule } from './bag/bag.module';
 
@@ -34,8 +34,7 @@ import { LoginComponent } from './login/login.component';
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    HttpModule,
-    BagSummaryModule
+    HttpModule
   ],
   providers: [
     {provide: LocationStrategy, useClass: HashLocationStrategy},
