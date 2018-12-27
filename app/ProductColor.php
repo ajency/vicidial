@@ -104,12 +104,15 @@ class ProductColor extends Model
             $params = [
                 'id'                => $productColorData['id'],
                 'title'             => $productColorData['search_result_data']['product_title'],
-                'age_group'         => $productColorData['search_result_data']['product_age_group'],
                 'color'             => $productColorData['search_result_data']['product_color_name'],
                 'gender'            => ($productColorData['search_result_data']['product_gender'] == 'Boys') ? 'male' : (($productColorData['search_result_data']['product_gender'] == 'Girls') ? 'female' : 'unisex'),
                 'identifier_exists' => 'no',
                 'link'              => url('/') . "/" . $productColorData['search_result_data']['product_slug'] . "/buy",
             ];
+
+            if ($productColorData['search_result_data']['product_age_group'] != 'Others' && $productColorData['search_result_data']['product_age_group'] != 'All') {
+                $params['age_group'] = ($productColorData['search_result_data']['product_age_group'] == 'Infant') ? 'infant' : (($productColorData['search_result_data']['product_age_group'] == 'Toddler') ? 'toddler' : 'kids');
+            }
 
             if ($productColorData['search_result_data']['product_description'] != false) {
                 $params['description'] = $productColorData['search_result_data']['product_description'];
