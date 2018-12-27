@@ -232,7 +232,7 @@ export class ShippingDetailsComponent implements OnInit {
     let url = window.location.href.split("#")[0];
     history.pushState({cart : false}, 'cart', url);
     this.appservice.closeCart();
-    // window.location.reload();
+    window.location.reload();
   }
 
   navigateBack(){
