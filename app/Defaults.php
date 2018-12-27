@@ -75,6 +75,27 @@ class Defaults extends Model
         $sync->save();
     }
 
+    public static function getLastInactiveVariantSync()
+    {
+        $sync = self::where('type', 'sync')->where('label', 'inactive_variant')->first();
+        if ($sync == null) {
+            $sync            = new self;
+            $sync->type      = 'sync';
+            $sync->label     = 'inactive_variant';
+            $sync->meta_data = ['time' => Carbon::now()->subYear()->startOfDay()->toDateTimeString()];
+            $sync->save();
+        }
+        return $sync->meta_data['time'];
+
+    }
+
+    public static function setLastInactiveVariantSync()
+    {
+        $sync            = self::where('type', 'sync')->where('label', 'inactive_variant')->first();
+        $sync->meta_data = ['time' => Carbon::now()->toDateTimeString()];
+        $sync->save();
+    }
+
     public static function getEmailExtras($type, $orig = [], $for = null)
     {
         if (!is_array($orig)) {
