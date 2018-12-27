@@ -72,7 +72,7 @@ export class ShippingDetailsComponent implements OnInit {
 
   checkCartStatus(){
     if(!this.appservice.isLoggedInUser()){
-       this.router.navigateByUrl('/bag');
+       this.router.navigateByUrl('/bag', { replaceUrl: true });
     }
     else{
       this.appservice.showLoader();
@@ -91,13 +91,13 @@ export class ShippingDetailsComponent implements OnInit {
            this.getAddress();
         }
         else{
-          this.router.navigateByUrl('/bag');
+          this.router.navigateByUrl('/bag', { replaceUrl: true });
         }
       })
       .catch((error)=>{
         console.log("error ===>", error);
         this.appservice.removeLoader();
-        this.router.navigateByUrl('/bag');
+        this.router.navigateByUrl('/bag', { replaceUrl: true });
       })
     }
   }

@@ -40,7 +40,7 @@ export class ShippingSummaryComponent implements OnInit {
     })
     .catch((error)=>{
       console.log("error ===>", error);
-      this.router.navigateByUrl('/bag');
+      this.router.navigateByUrl('/bag',{ replaceUrl: true });
       this.appservice.removeLoader();      
     })      
   }
@@ -82,7 +82,7 @@ export class ShippingSummaryComponent implements OnInit {
     })
     .catch((error)=>{
       console.log("error ===>", error);
-      this.router.navigateByUrl('/bag');
+      this.router.navigateByUrl('/bag', { replaceUrl: true });
       this.appservice.removeLoader();      
     })  
   }
