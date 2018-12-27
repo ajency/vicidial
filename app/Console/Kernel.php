@@ -4,7 +4,7 @@ namespace App\Console;
 
 use App\Jobs\ProductMoveSync;
 use App\Jobs\ProductSync;
-use App\Variant;
+use App\Product;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\ProductColor;
@@ -43,7 +43,7 @@ class Kernel extends ConsoleKernel
                 })->dailyAt('21:30');
             }
             $schedule->call(function() {
-                Variant::getInactiveVariants();
+                Product::startInactiveSync();
             })->daily();
         }
     }

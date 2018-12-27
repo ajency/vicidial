@@ -53,6 +53,21 @@ class Product
         } while ($products->count() == config('odoo.limit'));
     }
 
+    public static function startInactiveSync()
+    {
+        $odooFilter      = OdooConnect::odooFilter(['write' => Defaults::getLastInactiveProductSync()]);
+        $odooFilter[0][] = ['active', '=', false];
+        $offset          = 0;
+        $attributes      = ['order' => 'id', 'offset' => $offset];
+        $odoo            = new OdooConnect;
+        do {
+            $productIds = $odoo->defaultExec('product.template', 'search', $odooFilter, $attributes);
+            CreateProductJobs::dispatch($productIds)->onQueue('create_jobs');
+            $offset = $offset + $productIds->count();
+        } while ($productIds->count() == config('odoo.limit'));
+        Defaults::setLastInactiveProductSync();
+    }
+
     public static function indexProduct($product_id)
     {
         $odoo        = new OdooConnect;
@@ -67,10 +82,11 @@ class Product
 
     public static function indexVariants($variant_ids, $productData)
     {
-        $products     = collect();
-        $odoo         = new OdooConnect;
-        $variants     = collect();
-        $variantsData = $odoo->defaultExec("product.product", 'read', [$variant_ids], ['fields' => config('product.variant_fields')]);
+        $products         = collect();
+        $odoo             = new OdooConnect;
+        $variants         = collect();
+        $inactiveVariants = $odoo->defaultExec("product.product", 'search', [[['product_tmpl_id', '=', $productData['product_id']], ['active', '=', false]]], [])->toArray();
+        $variantsData     = $odoo->defaultExec("product.product", 'read', [array_merge($variant_ids, $inactiveVariants)], ['fields' => config('product.variant_fields')]);
         foreach ($variantsData as $variantData) {
             $attributeValues = $odoo->defaultExec('product.attribute.value', 'read', [$variantData['attribute_value_ids']], ['fields' => config('product.attribute_fields')]);
             $sanitisedData   = sanitiseVariantData($variantData, $attributeValues);
@@ -99,11 +115,11 @@ class Product
             $elastic = ProductColor::where('elastic_id', $product['product_id'] . '.' . $variant['product_color_id'])->first();
         }
         try {
-            $object                   = new Variant;
+            $object                   = Variant::firstOrNew(['odoo_id' => $variant['variant_id']]);
             $object->odoo_id          = $variant['variant_id'];
             $object->inventory        = [];
             $object->product_color_id = $elastic->id;
-            $object->active           = true;
+            $object->active           = $variant['variant_active'];
             $object->deleted          = false;
             $object->save();
         } catch (\Exception $e) {

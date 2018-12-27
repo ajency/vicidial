@@ -75,13 +75,13 @@ class Defaults extends Model
         $sync->save();
     }
 
-    public static function getLastInactiveVariantSync()
+    public static function getLastInactiveProductSync()
     {
-        $sync = self::where('type', 'sync')->where('label', 'inactive_variant')->first();
+        $sync = self::where('type', 'sync')->where('label', 'inactive_product')->first();
         if ($sync == null) {
             $sync            = new self;
             $sync->type      = 'sync';
-            $sync->label     = 'inactive_variant';
+            $sync->label     = 'inactive_product';
             $sync->meta_data = ['time' => Carbon::now()->subYear()->startOfDay()->toDateTimeString()];
             $sync->save();
         }
@@ -89,9 +89,9 @@ class Defaults extends Model
 
     }
 
-    public static function setLastInactiveVariantSync()
+    public static function setLastInactiveProductSync()
     {
-        $sync            = self::where('type', 'sync')->where('label', 'inactive_variant')->first();
+        $sync            = self::where('type', 'sync')->where('label', 'inactive_product')->first();
         $sync->meta_data = ['time' => Carbon::now()->toDateTimeString()];
         $sync->save();
     }
