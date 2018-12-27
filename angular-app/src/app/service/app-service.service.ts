@@ -1,4 +1,4 @@
-import { Injectable, isDevMode } from '@angular/core';
+import { Injectable, isDevMode, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
@@ -29,6 +29,9 @@ export class AppServiceService {
   myOrders : any; //used to store list of orders in my-orders page
   redirectUrl : any = '';
 
+  private loginSuccess = new Subject<any>();
+
+  @Output() loginComplete : EventEmitter<boolean> = new EventEmitter();
 
   constructor(	private router: Router,
                 private apiservice : ApiServiceService) { 
@@ -78,7 +81,10 @@ export class AppServiceService {
   }
 
   closeVerificationModal() {
-    this.closeModal.next();
+    console.log("closeVerificationModal");
+    this.loginComplete.emit();
+    // this.loginSuccess.next();
+    // this.closeModal.next();
   }
 
   openVerificationModal(){
@@ -99,6 +105,16 @@ export class AppServiceService {
 
   listenToOpenModal() : Observable<any> {
     return this.openModal.asObservable();
+  }
+
+
+  loginSuccessComplete(){
+    console.log("loginSuccessComplete for bag view");
+    this.loginSuccess.next();
+  }
+
+  listenToLoginSuccess() : Observable<any> {    
+    return this.loginSuccess.asObservable();
   }
 
   getCookie(cname) {

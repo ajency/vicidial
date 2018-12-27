@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, Output, EventEmitter} from '@angular/core';
 import { AppServiceService } from './service/app-service.service';
 import { Router } from '@angular/router';
 import { ApiServiceService } from './service/api-service.service';
@@ -13,9 +13,18 @@ declare var openCart: any;
 })
 export class AppComponent {
   title = 'KSS';
+
+  @Output() loginSuccessForBag : EventEmitter<any> = new EventEmitter();
+
   constructor(private appservice : AppServiceService,
 					  	private apiservice : ApiServiceService,
   						private router : Router){
+
+  	this.appservice.loginComplete.subscribe((data)=> {
+      console.log("loginSuccess event fired");
+      // this.appservice.loginSuccessComplete();
+      this.loginSuccessForBag.emit();
+    })
 
 	window.onpopstate = (event)=>{
 	  console.log("On popstate location: " + document.location + ", state: " + JSON.stringify(event.state));
@@ -49,12 +58,6 @@ export class AppComponent {
 }
 
 	ngOnInit(){
-		// if(window.location.href.endsWith('#shipping-address')){
-		// 		this.appservice.directNavigationToShippingAddress = true;
-		// 		this.router.navigateByUrl('/shipping-details', { skipLocationChange: true });
-		// }
-		// else{
-		// 	this.router.navigateByUrl('/cartpage', { skipLocationChange: true });
-		// }
+
 	}
 }

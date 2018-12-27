@@ -14,27 +14,27 @@ import { ApiServiceService } from './service/api-service.service';
 import { AuthGuardService } from './service/auth-guard.service';
 import { NumbersDirective } from './directives/numbers.directive';
 
-import { LoginModule } from './shared-components/login/login.module';
-import { PromotionsModule } from './shared-components/promotions/promotions.module';
+// import { LoginModule } from './shared-components/login/login.module';
+// import { PromotionsModule } from './shared-components/promotions/promotions.module';
 // import { AppliedCouponComponent } from './components/applied-coupon/applied-coupon.component';
 // import { UpgradeCartComponent } from './components/upgrade-cart/upgrade-cart.component';
 // import { BetterPromoAvailableComponent } from './components/better-promo-available/better-promo-available.component';
 
 import { BagSummaryModule } from './shared-components/bag-summary/bag-summary.module';
+import { LoginComponent } from './login/login.component';
 // import { BagModule } from './bag/bag.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NumbersDirective
+    NumbersDirective,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
     HttpModule,
-    LoginModule,
-    PromotionsModule,
     BagSummaryModule
   ],
   providers: [
