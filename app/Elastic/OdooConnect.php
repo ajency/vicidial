@@ -54,9 +54,9 @@ class OdooConnect
         ));
 
         \Log::info('odoo data from ' . $model . ' with user ' . $this->defaultConn()['username'] . ': ' . $data);
-        if (isset($data['faultCode'])) {
+        /*if (isset($data['faultCode'])) {
             abort(400);
-        }
+        }*/
         return $data;
     }
 

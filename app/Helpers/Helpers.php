@@ -712,3 +712,8 @@ function updateProductsWithMetaTags()
         $offset += $limit;
     } while (count($metatags) > 0);
 }
+
+function getDisplayWhatsapp()
+{
+    return Defaults::where('type', 'display')->where('label', 'whatsapp')->first()->meta_data[0];
+}
