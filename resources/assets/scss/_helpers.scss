@@ -240,6 +240,7 @@ footer .bl-1{
     font-size: 1em;
     display: none;
     padding: 1em;
+    padding-right: 0;
     z-index: 1;
     will-change: transform;
     @media (min-width: 320px) and (max-width: 767.98px) {
@@ -548,4 +549,63 @@ footer .bl-1{
         text-align: center;
         color: #fff;
     }
+}
+
+// Social colors
+
+.fb-color{
+    color: #3b5998;
+}
+
+.instagram-color{
+    color: #e95950;
+}
+
+.whatsapp-color{
+    color: #90ce46;
+}
+
+// whatsapp floating button
+
+.whatsapp-floating{
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 160px;
+    right: 35px;
+    background-color: #25d366;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 30px;
+    box-shadow: 2px 2px 3px #999;
+    z-index: 999;
+    a{
+        color: #fff;
+    }
+    @media (max-width: 767px){
+        bottom: 60px;
+        right: 20px;
+        width: 52px;
+        height: 52px;
+        font-size: 25px;
+    }
+}
+
+.web-wp{
+    display: none !important;
+    @media (min-width: 992px){
+        display: flex !important;
+    }
+}
+
+.mobile-wp{
+    display: none !important;
+    @media (max-width: 991px){
+        display: flex !important;
+    }
+}
+
+
+.align-self-normal{
+    align-self: normal;
 }
