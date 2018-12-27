@@ -84,4 +84,63 @@ class ProductColor extends Model
         $result = self::saveToElastic($elastic_data['id'], $elastic_data);
         return $result;
     }
+
+    public static function productXMLData()
+    {
+        $productColors = self::get();
+        $xmlData       = array();
+        foreach ($productColors as $productColor) {
+            try {
+                $productColorData = $productColor->getElasticData();
+            } catch (\Exception $e) {
+                continue;
+            }
+
+            $images     = $productColor->getAllImages(["main"]);
+            $main_image = (isset($images['main'])) ? $images['main'] : false;
+
+            $params = [
+                'id'                => $productColorData['id'],
+                'title'             => $productColorData['search_result_data']['product_title'],
+                'age_group'         => $productColorData['search_result_data']['product_age_group'],
+                'color'             => $productColorData['search_result_data']['product_color_name'],
+                'gender'            => $productColorData['search_result_data']['product_gender'],
+                'identifier_exists' => 'no',
+                'link'              => url('/') . $productColorData['search_result_data']['product_slug'] . "/buy",
+            ];
+
+            if ($productColorData['search_result_data']['product_description'] != false) {
+                $params['description'] = $productColorData['search_result_data']['product_description'];
+            }
+
+            if ($productColorData['search_result_data']['product_att_material'] != false) {
+                $params['material'] = $productColorData['search_result_data']['product_att_material'];
+            }
+
+            if ($productColorData['search_result_data']['product_image_available'] != false && $main_image != false) {
+                $params['image_link'] = $main_image;
+            }
+
+            $params['sale_price']   = $productColorData["variants"][0]["variant_sale_price"];
+            $params['price']        = $productColorData["variants"][0]["variant_list_price"];
+            $params['availability'] = false;
+            $params['size']         = "";
+            $sizes                  = array();
+
+            foreach ($productColorData["variants"] as $key => $variant) {
+                if ($params['sale_price'] > $variant["variant_sale_price"]) {
+                    $params['sale_price'] = $variant["variant_sale_price"];
+                    $params['price']      = $variant["variant_list_price"];
+                }
+                if ($params['availability'] == true || $variant['variant_availability'] == true) {
+                    $params['availability'] = true;
+                }
+                array_push($sizes, $variant["variant_size_name"]);
+            }
+
+            $params['size'] = implode('/', $sizes);
+
+            array_push($xmlData, $params);
+        }
+    }
 }
