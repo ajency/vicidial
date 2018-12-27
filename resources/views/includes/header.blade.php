@@ -360,6 +360,7 @@
                   <ul class="list-unstyled">
                     <li><a class="megamenu-link" href="/about-us">About Us</a></li>
                     <li><a class="megamenu-link" href="/contact">Contact Us</a></li>
+                    <li><a href="https://cutshort.io/company/omni-edge-retail-private-ltd?career_page=true" class="megamenu-link">Careers</a></li>
                     <li><a class="megamenu-link" href="/faq">FAQ</a></li>
                     <li><a class="megamenu-link" href="/terms-and-conditions">Terms of Use</a></li>
                     <li><a class="megamenu-link" href="/privacy-policy">Privacy Policy</a></li>

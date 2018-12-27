@@ -40,11 +40,12 @@
             <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
           </form> -->
           <p class="font-weight-bold"><strong>Keep In Touch (Social Connect)</strong></p>
-          <ul class="list-inline">
-            <li class="list-inline-item"><a href="https://www.facebook.com/kidsuperstore" class="text-dark" target="_blank"><i class="fab fa-facebook-f socialIcon-size"></i><span class="social-title">Facebook</span></a></li>
+          <ul class="list-inline d-flex align-items-center flex-wrap social-wrap">
+            <li class="list-inline-item"><a href="https://api.whatsapp.com/send?phone=+917304751127&text=Hi, I contacted you through your website." class="text-dark d-flex align-items-center" target="_blank"><i class="fab fa-whatsapp-square wa socialIcon-size whatsapp-color"></i><span class="social-title">Whatsapp</span></a></li>
+            <li class="list-inline-item"><a href="https://www.facebook.com/kidsuperstore" class="text-dark d-flex align-items-center" target="_blank"><i class="fab fa-facebook-f socialIcon-size fb-color"></i><span class="social-title">Facebook</span></a></li>
             <!-- <li class="list-inline-item"><a href="#" class="text-gray"><h3><i class="fab fa-twitter"></i></h3></a></li>
             <li class="list-inline-item"><a href="#" class="text-gray"><h3><i class="fab fa-youtube"></i></h3></a></li> -->
-            <li class="list-inline-item"><a href="https://www.instagram.com/kidsuperstore.in/" class="text-dark" target="_blank"><i class="fab fa-instagram socialIcon-size"></i><span class="social-title">Instagram</span></a></li>
+            <li class="list-inline-item"><a href="https://www.instagram.com/kidsuperstore.in/" class="text-dark d-flex align-items-center" target="_blank"><i class="fab fa-instagram socialIcon-size instagram-color"></i><span class="social-title">Instagram</span></a></li>
             <!-- <li class="list-inline-item"><a href="#" class="text-gray"><h3><i class="fab fa-google-plus-g"></i></h3></a></li>
             <li class="list-inline-item"><a href="#" class="text-gray"><h3><i class="fab fa-pinterest-p"></i></h3></a></li> -->
           </ul>
