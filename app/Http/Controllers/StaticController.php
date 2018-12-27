@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class StaticController extends Controller
 {
@@ -70,6 +71,13 @@ class StaticController extends Controller
     {
         $this->params['breadcrumb']['current'] = 'Store';
         return view('store-single')->with('params', $this->params);
+    }
+
+    public function productXML(Request $request)
+    {
+        return response(Storage::disk('s3')->get(config('ajfileupload.doc_base_root_path').'/products.xml'), 200, [
+            'Content-Type' => 'application/xml'
+        ]);
     }
 
 }

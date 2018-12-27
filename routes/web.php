@@ -32,6 +32,8 @@ Route::get('/stores/surat', 'StaticController@singlestore');
 Route::get('/stores/hyderabad', 'StaticController@singlestore');
 Route::get('/stores/coimbatore', 'StaticController@singlestore');
 
+Route::get('/products/xml', 'StaticController@productXML');
+
 Route::get('/rest/v1/authenticate/login', 'UserController@verifyOTP');
 Route::get('/rest/v1/authenticate/generate_otp', 'UserController@sendSMS');
 

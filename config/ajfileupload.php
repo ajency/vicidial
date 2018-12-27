@@ -37,4 +37,5 @@ return [
             "load" => "10X10"
         ],
     ],
+    'doc_base_root_path'      => env('DOC_PRESET','').'documents',
 ];
