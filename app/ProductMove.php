@@ -6,8 +6,6 @@ use App\Defaults;
 use App\Elastic\ElasticQuery;
 use App\Elastic\OdooConnect;
 use App\Jobs\CreateMoveJobs;
-use App\Jobs\IndexMove;
-use App\Jobs\IndexProduct;
 use App\Jobs\UpdateVariantInventory;
 
 class ProductMove
@@ -50,8 +48,8 @@ class ProductMove
             //     (new IndexMove($move_id))->onQueue('process_move'),
             // ])->dispatch(Variant::getVariantProductIdFromOdoo($sanitisedData['move_product_id']))->onQueue('process_product');
             // return;
-            throw new \Exception("Variant ".$sanitisedData['move_product_id']." not indexed. Failed to index Product Move ".$move_id, 1);
-            
+            throw new \Exception("Variant " . $sanitisedData['move_product_id'] . " not indexed. Failed to index Product Move " . $move_id, 1);
+
         }
         $elastic_data = array_merge($sanitisedData, $variant->getVariantData('all', 'variant_'));
         $data         = self::indexElasticData($elastic_data);
@@ -78,6 +76,57 @@ class ProductMove
             default:
                 \Log::notice("Product Move {$response['_id']} status {$response['result']}");
                 break;
+        }
+    }
+
+    public static function syncMovesToIndex($index, $start, $end)
+    {
+        $offset = 0;
+        do {
+            $moves = self::indexMoves($index, ['id_range' => [$start, $end]], $offset);
+            // $moves = self::getMoves(['id' => $start], $offset);
+            $offset = $offset + $moves->count();
+        } while ($start + $offset < $end);
+    }
+
+    public static function indexMoves($index, $filters, $offset, $limit = false)
+    {
+        $odooFilter = OdooConnect::odooFilter($filters);
+        $odoo       = new OdooConnect;
+        $attributes = ['order' => 'id', 'offset' => $offset, 'fields' => config('product.move_fields')];
+        if ($limit) {
+            $attributes['limit'] = $limit;
+        }
+        $moves         = $odoo->defaultExec('stock.move.line', 'search_read', $odooFilter, $attributes);
+        $sanitisedData = collect();
+        $moves->each(function ($item, $key) use ($sanitisedData) {
+            $sanitisedData->push(sanitiseMoveData($item, 'move_'));
+        });
+        self::bulkIndexProductMoves($index, $sanitisedData);
+        return $moves;
+    }
+
+    public static function bulkIndexProductMoves($index, $moves)
+    {
+        $query = new ElasticQuery;
+        $query->setIndex($index);
+        $query->initializeBulkIndexing();
+        $moves->each(function ($item, $key) use ($query) {
+            $query->addToBulkIndexing($item['move_id'], $item);
+        });
+        $responses = $query->bulk();
+        foreach ($responses['items'] as $response) {
+            switch ($response['index']['result']) {
+                case 'created':
+                    \Log::info("Product Move {$response['index']['_id']} created");
+                    break;
+                case 'updated':
+                    \Log::info("Product Move {$response['index']['_id']} updated");
+                    break;
+                default:
+                    \Log::notice("Product {$response['index']['_id']} status {$response['index']['result']}");
+                    break;
+            }
         }
     }
 
