@@ -233,7 +233,7 @@
         </a>
       </div>
       <div class="cat-item cat-14">
-        <a href="/stationary">
+        <a href="/stationery">
           <img class="d-block w-100 img-fluid lazyload blur-up"
               src="{{CDN::asset('/img/home-category/category_grid14_10px.jpg') }}"
               data-srcset="{{CDN::asset('/img/home-category/category_grid14_large.jpg') }} 740w,

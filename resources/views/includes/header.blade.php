@@ -34,8 +34,8 @@
           <li class="nav-item" data-target="toys">
             Toys
           </li>
-          <li class="nav-item" data-target="stationary">
-            Stationary
+          <li class="nav-item" data-target="stationery">
+            Stationery
           </li>
           <li class="flex-grow-1 disabled"></li>
           <li class="nav-item" data-target="otherlinks">
@@ -299,8 +299,8 @@
 
             <!-- Stationary -->
             <li>
-              <a href="javascript:void(0)" class="d-none d-lg-block">Stationary</a>
-              <div class="megamenu-wrapper" data-menu="stationary">
+              <a href="javascript:void(0)" class="d-none d-lg-block">Stationery</a>
+              <div class="megamenu-wrapper" data-menu="stationery">
                   <div class="nav-column">
                       <div class="nav-column--heading mb-1">Shop by Sub-Types</div>
                       <ul class="list-unstyled">
@@ -308,30 +308,30 @@
                         <li><a class="megamenu-link" href="/water-bottles">Water Bottles</a></li>
                         <li><a class="megamenu-link" href="/boxes?search_string=box">Lunch Box/Pencil Case</a></li>
                         <li><a class="megamenu-link" href="/boxes?search_string=birthday">Birthday Decoration</a></li>
-                        <li><a class="megamenu-link megamenu-link--primary" href="/stationary">View all products</a></li>
+                        <li><a class="megamenu-link megamenu-link--primary" href="/stationery">View all products</a></li>
                       </ul>
                   </div>
 
                   <div class="nav-column">
                       <div class="nav-column--heading mb-1">Shop by Price</div>
                       <ul class="list-unstyled">
-                        <li><a class="megamenu-link" href="/stationary?rf=price:0TO499">Below Rs.500</a></li>
-                        <li><a class="megamenu-link" href="/stationary?rf=price:500TO999">Rs.500 to Rs.999</a></li>
-                        <li><a class="megamenu-link" href="/stationary?rf=price:1000TO1499">Rs.1000 to Rs.1499</a></li>
-                        <li><a class="megamenu-link" href="/stationary?rf=price:1500TO3000">Above Rs.1500</a></li>
+                        <li><a class="megamenu-link" href="/stationery?rf=price:0TO499">Below Rs.500</a></li>
+                        <li><a class="megamenu-link" href="/stationery?rf=price:500TO999">Rs.500 to Rs.999</a></li>
+                        <li><a class="megamenu-link" href="/stationery?rf=price:1000TO1499">Rs.1000 to Rs.1499</a></li>
+                        <li><a class="megamenu-link" href="/stationery?rf=price:1500TO3000">Above Rs.1500</a></li>
                         <!-- <li><a class="megamenu-link" href="#">Above Rs.2000</a></li> -->
                       </ul>
 
                       <div class="nav-column--heading mb-1">Shop by Gender</div>
                       <ul class="list-unstyled">
-                        <li><a class="megamenu-link" href="/stationary/boys">Boys</a></li>
-                        <li><a class="megamenu-link" href="/stationary/girls">Girls</a></li>
-                        <li><a class="megamenu-link" href="/stationary/unisex">Unisex</a></li>
+                        <li><a class="megamenu-link" href="/stationery/boys">Boys</a></li>
+                        <li><a class="megamenu-link" href="/stationery/girls">Girls</a></li>
+                        <li><a class="megamenu-link" href="/stationery/unisex">Unisex</a></li>
                       </ul>
                   </div>
 
                   <div class="nav-column nav-column--wide d-none d-lg-block">
-                      <a href="/stationary" class="d-block">
+                      <a href="/stationery" class="d-block">
                         <img class="d-block w-100 img-fluid lazyload mt-4 mt-lg-0"
                            src="{{CDN::asset('/img/menu/mm_stationary_twocolumn_10px.jpg') }}"
                            data-srcset="{{CDN::asset('/img/menu/mm_stationary_twocolumn_medium.jpg') }} 2x,
