@@ -7,6 +7,7 @@ use App\Elastic\ElasticQuery;
 use App\Elastic\OdooConnect;
 use App\Jobs\CreateMoveJobs;
 use App\Jobs\UpdateVariantInventory;
+use App\Jobs\IndexAlternateMoves;
 
 class ProductMove
 {
@@ -79,6 +80,11 @@ class ProductMove
         }
     }
 
+    public static function syncMovesToIndex($index, $start, $end)
+    {
+        IndexAlternateMoves::dispatch($index, $start, $end)->onQueue('process_move');
+    }
+
     public static function indexMoves($index, $start, $end)
     {
         $odooFilter    = OdooConnect::odooFilter(['id_range' => [$start, $end]]);
@@ -91,7 +97,8 @@ class ProductMove
         });
         self::bulkIndexProductMoves($index, $sanitisedData);
         if($moves->count()  == config('odoo.limit') && $moves->last()['id'] < $end ){
-            self::indexMoves($index,$moves->last()['id']+1,$end);
+            IndexAlternateMoves::dispatch($index,$moves->last()['id']+1,$end)->onQueue('process_move');
+            // self::indexMoves($index,$moves->last()['id']+1,$end);
         }
     }
 
