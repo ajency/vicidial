@@ -108,6 +108,7 @@ class ProductColor extends Model
                 'gender'            => ($productColorData['search_result_data']['product_gender'] == 'Boys') ? 'male' : (($productColorData['search_result_data']['product_gender'] == 'Girls') ? 'female' : 'unisex'),
                 'identifier_exists' => 'no',
                 'link'              => url('/') . "/" . $productColorData['search_result_data']['product_slug'] . "/buy",
+                'product_type' => $productColorData['search_result_data']['product_category_type'] . ' > ' . $productColorData['search_result_data']['product_subtype'],
             ];
 
             if ($productColorData['search_result_data']['product_age_group'] != 'Others' && $productColorData['search_result_data']['product_age_group'] != 'All') {
@@ -124,6 +125,16 @@ class ProductColor extends Model
 
             if ($productColorData['search_result_data']['product_image_available'] != false && $main_image != false) {
                 $params['image_link'] = $main_image;
+            }
+
+            if ($productColorData['search_result_data']['product_category_type'] == 'Apparels' || $productColorData['search_result_data']['product_category_type'] == 'Accessories') {
+                $params['google_product_category'] = 166;
+            }
+            else if ($productColorData['search_result_data']['product_category_type'] == 'Shoes') {
+                $params['google_product_category'] = 187;
+            }
+            else if ($productColorData['search_result_data']['product_category_type'] == 'Toys') {
+                $params['google_product_category'] = 1239;
             }
 
             $params['sale_price']   = $productColorData["variants"][0]["variant_sale_price"];
