@@ -79,31 +79,20 @@ class ProductMove
         }
     }
 
-    public static function syncMovesToIndex($index, $start, $end)
+    public static function indexMoves($index, $start, $end)
     {
-        $offset = 0;
-        do {
-            $moves = self::indexMoves($index, ['id_range' => [$start, $end]], $offset);
-            // $moves = self::getMoves(['id' => $start], $offset);
-            $offset = $offset + $moves->count();
-        } while ($start + $offset < $end);
-    }
-
-    public static function indexMoves($index, $filters, $offset, $limit = false)
-    {
-        $odooFilter = OdooConnect::odooFilter($filters);
-        $odoo       = new OdooConnect;
-        $attributes = ['order' => 'id', 'offset' => $offset, 'fields' => config('product.move_fields')];
-        if ($limit) {
-            $attributes['limit'] = $limit;
-        }
+        $odooFilter    = OdooConnect::odooFilter(['id_range' => [$start, $end]]);
+        $odoo          = new OdooConnect;
+        $attributes    = ['order' => 'id', 'fields' => config('product.move_fields')];
         $moves         = $odoo->defaultExec('stock.move.line', 'search_read', $odooFilter, $attributes);
         $sanitisedData = collect();
         $moves->each(function ($item, $key) use ($sanitisedData) {
             $sanitisedData->push(sanitiseMoveData($item, 'move_'));
         });
         self::bulkIndexProductMoves($index, $sanitisedData);
-        return $moves;
+        if($moves->count()  == config('odoo.limit') && $moves->last()['id'] < $end ){
+            self::indexMoves($index,$moves->last()['id']+1,$end);
+        }
     }
 
     public static function bulkIndexProductMoves($index, $moves)
