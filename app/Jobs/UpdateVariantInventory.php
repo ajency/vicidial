@@ -15,16 +15,18 @@ class UpdateVariantInventory implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     public $tries = 3;
-    protected $variant_ids;
+    protected $variant_ids,$active;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($variant_ids)
+    public function __construct($variant_ids, $active = true)
     {
+
         $this->variant_ids = $variant_ids;
+        $this->active      = $active;
     }
 
     /**
@@ -39,19 +41,21 @@ class UpdateVariantInventory implements ShouldQueue
             $var            = Variant::where(["odoo_id" => $variant_id])->firstOrFail();
             $var->inventory = $inventory[$variant_id]["inventory"];
             $var->save();
-            $changes = [
-                'search' => [
-                    'boolean_facet' => [
+            if ($this->active) {
+                $changes = [
+                    'search' => [
+                        'boolean_facet' => [
+                            'variant_availability' => $var->getAvailability(),
+                        ],
+                    ],
+                    'result' => [
                         'variant_availability' => $var->getAvailability(),
                     ],
-                ],
-                'result' => [
-                    'variant_availability' => $var->getAvailability(),
-                ]
-            ];
-            $result = ProductColor::updateElasticData($var->getParentElasticData(), $changes, true, $variant_id);
-            // $result = ProductColor::updateElasticInventory($variant_id, $var->getParentElasticData(), $var->getAvailability());
-            \Log::info($result);
+                ];
+                $result = ProductColor::updateElasticData($var->getParentElasticData(), $changes, true, $variant_id);
+                // $result = ProductColor::updateElasticInventory($variant_id, $var->getParentElasticData(), $var->getAvailability());
+                \Log::info($result);
+            }
         }
     }
 }

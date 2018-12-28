@@ -4,6 +4,7 @@ namespace App\Console;
 
 use App\Jobs\ProductMoveSync;
 use App\Jobs\ProductSync;
+use App\Jobs\IndexInactiveProducts;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\ProductColor;
@@ -41,6 +42,7 @@ class Kernel extends ConsoleKernel
                     ProductColor::getProductsFromOdooDiscounts();
                 })->dailyAt('21:30');
             }
+            $schedule->job(new IndexInactiveProducts,'create_jobs')->daily();
         }
     }
 
