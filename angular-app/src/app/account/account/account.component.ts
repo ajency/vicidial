@@ -44,33 +44,9 @@ export class AccountComponent implements OnInit {
   displayModal(){
     this.checkLoginTimer();
     this.router.navigate([{ outlets: { popup: ['user-login'] }}], { replaceUrl: true });
-    // let url = window.location.href +'/user-verification';
-    // if(!window.location.href.endsWith('#/account/user-verification'))
-    //   history.replaceState({cart : true}, 'cart', url);
-    // $('#signin').modal('show');
-    // $('.modal-backdrop').appendTo('#cd-my-account');
-    // $('body').addClass('hide-scroll');
   }
 
-  loginSucessTriggered(){
-  	// history.back();
-    // this.closeLoginModal();
-  }
-
-   closeLoginModal(){   	
-    // $('#signin').modal('hide');
-    // $("#cd-my-account").css("overflow", "auto");
-
-    // To be added back once account page is ready
-    // if(this.appservice.redirectUrl.endsWith('/my-orders') && this.appservice.isLoggedInUser()){
-    // 	console.log("navigate to my-orders");
-  		// // this.router.navigateByUrl('account/my-orders');
-  		// this.router.navigate(['account/my-orders']);
-  		// this.appservice.redirectUrl = '';
-    // }
-
-    // Temporary fix for not letting user see account page on history back
-    // history.back();
+  closeLoginModal(){   	
     this.router.navigateByUrl(this.returnUrl, { replaceUrl: true });
   }
 

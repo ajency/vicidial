@@ -44,7 +44,6 @@ export class ShippingDetailsComponent implements OnInit {
     }
     else{
       this.addresses = this.appservice.shippingAddresses;
-      this.updateUrl();
       this.checkAddresses();
     }    
   }
@@ -61,15 +60,6 @@ export class ShippingDetailsComponent implements OnInit {
       this.editAddress(address);
     }
     this.addresses.forEach((address)=> {if(address.default == true) this.selectedAddressId=address.id});
-  }
-
-  updateUrl(){
-    // let url = window.location.href.split("#")[0] + '#shipping-address';
-    // console.log("check url ==>", url);
-    // if(!window.location.href.endsWith('#shipping-address')){
-    //   this.appservice.userVerificationComplete ? history.replaceState({cart : true}, 'cart', url) : history.pushState({cart : true}, 'cart', url);
-    //   this.appservice.userVerificationComplete = false;
-    // }      
   }
 
   checkCartStatus(){
@@ -109,7 +99,6 @@ export class ShippingDetailsComponent implements OnInit {
     this.appservice.callGetAllAddressesApi().then((response)=>{
       this.addresses = response.addresses;
       this.checkAddresses();
-      this.updateUrl();
       this.appservice.shippingAddresses = response.addresses;
       this.removeLoader();
     })

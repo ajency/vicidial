@@ -64,14 +64,12 @@ export class BagViewComponent implements OnInit {
   }
 
   reloadCart(){
-    this.updateUrl();
     console.log("listened to the add to cart trigger");
     this.cartOpen = true;
     this.fetchCartDataOnAddToCartSuccess();
   }
 
   loadCart(){
-    this.updateUrl();
     console.log("listened to open cart trigger");
     this.cartOpen = true;
     this.getCartData();
@@ -104,7 +102,6 @@ export class BagViewComponent implements OnInit {
       this.loginSuccess();
     })
 
-      this.updateUrl();
       this.cartOpen = true;
       $('.ng-cart-loader').removeClass('cart-loader')
       if(add_to_cart_clicked){
@@ -118,16 +115,6 @@ export class BagViewComponent implements OnInit {
 
   ngAfterViewInit(){
     console.log("bag-view ngAfterViewInit");
-    // if(window.location.href.endsWith('/user-verification'))
-    //   this.modalHandler();
-  }
-
-  updateUrl(){
-    // let url = window.location.href.split("#")[0] + '#bag';
-    // if(window.location.href.endsWith('#shipping-address') || window.location.href.endsWith('#shipping-summary'))
-    //   history.replaceState({cart : true}, 'cart', url);
-    // else if(!(window.location.href.endsWith('#bag') || window.location.href.endsWith('#bag/user-verification')))
-    //   history.pushState({cart : true}, 'cart', url);
   }
 
   fetchCartDataOnAddToCartSuccess(){    
@@ -272,11 +259,6 @@ export class BagViewComponent implements OnInit {
   }
 
   viewOrders(){
-      // let url = window.location.href.split("#")[0] + '#/account/my-orders';
-      // this.appservice.closeCart();
-      // history.pushState({cart : false}, 'cart', url);
-      // window.location.href = url;
-      // this.reloadPage();
       this.router.navigateByUrl('account/my-orders');
   }
 
@@ -294,14 +276,6 @@ export class BagViewComponent implements OnInit {
   displayModal(){
     this.checkLoginTimer();
     this.router.navigate([{ outlets: { popup: ['user-login'] }}]);
-    // this.showLoginPopup = true;
-    // let url = window.location.href +'/user-verification';
-    // if(!window.location.href.endsWith('#bag/user-verification'))
-    //   history.pushState({cart : true}, 'cart', url);
-    // $('#signin').modal('show');
-    // $("#cd-cart").css("overflow", "hidden");
-    // $('.modal-backdrop').appendTo('#cd-cart');
-    // $('body').addClass('hide-scroll');
   }
 
 
@@ -309,10 +283,6 @@ export class BagViewComponent implements OnInit {
     this.showLoginPopup = false;
     $('#signin').modal('hide');
     $("#cd-cart").css("overflow", "auto");
-    // this.mobileNumberEntered = false;
-    // this.otp = null;
-    // this.otpCode.otp1 =''; this.otpCode.otp2 = ''; this.otpCode.otp3 = ''; this.otpCode.otp4 = ''; this.otpCode.otp5 = ''; this.otpCode.otp6='';
-    // this.userValidation.otpVerificationErrorMsg = '';
   }
 
   navigateToShippingDetailsPage(){

@@ -28,7 +28,6 @@ export class ShippingSummaryComponent implements OnInit {
 
   ngOnInit() {
     this.callOrderApi();
-    this.updateUrl();
   }
 
   navigateToPaymentPage(){
@@ -57,13 +56,6 @@ export class ShippingSummaryComponent implements OnInit {
   navigateBack(){
     history.back();
   }
-
-  updateUrl(){
-    // let url = window.location.href.split("#")[0] + '#shipping-summary';
-    // console.log("check url ==>", url);
-    // history.pushState({cart : true}, 'cart', url);      
-  }
-
 
   callOrderApi(){
     this.appservice.showLoader();
