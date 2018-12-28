@@ -65,6 +65,12 @@ class Product
             CreateProductJobs::dispatch($productIds)->onQueue('create_jobs');
             $offset = $offset + $productIds->count();
         } while ($productIds->count() == config('odoo.limit'));
+        $variantsData = $odoo->defaultExec("product.product", 'search_read', $odooFilter, ['fields' => ["product_tmpl_id"], 'limit' => 100]);
+        $productIDs   = collect();
+        $variantsData->each(function ($item, $key) use ($productIDs) {
+            $productIDs->push($item["product_tmpl_id"][0]);
+        });
+        CreateProductJobs::dispatch($productIDs->unique())->onQueue('create_jobs');
         Defaults::setLastInactiveProductSync();
     }
 
