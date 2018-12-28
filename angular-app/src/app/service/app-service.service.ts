@@ -18,7 +18,6 @@ export class AppServiceService {
   shippingAddresses = [];
   shippingDetails : any;
   userVerificationComplete : boolean = false;
-  directNavigationToShippingAddress : boolean = false;
   selectedAddressId : any;
   continueOrder : boolean = false;
   states : any = [];
@@ -32,6 +31,8 @@ export class AppServiceService {
   private loginSuccess = new Subject<any>();
 
   @Output() loginComplete : EventEmitter<boolean> = new EventEmitter();
+
+  navigatingFromBagToAddress : boolean = false;
 
   constructor(	private router: Router,
                 private apiservice : ApiServiceService) { 

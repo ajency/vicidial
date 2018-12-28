@@ -294,6 +294,8 @@ export class BagViewComponent implements OnInit {
         this.appservice.shippingAddresses = response.addresses;
         $("#cd-cart").css("overflow", "auto");
         $('.modal-backdrop').remove();
+
+        this.appservice.navigatingFromBagToAddress = true;
         if(this.appservice.userVerificationComplete){
           this.appservice.userVerificationComplete = false;
           this.router.navigateByUrl('bag/shipping-address', { replaceUrl: true });

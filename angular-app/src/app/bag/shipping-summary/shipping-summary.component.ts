@@ -159,7 +159,6 @@ export class ShippingSummaryComponent implements OnInit {
   }
 
   editShippingAddress(){
-    this.appservice.directNavigationToShippingAddress = true;
     this.appservice.editAddressFromShippingSummary = true;
     this.appservice.addressToEdit = this.shippingDetails.address;
     this.router.navigateByUrl('/shipping-details', { skipLocationChange: true });
