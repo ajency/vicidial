@@ -3,11 +3,12 @@
 namespace App;
 
 use App\Elastic\ElasticQuery;
+use App\Elastic\OdooConnect;
+use App\Facet;
+use App\Jobs\UpdateVariantInventory;
 use App\Location;
 use Illuminate\Database\Eloquent\Model;
-use App\Jobs\UpdateVariantInventory;
 use League\Csv\Writer;
-use App\Facet;
 
 class Variant extends Model
 {
@@ -35,7 +36,7 @@ class Variant extends Model
     public function newFromBuilder($attributes = [], $connection = null)
     {
         $model = parent::newFromBuilder($attributes, $connection);
-        $arr = (array)$attributes;
+        $arr   = (array) $attributes;
         if (isset($arr['product_color_id'])) {
             $model->fetchElasticData();
         }
@@ -353,22 +354,24 @@ class Variant extends Model
         }
     }
 
-    public function updateInventory(){
-         UpdateVariantInventory::dispatch([$this->odoo_id])->onQueue('update_inventory');
+    public function updateInventory()
+    {
+        UpdateVariantInventory::dispatch([$this->odoo_id])->onQueue('update_inventory');
     }
 
-    public static function getWarehouseInventory(){
-        $availableVariants = self::select(["odoo_id","inventory"])->where('inventory', 'not like', '[]')->get();
-        $locations = Location::where('use_in_inventory',true)->get()->pluck('display_name','odoo_id');
-        $header = ['variant_odoo_id'];
+    public static function getWarehouseInventory()
+    {
+        $availableVariants = self::select(["odoo_id", "inventory"])->where('inventory', 'not like', '[]')->get();
+        $locations         = Location::where('use_in_inventory', true)->get()->pluck('display_name', 'odoo_id');
+        $header            = ['variant_odoo_id'];
         foreach ($locations as $loc_id => $loc_name) {
-            $header[] = $loc_name." (".$loc_id.")";
+            $header[] = $loc_name . " (" . $loc_id . ")";
         }
         $variantInventory = collect([$header]);
         foreach ($availableVariants as $variant) {
             $inventoryLine = [$variant->odoo_id];
             foreach ($locations as $loc_id => $loc_name) {
-                $inventoryLine[] = (isset($variant->inventory["$loc_id"]))? $variant->inventory["$loc_id"]['quantity'] : 0;
+                $inventoryLine[] = (isset($variant->inventory["$loc_id"])) ? $variant->inventory["$loc_id"]['quantity'] : 0;
             }
             \Log::debug(collect($inventoryLine));
             $variantInventory->push($inventoryLine);
@@ -377,4 +380,28 @@ class Variant extends Model
         $csv->insertAll($variantInventory->toArray());
         $csv->output('inventory.csv');
     }
+
+    // public static function getInactiveVariants()
+    // {
+    //     $odooFilter       = OdooConnect::odooFilter(['write' => Defaults::getLastInactiveVariantSync()]);
+    //     $odooFilter[0][]  = ['active', '=', false];
+    //     $offset           = 0;
+    //     $inactiveVariants = [];
+    //     $odoo             = new OdooConnect;
+    //     do {
+    //         $variantsData = $odoo->defaultExec("product.product", 'search_read', $odooFilter, ['fields' => config('product.variant_fields'), 'offset' => $offset]);
+    //         $offset += $variantsData->count();
+    //         foreach ($variantsData as $variantData) {
+    //             $object            = self::firstOrNew(['odoo_id' => $variantData['id']]);
+    //             $object->odoo_id   = $variantData['id'];
+    //             $object->inventory = [];
+    //             $object->active    = false;
+    //             $object->deleted   = false;
+    //             $object->save();
+    //             $inactiveVariants[] = $variantData['id'];
+    //         }
+    //     } while ($variantsData->count() == config('odoo.limit'));
+    //     UpdateVariantInventory::dispatch($inactiveVariants,false)->onQueue('update_inventory');
+    //     Defaults::setLastInactiveVariantSync();
+    // }
 }

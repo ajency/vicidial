@@ -103,7 +103,7 @@ class ProductColor extends Model
             }
 
             $images     = $productColor->getAllImages(["main"]);
-            $main_image = (isset($images['main'])) ? $images['main'] : false;
+            $main_image = (isset($images[0]['main']['1x'])) ? $images[0]['main']['1x'] : false;
 
             $params = [
                 'id'                => $productColorData['id'],

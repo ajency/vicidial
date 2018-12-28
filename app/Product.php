@@ -7,8 +7,8 @@ use App\Elastic\OdooConnect;
 use App\Facet;
 use App\Jobs\CreateProductJobs;
 use App\Jobs\FetchProductImages;
-use App\Jobs\UpdateVariantInventory;
 use App\Jobs\UpdateSearchText;
+use App\Jobs\UpdateVariantInventory;
 use App\ProductColor;
 use App\Variant;
 use Illuminate\Support\Facades\DB;
@@ -53,6 +53,27 @@ class Product
         } while ($products->count() == config('odoo.limit'));
     }
 
+    public static function startInactiveSync()
+    {
+        $odooFilter      = OdooConnect::odooFilter(['write' => Defaults::getLastInactiveProductSync()]);
+        $odooFilter[0][] = ['active', '=', false];
+        $offset          = 0;
+        $attributes      = ['order' => 'id', 'offset' => $offset];
+        $odoo            = new OdooConnect;
+        do {
+            $productIds = $odoo->defaultExec('product.template', 'search', $odooFilter, $attributes);
+            CreateProductJobs::dispatch($productIds)->onQueue('create_jobs');
+            $offset = $offset + $productIds->count();
+        } while ($productIds->count() == config('odoo.limit'));
+        $variantsData = $odoo->defaultExec("product.product", 'search_read', $odooFilter, ['fields' => ["product_tmpl_id"], 'limit' => 100]);
+        $productIDs   = collect();
+        $variantsData->each(function ($item, $key) use ($productIDs) {
+            $productIDs->push($item["product_tmpl_id"][0]);
+        });
+        CreateProductJobs::dispatch($productIDs->unique())->onQueue('create_jobs');
+        Defaults::setLastInactiveProductSync();
+    }
+
     public static function indexProduct($product_id)
     {
         $odoo        = new OdooConnect;
@@ -67,10 +88,11 @@ class Product
 
     public static function indexVariants($variant_ids, $productData)
     {
-        $products     = collect();
-        $odoo         = new OdooConnect;
-        $variants     = collect();
-        $variantsData = $odoo->defaultExec("product.product", 'read', [$variant_ids], ['fields' => config('product.variant_fields')]);
+        $products         = collect();
+        $odoo             = new OdooConnect;
+        $variants         = collect();
+        $inactiveVariants = $odoo->defaultExec("product.product", 'search', [[['product_tmpl_id', '=', $productData['product_id']], ['active', '=', false]]], [])->toArray();
+        $variantsData     = $odoo->defaultExec("product.product", 'read', [array_merge($variant_ids, $inactiveVariants)], ['fields' => config('product.variant_fields')]);
         foreach ($variantsData as $variantData) {
             $attributeValues = $odoo->defaultExec('product.attribute.value', 'read', [$variantData['attribute_value_ids']], ['fields' => config('product.attribute_fields')]);
             $sanitisedData   = sanitiseVariantData($variantData, $attributeValues);
@@ -99,10 +121,12 @@ class Product
             $elastic = ProductColor::where('elastic_id', $product['product_id'] . '.' . $variant['product_color_id'])->first();
         }
         try {
-            $object                   = new Variant;
+            $object                   = Variant::firstOrNew(['odoo_id' => $variant['variant_id']]);
             $object->odoo_id          = $variant['variant_id'];
             $object->inventory        = [];
             $object->product_color_id = $elastic->id;
+            $object->active           = $variant['variant_active'];
+            $object->deleted          = false;
             $object->save();
         } catch (\Exception $e) {
             \Log::warning($e->getMessage());
@@ -249,7 +273,7 @@ class Product
      *
      * @return ElasticQuery
      */
-    public static function buildBaseQuery($variant_availability="skip")
+    public static function buildBaseQuery($variant_availability = "skip")
     {
 
         $q = new ElasticQuery;
@@ -258,7 +282,7 @@ class Product
 
         $required          = ["product_category_type", "product_gender", "product_subtype", "product_age_group", "product_color_html", "product_metatag"];
         $aggs_facet_name   = $q::createAggTerms("facet_name", "search_data.string_facet.facet_name", ["include" => $required]);
-        $aggs_facet_value  = $q::createAggTerms("facet_value", "search_data.string_facet.facet_value",["size" => $max_count]);
+        $aggs_facet_value  = $q::createAggTerms("facet_value", "search_data.string_facet.facet_value", ["size" => $max_count]);
         $aggs_facet_value  = $q::addToAggregation($aggs_facet_value, $q::createAggReverseNested('count'));
         $aggs_facet_name   = $q::addToAggregation($aggs_facet_name, $aggs_facet_value);
         $aggs_string_facet = $q::createAggNested("agg_string_facet", "search_data.string_facet");
@@ -271,28 +295,29 @@ class Product
         $aggsPrice     = $q::createAggNested("agg_price", "search_data.number_facet");
         $priceQ        = $q::addToAggregation($aggsPrice, $minMax);
 
-
-        $required = ["variant_size_name"];
+        $required    = ["variant_size_name"];
         $facet_names = [];
-        
+
         foreach ($required as $facet_name) {
-            $reverse = $q::createAggReverseNested('count');
-            $size = $q::createAggTerms($facet_name, "variants.".$facet_name, ["size" => $max_count]);
-            $aggs_facet_value  = $q::addToAggregation($size, $reverse);
-            $facet_names = $facet_names + $aggs_facet_value;
+            $reverse          = $q::createAggReverseNested('count');
+            $size             = $q::createAggTerms($facet_name, "variants." . $facet_name, ["size" => $max_count]);
+            $aggs_facet_value = $q::addToAggregation($size, $reverse);
+            $facet_names      = $facet_names + $aggs_facet_value;
         }
 
-        if($variant_availability==="skip")
-            $filterAgg  = $q::createAggFilter("available", ["match_all" => new \stdClass()]);
-        else
-            $filterAgg  = $q::createAggFilter("available", ["term" => [ "variants.variant_availability"=> $variant_availability ]]);
+        if ($variant_availability === "skip") {
+            $filterAgg = $q::createAggFilter("available", ["match_all" => new \stdClass()]);
+        } else {
+            $filterAgg = $q::createAggFilter("available", ["term" => ["variants.variant_availability" => $variant_availability]]);
+        }
+
         // $filterAgg  = $q::createAggFilter("available", ['bool' =>['must_not' =>[["term" => [ "variants.variant_availability"=> true ]]]]]);
-        $facet_name = $q::addToAggregation($filterAgg, $facet_names  );
-        $nestedAgg   = $q::createAggNested("variant_aggregation", "variants");
-        $aggs = $q::addToAggregation($nestedAgg,$facet_name );
-        
+        $facet_name = $q::addToAggregation($filterAgg, $facet_names);
+        $nestedAgg  = $q::createAggNested("variant_aggregation", "variants");
+        $aggs       = $q::addToAggregation($nestedAgg, $facet_name);
+
         $q->setIndex(config('elastic.indexes.product'))
-            ->initAggregation()->setAggregation(array_merge($priceQ, $aggs_string_facet,$aggs ))
+            ->initAggregation()->setAggregation(array_merge($priceQ, $aggs_string_facet, $aggs))
             ->setSize(0);
 
         return $q;
@@ -304,11 +329,13 @@ class Product
      * @return array
      */
     public static function getProductCategoriesWithFilter($params)
-    {   
+    {
         $params['search_object'] = setDefaultFilters($params);
-        $available = "skip";
-        if(isset($params['search_object']['boolean_filter']['variant_availability']))
+        $available               = "skip";
+        if (isset($params['search_object']['boolean_filter']['variant_availability'])) {
             $available = $params['search_object']['boolean_filter']['variant_availability'];
+        }
+
         $q    = self::buildBaseQuery($available);
         $must = setElasticFacetFilters($q, $params);
         $q->setQuery($must);
@@ -331,10 +358,10 @@ class Product
     public static function getItemsWithFilters($params)
     {
         $params['search_object'] = setDefaultFilters($params);
-        $size   = $params["display_limit"];
-        $offset = ($params["page"] - 1) * $size;
-        $index  = config('elastic.indexes.product');
-        $q      = new ElasticQuery;
+        $size                    = $params["display_limit"];
+        $offset                  = ($params["page"] - 1) * $size;
+        $index                   = config('elastic.indexes.product');
+        $q                       = new ElasticQuery;
         $q->setIndex($index);
         $must = setElasticFacetFilters($q, $params);
         $q->setQuery($must)
@@ -376,13 +403,13 @@ class Product
         if (isset($params["search_object"]["boolean_filter"])) {
             $filter_params["search_object"]["boolean_filter"] = $params["search_object"]["boolean_filter"];
         }
-        if(isset($params["search_object"]["search_string"])) {
+        if (isset($params["search_object"]["search_string"])) {
             $filter_params["search_object"]["search_string"] = $params["search_object"]["search_string"];
         }
 
         $filter_params["display_limit"] = $params["display_limit"];
         $filter_params["page"]          = $params["page"];
-        if(isset($params["sort_on"])) {
+        if (isset($params["sort_on"])) {
             $filter_params["sort_on"] = $params["sort_on"];
         }
 
@@ -390,11 +417,15 @@ class Product
 
         // $params = $filter_params =  ['search_object' =>['primary_filter' => [ 'product_gender' => ['Boys','all']]], 'display_limit' => 20, 'page' => 1] ;
         // $params = $filter_params ;
-        if((!isset($params["exclude_in_response"])) || (isset($params["exclude_in_response"]) && !in_array("filters", $params["exclude_in_response"])))
+        if ((!isset($params["exclude_in_response"])) || (isset($params["exclude_in_response"]) && !in_array("filters", $params["exclude_in_response"]))) {
             $output["filters"] = self::getProductCategoriesWithFilter($filter_params);
+        }
+
         // dd($output["filters"]);
-        if((!isset($params["exclude_in_response"])) || (isset($params["exclude_in_response"]) && !in_array("items", $params["exclude_in_response"])))
-            $results             = self::getItemsWithFilters($params);
+        if ((!isset($params["exclude_in_response"])) || (isset($params["exclude_in_response"]) && !in_array("items", $params["exclude_in_response"]))) {
+            $results = self::getItemsWithFilters($params);
+        }
+
         $facet_names         = array_keys($facet_display_data);
         $bread               = [];
         $bread['breadcrumb'] = array("list" => [], "current" => "");
@@ -426,28 +457,40 @@ class Product
             }
 
         }
-        
-        if((!isset($params["exclude_in_response"])) || (isset($params["exclude_in_response"]) && !in_array("items", $params["exclude_in_response"]))){
-            if((!isset($params["exclude_in_response"])) || (isset($params["exclude_in_response"]) &&!in_array("search_string", $params["exclude_in_response"])))
+
+        if ((!isset($params["exclude_in_response"])) || (isset($params["exclude_in_response"]) && !in_array("items", $params["exclude_in_response"]))) {
+            if ((!isset($params["exclude_in_response"])) || (isset($params["exclude_in_response"]) && !in_array("search_string", $params["exclude_in_response"]))) {
                 $output["search_string"] = $results['search_string'];
-            if((!isset($params["exclude_in_response"])) || (isset($params["exclude_in_response"]) &&!in_array("page", $params["exclude_in_response"])))
-                $output["page"]          = $results["page"];
-            $output["items"]         = $results["items"];
-            if((!isset($params["exclude_in_response"])) || (isset($params["exclude_in_response"]) &&!in_array("results_found", $params["exclude_in_response"])))
+            }
+
+            if ((!isset($params["exclude_in_response"])) || (isset($params["exclude_in_response"]) && !in_array("page", $params["exclude_in_response"]))) {
+                $output["page"] = $results["page"];
+            }
+
+            $output["items"] = $results["items"];
+            if ((!isset($params["exclude_in_response"])) || (isset($params["exclude_in_response"]) && !in_array("results_found", $params["exclude_in_response"]))) {
                 $output["results_found"] = $results["results_found"];
-            if((!isset($params["exclude_in_response"])) || (isset($params["exclude_in_response"]) &&!in_array("headers", $params["exclude_in_response"])))
-                $output["headers"]       = ["page_title" => $title, "product_count" => $results["page"]["total_item_count"]];
+            }
+
+            if ((!isset($params["exclude_in_response"])) || (isset($params["exclude_in_response"]) && !in_array("headers", $params["exclude_in_response"]))) {
+                $output["headers"] = ["page_title" => $title, "product_count" => $results["page"]["total_item_count"]];
+            }
+
         }
-        $output["sort_on"]       = config("product.sort_on");
+        $output["sort_on"] = config("product.sort_on");
         if (isset($params['sort_on'])) {
             foreach ($output["sort_on"] as &$value) {
                 $value['is_selected'] = ($value['value'] == $params['sort_on']);
             }
         }
-        if((!isset($params["exclude_in_response"])) || (isset($params["exclude_in_response"]) &&!in_array("breadcrumbs", $params["exclude_in_response"])))
-            $output["breadcrumbs"]   = $bread['breadcrumb'];
-        if((!isset($params["exclude_in_response"])) || (isset($params["exclude_in_response"]) &&!in_array("search", $params["exclude_in_response"])))
-            $output["search"]        = ["params" => ["genders" => ["men"], "l1_categories" => ["clothing"]], "pattern" => [["key" => "genders", "slugs" => ["men"]], ["key" => "l1_categories", "slugs" => ["clothing"]]], "is_valid" => true, "domain" => "https=>//newsite.stage.kidsuperstore.in", "type" => "product-list", "query" => ["page" => ["2"], "page_size" => ["20"]]];
+        if ((!isset($params["exclude_in_response"])) || (isset($params["exclude_in_response"]) && !in_array("breadcrumbs", $params["exclude_in_response"]))) {
+            $output["breadcrumbs"] = $bread['breadcrumb'];
+        }
+
+        if ((!isset($params["exclude_in_response"])) || (isset($params["exclude_in_response"]) && !in_array("search", $params["exclude_in_response"]))) {
+            $output["search"] = ["params" => ["genders" => ["men"], "l1_categories" => ["clothing"]], "pattern" => [["key" => "genders", "slugs" => ["men"]], ["key" => "l1_categories", "slugs" => ["clothing"]]], "is_valid" => true, "domain" => "https=>//newsite.stage.kidsuperstore.in", "type" => "product-list", "query" => ["page" => ["2"], "page_size" => ["20"]]];
+        }
+
         // dd($output);
         return $output;
     }
@@ -474,21 +517,23 @@ class Product
         }
     }
 
-    public static function updateAllSearchtext($indexname){
+    public static function updateAllSearchtext($indexname)
+    {
         $products = ProductColor::select('elastic_id')->get()->pluck('elastic_id')->toArray();
         $job_sets = array_chunk($products, config('odoo.update_products'));
         foreach ($job_sets as $job_set) {
-            UpdateSearchText::dispatch(['productIDs'=> $job_set,'indexName'=> $indexname])->onQueue('search_text');
+            UpdateSearchText::dispatch(['productIDs' => $job_set, 'indexName' => $indexname])->onQueue('search_text');
         }
     }
 
-    public static function elasticSearchtext($elasticData){
-        $searchResult = $elasticData['search_result_data'];
-        $productId = $searchResult['product_id'];
+    public static function elasticSearchtext($elasticData)
+    {
+        $searchResult       = $elasticData['search_result_data'];
+        $productId          = $searchResult['product_id'];
         $productdisplayName = $searchResult['product_att_magento_display_name'];
         foreach ($elasticData['search_data'] as &$variant) {
-            $variant['full_text'] = implode(' ',[$variant['full_text'],$productId,$productdisplayName]);
-            $variant['full_text_boosted'] = implode(' ',[$variant['full_text_boosted'],$productId,$productdisplayName]);
+            $variant['full_text']         = implode(' ', [$variant['full_text'], $productId, $productdisplayName]);
+            $variant['full_text_boosted'] = implode(' ', [$variant['full_text_boosted'], $productId, $productdisplayName]);
         }
         return $elasticData;
     }
