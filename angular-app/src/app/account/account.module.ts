@@ -6,9 +6,7 @@ import { AccountComponent } from './account/account.component';
 import { MyOrdersComponent } from './my-orders/my-orders.component';
 import { OrderDetailsComponent } from './order-details/order-details.component';
 
-// import { LoginModule } from '../shared-components/login/login.module';
 import { BagSummaryModule } from '../shared-components/bag-summary/bag-summary.module';
-
 
 import { OrderInfoComponent } from './components/order-info/order-info.component';
 import { OrderComponent } from './components/order/order.component';

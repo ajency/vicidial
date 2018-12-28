@@ -4,29 +4,26 @@ import { AppServiceService } from '../../service/app-service.service';
 import { ApiServiceService } from '../../service/api-service.service';
 import { Subscription } from 'rxjs/Subscription';
 
-import { LoginComponentComponent } from '../../shared-components/login/login-component/login-component.component';
 import { PromotionsListComponent } from '../../shared-components/promotions/promotions-list/promotions-list.component';
 import { AppliedCouponComponent } from '../../components/applied-coupon/applied-coupon.component';
 import { UpgradeCartComponent } from '../../components/upgrade-cart/upgrade-cart.component';
 import { BetterPromoAvailableComponent } from '../../components/better-promo-available/better-promo-available.component';
 import { BagSummaryComponent } from '../../shared-components/bag-summary/bag-summary/bag-summary.component';
-// import * as $ from 'jquery';
+
 declare var $: any;
 declare var add_to_cart_failed: any;
 declare var add_to_cart_failure_message: any;
 declare var add_to_cart_clicked: any;
 declare var add_to_cart_completed: any;
-
 declare var fbTrackInitiateCheckout : any;
 // declare var fbTrackuserRegistration : any;
+
 @Component({
   selector: 'app-bag-view',
   templateUrl: './bag-view.component.html',
   styleUrls: ['./bag-view.component.css']
 })
 export class BagViewComponent implements OnInit {
-
-  @Input() userLoggedIn : any;
 
   enterCoupon = false;
   cart : any = {};
@@ -95,28 +92,8 @@ export class BagViewComponent implements OnInit {
       clearInterval(this.loginCheckTimer);
   }
 
-  ngOnChanges(){
-    console.log("bag-view ngOnChanges", this.userLoggedIn);
-  }
-
-  ngDoCheck(){
-    // console.log("bag-view ngDoCheck");
-  }
-
   ngAfterContentInit(){
     console.log("bag-view ngAfterContentInit");
-  }
-
-  ngAfterContentChecked(){
-    // console.log("bag-view ngAfterContentChecked");
-  }
-
-  // ngAfterViewInit(){
-  //   console.log("bag-view ngAfterViewInit");
-  // }
-
-  ngAfterViewChecked(){
-    // console.log("bag-view ngAfterViewChecked");
   }
 
   ngOnInit() {
