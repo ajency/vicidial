@@ -37,11 +37,10 @@
 					</div>
 				</div>
 				<hr>
-				<form #myForm="ngForm">
+<!-- 				<form #myForm="ngForm">
 					<div class="shipping-content" *ngIf="addAddress">
 						<div class="row">
 							<div class="col-md-12">
-								<!--firstName-->
 								<div class="form-group ">
 									<input class="form-control form-control-lg" id="names" type="text" name="name" [(ngModel)]="newAddress.name" required [ngClass]="{'has-value' : newAddress.name}">
 									<label class="control-label">Full Name <span class="pl-1 text-danger">*</span></label>
@@ -55,13 +54,7 @@
 										Please enter a valid Indian Mobile Number
 									</small>
 								</div>
-							</div>
-<!-- 							<div class="col-md-12">
-								<div class="form-group">
-									<input class="form-control form-control-lg" id="email-address" type="email" name="email" [(ngModel)]="newAddress.email" required [ngClass]="{'has-value' : newAddress.email}">
-									<label class="control-label">Email Address <span class="pl-1 text-danger">*</span></label>
-								</div>
-							</div>		 -->					
+							</div>					
 						</div>
 						<div class="row">
 							<div class="col-md-6">
@@ -93,10 +86,6 @@
 								</div>
 							</div>
 							<div class="col-md-6">
-		<!-- 						<div class="form-group">
-									<input class="form-control form-control-lg" id="state" type="text" name="state" [(ngModel)]="newAddress.state" required [ngClass]="{'has-value' : newAddress.state}">
-									<label class="control-label">State<span class="pl-1 text-danger">*</span></label>
-								</div> -->
 								<div class="form-group custom-bs-select">
 									<select name="" id="state" class="form-control form-control-lg has-value"  name="state" data-style="form-control" [(ngModel)]="newAddress.state_id" required data-live-search="true">
 										<option value="">--Select--</option>
@@ -112,17 +101,7 @@
 									<input type="text" class="form-control form-control-lg" id="landmark" name="landmark" [(ngModel)]="newAddress.landmark" [ngClass]="{'has-value' : newAddress.landmark}">
 									<label class="control-label">Landmark</label>
 								</div>
-							</div>
-						<!-- 	<div class="col-md-6">
-								<div class="form-group custom-select-drop">
-									<select name="type" id="address_type" class="form-control form-control-lg has-value" [(ngModel)]="newAddress.type" required>
-										<option value="">--Select--</option>
-										<option value="Home">Home</option>
-										<option value="Office">Office</option>
-									</select>
-									<label class="control-label">Type of address <span class="pl-1 text-danger">*</span></label>
-								</div>
-							</div>	 -->						
+							</div>						
 						</div>
 						<div *ngIf="!hideDefaultAddressField && addresses.length" class="row mt-4 mb-3">
 							<div class="col-md-12">
@@ -146,7 +125,7 @@
 									 	<i class="fas fa-check-circle"></i>
 									</div>
 									<div class="text-left pl-2 flex-fill">
-										<h3 class="kss-title font-weight-bold d-flex align-items-center w-100">{{address.name}} <span *ngIf="address.default" class="pl-2">(Default)  </span> <!-- <i class="fas fa-pencil-alt number-edit ml-2" (click)="editAddress(address)"></i> --></h3>
+										<h3 class="kss-title font-weight-bold d-flex align-items-center w-100">{{address.name}} <span *ngIf="address.default" class="pl-2">(Default)  </span> </h3>
 
 										<p class="w-75">
 											{{address.address}}, {{address.city}}, {{getStateName(address.state_id)}} {{address.pincode}}
@@ -165,19 +144,21 @@
 						</div>
 					</div>
 					<button type="button" id="add-address" class="btn kss-btn kss-btn--outline-secondary kss-btn--big" (click)="addNewAddress()">Add A New Address</button>
-				</div>
+				</div> -->
+
+				<app-address [addresses]="addresses" [addAddress]="addAddress" [selectedAddressId]="selectedAddressId" [states]="states" (addAddressFlagChanged)="updateView()"></app-address>
 
 				<div class="seperator mt-2 mb-2"></div>
 
 				<div class="fixed-bottom d-block pl-3 pr-3">
-					<div *ngIf="addAddress" class="row no-gutters px-2 py-2 shipping-state-1" style="display: flex;">
+<!-- 					<div *ngIf="addAddress" class="row no-gutters px-2 py-2 shipping-state-1" style="display: flex;">
 						<div class="col-6 text-center">
 							<button [disabled]="!addresses.length" type="button" class="shipping-details-save btn kss-btn kss-btn--link kss-btn--big mt-1 mb-1 ml-auto mr-auto" (click)="addAddress = false" >Cancel </button>
 						</div>
 						<div class="col-6 text-center">
 							<button [disabled]="!myForm.valid"  type="button" class="shipping-details-save btn kss-btn kss-btn--big mt-1 mb-1 ml-auto mr-auto" (click)="saveNewAddress()"> Save </button>
 						</div>
-					</div>
+					</div> -->
 					 <div *ngIf="!addAddress && addresses" class="row no-gutters py-2 shipping-state-2" style="display: flex;">
 						<div class="col-12 text-center">
 							<button id="shipping-summary" type="button" class=" btn kss-btn kss-btn--big mt-1 mb-1" (click)="navigateToShippingPage()">Proceed</button>
