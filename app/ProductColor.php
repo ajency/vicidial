@@ -6,6 +6,12 @@ use Ajency\FileUpload\FileUpload;
 use App\Elastic\ElasticQuery;
 use Illuminate\Database\Eloquent\Model;
 use App\Jobs\FetchProductImages;
+use SoapBox\Formatter\Formatter;
+use Illuminate\Support\Facades\Storage;
+use App\Elastic\OdooConnect;
+use Illuminate\Support\Facades\DB;
+use App\Jobs\IndexProduct;
+use Carbon\Carbon;
 
 class ProductColor extends Model
 {
@@ -83,5 +89,115 @@ class ProductColor extends Model
         \Log::debug($elastic_data);
         $result = self::saveToElastic($elastic_data['id'], $elastic_data);
         return $result;
+    }
+
+    public static function productXMLData()
+    {
+        $productColors = self::get();
+        $xmlData       = array();
+        foreach ($productColors as $productColor) {
+            try {
+                $productColorData = $productColor->getElasticData();
+            } catch (\Exception $e) {
+                continue;
+            }
+
+            $images     = $productColor->getAllImages(["main"]);
+            $main_image = (isset($images['main'])) ? $images['main'] : false;
+
+            $params = [
+                'id'                => $productColorData['id'],
+                'title'             => $productColorData['search_result_data']['product_title'],
+                'color'             => $productColorData['search_result_data']['product_color_name'],
+                'gender'            => ($productColorData['search_result_data']['product_gender'] == 'Boys') ? 'male' : (($productColorData['search_result_data']['product_gender'] == 'Girls') ? 'female' : 'unisex'),
+                'identifier_exists' => 'no',
+                'link'              => url('/') . "/" . $productColorData['search_result_data']['product_slug'] . "/buy",
+                'product_type' => $productColorData['search_result_data']['product_category_type'] . ' > ' . $productColorData['search_result_data']['product_subtype'],
+            ];
+
+            if ($productColorData['search_result_data']['product_age_group'] != 'Others' && $productColorData['search_result_data']['product_age_group'] != 'All') {
+                $params['age_group'] = ($productColorData['search_result_data']['product_age_group'] == 'Infant') ? 'infant' : (($productColorData['search_result_data']['product_age_group'] == 'Toddler') ? 'toddler' : 'kids');
+            }
+
+            if ($productColorData['search_result_data']['product_description'] != false) {
+                $params['description'] = $productColorData['search_result_data']['product_description'];
+            }
+
+            if ($productColorData['search_result_data']['product_att_material'] != false) {
+                $params['material'] = $productColorData['search_result_data']['product_att_material'];
+            }
+
+            if ($productColorData['search_result_data']['product_image_available'] != false && $main_image != false) {
+                $params['image_link'] = $main_image;
+            }
+
+            if ($productColorData['search_result_data']['product_category_type'] == 'Apparels' || $productColorData['search_result_data']['product_category_type'] == 'Accessories') {
+                $params['google_product_category'] = 166;
+            }
+            else if ($productColorData['search_result_data']['product_category_type'] == 'Shoes') {
+                $params['google_product_category'] = 187;
+            }
+            else if ($productColorData['search_result_data']['product_category_type'] == 'Toys') {
+                $params['google_product_category'] = 1239;
+            }
+
+            $params['sale_price']   = $productColorData["variants"][0]["variant_sale_price"];
+            $params['price']        = $productColorData["variants"][0]["variant_list_price"];
+            $params['availability'] = "out of stock";
+            $params['size']         = "";
+            $sizes                  = array();
+
+            foreach ($productColorData["variants"] as $key => $variant) {
+                if ($params['sale_price'] > $variant["variant_sale_price"]) {
+                    $params['sale_price'] = $variant["variant_sale_price"];
+                    $params['price']      = $variant["variant_list_price"];
+                }
+                if ($params['availability'] == "in stock" || $variant['variant_availability'] == true) {
+                    $params['availability'] = "in stock";
+                }
+                array_push($sizes, $variant["variant_size_name"]);
+            }
+
+            $params['size'] = implode('/', $sizes);
+
+            array_push($xmlData, $params);
+        }
+
+        $formatter = Formatter::make($xmlData, Formatter::ARR);
+        $xml       = $formatter->toXml();
+
+        Storage::disk('s3')->put(config('ajfileupload.doc_base_root_path').'/products.xml', $xml);
+    }
+
+    public static function getProductsFromOdooDiscounts()
+    {
+        $variant_ids  = array();
+        $offset       = 0;
+        $odoo         = new OdooConnect;
+        $current_date = Carbon::now()->toDateTimeString();
+        do {
+            $discounts = $odoo->defaultExec("product.template", 'search_read', [[['type', '=', 'discount'], ['discount_rule', '=', 'catalog'], ['from_date', '<', $current_date], ['to_date', '>', $current_date]]], ['fields' => config('odoo.model_fields.discounts'), 'order' => 'id', 'offset' => $offset]);
+
+            foreach ($discounts as $discount) {
+                $offset_p = 0;
+                do {
+                    $products = $odoo->defaultExec('prod_discount', 'read', [$discount['condition_id']], ['fields' => config('odoo.model_fields.discount_products')]);
+
+                    foreach ($products as $product_ids) {
+                        $variant_ids = array_merge($variant_ids, $product_ids['product_ids']);
+                    }
+
+                    $offset_p = $offset_p + $products->count();
+                } while ($products->count() == config('odoo.limit'));
+            }
+
+            $offset = $offset + $discounts->count();
+        } while ($discounts->count() == config('odoo.limit'));
+
+        $productIds = DB::select(DB::raw('SELECT DISTINCT product_id FROM product_colors where product_colors.id in (SELECT product_color_id from variants where variants.odoo_id in (' . implode(',', $variant_ids) . '))'));
+
+        foreach ($productIds as $productId) {
+            IndexProduct::dispatch($productId->product_id)->onQueue('process_product');
+        }
     }
 }

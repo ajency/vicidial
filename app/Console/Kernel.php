@@ -6,6 +6,7 @@ use App\Jobs\ProductMoveSync;
 use App\Jobs\ProductSync;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\ProductColor;
 
 class Kernel extends ConsoleKernel
 {
@@ -30,9 +31,15 @@ class Kernel extends ConsoleKernel
             if (!isNotProd()) {
                 $schedule->job(new ProductSync, 'create_jobs')->hourly();
                 $schedule->job(new ProductMoveSync, 'create_jobs')->everyMinute();
+                $schedule->call(function(){
+                    ProductColor::getProductsFromOdooDiscounts();
+                })->dailyAt('21:30');
             } else {
                 $schedule->job(new ProductSync, 'create_jobs')->everyTenMinutes();
                 $schedule->job(new ProductMoveSync, 'create_jobs')->everyMinute();
+                $schedule->call(function(){
+                    ProductColor::getProductsFromOdooDiscounts();
+                })->dailyAt('21:30');
             }
         }
     }

@@ -54,9 +54,9 @@ class OdooConnect
         ));
 
         \Log::info('odoo data from ' . $model . ' with user ' . $this->defaultConn()['username'] . ': ' . $data);
-        if (isset($data['faultCode'])) {
+        /*if (isset($data['faultCode'])) {
             abort(400);
-        }
+        }*/
         return $data;
     }
 
@@ -92,6 +92,8 @@ class OdooConnect
             return [[['__last_update', '>', $filters['updated']]]];
         } elseif (isset($filters['write'])) {
             return [[['write_date', '>', $filters['write']]]];
+        } elseif (isset($filters['id_range'])){
+            return [[['id', '>', $filters['id_range'][0]],['id', '<', $filters['id_range'][1]]]];
         }
     }
 

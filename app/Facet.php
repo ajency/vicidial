@@ -18,8 +18,9 @@ class Facet extends Model
         if(!isset($facets[$attribute])) $facets[$attribute] = 'variant_'.strtolower($attribute).'_name';
         $max_facet_id   = self::select(['odoo_id'])->where('facet_name', $facets[$attribute])->max('odoo_id');
         if($max_facet_id == null) $max_facet_id = 0;
+        
+        $odoo = new OdooConnect;
         do {
-            $odoo           = new OdooConnect;
 	        $attributesData = $odoo->defaultExec("product.attribute.value", 'search_read', [[["id", ">", $max_facet_id ]]], ['fields' => config('odoo.model_fields.attributes'), 'order' => 'id', 'offset' => $offset]);
 
             foreach ($attributesData as $attributeData) {
