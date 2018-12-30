@@ -9,7 +9,7 @@ import { BagViewComponent } from './bag-view/bag-view.component';
 
 import { BagSummaryModule } from '../shared-components/bag-summary/bag-summary.module';
 import { PromotionsModule } from '../shared-components/promotions/promotions.module';
-import { AddressModule } from '../shared-components/address/address.module'
+import { AddressModule } from '../shared-components/address/address.module';
 
 import { AppliedCouponComponent } from '../components/applied-coupon/applied-coupon.component';
 import { UpgradeCartComponent } from '../components/upgrade-cart/upgrade-cart.component';

@@ -261,12 +261,12 @@ export class ShippingDetailsComponent implements OnInit {
     }
   }
 
-  getStateName(id){
-    if(this.states){
-      let state_obj = this.states.find((state)=>{ return id == state.id});
-      return state_obj.state;
-    }    
-  }
+  // getStateName(id){
+  //   if(this.states){
+  //     let state_obj = this.states.find((state)=>{ return id == state.id});
+  //     return state_obj.state;
+  //   }    
+  // }
 
   updateView(){
     console.log("inside updateView function", this.addressComponent.addAddress, this.addressComponent.selectedAddressId);
