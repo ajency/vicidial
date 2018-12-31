@@ -135,8 +135,8 @@ export class ShippingDetailsComponent implements OnInit {
   }
 
   updateView(){
-    console.log("inside updateView function", this.addressComponent.addAddress, this.addressComponent.selectedAddressId);
-    this.addAddress = this.addressComponent.addAddress;
-    this.selectedAddressId = this.addressComponent.selectedAddressId;
+    console.log("inside updateView function");
+    this.addAddress = this.addressComponent ? this.addressComponent.addAddress: this.addAddress;
+    this.selectedAddressId = this.addressComponent ? this.addressComponent.selectedAddressId : this.selectedAddressId;
   }
 }

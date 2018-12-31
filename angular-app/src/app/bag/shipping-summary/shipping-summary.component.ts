@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router'
 import { AppServiceService } from '../../service/app-service.service';
 import { ApiServiceService } from '../../service/api-service.service';
 import { BagSummaryComponent } from '../../shared-components/bag-summary/bag-summary/bag-summary.component';
+import { EditUserPopupComponent } from '../../shared-components/edit-user/edit-user-popup/edit-user-popup.component';
 
 declare var $: any;
 declare var fbTrackAddPaymentInfo : any;
@@ -13,6 +14,8 @@ declare var fbTrackAddPaymentInfo : any;
   styleUrls: ['./shipping-summary.component.css']
 })
 export class ShippingSummaryComponent implements OnInit {
+  @ViewChild(EditUserPopupComponent)
+  private editUserPopUp : EditUserPopupComponent;
 
   shippingDetails : any;
   showUserInfoModal : boolean = false;
@@ -101,26 +104,26 @@ export class ShippingSummaryComponent implements OnInit {
     return data;
   }
 
-  saveUserInfo(){
-    this.appservice.showLoader();
-    let url = this.appservice.apiUrl + '/api/rest/v1/user/save-user-details';
-    let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
-    let body : any = {
-      _token : $('meta[name="csrf-token"]').attr('content'),
-      name : this.shippingDetails.user_info.name,
-      email : this.shippingDetails.user_info.email
-    };
+  // saveUserInfo(){
+  //   this.appservice.showLoader();
+  //   let url = this.appservice.apiUrl + '/api/rest/v1/user/save-user-details';
+  //   let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
+  //   let body : any = {
+  //     _token : $('meta[name="csrf-token"]').attr('content'),
+  //     name : this.shippingDetails.user_info.name,
+  //     email : this.shippingDetails.user_info.email
+  //   };
 
-    this.apiservice.request(url, 'post', body , header ).then((response)=>{
-      this.hideModal();
-      this.userEmail = body.email;
-      this.appservice.removeLoader();
-    })
-    .catch((error)=>{
-      console.log("error ===>", error);
-      this.appservice.removeLoader();
-    }) 
-  }
+  //   this.apiservice.request(url, 'post', body , header ).then((response)=>{
+  //     this.hideModal();
+  //     this.userEmail = body.email;
+  //     this.appservice.removeLoader();
+  //   })
+  //   .catch((error)=>{
+  //     console.log("error ===>", error);
+  //     this.appservice.removeLoader();
+  //   }) 
+  // }
 
   setUserName(){
     if(!this.shippingDetails.user_info){
@@ -151,17 +154,23 @@ export class ShippingSummaryComponent implements OnInit {
     $('body').addClass('hide-scroll');
   }
 
-  hideModal(){
-    this.showUserInfoModal = false;
-    $('#user-info').modal('hide');
-    $("#cd-cart,.kss_shipping_summary").css("overflow", "auto");
-    $('.modal-backdrop').remove();
-  }
+  // hideModal(){
+  //   this.showUserInfoModal = false;
+  //   $('#user-info').modal('hide');
+  //   $("#cd-cart,.kss_shipping_summary").css("overflow", "auto");
+  //   $('.modal-backdrop').remove();
+  // }
 
   editShippingAddress(){
     this.appservice.editAddressFromShippingSummary = true;
     this.appservice.addressToEdit = this.shippingDetails.address;
     this.router.navigateByUrl('/shipping-details', { skipLocationChange: true });
+  }
+
+  updateEmail(){
+    this.showUserInfoModal = false;
+    console.log("this.editUserPopUp.userEmail", this.editUserPopUp.userEmail);
+    this.userEmail = this.editUserPopUp.userEmail;
   }
 
 }
