@@ -12,15 +12,6 @@
 						<h3 class="m-0 text-white kss_highlight btn-pay" (click)="closeCart()"><span aria-hidden="true">&times;</span></h3>
 					</div>
 				</div>
-				<!--   <div class="row no-gutters w-100">
-						<div class="col-8 col-xl-9">
-						<img src="{{"img/logo-kss.png" | absURL}}" xpreview="{{"img/logo-kss.png" | absURL}}" class=" img-fluid m-0" width="180px">
-						 </div>
-						 <div class="col text-white secure-label">
-							<i class="fas fa-lock float-left mr-2"></i>SECURE<br>
-							CHECKOUT
-						 </div>
-					</div> -->
 			</nav>
 			<div class="py-3 px-3 padding-size">	
 				<div class="row no-gutter">
@@ -37,128 +28,12 @@
 					</div>
 				</div>
 				<hr>
-<!-- 				<form #myForm="ngForm">
-					<div class="shipping-content" *ngIf="addAddress">
-						<div class="row">
-							<div class="col-md-12">
-								<div class="form-group ">
-									<input class="form-control form-control-lg" id="names" type="text" name="name" [(ngModel)]="newAddress.name" required [ngClass]="{'has-value' : newAddress.name}">
-									<label class="control-label">Full Name <span class="pl-1 text-danger">*</span></label>
-								</div>
-							</div>
-							<div class="col-md-12">
-								<div class="form-group" [ngClass]="{'has-error' : newAddress.phone<7000000000 && newAddress.phone.length== 10 }">
-									<input class="form-control form-control-lg" id="mobile" type="tel" minlength = "10" maxlength = "10" pattern="^[789]\d{9}$" inputmode="numeric" name="mobile" for="inputError" [(ngModel)]="newAddress.phone" required appNumbers [ngClass]="{'has-value' : newAddress.phone}">
-									 <label class="control-label" for="inputError">Mobile Number <span class="pl-1 text-danger">*</span></label>
-									 <small *ngIf="newAddress.phone<7000000000 && newAddress.phone.length== 10" id="passwordHelpBlock" class="form-text text-danger">
-										Please enter a valid Indian Mobile Number
-									</small>
-								</div>
-							</div>					
-						</div>
-						<div class="row">
-							<div class="col-md-6">
-								<div class="form-group ">
-									<input class="form-control form-control-lg" id="pincode" type="tel"  minlength = "6" maxlength = "6" name="pincode" [(ngModel)]="newAddress.pincode" required appNumbers inputmode="numeric" [ngClass]="{'has-value' : newAddress.pincode}">
-									<label class="control-label">Pincode <span class="pl-1 text-danger">*</span></label>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<input class="form-control form-control-lg" id="locality" type="text" name="locality" [(ngModel)]="newAddress.locality" required [ngClass]="{'has-value' : newAddress.locality}">
-									<label class="control-label">Locality/Town <span class="pl-1 text-danger">*</span></label>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-12">
-								<div class="form-group ">
-									<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="address" [(ngModel)]="newAddress.address" required [ngClass]="{'has-value' : newAddress.address}"></textarea>
-									<label class="control-label">Street Address (<small>House No,Building,Street,Area</small>) <span class="pl-1 text-danger">*</span></label>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-6">
-								<div class="form-group ">
-									<input class="form-control form-control-lg" id="citys" type="text" name="city" [(ngModel)]="newAddress.city" required [ngClass]="{'has-value' : newAddress.city}">
-									<label class="control-label">City/District <span class="pl-1 text-danger">*</span></label>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group custom-bs-select">
-									<select name="" id="state" class="form-control form-control-lg has-value"  name="state" data-style="form-control" [(ngModel)]="newAddress.state_id" required data-live-search="true">
-										<option value="">--Select--</option>
-										<option *ngFor="let state of states" value="{{state.id}}">{{state.state}}</option>
-									</select>
-									<label class="control-label">State <span class="pl-1 text-danger">*</span></label>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-12">
-								<div class="form-group ">
-									<input type="text" class="form-control form-control-lg" id="landmark" name="landmark" [(ngModel)]="newAddress.landmark" [ngClass]="{'has-value' : newAddress.landmark}">
-									<label class="control-label">Landmark</label>
-								</div>
-							</div>						
-						</div>
-						<div *ngIf="!hideDefaultAddressField && addresses.length" class="row mt-4 mb-3">
-							<div class="col-md-12">
-								<div class="custom-control custom-checkbox">
-									<input type="checkbox" class="custom-control-input" id="customCheck1" name="default" [(ngModel)]="newAddress.default">
-									<label class="custom-control-label" for="customCheck1">Make this my default address</label>
-								</div>
-							</div>
-						</div>
-					</div>	
-				</form>
-			
-
-				<div *ngIf="!addAddress && addresses" class="shipping-content-info" style="display: block;">
-					<div class="radio-wrap d-flex kss_sizes wo-image mb-4">
-						<div *ngFor="let address of addresses">
-							<input class="d-none radio-input" type="radio" name="kss-address" id="address-{{address.id}}" [value]="address.id" [(ngModel)]="selectedAddressId">
-							<label class="radio-label w-100 border-bottom text-left" for="address-{{address.id}}">
-								<div class="radio-option d-flex align-items-start address-block">
-									<div class="radio-selection position-relative">
-									 	<i class="fas fa-check-circle"></i>
-									</div>
-									<div class="text-left pl-2 flex-fill">
-										<h3 class="kss-title font-weight-bold d-flex align-items-center w-100">{{address.name}} <span *ngIf="address.default" class="pl-2">(Default)  </span> </h3>
-
-										<p class="w-75">
-											{{address.address}}, {{address.city}}, {{getStateName(address.state_id)}} {{address.pincode}}
-										</p>
-										<p class="w-75">
-											Mobile: <b class="font-weight-bold">{{address.phone}}</b>
-										</p>
-									</div>
-									<div class="product-delete ml-2" title="Remove">
-										<a (click)="deleteAddress(address.id)" class="cd-item-remove delete d-flex align-items-center justify-content-center text-center">
-											<i class="far fa-trash-alt"></i>
-										</a>
-									</div>
-								</div>
-							</label>
-						</div>
-					</div>
-					<button type="button" id="add-address" class="btn kss-btn kss-btn--outline-secondary kss-btn--big" (click)="addNewAddress()">Add A New Address</button>
-				</div> -->
 
 				<app-address [addresses]="addresses" [addAddress]="addAddress" [selectedAddressId]="selectedAddressId" [states]="states" (addAddressFlagChanged)="updateView()"></app-address>
 
 				<div class="seperator mt-2 mb-2"></div>
 
 				<div class="fixed-bottom d-block pl-3 pr-3">
-<!-- 					<div *ngIf="addAddress" class="row no-gutters px-2 py-2 shipping-state-1" style="display: flex;">
-						<div class="col-6 text-center">
-							<button [disabled]="!addresses.length" type="button" class="shipping-details-save btn kss-btn kss-btn--link kss-btn--big mt-1 mb-1 ml-auto mr-auto" (click)="addAddress = false" >Cancel </button>
-						</div>
-						<div class="col-6 text-center">
-							<button [disabled]="!myForm.valid"  type="button" class="shipping-details-save btn kss-btn kss-btn--big mt-1 mb-1 ml-auto mr-auto" (click)="saveNewAddress()"> Save </button>
-						</div>
-					</div> -->
 					 <div *ngIf="!addAddress && addresses" class="row no-gutters py-2 shipping-state-2" style="display: flex;">
 						<div class="col-12 text-center">
 							<button id="shipping-summary" type="button" class=" btn kss-btn kss-btn--big mt-1 mb-1" (click)="navigateToShippingPage()">Proceed</button>

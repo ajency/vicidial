@@ -56,6 +56,7 @@ export class AddressComponent implements OnInit, OnChanges {
       this.editAddress(address);
     }
     this.addresses.forEach((address)=> {if(address.default == true) this.selectedAddressId=address.id});
+    // this.addAddressFlagChanged.emit(true);
   }
 
   editAddress(address){
@@ -127,6 +128,7 @@ export class AddressComponent implements OnInit, OnChanges {
       this.appservice.shippingAddresses = this.addresses;
       this.newAddress = {};
       this.appservice.removeLoader();
+      this.addAddressFlagChanged.emit(true);
     })
     .catch((error)=>{
       console.log("error ===>", error);
@@ -158,6 +160,7 @@ export class AddressComponent implements OnInit, OnChanges {
           this.selectedAddressId = old_id;
       }
       this.appservice.removeLoader();
+      this.addAddressFlagChanged.emit(true);
     })
     .catch((error)=>{
       console.log("error ===>", error);

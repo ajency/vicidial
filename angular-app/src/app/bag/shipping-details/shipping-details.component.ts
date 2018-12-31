@@ -48,25 +48,12 @@ export class ShippingDetailsComponent implements OnInit {
       this.addresses = this.appservice.shippingAddresses;
       // this.checkAddresses();
       this.appservice.navigatingFromBagToAddress = false;
+      this.addresses.forEach((address)=> {if(address.default == true) this.selectedAddressId=address.id});
     }
     else{
       this.checkCartStatus();
     }  
   }
-
-  // checkAddresses(){
-  //   if(!this.addresses.length){
-  //     this.addAddress = true;
-  //     if(this.states && this.states.length) 
-  //       this.initSelectPicker(); 
-  //   }
-  //   else if(this.appservice.editAddressFromShippingSummary){
-  //     this.appservice.editAddressFromShippingSummary = false;
-  //     let address = this.addresses.find((add)=>{ return add.id == this.appservice.addressToEdit.id})
-  //     this.editAddress(address);
-  //   }
-  //   this.addresses.forEach((address)=> {if(address.default == true) this.selectedAddressId=address.id});
-  // }
 
   checkCartStatus(){
     if(!this.appservice.isLoggedInUser()){
@@ -103,9 +90,9 @@ export class ShippingDetailsComponent implements OnInit {
   getAddress(){
     this.appservice.showLoader();
     this.appservice.callGetAllAddressesApi().then((response)=>{
-      this.addresses = response.addresses;
-      // this.checkAddresses();
+      this.addresses = response.addresses;      
       this.appservice.shippingAddresses = response.addresses;
+      this.addresses.forEach((address)=> {if(address.default == true) this.selectedAddressId=address.id});
       this.removeLoader();
     })
     .catch((error)=>{
@@ -115,108 +102,7 @@ export class ShippingDetailsComponent implements OnInit {
     })
   }
 
-  // saveNewAddress(){
-  //   this.appservice.showLoader();
-  //   let url = this.appservice.apiUrl + (this.newAddress.id ? "/api/rest/v1/user/address/edit" :  "/api/rest/v1/user/address/new");
-  //   let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
-  //   let body : any = {};
-  //   body = this.newAddress;
-  //   body._token = $('meta[name="csrf-token"]').attr('content');
 
-  //   this.apiservice.request(url, 'post', body , header ).then((response)=>{
-  //     if(this.newAddress.id){
-  //      this.addresses = this.addresses.map((address)=> {
-  //       var a = address;
-  //       if(address.id == this.newAddress.id)
-  //         a = response.address;
-  //       return a
-  //     });
-  //     }
-  //     else{
-  //       this.addresses.push(response.address);
-  //     }
-  //     if(response.address.default)
-  //       this.changeAddreessDefault(response.address.id);
-
-  //     this.selectedAddressId=response.address.id;
-  //     this.addAddress = false;
-  //     this.appservice.shippingAddresses = this.addresses;
-  //     this.newAddress = {};
-  //     this.appservice.removeLoader();
-  //   })
-  //   .catch((error)=>{
-  //     console.log("error ===>", error);
-  //     this.appservice.removeLoader();
-  //     this.addAddress = false;
-  //   })    
-  // }
-
-  // editAddress(address){
-  //   this.newAddress = Object.assign({}, address);
-  //   this.hideDefaultAddressField = address.default ? true : false;
-  //   this.addAddress = true;
-  //   this.initSelectPicker();
-  // }
-
-  // changeAddreessDefault(id){
-  //   this.addresses.forEach((address)=>{
-  //     if(address.id != id)
-  //       address.default = false;
-  //   })
-  // }
-
-  // setAddressDefault(id){
-  //   this.addresses.forEach((address)=>{
-  //     if(address.id == id)
-  //       address.default = true;
-  //   })
-  // }
-
-  // addNewAddress(){
-  //   this.hideDefaultAddressField = false;
-  //   this.addAddress = true;
-  //   this.newAddress = {};
-  //   this.newAddress.default = false;
-  //   this.newAddress.state_id="";
-  //   this.newAddress.landmark = "";
-  //   this.initSelectPicker();
-  // }
-
-  // initSelectPicker(){
-  //   $(".kss_shipping").scrollTop(0);
-  //   setTimeout(()=>{
-  //     $('#state').selectpicker();
-  //   },100); 
-  // }
-
-  // deleteAddress(id){
-  //   let change_selected_address = (id == this.selectedAddressId) ? true : false;
-  //   let old_id = this.selectedAddressId;
-  //   this.appservice.showLoader();
-  //   let body = { address_id : id };
-  //   let url = this.appservice.apiUrl +  "/api/rest/v1/user/address/delete?";
-  //   let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
-  //   url = url+$.param(body);
-  //   this.apiservice.request(url, 'get', body, header ).then((response)=>{
-  //     let index = this.addresses.findIndex(i => i.id == id);
-  //     this.addresses.splice(index,1);
-  //     if(!this.addresses.length){
-  //       this.addNewAddress();
-  //     }
-  //     if(response.default_id){
-  //       this.setAddressDefault(response.default_id);
-  //       if(change_selected_address)
-  //         this.selectedAddressId=response.default_id;
-  //       else
-  //         this.selectedAddressId = old_id;
-  //     }
-  //     this.appservice.removeLoader();
-  //   })
-  //   .catch((error)=>{
-  //     console.log("error ===>", error);
-  //     this.appservice.removeLoader();
-  //   })
-  // }
 
   navigateToShippingPage(){
     this.appservice.selectedAddressId = this.selectedAddressId;
@@ -260,13 +146,6 @@ export class ShippingDetailsComponent implements OnInit {
       this.appservice.removeLoader();
     }
   }
-
-  // getStateName(id){
-  //   if(this.states){
-  //     let state_obj = this.states.find((state)=>{ return id == state.id});
-  //     return state_obj.state;
-  //   }    
-  // }
 
   updateView(){
     console.log("inside updateView function", this.addressComponent.addAddress, this.addressComponent.selectedAddressId);
