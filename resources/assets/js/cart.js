@@ -75,6 +75,13 @@ $(document).ready(function(){
         $('[data-toggle="tooltip"]').tooltip();
     }
 
+    jQuery("#cd-my-account-trigger").click(function() {      
+        let url = window.location.href.split("#")[0] + '#/account';
+        window.location = url;
+        // history.pushState({}, 'cart', url);        
+        // openCart();   
+    });
+
     jQuery("#cd-cart-trigger").click(function() {      
         let url = window.location.href.split("#")[0] + '#/bag';
         // history.pushState({}, 'cart', url);
