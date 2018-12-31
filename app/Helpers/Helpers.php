@@ -717,3 +717,8 @@ function getDisplayWhatsapp()
 {
     return Defaults::where('type', 'display')->where('label', 'whatsapp')->first()->meta_data[0];
 }
+
+function getOdooDiff($model,$dbData){
+    $odooData = OdooConnect::getAllActiveIds($model);
+    return ['odooExtra'=> array_values($odooData->diff($dbData)->toArray()), 'dbExtra' => array_values($dbData->diff($odooData)->toArray())];
+}

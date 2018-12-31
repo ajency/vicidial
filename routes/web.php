@@ -42,6 +42,7 @@ Route::get('/test/productlist', 'ProductListTestController@index')->name('produc
 Route::get('/shop', 'ListingController@shop')->name('shoplisting');
 
 Route::get('/', 'HomeController@index')->name('home');
+Route::get('/variant-diff-file','StaticController@getVariantDiffFile');
 
 # PayU
 Route::get('/user/order/{orderid}/payment/payu', 'PaymentController@payment')->name('payment');
