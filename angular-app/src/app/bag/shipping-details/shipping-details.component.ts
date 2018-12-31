@@ -18,22 +18,9 @@ export class ShippingDetailsComponent implements OnInit {
 
 	addAddress = false;
   addresses : any;
-  // newAddress : any = {
-  //   name : '',
-  //   phone : '',
-  //   address : '',
-  //   pincode : '',
-  //   locality : '',
-  //   landmark : '',
-  //   city : '',
-  //   state_id : '',
-  //   default : false
-  // };
   selectedAddressId : any;
   states : any;
-  // hideDefaultAddressField : boolean = false;
   cart : any;
-
   widgetOpen : boolean = true;
   constructor( private router : Router,
                private appservice : AppServiceService,

@@ -25,8 +25,7 @@ export class OrderDetailsComponent implements OnInit {
   order : any;
   orders : any;
   showBackButton : boolean = false;
-
-  loginCheckTimer : any;
+  
   constructor(private appservice : AppServiceService,
               private route: ActivatedRoute,
               private router: Router) { }
@@ -39,17 +38,12 @@ export class OrderDetailsComponent implements OnInit {
       this.showBackButton = true;
     }
     else{
-      if(this.appservice.isLoggedInUser()){
-        this.getOrders();
-      }
-      else{
-        this.displayModal();
-      } 
+        this.getOrders(); 
     }    
   }
 
   ngOnDestroy(){
-    this.clearLoginTimerInterval();
+
   }
 
   getOrders(){
@@ -91,27 +85,6 @@ export class OrderDetailsComponent implements OnInit {
 
   isLoggedIn(){
     return this.appservice.isLoggedInUser();
-  }
-
-  displayModal(){
-    this.checkLoginTimer();
-    this.router.navigate([{ outlets: { popup: ['user-login'] }}], { replaceUrl: true });
-  }
-
-  checkLoginTimer(){
-    this.clearLoginTimerInterval();
-    console.log("inside checkLoginTimer function");
-    this.loginCheckTimer = setInterval(()=>{
-      if(this.appservice.isLoggedInUser()){
-        this.getOrders();
-        this.clearLoginTimerInterval();
-      }
-    },100)
-  }
-
-  clearLoginTimerInterval(){
-    if(this.loginCheckTimer)
-      clearInterval(this.loginCheckTimer);
   }
 
 }

@@ -49,18 +49,11 @@ export class BagViewComponent implements OnInit {
                private apiservice : ApiServiceService,
                private zone : NgZone
               ) { 
-    // this.createDummyPromotions();
     this.reloadSubscription = this.appservice.listenToAddToCartEvent().subscribe(()=> { this.reloadCart() });
     this.loadSubscription = this.appservice.listenToOpenCartEvent().subscribe(()=> { this.loadCart() });
 
     this.closeModalSubscription = this.appservice.listenToCloseModal().subscribe(()=>{ console.log("loginSuccess event received") });
     this.openModalSubscription = this.appservice.listenToOpenModal().subscribe(()=>{ this.modalHandler()});
-
-
-  if(!this.appservice.isLoggedInUser()){
-
-  }
-
   }
 
   reloadCart(){
