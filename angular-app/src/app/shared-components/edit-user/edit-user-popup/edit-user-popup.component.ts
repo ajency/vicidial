@@ -16,6 +16,7 @@ export class EditUserPopupComponent implements OnInit, OnChanges {
 	@Input() showCancelButton : any;
 	@Output() pop_up_closed = new EventEmitter();
 	userEmail : any;
+  userName : any;
   constructor(private appservice : AppServiceService,
               private apiservice : ApiServiceService) { }
 
@@ -25,6 +26,7 @@ export class EditUserPopupComponent implements OnInit, OnChanges {
   ngOnChanges(){
   	console.log("ngOnChanges edit-user-popup", this.user_info, this.showCancelButton);
   	this.userEmail = this.user_info.email;
+    this.userName = this.user_info.name;
   }
 
   saveUserInfo(){
@@ -33,12 +35,14 @@ export class EditUserPopupComponent implements OnInit, OnChanges {
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     let body : any = {
       _token : $('meta[name="csrf-token"]').attr('content'),
-      name : this.user_info.name,
-      email : this.user_info.email
+      name : this.userName,
+      email : this.userEmail
     };
 
     this.apiservice.request(url, 'post', body , header ).then((response)=>{
       this.userEmail = body.email;
+      this.user_info.email = body.email;
+      this.user_info.name = body.name;
       this.hideModal();
       this.appservice.removeLoader();
     })

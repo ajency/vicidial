@@ -222,14 +222,6 @@ function openCart(){
     $("body").addClass("hide-scroll");
 }
 
-function openMyAccountPage(){
-    loadMyAccountApp();
-    $('#main-nav').removeClass('speed-in');
-    $('#cd-my-account').addClass("speed-in");
-    $('#cd-shadow-layer').addClass('is-visible');
-    $("body").addClass("hide-scroll");
-}
-
 function updateCartCountInUI() {
     //Check cart count in cookie
     var cart_count = getCookie( "cart_count" );

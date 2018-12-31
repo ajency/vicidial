@@ -33,18 +33,20 @@
 			<h5 class="font-weight-bold text-dark mb-3">Primary Info</h5>
 			<div class="row mb-2">
 				<div class=" col-6">Name</div>
-				<label class="mb-0  col-6">Tony</label>
+				<label class="mb-0  col-6">{{userInfo.name}}</label>
 			</div>
 			<div class="row mb-2">
 				<div class="col-6">Mobile Number</div>
-				<label class="mb-0 col-6">9822334455</label>
+				<label class="mb-0 col-6">{{userInfo.mobile}}</label>
 			</div>
 			<div class="row mb-2">
 				<div class="col-6">E-mail id</div>
-				<label class="mb-0 col-6">tony@avengers.com</label>
+				<label class="mb-0 col-6">{{userInfo.email}}</label>
 			</div>
 
-			<button type="button" class="btn btn-primary mt-3">Edit Details</button>
+			<button type="button" class="btn btn-primary mt-3" (click)="showModal()">Edit Details</button>
 		</div>			
 	</div>
+
+	<app-edit-user-popup [user_info]="userInfo" [showCancelButton]="showCancelButton" (pop_up_closed)="updateEmail()"></app-edit-user-popup>
 </div>	

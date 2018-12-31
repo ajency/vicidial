@@ -18,11 +18,11 @@
           <p class="sub-text w-75 mt-3">Please provide following details</p>
           <form #userInfo="ngForm">
             <div class="form-group mb-0">
-              <input type="text" class="form-control form-control-lg" id="frm-name" name="name" required [(ngModel)]="user_info.name" [ngClass]="{'has-value' : user_info.name}">
+              <input type="text" class="form-control form-control-lg" id="frm-name" name="name" required [(ngModel)]="userName" [ngClass]="{'has-value' : userName}">
               <label class="control-label">Name</label>			              
             </div>
             <div class="form-group mb-0">
-            	<input type="email" class="form-control form-control-lg" id="frm-email" name="email" required [(ngModel)]="user_info.email" [ngClass]="{'has-value' : user_info.email}" pattern="[^ @]+@[^ @]+\.[^ @]+">
+            	<input type="email" class="form-control form-control-lg" id="frm-email" name="email" required [(ngModel)]="userEmail" [ngClass]="{'has-value' : userEmail}" pattern="[^ @]+@[^ @]+\.[^ @]+">
 	            <label class="control-label">Email Id</label>
             </div>
           </form>

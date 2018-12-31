@@ -104,27 +104,6 @@ export class ShippingSummaryComponent implements OnInit {
     return data;
   }
 
-  // saveUserInfo(){
-  //   this.appservice.showLoader();
-  //   let url = this.appservice.apiUrl + '/api/rest/v1/user/save-user-details';
-  //   let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
-  //   let body : any = {
-  //     _token : $('meta[name="csrf-token"]').attr('content'),
-  //     name : this.shippingDetails.user_info.name,
-  //     email : this.shippingDetails.user_info.email
-  //   };
-
-  //   this.apiservice.request(url, 'post', body , header ).then((response)=>{
-  //     this.hideModal();
-  //     this.userEmail = body.email;
-  //     this.appservice.removeLoader();
-  //   })
-  //   .catch((error)=>{
-  //     console.log("error ===>", error);
-  //     this.appservice.removeLoader();
-  //   }) 
-  // }
-
   setUserName(){
     if(!this.shippingDetails.user_info){
       this.shippingDetails.user_info = {};
@@ -154,13 +133,6 @@ export class ShippingSummaryComponent implements OnInit {
     $('body').addClass('hide-scroll');
   }
 
-  // hideModal(){
-  //   this.showUserInfoModal = false;
-  //   $('#user-info').modal('hide');
-  //   $("#cd-cart,.kss_shipping_summary").css("overflow", "auto");
-  //   $('.modal-backdrop').remove();
-  // }
-
   editShippingAddress(){
     this.appservice.editAddressFromShippingSummary = true;
     this.appservice.addressToEdit = this.shippingDetails.address;
@@ -170,7 +142,7 @@ export class ShippingSummaryComponent implements OnInit {
   updateEmail(){
     this.showUserInfoModal = false;
     console.log("this.editUserPopUp.userEmail", this.editUserPopUp.userEmail);
-    this.userEmail = this.editUserPopUp.userEmail;
+    this.userEmail = this.editUserPopUp.user_info.email;
   }
 
 }
