@@ -7,11 +7,11 @@ use App\Elastic\OdooConnect;
 use App\Facet;
 use App\Jobs\UpdateVariantInventory;
 use App\Location;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use League\Csv\Writer;
 use SoapBox\Formatter\Formatter;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Storage;
 
 class Variant extends Model
 {
@@ -23,6 +23,8 @@ class Variant extends Model
     protected $fillable      = ['odoo_id', 'product_color_id'];
     protected $casts         = [
         'inventory' => 'array',
+        'active'    => 'boolean',
+        'deleted'   => 'boolean',
     ];
     /**
      *
@@ -384,6 +386,43 @@ class Variant extends Model
         $csv->output('inventory.csv');
     }
 
+    public static function updateInventoryIndex()
+    {
+        $availableVariants = self::select(["odoo_id", "inventory", "active", "deleted"])->get();
+        $locations         = Location::where('use_in_inventory', true)->get()->pluck('location_name', 'odoo_id');
+        $variantInventory  = collect();
+        foreach ($availableVariants as $variant) {
+            $inventoryLine = ["variant_id" => $variant->odoo_id];
+            $inventoryLine["active"] = $variant->active;
+            $inventoryLine["deleted"] = $variant->deleted;
+            foreach ($locations as $loc_id => $loc_name) {
+                $inventoryLine[$loc_name] = (isset($variant->inventory["$loc_id"])) ? $variant->inventory["$loc_id"]['quantity'] : 0;
+            }
+            \Log::debug(collect($inventoryLine));
+            $variantInventory->push($inventoryLine);
+        }
+        $query = new ElasticQuery;
+        $query->setIndex(config('elastic.indexes.inventory'));
+        $query->initializeBulkIndexing();
+        $variantInventory->each(function ($item, $key) use ($query) {
+            $query->addToBulkIndexing($item['variant_id'], $item);
+        });
+        $responses = $query->bulk();
+        foreach ($responses['items'] as $response) {
+            switch ($response['index']['result']) {
+                case 'created':
+                    \Log::info("Product {$response['index']['_id']} created");
+                    break;
+                case 'updated':
+                    \Log::info("Product {$response['index']['_id']} updated");
+                    break;
+                default:
+                    \Log::notice("Product {$response['index']['_id']} status {$response['index']['result']}");
+                    break;
+            }
+        }
+    }
+
     // public static function getInactiveVariants()
     // {
     //     $odooFilter       = OdooConnect::odooFilter(['write' => Defaults::getLastInactiveVariantSync()]);
@@ -408,15 +447,14 @@ class Variant extends Model
     //     Defaults::setLastInactiveVariantSync();
     // }
 
-
     public static function updateVariantDiffFile()
     {
-        $dbVariants = self::select('odoo_id')->where('active',1)->where('deleted',0)->get()->pluck('odoo_id');
-        $diff = getOdooDiff('product.product',$dbVariants);
-        $formatter = Formatter::make($diff, Formatter::ARR);
-        $diffJson       = $formatter->toJson();
-        $now = Carbon::now();
-        Storage::disk('s3')->put(config('ajfileupload.doc_base_root_path').'/VariantOdooDbDiff'.$now->timestamp.'.json', $diffJson, 'public');
-        return redirect(Storage::disk('s3')->url(config('ajfileupload.doc_base_root_path').'/VariantOdooDbDiff'.$now->timestamp.'.json'));
+        $dbVariants = self::select('odoo_id')->where('active', 1)->where('deleted', 0)->get()->pluck('odoo_id');
+        $diff       = getOdooDiff('product.product', $dbVariants);
+        $formatter  = Formatter::make($diff, Formatter::ARR);
+        $diffJson   = $formatter->toJson();
+        $now        = Carbon::now();
+        Storage::disk('s3')->put(config('ajfileupload.doc_base_root_path') . '/VariantOdooDbDiff' . $now->timestamp . '.json', $diffJson, 'public');
+        return redirect(Storage::disk('s3')->url(config('ajfileupload.doc_base_root_path') . '/VariantOdooDbDiff' . $now->timestamp . '.json'));
     }
 }
