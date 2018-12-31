@@ -18,7 +18,18 @@
 <div [ngClass]="(orders && orders.length) ? 'my-order-bg' : 'mt-3' ">
 	<div class="col-12 p-0 myorder-wrapper">
 		<div class="h-100">
-			<h4 class="font-weight-bold m-0">My Orders</h4>
+			<div class="d-flex align-items-top top-navbar pt-1">
+	            <div class="pr-3 d-block">
+	            	<a>		              	
+		              	<h4 class="m-0 font-weight-bold back-to-cart">
+			               <img (click)="navigateBack()" class="btn-back kss_highlight" src="/img/left-arrow.png" style="width:20px;">
+			             </h4>
+		          	</a>
+	            </div>
+	            <div class="">
+	              <h4 class="font-weight-bold m-0">My Orders</h4>
+	            </div>
+	        </div>
 			<hr>
 			<div *ngIf="isLoggedIn()" class="my-order-parent accordion mb-4" id="accordionExample">
 				<div *ngIf="orders && orders.length" class="my-order-child">

@@ -59,7 +59,7 @@ export class AccountComponent implements OnInit {
   	let url = window.location.href.split("#")[0];
     history.replaceState({}, 'account', url);
     this.appservice.closeWidget();
-    window.location.reload();
+    // window.location.reload();
   }
 
   checkLoginTimer(){

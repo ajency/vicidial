@@ -34,8 +34,8 @@ export class MyOrdersComponent implements OnInit {
 
   }
 
-  navigateToBlank(){
-  	this.router.navigateByUrl('/blank');
+  navigateBack(){
+  	history.back();
   }
 
   getOrders(){

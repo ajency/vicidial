@@ -16,7 +16,18 @@
 <div [ngClass]="(addresses && addresses.length) ? 'my-order-bg' : 'mt-3' ">
 		<div class="col-12 p-0 myorder-wrapper">
 			<div *ngIf="addresses" class="h-100">
-				<h4 class="font-weight-bold m-0">Addresses</h4>
+				<div class="d-flex align-items-top top-navbar pt-1">
+		            <div class="pr-3 d-block">
+		            	<a>		              	
+			              	<h4 class="m-0 font-weight-bold back-to-cart">
+				               <img (click)="navigateBack()" class="btn-back kss_highlight" src="/img/left-arrow.png" style="width:20px;">
+				             </h4>
+			          	</a>
+		            </div>
+		            <div class="">
+		              <h4 class="font-weight-bold m-0">Addresses</h4>
+		            </div>
+		        </div>
 				<hr>
 				
 				<app-address [addresses]="addresses" [addAddress]="addAddress" [selectedAddressId]="selectedAddressId" [states]="states" ></app-address>			
