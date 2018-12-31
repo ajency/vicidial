@@ -9,6 +9,9 @@ use App\Jobs\UpdateVariantInventory;
 use App\Location;
 use Illuminate\Database\Eloquent\Model;
 use League\Csv\Writer;
+use SoapBox\Formatter\Formatter;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class Variant extends Model
 {
@@ -404,4 +407,16 @@ class Variant extends Model
     //     UpdateVariantInventory::dispatch($inactiveVariants,false)->onQueue('update_inventory');
     //     Defaults::setLastInactiveVariantSync();
     // }
+
+
+    public static function updateVariantDiffFile()
+    {
+        $dbVariants = self::select('odoo_id')->where('active',1)->where('deleted',0)->get()->pluck('odoo_id');
+        $diff = getOdooDiff('product.product',$dbVariants);
+        $formatter = Formatter::make($diff, Formatter::ARR);
+        $diffJson       = $formatter->toJson();
+        $now = Carbon::now();
+        Storage::disk('s3')->put(config('ajfileupload.doc_base_root_path').'/VariantOdooDbDiff'.$now->timestamp.'.json', $diffJson, 'public');
+        return redirect(Storage::disk('s3')->url(config('ajfileupload.doc_base_root_path').'/VariantOdooDbDiff'.$now->timestamp.'.json'));
+    }
 }

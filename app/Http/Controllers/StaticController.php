@@ -2,44 +2,47 @@
 
 namespace App\Http\Controllers;
 
+use App\Variant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class StaticController extends Controller
 {
-	public function __construct()
+    public function __construct()
     {
-        $this->params['breadcrumb'] = array();
-        $this->params['breadcrumb']['list']    = array();
+        $this->params['breadcrumb']         = array();
+        $this->params['breadcrumb']['list'] = array();
         setSEO();
     }
 
     public function index($static_page, Request $request)
     {
-    	$params = array();
-    	$params['page'] = $static_page;
-    	$params['query'] = $request->all();
-        if(view()->exists('shop.'.$params['page']))
-            return view('shop.'.$params['page'])->with('params',$params);
-        else
+        $params          = array();
+        $params['page']  = $static_page;
+        $params['query'] = $request->all();
+        if (view()->exists('shop.' . $params['page'])) {
+            return view('shop.' . $params['page'])->with('params', $params);
+        } else {
             abort(404);
+        }
+
     }
 
-	public function contact(Request $request)
+    public function contact(Request $request)
     {
-    	$this->params['breadcrumb']['current'] = 'Contact Us';
+        $this->params['breadcrumb']['current'] = 'Contact Us';
         return view('contact-us')->with('params', $this->params);
     }
 
     public function contactnew(Request $request)
     {
-    	$this->params['breadcrumb']['current'] = 'Contact Us';
+        $this->params['breadcrumb']['current'] = 'Contact Us';
         return view('contact')->with('params', $this->params);
     }
 
     public function faq(Request $request)
     {
-    	$this->params['breadcrumb']['current'] = 'Faq';
+        $this->params['breadcrumb']['current'] = 'Faq';
         return view('faq')->with('params', $this->params);
     }
 
@@ -51,7 +54,7 @@ class StaticController extends Controller
 
     public function tc(Request $request)
     {
-    	$this->params['breadcrumb']['current'] = 'Terms and Conditions';
+        $this->params['breadcrumb']['current'] = 'Terms and Conditions';
         return view('terms-and-conditions')->with('params', $this->params);
     }
 
@@ -75,9 +78,14 @@ class StaticController extends Controller
 
     public function productXML(Request $request)
     {
-        return response(Storage::disk('s3')->get(config('ajfileupload.doc_base_root_path').'/products.xml'), 200, [
-            'Content-Type' => 'application/xml'
+        return response(Storage::disk('s3')->get(config('ajfileupload.doc_base_root_path') . '/products.xml'), 200, [
+            'Content-Type' => 'application/xml',
         ]);
+    }
+
+    public function getVariantDiffFile(Request $request)
+    {
+        return Variant::updateVariantDiffFile();
     }
 
 }
