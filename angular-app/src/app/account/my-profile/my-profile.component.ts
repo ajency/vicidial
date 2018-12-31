@@ -19,13 +19,28 @@ export class MyProfileComponent implements OnInit {
 
   userInfo : any = {};
   showCancelButton : boolean = true;
-  ngOnInit() {
-    this.userInfo = {
-      name : 'Tony Stark',
-      email : 'tony@ajency.in',
-      mobile : '9885945404'
-    }
-  	this.appservice.removeLoader();
+  ngOnInit() {    
+    this.getUserInfo();
+    // this.userInfo = {
+    //   name : 'Tony Stark',
+    //   email : 'tony@ajency.in',
+    //   mobile : '9885945404'
+    // }  	
+  }
+
+  getUserInfo(){    
+    this.appservice.showLoader();
+    let url = 'https://demo8558685.mockable.io/user_info'
+    let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
+
+    this.apiservice.request(url, 'get', {} , header ).then((response)=>{
+      this.userInfo = response.user_info;
+      this.appservice.removeLoader();
+    })
+    .catch((error)=>{
+      console.log("error ===>", error);      
+      this.appservice.removeLoader();      
+    }) 
   }
 
   closeWidget(){
