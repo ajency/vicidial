@@ -149,7 +149,7 @@ export class LoginComponent implements OnInit {
   }
 
   closeOtpModal(){
-  	this.router.navigate([{ outlets: { popup: null }}]);
+  	this.router.navigate([{ outlets: { popup: null }}], {replaceUrl : true});
     // history.back();
     // this.mobileNumber = '';
     // this.resetOTP();
