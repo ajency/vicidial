@@ -1,3 +1,50 @@
-<p>
-  my-profile works!
-</p>
+<div class="cart-step1-header">
+	<nav class="navbar navbar-dark bg-dark pt-3 pb-3 ">
+		<div class="d-flex align-items-center w-100">
+			<div class="">
+				<a>
+					<img _ngcontent-c1="" class=" img-fluid m-0" src="/img/logo-kss.png" width="180px" xpreview="/img/logo-kss.png">
+			 	</a>
+			</div>
+			<div class="ml-auto align-self-center">
+				<h3 class="m-0 text-white kss_highlight btn-pay" (click)="closeWidget()"><span aria-hidden="true">×</span></h3>
+			</div>
+		</div>
+	</nav>
+</div>
+
+<div>
+	<div class="col-12 p-0">
+		<div class="d-flex align-items-top top-navbar">
+            <div class="pr-3 d-block">
+            	<a>		              	
+	              	<h4 class="m-0 font-weight-bold back-to-cart">
+		               <img (click)="navigateBack()" class="btn-back kss_highlight" src="/img/left-arrow.png" style="width:20px;">
+		             </h4>
+	          	</a>
+            </div>
+            <div class="">
+              <h4 class="font-weight-bold m-0"> Profile</h4>
+            </div>
+        </div>
+		<hr>
+		
+		<div class="p-3 mb-3 card shadow-sm d-block">
+			<h5 class="font-weight-bold text-dark mb-3">Primary Info</h5>
+			<div class="row mb-2">
+				<div class=" col-6">Name</div>
+				<label class="mb-0  col-6">Tony</label>
+			</div>
+			<div class="row mb-2">
+				<div class="col-6">Mobile Number</div>
+				<label class="mb-0 col-6">9822334455</label>
+			</div>
+			<div class="row mb-2">
+				<div class="col-6">E-mail id</div>
+				<label class="mb-0 col-6">tony@avengers.com</label>
+			</div>
+
+			<button type="button" class="btn btn-primary mt-3">Edit Details</button>
+		</div>			
+	</div>
+</div>	

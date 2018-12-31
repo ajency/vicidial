@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AppServiceService } from '../../service/app-service.service';
+import { ApiServiceService } from '../../service/api-service.service';
 
 @Component({
   selector: 'app-my-profile',
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MyProfileComponent implements OnInit {
 
-  constructor() { }
+  constructor(private appservice : AppServiceService,
+              private apiservice : ApiServiceService) { }
 
   ngOnInit() {
+  	this.appservice.removeLoader();
+  }
+
+  closeWidget(){
+    let url = window.location.href.split("#")[0];
+    history.replaceState({}, 'account', url);
+    this.appservice.closeCart();
+  }
+
+  navigateBack(){
+     history.back();
   }
 
 }
