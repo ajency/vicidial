@@ -24,6 +24,7 @@ export class EditUserPopupComponent implements OnInit, OnChanges {
 
   ngOnChanges(){
   	console.log("ngOnChanges edit-user-popup", this.user_info, this.showCancelButton);
+  	this.userEmail = this.user_info.email;
   }
 
   saveUserInfo(){
