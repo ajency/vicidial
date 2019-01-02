@@ -150,4 +150,15 @@ class User extends Authenticatable
             return array('name' => $this->name, 'email' => $this->email);
         }
     }
+
+    public function userDetails()
+    {
+        $user_info = $this->userInfo();
+        if ($user_info != null) {
+            $response = $user_info;
+        }
+        $response['mobile'] = $this->phone;
+
+        return $response;
+    }
 }

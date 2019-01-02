@@ -57,7 +57,7 @@ class UserController extends Controller
         $UserObject->save();
         
         $id = $UserObject->cart_id;
-        $user = ["id"=> $UserObject->id, 'active_cart_id'=> $id];
+        $user = ["id"=> $UserObject->id, 'user_info'=> $this->userDetails(), 'active_cart_id'=> $id];
         
         return response()->json(["message"=> 'user login successful', 'user'=> $user, 'token'=> $token->id, 'success'=> true]);
     }
@@ -156,5 +156,13 @@ class UserController extends Controller
         $user->save();
 
         return response()->json(["message"=> "User info saved successfully", 'success'=> true]);
+    }
+
+    public function fetchUserDetails(Request $request)
+    {
+        $user                  = User::getUserByToken($request->header('Authorization'));
+        $response['user_info'] = $this->userDetails();
+
+        return response()->json($response);
     }
 }
