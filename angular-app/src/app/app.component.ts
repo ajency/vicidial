@@ -2,6 +2,8 @@ import { Component, ViewEncapsulation, Output, EventEmitter} from '@angular/core
 import { AppServiceService } from './service/app-service.service';
 import { Router } from '@angular/router';
 import { ApiServiceService } from './service/api-service.service';
+import { PlatformLocation } from '@angular/common';
+
 declare var $: any;
 declare var openCart: any;
 
@@ -18,7 +20,8 @@ export class AppComponent {
 
   constructor(private appservice : AppServiceService,
 					  	private apiservice : ApiServiceService,
-  						private router : Router){
+  						private router : Router,
+              private loc : PlatformLocation){
 
   	// this.appservice.loginComplete.subscribe((data)=> {
    //    console.log("loginSuccess event fired");
@@ -26,12 +29,12 @@ export class AppComponent {
    //    this.loginSuccessForBag.emit();
    //  })
 
-		window.onpopstate = (event)=>{
-			console.log("On popstate location: " + document.location + ", state: " + JSON.stringify(event.state));
+		this.loc.onPopState(()=>{
+			console.log("On popstate location: ", document.location);
 			if(window.location.href.endsWith('#/') || window.location.href.endsWith('#') || (!window.location.href.includes("#")) ){
 			  	this.appservice.closeCart();
 			  }
-		}
+		});
 	}
 
 	ngOnInit(){
