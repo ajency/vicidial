@@ -24,14 +24,19 @@ export class MyProfileComponent implements OnInit {
   }
 
   getUserInfo(){
-    this.appservice.getUserInfo().then((response) =>{
-      this.userInfo = response.user_info;
-      this.appservice.removeLoader();
-    })
-    .catch((error)=>{
-      console.log("error in get-user-info api ==>",error);
-      this.appservice.removeLoader();
-    })
+    if(this.appservice.userInfo)
+      this.userInfo = this.appservice.userInfo;
+    else{
+      this.appservice.getUserInfo().then((response) =>{
+        this.userInfo = response.user_info;
+        this.appservice.userInfo = response.user_info;
+        this.appservice.removeLoader();
+      })
+      .catch((error)=>{
+        console.log("error in get-user-info api ==>",error);
+        this.appservice.removeLoader();
+      })
+    }
   }
 
   closeWidget(){
@@ -55,6 +60,7 @@ export class MyProfileComponent implements OnInit {
     console.log("this.editUserPopUp.userEmail", this.editUserPopUp.userEmail);
     this.userInfo.email = this.editUserPopUp.userEmail;
     this.userInfo.name = this.editUserPopUp.user_info.name;
+    this.appservice.userInfo = this.userInfo;
   }
 
 }

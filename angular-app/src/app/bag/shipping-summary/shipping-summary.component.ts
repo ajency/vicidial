@@ -143,6 +143,8 @@ export class ShippingSummaryComponent implements OnInit {
     this.showUserInfoModal = false;
     console.log("this.editUserPopUp.userEmail", this.editUserPopUp.userEmail);
     this.userEmail = this.editUserPopUp.user_info.email;
+    this.appservice.userInfo.email = this.userEmail;
+    this.appservice.userInfo.name = this.editUserPopUp.user_info.name
   }
 
 }

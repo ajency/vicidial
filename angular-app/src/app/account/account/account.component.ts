@@ -31,14 +31,19 @@ export class AccountComponent implements OnInit {
   }
 
   getUserInfo(){
-    this.appservice.getUserInfo().then((response) =>{
-      this.userInfo = response.user_info;
-      this.appservice.removeLoader();
-    })
-    .catch((error)=>{
-      console.log("error in get-user-info api ==>",error);
-      this.appservice.removeLoader();
-    })
+    if(this.appservice.userInfo)
+      this.userInfo = this.appservice.userInfo;
+    else{
+      this.appservice.getUserInfo().then((response) =>{
+        this.userInfo = response.user_info;
+        this.appservice.userInfo = response.user_info;
+        this.appservice.removeLoader();
+      })
+      .catch((error)=>{
+        console.log("error in get-user-info api ==>",error);
+        this.appservice.removeLoader();
+      })
+    }
   }
 
   ngOnDestroy(){
