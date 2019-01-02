@@ -26,7 +26,7 @@ Route::middleware('auth:api')->get('/rest/v1/user/address/all', 'AddressControll
 
 Route::middleware('auth:api')->get('/rest/v1/user/address/delete', 'AddressController@userDeleteAddress');
 
-Route::middleware('auth:api')->get('/rest/v1/user/get-user-info', 'UserController@fetchUserDetails');
+Route::middleware('auth:api')->get('/rest/v1/user/get-user-info', 'UserController@fetchUserInfo');
 
 Route::post('/rest/v1/product-list', 'ListingController@productList');
 
