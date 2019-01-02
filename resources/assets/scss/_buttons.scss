@@ -168,6 +168,11 @@
             border-radius: 0;
         }
     }
+    &--medium{
+        font-size: 1.2em;
+        width: auto;
+        padding: 0.6rem 2rem;
+    }
     &--mini{
         // width: 150px;
         font-size: 12px;
