@@ -32,16 +32,13 @@ class Kernel extends ConsoleKernel
             if (!isNotProd()) {
                 $schedule->job(new ProductSync, 'create_jobs')->hourly();
                 $schedule->job(new ProductMoveSync, 'create_jobs')->everyMinute();
-                $schedule->call(function(){
-                    ProductColor::getProductsFromOdooDiscounts();
-                })->dailyAt('21:30');
             } else {
                 $schedule->job(new ProductSync, 'create_jobs')->everyTenMinutes();
                 $schedule->job(new ProductMoveSync, 'create_jobs')->everyMinute();
-                $schedule->call(function(){
-                    ProductColor::getProductsFromOdooDiscounts();
-                })->dailyAt('21:30');
             }
+            $schedule->call(function(){
+                ProductColor::productXMLData();
+            })->dailyAt('21:30');
             $schedule->job(new IndexInactiveProducts,'create_jobs')->daily();
             $schedule->call(function(){
                 Variant::updateInventoryIndex();

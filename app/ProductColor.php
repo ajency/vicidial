@@ -94,7 +94,8 @@ class ProductColor extends Model
     public static function productXMLData()
     {
         $productColors = self::get();
-        $xmlData       = array();
+        $xmlData       = array('title' => 'Online shopping for kids wear and fashion in India - KidSuperStore.in', 'description' => 'Kidsuperstore.in: Online shopping site for kids wear and fashion in India. Buy Shoes, Clothing, Dresses and Accessories for Boys, Girls, Toddlers, Juniors and Infants. Shipping | Cash on Delivery | 30 days return.', 'link' => url('/'));
+        $excludeArray  = ["title", "description", "link"];
         foreach ($productColors as $productColor) {
             try {
                 $productColorData = $productColor->getElasticData();
@@ -164,7 +165,7 @@ class ProductColor extends Model
         }
 
         $formatter = Formatter::make($xmlData, Formatter::ARR);
-        $xml       = $formatter->toXml();
+        $xml       = $formatter->toXml('rss version="2.0" xmlns:g="http://base.google.com/ns/1.0"', 'http://base.google.com/ns/1.0', $excludeArray);
 
         Storage::disk('s3')->put(config('ajfileupload.doc_base_root_path').'/products.xml', $xml);
     }
