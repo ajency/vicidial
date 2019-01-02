@@ -12,19 +12,15 @@ declare var $: any;
 })
 export class AccountComponent implements OnInit {
 
-	closeModalSubscription: Subscription;
-  openModalSubscription : Subscription;
   returnUrl: string;
   loginCheckTimer : any;
   constructor(private appservice : AppServiceService,
       			  private router : Router,
               private route: ActivatedRoute) {
-  	      this.closeModalSubscription = this.appservice.listenToCloseModal().subscribe(()=>{ this.closeLoginModal()});
-	        this.openModalSubscription = this.appservice.listenToOpenModal().subscribe(()=>{ this.modalHandler()});
   	}
 
   ngOnInit() {
-    this.returnUrl = this.route.snapshot.queryParams['return_url'] || '/';
+    this.returnUrl = this.route.snapshot.queryParams['return_url'];
     console.log("this.returnUrl ==>", this.returnUrl);
   	this.appservice.removeLoader();
   	if(!this.appservice.isLoggedInUser())
@@ -32,8 +28,6 @@ export class AccountComponent implements OnInit {
   }
 
   ngOnDestroy(){
-    this.closeModalSubscription.unsubscribe();
-    this.openModalSubscription.unsubscribe();
     this.clearLoginTimerInterval();
   }
 
@@ -46,8 +40,9 @@ export class AccountComponent implements OnInit {
     this.router.navigate([{ outlets: { popup: ['user-login'] }}], { replaceUrl: true });
   }
 
-  closeLoginModal(){   	
-    this.router.navigateByUrl(this.returnUrl, { replaceUrl: true });
+  redirectToReturnUrl(){
+    if(this.returnUrl)  	
+      this.router.navigateByUrl(this.returnUrl, { replaceUrl: true });
   }
 
   modalHandler(){
@@ -66,7 +61,7 @@ export class AccountComponent implements OnInit {
     console.log("inside checkLoginTimer function");
     this.loginCheckTimer = setInterval(()=>{
       if(this.appservice.isLoggedInUser()){
-        this.closeLoginModal();
+        this.redirectToReturnUrl();
         this.clearLoginTimerInterval();
       }
     },100)
