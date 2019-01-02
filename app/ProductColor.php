@@ -95,6 +95,7 @@ class ProductColor extends Model
     {
         $productColors = self::get();
         $xmlData       = array();
+        $excludeArray  = ["title", "description", "link"];
         foreach ($productColors as $productColor) {
             try {
                 $productColorData = $productColor->getElasticData();
@@ -164,7 +165,7 @@ class ProductColor extends Model
         }
 
         $formatter = Formatter::make($xmlData, Formatter::ARR);
-        $xml       = $formatter->toXml();
+        $xml       = $formatter->toXml('rss version="2.0" xmlns:g="http://base.google.com/ns/1.0"', 'http://base.google.com/ns/1.0', $excludeArray);
 
         Storage::disk('s3')->put(config('ajfileupload.doc_base_root_path').'/products.xml', $xml);
     }
