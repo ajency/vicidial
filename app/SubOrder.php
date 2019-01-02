@@ -81,7 +81,7 @@ class SubOrder extends Model
         if ($this->odoo_id == null) {
             $items = $this->getItems();
             foreach ($items as $itemData) {
-                if (!isset($itemData['item']->inventory[$this->location_id]) || $itemData['quantity'] > $itemData['item']->inventory[$this->location_id]['quantity']) {
+                if (!isset($itemData['item']->inventory[$this->location_id]) || ($itemData['quantity'] > $itemData['item']->inventory[$this->location_id]['quantity'])) {
                     $this->order->cart->type = 'failure';
                     $this->order->cart->save();
                     if($abort) {
