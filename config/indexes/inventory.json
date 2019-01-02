@@ -1,0 +1,27 @@
+{
+  "mappings": {
+    "_doc": {
+      "properties": {
+        "variant_id": {
+          "type": "long"
+        },
+        "COI": {
+          "type": "long"
+        },
+        "2007": {
+          "type": "long"
+        },
+        "SUR": {
+          "type": "long"
+        },
+
+        "active": {
+          "type": "boolean"
+        },
+        "deleted": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

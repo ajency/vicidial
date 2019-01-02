@@ -28,7 +28,7 @@ class AppServiceProvider extends ServiceProvider
             \Log::notice('Job : '.$event->job->resolveName());
             sendEmail('failed-job', [
                 'from'          => config('communication.failed-job.from'),
-                'subject'       => 'Failed Job : '.$event->job->getQueue(),
+                'subject'       => 'Failed Job : '.$event->job->getQueue().' ['.config('app.env').']',
                 'template_data' => [
                     'queue' => $event->job->getQueue(),
                     'job' => $event->job->resolveName(),

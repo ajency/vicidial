@@ -97,4 +97,10 @@ class OdooConnect
         }
     }
 
+    public static function getAllActiveIds($model){
+        $odoo = new self;
+        $modelIds = $odoo->defaultExec($model,'search',[[['active','=',true]]],['limit'=>100000]);
+        return $modelIds;
+    }
+
 }
