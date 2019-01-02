@@ -93,6 +93,7 @@ export class LoginComponent implements OnInit {
       this.otp = null;
       this.userValidation.disableVerifyOtpButton = false;
       if(response.success){
+        this.appservice.userInfo = response.user.user_info;
         document.cookie='token='+ response.token + ";path=/";
         document.cookie='cart_id=' + response.user.active_cart_id + ";path=/";
         this.appservice.userVerificationComplete = true;

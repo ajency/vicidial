@@ -30,6 +30,8 @@ export class AppServiceService {
 
   private loginSuccess = new Subject<any>();
 
+  userInfo : any;
+
   @Output() loginComplete : EventEmitter<boolean> = new EventEmitter();
 
   navigatingFromBagToAddress : boolean = false;
@@ -242,6 +244,13 @@ export class AppServiceService {
       })
     })
     return data;
+  }
+
+  getUserInfo(){    
+    this.showLoader();
+    let url = this.apiUrl + '/api/rest/v1/user/get-user-info';
+    let header = { Authorization : 'Bearer '+this.getCookie('token') };
+    return this.apiservice.request(url, 'get', {} , header );
   }
 
 }

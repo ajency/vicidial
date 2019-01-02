@@ -14,6 +14,7 @@ export class AccountComponent implements OnInit {
 
   returnUrl: string;
   loginCheckTimer : any;
+  userInfo : any;
   constructor(private appservice : AppServiceService,
       			  private router : Router,
               private route: ActivatedRoute) {
@@ -25,6 +26,19 @@ export class AccountComponent implements OnInit {
   	this.appservice.removeLoader();
   	if(!this.appservice.isLoggedInUser())
   		this.displayModal();
+    else
+      this.getUserInfo();
+  }
+
+  getUserInfo(){
+    this.appservice.getUserInfo().then((response) =>{
+      this.userInfo = response.user_info;
+      this.appservice.removeLoader();
+    })
+    .catch((error)=>{
+      console.log("error in get-user-info api ==>",error);
+      this.appservice.removeLoader();
+    })
   }
 
   ngOnDestroy(){
@@ -56,6 +70,7 @@ export class AccountComponent implements OnInit {
     console.log("inside checkLoginTimer function");
     this.loginCheckTimer = setInterval(()=>{
       if(this.appservice.isLoggedInUser()){
+        this.userInfo = this.appservice.userInfo;
         this.redirectToReturnUrl();
         this.clearLoginTimerInterval();
       }
