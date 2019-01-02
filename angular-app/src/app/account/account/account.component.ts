@@ -45,11 +45,6 @@ export class AccountComponent implements OnInit {
       this.router.navigateByUrl(this.returnUrl, { replaceUrl: true });
   }
 
-  modalHandler(){
-    if(!this.appservice.isLoggedInUser())
-      this.displayModal();    
-  }
-
   closeWidget(){
     let url = window.location.href.split("#")[0];
     history.replaceState({}, 'account', url);
