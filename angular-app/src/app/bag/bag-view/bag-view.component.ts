@@ -148,11 +148,7 @@ export class BagViewComponent implements OnInit {
       this.zone.run(() => {});
     })
     .catch((error)=>{
-      if(add_to_cart_failed){
-        console.log("add_to_cart_failed", add_to_cart_failure_message);
-        add_to_cart_failed = false;
-        add_to_cart_failure_message = '';
-      }
+      this.checkAddToCartStatus();
       this.handleFetchCartFailure(error);
       this.appservice.removeLoader();
       this.zone.run(() => {});
@@ -169,19 +165,24 @@ export class BagViewComponent implements OnInit {
     this.checkAppliedPromotionValidity();
     this.updateLocalDataAndUI(this.cart, this.cart.cart_count);
     console.log(add_to_cart_failed);
-    if(add_to_cart_failed){
-      console.log("add_to_cart_failed", add_to_cart_failure_message);
-      this.addToCartFailureMessage = add_to_cart_failure_message;
-      this.addToCartFailed = true;
-      add_to_cart_failed = false;
-      add_to_cart_failure_message = '';
-    }      
+    this.checkAddToCartStatus();     
     if(this.cart.cart_type == 'failure'){
       this.editBag();
       this.isCartTypeFailure = true;
     }
     this.fetchCartFailed = false;  
     this.zone.run(() => {}); 
+  }
+
+  checkAddToCartStatus(){
+    if(add_to_cart_failed){
+      console.log("add_to_cart_failed", add_to_cart_failure_message);
+      this.addToCartFailureMessage = add_to_cart_failure_message;
+      this.addToCartFailed = true;
+      add_to_cart_failed = false;
+      add_to_cart_failure_message = '';
+    }
+    this.zone.run(() => {});  
   }
 
   formattedCartDataForUI(data){
@@ -192,8 +193,8 @@ export class BagViewComponent implements OnInit {
       item.attributes.images = Array.isArray(item.attributes.images) ? ['/img/placeholder.svg', '/img/placeholder.svg', '/img/placeholder.svg'] : Object.values(item.attributes.images);
     })
 
-    data.items.sort((a,b)=>{ return a.timestamp - b.timestamp});
-    data.items.reverse();
+    data.items.sort((a,b)=>{ return b.timestamp - a.timestamp});
+    // data.items.reverse();
     return data;
   }
 
