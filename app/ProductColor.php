@@ -94,7 +94,7 @@ class ProductColor extends Model
     public static function productXMLData()
     {
         $productColors = self::get();
-        $xmlData       = array();
+        $xmlData       = array('title' => 'Online shopping for kids wear and fashion in India - KidSuperStore.in', 'description' => 'Kidsuperstore.in: Online shopping site for kids wear and fashion in India. Buy Shoes, Clothing, Dresses and Accessories for Boys, Girls, Toddlers, Juniors and Infants. Shipping | Cash on Delivery | 30 days return.', 'link' => url('/'));
         $excludeArray  = ["title", "description", "link"];
         foreach ($productColors as $productColor) {
             try {
