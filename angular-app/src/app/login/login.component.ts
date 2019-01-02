@@ -96,8 +96,6 @@ export class LoginComponent implements OnInit {
         document.cookie='token='+ response.token + ";path=/";
         document.cookie='cart_id=' + response.user.active_cart_id + ";path=/";
         this.appservice.userVerificationComplete = true;
-        // $('body').removeClass('modal-open')
-        // this.loginSuccess.emit(); 
         // this.appservice.closeVerificationModal();
         // this.appservice.loginSuccess.emit();
         this.closeOtpModal();
@@ -150,9 +148,6 @@ export class LoginComponent implements OnInit {
 
   closeOtpModal(){
   	this.router.navigate([{ outlets: { popup: null }}], {replaceUrl : true});
-    // history.back();
-    // this.mobileNumber = '';
-    // this.resetOTP();
   }
 
   resetOTP(){

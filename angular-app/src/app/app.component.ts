@@ -20,18 +20,18 @@ export class AppComponent {
 					  	private apiservice : ApiServiceService,
   						private router : Router){
 
-  	this.appservice.loginComplete.subscribe((data)=> {
-      console.log("loginSuccess event fired");
-      // this.appservice.loginSuccessComplete();
-      this.loginSuccessForBag.emit();
-    })
+  	// this.appservice.loginComplete.subscribe((data)=> {
+   //    console.log("loginSuccess event fired");
+   //    // this.appservice.loginSuccessComplete();
+   //    this.loginSuccessForBag.emit();
+   //  })
 
 		window.onpopstate = (event)=>{
 			console.log("On popstate location: " + document.location + ", state: " + JSON.stringify(event.state));
 			if(window.location.href.endsWith('#/') || window.location.href.endsWith('#') || (!window.location.href.includes("#")) ){
 			  	this.appservice.closeCart();
 			  }
-			}
+		}
 	}
 
 	ngOnInit(){

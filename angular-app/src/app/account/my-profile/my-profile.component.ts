@@ -20,12 +20,7 @@ export class MyProfileComponent implements OnInit {
   userInfo : any = {};
   showCancelButton : boolean = true;
   ngOnInit() {    
-    this.getUserInfo();
-    // this.userInfo = {
-    //   name : 'Tony Stark',
-    //   email : 'tony@ajency.in',
-    //   mobile : '9885945404'
-    // }  	
+    this.getUserInfo();	
   }
 
   getUserInfo(){    

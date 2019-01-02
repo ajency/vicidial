@@ -53,7 +53,7 @@ export class BagViewComponent implements OnInit {
     this.loadSubscription = this.appservice.listenToOpenCartEvent().subscribe(()=> { this.loadCart() });
 
     this.closeModalSubscription = this.appservice.listenToCloseModal().subscribe(()=>{ console.log("loginSuccess event received") });
-    this.openModalSubscription = this.appservice.listenToOpenModal().subscribe(()=>{ this.modalHandler()});
+    this.openModalSubscription = this.appservice.listenToOpenModal().subscribe(()=>{ this.checkLoginStatus()});
   }
 
   reloadCart(){
@@ -95,15 +95,15 @@ export class BagViewComponent implements OnInit {
       this.loginSuccess();
     })
 
-      this.cartOpen = true;
-      $('.ng-cart-loader').removeClass('cart-loader')
-      if(add_to_cart_clicked){
-        this.fetchCartDataOnAddToCartSuccess();
-        add_to_cart_clicked = false;
-      }
-      else{
-        this.getCartData();
-      }
+    this.cartOpen = true;
+    $('.ng-cart-loader').removeClass('cart-loader')
+    if(add_to_cart_clicked){
+      this.fetchCartDataOnAddToCartSuccess();
+      add_to_cart_clicked = false;
+    }
+    else{
+      this.getCartData();
+    }
   }
 
   ngAfterViewInit(){
@@ -142,26 +142,8 @@ export class BagViewComponent implements OnInit {
     this.addToCartFailureMessage = '';
     this.addToCartFailed = false;    
     this.appservice.callFetchCartApi().then((response)=>{
-      console.log("promotions ==>", response.promotions);             
-      this.cart = this.formattedCartDataForUI(response);   
-      this.formatPromotions(response);          
-      this.checkCartItemOutOfStock();
-      this.appservice.removeLoader();
-      this.checkAppliedPromotionValidity();
-      this.updateLocalDataAndUI(this.cart, this.cart.cart_count);
-      console.log(add_to_cart_failed);
-      if(add_to_cart_failed){
-        console.log("add_to_cart_failed", add_to_cart_failure_message);
-        this.addToCartFailureMessage = add_to_cart_failure_message;
-        this.addToCartFailed = true;
-        add_to_cart_failed = false;
-        add_to_cart_failure_message = '';
-      }      
-      if(this.cart.cart_type == 'failure'){
-        this.editBag();
-        this.isCartTypeFailure = true;
-      }
-      this.fetchCartFailed = false;      
+      console.log("promotions ==>", response.promotions); 
+      this.fetchCartSuccessHandler(response);                 
       this.zone.run(() => {});
     })
     .catch((error)=>{
@@ -175,6 +157,29 @@ export class BagViewComponent implements OnInit {
       this.zone.run(() => {});
     })
     this.zone.run(() => {});
+  }
+
+
+  fetchCartSuccessHandler(response){
+    this.cart = this.formattedCartDataForUI(response);   
+    this.formatPromotions(response);          
+    this.checkCartItemOutOfStock();
+    this.appservice.removeLoader();
+    this.checkAppliedPromotionValidity();
+    this.updateLocalDataAndUI(this.cart, this.cart.cart_count);
+    console.log(add_to_cart_failed);
+    if(add_to_cart_failed){
+      console.log("add_to_cart_failed", add_to_cart_failure_message);
+      this.addToCartFailureMessage = add_to_cart_failure_message;
+      this.addToCartFailed = true;
+      add_to_cart_failed = false;
+      add_to_cart_failure_message = '';
+    }      
+    if(this.cart.cart_type == 'failure'){
+      this.editBag();
+      this.isCartTypeFailure = true;
+    }
+    this.fetchCartFailed = false;   
   }
 
   formattedCartDataForUI(data){
@@ -247,7 +252,6 @@ export class BagViewComponent implements OnInit {
   closeCart(){
     let url = window.location.href.split("#")[0];
     history.pushState({cart : false}, 'cart', url);
-    // this.reloadPage();
     this.appservice.closeCart();
   }
 
@@ -255,7 +259,7 @@ export class BagViewComponent implements OnInit {
       this.router.navigateByUrl('account/my-orders');
   }
 
-  modalHandler(){
+  checkLoginStatus(){
     fbTrackInitiateCheckout(this.cart.summary.you_pay);
     this.addToCartFailed = false;
     if(this.appservice.isLoggedInUser()){

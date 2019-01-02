@@ -89,8 +89,6 @@ export class ShippingDetailsComponent implements OnInit {
     })
   }
 
-
-
   navigateToShippingPage(){
     this.appservice.selectedAddressId = this.selectedAddressId;
     if (this.cart && this.cart.cart_type == "order")

@@ -60,19 +60,6 @@ export class AppServiceService {
 	    document.getElementsByClassName("modal-backdrop")[0].remove();
   }
 
-  closeWidget(){
-    console.log('inside closeWidget');
-    if(document.getElementsByTagName("body")){
-      document.getElementsByTagName("body")[0].classList.remove("hide-scroll");
-    }
-    if(document.getElementById('cd-my-account'))
-      document.getElementById('cd-my-account').classList.remove("speed-in");
-    if(document.getElementById('cd-shadow-layer'))
-      document.getElementById('cd-shadow-layer').classList.remove('is-visible');
-    if(document.getElementsByClassName("modal-backdrop")[0])
-      document.getElementsByClassName("modal-backdrop")[0].remove();
-  }
-
   addToCartClicked() {
     this.addToCart.next();
   }

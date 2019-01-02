@@ -70,7 +70,6 @@ export class MyOrdersComponent implements OnInit {
     let url = window.location.href.split("#")[0];
     history.replaceState({}, 'account', url);
     this.appservice.closeCart();
-    // window.location.reload();
   }
 
   updateOrderParams(){
