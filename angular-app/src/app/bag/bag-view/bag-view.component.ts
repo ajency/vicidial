@@ -59,12 +59,13 @@ export class BagViewComponent implements OnInit {
   reloadCart(){
     console.log("listened to the add to cart trigger");
     this.cartOpen = true;
+    add_to_cart_clicked = false;
     this.fetchCartDataOnAddToCartSuccess();
   }
 
   loadCart(){
     console.log("listened to open cart trigger");
-    this.cartOpen = true;
+    this.cartOpen = true;    
     this.getCartData();
   }
 
@@ -88,16 +89,16 @@ export class BagViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("ngOnInit cart component");        
+    console.log("ngOnInit cart component", add_to_cart_clicked);        
 
-    this.loginSuccessSub = this.appservice.listenToLoginSuccess().subscribe(()=> {
-      console.log("bag view loginSuccess event fired");
-      this.loginSuccess();
-    })
+    // this.loginSuccessSub = this.appservice.listenToLoginSuccess().subscribe(()=> {
+    //   console.log("bag view loginSuccess event fired");
+    //   this.loginSuccess();
+    // })
 
     this.cartOpen = true;
     $('.ng-cart-loader').removeClass('cart-loader')
-    if(add_to_cart_clicked){
+    if(add_to_cart_clicked){      
       this.fetchCartDataOnAddToCartSuccess();
       add_to_cart_clicked = false;
     }
@@ -179,7 +180,8 @@ export class BagViewComponent implements OnInit {
       this.editBag();
       this.isCartTypeFailure = true;
     }
-    this.fetchCartFailed = false;   
+    this.fetchCartFailed = false;  
+    this.zone.run(() => {}); 
   }
 
   formattedCartDataForUI(data){
