@@ -385,3 +385,40 @@
     margin-bottom: 0;
     font-size: 1.1em;
 }
+
+.account-nav{
+	&__username{
+		font-size: 1.4em;
+	}
+	.list-group-item{
+		display: flex;
+    	align-items: center;
+    	justify-content: space-between;
+		&:hover{
+			background-color: #fbfbfb;
+			color: #000;
+			font-weight: bold;
+		}
+	}
+	.nav-icon{
+		background-image: url('../img/account-sprite.png');
+	    height: 50px;
+	    width: 50px;
+	    display: inline-block;
+	    background-size: cover;
+	    background-position: -58px 0px;
+	    &.i-profile{
+	    	background-position: -115px 0px;
+	    }
+	    &.i-address{
+	    	background-position: 0 0px;
+	    }
+	}
+	.nav-title{
+		font-size: 1.1em;
+		padding-left: 0.5em;
+	}
+	.arrow-right{
+		font-size: 1.3em;
+	}
+}
