@@ -114,6 +114,11 @@
     		color: #707279;
     		text-decoration: underline;
     	}
+        &:disabled{
+            &:hover{
+                background-color: transparent !important;
+            }
+        }
     }
     &--secondary-link{
         font-size: 1.25em;
