@@ -15,7 +15,7 @@ const routes: Routes = [
 	{ path: 'my-orders/:id', component: OrderDetailsComponent, canActivate: [AuthGuard]},
 	{ path: 'my-addresses', component: MyAddressesComponent, canActivate: [AuthGuard]},
 	{ path: 'my-profile', component: MyProfileComponent, canActivate: [AuthGuard]},
-	{ path: '**' , redirectTo: 'account'}
+	{ path: '**' , component : AccountComponent}
 ];
 
 @NgModule({

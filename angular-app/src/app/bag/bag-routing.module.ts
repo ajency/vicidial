@@ -9,7 +9,7 @@ const routes: Routes = [
 	{ path: '', component: BagViewComponent },
 	{ path: 'shipping-address', component: ShippingDetailsComponent },
 	{ path: 'shipping-summary', component: ShippingSummaryComponent },
-	{ path: '**', redirectTo : 'bag'}
+	{ path: '**', component : BagViewComponent}
 ];
 
 @NgModule({
