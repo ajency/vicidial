@@ -159,7 +159,7 @@ Add the following to crontab
 `php artisan odoo:discounts` 
 
 ### create passport keys for API to work
-`php artisan passport:client --personal`
+`php artisan passport:client --personal --name='KSS Personal Access Client'`
 
 ### Enter into laravel console
 `php artisan tinker`

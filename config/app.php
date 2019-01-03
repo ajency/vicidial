@@ -129,6 +129,8 @@ return [
 
     'prod_behaviour' => ['production', 'staging'],
 
+    'version' => 'v1',
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

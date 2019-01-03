@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1f934597d1e8ccffd876ff9c40e42884",
-    "content-hash": "de304f7943ff1d37b5c1624af32c5c57",
+    "hash": "2c8eb53a4b5ca64c5e728a268b8004fd",
+    "content-hash": "855fc739eaec157ae7b499f1a67961a9",
     "packages": [
         {
             "name": "ajency/comm",
@@ -1730,6 +1730,66 @@
                 "urlify"
             ],
             "time": "2018-12-08 15:51:20"
+        },
+        {
+            "name": "juampi92/api-resources",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/juampi92/api-resources.git",
+                "reference": "71d146d2159e21a3998eaa43b7914714513091f8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/juampi92/api-resources/zipball/71d146d2159e21a3998eaa43b7914714513091f8",
+                "reference": "71d146d2159e21a3998eaa43b7914714513091f8",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/http": "5.5.*||5.6.*||5.7.*",
+                "illuminate/support": "5.5.*||5.6.*||5.7.*",
+                "php": ">=7.0.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "~3.5",
+                "phpunit/phpunit": "~6.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Juampi92\\APIResources\\APIResourcesServiceProvider"
+                    ],
+                    "aliases": {
+                        "APIResource": "Juampi92\\APIResources\\Facades\\APIResource"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Juampi92\\APIResources\\": "src/"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "juampi92",
+                    "email": "juampi92@gmail.com"
+                }
+            ],
+            "description": "Manage your resources maintaining API versioning",
+            "homepage": "https://github.com/juampi92/api-resources",
+            "keywords": [
+                "api",
+                "laravel"
+            ],
+            "time": "2018-09-21 12:23:48"
         },
         {
             "name": "laravel/framework",
