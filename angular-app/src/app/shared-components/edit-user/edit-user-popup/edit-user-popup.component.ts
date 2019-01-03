@@ -43,6 +43,7 @@ export class EditUserPopupComponent implements OnInit, OnChanges {
       this.userEmail = body.email;
       this.user_info.email = body.email;
       this.user_info.name = body.name;
+      this.pop_up_closed.emit(true);
       this.hideModal();
       this.appservice.removeLoader();
     })
@@ -53,7 +54,8 @@ export class EditUserPopupComponent implements OnInit, OnChanges {
   }
 
   hideModal(){
-    this.pop_up_closed.emit(true);
+    this.userEmail = this.user_info.email;
+    this.userName = this.user_info.name;
     $('#user-info').modal('hide');
     $("#cd-cart,.kss_shipping_summary").css("overflow", "auto");
     $('.modal-backdrop').remove();
