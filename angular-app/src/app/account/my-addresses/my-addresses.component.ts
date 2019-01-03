@@ -26,18 +26,24 @@ export class MyAddressesComponent implements OnInit {
   }
 
   getAddress(){
-    this.appservice.showLoader();
-    this.appservice.callGetAllAddressesApi().then((response)=>{
-      this.addresses = response.addresses;
-      // this.checkAddresses();
-      this.appservice.shippingAddresses = response.addresses;
-      this.removeLoader();
-    })
-    .catch((error)=>{
-      console.log("error ===>", error);
-      this.addresses = [];
-      this.removeLoader();
-    })
+    if(this.appservice.shippingAddresses && this.appservice.shippingAddresses.length){
+      this.addresses = this.appservice.shippingAddresses;
+      this.appservice.removeLoader();
+    }
+    else{
+      this.appservice.showLoader();
+      this.appservice.callGetAllAddressesApi().then((response)=>{
+        this.addresses = response.addresses;
+        // this.checkAddresses();
+        this.appservice.shippingAddresses = response.addresses;
+        this.removeLoader();
+      })
+      .catch((error)=>{
+        console.log("error ===>", error);
+        this.addresses = [];
+        this.removeLoader();
+      })
+    }
   }
 
   closeWidget(){
