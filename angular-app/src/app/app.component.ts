@@ -23,12 +23,6 @@ export class AppComponent {
   						private router : Router,
               private loc : PlatformLocation){
 
-  	// this.appservice.loginComplete.subscribe((data)=> {
-   //    console.log("loginSuccess event fired");
-   //    // this.appservice.loginSuccessComplete();
-   //    this.loginSuccessForBag.emit();
-   //  })
-
 		this.loc.onPopState(()=>{
 			console.log("On popstate location: ", document.location);
 			if(window.location.href.endsWith('#/') || window.location.href.endsWith('#') || (!window.location.href.includes("#")) ){

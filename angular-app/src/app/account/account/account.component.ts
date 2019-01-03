@@ -13,11 +13,13 @@ declare var $: any;
 export class AccountComponent implements OnInit {
 
   returnUrl: string;
-  loginCheckTimer : any;
   userInfo : any;
+  loginSucessListener : Subscription;
+
   constructor(private appservice : AppServiceService,
       			  private router : Router,
               private route: ActivatedRoute) {
+      this.loginSucessListener = this.appservice.listenToLoginSuccess().subscribe(()=>{ this.redirectToReturnUrl() });
   	}
 
   ngOnInit() {
@@ -47,7 +49,7 @@ export class AccountComponent implements OnInit {
   }
 
   ngOnDestroy(){
-    this.clearLoginTimerInterval();
+    this.loginSucessListener.unsubscribe();
   }
 
   isLoggedIn(){
@@ -55,36 +57,20 @@ export class AccountComponent implements OnInit {
   }
 
   displayModal(){
-    this.checkLoginTimer();
     this.router.navigate([{ outlets: { popup: ['user-login'] }}], { replaceUrl: true });
   }
 
   redirectToReturnUrl(){
-    if(this.returnUrl)  	
-      this.router.navigateByUrl(this.returnUrl, { replaceUrl: true });
+    setTimeout(()=>{
+      if(this.returnUrl)    
+        this.router.navigateByUrl(this.returnUrl, { replaceUrl: true });
+    },100)
   }
 
   closeWidget(){
     let url = window.location.href.split("#")[0];
     history.replaceState({}, 'account', url);
     this.appservice.closeCart();
-  }
-
-  checkLoginTimer(){
-    this.clearLoginTimerInterval();
-    console.log("inside checkLoginTimer function");
-    this.loginCheckTimer = setInterval(()=>{
-      if(this.appservice.isLoggedInUser()){
-        this.userInfo = this.appservice.userInfo;
-        this.redirectToReturnUrl();
-        this.clearLoginTimerInterval();
-      }
-    },100)
-  }
-
-  clearLoginTimerInterval(){
-    if(this.loginCheckTimer)
-      clearInterval(this.loginCheckTimer);
   }
 
 }

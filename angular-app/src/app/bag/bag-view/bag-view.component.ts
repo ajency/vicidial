@@ -31,8 +31,6 @@ export class BagViewComponent implements OnInit {
   cartOpen = false;
   reloadSubscription: Subscription;
   loadSubscription: Subscription;
-  closeModalSubscription: Subscription;
-  openModalSubscription : Subscription;
   cartItemOutOfStock : boolean = false;
   fetchCartFailed : boolean = false;
   isCartTypeFailure : boolean = false;
@@ -41,9 +39,8 @@ export class BagViewComponent implements OnInit {
   promotions = [];
   displayPromo : boolean = true;
   showLoginPopup : boolean = true;
+  loginSucessListener : Subscription;
 
-  loginSuccessSub : Subscription;
-  loginCheckTimer : any;
   constructor( private router: Router,
                private appservice : AppServiceService,
                private apiservice : ApiServiceService,
@@ -52,8 +49,7 @@ export class BagViewComponent implements OnInit {
     this.reloadSubscription = this.appservice.listenToAddToCartEvent().subscribe(()=> { this.reloadCart() });
     this.loadSubscription = this.appservice.listenToOpenCartEvent().subscribe(()=> { this.loadCart() });
 
-    this.closeModalSubscription = this.appservice.listenToCloseModal().subscribe(()=>{ console.log("loginSuccess event received") });
-    this.openModalSubscription = this.appservice.listenToOpenModal().subscribe(()=>{ this.checkLoginStatus()});
+    this.loginSucessListener = this.appservice.listenToLoginSuccess().subscribe(()=>{ this.loginSuccess() });
   }
 
   reloadCart(){
@@ -71,31 +67,13 @@ export class BagViewComponent implements OnInit {
 
   ngOnDestroy() {
     console.log("bag-view ngOnDestroy");
-  // unsubscribe to ensure no memory leaks
-    this.clearLoginTimerInterval();
     this.reloadSubscription.unsubscribe();
     this.loadSubscription.unsubscribe();
-    this.closeModalSubscription.unsubscribe();
-    this.openModalSubscription.unsubscribe();
-  }
-
-  clearLoginTimerInterval(){
-    if(this.loginCheckTimer)
-      clearInterval(this.loginCheckTimer);
-  }
-
-  ngAfterContentInit(){
-    console.log("bag-view ngAfterContentInit");
+    this.loginSucessListener.unsubscribe();
   }
 
   ngOnInit() {
     console.log("ngOnInit cart component", add_to_cart_clicked);        
-
-    // this.loginSuccessSub = this.appservice.listenToLoginSuccess().subscribe(()=> {
-    //   console.log("bag view loginSuccess event fired");
-    //   this.loginSuccess();
-    // })
-
     this.cartOpen = true;
     $('.ng-cart-loader').removeClass('cart-loader')
     if(add_to_cart_clicked){      
@@ -105,10 +83,6 @@ export class BagViewComponent implements OnInit {
     else{
       this.getCartData();
     }
-  }
-
-  ngAfterViewInit(){
-    console.log("bag-view ngAfterViewInit");
   }
 
   fetchCartDataOnAddToCartSuccess(){    
@@ -274,7 +248,6 @@ export class BagViewComponent implements OnInit {
   }
 
   displayModal(){
-    this.checkLoginTimer();
     this.router.navigate([{ outlets: { popup: ['user-login'] }}]);
   }
 
@@ -459,19 +432,8 @@ export class BagViewComponent implements OnInit {
   }
 
   loginSuccess(){
-    console.log("loginSuccess navigateToShippingDetailsPage")
+    console.warn("loginSuccess navigateToShippingDetailsPage")
     this.navigateToShippingDetailsPage();
-  }
-
-  checkLoginTimer(){
-    this.clearLoginTimerInterval();
-    console.log("inside checkLoginTimer function");
-    this.loginCheckTimer = setInterval(()=>{
-      if(this.appservice.isLoggedInUser()){
-        this.loginSuccess();
-        this.clearLoginTimerInterval();
-      }
-    },100)
   }
   
 }

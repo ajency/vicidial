@@ -13,8 +13,7 @@ export class AppServiceService {
   apiUrl = '';
   private addToCart = new Subject<any>();
   private openCart = new Subject<any>();
-  private closeModal = new Subject<any>();
-  private openModal = new Subject<any>();
+
   shippingAddresses = [];
   shippingDetails : any;
   userVerificationComplete : boolean = false;
@@ -23,17 +22,10 @@ export class AppServiceService {
   states : any = [];
   editAddressFromShippingSummary : boolean = false;
   addressToEdit : any;
-
   order : any; // used to pass data to order-details page
   myOrders : any; //used to store list of orders in my-orders page
-  redirectUrl : any = '';
-
   private loginSuccess = new Subject<any>();
-
   userInfo : any;
-
-  @Output() loginComplete : EventEmitter<boolean> = new EventEmitter();
-
   navigatingFromBagToAddress : boolean = false;
 
   constructor(	private router: Router,
@@ -70,17 +62,6 @@ export class AppServiceService {
     this.openCart.next();
   }
 
-  closeVerificationModal() {
-    console.log("closeVerificationModal");
-    this.loginComplete.emit();
-    // this.loginSuccess.next();
-    // this.closeModal.next();
-  }
-
-  openVerificationModal(){
-    this.openModal.next();
-  }
-
   listenToAddToCartEvent(): Observable<any> {
     return this.addToCart.asObservable();
   }
@@ -89,17 +70,7 @@ export class AppServiceService {
     return this.openCart.asObservable();
   }
 
-  listenToCloseModal() : Observable<any> {
-    return this.closeModal.asObservable();
-  }
-
-  listenToOpenModal() : Observable<any> {
-    return this.openModal.asObservable();
-  }
-
-
   loginSuccessComplete(){
-    console.log("loginSuccessComplete for bag view");
     this.loginSuccess.next();
   }
 

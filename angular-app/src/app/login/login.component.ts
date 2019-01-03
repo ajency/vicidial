@@ -65,7 +65,6 @@ export class LoginComponent implements OnInit {
       this.userValidation.disableSendOtpButton = false;
       if(response.success){
         this.mobileNumberEntered = true;
-        this.appservice.closeVerificationModal();
       }
       else{
         this.userValidation.mobileValidationFailed = true;
@@ -97,10 +96,8 @@ export class LoginComponent implements OnInit {
         document.cookie='token='+ response.token + ";path=/";
         document.cookie='cart_id=' + response.user.active_cart_id + ";path=/";
         this.appservice.userVerificationComplete = true;
-        // this.appservice.closeVerificationModal();
-        // this.appservice.loginSuccess.emit();
         this.closeOtpModal();
-        this.appservice.closeVerificationModal();
+        this.appservice.loginSuccessComplete();
       }
       else{
         this.userValidation.otpVerificationErrorMsg = response.message;
