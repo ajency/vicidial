@@ -1,4 +1,4 @@
-import { Injectable, isDevMode } from '@angular/core';
+import { Injectable, isDevMode, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
@@ -13,22 +13,20 @@ export class AppServiceService {
   apiUrl = '';
   private addToCart = new Subject<any>();
   private openCart = new Subject<any>();
-  private closeModal = new Subject<any>();
-  private openModal = new Subject<any>();
+
   shippingAddresses = [];
   shippingDetails : any;
   userVerificationComplete : boolean = false;
-  directNavigationToShippingAddress : boolean = false;
   selectedAddressId : any;
   continueOrder : boolean = false;
   states : any = [];
   editAddressFromShippingSummary : boolean = false;
   addressToEdit : any;
-
   order : any; // used to pass data to order-details page
   myOrders : any; //used to store list of orders in my-orders page
-  redirectUrl : any = '';
-
+  private loginSuccess = new Subject<any>();
+  userInfo : any;
+  navigatingFromBagToAddress : boolean = false;
 
   constructor(	private router: Router,
                 private apiservice : ApiServiceService) { 
@@ -56,33 +54,12 @@ export class AppServiceService {
 	    document.getElementsByClassName("modal-backdrop")[0].remove();
   }
 
-  closeWidget(){
-    console.log('inside closeWidget');
-    if(document.getElementsByTagName("body")){
-      document.getElementsByTagName("body")[0].classList.remove("hide-scroll");
-    }
-    if(document.getElementById('cd-my-account'))
-      document.getElementById('cd-my-account').classList.remove("speed-in");
-    if(document.getElementById('cd-shadow-layer'))
-      document.getElementById('cd-shadow-layer').classList.remove('is-visible');
-    if(document.getElementsByClassName("modal-backdrop")[0])
-      document.getElementsByClassName("modal-backdrop")[0].remove();
-  }
-
   addToCartClicked() {
     this.addToCart.next();
   }
 
   openCartClicked() {
     this.openCart.next();
-  }
-
-  closeVerificationModal() {
-    this.closeModal.next();
-  }
-
-  openVerificationModal(){
-    this.openModal.next();
   }
 
   listenToAddToCartEvent(): Observable<any> {
@@ -93,12 +70,12 @@ export class AppServiceService {
     return this.openCart.asObservable();
   }
 
-  listenToCloseModal() : Observable<any> {
-    return this.closeModal.asObservable();
+  loginSuccessComplete(){
+    this.loginSuccess.next();
   }
 
-  listenToOpenModal() : Observable<any> {
-    return this.openModal.asObservable();
+  listenToLoginSuccess() : Observable<any> {    
+    return this.loginSuccess.asObservable();
   }
 
   getCookie(cname) {
@@ -238,6 +215,13 @@ export class AppServiceService {
       })
     })
     return data;
+  }
+
+  getUserInfo(){    
+    this.showLoader();
+    let url = this.apiUrl + '/api/rest/v1/user/get-user-info';
+    let header = { Authorization : 'Bearer '+this.getCookie('token') };
+    return this.apiservice.request(url, 'get', {} , header );
   }
 
 }

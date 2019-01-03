@@ -6,26 +6,16 @@ var add_to_cart_completed = false;
 $(document).ready(function(){
     //Set crt count on page load
     updateCartCountInUI();
-    // console.log("window.location.href ==>",window.location.href)
-    if(window.location.href.endsWith('#bag') || window.location.href.endsWith('#bag/user-verification') || window.location.href.endsWith('#shipping-address') || window.location.href.endsWith('#shipping-summary'))
+
+    if(window.location.href.includes('#/bag') || window.location.href.includes('#/account'))
         openCart();
 
     window.onhashchange = function() { 
-     // console.log("hash changed");
-     if(!$('#cd-cart').hasClass("speed-in") && (window.location.href.endsWith('#bag') || window.location.href.endsWith('#bag/user-verification') || window.location.href.endsWith('#shipping-address') || window.location.href.endsWith('#shipping-summary')) ){
-        // console.log("opening cart from vanilla js");
+     console.log("hash changed");
+     if(!$('#cd-cart').hasClass("speed-in") && (window.location.href.includes('#/bag') || window.location.href.includes('#/account')) ){
         openCart();
      }
-     openAccountAppOnUrlChange();
-    }
-
-    openAccountAppOnUrlChange();
-    
-
-    function openAccountAppOnUrlChange(){
-        if(!$('#cd-my-account').hasClass("speed-in") && (window.location.href.includes('#/account/my-orders') || window.location.href.includes('#/account') || window.location.href.includes('#/account/user-verification') ))
-            openMyAccountPage();
-    }
+    }    
 
     var kss_alert_timeout;
 
@@ -57,7 +47,8 @@ $(document).ready(function(){
         
         // for angular app 
         add_to_cart_clicked = true;
-        openCart();
+        let url = window.location.href.split("#")[0] + '#/bag';
+        window.location = url;
 
         if($('input[type=radio][name=kss-sizes]:checked').length == 0){
             //Size not selected error css
@@ -82,14 +73,16 @@ $(document).ready(function(){
         $('[data-toggle="tooltip"]').tooltip();
     }
 
-    jQuery("#cd-cart-trigger").click(function() {
-      openCart();             
-    });
-    
-    jQuery("#cd-my-account-trigger").click(function() {
-      openMyAccountPage();             
+    jQuery("#cd-my-account-trigger").click(function() {      
+        let url = window.location.href.split("#")[0] + '#/account';
+        window.location = url;
     });
 
+    jQuery("#cd-cart-trigger").click(function() {      
+        let url = window.location.href.split("#")[0] + '#/bag';
+        window.location = url;
+    });
+    
     function addToCart(){
         var var_id = $('input[type=radio][name=kss-sizes]:checked')[0].dataset['variant_id'];
         fbTrackAddToCart(var_id);
@@ -106,11 +99,8 @@ $(document).ready(function(){
             dataType: 'JSON',
             success: function (data) {
                 $('.cd-add-to-cart .btn-icon').hide();
-                //$('.cd-add-to-cart .btn-label-success').show();
                 $('.cd-add-to-cart .kss-btn__wrapper').addClass('d-flex');
                 $('.cd-add-to-cart .kss-btn__wrapper').removeClass('d-none');
-                //var itemImg = $(add_to_cart_element).closest('.container').find('img').eq(1);
-                //flyToElement($(itemImg), $('.shopping-cart'));
                 document.cookie = "cart_count=" + data.cart_count + ";path=/";
                 add_to_cart_completed = true;
                 // set_cart_data(data.item);
@@ -119,9 +109,7 @@ $(document).ready(function(){
                 // $('.kss-alert').addClass('kss-alert--success');
                 // $('.kss-alert').addClass('is-open');
                 $('.cd-add-to-cart').removeClass('cartLoader');
-                //$(add_to_cart_element).addClass('go-to-cart');
-                setTimeoutVariable();
-                        
+                setTimeoutVariable();                        
             },
             error: function (request, status, error) {
                 // console.log("Check ==>",request);
@@ -144,19 +132,13 @@ $(document).ready(function(){
 
     function showErrorPopup(request){
         var error_msg = (request && request.responseJSON && request.responseJSON.message!='') ? request.responseJSON.message : 'Could not add to bag';
-        //if(request.responseJSON.message!='') error_msg = request.responseJSON.message
         add_to_cart_failed = true;
         add_to_cart_completed = true;
-        // console.log("error_msg",error_msg);
         add_to_cart_failure_message = error_msg=='Quantity not available' ? 'Could not add '+ $('.section-heading--single').text() +' to bag as it is out of stock' : (error_msg == "invalid cart" ? 'Hey, before you add your item to bag it looks like you were interrupted during your last checkout. You can place this existing order or edit bag to add more items.' : 'Due to the high traffic, there was an issue adding your item to bag. Please try adding the item again' );
 
         $('.cd-add-to-cart .btn-icon').hide();
         $('.cd-add-to-cart .kss-btn__wrapper').addClass('d-flex');
         $('.cd-add-to-cart .kss-btn__wrapper').removeClass('d-none');
-        // $('.kss-alert .message').html('<strong>Failed!!!</strong> '+error_msg);
-        // $('.kss-alert').addClass('kss-alert--failure');
-        // $('.kss-alert').addClass('is-open');
-        // $('#cd-cart').css('pointer-events','none');
         $('.cd-add-to-cart').removeClass('cartLoader');
         setTimeoutVariable();
     }
@@ -175,13 +157,7 @@ $(document).ready(function(){
                     },
             data: {},
             dataType: 'JSON',
-            success: function (data) {
-                // if(data.cart_id == getCookie('cart_id'))
-                //     showErrorPopup(request)
-                // else{
-                //     document.cookie = "cart_id=" + data.cart_id + ";path=/";
-                //     addToCart();
-                // }
+            success: function (data) {               
                 document.cookie = "cart_id=" + data.cart_id + ";path=/";
                 if(data.cart_type == 'cart')
                     addToCart(); 
@@ -226,14 +202,6 @@ function openCart(){
     loadAngularApp();
     $('#main-nav').removeClass('speed-in');
     $('#cd-cart').addClass("speed-in");
-    $('#cd-shadow-layer').addClass('is-visible');
-    $("body").addClass("hide-scroll");
-}
-
-function openMyAccountPage(){
-    loadMyAccountApp();
-    $('#main-nav').removeClass('speed-in');
-    $('#cd-my-account').addClass("speed-in");
     $('#cd-shadow-layer').addClass('is-visible');
     $("body").addClass("hide-scroll");
 }
@@ -292,7 +260,7 @@ function loadAngularApp(){
                 // loadAngularApp();
             })
     }
-  }
+}
 
 function isLoggedInUser(){
     if(getCookie('token') && getCookie('cart_id'))
@@ -340,39 +308,4 @@ function fbTrackInitiateCheckout(order_total){
 
 function fbTrackAddPaymentInfo(){
     fbq('track', 'AddPaymentInfo');
-}
-
-function loadMyAccountApp(){
-    $.getScript("/views/my-account/inline.bundle.js")
-        .done(function(script, textStatus){
-            // console.log(textStatus);
-            $.getScript("/views/my-account/vendor.bundle.js")
-                .done(function(script2, textStatus2){
-                    // console.log(textStatus2);
-                    $.getScript("/views/my-account/polyfills.bundle.js")
-                        .done(function(script3, textStatus3){
-                            // console.log(textStatus3);
-                            $.getScript("/views/my-account/main.bundle.js")
-                                .done(function(script4,textStatus4){
-                                    // console.log(textStatus4);
-                                })
-                                .fail(function(jqxhr, settings, exception){
-                                    // console.log("angular load failed")
-                                    // loadAngularApp();
-                                })
-                        })
-                        .fail(function(jqxhr, settings, exception){
-                            // console.log("angular load failed")
-                            // loadAngularApp();
-                        })
-                })
-                .fail(function(jqxhr, settings, exception){
-                    // console.log("angular load failed")
-                    // loadAngularApp();
-                })
-        })
-        .fail(function(jqxhr, settings, exception){
-            // console.log("angular load failed")
-            // loadAngularApp();
-    })
 }

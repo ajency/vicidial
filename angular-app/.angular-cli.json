@@ -27,7 +27,8 @@
       "environments": {
         "dev": "environments/environment.ts",
         "prod": "environments/environment.prod.ts"
-      }
+      },
+      "deployUrl": "/views/cart/"
     },
     {
       "name": "app2",
