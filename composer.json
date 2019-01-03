@@ -9,6 +9,10 @@
             "type": "vcs",
             "url": "https://github.com/ajency/payu.git"
         },
+        { 
+            "type": "vcs", 
+            "url": "https://github.com/ajency/laravel-formatter.git" 
+        },
         {
             "type": "vcs",
             "url": "https://github.com/ajency/laravel-comm-package.git"
@@ -39,7 +43,7 @@
         "league/csv": "^9.1",
         "league/flysystem-aws-s3-v3": "^1.0",
         "publiux/laravelcdn": "dev-ajency",
-        "soapbox/laravel-formatter": "^3.1",
+        "soapbox/laravel-formatter": "dev-ajency",
         "spatie/laravel-permission": "^2.23",
         "toin0u/geocoder-laravel": "^4.0",
         "tzsk/payu": "dev-ajency"
