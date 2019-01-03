@@ -107,7 +107,7 @@ class ProductColor extends Model
             $main_image = (isset($images[0]['main']['1x'])) ? $images[0]['main']['1x'] : false;
 
             $params = [
-                'id'                => $productColorData['id'],
+                'id'                => $productColorData['search_result_data']['product_id'] . "-" . $productColorData['search_result_data']['product_color_id'],
                 'title'             => $productColorData['search_result_data']['product_title'],
                 'color'             => $productColorData['search_result_data']['product_color_name'],
                 'gender'            => ($productColorData['search_result_data']['product_gender'] == 'Boys') ? 'male' : (($productColorData['search_result_data']['product_gender'] == 'Girls') ? 'female' : 'unisex'),
