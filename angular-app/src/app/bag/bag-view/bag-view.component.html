@@ -189,7 +189,7 @@
 
 		<div class="seperator mb-5"></div>
 
-		<div id="kss_cart" class="p-3 fixed-bottom d-flex align-items-center justify-content-between">
+		<div id="kss_cart" class="p-3 fixed-bottom fixed-checkout-btn d-flex align-items-center justify-content-between">
 			<button *ngIf="cart.cart_type =='order'" id="checkout" class="btn kss-btn kss-btn--outline-secondary kss-btn--big mr-3" (click)="editBag()" >Edit Bag</button>
 			<button  id="checkout" class="btn kss-btn kss-btn--big mt-0" [ngClass]="{'disabled' : cartItemOutOfStock}" (click)="checkLoginStatus()" >Checkout</button>
 		</div>
