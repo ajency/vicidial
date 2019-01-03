@@ -16,7 +16,7 @@
 <div *ngIf="isLoggedIn()" class="account-nav">
 	<div *ngIf="userInfo" class="d-block text-center p-4">
          <h1 class="w-100 account-nav__username m-0 text-gray font-weight-bold ">
-           Hello, <span *ngIf="userInfo.name">{{userInfo.name}}</span>
+           Hello<span *ngIf="userInfo.name">, {{userInfo.name}}</span>
          </h1>
 		<h6 class="text-muted mt-1"> <span *ngIf="userInfo.email; else noEmail">{{userInfo.email}}</span> <ng-template #noEmail>{{userInfo.mobile}}</ng-template> </h6>
 	</div>
@@ -35,7 +35,7 @@
 			</span>
 			<i class="fas fa-angle-right float-right arrow-right mt-1"></i>
 		</a>
-		<a routerLink="/account/my-addresses" class="list-group-item text-gray py-3" title="Addresses">
+		<a routerLink="/account/my-addresses" class="list-group-item text-gray py-3 border-bottom" title="Addresses">
 			<span class="d-inline-flex align-items-center">
 				<i class="nav-icon i-address mr-1 text-secondary"></i> 
 				<span class="nav-title">Addresses</span>
