@@ -57,7 +57,7 @@ export class MyProfileComponent implements OnInit {
   }
 
   updateEmail(){
-    console.log("this.editUserPopUp.userEmail", this.editUserPopUp.userEmail);
+    // console.log("this.editUserPopUp.userEmail", this.editUserPopUp.userEmail);
     this.userInfo.email = this.editUserPopUp.userEmail;
     this.userInfo.name = this.editUserPopUp.user_info.name;
     this.appservice.userInfo = this.userInfo;

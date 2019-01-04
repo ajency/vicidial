@@ -14,7 +14,9 @@ export class EditUserPopupComponent implements OnInit, OnChanges {
 
 	@Input() user_info : any;
 	@Input() showCancelButton : any;
+  @Input() showMobileNumber : any;
 	@Output() pop_up_closed = new EventEmitter();
+  @Output() showPayButton = new EventEmitter();
 	userEmail : any;
   userName : any;
   constructor(private appservice : AppServiceService,
@@ -24,7 +26,7 @@ export class EditUserPopupComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(){
-  	console.log("ngOnChanges edit-user-popup", this.user_info, this.showCancelButton);
+  	// console.log("ngOnChanges edit-user-popup", this.user_info, this.showCancelButton, this.showMobileNumber);
   	this.userEmail = this.user_info.email;
     this.userName = this.user_info.name;
   }
@@ -54,6 +56,7 @@ export class EditUserPopupComponent implements OnInit, OnChanges {
   }
 
   hideModal(){
+    this.showPayButton.emit(true);
     this.userEmail = this.user_info.email;
     this.userName = this.user_info.name;
     $('#user-info').modal('hide');
