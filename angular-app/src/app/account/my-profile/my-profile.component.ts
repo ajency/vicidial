@@ -51,6 +51,9 @@ export class MyProfileComponent implements OnInit {
 
   showModal(){
     $('#user-info').modal('show');
+    $('#user-info').on('shown.bs.modal', function () {
+      $('[data-toggle="tooltip"]').tooltip();
+    })
     $("#cd-cart,.kss_shipping_summary").css("overflow", "hidden");
     $('.modal-backdrop').appendTo('#cd-cart');
     $('body').addClass('hide-scroll');

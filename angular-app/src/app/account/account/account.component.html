@@ -21,24 +21,27 @@
 		<h6 class="text-muted mt-1"> <span *ngIf="userInfo.email; else noEmail">{{userInfo.email}}</span> <ng-template #noEmail>{{userInfo.mobile}}</ng-template> </h6>
 	</div>
 	<div class="list-group list-group-flush account-nav__group">
-		<a routerLink="/account/my-orders" id="list-menu" class="list-group-item text-gray py-3" title="Orders">
+		<a routerLink="/account/my-orders" id="list-menu" class="list-group-item text-gray py-4" title="Orders">
 			<span class="d-inline-flex align-items-center">
-				<i class="nav-icon i-orders mr-1 text-secondary"></i>
-				<span class="nav-title">Orders</span>
+				<!-- <i class="nav-icon i-orders mr-1 text-secondary"></i> -->
+				<i class="fas fa-box-open mr-1 text-secondary account-nav__icons"></i>
+				<span class="nav-title">My Orders</span>
 			</span>
 			<i class="fas fa-angle-right float-right arrow-right mt-1"></i>
 		</a>
-		<a routerLink="/account/my-profile" id="profile-menu" class="list-group-item text-gray py-3" title="Profile">
+		<a routerLink="/account/my-profile" id="profile-menu" class="list-group-item text-gray py-4" title="Profile">
 			<span class="d-inline-flex align-items-center">
-				<i class="nav-icon i-profile mr-1 text-secondary"></i> 
-				<span class="nav-title">Profile</span>
+				<!-- <i class="nav-icon i-profile mr-1 text-secondary"></i>  -->
+				<i class="far fa-user mr-1 text-secondary account-nav__icons"></i>
+				<span class="nav-title">My Profile</span>
 			</span>
 			<i class="fas fa-angle-right float-right arrow-right mt-1"></i>
 		</a>
-		<a routerLink="/account/my-addresses" class="list-group-item text-gray py-3 border-bottom" title="Addresses">
+		<a routerLink="/account/my-addresses" class="list-group-item text-gray py-4 border-bottom" title="Addresses">
 			<span class="d-inline-flex align-items-center">
-				<i class="nav-icon i-address mr-1 text-secondary"></i> 
-				<span class="nav-title">Addresses</span>
+				<!-- <i class="nav-icon i-address mr-1 text-secondary"></i>  -->
+				<i class="fas fa-map-marker-alt mr-1 text-secondary account-nav__icons"></i>
+				<span class="nav-title">Saved Addresses</span>
 			</span>
 			<i class="fas fa-angle-right float-right arrow-right mt-1"></i>
 		</a>

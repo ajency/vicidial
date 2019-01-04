@@ -29,22 +29,26 @@
         </div>
 		<hr>
 		
-		<div class="p-3 mb-3 card shadow-sm d-block">
+		<div class="p-3 mb-3 d-block">
 			<h5 class="font-weight-bold text-dark mb-3">Primary Info</h5>
 			<div class="row mb-2">
-				<div class="col-6 card-title-size">Name</div>
+				<div class="col-5 card-title-size">Name :</div>
 				<label class="mb-0 col-6 card-title-size"> <span *ngIf="userInfo.name; else noName">{{userInfo.name}}</span> <ng-template #noName> - </ng-template> </label>
 			</div>
 			<div class="row mb-2">
-				<div class="col-6 card-title-size">Mobile Number</div>
+				<div class="col-5 card-title-size">Mobile Number :</div>
 				<label class="mb-0 col-6 card-title-size">{{userInfo.mobile}}</label>
 			</div>
 			<div class="row mb-2">
-				<div class="col-6 card-title-size">E-mail id</div>
+				<div class="col-5 card-title-size">E-mail id :</div>
 				<label class="mb-0 col-6 card-title-size"><span *ngIf="userInfo.email; else noEmail">{{userInfo.email}}</span> <ng-template #noEmail> - </ng-template></label>
 			</div>
 
-			<button type="button" class="btn kss-btn kss-btn--medium mt-3" (click)="showModal()">Edit</button>
+			<!-- <button type="button" class="btn kss-btn kss-btn--medium mt-3" (click)="showModal()">Edit</button> -->
+			<div class="text-center">
+				<button type="button" class="btn text-secondary pb-0 pr-0 link-btn" (click)="showModal()">Edit <i class="fas fa-chevron-right pl-2"></i></button>
+			</div>
+
 		</div>			
 	</div>
 

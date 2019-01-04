@@ -400,6 +400,10 @@
 			font-weight: bold;
 		}
 	}
+	&__icons{
+		font-size: 1.6em;
+		min-width: 25px;
+	}
 	.nav-icon{
 		background-image: url('../img/account-sprite.png');
 	    height: 40px;
