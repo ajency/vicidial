@@ -90,7 +90,7 @@ class Variant extends Model
     {
         if (isset($this->inventory)) {
             foreach ($this->inventory as $inventory) {
-                if ($inventory["quantity"] > 0) {
+                if ($inventory["quantity"] > 0 && $inventory["use_in_inventory"] == true) {
                     return true;
                 }
 
@@ -311,7 +311,7 @@ class Variant extends Model
         $total = 0;
         if (isset($this->inventory)) {
             foreach ($this->inventory as $inventory) {
-                if ($inventory["quantity"] >= 0) {
+                if ($inventory["quantity"] >= 0 && $inventory["use_in_inventory"] == true) {
                     $total += $inventory["quantity"];
                 }
             }
@@ -330,7 +330,7 @@ class Variant extends Model
         $location_arr = array();
         if (isset($this->inventory)) {
             foreach ($this->inventory as $inventory) {
-                if ($inventory["quantity"] > 0) {
+                if ($inventory["quantity"] > 0 && $inventory['use_in_inventory'] == true) {
                     $location       = Location::where('odoo_id', $inventory["location_id"])->first();
                     $quantity_arr[] = array('warehouse' => $location->warehouse->name, 'location' => $location->name, 'quantity' => $inventory["quantity"]);
                 }
@@ -385,67 +385,6 @@ class Variant extends Model
         $csv->insertAll($variantInventory->toArray());
         $csv->output('inventory.csv');
     }
-
-    public static function updateInventoryIndex()
-    {
-        $availableVariants = self::select(["odoo_id", "inventory", "active", "deleted"])->get();
-        $locations         = Location::where('use_in_inventory', true)->get()->pluck('location_name', 'odoo_id');
-        $variantInventory  = collect();
-        foreach ($availableVariants as $variant) {
-            $inventoryLine = ["variant_id" => $variant->odoo_id];
-            $inventoryLine["active"] = $variant->active;
-            $inventoryLine["deleted"] = $variant->deleted;
-            foreach ($locations as $loc_id => $loc_name) {
-                $inventoryLine[$loc_name] = (isset($variant->inventory["$loc_id"])) ? $variant->inventory["$loc_id"]['quantity'] : 0;
-            }
-            \Log::debug(collect($inventoryLine));
-            $variantInventory->push($inventoryLine);
-        }
-        $query = new ElasticQuery;
-        $query->setIndex(config('elastic.indexes.inventory'));
-        $query->initializeBulkIndexing();
-        $variantInventory->each(function ($item, $key) use ($query) {
-            $query->addToBulkIndexing($item['variant_id'], $item);
-        });
-        $responses = $query->bulk();
-        foreach ($responses['items'] as $response) {
-            switch ($response['index']['result']) {
-                case 'created':
-                    \Log::info("Product {$response['index']['_id']} created");
-                    break;
-                case 'updated':
-                    \Log::info("Product {$response['index']['_id']} updated");
-                    break;
-                default:
-                    \Log::notice("Product {$response['index']['_id']} status {$response['index']['result']}");
-                    break;
-            }
-        }
-    }
-
-    // public static function getInactiveVariants()
-    // {
-    //     $odooFilter       = OdooConnect::odooFilter(['write' => Defaults::getLastInactiveVariantSync()]);
-    //     $odooFilter[0][]  = ['active', '=', false];
-    //     $offset           = 0;
-    //     $inactiveVariants = [];
-    //     $odoo             = new OdooConnect;
-    //     do {
-    //         $variantsData = $odoo->defaultExec("product.product", 'search_read', $odooFilter, ['fields' => config('product.variant_fields'), 'offset' => $offset]);
-    //         $offset += $variantsData->count();
-    //         foreach ($variantsData as $variantData) {
-    //             $object            = self::firstOrNew(['odoo_id' => $variantData['id']]);
-    //             $object->odoo_id   = $variantData['id'];
-    //             $object->inventory = [];
-    //             $object->active    = false;
-    //             $object->deleted   = false;
-    //             $object->save();
-    //             $inactiveVariants[] = $variantData['id'];
-    //         }
-    //     } while ($variantsData->count() == config('odoo.limit'));
-    //     UpdateVariantInventory::dispatch($inactiveVariants,false)->onQueue('update_inventory');
-    //     Defaults::setLastInactiveVariantSync();
-    // }
 
     public static function updateVariantDiffFile()
     {
