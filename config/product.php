@@ -159,7 +159,6 @@ return [
         ],
     ],
     "inventory_fields"               => ["product_id", "quantity", 'location_id'],
-    "inventory_max"                  => 10,
     'facet_display_data'             => [
         'product_category_type'   => [
             'name'                   => 'Category',

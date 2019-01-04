@@ -351,9 +351,9 @@ function sanitiseInventoryData($inventoryData)
     foreach ($inventoryData as $connectionData) {
         foreach ($connectionData as $invtry) {
             $location = Location::where('odoo_id', $invtry["location_id"][0])->first();
-            if ($location == null || $location->use_in_inventory == false) {
-                continue;
-            }
+            // if ($location == null || $location->use_in_inventory == false) {
+            //     continue;
+            // }
             $temp = [
                 "location_id"   => $invtry["location_id"][0],
                 "location_name" => $invtry["location_id"][1],
@@ -370,14 +370,15 @@ function inventoryFormatData(array $variant_ids, array $inventory)
 {
 
     $final = [];
+    $activeLocations = Location::where('use_in_inventory',true)->pluck('odoo_id')->toArray();
     foreach ($variant_ids as $variant_id) {
         $ret = [
             "availability" => false,
             "inventory"    => isset($inventory[$variant_id]) ? $inventory[$variant_id] : [],
         ];
         if (isset($inventory[$variant_id])) {
-            foreach ($inventory[$variant_id] as $invntry) {
-                if ($invntry > 0) {
+            foreach ($inventory[$variant_id] as $inventoryData) {
+                if ($inventoryData['quantity'] > 0 && in_array($inventoryData['location_id'], $activeLocations)) {
                     $ret["availability"] = true;
                     break;
                 }

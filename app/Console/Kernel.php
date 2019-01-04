@@ -41,9 +41,8 @@ class Kernel extends ConsoleKernel
             })->dailyAt('21:30');
             $schedule->job(new IndexInactiveProducts,'create_jobs')->daily();
             $schedule->call(function(){
-                Variant::updateInventoryIndex();
                 Variant::updateVariantDiffFile();
-            })->dailyAt('18:30');
+            })->dailyAt('19:30');
         }
     }
 
