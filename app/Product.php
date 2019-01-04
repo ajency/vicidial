@@ -230,7 +230,7 @@ class Product
     {
         $odoo          = new OdooConnect;
         $filters       = [["product_id", "in", $variant_ids]];
-        $inventoryData = $odoo->multiExec('stock.quant', 'search_read', [$filters], ["fields" => config("product.inventory_fields"), "limit" => config("product.inventory_max")]);
+        $inventoryData = $odoo->multiExec('stock.quant', 'search_read', [$filters], ["fields" => config("product.inventory_fields")]);
         $inventory     = sanitiseInventoryData($inventoryData);
         return inventoryFormatData($variant_ids, $inventory);
     }
