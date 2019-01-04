@@ -13,33 +13,43 @@ use Illuminate\Http\Request;
 |
 */
 
+for ($group_app_version=1; $group_app_version <= config('app.api_latest'); $group_app_version++) { 
+	Route::group([
+	  'prefix'     => '/rest/v'.$group_app_version,
+	], function () use ($group_app_version) {
+		Route::group([
+		  'middleware' => ['auth:api'],
+		  'prefix'     => '/user',
+		], function () use ($group_app_version) {
+			Route::group([
+			  'prefix'     => '/cart',
+			], function () use ($group_app_version) {
+				Route::post('/{id}/insert', 'v'.$group_app_version.'\CartController@userAddItem');
+				Route::get('/{id}/get', 'v'.$group_app_version.'\CartController@userCartFetch');
+				Route::get('/{id}/delete', 'v'.$group_app_version.'\CartController@userCartDelete');
+				Route::get('/{id}/change-promotion', 'v'.$group_app_version.'\CartController@userCartPromotion');
+				Route::post('/{id}/create-order', 'v'.$group_app_version.'\OrderController@userCreateOrder');
+				Route::post('/{id}/continue-order', 'v'.$group_app_version.'\OrderController@continueOrder');
+				Route::get('/mine', 'v'.$group_app_version.'\CartController@getCartID');
+				Route::get('/start-fresh', 'v'.$group_app_version.'\CartController@startFresh');
+			});
+			Route::group([
+			  'prefix'     => '/address',
+			], function () use ($group_app_version) {
+				Route::post('/new', 'v'.$group_app_version.'\AddressController@userAddAddress');
+				Route::post('/edit', 'v'.$group_app_version.'\AddressController@userEditAddress');
+				Route::get('/all', 'v'.$group_app_version.'\AddressController@userFetchAddresses');
+				Route::get('/delete', 'v'.$group_app_version.'\AddressController@userDeleteAddress');
+			});
+			Route::get('/get-user-info', 'v'.$group_app_version.'\UserController@fetchUserInfo');
+			Route::post('/save-user-details', 'v'.$group_app_version.'\UserController@saveUserDetails');
+			Route::get('/order/{id}/check-inventory', 'v'.$group_app_version.'\OrderController@checkSubOrderInventory');
+			Route::post('/orders', 'v'.$group_app_version.'\OrderController@listOrders');
+		});
+		Route::post('/product-list', 'v'.$group_app_version.'\ListingController@productList');
+		Route::get('/product-with-missing-images', 'v'.$group_app_version.'\ProductController@productMissingImages');
+	});
+}
+
 Route::middleware('auth:api')->get('/user', config('app.version').'\HomeController@api');
-
-Route::middleware('auth:api')->post('/rest/v1/user/cart/{id}/insert', 'v1\CartController@userAddItem');
-Route::middleware('auth:api')->get('/rest/v1/user/cart/{id}/get', 'v1\CartController@userCartFetch');
-Route::middleware('auth:api')->get('/rest/v1/user/cart/{id}/delete', 'v1\CartController@userCartDelete');
-Route::middleware('auth:api')->get('/rest/v1/user/cart/{id}/change-promotion', 'v1\CartController@userCartPromotion');
-
-Route::middleware('auth:api')->post('/rest/v1/user/address/new', 'v1\AddressController@userAddAddress');
-Route::middleware('auth:api')->post('/rest/v1/user/address/edit', 'v1\AddressController@userEditAddress');
-Route::middleware('auth:api')->get('/rest/v1/user/address/all', 'v1\AddressController@userFetchAddresses');
-
-Route::middleware('auth:api')->get('/rest/v1/user/address/delete', 'v1\AddressController@userDeleteAddress');
-
-Route::middleware('auth:api')->get('/rest/v1/user/get-user-info', 'v1\UserController@fetchUserInfo');
-
-Route::post('/rest/v1/product-list', 'v1\ListingController@productList');
-
-Route::middleware('auth:api')->post('/rest/v1/user/cart/{id}/create-order', 'v1\OrderController@userCreateOrder');
-Route::middleware('auth:api')->post('/rest/v1/user/cart/{id}/continue-order', 'v1\OrderController@continueOrder');
-Route::middleware('auth:api')->get('/rest/v1/user/cart/mine', 'v1\CartController@getCartID');
-Route::middleware('auth:api')->get('/rest/v1/user/cart/start-fresh', 'v1\CartController@startFresh');
-
-Route::middleware('auth:api')->post('/rest/v1/user/save-user-details', 'v1\UserController@saveUserDetails');
-
-Route::middleware('auth:api')->get('/rest/v1/user/order/{id}/check-inventory', 'v1\OrderController@checkSubOrderInventory');
-
-Route::get('/rest/v1/product-with-missing-images', 'v1\ProductController@productMissingImages');
-
-Route::middleware('auth:api')->post('/rest/v1/user/orders', 'v1\OrderController@listOrders');
 

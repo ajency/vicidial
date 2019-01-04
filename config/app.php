@@ -128,6 +128,20 @@ return [
     'run_cron' => env('RUN_CRON',false),
 
     'prod_behaviour' => ['production', 'staging'],
+ 
+    /* 
+    |------------------------------------------- 
+    | API Version 
+    |------------------------------------------- 
+    | 
+    | This value is the version of your api. 
++
+    | It's used when there's no specified  
+    | version on the routes, so it will take this  
+    | as the default, or current. 
+     */ 
+ 
+    'api_latest'  => '1', 
 
     'version' => 'v1',
 
