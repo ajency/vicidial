@@ -34,7 +34,8 @@ class UserController extends Controller
         $notify->setRecipientIds([$sms]);
         \AjComm::sendNotification($notify);
 
-        return response()->json(["message"=> "OTP Sent successfully", 'success'=> true]);
+        $response = ["message"=> "OTP Sent successfully", 'success'=> true];
+        return response()->json(isNotProd() ? array_merge($response,['OTP'=> $otp]) : $response);
     }
     public function verifyOTP(Request $request)
     {

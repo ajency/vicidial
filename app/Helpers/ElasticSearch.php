@@ -193,3 +193,17 @@ function singleproduct(string $product_slug)
     return fetchProduct($product);
 
 }
+
+function singleProductAPI(string $product_color)
+{
+    $q = new ElasticQuery();
+    $q->setIndex(config("elastic.indexes.product"));
+    
+    try {
+        $product = $q->get($product_color, 'search_result_data');
+    } catch (Exception $e) {
+        abort(404);
+    }
+
+    return fetchProduct($product);
+}

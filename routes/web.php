@@ -13,35 +13,33 @@
 $config = config('ajfileupload');
 
 $app_version = config('app.version');
-$api_latest = config('app.api_latest');
 
-for ($group_app_version=1; $group_app_version <= $api_latest; $group_app_version++) { 
+$group_app_version = 1; 
+Route::group([
+  'prefix'     => '/rest/v'.$group_app_version,
+], function () use ($group_app_version) {
 	Route::group([
-	  'prefix'     => '/rest/v'.$group_app_version,
+	  'prefix'     => '/anonymous',
 	], function () use ($group_app_version) {
 		Route::group([
-		  'prefix'     => '/anonymous',
+		  'prefix'     => '/cart',
 		], function () use ($group_app_version) {
-			Route::group([
-			  'prefix'     => '/cart',
-			], function () use ($group_app_version) {
-				Route::get('/count', 'v'.$group_app_version.'\CartController@guestGetCount');
-				Route::post('/insert', 'v'.$group_app_version.'\CartController@guestAddItem');
-				Route::get('/get', 'v'.$group_app_version.'\CartController@guestCartFetch');
-				Route::get('/delete', 'v'.$group_app_version.'\CartController@guestCartDelete');
-				Route::get('/check-status', 'v'.$group_app_version.'\CartController@checkStatus');
-				Route::get('/changePromotion', 'v'.$group_app_version.'\CartController@guestCartPromotion');
-			});
-			Route::get('/states/all', 'v'.$group_app_version.'\AddressController@fetchStates');
+			Route::get('/count', 'v'.$group_app_version.'\CartController@guestGetCount');
+			Route::post('/insert', 'v'.$group_app_version.'\CartController@guestAddItem');
+			Route::get('/get', 'v'.$group_app_version.'\CartController@guestCartFetch');
+			Route::get('/delete', 'v'.$group_app_version.'\CartController@guestCartDelete');
+			Route::get('/check-status', 'v'.$group_app_version.'\CartController@checkStatus');
+			Route::get('/changePromotion', 'v'.$group_app_version.'\CartController@guestCartPromotion');
 		});
-		Route::group([
-		  'prefix'     => '/authenticate',
-		], function () use ($group_app_version) {
-			Route::get('/login', 'v'.$group_app_version.'\UserController@verifyOTP');
-			Route::get('/generate_otp', 'v'.$group_app_version.'\UserController@sendSMS');
-		});
+		Route::get('/states/all', 'v'.$group_app_version.'\AddressController@fetchStates');
 	});
-}
+	Route::group([
+	  'prefix'     => '/authenticate',
+	], function () use ($group_app_version) {
+		Route::get('/login', 'v'.$group_app_version.'\UserController@verifyOTP');
+		Route::get('/generate_otp', 'v'.$group_app_version.'\UserController@sendSMS');
+	});
+});
 
 Route::get('/', $app_version.'\HomeController@index')->name('home');
 Route::get('/getWarehouseLevelInventory', $app_version."\ProductController@allInventory");
