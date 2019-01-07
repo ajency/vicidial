@@ -113,7 +113,7 @@
                            @if($item['price_final'] != $item['price_mrp'])
                            <div style="margin-top: 8px;">
                               <small style="text-decoration: line-through;padding-left: 5px;padding-right: 5px;margin-right: 5px;color: #6c757d;font-size: 12px;border-right: 1px solid;">₹{{$item['price_mrp']}}</small>
-                              <span class="kss-discount text-danger" style="color: #28a745;font-size: 12px;">{{ calculate_discount( $item['price_mrp'],$item['price_final']) }} % OFF</span>
+                              <span class="kss-discount text-danger" style="color: #28a745;font-size: 12px;">{{ calculate_discount( $item['price_mrp'],$item['price_final']) }}% OFF</span>
                            </div>
                            @endif
                         </td>
