@@ -24,7 +24,7 @@ export class AppComponent {
               private loc : PlatformLocation){
 
 		this.loc.onPopState(()=>{
-			console.log("On popstate location: ", document.location);
+			// console.log("On popstate location: ", document.location);
 			if(window.location.href.endsWith('#/') || window.location.href.endsWith('#') || (!window.location.href.includes("#")) ){
 			  	this.appservice.closeCart();
 			  }

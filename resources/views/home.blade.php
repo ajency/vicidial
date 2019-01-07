@@ -14,104 +14,104 @@
       <a href="/shop">
         <picture>
            <source media="(orientation: landscape)"
-                  data-srcset="{{CDN::asset('/img/home-banner/banner1_large.jpg') }} 2000w,
-                              {{CDN::asset('/img/home-banner/banner1_medium.jpg') }} 1200w,
-                              {{CDN::asset('/img/home-banner/banner1_small.jpg') }} 700w,"
+                  data-srcset="{{CDN::asset('/img/home-banner/banner1_jan_large.jpg') }} 2000w,
+                              {{CDN::asset('/img/home-banner/banner1_jan_medium.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/banner1_jan_small.jpg') }} 700w"
                   sizes="100vw">
 
            <source media="(orientation: portrait)"
-                  data-srcset="{{CDN::asset('/img/home-banner/banner1_portrait_large.jpg') }} 1200w,
-                              {{CDN::asset('/img/home-banner/banner1_portrait_medium.jpg') }} 700w,
-                              {{CDN::asset('/img/home-banner/banner1_portrait_small.jpg') }} 400w"
+                  data-srcset="{{CDN::asset('/img/home-banner/banner1_jan_portrait_large.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/banner1_jan_portrait_medium.jpg') }} 700w,
+                              {{CDN::asset('/img/home-banner/banner1_jan_portrait_small.jpg') }} 400w"
                   sizes="100vw">
 
-           <img src="{{CDN::asset('/img/home-banner/banner1_20px.jpg') }}"
+           <img src="{{CDN::asset('/img/home-banner/banner1_jan_20px.jpg') }}"
                data-sizes="100vw"
-               class="img-fluid lazyload blur-up w-100" alt="New Year Super Sale - Flat 50% off" title="New Year Super Sale - Flat 50% off">
+               class="img-fluid lazyload blur-up w-100" alt="Shop And Get Four Super Offers" title="Shop And Get Four Super Offers">
         </picture>
       </a>
     </div>
     <div class="home-slide-item">
-      <a href="/toys">
+      <a href="/shop">
         <picture>
            <source media="(orientation: landscape)"
-                  data-srcset="{{CDN::asset('/img/home-banner/banner2_large.jpg') }} 2000w,
-                              {{CDN::asset('/img/home-banner/banner2_medium.jpg') }} 1200w,
-                              {{CDN::asset('/img/home-banner/banner2_small.jpg') }} 700w,"
+                  data-srcset="{{CDN::asset('/img/home-banner/banner2_jan_large.jpg') }} 2000w,
+                              {{CDN::asset('/img/home-banner/banner2_jan_medium.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/banner2_jan_small.jpg') }} 700w"
                   sizes="100vw">
 
            <source media="(orientation: portrait)"
-                  data-srcset="{{CDN::asset('/img/home-banner/banner2_portrait_large.jpg') }} 1200w,
-                              {{CDN::asset('/img/home-banner/banner2_portrait_medium.jpg') }} 700w,
-                              {{CDN::asset('/img/home-banner/banner2_portrait_small.jpg') }} 400w"
+                  data-srcset="{{CDN::asset('/img/home-banner/banner2_jan_portrait_large.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/banner2_jan_portrait_medium.jpg') }} 700w,
+                              {{CDN::asset('/img/home-banner/banner2_jan_portrait_small.jpg') }} 400w"
                   sizes="100vw">
 
-           <img src="{{CDN::asset('/img/home-banner/banner2_20px.jpg') }}"
+           <img src="{{CDN::asset('/img/home-banner/banner2_jan_20px.jpg') }}"
                data-sizes="100vw"
-               class="img-fluid lazyload blur-up w-100" alt="Kidsuperstore Banner - The Super Toy Store" title="The Super Toy Store">
+               class="img-fluid lazyload blur-up w-100" alt="Upto 50% OFF" title="Upto 50% OFF">
         </picture>
       </a>
     </div>    
-    <div  class="home-slide-item">
-      <a href="/shop?rf=price:0TO999">
+    <div class="home-slide-item">
+      <a href="/shop">
         <picture>
            <source media="(orientation: landscape)"
-                  data-srcset="{{CDN::asset('/img/home-banner/home-banner-large.jpg') }} 2000w,
-                              {{CDN::asset('/img/home-banner/home-banner-medium.jpg') }} 1200w,
-                              {{CDN::asset('/img/home-banner/home-banner-small.jpg') }} 700w,"
+                  data-srcset="{{CDN::asset('/img/home-banner/banner3_jan_large.jpg') }} 2000w,
+                              {{CDN::asset('/img/home-banner/banner3_jan_medium.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/banner3_jan_small.jpg') }} 700w"
                   sizes="100vw">
 
            <source media="(orientation: portrait)"
-                  data-srcset="{{CDN::asset('/img/home-banner/home-banner-portrait-large.jpg') }} 1200w,
-                              {{CDN::asset('/img/home-banner/home-banner-portrait-medium.jpg') }} 700w,
-                              {{CDN::asset('/img/home-banner/home-banner-portrait-small.jpg') }} 400w"
+                  data-srcset="{{CDN::asset('/img/home-banner/banner3_jan_portrait_large.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/banner3_jan_portrait_medium.jpg') }} 700w,
+                              {{CDN::asset('/img/home-banner/banner3_jan_portrait_small.jpg') }} 400w"
                   sizes="100vw">
 
-           <img src="{{CDN::asset('/img/home-banner/home-banner-20px.jpg') }}"
+           <img src="{{CDN::asset('/img/home-banner/banner3_jan_20px.jpg') }}"
                data-sizes="100vw"
-               class="img-fluid lazyload blur-up w-100" alt="Kidsuperstore Banner - Stylish kids-wear collections under Rs.999" title="Stylish kids-wear collections under Rs.999">
+               class="img-fluid lazyload blur-up w-100" alt="Free Gifts On The Purchase Of ₹3000 And Above" title="Free Gifts On The Purchase Of ₹3000 And Above">
         </picture>
       </a>
     </div>
     <div class="home-slide-item">
-      <a href="/tshirt/">
+      <a href="/shop">
         <picture>
            <source media="(orientation: landscape)"
-                  data-srcset="{{CDN::asset('/img/home-banner/home-banner-boys-large.jpg') }} 2000w,
-                              {{CDN::asset('/img/home-banner/home-banner-boys-medium.jpg') }} 1200w,
-                              {{CDN::asset('/img/home-banner/home-banner-boys-small.jpg') }} 700w"
+                  data-srcset="{{CDN::asset('/img/home-banner/banner4_jan_large.jpg') }} 2000w,
+                              {{CDN::asset('/img/home-banner/banner4_jan_medium.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/banner4_jan_small.jpg') }} 700w"
                   sizes="100vw">
 
            <source media="(orientation: portrait)"
-                  data-srcset="{{CDN::asset('/img/home-banner/home-banner-boys-portrait-large.jpg') }} 1200w,
-                              {{CDN::asset('/img/home-banner/home-banner-boys-portrait-medium.jpg') }} 700w,
-                              {{CDN::asset('/img/home-banner/home-banner-boys-portrait-small.jpg') }} 400w"
+                  data-srcset="{{CDN::asset('/img/home-banner/banner4_jan_portrait_large.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/banner4_jan_portrait_medium.jpg') }} 700w,
+                              {{CDN::asset('/img/home-banner/banner4_jan_portrait_small.jpg') }} 400w"
                   sizes="100vw">
 
-           <img src="{{CDN::asset('/img/home-banner/home-banner-boys-20px.jpg') }}"
+           <img src="{{CDN::asset('/img/home-banner/banner4_jan_20px.jpg') }}"
                data-sizes="100vw"
-               class="img-fluid lazyload blur-up" alt="Kidsuperstore Banner - Trending tshirts for boys and girls" title="Trending tshirts for boys and girls">
+               class="img-fluid lazyload blur-up" alt="₹500 OFF On Your Next Purchase" title="₹500 OFF On Your Next Purchase">
         </picture>
       </a>
     </div>
     <div class="home-slide-item">
-      <a href="/apparels/girls/dress/">
+      <a href="/shop">
         <picture>
            <source media="(orientation: landscape)"
-                  data-srcset="{{CDN::asset('/img/home-banner/home-banner-girls-large.jpg') }} 2000w,
-                              {{CDN::asset('/img/home-banner/home-banner-girls-medium.jpg') }} 1200w,
-                              {{CDN::asset('/img/home-banner/home-banner-girls-small.jpg') }} 700w"
+                  data-srcset="{{CDN::asset('/img/home-banner/banner5_jan_large.jpg') }} 2000w,
+                              {{CDN::asset('/img/home-banner/banner5_jan_medium.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/banner5_jan_small.jpg') }} 700w"
                   sizes="100vw">
 
            <source media="(orientation: portrait)"
-                  data-srcset="{{CDN::asset('/img/home-banner/home-banner-girls-portrait-large.jpg') }} 1200w,
-                              {{CDN::asset('/img/home-banner/home-banner-girls-portrait-medium.jpg') }} 700w,
-                              {{CDN::asset('/img/home-banner/home-banner-girls-portrait-small.jpg') }} 400w"
+                 data-srcset="{{CDN::asset('/img/home-banner/banner5_jan_portrait_large.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/banner5_jan_portrait_medium.jpg') }} 700w,
+                              {{CDN::asset('/img/home-banner/banner5_jan_portrait_small.jpg') }} 400w"
                   sizes="100vw">
 
-           <img src="{{CDN::asset('/img/home-banner/home-banner-girls-20px.jpg') }}"
+           <img src="{{CDN::asset('/img/home-banner/banner5_jan_20px.jpg') }}"
                data-sizes="100vw"
-               class="img-fluid lazyload blur-up" alt="Kidsuperstore Banner - Pretty dresses for girls" title="Pretty dresses for girls">
+               class="img-fluid lazyload blur-up" alt="Chance To Win a Super Cycle Every Week" title="Chance To Win a Super Cycle Every Week">
         </picture>
       </a>
     </div>
@@ -393,10 +393,10 @@
       <div class="cat-item cat-12">
         <a href="/shirt">
           <img class="d-block w-100 img-fluid lazyload blur-up"
-              src="{{CDN::asset('/img/home-category/category_grid12_10px.jpg') }}"
-              data-srcset="{{CDN::asset('/img/home-category/category_grid12_large.jpg') }} 570w,
-                            {{CDN::asset('/img/home-category/category_grid12_medium.jpg') }} 284w,
-                            {{CDN::asset('/img/home-category/category_grid12_small.jpg') }} 190w"
+              src="{{CDN::asset('/img/home-category/category_grid12_jan_10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/home-category/category_grid12_jan_large.jpg') }} 570w,
+                            {{CDN::asset('/img/home-category/category_grid12_jan_medium.jpg') }} 284w,
+                            {{CDN::asset('/img/home-category/category_grid12_jan_small.jpg') }} 190w"
               data-sizes='(min-width: 1200px) 570px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 92vw,  31vw'
               alt="His Favourite Shirts"
               title="His Favourite Shirts" />

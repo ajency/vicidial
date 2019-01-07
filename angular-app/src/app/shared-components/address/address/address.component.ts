@@ -15,6 +15,7 @@ export class AddressComponent implements OnInit, OnChanges {
 	@Input() addAddress : any;
 	@Input() selectedAddressId : any;
 	@Input() states : any;
+  @Input() hideRadio : any;
 
   @Output() addAddressFlagChanged = new EventEmitter();
 
@@ -37,7 +38,7 @@ export class AddressComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(){
-  	console.log("ngOnChanges address component ==>", this.addresses, this.addAddress, this.selectedAddressId, this.states);
+  	// console.log("ngOnChanges address component ==>", this.addresses, this.addAddress, this.selectedAddressId, this.states);
     this.checkAddresses();
     if(this.states && this.states.length) 
       this.initSelectPicker(); 
@@ -133,8 +134,8 @@ export class AddressComponent implements OnInit, OnChanges {
     .catch((error)=>{
       console.log("error ===>", error);
       this.appservice.removeLoader();
-      this.addAddress = false;
-      this.addAddressFlagChanged.emit(false);
+      // this.addAddress = false;
+      // this.addAddressFlagChanged.emit(false);
     })    
   }
 

@@ -1,6 +1,6 @@
 <div id="cd-shadow-layer"></div>
 
-<div id="cd-cart">
+<div id="cd-cart" class="default-flyout-open">
 	<div class="kss_shipping_summary slide-out custom-padding" [ngClass]="{'slide-show' : widgetOpen}">
 		<div *ngIf="shippingDetails" class="scroll-container">	
 			<nav class="navbar navbar-dark bg-dark pt-3 pb-3 ">
@@ -119,7 +119,7 @@
 			  </div>
 			</div>
 			
-			<app-edit-user-popup [user_info]="shippingDetails.user_info" [showCancelButton]="showCancelButton" (pop_up_closed)="updateEmail()"></app-edit-user-popup>
+			<app-edit-user-popup [user_info]="shippingDetails.user_info" [showCancelButton]="showCancelButton" [showMobileNumber]=false (showPayButton)="showUserInfoModal = false" (pop_up_closed)="updateEmail()"></app-edit-user-popup>
 		</div>
 	</div>
 </div>	

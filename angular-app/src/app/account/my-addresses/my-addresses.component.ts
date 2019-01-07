@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AppServiceService } from '../../service/app-service.service';
 import { ApiServiceService } from '../../service/api-service.service';
 
@@ -11,6 +11,9 @@ declare var $: any;
   styleUrls: ['./my-addresses.component.css']
 })
 export class MyAddressesComponent implements OnInit {
+
+  @ViewChild(AddressComponent)
+  private addressComponent : AddressComponent
 	
 	addAddress = false;
   addresses : any;
@@ -54,7 +57,11 @@ export class MyAddressesComponent implements OnInit {
   }
 
   navigateBack(){
-    history.back();
+    if(this.addAddress && this.addresses.length){
+      this.addAddress = false;
+    }
+    else
+      history.back();
   }
 
   getAllStates(){    
@@ -79,5 +86,10 @@ export class MyAddressesComponent implements OnInit {
     if(this.states && this.addresses){
       this.appservice.removeLoader();
     }
+  }
+
+  updateView(){
+    console.log("inside updateView function");
+    this.addAddress = this.addressComponent ? this.addressComponent.addAddress: this.addAddress;
   }
 }

@@ -24,29 +24,32 @@
 	          	</a>
             </div>
             <div class="">
-              <h4 class="font-weight-bold m-0"> Profile</h4>
+              <h4 class="font-weight-bold m-0"> My Profile</h4>
             </div>
         </div>
 		<hr>
 		
-		<div class="p-3 mb-3 card shadow-sm d-block">
-			<h5 class="font-weight-bold text-dark mb-3">Primary Info</h5>
+		<div class="p-3 mb-3 d-block">
+			<h5 class="font-weight-bold text-dark mb-3 d-flex align-items-center justify-content-between border-bottom profile-title pb-2">Primary Info 
+				<i class="fas fa-pencil-alt number-edit cursor-pointer" (click)="showModal()"></i>
+			</h5>
 			<div class="row mb-2">
-				<div class="col-6 card-title-size">Name</div>
+				<div class="col-5 card-title-size">Name :</div>
 				<label class="mb-0 col-6 card-title-size"> <span *ngIf="userInfo.name; else noName">{{userInfo.name}}</span> <ng-template #noName> - </ng-template> </label>
 			</div>
 			<div class="row mb-2">
-				<div class="col-6 card-title-size">Mobile Number</div>
+				<div class="col-5 card-title-size">Mobile Number :</div>
 				<label class="mb-0 col-6 card-title-size">{{userInfo.mobile}}</label>
 			</div>
 			<div class="row mb-2">
-				<div class="col-6 card-title-size">E-mail id</div>
+				<div class="col-5 card-title-size">E-mail id :</div>
 				<label class="mb-0 col-6 card-title-size"><span *ngIf="userInfo.email; else noEmail">{{userInfo.email}}</span> <ng-template #noEmail> - </ng-template></label>
 			</div>
 
-			<button type="button" class="btn kss-btn kss-btn--medium mt-3" (click)="showModal()">Edit</button>
+			<!-- <button type="button" class="btn kss-btn kss-btn--medium mt-3" (click)="showModal()">Edit</button> -->
+
 		</div>			
 	</div>
 
-	<app-edit-user-popup [user_info]="userInfo" [showCancelButton]="showCancelButton" (pop_up_closed)="updateEmail()"></app-edit-user-popup>
+	<app-edit-user-popup [user_info]="userInfo" [showCancelButton]="showCancelButton" [showMobileNumber]=true (pop_up_closed)="updateEmail()"></app-edit-user-popup>
 </div>	

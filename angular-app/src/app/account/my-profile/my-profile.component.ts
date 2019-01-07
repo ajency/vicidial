@@ -51,13 +51,16 @@ export class MyProfileComponent implements OnInit {
 
   showModal(){
     $('#user-info').modal('show');
+    $('#user-info').on('shown.bs.modal', function () {
+      $('[data-toggle="tooltip"]').tooltip();
+    })
     $("#cd-cart,.kss_shipping_summary").css("overflow", "hidden");
     $('.modal-backdrop').appendTo('#cd-cart');
     $('body').addClass('hide-scroll');
   }
 
   updateEmail(){
-    console.log("this.editUserPopUp.userEmail", this.editUserPopUp.userEmail);
+    // console.log("this.editUserPopUp.userEmail", this.editUserPopUp.userEmail);
     this.userInfo.email = this.editUserPopUp.userEmail;
     this.userInfo.name = this.editUserPopUp.user_info.name;
     this.appservice.userInfo = this.userInfo;
