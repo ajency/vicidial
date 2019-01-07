@@ -200,7 +200,7 @@ function singleProductAPI(string $product_color)
     $q->setIndex(config("elastic.indexes.product"));
     
     try {
-        $product = $q->get($product_color, 'search_result_data');
+        $product = $q->get($product_color, ['search_result_data', 'variants']);
     } catch (Exception $e) {
         abort(404);
     }

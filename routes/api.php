@@ -50,5 +50,12 @@ Route::group([
 	Route::get('/product-with-missing-images', 'v'.$group_app_version.'\ProductController@productMissingImages');
 });
 
+$group_app_version = 2;
+Route::group([
+  'prefix'     => '/rest/v'.$group_app_version,
+], function () use ($group_app_version) {
+	Route::get('/product-details', 'v2\ProductController@singleProductAPI');
+});
+
 Route::middleware('auth:api')->get('/user', config('app.version').'\HomeController@api');
 
