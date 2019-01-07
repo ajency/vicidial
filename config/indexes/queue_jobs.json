@@ -1,0 +1,21 @@
+{
+  "mappings": {
+    "_doc": {
+      "properties": {
+        "job": {
+          "type": "keyword"
+        },
+        "payload": {
+          "type": "text"
+        },
+        "command_data": {
+          "type": "text"
+        },
+        "timestamp": {
+          "type": "date",
+          "format": "epoch_second"
+        }
+      }
+    }
+  }
+}
