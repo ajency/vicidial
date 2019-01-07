@@ -94,6 +94,9 @@ $L : 1200px;
         .fixed-bottom{
             right: 0;
         }
+        .fixed-checkout-btn{
+            animation: shiftRight 0.5s forwards;
+        }
     }
     >* {
         padding: 0 1em;
@@ -157,6 +160,11 @@ $L : 1200px;
         }
         .cd-item-remove {
             right: 2em;
+        }
+    }
+    @media (max-width: 767px){
+        .default-flyout-open{
+            right: 0 !important
         }
     }
 }
@@ -553,4 +561,13 @@ body{
     label{
         font-size: 0.9rem;
     }
+}
+
+@keyframes shiftRight {
+  0% {
+    right: -100%;
+  }
+  100% {
+    right: 0;
+  }
 }

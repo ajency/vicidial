@@ -1,0 +1,46 @@
+<div id="cd-cart" class="angular-app h-100 shipping-section default-flyout-open">
+	<div *ngIf="addAddress || (addresses)" class="kss_shipping slide-out custom-padding" [ngClass]="{'slide-show' : widgetOpen}">
+		<div class="scroll-container">
+			<nav class="navbar navbar-dark bg-dark pt-3 pb-3 ">
+				<div class="d-flex align-items-center w-100">
+					<div class="">
+						<a>
+							 <img src="/img/logo-kss.png" xpreview="/img/logo-kss.png" class=" img-fluid m-0" width="180px">
+					 </a>
+					</div>
+					<div class="ml-auto align-self-center">
+						<h3 class="m-0 text-white kss_highlight btn-pay" (click)="closeCart()"><span aria-hidden="true">&times;</span></h3>
+					</div>
+				</div>
+			</nav>
+			<div class="py-3 px-3 padding-size">	
+				<div class="row no-gutter">
+					<div class="col-1">
+		             <h3 class="m-0 font-weight-bold back-to-cart">
+		               <img (click)="navigateBack()" class="btn-back kss_highlight" src="/img/left-arrow.png" style="width:20px;">
+		             </h3>
+		           </div>
+					<div class="col-7">
+						<h3 class="modal-title font-weight-bold" id="exampleModalLabel">Ship To</h3>
+					</div>
+					<div class="col-4 text-right">
+						<h6 class="text-muted mt-2">STEP: 1 / 2</h6>
+					</div>
+				</div>
+				<hr>
+
+				<app-address [addresses]="addresses" [addAddress]="addAddress" [selectedAddressId]="selectedAddressId" [states]="states" [hideRadio]=false (addAddressFlagChanged)="updateView()"></app-address>
+
+				<div class="seperator mt-2 mb-2"></div>
+
+				<div class="fixed-bottom d-block pl-3 pr-3">
+					 <div *ngIf="!addAddress && addresses && addresses.length" class="row no-gutters py-2 shipping-state-2" style="display: flex;">
+						<div class="col-12 text-center">
+							<button id="shipping-summary" type="button" class=" btn kss-btn kss-btn--big mt-1 mb-1" (click)="navigateToShippingPage()">Proceed</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>	

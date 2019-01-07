@@ -110,6 +110,12 @@
                         </td>
                         <td class="m_-1366001226154905177m_-6808368826616678290m_8600340093737608931cell-content m_-1366001226154905177m_-6808368826616678290m_8600340093737608931align-right" style="text-align:right">
                            <strong class="m_-1366001226154905177m_-6808368826616678290m_8600340093737608931price" style="padding-right:8px;font-size: 15px;">₹{{$item['price_final']}}</strong>
+                           @if($item['price_final'] != $item['price_mrp'])
+                           <div style="margin-top: 8px;">
+                              <small style="text-decoration: line-through;padding-left: 5px;padding-right: 5px;margin-right: 5px;color: #6c757d;font-size: 12px;border-right: 1px solid;">₹{{$item['price_mrp']}}</small>
+                              <span class="kss-discount text-danger" style="color: #28a745;font-size: 12px;">{{ calculate_discount( $item['price_mrp'],$item['price_final']) }}% OFF</span>
+                           </div>
+                           @endif
                         </td>
                      </tr>
                </tbody>

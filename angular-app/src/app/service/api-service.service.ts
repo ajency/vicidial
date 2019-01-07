@@ -14,7 +14,7 @@ export class ApiServiceService {
 		        }
   }
 
-	public request(url: string,type: string, body: object, optionalHeaders: object = {},overrideheaders: boolean = false, returntype: string = 'promise',): any{
+	public request(url: string,type: string, body: object, optionalHeaders: object = {},overrideheaders: boolean = false, returntype: string = 'promise'): any{
 	  let headers = new Headers({'Content-Type': 'application/json'});
 	  let opHeaderKeys = Object.keys(optionalHeaders);
 	  if(opHeaderKeys.length){

@@ -1,15 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { CartComponent } from './pages/cart/cart.component';
-import { ShippingDetailsComponent } from './pages/shipping-details/shipping-details.component';
-import { ShippingSummaryComponent } from './pages/shipping-summary/shipping-summary.component';
-
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
-	{ path: 'shipping-details', component: ShippingDetailsComponent},
-	{ path: 'shipping-summary', component: ShippingSummaryComponent},
-	{ path: '**', component: CartComponent }
+	{ path: 'user-login', component : LoginComponent, outlet: 'popup'},
+	{ path: 'bag', loadChildren: './bag/bag.module#BagModule'},
+	{ path: 'account', loadChildren: './account/account.module#AccountModule'},
+	// { path: '**', loadChildren: './bag/bag.module#BagModule'}
 ];
 
 @NgModule({
