@@ -61,6 +61,7 @@ class AppServiceProvider extends ServiceProvider
                 'command_data' => $command,
                 'payload'      => $json,
                 'timestamp'    => $timestamp,
+                'success'      => true,
             ];
             $q = new ElasticQuery;
             $q->setIndex('queue_jobs')->createIndexParams($id, $data)->index();
