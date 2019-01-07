@@ -105,7 +105,11 @@ export class ShippingDetailsComponent implements OnInit {
   }
 
   navigateBack(){
-    history.back();
+    if(this.addAddress && this.addresses.length){
+      this.addAddress = false;
+    }
+    else
+      history.back();
   }
 
   getAllStates(){    
