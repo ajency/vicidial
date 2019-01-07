@@ -133,8 +133,8 @@ export class AddressComponent implements OnInit, OnChanges {
     .catch((error)=>{
       console.log("error ===>", error);
       this.appservice.removeLoader();
-      this.addAddress = false;
-      this.addAddressFlagChanged.emit(false);
+      // this.addAddress = false;
+      // this.addAddressFlagChanged.emit(false);
     })    
   }
 
