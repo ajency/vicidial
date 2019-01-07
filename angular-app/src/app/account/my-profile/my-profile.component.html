@@ -30,7 +30,9 @@
 		<hr>
 		
 		<div class="p-3 mb-3 d-block">
-			<h5 class="font-weight-bold text-dark mb-3">Primary Info</h5>
+			<h5 class="font-weight-bold text-dark mb-3 d-flex align-items-center justify-content-between border-bottom profile-title pb-2">Primary Info 
+				<i class="fas fa-pencil-alt number-edit cursor-pointer" (click)="showModal()"></i>
+			</h5>
 			<div class="row mb-2">
 				<div class="col-5 card-title-size">Name :</div>
 				<label class="mb-0 col-6 card-title-size"> <span *ngIf="userInfo.name; else noName">{{userInfo.name}}</span> <ng-template #noName> - </ng-template> </label>
@@ -45,9 +47,6 @@
 			</div>
 
 			<!-- <button type="button" class="btn kss-btn kss-btn--medium mt-3" (click)="showModal()">Edit</button> -->
-			<div class="">
-				<button type="button" class="btn text-secondary pb-0 pl-0 link-btn" (click)="showModal()">Edit <i class="fas fa-chevron-right"></i></button>
-			</div>
 
 		</div>			
 	</div>
