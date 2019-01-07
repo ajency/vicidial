@@ -15,6 +15,7 @@ export class AddressComponent implements OnInit, OnChanges {
 	@Input() addAddress : any;
 	@Input() selectedAddressId : any;
 	@Input() states : any;
+  @Input() hideRadio : any;
 
   @Output() addAddressFlagChanged = new EventEmitter();
 
