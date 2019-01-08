@@ -111,7 +111,7 @@ class ProductController extends Controller
 
     public function singleProductAPI(Request $request)
     {
-        $request->validate(['product_details' => 'required']);
+        $request->validate(['product_details' => 'required', 'type' => 'sometimes|in:slug,product_color']);
         $params  = $request->all();
         if (isset($params['type']) && $params['type'] == 'slug') {
             $json = json_decode(singleproduct($params['product_details']));
