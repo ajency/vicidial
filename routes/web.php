@@ -12,11 +12,11 @@
  */
 $config = config('ajfileupload');
 
-$app_version = config('app.version');
+$app_version = 'v'.config('app.api_version');
 
-$group_app_version = 1; 
+$group_app_version = 'v1'; 
 Route::group([
-  'prefix'     => '/rest/v'.$group_app_version,
+  'prefix'     => '/rest/'.$group_app_version,
 ], function () use ($group_app_version) {
 	Route::group([
 	  'prefix'     => '/anonymous',
@@ -24,20 +24,20 @@ Route::group([
 		Route::group([
 		  'prefix'     => '/cart',
 		], function () use ($group_app_version) {
-			Route::get('/count', 'v'.$group_app_version.'\CartController@guestGetCount');
-			Route::post('/insert', 'v'.$group_app_version.'\CartController@guestAddItem');
-			Route::get('/get', 'v'.$group_app_version.'\CartController@guestCartFetch');
-			Route::get('/delete', 'v'.$group_app_version.'\CartController@guestCartDelete');
-			Route::get('/check-status', 'v'.$group_app_version.'\CartController@checkStatus');
-			Route::get('/changePromotion', 'v'.$group_app_version.'\CartController@guestCartPromotion');
+			Route::get('/count', $group_app_version.'\CartController@guestGetCount');
+			Route::post('/insert', $group_app_version.'\CartController@guestAddItem');
+			Route::get('/get', $group_app_version.'\CartController@guestCartFetch');
+			Route::get('/delete', $group_app_version.'\CartController@guestCartDelete');
+			Route::get('/check-status', $group_app_version.'\CartController@checkStatus');
+			Route::get('/changePromotion', $group_app_version.'\CartController@guestCartPromotion');
 		});
-		Route::get('/states/all', 'v'.$group_app_version.'\AddressController@fetchStates');
+		Route::get('/states/all', $group_app_version.'\AddressController@fetchStates');
 	});
 	Route::group([
 	  'prefix'     => '/authenticate',
 	], function () use ($group_app_version) {
-		Route::get('/login', 'v'.$group_app_version.'\UserController@verifyOTP');
-		Route::get('/generate_otp', 'v'.$group_app_version.'\UserController@sendSMS');
+		Route::get('/login', $group_app_version.'\UserController@verifyOTP');
+		Route::get('/generate_otp', $group_app_version.'\UserController@sendSMS');
 	});
 });
 
