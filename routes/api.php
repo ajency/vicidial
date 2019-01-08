@@ -17,7 +17,7 @@ $app_version = 'v'.config('app.api_version');
 
 $group_app_version = 'v1';
 Route::group([
-  'prefix'     => '/rest/v'.$group_app_version,
+  'prefix'     => '/rest/'.$group_app_version,
 ], function () use ($group_app_version) {
 	Route::group([
 	  'middleware' => ['auth:api'],
