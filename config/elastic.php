@@ -10,5 +10,7 @@ return [
         "product"   => "products",
         "move"      => "product_moves",
         "inventory" => "inventory",
+        "variants"  => "variants",
+        "jobs"      => "queue_jobs",
     ],
 ];

@@ -32,24 +32,24 @@ class Defaults extends Model
         }
     }
 
-    public static function getLastProductMove()
+    public static function getLastProductMoveSync()
     {
         $move = self::where('type', 'sync')->where('label', 'product_move')->first();
         if ($move == null) {
             $move            = new self;
             $move->type      = 'sync';
             $move->label     = 'product_move';
-            $move->meta_data = ['id' => 0];
+            $move->meta_data = ['time' => Carbon::now()->subDay()->startOfDay()->toDateTimeString()];
             $move->save();
         }
-        return $move->meta_data['id'];
+        return $move->meta_data['time'];
     }
 
-    public static function setLastProductMove($id)
+    public static function setLastProductMoveSync()
     {
         $move = self::where('type', 'sync')->where('label', 'product_move')->first();
         if ($move->meta_data['id'] < $id) {
-            $move->meta_data = ['id' => $id];
+            $move->meta_data = ['time' => Carbon::now()->toDateTimeString()];
             $move->save();
         }
     }
