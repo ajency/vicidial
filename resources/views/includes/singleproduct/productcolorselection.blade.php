@@ -31,7 +31,7 @@
 		    		$image_2x = $color_set->images->{'2x'};
 		    		$image_3x = $color_set->images->{'3x'};
 		    	}
-			    $url = create_url([$color_set->slug_name, 'buy']);
+			    $url = createUrl([$color_set->slug_name, 'buy']);
 			    $hexcode = ($color_set->html != '') ? $color_set->html : implode('', explode(" ",$color_set->name));
 			@endphp
 			    <input class="d-none radio-input" type="radio" name="kss-variants" id="color-{{$color_id}}" {{$checked}} />

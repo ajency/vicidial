@@ -47,11 +47,9 @@ class Defaults extends Model
 
     public static function setLastProductMoveSync()
     {
-        $move = self::where('type', 'sync')->where('label', 'product_move')->first();
-        if ($move->meta_data['id'] < $id) {
-            $move->meta_data = ['time' => Carbon::now()->toDateTimeString()];
-            $move->save();
-        }
+        $move            = self::where('type', 'sync')->where('label', 'product_move')->first();
+        $move->meta_data = ['time' => Carbon::now()->toDateTimeString()];
+        $move->save();
     }
 
     public static function getLastProductSync()

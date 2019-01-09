@@ -4,7 +4,7 @@
   <!-- Calculate & Display Price & Discount -->
   @php
   foreach ($product->variants as $size_set) {
-    $price_set = get_price_set($size_set);
+    $price_set = getPriceSet($size_set);
   @endphp
     <!-- Size Selection -->
     <input class="d-none radio-input" type="radio" name="kss-sizes-{{$product->product_id}}-{{$product->color_id}}" id="size-{{$product->product_id}}-{{$product->color_id}}-{{$size_set->size->size_id}}" {{$price_set['checked']}} data-product_id="{{$product->product_id}}" data-color_id="{{$product->color_id}}" data-variant_id="{{$size_set->variant_id}}" {{$price_set['disabled']}} data-list_price="{{$price_set['list_price']}}" data-sale_price="{{$price_set['sale_price']}}" data-discount_per="{{$price_set['discount_per']}}"/>

@@ -113,7 +113,7 @@ class ProductColor extends Model
                 'gender'            => ($productColorData['search_result_data']['product_gender'] == 'Boys') ? 'male' : (($productColorData['search_result_data']['product_gender'] == 'Girls') ? 'female' : 'unisex'),
                 'identifier_exists' => 'no',
                 'link'              => url('/') . "/" . $productColorData['search_result_data']['product_slug'] . "/buy",
-                'product_type' => $productColorData['search_result_data']['product_category_type'] . ' > ' . $productColorData['search_result_data']['product_subtype'],
+                'product_type'      => $productColorData['search_result_data']['product_category_type'] . ' > ' . $productColorData['search_result_data']['product_subtype'],
             ];
 
             if ($productColorData['search_result_data']['product_age_group'] != 'Others' && $productColorData['search_result_data']['product_age_group'] != 'All') {
@@ -122,6 +122,8 @@ class ProductColor extends Model
 
             if ($productColorData['search_result_data']['product_description'] != false) {
                 $params['description'] = $productColorData['search_result_data']['product_description'];
+            } else {
+                $params['description'] = $productColorData['search_result_data']['product_title'];
             }
 
             if ($productColorData['search_result_data']['product_att_material'] != false) {
@@ -130,15 +132,15 @@ class ProductColor extends Model
 
             if ($productColorData['search_result_data']['product_image_available'] != false && $main_image != false) {
                 $params['image_link'] = $main_image;
+            } else {
+                continue;   // Skip if image not available
             }
 
             if ($productColorData['search_result_data']['product_category_type'] == 'Apparels' || $productColorData['search_result_data']['product_category_type'] == 'Accessories') {
                 $params['google_product_category'] = 166;
-            }
-            else if ($productColorData['search_result_data']['product_category_type'] == 'Shoes') {
+            } else if ($productColorData['search_result_data']['product_category_type'] == 'Shoes') {
                 $params['google_product_category'] = 187;
-            }
-            else if ($productColorData['search_result_data']['product_category_type'] == 'Toys') {
+            } else if ($productColorData['search_result_data']['product_category_type'] == 'Toys') {
                 $params['google_product_category'] = 1239;
             }
 
@@ -167,7 +169,7 @@ class ProductColor extends Model
         $formatter = Formatter::make($xmlData, Formatter::ARR);
         $xml       = $formatter->toXml('rss version="2.0" xmlns:g="http://base.google.com/ns/1.0"', 'http://base.google.com/ns/1.0', $excludeArray);
 
-        Storage::disk('s3')->put(config('ajfileupload.doc_base_root_path').'/products.xml', $xml);
+        Storage::disk('s3')->put(config('ajfileupload.doc_base_root_path') . '/products.xml', $xml);
     }
 
     public static function getProductsFromOdooDiscounts()

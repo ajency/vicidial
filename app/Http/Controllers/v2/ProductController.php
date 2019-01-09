@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\v2;
 
+use App\Http\Controllers\Controller;
 use App\ProductColor;
 use App\Product;
 use App\Facet;
@@ -34,7 +35,7 @@ class ProductController extends Controller
         foreach ($breadcrumb as $category) {
             $facet = Facet::where('facet_name', '=', $category)->where('facet_value', '=', $params['category']->{$category})->first();
             $url[] = $facet->slug;
-            $params['breadcrumb']['list'][] = ['name' => $facet->display_name, 'href' => create_url($url)];
+            $params['breadcrumb']['list'][] = ['name' => $facet->display_name, 'href' => createUrl($url)];
         }
 
         $params['breadcrumb']['current'] = '';
@@ -106,5 +107,43 @@ class ProductController extends Controller
 
     public function allInventory(){
         Variant::getWarehouseInventory();
+    }
+
+    public function singleProductAPI(Request $request)
+    {
+        $request->validate(['product_details' => 'required', 'type' => 'sometimes|in:slug,product_color']);
+        $params  = $request->all();
+        if (isset($params['type']) && $params['type'] == 'slug') {
+            $json = json_decode(singleproduct($params['product_details']));
+        }
+        else {
+            $json = json_decode(singleProductAPI($params['product_details']));
+        }
+        $response =  (array) $json;
+
+        $similar_cat_params=[];
+        $facets = Facet::select('slug')->whereIn('facet_value', array_values((array)$response["category"]))->get()->toArray();
+        $similar_cat_params['categories'] = array_column($facets, 'slug');
+        $search_object_arr = build_search_object($similar_cat_params);
+
+        $search_results = [];
+
+        $search_object = $search_object_arr["search_result"];
+
+        $search_results["slug_search_result"] = $search_object_arr["slug_search_result"];
+        $search_results["slug_value_search_result"] = $search_object_arr["slug_value_search_result"];
+        $search_results["slugs_result"] = $search_object_arr["slugs_result"];
+        $search_results["title"] = $search_object_arr["title"];
+        $similar_products_display_limit = config('product.similar_products_display_limit');
+        $parameters = Product::productListPage(["search_object" => $search_object,"display_limit"=> ($similar_products_display_limit+1),"page" =>1],$search_results["slug_value_search_result"],$search_results["slug_search_result"],$search_results["slugs_result"],$search_results["title"]);
+
+        $similar_data_params= json_decode(json_encode($parameters,JSON_FORCE_OBJECT));
+        $response['similar_products'] = [];
+        foreach($similar_data_params->items as $similar_item){
+            if($similar_item->product_id != $response["parent_id"] && count($response['similar_products'])<$similar_products_display_limit)
+                array_push($response['similar_products'], $similar_item);
+        }
+
+        return json_encode($response);
     }
 }

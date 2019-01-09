@@ -47,7 +47,7 @@
 								@if($item['price_final'] != $item['price_mrp'])
 									<small class="kss-original-price text-muted">₹{{$item['price_mrp']}}
 								  	</small>
-								  	<span class="kss-discount text-danger">{{ calculate_discount( $item['price_mrp'],$item['price_final']) }} % OFF</span>
+								  	<span class="kss-discount text-danger">{{ calculateDiscount( $item['price_mrp'],$item['price_final']) }} % OFF</span>
 							  	@endif
 
 							</div>
