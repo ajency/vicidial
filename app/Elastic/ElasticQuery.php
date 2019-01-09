@@ -263,10 +263,12 @@ class ElasticQuery
         return $this->elastic_client->search($this->params);
     }
 
-    public function get($id)
+    public function get($id, $source = [])
     {
-        $this->params["type"] = "_doc";
-        $this->params["id"]   = $id;
+        $this->params["type"]    = "_doc";
+        $this->params["id"]      = $id;
+        $this->params["_source"] = $source;
+
         return $this->elastic_client->get($this->params);
     }
 

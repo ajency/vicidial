@@ -1,6 +1,6 @@
 @php
 //URL Generation
-$url = create_url([$product->slug_name, 'buy']);
+$url = createUrl([$product->slug_name, 'buy']);
 @endphp
 <div class="col-lg-4 col-md-6 mb-sm-4 col-6  ">
 
@@ -37,7 +37,7 @@ $url = create_url([$product->slug_name, 'buy']);
       </a>
       <!-- Calculate & Display Price -->
       @php
-        $default_price = set_default_price($product->variants);
+        $default_price = setDefaultPrice($product->variants);
         if($default_price['list_price'] == $default_price['sale_price']) { @endphp
         <div id="kss-price-{{$product->product_id}}-{{$product->color_id}}" class="kss-price kss-price--smaller">₹{{$default_price['sale_price']}}</div>
       @php } else { @endphp

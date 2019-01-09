@@ -107,13 +107,14 @@ function fetchProduct($product)
             "id"                  => $variant["variant_id"],
             "list_price"          => $variant["variant_list_price"],
             "sale_price"          => $variant["variant_sale_price"],
+            "discount_per"        => calculateDiscount($variant["variant_list_price"], $variant["variant_sale_price"]),
             "is_default"          => ($id == $variant["variant_id"]),
             "size"                => [
-                "id"   => $variant["variant_size_id"],
-                "name" => $variant["variant_size_name"],
+                "id"           => $variant["variant_size_id"],
+                "name"         => $variant["variant_size_name"],
                 "display_name" => $variant["display_name"],
-                "slug" => $variant["slug"],
-                "sequence" => $variant["sequence"],
+                "slug"         => $variant["slug"],
+                "sequence"     => $variant["sequence"],
             ],
             "inventory_available" => $variant["variant_availability"],
 
@@ -192,4 +193,18 @@ function singleproduct(string $product_slug)
 
     return fetchProduct($product);
 
+}
+
+function singleProductAPI(string $product_color)
+{
+    $q = new ElasticQuery();
+    $q->setIndex(config("elastic.indexes.product"));
+    
+    try {
+        $product = $q->get($product_color, ['search_result_data', 'variants']);
+    } catch (Exception $e) {
+        abort(404);
+    }
+
+    return fetchProduct($product);
 }

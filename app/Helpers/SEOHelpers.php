@@ -60,10 +60,10 @@ function productseo($params) {
 	}
 
     if(isset($params['size'])) {
-        $default_price = set_default_price($params['variant_group']->{$selected_color_id}->variants, $params['size']);
+        $default_price = setDefaultPrice($params['variant_group']->{$selected_color_id}->variants, $params['size']);
     }
     else {
-        $default_price = set_default_price($params['variant_group']->{$selected_color_id}->variants);
+        $default_price = setDefaultPrice($params['variant_group']->{$selected_color_id}->variants);
     }
 
     $product_subtype = $params['category']->product_subtype;

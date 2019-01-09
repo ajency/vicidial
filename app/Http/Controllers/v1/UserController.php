@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\v1;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
@@ -33,7 +34,8 @@ class UserController extends Controller
         $notify->setRecipientIds([$sms]);
         \AjComm::sendNotification($notify);
 
-        return response()->json(["message"=> "OTP Sent successfully", 'success'=> true]);
+        $response = ["message"=> "OTP Sent successfully", 'success'=> true];
+        return response()->json(isNotProd() ? array_merge($response,['OTP'=> $otp]) : $response);
     }
     public function verifyOTP(Request $request)
     {
