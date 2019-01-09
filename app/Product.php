@@ -80,8 +80,6 @@ class Product
         $productData = $odoo->defaultExec('product.template', 'read', [[$product_id]], ['fields' => config('product.template_fields')])->first();
         $products    = self::indexVariants($productData['product_variant_ids'], sanitiseProductData($productData));
         self::bulkIndexProducts($products);
-        //create update job for $productData['product_variant_ids']
-        UpdateVariantInventory::dispatch($productData['product_variant_ids'])->onQueue('update_inventory');
         //create photo job for $product_id
         FetchProductImages::dispatch($product_id)->onQueue('process_product_images');
     }
@@ -104,6 +102,8 @@ class Product
             $products->push(buildProductIndexFromOdooData($productData, $colorVariantData));
 
         }
+        //create update job for active and inactive variants
+        UpdateVariantInventory::dispatch(array_merge($variant_ids, $inactiveVariants))->onQueue('update_inventory');
         return $products;
     }
 

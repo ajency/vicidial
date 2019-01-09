@@ -13,13 +13,14 @@ class ProductMove
 {
     public static function startSync()
     {
-        $lastMove = Defaults::getLastProductMove();
+        $lastMove = Defaults::getLastProductMoveSync();
         $offset   = 0;
         do {
-            $moves = self::getMoveIDs(['id' => $lastMove], $offset);
+            $moves = self::getMoveIDs(['write' => $lastMove], $offset);
             CreateMoveJobs::dispatch($moves)->onQueue('create_jobs');
             $offset = $offset + $moves->count();
         } while ($moves->count() == config('odoo.limit'));
+        Defaults::setLastProductMoveSync();
     }
 
     public static function getMoveIDs($filters, $offset, $limit = false)
@@ -32,8 +33,6 @@ class ProductMove
         }
 
         $moves = $odoo->defaultExec('stock.move.line', 'search', $odooFilter, $attributes);
-
-        Defaults::setLastProductMove($moves->last());
         return $moves;
     }
 
@@ -42,18 +41,6 @@ class ProductMove
         $odoo          = new OdooConnect;
         $moveData      = $odoo->defaultExec('stock.move.line', 'read', [[$move_id]], ['fields' => config('product.move_fields')])->first();
         $sanitisedData = sanitiseMoveData($moveData, 'move_');
-        // $variant       = Variant::where('odoo_id', $sanitisedData['move_product_id'])->first();
-        // if ($variant == null) {
-        //     // \Log::notice('chaining product Move ' . $move_id . ' as variant ' . $sanitisedData['move_product_id'] . ' is not found in DB');
-        //     // IdexPnroduct::withChain([
-        //     //     (new IndexMove($move_id))->onQueue('process_move'),
-        //     // ])->dispatch(Variant::getVariantProductIdFromOdoo($sanitisedData['move_product_id']))->onQueue('process_product');
-        //     // return;
-        //     throw new \Exception("Variant " . $sanitisedData['move_product_id'] . " not indexed. Failed to index Product Move " . $move_id, 1);
-
-        // }
-        // $elastic_data = array_merge($sanitisedData, $variant->getVariantData('all', 'variant_'));
-        // $data         = self::indexElasticData($elastic_data);
         $data         = self::indexElasticData($sanitisedData);
         if (config('product.update_inventory')) {
             if ($sanitisedData["move_to_loc"] == "Stock" or $sanitisedData["move_from_loc"] == "Stock") {
