@@ -35,7 +35,7 @@ class ProductController extends Controller
         foreach ($breadcrumb as $category) {
             $facet = Facet::where('facet_name', '=', $category)->where('facet_value', '=', $params['category']->{$category})->first();
             $url[] = $facet->slug;
-            $params['breadcrumb']['list'][] = ['name' => $facet->display_name, 'href' => create_url($url)];
+            $params['breadcrumb']['list'][] = ['name' => $facet->display_name, 'href' => createUrl($url)];
         }
 
         $params['breadcrumb']['current'] = '';

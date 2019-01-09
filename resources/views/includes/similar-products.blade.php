@@ -4,7 +4,7 @@
    <div id="card-list" class="row similar-products">
           @php
           foreach ($items as $product) {
-          $url = create_url([$product->slug_name, 'buy']);
+          $url = createUrl([$product->slug_name, 'buy']);
           @endphp
           <div class="col similar-products__col">
             <div class="card h-100 product-card">
@@ -31,7 +31,7 @@
                   </h5>
                 </a>
                 @php
-                  $default_price = set_default_price($product->variants);
+                  $default_price = setDefaultPrice($product->variants);
                   if($default_price['list_price'] == $default_price['sale_price']) {
                 @endphp
                 <div id="kss-price-{{$product->product_id}}-{{$product->color_id}}" class="kss-price kss-price--smaller">₹{{$default_price['sale_price']}}</div>

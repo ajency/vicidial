@@ -4,52 +4,57 @@ use App\ProductColor;
 use App\Variant;
 use App\Elastic\ElasticQuery;
 //Calculate Discount from price
-function calculate_discount($list_price, $sale_price){
-    if($list_price == 0 or $sale_price == 0)
+function calculateDiscount($list_price, $sale_price)
+{
+    if ($list_price == 0 or $sale_price == 0) {
         return 0;
-	$discount_amt = $list_price - $sale_price;
-	return $discount_per = round($discount_amt/$list_price * 100);
+    }
+
+    $discount_amt        = $list_price - $sale_price;
+    return $discount_per = round($discount_amt / $list_price * 100);
 }
 
 //Get price, discount, attributes for size
-function get_price_set($size_set, $size = null){
-	$list_price = $size_set->list_price;
-	$sale_price = $size_set->sale_price;
+function getPriceSet($size_set, $size = null)
+{
+    $list_price   = $size_set->list_price;
+    $sale_price   = $size_set->sale_price;
+    $discount_per = $size_set->discount_per;
 
-	$disabled = "";
-	$checked = "";
-	if(!$size_set->inventory_available) {
-		$disabled = "disabled";
-	}
-	elseif ($size != null && $size == $size_set->size->slug) {
-		$checked="checked";
+    $disabled = "";
+    $checked  = "";
+    if (!$size_set->inventory_available) {
+        $disabled = "disabled";
+    } elseif ($size != null && $size == $size_set->size->slug) {
+        $checked = "checked";
     }
-	return ['list_price'=> $list_price, 'sale_price'=> $sale_price, 'discount_per'=> calculate_discount($list_price, $sale_price), 'disabled'=> $disabled, 'checked'=> $checked];
+    return ['list_price' => $list_price, 'sale_price' => $sale_price, 'discount_per' => $discount_per, 'disabled' => $disabled, 'checked' => $checked];
 }
 
 //Set price to be displayed
-function set_default_price($variants, $size = null){
-	foreach ($variants as $size_set) {
-	    if($size != null) {
-		    if($size == $size_set->size->slug && $size_set->inventory_available) {
-	        	return get_price_set($size_set, $size);
-	        }
-        }
-        else {
-        	if($size_set->is_default) {
-	     		return get_price_set($size_set);
-	     	}
+function setDefaultPrice($variants, $size = null)
+{
+    foreach ($variants as $size_set) {
+        if ($size != null) {
+            if ($size == $size_set->size->slug && $size_set->inventory_available) {
+                return getPriceSet($size_set, $size);
+            }
+        } else {
+            if ($size_set->is_default) {
+                return getPriceSet($size_set);
+            }
         }
     }
 }
 
 //URL Generation
-function create_url($slugs){
-	$url = '';
-	foreach ($slugs as $slug) {
-		$url .= '/'.$slug;
-	}
-	return $url;
+function createUrl($slugs)
+{
+    $url = '';
+    foreach ($slugs as $slug) {
+        $url .= '/' . $slug;
+    }
+    return $url;
 }
 
 function formatItems($result, $params){
@@ -100,7 +105,7 @@ function formatItems($result, $params){
                 ],
                 "inventory_available" => $variant["variant_availability"],
                 "variant_id" => $variant["variant_id"],
-                "discount_per" => calculate_discount($variant["variant_list_price"],$variant["variant_sale_price"])
+                "discount_per" => calculateDiscount($variant["variant_list_price"],$variant["variant_sale_price"])
             ];
         }
         $items[] = $item;
