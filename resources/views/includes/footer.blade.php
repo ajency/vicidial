@@ -8,7 +8,9 @@
                     <li><a href="/boys/" class="text-gray">Boys</a></li>
                     <li><a href="/girls/" class="text-gray">Girls</a></li>
                     <li><a href="/infant-0-2-years/" class="text-gray">Infants</a></li>
-                    <li><a href="/accessories/" class="text-gray">Accessories</a></li>
+                    <li><a href="/toys" class="text-gray">Toys</a></li>
+                    <li><a href="/stationery" class="text-gray">Stationery</a></li>
+                    <!-- <li><a href="/accessories/" class="text-gray">Accessories</a></li> -->
                   </ul>
               </div>
               <div class="mbr-footer-content col-12">
@@ -86,7 +88,7 @@
           <p class="my-2"></p>
           <strong>Infants Clothings: </strong>  <a href="/apparels/infant-0-2-years/bottoms" class="text-dark">Bottoms </a> |  <a href="/apparels/infant-0-2-years/dress" class="text-dark"> Dress </a>  |   <a href="/apparels/infant-0-2-years/infant-utility" class="text-dark">Infant Utility</a>  |    <a href="/apparels/infant-0-2-years/jeans" class="text-dark">Jeans</a>  |   <a href="/apparels/infant-0-2-years/shirt" class="text-dark">Shirt</a>  |   <a href="/shoes/infant-0-2-years" class="text-dark">Shoes</a>  |   <a href="/apparels/infant-0-2-years/short" class="text-dark">Short</a>   |   <a href="/apparels/infant-0-2-years/tshirt" class="text-dark">Tshirt</a>   |   <a href="/apparels/infant-0-2-years/woven-tops" class="text-dark">Woven Tops</a>
            <p class="my-2"></p>
-          <strong>Kids Accessories: </strong>  <a href="/accessories/boys/miscellaneous" class="text-dark">Boys </a> |  <a href="/accessories/girls/miscellaneous" class="text-dark"> Girls</a>  |   <a href="/accessories/others/miscellaneous" class="text-dark">Others</a>
+          <!-- <strong>Kids Accessories: </strong>  <a href="/accessories/boys/miscellaneous" class="text-dark">Boys </a> |  <a href="/accessories/girls/miscellaneous" class="text-dark"> Girls</a>  |   <a href="/accessories/others/miscellaneous" class="text-dark">Others</a> -->
       </div>
    </div>
 
