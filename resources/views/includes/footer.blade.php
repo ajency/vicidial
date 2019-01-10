@@ -24,7 +24,7 @@
             </div>
         </div>
 
-        <div class="mbr-footer-content col-md-4 mt-4 mt-sm-5 mt-md-0">
+        <div class="mbr-footer-content col-md-4 mt-0 mt-sm-5 mt-md-0">
 <!--           <p class="font-weight-bold"><strong>Subscribe To Our Newsletter</strong></p>
           <form class="">
             <div class="form-group m-0 d-flex align-items-baseline newsletter">
