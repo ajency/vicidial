@@ -51,12 +51,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ajency/aj-connections.git",
-                "reference": "ebe312d0ea9d84580ded7a4501e214f8e6f427c9"
+                "reference": "5e81f9d6a31fd429c74ff8b1b973168b1156010d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ajency/aj-connections/zipball/ebe312d0ea9d84580ded7a4501e214f8e6f427c9",
-                "reference": "ebe312d0ea9d84580ded7a4501e214f8e6f427c9",
+                "url": "https://api.github.com/repos/ajency/aj-connections/zipball/5e81f9d6a31fd429c74ff8b1b973168b1156010d",
+                "reference": "5e81f9d6a31fd429c74ff8b1b973168b1156010d",
                 "shasum": ""
             },
             "require": {
@@ -81,7 +81,7 @@
                 "source": "https://github.com/ajency/aj-connections/tree/master",
                 "issues": "https://github.com/ajency/aj-connections/issues"
             },
-            "time": "2019-01-10 10:37:25"
+            "time": "2019-01-10 12:07:43"
         },
         {
             "name": "ajency/file-upload",
