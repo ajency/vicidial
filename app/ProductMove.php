@@ -16,7 +16,7 @@ class ProductMove
         $lastMove = Defaults::getLastProductMoveSync();
         $offset   = 0;
         do {
-            $moves = self::getMoveIDs(['write' => $lastMove['time'],'term' => ['state','done']], $offset);
+            $moves = self::getMoveIDs(['write' => $lastMove['time'],'term' => [['state','done']]], $offset);
             CreateMoveJobs::dispatch($moves)->onQueue('create_jobs');
             $offset = $offset + $moves->count();
         } while ($moves->count() == config('odoo.limit'));
