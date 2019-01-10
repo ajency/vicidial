@@ -518,7 +518,7 @@
                 </a>
             </li>
             <li class="list-inline-item pr-0 ">
-                <div id="cd-cart-trigger" class="shopping-cart position-relative">
+                <div id="cd-cart-trigger" class="shopping-cart position-relative cursor-pointer">
                 <!-- <a id="cd-cart-trigger-test" href="#" class="shopping-cart"> -->
                    <i class="kss_icon bag-icon cursor-pointer">
                    </i>
