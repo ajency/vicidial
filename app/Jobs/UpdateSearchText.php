@@ -7,7 +7,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use App\Elastic\ElasticQuery;
+use Ajency\Connections\ElasticQuery;
 use App\Product;
 
 class UpdateSearchText implements ShouldQueue

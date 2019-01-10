@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\Controller;
-use App\Elastic\ElasticQuery;
+use Ajency\Connections\ElasticQuery;
 use Illuminate\Http\Request;
 
 class ProductListTestController extends Controller

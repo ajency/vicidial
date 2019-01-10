@@ -5,7 +5,7 @@ namespace App;
 use App\Variant;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
-use App\Elastic\OdooConnect;
+use Ajency\Connections\OdooConnect;
 
 class SubOrder extends Model
 {

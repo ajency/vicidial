@@ -199,6 +199,7 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         Ajency\Comm\CommServiceProvider::class,
         GoogleMaps\ServiceProvider\GoogleMapsServiceProvider::class,
+        Ajency\Connections\ConnectionsServiceProvider::class,
 
     ],
 
