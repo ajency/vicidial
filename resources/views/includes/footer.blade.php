@@ -14,20 +14,12 @@
                   </ul>
               </div>
               <div class="mbr-footer-content col-12">
-                  <p class="font-weight-bold"><strong>Useful Links</strong></p>
-                  <ul class="list-unstyled d-flex flex-wrap footer-link-separator">
-                      <li><a href="/about-us" class="text-gray">About Us</a></li>
-                      <li><a href="/contact" class="text-gray">Contact Us</a></li>
-                      <li><a href="https://cutshort.io/company/omni-edge-retail-private-ltd?career_page=true" class="text-gray">Careers</a></li>
-                      <li><a href="/faq" class="text-gray">FAQ</a></li>
-                      <li><a href="/terms-and-conditions" class="text-gray">Terms of Use</a></li>
-                      <li><a href="/privacy-policy" class="text-gray">Privacy Policy</a></li>
-                      <!-- <li><a href="#" class="text-gray">Track Orders</a></li> -->
-                      <li><a href="/terms-and-conditions#cancellation" class="text-gray">Cancellation</a></li>
-                      <li><a href="/terms-and-conditions#shipping" class="text-gray">Shipping</a></li>
-                      <li><a href="/terms-and-conditions#return" class="text-gray">Return 30 days</a></li>
-                      <li><a href="http://ideas.kidsuperstore.in/" class="text-gray">Blog</a></li>
-                    </ul>
+                  <p class="font-weight-bold"><strong>My Account</strong></p>
+                  <ul class="list-unstyled d-flex footer-link-separator">
+                    <li><a href="/#/account/my-orders" class="text-gray">My Orders</a></li>
+                    <li><a href="/#/account/my-profile" class="text-gray">My Profile</a></li>
+                    <li><a href="/#/account/my-addresses" class="text-gray">Saved Addresses</a></li>
+                  </ul>
                 </div>
             </div>
         </div>
@@ -41,15 +33,35 @@
             </div>
             <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
           </form> -->
-          <p class="font-weight-bold"><strong>Keep In Touch (Social Connect)</strong></p>
-          <ul class="list-inline d-flex align-items-center flex-wrap social-wrap">
-            <li class="list-inline-item"><a href="https://www.facebook.com/kidsuperstore" class="text-dark d-flex align-items-center" target="_blank"><i class="fab fa-facebook-f socialIcon-size fb-color"></i><span class="social-title">Facebook</span></a></li>
-            <!-- <li class="list-inline-item"><a href="#" class="text-gray"><h3><i class="fab fa-twitter"></i></h3></a></li>
-            <li class="list-inline-item"><a href="#" class="text-gray"><h3><i class="fab fa-youtube"></i></h3></a></li> -->
-            <li class="list-inline-item"><a href="https://www.instagram.com/kidsuperstore.in/" class="text-dark d-flex align-items-center" target="_blank"><i class="fab fa-instagram socialIcon-size instagram-color"></i><span class="social-title">Instagram</span></a></li>
-            <!-- <li class="list-inline-item"><a href="#" class="text-gray"><h3><i class="fab fa-google-plus-g"></i></h3></a></li>
-            <li class="list-inline-item"><a href="#" class="text-gray"><h3><i class="fab fa-pinterest-p"></i></h3></a></li> -->
-          </ul>
+           <div class="row">
+              <div class="mbr-footer-content col-12">
+                <p class="font-weight-bold"><strong>Useful Links</strong></p>
+                  <ul class="list-unstyled d-flex flex-wrap footer-link-separator">
+                      <li><a href="/about-us" class="text-gray">About Us</a></li>
+                      <li><a href="/contact" class="text-gray">Contact Us</a></li>
+                      <li><a href="https://cutshort.io/company/omni-edge-retail-private-ltd?career_page=true" class="text-gray">Careers</a></li>
+                      <li><a href="/faq" class="text-gray">FAQ</a></li>
+                      <li><a href="/terms-and-conditions" class="text-gray">Terms of Use</a></li>
+                      <li><a href="/privacy-policy" class="text-gray">Privacy Policy</a></li>
+                      <!-- <li><a href="#" class="text-gray">Track Orders</a></li> -->
+                      <li><a href="/terms-and-conditions#cancellation" class="text-gray">Cancellation</a></li>
+                      <li><a href="/terms-and-conditions#shipping" class="text-gray">Shipping</a></li>
+                      <li><a href="/terms-and-conditions#return" class="text-gray">Return 30 days</a></li>
+                      <li><a href="http://ideas.kidsuperstore.in/" class="text-gray">Blog</a></li>
+                  </ul>
+              </div>
+              <div class="mbr-footer-content col-12">
+                <p class="font-weight-bold"><strong>Keep In Touch (Social Connect)</strong></p>
+                <ul class="list-inline d-flex align-items-center flex-wrap social-wrap">
+                  <li class="list-inline-item"><a href="https://www.facebook.com/kidsuperstore" class="text-dark d-flex align-items-center" target="_blank"><i class="fab fa-facebook-f socialIcon-size fb-color"></i><span class="social-title">Facebook</span></a></li>
+                  <!-- <li class="list-inline-item"><a href="#" class="text-gray"><h3><i class="fab fa-twitter"></i></h3></a></li>
+                  <li class="list-inline-item"><a href="#" class="text-gray"><h3><i class="fab fa-youtube"></i></h3></a></li> -->
+                  <li class="list-inline-item"><a href="https://www.instagram.com/kidsuperstore.in/" class="text-dark d-flex align-items-center" target="_blank"><i class="fab fa-instagram socialIcon-size instagram-color"></i><span class="social-title">Instagram</span></a></li>
+                  <!-- <li class="list-inline-item"><a href="#" class="text-gray"><h3><i class="fab fa-google-plus-g"></i></h3></a></li>
+                  <li class="list-inline-item"><a href="#" class="text-gray"><h3><i class="fab fa-pinterest-p"></i></h3></a></li> -->
+                </ul>
+              </div>
+            </div>
         </div>
 
         <div class="mbr-footer-content col-md-4 bl-1 mt-4 mt-sm-5 mt-md-0">
