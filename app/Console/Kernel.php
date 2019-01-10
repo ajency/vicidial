@@ -43,6 +43,9 @@ class Kernel extends ConsoleKernel
             $schedule->call(function(){
                 Variant::updateVariantDiffFile();
             })->dailyAt('19:30');
+            $schedule->call(function(){ 
+                ProductColor::getProductsFromOdooDiscounts(); 
+            })->dailyAt('22:00');
         }
     }
 
