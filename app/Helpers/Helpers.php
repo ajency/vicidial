@@ -1,7 +1,7 @@
 <?php
 
 use App\Defaults;
-use App\Elastic\OdooConnect;
+use Ajency\Connections\OdooConnect;
 use App\Jobs\FetchProductImages;
 use App\Location;
 use App\User;
@@ -532,6 +532,7 @@ function sanitiseMoveData($moveData, $prefix = '')
         $prefix . 'package_id'       => $moveData['package_id'],
         $prefix . 'is_locked'        => $moveData['is_locked'],
         $prefix . 'lot_name'         => $moveData['lot_name'],
+        'deleted'                    => false,
     ];
 
     return $body;

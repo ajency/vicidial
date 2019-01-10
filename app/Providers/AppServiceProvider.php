@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Elastic\ElasticQuery;
+use Ajency\Connections\ElasticQuery;
 use Carbon\Carbon;
 use Illuminate\Queue\Events\JobFailed;
 use Illuminate\Queue\Events\JobProcessed;

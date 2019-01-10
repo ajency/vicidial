@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Elastic\OdooConnect;
+use Ajency\Connections\OdooConnect;
 
 class Facet extends Model
 {

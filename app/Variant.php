@@ -2,8 +2,8 @@
 
 namespace App;
 
-use App\Elastic\ElasticQuery;
-use App\Elastic\OdooConnect;
+use Ajency\Connections\ElasticQuery;
+use Ajency\Connections\OdooConnect;
 use App\Facet;
 use App\Jobs\UpdateVariantInventory;
 use App\Location;

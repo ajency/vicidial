@@ -3,8 +3,8 @@
 namespace App;
 
 use App\Defaults;
-use App\Elastic\ElasticQuery;
-use App\Elastic\OdooConnect;
+use Ajency\Connections\ElasticQuery;
+use Ajency\Connections\OdooConnect;
 use App\Jobs\CreateMoveJobs;
 use App\Jobs\UpdateVariantInventory;
 use App\Jobs\IndexAlternateMoves;
@@ -16,11 +16,11 @@ class ProductMove
         $lastMove = Defaults::getLastProductMoveSync();
         $offset   = 0;
         do {
-            $moves = self::getMoveIDs(['write' => $lastMove], $offset);
+            $moves = self::getMoveIDs(['write' => $lastMove['time'],'term' => [['state','done']]], $offset);
             CreateMoveJobs::dispatch($moves)->onQueue('create_jobs');
             $offset = $offset + $moves->count();
         } while ($moves->count() == config('odoo.limit'));
-        Defaults::setLastProductMoveSync();
+        
     }
 
     public static function getMoveIDs($filters, $offset, $limit = false)
@@ -31,8 +31,8 @@ class ProductMove
         if ($limit) {
             $attributes['limit'] = $limit;
         }
-
         $moves = $odoo->defaultExec('stock.move.line', 'search', $odooFilter, $attributes);
+        Defaults::setLastProductMoveSync($moves->last());
         return $moves;
     }
 

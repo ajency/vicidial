@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Elastic\OdooConnect;
+use Ajency\Connections\OdooConnect;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -39,16 +39,21 @@ class Defaults extends Model
             $move            = new self;
             $move->type      = 'sync';
             $move->label     = 'product_move';
-            $move->meta_data = ['time' => Carbon::now()->subDay()->startOfDay()->toDateTimeString()];
+            $move->meta_data = ['time' => Carbon::now()->subDay()->startOfDay()->toDateTimeString(), 'id' => 0];
             $move->save();
         }
-        return $move->meta_data['time'];
+        return $move->meta_data;
     }
 
-    public static function setLastProductMoveSync()
+    public static function setLastProductMoveSync($id)
     {
-        $move            = self::where('type', 'sync')->where('label', 'product_move')->first();
-        $move->meta_data = ['time' => Carbon::now()->toDateTimeString()];
+        $move = self::where('type', 'sync')->where('label', 'product_move')->first();
+        if (!isset($move->meta_data['id']) || $id > $move->meta_data['id']) {
+            $move->meta_data = ['time' => Carbon::now()->subSeconds(5)->toDateTimeString(), 'id' => $id];
+
+        } else {
+            $move->meta_data = ['time' => Carbon::now()->subSeconds(5)->toDateTimeString(), 'id' => $move->meta_data['id']];
+        }
         $move->save();
     }
 
@@ -69,6 +74,27 @@ class Defaults extends Model
     public static function setLastProductSync()
     {
         $sync            = self::where('type', 'sync')->where('label', 'product')->first();
+        $sync->meta_data = ['time' => Carbon::now()->toDateTimeString()];
+        $sync->save();
+    }
+
+    public static function getLastCatalogDiscountSync()
+    {
+        $sync = self::where('type', 'sync')->where('label', 'product')->first();
+        if ($sync == null) {
+            $sync            = new self;
+            $sync->type      = 'sync';
+            $sync->label     = 'catalog_discount';
+            $sync->meta_data = ['time' => Carbon::now()->subDay()->startOfDay()->toDateTimeString()];
+            $sync->save();
+        }
+        return $sync->meta_data['time'];
+
+    }
+
+    public static function setLastCatalogDiscountSync()
+    {
+        $sync            = self::where('type', 'sync')->where('label', 'catalog_discount')->first();
         $sync->meta_data = ['time' => Carbon::now()->toDateTimeString()];
         $sync->save();
     }
@@ -117,25 +143,27 @@ class Defaults extends Model
         return array_unique($orig);
     }
 
-    public static function addElasticAlternateIndex($index,$name){
+    public static function addElasticAlternateIndex($index, $name)
+    {
         $indexes = self::where('type', 'index')->where('label', $index)->first();
-        if($indexes == null){
-            $indexes = new self;
-            $indexes->type = 'index';
-            $indexes->label = $index;
+        if ($indexes == null) {
+            $indexes            = new self;
+            $indexes->type      = 'index';
+            $indexes->label     = $index;
             $indexes->meta_data = [];
         }
-        $names = $indexes->meta_data;
-        $names[] = $name;
+        $names              = $indexes->meta_data;
+        $names[]            = $name;
         $indexes->meta_data = array_unique($names);
         $indexes->save();
     }
 
-    public static function getElasticAlternateIndexes($index){
+    public static function getElasticAlternateIndexes($index)
+    {
         $indexes = self::where('type', 'index')->where('label', $index)->first();
-        if($indexes == null){
+        if ($indexes == null) {
             return [];
-        }else{
+        } else {
             return $indexes->meta_data;
         }
     }

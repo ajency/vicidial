@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Defaults;
-use App\Elastic\ElasticQuery;
+use Ajency\Connections\ElasticQuery;
 use Illuminate\Console\Command;
 
 class AlternateIndex extends Command
