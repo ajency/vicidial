@@ -3,12 +3,12 @@
 namespace App;
 
 use Ajency\FileUpload\FileUpload;
-use App\Elastic\ElasticQuery;
+use Ajency\Connections\ElasticQuery;
 use Illuminate\Database\Eloquent\Model;
 use App\Jobs\FetchProductImages;
 use SoapBox\Formatter\Formatter;
 use Illuminate\Support\Facades\Storage;
-use App\Elastic\OdooConnect;
+use Ajency\Connections\OdooConnect;
 use Illuminate\Support\Facades\DB;
 use App\Jobs\IndexProduct;
 use Carbon\Carbon;

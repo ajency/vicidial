@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Elastic\OdooConnect;
+use Ajency\Connections\OdooConnect;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 

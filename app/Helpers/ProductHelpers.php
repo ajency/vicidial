@@ -2,7 +2,7 @@
 use App\Facet;
 use App\ProductColor;
 use App\Variant;
-use App\Elastic\ElasticQuery;
+use Ajency\Connections\ElasticQuery;
 //Calculate Discount from price
 function calculateDiscount($list_price, $sale_price)
 {

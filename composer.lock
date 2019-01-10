@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1f934597d1e8ccffd876ff9c40e42884",
-    "content-hash": "de304f7943ff1d37b5c1624af32c5c57",
+    "hash": "799aa3fbad628512a4dde12b44d623c2",
+    "content-hash": "872a95e131eadf850af3af1dc46c943a",
     "packages": [
         {
             "name": "ajency/comm",
@@ -44,6 +44,44 @@
                 "issues": "https://github.com/ajency/laravel-comm-package/issues"
             },
             "time": "2018-11-05 08:09:52"
+        },
+        {
+            "name": "ajency/connections",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ajency/aj-connections.git",
+                "reference": "ebe312d0ea9d84580ded7a4501e214f8e6f427c9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ajency/aj-connections/zipball/ebe312d0ea9d84580ded7a4501e214f8e6f427c9",
+                "reference": "ebe312d0ea9d84580ded7a4501e214f8e6f427c9",
+                "shasum": ""
+            },
+            "require": {
+                "darkaonline/ripcord": "^0.1.6",
+                "elasticsearch/elasticsearch": "^6.0",
+                "laravel/framework": "5.7.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Ajency\\Connections\\": "src/"
+                }
+            },
+            "authors": [
+                {
+                    "name": "Prasad Honavar",
+                    "email": "prasad@ajency.in"
+                }
+            ],
+            "description": "Elasticsearch and Odoo wrapper",
+            "support": {
+                "source": "https://github.com/ajency/aj-connections/tree/master",
+                "issues": "https://github.com/ajency/aj-connections/issues"
+            },
+            "time": "2019-01-10 10:37:25"
         },
         {
             "name": "ajency/file-upload",
@@ -250,16 +288,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.82.6",
+            "version": "3.84.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "a254cef386f193249e2dea5ca54f66b3e2c00963"
+                "reference": "2c1800a5260ef4399b366857b3792a307f4881a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/a254cef386f193249e2dea5ca54f66b3e2c00963",
-                "reference": "a254cef386f193249e2dea5ca54f66b3e2c00963",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/2c1800a5260ef4399b366857b3792a307f4881a9",
+                "reference": "2c1800a5260ef4399b366857b3792a307f4881a9",
                 "shasum": ""
             },
             "require": {
@@ -329,7 +367,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2019-01-04 23:01:07"
+            "time": "2019-01-09 22:26:16"
         },
         {
             "name": "clue/stream-filter",
@@ -752,16 +790,16 @@
         },
         {
             "name": "elasticsearch/elasticsearch",
-            "version": "v6.0.1",
+            "version": "v6.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/elastic/elasticsearch-php.git",
-                "reference": "b8e3bc9d1fc54d6a18692df0b74956efe7fe241a"
+                "reference": "b237a37b2cdf23a5a17fd3576cdea771394ad00d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/elastic/elasticsearch-php/zipball/b8e3bc9d1fc54d6a18692df0b74956efe7fe241a",
-                "reference": "b8e3bc9d1fc54d6a18692df0b74956efe7fe241a",
+                "url": "https://api.github.com/repos/elastic/elasticsearch-php/zipball/b237a37b2cdf23a5a17fd3576cdea771394ad00d",
+                "reference": "b237a37b2cdf23a5a17fd3576cdea771394ad00d",
                 "shasum": ""
             },
             "require": {
@@ -805,7 +843,7 @@
                 "elasticsearch",
                 "search"
             ],
-            "time": "2017-12-05 14:15:58"
+            "time": "2019-01-08 18:53:46"
         },
         {
             "name": "erusev/parsedown",
@@ -955,16 +993,16 @@
         },
         {
             "name": "geocoder-php/chain-provider",
-            "version": "4.0.0",
+            "version": "4.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/geocoder-php/chain-provider.git",
-                "reference": "c327807dc455c2fee8c951d8fadbb5a60cfdcd48"
+                "reference": "be9d39b4097d3f926eb8465d051addaf46ead3ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/geocoder-php/chain-provider/zipball/c327807dc455c2fee8c951d8fadbb5a60cfdcd48",
-                "reference": "c327807dc455c2fee8c951d8fadbb5a60cfdcd48",
+                "url": "https://api.github.com/repos/geocoder-php/chain-provider/zipball/be9d39b4097d3f926eb8465d051addaf46ead3ae",
+                "reference": "be9d39b4097d3f926eb8465d051addaf46ead3ae",
                 "shasum": ""
             },
             "require": {
@@ -977,10 +1015,9 @@
             },
             "require-dev": {
                 "nyholm/nsa": "^1.1",
-                "nyholm/psr7": "^0.2.2",
                 "php-http/curl-client": "^1.7",
                 "php-http/message": "^1.0",
-                "phpunit/phpunit": "^6.1"
+                "phpunit/phpunit": "6.3.*"
             },
             "type": "library",
             "extra": {
@@ -1008,7 +1045,7 @@
             ],
             "description": "Geocoder chain adapter",
             "homepage": "http://geocoder-php.org/Geocoder/",
-            "time": "2017-08-01 07:23:53"
+            "time": "2019-01-08 12:13:42"
         },
         {
             "name": "geocoder-php/common-http",
@@ -1733,16 +1770,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.7.19",
+            "version": "v5.7.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "5c1d1ec7e8563ea31826fd5eb3f6791acf01160c"
+                "reference": "10cd20294b5668f90ba91996236834e71f7ff670"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/5c1d1ec7e8563ea31826fd5eb3f6791acf01160c",
-                "reference": "5c1d1ec7e8563ea31826fd5eb3f6791acf01160c",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/10cd20294b5668f90ba91996236834e71f7ff670",
+                "reference": "10cd20294b5668f90ba91996236834e71f7ff670",
                 "shasum": ""
             },
             "require": {
@@ -1816,7 +1853,7 @@
                 "moontoast/math": "^1.1",
                 "orchestra/testbench-core": "3.7.*",
                 "pda/pheanstalk": "^3.0",
-                "phpunit/phpunit": "^7.0",
+                "phpunit/phpunit": "^7.5",
                 "predis/predis": "^1.1.1",
                 "symfony/css-selector": "^4.1",
                 "symfony/dom-crawler": "^4.1",
@@ -1875,7 +1912,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2018-12-18 14:00:38"
+            "time": "2019-01-08 14:39:11"
         },
         {
             "name": "laravel/nexmo-notification-channel",
@@ -4034,16 +4071,16 @@
         },
         {
             "name": "react/promise",
-            "version": "v2.7.0",
+            "version": "v2.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/reactphp/promise.git",
-                "reference": "f4edc2581617431aea50430749db55cc3fc031b3"
+                "reference": "31ffa96f8d2ed0341a57848cbb84d88b89dd664d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/reactphp/promise/zipball/f4edc2581617431aea50430749db55cc3fc031b3",
-                "reference": "f4edc2581617431aea50430749db55cc3fc031b3",
+                "url": "https://api.github.com/repos/reactphp/promise/zipball/31ffa96f8d2ed0341a57848cbb84d88b89dd664d",
+                "reference": "31ffa96f8d2ed0341a57848cbb84d88b89dd664d",
                 "shasum": ""
             },
             "require": {
@@ -4076,7 +4113,7 @@
                 "promise",
                 "promises"
             ],
-            "time": "2018-06-13 15:59:06"
+            "time": "2019-01-07 21:25:54"
         },
         {
             "name": "soapbox/laravel-formatter",
@@ -7398,6 +7435,7 @@
     "stability-flags": {
         "ajency/comm": 20,
         "ajency/file-upload": 20,
+        "ajency/connections": 20,
         "publiux/laravelcdn": 20,
         "soapbox/laravel-formatter": 20,
         "tzsk/payu": 20

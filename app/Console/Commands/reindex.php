@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Elastic\ElasticQuery;
+use Ajency\Connections\ElasticQuery;
 use Illuminate\Console\Command;
 
 class reindex extends Command

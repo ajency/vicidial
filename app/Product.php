@@ -2,8 +2,8 @@
 namespace App;
 
 use App\Defaults;
-use App\Elastic\ElasticQuery;
-use App\Elastic\OdooConnect;
+use Ajency\Connections\ElasticQuery;
+use Ajency\Connections\OdooConnect;
 use App\Facet;
 use App\Jobs\CreateProductJobs;
 use App\Jobs\FetchProductImages;
