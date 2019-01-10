@@ -94,7 +94,7 @@ class ProductColor extends Model
     public static function productXMLData()
     {
         $productColors = self::get();
-        $xmlData       = array('title' => 'Online shopping for kids wear and fashion in India - KidSuperStore.in', 'description' => 'Kidsuperstore.in: Online shopping site for kids wear and fashion in India. Buy Shoes, Clothing, Dresses and Accessories for Boys, Girls, Toddlers, Juniors and Infants. Shipping | Cash on Delivery | 30 days return.', 'link' => url('/'));
+        $xmlData       = array('title' => 'Online Shopping For Kids Wear And Fashion In India - Kidsuperstore.in', 'description' => 'Kidsuperstore.in: Online Shopping Site For Kids Wear And Fashion In India. Buy Shoes, Clothing, Dresses And Accessories For Boys, Girls, Toddlers, Juniors And Infants. Shipping | Cash On Delivery | 30 Days Return.', 'link' => url('/'));
         $excludeArray  = ["title", "description", "link"];
         foreach ($productColors as $productColor) {
             try {
@@ -108,10 +108,11 @@ class ProductColor extends Model
 
             $params = [
                 'id'                => $productColorData['search_result_data']['product_id'] . "-" . $productColorData['search_result_data']['product_color_id'],
-                'title'             => $productColorData['search_result_data']['product_title'],
+                'title'             => ucwords(strtolower($productColorData['search_result_data']['product_title'])),
                 'color'             => $productColorData['search_result_data']['product_color_name'],
                 'gender'            => ($productColorData['search_result_data']['product_gender'] == 'Boys') ? 'male' : (($productColorData['search_result_data']['product_gender'] == 'Girls') ? 'female' : 'unisex'),
                 'identifier_exists' => 'no',
+                'condition'         => 'new',
                 'link'              => url('/') . "/" . $productColorData['search_result_data']['product_slug'] . "/buy",
                 'product_type'      => $productColorData['search_result_data']['product_category_type'] . ' > ' . $productColorData['search_result_data']['product_subtype'],
             ];
@@ -121,9 +122,13 @@ class ProductColor extends Model
             }
 
             if ($productColorData['search_result_data']['product_description'] != false) {
-                $params['description'] = $productColorData['search_result_data']['product_description'];
+                $params['description'] = ucwords(strtolower($productColorData['search_result_data']['product_description']));
             } else {
-                $params['description'] = $productColorData['search_result_data']['product_title'];
+                $params['description'] = ucwords(strtolower($productColorData['search_result_data']['product_title']));
+            }
+
+            if (strlen($params['description']) < 145) {
+                $params['description'] .= ' - Kidsuperstore.in Brings You The Latest Clothing And Accessories For Kids. We Ensure That All Of Our Products Are Genuine And Of The Highest Quality.';
             }
 
             if ($productColorData['search_result_data']['product_att_material'] != false) {
@@ -133,7 +138,7 @@ class ProductColor extends Model
             if ($productColorData['search_result_data']['product_image_available'] != false && $main_image != false) {
                 $params['image_link'] = $main_image;
             } else {
-                continue;   // Skip if image not available
+                continue; // Skip if image not available
             }
 
             if ($productColorData['search_result_data']['product_category_type'] == 'Apparels' || $productColorData['search_result_data']['product_category_type'] == 'Accessories') {
