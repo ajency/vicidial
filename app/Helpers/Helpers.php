@@ -1,7 +1,7 @@
 <?php
 
 use App\Defaults;
-use App\Elastic\OdooConnect;
+use Ajency\Connections\OdooConnect;
 use App\Jobs\FetchProductImages;
 use App\Location;
 use App\User;

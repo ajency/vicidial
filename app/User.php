@@ -3,7 +3,7 @@
 namespace App;
 
 use App\Cart;
-use App\Elastic\OdooConnect;
+use Ajency\Connections\OdooConnect;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;

@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Elastic\OdooConnect;
+use Ajency\Connections\OdooConnect;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -74,6 +74,27 @@ class Defaults extends Model
     public static function setLastProductSync()
     {
         $sync            = self::where('type', 'sync')->where('label', 'product')->first();
+        $sync->meta_data = ['time' => Carbon::now()->toDateTimeString()];
+        $sync->save();
+    }
+
+    public static function getLastCatalogDiscountSync()
+    {
+        $sync = self::where('type', 'sync')->where('label', 'product')->first();
+        if ($sync == null) {
+            $sync            = new self;
+            $sync->type      = 'sync';
+            $sync->label     = 'catalog_discount';
+            $sync->meta_data = ['time' => Carbon::now()->subDay()->startOfDay()->toDateTimeString()];
+            $sync->save();
+        }
+        return $sync->meta_data['time'];
+
+    }
+
+    public static function setLastCatalogDiscountSync()
+    {
+        $sync            = self::where('type', 'sync')->where('label', 'catalog_discount')->first();
         $sync->meta_data = ['time' => Carbon::now()->toDateTimeString()];
         $sync->save();
     }

@@ -3,8 +3,8 @@
 namespace App;
 
 use App\Defaults;
-use App\Elastic\ElasticQuery;
-use App\Elastic\OdooConnect;
+use Ajency\Connections\ElasticQuery;
+use Ajency\Connections\OdooConnect;
 use App\Jobs\CreateMoveJobs;
 use App\Jobs\UpdateVariantInventory;
 use App\Jobs\IndexAlternateMoves;
