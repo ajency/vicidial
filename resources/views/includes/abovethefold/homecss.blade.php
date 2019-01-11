@@ -3,5 +3,6 @@
 	@media(min-width: 992px){.stellarnav>ul>li>a:after{content: '\f107';margin-left: 10px;}}.home-slider button{visibility: hidden;}.home-slider .slick-prev, .home-slider .slick-next{visibility: visible;width: 45px;height: 45px;background-color: white;opacity: 0.4;color: transparent;border: none;outline: none;}.stellarnav ul ul, .stellarnav .close-menu, .stellarnav .dd-toggle, .stellarnav .menu-toggle{display: none;}.stellarnav>ul>li{display: inline-block;list-style: none;}
 	.megamenu .nav > li > div{opacity: 0;position: absolute;visibility: hidden;pointer-events: none;}.nav{display: flex;flex-wrap: wrap;padding-left: 0;margin-bottom: 0;list-style: none;}@media (min-width: 992px){.d-lg-block {display: block !important;}}.megamenu .nav > li > a{padding: 0 20px;line-height: 54px;font-weight: bold;}.megamenu{padding-left: 20px;}@media (max-width: 991px){.megamenu{position: fixed;width: 100vw;transform: translateX(-100vw);}}
 	.menu-toggle{color: white;font-size: 1.2rem;padding: 0.5rem 1rem 0.5rem 0;}
+	@media (max-width: 991px){.header-close-trigger {position: absolute;top: 0;left: 0;width: 100%;z-index: 9;}}
 
 </style>
