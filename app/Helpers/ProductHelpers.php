@@ -57,6 +57,26 @@ function createUrl($slugs)
     return $url;
 }
 
+function defaultVariant($variants){
+    $variants = collect($variants);
+    // max discount
+    $discount = $variants[0]["variant_sale_price"] - $variants[0]["variant_list_price"];
+    foreach ($variants as $variant) {
+        if ($discount > ($variant["variant_list_price"] - $variant["variant_sale_price"])) {
+            $discount = $variant["variant_list_price"] - $variant["variant_sale_price"];
+        }
+    }
+    $variants = $variants->filter(function ($variant, $key) use ($discount) {
+        return ($variant["variant_list_price"] - $variant["variant_sale_price"]) == $discount;
+    });
+    $min_sale_price = $variants->pluck('variant_sale_price')->min();
+    $variants = $variants->filter(function ($variant, $key) use ($min_sale_price) {
+        return $variant["variant_sale_price"]  == $min_sale_price;
+    });
+
+    return $variants->first()['variant_id'];
+
+}
 function formatItems($result, $params){
     $items = [];
     $response = ["results_found" => ($result["hits"]["total"] > 0)];
