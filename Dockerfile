@@ -1,11 +1,11 @@
 FROM ubuntu:18.04
 # Update packages and install composer and PHP dependencies.
-MAINTAINER Vilas Bhumare 
+MAINTAINER Vilas Bhumare
 
 RUN apt-get update && \
 	  DEBIAN_FRONTEND=noninteractive apt-get install -y \
 	  php-pear \
-          php7.2-curl \ 
+          php7.2-curl \
 	  php7.2-dev \
           php7.2-gd \
 	  php7.2-mbstring \
@@ -18,10 +18,10 @@ RUN apt-get update && \
 	  supervisor \
 	  unzip \
 	  php7.2-fpm
-	  
+
 # Nodejs and NPM installtion
-#RUN apt-get install -y nodejs npm
-#RUN update-alternatives --install /usr/bin/node node /usr/bin/nodejs 10
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
+RUN apt-get install -y nodejs
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -31,9 +31,10 @@ WORKDIR /var/www/html
 RUN touch storage/logs/laravel.log
 RUN chmod 777 storage/logs/laravel.log
 RUN composer config --global --auth github-oauth.github.com github_token
-RUN composer install 
-#RUN npm install
-#RUN npm run production
+RUN composer install
+RUN npm install
+RUN npm run production
+RUN gulp
 RUN chmod -R 777 /var/www/html/storage
 RUN echo "* * * * * cd /var/www/html && php /var/www/html/artisan schedule:run >> /dev/null 2>&1" > /etc/cron.d/artisan-schedule-run
 # Give execution rights on the cron job
