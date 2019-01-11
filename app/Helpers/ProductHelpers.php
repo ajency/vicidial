@@ -110,14 +110,7 @@ function formatItems($result, $params){
         $item['display_price'] = ["min" => $prices->min(), "max" => $prices->max()];
 
         // find default product by max sale price
-        $id         = $product["variants"][0]["variant_id"];
-        $sale_price = $product["variants"][0]["variant_sale_price"];
-        foreach ($product["variants"] as $variant) {
-            if ($sale_price > $variant["variant_sale_price"]) {
-                $id         = $variant["variant_id"];
-                $sale_price = $variant["variant_sale_price"];
-            }
-        }
+        $id = defaultVariant($product['variants']);
         foreach ($product["variants"] as $variant) {
             $item["variants"][] = [
                 "list_price" => $variant["variant_list_price"],
