@@ -87,11 +87,7 @@ function formatItems($result, $params){
         }
         // display price
         $prices = collect($product['variants'])->pluck('variant_sale_price')->unique();
-        if ($prices->count() == 1) {
-            $item['display_price'] = ["min" => $prices[0], "max" => $prices[0]];
-        } else {
-            $item['display_price'] = ["min" => $prices->min(), "max" => $prices->max()];
-        }
+        $item['display_price'] = ["min" => $prices->min(), "max" => $prices->max()];
 
         // find default product by max sale price
         $id         = $product["variants"][0]["variant_id"];
