@@ -60,9 +60,9 @@ function createUrl($slugs)
 function defaultVariant($variants){
     $variants = collect($variants);
     // max discount
-    $discount = $variants[0]["variant_sale_price"] - $variants[0]["variant_list_price"];
+    $discount = $variants[0]["variant_list_price"] - $variants[0]["variant_sale_price"] ;
     foreach ($variants as $variant) {
-        if ($discount > ($variant["variant_list_price"] - $variant["variant_sale_price"])) {
+        if ($discount < ($variant["variant_list_price"] - $variant["variant_sale_price"])) {
             $discount = $variant["variant_list_price"] - $variant["variant_sale_price"];
         }
     }
