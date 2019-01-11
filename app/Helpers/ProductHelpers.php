@@ -106,10 +106,23 @@ function formatItems($result, $params){
             }
         }
         // display price
-        $prices = collect($product['variants'])->pluck('variant_sale_price')->unique();
-        $item['display_price'] = ["min" => $prices->min(), "max" => $prices->max()];
+        $variants           = collect($product['variants']);
+        $prices             = $variants->pluck('variant_sale_price')->unique();
+        $item['sale_price'] = ["min" => $prices->min(), "max" => $prices->max()];
+        $list_price         = $variants->pluck('variant_list_price');
+        $item['mrp']        = ["min" => $list_price->min(), "max" => $list_price->max()];
+        $variants->transform(function ($item, $key) {
+            $item['variant_discount'] = $item['variant_list_price'] - $item['variant_sale_price'];
+            return $item;
+        });
+        $discounts             = $variants->pluck('variant_discount');
+        $item['discount']      = ["min" => $discounts->min(), "max" => $discounts->max()];
+        $item['display_price'] = $item['sale_price'];
 
-        // find default product by max sale price
+        $item['default_mrp']        = $item['mrp']['min'];
+        $item['default_sale_price'] = $item['sale_price']['min'];
+        $item['default_default']    = $item['discount']['max'];
+        
         $id = defaultVariant($product['variants']);
         foreach ($product["variants"] as $variant) {
             $item["variants"][] = [
