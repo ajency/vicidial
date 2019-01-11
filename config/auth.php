@@ -99,4 +99,8 @@ return [
         ],
     ],
 
+    'user_token' => [
+        'expire' => 15, //Days
+    ],
+
 ];

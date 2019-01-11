@@ -57,6 +57,13 @@ Route::group([
   'prefix'     => '/rest/'.$group_app_version,
 ], function () use ($group_app_version) {
 	Route::get('/product-details', $group_app_version.'\ProductController@singleProductAPI');
+	
+	Route::group([
+	  'prefix'     => '/authenticate',
+	], function () use ($group_app_version) {
+		Route::get('/login', $group_app_version.'\UserController@verifyOTP');
+		Route::get('/generate_otp', $group_app_version.'\UserController@sendSMS');
+	});
 });
 
 Route::middleware('auth:api')->get('/user', $app_version.'\HomeController@api');
