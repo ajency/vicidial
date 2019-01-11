@@ -20,6 +20,7 @@
 			>div {
 				position: absolute;
 				display: flex;
+				pointer-events: none; //fix for instant hover on wrapper
 				justify-content: space-between;
 				width: 100%;
 				top: 54px;
@@ -38,6 +39,8 @@
 					opacity: 1;
 					visibility: visible;
 					overflow: visible;
+					pointer-events: auto;
+					transition-delay: 0.3s;
 				}
 			}
 		}
