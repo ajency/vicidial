@@ -11,6 +11,69 @@
 @section('content')
 <div id="home-slider" class="home-slider">
     <div class="home-slide-item">
+      <a href="/shop?rf=price:0TO499">
+        <picture>
+           <source media="(orientation: landscape)"
+                  data-srcset="{{CDN::asset('/img/home-banner/makar_sankranti_jan_large.jpg') }} 2000w,
+                              {{CDN::asset('/img/home-banner/makar_sankranti_jan_medium.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/makar_sankranti_jan_small.jpg') }} 700w"
+                  sizes="100vw">
+
+           <source media="(orientation: portrait)"
+                  data-srcset="{{CDN::asset('/img/home-banner/makar_sankranti_jan_portrait_large.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/makar_sankranti_jan_portrait_medium.jpg') }} 700w,
+                              {{CDN::asset('/img/home-banner/makar_sankranti_jan_portrait_small.jpg') }} 400w"
+                  sizes="100vw">
+
+           <img src="{{CDN::asset('/img/home-banner/makar_sankranti_jan_20px.jpg') }}"
+               data-sizes="100vw"
+               class="img-fluid lazyload blur-up w-100" alt="Happy Makar Sankranti Flash Sale - Entire Store Under ₹499" title="Happy Makar Sankranti Flash Sale - Entire Store Under ₹499">
+        </picture>
+      </a>
+    </div>
+    <div class="home-slide-item">
+      <a href="/shop?rf=price:0TO499">
+        <picture>
+           <source media="(orientation: landscape)"
+                  data-srcset="{{CDN::asset('/img/home-banner/pongal_jan_large.jpg') }} 2000w,
+                              {{CDN::asset('/img/home-banner/pongal_jan_medium.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/pongal_jan_small.jpg') }} 700w"
+                  sizes="100vw">
+
+           <source media="(orientation: portrait)"
+                  data-srcset="{{CDN::asset('/img/home-banner/pongal_jan_portrait_large.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/pongal_jan_portrait_medium.jpg') }} 700w,
+                              {{CDN::asset('/img/home-banner/pongal_jan_portrait_small.jpg') }} 400w"
+                  sizes="100vw">
+
+           <img src="{{CDN::asset('/img/home-banner/pongal_jan_20px.jpg') }}"
+               data-sizes="100vw"
+               class="img-fluid lazyload blur-up w-100" alt="Happy Pongal Flash Sale - Entire Store Under " title="Happy Pongal Flash Sale - Entire Store Under ₹499">
+        </picture>
+      </a>
+    </div>
+    <div class="home-slide-item">
+      <a href="/shop?rf=price:0TO499">
+        <picture>
+           <source media="(orientation: landscape)"
+                  data-srcset="{{CDN::asset('/img/home-banner/lohri_jan_large.jpg') }} 2000w,
+                              {{CDN::asset('/img/home-banner/lohri_jan_medium.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/lohri_jan_small.jpg') }} 700w"
+                  sizes="100vw">
+
+           <source media="(orientation: portrait)"
+                  data-srcset="{{CDN::asset('/img/home-banner/lohri_jan_portrait_large.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/lohri_jan_portrait_medium.jpg') }} 700w,
+                              {{CDN::asset('/img/home-banner/lohri_jan_portrait_small.jpg') }} 400w"
+                  sizes="100vw">
+
+           <img src="{{CDN::asset('/img/home-banner/lohri_jan_20px.jpg') }}"
+               data-sizes="100vw"
+               class="img-fluid lazyload blur-up w-100" alt="Happy Lohri Flash Sale - Entire Store Under " title="Happy Lohri Flash Sale - Entire Store Under ₹499">
+        </picture>
+      </a>
+    </div>
+    <div class="home-slide-item">
       <a href="/shop">
         <picture>
            <source media="(orientation: landscape)"
@@ -27,11 +90,11 @@
 
            <img src="{{CDN::asset('/img/home-banner/banner1_jan_20px.jpg') }}"
                data-sizes="100vw"
-               class="img-fluid lazyload blur-up w-100" alt="Shop And Get Four Super Offers" title="Shop And Get Four Super Offers">
+               class="img-fluid lazyload blur-up w-100" alt="Upto 50% OFF" title="Upto 50% OFF">
         </picture>
       </a>
     </div>
-    <div class="home-slide-item">
+<!--     <div class="home-slide-item">
       <a href="/shop">
         <picture>
            <source media="(orientation: landscape)"
@@ -51,8 +114,8 @@
                class="img-fluid lazyload blur-up w-100" alt="Upto 50% OFF" title="Upto 50% OFF">
         </picture>
       </a>
-    </div>    
-    <div class="home-slide-item">
+    </div>  -->   
+<!--     <div class="home-slide-item">
       <a href="/shop">
         <picture>
            <source media="(orientation: landscape)"
@@ -72,7 +135,7 @@
                class="img-fluid lazyload blur-up w-100" alt="Free Gifts On The Purchase Of ₹3000 And Above" title="Free Gifts On The Purchase Of ₹3000 And Above">
         </picture>
       </a>
-    </div>
+    </div> -->
     <div class="home-slide-item">
       <a href="/shop">
         <picture>
@@ -221,15 +284,15 @@
   <div class="container">
     <div class="cat-container">
       <div class="cat-item cat-13">
-        <a href="/shop">
+        <a href="/shop?rf=price:0TO499">
           <img class="d-block w-100 img-fluid lazyload blur-up"
-              src="{{CDN::asset('/img/home-category/category_grid13_10px.jpg') }}"
-              data-srcset="{{CDN::asset('/img/home-category/category_grid13_large.jpg') }} 740w,
-                            {{CDN::asset('/img/home-category/category_grid13_medium.jpg') }} 370w,
-                            {{CDN::asset('/img/home-category/category_grid13_small.jpg') }} 248w"
+              src="{{CDN::asset('/img/home-category/makar_sankranti_category_10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/home-category/makar_sankranti_category_large.jpg') }} 740w,
+                            {{CDN::asset('/img/home-category/makar_sankranti_category_medium.jpg') }} 370w,
+                            {{CDN::asset('/img/home-category/makar_sankranti_category_small.jpg') }} 248w"
               data-sizes='(min-width: 1200px) 570px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 92vw,  31vw'
-              alt="New Year Super Sale - Flat 50% off"
-              title="New Year Super Sale - Flat 50% off" />
+              alt="Happy Makar Sankranti - Entire Store Under ₹499"
+              title="Happy Makar Sankranti - Entire Store Under ₹499" />
         </a>
       </div>
       <div class="cat-item cat-14">
@@ -273,8 +336,8 @@
       </div>
       <div class="cat-item cat-3">
         <a href="/shop?rf=price:0TO299">
-          <img class="img-fluid lazyload blur-up" src="{{CDN::asset('/img/home-category/category_grid3_10px.gif') }}"
-          data-srcset="{{CDN::asset('/img/home-category/category_grid3_large.gif') }}" alt="Shop under ₹299" title="Shop under ₹299" />
+          <img class="img-fluid lazyload blur-up" src="{{CDN::asset('/img/home-category/category_grid3_jan_10px.jpg') }}"
+          data-srcset="{{CDN::asset('/img/home-category/category_grid3_jan_large.gif') }}" alt="Shop under ₹299" title="Shop under ₹299" />
           <!-- <div class="shop-under-box d-flex align-items-center justify-content-center">
             <p class="m-0 shop-under-box__text text-uppercase">Shop Under</p>
           </div> -->
@@ -345,14 +408,14 @@
       <div class="cat-item cat-8 position-relative">
         <a href="/infant-utility">
          <img class="d-block w-100 img-fluid lazyload blur-up"
-              src="{{CDN::asset('/img/home-category/category_grid8_10px.jpg') }}"
-              data-srcset="{{CDN::asset('/img/home-category/category_grid8_large.jpg') }} 740w,
-                            {{CDN::asset('/img/home-category/category_grid8_medium.jpg') }} 370w,
-                            {{CDN::asset('/img/home-category/category_grid8_small.jpg') }} 246w"
+              src="{{CDN::asset('/img/home-category/category_grid8_jan_10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/home-category/category_grid8_jan_large.jpg') }} 740w,
+                            {{CDN::asset('/img/home-category/category_grid8_jan_medium.jpg') }} 370w,
+                            {{CDN::asset('/img/home-category/category_grid8_jan_small.jpg') }} 246w"
               data-sizes='(min-width: 1200px) 370px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 92vw,  31vw'
-              alt="The Cute Accessory Shop"
-              title="The Cute Accessory Shop"/>
-          <p class="custom-text text-acc text-uppercase">The cute <strong>accessory</strong> shop</p>
+              alt="Her Cute Accessory Shop"
+              title="Her Cute Accessory Shop"/>
+          <!-- <p class="custom-text text-acc text-uppercase">The cute <strong>accessory</strong> shop</p> -->
         </a>
       </div>
       <div class="cat-item cat-9 position-relative">
@@ -371,10 +434,10 @@
       <div class="cat-item cat-10 position-relative">
         <a href="/shoes">
           <img class="d-block w-100 img-fluid lazyload blur-up"
-              src="{{CDN::asset('/img/home-category/category_grid10_10px.jpg') }}"
-              data-srcset="{{CDN::asset('/img/home-category/category_grid10_large.jpg') }} 1535w,
-                            {{CDN::asset('/img/home-category/category_grid10_medium.jpg') }} 767w,
-                            {{CDN::asset('/img/home-category/category_grid10_small.jpg') }} 511w"
+              src="{{CDN::asset('/img/home-category/category_grid10_jan_10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/home-category/category_grid10_jan_large.jpg') }} 1535w,
+                            {{CDN::asset('/img/home-category/category_grid10_jan_medium.jpg') }} 767w,
+                            {{CDN::asset('/img/home-category/category_grid10_jan_small.jpg') }} 511w"
               data-sizes='(min-width: 1200px) 770px, (max-width: 992px) 92vw, 96vw'
               alt="Shoes"
               title="Shoes" />

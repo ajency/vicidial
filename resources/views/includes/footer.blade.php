@@ -8,11 +8,34 @@
                     <li><a href="/boys/" class="text-gray">Boys</a></li>
                     <li><a href="/girls/" class="text-gray">Girls</a></li>
                     <li><a href="/infant-0-2-years/" class="text-gray">Infants</a></li>
-                    <li><a href="/accessories/" class="text-gray">Accessories</a></li>
+                    <li><a href="/toys" class="text-gray">Toys</a></li>
+                    <li><a href="/stationery" class="text-gray">Stationery</a></li>
+                    <!-- <li><a href="/accessories/" class="text-gray">Accessories</a></li> -->
                   </ul>
               </div>
               <div class="mbr-footer-content col-12">
-                  <p class="font-weight-bold"><strong>Useful Links</strong></p>
+                  <p class="font-weight-bold"><strong>My Account</strong></p>
+                  <ul class="list-unstyled d-flex footer-link-separator">
+                    <li><a href="/#/account/my-orders" class="text-gray">My Orders</a></li>
+                    <li><a href="/#/account/my-profile" class="text-gray">My Profile</a></li>
+                    <li><a href="/#/account/my-addresses" class="text-gray">Saved Addresses</a></li>
+                  </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="mbr-footer-content col-md-4 mt-0 mt-sm-5 mt-md-0">
+<!--           <p class="font-weight-bold"><strong>Subscribe To Our Newsletter</strong></p>
+          <form class="">
+            <div class="form-group m-0 d-flex align-items-baseline newsletter">
+              <input type="email" class="form-control newsletter__input" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email address">
+              <button type="submit" class="btn btn-primary newsletter__btn">Submit</button>
+            </div>
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+          </form> -->
+           <div class="row">
+              <div class="mbr-footer-content col-12">
+                <p class="font-weight-bold"><strong>Useful Links</strong></p>
                   <ul class="list-unstyled d-flex flex-wrap footer-link-separator">
                       <li><a href="/about-us" class="text-gray">About Us</a></li>
                       <li><a href="/contact" class="text-gray">Contact Us</a></li>
@@ -25,29 +48,20 @@
                       <li><a href="/terms-and-conditions#shipping" class="text-gray">Shipping</a></li>
                       <li><a href="/terms-and-conditions#return" class="text-gray">Return 30 days</a></li>
                       <li><a href="http://ideas.kidsuperstore.in/" class="text-gray">Blog</a></li>
-                    </ul>
-                </div>
+                  </ul>
+              </div>
+              <div class="mbr-footer-content col-12">
+                <p class="font-weight-bold"><strong>Keep In Touch (Social Connect)</strong></p>
+                <ul class="list-inline d-flex align-items-center flex-wrap social-wrap">
+                  <li class="list-inline-item"><a href="https://www.facebook.com/kidsuperstore" class="text-dark d-flex align-items-center" target="_blank"><i class="fab fa-facebook-f socialIcon-size fb-color"></i><span class="social-title">Facebook</span></a></li>
+                  <!-- <li class="list-inline-item"><a href="#" class="text-gray"><h3><i class="fab fa-twitter"></i></h3></a></li>
+                  <li class="list-inline-item"><a href="#" class="text-gray"><h3><i class="fab fa-youtube"></i></h3></a></li> -->
+                  <li class="list-inline-item"><a href="https://www.instagram.com/kidsuperstore.in/" class="text-dark d-flex align-items-center" target="_blank"><i class="fab fa-instagram socialIcon-size instagram-color"></i><span class="social-title">Instagram</span></a></li>
+                  <!-- <li class="list-inline-item"><a href="#" class="text-gray"><h3><i class="fab fa-google-plus-g"></i></h3></a></li>
+                  <li class="list-inline-item"><a href="#" class="text-gray"><h3><i class="fab fa-pinterest-p"></i></h3></a></li> -->
+                </ul>
+              </div>
             </div>
-        </div>
-
-        <div class="mbr-footer-content col-md-4 mt-4 mt-sm-5 mt-md-0">
-<!--           <p class="font-weight-bold"><strong>Subscribe To Our Newsletter</strong></p>
-          <form class="">
-            <div class="form-group m-0 d-flex align-items-baseline newsletter">
-              <input type="email" class="form-control newsletter__input" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email address">
-              <button type="submit" class="btn btn-primary newsletter__btn">Submit</button>
-            </div>
-            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-          </form> -->
-          <p class="font-weight-bold"><strong>Keep In Touch (Social Connect)</strong></p>
-          <ul class="list-inline d-flex align-items-center flex-wrap social-wrap">
-            <li class="list-inline-item"><a href="https://www.facebook.com/kidsuperstore" class="text-dark d-flex align-items-center" target="_blank"><i class="fab fa-facebook-f socialIcon-size fb-color"></i><span class="social-title">Facebook</span></a></li>
-            <!-- <li class="list-inline-item"><a href="#" class="text-gray"><h3><i class="fab fa-twitter"></i></h3></a></li>
-            <li class="list-inline-item"><a href="#" class="text-gray"><h3><i class="fab fa-youtube"></i></h3></a></li> -->
-            <li class="list-inline-item"><a href="https://www.instagram.com/kidsuperstore.in/" class="text-dark d-flex align-items-center" target="_blank"><i class="fab fa-instagram socialIcon-size instagram-color"></i><span class="social-title">Instagram</span></a></li>
-            <!-- <li class="list-inline-item"><a href="#" class="text-gray"><h3><i class="fab fa-google-plus-g"></i></h3></a></li>
-            <li class="list-inline-item"><a href="#" class="text-gray"><h3><i class="fab fa-pinterest-p"></i></h3></a></li> -->
-          </ul>
         </div>
 
         <div class="mbr-footer-content col-md-4 bl-1 mt-4 mt-sm-5 mt-md-0">
@@ -86,7 +100,7 @@
           <p class="my-2"></p>
           <strong>Infants Clothings: </strong>  <a href="/apparels/infant-0-2-years/bottoms" class="text-dark">Bottoms </a> |  <a href="/apparels/infant-0-2-years/dress" class="text-dark"> Dress </a>  |   <a href="/apparels/infant-0-2-years/infant-utility" class="text-dark">Infant Utility</a>  |    <a href="/apparels/infant-0-2-years/jeans" class="text-dark">Jeans</a>  |   <a href="/apparels/infant-0-2-years/shirt" class="text-dark">Shirt</a>  |   <a href="/shoes/infant-0-2-years" class="text-dark">Shoes</a>  |   <a href="/apparels/infant-0-2-years/short" class="text-dark">Short</a>   |   <a href="/apparels/infant-0-2-years/tshirt" class="text-dark">Tshirt</a>   |   <a href="/apparels/infant-0-2-years/woven-tops" class="text-dark">Woven Tops</a>
            <p class="my-2"></p>
-          <strong>Kids Accessories: </strong>  <a href="/accessories/boys/miscellaneous" class="text-dark">Boys </a> |  <a href="/accessories/girls/miscellaneous" class="text-dark"> Girls</a>  |   <a href="/accessories/others/miscellaneous" class="text-dark">Others</a>
+          <!-- <strong>Kids Accessories: </strong>  <a href="/accessories/boys/miscellaneous" class="text-dark">Boys </a> |  <a href="/accessories/girls/miscellaneous" class="text-dark"> Girls</a>  |   <a href="/accessories/others/miscellaneous" class="text-dark">Others</a> -->
       </div>
    </div>
 
