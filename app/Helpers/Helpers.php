@@ -6,6 +6,8 @@ use App\Jobs\FetchProductImages;
 use App\Location;
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
+
 function valInteger($object, $values)
 {
     if (empty($object) || empty($values)) {
@@ -744,4 +746,14 @@ function isProductAttribute($attribute)
         return false;
     }
 
+}
+
+function defaultUserPassword(){
+    $key = config('app.key');
+
+    if (Str::startsWith($key, 'base64:')) {
+        $key = base64_decode(substr($key, 7));
+    }
+
+    return $key;
 }

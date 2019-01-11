@@ -84,6 +84,8 @@ class UserController extends Controller
                 'name' => '',
                 'phone' => $data['phone'],
                 'cart_id' => $cart->id,
+                'email' => $data['phone'],
+                'password' => bcrypt(defaultUserPassword()),
             ]);
 
             $cart->user_id = $UserObject->id;
@@ -154,7 +156,7 @@ class UserController extends Controller
 
         $user			= User::getUserByToken($request->header('Authorization'));
         $user->name		= $data['name'];
-        $user->email	= $data['email'];
+        $user->email_id	= $data['email'];
         $user->save();
 
         return response()->json(["message"=> "User info saved successfully", 'success'=> true]);

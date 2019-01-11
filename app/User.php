@@ -21,7 +21,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'phone', 'cart_id',
+        'name', 'phone', 'cart_id', 'email', 'password',
     ];
 
     protected $odooModel = "res.partner";
@@ -99,7 +99,7 @@ class User extends Authenticatable
             "customer"   => true,
             "name"       => $this->name,
             "phone"      => $this->phone,
-            "email"      => ($this->email) ? $this->email : "",
+            "email"      => ($this->email_id) ? $this->email_id : "",
             "type"       => "contact",
             "is_company" => false,
         ]], null)->first();
@@ -112,7 +112,7 @@ class User extends Authenticatable
             "customer"   => true,
             "name"       => $this->name,
             "phone"      => $this->phone,
-            "email"      => ($this->email) ? $this->email : "",
+            "email"      => ($this->email_id) ? $this->email_id : "",
             "type"       => "contact",
             "is_company" => false,
 
@@ -144,10 +144,10 @@ class User extends Authenticatable
 
     public function userInfo()
     {
-        if ($this->email == null) {
+        if ($this->email_id == null) {
             return null;
         } else {
-            return array('name' => $this->name, 'email' => $this->email);
+            return array('name' => $this->name, 'email' => $this->email_id);
         }
     }
 
