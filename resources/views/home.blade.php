@@ -73,7 +73,7 @@
         </picture>
       </a>
     </div>
-    <div class="home-slide-item">
+<!--     <div class="home-slide-item">
       <a href="/shop">
         <picture>
            <source media="(orientation: landscape)"
@@ -93,7 +93,7 @@
                class="img-fluid lazyload blur-up w-100" alt="Upto 50% OFF" title="Upto 50% OFF">
         </picture>
       </a>
-    </div>
+    </div> -->
 <!--     <div class="home-slide-item">
       <a href="/shop">
         <picture>
@@ -115,7 +115,7 @@
         </picture>
       </a>
     </div>  -->   
-<!--     <div class="home-slide-item">
+    <div class="home-slide-item">
       <a href="/shop">
         <picture>
            <source media="(orientation: landscape)"
@@ -135,7 +135,7 @@
                class="img-fluid lazyload blur-up w-100" alt="Free Gifts On The Purchase Of ₹3000 And Above" title="Free Gifts On The Purchase Of ₹3000 And Above">
         </picture>
       </a>
-    </div> -->
+    </div>
     <div class="home-slide-item">
       <a href="/shop">
         <picture>
