@@ -12,7 +12,7 @@
       <tr>
          <td style="text-align:center;padding-bottom:10px;">
             <a href="#" style="cursor: default;">
-              <img src="{{CDN::asset('/img/order-success-banner.jpg') }}" style="margin-bottom:0px;max-width:100%;height:auto;border:0" width="650" border="0" class="CToWUd">
+              <img src="{{CDN::asset('/img/Email-banner-full-size.jpg') }}" style="margin-bottom:0px;max-width:100%;height:auto;border:0" width="650" border="0" class="CToWUd">
             </a>
          </td>
       </tr>
