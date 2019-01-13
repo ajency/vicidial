@@ -27,7 +27,7 @@ Facet::select('facet_value',DB::raw('count(id) as "count",facet_name'))->whereIn
         }
         else
         {
-            $select=['id','type','element_data','element_data_draft', 'sequence','sequence_data_draft','published'];
+            $select=['id','type','element_data','sequence','published'];
         }
 
         if(!empty($data))
@@ -50,11 +50,9 @@ Facet::select('facet_value',DB::raw('count(id) as "count",facet_name'))->whereIn
         {
             $staticElement=self::select($select)->orderBy('sequence', 'ASC')->get();
         }
-       
-       
-        dd($staticElement);
-
-
+             
+        
+        //if id is set
         if(isset($data['id']))
         {
            $staticElementnew = $staticElement->first();
@@ -63,35 +61,31 @@ Facet::select('facet_value',DB::raw('count(id) as "count",facet_name'))->whereIn
                 "sequence"=>$staticElement[0]['sequence'],
                 "element_data"=>$staticElement[0]['element_data']
             ];
- 
+            
+        }//if
 
-        return(json_encode($response));
-        }
-       
-        
-
-        foreach($staticElement as $k=>$v)
-        {
-               //dd($v['id']);
-        
+        //if id is not set
+       else
+       {
+            $responseAll=array();
+            foreach($staticElement as $k=>$v)
+            {
                 $id=$v['id'];
                 $type=$v['type'];
                 $sequence=$v['sequence'];
                 $element_data=$v['element_data'];
 
-                $response=array(
-                    "type"=>$type,
-                   
-                    array("id"=>$id,
-                    "sequence"=>$sequence,
-                    "element_data"=>$element_data),
-                );
-         }//foreach
+                $staticElements=array("id"=>$id,
+                "sequence"=>$sequence,
+                "element_data"=>$element_data);
+                array_push($responseAll,$response);
+            }//foreach
             
-        // dd($response);
-
-            
-       return(json_encode($response));
+            $response=[$type=>$staticElements];
+            dd(json_encode($response));
+        }//else
+        
+        return(json_encode($response));
         
        
         
