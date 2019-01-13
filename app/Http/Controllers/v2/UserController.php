@@ -38,6 +38,32 @@ class UserController extends Controller
         return response()->json(isNotProd() ? array_merge($response, ['OTP' => $otp]) : $response);
     }
 
+    public function reSendSMS(Request $request)
+    {
+        $data      = $request->all();
+        $validator = $this->validateNumber($data);
+        if ($validator->fails()) {
+            return response()->json(["message" => $validator->errors()->first(), 'success' => false]);
+        }
+
+        $userLogin = UserLogin::where(['phone' => $data['phone']])->get()->first();
+        if ($userLogin == null) {
+            return response()->json(["message" => 'OTP not sent to this number. Please check the number.', 'success' => false]);
+        }
+
+        $otp_expiry            = Carbon::now()->addMinutes(config('otp.expiry'));
+        $userLogin->otp_expiry = $otp_expiry->toDateTimeString();
+        $userLogin->save();
+
+        sendSMS('send-otp', [
+            'to'      => '91' . $data['phone'],
+            'message' => $userLogin->otp . ' is the OTP to verify your number with KidSuperStore. It will expire in ' . config('otp.expiry') . ' minutes.',
+        ], true);
+
+        $response = ["message" => "OTP Sent successfully", 'success' => true];
+        return response()->json(isNotProd() ? array_merge($response, ['OTP' => $userLogin->otp]) : $response);
+    }
+
     public function verifyOTP(Request $request)
     {
         $data      = $request->all();
@@ -73,18 +99,18 @@ class UserController extends Controller
     public function fetchUserDetails($data)
     {
         $UserObject = $this->createAuthenticateUser($data);
-        if(isLocalSetup()) {
+        if (isLocalSetup()) {
             $tokenArr = $UserObject->createPersonalAccessToken();
         } else {
             $tokenArr = $UserObject->createPasswordGrantToken(defaultUserPassword());
         }
         $UserObject->api_token = fetchAccessToken($UserObject)->id;
         $UserObject->save();
-        
-        $id = $UserObject->cart_id;
-        $user = ["id"=> $UserObject->id, 'user_info'=> $UserObject->userDetails(), 'active_cart_id'=> $id];
-        
-        return response()->json(["message"=> 'user login successful', 'user'=> $user, 'token'=> $tokenArr['access_token'], 'token_expires_at'=> $tokenArr['expires_at'], 'success'=> true]);
+
+        $id   = $UserObject->cart_id;
+        $user = ["id" => $UserObject->id, 'user_info' => $UserObject->userDetails(), 'active_cart_id' => $id];
+
+        return response()->json(["message" => 'user login successful', 'user' => $user, 'token' => $tokenArr['access_token'], 'token_expires_at' => $tokenArr['expires_at'], 'success' => true]);
     }
 
     public function createAuthenticateUser($data)
@@ -93,21 +119,20 @@ class UserController extends Controller
 
         $UserObject = User::where('phone', '=', $data['phone'])->first();
 
-        if($UserObject) {
+        if ($UserObject) {
             $cart = $this->userCart($id, $UserObject);
-        }
-        else {
+        } else {
             $cart = ($id) ? Cart::find($id) : null;
-            if($cart == null || $cart->user_id != null) {
+            if ($cart == null || $cart->user_id != null) {
                 $cart = new Cart;
                 $cart->save();
             }
 
             $UserObject = User::create([
-                'name' => '',
-                'phone' => $data['phone'],
-                'cart_id' => $cart->id,
-                'email' => $data['phone'],
+                'name'     => '',
+                'phone'    => $data['phone'],
+                'cart_id'  => $cart->id,
+                'email'    => $data['phone'],
                 'password' => bcrypt(defaultUserPassword()),
             ]);
 
@@ -127,14 +152,13 @@ class UserController extends Controller
 
     public function userCart($id, $UserObject)
     {
-        $cart = null;
+        $cart         = null;
         $user_cart_id = $UserObject->cart_id;
-        if($id) {
+        if ($id) {
             $cart = Cart::find($id);
-            if($cart != null && $cart->user_id != null) {
+            if ($cart != null && $cart->user_id != null) {
                 $cart = null;
-            }
-            elseif($cart != null) {
+            } elseif ($cart != null) {
                 $cart->user_id = $UserObject->id;
                 $cart->save();
                 $UserObject->cart_id = $cart->id;
@@ -142,12 +166,11 @@ class UserController extends Controller
             }
         }
 
-        if($cart == null) {
+        if ($cart == null) {
             $cart = Cart::find($user_cart_id);
-        }
-        else {
+        } else {
             $cartcheck = Cart::find($user_cart_id);
-            if(count($cartcheck->cart_data) == 0) {
+            if (count($cartcheck->cart_data) == 0) {
                 $cartcheck->delete();
             }
         }
@@ -159,7 +182,7 @@ class UserController extends Controller
     {
         return $validator = Validator::make($data, [
             'phone' => 'required|digits:10',
-            'otp' => 'required|digits:'.config('otp.length'),
+            'otp'   => 'required|digits:' . config('otp.length'),
         ]);
     }
 
@@ -173,14 +196,14 @@ class UserController extends Controller
     public function saveUserDetails(Request $request)
     {
         $request->validate(['name' => 'required', 'email' => 'required|email']);
-        $data			= $request->all();
+        $data = $request->all();
 
-        $user			= $request->user();
-        $user->name		= $data['name'];
-        $user->email_id	= $data['email'];
+        $user           = $request->user();
+        $user->name     = $data['name'];
+        $user->email_id = $data['email'];
         $user->save();
 
-        return response()->json(["message"=> "User info saved successfully", 'success'=> true]);
+        return response()->json(["message" => "User info saved successfully", 'success' => true]);
     }
 
     public function fetchUserInfo(Request $request)
@@ -189,5 +212,18 @@ class UserController extends Controller
         $response['user_info'] = $user->userDetails();
 
         return response()->json($response);
+    }
+
+    public function refreshToken(Request $request)
+    {
+        $user = $request->user();
+
+        if (isLocalSetup()) {
+            $tokenArr = $user->createPersonalAccessToken();
+        } else {
+            $tokenArr = $user->createPasswordGrantToken(defaultUserPassword());
+        }
+
+        return response()->json(["message" => 'user token refreshed', 'token' => $tokenArr['access_token'], 'token_expires_at' => $tokenArr['expires_at'], 'success' => true]);
     }
 }

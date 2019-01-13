@@ -50,6 +50,7 @@ Route::group([
 	], function () use ($group_app_version) {
 		Route::get('/login', $group_app_version.'\UserController@verifyOTP');
 		Route::get('/generate_otp', $group_app_version.'\UserController@sendSMS');
+		Route::get('/resend_otp', $group_app_version.'\UserController@reSendSMS');
 	});
 });
 
