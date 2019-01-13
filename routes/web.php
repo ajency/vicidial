@@ -41,6 +41,18 @@ Route::group([
 	});
 });
 
+$group_app_version = 'v2'; 
+Route::group([
+  'prefix'     => '/rest/'.$group_app_version,
+], function () use ($group_app_version) {
+	Route::group([
+	  'prefix'     => '/authenticate',
+	], function () use ($group_app_version) {
+		Route::get('/login', $group_app_version.'\UserController@verifyOTP');
+		Route::get('/generate_otp', $group_app_version.'\UserController@sendSMS');
+	});
+});
+
 Route::get('/', $app_version.'\HomeController@index')->name('home');
 Route::get('/getWarehouseLevelInventory', $app_version."\ProductController@allInventory");
 Route::get('/contact-us', $app_version.'\StaticController@contact');

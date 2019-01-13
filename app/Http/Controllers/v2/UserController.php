@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers\v2;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Auth;
-use App\User;
-use Illuminate\Support\Facades\Hash;
-use Spatie\Permission\Models\Role;
-use Carbon\Carbon;
 use App\Cart;
+use App\Http\Controllers\Controller;
+use App\User;
+use App\UserLogin;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -22,11 +21,13 @@ class UserController extends Controller
             return response()->json(["message" => $validator->errors()->first(), 'success' => false]);
         }
 
-        $otp        = generateOTP();
-        $otp_expiry = Carbon::now()->addMinutes(config('otp.expiry'));
-        $request->session()->put('otp', $otp);
-        $request->session()->put('otp_expiry', $otp_expiry->timestamp);
-        $request->session()->put('phone', $data['phone']);
+        $otp                   = generateOTP();
+        $otp_expiry            = Carbon::now()->addMinutes(config('otp.expiry'));
+        $userLogin             = UserLogin::firstOrNew(['phone' => $data['phone']]);
+        $userLogin->otp        = $otp;
+        $userLogin->otp_expiry = $otp_expiry->timestamp;
+        $userLogin->attempts   = 0;
+        $userLogin->save();
 
         sendSMS('send-otp', [
             'to'      => '91' . $data['phone'],
@@ -45,20 +46,26 @@ class UserController extends Controller
             return response()->json(["message" => $validator->errors()->first(), 'success' => false]);
         }
 
-        $phone      = $request->session()->get('phone', false);
-        $otp        = $request->session()->get('otp', false);
-        $otp_expiry = $request->session()->get('otp_expiry', false);
-        if ($phone != $data['phone']) {
+        $userLogin = UserLogin::where(['phone' => $data['phone']])->get()->first();
+        if ($userLogin != null) {
+            return response()->json(["message" => 'OTP not sent to this number. Please check the number.', 'success' => false]);
+        }
+
+        if ($userLogin->otp_expiry < Carbon::now()->timestamp) {
+            return response()->json(["message" => 'The entered OTP is Expired. Please send OTP again.', 'success' => false]);
+        }
+
+        if ($userLogin->attempts >= config('otp.attempts')) {
+            return response()->json(["message" => 'You have exceeded the maximum number of attempts. Please send OTP again.', 'success' => false]);
+        }
+
+        if ($userLogin->otp != $data['otp']) {
+            $userLogin->attempts += 1;
+            $userLogin->save();
             return response()->json(["message" => 'The entered OTP is invalid. Please try again.', 'success' => false]);
         }
 
-        if ($otp != $data['otp']) {
-            return response()->json(["message" => 'The entered OTP is invalid. Please try again.', 'success' => false]);
-        }
-
-        if ($otp_expiry < Carbon::now()->timestamp) {
-            return response()->json(["message" => 'The entered OTP is Expired', 'success' => false]);
-        }
+        $userLogin->delete();
 
         return $this->fetchUserDetails($data);
     }
