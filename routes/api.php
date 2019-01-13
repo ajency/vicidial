@@ -59,7 +59,7 @@ Route::group([
 	Route::get('/product-details', $group_app_version.'\ProductController@singleProductAPI');
 
 	Route::group([
-	  'middleware' => ['auth:api'],
+	  'middleware' => ['auth:api-passport'],
 	  'prefix'     => '/authenticate',
 	], function () use ($group_app_version) {
 		Route::get('/refresh_token', $group_app_version.'\UserController@refreshToken');
