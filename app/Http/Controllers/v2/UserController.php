@@ -25,7 +25,7 @@ class UserController extends Controller
         $otp_expiry            = Carbon::now()->addMinutes(config('otp.expiry'));
         $userLogin             = UserLogin::firstOrNew(['phone' => $data['phone']]);
         $userLogin->otp        = $otp;
-        $userLogin->otp_expiry = $otp_expiry->timestamp;
+        $userLogin->otp_expiry = $otp_expiry->toDateTimeString();
         $userLogin->attempts   = 0;
         $userLogin->save();
 
@@ -47,11 +47,11 @@ class UserController extends Controller
         }
 
         $userLogin = UserLogin::where(['phone' => $data['phone']])->get()->first();
-        if ($userLogin != null) {
+        if ($userLogin == null) {
             return response()->json(["message" => 'OTP not sent to this number. Please check the number.', 'success' => false]);
         }
 
-        if ($userLogin->otp_expiry < Carbon::now()->timestamp) {
+        if ((new Carbon($userLogin->otp_expiry))->timestamp < Carbon::now()->timestamp) {
             return response()->json(["message" => 'The entered OTP is Expired. Please send OTP again.', 'success' => false]);
         }
 
@@ -73,14 +73,18 @@ class UserController extends Controller
     public function fetchUserDetails($data)
     {
         $UserObject = $this->createAuthenticateUser($data);
-        $token = $UserObject->createPasswordGrantToken($u->email, defaultUserPassword())['access_token'];
+        if(isLocalSetup()) {
+            $tokenArr = $UserObject->createPersonalAccessToken();
+        } else {
+            $tokenArr = $UserObject->createPasswordGrantToken(defaultUserPassword());
+        }
         $UserObject->api_token = fetchAccessToken($UserObject)->id;
         $UserObject->save();
         
         $id = $UserObject->cart_id;
         $user = ["id"=> $UserObject->id, 'user_info'=> $UserObject->userDetails(), 'active_cart_id'=> $id];
         
-        return response()->json(["message"=> 'user login successful', 'user'=> $user, 'token'=> $token, 'success'=> true]);
+        return response()->json(["message"=> 'user login successful', 'user'=> $user, 'token'=> $tokenArr['access_token'], 'token_expires_at'=> $tokenArr['expires_at'], 'success'=> true]);
     }
 
     public function createAuthenticateUser($data)

@@ -711,6 +711,14 @@ function isNotProd()
     return true;
 }
 
+function isLocalSetup()
+{
+    if (config('app.env') == 'local') {
+        return true;
+    }
+    return false;
+}
+
 function updateProductsWithMetaTags()
 {
     $odoo   = new OdooConnect;
