@@ -146,14 +146,25 @@ export class BagViewComponent implements OnInit {
       this.isCartTypeFailure = true;
     }
     this.fetchCartFailed = false;  
-    this.zone.run(() => {}); 
-    google_pixel_cart();
+    console.log(this.test(response));
+    let result = this.test(response); 
+    google_pixel_cart(result.variant_ids, result.total_values);
+    this.zone.run(() => {});    
   }
 
-test(response){
-  google_pixel_cart();
-  
-}
+  test(response){
+    let variant_ids = [], total_values = [];
+    response.items.forEach((item)=>{
+      variant_ids.push(item.id);
+      total_values.push(item.attributes.price_final);
+    })
+    console.log("check ==>", variant_ids, total_values);
+    let result = {
+      variant_ids : variant_ids.join(),
+      total_values : total_values.join()
+    }
+    return result;  
+  }
 
   checkAddToCartStatus(){
     if(add_to_cart_failed){
