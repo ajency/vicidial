@@ -314,6 +314,8 @@ var google_id = 123;
 
 
 function google_pixel_cart(variant_id,price_final){
+    console.log("google_pixel_cart =>", variant_id,price_final);
+    console.log("user_id ==>", getCookie('user_id'));
       gtag('event', 'page_view', {
         'send_to': google_id,
         'ecomm_pagetype': 'cart',

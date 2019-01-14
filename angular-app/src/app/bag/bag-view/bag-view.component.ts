@@ -158,7 +158,7 @@ export class BagViewComponent implements OnInit {
       variant_ids.push(item.id);
       total_values.push(item.attributes.price_final);
     })
-    console.log("check ==>", variant_ids, total_values);
+    // console.log("check ==>", variant_ids, total_values);
     let result = {
       variant_ids : variant_ids.join(),
       total_values : total_values.join()
