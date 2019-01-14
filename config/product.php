@@ -415,9 +415,9 @@ return [
         ],
     ],
     'discount_filter'                => [
-        ["min" => 0,  "max" => 30, "display_name" => "0% to 30%",  "sequence" => 1, 'facet_value' => "0TO30"],
-        ["min" => 30, "max" => 60, "display_name" => "30% to 60%", "sequence" => 2, 'facet_value' => "30TO60"],
-        ["min" => 60, "max" => 100,"display_name" => "60% to 100%","sequence" => 3, 'facet_value' => "60TO100"],
+        ["min" => 0,  "max" => 30, "display_name" => "Upto 30%",  "sequence" => 1],
+        ["min" => 30, "max" => 60, "display_name" => "30% to 60%", "sequence" => 2],
+        ["min" => 60, "max" => 100,"display_name" => "60% to 100%","sequence" => 3],
     ],
     'breadcrumb_order'               => [
         'product_category_type',
