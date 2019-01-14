@@ -310,15 +310,13 @@ function fbTrackAddPaymentInfo(){
     fbq('track', 'AddPaymentInfo');
 }
 
-var google_id = 123;
 
-
-function google_pixel_cart(variant_id,price_final){
+function google_pixel_tracking(variant_id,price_final,pagetype){
     console.log("google_pixel_cart =>", variant_id,price_final);
     console.log("user_id ==>", getCookie('user_id'));
       gtag('event', 'page_view', {
-        'send_to': google_id,
-        'ecomm_pagetype': 'cart',
+        'send_to': google_pixel_id,
+        'ecomm_pagetype': pagetype,
         'ecomm_prodid': variant_id,
         'ecomm_totalvalue': price_final,
         'user_id': 'pass_user_id'

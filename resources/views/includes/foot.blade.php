@@ -3,6 +3,7 @@
 	<link rel="stylesheet" type="text/css" href="{{CDN::mix('/css/kss.css') }}">
 </noscript>
 <script>
+  var google_pixel_id = "{{config('analytics.google_pixel_id')}}";
   var loadDeferredStyles = function() {
     var addStylesNode = document.getElementById("deferred-styles");
     var replacement = document.createElement("div");
@@ -55,6 +56,25 @@
   gtag('js', new Date());
 
   gtag('config', "{{config('analytics.google_id')}}");
+</script>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id={{config('analytics.google_pixel_id')}}"></script>
+
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', "{{config('analytics.google_pixel_id')}}");
+</script>
+
+<script>
+  gtag('event', 'conversion', {
+      'send_to': "{{config('analytics.google_pixel_id')}}/2OLaCNSGioUBEK24rP0C",
+      'value': 1.0,
+      'currency': 'INR',
+      'transaction_id': ''
+  });
 </script>
 
 <!-- Hotjar Tracking Code -->
