@@ -21,6 +21,7 @@ class CreateStaticElementsTable extends Migration
             $table->integer('sequence');
             $table->integer('sequence_data_draft');
             $table->boolean('published')->default(1);
+            $table->boolean('display')->default(1);
             $table->timestamps();
         });
     }

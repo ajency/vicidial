@@ -107,5 +107,10 @@ Route::group([
 	Route::get('/district-state/{pincode}', $group_app_version.'\AddressController@fetchPincode');
 });
 
+//routes to staticElements
+Route::get('/rest/v2/get-page-element','v2\StaticElementController@callFetch');
+
+
+
 Route::middleware('auth:api')->get('/user', $app_version.'\HomeController@api');
 
