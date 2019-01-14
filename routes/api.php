@@ -73,6 +73,8 @@ Route::group([
 				Route::get('/{id}/change-promotion', $group_app_version.'\CartController@userCartPromotion');
 				Route::get('/mine', $group_app_version.'\CartController@getCartID');
 				Route::get('/start-fresh', $group_app_version.'\CartController@startFresh');
+				Route::post('/{id}/create-order', $group_app_version.'\OrderController@userCreateOrder');
+				Route::post('/{id}/continue-order', $group_app_version.'\OrderController@continueOrder');
 			});
 			Route::group([
 			  'prefix'     => '/address',
@@ -89,6 +91,9 @@ Route::group([
 		], function () use ($group_app_version) {
 			Route::get('/refresh_token', $group_app_version.'\UserController@refreshToken');
 		});
+
+		Route::get('/order/{id}/check-inventory', $group_app_version.'\OrderController@checkSubOrderInventory');
+		Route::post('/orders', $group_app_version.'\OrderController@listOrders');
 	});
 
 	Route::get('/product-details', $group_app_version.'\ProductController@singleProductAPI');
