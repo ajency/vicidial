@@ -55,8 +55,8 @@ Route::group([
 			Route::post('/insert', $group_app_version.'\CartController@guestAddItem');
 			Route::get('/get', $group_app_version.'\CartController@guestCartFetch');
 			Route::get('/delete', $group_app_version.'\CartController@guestCartDelete');
-			Route::get('/check-status', $group_app_version.'\CartController@checkStatus');
 			Route::get('/changePromotion', $group_app_version.'\CartController@guestCartPromotion');
+			Route::get('/check-status', $group_app_version.'\CartController@checkStatus');
 		});
 	});
 	Route::group([

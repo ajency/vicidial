@@ -23,10 +23,8 @@ function valInteger($object, $values)
     return true;
 }
 
-function checkUserCart($token, $cart)
+function checkUserCart($user, $cart)
 {
-    $token = explode('Bearer ', $token)[1];
-    $user  = User::where('api_token', $token)->first();
     if ($user->id != $cart->user_id) {
         abort(403);
     }

@@ -56,14 +56,33 @@ $group_app_version = 'v2';
 Route::group([
   'prefix'     => '/rest/'.$group_app_version,
 ], function () use ($group_app_version) {
-	Route::get('/product-details', $group_app_version.'\ProductController@singleProductAPI');
-
 	Route::group([
 	  'middleware' => ['auth:api-passport'],
-	  'prefix'     => '/authenticate',
 	], function () use ($group_app_version) {
-		Route::get('/refresh_token', $group_app_version.'\UserController@refreshToken');
+		Route::group([
+		  'prefix'     => '/user',
+		], function () use ($group_app_version) {
+			Route::group([
+			  'prefix'     => '/cart',
+			], function () use ($group_app_version) {
+				Route::post('/{id}/count', $group_app_version.'\CartController@userGetCount');
+				Route::post('/{id}/insert', $group_app_version.'\CartController@userAddItem');
+				Route::get('/{id}/get', $group_app_version.'\CartController@userCartFetch');
+				Route::get('/{id}/delete', $group_app_version.'\CartController@userCartDelete');
+				Route::get('/{id}/change-promotion', $group_app_version.'\CartController@userCartPromotion');
+				Route::get('/mine', $group_app_version.'\CartController@getCartID');
+				Route::get('/start-fresh', $group_app_version.'\CartController@startFresh');
+			});
+		});
+
+		Route::group([
+		  'prefix'     => '/authenticate',
+		], function () use ($group_app_version) {
+			Route::get('/refresh_token', $group_app_version.'\UserController@refreshToken');
+		});
 	});
+
+	Route::get('/product-details', $group_app_version.'\ProductController@singleProductAPI');
 });
 
 Route::middleware('auth:api')->get('/user', $app_version.'\HomeController@api');
