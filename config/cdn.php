@@ -191,7 +191,7 @@ return [
                 | Add metadata to each S3 file
                 |
                 */
-                'metadata' => ['content-encoding'  :  'gzip'],
+                'metadata' => ['Content-Encoding' => 'gzip'],
 
                 /*
                 |--------------------------------------------------------------------------
