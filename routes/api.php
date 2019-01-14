@@ -84,6 +84,7 @@ Route::group([
 	});
 
 	Route::get('/product-details', $group_app_version.'\ProductController@singleProductAPI');
+	Route::get('/states/all', $group_app_version.'\AddressController@fetchStates');
 });
 
 Route::middleware('auth:api')->get('/user', $app_version.'\HomeController@api');
