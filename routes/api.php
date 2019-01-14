@@ -74,6 +74,14 @@ Route::group([
 				Route::get('/mine', $group_app_version.'\CartController@getCartID');
 				Route::get('/start-fresh', $group_app_version.'\CartController@startFresh');
 			});
+			Route::group([
+			  'prefix'     => '/address',
+			], function () use ($group_app_version) {
+				Route::post('/new', $group_app_version.'\AddressController@userAddAddress');
+				Route::post('/edit', $group_app_version.'\AddressController@userEditAddress');
+				Route::get('/all', $group_app_version.'\AddressController@userFetchAddresses');
+				Route::get('/delete', $group_app_version.'\AddressController@userDeleteAddress');
+			});
 		});
 
 		Route::group([
