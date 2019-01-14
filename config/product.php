@@ -429,14 +429,17 @@ return [
     "similar_products_display_limit" => 5,
     "price_filter_bucket_range"      => ["min" => 0, "max" => 7000],
     "sort"                           => [
-        'price_asc'  => ['field' => 'number_sort.variant_sale_price', "order" => 'asc'],
-        'price_desc' => ['field' => 'number_sort.variant_sale_price', "order" => 'desc'],
+        'price_asc'     => ['field' => 'number_sort.variant_sale_price', "order" => 'asc'],
+        'price_desc'    => ['field' => 'number_sort.variant_sale_price', "order" => 'desc'],
+        'discount_asc'  => ['field' => 'number_sort.variant_discount_percent', "order" => 'asc'],
+        'discount_desc' => ['field' => 'number_sort.variant_discount_percent', "order" => 'desc'],
     ],
     "sort_on"                        => [
         ["name" => "Recommended", "value" => "", "is_selected" => true],
         ["name" => "Price Low to High", "value" => "price_asc", "is_selected" => false],
         ["name" => "Price High to Low", "value" => "price_desc", "is_selected" => false],
-
+        ["name" => "Discount High to Low", "value" => "discount_desc", "is_selected" => false],
+        ["name" => "Discount Low to High", "value" => "discount_asc", "is_selected" => false],
     ],
     "show_list_search" => true
 ];
