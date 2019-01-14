@@ -115,7 +115,7 @@ function formatItems($result, $params){
 
         $item['default_mrp']        = $item['mrp']['min'];
         $item['default_sale_price'] = $item['sale_price']['min'];
-        $item['default_default']    = $item['discount']['max'];
+        $item['default_discount']    = $item['discount']['max'];
         
         $id = defaultVariant($product['variants']);
         foreach ($product["variants"] as $variant) {
