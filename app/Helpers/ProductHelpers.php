@@ -59,20 +59,14 @@ function createUrl($slugs)
 
 function defaultVariant($variants){
     $variants = collect($variants);
-    // max discount
-    $discount = $variants[0]["variant_list_price"] - $variants[0]["variant_sale_price"] ;
-    foreach ($variants as $variant) {
-        if ($discount < ($variant["variant_list_price"] - $variant["variant_sale_price"])) {
-            $discount = $variant["variant_list_price"] - $variant["variant_sale_price"];
-        }
-    }
-    $variants = $variants->filter(function ($variant, $key) use ($discount) {
-        return ($variant["variant_list_price"] - $variant["variant_sale_price"]) == $discount;
-    });
+    $variants->transform(function ($item, $key) {
+            $item['variant_discount'] = $item['variant_list_price'] - $item['variant_sale_price'];
+            return $item;
+        });
+    $max_discount = $variants->pluck('variant_discount')->max();
+    $variants = $variants->where('variant_discount', $max_discount);
     $min_sale_price = $variants->pluck('variant_sale_price')->min();
-    $variants = $variants->filter(function ($variant, $key) use ($min_sale_price) {
-        return $variant["variant_sale_price"]  == $min_sale_price;
-    });
+    $variants = $variants = $variants->where('variant_sale_price', $min_sale_price);
 
     return $variants->first()['variant_id'];
 
