@@ -59,7 +59,7 @@
 				        		@{{else}}
 				        			₹@{{../display_price.min}} - ₹@{{../display_price.max}}
 				        		@{{/ifEquals}}</div>
-				        		<small class="kss-original-price text-muted">₹@{{list_price}}</small><span class="kss-discount text-danger">@{{discount_per}}% OFF</span></div>
+				        		<small class="kss-original-price text-muted">₹@{{list_price}}</small><span class="kss-discount text-danger">@{{discount_per}}% OFF</span>
 				        	@{{/ifEquals}}
 			        	@{{/ifEquals}}
 		        	</div>
