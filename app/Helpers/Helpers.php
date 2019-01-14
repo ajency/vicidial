@@ -756,12 +756,15 @@ function isProductAttribute($attribute)
 
 }
 
-function defaultUserPassword(){
+function defaultUserPassword($append)
+{
     $key = config('app.key');
 
     if (Str::startsWith($key, 'base64:')) {
         $key = base64_decode(substr($key, 7));
     }
+
+    $key .= $append;
 
     return $key;
 }

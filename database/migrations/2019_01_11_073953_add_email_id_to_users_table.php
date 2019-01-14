@@ -19,7 +19,9 @@ class AddEmailIdToUsersTable extends Migration
 
         DB::table('users')->update(['email_id' => DB::raw("email")]);
         DB::table('users')->update(['email' => DB::raw("phone")]);
-        DB::table('users')->update(['password' => bcrypt(defaultUserPassword())]);
+        foreach (DB::table('users')->get() as $user) {
+            DB::table('users')->where('id', '=', $user->id)->update(['password' => bcrypt(defaultUserPassword($user->phone))]);
+        }
 
         Schema::table('users', function (Blueprint $table) {
             $table->string('email')->nullable(false)->change();

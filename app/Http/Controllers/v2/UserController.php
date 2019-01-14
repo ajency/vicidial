@@ -102,7 +102,7 @@ class UserController extends Controller
         if (isLocalSetup()) {
             $tokenArr = $UserObject->createPersonalAccessToken();
         } else {
-            $tokenArr = $UserObject->createPasswordGrantToken(defaultUserPassword());
+            $tokenArr = $UserObject->createPasswordGrantToken(defaultUserPassword($UserObject->phone));
         }
         $UserObject->api_token = fetchAccessToken($UserObject)->id;
         $UserObject->save();
@@ -133,7 +133,7 @@ class UserController extends Controller
                 'phone'    => $data['phone'],
                 'cart_id'  => $cart->id,
                 'email'    => $data['phone'],
-                'password' => bcrypt(defaultUserPassword()),
+                'password' => bcrypt(defaultUserPassword($data['phone'])),
             ]);
 
             $cart->user_id = $UserObject->id;
@@ -221,7 +221,7 @@ class UserController extends Controller
         if (isLocalSetup()) {
             $tokenArr = $user->createPersonalAccessToken();
         } else {
-            $tokenArr = $user->createPasswordGrantToken(defaultUserPassword());
+            $tokenArr = $user->createPasswordGrantToken(defaultUserPassword($user->phone));
         }
 
         return response()->json(["message" => 'user token refreshed', 'token' => $tokenArr['access_token'], 'token_expires_at' => $tokenArr['expires_at'], 'success' => true]);

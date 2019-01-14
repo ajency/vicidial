@@ -85,7 +85,7 @@ class UserController extends Controller
                 'phone' => $data['phone'],
                 'cart_id' => $cart->id,
                 'email' => $data['phone'],
-                'password' => bcrypt(defaultUserPassword()),
+                'password' => bcrypt(defaultUserPassword($data['phone'])),
             ]);
 
             $cart->user_id = $UserObject->id;
