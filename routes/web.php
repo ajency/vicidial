@@ -46,6 +46,20 @@ Route::group([
   'prefix'     => '/rest/'.$group_app_version,
 ], function () use ($group_app_version) {
 	Route::group([
+	  'prefix'     => '/anonymous',
+	], function () use ($group_app_version) {
+		Route::group([
+		  'prefix'     => '/cart',
+		], function () use ($group_app_version) {
+			Route::get('/count', $group_app_version.'\CartController@guestGetCount');
+			Route::post('/insert', $group_app_version.'\CartController@guestAddItem');
+			Route::get('/get', $group_app_version.'\CartController@guestCartFetch');
+			Route::get('/delete', $group_app_version.'\CartController@guestCartDelete');
+			Route::get('/check-status', $group_app_version.'\CartController@checkStatus');
+			Route::get('/changePromotion', $group_app_version.'\CartController@guestCartPromotion');
+		});
+	});
+	Route::group([
 	  'prefix'     => '/authenticate',
 	], function () use ($group_app_version) {
 		Route::get('/login', $group_app_version.'\UserController@verifyOTP');
