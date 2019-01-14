@@ -309,3 +309,16 @@ function fbTrackInitiateCheckout(order_total){
 function fbTrackAddPaymentInfo(){
     fbq('track', 'AddPaymentInfo');
 }
+
+var google_id = 123;
+
+
+function google_pixel_cart(variant_id,price_final){
+      gtag('event', 'page_view', {
+        'send_to': google_id,
+        'ecomm_pagetype': 'cart',
+        'ecomm_prodid': variant_id,
+        'ecomm_totalvalue': price_final,
+        'user_id': 'pass_user_id'
+      });
+  }

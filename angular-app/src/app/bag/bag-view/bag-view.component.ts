@@ -16,6 +16,7 @@ declare var add_to_cart_failure_message: any;
 declare var add_to_cart_clicked: any;
 declare var add_to_cart_completed: any;
 declare var fbTrackInitiateCheckout : any;
+declare var google_pixel_cart : any;
 // declare var fbTrackuserRegistration : any;
 
 @Component({
@@ -146,7 +147,13 @@ export class BagViewComponent implements OnInit {
     }
     this.fetchCartFailed = false;  
     this.zone.run(() => {}); 
+    google_pixel_cart();
   }
+
+test(response){
+  google_pixel_cart();
+  
+}
 
   checkAddToCartStatus(){
     if(add_to_cart_failed){

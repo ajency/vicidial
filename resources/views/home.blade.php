@@ -1180,3 +1180,16 @@
 
 
 @stop
+
+@section('footjs')
+<!-- <script>
+  gtag('event', 'page_view', {
+    'send_to': 'AW-770209976',
+    'ecomm_pagetype': 'home',
+    'ecomm_prodid': '',
+    'ecomm_totalvalue': '',
+    'user_id': 'pass_user_id'
+  });
+</script> -->
+
+@stop
