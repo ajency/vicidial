@@ -25,6 +25,14 @@
       $timings = "Monday to Sunday 11AM to 9PM";
       $phone = "9959159192";
       $email = "2007@omniedgeretail.com";
+  } else if (\Request::is('stores/jaipur')){
+      $name = "Triton Mall, Jaipur";
+      $location = "Triton Mall, Jhotwara Rd, Jaipur";
+      $address = "Triton Mall, Plot No 1/1, Near Chomu Pulia Circle, Jhotwara Rd, Jaipur";
+      $manager = "Shashi";
+      $timings = "Monday to Sunday 11AM to 9PM";
+      $phone = "9959159192";
+      $email = "2007@omniedgeretail.com";
   }
 @endphp
 
@@ -289,6 +297,23 @@
             </li>
           </ul>
         @endif
+
+        @if (\Request::is('stores/jaipur'))
+          <div class="store-offer text-center mb-3">
+            <h2 class="store-offer__title font-weight-bold text-uppercase">Launch Offers</h2>
+            <p class="store-offer__desc h5 text-gray line-height-5">When you visit the store.</p>
+          </div>
+          <div>
+             <img class="card-img-top lazyload blur-up"
+                  src="{{CDN::asset('/img/stores/coimbatore/coimbatore1-10px.jpg') }}"
+                  data-srcset="{{CDN::asset('/img/stores/coimbatore/coimbatore1-large.jpg') }} 1200w,
+                               {{CDN::asset('/img/stores/coimbatore/coimbatore1-medium.jpg') }} 770w,
+                               {{CDN::asset('/img/stores/coimbatore/coimbatore1-small.jpg') }} 480w"
+                  data-sizes='(min-width: 1200px) 770px, (min-width: 768px) 62vw,  94vw'
+                  title="R.S. Puram, Coimbatore"
+                  alt="R.S. Puram, Coimbatore"/>
+          </div>
+        @endif
       </div>
       <div class="col-12 col-md-4">
         <h4 class="font-weight-bold mb-2">Location</h4>
@@ -303,7 +328,11 @@
         @if (\Request::is('stores/coimbatore'))
           <a href="https://www.google.com/maps/search/?api=1&query=11.00742,76.95087" target="_blank" class="btn btn-primary my-2">View on Google Maps</a>
         @endif
-
+        @if (\Request::is('stores/jaipur'))
+          <a href="https://www.google.com/maps/search/?api=1&query=26.941362,75.771318" target="_blank" class="btn btn-primary my-2">View on Google Maps</a>
+        @endif
+        
+        @if (!\Request::is('stores/jaipur'))
         <h4 class="font-weight-bold mt-5 mb-2">Store Manager</h4>
         <div class="h5 text-gray line-height-5">{{$manager}}</div>
 
@@ -313,6 +342,7 @@
         <h4 class="font-weight-bold mt-5 mb-2">Contact</h4>
         <div class="h5 text-gray line-height-5">Phone: {{$phone}}</div>
         <div class="h5 text-gray line-height-5">Email: {{$email}}</div>
+        @endif
       </div>
    </div>
 </div>
@@ -377,5 +407,82 @@
 
   </div>
 </div>
+
+@if (\Request::is('stores/jaipur'))
+
+<div class="container-fluid mt-5 py-5" style="margin-top: 100px;">
+  <h2 class="font-weight-bold pt-2 pb-5 text-center">Four Super Offers</h2>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-4"> 
+        <a href="/"> 
+        <img class="img-fluid"
+            src="{{CDN::asset('/img/kss_why.png') }}"
+            title="Why KSS"
+            alt="Why KSS"/>
+
+
+        <!-- <img class="card-img-top lazyload blur-up"
+                  src="{{CDN::asset('/img/stores/coimbatore/coimbatore1-10px.jpg') }}"
+                  data-srcset="{{CDN::asset('/img/stores/coimbatore/coimbatore1-large.jpg') }} 760w,
+                               {{CDN::asset('/img/stores/coimbatore/coimbatore1-medium.jpg') }} 508w,
+                               {{CDN::asset('/img/stores/coimbatore/coimbatore1-small.jpg') }} 254w"
+                  data-sizes='(min-width: 1200px) 370px, (min-width: 768px) 28vw,  84vw'
+                  title="R.S. Puram, Coimbatore"
+                  alt="R.S. Puram, Coimbatore"/> -->
+        </a>
+
+      </div>
+      <div class="col-sm-4">  
+        <a href="/"> 
+          <img class="img-fluid"
+              src="{{CDN::asset('/img/kss_why.png') }}"
+              title="Why KSS"
+              alt="Why KSS"/>
+        </a>
+      </div>
+      <div class="col-sm-4">
+        <a href="/">   
+          <img class="img-fluid"
+            src="{{CDN::asset('/img/kss_why.png') }}"
+            title="Why KSS"
+            alt="Why KSS"/>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid mt-5 py-5" style="background-color: #f6f6f6;margin-bottom: -50px;">
+  <div class="container" >
+    <div class="row">
+      <div class="col-sm-12">
+        <div>
+            <a href="/shop?rf=price:0TO499">
+              <picture>
+                 <source media="(orientation: landscape)"
+                        data-srcset="{{CDN::asset('/img/home-banner/makar_sankranti_jan_large.jpg') }} 2000w,
+                                    {{CDN::asset('/img/home-banner/makar_sankranti_jan_medium.jpg') }} 1200w,
+                                    {{CDN::asset('/img/home-banner/makar_sankranti_jan_small.jpg') }} 700w"
+                        sizes="100vw">
+
+                 <source media="(orientation: portrait)"
+                        data-srcset="{{CDN::asset('/img/home-banner/makar_sankranti_jan_portrait_large.jpg') }} 1200w,
+                                    {{CDN::asset('/img/home-banner/makar_sankranti_jan_portrait_medium.jpg') }} 700w,
+                                    {{CDN::asset('/img/home-banner/makar_sankranti_jan_portrait_small.jpg') }} 400w"
+                        sizes="100vw">
+
+                 <img src="{{CDN::asset('/img/home-banner/makar_sankranti_jan_20px.jpg') }}"
+                     data-sizes="100vw"
+                     class="img-fluid lazyload blur-up w-100" alt="Happy Makar Sankranti Flash Sale - Entire Store Under ₹499" title="Happy Makar Sankranti Flash Sale - Entire Store Under ₹499">
+              </picture>
+            </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+@endif
 
 @stop

@@ -53,6 +53,7 @@ Route::get('/stores', $app_version.'\StaticController@stores');
 Route::get('/stores/surat', $app_version.'\StaticController@singlestore');
 Route::get('/stores/hyderabad', $app_version.'\StaticController@singlestore');
 Route::get('/stores/coimbatore', $app_version.'\StaticController@singlestore');
+Route::get('/stores/jaipur', $app_version.'\StaticController@singlestore');
 Route::get('/products/xml', $app_version.'\StaticController@productXML');
 Route::get('/test/productlist', $app_version.'\ProductListTestController@index')->name('productListTest');
 Route::get('/shop', $app_version.'\ListingController@shop')->name('shoplisting');
