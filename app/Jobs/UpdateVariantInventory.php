@@ -54,6 +54,6 @@ class UpdateVariantInventory implements ShouldQueue
             }
 
         }
-        ProductColor::updateElasticData($changes);
+        if ($this->active) ProductColor::updateElasticData($changes);
     }
 }

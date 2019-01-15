@@ -6,6 +6,7 @@ use Ajency\Connections\ElasticQuery;
 use Ajency\Connections\OdooConnect;
 use Ajency\FileUpload\FileUpload;
 use App\Jobs\IndexProduct;
+use App\Jobs\UpdateElasticData;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -39,7 +40,6 @@ class ProductColor extends Model
         $products->each(function ($productData) use ($variants, $product_data) {
             $variant_data = ['variant_product_own' => true, 'variant_barcode' => 0];
 
-
             $attTypes = ['string_facet', 'number_facet', 'boolean_facet', 'attributes'];
 
             foreach ($attTypes as $attType) {
@@ -47,19 +47,24 @@ class ProductColor extends Model
                     $key   = ($attType == 'attributes') ? 'attribute_name' : 'facet_name';
                     $value = ($attType == 'attributes') ? 'attribute_value' : 'facet_value';
                     if (isProductAttribute($facetData[$key])) {
-                        if($facetData[$key] == 'product_gender' && isset($product_data[$facetData[$key]]) && $product_data[$facetData[$key]] == 'Unisex') continue;
-                        if($facetData[$key] == 'product_metatag') {
-                            $arr = $product_data[$facetData[$key]];
-                            $arr[] = $facetData[$value];
-                            $product_data[$facetData[$key]] = $arr;
+                        if ($facetData[$key] == 'product_gender' && isset($product_data[$facetData[$key]]) && $product_data[$facetData[$key]] == 'Unisex') {
+                            continue;
                         }
-                        else $product_data[$facetData[$key]] = $facetData[$value];
+
+                        if ($facetData[$key] == 'product_metatag') {
+                            $arr                            = $product_data[$facetData[$key]];
+                            $arr[]                          = $facetData[$value];
+                            $product_data[$facetData[$key]] = $arr;
+                        } else {
+                            $product_data[$facetData[$key]] = $facetData[$value];
+                        }
+
                     } else {
                         $variant_data[$facetData[$key]] = $facetData[$value];
                     }
                 }
             }
-            $variants[$variant_data['variant_id']]=$variant_data;
+            $variants[$variant_data['variant_id']] = $variant_data;
 
         });
         $extraAtt = ['product_vendor', 'product_att_ecom_sales', 'product_image_available'];
@@ -206,4 +211,15 @@ class ProductColor extends Model
             IndexProduct::dispatch($productId->product_id)->onQueue('process_product');
         }
     }
+
+    public static function updateAllProducts()
+    {
+        $ids    = ProductColor::select('elastic_id')->pluck('elastic_id');
+        $chunks = $ids->chunk(30);
+
+        foreach ($chunks as $chunk) {
+            UpdateElasticData::dispatch($chunk)->onQueue('process_product');
+        }
+    }
+
 }

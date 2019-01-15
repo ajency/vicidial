@@ -221,7 +221,7 @@ function buildProductIndexFromOdooData($productData, $variantData)
     $product_title                   = ($productData['product_att_magento_display_name'] && $productData['product_att_magento_display_name'] != '') ? $productData['product_att_magento_display_name'] : $productData['product_name'];
     $indexData['search_result_data'] = [
         'product_id'                       => $productData['product_id'],
-        "product_title"                    => $product_title,
+        "product_title"                    => $product_title . ' - ' . $variantData->first()['product_color_name'],
         "product_att_magento_display_name" => $productData['product_att_magento_display_name'],
         "product_name"                     => $productData['product_name'],
         "product_slug"                     => $productData['product_slug'],
@@ -252,14 +252,16 @@ function buildProductIndexFromOdooData($productData, $variantData)
     $indexData["variants"] = [];
     foreach ($variantData as $variant) {
         $indexData['variants'][] = [
-            "variant_id"             => $variant['variant_id'],
-            "variant_list_price"     => $variant['variant_lst_price'],
-            "variant_sale_price"     => $variant['variant_sale_price'],
-            "variant_standard_price" => $variant['variant_standard_price'],
-            "variant_size_id"        => $variant['variant_size_id'],
-            "variant_size_name"      => $variant['variant_size_name'],
-            "variant_availability"   => $variant['variant_availability'],
-            "variant_product_own"    => $variant['variant_product_own'],
+            "variant_id"               => $variant['variant_id'],
+            "variant_list_price"       => $variant['variant_lst_price'],
+            "variant_sale_price"       => $variant['variant_sale_price'],
+            "variant_discount"         => $variant['variant_discount'],
+            "variant_discount_percent" => $variant['variant_discount_percent'],
+            "variant_standard_price"   => $variant['variant_standard_price'],
+            "variant_size_id"          => $variant['variant_size_id'],
+            "variant_size_name"        => $variant['variant_size_name'],
+            "variant_availability"     => $variant['variant_availability'],
+            "variant_product_own"      => $variant['variant_product_own'],
         ];
         $search_data = [
             'full_text'         => generateFullTextForIndexing($productData, $variant),
@@ -331,17 +333,17 @@ function buildProductIndexFromOdooData($productData, $variantData)
     //     'direct_parents' => [$categories->last()],
     //     'all_parents'    => $categories->toArray(),
     //     'paths'          => [str_slug($productData['product_name']) . '/' . $productData['product_style_no'] . "/" . str_slug($variant['product_color_name']) . '/buy'],
-    // ]; 
+    // ];
     $indexData['path'] = implode('-', [
         str_slug($productData['product_name']),
         $variantData->first()['product_color_id'],
         str_slug($variantData->first()['product_color_name']),
-    ]); 
+    ]);
     $indexData['number_sort'] = [
-        "variant_discount"         => $variant['variant_discount'],
-        "variant_discount_percent" => $variant['variant_discount_percent'],
-        "variant_lst_price"        => $variant['variant_lst_price'],
-        "variant_sale_price"       => $variant['variant_sale_price'],
+        "variant_discount"         => $variantData->max('variant_discount'),
+        "variant_discount_percent" => $variantData->max('variant_discount_percent'),
+        "variant_lst_price"        => $variantData->max('variant_lst_price'),
+        "variant_sale_price"       => $variantData->min('variant_sale_price'),
     ];
     $indexData['string_sort'] = [
         "product_name" => $productData['product_name'],
