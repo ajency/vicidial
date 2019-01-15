@@ -348,13 +348,13 @@
         <div class="h5 text-gray line-height-5">{{$address}}</div>
 
         @if (\Request::is('stores/surat'))
-          <a href="https://www.google.com/maps/search/?api=1&query=21.19279,72.79981" target="_blank" class="btn btn-primary my-2">View on Google Maps</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=21.19279,72.79981" target="_blank" class="btn btn-primary my-2 font-weight-bold">View on Google Maps</a>
         @endif
         @if (\Request::is('stores/coimbatore'))
-          <a href="https://www.google.com/maps/search/?api=1&query=11.00742,76.95087" target="_blank" class="btn btn-primary my-2">View on Google Maps</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=11.00742,76.95087" target="_blank" class="btn btn-primary my-2 font-weight-bold">View on Google Maps</a>
         @endif
         @if (\Request::is('stores/jaipur'))
-          <a href="https://www.google.com/maps/search/?api=1&query=26.941362,75.771318" target="_blank" class="btn btn-primary my-2">View on Google Maps</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=26.941362,75.771318" target="_blank" class="btn btn-primary my-2 font-weight-bold">View on Google Maps</a>
         @endif
         
         @if (!\Request::is('stores/jaipur'))
