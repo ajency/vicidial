@@ -10,7 +10,7 @@
 <link  rel="icon" type="image/x-icon" href="/img/kss_favicon.png" />
 
 @empty($delaycss)
-	<link rel="stylesheet" type="text/css" href="{{ mix('/css/kss.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{CDN::mix('/css/kss.css') }}">
 @endempty
 
 @yield('headjs')

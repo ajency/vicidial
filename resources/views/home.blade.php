@@ -10,6 +10,27 @@
 
 @section('content')
 <div id="home-slider" class="home-slider">
+<!--     <div class="home-slide-item">
+      <a href="/stores/jaipur">
+        <picture>
+           <source media="(orientation: landscape)"
+                  data-srcset="{{CDN::asset('/img/home-banner/hello-jaipur-large.jpg') }} 2000w,
+                              {{CDN::asset('/img/home-banner/hello-jaipur-medium.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/hello-jaipur-small.jpg') }} 700w"
+                  sizes="100vw">
+
+           <source media="(orientation: portrait)"
+                  data-srcset="{{CDN::asset('/img/home-banner/hello-jaipur-portrait-large.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/hello-jaipur-portrait-medium.jpg') }} 700w,
+                              {{CDN::asset('/img/home-banner/hello-jaipur-portrait-small.jpg') }} 400w"
+                  sizes="100vw">
+
+           <img src="{{CDN::asset('/img/home-banner/hello-jaipur-20px.jpg') }}"
+               data-sizes="100vw"
+               class="img-fluid lazyload blur-up w-100" alt="Hello Jaipur - Your Kids's Favourite fashion destination is now coming to Jaipur!" title="Hello Jaipur - Your Kids's Favourite fashion destination is now coming to Jaipur!">
+        </picture>
+      </a>
+    </div> -->
     <div class="home-slide-item">
       <a href="/shop?rf=price:0TO499">
         <picture>
@@ -485,6 +506,38 @@
 
 <section>
   <div class="container stories-wrapper">
+    <div class="trend-focus-wrapper mb-4 mb-sm-0">
+      <a href="/shop?pf=tag:lines-blocks" class="trend-box d-block link-card">
+          <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
+              src="{{CDN::asset('/img/stories/story_grid9_10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/stories/story_grid9_large.jpg') }} 740w,
+                           {{CDN::asset('/img/stories/story_grid9_medium.jpg') }} 370w,
+                           {{CDN::asset('/img/stories/story_grid9_small.jpg') }} 248w"
+              data-sizes='(min-width: 1200px) 376px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 90vw,  30vw'
+              alt="Lines &amp; Blocks"
+              title="Lines &amp; Blocks"/>
+      </a>
+      <a href="/shop?pf=tag:chubby-cheeks" class="trend-box d-block link-card">
+          <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
+              src="{{CDN::asset('/img/stories/story_grid10_10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/stories/story_grid10_large.jpg') }} 740w,
+                           {{CDN::asset('/img/stories/story_grid10_medium.jpg') }} 370w,
+                           {{CDN::asset('/img/stories/story_grid10_small.jpg') }} 248w"
+              data-sizes='(min-width: 1200px) 376px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 90vw,  30vw'
+              alt="Chubby Cheeks"
+              title="Chubby Cheeks"/>
+      </a>
+      <a href="/shop?pf=tag:rock-them-up" class="trend-box d-block link-card rock-them">
+          <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
+              src="{{CDN::asset('/img/stories/story_grid11_10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/stories/story_grid11_large.jpg') }} 740w,
+                           {{CDN::asset('/img/stories/story_grid11_medium.jpg') }} 370w,
+                           {{CDN::asset('/img/stories/story_grid11_small.jpg') }} 248w"
+              data-sizes='(min-width: 1200px) 376px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 90vw,  30vw'
+              alt="Rock Them Up"
+              title="Rock Them Up"/>
+      </a>
+    </div>
     <div class="trend-focus-wrapper">
         <!-- Grid-1 -->
         <a href="/shop?pf=tag:cute-florals" class="trend-box d-block link-card position-relative" style="order:0;">
@@ -545,7 +598,7 @@
         </a>
         
         <!-- Grid-6 -->
-        <a href="/shop?pf=tag:party-shoes" class="trend-box d-block link-card position-relative" style="order:6;">
+        <a href="/shop?pf=tag:party-shoes" class="trend-box d-block link-card position-relative party-shoes" style="order:6;">
           <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
               src="{{CDN::asset('/img/stories/story_grid6_10px.jpg') }}"
               data-srcset="{{CDN::asset('/img/stories/story_grid6_large.jpg') }} 740w,
