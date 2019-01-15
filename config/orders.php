@@ -39,7 +39,6 @@ return [
         "product_uom"        => 1,
         "route_id"           => false,
         "product_packaging"  => false,
-        "tax_id"             => [],
         "customer_lead"      => 0,
         "analytic_tag_ids"   => [],
         "invoice_lines"      => [],
