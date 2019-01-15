@@ -609,3 +609,23 @@ footer .bl-1{
 .align-self-normal{
     align-self: normal;
 }
+
+// Custom full page loader
+.full-page-loader{
+    position: relative;
+    overflow: hidden;
+    &:after{
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100vh;
+        z-index: 1090;
+        left: 0;
+        top: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255,255,255,0.94) url(../img/loader_818e.gif) center center no-repeat;
+
+    }
+}

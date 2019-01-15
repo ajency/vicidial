@@ -42,12 +42,37 @@
 
 @section('content')
 
+@if (!\Request::is('stores/jaipur'))
 <!-- Banner -->
 <div class="kss_banner_sm justify-content-center d-flex p-3 p-md-5 text-white bg-dark">
    <div class="align-self-center text-center">
       <h1 class="display-6 bold mt-4 mb-1 banner-title">KidSuperStore Stores - {{$name}}</h1>
    </div>
 </div>
+
+@else
+
+<div class="single-store-banner">
+     <picture>
+       <source media="(orientation: landscape)"
+              data-srcset="{{CDN::asset('/img/stores/jaipur/hello-jaipur-large.jpg') }} 2000w,
+                          {{CDN::asset('/img/stores/jaipur/hello-jaipur-medium.jpg') }} 1200w,
+                          {{CDN::asset('/img/stores/jaipur/hello-jaipur-small.jpg') }} 700w"
+              sizes="100vw">
+
+       <source media="(orientation: portrait)"
+              data-srcset="{{CDN::asset('/img/stores/jaipur/hello-jaipur-portrait-large.jpg') }} 1200w,
+                          {{CDN::asset('/img/stores/jaipur/hello-jaipur-portrait-medium.jpg') }} 700w,
+                          {{CDN::asset('/img/stores/jaipur/hello-jaipur-portrait-small.jpg') }} 400w"
+              sizes="100vw">
+
+       <img src="{{CDN::asset('/img/stores/jaipur/hello-jaipur-20px.jpg') }}"
+           data-sizes="100vw"
+           class="img-fluid lazyload blur-up w-100" alt="Hello Jaipur" title="Hello Jaipur">
+    </picture>
+</div>
+@endif
+
 
 <div class="container mt-5">
    <div class="row">
@@ -350,7 +375,7 @@
 @if (\Request::is('stores/jaipur'))
 
 <div class="container-fluid mt-4 py-5 store-jp-offer" style="background-color: #f6f6f6;margin-bottom: -50px;">
-  <h2 class="font-weight-bold pt-2 pb-5 text-center">Four Super Offers</h2>
+  <h2 class="font-weight-bold pt-2 pb-5 text-center">Other Super Offers</h2>
 
   <div class="container">
     <div class="row">

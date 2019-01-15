@@ -10,6 +10,27 @@
 
 @section('content')
 <div id="home-slider" class="home-slider">
+<!--     <div class="home-slide-item">
+      <a href="/stores/jaipur">
+        <picture>
+           <source media="(orientation: landscape)"
+                  data-srcset="{{CDN::asset('/img/home-banner/hello-jaipur-large.jpg') }} 2000w,
+                              {{CDN::asset('/img/home-banner/hello-jaipur-medium.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/hello-jaipur-small.jpg') }} 700w"
+                  sizes="100vw">
+
+           <source media="(orientation: portrait)"
+                  data-srcset="{{CDN::asset('/img/home-banner/hello-jaipur-portrait-large.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/hello-jaipur-portrait-medium.jpg') }} 700w,
+                              {{CDN::asset('/img/home-banner/hello-jaipur-portrait-small.jpg') }} 400w"
+                  sizes="100vw">
+
+           <img src="{{CDN::asset('/img/home-banner/hello-jaipur-20px.jpg') }}"
+               data-sizes="100vw"
+               class="img-fluid lazyload blur-up w-100" alt="Hello Jaipur - Your Kids's Favourite fashion destination is now coming to Jaipur!" title="Hello Jaipur - Your Kids's Favourite fashion destination is now coming to Jaipur!">
+        </picture>
+      </a>
+    </div> -->
     <div class="home-slide-item">
       <a href="/shop?rf=price:0TO499">
         <picture>
