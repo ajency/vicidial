@@ -125,7 +125,7 @@ function sanitiseProductData($odooData)
         "product_att_ecom_sales"           => ($odooData["att_ecom_sales"] == "yes") ? true : false,
         "product_vendor"                   => ($odooData["vendor_id"]) ? $odooData["vendor_id"][1] : null,
         'product_image_available'          => false,
-        'product_metatag'                  => $metatags->map(function ($item, $key) {$item['name'] = trim($item['name']);return $item;})->toArray(),
+        'product_metatag'                  => $metatags->map(function ($item, $key) {$item['name'] = trim($item['name']);return $item;})->pluck('name')->toArray(),
     ];
     $product_categories = explode('/', $index['product_categories']);
     $categories         = ['product_category_type', 'product_gender', 'product_age_group', 'product_subtype'];
@@ -193,7 +193,7 @@ function generateFullTextForIndexing($productData, $variant)
         $productData['product_gender'],
         $productData['product_age_group'],
         $productData['product_subtype'],
-        implode(collect($productData['product_metatag'])->map(function ($item, $key) {return $item['name'];})->toArray(), ' '),
+        implode($productData['product_metatag'], ' '),
         $variant['variant_barcode'],
         $variant['variant_style_no'],
         $variant['product_color_name'],
@@ -247,7 +247,7 @@ function buildProductIndexFromOdooData($productData, $variantData)
         "product_color_html"               => $variantData->first()['product_color_html'],
         "product_images"                   => [],
         "product_image_available"          => $productData['product_image_available'],
-        "product_metatag"                  => collect($productData['product_metatag'])->map(function ($item, $key) {return $item['name'];})->toArray(),
+        "product_metatag"                  => $productData['product_metatag'],
     ];
     $indexData["variants"] = [];
     foreach ($variantData as $variant) {
@@ -277,8 +277,8 @@ function buildProductIndexFromOdooData($productData, $variantData)
                     foreach ($productData[$value] as $metatag) {
                         $facetObj = [
                             'facet_name'  => $value,
-                            'facet_value' => $metatag['name'],
-                            'facet_slug'  => str_slug($metatag['name']),
+                            'facet_value' => $metatag,
+                            'facet_slug'  => str_slug($metatag),
                         ];
                         $search_data[$facet][] = $facetObj;
                     }

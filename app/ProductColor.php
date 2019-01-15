@@ -48,7 +48,11 @@ class ProductColor extends Model
                     $value = ($attType == 'attributes') ? 'attribute_value' : 'facet_value';
                     if (isProductAttribute($facetData[$key])) {
                         if($facetData[$key] == 'product_gender' && isset($product_data[$facetData[$key]]) && $product_data[$facetData[$key]] == 'Unisex') continue;
-                        if($facetData[$key] == 'product_metatag') $product_data[$facetData[$key]][] = $facetData[$value];
+                        if($facetData[$key] == 'product_metatag') {
+                            $arr = $product_data[$facetData[$key]];
+                            $arr[] = $facetData[$value];
+                            $product_data[$facetData[$key]] = $arr;
+                        }
                         else $product_data[$facetData[$key]] = $facetData[$value];
                     } else {
                         $variant_data[$facetData[$key]] = $facetData[$value];
