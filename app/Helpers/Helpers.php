@@ -1,7 +1,7 @@
 <?php
 
-use App\Defaults;
 use Ajency\Connections\OdooConnect;
+use App\Defaults;
 use App\Jobs\FetchProductImages;
 use App\Location;
 use App\User;
@@ -326,12 +326,17 @@ function buildProductIndexFromOdooData($productData, $variantData)
         }
         $indexData['search_data'][] = $search_data;
     }
-    $categories            = collect(explode('/', $productData['product_categories']));
-    $indexData['category'] = [
-        'direct_parents' => [$categories->last()],
-        'all_parents'    => $categories->toArray(),
-        'paths'          => [str_slug($productData['product_name']) . '/' . $productData['product_style_no'] . "/" . str_slug($variant['product_color_name']) . '/buy'],
-    ];
+    // $categories            = collect(explode('/', $productData['product_categories']));
+    // $indexData['category'] = [
+    //     'direct_parents' => [$categories->last()],
+    //     'all_parents'    => $categories->toArray(),
+    //     'paths'          => [str_slug($productData['product_name']) . '/' . $productData['product_style_no'] . "/" . str_slug($variant['product_color_name']) . '/buy'],
+    // ]; 
+    $indexData['path'] = implode('-', [
+        str_slug($productData['product_name']),
+        $variantData->first()['product_color_id'],
+        str_slug($variantData->first()['product_color_name']),
+    ]); 
     $indexData['number_sort'] = [
         "variant_discount"         => $variant['variant_discount'],
         "variant_discount_percent" => $variant['variant_discount_percent'],
@@ -369,8 +374,8 @@ function sanitiseInventoryData($inventoryData)
 function inventoryFormatData(array $variant_ids, array $inventory)
 {
 
-    $final = [];
-    $activeLocations = Location::where('use_in_inventory',true)->pluck('odoo_id')->toArray();
+    $final           = [];
+    $activeLocations = Location::where('use_in_inventory', true)->pluck('odoo_id')->toArray();
     foreach ($variant_ids as $variant_id) {
         $ret = [
             "availability" => false,
@@ -720,7 +725,21 @@ function getDisplayWhatsapp()
     return Defaults::where('type', 'display')->where('label', 'whatsapp')->first()->meta_data[0];
 }
 
-function getOdooDiff($model,$dbData){
+function getOdooDiff($model, $dbData)
+{
     $odooData = OdooConnect::getAllActiveIds($model);
-    return ['odooExtra'=> array_values($odooData->diff($dbData)->toArray()), 'dbExtra' => array_values($dbData->diff($odooData)->toArray())];
+    return ['odooExtra' => array_values($odooData->diff($dbData)->toArray()), 'dbExtra' => array_values($dbData->diff($odooData)->toArray())];
+}
+
+function isProductAttribute($attribute)
+{
+    if (in_array($attribute, ['product_color_id', 'product_color_name', 'product_color_html']) !== false) {
+        return false;
+    }
+    if (strpos($attribute, 'product_') !== false) {
+        return true;
+    } else {
+        return false;
+    }
+
 }

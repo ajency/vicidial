@@ -15,7 +15,7 @@ class UpdateVariantInventory implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     public $tries = 3;
-    protected $variant_ids,$active;
+    protected $variant_ids, $active;
 
     /**
      * Create a new job instance.
@@ -37,25 +37,23 @@ class UpdateVariantInventory implements ShouldQueue
     public function handle()
     {
         $inventory = Product::getVariantInventory($this->variant_ids);
+        $changes   = [];
         foreach ($this->variant_ids as $variant_id) {
             $var            = Variant::where(["odoo_id" => $variant_id])->firstOrFail();
             $var->inventory = $inventory[$variant_id]["inventory"];
             $var->save();
             if ($this->active) {
-                $changes = [
-                    'search' => [
-                        'boolean_facet' => [
-                            'variant_availability' => $var->getAvailability(),
-                        ],
-                    ],
-                    'result' => [
-                        'variant_availability' => $var->getAvailability(),
-                    ],
+                $changes[$var->getParentElasticData()['id']] = [
+                    'elastic_data' => $var->getParentElasticData(),
+                    'change'       => function (&$product, &$variants) use ($var) {
+                        $variant                         = $variants[$var->odoo_id];
+                        $variant['variant_availability'] = $var->getAvailability();
+                        $variants[$var->odoo_id]         = $variant;
+                    },
                 ];
-                $result = ProductColor::updateElasticData($var->getParentElasticData(), $changes, true, $variant_id);
-                // $result = ProductColor::updateElasticInventory($variant_id, $var->getParentElasticData(), $var->getAvailability());
-                \Log::info($result);
             }
+
         }
+        ProductColor::updateElasticData($changes);
     }
 }
