@@ -105,14 +105,13 @@ class CartController extends Controller
         $cart->abortNotCart('cart');
         $items = getCartData($cart, true, isNotProd());
 
-        $code = ["code" => "NEWUSER", "applied" => true];
         if (!$cart->isPromotionApplicable($cart->promotion) && $cart->type == 'cart') {
             $cart->applyPromotion($cart->getBestPromotion());
             $cart->refresh();
         }
         $summary    = $cart->getSummary();
         $promotions = Promotion::getAllPromotions($cart, 'web');
-        return response()->json(['cart_count' => $cart->itemCount(), 'cart_type' => $cart->type, 'items' => $items, 'promo_applied' => $cart->promotion_id, "summary" => $summary, "promotions" => $promotions, "code" => $code]);
+        return response()->json(['cart_count' => $cart->itemCount(), 'cart_type' => $cart->type, 'items' => $items, 'promo_applied' => $cart->promotion_id, "summary" => $summary, "promotions" => $promotions]);
     }
 
     public function guestCartDelete(Request $request)
@@ -280,14 +279,13 @@ class CartController extends Controller
 
         $items = getCartData($cart, true, isNotProd());
 
-        $code = ["code" => "NEWUSER", "applied" => true];
         if (!$cart->isPromotionApplicable($cart->promotion) && $cart->type == 'cart') {
             $cart->applyPromotion($cart->getBestPromotion());
             $cart->refresh();
         }
         $summary    = $cart->getSummary();
         $promotions = Promotion::getAllPromotions($cart, 'web');
-        return response()->json(['cart_count' => $cart->itemCount(), 'cart_type' => $cart->type, 'items' => $items, 'promo_applied' => $cart->promotion_id, "promotions" => $promotions, "summary" => $summary, "code" => $code]);
+        return response()->json(['cart_count' => $cart->itemCount(), 'cart_type' => $cart->type, 'items' => $items, 'promo_applied' => $cart->promotion_id, "summary" => $summary, "promotions" => $promotions]);
     }
 
     public function userCartDelete($id, Request $request)
