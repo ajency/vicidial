@@ -2,16 +2,16 @@
 
 namespace App;
 
-use Ajency\FileUpload\FileUpload;
 use Ajency\Connections\ElasticQuery;
-use Illuminate\Database\Eloquent\Model;
-use App\Jobs\FetchProductImages;
-use SoapBox\Formatter\Formatter;
-use Illuminate\Support\Facades\Storage;
 use Ajency\Connections\OdooConnect;
-use Illuminate\Support\Facades\DB;
+use Ajency\FileUpload\FileUpload;
 use App\Jobs\IndexProduct;
+use App\Jobs\UpdateElasticData;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use SoapBox\Formatter\Formatter;
 
 class ProductColor extends Model
 {
@@ -32,63 +32,64 @@ class ProductColor extends Model
         return $q->index();
     }
 
-    private static function updateElasticResultData($elastic_data, $change, $is_variant, $variant_id)
+    public static function deconstructElasticData($elastic_data)
     {
-        if ($is_variant) {
-            foreach ($elastic_data["variants"] as &$variant) {
-                if ($variant["variant_id"] == $variant_id) {
-                    foreach ($change as $key => $value) {
-                        $variant[$key] = $value;
-                    }
-                    break;
-                }
-            }
-        } else {
-            foreach ($change as $key => $value) {
-                $elastic_data['search_result_data'][$key] = $value;
-            }
-        }
-        return $elastic_data;
-    }
+        $products     = collect($elastic_data['search_data']);
+        $variants     = collect();
+        $product_data = collect(['product_metatag' => []]);
+        $products->each(function ($productData) use ($variants, $product_data) {
+            $variant_data = ['variant_product_own' => true, 'variant_barcode' => 0];
 
-    public static function updateElasticSearchData($elastic_data, $change, $is_variant, $variant_id)
-    {
-        foreach ($elastic_data['search_data'] as &$variant) {
-            $flag = false;
-            if ($is_variant) {
-                foreach ($variant["number_facet"] as $facet) {
-                    if ($facet["facet_name"] == "variant_id" and $facet["facet_value"] == $variant_id) {
-                        $flag = true;
-                        break;
-                    }
-                }
-            } else {
-                $flag = true;
-            }
-            if ($flag) {
-                foreach ($change as $facet_type => $attributes) {
-                    foreach ($variant[$facet_type] as $facet_key => $facet) {
-                        if (isset($attributes[$facet["facet_name"]])) {
-                            $variant[$facet_type][$facet_key]["facet_value"] = $attributes[$facet["facet_name"]];
+            $attTypes = ['string_facet', 'number_facet', 'boolean_facet', 'attributes'];
+
+            foreach ($attTypes as $attType) {
+                foreach ($productData[$attType] as $facetData) {
+                    $key   = ($attType == 'attributes') ? 'attribute_name' : 'facet_name';
+                    $value = ($attType == 'attributes') ? 'attribute_value' : 'facet_value';
+                    if (isProductAttribute($facetData[$key])) {
+                        if ($facetData[$key] == 'product_gender' && isset($product_data[$facetData[$key]]) && $product_data[$facetData[$key]] == 'Unisex') {
+                            continue;
                         }
+
+                        if ($facetData[$key] == 'product_metatag') {
+                            $arr                            = $product_data[$facetData[$key]];
+                            $arr[]                          = $facetData[$value];
+                            $product_data[$facetData[$key]] = $arr;
+                        } else {
+                            $product_data[$facetData[$key]] = $facetData[$value];
+                        }
+
+                    } else {
+                        $variant_data[$facetData[$key]] = $facetData[$value];
                     }
                 }
             }
+            $variants[$variant_data['variant_id']] = $variant_data;
+
+        });
+        $extraAtt = ['product_vendor', 'product_att_ecom_sales', 'product_image_available'];
+        foreach ($extraAtt as $att) {
+            $product_data[$att] = (isset($elastic_data['search_result_data'][$att])) ? $elastic_data['search_result_data'][$att] : false;
         }
-        return $elastic_data;
+        return ['product' => $product_data, 'variant' => $variants];
+
     }
 
-    public static function updateElasticData(array $elastic_data, array $change, $is_variant = true, $variant_id = null)
+    public static function updateElasticData($products)
     {
-        if (isset($change['result'])) {
-            $elastic_data = self::updateElasticResultData($elastic_data, $change['result'], $is_variant, $variant_id);
+        $elasticProducts = collect();
+        foreach ($products as $elastic_id => $productData) {
+            $elastic_data = ($productData['elastic_data'] == null) ? (new ElasticQuery())->setIndex(config("elastic.indexes.product"))->get($elastic_id)['_source'] : $productData['elastic_data'];
+            $change       = $productData['change'];
+
+            $unstructured_data = self::deconstructElasticData($elastic_data);
+            $productData       = $unstructured_data['product'];
+            $variantsData      = $unstructured_data['variant'];
+            $changed_data      = $change($productData, $variantsData);
+            $structured_data   = buildProductIndexFromOdooData($productData, $variantsData);
+            $elasticProducts->push($structured_data);
         }
-        if (isset($change['search'])) {
-            $elastic_data = self::updateElasticSearchData($elastic_data, $change['search'], $is_variant, $variant_id);
-        }
-        \Log::debug($elastic_data);
-        $result = self::saveToElastic($elastic_data['id'], $elastic_data);
-        return $result;
+        Product::bulkIndexProducts($elasticProducts);
     }
 
     public static function productXMLData()
@@ -210,4 +211,15 @@ class ProductColor extends Model
             IndexProduct::dispatch($productId->product_id)->onQueue('process_product');
         }
     }
+
+    public static function updateAllProducts()
+    {
+        $ids    = ProductColor::select('elastic_id')->pluck('elastic_id');
+        $chunks = $ids->chunk(30);
+
+        foreach ($chunks as $chunk) {
+            UpdateElasticData::dispatch($chunk)->onQueue('process_product');
+        }
+    }
+
 }

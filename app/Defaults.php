@@ -49,10 +49,10 @@ class Defaults extends Model
     {
         $move = self::where('type', 'sync')->where('label', 'product_move')->first();
         if (!isset($move->meta_data['id']) || $id > $move->meta_data['id']) {
-            $move->meta_data = ['time' => Carbon::now()->subSeconds(5)->toDateTimeString(), 'id' => $id];
+            $move->meta_data = ['time' => Carbon::now()->subSeconds(15)->toDateTimeString(), 'id' => $id];
 
         } else {
-            $move->meta_data = ['time' => Carbon::now()->subSeconds(5)->toDateTimeString(), 'id' => $move->meta_data['id']];
+            $move->meta_data = ['time' => Carbon::now()->subSeconds(15)->toDateTimeString(), 'id' => $move->meta_data['id']];
         }
         $move->save();
     }

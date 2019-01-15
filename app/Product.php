@@ -501,18 +501,15 @@ class Product
         foreach ($products as $product) {
             $images = $product->getAllImages(array_keys(config('ajfileupload.presets')));
             if (count($images) > 0) {
-                $changes = [
-                    'search' => [
-                        'boolean_facet' => [
-                            'product_image_available' => true,
-                        ],
-                    ],
-                    'result' => [
-                        'product_image_available' => true,
-                        // 'product_images' => $images,
-                    ],
+                $changeData = [
+                    $product->elastic_id => [
+                        'elastic_data' => $product->getElasticData(),
+                        'change'       => function(&$product,&$variants){
+                            $product['product_image_available'] = true;
+                        },
+                    ]
                 ];
-                ProductColor::updateElasticData($product->getElasticData(), $changes, false);
+                ProductColor::updateElasticData($changeData);
             }
         }
     }

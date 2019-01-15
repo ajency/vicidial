@@ -1,7 +1,7 @@
 <?php
 
-use App\Defaults;
 use Ajency\Connections\OdooConnect;
+use App\Defaults;
 use App\Jobs\FetchProductImages;
 use App\Location;
 use App\User;
@@ -125,7 +125,7 @@ function sanitiseProductData($odooData)
         "product_att_ecom_sales"           => ($odooData["att_ecom_sales"] == "yes") ? true : false,
         "product_vendor"                   => ($odooData["vendor_id"]) ? $odooData["vendor_id"][1] : null,
         'product_image_available'          => false,
-        'product_metatag'                  => $metatags->map(function ($item, $key) {$item['name'] = trim($item['name']);return $item;})->toArray(),
+        'product_metatag'                  => $metatags->map(function ($item, $key) {$item['name'] = trim($item['name']);return $item;})->pluck('name')->toArray(),
     ];
     $product_categories = explode('/', $index['product_categories']);
     $categories         = ['product_category_type', 'product_gender', 'product_age_group', 'product_subtype'];
@@ -193,7 +193,7 @@ function generateFullTextForIndexing($productData, $variant)
         $productData['product_gender'],
         $productData['product_age_group'],
         $productData['product_subtype'],
-        implode(collect($productData['product_metatag'])->map(function ($item, $key) {return $item['name'];})->toArray(), ' '),
+        implode($productData['product_metatag'], ' '),
         $variant['variant_barcode'],
         $variant['variant_style_no'],
         $variant['product_color_name'],
@@ -221,7 +221,7 @@ function buildProductIndexFromOdooData($productData, $variantData)
     $product_title                   = ($productData['product_att_magento_display_name'] && $productData['product_att_magento_display_name'] != '') ? $productData['product_att_magento_display_name'] : $productData['product_name'];
     $indexData['search_result_data'] = [
         'product_id'                       => $productData['product_id'],
-        "product_title"                    => $product_title,
+        "product_title"                    => $product_title . ' - ' . $variantData->first()['product_color_name'],
         "product_att_magento_display_name" => $productData['product_att_magento_display_name'],
         "product_name"                     => $productData['product_name'],
         "product_slug"                     => $productData['product_slug'],
@@ -247,19 +247,21 @@ function buildProductIndexFromOdooData($productData, $variantData)
         "product_color_html"               => $variantData->first()['product_color_html'],
         "product_images"                   => [],
         "product_image_available"          => $productData['product_image_available'],
-        "product_metatag"                  => collect($productData['product_metatag'])->map(function ($item, $key) {return $item['name'];})->toArray(),
+        "product_metatag"                  => $productData['product_metatag'],
     ];
     $indexData["variants"] = [];
     foreach ($variantData as $variant) {
         $indexData['variants'][] = [
-            "variant_id"             => $variant['variant_id'],
-            "variant_list_price"     => $variant['variant_lst_price'],
-            "variant_sale_price"     => $variant['variant_sale_price'],
-            "variant_standard_price" => $variant['variant_standard_price'],
-            "variant_size_id"        => $variant['variant_size_id'],
-            "variant_size_name"      => $variant['variant_size_name'],
-            "variant_availability"   => $variant['variant_availability'],
-            "variant_product_own"    => $variant['variant_product_own'],
+            "variant_id"               => $variant['variant_id'],
+            "variant_list_price"       => $variant['variant_lst_price'],
+            "variant_sale_price"       => $variant['variant_sale_price'],
+            "variant_discount"         => $variant['variant_discount'],
+            "variant_discount_percent" => $variant['variant_discount_percent'],
+            "variant_standard_price"   => $variant['variant_standard_price'],
+            "variant_size_id"          => $variant['variant_size_id'],
+            "variant_size_name"        => $variant['variant_size_name'],
+            "variant_availability"     => $variant['variant_availability'],
+            "variant_product_own"      => $variant['variant_product_own'],
         ];
         $search_data = [
             'full_text'         => generateFullTextForIndexing($productData, $variant),
@@ -277,8 +279,8 @@ function buildProductIndexFromOdooData($productData, $variantData)
                     foreach ($productData[$value] as $metatag) {
                         $facetObj = [
                             'facet_name'  => $value,
-                            'facet_value' => $metatag['name'],
-                            'facet_slug'  => str_slug($metatag['name']),
+                            'facet_value' => $metatag,
+                            'facet_slug'  => str_slug($metatag),
                         ];
                         $search_data[$facet][] = $facetObj;
                     }
@@ -326,17 +328,22 @@ function buildProductIndexFromOdooData($productData, $variantData)
         }
         $indexData['search_data'][] = $search_data;
     }
-    $categories            = collect(explode('/', $productData['product_categories']));
-    $indexData['category'] = [
-        'direct_parents' => [$categories->last()],
-        'all_parents'    => $categories->toArray(),
-        'paths'          => [str_slug($productData['product_name']) . '/' . $productData['product_style_no'] . "/" . str_slug($variant['product_color_name']) . '/buy'],
-    ];
+    // $categories            = collect(explode('/', $productData['product_categories']));
+    // $indexData['category'] = [
+    //     'direct_parents' => [$categories->last()],
+    //     'all_parents'    => $categories->toArray(),
+    //     'paths'          => [str_slug($productData['product_name']) . '/' . $productData['product_style_no'] . "/" . str_slug($variant['product_color_name']) . '/buy'],
+    // ];
+    $indexData['path'] = implode('-', [
+        str_slug($productData['product_name']),
+        $variantData->first()['product_color_id'],
+        str_slug($variantData->first()['product_color_name']),
+    ]);
     $indexData['number_sort'] = [
-        "variant_discount"         => $variant['variant_discount'],
-        "variant_discount_percent" => $variant['variant_discount_percent'],
-        "variant_lst_price"        => $variant['variant_lst_price'],
-        "variant_sale_price"       => $variant['variant_sale_price'],
+        "variant_discount"         => $variantData->max('variant_discount'),
+        "variant_discount_percent" => $variantData->max('variant_discount_percent'),
+        "variant_lst_price"        => $variantData->max('variant_lst_price'),
+        "variant_sale_price"       => $variantData->min('variant_sale_price'),
     ];
     $indexData['string_sort'] = [
         "product_name" => $productData['product_name'],
@@ -369,8 +376,8 @@ function sanitiseInventoryData($inventoryData)
 function inventoryFormatData(array $variant_ids, array $inventory)
 {
 
-    $final = [];
-    $activeLocations = Location::where('use_in_inventory',true)->pluck('odoo_id')->toArray();
+    $final           = [];
+    $activeLocations = Location::where('use_in_inventory', true)->pluck('odoo_id')->toArray();
     foreach ($variant_ids as $variant_id) {
         $ret = [
             "availability" => false,
@@ -720,7 +727,21 @@ function getDisplayWhatsapp()
     return Defaults::where('type', 'display')->where('label', 'whatsapp')->first()->meta_data[0];
 }
 
-function getOdooDiff($model,$dbData){
+function getOdooDiff($model, $dbData)
+{
     $odooData = OdooConnect::getAllActiveIds($model);
-    return ['odooExtra'=> array_values($odooData->diff($dbData)->toArray()), 'dbExtra' => array_values($dbData->diff($odooData)->toArray())];
+    return ['odooExtra' => array_values($odooData->diff($dbData)->toArray()), 'dbExtra' => array_values($dbData->diff($odooData)->toArray())];
+}
+
+function isProductAttribute($attribute)
+{
+    if (in_array($attribute, ['product_color_id', 'product_color_name', 'product_color_html']) !== false) {
+        return false;
+    }
+    if (strpos($attribute, 'product_') !== false) {
+        return true;
+    } else {
+        return false;
+    }
+
 }
