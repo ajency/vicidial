@@ -39,3 +39,9 @@ yarn-error.log
 
 # packages
 /packages
+
+# static assets
+/public/css
+/public/fonts
+/public/img
+/public/js
