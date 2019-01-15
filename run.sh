@@ -2,6 +2,9 @@
 cron
 service php7.2-fpm start
 #service nginx start
+php /var/www/html/artisan config:cache
+php /var/www/html/artisan route:cache
+php /var/www/html/artisan view:cache
 service supervisor start
 supervisorctl reread 
 supervisorctl update 
