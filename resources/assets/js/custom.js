@@ -577,5 +577,7 @@ $('.megamenu-close').click(function(){
 if ($(window).width() >= 768 && $(window).width() <= 992 ) {
     var story_detach = $('.stories-bottom-row .right-col').detach();
     $('.tab-append').after(story_detach);
+    var rock_them = $('.trend-focus-wrapper .rock-them').detach();
+    $('.trend-focus-wrapper .party-shoes').after(rock_them);
 }
 

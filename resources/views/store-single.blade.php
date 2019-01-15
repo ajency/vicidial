@@ -25,6 +25,14 @@
       $timings = "Monday to Sunday 11AM to 9PM";
       $phone = "9959159192";
       $email = "2007@omniedgeretail.com";
+  } else if (\Request::is('stores/jaipur')){
+      $name = "Triton Mall, Jaipur";
+      $location = "Triton Mall, Jhotwara Rd, Jaipur";
+      $address = "Triton Mall, Plot No 1/1, Near Chomu Pulia Circle, Jhotwara Rd, Jaipur";
+      $manager = "Shashi";
+      $timings = "Monday to Sunday 11AM to 9PM";
+      $phone = "9959159192";
+      $email = "2007@omniedgeretail.com";
   }
 @endphp
 
@@ -34,12 +42,37 @@
 
 @section('content')
 
+@if (!\Request::is('stores/jaipur'))
 <!-- Banner -->
 <div class="kss_banner_sm justify-content-center d-flex p-3 p-md-5 text-white bg-dark">
    <div class="align-self-center text-center">
       <h1 class="display-6 bold mt-4 mb-1 banner-title">KidSuperStore Stores - {{$name}}</h1>
    </div>
 </div>
+
+@else
+
+<div class="single-store-banner">
+     <picture>
+       <source media="(orientation: landscape)"
+              data-srcset="{{CDN::asset('/img/stores/jaipur/hello-jaipur-large.jpg') }} 2000w,
+                          {{CDN::asset('/img/stores/jaipur/hello-jaipur-medium.jpg') }} 1200w,
+                          {{CDN::asset('/img/stores/jaipur/hello-jaipur-small.jpg') }} 700w"
+              sizes="100vw">
+
+       <source media="(orientation: portrait)"
+              data-srcset="{{CDN::asset('/img/stores/jaipur/hello-jaipur-portrait-large.jpg') }} 1200w,
+                          {{CDN::asset('/img/stores/jaipur/hello-jaipur-portrait-medium.jpg') }} 700w,
+                          {{CDN::asset('/img/stores/jaipur/hello-jaipur-portrait-small.jpg') }} 400w"
+              sizes="100vw">
+
+       <img src="{{CDN::asset('/img/stores/jaipur/hello-jaipur-20px.jpg') }}"
+           data-sizes="100vw"
+           class="img-fluid lazyload blur-up w-100" alt="Hello Jaipur" title="Hello Jaipur">
+    </picture>
+</div>
+@endif
+
 
 <div class="container mt-5">
    <div class="row">
@@ -289,6 +322,23 @@
             </li>
           </ul>
         @endif
+
+        @if (\Request::is('stores/jaipur'))
+          <div class="store-offer text-center mb-4">
+            <h2 class="store-offer__title font-weight-bold text-uppercase">Launch Offers</h2>
+            <p class="store-offer__desc h5 text-gray line-height-5">When you visit the store.</p>
+          </div>
+          <div>
+             <img class="card-img-top lazyload blur-up"
+                  src="{{CDN::asset('/img/stores/jaipur/jaipur-large-10px.jpg') }}"
+                  data-srcset="{{CDN::asset('/img/stores/jaipur/jaipur-large.jpg') }} 1200w,
+                               {{CDN::asset('/img/stores/jaipur/jaipur-medium.jpg') }} 770w,
+                               {{CDN::asset('/img/stores/jaipur/jaipur-small.jpg') }} 480w"
+                  data-sizes='(min-width: 1200px) 770px, (min-width: 768px) 62vw,  94vw'
+                  title="Upto 50% OFF"
+                  alt="Upto 50% OFF"/>
+          </div>
+        @endif
       </div>
       <div class="col-12 col-md-4">
         <h4 class="font-weight-bold mb-2">Location</h4>
@@ -298,12 +348,16 @@
         <div class="h5 text-gray line-height-5">{{$address}}</div>
 
         @if (\Request::is('stores/surat'))
-          <a href="https://www.google.com/maps/search/?api=1&query=21.19279,72.79981" target="_blank" class="btn btn-primary my-2">View on Google Maps</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=21.19279,72.79981" target="_blank" class="btn btn-primary my-2 font-weight-bold">View on Google Maps</a>
         @endif
         @if (\Request::is('stores/coimbatore'))
-          <a href="https://www.google.com/maps/search/?api=1&query=11.00742,76.95087" target="_blank" class="btn btn-primary my-2">View on Google Maps</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=11.00742,76.95087" target="_blank" class="btn btn-primary my-2 font-weight-bold">View on Google Maps</a>
         @endif
-
+        @if (\Request::is('stores/jaipur'))
+          <a href="https://www.google.com/maps/search/?api=1&query=26.941362,75.771318" target="_blank" class="btn btn-primary my-2 font-weight-bold">View on Google Maps</a>
+        @endif
+        
+        @if (!\Request::is('stores/jaipur'))
         <h4 class="font-weight-bold mt-5 mb-2">Store Manager</h4>
         <div class="h5 text-gray line-height-5">{{$manager}}</div>
 
@@ -313,9 +367,67 @@
         <h4 class="font-weight-bold mt-5 mb-2">Contact</h4>
         <div class="h5 text-gray line-height-5">Phone: {{$phone}}</div>
         <div class="h5 text-gray line-height-5">Email: {{$email}}</div>
+
+        @else
+        
+        <div class="embeded-map mt-2">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3556.8060640541003!2d75.771318!3d26.941362!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjbCsDU2JzI4LjkiTiA3NcKwNDYnMTYuNyJF!5e0!3m2!1sen!2sin!4v1547548937024" frameborder="0" style="border:0;width: 100%;height: 295px;" allowfullscreen></iframe>
+        </div>
+
+        @endif
       </div>
    </div>
 </div>
+
+@if (\Request::is('stores/jaipur'))
+
+<div class="container-fluid mt-4 py-5 store-jp-offer" style="background-color: #f6f6f6;margin-bottom: -50px;">
+  <h2 class="font-weight-bold pt-2 pb-5 text-center">Other Super Offers</h2>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-4 mb-4 mb-sm-0"> 
+        <a href="/shop"> 
+        
+          <img class="card-img-top lazyload blur-up shadow"
+                  src="{{CDN::asset('/img/stores/jaipur/fso-gifts-10px.jpg') }}"
+                  data-srcset="{{CDN::asset('/img/stores/jaipur/fso-gifts-large.jpg') }} 760w,
+                               {{CDN::asset('/img/stores/jaipur/fso-gifts-medium.jpg') }} 508w,
+                               {{CDN::asset('/img/stores/jaipur/fso-gifts-small.jpg') }} 254w"
+                  data-sizes='(min-width: 1200px) 370px, (min-width: 768px) 28vw,  84vw'
+                  title="Free Gifts"
+                  alt="Free Gifts"/>
+        </a>
+
+      </div>
+      <div class="col-sm-4 mb-4 mb-sm-0">  
+        <a href="/shop"> 
+          <img class="card-img-top lazyload blur-up shadow"
+                  src="{{CDN::asset('/img/stores/jaipur/fso-500-off-10px.jpg') }}"
+                  data-srcset="{{CDN::asset('/img/stores/jaipur/fso-500-off-large.jpg') }} 760w,
+                               {{CDN::asset('/img/stores/jaipur/fso-500-off-medium.jpg') }} 508w,
+                               {{CDN::asset('/img/stores/jaipur/fso-500-off-small.jpg') }} 254w"
+                  data-sizes='(min-width: 1200px) 370px, (min-width: 768px) 28vw,  84vw'
+                  title="₹500 OFF"
+                  alt="₹500 OFF"/>
+        </a>
+      </div>
+      <div class="col-sm-4 mb-4 mb-sm-0">
+        <a href="/shop">   
+          <img class="card-img-top lazyload blur-up shadow"
+                  src="{{CDN::asset('/img/stores/jaipur/fso-cycle-10px.jpg') }}"
+                  data-srcset="{{CDN::asset('/img/stores/jaipur/fso-cycle-large.jpg') }} 760w,
+                               {{CDN::asset('/img/stores/jaipur/fso-cycle-medium.jpg') }} 508w,
+                               {{CDN::asset('/img/stores/jaipur/fso-cycle-small.jpg') }} 254w"
+                  data-sizes='(min-width: 1200px) 370px, (min-width: 768px) 28vw,  84vw'
+                  title="Chance To Win A Super Cycle Every Week"
+                  alt="Chance To Win A Super Cycle Every Week"/>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+@endif
 
 <div class="container-fluid mt-5 py-5" style="margin-bottom:-50px; background-color: #f6f6f6;">
   <h2 class="font-weight-bold pt-2 pb-5 text-center">Why Visit Us?</h2>
@@ -377,5 +489,38 @@
 
   </div>
 </div>
+
+@if (\Request::is('stores/jaipur'))
+
+<div class="container-fluid mt-5 py-5" style="background-color: #f6f6f6;margin-bottom: -50px;">
+  <div class="container py-sm-5">
+    <div class="row">
+      <div class="col-sm-12">
+        <div>
+            <a href="/shop">
+              <picture>
+                 <source media="(orientation: landscape)"
+                        data-srcset="{{CDN::asset('/img/stores/jaipur/jaipur-banner-large.jpg') }} 2000w,
+                                    {{CDN::asset('/img/stores/jaipur/jaipur-banner-medium.jpg') }} 1200w,
+                                    {{CDN::asset('/img/stores/jaipur/jaipur-banner-small.jpg') }} 700w"
+                        sizes="100vw">
+
+                 <source media="(orientation: portrait)"
+                        data-srcset="{{CDN::asset('/img/stores/jaipur/jaipur-banner-portrait-large.jpg') }} 1200w,
+                                    {{CDN::asset('/img/stores/jaipur/jaipur-banner-portrait-medium.jpg') }} 700w,
+                                    {{CDN::asset('/img/stores/jaipur/jaipur-banner-portrait-small.jpg') }} 400w"
+                        sizes="100vw">
+
+                 <img src="{{CDN::asset('/img/stores/jaipur/jaipur-banner-20px.jpg') }}"
+                     data-sizes="100vw"
+                     class="img-fluid lazyload blur-up w-100" alt="Shop Online" title="Shop Online">
+              </picture>
+            </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+@endif
 
 @stop

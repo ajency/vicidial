@@ -47,7 +47,7 @@
                       <li><a href="/terms-and-conditions#cancellation" class="text-gray">Cancellation</a></li>
                       <li><a href="/terms-and-conditions#shipping" class="text-gray">Shipping</a></li>
                       <li><a href="/terms-and-conditions#return" class="text-gray">Return 30 days</a></li>
-                      <li><a href="http://ideas.kidsuperstore.in/" class="text-gray">Blog</a></li>
+                      <!-- <li><a href="http://ideas.kidsuperstore.in/" class="text-gray">Blog</a></li> -->
                   </ul>
               </div>
               <div class="mbr-footer-content col-12">
