@@ -65,7 +65,7 @@ Route::group([
 			Route::group([
 			  'prefix'     => '/cart',
 			], function () use ($group_app_version) {
-				Route::post('/{id}/count', $group_app_version.'\CartController@userGetCount');
+				Route::get('/{id}/count', $group_app_version.'\CartController@userGetCount');
 				Route::post('/{id}/insert', $group_app_version.'\CartController@userAddItem');
 				Route::post('/{id}/update', $group_app_version.'\CartController@userModifyItem');
 				Route::get('/{id}/get', $group_app_version.'\CartController@userCartFetch');
