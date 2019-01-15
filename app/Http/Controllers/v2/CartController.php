@@ -72,9 +72,7 @@ class CartController extends Controller
         $item    = $variant->getItem(true, isNotProd());
         if ($item) {
             $qty = $params['variant_quantity'];
-            if ($cart->itemExists($item)) {
-                $qty += $cart->cart_data[$item["id"]]["quantity"];
-            } else {
+            if (!$cart->itemExists($item)) {
                 abort(404, "Item not found in this cart");
             }
 
@@ -241,9 +239,7 @@ class CartController extends Controller
         $item    = $variant->getItem(true, isNotProd());
         if ($item) {
             $qty = $params['variant_quantity'];
-            if ($cart->itemExists($item)) {
-                $qty += $cart->cart_data[$item["id"]]["quantity"];
-            } else {
+            if (!$cart->itemExists($item)) {
                 abort(404, "Item not found in this cart");
             }
 
