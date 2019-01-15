@@ -324,7 +324,7 @@
         @endif
 
         @if (\Request::is('stores/jaipur'))
-          <div class="store-offer text-center mb-3">
+          <div class="store-offer text-center mb-4">
             <h2 class="store-offer__title font-weight-bold text-uppercase">Launch Offers</h2>
             <p class="store-offer__desc h5 text-gray line-height-5">When you visit the store.</p>
           </div>
@@ -367,6 +367,13 @@
         <h4 class="font-weight-bold mt-5 mb-2">Contact</h4>
         <div class="h5 text-gray line-height-5">Phone: {{$phone}}</div>
         <div class="h5 text-gray line-height-5">Email: {{$email}}</div>
+
+        @else
+        
+        <div class="embeded-map mt-2">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3556.8060640541003!2d75.771318!3d26.941362!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjbCsDU2JzI4LjkiTiA3NcKwNDYnMTYuNyJF!5e0!3m2!1sen!2sin!4v1547548937024" frameborder="0" style="border:0;width: 100%;height: 295px;" allowfullscreen></iframe>
+        </div>
+
         @endif
       </div>
    </div>
