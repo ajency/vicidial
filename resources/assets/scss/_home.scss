@@ -136,10 +136,11 @@
     width: 163px;
     height: 348px;
      @media (min-width: 320px) and (max-width: 767.98px) {
-	background-position: -3px -1px;
-    width: 93px;
-    height: 188px;
-    background-size: 190%;
+        background-position-x: -3px;
+    	background-position-y: -1px;
+        width: 93px;
+        height: 188px;
+        background-size: 190%;
 	}
 }
 
@@ -444,7 +445,7 @@
     grid-template-columns: repeat(6, 1fr) ;
     grid-gap: 30px;
     -ms-grid-rows: auto 30px auto 30px auto 30px auto 30px auto 30px auto;
-    grid-template-areas: 
+    grid-template-areas:
         "cat-13 cat-13 cat-13 cat-14 cat-14 cat-14"
         "cat-1 cat-1 cat-2 cat-2 cat-4 cat-4"
         "cat-1 cat-1 cat-3 cat-3 cat-4 cat-4"
@@ -460,7 +461,7 @@
     }
     // &--bottom{
     //     grid-template-columns: 1fr 1fr;
-    //     grid-template-areas: 
+    //     grid-template-areas:
     //         "cat-11 cat-12";
     //     margin-top: 30px;
     // }
@@ -533,7 +534,7 @@
     }
     @media (min-width: 768px) and (max-width: 992px){
         grid-template-columns: 1fr 1fr;
-        grid-template-areas: 
+        grid-template-areas:
             "cat-13 cat-14"
             "cat-1 cat-2"
             "cat-1 cat-3"
@@ -546,7 +547,7 @@
             // "cat-9 .";
         // &--bottom{
         //     grid-template-columns: 1fr 1fr;
-        //     grid-template-areas: 
+        //     grid-template-areas:
         //         "cat-11 cat-12";
         // }
         // .movable-item{
@@ -554,22 +555,22 @@
         // }
         // &--bottom{
         //     grid-template-columns: 1fr 1fr;
-        //     grid-template-areas: 
+        //     grid-template-areas:
         //     "cat-11 cat-12"
         //     "cat-9 .";
         //     .cat-9{
         //         display: block !important;
         //     }
-        // } 
+        // }
         .cat-12{
             img{
                 height: 100%;
             }
-        }    
+        }
     }
     @media (max-width: 767px){
         grid-template-columns: 1fr;
-        grid-template-areas: 
+        grid-template-areas:
             "cat-13"
             "cat-14"
             "cat-1"
@@ -586,10 +587,10 @@
             "cat-12";
         // &--bottom{
         //     grid-template-columns: 1fr;
-        //      grid-template-areas: 
+        //      grid-template-areas:
         //         "cat-11"
         //         "cat-12";
-        // }            
+        // }
     }
     @media (max-width: 320px){
         .dress-text{
