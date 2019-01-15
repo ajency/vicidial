@@ -34,7 +34,6 @@ RUN composer config --global --auth github-oauth.github.com github_token
 RUN composer install
 RUN npm install
 RUN npm install -g gulp
-RUN npm install gulp
 RUN npm run production
 RUN gulp
 RUN chmod -R 777 /var/www/html/storage
