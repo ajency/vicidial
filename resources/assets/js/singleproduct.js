@@ -59,5 +59,14 @@ $(function(){
         content_type: 'product_group',
     });
 
+    // Google analytic pixel tracking
+    gtag('event', 'page_view', {
+        'send_to': google_pixel_id,
+        'ecomm_pagetype': 'list',
+        'ecomm_prodid': parent_id+'-'+selected_color_id,
+        'ecomm_totalvalue': default_price,
+        'user_id': getCookie('user_id')
+      });
+
 })
 

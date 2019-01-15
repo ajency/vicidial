@@ -148,7 +148,7 @@ export class BagViewComponent implements OnInit {
     this.fetchCartFailed = false;  
     console.log(this.google_track_response(response));
     let result = this.google_track_response(response); 
-    google_pixel_tracking(result.variant_ids, result.total_values);
+    google_pixel_tracking(result.variant_ids, result.total_values, "cart");
     this.zone.run(() => {});    
   }
 
@@ -257,7 +257,7 @@ export class BagViewComponent implements OnInit {
   checkLoginStatus(){
     console.log(this.google_track_response(this.cart));
     let result = this.google_track_response(this.cart); 
-    google_pixel_tracking(result.variant_ids, result.total_values);
+    google_pixel_tracking(result.variant_ids, result.total_values, "checkout");
     fbTrackInitiateCheckout(this.cart.summary.you_pay);
     this.addToCartFailed = false;
     if(this.appservice.isLoggedInUser()){

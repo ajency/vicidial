@@ -314,6 +314,7 @@ function fbTrackAddPaymentInfo(){
 function google_pixel_tracking(variant_id,price_final,pagetype){
     console.log("google_pixel_cart =>", variant_id,price_final);
     console.log("user_id ==>", getCookie('user_id'));
+    console.log("page type ==>", pagetype);
       gtag('event', 'page_view', {
         'send_to': google_pixel_id,
         'ecomm_pagetype': pagetype,

@@ -1182,14 +1182,14 @@
 @stop
 
 @section('footjs')
-<!-- <script>
+<script type="text/javascript">
   gtag('event', 'page_view', {
-    'send_to': 'AW-770209976',
+    'send_to': google_pixel_id,
     'ecomm_pagetype': 'home',
     'ecomm_prodid': '',
     'ecomm_totalvalue': '',
-    'user_id': 'pass_user_id'
+    'user_id': getCookie('user_id')
   });
-</script> -->
+</script>
 
 @stop
