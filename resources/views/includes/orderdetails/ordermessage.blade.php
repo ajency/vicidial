@@ -1,10 +1,11 @@
 <!--Order success failure messages -->
 
 <div class="alert {{$status == 'success' ? 'alert-warning' : 'alert-danger'}}  mb-4 mt-2">
+	
+	@if($status == 'success')
 	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 	    <span aria-hidden="true">&times;</span>
 	</button>
-	@if($status == 'success')
 	<div>
 		<h4 class="font-weight-bold text-success mb-3"><i class="fas fa-check-circle"></i> Order Confirmed</h4>
 		<h4 class="font-weight-bold"> Thank you for shopping at kidsuperstore.in</h4>
@@ -13,11 +14,12 @@
 	</div>
 	@endif
 	@if($status == 'failure')
+	<button class="btn btn-primary retry-pay-btn">Retry Payment</button>
 	<div>
-		<h4 class="font-weight-bold"><i class="fas fa-times-circle"></i> Payment Failed</h4>
-		<p class="mb-2">We could not process your payment. This could be due to the following reasons :</p>
+		<h4 class="font-weight-bold failed-title"><i class="fas fa-times-circle"></i> Payment Failed</h4>
+		<p class="mb-2 pt-3 pt-md-0">We could not process your payment. This could be due to the following reasons :</p>
 		1. The CVV or Expiry Date might be wrong<br>
-		2. Your banck network might be down<br>
+		2. Your bank network might be down<br>
 		3. You have cancelled the transaction
 	</div>
 	@endif
@@ -53,6 +55,12 @@
 				updateCartCountInUI();
 				sessionStorage.removeItem('cart_data');
 		}
+		$(function(){
+			$('.retry-pay-btn').click(function(){
+				let url = window.location.href.split("#")[0] + '#/bag';
+	       		window.location = url;	
+			})
+		})
 		
 	</script>
 @stop
