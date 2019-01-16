@@ -47,9 +47,10 @@ class StaticElementController extends Controller
     //save new
     public function callSaveNew(Request $request)
     {
-        $request->validate(['element_data' => 'required']);
+        $request->validate(['element_data' => 'required','type'=>'required']);
         $params=$request->all();
         $element_data=$params['element_data'];
+        $type=$params['type'];
 
         
 

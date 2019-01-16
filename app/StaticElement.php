@@ -32,7 +32,7 @@ class StaticElement extends Model
             $response=[
                 "id"=>$record['id'],
                 "sequence"=>$record['sequence'],
-                "element_data"=>$record['element_data'],
+                "element_data"=>json_decode($record['element_data']),
                 ];
         }
         else
@@ -87,7 +87,7 @@ class StaticElement extends Model
         }
         $staticElements=array("id"=>$id,
         "sequence"=>$sequence,
-        "element_data"=>$element_data);
+        "element_data"=>json_decode($element_data));
         array_push($response[$type],$staticElements);
         
     }//foreach
@@ -109,7 +109,7 @@ class StaticElement extends Model
         {
             $se=new StaticElement();
             $se->sequence=$seq_no;
-            $se->element_data=$element_data;
+            $se->element_data=json_encode($element_data);
             $se->type=$record['type'];
             $se->published=null;
             $success=$se->save();
@@ -125,7 +125,7 @@ class StaticElement extends Model
             
             $se=new StaticElement();
             $se->sequence=$seq_no;
-            $se->element_data=$element_data;
+            $se->element_data=json_encode($element_data);
             $se->published=null;
             $se->type=$record['type'];
 
@@ -164,7 +164,7 @@ class StaticElement extends Model
         
         $se=new StaticElement();
         $se->sequence=$sequence;
-        $se->element_data=$element_data;
+        $se->element_data=json_encode($element_data);
         $se->published=null;
         $se->type=$record['type'];
         $success=$se->save();
@@ -188,78 +188,3 @@ class StaticElement extends Model
 
 
 }//model
-
-/* 
-
-
-if($draft==true)
-        {
-            $select = ['id','type','element_data', 'sequence','published'];
-        }
-        else
-        {
-            $select=['id','type','element_data','sequence','published'];
-        }
-
-        if(!empty($data))
-        {
-            $where=array();
-
-            if(isset($data['id']))
-            {
-                $where[] = ['id', '=', $data['id']];
-                
-            }
-            if(isset($data['type']))
-            {
-                $where[] = ['type', '=', $data['type']];
-            }
-          $staticElement=self::select($select)->where($where)->orderBy('sequence', 'ASC')->get();  
-        }
-        else
-        {
-            $staticElement=self::select($select)->orderBy('sequence', 'ASC')->get();
-        }
-       
-       
-        $response=array();
-        //if id is set
-        if(isset($data['id']))
-        {
-           $staticElementnew = $staticElement->first();
-           if($staticElementnew==null)
-           {
-               abort(404);
-           }
-           $response=[
-                "id"=>$staticElement[0]['id'],
-                "sequence"=>$staticElement[0]['sequence'],
-                "element_data"=>$staticElement[0]['element_data']
-            ];
-            
-        }
-       else
-       {
-           foreach($staticElement as $k=>$v)
-            {
-                $id=$v['id'];
-                $type=$v['type'];
-                $sequence=$v['sequence'];
-                $element_data=$v['element_data'];
-
-                if(!isset($response[$type])) 
-                {
-                    $response[$type] = array();
-                }
-                $staticElements=array("id"=>$id,
-                "sequence"=>$sequence,
-                "element_data"=>$element_data);
-                array_push($response[$type],$staticElements);
-                
-            }//foreach
-        }//else
-
-
-
-
-*/
