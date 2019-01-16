@@ -36,7 +36,7 @@ class AddressController extends Controller
 
     public function userEditAddress(Request $request)
     {
-        $request->validate(['default' => 'required', 'name' => 'required', 'phone' => 'required|digits:10', 'pincode' => 'required|digits:6', 'state_id' => 'required|numeric', 'address' => 'required', 'locality' => 'required', 'landmark' => 'present', 'city' => 'required']);
+        $request->validate(['default' => 'required', 'name' => 'required', 'phone' => 'required|digits:10', 'pincode' => 'required|digits:6', 'state_id' => 'required|numeric', 'address' => 'required', 'locality' => 'required', 'landmark' => 'present', 'city' => 'required', 'id' => 'required']);
         $params  = $request->all();
         $user_id = $request->user()->id;
 

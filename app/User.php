@@ -59,13 +59,13 @@ class User extends Authenticatable
         return $user;
     }
 
-    public function newCart($replicate = false)
+    public function newCart($replicate = false, $old_cart = null)
     {
         // $cart = Cart::create(['user_id' => $this->id, 'active' => 1, 'type' => 'cart']);
         $cart          = new Cart;
         $cart->user_id = $this->id;
         $cart->save();
-        $ac = $this->activeCart();
+        $ac = ($old_cart == null) ? $this->activeCart() : $old_cart;
         if ($replicate) {
             $cart->cart_data    = $ac->cart_data;
             $cart->promotion_id = $ac->promotion_id;

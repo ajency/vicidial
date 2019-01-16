@@ -338,8 +338,15 @@ class CartController extends Controller
 
     public function startFresh(Request $request)
     {
+        $request->validate(['cart_id' => 'sometimes|exists:carts,id']);
         $user = $request->user();
-        $cart = $user->newCart(true);
+        if (isset($params['cart_id'])) {
+            $old_cart = Cart::find($params['cart_id']);
+            validateCart($user, $old_cart);
+            $cart = $user->newCart(true, $old_cart);
+        } else {
+            $cart = $user->newCart(true);
+        }
         return response()->json(['cart_id' => $cart->id]);
     }
 }
