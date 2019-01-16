@@ -97,6 +97,11 @@ $L : 1200px;
         .fixed-checkout-btn{
             animation: shiftRight 0.5s forwards;
         }
+        @media (max-width: 767px){
+            .default-flyout-open{
+                right: 0 !important;
+            }
+        }
     }
     >* {
         padding: 0 1em;
@@ -160,11 +165,6 @@ $L : 1200px;
         }
         .cd-item-remove {
             right: 2em;
-        }
-    }
-    @media (max-width: 767px){
-        .default-flyout-open{
-            // right: 0 !important
         }
     }
 }
