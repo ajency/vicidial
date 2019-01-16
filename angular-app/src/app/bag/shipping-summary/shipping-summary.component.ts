@@ -53,6 +53,7 @@ export class ShippingSummaryComponent implements OnInit {
     history.pushState({cart : false}, 'cart', url);
     this.widgetOpen = false;
     this.appservice.closeCart();
+
     // window.location.reload();
   }
 
