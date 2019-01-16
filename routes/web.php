@@ -41,6 +41,34 @@ Route::group([
 	});
 });
 
+$group_app_version = 'v2'; 
+Route::group([
+  'prefix'     => '/rest/'.$group_app_version,
+], function () use ($group_app_version) {
+	Route::group([
+	  'prefix'     => '/anonymous',
+	], function () use ($group_app_version) {
+		Route::group([
+		  'prefix'     => '/cart',
+		], function () use ($group_app_version) {
+			Route::get('/count', $group_app_version.'\CartController@guestGetCount');
+			Route::post('/insert', $group_app_version.'\CartController@guestAddItem');
+			Route::post('/update', $group_app_version.'\CartController@guestModifyItem');
+			Route::get('/get', $group_app_version.'\CartController@guestCartFetch');
+			Route::get('/delete', $group_app_version.'\CartController@guestCartDelete');
+			Route::get('/change-promotion', $group_app_version.'\CartController@guestCartPromotion');
+			Route::get('/check-status', $group_app_version.'\CartController@checkStatus');
+		});
+	});
+	Route::group([
+	  'prefix'     => '/authenticate',
+	], function () use ($group_app_version) {
+		Route::get('/login', $group_app_version.'\UserController@verifyOTP');
+		Route::get('/generate_otp', $group_app_version.'\UserController@sendSMS');
+		Route::get('/resend_otp', $group_app_version.'\UserController@reSendSMS');
+	});
+});
+
 Route::get('/', $app_version.'\HomeController@index')->name('home');
 Route::get('/getWarehouseLevelInventory', $app_version."\ProductController@allInventory");
 Route::get('/contact-us', $app_version.'\StaticController@contact');

@@ -175,11 +175,12 @@ class Variant extends Model
     {
 
         return array(
-            'title'       => $this->getName(),
-            'images'      => $this->getPrimaryImageSrcset(),
-            'size'        => $this->getSize(),
-            'price_mrp'   => $this->getLstPrice(),
-            'price_final' => $this->getSalePrice(),
+            'title'        => $this->getName(),
+            'images'       => $this->getPrimaryImageSrcset(),
+            'size'         => $this->getSize(),
+            'price_mrp'    => $this->getLstPrice(),
+            'price_final'  => $this->getSalePrice(),
+            'discount_per' => calculateDiscount($this->getLstPrice(), $this->getSalePrice()),
         );
     }
 
