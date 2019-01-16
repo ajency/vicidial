@@ -150,9 +150,14 @@ class StaticElement extends Model
   }//save
 
   //new data
-  public static function saveNewData($element_data)
+  public static function saveNewData($element_data,$type)
   {
-        $record=StaticElement::select()->where('published', '=', 1)->orWhere('draft','=', 1)->orderBy('sequence', 'desc')->first();
+        $record=StaticElement::select()->where('type','=',$type)->where(function($q) 
+                                            {
+                                                $q->where('published', 1)
+                                                ->orWhere('draft', 1);
+                                            })->orderBy('sequence', 'desc')->get()->first();
+
         if($record==null)
         {
             $sequence=1;

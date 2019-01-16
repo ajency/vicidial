@@ -54,7 +54,7 @@ class StaticElementController extends Controller
 
         
 
-        $dataInserted=StaticElement::saveNewData($element_data);
+        $dataInserted=StaticElement::saveNewData($element_data,$type);
         return(json_encode($dataInserted));
     }//callSaveNew
 }
