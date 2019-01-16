@@ -84,6 +84,12 @@ Route::group([
 				Route::get('/all', $group_app_version.'\AddressController@userFetchAddresses');
 				Route::get('/delete', $group_app_version.'\AddressController@userDeleteAddress');
 			});
+
+			Route::get('/get-user-info', $group_app_version.'\UserController@fetchUserInfo');
+			Route::post('/save-user-details', $group_app_version.'\UserController@saveUserDetails');
+
+			Route::get('/order/{id}/check-inventory', $group_app_version.'\OrderController@checkSubOrderInventory');
+			Route::post('/orders', $group_app_version.'\OrderController@listOrders');
 		});
 
 		Route::group([
@@ -91,12 +97,6 @@ Route::group([
 		], function () use ($group_app_version) {
 			Route::get('/refresh_token', $group_app_version.'\UserController@refreshToken');
 		});
-		
-		Route::get('/get-user-info', $group_app_version.'\UserController@fetchUserInfo');
-		Route::post('/save-user-details', $group_app_version.'\UserController@saveUserDetails');
-
-		Route::get('/order/{id}/check-inventory', $group_app_version.'\OrderController@checkSubOrderInventory');
-		Route::post('/orders', $group_app_version.'\OrderController@listOrders');
 	});
 
 	Route::get('/product-details', $group_app_version.'\ProductController@singleProductAPI');
