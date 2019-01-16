@@ -123,7 +123,6 @@ return [
             'variant' => [
                 'variant_active',
                 'variant_availability',
-                'variant_product_own',
             ],
         ],
         "number_facet"  => [

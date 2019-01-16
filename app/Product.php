@@ -198,7 +198,9 @@ class Product
                     \Log::info("Product {$response['index']['_id']} updated");
                     break;
                 default:
-                    \Log::notice("Product {$response['index']['_id']} status {$response['index']['result']}");
+                    \Log::notice("Product {$response['index']['_id']} status {$response}");
+                    throw new \Exception($response, 1);
+                    
                     break;
             }
         }
