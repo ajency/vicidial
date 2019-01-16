@@ -3,6 +3,7 @@
 	<link rel="stylesheet" type="text/css" href="{{CDN::mix('/css/kss.css') }}">
 </noscript>
 <script>
+  // Google pixel tracking id
   var google_pixel_id = "{{config('analytics.google_pixel_id')}}";
   var loadDeferredStyles = function() {
     var addStylesNode = document.getElementById("deferred-styles");
@@ -58,6 +59,7 @@
   gtag('config', "{{config('analytics.google_id')}}");
 </script>
 
+<!-- Google pixel tracking -->
 <script async src="https://www.googletagmanager.com/gtag/js?id={{config('analytics.google_pixel_id')}}"></script>
 
 <script>

@@ -1182,6 +1182,7 @@
 @stop
 
 @section('footjs')
+<!-- Google pixel tracking -->
 <script type="text/javascript">
   gtag('event', 'page_view', {
     'send_to': google_pixel_id,
