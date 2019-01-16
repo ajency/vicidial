@@ -242,15 +242,15 @@
   <div class="container">
     <div class="cat-container">
       <div class="cat-item cat-13">
-        <a href="/shop?rf=price:0TO499">
+        <a href="/shop">
           <img class="d-block w-100 img-fluid lazyload blur-up"
-              src="{{CDN::asset('/img/home-category/makar_sankranti_category_10px.jpg') }}"
-              data-srcset="{{CDN::asset('/img/home-category/makar_sankranti_category_large.jpg') }} 740w,
-                            {{CDN::asset('/img/home-category/makar_sankranti_category_medium.jpg') }} 370w,
-                            {{CDN::asset('/img/home-category/makar_sankranti_category_small.jpg') }} 248w"
+              src="{{CDN::asset('/img/home-category/category_grid13_10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/home-category/category_grid13_large.jpg') }} 740w,
+                            {{CDN::asset('/img/home-category/category_grid13_medium.jpg') }} 370w,
+                            {{CDN::asset('/img/home-category/category_grid13_small.jpg') }} 248w"
               data-sizes='(min-width: 1200px) 570px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 92vw,  31vw'
-              alt="Happy Makar Sankranti - Entire Store Under ₹499"
-              title="Happy Makar Sankranti - Entire Store Under ₹499" />
+              alt="New Year Super Sale - Flat 50% OFF"
+              title="New Year Super Sale - Flat 50% OFF" />
         </a>
       </div>
       <div class="cat-item cat-14">

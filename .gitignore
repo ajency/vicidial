@@ -46,3 +46,4 @@ yarn-error.log
 /public/img
 /public/js
 /public/mix-manifest.json
+/resources/assets/css/custom.css
