@@ -14,10 +14,10 @@
 	</div>
 	@endif
 	@if($status == 'failure')
-	<button class="btn btn-primary close retry-pay-btn">Retry Payment</button>
+	<button class="btn btn-primary retry-pay-btn">Retry Payment</button>
 	<div>
-		<h4 class="font-weight-bold"><i class="fas fa-times-circle"></i> Payment Failed</h4>
-		<p class="mb-2">We could not process your payment. This could be due to the following reasons :</p>
+		<h4 class="font-weight-bold failed-title"><i class="fas fa-times-circle"></i> Payment Failed</h4>
+		<p class="mb-2 pt-3 pt-md-0">We could not process your payment. This could be due to the following reasons :</p>
 		1. The CVV or Expiry Date might be wrong<br>
 		2. Your bank network might be down<br>
 		3. You have cancelled the transaction
