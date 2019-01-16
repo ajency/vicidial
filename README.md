@@ -160,6 +160,7 @@ Add the following to crontab
 
 ### create passport keys for API to work
 `php artisan passport:client --personal --name='KSS Personal Access Client'`
+`php artisan passport:client --password --name='KSS Password Grant Client'`
 
 ### Enter into laravel console
 `php artisan tinker`

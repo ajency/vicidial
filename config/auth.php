@@ -45,6 +45,11 @@ return [
             'driver' => 'token',
             'provider' => 'users',
         ],
+
+        'api-passport' => [
+            'driver' => 'passport',
+            'provider' => 'users',
+        ],
     ],
 
     /*
@@ -97,6 +102,10 @@ return [
             'table' => 'password_resets',
             'expire' => 60,
         ],
+    ],
+
+    'user_token' => [
+        'expire' => 15, //Days
     ],
 
 ];

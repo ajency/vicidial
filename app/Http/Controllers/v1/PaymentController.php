@@ -23,7 +23,7 @@ class PaymentController extends Controller
 		    'amount' => $order->subOrderData()['you_pay'], # Amount to be charged.
 		    'productinfo' => $order->id,
 		    'firstname' => $user->name, # Payee Name.
-		    'email' => $user->email, # Payee Email Address.
+		    'email' => $user->email_id, # Payee Email Address.
 		    'phone' => $user->phone, # Payee Phone Number.
 		];
 

@@ -104,7 +104,7 @@ class CartController extends Controller
         if ($cart == null) {
             abort(400, "Invalid Cart");
         }
-        checkUserCart($request->header('Authorization'), $cart);
+        checkUserCart(User::getUserByToken($request->header('Authorization')), $cart);
         if($cart->type == 'order-complete') abort(400);
         if($cart->type == 'order') {
             $cart->type = (checkOrderInventory($cart->order, false) == 'failure') ? 'failure' : 'order';

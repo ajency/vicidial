@@ -167,14 +167,16 @@ class Cart extends Model
         }
     }
 
-    public function abortNotCart($type)
+    public function abortNotCart($type, $skip_session = false)
     {
         if ($this->type == null && $type == 'cart') {
             return;
         }
 
         if ($this->type != $type) {
-            request()->session()->forget('active_cart_id');
+            if (!$skip_session) {
+                request()->session()->forget('active_cart_id');
+            }
             abort(403);
         }
     }

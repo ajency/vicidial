@@ -6,6 +6,8 @@ use App\Jobs\FetchProductImages;
 use App\Location;
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
+
 function valInteger($object, $values)
 {
     if (empty($object) || empty($values)) {
@@ -21,10 +23,8 @@ function valInteger($object, $values)
     return true;
 }
 
-function checkUserCart($token, $cart)
+function checkUserCart($user, $cart)
 {
-    $token = explode('Bearer ', $token)[1];
-    $user  = User::where('api_token', $token)->first();
     if ($user->id != $cart->user_id) {
         abort(403);
     }
@@ -709,6 +709,14 @@ function isNotProd()
     return true;
 }
 
+function isLocalSetup()
+{
+    if (config('app.env') == 'local') {
+        return true;
+    }
+    return false;
+}
+
 function updateProductsWithMetaTags()
 {
     $odoo   = new OdooConnect;
@@ -744,4 +752,17 @@ function isProductAttribute($attribute)
         return false;
     }
 
+}
+
+function defaultUserPassword($append)
+{
+    $key = config('app.key');
+
+    if (Str::startsWith($key, 'base64:')) {
+        $key = base64_decode(substr($key, 7));
+    }
+
+    $key .= $append;
+
+    return $key;
 }
