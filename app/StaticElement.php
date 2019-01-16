@@ -44,15 +44,56 @@ class StaticElement extends Model
  }//fetchSeq
 
 
- public static function fetch(array $data=[])
+ //fetch type
+ public static function fetch($type, bool $draft = true)
  {
-    if(isset($data['type']))
+     if(isset($type))
+     {
+         $where=['type','=',$type];
+          
+         if($draft==true)
+         {
+             $records=StaticElement::select()->where($where)->where('draft',1)->orderBy('sequence','desc')->get();
+         }
+         else
+         {
+             $records=StaticElement::select()->where($where)->where('published',1)->orderBy('sequence','desc')->get();
+         }
+    }
+    else
     {
-        $records=StaticElement::select()->where('type', '=', $data['type'])->get();
+        if($draft==true)
+        {
+            $records=StaticElement::select()->where('draft',1)->orderBy('sequence','desc')->get();
+        }
+        else
+        {
+            $records=StaticElement::select()->where('published',1)->orderBy('sequence','desc')->get();
+        }
     }
 
-   
-    return(json_encode($response));
+    
+    
+    foreach($records as $k=>$v)
+    {
+        $id=$v['id'];
+        $type=$v['type'];
+        $sequence=$v['sequence'];
+        $element_data=$v['element_data'];
+
+        if(!isset($response[$type])) 
+        {
+            $response[$type] = array();
+        }
+        $staticElements=array("id"=>$id,
+        "sequence"=>$sequence,
+        "element_data"=>$element_data);
+        array_push($response[$type],$staticElements);
+        
+    }//foreach
+
+
+    return($response);
  }//fetch
  
 //update
@@ -104,7 +145,6 @@ class StaticElement extends Model
             ];
         }
         
-        //dd(response);
         return ($response);
         
   }//save
@@ -148,3 +188,78 @@ class StaticElement extends Model
 
 
 }//model
+
+/* 
+
+
+if($draft==true)
+        {
+            $select = ['id','type','element_data', 'sequence','published'];
+        }
+        else
+        {
+            $select=['id','type','element_data','sequence','published'];
+        }
+
+        if(!empty($data))
+        {
+            $where=array();
+
+            if(isset($data['id']))
+            {
+                $where[] = ['id', '=', $data['id']];
+                
+            }
+            if(isset($data['type']))
+            {
+                $where[] = ['type', '=', $data['type']];
+            }
+          $staticElement=self::select($select)->where($where)->orderBy('sequence', 'ASC')->get();  
+        }
+        else
+        {
+            $staticElement=self::select($select)->orderBy('sequence', 'ASC')->get();
+        }
+       
+       
+        $response=array();
+        //if id is set
+        if(isset($data['id']))
+        {
+           $staticElementnew = $staticElement->first();
+           if($staticElementnew==null)
+           {
+               abort(404);
+           }
+           $response=[
+                "id"=>$staticElement[0]['id'],
+                "sequence"=>$staticElement[0]['sequence'],
+                "element_data"=>$staticElement[0]['element_data']
+            ];
+            
+        }
+       else
+       {
+           foreach($staticElement as $k=>$v)
+            {
+                $id=$v['id'];
+                $type=$v['type'];
+                $sequence=$v['sequence'];
+                $element_data=$v['element_data'];
+
+                if(!isset($response[$type])) 
+                {
+                    $response[$type] = array();
+                }
+                $staticElements=array("id"=>$id,
+                "sequence"=>$sequence,
+                "element_data"=>$element_data);
+                array_push($response[$type],$staticElements);
+                
+            }//foreach
+        }//else
+
+
+
+
+*/

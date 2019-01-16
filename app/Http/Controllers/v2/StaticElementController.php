@@ -24,10 +24,10 @@ class StaticElementController extends Controller
         $data=array();
         if(isset($params['type']))
         {
-            $data['type']=$params['type'];
+            $type=$params['type'];
         }
-
-        $fetchedData=StaticElement::fetch($data);
+        
+        $fetchedData=StaticElement::fetch($type);
         return(json_encode($fetchedData));
     }
 

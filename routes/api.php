@@ -112,7 +112,7 @@ Route::group([
 Route::post('/rest/v2/save-page-element/new','v2\StaticElementController@callSaveNew'); //working
 
 Route::get('/rest/v2/get-page-element/{seq_no}','v2\StaticElementController@callFetchSeq');
-Route::get('/rest/v2/get-page-element','v2\StaticElementController@callFetch');
+Route::get('/rest/v2/get-page-element','v2\StaticElementController@callFetch'); //not
 Route::post('/rest/v2/save-page-element/{seq_no}','v2\StaticElementController@callSave'); //update
 
 Route::middleware('auth:api')->get('/user', $app_version.'\HomeController@api');
