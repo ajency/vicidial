@@ -6,76 +6,145 @@ use Illuminate\Database\Eloquent\Model;
 
 class StaticElement extends Model
 {
-    public static function fetch(array $data = [], bool $draft = true)
+    public static function fetchSeq($seq_no, bool $draft = true)
     {
-       if($draft==true)
+        if($draft==true)
         {
-            $select = ['id','type','element_data','element_data_draft', 'sequence','sequence_data_draft','published'];
-        }
-        else
-        {
-            $select=['id','type','element_data','element_data_draft', 'sequence','sequence_data_draft','published'];
-        }
+            $getRecord=StaticElement::select()->where('sequence',$seq_no)->where('draft',1)->orderBy('sequence','desc')->get()->first();
 
-        if(!empty($data))
-        {
-            $where=array();
-
-            if(isset($data['id']))
+            if(!is_null($getRecord))
             {
-                $where[] = ['id', '=', $data['id']];
-                
+                $record=$getRecord;
             }
-            if(isset($data['type']))
+            else
             {
-                $where[] = ['type', '=', $data['type']];
+                $record=StaticElement::select()->where('sequence',$seq_no)->where('published',1)->orderBy('sequence','desc')->first();        
             }
-          $staticElement=self::select($select)->where($where)->orderBy('sequence', 'ASC')->get();  
         }
-        else
-        {
-            $staticElement=self::select($select)->orderBy('sequence', 'ASC')->get();
-        }
-       
-       
-        $response=array();
-        //if id is set
-        if(isset($data['id']))
-        {
-           $staticElementnew = $staticElement->first();
-           if($staticElementnew==null)
-           {
-               abort(404);
-           }
-           $response=[
-                "id"=>$staticElement[0]['id'],
-                "sequence"=>$staticElement[0]['sequence'],
-                "element_data"=>$staticElement[0]['element_data']
-            ];
-            
-        }
-       else
-       {
-           foreach($staticElement as $k=>$v)
-            {
-                $id=$v['id'];
-                $type=$v['type'];
-                $sequence=$v['sequence'];
-                $element_data=$v['element_data'];
-
-                if(!isset($response[$type])) 
-                {
-                    $response[$type] = array();
-                }
-                $staticElements=array("id"=>$id,
-                "sequence"=>$sequence,
-                "element_data"=>$element_data);
-                array_push($response[$type],$staticElements);
-                
-            }//foreach
-        }//else
         
-        return(json_encode($response));
+        else
+        {
+            $record=StaticElement::select()->where('published', 1)->get()->first();
+        }
+        
+        if(!is_null($record))
+        {
+            $response=[
+                "id"=>$record['id'],
+                "sequence"=>$record['sequence'],
+                "element_data"=>$record['element_data'],
+                ];
+        }
+        else
+        {
+            $response=[];
+        }
+       
+        return($response);
+ }//fetchSeq
+
+
+ public static function fetch(array $data=[])
+ {
+    if(isset($data['type']))
+    {
+        $records=StaticElement::select()->where('type', '=', $data['type'])->get();
+    }
+
+   
+    return(json_encode($response));
  }//fetch
+ 
+//update
+ public static function saveData($seq_no,$element_data)
+ {
+        $record=StaticElement::select()->where('sequence', '=', $seq_no)->orderBy('created_at', 'desc')->get()->first();
+        
+        if($record==null)
+        {
+            abort(404);
+        }
+        if($record['published']==1)
+        {
+            $se=new StaticElement();
+            $se->sequence=$seq_no;
+            $se->element_data=$element_data;
+            $se->type=$record['type'];
+            $se->published=null;
+            $success=$se->save();
+                    
+        }
+        else
+        {
+            //get latest seq
+            $get_seq=Staticelement::select()->where('sequence',$seq_no)->orderBy('created_at', 'desc')->get()->first();
+            $id=$get_seq['id'];
+           
+            $result=Staticelement::where('id', $id)->update(['published' => null,'draft'=>null]);
+            
+            $se=new StaticElement();
+            $se->sequence=$seq_no;
+            $se->element_data=$element_data;
+            $se->published=null;
+            $se->type=$record['type'];
+
+            $success=$se->save();
+        } 
+        if($success)
+        {
+           $response=[
+                "message"=>"Home page element saved successfully",
+                "success"=>true
+                ];
+        }
+        else
+        {
+            $response=[
+                "message"=>"Home page element not saved successfully",
+            ];
+        }
+        
+        //dd(response);
+        return ($response);
+        
+  }//save
+
+  //new data
+  public static function saveNewData($element_data)
+  {
+        $record=StaticElement::select()->where('published', '=', 1)->orWhere('draft','=', 1)->orderBy('sequence', 'desc')->first();
+        if($record==null)
+        {
+            $sequence=1;
+        }
+        else
+        {
+            $sequence=$record['sequence']+1;
+        }
+        
+        $se=new StaticElement();
+        $se->sequence=$sequence;
+        $se->element_data=$element_data;
+        $se->published=null;
+        $se->type=$record['type'];
+        $success=$se->save();
+
+        if($success)
+        {
+            $response=[
+              "message"=>"Home page element saved successfully",
+              "success"=>true
+          ];
+        }
+        else
+        {
+            $response=[
+                "message"=>"Home page element not saved successfully",
+            ];
+        }
+
+      return ($response);
+  }//saveNewData
+
 
 }//model

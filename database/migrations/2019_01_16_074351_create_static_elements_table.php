@@ -11,20 +11,21 @@ class CreateStaticElementsTable extends Migration
      *
      * @return void
      */
+    
     public function up()
     {
         Schema::create('static_elements', function (Blueprint $table) {
             $table->increments('id');
             $table->json('element_data');
-            $table->json('element_data_draft');
             $table->string('type');
             $table->integer('sequence');
-            $table->integer('sequence_data_draft');
-            $table->boolean('published')->default(1);
-            $table->boolean('display')->default(1);
+            $table->boolean('published')->nullable()->default(1);
+            $table->boolean('draft')->nullable()->default(1);
+            $table->unique(array('sequence', 'type','published'));
+            $table->unique(array('sequence','type','draft'));
             $table->timestamps();
         });
-    }
+    } 
 
     /**
      * Reverse the migrations.
