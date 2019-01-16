@@ -10,91 +10,7 @@
 
 @section('content')
 <div id="home-slider" class="home-slider">
-<!--     <div class="home-slide-item">
-      <a href="/stores/jaipur">
-        <picture>
-           <source media="(orientation: landscape)"
-                  data-srcset="{{CDN::asset('/img/home-banner/hello-jaipur-large.jpg') }} 2000w,
-                              {{CDN::asset('/img/home-banner/hello-jaipur-medium.jpg') }} 1200w,
-                              {{CDN::asset('/img/home-banner/hello-jaipur-small.jpg') }} 700w"
-                  sizes="100vw">
-
-           <source media="(orientation: portrait)"
-                  data-srcset="{{CDN::asset('/img/home-banner/hello-jaipur-portrait-large.jpg') }} 1200w,
-                              {{CDN::asset('/img/home-banner/hello-jaipur-portrait-medium.jpg') }} 700w,
-                              {{CDN::asset('/img/home-banner/hello-jaipur-portrait-small.jpg') }} 400w"
-                  sizes="100vw">
-
-           <img src="{{CDN::asset('/img/home-banner/hello-jaipur-20px.jpg') }}"
-               data-sizes="100vw"
-               class="img-fluid lazyload blur-up w-100" alt="Hello Jaipur - Your Kids's Favourite fashion destination is now coming to Jaipur!" title="Hello Jaipur - Your Kids's Favourite fashion destination is now coming to Jaipur!">
-        </picture>
-      </a>
-    </div> -->
     <div class="home-slide-item">
-      <a href="/shop?rf=price:0TO499">
-        <picture>
-           <source media="(orientation: landscape)"
-                  data-srcset="{{CDN::asset('/img/home-banner/makar_sankranti_jan_large.jpg') }} 2000w,
-                              {{CDN::asset('/img/home-banner/makar_sankranti_jan_medium.jpg') }} 1200w,
-                              {{CDN::asset('/img/home-banner/makar_sankranti_jan_small.jpg') }} 700w"
-                  sizes="100vw">
-
-           <source media="(orientation: portrait)"
-                  data-srcset="{{CDN::asset('/img/home-banner/makar_sankranti_jan_portrait_large.jpg') }} 1200w,
-                              {{CDN::asset('/img/home-banner/makar_sankranti_jan_portrait_medium.jpg') }} 700w,
-                              {{CDN::asset('/img/home-banner/makar_sankranti_jan_portrait_small.jpg') }} 400w"
-                  sizes="100vw">
-
-           <img src="{{CDN::asset('/img/home-banner/makar_sankranti_jan_20px.jpg') }}"
-               data-sizes="100vw"
-               class="img-fluid lazyload blur-up w-100" alt="Happy Makar Sankranti Flash Sale - Entire Store Under ₹499" title="Happy Makar Sankranti Flash Sale - Entire Store Under ₹499">
-        </picture>
-      </a>
-    </div>
-    <div class="home-slide-item">
-      <a href="/shop?rf=price:0TO499">
-        <picture>
-           <source media="(orientation: landscape)"
-                  data-srcset="{{CDN::asset('/img/home-banner/pongal_jan_large.jpg') }} 2000w,
-                              {{CDN::asset('/img/home-banner/pongal_jan_medium.jpg') }} 1200w,
-                              {{CDN::asset('/img/home-banner/pongal_jan_small.jpg') }} 700w"
-                  sizes="100vw">
-
-           <source media="(orientation: portrait)"
-                  data-srcset="{{CDN::asset('/img/home-banner/pongal_jan_portrait_large.jpg') }} 1200w,
-                              {{CDN::asset('/img/home-banner/pongal_jan_portrait_medium.jpg') }} 700w,
-                              {{CDN::asset('/img/home-banner/pongal_jan_portrait_small.jpg') }} 400w"
-                  sizes="100vw">
-
-           <img src="{{CDN::asset('/img/home-banner/pongal_jan_20px.jpg') }}"
-               data-sizes="100vw"
-               class="img-fluid lazyload blur-up w-100" alt="Happy Pongal Flash Sale - Entire Store Under " title="Happy Pongal Flash Sale - Entire Store Under ₹499">
-        </picture>
-      </a>
-    </div>
-    <div class="home-slide-item">
-      <a href="/shop?rf=price:0TO499">
-        <picture>
-           <source media="(orientation: landscape)"
-                  data-srcset="{{CDN::asset('/img/home-banner/lohri_jan_large.jpg') }} 2000w,
-                              {{CDN::asset('/img/home-banner/lohri_jan_medium.jpg') }} 1200w,
-                              {{CDN::asset('/img/home-banner/lohri_jan_small.jpg') }} 700w"
-                  sizes="100vw">
-
-           <source media="(orientation: portrait)"
-                  data-srcset="{{CDN::asset('/img/home-banner/lohri_jan_portrait_large.jpg') }} 1200w,
-                              {{CDN::asset('/img/home-banner/lohri_jan_portrait_medium.jpg') }} 700w,
-                              {{CDN::asset('/img/home-banner/lohri_jan_portrait_small.jpg') }} 400w"
-                  sizes="100vw">
-
-           <img src="{{CDN::asset('/img/home-banner/lohri_jan_20px.jpg') }}"
-               data-sizes="100vw"
-               class="img-fluid lazyload blur-up w-100" alt="Happy Lohri Flash Sale - Entire Store Under " title="Happy Lohri Flash Sale - Entire Store Under ₹499">
-        </picture>
-      </a>
-    </div>
-<!--     <div class="home-slide-item">
       <a href="/shop">
         <picture>
            <source media="(orientation: landscape)"
@@ -114,8 +30,29 @@
                class="img-fluid lazyload blur-up w-100" alt="Upto 50% OFF" title="Upto 50% OFF">
         </picture>
       </a>
-    </div> -->
-<!--     <div class="home-slide-item">
+    </div>
+    <div class="home-slide-item">
+      <a href="/stores/jaipur">
+        <picture>
+           <source media="(orientation: landscape)"
+                  data-srcset="{{CDN::asset('/img/home-banner/store-jaipur-large.jpg') }} 2000w,
+                              {{CDN::asset('/img/home-banner/store-jaipur-medium.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/store-jaipur-small.jpg') }} 700w"
+                  sizes="100vw">
+
+           <source media="(orientation: portrait)"
+                  data-srcset="{{CDN::asset('/img/home-banner/store-jaipur-portrait-large.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/store-jaipur-portrait-medium.jpg') }} 700w,
+                              {{CDN::asset('/img/home-banner/store-jaipur-portrait-small.jpg') }} 400w"
+                  sizes="100vw">
+
+           <img src="{{CDN::asset('/img/home-banner/store-jaipur-20px.jpg') }}"
+               data-sizes="100vw"
+               class="img-fluid lazyload blur-up w-100" alt="Hello Jaipur - Your Kids's Favourite fashion destination is now coming to Jaipur!" title="Hello Jaipur - Your Kids's Favourite fashion destination is now coming to Jaipur!">
+        </picture>
+      </a>
+    </div>     
+    <div class="home-slide-item">
       <a href="/shop">
         <picture>
            <source media="(orientation: landscape)"
@@ -135,7 +72,7 @@
                class="img-fluid lazyload blur-up w-100" alt="Upto 50% OFF" title="Upto 50% OFF">
         </picture>
       </a>
-    </div>  -->   
+    </div>    
     <div class="home-slide-item">
       <a href="/shop">
         <picture>
@@ -156,7 +93,7 @@
                class="img-fluid lazyload blur-up w-100" alt="Free Gifts On The Purchase Of ₹3000 And Above" title="Free Gifts On The Purchase Of ₹3000 And Above">
         </picture>
       </a>
-    </div>
+    </div>  
     <div class="home-slide-item">
       <a href="/shop">
         <picture>
@@ -305,15 +242,15 @@
   <div class="container">
     <div class="cat-container">
       <div class="cat-item cat-13">
-        <a href="/shop?rf=price:0TO499">
+        <a href="/shop">
           <img class="d-block w-100 img-fluid lazyload blur-up"
-              src="{{CDN::asset('/img/home-category/makar_sankranti_category_10px.jpg') }}"
-              data-srcset="{{CDN::asset('/img/home-category/makar_sankranti_category_large.jpg') }} 740w,
-                            {{CDN::asset('/img/home-category/makar_sankranti_category_medium.jpg') }} 370w,
-                            {{CDN::asset('/img/home-category/makar_sankranti_category_small.jpg') }} 248w"
+              src="{{CDN::asset('/img/home-category/category_grid13_10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/home-category/category_grid13_large.jpg') }} 740w,
+                            {{CDN::asset('/img/home-category/category_grid13_medium.jpg') }} 370w,
+                            {{CDN::asset('/img/home-category/category_grid13_small.jpg') }} 248w"
               data-sizes='(min-width: 1200px) 570px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 92vw,  31vw'
-              alt="Happy Makar Sankranti - Entire Store Under ₹499"
-              title="Happy Makar Sankranti - Entire Store Under ₹499" />
+              alt="New Year Super Sale - Flat 50% OFF"
+              title="New Year Super Sale - Flat 50% OFF" />
         </a>
       </div>
       <div class="cat-item cat-14">
