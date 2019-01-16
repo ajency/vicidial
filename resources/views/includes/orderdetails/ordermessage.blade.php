@@ -14,7 +14,7 @@
 	</div>
 	@endif
 	@if($status == 'failure')
-	<a href="/#/bag" class="btn btn-primary close">Retry Payment</a>
+	<button class="btn btn-primary close retry-pay-btn">Retry Payment</button>
 	<div>
 		<h4 class="font-weight-bold"><i class="fas fa-times-circle"></i> Payment Failed</h4>
 		<p class="mb-2">We could not process your payment. This could be due to the following reasons :</p>
@@ -55,6 +55,12 @@
 				updateCartCountInUI();
 				sessionStorage.removeItem('cart_data');
 		}
+		$(function(){
+			$('.retry-pay-btn').click(function(){
+				let url = window.location.href.split("#")[0] + '#/bag';
+	       		window.location = url;	
+			})
+		})
 		
 	</script>
 @stop
