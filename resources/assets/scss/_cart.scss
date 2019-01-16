@@ -169,6 +169,13 @@ $L : 1200px;
     }
 }
 
+// Safari white screen issue fix
+@media (min-width: 992px){
+    _::-webkit-full-page-media, _:future, :root #cd-cart.speed-in .default-flyout-open {
+        right: 0 !important;
+    }
+}
+
 .cd-cart-total {
     // padding-top: 1em;
     padding-bottom: 1em;
