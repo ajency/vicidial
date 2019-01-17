@@ -24,7 +24,6 @@ export class AddressComponent implements OnInit, OnChanges {
     phone : '',
     address : '',
     pincode : '',
-    locality : '',
     landmark : '',
     city : '',
     state_id : '',
