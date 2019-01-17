@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ElementRef, ViewChild, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppServiceService } from '../service/app-service.service';
 import { ApiServiceService } from '../service/api-service.service';
@@ -11,6 +11,13 @@ declare var $: any;
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+
+  @ViewChild('otp1') otp1: ElementRef;
+  @ViewChild('otp2') otp2: ElementRef;
+  @ViewChild('otp3') otp3: ElementRef;
+  @ViewChild('otp4') otp4: ElementRef;
+  @ViewChild('otp5') otp5: ElementRef;
+  @ViewChild('otp6') otp6: ElementRef;
 
 	@Output() loginSuccess = new EventEmitter();
 
@@ -29,7 +36,8 @@ export class LoginComponent implements OnInit {
 
   constructor(private appservice : AppServiceService,
   						private apiservice : ApiServiceService,
-  						private router: Router) { }
+  						private router: Router,
+              private zone : NgZone) { }
 
   ngOnInit() {
   	if(!this.appservice.isLoggedInUser()){
@@ -154,6 +162,28 @@ export class LoginComponent implements OnInit {
     this.otp = null;
     this.otpCode.otp1 =''; this.otpCode.otp2 = ''; this.otpCode.otp3 = ''; this.otpCode.otp4 = ''; this.otpCode.otp5 = ''; this.otpCode.otp6='';
     this.userValidation.otpVerificationErrorMsg = '';
+  }
+
+  otpVerificationIOS(otp){
+    if(otp.length == 6){
+      console.log("otp code length is 6")
+      this.otpCode.otp1 = otp.charAt(0); 
+      this.otpCode.otp2 = otp.charAt(1); 
+      this.otpCode.otp3 = otp.charAt(2); 
+      this.otpCode.otp4 = otp.charAt(3); 
+      this.otpCode.otp5 = otp.charAt(4); 
+      this.otpCode.otp6 = otp.charAt(5);
+
+      setTimeout(()=>{          
+        this.otp1.nativeElement.value = otp.charAt(0); 
+        this.otp2.nativeElement.value = otp.charAt(1); 
+        this.otp3.nativeElement.value = otp.charAt(2); 
+        this.otp4.nativeElement.value = otp.charAt(3); 
+        this.otp5.nativeElement.value = otp.charAt(4); 
+        this.otp6.nativeElement.value = otp.charAt(5); 
+      },25);
+      this.zone.run(() => {});
+    }
   }
 
 }
