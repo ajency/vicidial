@@ -538,12 +538,12 @@
                            <tr>
                               <td>Clothes and Footwear</td>
                               <td></td>
-                              <td>Within 15 days of delivery</td>
+                              <td>Within 7 days of delivery</td>
                            </tr>
                            <tr>
                               <td>Other products except products mentioned below</td>
                               <td></td>
-                              <td>Within 15 days of delivery</td>
+                              <td>Within 7 days of delivery</td>
                            </tr>
                            <tr>
                               <td>Socks</td>
