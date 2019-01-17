@@ -225,7 +225,7 @@ function buildProductIndexFromOdooData($productData, $variantData)
     $product_title                   = ($productData['product_att_magento_display_name'] && $productData['product_att_magento_display_name'] != '') ? $productData['product_att_magento_display_name'] : $productData['product_name'];
     $indexData['search_result_data'] = [
         'product_id'                       => $productData['product_id'],
-        "product_title"                    => $product_title . ' - ' . $variantData->first()['product_color_name'],
+        "product_title"                    => $product_title,
         "product_att_magento_display_name" => $productData['product_att_magento_display_name'],
         "product_name"                     => $productData['product_name'],
         "product_slug"                     => $productData['product_slug'],
