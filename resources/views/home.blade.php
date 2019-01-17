@@ -350,7 +350,7 @@
         </div>
       </div>
       <div class="cat-item cat-7 position-relative">
-        <a href="/infant-utility">
+        <a href="/accessories/girls">
           <img class="d-block w-100 img-fluid lazyload blur-up"
               src="{{CDN::asset('/img/home-category/category_grid8_jan_10px.jpg') }}"
               data-srcset="{{CDN::asset('/img/home-category/category_grid8_jan_large.jpg') }} 740w,
