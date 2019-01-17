@@ -181,8 +181,9 @@ export class LoginComponent implements OnInit {
         this.otp4.nativeElement.value = otp.charAt(3); 
         this.otp5.nativeElement.value = otp.charAt(4); 
         this.otp6.nativeElement.value = otp.charAt(5); 
-      },25);
+      },20);
       this.zone.run(() => {});
+      this.otp6.nativeElement.focus();
     }
   }
 
