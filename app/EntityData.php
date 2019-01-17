@@ -37,9 +37,9 @@ class EntityData extends Model
     		$query->where('active',true);
     	}
     	$results = $query->get();
-    	dd($results->mapWithKeys(function($item){
+    	return $results->mapWithKeys(function($item){
     		return [$item['attribute'] => EntityData::attributeCastHelper($item['attribute'],$item['value'])];
 
-    	}));
+    	});
     }
 }

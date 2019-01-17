@@ -87,6 +87,11 @@ return [
         "is_locked",
         "lot_name",
     ],
+    'static_fields' => [
+        'product' => [
+            'product_rank' => 0,
+        ],
+    ],
     'update_inventory'               => env('UPDATE_INVENTORY', false),
     'attribute_fields'               => [
         'id',
@@ -127,7 +132,7 @@ return [
             ],
         ],
         "number_facet"  => [
-            'product' => ['product_id'],
+            'product' => ['product_id','product_rank'],
             'variant' => [
                 'product_color_id',
                 'variant_id',

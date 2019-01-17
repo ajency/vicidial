@@ -3,6 +3,7 @@
 use Ajency\Connections\OdooConnect;
 use App\Defaults;
 use App\Facet;
+use App\EntityData;
 use App\Jobs\FetchProductImages;
 use App\Location;
 use Carbon\Carbon;
@@ -140,6 +141,10 @@ function sanitiseProductData($odooData)
     if ($index['product_gender'] == 'Others') {
         $index['product_gender'] = 'Unisex';
     }
+    $staticData = EntityData::getOdooProductAttributes($odooData["id"]);
+    foreach (config('product.static_fields.product') as $attribute => $defaultAttValue) {
+        $index[$attribute] = (isset($staticData[$attribute]))? $staticData[$attribute] : $defaultAttValue;
+    }
     return $index;
 }
 
@@ -253,6 +258,7 @@ function buildProductIndexFromOdooData($productData, $variantData)
         "product_images"                   => [],
         "product_image_available"          => $productData['product_image_available'],
         "product_metatag"                  => $productData['product_metatag'],
+        "product_rank"                     => $productData['product_rank'],
     ];
     $indexData["variants"] = [];
     foreach ($variantData as $variant) {
@@ -349,7 +355,7 @@ function buildProductIndexFromOdooData($productData, $variantData)
         "variant_discount_percent" => $variantData->max('variant_discount_percent'),
         "variant_lst_price"        => $variantData->max('variant_lst_price'),
         "variant_sale_price"       => $variantData->min('variant_sale_price'),
-        "product_rank"             => 0,
+        "product_rank"             => $productData['product_rank'],
     ];
     $indexData['string_sort'] = [
         "product_name" => $productData['product_name'],
