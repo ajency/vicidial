@@ -89,7 +89,7 @@ class AddressController extends Controller
             $address_data[] = $address->shippingAddress(true);
         }
 
-        return json_encode(["addresses" => $address_data, "user_info" = $user->userDetails()]);
+        return json_encode(["addresses" => $address_data, "user_info" => $user->userDetails()]);
     }
 
     public function userDeleteAddress(Request $request)
