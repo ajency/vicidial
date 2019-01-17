@@ -46,6 +46,7 @@ export class AddressComponent implements OnInit, OnChanges {
   checkAddresses(){
     if(!this.addresses.length){
       this.addAddress = true;
+      this.newAddress.phone = this.appservice.userMobile;
       this.addAddressFlagChanged.emit(true);
       if(this.states && this.states.length) 
         this.initSelectPicker(); 
@@ -82,6 +83,7 @@ export class AddressComponent implements OnInit, OnChanges {
     this.newAddress.default = false;
     this.newAddress.state_id="";
     this.newAddress.landmark = "";
+    this.newAddress.phone = this.appservice.userMobile;
     this.initSelectPicker();
   }
 

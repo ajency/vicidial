@@ -79,6 +79,7 @@ export class ShippingDetailsComponent implements OnInit {
     this.appservice.callGetAllAddressesApi().then((response)=>{
       this.addresses = response.addresses;      
       this.appservice.shippingAddresses = response.addresses;
+      this.appservice.userMobile = response.user_info.mobile;
       this.addresses.forEach((address)=> {if(address.default == true) this.selectedAddressId=address.id});
       this.removeLoader();
     })
