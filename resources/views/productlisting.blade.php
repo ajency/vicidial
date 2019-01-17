@@ -56,6 +56,7 @@
   ?>
   <script type="text/javascript">
       var config_facet_names_arr = <?= json_encode($config_facet_names_arr);?>;
+      var page_no_val = <?= json_encode($params->page_val);?>;
       var facet_value_slug_assoc = <?= $facet_value_slug_assoc ?>;
       var facet_display_data_arr = <?= $facet_display_data_arr ?>;
       var price_bucket_config_arr = <?= json_encode($price_bucket_config) ?>;

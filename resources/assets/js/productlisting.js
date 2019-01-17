@@ -544,6 +544,7 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                   context["products"] = product_list_context.products;
                   context["show_more"] = product_list_context.page.has_next;
                   context["load_prev"] = product_list_context.page.has_previous;
+                  context["page_val"] = page_no_val;
                   context["total_item_count"] = product_list_context.page.total_item_count;
                   context["display_limit"] = product_list_context.page.display_limit;
                   context["current"] = product_list_context.page.current;
@@ -910,6 +911,7 @@ function loadProductListing(pageval=-1,mobile_view = false,prepend = false){
          }
         context["show_more"] = product_list_context.page.has_next;
         context["load_prev"] = product_list_context.page.has_previous;
+        context["page_val"] = page_no_val;
         context["total_item_count"] = product_list_context.page.total_item_count;
         context["display_limit"] = product_list_context.page.display_limit;
         context["current"] = product_list_context.page.current;
