@@ -55,7 +55,6 @@
                     <div style="font-weight: bold;text-transform: uppercase;color: #000000;letter-spacing: 1px;">YOUR ORDER WILL BE SENT TO:</div>
                     <div style="margin-top: 20px;line-height: 20px;">{{$shipping_address['name']}} <br>
                     {{$shipping_address['address']}}<br>
-                    {{$shipping_address['locality']}}<br>
                     {{$shipping_address['city']}} {{$shipping_address['pincode']}} <br>
                     {{$shipping_address['state']}} <br>
                     Mobile: +91 {{$shipping_address['phone']}}

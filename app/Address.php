@@ -48,7 +48,6 @@ class Address extends Model
             "phone"      => $this->address["phone"],
             "city"       => $this->address["city"],
             "street"     => $this->address["address"],
-            "street2"    => $this->address["locality"],
             "state_id"   => $this->address["state_odoo_id"],
             "zip"        => $this->address["pincode"],
 
@@ -62,7 +61,6 @@ class Address extends Model
             "phone"      => $this->address["phone"],
             "city"       => $this->address["city"],
             "street"     => $this->address["address"],
-            "street2"    => $this->address["locality"],
             "state_id"   => $this->address["state_odoo_id"],
             "zip"        => $this->address["pincode"],
 
@@ -84,7 +82,6 @@ class Address extends Model
         $this->odooSync();
         $address = implode(", ", [
             $this->address["address"],
-            $this->address["locality"],
             $this->address["city"],
             $this->address["state"],
             'India'

@@ -18,7 +18,7 @@
       <div class="card-body">
          <h3 class="kss-title font-weight-bold text-muted">{{$shipping_address['name']}}</h3>
          <p class="text-muted">
-            {{$shipping_address['address']}}, {{$shipping_address['locality']}}, @if($shipping_address['landmark']!=""){{$shipping_address['landmark']}},@endif {{$shipping_address['city']}}, {{$shipping_address['state']}} {{$shipping_address['pincode']}}
+            {{$shipping_address['address']}}, @if($shipping_address['landmark']!=""){{$shipping_address['landmark']}},@endif {{$shipping_address['city']}}, {{$shipping_address['state']}} {{$shipping_address['pincode']}}
          </p>
          <p class="text-muted">
             Mobile: <b class="font-weight-bold">+91 {{$shipping_address['phone']}}</b>
