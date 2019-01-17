@@ -349,6 +349,7 @@ function buildProductIndexFromOdooData($productData, $variantData)
         "variant_discount_percent" => $variantData->max('variant_discount_percent'),
         "variant_lst_price"        => $variantData->max('variant_lst_price'),
         "variant_sale_price"       => $variantData->min('variant_sale_price'),
+        "product_rank"             => 0,
     ];
     $indexData['string_sort'] = [
         "product_name" => $productData['product_name'],
