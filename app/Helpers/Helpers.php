@@ -184,6 +184,11 @@ function sanitiseVariantData($odooData, $attributeData)
         $variantData['variant_size_name'] = "Miscellaneous";
     }
 
+    $staticData = EntityData::getOdooVariantAttributes($odooData["id"]);
+    foreach (config('product.static_fields.product') as $attribute => $defaultAttValue) {
+        $index[$attribute] = (isset($staticData[$attribute]))? $staticData[$attribute] : $defaultAttValue;
+    }
+
     return $variantData;
 }
 

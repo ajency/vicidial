@@ -91,6 +91,9 @@ return [
         'product' => [
             'product_rank' => 0,
         ],
+        'variant' => [
+            
+        ],
     ],
     'update_inventory'               => env('UPDATE_INVENTORY', false),
     'attribute_fields'               => [

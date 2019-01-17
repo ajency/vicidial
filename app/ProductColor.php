@@ -89,6 +89,13 @@ class ProductColor extends Model
         }
 
         //add static data to variant
+        foreach ($unstructured['variant'] as $variant_id => $variantData) {
+            $variantStaticData = EntityData::getOdooVariantAttributes($variant_id);
+            foreach (config('product.static_fields.variant') as $attribute => $defaultAttValue) {
+                $variantData[$attribute] = (isset($variantStaticData[$attribute])) ? $variantStaticData[$attribute] : $defaultAttValue;
+            }
+            $unstructured['variant'][$variant_id] = $variantData;
+        }
 
         return $unstructured;
     }
