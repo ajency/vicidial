@@ -40,6 +40,11 @@ class FetchProductImages implements ShouldQueue
         \Log::debug("=");
         \Log::debug(count($prod_images));
 
+        $productColors = ProductColor::where('product_id', $this->productId)->get();
+        foreach ($productColors as $pcs) {
+            $pcs->unmapAllImages();
+        }
+
         if($prod_images->count() == 0) {
             ProductColor::where('product_id', $this->productId)->update(['no_image'=>true]);
             return;
@@ -49,10 +54,6 @@ class FetchProductImages implements ShouldQueue
 
         $extension   = "jpg";
 
-        $productColors = ProductColor::where('product_id', $this->productId)->get();
-        foreach ($productColors as $pcs) {
-            $pcs->unmapAllImages();
-        }
         $prod_images_arr   = json_decode($prod_images, true);
         $colors            = array_column($prod_images_arr, "color_name");
         $default_color_ids = [];
