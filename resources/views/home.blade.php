@@ -350,30 +350,30 @@
         </div>
       </div>
       <div class="cat-item cat-7 position-relative">
-        <a href="/accessories/girls">
+        <a href="/infant-utility">
           <img class="d-block w-100 img-fluid lazyload blur-up"
-              src="{{CDN::asset('/img/home-category/category_grid7_10px.jpg') }}"
-              data-srcset="{{CDN::asset('/img/home-category/category_grid7_large.jpg') }} 740w,
-                            {{CDN::asset('/img/home-category/category_grid7_medium.jpg') }} 370w,
-                            {{CDN::asset('/img/home-category/category_grid7_small.jpg') }} 246w"
+              src="{{CDN::asset('/img/home-category/category_grid8_jan_10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/home-category/category_grid8_jan_large.jpg') }} 740w,
+                            {{CDN::asset('/img/home-category/category_grid8_jan_medium.jpg') }} 370w,
+                            {{CDN::asset('/img/home-category/category_grid8_jan_small.jpg') }} 246w"
               data-sizes='(min-width: 1200px) 370px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 92vw,  31vww'
-              alt="Her Jewellery"
-              title="Her Jewellery"/>
+              alt="Her Cute Accessory Shop"
+              title="Her Cute Accessory Shop"/>
 
           <!-- <a href="/shop" class="shop-now-btn shop-now-btn--jewelery">Shop Now</a> -->
         </a>
       </div>
       <div class="cat-item cat-8 position-relative">
-        <a href="/infant-utility">
+        <a href="/accessories/infant-0-2-years">
          <img class="d-block w-100 img-fluid lazyload blur-up"
-              src="{{CDN::asset('/img/home-category/category_grid8_jan_10px.jpg') }}"
-              data-srcset="{{CDN::asset('/img/home-category/category_grid8_jan_large.jpg') }} 740w,
-                            {{CDN::asset('/img/home-category/category_grid8_jan_medium.jpg') }} 370w,
-                            {{CDN::asset('/img/home-category/category_grid8_jan_small.jpg') }} 246w"
+              src="{{CDN::asset('/img/home-category/category_grid8_10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/home-category/category_grid8_large.jpg') }} 740w,
+                            {{CDN::asset('/img/home-category/category_grid8_medium.jpg') }} 370w,
+                            {{CDN::asset('/img/home-category/category_grid8_small.jpg') }} 246w"
               data-sizes='(min-width: 1200px) 370px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 92vw,  31vw'
-              alt="Her Cute Accessory Shop"
-              title="Her Cute Accessory Shop"/>
-          <!-- <p class="custom-text text-acc text-uppercase">The cute <strong>accessory</strong> shop</p> -->
+              alt="The Cute Accessory Shop"
+              title="The Cute Accessory Shop"/>
+          <p class="custom-text text-acc text-uppercase">The cute <strong>accessory</strong> shop</p>
         </a>
       </div>
       <div class="cat-item cat-9 position-relative">
