@@ -67,10 +67,9 @@ $(function(){
 
     gtag('event', 'page_view', {
         'send_to': google_pixel_id,
-        'ecomm_pagetype': 'list',
-        'ecomm_prodid': parent_id+'-'+selected_color_id,
-        'ecomm_totalvalue': default_price,
-        'user_id': getCookie('user_id')
+        'event_category': 'list',
+        'event_label': parent_id+'-'+selected_color_id,
+        'value': default_price
       });
 
 })
