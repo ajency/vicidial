@@ -93,7 +93,7 @@ class StaticController extends Controller
         $data = $request->all();
         // dd($data);
         sendEmail('contact-us', [
-            'from'          => $data["email"],
+            'from'          => ["name"=>$data["name"],"id"=>$data["email"]],
             'subject'       => 'Contact Form - '.$data["name"],
             'template_data' => [
                 'data' => $data,
