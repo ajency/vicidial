@@ -89,9 +89,6 @@
 				    content_type: 'product_group',
 				});
 				// Google pixel tracking
-				console.log("GA", google_pixel_id);
-				console.log("contentID", content_ids);
-				console.log("total", total);
 				gtag('event', 'page_view', {
 					'send_to': google_pixel_id,
 					'ecomm_pagetype': 'purchase',
