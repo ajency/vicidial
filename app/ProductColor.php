@@ -104,8 +104,16 @@ class ProductColor extends Model
                 continue;
             }
 
+            if ($productColorData['search_result_data']['product_att_ecom_sales'] == false) {
+                continue; // Skip if ecom sales is off
+            }
+
             $images     = $productColor->getAllImages(["main"]);
             $main_image = (isset($images[0]['main']['1x'])) ? $images[0]['main']['1x'] : false;
+
+            if ($productColorData['search_result_data']['product_image_available'] == false || $main_image == false) {
+                continue; // Skip if image not available
+            }
 
             $params = [
                 'id'                => $productColorData['search_result_data']['product_id'] . "-" . $productColorData['search_result_data']['product_color_id'],
@@ -115,6 +123,7 @@ class ProductColor extends Model
                 'identifier_exists' => 'no',
                 'condition'         => 'new',
                 'link'              => url('/') . "/" . $productColorData['search_result_data']['product_slug'] . "/buy",
+                'image_link'        => $main_image,
                 'product_type'      => $productColorData['search_result_data']['product_category_type'] . ' > ' . $productColorData['search_result_data']['product_subtype'],
             ];
 
@@ -134,12 +143,6 @@ class ProductColor extends Model
 
             if ($productColorData['search_result_data']['product_att_material'] != false) {
                 $params['material'] = $productColorData['search_result_data']['product_att_material'];
-            }
-
-            if ($productColorData['search_result_data']['product_image_available'] != false && $main_image != false) {
-                $params['image_link'] = $main_image;
-            } else {
-                continue; // Skip if image not available
             }
 
             if ($productColorData['search_result_data']['product_category_type'] == 'Apparels' || $productColorData['search_result_data']['product_category_type'] == 'Accessories') {
