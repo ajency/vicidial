@@ -50,6 +50,7 @@ Route::group([
 	});
 	Route::post('/product-list', $group_app_version.'\ListingController@productList');
 	Route::get('/product-with-missing-images', $group_app_version.'\ProductController@productMissingImages');
+	Route::post('/send-contact-details', $group_app_version.'\StaticController@saveContactDetails');
 });
 
 $group_app_version = 'v2';
