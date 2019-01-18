@@ -563,6 +563,7 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                   context["page"] = product_list_context.page;
                   context["show_more"] = product_list_context.page.has_next;
                   context["load_prev"] = product_list_context.page.has_previous;
+                  product_list_items = $.extend({}, product_list_context.products);
                   prod_items_count = (Object.keys(product_list_items).length)
                   context["page_val"] = page_no_val;
                   context["item_count"] =  prod_items_count;
@@ -571,7 +572,7 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                   context["current"] = product_list_context.page.current;
                   var html = template(context);
                   document.getElementById("products-list-template-content").innerHTML = html;
-                  product_list_items = $.extend({}, product_list_context.products);
+                  
                 }
                 else{
                   product_list_items = {};
