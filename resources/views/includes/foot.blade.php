@@ -3,8 +3,6 @@
 	<link rel="stylesheet" type="text/css" href="{{CDN::mix('/css/kss.css') }}">
 </noscript>
 <script>
-  // Google pixel tracking id
-  var google_pixel_id = "{{config('analytics.google_pixel_id')}}";
   var loadDeferredStyles = function() {
     var addStylesNode = document.getElementById("deferred-styles");
     var replacement = document.createElement("div");
@@ -19,6 +17,10 @@
 </script>
 @endisset
 
+<script type="text/javascript">
+  // Google pixel tracking id
+  var google_pixel_id = "{{config('analytics.google_pixel_id')}}";
+</script>
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 
