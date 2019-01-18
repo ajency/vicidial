@@ -60,6 +60,11 @@ $(function(){
     });
 
     // Google analytic pixel tracking
+    console.log("GA ID =>", google_pixel_id);
+    console.log("UserID =>", getCookie('user_id'));
+    console.log("parentid+colorid =>", parent_id+'-'+selected_color_id);
+    console.log("Price =>", default_price);
+
     gtag('event', 'page_view', {
         'send_to': google_pixel_id,
         'ecomm_pagetype': 'list',

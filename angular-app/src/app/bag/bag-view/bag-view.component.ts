@@ -148,19 +148,19 @@ export class BagViewComponent implements OnInit {
     this.fetchCartFailed = false;  
     console.log(this.google_track_response(response));
     let result = this.google_track_response(response); 
-    google_pixel_tracking(result.variant_ids, result.total_values, "cart");
+    google_pixel_tracking(result.pixel_ids, result.total_values, "cart");
     this.zone.run(() => {});    
   }
 
   google_track_response(response){
-    let variant_ids = [], total_values = [];
+    let pixel_ids = [], total_values = [];
     response.items.forEach((item)=>{
-      variant_ids.push(item.id);
+      pixel_ids.push(item.pixel_id);
       total_values.push(item.attributes.price_final);
     })
     // console.log("check ==>", variant_ids, total_values);
     let result = {
-      variant_ids : variant_ids.join(),
+      pixel_ids : pixel_ids.join(),
       total_values : total_values.join()
     }
     return result;  
@@ -257,7 +257,7 @@ export class BagViewComponent implements OnInit {
   checkLoginStatus(){
     console.log(this.google_track_response(this.cart));
     let result = this.google_track_response(this.cart); 
-    google_pixel_tracking(result.variant_ids, result.total_values, "checkout");
+    google_pixel_tracking(result.pixel_ids, result.total_values, "checkout");
     fbTrackInitiateCheckout(this.cart.summary.you_pay);
     this.addToCartFailed = false;
     if(this.appservice.isLoggedInUser()){
