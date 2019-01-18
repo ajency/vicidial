@@ -10,4 +10,7 @@ return [
     "failed-job" => [
         'laravel'    => 'email.failed-job',
     ],
+     "contact-us" => [
+        'laravel'    => 'email.contact-us',
+    ],
 ];

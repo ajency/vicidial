@@ -30,41 +30,44 @@
    </div>
    <div class="row justify-content-center">
       <!-- Contact form -->
+      <form id="contact-form">
       <div class="col-sm-8 pb-3 pb-sm-5 pb-md-0 contactForm">
          <div class="row ml-0 p-md-4 mr-3 shadow no-shadow-mobile">
             <div class="col-md-12">
                <h4 class="text-center mb-sm-3 font-weight-bold">Send us a message to let us know how we can help</h4>
                <!--firstName-->
                <div class="form-group ">
-                  <input class="form-control form-control-lg" id="names" type="text">
-                  <label class="control-label">Name*</label>
+                  <input class="form-control form-control-lg" id="names" name="name" type="text" required="true">
+                  <label class="control-label">Name<span class="text-danger">*</span></label>
                </div>
             </div>
             <div class="col-md-12">
                <div class="form-group ">
-                  <input class="form-control form-control-lg" id="mobile" type="text" >
-                  <label class="control-label" >Mobile No*</label>
+                  <input class="form-control form-control-lg" id="mobile" name="mobile" type="text" required="true">
+                  <label class="control-label" >Mobile No<span class="text-danger">*</span></label>
                </div>
             </div>
             <div class="col-md-12">
                <div class="form-group ">
-                  <input class="form-control form-control-lg" id="mobile" type="text" >
-                  <label class="control-label" >Email*</label>
+                  <input class="form-control form-control-lg" id="mobile" name="email" type="text" required="true">
+                  <label class="control-label" >Email<span class="text-danger">*</span></label>
                </div>
             </div>
             <div class="col-md-12">
                <div class="form-group ">
-                  <input class="form-control form-control-lg" id="mobile" type="text" >
-                  <label class="control-label" >Comments*</label>
+                  <input class="form-control form-control-lg" id="mobile" name="comments" type="text" required="true">
+                  <label class="control-label" >Comments<span class="text-danger">*</span></label>
                </div>
             </div>
             <div class="col-md-12">
                <div class="form-group mt-3">
-                  <button type="button" class="btn btn-primary btn-lg btn-block">Submit</button>
+                  <button type="submit" class="btn btn-primary btn-lg btn-block" id="submitContactForm">Submit</button>
                </div>
             </div>
          </div>
       </div>
+
+      </form>
       <div class="col-sm-4 mb-sm-3">
          <div class="row m-0">
             <div class="col-sm-12 shadow no-shadow-mobile p-sm-4 text-center">
@@ -77,4 +80,24 @@
    </div>
 </div>
 
+@stop
+
+@section('footjs')
+<script type="text/javascript">
+   $(document).ready(function(){
+      $("#submitContactForm").submit(function(){
+         $.ajax({
+             method: "POST",
+             url: "/api/rest/v1/product-list",
+             data: $("#contact-form").serialize(),
+             dataType: "json",
+             contentType: "application/json"
+         }).done(function( response ) {
+
+         });
+      })
+      
+   })
+   
+</script>
 @stop

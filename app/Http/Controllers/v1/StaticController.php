@@ -89,4 +89,17 @@ class StaticController extends Controller
         return Variant::updateVariantDiffFile();
     }
 
+    public function saveContactDetails(Request $request){
+        $data = $request->all();
+        sendEmail('contact-us', [
+            'from'          => config('communication.order-success.from'),
+            'subject'       => 'Thank you for contacting us',
+            'template_data' => [
+                'data' => $data,
+            ],
+            'priority'      => 'default',
+        ]);
+        return response()->json(["message"=> 'Thank you.. we will get back to you.', 'success'=> true]);
+    }
+
 }
