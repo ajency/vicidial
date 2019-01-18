@@ -20,6 +20,10 @@ Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
   return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
 });
 
+Handlebars.registerHelper('ifGreaterEq', function(arg1, arg2, options) {
+  return (arg1 >= arg2) ? options.fn(this) : options.inverse(this);
+});
+
 Handlebars.registerHelper('assign', function (varName, varValue, options) {
   if (!options.data.root) {
     options.data.root = {};
@@ -542,9 +546,12 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
 
                   var context = {};
                   context["products"] = product_list_context.products;
+                  context["page"] = product_list_context.page;
                   context["show_more"] = product_list_context.page.has_next;
                   context["load_prev"] = product_list_context.page.has_previous;
+                  prod_items_count = (Object.keys(product_list_items).length)
                   context["page_val"] = page_no_val;
+                  context["item_count"] =  prod_items_count;
                   context["total_item_count"] = product_list_context.page.total_item_count;
                   context["display_limit"] = product_list_context.page.display_limit;
                   context["current"] = product_list_context.page.current;
@@ -909,9 +916,12 @@ function loadProductListing(pageval=-1,mobile_view = false,prepend = false){
            $(".productlist__row").removeClass('d-none');
            $(".productlist__na").addClass('d-none');
          }
+        context["page"] = product_list_context.page;
         context["show_more"] = product_list_context.page.has_next;
         context["load_prev"] = product_list_context.page.has_previous;
         context["page_val"] = page_no_val;
+        prod_items_count = (Object.keys(product_list_items).length)
+        context["item_count"] =  prod_items_count;
         context["total_item_count"] = product_list_context.page.total_item_count;
         context["display_limit"] = product_list_context.page.display_limit;
         context["current"] = product_list_context.page.current;

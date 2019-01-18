@@ -1,10 +1,12 @@
 <!-- Loop all products -->
 <script id="products-list-template" type="text/x-handlebars-template">
+  @{{#ifGreaterEq page.total page.current }}
   <div class="text-center mt-4 mb-0 mb-sm-4 pt-4 pb-0 pb-sm-4 @{{#if load_prev }} @{{#ifEquals page_val 1 }} d-none @{{/ifEquals}} @{{else}} d-none @{{/if}}">
   	<button href="javascript:void(0);" class="d-flex align-items-center justify-content-center btn more-products-btn m-auto" id="loadPrevProductsBtn">
 		<i class="load-icon-cls align-middle fa-circle-notch fa-lg fa-spin fas mr-2 d-none"></i> Load Previous
 	</button>
   </div>
+  @{{/ifGreaterEq}}
  <div id="card-list" class="row">
   @{{#each products}}
   <div class="col-lg-4 col-md-6 mb-sm-4 col-6  ">
@@ -81,13 +83,13 @@
   </div>
 
   @{{assign "viewed_products" (multiply display_limit current)}}
-  <p class="my-4 product-view text-center @{{#if show_more }} @{{else}} d-none @{{/if}}">You've viewed @{{viewed_products}} of  @{{total_item_count}} products</p>
+  <p class="my-4 product-view text-center @{{#if show_more }} @{{else}} d-none @{{/if}}">You've viewed @{{item_count}} of  @{{total_item_count}} products</p>
   <!-- progress loader -->
   <div class="kss-progress-bar @{{#if show_more }} @{{else}} d-none @{{/if}}">
   	<div class="kss-progress-bar__loader" style="width:@{{percent viewed_products total_item_count}}%;"></div>
   </div>
 
-  <div class="text-center mt-4 mb-0 mb-sm-4 pt-4 pb-0 pb-sm-4 @{{#if show_more }} @{{else}} d-none @{{/if}}">
+  <div class="text-center mt-4 mb-0 mb-sm-4 pt-4 pb-0 pb-sm-4 @{{#if show_more }} @{{#ifEquals page_val page.total }} d-none @{{/ifEquals}} @{{else}} d-none @{{/if}}">
   	<button href="javascript:void(0);" class="d-flex align-items-center justify-content-center btn more-products-btn m-auto" id="showMoreProductsBtn">
 		<i class="load-icon-cls align-middle fa-circle-notch fa-lg fa-spin fas mr-2 d-none"></i> Show more products 
 	</button>
@@ -125,6 +127,8 @@
    context["load_prev"] = <?= json_encode($page->has_previous) ?>;
    context["page_val"] = page_no_val;
    console.log("load prev =="+context["page_val"])
+   context["item_count"] = prod_items_count;
+   console.log("prod_items_count =="+prod_items_count)
    context["total_item_count"] = <?= json_encode($page->total_item_count) ?>;
    context["display_limit"] = <?= json_encode($page->display_limit) ?>;
    context["current"] = <?= json_encode($page->current) ?>;
