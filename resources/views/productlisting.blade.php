@@ -65,6 +65,7 @@
       var show_search_box = <?= json_encode($params->show_search) ?>;
       var slug_value_search_result = <?= $slug_value_search_result ?>;
       var product_list_items = {};
+      var first_page_loaded = false;
       Handlebars.registerPartial(
         'checkboxTemplate', '<?= $checkboxTemplate ?>'
         

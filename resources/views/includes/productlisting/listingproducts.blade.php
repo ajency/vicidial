@@ -1,7 +1,7 @@
 <!-- Loop all products -->
 <script id="products-list-template" type="text/x-handlebars-template">
   @{{#ifGreaterEq page.total page.current }}
-  <div class="text-center mt-4 mb-0 mb-sm-4 pt-4 pb-0 pb-sm-4 @{{#if load_prev }} @{{#ifEquals page_val 1 }} d-none @{{/ifEquals}} @{{else}} d-none @{{/if}}">
+  <div class="text-center mt-4 mb-0 mb-sm-4 pt-4 pb-0 pb-sm-4 @{{#if load_prev }} @{{#ifEquals page_val 1 }} d-none @{{/ifEquals}} @{{#if first_page_loaded}} d-none @{{/if}} @{{else}} d-none @{{/if}}">
   	<button href="javascript:void(0);" class="d-flex align-items-center justify-content-center btn more-products-btn m-auto" id="loadPrevProductsBtn">
 		<i class="load-icon-cls align-middle fa-circle-notch fa-lg fa-spin fas mr-2 d-none"></i> Load Previous
 	</button>
@@ -126,9 +126,8 @@
    context["show_more"] = <?= json_encode($page->has_next) ?>;
    context["load_prev"] = <?= json_encode($page->has_previous) ?>;
    context["page_val"] = page_no_val;
-   console.log("load prev =="+context["page_val"])
+   context["first_page_loaded"] = first_page_loaded;
    context["item_count"] = prod_items_count;
-   console.log("prod_items_count =="+prod_items_count)
    context["total_item_count"] = <?= json_encode($page->total_item_count) ?>;
    context["display_limit"] = <?= json_encode($page->display_limit) ?>;
    context["current"] = <?= json_encode($page->current) ?>;

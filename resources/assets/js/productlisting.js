@@ -563,6 +563,7 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                   context["page"] = product_list_context.page;
                   context["show_more"] = product_list_context.page.has_next;
                   context["load_prev"] = product_list_context.page.has_previous;
+                  context["first_page_loaded"] = first_page_loaded;
                   product_list_items = $.extend({}, product_list_context.products);
                   prod_items_count = (Object.keys(product_list_items).length)
                   context["page_val"] = page_no_val;
@@ -839,9 +840,7 @@ function loadProductListing(pageval=-1,mobile_view = false,prepend = false){
     }
     else{
         pageVal = (prepend == false)?(parseInt(page)+1):(parseInt(page)-1);
-        console.log(loaded_pages)
         while(jQuery.inArray( pageVal, loaded_pages ) != -1){
-          console.log("exists")
           pageVal = (prepend == false)?(pageVal+1):(pageVal-1);
         }
         url = url.replace(/page=\d+/, "page="+(pageVal));
@@ -894,11 +893,10 @@ function loadProductListing(pageval=-1,mobile_view = false,prepend = false){
           getPrimaryFiltersInfo(url_pfilter)
       }
     }
-    console.log("pp=="+jQuery.inArray( pageVal, loaded_pages ))
+    if(pageVal == 1 && prepend == true)
+      first_page_loaded = true;
     if(jQuery.inArray( pageVal, loaded_pages ) == -1)
       loaded_pages.push(pageVal)
-    console.log("pageVal=="+pageVal)
-    console.log(loaded_pages)
     ajax_data["page"] = pageVal
     if(isMobile){
       delete ajax_data["exclude_in_response"];
@@ -943,7 +941,6 @@ function loadProductListing(pageval=-1,mobile_view = false,prepend = false){
             product_list_items_list[list_count+vkey] = product_list_items[vkey];
           }
           product_list_items = product_list_items_list
-          console.log(product_list_items)
         }
         else{
           var list_count = Object.keys(product_list_items).length;
@@ -966,6 +963,7 @@ function loadProductListing(pageval=-1,mobile_view = false,prepend = false){
         context["show_more"] = product_list_context.page.has_next;
         context["load_prev"] = product_list_context.page.has_previous;
         context["page_val"] = page_no_val;
+        context["first_page_loaded"] = first_page_loaded;
         prod_items_count = (Object.keys(product_list_items).length)
         context["item_count"] =  prod_items_count;
         context["total_item_count"] = product_list_context.page.total_item_count;
