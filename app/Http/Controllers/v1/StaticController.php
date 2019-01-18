@@ -91,9 +91,10 @@ class StaticController extends Controller
 
     public function saveContactDetails(Request $request){
         $data = $request->all();
+        // dd($data);
         sendEmail('contact-us', [
-            'from'          => config('communication.order-success.from'),
-            'subject'       => 'Thank you for contacting us',
+            'from'          => $data["email"],
+            'subject'       => 'Contact Form - '.$data["name"],
             'template_data' => [
                 'data' => $data,
             ],

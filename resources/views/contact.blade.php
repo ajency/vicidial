@@ -30,9 +30,11 @@
    </div>
    <div class="row justify-content-center">
       <!-- Contact form -->
-      <form id="contact-form">
+      
       <div class="col-sm-8 pb-3 pb-sm-5 pb-md-0 contactForm">
+         <form id="contact-form" method="post" >
          <div class="row ml-0 p-md-4 mr-3 shadow no-shadow-mobile">
+         
             <div class="col-md-12">
                <h4 class="text-center mb-sm-3 font-weight-bold">Send us a message to let us know how we can help</h4>
                <!--firstName-->
@@ -43,13 +45,13 @@
             </div>
             <div class="col-md-12">
                <div class="form-group ">
-                  <input class="form-control form-control-lg" id="mobile" name="mobile" type="text" required="true">
+                  <input class="form-control form-control-lg" id="mobile" name="mobile" type="tel" required="true">
                   <label class="control-label" >Mobile No<span class="text-danger">*</span></label>
                </div>
             </div>
             <div class="col-md-12">
                <div class="form-group ">
-                  <input class="form-control form-control-lg" id="mobile" name="email" type="text" required="true">
+                  <input class="form-control form-control-lg" id="mobile" name="email" type="email" required="true">
                   <label class="control-label" >Email<span class="text-danger">*</span></label>
                </div>
             </div>
@@ -62,12 +64,17 @@
             <div class="col-md-12">
                <div class="form-group mt-3">
                   <button type="submit" class="btn btn-primary btn-lg btn-block" id="submitContactForm">Submit</button>
+                  <div class="alert kss-flash alert-success p-3 alert-dismissible fade hide"><i class="fas fa-check-circle pr-1"></i> Thank you for contacting us. We will get back to you. 
+                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  </div>
                </div>
             </div>
+            
          </div>
+         </form>
       </div>
 
-      </form>
+      
       <div class="col-sm-4 mb-sm-3">
          <div class="row m-0">
             <div class="col-sm-12 shadow no-shadow-mobile p-sm-4 text-center">
@@ -77,6 +84,7 @@
             </div>
          </div>
       </div>
+
    </div>
 </div>
 
@@ -85,16 +93,23 @@
 @section('footjs')
 <script type="text/javascript">
    $(document).ready(function(){
-      $("#submitContactForm").submit(function(){
+      $("#contact-form").submit(function(event){
+         event.preventDefault();
+         $('.alert-success').addClass('hide')
+         $('.alert-success').removeClass('show')
          $.ajax({
              method: "POST",
-             url: "/api/rest/v1/product-list",
+             url: "/api/rest/v1/send-contact-details",
              data: $("#contact-form").serialize(),
-             dataType: "json",
-             contentType: "application/json"
+             // dataType: "json",
+             // contentType: "application/json"
          }).done(function( response ) {
-
+            if(response["success"]){
+               $('.alert-success').removeClass('hide')
+               $('.alert-success').addClass('show')
+            }
          });
+         
       })
       
    })
