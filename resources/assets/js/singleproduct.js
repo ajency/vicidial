@@ -60,16 +60,13 @@ $(function(){
     });
 
     // Google analytic pixel tracking
-    console.log("GA ID =>", google_pixel_id);
-    console.log("UserID =>", getCookie('user_id'));
-    console.log("parentid+colorid =>", parent_id+'-'+selected_color_id);
-    console.log("Price =>", default_price);
 
     gtag('event', 'page_view', {
         'send_to': google_pixel_id,
-        'event_category': 'list',
-        'event_label': parent_id+'-'+selected_color_id,
-        'value': default_price
+        'ecomm_pagetype': 'list',
+        'ecomm_prodid': parent_id+'-'+selected_color_id,
+        'ecomm_totalvalue': default_price,
+        'user_id': getCookie('user_id')
       });
 
 })
