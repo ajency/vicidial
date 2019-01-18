@@ -15,6 +15,7 @@ var filter_tags_list = [] ;
 var copy_filters ={}
 var has_reset_filter = false
 var call_mobile_api = false
+var loaded_pages = [parseInt(page_no_val)]
 
 Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
   return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
@@ -837,12 +838,18 @@ function loadProductListing(pageval=-1,mobile_view = false,prepend = false){
     }
     else{
         pageVal = (prepend == false)?(parseInt(page)+1):(parseInt(page)-1);
+        console.log(loaded_pages)
+        while(jQuery.inArray( pageVal, loaded_pages ) != -1){
+          console.log("exists")
+          pageVal = (prepend == false)?(pageVal+1):(pageVal-1);
+        }
         url = url.replace(/page=\d+/, "page="+(pageVal));
         
     }
     if(call_mobile_api == false && mobile_view == true){
       return;
     }
+
     call_mobile_api = false;
     var url_params = new window.URLSearchParams(window.location.search);
     var facet_display_data_keys = Object.keys(facet_display_data_arr)
@@ -886,6 +893,11 @@ function loadProductListing(pageval=-1,mobile_view = false,prepend = false){
           getPrimaryFiltersInfo(url_pfilter)
       }
     }
+    console.log("pp=="+jQuery.inArray( pageVal, loaded_pages ))
+    if(jQuery.inArray( pageVal, loaded_pages ) == -1)
+      loaded_pages.push(pageVal)
+    console.log("pageVal=="+pageVal)
+    console.log(loaded_pages)
     ajax_data["page"] = pageVal
     if(isMobile){
       delete ajax_data["exclude_in_response"];
