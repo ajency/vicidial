@@ -1040,3 +1040,12 @@ function updateFilterCount(){
       $('.nav-item[data-target="'+facet_display_data_arr[item]["template"]+'"]').find('.filter-count').removeClass('d-none')
   }
 }
+
+// Google pixel tracking
+gtag('event', 'page_view', {
+  'send_to': google_pixel_id,
+  'ecomm_pagetype': 'category',
+  'ecomm_prodid': '',
+  'ecomm_totalvalue': '',
+  'user_id': getCookie('user_id')
+});
