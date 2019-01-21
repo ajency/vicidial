@@ -438,3 +438,46 @@
 		}
 	}
 }
+
+// Activities landing page
+
+.rules{
+	.group-body{
+		@media (min-width: 768px){
+			font-size: 1.05rem;
+		}
+	}
+}
+
+.check-terms{
+	.custom-control-label{
+		&:before{
+			background-color: #fff;
+			border: 1px solid #828181;
+		    width: 1.5rem;
+		    height: 1.5rem;
+		}
+		&:after{
+			width: 1.5rem;
+		}
+		@media (max-width: 600px){
+			&:before{
+				width: 1.3rem;
+		    	height: 1.3rem;
+			}
+			&:after{
+				width: 1.4rem;
+    			height: 1.2rem;
+			}
+		}
+	}
+	label{
+		font-size: 1.15rem;
+		@media (max-width: 600px){
+			font-size: 1rem !important;
+		}
+	}
+	.terms-accepted-btn{
+		width: 150px;
+	}
+}
