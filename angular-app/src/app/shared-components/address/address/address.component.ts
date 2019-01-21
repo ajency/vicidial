@@ -198,11 +198,10 @@ export class AddressComponent implements OnInit, OnChanges {
       console.log("make api call");
       this.showShowLoader();
       this.unsubscribeGetLocationCall();
-      // let url = this.appservice.apiUrl +  "/api/rest/v1/district-state/"+pincode;
-      let url = 'https://demo8558685.mockable.io/location';
+      let url = this.appservice.apiUrl +  "/api/rest/v1/district-state/"+pincode;
       this.getLocationCall = this.apiservice.request(url, 'get', {}, {}, false, 'observable').subscribe((response)=>{
         console.log("response from location api ==>", response);
-        this.newAddress.city = response.city;
+        this.newAddress.city = response.district;
         this.newAddress.state_id = response.state_id;
         this.removeLoader();
       },
@@ -210,7 +209,7 @@ export class AddressComponent implements OnInit, OnChanges {
         console.log("error ===>", error);
         this.resetStateAndCity();
         this.removeLoader();
-        if(error.status == 404)
+        if(error.status == 403)
           this.pincodeErrorMsg = "We do not service this pincode.";
         else if(error.status == 0)
           this.pincodeErrorMsg = "Failed to verify pincode. Please check your internet connection."
