@@ -28,11 +28,11 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN apt-get install git -y
 RUN npm install -g gulp
 COPY composer.json composer.lock package.json /var/www/html/
+WORKDIR /var/www/html
 RUN composer config --global --auth github-oauth.github.com github_token
 RUN composer install
 RUN npm install
 ADD . /var/www/html
-WORKDIR /var/www/html
 RUN touch storage/logs/laravel.log
 RUN chmod 777 storage/logs/laravel.log
 RUN composer config --global --auth github-oauth.github.com github_token
