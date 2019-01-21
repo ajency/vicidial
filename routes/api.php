@@ -51,6 +51,8 @@ Route::group([
 	Route::post('/product-list', $group_app_version.'\ListingController@productList');
 	Route::get('/product-with-missing-images', $group_app_version.'\ProductController@productMissingImages');
 	Route::post('/send-contact-details', $group_app_version.'\StaticController@saveContactDetails');
+	
+	Route::get('/district-state/{pincode}', $group_app_version.'\AddressController@fetchPincode');
 });
 
 $group_app_version = 'v2';

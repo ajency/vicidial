@@ -9,6 +9,7 @@ use App\User;
 use App\Defaults;
 use App\Variant;
 use App\Cart;
+use App\Pincode;
 
 class AddressController extends Controller
 {
@@ -145,5 +146,15 @@ class AddressController extends Controller
         }
         
         return $statesArr;
+    }
+
+    public function fetchPincode($pincode, Request $request)
+    {
+        $pincode_entry = Pincode::where('pincode', '=', $pincode)->get()->first();
+        if($pincode_entry == null){
+            abort(403);
+        }
+        
+        return json_encode(['district' => $pincode_entry['district'], 'state_id' => $pincode_entry['state_id']]);
     }
 }
