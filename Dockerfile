@@ -37,8 +37,6 @@ RUN touch storage/logs/laravel.log
 RUN chmod 777 storage/logs/laravel.log
 RUN composer config --global --auth github-oauth.github.com github_token
 RUN composer install
-RUN npm install
-RUN npm install -g gulp
 RUN npm run production
 RUN gulp
 RUN chmod -R 777 /var/www/html/storage
