@@ -62,7 +62,7 @@
 			<div class="row" *ngIf="newAddress.state_id && newAddress.city">
 				<div class="col-md-6">
 					<div class="form-group ">
-						<input class="form-control form-control-lg" id="citys" type="text" name="city" [(ngModel)]="newAddress.city" required [ngClass]="{'has-value' : newAddress.city}">
+						<input disabled class="form-control form-control-lg" id="citys" type="text" name="city" [(ngModel)]="newAddress.city" required [ngClass]="{'has-value' : newAddress.city}">
 						<label class="control-label">City/District <span class="pl-1 text-danger">*</span></label>
 					</div>
 				</div>
@@ -79,7 +79,10 @@
 						<!-- <input class="form-control form-control-lg" id="state" type="text" name="state" [(ngModel)]="newAddress.state_id" required [ngClass]="{'has-value' : newAddress.state}">
 						<label class="control-label">State <span class="pl-1 text-danger">*</span></label> -->						
 					<!-- </div> -->
-					<label>{{getStateName(newAddress.state_id)}}</label>
+					<div class="form-group ">
+						<input disabled class="form-control form-control-lg" id="state" type="text" name="state" value="{{getStateName(newAddress.state_id)}}" [ngClass]="{'has-value' : newAddress.city}">
+						<label class="control-label">State<span class="pl-1 text-danger">*</span></label>
+					</div>					
 				</div>
 			</div>
 			<div *ngIf="!hideDefaultAddressField && addresses.length" class="row mt-4 mb-3">
