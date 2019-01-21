@@ -195,19 +195,19 @@ export class AddressComponent implements OnInit, OnChanges {
   getCityState(pincode){
     if(pincode.length == 6){
       console.log("make api call");
+      this.showShowLoader();
       this.unsubscribeGetLocationCall();
       let url = 'https://demo8558685.mockable.io/location';
       this.getLocationCall = this.apiservice.request(url, 'get', {}, {}, false, 'observable').subscribe((response)=>{
         console.log("response from location api ==>", response);
         this.newAddress.city = response.city;
         this.newAddress.state_id = response.state_id;
-        this.appservice.removeLoader();
+        this.removeLoader();
       },
       (error)=>{
         console.log("error ===>", error);
-        this.newAddress.city = '';
-        this.newAddress.state_id = '';
-        this.appservice.removeLoader();
+        this.resetStateAndCity();
+        this.removeLoader();
         if(error.status == 404)
           this.pincodeErrorMsg = "We do not service this pincode.";
         else
@@ -216,8 +216,7 @@ export class AddressComponent implements OnInit, OnChanges {
     }
     else{
       this.unsubscribeGetLocationCall();
-      this.newAddress.city = '';
-      this.newAddress.state_id = '';
+      this.resetStateAndCity();
       this.pincodeErrorMsg = "";
     }
   }
@@ -225,6 +224,19 @@ export class AddressComponent implements OnInit, OnChanges {
   unsubscribeGetLocationCall(){
     if(this.getLocationCall)
       this.getLocationCall.unsubscribe();
+  }
+
+  showShowLoader(){
+
+  }
+
+  removeLoader(){
+
+  }
+
+  resetStateAndCity(){
+    this.newAddress.city = '';
+    this.newAddress.state_id = '';
   }
 
 }
