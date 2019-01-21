@@ -317,6 +317,6 @@ function google_pixel_tracking(pixel_id,price_final,pagetype){
         'ecomm_pagetype': pagetype,
         'ecomm_prodid': pixel_id,
         'ecomm_totalvalue': price_final,
-        'user_id': 'pass_user_id'
+        'user_id': getCookie('user_id')
       });
   }
