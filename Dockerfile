@@ -30,7 +30,7 @@ RUN npm install -g gulp
 COPY composer.json composer.lock package.json /var/www/html/
 WORKDIR /var/www/html
 RUN composer config --global --auth github-oauth.github.com github_token
-RUN composer install
+RUN composer install --no-autoloader
 RUN npm install
 ADD . /var/www/html
 RUN touch storage/logs/laravel.log
