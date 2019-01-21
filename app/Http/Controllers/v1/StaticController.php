@@ -77,6 +77,15 @@ class StaticController extends Controller
         return view('store-single')->with('params', $this->params);
     }
 
+    public function activities($storename, Request $request)
+    {
+        if (!in_array($storename, ["jaipur","surat"])){
+            abort(404);
+        }
+        $this->params['breadcrumb']['current'] = 'Activities Rules';
+        return view('activities-rules')->with('params', $this->params)->with('storename', $storename);
+    }
+
     public function productXML(Request $request)
     {
         return response(Storage::disk('s3')->get(config('ajfileupload.doc_base_root_path') . '/products.xml'), 200, [
