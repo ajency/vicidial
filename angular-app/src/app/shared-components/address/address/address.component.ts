@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { AppServiceService } from '../../../service/app-service.service';
 import { ApiServiceService } from '../../../service/api-service.service';
+import { NumbersDirective } from '../../../directives/numbers.directive';
 
 declare var $: any;
 

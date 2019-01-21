@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter, ElementRef, ViewChild, NgZone 
 import { Router } from '@angular/router';
 import { AppServiceService } from '../service/app-service.service';
 import { ApiServiceService } from '../service/api-service.service';
+import { NumbersDirective } from '../directives/numbers.directive';
 
 declare var $: any;
 
