@@ -3,15 +3,15 @@
 @php
   if ($storename == 'jaipur') {
   	$title = 'Rules of the show';
-  	$date = '26th January, 2019';
+  	$date = '26th January 2019';
   	$venue = 'Triton Mall, Plot No. 1/1, Near Chomu Pulia Circle, Jhitwara Rd, Jaipur, Rajasthan.';
-  	$registrationDate = 'January 25th, 2019; 7:00 P.M';
+  	$registrationDate = 'January 25th, 2019; 7:00 PM';
   	$redirectLink = 'https://goo.gl/forms/yASCybdisxnuAhjT2';
   } else {
   	$title = 'Rules of the Competition';
-  	$date = '26th January, 2019';
+  	$date = '26th January 2019';
   	$venue = 'G-5, G-6, G-7, F-105, Om Arcade, Anandmahal, Adajan, Surat. Gujarat - 395009.';
-  	$registrationDate = 'January 25th, 2019; 5:00 P.M';
+  	$registrationDate = 'January 25th, 2019; 5:00 PM';
   	$redirectLink = 'https://goo.gl/forms/gnbLVZiUuMZDE1PA2';
   }
 @endphp
@@ -88,7 +88,7 @@
 			               </li>
 			               <li class="group-body">
 								@if ($storename == 'jaipur')
-									All the participants needs to pre-register in order to participate in the competition.
+									All the participants need to pre-register in order to participate in the competition.
 								@else
 									Contact No: <a href="tel:0261-2737303" class="kss-anchor">0261-2737303</a> / <a href="tel:0261-2737304" class="kss-anchor">0261-2737304</a>
 								@endif
@@ -101,7 +101,7 @@
 			               </li>
 			               @if ($storename == 'jaipur')
 			               <li class="group-body">
-								All the participants are requested to be in premises by <strong>3:00 P.M</strong>
+								All the participants are requested to be in premises by <strong>3:00 PM</strong>
 			               </li>
 			               <li class="group-body">
 			               		The participants would be divided into sequences as suggested by the stylist.
@@ -122,7 +122,7 @@
 			               		The participants have to take care of their belongings, the management shall not be liable for any loss or theft of the items outside the green room.
 			               </li>
 			               <li class="group-body">
-			               		The tags (if any) of the merchandise worn should be returned while handling over the merchandise at the end of the show.
+			               		The tags (if any) of the merchandise worn should be returned while handing over the merchandise at the end of the show.
 			               </li>
 			               <li class="group-body">
 			               		<a href="http://www.kidsuperstore.in" class="kss-anchor">Kidsuperstore.in</a> reserves all the rights to use any photograph, video, audio, interview during the course of the show for the branding purpose.
