@@ -50,7 +50,7 @@
 	          <form class="mt-0" #otpForm="ngForm">
 	            <div class="form-group mb-0 mt-3">
 	              <p >Enter the OTP sent to your number</p><h4 class="font-weight-bold m-0">{{mobileNumber}} <i class="fas fa-pencil-alt number-edit ml-2 cursor-pointer" (click)="resetOTP()"></i></h4>
-	              <input type="tel" class="form-control form-control-number form-control-lg mb-2 letter-spacing-5" (keyup)="enterclick($event)" [ngClass]="{'has-error' : userValidation.otpVerificationFailed}"  aria-describedby="emailHelp" [(ngModel)]="otp" name="otp" placeholder="" required pattern="\d{6}$" minlength = "6" maxlength = "6" inputmode="numeric" appNumbers placeholder="Enter OTP" [ngClass]="{'has-value' : otp}">
+	              <input autocomplete="off" type="tel" class="form-control form-control-number form-control-lg mb-2 letter-spacing-5" (keyup)="enterclick($event)" [ngClass]="{'has-error' : userValidation.otpVerificationFailed}"  aria-describedby="emailHelp" [(ngModel)]="otp" name="otp" placeholder="" required pattern="\d{6}$" minlength = "6" maxlength = "6" inputmode="numeric" appNumbers placeholder="Enter OTP" [ngClass]="{'has-value' : otp}">
 
 <!-- 		             <div class="otp-fields d-flex align-items-center justify-content-center">
 						<input type="tel" maxlength="1" size="1" min="0" max="9" pattern="\d*" class="form-control form-control-lg form-control-number mb-2 text-center mx-2" autocomplete="off" #otp1 (keydown)="onKeyDown($event,otp1,otp2,otpCode['otp1'])" (keyup)="onKeyUp($event,otp1,otp2,otpCode['otp1'])" [(ngModel)]="otpCode['otp1']" name="otp1" appNumbers (change)="otpVerificationIOS(otpCode['otp1'])">
