@@ -198,6 +198,7 @@ export class AddressComponent implements OnInit, OnChanges {
       console.log("make api call");
       this.showShowLoader();
       this.unsubscribeGetLocationCall();
+      // let url = this.appservice.apiUrl +  "/api/rest/v1/district-state/"+pincode;
       let url = 'https://demo8558685.mockable.io/location';
       this.getLocationCall = this.apiservice.request(url, 'get', {}, {}, false, 'observable').subscribe((response)=>{
         console.log("response from location api ==>", response);
