@@ -45,7 +45,7 @@ class Pincode extends Model
                 $statename = strtolower($pincode['state']);
                 if (isset($statesArr[$statename])) {
                     $pincodes_entry           = self::firstOrNew(['pincode' => $pincode['pincode']]);
-                    $pincodes_entry->district = $pincode['district'];
+                    $pincodes_entry->district = ($pincode['taluka'] != 'NA') ? $pincode['taluka'] . ", " . $pincode['district'] : $pincode['district'];
                     $pincodes_entry->state_id = $statesArr[$statename];
                     $pincodes_entry->save();
                 } else {
