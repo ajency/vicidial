@@ -103,6 +103,7 @@ export class LoginComponent implements OnInit {
         this.appservice.userInfo = response.user.user_info;
         document.cookie='token='+ response.token + ";path=/";
         document.cookie='cart_id=' + response.user.active_cart_id + ";path=/";
+        document.cookie='user_id=' + response.user.id + ";path=/";
         this.appservice.userVerificationComplete = true;
         this.closeOtpModal();
         this.appservice.loginSuccessComplete();
