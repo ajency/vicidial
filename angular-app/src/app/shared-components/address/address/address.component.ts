@@ -35,6 +35,7 @@ export class AddressComponent implements OnInit, OnChanges {
   pincodeBlur : boolean = false;
   getLocationCall : any;
   pincodeErrorMsg : any;
+  showPicodeLoader : boolean = false;
   constructor(private appservice : AppServiceService,
               private apiservice : ApiServiceService) { }
 
@@ -210,8 +211,10 @@ export class AddressComponent implements OnInit, OnChanges {
         this.removeLoader();
         if(error.status == 404)
           this.pincodeErrorMsg = "We do not service this pincode.";
+        else if(error.status == 0)
+          this.pincodeErrorMsg = "Failed to verify pincode. Please check your internet connection."
         else
-          this.pincodeErrorMsg = "Failed to verify pincode. Please re-enter pincode";
+          this.pincodeErrorMsg = "Failed to verify pincode. Please re-enter pincode.";
       })
     }
     else{
@@ -227,11 +230,11 @@ export class AddressComponent implements OnInit, OnChanges {
   }
 
   showShowLoader(){
-
+    this.showPicodeLoader = true;
   }
 
   removeLoader(){
-
+    this.showPicodeLoader = false;
   }
 
   resetStateAndCity(){
