@@ -11,9 +11,9 @@
 				</div>
 				<div class="col-md-12">
 					<div class="form-group" [ngClass]="{'has-error' : newAddress.phone<7000000000 && newAddress.phone.length== 10 }">
-						<input class="form-control form-control-lg" id="mobile" type="tel" minlength = "10" maxlength = "10" pattern="^[789]\d{9}$" inputmode="numeric" name="mobile" for="inputError" [(ngModel)]="newAddress.phone" required appNumbers [ngClass]="{'has-value' : newAddress.phone}">
+						<input class="form-control form-control-lg" id="mobile" type="tel" minlength = "10" maxlength = "10" pattern="^[789]\d{9}$" inputmode="numeric" name="mobile" for="inputError" [(ngModel)]="newAddress.phone" required appNumbers [ngClass]="{'has-value' : newAddress.phone}" (blur)="phoneBlur = true" (focus)="phoneBlur = false">
 						 <label class="control-label" for="inputError">Mobile Number <span class="pl-1 text-danger">*</span></label>
-						 <small *ngIf="newAddress.phone<7000000000 && newAddress.phone.length== 10" id="passwordHelpBlock" class="form-text text-danger">
+						 <small *ngIf="(newAddress.phone<7000000000 && newAddress.phone.length== 10) || (phoneBlur && newAddress.phone.length != 10) " id="passwordHelpBlock" class="form-text text-danger">
 							Please enter a valid Indian Mobile Number
 						</small>
 					</div>
@@ -28,8 +28,11 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div class="form-group ">
-						<input class="form-control form-control-lg" id="pincode" type="tel"  minlength = "6" maxlength = "6" name="pincode" [(ngModel)]="newAddress.pincode" required appNumbers inputmode="numeric" [ngClass]="{'has-value' : newAddress.pincode}">
+						<input class="form-control form-control-lg" id="pincode" type="tel"  minlength = "6" maxlength = "6" name="pincode" [(ngModel)]="newAddress.pincode" required appNumbers inputmode="numeric" [ngClass]="{'has-value' : newAddress.pincode}" (blur)="pincodeBlur = true" (focus)="pincodeBlur = false">
 						<label class="control-label">Pincode <span class="pl-1 text-danger">*</span></label>
+						<small *ngIf="pincodeBlur && newAddress.pincode.length != 6 " class="form-text text-danger">
+							Please enter a valid pincode
+						</small>
 					</div>
 				</div>
 <!-- 				<div class="col-md-6">

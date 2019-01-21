@@ -30,6 +30,8 @@ export class AddressComponent implements OnInit, OnChanges {
     default : false
   };
   hideDefaultAddressField : boolean = false;
+  phoneOnBlur : boolean = false;
+  pincodeBlur : boolean = false;
   constructor(private appservice : AppServiceService,
               private apiservice : ApiServiceService) { }
 
