@@ -27,7 +27,7 @@ RUN apt-get install -y nodejs
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN apt-get install git -y
 RUN npm install -g gulp
-COPY composer.json composer.lock package.json /var/www/html
+COPY composer.json composer.lock package.json /var/www/html/
 RUN composer config --global --auth github-oauth.github.com github_token
 RUN composer install
 RUN npm install
