@@ -10,7 +10,7 @@
 
 @section('content')
 <div id="home-slider" class="home-slider">
- <!--    <div class="home-slide-item">
+    <div class="home-slide-item">
       <a href="/shop">
         <picture>
            <source media="(orientation: landscape)"
@@ -30,8 +30,8 @@
                class="img-fluid lazyload blur-up w-100" alt="Upto 50% OFF" title="Upto 50% OFF">
         </picture>
       </a>
-    </div> -->
-    <div class="home-slide-item">
+    </div>
+<!--     <div class="home-slide-item">
       <a href="/shop?rf=price:0TO499">
         <picture>
            <source media="(orientation: landscape)"
@@ -51,7 +51,7 @@
                class="img-fluid lazyload blur-up w-100" alt="Flash Sale - Entire Store Under ₹499" title="Flash Sale - Entire Store Under ₹499">
         </picture>
       </a>
-    </div>    
+    </div>   -->  
     <div class="home-slide-item">
       <a href="/stores/jaipur">
         <picture>
@@ -73,7 +73,7 @@
         </picture>
       </a>
     </div>     
-<!--     <div class="home-slide-item">
+    <div class="home-slide-item">
       <a href="/shop">
         <picture>
            <source media="(orientation: landscape)"
@@ -93,7 +93,7 @@
                class="img-fluid lazyload blur-up w-100" alt="Upto 50% OFF" title="Upto 50% OFF">
         </picture>
       </a>
-    </div>    --> 
+    </div>    
     <div class="home-slide-item">
       <a href="/shop">
         <picture>
@@ -263,17 +263,7 @@
   <div class="container">
     <div class="cat-container">
       <div class="cat-item cat-13">
-        <a href="/shop?rf=price:0TO499">
-          <img class="d-block w-100 img-fluid lazyload blur-up"
-              src="{{CDN::asset('/img/home-category/category_flash-sale_10px.jpg') }}"
-              data-srcset="{{CDN::asset('/img/home-category/category_flash-sale_large.jpg') }} 740w,
-                            {{CDN::asset('/img/home-category/category_flash-sale_medium.jpg') }} 370w,
-                            {{CDN::asset('/img/home-category/category_flash-sale_small.jpg') }} 248w"
-              data-sizes='(min-width: 1200px) 570px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 92vw,  31vw'
-              alt="Flash Sale - Entire Store Under ₹499"
-              title="Flash Sale - Entire Store Under ₹499" />
-        </a>
-       <!--  <a href="/shop">
+        <a href="/shop">
           <img class="d-block w-100 img-fluid lazyload blur-up"
               src="{{CDN::asset('/img/home-category/category_grid13_10px.jpg') }}"
               data-srcset="{{CDN::asset('/img/home-category/category_grid13_large.jpg') }} 740w,
@@ -282,7 +272,7 @@
               data-sizes='(min-width: 1200px) 570px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 92vw,  31vw'
               alt="New Year Super Sale - Flat 50% OFF"
               title="New Year Super Sale - Flat 50% OFF" />
-        </a> -->
+        </a>
       </div>
       <div class="cat-item cat-14">
         <a href="/stationery">
