@@ -1180,3 +1180,17 @@
 
 
 @stop
+
+@section('footjs')
+<!-- Google pixel tracking -->
+<script type="text/javascript">
+  gtag('event', 'page_view', {
+    'send_to': google_pixel_id,
+    'ecomm_pagetype': 'home',
+    'ecomm_prodid': '',
+    'ecomm_totalvalue': '',
+    'user_id': getCookie('user_id')
+  });
+</script>
+
+@stop

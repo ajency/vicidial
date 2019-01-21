@@ -88,6 +88,14 @@
 				    content_ids: content_ids,
 				    content_type: 'product_group',
 				});
+				// Google pixel tracking
+				gtag('event', 'page_view', {
+					'send_to': google_pixel_id,
+					'ecomm_pagetype': 'purchase',
+					'ecomm_prodid': content_ids,
+					'ecomm_totalvalue': total,
+					'user_id': getCookie('user_id')
+				});
 			</script>
 		@endif	
 	@endif

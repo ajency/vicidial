@@ -16,6 +16,7 @@ declare var add_to_cart_failure_message: any;
 declare var add_to_cart_clicked: any;
 declare var add_to_cart_completed: any;
 declare var fbTrackInitiateCheckout : any;
+declare var google_pixel_tracking : any;
 // declare var fbTrackuserRegistration : any;
 
 @Component({
@@ -145,7 +146,24 @@ export class BagViewComponent implements OnInit {
       this.isCartTypeFailure = true;
     }
     this.fetchCartFailed = false;  
-    this.zone.run(() => {}); 
+    console.log(this.google_track_response(response));
+    let result = this.google_track_response(response); 
+    google_pixel_tracking(result.pixel_ids, result.total_values, "cart");
+    this.zone.run(() => {});    
+  }
+
+  google_track_response(response){
+    let pixel_ids = [], total_values = [];
+    response.items.forEach((item)=>{
+      pixel_ids.push(item.pixel_id);
+      total_values.push(item.attributes.price_final);
+    })
+    // console.log("check ==>", variant_ids, total_values);
+    let result = {
+      pixel_ids : pixel_ids.join(),
+      total_values : total_values.join()
+    }
+    return result;  
   }
 
   checkAddToCartStatus(){
@@ -237,6 +255,9 @@ export class BagViewComponent implements OnInit {
   }
 
   checkLoginStatus(){
+    console.log(this.google_track_response(this.cart));
+    let result = this.google_track_response(this.cart); 
+    google_pixel_tracking(result.pixel_ids, result.total_values, "checkout");
     fbTrackInitiateCheckout(this.cart.summary.you_pay);
     this.addToCartFailed = false;
     if(this.appservice.isLoggedInUser()){

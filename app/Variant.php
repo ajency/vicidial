@@ -158,6 +158,7 @@ class Variant extends Model
             'message'      => $this->getMessage(),
             'attributes'   => $this->getItemAttributes(),
             "id"           => $this->id,
+            "pixel_id"     => $this->getParentId() . "-" . $this->getVarColorId(),
         );
 
         if ($related_items) {

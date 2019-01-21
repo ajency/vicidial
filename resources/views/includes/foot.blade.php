@@ -17,6 +17,10 @@
 </script>
 @endisset
 
+<script type="text/javascript">
+  // Google pixel tracking id
+  var google_pixel_id = "{{config('analytics.google_pixel_id')}}";
+</script>
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 
@@ -55,6 +59,26 @@
   gtag('js', new Date());
 
   gtag('config', "{{config('analytics.google_id')}}");
+</script>
+
+<!-- Google pixel tracking -->
+<script async src="https://www.googletagmanager.com/gtag/js?id={{config('analytics.google_pixel_id')}}"></script>
+
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', "{{config('analytics.google_pixel_id')}}");
+</script>
+
+<script>
+  gtag('event', 'conversion', {
+      'send_to': "{{config('analytics.google_pixel_id')}}/2OLaCNSGioUBEK24rP0C",
+      'value': 1.0,
+      'currency': 'INR',
+      'transaction_id': ''
+  });
 </script>
 
 <!-- Hotjar Tracking Code -->
