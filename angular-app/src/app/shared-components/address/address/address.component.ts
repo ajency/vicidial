@@ -33,7 +33,8 @@ export class AddressComponent implements OnInit, OnChanges {
   hideDefaultAddressField : boolean = false;
   phoneOnBlur : boolean = false;
   pincodeBlur : boolean = false;
-  getLocationCall : any
+  getLocationCall : any;
+  pincodeErrorMsg : any;
   constructor(private appservice : AppServiceService,
               private apiservice : ApiServiceService) { }
 
@@ -207,12 +208,17 @@ export class AddressComponent implements OnInit, OnChanges {
         this.newAddress.city = '';
         this.newAddress.state_id = '';
         this.appservice.removeLoader();
+        if(error.status == 404)
+          this.pincodeErrorMsg = "We do not service this pincode.";
+        else
+          this.pincodeErrorMsg = "Failed to verify pincode. Please re-enter pincode";
       })
     }
     else{
       this.unsubscribeGetLocationCall();
       this.newAddress.city = '';
       this.newAddress.state_id = '';
+      this.pincodeErrorMsg = "";
     }
   }
 

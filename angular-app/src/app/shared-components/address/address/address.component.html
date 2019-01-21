@@ -46,8 +46,9 @@
 					<div class="form-group ">
 						<input class="form-control form-control-lg" id="pincode" type="tel"  minlength = "6" maxlength = "6" name="pincode" [(ngModel)]="newAddress.pincode" required appNumbers inputmode="numeric" [ngClass]="{'has-value' : newAddress.pincode}" (blur)="pincodeBlur = true" (focus)="pincodeBlur = false" (ngModelChange)="getCityState(newAddress.pincode)">
 						<label class="control-label">Pincode <span class="pl-1 text-danger">*</span></label>
-						<small *ngIf="pincodeBlur && newAddress.pincode.length != 6 " class="form-text text-danger">
-							Please enter a valid pincode
+						<small class="form-text text-danger">
+							<span *ngIf="pincodeBlur && newAddress.pincode.length != 6; else otherError">Please enter a valid 6 digit pincode</span>
+							<ng-template #otherError>{{pincodeErrorMsg}}</ng-template>
 						</small>
 					</div>
 				</div>
@@ -58,7 +59,7 @@
 					</div>
 				</div> -->
 			</div>
-			<div class="row">
+			<div class="row" *ngIf="newAddress.state_id && newAddress.city">
 				<div class="col-md-6">
 					<div class="form-group ">
 						<input class="form-control form-control-lg" id="citys" type="text" name="city" [(ngModel)]="newAddress.city" required [ngClass]="{'has-value' : newAddress.city}">
