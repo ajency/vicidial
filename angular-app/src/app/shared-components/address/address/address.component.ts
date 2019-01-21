@@ -33,6 +33,7 @@ export class AddressComponent implements OnInit, OnChanges {
   hideDefaultAddressField : boolean = false;
   phoneOnBlur : boolean = false;
   pincodeBlur : boolean = false;
+  getLocationCall : any
   constructor(private appservice : AppServiceService,
               private apiservice : ApiServiceService) { }
 
@@ -44,6 +45,10 @@ export class AddressComponent implements OnInit, OnChanges {
     this.checkAddresses();
     if(this.states && this.states.length) 
       this.initSelectPicker(); 
+  }
+
+  ngOnDestroy() {
+    this.unsubscribeGetLocationCall();
   }
 
   checkAddresses(){
@@ -87,6 +92,7 @@ export class AddressComponent implements OnInit, OnChanges {
     this.newAddress.state_id="";
     this.newAddress.landmark = "";
     this.newAddress.phone = this.appservice.userMobile;
+    this.newAddress.pincode = "";
     this.initSelectPicker();
   }
 
@@ -174,7 +180,7 @@ export class AddressComponent implements OnInit, OnChanges {
   }
 
   getStateName(id){
-    if(this.states){
+    if(this.states && id){
       let state_obj = this.states.find((state)=>{ return id == state.id});
       return state_obj.state;
     }    
@@ -183,6 +189,36 @@ export class AddressComponent implements OnInit, OnChanges {
   updatedAddAddress(){
     this.addAddress = false;
     this.addAddressFlagChanged.emit(false);
+  }
+
+  getCityState(pincode){
+    if(pincode.length == 6){
+      console.log("make api call");
+      this.unsubscribeGetLocationCall();
+      let url = 'https://demo8558685.mockable.io/location';
+      this.getLocationCall = this.apiservice.request(url, 'get', {}, {}, false, 'observable').subscribe((response)=>{
+        console.log("response from location api ==>", response);
+        this.newAddress.city = response.city;
+        this.newAddress.state_id = response.state_id;
+        this.appservice.removeLoader();
+      },
+      (error)=>{
+        console.log("error ===>", error);
+        this.newAddress.city = '';
+        this.newAddress.state_id = '';
+        this.appservice.removeLoader();
+      })
+    }
+    else{
+      this.unsubscribeGetLocationCall();
+      this.newAddress.city = '';
+      this.newAddress.state_id = '';
+    }
+  }
+
+  unsubscribeGetLocationCall(){
+    if(this.getLocationCall)
+      this.getLocationCall.unsubscribe();
   }
 
 }
