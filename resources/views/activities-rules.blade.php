@@ -178,7 +178,7 @@
 				<div class="check-terms mt-4 mt-sm-2">
 					<div class="custom-control custom-checkbox">
 			            <input type="checkbox" class="custom-control-input agree-terms" id="agree-terms">
-			            <label class="custom-control-label f-w-4 pt-sm-1 pl-2" for="agree-terms">I hereby agree to the terms and conditions</label>
+			            <label class="custom-control-label f-w-4 pt-sm-1 pl-2" for="agree-terms">I agree to the rules and regulations</label>
 			        </div>
 			        <div class="d-block d-sm-inline-flex my-4 text-center text-sm-left">
 		        		<a href="{{$redirectLink}}" class="btn kss-btn kss-btn--primary kss-btn--big terms-accepted-btn disabled" target="_blank">Register</a>
