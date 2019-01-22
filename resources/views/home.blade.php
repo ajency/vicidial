@@ -748,7 +748,8 @@
                       data-srcset="/images/products/30044/list-view/1x/boys-jeans-1563-color-mid-wash-1.jpg 270w, /images/products/30044/list-view/2x/boys-jeans-1563-color-mid-wash-1.jpg 540w, /images/products/30044/list-view/3x/boys-jeans-1563-color-mid-wash-1.jpg 810w"
                       data-sizes='(min-width: 1200px) 266px, (min-width: 991px) 22vw, 41vw'
                       title="Regular denim jeans - Mid Wash"
-                      alt="Regular denim jeans - Mid Wash"/>
+                      alt="Regular denim jeans - Mid Wash" 
+                      style="padding: 8px;" />
                </div>
               </a>
               <div class="kss-price kss-price--medium">₹599</div>
