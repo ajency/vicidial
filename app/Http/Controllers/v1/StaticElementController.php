@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\v2;
+namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -31,15 +31,11 @@ class StaticElementController extends Controller
         {
             $published=$params['published'];
             $boole=(trim($published) == 'true')?true:false;
-            //return json_encode([gettype($boole)]);
-            
             $fectchedData=StaticElement::fetch($data,$boole);
         }
         else
         {
-            $hi="hi";
-            return $hi;
-            $fetchedData=StaticElement::fetch($data);
+           $fetchedData=StaticElement::fetch($data);
         }
         return(json_encode($fetchedData));
     }
@@ -50,7 +46,7 @@ class StaticElementController extends Controller
     {
         $request->validate(['element_data' => 'required','image_upload'=>'required']);
         $params=$request->all();
-        
+
         $dataSaved=StaticElement::saveData($seq_no,$params['element_data'],$params['image_upload']);
         return(json_encode($dataSaved));
     }//callSave
@@ -59,9 +55,12 @@ class StaticElementController extends Controller
     public function callSaveNew(Request $request)
     {
         $request->validate(['element_data' => 'required','type'=>'required','images'=>'required']);
+        $images=$request->images;
+       
         $params=$request->all();
 
         $dataInserted=StaticElement::saveNewData($params['element_data'],$params['type'],$params['images']);
         return(json_encode($dataInserted));
     }//callSaveNew
 }
+
