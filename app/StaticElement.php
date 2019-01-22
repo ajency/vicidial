@@ -355,7 +355,7 @@ class StaticElement extends Model
 
         foreach ($files as $file) {
             $imagedata = $this->returnStaticPresetUrl($presets, get_class($this), $this, $file->file, $record->type);
-            array_push($allImages, $imagedata);
+            $allImages = array_merge($allImages, $imagedata);
         }
         return $allImages;
     }
@@ -393,5 +393,98 @@ class StaticElement extends Model
             }
         }
         return $resp;
+    }
+
+
+
+
+    public function getSingleStaticImage($file_id,$presets,$depth){
+      $file = FileUpload_Photos::find($file_id);
+      $config        = config('fileupload_static_element');
+      if($file == null) return false;
+      if(config('fileupload_static_element')['disk_name'] == "s3"){
+        $map_image_size = json_decode($file->image_size,true);
+        if($map_image_size == null) return false;
+        $image_size = ($presets == "original")?$presets:($presets."$$".$depth);
+        if(in_array($image_size,$map_image_size)){
+          $obj_instance = $this;
+          $obj_class = get_class($this);
+          if($presets == "original"){
+            $newfilepath = str_replace($config['model'][$obj_class]['base_path'].'/'.$obj_instance[$config['model'][$obj_class]['slug_column']].'/', $config['model'][$obj_class]['base_path'].'/'.$obj_instance[$config['model'][$obj_class]['slug_column']].'/'.$presets.'/', $file->url);
+          }
+          else{
+            $newfilepath = str_replace($config['model'][$obj_class]['base_path'].'/'.$obj_instance[$config['model'][$obj_class]['slug_column']].'/', $config['model'][$obj_class]['base_path'].'/'.$obj_instance[$config['model'][$obj_class]['slug_column']].'/'.$presets.'/'.$depth.'/', $file->url);
+          }
+          return $newfilepath;
+        }
+        else
+          return false;
+      }
+    }
+
+    public function resizeStaticImages($file_id,$presets,$depth,$filename){
+      $file = FileUpload_Photos::find($file_id);
+      return $this->generateResizedStaticImages($this->id,$presets,$depth,get_class($this),$this,$filename, $file);
+    }
+
+    public function generateResizedStaticImages($object_id,$presets,$depth,$obj_class,$obj_instance,$filename, $file){
+        $config        = config('fileupload_static_element');
+        $disk          = \Storage::disk($config['disk_name']);
+        $path = explode('amazonaws.com/',$file->url);
+        $command = $disk->getDriver()->getAdapter()->getClient()->getCommand('GetObject', [
+            'Bucket'                     => \Config::get('filesystems.disks.s3.bucket'),
+            'Key'                        => $path[1],
+        ]);
+        $filepath =  $disk->getDriver()->getAdapter()->getClient()->createPresignedRequest($command, '+10 minutes')->getUri();
+        
+        $extarr = explode(".", $filepath);
+        $ext = (count($extarr)>1)?$extarr[1]:"jpg";
+        
+        $image_size = ($presets == "original")?$presets:($presets."$$".$depth);
+        if($file->image_size != null){
+            $image_size_arr = json_decode($file->image_size,true);
+            if(is_array($image_size_arr))
+                array_push($image_size_arr, $image_size);
+        }
+        else {
+            $image_size_arr = [$image_size];
+        }
+        $file->image_size = json_encode($image_size_arr);
+        if($presets == "original"){
+            $nfilepath = explode("?", $filepath)[0];
+            $newfilepath = $config['base_root_path'] . $config['model'][$obj_class]['base_path'].'/'.$obj_instance[$config['model'][$obj_class]['slug_column']]. '/'.$presets.'/' .$filename;
+            $newfilepathfullurl = str_replace($config['model'][$obj_class]['base_path'].'/'.$obj_instance[$config['model'][$obj_class]['slug_column']].'/', $config['model'][$obj_class]['base_path'].'/'.$obj_instance[$config['model'][$obj_class]['slug_column']].'/'.$presets.'/', $file->url);
+            if($disk->put($newfilepath, file_get_contents($filepath), 'public')) {
+                $file->save();
+                return $newfilepathfullurl;
+            } else {
+                return false;
+            }
+        }
+        else{
+            $config_dimensions = $config[$obj_instance->type . '_presets'][$presets][$depth];
+            $dimensions_arr = explode("X", $config_dimensions);
+            $width = $dimensions_arr[0];
+            $height = $dimensions_arr[1];
+            $new_img = \Image::make(file_get_contents($filepath));
+            $new_img->resize($width, $height, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
+            $new_img = $new_img->stream();
+
+            $fp      = $config['base_root_path'] . $config['model'][$obj_class]['base_path'].'/'.$obj_instance[$config['model'][$obj_class]['slug_column']]. '/'.$presets.'/' .$depth.'/'.$filename;
+            if ($disk->put($fp, $new_img->__toString(), 'public')) {
+                $file->save();
+                $newfilepathfullurl = str_replace($config['model'][$obj_class]['base_path'].'/'.$obj_instance[$config['model'][$obj_class]['slug_column']].'/', $config['model'][$obj_class]['base_path'].'/'.$obj_instance[$config['model'][$obj_class]['slug_column']].'/'.$presets.'/' .$depth.'/', $file->url);
+                return $newfilepathfullurl;
+            } else {
+                return false;
+            }
+
+        }
+        
+
+
     }
 }

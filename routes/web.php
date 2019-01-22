@@ -12,11 +12,11 @@
  */
 $config = config('ajfileupload');
 
-$app_version = 'v'.config('app.api_version');
+$app_version = 'v' . config('app.api_version');
 
 $group_app_version = 'v1';
 Route::group([
-  'prefix'     => '/rest/'.$group_app_version,
+    'prefix' => '/rest/' . $group_app_version,
 ], function () use ($group_app_version) {
 	Route::group([
 	  'prefix'     => '/anonymous',
@@ -44,7 +44,7 @@ Route::group([
 
 $group_app_version = 'v2';
 Route::group([
-  'prefix'     => '/rest/'.$group_app_version,
+    'prefix' => '/rest/' . $group_app_version,
 ], function () use ($group_app_version) {
 	Route::group([
 	  'prefix'     => '/anonymous',
@@ -98,5 +98,5 @@ Route::get('/my/order/details', $app_version.'\OrderController@getOrderDetails')
 Route::get('/shop/{static_page}', $app_version.'\StaticController@index')->name('shopstatic');
 Route::get('/{product_slug}/buy', $app_version.'\ProductController@index')->name('product');
 Route::get('/'.$config['base_root_path']. $config['model']["App\ProductColor"]['base_path'].'/{photo_id}/{preset}/{depth}/{image}', $app_version.'\ProductController@getImage');
+Route::get('/' . config('fileupload_static_element')['base_root_path'] . config('fileupload_static_element')['model']["App\StaticElement"]['base_path'] . '/{photo_id}/{preset}/{depth}/{image}', $app_version . '\StaticElementController@getImage');
 Route::get('/{cat1}/{cat2?}/{cat3?}/{cat4?}', $app_version.'\ListingController@index')->name('listing');
-
