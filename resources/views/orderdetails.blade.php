@@ -75,6 +75,7 @@
 		@if($params['payment_status'] == 'success')
 			<script type="text/javascript">
 				var total = {{$params['order_info']['total_amount']}};
+				var transId = {{$params['order_info']['txn_no']}};
 				@php $variant_ids = []; @endphp
 				@foreach($params['sub_orders'] as $sub_order)
 					@foreach($sub_order['items'] as $item)
@@ -96,6 +97,13 @@
 					'ecomm_totalvalue': total,
 					'user_id': getCookie('user_id')
 				});
+				// Google Conversion tracking
+				gtag('event', 'conversion', {
+			      'send_to': google_conversion_id,
+			      'value': 1.0,
+			      'currency': 'INR',
+			      'transaction_id': transId
+			  });
 			</script>
 		@endif	
 	@endif
