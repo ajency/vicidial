@@ -4,8 +4,7 @@ return [
     'disk_name'           => 's3',
     'base_root_path'      => env('STATICELEMENTS_PRESET').'',
     'default_base_path'   => 'static_elements',
-    'valid_image_formats' => ['jpg', 'png'],
-    'valid_file_formats'  => ['doc', 'docx', 'pdf'],
+    'valid_image_formats' => ['jpg', 'jpeg', 'gif'],
     'model'               => [
       
         'App\StaticElement' => [
@@ -27,8 +26,16 @@ return [
             "3x"=>"1200*933" 
         ],
     ],
-
-    
-    
-    
+    'banner_upload'=> [
+        "landscape" => [
+            "size" => 250,
+            "height" => 933,
+            "width" => 1200
+        ],
+        "portrait" => [
+            "size" => 250,
+            "height" => 700,
+            "width" => 2000
+        ],
+    ],
 ];

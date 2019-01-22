@@ -19,7 +19,7 @@ class CreateStaticElementsTable extends Migration
             $table->json('element_data');
             $table->string('type');
             $table->integer('sequence');
-            $table->boolean('published')->nullable()->default(1);
+            $table->boolean('published')->nullable();
             $table->boolean('draft')->nullable()->default(1);
             $table->unique(array('sequence', 'type','published'));
             $table->unique(array('sequence','type','draft'));
