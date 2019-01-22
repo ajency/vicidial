@@ -46,7 +46,7 @@ export class AddressComponent implements OnInit, OnChanges {
   	// console.log("ngOnChanges address component ==>", this.addresses, this.addAddress, this.selectedAddressId, this.states);
     this.checkAddresses();
     if(this.states && this.states.length) 
-      this.initSelectPicker(); 
+      this.initSelectPicker(false); 
   }
 
   ngOnDestroy() {
@@ -78,9 +78,11 @@ export class AddressComponent implements OnInit, OnChanges {
     this.initSelectPicker();
   }
 
-  initSelectPicker(){
-    $(".kss_shipping").animate({scrollTop: 0}, 300);
-    $('#cd-cart').animate({scrollTop: 0}, 300);
+  initSelectPicker(scroll : boolean = true){
+    if(scroll){
+      $(".kss_shipping").animate({scrollTop: 0}, 300);
+      $('#cd-cart').animate({scrollTop: 0}, 300);
+    }    
     setTimeout(()=>{
       $('#state').selectpicker();
     },100); 
