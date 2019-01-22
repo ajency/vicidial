@@ -6,6 +6,7 @@ use App\Address;
 use App\Cart;
 use App\Defaults;
 use App\Http\Controllers\Controller;
+use App\Pincode;
 use App\User;
 use App\Variant;
 use Illuminate\Http\Request;
@@ -148,5 +149,15 @@ class AddressController extends Controller
         }
 
         return $statesArr;
+    }
+
+    public function fetchPincode($pincode, Request $request)
+    {
+        $pincode_entry = Pincode::where('pincode', '=', $pincode)->where('deliverable', '=', true)->get()->first();
+        if ($pincode_entry == null) {
+            abort(403);
+        }
+
+        return json_encode(['district' => $pincode_entry['district'], 'state_id' => $pincode_entry['state_id']]);
     }
 }
