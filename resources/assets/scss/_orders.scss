@@ -239,6 +239,9 @@
   position: absolute;
   top: -1.3em;
   left: 5em;
+  &.on-address{
+    left: 8em;
+  }
 }
 
 .profile-address-section{

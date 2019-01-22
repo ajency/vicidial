@@ -85,6 +85,7 @@ export class AddressComponent implements OnInit, OnChanges {
     }    
     setTimeout(()=>{
       $('#state').selectpicker();
+      $('[data-toggle="tooltip"]').tooltip();
     },100); 
   }
 

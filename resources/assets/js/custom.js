@@ -580,4 +580,3 @@ if ($(window).width() >= 768 && $(window).width() <= 992 ) {
     var rock_them = $('.trend-focus-wrapper .rock-them').detach();
     $('.trend-focus-wrapper .party-shoes').after(rock_them);
 }
-
