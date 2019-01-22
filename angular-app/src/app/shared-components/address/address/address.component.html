@@ -64,7 +64,7 @@
 				<div class="col-md-6">
 					<div class="form-group ">
 						<input disabled class="form-control form-control-lg" id="citys" type="text" name="city" [(ngModel)]="newAddress.city" required [ngClass]="{'has-value' : newAddress.city}">
-						<label class="control-label">City/District <span class="pl-1 text-danger">*</span></label>
+						<label class="control-label">Taluka/District <span class="pl-1 text-danger">*</span></label>
 					</div>
 				</div>
 				<div class="col-md-6">
@@ -81,7 +81,7 @@
 						<label class="control-label">State <span class="pl-1 text-danger">*</span></label> -->						
 					<!-- </div> -->
 					<div class="form-group ">
-						<input disabled class="form-control form-control-lg" id="state" type="text" name="state" value="{{getStateName(newAddress.state_id)}}" [ngClass]="{'has-value' : newAddress.city}">
+						<input disabled class="form-control form-control-lg" id="state" type="text" name="state" required value="{{getStateName(newAddress.state_id)}}" [ngClass]="{'has-value' : newAddress.city}">
 						<label class="control-label">State<span class="pl-1 text-danger">*</span></label>
 					</div>					
 				</div>
@@ -135,7 +135,7 @@
 				<button [disabled]="!addresses.length" type="button" class="shipping-details-save btn kss-btn kss-btn--link kss-btn--big mt-1 mb-1 ml-auto mr-auto" (click)="updatedAddAddress()" >Cancel </button>
 			</div>
 			<div class="col-6 text-center">
-				<button [disabled]="!myForm.valid"  type="button" class="shipping-details-save btn kss-btn kss-btn--big mt-1 mb-1 ml-auto mr-auto" (click)="saveNewAddress()"> Save </button>
+				<button [disabled]="!myForm.valid || !(newAddress.state_id && newAddress.city)"  type="button" class="shipping-details-save btn kss-btn kss-btn--big mt-1 mb-1 ml-auto mr-auto" (click)="saveNewAddress()"> Save </button>
 			</div>
 		</div>
 	</div>

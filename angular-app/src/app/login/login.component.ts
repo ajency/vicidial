@@ -12,6 +12,7 @@ declare var $: any;
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  @ViewChild("mobileInput") private mobileInput: ElementRef;
 
   @ViewChild('otp1') otp1: ElementRef;
   @ViewChild('otp2') otp2: ElementRef;
@@ -54,6 +55,9 @@ export class LoginComponent implements OnInit {
     $("#cd-cart").css("overflow", "hidden");
     $('.modal-backdrop').appendTo('#cd-cart');
     $('body').addClass('hide-scroll');
+    setTimeout(()=>{
+      this.mobileInput.nativeElement.focus();
+    },500);
   }
 
   ngOnDestroy(){
