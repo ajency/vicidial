@@ -29,7 +29,7 @@
 				<div class="col-md-12">
 					<div class="form-group ">
 						<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="address" [(ngModel)]="newAddress.address" required [ngClass]="{'has-value' : newAddress.address}"></textarea>
-						<label class="control-label">Street Address (<small>House No,Building,Street,Area</small>) <span class="pl-1 text-danger">*</span></label>
+						<label class="control-label">Address (House No,Building,Street,Area) <span class="pl-1 text-danger">*</span></label>
 					</div>
 				</div>
 			</div>
@@ -37,7 +37,7 @@
 				<div class="col-md-12">
 					<div class="form-group ">
 						<input type="text" class="form-control form-control-lg" id="landmark" name="landmark" [(ngModel)]="newAddress.landmark" [ngClass]="{'has-value' : newAddress.landmark}">
-						<label class="control-label">Landmark</label>
+						<label class="control-label">Landmark (Optional)</label>
 					</div>
 				</div>						
 			</div>
@@ -98,7 +98,7 @@
 	</form>
 
 
-	<div *ngIf="!addAddress && addresses" class="shipping-content-info" style="display: block;">
+	<div *ngIf="!addAddress && addresses" class="shipping-content-info mb-4" style="display: block;">
 		<div class="radio-wrap d-flex kss_sizes wo-image mb-4">
 			<div *ngFor="let address of addresses">
 				<input class="d-none radio-input" type="radio" name="kss-address" id="address-{{address.id}}" [value]="address.id" [(ngModel)]="selectedAddressId" (change)="updatedAddAddress()">

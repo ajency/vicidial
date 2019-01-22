@@ -79,7 +79,8 @@ export class AddressComponent implements OnInit, OnChanges {
   }
 
   initSelectPicker(){
-    $(".kss_shipping").scrollTop(0);
+    $(".kss_shipping").animate({scrollTop: 0}, 300);
+    $('#cd-cart').animate({scrollTop: 0}, 300);
     setTimeout(()=>{
       $('#state').selectpicker();
     },100); 
