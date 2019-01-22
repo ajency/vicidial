@@ -79,6 +79,7 @@ export class ShippingDetailsComponent implements OnInit {
     this.appservice.callGetAllAddressesApi().then((response)=>{
       this.addresses = response.addresses;      
       this.appservice.shippingAddresses = response.addresses;
+      this.appservice.userMobile = response.user_info.mobile;
       this.addresses.forEach((address)=> {if(address.default == true) this.selectedAddressId=address.id});
       this.removeLoader();
     })
@@ -98,7 +99,7 @@ export class ShippingDetailsComponent implements OnInit {
 
   closeCart(){
     let url = window.location.href.split("#")[0];
-    history.pushState({cart : false}, 'cart', url);
+    history.replaceState({cart : false}, 'cart', url);
     this.widgetOpen = false;
     this.appservice.closeCart();
     // window.location.reload();

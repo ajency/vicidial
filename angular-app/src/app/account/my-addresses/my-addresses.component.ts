@@ -37,6 +37,7 @@ export class MyAddressesComponent implements OnInit {
       this.appservice.showLoader();
       this.appservice.callGetAllAddressesApi().then((response)=>{
         this.addresses = response.addresses;
+        this.appservice.userMobile = response.user_info.mobile;
         // this.checkAddresses();
         this.appservice.shippingAddresses = response.addresses;
         this.removeLoader();

@@ -20,6 +20,7 @@
 <script type="text/javascript">
   // Google pixel tracking id
   var google_pixel_id = "{{config('analytics.google_pixel_id')}}";
+  var google_conversion_id = "{{config('analytics.conversion_id')}}";
 </script>
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
@@ -70,15 +71,6 @@
   gtag('js', new Date());
 
   gtag('config', "{{config('analytics.google_pixel_id')}}");
-</script>
-
-<script>
-  gtag('event', 'conversion', {
-      'send_to': "{{config('analytics.google_pixel_id')}}/2OLaCNSGioUBEK24rP0C",
-      'value': 1.0,
-      'currency': 'INR',
-      'transaction_id': ''
-  });
 </script>
 
 <!-- Hotjar Tracking Code -->

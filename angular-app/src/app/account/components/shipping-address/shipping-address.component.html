@@ -4,7 +4,7 @@
 	  <div class="card-body p-3">
 	     <h3 class="kss-title font-weight-bold text-muted">{{shipping_address.name}}</h3>
 	     <p class="text-muted mb-2">
-	        {{shipping_address.address}}, {{shipping_address.locality}},
+	        {{shipping_address.address}},
 	        <span *ngIf="shipping_address.landmark">{{shipping_address.landmark}},</span>
 	        {{shipping_address.city}}, {{shipping_address.state}} {{shipping_address.pincode}}
 	     </p>

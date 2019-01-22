@@ -27,6 +27,7 @@ export class AppServiceService {
   private loginSuccess = new Subject<any>();
   userInfo : any;
   navigatingFromBagToAddress : boolean = false;
+  userMobile : any;
 
   constructor(	private router: Router,
                 private apiservice : ApiServiceService) { 
