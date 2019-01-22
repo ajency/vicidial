@@ -11,9 +11,10 @@
 				</div>
 				<div class="col-md-12">
 					<div class="form-group" [ngClass]="{'has-error' : newAddress.phone<7000000000 && newAddress.phone.length== 10 }">
-						<input class="form-control form-control-lg" id="mobile" type="tel" minlength = "10" maxlength = "10" pattern="^[789]\d{9}$" inputmode="numeric" name="mobile" for="inputError" [(ngModel)]="newAddress.phone" required appNumbers [ngClass]="{'has-value' : newAddress.phone}">
+						<input class="form-control form-control-lg" id="mobile" type="tel" minlength = "10" maxlength = "10" pattern="^[789]\d{9}$" inputmode="numeric" name="mobile" for="inputError" [(ngModel)]="newAddress.phone" required appNumbers [ngClass]="{'has-value' : newAddress.phone}" (blur)="phoneBlur = true" (focus)="phoneBlur = false">
 						 <label class="control-label" for="inputError">Mobile Number <span class="pl-1 text-danger">*</span></label>
-						 <small *ngIf="newAddress.phone<7000000000 && newAddress.phone.length== 10" id="passwordHelpBlock" class="form-text text-danger">
+						  <i class="fas fa-info-circle mobile-info-icon on-address" data-toggle="tooltip" data-placement="top" title="We will use this number to contact you at the time of delivery"></i>
+						 <small *ngIf="(newAddress.phone<7000000000 && newAddress.phone.length== 10) || (phoneBlur && newAddress.phone.length != 10) " id="passwordHelpBlock" class="form-text text-danger">
 							Please enter a valid Indian Mobile Number
 						</small>
 					</div>
@@ -26,45 +27,10 @@
 				</div>		 -->					
 			</div>
 			<div class="row">
-				<div class="col-md-6">
-					<div class="form-group ">
-						<input class="form-control form-control-lg" id="pincode" type="tel"  minlength = "6" maxlength = "6" name="pincode" [(ngModel)]="newAddress.pincode" required appNumbers inputmode="numeric" [ngClass]="{'has-value' : newAddress.pincode}">
-						<label class="control-label">Pincode <span class="pl-1 text-danger">*</span></label>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="form-group">
-						<input class="form-control form-control-lg" id="locality" type="text" name="locality" [(ngModel)]="newAddress.locality" required [ngClass]="{'has-value' : newAddress.locality}">
-						<label class="control-label">Locality/Town <span class="pl-1 text-danger">*</span></label>
-					</div>
-				</div>
-			</div>
-			<div class="row">
 				<div class="col-md-12">
 					<div class="form-group ">
 						<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="address" [(ngModel)]="newAddress.address" required [ngClass]="{'has-value' : newAddress.address}"></textarea>
-						<label class="control-label">Street Address (<small>House No,Building,Street,Area</small>) <span class="pl-1 text-danger">*</span></label>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-6">
-					<div class="form-group ">
-						<input class="form-control form-control-lg" id="citys" type="text" name="city" [(ngModel)]="newAddress.city" required [ngClass]="{'has-value' : newAddress.city}">
-						<label class="control-label">City/District <span class="pl-1 text-danger">*</span></label>
-					</div>
-				</div>
-				<div class="col-md-6">
-<!-- 						<div class="form-group">
-						<input class="form-control form-control-lg" id="state" type="text" name="state" [(ngModel)]="newAddress.state" required [ngClass]="{'has-value' : newAddress.state}">
-						<label class="control-label">State<span class="pl-1 text-danger">*</span></label>
-					</div> -->
-					<div class="form-group custom-bs-select">
-						<select name="" id="state" class="form-control form-control-lg has-value"  name="state" data-style="form-control" [(ngModel)]="newAddress.state_id" required data-live-search="true">
-							<option value="">--Select--</option>
-							<option *ngFor="let state of states" value="{{state.id}}">{{state.state}}</option>
-						</select>
-						<label class="control-label">State <span class="pl-1 text-danger">*</span></label>
+						<label class="control-label">Address (House No, Building, Street, Area) <span class="pl-1 text-danger">*</span></label>
 					</div>
 				</div>
 			</div>
@@ -72,25 +38,60 @@
 				<div class="col-md-12">
 					<div class="form-group ">
 						<input type="text" class="form-control form-control-lg" id="landmark" name="landmark" [(ngModel)]="newAddress.landmark" [ngClass]="{'has-value' : newAddress.landmark}">
-						<label class="control-label">Landmark</label>
+						<label class="control-label">Landmark (Optional)</label>
+					</div>
+				</div>						
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group ">
+						<input class="form-control form-control-lg" id="pincode" type="tel"  minlength = "6" maxlength = "6" name="pincode" [(ngModel)]="newAddress.pincode" required appNumbers inputmode="numeric" [ngClass]="{'has-value' : newAddress.pincode}" (blur)="pincodeBlur = true" (focus)="pincodeBlur = false" (ngModelChange)="getCityState(newAddress.pincode)">
+						<label class="control-label">Pincode <span class="pl-1 text-danger">*</span></label>
+						<small class="form-text text-danger">
+							<span *ngIf="pincodeBlur && newAddress.pincode.length != 6; else otherError">Please enter a valid 6 digit pincode</span>
+							<ng-template #otherError>{{pincodeErrorMsg}}</ng-template>
+						</small>
 					</div>
 				</div>
-			<!-- 	<div class="col-md-6">
-					<div class="form-group custom-select-drop">
-						<select name="type" id="address_type" class="form-control form-control-lg has-value" [(ngModel)]="newAddress.type" required>
-							<option value="">--Select--</option>
-							<option value="Home">Home</option>
-							<option value="Office">Office</option>
-						</select>
-						<label class="control-label">Type of address <span class="pl-1 text-danger">*</span></label>
+<!-- 				<div class="col-md-6">
+					<div class="form-group">
+						<input class="form-control form-control-lg" id="locality" type="text" name="locality" [(ngModel)]="newAddress.locality" required [ngClass]="{'has-value' : newAddress.locality}">
+						<label class="control-label">Locality/Town <span class="pl-1 text-danger">*</span></label>
 					</div>
-				</div>	 -->						
+				</div> -->
+			</div>
+			<div class="text-center d-none" [ngClass]="{'d-block': showPicodeLoader}" ><i class="fa-circle-notch fa-lg fa-spin fas text-primary"></i></div>
+			<div class="row" *ngIf="newAddress.state_id && newAddress.city">
+				<div class="col-md-6">
+					<div class="form-group ">
+						<input disabled class="form-control form-control-lg" id="citys" type="text" name="city" [(ngModel)]="newAddress.city" required [ngClass]="{'has-value' : newAddress.city}">
+						<label class="control-label">Taluka/District <span class="pl-1 text-danger">*</span></label>
+					</div>
+				</div>
+				<div class="col-md-6">
+<!-- 						<div class="form-group">
+						<input class="form-control form-control-lg" id="state" type="text" name="state" [(ngModel)]="newAddress.state" required [ngClass]="{'has-value' : newAddress.state}">
+						<label class="control-label">State<span class="pl-1 text-danger">*</span></label>
+					</div> -->
+					<!-- <div class="form-group custom-bs-select"> -->
+						<!-- <select name="" id="state" class="form-control form-control-lg has-value"  name="state" data-style="form-control" [(ngModel)]="newAddress.state_id" required data-live-search="true">
+							<option value="">--Select--</option>
+							<option *ngFor="let state of states" value="{{state.id}}">{{state.state}}</option>
+						</select> -->
+						<!-- <input class="form-control form-control-lg" id="state" type="text" name="state" [(ngModel)]="newAddress.state_id" required [ngClass]="{'has-value' : newAddress.state}">
+						<label class="control-label">State <span class="pl-1 text-danger">*</span></label> -->						
+					<!-- </div> -->
+					<div class="form-group ">
+						<input disabled class="form-control form-control-lg" id="state" type="text" name="state" required value="{{getStateName(newAddress.state_id)}}" [ngClass]="{'has-value' : newAddress.city}">
+						<label class="control-label">State<span class="pl-1 text-danger">*</span></label>
+					</div>					
+				</div>
 			</div>
 			<div *ngIf="!hideDefaultAddressField && addresses.length" class="row mt-4 mb-3">
 				<div class="col-md-12">
 					<div class="custom-control custom-checkbox">
 						<input type="checkbox" class="custom-control-input" id="customCheck1" name="default" [(ngModel)]="newAddress.default">
-						<label class="custom-control-label" for="customCheck1">Make this my default address</label>
+						<label class="custom-control-label font-weight-normal" for="customCheck1">Make this my default address</label>
 					</div>
 				</div>
 			</div>
@@ -98,7 +99,7 @@
 	</form>
 
 
-	<div *ngIf="!addAddress && addresses" class="shipping-content-info" style="display: block;">
+	<div *ngIf="!addAddress && addresses" class="shipping-content-info mb-4" style="display: block;">
 		<div class="radio-wrap d-flex kss_sizes wo-image mb-4">
 			<div *ngFor="let address of addresses">
 				<input class="d-none radio-input" type="radio" name="kss-address" id="address-{{address.id}}" [value]="address.id" [(ngModel)]="selectedAddressId" (change)="updatedAddAddress()">
@@ -135,7 +136,7 @@
 				<button [disabled]="!addresses.length" type="button" class="shipping-details-save btn kss-btn kss-btn--link kss-btn--big mt-1 mb-1 ml-auto mr-auto" (click)="updatedAddAddress()" >Cancel </button>
 			</div>
 			<div class="col-6 text-center">
-				<button [disabled]="!myForm.valid"  type="button" class="shipping-details-save btn kss-btn kss-btn--big mt-1 mb-1 ml-auto mr-auto" (click)="saveNewAddress()"> Save </button>
+				<button [disabled]="!myForm.valid || !(newAddress.state_id && newAddress.city)"  type="button" class="shipping-details-save btn kss-btn kss-btn--big mt-1 mb-1 ml-auto mr-auto" (click)="saveNewAddress()"> Save </button>
 			</div>
 		</div>
 	</div>

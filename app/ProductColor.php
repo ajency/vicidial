@@ -71,7 +71,7 @@ class ProductColor extends Model
         foreach ($extraAtt as $att) {
             $product_data[$att] = (isset($elastic_data['search_result_data'][$att])) ? $elastic_data['search_result_data'][$att] : false;
         }
-        $productData['product_metatag'] = array_unique($productData['product_metatag']);
+        $product_data['product_metatag'] = array_unique($product_data['product_metatag']);
         return ['product' => $product_data, 'variant' => $variants];
     }
 

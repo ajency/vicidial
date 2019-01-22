@@ -50,7 +50,7 @@ export class ShippingSummaryComponent implements OnInit {
   
   closeCart(){
     let url = window.location.href.split("#")[0];
-    history.pushState({cart : false}, 'cart', url);
+    history.replaceState({cart : false}, 'cart', url);
     this.widgetOpen = false;
     this.appservice.closeCart();
 

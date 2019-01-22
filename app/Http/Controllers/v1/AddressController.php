@@ -15,7 +15,7 @@ class AddressController extends Controller
 {
     public function userAddAddress(Request $request)
     {
-    	$request->validate(['default' => 'required', 'name' => 'required', 'phone' => 'required|digits:10', 'pincode' => 'required|digits:6', 'state_id' => 'required|numeric', 'address' => 'required', 'locality' => 'required', 'landmark' => 'present', 'city' => 'required']);
+    	$request->validate(['default' => 'required', 'name' => 'required', 'phone' => 'required|digits:10', 'pincode' => 'required|digits:6', 'state_id' => 'required|numeric', 'address' => 'required', 'landmark' => 'present', 'city' => 'required']);
     	$params  = $request->all();
     	$user_id = User::getUserByToken($request->header('Authorization'))->id;
 
@@ -25,7 +25,7 @@ class AddressController extends Controller
         if ($state == null) abort(403);
 
     	$address = new Address;
-        $address->address = ["name" => $params["name"], "phone" => $params["phone"], "pincode" => $params["pincode"], "state_id" => $state->id, "state_odoo_id" => $state->meta_data['odoo_id'], "state" => $state->label, "address" => $params["address"], "locality" => $params["locality"], "landmark" => $params["landmark"], "city" => $params["city"]];
+        $address->address = ["name" => $params["name"], "phone" => $params["phone"], "pincode" => $params["pincode"], "state_id" => $state->id, "state_odoo_id" => $state->meta_data['odoo_id'], "state" => $state->label, "address" => $params["address"], "landmark" => $params["landmark"], "city" => $params["city"]];
         $address->default = $default;
         $address->user_id = $user_id;
         $address->save();
@@ -35,7 +35,7 @@ class AddressController extends Controller
 
     public function userEditAddress(Request $request)
     {
-        $request->validate(['default' => 'required', 'name' => 'required', 'phone' => 'required|digits:10', 'pincode' => 'required|digits:6', 'state_id' => 'required|numeric', 'address' => 'required', 'locality' => 'required', 'landmark' => 'present', 'city' => 'required']);
+        $request->validate(['default' => 'required', 'name' => 'required', 'phone' => 'required|digits:10', 'pincode' => 'required|digits:6', 'state_id' => 'required|numeric', 'address' => 'required', 'landmark' => 'present', 'city' => 'required']);
         $params  = $request->all();
         $user_id = User::getUserByToken($request->header('Authorization'))->id;
 
@@ -47,7 +47,7 @@ class AddressController extends Controller
 
         $default = $this->defaultAddressSet($user_id, $params["default"], $address->id);
 
-        $address->address = ["name" => $params["name"], "phone" => $params["phone"], "pincode" => $params["pincode"], "state_id" => $state->id, "state_odoo_id" => $state->meta_data['odoo_id'], "state" => $state->label, "address" => $params["address"], "locality" => $params["locality"], "landmark" => $params["landmark"], "city" => $params["city"]];
+        $address->address = ["name" => $params["name"], "phone" => $params["phone"], "pincode" => $params["pincode"], "state_id" => $state->id, "state_odoo_id" => $state->meta_data['odoo_id'], "state" => $state->label, "address" => $params["address"], "landmark" => $params["landmark"], "city" => $params["city"]];
         $address->default = $default;
         $address->user_id = $user_id;
         $address->save();
@@ -83,7 +83,7 @@ class AddressController extends Controller
             $address_data[] = $address->shippingAddress(true);
         }
 
-        return json_encode(["addresses"=> $address_data]);
+        return json_encode(["addresses"=> $address_data, "user_info" => $user->userDetails()]);
     }
 
     public function userDeleteAddress(Request $request)

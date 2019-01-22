@@ -286,6 +286,7 @@ export class BagViewComponent implements OnInit {
       this.appservice.showLoader();
       this.appservice.callGetAllAddressesApi(true).then((response)=>{
         this.appservice.shippingAddresses = response.addresses;
+        this.appservice.userMobile = response.user_info.mobile;
         $("#cd-cart").css("overflow", "auto");
         $('.modal-backdrop').remove();
 

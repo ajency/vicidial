@@ -12,21 +12,21 @@ import { AppComponent } from './app.component';
 import { AppServiceService } from './service/app-service.service';
 import { ApiServiceService } from './service/api-service.service';
 import { AuthGuardService } from './service/auth-guard.service';
-import { NumbersDirective } from './directives/numbers.directive';
+import { NumberModule } from './directives/number.module';
 
 import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NumbersDirective,
     LoginComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    HttpModule
+    HttpModule,
+    NumberModule
   ],
   providers: [
     {provide: LocationStrategy, useClass: HashLocationStrategy},

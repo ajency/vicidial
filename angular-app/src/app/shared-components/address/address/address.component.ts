@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { AppServiceService } from '../../../service/app-service.service';
 import { ApiServiceService } from '../../../service/api-service.service';
+import { NumbersDirective } from '../../../directives/numbers.directive';
 
 declare var $: any;
 
@@ -24,13 +25,17 @@ export class AddressComponent implements OnInit, OnChanges {
     phone : '',
     address : '',
     pincode : '',
-    locality : '',
     landmark : '',
     city : '',
     state_id : '',
     default : false
   };
   hideDefaultAddressField : boolean = false;
+  phoneOnBlur : boolean = false;
+  pincodeBlur : boolean = false;
+  getLocationCall : any;
+  pincodeErrorMsg : any;
+  showPicodeLoader : boolean = false;
   constructor(private appservice : AppServiceService,
               private apiservice : ApiServiceService) { }
 
@@ -41,12 +46,17 @@ export class AddressComponent implements OnInit, OnChanges {
   	// console.log("ngOnChanges address component ==>", this.addresses, this.addAddress, this.selectedAddressId, this.states);
     this.checkAddresses();
     if(this.states && this.states.length) 
-      this.initSelectPicker(); 
+      this.initSelectPicker(false); 
+  }
+
+  ngOnDestroy() {
+    this.unsubscribeGetLocationCall();
   }
 
   checkAddresses(){
     if(!this.addresses.length){
       this.addAddress = true;
+      this.newAddress.phone = this.appservice.userMobile;
       this.addAddressFlagChanged.emit(true);
       if(this.states && this.states.length) 
         this.initSelectPicker(); 
@@ -68,10 +78,14 @@ export class AddressComponent implements OnInit, OnChanges {
     this.initSelectPicker();
   }
 
-  initSelectPicker(){
-    $(".kss_shipping").scrollTop(0);
+  initSelectPicker(scroll : boolean = true){
+    if(scroll){
+      $(".kss_shipping").animate({scrollTop: 0}, 300);
+      $('#cd-cart').animate({scrollTop: 0}, 300);
+    }    
     setTimeout(()=>{
       $('#state').selectpicker();
+      $('[data-toggle="tooltip"]').tooltip();
     },100); 
   }
 
@@ -83,6 +97,8 @@ export class AddressComponent implements OnInit, OnChanges {
     this.newAddress.default = false;
     this.newAddress.state_id="";
     this.newAddress.landmark = "";
+    this.newAddress.phone = this.appservice.userMobile;
+    this.newAddress.pincode = "";
     this.initSelectPicker();
   }
 
@@ -170,7 +186,7 @@ export class AddressComponent implements OnInit, OnChanges {
   }
 
   getStateName(id){
-    if(this.states){
+    if(this.states && id){
       let state_obj = this.states.find((state)=>{ return id == state.id});
       return state_obj.state;
     }    
@@ -179,6 +195,55 @@ export class AddressComponent implements OnInit, OnChanges {
   updatedAddAddress(){
     this.addAddress = false;
     this.addAddressFlagChanged.emit(false);
+  }
+
+  getCityState(pincode){
+    if(pincode.length == 6){
+      console.log("make api call");
+      this.showShowLoader();
+      this.unsubscribeGetLocationCall();
+      let url = this.appservice.apiUrl +  "/api/rest/v1/district-state/"+pincode;
+      this.getLocationCall = this.apiservice.request(url, 'get', {}, {}, false, 'observable').subscribe((response)=>{
+        console.log("response from location api ==>", response);
+        this.newAddress.city = response.district;
+        this.newAddress.state_id = response.state_id;
+        this.removeLoader();
+      },
+      (error)=>{
+        console.log("error ===>", error);
+        this.resetStateAndCity();
+        this.removeLoader();
+        if(error.status == 403)
+          this.pincodeErrorMsg = "We do not service this pincode.";
+        else if(error.status == 0)
+          this.pincodeErrorMsg = "Failed to verify pincode. Please check your internet connection."
+        else
+          this.pincodeErrorMsg = "Failed to verify pincode. Please re-enter pincode.";
+      })
+    }
+    else{
+      this.unsubscribeGetLocationCall();
+      this.resetStateAndCity();
+      this.pincodeErrorMsg = "";
+    }
+  }
+
+  unsubscribeGetLocationCall(){
+    if(this.getLocationCall)
+      this.getLocationCall.unsubscribe();
+  }
+
+  showShowLoader(){
+    this.showPicodeLoader = true;
+  }
+
+  removeLoader(){
+    this.showPicodeLoader = false;
+  }
+
+  resetStateAndCity(){
+    this.newAddress.city = '';
+    this.newAddress.state_id = '';
   }
 
 }
