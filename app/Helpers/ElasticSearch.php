@@ -144,6 +144,7 @@ function fetchProduct($product)
             "product_type"      => $data["product_att_product_type"],
             "other_attribute"   => $data["product_att_other_attribute"],
         ],
+        "product_att_ecom_sales"  => $data["product_att_ecom_sales"],
         "selected_color_id" => $selected_color_id,
         "images"            => $allImages,
         "variant_group"     => [
