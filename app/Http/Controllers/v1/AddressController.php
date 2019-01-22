@@ -150,7 +150,7 @@ class AddressController extends Controller
 
     public function fetchPincode($pincode, Request $request)
     {
-        $pincode_entry = Pincode::where('pincode', '=', $pincode)->get()->first();
+        $pincode_entry = Pincode::where('pincode', '=', $pincode)->where('deliverable', '=', true)->get()->first();
         if($pincode_entry == null){
             abort(403);
         }
