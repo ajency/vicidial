@@ -12,6 +12,12 @@ class HomeController extends Controller
     	setSEO('home');
         return view('home');
     }
+    
+    public function draftimage(Request $request)
+    {
+    	setSEO('home');
+        return view('home');
+    }
 
     public function api(Request $request)
     {

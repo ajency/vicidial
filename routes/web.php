@@ -72,16 +72,17 @@ Route::group([
 });
 
 Route::get('/', $app_version.'\HomeController@index')->name('home');
+Route::get('/draftimage', $app_version . '\HomeController@draftimage')->name('draftimage');
 Route::get('/getWarehouseLevelInventory', $app_version."\ProductController@allInventory");
 Route::get('/contact-us', $app_version.'\StaticController@contact');
 Route::get('/contact', $app_version.'\StaticController@contactnew');
 Route::get('/faq', $app_version.'\StaticController@faq');
 Route::get('/about-us', $app_version.'\StaticController@about');
+Route::get('/terms-and-conditions', $app_version.'\StaticController@tc');
+Route::get('/privacy-policy', $app_version.'\StaticController@privacy');
 Route::get('/ideas', $app_version.'\PostController@blog');
 Route::get('/ideas/{title}', $app_version.'\PostController@post');
 Route::get('/ideas/category/{category}', $app_version.'\PostController@category');
-Route::get('/terms-and-conditions', $app_version.'\StaticController@tc');
-Route::get('/privacy-policy', $app_version.'\StaticController@privacy');
 Route::get('/stores', $app_version.'\StaticController@stores');
 Route::get('/stores/surat', $app_version.'\StaticController@singlestore');
 Route::get('/stores/hyderabad', $app_version.'\StaticController@singlestore');
