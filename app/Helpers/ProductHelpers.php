@@ -57,6 +57,20 @@ function createUrl($slugs)
     return $url;
 }
 
+function defaultVariant($variants){
+    $variants = collect($variants);
+    $variants->transform(function ($item, $key) {
+            $item['variant_discount'] = $item['variant_list_price'] - $item['variant_sale_price'];
+            return $item;
+        });
+    $max_discount = $variants->pluck('variant_discount')->max();
+    $variants = $variants->where('variant_discount', $max_discount);
+    $min_sale_price = $variants->pluck('variant_sale_price')->min();
+    $variants = $variants = $variants->where('variant_sale_price', $min_sale_price);
+
+    return $variants->first()['variant_id'];
+
+}
 function formatItems($result, $params){
     $items = [];
     $response = ["results_found" => ($result["hits"]["total"] > 0)];
@@ -85,15 +99,25 @@ function formatItems($result, $params){
                 break;
             }
         }
-        // find default product by max sale price
-        $id         = $product["variants"][0]["variant_id"];
-        $sale_price = $product["variants"][0]["variant_sale_price"];
-        foreach ($product["variants"] as $variant) {
-            if ($sale_price > $variant["variant_sale_price"]) {
-                $id         = $variant["variant_id"];
-                $sale_price = $variant["variant_sale_price"];
-            }
-        }
+        // display price
+        $variants           = collect($product['variants']);
+        $prices             = $variants->pluck('variant_sale_price')->unique();
+        $item['sale_price'] = ["min" => $prices->min(), "max" => $prices->max()];
+        $list_price         = $variants->pluck('variant_list_price');
+        $item['mrp']        = ["min" => $list_price->min(), "max" => $list_price->max()];
+        $variants->transform(function ($item, $key) {
+            $item['variant_discount'] = $item['variant_list_price'] - $item['variant_sale_price'];
+            return $item;
+        });
+        $discounts             = $variants->pluck('variant_discount');
+        $item['discount']      = ["min" => $discounts->min(), "max" => $discounts->max()];
+        $item['display_price'] = $item['sale_price'];
+
+        $item['default_mrp']        = $item['mrp']['min'];
+        $item['default_sale_price'] = $item['sale_price']['min'];
+        $item['default_discount']    = $item['discount']['max'];
+        
+        $id = defaultVariant($product['variants']);
         foreach ($product["variants"] as $variant) {
             $item["variants"][] = [
                 "list_price" => $variant["variant_list_price"],
@@ -244,7 +268,25 @@ function sanitiseFilterdata($result, $params = [])
     // $filter["selected_range"]["end"] = ($filter["selected_range"]["end"] > $filter["bucket_range"]["end"])? $filter["bucket_range"]["end"] : $filter["selected_range"]["end"];
     $response[] = $filter;
 
-    //le availability filter
+
+    // $filter           = [];
+    // $facet_name = "variant_discount_percent";
+    // $filter['header'] = [
+    //     'facet_name'   => $facet_name,
+    //     'display_name' => config('product.facet_display_data.'.$facet_name.'.name'),
+    // ];
+    // foreach ($attributes as $attribute) {
+    //     $filter[$attribute] = config('product.facet_display_data.'.$facet_name.'.'. $attribute);
+    // }
+
+    // $bucket = isset($params['search_object']['range_filter']['variant_discount_percent']) ? $params['search_object']['range_filter']['variant_discount_percent']: [];
+    // // dd($bucket);
+    // $filter["items"] = collect(config('product.discount_filter'))->transform(function ($item, $key) use ($bucket) {
+    //     $item['is_selected'] = $item["min"] == $bucket['min'] and $item["max"] == $bucket['max'];
+    //     return $item;
+    // })->toArray();
+    // $response[] = $filter;
+
     
     $response[] = boolFilterResponse("variant_availability", $attributes, $params);
 
@@ -324,7 +366,14 @@ function setDefaultFilters(array $params){
     foreach ($params['search_object'] as $filter_type => $facet) {
         if(is_array($facet)){
             foreach ($facet as $facet_name => $values) {
-                $search_object[$filter_type][$facet_name] = $values;
+                if ($filter_type == "range_filter")
+                {
+                    if(!isset($values['max']))
+                        $values['max'] = null;
+                    if(!isset($values['min']))
+                        $values['min'] = null;
+                }
+                $search_object[$filter_type][$facet_name] = $values;     
             }
         }
         else{

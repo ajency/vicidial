@@ -41,6 +41,7 @@ function makeQueryfromParams($searchObject)
         'product_subtype'         => 'search_data.string_facet.product_subtype',
         'product_color_html'      => 'search_data.string_facet.product_color_html',
         'variant_sale_price'      => 'search_data.number_facet.variant_sale_price',
+        'variant_discount_percent'=> 'search_data.number_facet.variant_discount_percent',
         'variant_availability'    => 'search_data.boolean_facet.variant_availability',
         'product_image_available' => 'search_data.boolean_facet.product_image_available',
         'product_att_ecom_sales'  => 'search_data.boolean_facet.product_att_ecom_sales',
@@ -79,6 +80,7 @@ function makeQueryfromParams($searchObject)
                 break;
         }
     }
+    // dd($queryParams);
 
     return $queryParams;
 }

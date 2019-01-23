@@ -28,6 +28,10 @@ class ProductController extends Controller
             $params['show_button'] = ($params['show_button'] or $size_set->inventory_available);
         }
 
+        if ($params['ecom_sales'] == false) {
+            $params['show_button'] = false;
+        }
+        
         $params['breadcrumb']           = array();
         $params['breadcrumb']['list']   = array();
         $url = array();
