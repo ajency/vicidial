@@ -398,7 +398,7 @@ return [
             'name'                   => 'Discount',
             'is_singleton'           => true,
             'is_collapsed'           => false,
-            'template'               => 'discount',
+            'template'               => null, //'discount',
             'order'                  => 9,
             'display_count'          => false,
             'disabled_at_zero_count' => false,
