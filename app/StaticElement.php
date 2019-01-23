@@ -16,7 +16,7 @@ class StaticElement extends Model
         'element_data' => 'array',
         'published'    => 'boolean',
         'draft'        => 'boolean',
-        'remove'        => 'boolean',
+        'remove'       => 'boolean',
     ];
 
     //fetch with seq number
@@ -28,7 +28,7 @@ class StaticElement extends Model
 
             $getRecord = StaticElement::where('sequence', $seq_no)->where('draft', true)->orderBy('sequence', 'desc')->get()->first();
         }
-        
+
         if (!is_null($getRecord)) {
             $record = $getRecord;
         } else {
@@ -52,28 +52,25 @@ class StaticElement extends Model
 
         return ($response);
     } //fetchSeq
-    
+
     //fetch all
     public static function fetch($data = [], $published = false)
-    {   
+    {
         if (isset($data['type'])) {
-           
+
             $records = StaticElement::where('type', $data['type'])->where('published', true)->orderBy('sequence', 'asc')->get();
+        } else {
+            $records = StaticElement::where('published', true)->orderBy('sequence', 'asc')->get();
         }
-        $records=StaticElement::where('published',true)->orderBy('sequence', 'asc')->get();//
-        
+
         if (!$published) {
-           
+
             if (isset($data['type'])) {
-                $records = StaticElement::where('type', $data['type'])->where('draft', true)->orderBy('sequence', 'asc')->get();
+                $draft = StaticElement::where('type', $data['type'])->where('draft', true)->orderBy('sequence', 'asc')->get();
+            } else {
+                $draft = StaticElement::where('draft', true)->orderBy('sequence', 'asc')->get();
             }
-            else
-            {
-                $draft=StaticElement::where('draft',true)->orderBy('sequence', 'asc')->get(); //
-            }
-            $records=$published->merge($draft)->unique();
-            
-            return $records;
+            $records = $records->merge($draft)->unique();
         }
 
         $response = array();
@@ -86,15 +83,15 @@ class StaticElement extends Model
             if (!isset($response[$type])) {
                 $response[$type] = array();
             }
-            
+
             array_push($response[$type], array(
                 "sequence"     => $record->sequence,
                 "element_data" => $record->element_data,
                 "images"       => $images,
             ));
-            
+
         } //foreach
-      
+
         return ($response);
     } //fetch
 
@@ -106,7 +103,7 @@ class StaticElement extends Model
         if ($record == null) {
             abort(404);
         }
-        
+
         StaticElement::where('sequence', $seq_no)->where('draft', true)->update(['published' => null, 'draft' => null]);
 
         $se               = new StaticElement();
@@ -159,7 +156,7 @@ class StaticElement extends Model
             $this->saveImage($images[$type], $type);
         }
     }
-    
+
     //update existing function to call saveImage
     public function saveUpdateImage($images, $record)
     {
@@ -406,113 +403,116 @@ class StaticElement extends Model
         return $resp;
     }
 
-
-
-
-    public function getSingleStaticImage($file_id,$presets,$depth){
-      $file = FileUpload_Photos::find($file_id);
-      $config        = config('fileupload_static_element');
-      if($file == null) return false;
-      if(config('fileupload_static_element')['disk_name'] == "s3"){
-        $map_image_size = json_decode($file->image_size,true);
-        if($map_image_size == null) return false;
-        $image_size = ($presets == "original")?$presets:($presets."$$".$depth);
-        if(in_array($image_size,$map_image_size)){
-          $obj_instance = $this;
-          $obj_class = get_class($this);
-          if($presets == "original"){
-            $newfilepath = str_replace($config['model'][$obj_class]['base_path'].'/'.$obj_instance[$config['model'][$obj_class]['slug_column']].'/', $config['model'][$obj_class]['base_path'].'/'.$obj_instance[$config['model'][$obj_class]['slug_column']].'/'.$presets.'/', $file->url);
-          }
-          else{
-            $newfilepath = str_replace($config['model'][$obj_class]['base_path'].'/'.$obj_instance[$config['model'][$obj_class]['slug_column']].'/', $config['model'][$obj_class]['base_path'].'/'.$obj_instance[$config['model'][$obj_class]['slug_column']].'/'.$presets.'/'.$depth.'/', $file->url);
-          }
-          return $newfilepath;
+    public function getSingleStaticImage($file_id, $presets, $depth)
+    {
+        $file   = FileUpload_Photos::find($file_id);
+        $config = config('fileupload_static_element');
+        if ($file == null) {
+            return false;
         }
-        else
-          return false;
-      }
+
+        if (config('fileupload_static_element')['disk_name'] == "s3") {
+            $map_image_size = json_decode($file->image_size, true);
+            if ($map_image_size == null) {
+                return false;
+            }
+
+            $image_size = ($presets == "original") ? $presets : ($presets . "$$" . $depth);
+            if (in_array($image_size, $map_image_size)) {
+                $obj_instance = $this;
+                $obj_class    = get_class($this);
+                if ($presets == "original") {
+                    $newfilepath = str_replace($config['model'][$obj_class]['base_path'] . '/' . $obj_instance[$config['model'][$obj_class]['slug_column']] . '/', $config['model'][$obj_class]['base_path'] . '/' . $obj_instance[$config['model'][$obj_class]['slug_column']] . '/' . $presets . '/', $file->url);
+                } else {
+                    $newfilepath = str_replace($config['model'][$obj_class]['base_path'] . '/' . $obj_instance[$config['model'][$obj_class]['slug_column']] . '/', $config['model'][$obj_class]['base_path'] . '/' . $obj_instance[$config['model'][$obj_class]['slug_column']] . '/' . $presets . '/' . $depth . '/', $file->url);
+                }
+                return $newfilepath;
+            } else {
+                return false;
+            }
+
+        }
     }
 
-    public function resizeStaticImages($file_id,$presets,$depth,$filename){
-      $file = FileUpload_Photos::find($file_id);
-      return $this->generateResizedStaticImages($this->id,$presets,$depth,get_class($this),$this,$filename, $file);
+    public function resizeStaticImages($file_id, $presets, $depth, $filename)
+    {
+        $file = FileUpload_Photos::find($file_id);
+        return $this->generateResizedStaticImages($this->id, $presets, $depth, get_class($this), $this, $filename, $file);
     }
 
-    public function generateResizedStaticImages($object_id,$presets,$depth,$obj_class,$obj_instance,$filename, $file){
-        $config        = config('fileupload_static_element');
-        $disk          = \Storage::disk($config['disk_name']);
-        $path = explode('amazonaws.com/',$file->url);
+    public function generateResizedStaticImages($object_id, $presets, $depth, $obj_class, $obj_instance, $filename, $file)
+    {
+        $config  = config('fileupload_static_element');
+        $disk    = \Storage::disk($config['disk_name']);
+        $path    = explode('amazonaws.com/', $file->url);
         $command = $disk->getDriver()->getAdapter()->getClient()->getCommand('GetObject', [
-            'Bucket'                     => \Config::get('filesystems.disks.s3.bucket'),
-            'Key'                        => $path[1],
+            'Bucket' => \Config::get('filesystems.disks.s3.bucket'),
+            'Key'    => $path[1],
         ]);
-        $filepath =  $disk->getDriver()->getAdapter()->getClient()->createPresignedRequest($command, '+10 minutes')->getUri();
-        
+        $filepath = $disk->getDriver()->getAdapter()->getClient()->createPresignedRequest($command, '+10 minutes')->getUri();
+
         $extarr = explode(".", $filepath);
-        $ext = (count($extarr)>1)?$extarr[1]:"jpg";
-        
-        $image_size = ($presets == "original")?$presets:($presets."$$".$depth);
-        if($file->image_size != null){
-            $image_size_arr = json_decode($file->image_size,true);
-            if(is_array($image_size_arr))
+        $ext    = (count($extarr) > 1) ? $extarr[1] : "jpg";
+
+        $image_size = ($presets == "original") ? $presets : ($presets . "$$" . $depth);
+        if ($file->image_size != null) {
+            $image_size_arr = json_decode($file->image_size, true);
+            if (is_array($image_size_arr)) {
                 array_push($image_size_arr, $image_size);
-        }
-        else {
+            }
+
+        } else {
             $image_size_arr = [$image_size];
         }
         $file->image_size = json_encode($image_size_arr);
-        if($presets == "original"){
-            $nfilepath = explode("?", $filepath)[0];
-            $newfilepath = $config['base_root_path'] . $config['model'][$obj_class]['base_path'].'/'.$obj_instance[$config['model'][$obj_class]['slug_column']]. '/'.$presets.'/' .$filename;
-            $newfilepathfullurl = str_replace($config['model'][$obj_class]['base_path'].'/'.$obj_instance[$config['model'][$obj_class]['slug_column']].'/', $config['model'][$obj_class]['base_path'].'/'.$obj_instance[$config['model'][$obj_class]['slug_column']].'/'.$presets.'/', $file->url);
-            if($disk->put($newfilepath, file_get_contents($filepath), 'public')) {
+        if ($presets == "original") {
+            $nfilepath          = explode("?", $filepath)[0];
+            $newfilepath        = $config['base_root_path'] . $config['model'][$obj_class]['base_path'] . '/' . $obj_instance[$config['model'][$obj_class]['slug_column']] . '/' . $presets . '/' . $filename;
+            $newfilepathfullurl = str_replace($config['model'][$obj_class]['base_path'] . '/' . $obj_instance[$config['model'][$obj_class]['slug_column']] . '/', $config['model'][$obj_class]['base_path'] . '/' . $obj_instance[$config['model'][$obj_class]['slug_column']] . '/' . $presets . '/', $file->url);
+            if ($disk->put($newfilepath, file_get_contents($filepath), 'public')) {
                 $file->save();
                 return $newfilepathfullurl;
             } else {
                 return false;
             }
-        }
-        else{
+        } else {
             $config_dimensions = $config[$obj_instance->type . '_presets'][$presets][$depth];
-            $dimensions_arr = explode("X", $config_dimensions);
-            $width = $dimensions_arr[0];
-            $height = $dimensions_arr[1];
-            $new_img = \Image::make(file_get_contents($filepath));
+            $dimensions_arr    = explode("X", $config_dimensions);
+            $width             = $dimensions_arr[0];
+            $height            = $dimensions_arr[1];
+            $new_img           = \Image::make(file_get_contents($filepath));
             $new_img->resize($width, $height, function ($constraint) {
                 $constraint->aspectRatio();
                 $constraint->upsize();
             });
             $new_img = $new_img->stream();
 
-            $fp      = $config['base_root_path'] . $config['model'][$obj_class]['base_path'].'/'.$obj_instance[$config['model'][$obj_class]['slug_column']]. '/'.$presets.'/' .$depth.'/'.$filename;
+            $fp = $config['base_root_path'] . $config['model'][$obj_class]['base_path'] . '/' . $obj_instance[$config['model'][$obj_class]['slug_column']] . '/' . $presets . '/' . $depth . '/' . $filename;
             if ($disk->put($fp, $new_img->__toString(), 'public')) {
                 $file->save();
-                $newfilepathfullurl = str_replace($config['model'][$obj_class]['base_path'].'/'.$obj_instance[$config['model'][$obj_class]['slug_column']].'/', $config['model'][$obj_class]['base_path'].'/'.$obj_instance[$config['model'][$obj_class]['slug_column']].'/'.$presets.'/' .$depth.'/', $file->url);
+                $newfilepathfullurl = str_replace($config['model'][$obj_class]['base_path'] . '/' . $obj_instance[$config['model'][$obj_class]['slug_column']] . '/', $config['model'][$obj_class]['base_path'] . '/' . $obj_instance[$config['model'][$obj_class]['slug_column']] . '/' . $presets . '/' . $depth . '/', $file->url);
                 return $newfilepathfullurl;
             } else {
                 return false;
             }
 
         }
-        
-
 
     }
 
     public static function publish()
     {
-        $getpublish=Staticelement::select()->where('draft',true)->orderBy('created_at', 'desc')->get();
-            
-        foreach($getpublish as $pub)
-        {
-            Staticelement::where('sequence', $pub->sequence)->where('published',true)->update(['published' => null,'draft'=>null]);
-            
-            $pub->published=true;
-            $pub->draft=null;
+        $getpublish = Staticelement::select()->where('draft', true)->get();
+
+        foreach ($getpublish as $pub) {
+            Staticelement::where('sequence', $pub->sequence)->where('published', true)->update(['published' => null, 'draft' => null]);
+
+            $pub->published = true;
+            $pub->draft     = null;
             $pub->save();
         }
-        $response="Element published successfully";
-        return($response);
+
+        return (["message" => "Element published successfully", "success" => true]);
     }
-    
+
 }

@@ -59,6 +59,7 @@ Route::group([
 		Route::post('/save-page-element/{seq_no}', $group_app_version . '\StaticElementController@callSave');
 		Route::get('/get-page-element', $group_app_version . '\StaticElementController@callFetch');
 		Route::get('/get-page-element/{seq_no}', $group_app_version . '\StaticElementController@callFetchSeq');
+        Route::get('/publish-page-element', $group_app_version . '\StaticElementController@callPublish');
     });
 });
 
@@ -115,6 +116,3 @@ Route::group([
 });
 
 Route::middleware('auth:api')->get('/user', $app_version . '\HomeController@api');
-
-
-Route::get('/rest/v1/publish-page-element', 'v1\StaticElementController@callPublish');

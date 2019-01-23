@@ -20,7 +20,7 @@ class StaticElementController extends Controller
         $request->validate(['type' => 'sometimes', 'published' => 'sometimes']);
         $params = $request->all();
         global $fetchedData;
-        
+
         $data = array();
         if (isset($params['type'])) {
             $data['type'] = $params['type'];
@@ -66,7 +66,7 @@ class StaticElementController extends Controller
         if ($staticElement == null) {
             abort(404);
         }
-         
+
         $imageurl = "";
         $file     = $staticElement->getSingleStaticImage($photo_id, $preset, $depth);
         if ($file) {
@@ -81,7 +81,7 @@ class StaticElementController extends Controller
     public function callPublish()
     {
         $publish = StaticElement::publish();
-        return(json_encode($publish));
+        return (json_encode($publish));
     }
 
 }
