@@ -28,7 +28,7 @@ class StaticElement extends Model
 
             $getRecord = StaticElement::where('sequence', $seq_no)->where('draft', true)->orderBy('sequence', 'desc')->get()->first();
         }
-
+        
         if (!is_null($getRecord)) {
             $record = $getRecord;
         } else {
@@ -52,20 +52,28 @@ class StaticElement extends Model
 
         return ($response);
     } //fetchSeq
-
+    
     //fetch all
     public static function fetch($data = [], $published = false)
-    {
-        if (!$published) {
-            $mode = 'draft';
-        } else {
-            $mode = 'published';
-        }
-
+    {   
         if (isset($data['type'])) {
-            $records = StaticElement::where('type', $data['type'])->where($mode, true)->orderBy('sequence', 'asc')->get();
-        } else {
-            $records = StaticElement::where($mode, true)->orderBy('sequence', 'asc')->get();
+           
+            $records = StaticElement::where('type', $data['type'])->where('published', true)->orderBy('sequence', 'asc')->get();
+        }
+        $records=StaticElement::where('published',true)->orderBy('sequence', 'asc')->get();//
+        
+        if (!$published) {
+           
+            if (isset($data['type'])) {
+                $records = StaticElement::where('type', $data['type'])->where('draft', true)->orderBy('sequence', 'asc')->get();
+            }
+            else
+            {
+                $draft=StaticElement::where('draft',true)->orderBy('sequence', 'asc')->get(); //
+            }
+            $records=$published->merge($draft)->unique();
+            
+            return $records;
         }
 
         $response = array();
@@ -78,15 +86,15 @@ class StaticElement extends Model
             if (!isset($response[$type])) {
                 $response[$type] = array();
             }
-
+            
             array_push($response[$type], array(
                 "sequence"     => $record->sequence,
                 "element_data" => $record->element_data,
                 "images"       => $images,
             ));
-
+            
         } //foreach
-
+      
         return ($response);
     } //fetch
 
@@ -98,7 +106,7 @@ class StaticElement extends Model
         if ($record == null) {
             abort(404);
         }
-
+        
         StaticElement::where('sequence', $seq_no)->where('draft', true)->update(['published' => null, 'draft' => null]);
 
         $se               = new StaticElement();
@@ -151,7 +159,7 @@ class StaticElement extends Model
             $this->saveImage($images[$type], $type);
         }
     }
-
+    
     //update existing function to call saveImage
     public function saveUpdateImage($images, $record)
     {
@@ -490,4 +498,21 @@ class StaticElement extends Model
 
 
     }
+
+    public static function publish()
+    {
+        $getpublish=Staticelement::select()->where('draft',true)->orderBy('created_at', 'desc')->get();
+            
+        foreach($getpublish as $pub)
+        {
+            Staticelement::where('sequence', $pub->sequence)->where('published',true)->update(['published' => null,'draft'=>null]);
+            
+            $pub->published=true;
+            $pub->draft=null;
+            $pub->save();
+        }
+        $response="Element published successfully";
+        return($response);
+    }
+    
 }

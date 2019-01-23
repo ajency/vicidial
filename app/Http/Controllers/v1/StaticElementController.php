@@ -20,16 +20,14 @@ class StaticElementController extends Controller
         $request->validate(['type' => 'sometimes', 'published' => 'sometimes']);
         $params = $request->all();
         global $fetchedData;
-
+        
         $data = array();
         if (isset($params['type'])) {
             $data['type'] = $params['type'];
         }
 
         if (isset($params['published'])) {
-            $published    = $params['published'];
-            $boole        = (trim($published) == 'true') ? true : false;
-            $fectchedData = StaticElement::fetch($data, $boole);
+            $fetchedData = StaticElement::fetch($data, $params['published']);
         } else {
             $fetchedData = StaticElement::fetch($data);
         }
@@ -68,7 +66,7 @@ class StaticElementController extends Controller
         if ($staticElement == null) {
             abort(404);
         }
-
+         
         $imageurl = "";
         $file     = $staticElement->getSingleStaticImage($photo_id, $preset, $depth);
         if ($file) {
@@ -79,4 +77,11 @@ class StaticElementController extends Controller
         return \Redirect::to(url($imageurl), 301);
 
     }
+
+    public function callPublish()
+    {
+        $publish = StaticElement::publish();
+        return(json_encode($publish));
+    }
+
 }

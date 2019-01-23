@@ -115,3 +115,6 @@ Route::group([
 });
 
 Route::middleware('auth:api')->get('/user', $app_version . '\HomeController@api');
+
+
+Route::get('/rest/v1/publish-page-element', 'v1\StaticElementController@callPublish');
