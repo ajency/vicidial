@@ -269,23 +269,23 @@ function sanitiseFilterdata($result, $params = [])
     $response[] = $filter;
 
 
-    $filter           = [];
-    $facet_name = "variant_discount_percent";
-    $filter['header'] = [
-        'facet_name'   => $facet_name,
-        'display_name' => config('product.facet_display_data.'.$facet_name.'.name'),
-    ];
-    foreach ($attributes as $attribute) {
-        $filter[$attribute] = config('product.facet_display_data.'.$facet_name.'.'. $attribute);
-    }
+    // $filter           = [];
+    // $facet_name = "variant_discount_percent";
+    // $filter['header'] = [
+    //     'facet_name'   => $facet_name,
+    //     'display_name' => config('product.facet_display_data.'.$facet_name.'.name'),
+    // ];
+    // foreach ($attributes as $attribute) {
+    //     $filter[$attribute] = config('product.facet_display_data.'.$facet_name.'.'. $attribute);
+    // }
 
-    $bucket = isset($params['search_object']['range_filter']['variant_discount_percent']) ? $params['search_object']['range_filter']['variant_discount_percent']: [];
-    // dd($bucket);
-    $filter["items"] = collect(config('product.discount_filter'))->transform(function ($item, $key) use ($bucket) {
-        $item['is_selected'] = $item["min"] == $bucket['min'] and $item["max"] == $bucket['max'];
-        return $item;
-    })->toArray();
-    $response[] = $filter;
+    // $bucket = isset($params['search_object']['range_filter']['variant_discount_percent']) ? $params['search_object']['range_filter']['variant_discount_percent']: [];
+    // // dd($bucket);
+    // $filter["items"] = collect(config('product.discount_filter'))->transform(function ($item, $key) use ($bucket) {
+    //     $item['is_selected'] = $item["min"] == $bucket['min'] and $item["max"] == $bucket['max'];
+    //     return $item;
+    // })->toArray();
+    // $response[] = $filter;
 
     
     $response[] = boolFilterResponse("variant_availability", $attributes, $params);
