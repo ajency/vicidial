@@ -68,7 +68,7 @@ function getUnSelectedVariants(int $product_id, int $selected_color_id)
     return $color_groups;
 }
 
-function sort_sizes($variant_a, $variant_b)
+function sortSizes($variant_a, $variant_b)
 {
     return ($variant_a['sequence'] > $variant_b['sequence']) ? 1 : 0;
 }
@@ -76,26 +76,25 @@ function sort_sizes($variant_a, $variant_b)
 function fetchProduct($product)
 {
 
-    $product    = $product["_source"];
-    $variants   = [];
+    $product  = $product["_source"];
+    $variants = [];
 
     $size_facet_values = getFacetValueSize();
 
     $id = defaultVariant($product['variants']);
     foreach ($product["variants"] as $key => $variant) {
-        if(isset($size_facet_values[$variant["variant_size_name"]])) {
+        if (isset($size_facet_values[$variant["variant_size_name"]])) {
             $product["variants"][$key]["display_name"] = $size_facet_values[$variant["variant_size_name"]]["display_name"];
-            $product["variants"][$key]["slug"] = $size_facet_values[$variant["variant_size_name"]]["slug"];
-            $product["variants"][$key]["sequence"] = $size_facet_values[$variant["variant_size_name"]]["sequence"];
-        }
-        else  {
+            $product["variants"][$key]["slug"]         = $size_facet_values[$variant["variant_size_name"]]["slug"];
+            $product["variants"][$key]["sequence"]     = $size_facet_values[$variant["variant_size_name"]]["sequence"];
+        } else {
             $product["variants"][$key]["display_name"] = $variant["variant_size_name"];
-            $product["variants"][$key]["slug"] = str_slug($variant["variant_size_name"]);
-            $product["variants"][$key]["sequence"] = 10000;
+            $product["variants"][$key]["slug"]         = str_slug($variant["variant_size_name"]);
+            $product["variants"][$key]["sequence"]     = 10000;
         }
     }
 
-    usort($product["variants"],"sort_sizes");
+    usort($product["variants"], "sortSizes");
 
     foreach ($product["variants"] as $key => $variant) {
         $variants[] = [
@@ -144,7 +143,7 @@ function fetchProduct($product)
             "product_type"      => $data["product_att_product_type"],
             "other_attribute"   => $data["product_att_other_attribute"],
         ],
-        "product_att_ecom_sales"  => $data["product_att_ecom_sales"],
+        "ecom_sales"        => $data["product_att_ecom_sales"],
         "selected_color_id" => $selected_color_id,
         "images"            => $allImages,
         "variant_group"     => [
@@ -195,7 +194,7 @@ function singleProductAPI(string $product_color)
 {
     $q = new ElasticQuery();
     $q->setIndex(config("elastic.indexes.product"));
-    
+
     try {
         $product = $q->get($product_color, ['search_result_data', 'variants']);
     } catch (Exception $e) {
