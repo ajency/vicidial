@@ -81,13 +81,8 @@ function fetchProduct($product)
 
     $size_facet_values = getFacetValueSize();
 
-    $id         = $product["variants"][0]["variant_id"];
-    $sale_price = $product["variants"][0]["variant_sale_price"];
+    $id = defaultVariant($product['variants']);
     foreach ($product["variants"] as $key => $variant) {
-        if ($sale_price > $variant["variant_sale_price"]) {
-            $id         = $variant["variant_id"];
-            $sale_price = $variant["variant_sale_price"];
-        }
         if(isset($size_facet_values[$variant["variant_size_name"]])) {
             $product["variants"][$key]["display_name"] = $size_facet_values[$variant["variant_size_name"]]["display_name"];
             $product["variants"][$key]["slug"] = $size_facet_values[$variant["variant_size_name"]]["slug"];

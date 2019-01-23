@@ -394,6 +394,30 @@ return [
                 'default_value' => [],
             ],
         ],
+        'variant_discount_percent'   => [
+            'name'                   => 'Discount',
+            'is_singleton'           => true,
+            'is_collapsed'           => false,
+            'template'               => null, //'discount',
+            'order'                  => 9,
+            'display_count'          => false,
+            'disabled_at_zero_count' => false,
+            "is_attribute_param"     => true,
+            "attribute_param"        => "discount",
+            'filter_type'            => 'range_filter',
+            "is_essential"           => false,
+            "custom_attributes"      => [],
+            "false_facet_value"      => null,
+            "implicit_filter"        => [
+                'skip'          => true,
+                'default_value' => [],
+            ],
+        ],
+    ],
+    'discount_filter'                => [
+        ["min" => 0,  "max" => 30, "display_name" => "Upto 30%",  "sequence" => 1],
+        ["min" => 30, "max" => 60, "display_name" => "30% to 60%", "sequence" => 2],
+        ["min" => 60, "max" => 100,"display_name" => "60% to 100%","sequence" => 3],
     ],
     'breadcrumb_order'               => [
         'product_category_type',
@@ -405,14 +429,17 @@ return [
     "similar_products_display_limit" => 5,
     "price_filter_bucket_range"      => ["min" => 0, "max" => 7000],
     "sort"                           => [
-        'price_asc'  => ['field' => 'number_sort.variant_sale_price', "order" => 'asc'],
-        'price_desc' => ['field' => 'number_sort.variant_sale_price', "order" => 'desc'],
+        'price_asc'     => ['field' => 'number_sort.variant_sale_price', "order" => 'asc'],
+        'price_desc'    => ['field' => 'number_sort.variant_sale_price', "order" => 'desc'],
+        'discount_asc'  => ['field' => 'number_sort.variant_discount_percent', "order" => 'asc'],
+        'discount_desc' => ['field' => 'number_sort.variant_discount_percent', "order" => 'desc'],
     ],
     "sort_on"                        => [
         ["name" => "Recommended", "value" => "", "is_selected" => true],
         ["name" => "Price Low to High", "value" => "price_asc", "is_selected" => false],
         ["name" => "Price High to Low", "value" => "price_desc", "is_selected" => false],
-
+        ["name" => "Discount High to Low", "value" => "discount_desc", "is_selected" => false],
+        ["name" => "Discount Low to High", "value" => "discount_asc", "is_selected" => false],
     ],
     "show_list_search" => true
 ];
