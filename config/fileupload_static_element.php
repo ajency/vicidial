@@ -15,7 +15,7 @@ return [
     'banner_presets'=> [
         "landscape" => [
             "1x"=>"700X245",
-            "2x"=>"1200x420",
+            "2x"=>"1200X420",
             "3x"=>"2000X700",
             "load"=>"20X10"
         ],
@@ -27,14 +27,14 @@ return [
     ],
     'banner_upload'=> [
         "landscape" => [
-            "size" => 250,
-            "height" => 933,
-            "width" => 1200
-        ],
-        "portrait" => [
-            "size" => 250,
+            "size" => 250000,
             "height" => 700,
             "width" => 2000
+        ],
+        "portrait" => [
+            "size" => 250000,
+            "height" => 933,
+            "width" => 1200
         ],
     ],
 ];

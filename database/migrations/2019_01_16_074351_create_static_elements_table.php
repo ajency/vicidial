@@ -21,6 +21,7 @@ class CreateStaticElementsTable extends Migration
             $table->integer('sequence');
             $table->boolean('published')->nullable();
             $table->boolean('draft')->nullable()->default(1);
+            $table->boolean('remove')->default(1);
             $table->unique(array('sequence', 'type','published'));
             $table->unique(array('sequence','type','draft'));
             $table->timestamps();

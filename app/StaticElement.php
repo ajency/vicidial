@@ -16,6 +16,7 @@ class StaticElement extends Model
         'element_data' => 'array',
         'published'    => 'boolean',
         'draft'        => 'boolean',
+        'remove'        => 'boolean',
     ];
 
     //fetch with seq number
@@ -108,6 +109,8 @@ class StaticElement extends Model
 
         if ($image_upload['upload']) {
             $se->saveUpdateImage($image_upload['images'], $record);
+        } else {
+            $se->saveUpdateImage([], $record);
         } //upload
 
         return (["message" => "Home page element saved successfully", "success" => true]);
