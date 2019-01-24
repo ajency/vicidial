@@ -1,4 +1,6 @@
+
 @extends('layouts.default')
+
 
 @php
   $delaycss = true;
@@ -11,7 +13,7 @@
 @section('content')
 
 <!-- Banner  -->
-@include('includes.banner.slider')
+@include('includes.banner.slider', ['banners' => $static_elements['banner']])
 
 
 <section class="mt-5">
