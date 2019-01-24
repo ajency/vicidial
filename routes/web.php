@@ -14,7 +14,7 @@ $config = config('ajfileupload');
 
 $app_version = 'v'.config('app.api_version');
 
-$group_app_version = 'v1'; 
+$group_app_version = 'v1';
 Route::group([
   'prefix'     => '/rest/'.$group_app_version,
 ], function () use ($group_app_version) {
@@ -42,7 +42,7 @@ Route::group([
 	});
 });
 
-$group_app_version = 'v2'; 
+$group_app_version = 'v2';
 Route::group([
   'prefix'     => '/rest/'.$group_app_version,
 ], function () use ($group_app_version) {
@@ -79,6 +79,7 @@ Route::get('/faq', $app_version.'\StaticController@faq');
 Route::get('/about-us', $app_version.'\StaticController@about');
 Route::get('/blog', $app_version.'\PostController@blog');
 Route::get('/blog/{title}', $app_version.'\PostController@post');
+Route::get('/blog/category/{category}', $app_version.'\PostController@category');
 Route::get('/terms-and-conditions', $app_version.'\StaticController@tc');
 Route::get('/privacy-policy', $app_version.'\StaticController@privacy');
 Route::get('/stores', $app_version.'\StaticController@stores');

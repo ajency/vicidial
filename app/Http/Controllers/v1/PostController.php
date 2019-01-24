@@ -24,6 +24,19 @@ class PostController extends Controller {
     {
         $post = Post::where('post_name',$title)->get()->first();
         // dd($post);
+    	if ($post == null) {
+    	    abort(404);
+    	}
         return view('single')->with('post', $post);
+    }
+
+    public function category(Request $request)
+    {
+        $post = Post::all();
+        // dd($post);
+    	if ($post == null) {
+    	    abort(404);
+    	}
+        return view('category')->with('post', $post);
     }
 }
