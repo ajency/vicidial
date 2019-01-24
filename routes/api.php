@@ -53,7 +53,7 @@ Route::group([
 	Route::get('/district-state/{pincode}', $group_app_version.'\AddressController@fetchPincode');
 
     Route::group([
-        'middleware' => ['auth:api', 'api-permissions'],
+        'middleware' => ['auth:api', 'extension-api-permissions'],
     ], function () use ($group_app_version) {
 		Route::post('/save-page-element/new', $group_app_version . '\StaticElementController@callSaveNew');
 		Route::post('/save-page-element/{seq_no}', $group_app_version . '\StaticElementController@callSave');

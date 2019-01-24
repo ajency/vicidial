@@ -5,7 +5,8 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
-class UseApiPermission extends Migration
+
+class AddExtensionApiPermission extends Migration
 {
     /**
      * Run the migrations.
@@ -14,13 +15,13 @@ class UseApiPermission extends Migration
      */
     public function up()
     {
-        $permission = new Permission();
-        $permission->name = "api permissions";
+        $permission       = new Permission();
+        $permission->name = "extension api permissions";
         $permission->save();
 
-        $role=new Role();
-        $role->name="admin";
-        $role->givePermissionTo('api permissions');
+        $role       = new Role();
+        $role->name = "admin";
+        $role->givePermissionTo('extension api permissions');
 
         $role->save();
     }
@@ -32,7 +33,7 @@ class UseApiPermission extends Migration
      */
     public function down()
     {
-        Permission::where('name', "api permissions")->delete();
-        Role::where('name',"admin")->delete();
+        Permission::where('name', "extension api permissions")->delete();
+        Role::where('name', "admin")->delete();
     }
 }

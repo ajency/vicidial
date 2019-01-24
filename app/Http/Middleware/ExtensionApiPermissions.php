@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class CheckApiPermissions
+class ExtensionApiPermissions
 {
     /**
      * Handle an incoming request.
@@ -15,15 +15,11 @@ class CheckApiPermissions
      */
     public function handle($request, Closure $next)
     {
-        
-        if(Auth::user()->hasPermission('api permissions'))
-        {
+
+        if (Auth::user()->hasPermission('api permissions')) {
             return $next($request);
-        }
-        else
-        {
-            abort(404);
+        } else {
+            abort(403);
         }
 
-
-}
+    }
