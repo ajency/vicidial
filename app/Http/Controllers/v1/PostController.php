@@ -16,8 +16,8 @@ class PostController extends Controller {
 
 	public function blog(Request $request)
 	{
-	    $this->params['breadcrumb']['current'] = 'Blog';
-	    return view('blog')->with('params', $this->params);
+	    // $posts = Post::published()->get();
+	    return view('blog');
 	}
 
     public function post($title, Request $request)
