@@ -15,11 +15,11 @@ class ExtensionApiPermissions
      */
     public function handle($request, Closure $next)
     {
-
-        if (Auth::user()->hasPermission('api permissions')) {
+        if ($request->user()->hasPermissionTo('extension api permissions')) {
             return $next($request);
         } else {
             abort(403);
         }
 
     }
+}
