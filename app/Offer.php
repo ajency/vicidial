@@ -3,6 +3,7 @@
 namespace App;
 
 use Ajency\Connections\OdooConnect;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Offer extends Model
@@ -36,9 +37,23 @@ class Offer extends Model
         return $this->hasOne('App\Action');
     }
 
-    public function sync()
+     public function getStartAttribute($value)
     {
+        return (new Carbon($value))->setTimezone('Asia/Kolkata');
+    }
 
+    public function getExpireAttribute($value)
+    {
+        return (new Carbon($value))->setTimezone('Asia/Kolkata');
+    }
+
+    public static function sync()
+    {
+        $odoo = new OdooConnect;
+        $coupons = $odoo->defaultExec(config('odoo.model.discount.name'),'search', [[['coupon_typ','=','SPECIFIC_COUPON'],['type', '=', 'discount'], ['discount_rule', '=', 'cart']]], ['limit' => 1000]);
+        $coupons->each(function ($couponID){
+            self::indexDiscount($couponID);
+        });
     }
 
     public function saveCouponData()
@@ -46,7 +61,7 @@ class Offer extends Model
         if (!$this->has_coupon) {
             return;
         }
-
+        $odoo = new OdooConnect;
         $discount_coupons = $odoo->defaultExec(config('odoo.model.coupon.name'), 'search_read', [[['program_id', '=', $this->odoo_id]]], ['fields' => config('odoo.model.coupon.fields'), 'order' => 'id']);
         if ($discount_coupons->isEmpty()) {
             throw new \Exception("coupon discount ID {$this->odoo_id} has no coupons");
@@ -78,7 +93,7 @@ class Offer extends Model
                 $expn         = new Expression;
                 $expn->entity = 'cart_price';
                 $expn->filter = 'greater_than';
-                $expn->value  = $discount['qty_step'];
+                $expn->value  = [$discount['qty_step']];
                 $this->expressions()->save($expn);
                 break;
         }
@@ -90,7 +105,18 @@ class Offer extends Model
         $this->action()->delete();
         $action         = new Action;
         $action->entity = 'cart_price';
-        $action->type   = $discount['apply1'];
+        switch ($discount['apply1']) {
+            case 'cart_fixed':
+                $action->type   = 'value';
+                break;
+            case 'by_percent':
+                $action->type   = 'percent';
+                break;
+            default:
+                # code...
+                break;
+        }
+        
         $action->value  = ['value' => $discount['discount_amt']];
         $this->action()->save($action);
     }
@@ -99,8 +125,6 @@ class Offer extends Model
         $this->title      = $discount['name'];
         $this->start      = $discount['from_date1'];
         $this->expire     = $discount['to_date1'];
-        $this->odoo_model = config('odoo.model.discount.name');
-        $this->odoo_id    = $offerID;
         $this->priority   = $discount['priority1'];
         switch ($discount['coupon_typ']) {
             case 'NO_COUPON':
@@ -126,5 +150,38 @@ class Offer extends Model
         $offer->saveCouponData();
         $offer->saveExpressionData($discount);
         $offer->saveActionData($discount);
+    }
+
+
+    public static function getAllActiveCoupons(){
+        $couponDiscounts = self::where('active', true)
+            ->where('display', true)
+            ->where('has_coupon', true)
+            ->where('global', true)
+            ->where('start', '<=', Carbon::now())
+            ->where('expire', '>', Carbon::now())
+            ->with(['expressions','action', 'coupons'])
+            ->get();
+        $coupons = [];
+        foreach ($couponDiscounts as $discount) {
+            $coupon = [];
+            $coupon['coupon_code'] =$discount->coupons->first()->display_code;
+            $coupon['display_title'] = $discount->title;
+            $coupon['description'] = $discount->description;
+            $expn = $discount->expressions->first();
+            $coupon['condition'] = [
+                'entity' => $expn['entity'],
+                'filter' => $expn['filter'],
+                'value' => $expn['value'] 
+            ];
+            $coupon['action'] = [
+                'type' => $discount->action->type,
+                'value' => $discount->action->value['value']
+            ];
+            $coupon['valid_from'] = $discount->start->toDateTimeString();
+            $coupon['valid_till'] = $discount->expire->toDateTimeString();
+            $coupons[] = $coupon;
+        }
+        return $coupons;
     }
 }

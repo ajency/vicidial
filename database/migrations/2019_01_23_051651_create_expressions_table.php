@@ -17,7 +17,7 @@ class CreateExpressionsTable extends Migration
             $table->increments('id');
             $table->string('entity');
             $table->string('filter');
-            $table->integer('value');
+            $table->json('value');
             $table->morphs('parent');
             $table->boolean('active')->default(1);
             $table->timestamps();

@@ -22,7 +22,7 @@ class CreateOffersTable extends Migration
             $table->boolean('active')->default(1);
             $table->boolean('global')->default(1);
             $table->boolean('display')->default(1);
-            $table->boolean('has_coupons')->default(0);
+            $table->boolean('has_coupon')->default(0);
             $table->integer('total_uses')->nullable();
             $table->longtext('description')->nullable();
             $table->string('odoo_model');
