@@ -5,6 +5,8 @@
 
     RewriteEngine On
 
+    RewriteCond $1 !^(blog)
+
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]

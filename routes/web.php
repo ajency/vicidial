@@ -77,6 +77,8 @@ Route::get('/contact-us', $app_version.'\StaticController@contact');
 Route::get('/contact', $app_version.'\StaticController@contactnew');
 Route::get('/faq', $app_version.'\StaticController@faq');
 Route::get('/about-us', $app_version.'\StaticController@about');
+Route::get('/blog', $app_version.'\PostController@blog');
+Route::get('/blog/{title}', $app_version.'\PostController@post');
 Route::get('/terms-and-conditions', $app_version.'\StaticController@tc');
 Route::get('/privacy-policy', $app_version.'\StaticController@privacy');
 Route::get('/stores', $app_version.'\StaticController@stores');
