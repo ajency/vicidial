@@ -146,19 +146,22 @@
               <div class="latest-posts mt-4 pt-3">
                  <div class="row more-post-grid">
                     <?php
-                    $args = array(
-                       'numberposts' => 3,
-                       'order'=> 'DESC',
-                       'orderby' => 'date',
-                       'meta_query' => array(
+                      $args = array(
+                        'posts_per_page'=>3,
+                        'order'=>'DESC',
+                        'orderby'=>'post_date',
+                        'meta_query' => array(
                             array(
                              'key' => '_thumbnail_id',
                              'compare' => 'EXISTS'
                             ),
                         )
-                    );
-                    $postslist = get_posts( $args );
-                    foreach ($postslist as $post) :  setup_postdata($post); ?>
+                        );
+                      $the_query = new WP_Query( $args );
+
+                      if ( $the_query->have_posts() ) {
+                            while ( $the_query->have_posts() ) {
+                                $the_query->the_post(); ?>
                        <div class="col-sm-4">
                           <div class="kss-posts">
                              <a href="<?php the_permalink(); ?>" class="d-block" title="<?php echo esc_attr( the_title_attribute( 'echo=0' ) ); ?>">
@@ -169,7 +172,7 @@
                                    <h1 class="bl-single-heading bl-single-heading--small"><?php the_title(); ?></h1>
                                    <p class="bl-single-caption bl-single-caption--small">
                                       <?php
-                                      if ( has_excerpt( $post->ID ) ) {
+                                      if ( has_excerpt( get_the_ID() ) ) {
                                           // This post has excerpt
                                          echo wp_strip_all_tags( get_the_excerpt(), true );
                                       } else {
@@ -206,7 +209,9 @@
                              </a>
                           </div>
                        </div>
-                    <?php endforeach; ?>
+                    <?php }
+                        }
+                      wp_reset_postdata(); ?>
                  </div>
               </div>
            </div>
@@ -242,7 +247,7 @@
                              <h1 class="bl-single-heading bl-single-heading--small"><?php echo the_title() ?></h1>
                              <p class="bl-single-caption bl-single-caption--small">
                                 <?php
-                                if ( has_excerpt( $post->ID ) ) {
+                                if ( has_excerpt( get_the_ID() ) ) {
                                     // This post has excerpt
                                    echo wp_strip_all_tags( get_the_excerpt(), true );
                                 } else {
@@ -294,26 +299,26 @@
                  <div class="c-popular mb-4">
                     <div class="text-center text-lg-left">
                            <h1 class="border-header">
-                             Popular Posts
+                             Popular Categories
                            </h1>
                        </div>
                     <ul class="c-popular__lists">
                        <li class="d-flex">
                           <span class="c-popular__index pr-3">01</span>
-                          <a href="#" class="kss-anchor">
-                          Is affirmative action in India becoming a gimmick?.</a>
+                          <a href="/boys/junior-7-14-years--toddler-2-7-years/ethnic/" class="kss-anchor">
+                          Boys Ethnic Wear</a>
                        </li>
                        <li class="d-flex">
                           <span class="c-popular__index pr-3">02</span>
-                          <a href="#" class="kss-anchor">Controversial India copper plant to reopen.</a>
+                          <a href="/shoes/boys" class="kss-anchor">Boys Shoes</a>
                        </li>
                        <li class="d-flex">
                           <span class="c-popular__index pr-3">03</span>
-                          <a href="#" class="kss-anchor">The man separating Ronaldo and Messi?.</a>
+                          <a href="/girls/junior-7-14-years--toddler-2-7-years/dress/" class="kss-anchor">Girls Dress</a>
                        </li>
                        <li class="d-flex">
                           <span class="c-popular__index pr-3">04</span>
-                          <a href="#" class="kss-anchor">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</a>
+                          <a href="/accessories/infant-0-2-years" class="kss-anchor">Infants Accessories</a>
                        </li>
                     </ul>
                  </div>

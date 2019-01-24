@@ -50,7 +50,7 @@
 
                     <p class="bl-single-caption row-spacer">
                       <?php
-                      if ( has_excerpt( $post->ID ) ) {
+                      if ( has_excerpt( the_ID() ) ) {
                           // This post has excerpt
                         echo wp_strip_all_tags( get_the_excerpt(), true );
                       }
@@ -99,7 +99,9 @@
             </div>
             <div class="col-lg-8 px-sm-4">
               <div class="blog-content mt-4 blog-content--spacer">
-                <?php the_content(); ?>
+                <?php the_content();
+                  wp_reset_postdata();
+                ?>
               </div>
             </div>
             <div class="col-lg-3 mt-4 d-none d-lg-block">
@@ -109,7 +111,7 @@
                     <div id="secondary" class="widget-area" role="complementary">
                     <?php dynamic_sidebar( 'sidebar-2' ); ?>
                     </div>
-                <?php endif; ?>
+                <?php endif;  ?>
 
               </div>
             </div>
@@ -144,7 +146,9 @@
                 $wpex_query = new wp_query( $args );
 
                 // Loop through posts
-                foreach( $wpex_query->posts as $post ) : setup_postdata( $post ); ?>
+                if ( $wpex_query->have_posts() ) {
+                  while ( $wpex_query->have_posts() ) {
+                      $wpex_query->the_post(); ?>
                   <div class="col-sm-4">
                     <div class="kss-posts">
                       <a href="<?php the_permalink(); ?>" class="d-block" title="<?php echo esc_attr( the_title_attribute( 'echo=0' ) ); ?>">
@@ -155,7 +159,7 @@
                           <h1 class="bl-single-heading bl-single-heading--small"><?php the_title(); ?></h1>
                           <p class="bl-single-caption bl-single-caption--small">
                             <?php
-                            if ( has_excerpt( $post->ID ) ) {
+                            if ( has_excerpt( the_ID() ) ) {
                                 // This post has excerpt
                               echo wp_strip_all_tags( get_the_excerpt(), true );
                             } else {
@@ -188,10 +192,9 @@
                   </div>
                 <?php
                 // End loop
-                endforeach;
-
-                // Reset post data
-                wp_reset_postdata(); ?>
+                  }
+                    }
+                  wp_reset_postdata(); ?>
               </div>
             </div>
           </section>
