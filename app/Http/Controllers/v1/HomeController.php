@@ -15,7 +15,7 @@ class HomeController extends Controller
         return view('home')->with('static_elements', $static_elements);
     }
     
-    public function draftimage(Request $request)
+    public function drafthome(Request $request)
     {
         $static_elements=StaticElement::fetch([]);
     	setSEO('home');

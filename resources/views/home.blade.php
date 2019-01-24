@@ -1074,6 +1074,17 @@
     'ecomm_totalvalue': '',
     'user_id': getCookie('user_id')
   });
+
+  $(function(){ 
+    // Tooltip for chrome extension  
+      if($('.update-element-btn')){ 
+        $(document).on('click',".update-element-btn",function(){ 
+            setTimeout(function() { 
+                $('[data-toggle="tooltip"]').tooltip() 
+             }, 1800); 
+        }); 
+      } 
+  })
 </script>
 
 @stop
