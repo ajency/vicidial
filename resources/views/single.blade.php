@@ -29,7 +29,7 @@
           <div class="row">
             <div class="col-lg-12">
               <div class="d-flex row layout-2">
-                <div class="d-flex flex-column justify-content-center col-lg-6 order-1 order-lg-0">
+                <div class="d-flex flex-column justify-content-center col-lg-7 order-1 order-lg-0">
                   <div>
                     <div class="mt-4 mb-2 d-none d-lg-block">
                             <nav aria-label="breadcrumb" class="">
@@ -75,7 +75,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-lg-6 order-0 order-lg-1 bl-single-img-wrapper mb-4 mb-sm-0">
+                <div class="col-lg-5 order-0 order-lg-1 bl-single-img-wrapper mb-4 mb-sm-0">
                   <?php the_post_thumbnail(); ?>
                   <small class="text-muted mt-2 pl-3 pl-lg-0 d-inline-block">
                     <?php echo get_post(get_post_thumbnail_id())->post_excerpt; ?>

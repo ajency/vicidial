@@ -239,12 +239,12 @@
               while ( $popularpost->have_posts() ) : $popularpost->the_post(); ?>
                  <div class="blog-col__wrapper">
                     <article class="kss-posts">
-                       <a href="<?php echo get_home_url(); ?>" class="d-block">
+                       <a href="<?php the_permalink(); ?>" class="d-block">
                           <div class="kss-posts__cover mb-3">
                              <?php the_post_thumbnail('medium', array('class' => 'd-block w-100 img-fluid')); ?>
                           </div>
                           <div class="kss-posts__content">
-                             <h1 class="bl-single-heading bl-single-heading--small"><?php echo the_title() ?></h1>
+                             <h1 class="bl-single-heading bl-single-heading--small"><?php the_title() ?></h1>
                              <p class="bl-single-caption bl-single-caption--small">
                                 <?php
                                 if ( has_excerpt( get_the_ID() ) ) {
@@ -326,13 +326,13 @@
                     <div class="store-banner position-relative">
                        <p class="store-banner__title">Want to see our clothes in real life?</p>
                        <img class="d-block w-100 img-fluid pb-1"
-                            src="<?php echo get_template_directory_uri(); ?>/img/store-banner-mo-small.jpg"
+                            src="{{CDN::asset('/img/stores/banner/store-banner-mo-small.jpg') }}"
                             alt="Visit our store"
                             title="Visit our store"/>
                        <div class="contentWrapper text-center d-flex align-items-center">
                           <div>
                              <span class="store-banner__caption">Just visit any one of stores near you!</span>
-                             <a href="https://www.kidsuperstore.in/stores/" class="btn kss-btn kss-btn--small">Visit our store</a>
+                             <a href="/stores/" class="btn kss-btn kss-btn--small">Visit our store</a>
                           </div>
                        </div>
                        </div>

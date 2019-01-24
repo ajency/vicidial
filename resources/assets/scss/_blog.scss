@@ -641,7 +641,7 @@
 	margin: 20px 0;
 	.featured-section{
 		display: grid;
-    	grid-template-columns: 1.6fr 1fr;
+    	grid-template-columns: 2fr 1fr;
     	grid-gap: 20px;
     	&__col{
     		margin-bottom: 0;
@@ -665,7 +665,7 @@
 		    grid-gap: 20px;
 		    .featured-post{
 		    	&__cover{
-		    		height: 250px;
+		    		height: 235px;
 		    	}
 		    	&__title{
 		    		font-size: 1.4em;
@@ -741,7 +741,7 @@
 		&__cover{
 			margin-bottom: 0 !important;
 			img{
-				height: 130px;
+				height: 125px;
 				width: 200px !important;
 				margin-left: auto;
 				margin-bottom: 1.5em;
@@ -869,7 +869,7 @@
 	&__cover{
 		position: relative;
 		img{
-			height: 250px;
+			height: 230px;
     		object-fit: cover;
     		@media (max-width: 767px){
     			height: 200px;
@@ -921,7 +921,7 @@
 			margin-bottom: 1.5em;
 		}
 		img{
-			height: 260px;
+			height: 290px;
 		    object-fit: cover;
 		    width: 100%;
 		}
