@@ -19,7 +19,7 @@ class HomeController extends Controller
     {
         $static_elements=StaticElement::fetch([]);
     	setSEO('home');
-        return view('home',$images)->with('static_elements', $static_elements);
+        return view('home')->with('static_elements', $static_elements);
     }
 
     public function api(Request $request)
