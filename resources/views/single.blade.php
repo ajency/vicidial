@@ -50,7 +50,7 @@
 
                     <p class="bl-single-caption row-spacer">
                       <?php
-                      if ( has_excerpt( the_ID() ) ) {
+                      if ( has_excerpt() ) {
                           // This post has excerpt
                         echo wp_strip_all_tags( get_the_excerpt(), true );
                       }
@@ -76,7 +76,7 @@
                   </div>
                 </div>
                 <div class="col-lg-5 order-0 order-lg-1 bl-single-img-wrapper mb-4 mb-sm-0">
-                  <?php the_post_thumbnail(); ?>
+                  <?php the_post_thumbnail('medium_large'); ?>
                   <small class="text-muted mt-2 pl-3 pl-lg-0 d-inline-block">
                     <?php echo get_post(get_post_thumbnail_id())->post_excerpt; ?>
                   </small>
@@ -89,10 +89,10 @@
               <div class="sticky-col">
                 <ul class="list-inline single-blog__social">
                   <li>
-                    <a href="#"><i class="fab fa-facebook fb s-icon"></i></a>
+                    <a href="http://www.facebook.com/share.php?u=<?php echo urlencode(get_the_permalink()) ?>" target="_new"><i class="fab fa-facebook fb s-icon"></i></a>
                   </li>
                   <li>
-                    <a href="#"><i class="fab fa-twitter-square twitter s-icon"></i></a>
+                    <a href="https://twitter.com/intent/tweet?text=<?php echo urlencode(get_the_title()). '+'. urlencode(get_the_permalink()) ?>" target="_new"><i class="fab fa-twitter-square twitter s-icon"></i></a>
                   </li>
                 </ul>
               </div>
@@ -159,7 +159,7 @@
                           <h1 class="bl-single-heading bl-single-heading--small"><?php the_title(); ?></h1>
                           <p class="bl-single-caption bl-single-caption--small">
                             <?php
-                            if ( has_excerpt( the_ID() ) ) {
+                            if ( has_excerpt() ) {
                                 // This post has excerpt
                               echo wp_strip_all_tags( get_the_excerpt(), true );
                             } else {

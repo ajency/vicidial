@@ -30,7 +30,7 @@
                 <div class="featured-post">
                   <div class="featured-post__cover">
                     <a href="<?php the_permalink(); ?>" class="d-block">
-                      <?php the_post_thumbnail('large', array('class' => 'd-block w-100 img-fluid cover-img')); ?>
+                      <?php the_post_thumbnail('medium_large', array('class' => 'd-block w-100 img-fluid cover-img')); ?>
                     </a>
                   </div>
                   <div class="post-content">
@@ -85,7 +85,7 @@
                   <div class="featured-post">
                     <div class="featured-post__cover">
                       <a href="<?php the_permalink(); ?>" class="d-block">
-                        <?php the_post_thumbnail('large', array('class' => 'd-block w-100 img-fluid cover-img')); ?>
+                        <?php the_post_thumbnail('medium_large', array('class' => 'd-block w-100 img-fluid cover-img')); ?>
                       </a>
                     </div>
                     <div class="post-content">
