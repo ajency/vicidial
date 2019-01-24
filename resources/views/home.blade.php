@@ -13,7 +13,9 @@
 @section('content')
 
 <!-- Banner  -->
-@include('includes.banner.slider', ['banners' => $static_elements['banner']])
+@if (isset($static_elements['banner'])) 
+  @include('includes.banner.slider', ['banners' => $static_elements['banner']])
+@endif
 
 
 <section class="mt-5">
