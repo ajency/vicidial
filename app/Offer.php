@@ -186,7 +186,38 @@ class Offer extends Model
     }
 
     public function applyOffer($cartData){
-        
+        $expressions = $this->expressions;
+        $isApplicable = true;
+        //check if offer is valid under current timeframe
+        $now = Carbon::now();
+        if($now < $this->start){
+            $cartData['messages']['offer_future'] => "Offer has expired";
+            return $cartData;
+        }
+        if($now > $this->expire){
+            $cartData['messages']['offer_expire'] => "Offer has expired";
+            return $cartData;
+        }
+        //check if offer satisfies all condition
+        $expressions->each(function ($expression) use ($cartData,$isApplicable){
+            if(!$expression->validate($cartData)) $isApplicable=false;
+        });
+        if(!$isApplicable){
+            $cartData['messages']['offer_not_applicable'] = "Offer {$this->title} not applicable on your cart";
+            return $cartData;
+        }
+        //if offer has coupon, check if coupon usage is still valid
+        $couponApplicable = false;
+        $coupons = $this->coupons;
+        $coupons->each(function ($coupon) use ($cartData,$couponApplicable){
+            if($coupon->validate()) $couponApplicable = true;
+        });
+        if(!$couponApplicable){
+            $cartData['messages']['coupon_not_applicable'] = "Coupon not valid or has exceeded its limit";
+            return $cartData;
+        }
+
+        //perform the offer action
     }
 
     public static function processData($cartData){
@@ -211,7 +242,7 @@ class Offer extends Model
             if($coupon!=null){
                 // $cartData = $coupon->offer->applyOffer($cartData);
             }else{
-                $cartData['messges']['invalid_coupon'] => 'Your code did not match any coupons';//shift this to config
+                $cartData['messges']['invalid_coupon'] = 'Your code did not match any coupons';//shift this to config
             }
         }
         return $cartData;
