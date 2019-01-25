@@ -202,8 +202,7 @@ function sanitiseFilterdata($result, $params = [])
     $response           = [];
 
 
-    $facetNames =  ["product_category_type", "product_gender", "product_subtype", "product_age_group", "product_color_html", "product_metatag", "variant_size_name"];
-    // dd($facetNames);
+    $facetNames =  ["product_category_type", "product_gender", "product_subtype", "product_age_group", "product_color_html", "product_metatag", "variant_size_name", "product_brand"];
     foreach ($facetNames as $f) {
         $filter           = [];
         $facetName = $f;
@@ -362,8 +361,6 @@ function setDefaultFilters(array $params){
             $search_object[$data['filter_type']][$facet_name] = $data['implicit_filter']['default_value'];
         }
     }
-    
-    //add request params
     foreach ($params['search_object'] as $filter_type => $facet) {
         if(is_array($facet)){
             foreach ($facet as $facet_name => $values) {
@@ -381,7 +378,6 @@ function setDefaultFilters(array $params){
             $search_object[$filter_type] = $facet;
         }
     }
-
     return $search_object;
 }
 
