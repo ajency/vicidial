@@ -10,7 +10,7 @@
 
 @section('content')
 <div id="home-slider" class="home-slider">
-    <div class="home-slide-item">
+<!--     <div class="home-slide-item">
       <a href="/shop">
         <picture>
            <source media="(orientation: landscape)"
@@ -30,29 +30,29 @@
                class="img-fluid lazyload blur-up w-100" alt="Upto 50% OFF" title="Upto 50% OFF">
         </picture>
       </a>
-    </div>
-<!--     <div class="home-slide-item">
-      <a href="/shop?rf=price:0TO499">
+    </div> -->
+    <div class="home-slide-item">
+      <a href="/shop">
         <picture>
            <source media="(orientation: landscape)"
-                  data-srcset="{{CDN::asset('/img/home-banner/flash-sale-large.jpg') }} 2000w,
-                              {{CDN::asset('/img/home-banner/flash-sale-medium.jpg') }} 1200w,
-                              {{CDN::asset('/img/home-banner/flash-sale-small.jpg') }} 700w"
+                  data-srcset="{{CDN::asset('/img/home-banner/banner_freedom_large.jpg') }} 2000w,
+                              {{CDN::asset('/img/home-banner/banner_freedom_medium.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/banner_freedom_small.jpg') }} 700w"
                   sizes="100vw">
 
            <source media="(orientation: portrait)"
-                  data-srcset="{{CDN::asset('/img/home-banner/flash-sale-portrait-large.jpg') }} 1200w,
-                              {{CDN::asset('/img/home-banner/flash-sale-portrait-medium.jpg') }} 700w,
-                              {{CDN::asset('/img/home-banner/flash-sale-portrait-small.jpg') }} 400w"
+                  data-srcset="{{CDN::asset('/img/home-banner/banner_freedom_portrait_large.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/banner_freedom_portrait_medium.jpg') }} 700w,
+                              {{CDN::asset('/img/home-banner/banner_freedom_portrait_small.jpg') }} 400w"
                   sizes="100vw">
 
-           <img src="{{CDN::asset('/img/home-banner/flash-sale-20px.jpg') }}"
+           <img src="{{CDN::asset('/img/home-banner/banner_freedom_20px.jpg') }}"
                data-sizes="100vw"
-               class="img-fluid lazyload blur-up w-100" alt="Flash Sale - Entire Store Under ₹499" title="Flash Sale - Entire Store Under ₹499">
+               class="img-fluid lazyload blur-up w-100" alt="Get Upto 69% Off This Republic Day" title="Get Upto 69% Off This Republic Day">
         </picture>
       </a>
-    </div>   -->  
-    <div class="home-slide-item">
+    </div>    
+<!--     <div class="home-slide-item">
       <a href="/stores/jaipur">
         <picture>
            <source media="(orientation: landscape)"
@@ -72,8 +72,8 @@
                class="img-fluid lazyload blur-up w-100" alt="Hello Jaipur - Your Kids's Favourite fashion destination is now coming to Jaipur!" title="Hello Jaipur - Your Kids's Favourite fashion destination is now coming to Jaipur!">
         </picture>
       </a>
-    </div>     
-    <div class="home-slide-item">
+    </div>   -->   
+ <!--    <div class="home-slide-item">
       <a href="/shop">
         <picture>
            <source media="(orientation: landscape)"
@@ -93,7 +93,7 @@
                class="img-fluid lazyload blur-up w-100" alt="Upto 50% OFF" title="Upto 50% OFF">
         </picture>
       </a>
-    </div>    
+    </div>    --> 
     <div class="home-slide-item">
       <a href="/shop">
         <picture>
@@ -263,7 +263,7 @@
   <div class="container">
     <div class="cat-container">
       <div class="cat-item cat-13">
-        <a href="/shop">
+        <!-- <a href="/shop">
           <img class="d-block w-100 img-fluid lazyload blur-up"
               src="{{CDN::asset('/img/home-category/category_grid13_10px.jpg') }}"
               data-srcset="{{CDN::asset('/img/home-category/category_grid13_large.jpg') }} 740w,
@@ -272,6 +272,16 @@
               data-sizes='(min-width: 1200px) 570px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 92vw,  31vw'
               alt="New Year Super Sale - Flat 50% OFF"
               title="New Year Super Sale - Flat 50% OFF" />
+        </a> -->
+        <a href="/shop">
+          <img class="d-block w-100 img-fluid lazyload blur-up"
+              src="{{CDN::asset('/img/home-category/category_freedom_10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/home-category/category_freedom_large.jpg') }} 740w,
+                            {{CDN::asset('/img/home-category/category_freedom_medium.jpg') }} 370w,
+                            {{CDN::asset('/img/home-category/category_freedom_small.jpg') }} 248w"
+              data-sizes='(min-width: 1200px) 570px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 92vw,  31vw'
+              alt="Get upto 69% off This Republic Day"
+              title="Get upto 69% off This Republic Day" />
         </a>
       </div>
       <div class="cat-item cat-14">
@@ -655,50 +665,47 @@
     <div id="card-list" class="overflow-m row productGrid">
       <div class="col-lg-3 col-md-6 col-6">
         <div class="card h-100 product-card position-relative">
-          <a href="/white-cotton-shirt-251-white/buy/">
+          <a href="/knit-striped-printed-dress-998-navy/buy">
             <div class="">
              <img class="d-block w-100 img-fluid lazyload blur-up"
-                  src="{{CDN::asset('/img/product-of-day/boys-shirt-op06-color-white-1-10px.jpg') }}"
-                  data-srcset="{{CDN::asset('/img/product-of-day/boys-shirt-op06-color-white-1-medium.jpg') }} 370w,
-                               {{CDN::asset('/img/product-of-day/boys-shirt-op06-color-white-1-small.jpg') }} 326w"
+                  src="/images/products/33394/list-view/load/knit-dress-3045-color-navy-1.jpg"
+                  data-srcset="/images/products/33394/list-view/1x/knit-dress-3045-color-navy-1.jpg 270w, /images/products/33394/list-view/2x/knit-dress-3045-color-navy-1.jpg 540w, /images/products/33394/list-view/3x/knit-dress-3045-color-navy-1.jpg 810w"
                   data-sizes='(min-width: 1200px) 266px, (min-width: 991px) 22vw, 41vw'
-                  title="White Cotton Shirt"
-                  alt="White Cotton Shirt"/>
+                  title="Knit Striped Printed dress  - Navy"
+                  alt="Knit Striped Printed dress  - Navy"/>
            </div>
           </a>
-          <div class="kss-price kss-price--medium">₹699</div>
+          <div class="kss-price kss-price--medium">₹175</div>
         </div>
       </div>
       <div class="col-lg-3 col-md-6 col-6">
         <div class="card h-100 product-card position-relative">
-          <a href="/grey-circular-knit-graphic-girls-tshirt-1272-grey/buy/">
+          <a href="/white-regular-a-line-dress-410-white/buy">
             <div class="">
               <img class="d-block w-100 img-fluid lazyload blur-up"
-                  src="{{CDN::asset('/img/product-of-day/jl-ppg-3-side-girls-hd-hs-top-color-grey-1-10px.jpg') }}"
-                  data-srcset="{{CDN::asset('/img/product-of-day/jl-ppg-3-side-girls-hd-hs-top-color-grey-1-medium.jpg') }} 537w,
-                               {{CDN::asset('/img/product-of-day/jl-ppg-3-side-girls-hd-hs-top-color-grey-1-small.jpg') }} 326w"
+                  src="/images/products/30329/list-view/load/knit-dresses-1509-color-white-1.jpg"
+                  data-srcset="/images/products/30329/list-view/1x/knit-dresses-1509-color-white-1.jpg 270w, /images/products/30329/list-view/2x/knit-dresses-1509-color-white-1.jpg 540w, /images/products/30329/list-view/3x/knit-dresses-1509-color-white-1.jpg 810w"
                   data-sizes='(min-width: 1200px) 266px, (min-width: 991px) 22vw, 41vw'
-                  title="Grey circular knit graphic girls tshirt"
-                  alt="Grey circular knit graphic girls tshirt"/>
+                  title="White regular A-line dress - White"
+                  alt="White regular A-line dress - White"/>
             </div>
           </a>
-          <div class="kss-price kss-price--medium">₹299</div>
+          <div class="kss-price kss-price--medium">₹239</div>
         </div>
       </div>
       <div class="col-lg-3 col-md-6 col-6">
         <div class="card h-100 product-card position-relative">
-          <a href="/cotton-printed-girls-rompers-1061-white/buy/">
+          <a href="/woven-cotton-dress-301-turquoise/buy">
             <div class="">
               <img class="d-block w-100 img-fluid lazyload blur-up"
-                  src="{{CDN::asset('/img/product-of-day/new-born-3009-color-white-1-10px.jpg') }}"
-                  data-srcset="{{CDN::asset('/img/product-of-day/new-born-3009-color-white-1-medium.jpg') }} 448w,
-                               {{CDN::asset('/img/product-of-day/new-born-3009-color-white-1-small.jpg') }} 326w"
+                  src="/images/products/33613/list-view/load/dresses-1706-color-turquoise-1.jpg"
+                  data-srcset="/images/products/33613/list-view/1x/dresses-1706-color-turquoise-1.jpg 270w, /images/products/33613/list-view/2x/dresses-1706-color-turquoise-1.jpg 540w, /images/products/33613/list-view/3x/dresses-1706-color-turquoise-1.jpg 810w"
                   data-sizes='(min-width: 1200px) 266px, (min-width: 991px) 22vw, 41vw'
-                  title="Cotton printed girls rompers"
-                  alt="Cotton printed girls rompers"/>
+                  title="Woven cotton dress - Turquoise"
+                  alt="Woven cotton dress - Turquoise"/>
            </div>
           </a>
-          <div class="kss-price kss-price--medium">₹249</div>
+          <div class="kss-price kss-price--medium">₹399</div>
         </div>
       </div>
 <!--       <div class="col">
@@ -720,19 +727,17 @@
       </div> -->
       <div class="col-lg-3 col-md-6 col-6">
         <div class="card h-100 product-card position-relative">
-          <a href="/blue-cotton-rompers-1071-navy/buy/">
+          <a href="/sleeveless-tie-dye-jumpsuit-2137-lime/buy">
             <div class="">
               <img class="d-block w-100 img-fluid lazyload blur-up"
-                  src="{{CDN::asset('/img/product-of-day/infant-2-10px.jpg') }}"
-                  data-srcset="{{CDN::asset('/img/product-of-day/infant-2-large.jpg') }} 978w,
-                               {{CDN::asset('/img/product-of-day/infant-2-medium.jpg') }} 652w,
-                               {{CDN::asset('/img/product-of-day/infant-2-small.jpg') }} 326w"
+                  src="/images/products/32895/list-view/load/ssgi180902-ay-3008-sleeveless-tie-dye-jumpsuit-color-lime-3.jpg"
+                  data-srcset="/images/products/32895/list-view/1x/ssgi180902-ay-3008-sleeveless-tie-dye-jumpsuit-color-lime-3.jpg 270w, /images/products/32895/list-view/2x/ssgi180902-ay-3008-sleeveless-tie-dye-jumpsuit-color-lime-3.jpg 540w, /images/products/32895/list-view/3x/ssgi180902-ay-3008-sleeveless-tie-dye-jumpsuit-color-lime-3.jpg 810w"
                   data-sizes='(min-width: 1200px) 266px, (min-width: 991px) 22vw, 41vw'
-                  title="Blue Cotton Rompers"
-                  alt="Blue Cotton Rompers"/>
+                  title="Sleeveless Tie &amp; dye Jumpsuit - Lime"
+                  alt="Sleeveless Tie &amp; dye Jumpsuit - Lime"/>
            </div>
           </a>
-          <div class="kss-price kss-price--medium">₹799</div>
+          <div class="kss-price kss-price--medium">₹499</div>
         </div>
       </div>
     </div>
@@ -746,19 +751,18 @@
     <div id="card-list" class="overflow-m row productGrid mt-2">
           <div class="col-lg-3 col-md-6 col-6">
             <div class="card h-100 product-card position-relative position-relative">
-              <a href="/a-line-marigold-embroidered-dress-982-turquoise/buy/">
+              <a href="/regular-denim-jeans-211-mid-wash/buy">
                 <div class="">
                  <img class="d-block w-100 img-fluid lazyload blur-up"
-                      src="{{CDN::asset('/img/product-of-day/171081-a-line-marigold-embroidered-dress-color-turquoise-1-10px.jpg') }}"
-                      data-srcset="{{CDN::asset('/img/product-of-day/171081-a-line-marigold-embroidered-dress-color-turquoise-1-large.jpg') }} 810w,
-                                   {{CDN::asset('/img/product-of-day/171081-a-line-marigold-embroidered-dress-color-turquoise-1-medium.jpg') }} 652w,
-                                   {{CDN::asset('/img/product-of-day/171081-a-line-marigold-embroidered-dress-color-turquoise-1-small.jpg') }} 326w"
+                      src="/images/products/30044/list-view/load/boys-jeans-1563-color-mid-wash-1.jpg"
+                      data-srcset="/images/products/30044/list-view/1x/boys-jeans-1563-color-mid-wash-1.jpg 270w, /images/products/30044/list-view/2x/boys-jeans-1563-color-mid-wash-1.jpg 540w, /images/products/30044/list-view/3x/boys-jeans-1563-color-mid-wash-1.jpg 810w"
                       data-sizes='(min-width: 1200px) 266px, (min-width: 991px) 22vw, 41vw'
-                      title="A-line Marigold Embroidered Dress"
-                      alt="A-line Marigold Embroidered Dress"/>
+                      title="Regular denim jeans - Mid Wash"
+                      alt="Regular denim jeans - Mid Wash" 
+                      style="padding: 8px;" />
                </div>
               </a>
-              <div class="kss-price kss-price--medium">₹695</div>
+              <div class="kss-price kss-price--medium">₹599</div>
             </div>
           </div>
 <!--           <div class="col">
@@ -780,52 +784,47 @@
           </div>  -->
           <div class="col-lg-3 col-md-6 col-6">
             <div class="card h-100 product-card position-relative position-relative">
-              <a href="/grey-printed-graphic-t-shirt-1441-grey/buy/">
+              <a href="/applique-cotton-boys-tshirt-1304-black/buy">
                 <div class="">
                   <img class="d-block w-100 img-fluid lazyload blur-up"
-                      src="{{CDN::asset('/img/product-of-day/pc-29028-black-panther-printed-tshirt-color-grey-1-10px.jpg') }}"
-                      data-srcset="{{CDN::asset('/img/product-of-day/pc-29028-black-panther-printed-tshirt-color-grey-1-medium.jpg') }} 400w,
-                                   {{CDN::asset('/img/product-of-day/pc-29028-black-panther-printed-tshirt-color-grey-1-small.jpg') }} 326w"
+                      src="/images/products/33028/list-view/load/mtc-3714a-occ-player-applique-hs-boys-tshirt-color-black-4.jpg"
+                      data-srcset="/images/products/33028/list-view/1x/mtc-3714a-occ-player-applique-hs-boys-tshirt-color-black-4.jpg 270w, /images/products/33028/list-view/2x/mtc-3714a-occ-player-applique-hs-boys-tshirt-color-black-4.jpg 540w, /images/products/33028/list-view/3x/mtc-3714a-occ-player-applique-hs-boys-tshirt-color-black-4.jpg 810w"
                       data-sizes='(min-width: 1200px) 266px, (min-width: 991px) 22vw, 41vw'
-                      title="Grey printed graphic t-shirt"
-                      alt="Grey printed graphic t-shirt"/>
+                      title="Applique cotton boys tshirt - Black"
+                      alt="Applique cotton boys tshirt - Black"/>
                </div>
               </a>
-              <div class="kss-price kss-price--medium">₹395</div>
+              <div class="kss-price kss-price--medium">₹319</div>
             </div>
           </div>
           <div class="col-lg-3 col-md-6 col-6">
             <div class="card h-100 product-card position-relative">
-              <a href="/cotton-circular-knit-short-1217-turquoise/buy/">
+              <a href="/full-sleeves-checkered-shirt-2000-red/buy">
                 <div class="">
                   <img class="d-block w-100 img-fluid lazyload blur-up"
-                      src="{{CDN::asset('/img/product-of-day/girl-short-10px.jpg') }}"
-                      data-srcset="{{CDN::asset('/img/product-of-day/girl-short-large.jpg') }} 978w,
-                                  {{CDN::asset('/img/product-of-day/girl-short-medium.jpg') }} 450w,
-                                   {{CDN::asset('/img/product-of-day/girl-short-small.jpg') }} 326w"
+                      src="/images/products/10321/list-view/load/upbj180902-ca-1009-color-red-1.jpg"
+                      data-srcset="/images/products/10321/list-view/1x/upbj180902-ca-1009-color-red-1.jpg 270w, /images/products/10321/list-view/2x/upbj180902-ca-1009-color-red-1.jpg 540w, /images/products/10321/list-view/3x/upbj180902-ca-1009-color-red-1.jpg 810w"
                       data-sizes='(min-width: 1200px) 266px, (min-width: 991px) 22vw, 41vw'
-                      title="Cotton Circular Knit Short"
-                      alt="Cotton Circular Knit Short"/>
+                      title="Full Sleeves Checkered Shirt - Red"
+                      alt="Full Sleeves Checkered Shirt - Red"/>
                </div>
               </a>
-              <div class="kss-price kss-price--medium">₹295</div>
+              <div class="kss-price kss-price--medium">₹599</div>
             </div>
           </div>
           <div class="col-lg-3 col-md-6 col-6">
             <div class="card h-100 product-card position-relative">
-              <a href="/chambray-hemla-dress-coral-972-coral/buy/">
+              <a href="/turquoise-casual-printed-tshirt-1526-turquoise/buy">
                 <div class="">
                   <img class="d-block w-100 img-fluid lazyload blur-up"
-                      src="{{CDN::asset('/img/product-of-day/161025-chambray-hemla-dress-coral-color-coral-1-10px.jpg') }}"
-                      data-srcset="{{CDN::asset('/img/product-of-day/161025-chambray-hemla-dress-coral-color-coral-1-large.jpg') }} 810w,
-                                   {{CDN::asset('/img/product-of-day/161025-chambray-hemla-dress-coral-color-coral-1-medium.jpg') }} 652w,
-                                   {{CDN::asset('/img/product-of-day/161025-chambray-hemla-dress-coral-color-coral-1-small.jpg') }} 326w"
+                      src="/images/products/31927/list-view/load/jus-jc69tb047-t-shirt-color-turquoise-1.jpg"
+                      data-srcset="/images/products/31927/list-view/1x/jus-jc69tb047-t-shirt-color-turquoise-1.jpg 270w, /images/products/31927/list-view/2x/jus-jc69tb047-t-shirt-color-turquoise-1.jpg 540w, /images/products/31927/list-view/3x/jus-jc69tb047-t-shirt-color-turquoise-1.jpg 810w"
                      data-sizes='(min-width: 1200px) 266px, (min-width: 991px) 22vw, 41vw'
-                     title="Chambray Hemla Dress Coral"
-                     alt="Chambray Hemla Dress Coral"/>
+                     title="Turquoise casual printed tshirt - Turquoise"
+                     alt="Turquoise casual printed tshirt - Turquoise"/>
                 </div>
               </a>
-              <div class="kss-price kss-price--medium">₹895</div>
+              <div class="kss-price kss-price--medium">₹257</div>
             </div>
           </div>
     </div>
@@ -840,19 +839,17 @@
 
         <div class="col-lg-3 col-md-6 col-6">
           <div class="card h-100 product-card position-relative position-relative">
-            <a href="/half-sleeves-navy-cotton-tshirt-1034-navy/buy/">
+            <a href="/casual-girl-denim-shorts-310-mid-wash/buy">
               <div class="">
                 <img class="d-block w-100 img-fluid lazyload blur-up"
-                    src="{{CDN::asset('/img/product-of-day/infant-1-10px.jpg') }}"
-                    data-srcset="{{CDN::asset('/img/product-of-day/infant-1-large.jpg') }} 978w,
-                                 {{CDN::asset('/img/product-of-day/infant-1-medium.jpg') }} 652w,
-                                 {{CDN::asset('/img/product-of-day/infant-1-small.jpg') }} 326w"
+                    src="/images/products/30253/list-view/load/girl-shorts1020-color-mid-wash-1.jpg"
+                    data-srcset="/images/products/30253/list-view/1x/girl-shorts1020-color-mid-wash-1.jpg 270w, /images/products/30253/list-view/2x/girl-shorts1020-color-mid-wash-1.jpg 540w, /images/products/30253/list-view/3x/girl-shorts1020-color-mid-wash-1.jpg 810w"
                     data-sizes='(min-width: 1200px) 266px, (min-width: 991px) 22vw, 41vw'
-                    title="Half Sleeves Navy Cotton Tshirt"
-                    alt="Half Sleeves Navy Cotton Tshirt"/>
+                    title="Casual girl denim shorts - Mid Wash"
+                    alt="Casual girl denim shorts - Mid Wash"/>
              </div>
             </a>
-            <div class="kss-price kss-price--medium">₹299</div>
+            <div class="kss-price kss-price--medium">₹400</div>
           </div>
         </div>
 
@@ -876,54 +873,48 @@
 
         <div class="col-lg-3 col-md-6 col-6">
           <div class="card h-100 product-card position-relative">
-            <a href="/half-sleeves-cotton-shirt-256-blue/buy/">
+            <a href="/full-elasticated-all-over-printed-woven-short-2055-aqua/buy">
               <div class="">
                 <img class="d-block w-100 img-fluid lazyload blur-up"
-                    src="{{CDN::asset('/img/product-of-day/shirt-5-shirt-10px.jpg') }}"
-                    data-srcset="{{CDN::asset('/img/product-of-day/shirt-5-shirt-large.jpg') }} 978w,
-                                 {{CDN::asset('/img/product-of-day/shirt-5-shirt-medium.jpg') }} 652w,
-                                 {{CDN::asset('/img/product-of-day/shirt-5-shirt-small.jpg') }} 326w"
+                    src="/images/products/32403/list-view/load/upgt180901-an-7021-full-elasticated-all-over-printed-woven-short-color-aqua-1.jpg"
+                    data-srcset="/images/products/32403/list-view/1x/upgt180901-an-7021-full-elasticated-all-over-printed-woven-short-color-aqua-1.jpg 270w, /images/products/32403/list-view/2x/upgt180901-an-7021-full-elasticated-all-over-printed-woven-short-color-aqua-1.jpg 540w, /images/products/32403/list-view/3x/upgt180901-an-7021-full-elasticated-all-over-printed-woven-short-color-aqua-1.jpg 810w"
                    data-sizes='(min-width: 1200px) 266px, (min-width: 991px) 22vw, 41vw'
-                   title="Half Sleeves Cotton Shirt"
-                   alt="Half Sleeves Cotton Shirt"/>
+                   title="Full Elasticated All over Printed Woven Short - Aqua"
+                   alt="Full Elasticated All over Printed Woven Short - Aqua"/>
               </div>
             </a>
-            <div class="kss-price kss-price--medium">₹599</div>
+            <div class="kss-price kss-price--medium">₹399</div>
           </div>
         </div>
 
         <div class="col-lg-3 col-md-6 col-6">
           <div class="card h-100 product-card position-relative">
-            <a href="/cobalt-casual-knit-short-1010-cobalt/buy/">
+            <a href="/black-full-elasticated-net-and-georgette-pallazo-2296-black/buy">
               <div class="">
                 <img class="d-block w-100 img-fluid lazyload blur-up"
-                    src="{{CDN::asset('/img/product-of-day/infant-3-10px.jpg') }}"
-                    data-srcset="{{CDN::asset('/img/product-of-day/infant-3-large.jpg') }} 978w,
-                               {{CDN::asset('/img/product-of-day/infant-3-medium.jpg') }} 652w,
-                               {{CDN::asset('/img/product-of-day/infant-3-small.jpg') }} 326w"
+                    src="/images/products/13098/list-view/load/upgt180901-an-7084-color-black-1.jpg"
+                    data-srcset="/images/products/13098/list-view/1x/upgt180901-an-7084-color-black-1.jpg 270w, /images/products/13098/list-view/2x/upgt180901-an-7084-color-black-1.jpg 540w, /images/products/13098/list-view/3x/upgt180901-an-7084-color-black-1.jpg 810w"
                     data-sizes='(min-width: 1200px) 266px, (min-width: 991px) 22vw, 41vw'
-                    title="Cobalt Casual Knit Short"
-                    alt="Cobalt Casual Knit Short"/>
+                    title="Black Full Elasticated Net and Georgette Pallazo - Black"
+                    alt="Black Full Elasticated Net and Georgette Pallazo - Black"/>
              </div>
             </a>
-            <div class="kss-price kss-price--medium">₹269</div>
+            <div class="kss-price kss-price--medium">₹499</div>
           </div>
         </div>
         <div class="col-lg-3 col-md-6 col-6">
           <div class="card h-100 product-card position-relative">
-            <a href="/casual-indigo-shorts-210-dark-wash/buy/">
+            <a href="/girls-blue-ethnic-western-wear-2228-dark-blue/buy">
               <div class="">
                <img class="d-block w-100 img-fluid lazyload blur-up"
-                    src="{{CDN::asset('/img/product-of-day/denim-shorts-1556-color-dark-wash-3-10px.jpg') }}"
-                    data-srcset="{{CDN::asset('/img/product-of-day/denim-shorts-1556-color-dark-wash-3-large.jpg') }} 697w,
-                                {{CDN::asset('/img/product-of-day/denim-shorts-1556-color-dark-wash-3-medium.jpg') }} 652w,
-                                 {{CDN::asset('/img/product-of-day/denim-shorts-1556-color-dark-wash-3-small.jpg') }} 326w"
+                    src="/images/products/10555/list-view/load/upgt181001-sb-1904-color-dark-blue-1.jpg"
+                    data-srcset="/images/products/10555/list-view/1x/upgt181001-sb-1904-color-dark-blue-1.jpg 270w, /images/products/10555/list-view/2x/upgt181001-sb-1904-color-dark-blue-1.jpg 540w, /images/products/10555/list-view/3x/upgt181001-sb-1904-color-dark-blue-1.jpg 810w"
                     data-sizes='(min-width: 1200px) 266px, (min-width: 991px) 22vw, 41vw'
-                    title="Casual indigo shorts"
-                    alt="Casual indigo shorts"/>
+                    title="Girls Blue Ethnic western wear - Dark Blue"
+                    alt="Girls Blue Ethnic western wear - Dark Blue"/>
              </div>
             </a>
-            <div class="kss-price kss-price--medium">₹699</div>
+            <div class="kss-price kss-price--medium">₹1400</div>
           </div>
         </div>
     </div>
