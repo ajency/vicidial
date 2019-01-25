@@ -11,7 +11,7 @@ class PostController extends Controller {
 
 	public function blog(Request $request)
 	{
-	    return view('blog');
+	    return view('blog.blog');
 	}
 
     public function post($title, Request $request)
@@ -21,7 +21,7 @@ class PostController extends Controller {
     	if ($post == null) {
     	    abort(404);
     	}
-        return view('single')->with('post', $post);
+        return view('blog.single')->with('post', $post);
     }
 
     public function category($category, Request $request)
@@ -29,10 +29,10 @@ class PostController extends Controller {
     	$cat = Taxonomy::where('taxonomy', 'category')->slug($category)->first();
         // dd($cat);
     	if ($category == "all") {
-        	return view('category')->with('cat', $cat);
+        	return view('blog.category')->with('cat', $cat);
     	} else if ($cat == null) {
     	    abort(404);
     	}
-        return view('category')->with('cat', $cat);
+        return view('blog.category')->with('cat', $cat);
     }
 }

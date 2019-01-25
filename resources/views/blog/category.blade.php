@@ -8,15 +8,31 @@
 
 @section('content')
 
+  <?php $catname = single_cat_title("", false); ?>
   <section class="">
     <div class="container">
       <div class="row">
          <div class="col-lg-9">
+          <div class="mt-4 mb-2 d-none d-lg-block">
+            <nav aria-label="breadcrumb" class="">
+              <ol class="breadcrumb mb-1 bg-transparent p-0">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item"><a href="<?php echo get_home_url(); ?>">Blog</a></li>
+                <li class="breadcrumb-item active"><a>
+                  <?php if( ! empty( $catname ) ){
+                          echo $catname;
+                      } else {
+                          echo 'All Posts';
+                      }?>
+                  </a></li>
+              </ol>
+            </nav>
+          </div>
+
             <div class="mt-4">
                <div class="text-center text-lg-left">
                   <h1 class="border-header">
                      <?php
-                      $catname = single_cat_title("", false);
                       if( ! empty( $catname ) ){
                           echo $catname;
                       } else {
