@@ -236,4 +236,18 @@ class Cart extends Model
         $variant_discount_price = $variant->getSalePrice() * (1 - $discount_ratio);
         return $variant_discount_price;
     }
+
+    public function flatData(){
+        $items = $this->getItems();
+        $cartData = ["items"=>[], "coupon"=> $this->coupon];
+        foreach ($items as $item) {
+            $singleItem = [];
+            $singleItem['odoo_id'] = $item['item']->odoo_id;
+            $singleItem['quantity'] = $item['quantity'];
+            $singleItem['price_mrp'] = $item['item']->getLstPrice();
+            $singleItem['price_sale'] = $item['item']->getSalePrice();
+            $cartData['items'][$item['item']->id] = $singleItem;
+        }
+        return $cartData;
+    }
 }

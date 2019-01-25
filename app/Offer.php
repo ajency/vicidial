@@ -184,4 +184,36 @@ class Offer extends Model
         }
         return $coupons;
     }
+
+    public function applyOffer($cartData){
+        
+    }
+
+    public static function processData($cartData){
+        $mrp_total = 0;
+        $sale_total = 0;
+        
+        foreach ($cartData['items'] as $id => $item) {
+            $mrp_total += $item['price_mrp'];
+            $sale_total += $item['price_sale'];
+            $cartData['items'][$id]['price_final'] = $item['price_sale'];
+
+        }
+        $cartData['mrp_total'] = $mrp_total;
+        $cartData['sale_total'] = $sale_total;
+        $cartData['final_total'] = $sale_total;
+        $cartData['discount'] = 0;
+        $cartData['offersApplied'] = [];
+        $cartData['messges'] = [];
+
+        if($cartData['coupon']!= null && trim($cartData['coupon'])!=''){
+            $coupon = Coupon::where('display_code',$cartData['coupon'])->first();
+            if($coupon!=null){
+                // $cartData = $coupon->offer->applyOffer($cartData);
+            }else{
+                $cartData['messges']['invalid_coupon'] => 'Your code did not match any coupons';//shift this to config
+            }
+        }
+        return $cartData;
+    }
 }
