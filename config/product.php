@@ -106,6 +106,7 @@ return [
                 'product_subtype',
                 'product_att_sleeves',
                 'product_metatag',
+                'product_brand',
             ],
             'variant' => [
                 'product_color_name',

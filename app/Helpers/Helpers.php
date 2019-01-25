@@ -5,7 +5,6 @@ use App\Defaults;
 use App\Facet;
 use App\Jobs\FetchProductImages;
 use App\Location;
-use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 
@@ -36,18 +35,18 @@ function makeQueryfromParams($searchObject)
 {
     $queryParams    = ['search_data' => []];
     $elasticMapping = [
-        'product_category_type'   => 'search_data.string_facet.product_category_type',
-        'product_gender'          => 'search_data.string_facet.product_gender',
-        'product_age_group'       => 'search_data.string_facet.product_age_group',
-        'product_subtype'         => 'search_data.string_facet.product_subtype',
-        'product_color_html'      => 'search_data.string_facet.product_color_html',
-        'variant_sale_price'      => 'search_data.number_facet.variant_sale_price',
-        'variant_discount_percent'=> 'search_data.number_facet.variant_discount_percent',
-        'variant_availability'    => 'search_data.boolean_facet.variant_availability',
-        'product_image_available' => 'search_data.boolean_facet.product_image_available',
-        'product_att_ecom_sales'  => 'search_data.boolean_facet.product_att_ecom_sales',
-        'product_metatag'         => 'search_data.string_facet.product_metatag',
-        'variant_size_name'       => 'search_data.string_facet.variant_size_name',
+        'product_category_type'    => 'search_data.string_facet.product_category_type',
+        'product_gender'           => 'search_data.string_facet.product_gender',
+        'product_age_group'        => 'search_data.string_facet.product_age_group',
+        'product_subtype'          => 'search_data.string_facet.product_subtype',
+        'product_color_html'       => 'search_data.string_facet.product_color_html',
+        'variant_sale_price'       => 'search_data.number_facet.variant_sale_price',
+        'variant_discount_percent' => 'search_data.number_facet.variant_discount_percent',
+        'variant_availability'     => 'search_data.boolean_facet.variant_availability',
+        'product_image_available'  => 'search_data.boolean_facet.product_image_available',
+        'product_att_ecom_sales'   => 'search_data.boolean_facet.product_att_ecom_sales',
+        'product_metatag'          => 'search_data.string_facet.product_metatag',
+        'variant_size_name'        => 'search_data.string_facet.variant_size_name',
     ];
 
     foreach ($searchObject as $filterType => $params) {
@@ -139,7 +138,7 @@ function sanitiseProductData($odooData)
     if ($index['product_gender'] == 'Others') {
         $index['product_gender'] = 'Unisex';
     }
-
+    $index['product_brand'] = 'kss-fashion';
     return $index;
 }
 
@@ -204,6 +203,7 @@ function generateFullTextForIndexing($productData, $variant)
         $variant['variant_size_name'],
         $productData['product_id'],
         $productData['product_att_magento_display_name'],
+        $productData['product_brand'],
     ];
     return implode(' ', $textComponents);
 }
@@ -244,6 +244,7 @@ function buildProductIndexFromOdooData($productData, $variantData)
         "product_subtype"                  => $productData['product_subtype'],
         "product_vendor"                   => $productData['product_vendor'],
         "product_att_ecom_sales"           => $productData['product_att_ecom_sales'],
+        "product_brand"                    => $productData['product_brand'],
         "product_color_id"                 => $variantData->first()['product_color_id'],
         "product_color_slug"               => str_slug($variantData->first()['product_color_name']),
         "product_color_name"               => $variantData->first()['product_color_name'],

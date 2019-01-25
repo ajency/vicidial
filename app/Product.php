@@ -536,6 +536,7 @@ class Product
         return $elasticData;
     }
 
+
     public static function getProductDataFromIds($ids)
     {
         $q = new ElasticQuery();
@@ -545,4 +546,24 @@ class Product
 
         return fetchLandingProductDetails($products['docs']);
     }
-}
+
+    public static function getBrandsForProducts(){
+        $odoo = new OdooConnect;
+        $allBrands = $odoo->defaultExec('product.template','search_read',[[['brand_ids','!=', false]]],['fields'=>['brand_ids'],'limit'=>500, 'offset' => 0]);
+        $brandIds = $allBrands->pluck('brand_ids')->flatten()->unique()->values();
+        $brands = $odoo->defaultExec('custom.brand','read',[$brandIds->toArray()],['fields'=>['display_name']])->pluck('display_name','id');
+        $products = $allBrands->pluck('id');
+        $productColors = ProductColor::select(['product_id','elastic_id'])->whereIn('product_id',$products)->pluck('product_id','elastic_id');
+        $productBrands = $productColors->map(function($productID)use($brands,$allBrands){
+            $brand = $brands[$allBrands->where('id',$productID)->first()['brand_ids'][0]];
+            return [
+                'elastic_data' => null,
+                'change' => function (&$product, &$variants) use ($brand) {
+                    $product['product_brand'] = $brand; 
+                }
+            ];
+            
+        });
+        ProductColor::updateElasticData($productBrands);
+        return ;
+    }
