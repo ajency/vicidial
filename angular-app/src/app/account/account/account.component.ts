@@ -72,6 +72,10 @@ export class AccountComponent implements OnInit {
     setTimeout(()=>{
       if(this.returnUrl)    
         this.router.navigateByUrl(this.returnUrl, { replaceUrl: true });
+      else{
+        if(!this.appservice.userInfo)
+          this.getUserInfo()
+      }
     },100)
   }
 
