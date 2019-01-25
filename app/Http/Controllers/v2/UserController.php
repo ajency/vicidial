@@ -96,9 +96,20 @@ class UserController extends Controller
         return $this->fetchUserDetails($data);
     }
 
-    public function fetchUserDetails($data)
+    public function skipOTP(Request $request)
     {
-        $UserObject = $this->createAuthenticateUser($data);
+        $data      = $request->all();
+        $validator = $this->validateNumber($data);
+        if ($validator->fails()) {
+            return response()->json(["message" => $validator->errors()->first(), 'success' => false]);
+        }
+
+        return $this->fetchUserDetails($data, true);
+    }
+
+    public function fetchUserDetails($data, $skip = false)
+    {
+        $UserObject = $this->createAuthenticateUser($data, $skip);
         if (isLocalSetup()) {
             $tokenArr = $UserObject->createPersonalAccessToken();
         } else {
@@ -113,11 +124,15 @@ class UserController extends Controller
         return response()->json(["message" => 'user login successful', 'user' => $user, 'token' => $tokenArr['access_token'], 'token_expires_at' => $tokenArr['expires_at'], 'success' => true]);
     }
 
-    public function createAuthenticateUser($data)
+    public function createAuthenticateUser($data, $skip)
     {
         $id = request()->session()->get('active_cart_id', false);
 
-        $UserObject = User::where('phone', '=', $data['phone'])->first();
+        if ($skip) {
+            $UserObject = null;
+        } else {
+            $UserObject = User::where('phone', '=', $data['phone'])->where('verified', '=', true)->first();
+        }
 
         if ($UserObject) {
             $cart = $this->userCart($id, $UserObject);
@@ -138,6 +153,11 @@ class UserController extends Controller
 
             $cart->user_id = $UserObject->id;
             $cart->save();
+
+            if (!$skip) {
+                $UserObject->verified = true;
+                $UserObject->save();
+            }
 
             $UserObject->assignRole('customer');
         }

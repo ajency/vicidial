@@ -26,6 +26,10 @@ class User extends Authenticatable
         'name', 'phone', 'cart_id', 'email', 'password',
     ];
 
+    protected $casts = [
+        'verified' => 'boolean',
+    ];
+
     protected $odooModel = "res.partner";
 
     /**
