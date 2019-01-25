@@ -32,42 +32,44 @@
             while ( $allpost->have_posts() ) : $allpost->the_post(); ?>
                <div class="blog-col__wrapper">
                   <article class="kss-posts">
-                     <a href="<?php the_permalink(); ?>" class="d-block">
+                     <a href="<?php the_permalink(); ?>" class="d-md-block d-none">
                         <div class="kss-posts__cover mb-3">
                            <?php the_post_thumbnail('medium', array('class' => 'd-block w-100 img-fluid')); ?>
                         </div>
-                        <div class="kss-posts__content">
+                     </a>
+                      <div class="kss-posts__content">
+                        <a href="<?php the_permalink(); ?>" class="d-block">
                            <h1 class="bl-single-heading bl-single-heading--small"><?php the_title() ?></h1>
                            <p class="bl-single-caption bl-single-caption--small">
                               <?php
                               if ( has_excerpt( get_the_ID() ) ) {
                                   // This post has excerpt
-                                 echo wp_strip_all_tags( get_the_excerpt(), true );
+                                 echo wp_strip_all_tags( the_excerpt_max_charlength(128), true );
                               } else {
                                   // This post has no excerpt
                                  echo wp_trim_words( get_the_content(), 18 );
                               }
                               ?>
                            </p>
-                           <div class="flex-sm-row mb-1 mr-2 post-tags">
-                              <div class="post-tags mb-1 d-flex">
-                                 <div class="post-tags__data">
-                                    <?php
-                                        $categories = get_the_category();
-                                        $separator = ' ';
-                                        $output = '';
-                                        if ( ! empty( $categories ) ) {
-                                            foreach( $categories as $category ) {
-                                                $output .= '<a href="' . esc_url( get_category_link( $category->term_id ) ) . '" alt="' . esc_attr( sprintf( __( 'View all posts in %s', 'textdomain' ), $category->name ) ) . '"><span>' . esc_html( $category->name ) . '</span></a>' . $separator;
-                                            }
-                                            echo trim( $output, $separator );
-                                        }
-                                    ?>
-                                 </div>
-                              </div>
-                           </div>
+                        </a>
+                        <div class="flex-sm-row mb-1 mr-2 post-tags">
+                            <div class="post-tags mb-1 d-flex">
+                               <div class="post-tags__data">
+                                  <?php
+                                      $categories = get_the_category();
+                                      $separator = ' ';
+                                      $output = '';
+                                      if ( ! empty( $categories ) ) {
+                                          foreach( $categories as $category ) {
+                                              $output .= '<a href="' . esc_url( get_category_link( $category->term_id ) ) . '" alt="' . esc_attr( sprintf( __( 'View all posts in %s', 'textdomain' ), $category->name ) ) . '"><span>' . esc_html( $category->name ) . '</span></a>' . $separator;
+                                          }
+                                          echo trim( $output, $separator );
+                                      }
+                                  ?>
+                               </div>
+                            </div>
                         </div>
-                     </a>
+                      </div>
                   </article>
                </div>
             <?php endwhile;?>

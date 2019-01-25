@@ -32,12 +32,12 @@
                 <div class="d-flex flex-column justify-content-center col-lg-7 order-1 order-lg-0">
                   <div>
                     <div class="mt-4 mb-2 d-none d-lg-block">
-                            <nav aria-label="breadcrumb" class="">
+                      <nav aria-label="breadcrumb" class="">
                         <ol class="breadcrumb mb-1 bg-transparent p-0">
                           <li class="breadcrumb-item"><a href="/">Home</a></li>
                           <li class="breadcrumb-item"><a href="<?php echo get_home_url(); ?>">Blog</a></li>
                           <li class="breadcrumb-item active"><a><?php echo the_title() ?></a></li>
-                          </ol>
+                        </ol>
                       </nav>
                     </div>
 
@@ -76,7 +76,7 @@
                   </div>
                 </div>
                 <div class="col-lg-5 order-0 order-lg-1 bl-single-img-wrapper mb-4 mb-sm-0">
-                  <?php the_post_thumbnail('medium_large'); ?>
+                  <?php the_post_thumbnail('medium_large', array('class' => 'd-block w-100 img-fluid')); ?>
                   <small class="text-muted mt-2 pl-3 pl-lg-0 d-inline-block">
                     <?php echo get_post(get_post_thumbnail_id())->post_excerpt; ?>
                   </small>
@@ -163,19 +163,22 @@
                                   <img src="{{CDN::asset('/img/blog/kss_logo_gray.jpg') }}" class="d-block w-100 img-fluid" />
                               <?php } ?>
                             </div>
+                          </a>
                             <div class="kss-posts__content">
-                              <h1 class="bl-single-heading bl-single-heading--small"><?php the_title(); ?></h1>
-                              <p class="bl-single-caption bl-single-caption--small">
-                                <?php
-                                if ( has_excerpt() ) {
-                                    // This post has excerpt
-                                  echo wp_strip_all_tags( get_the_excerpt(), true );
-                                } else {
-                                    // This post has no excerpt
-                                  echo wp_trim_words( get_the_content(), 12 );
-                                }
-                                ?>
-                              </p>
+                              <a href="<?php the_permalink(); ?>" class="d-block" title="<?php echo esc_attr( the_title_attribute( 'echo=0' ) ); ?>">
+                                <h1 class="bl-single-heading bl-single-heading--small"><?php the_title(); ?></h1>
+                                <p class="bl-single-caption bl-single-caption--small">
+                                  <?php
+                                  if ( has_excerpt() ) {
+                                      // This post has excerpt
+                                    echo wp_strip_all_tags( get_the_excerpt(), true );
+                                  } else {
+                                      // This post has no excerpt
+                                    echo wp_trim_words( get_the_content(), 12 );
+                                  }
+                                  ?>
+                                </p>
+                              </a>
                               <div class="flex-sm-row mb-1 mr-2 post-tags">
                                 <div class="post-tags mb-1 d-flex">
                                   <!-- <p class="post-tags__title">Category :</p> -->
@@ -195,7 +198,6 @@
                                 </div>
                               </div>
                             </div>
-                          </a>
                         </div>
                       </div>
                     <?php
