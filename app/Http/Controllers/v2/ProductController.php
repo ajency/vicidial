@@ -21,12 +21,23 @@ class ProductController extends Controller
 
         $params['show_button'] = false;
 
+        $available_sizes   = array();
+        $unavailable_sizes = array();
+
         foreach ($params['variant_group']->{$params['selected_color_id']}->variants as $size_set) {
             if (isset($query['size']) and $query['size'] == $size_set->size->slug && $size_set->inventory_available) {
                 $params['size'] = $query['size'];
             }
             $params['show_button'] = ($params['show_button'] or $size_set->inventory_available);
+
+            if ($size_set->inventory_available) {
+                $available_sizes[] = $size_set;
+            } else  {
+                $unavailable_sizes[] = $size_set;
+            }
         }
+
+        $params['variant_group']->{$params['selected_color_id']}->variants = array_merge($available_sizes, $unavailable_sizes);
 
         if ($params['ecom_sales'] == false) {
             $params['show_button'] = false;
