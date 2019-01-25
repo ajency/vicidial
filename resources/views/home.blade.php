@@ -119,10 +119,17 @@
 </section>
 
 <!-- Home category -->
+
+<!-- <section>
+  <div class="container">
+    @include('includes.homecategory.home-category')
+  </div>
+</section> -->
+
 <section>
   <div class="container">
     <div class="cat-container">
-      <div class="cat-item cat-13">
+      <div class="cat-item cat-1">
         <a href="/shop">
           <img class="d-block w-100 img-fluid lazyload blur-up"
               src="{{CDN::asset('/img/home-category/category_grid13_10px.jpg') }}"
@@ -134,7 +141,7 @@
               title="New Year Super Sale - Flat 50% OFF" />
         </a>
       </div>
-      <div class="cat-item cat-14">
+      <div class="cat-item cat-2">
         <a href="/stationery">
           <img class="d-block w-100 img-fluid lazyload blur-up"
               src="{{CDN::asset('/img/home-category/category_grid14_10px.jpg') }}"
@@ -146,7 +153,7 @@
               title="Bag To School" />
         </a>
       </div>
-      <div class="cat-item cat-1 position-relative">
+      <div class="cat-item cat-3 position-relative">
         <a href="/girls/dress">
             <img class="d-block w-100 img-fluid lazyload blur-up"
                         src="{{CDN::asset('/img/home-category/category_grid1_10px.jpg') }}"
@@ -160,7 +167,7 @@
           <p class="custom-text dress-text">Dear <strong>dress</strong>, with <strong class="text-primary">Love.</strong></p>
         </a>
       </div>
-      <div class="cat-item cat-2 position-relative">
+      <div class="cat-item cat-4 position-relative">
         <a href="/girls/tops--woven-tops">
           <img class="d-block w-100 img-fluid lazyload blur-up"
               src="{{CDN::asset('/img/home-category/category_grid2_10px.jpg') }}"
@@ -173,16 +180,7 @@
           <!-- <a href="/shop" class="shop-now-btn shop-now-btn--orange">Shop Now</a> -->
         </a>
       </div>
-      <div class="cat-item cat-3">
-        <a href="/shop?rf=price:0TO299">
-          <img class="img-fluid lazyload blur-up" src="{{CDN::asset('/img/home-category/category_grid3_jan_10px.jpg') }}"
-          data-srcset="{{CDN::asset('/img/home-category/category_grid3_jan_large.gif') }}" alt="Shop under ₹299" title="Shop under ₹299" />
-          <!-- <div class="shop-under-box d-flex align-items-center justify-content-center">
-            <p class="m-0 shop-under-box__text text-uppercase">Shop Under</p>
-          </div> -->
-        </a>
-      </div>
-      <div class="cat-item cat-4 position-relative">
+      <div class="cat-item cat-5 position-relative">
         <a href="/toys">
           <img class="d-block w-100 img-fluid lazyload blur-up"
               src="{{CDN::asset('/img/home-category/category_grid4_10px.jpg') }}"
@@ -197,7 +195,16 @@
           <!-- <a href="/shop" class="shop-now-btn shop-now-btn--red">Shop Now</a> -->
         </a>
       </div>
-      <div class="cat-item cat-5 position-relative">
+      <div class="cat-item cat-6">
+        <a href="/shop?rf=price:0TO299">
+          <img class="img-fluid lazyload blur-up" src="{{CDN::asset('/img/home-category/category_grid3_jan_10px.jpg') }}"
+          data-srcset="{{CDN::asset('/img/home-category/category_grid3_jan_large.gif') }}" alt="Shop under ₹299" title="Shop under ₹299" />
+          <!-- <div class="shop-under-box d-flex align-items-center justify-content-center">
+            <p class="m-0 shop-under-box__text text-uppercase">Shop Under</p>
+          </div> -->
+        </a>
+      </div>
+      <div class="cat-item cat-7 position-relative">
         <a href="/jeans">
           <img class="d-block w-100 img-fluid lazyload blur-up"
               src="{{CDN::asset('/img/home-category/category_grid5_10px.jpg') }}"
@@ -210,7 +217,7 @@
           <!-- <p class="m-0 custom-text denim-text">Denim<strong>search!</strong></p> -->
         </a>
       </div>
-      <div class="cat-item cat-6 position-relative">
+      <div class="cat-item cat-8 position-relative">
         <a href="/short" class="d-block">
           <img class="d-block w-100 img-fluid lazyload blur-up"
               src="{{CDN::asset('/img/home-category/category_grid6_10px.jpg') }}"
@@ -230,7 +237,7 @@
           <a href="/short" class="links-wrapper__shop">Shop Now</a>
         </div>
       </div>
-      <div class="cat-item cat-7 position-relative">
+      <div class="cat-item cat-9 position-relative">
         <a href="/accessories/girls">
           <img class="d-block w-100 img-fluid lazyload blur-up"
               src="{{CDN::asset('/img/home-category/category_grid8_jan_10px.jpg') }}"
@@ -244,7 +251,7 @@
           <!-- <a href="/shop" class="shop-now-btn shop-now-btn--jewelery">Shop Now</a> -->
         </a>
       </div>
-      <div class="cat-item cat-8 position-relative">
+      <div class="cat-item cat-10 position-relative">
         <a href="/infant-utility">
          <img class="d-block w-100 img-fluid lazyload blur-up"
               src="{{CDN::asset('/img/home-category/category_grid8_10px.jpg') }}"
@@ -257,7 +264,7 @@
           <p class="custom-text text-acc text-uppercase">The cute <strong>accessory</strong> shop</p>
         </a>
       </div>
-      <div class="cat-item cat-9 position-relative">
+      <div class="cat-item cat-11 position-relative">
         <a href="/infant-0-2-years">
           <img class="d-block w-100 img-fluid lazyload blur-up"
               src="{{CDN::asset('/img/home-category/category_grid9_10px.jpg') }}"
@@ -270,7 +277,7 @@
           <p class="custom-text text-wardrobe text-uppercase">Their <strong>first wardrobe</strong></p>
         </a>
       </div>
-      <div class="cat-item cat-10 position-relative">
+      <div class="cat-item cat-12 position-relative">
         <a href="/shoes">
           <img class="d-block w-100 img-fluid lazyload blur-up"
               src="{{CDN::asset('/img/home-category/category_grid10_jan_10px.jpg') }}"
@@ -283,7 +290,7 @@
           <!-- <a href="/shop" class="shop-now-btn shop-now-btn--shoes">Shop Now</a> -->
         </a>
       </div>
-      <div class="cat-item cat-11">
+      <div class="cat-item cat-13">
         <a href="/tshirt">
           <img class="d-block w-100 img-fluid lazyload blur-up"
               src="{{CDN::asset('/img/home-category/category_grid11_10px.gif') }}"
@@ -292,7 +299,7 @@
               title="T-shirts and Polos" />
         </a>
       </div>
-      <div class="cat-item cat-12">
+      <div class="cat-item cat-14">
         <a href="/shirt">
           <img class="d-block w-100 img-fluid lazyload blur-up"
               src="{{CDN::asset('/img/home-category/category_grid12_jan_10px.jpg') }}"
@@ -322,10 +329,18 @@
 
 <!-- Stories -->
 
+<!-- <section>
+  <div class="container">
+      @include('includes.stories.stories')
+  </div>
+</section> -->
+
+
 <section>
-  <div class="container stories-wrapper">
-    <div class="trend-focus-wrapper mb-4 mb-sm-0">
-      <a href="/shop?pf=tag:lines-blocks" class="trend-box d-block link-card">
+
+<div class="container">
+    <div class="stories-grid stories-wrapper">
+      <a href="/shop?pf=tag:lines-blocks" class="story-1 trend-box d-block link-card">
           <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
               src="{{CDN::asset('/img/stories/story_grid9_10px.jpg') }}"
               data-srcset="{{CDN::asset('/img/stories/story_grid9_large.jpg') }} 740w,
@@ -335,7 +350,7 @@
               alt="Lines &amp; Blocks"
               title="Lines &amp; Blocks"/>
       </a>
-      <a href="/shop?pf=tag:chubby-cheeks" class="trend-box d-block link-card">
+      <a href="/shop?pf=tag:chubby-cheeks" class="story-2 trend-box d-block link-card">
           <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
               src="{{CDN::asset('/img/stories/story_grid10_10px.jpg') }}"
               data-srcset="{{CDN::asset('/img/stories/story_grid10_large.jpg') }} 740w,
@@ -345,7 +360,7 @@
               alt="Chubby Cheeks"
               title="Chubby Cheeks"/>
       </a>
-      <a href="/shop?pf=tag:rock-them-up" class="trend-box d-block link-card rock-them">
+      <a href="/shop?pf=tag:rock-them-up" class="story-3 trend-box d-block link-card rock-them">
           <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
               src="{{CDN::asset('/img/stories/story_grid11_10px.jpg') }}"
               data-srcset="{{CDN::asset('/img/stories/story_grid11_large.jpg') }} 740w,
@@ -355,10 +370,8 @@
               alt="Rock Them Up"
               title="Rock Them Up"/>
       </a>
-    </div>
-    <div class="trend-focus-wrapper">
-        <!-- Grid-1 -->
-        <a href="/shop?pf=tag:cute-florals" class="trend-box d-block link-card position-relative" style="order:0;">
+
+      <a href="/shop?pf=tag:cute-florals" class="story-4 trend-box d-block link-card position-relative" style="order:0;">
           <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
               src="{{CDN::asset('/img/stories/story_grid1_10px.jpg') }}"
               data-srcset="{{CDN::asset('/img/stories/story_grid1_large.jpg') }} 818w,
@@ -368,18 +381,9 @@
               alt="Cute Floral"
               title="Cute Floral"/>
           <p class="custom-text floral-text text-uppercase">Cute <strong>Florals</strong></p>
-        </a>
-        
-        <!-- Grid-4 -->
-        <a href="/shop?pf=tag:see-spot-run" class="trend-box d-block link-card position-relative"  style="order:4;">
+      </a>
 
-          <img class="img-fluid lazyload blur-up" src="{{CDN::asset('/img/stories/story_grid4_10px.gif') }}"
-              data-srcset="{{CDN::asset('/img/stories/story_grid4_large.gif') }}" alt="See spot run" title="See spot run" />
-            <p class="custom-text spot-text text-uppercase">See <strong>Spot</strong> Run</p>
-        </a>
-    
-        <!-- Grid-2 -->
-        <a href="/shop?pf=tag:baby-mornings" class="trend-box d-block link-card tab-append" style="order:1;">
+      <a href="/shop?pf=tag:baby-mornings" class="story-5 trend-box d-block link-card tab-append" style="order:1;">
           <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
               src="{{CDN::asset('/img/stories/story_grid2_10px.jpg') }}"
               data-srcset="{{CDN::asset('/img/stories/story_grid2_large.jpg') }} 740w,
@@ -388,10 +392,27 @@
               data-sizes='(min-width: 1200px) 376px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 90vw,  30vw'
               alt="Baby Mornings"
               title="Baby Mornings"/>
-        </a>
+      </a>
 
-        <!-- Grid-5 -->
-        <a href="/shop?pf=tag:teenage-drama" class="trend-box d-block link-card position-relative" style="order:5;">
+      <a href="/shop?pf=tag:ice-cream" class="story-6 trend-box d-block link-card" style="order:3;">
+       <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
+            src="{{CDN::asset('/img/stories/story_grid3_10px.jpg') }}"
+            data-srcset="{{CDN::asset('/img/stories/story_grid3_large.jpg') }} 818w,
+                         {{CDN::asset('/img/stories/story_grid3_medium.jpg') }} 409w,
+                         {{CDN::asset('/img/stories/story_grid3_small.jpg') }} 272w"
+            data-sizes='(min-width: 1200px) 376px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 90vw,  30vw'
+            alt="T-shirts and Tops"
+            title="T-shirts and Tops"/>
+      </a>
+
+        <a href="/shop?pf=tag:see-spot-run" class="story-7 trend-box d-block link-card position-relative"  style="order:4;">
+
+          <img class="img-fluid lazyload blur-up" src="{{CDN::asset('/img/stories/story_grid4_10px.gif') }}"
+              data-srcset="{{CDN::asset('/img/stories/story_grid4_large.gif') }}" alt="See spot run" title="See spot run" />
+            <p class="custom-text spot-text text-uppercase">See <strong>Spot</strong> Run</p>
+        </a>      
+
+        <a href="/shop?pf=tag:teenage-drama" class="story-8 trend-box d-block link-card position-relative" style="order:5;">
          <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
               src="{{CDN::asset('/img/stories/story_grid5_10px.jpg') }}"
               data-srcset="{{CDN::asset('/img/stories/story_grid5_large.jpg') }} 818w,
@@ -402,21 +423,7 @@
               title="Teenage Drama"/>
               <p class="custom-text teenage-text text-uppercase">Teenage <strong>Drama</strong></p>
         </a>
-
-        <!-- Grid-3 -->
-        <a href="/shop?pf=tag:ice-cream" class="trend-box d-block link-card" style="order:3;">
-         <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
-              src="{{CDN::asset('/img/stories/story_grid3_10px.jpg') }}"
-              data-srcset="{{CDN::asset('/img/stories/story_grid3_large.jpg') }} 818w,
-                           {{CDN::asset('/img/stories/story_grid3_medium.jpg') }} 409w,
-                           {{CDN::asset('/img/stories/story_grid3_small.jpg') }} 272w"
-              data-sizes='(min-width: 1200px) 376px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 90vw,  30vw'
-              alt="T-shirts and Tops"
-              title="T-shirts and Tops"/>
-        </a>
-        
-        <!-- Grid-6 -->
-        <a href="/shop?pf=tag:party-shoes" class="trend-box d-block link-card position-relative party-shoes" style="order:6;">
+        <a href="/shop?pf=tag:party-shoes" class="story-9 trend-box d-block link-card position-relative party-shoes" style="order:6;">
           <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
               src="{{CDN::asset('/img/stories/story_grid6_10px.jpg') }}"
               data-srcset="{{CDN::asset('/img/stories/story_grid6_large.jpg') }} 740w,
@@ -426,10 +433,9 @@
               alt="Party shoes"
               title="Party shoes"/>
               <p class="custom-text party-text text-uppercase">Party <strong>Shoes</strong></p>
-        </a>
-    </div>
-     <div class="d-flex align-items-end stories-bottom-row">
-         <a href="/shop?pf=tag:how-i-wonder-what-you-are" class="trend-box d-block link-card col-8 left-col">
+        </a>        
+
+        <a href="/shop?pf=tag:how-i-wonder-what-you-are" class="story-10 trend-box d-block link-card">
           <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
             src="{{CDN::asset('/img/stories/story_grid7_10px.jpg') }}"
             data-srcset="{{CDN::asset('/img/stories/story_grid7_large.jpg') }} 1553w,
@@ -439,7 +445,7 @@
             alt="How I Wounder What You Are"
             title="How I Wounder What You Are"/>
         </a>
-        <a href="/shop?pf=tag:comfy-underwear" class="trend-box d-block link-card col-4 right-col position-relative">
+        <a href="/shop?pf=tag:comfy-underwear" class="story-11 trend-box d-block link-card position-relative">
           <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
               src="{{CDN::asset('/img/stories/story_grid8_10px.jpg') }}"
               data-srcset="{{CDN::asset('/img/stories/story_grid8_large.jpg') }} 740w,
@@ -450,8 +456,9 @@
               title="Comfy Underwear"/>
           <p class="custom-text comfy-text text-uppercase">Comfy <strong>Underwears</strong></p>
         </a>
-      </div>
-  </div>
+    </div>
+</div>
+
 </section>
 
 
