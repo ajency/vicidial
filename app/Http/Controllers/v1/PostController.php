@@ -4,19 +4,13 @@ namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\Model;
-use Corcel\Model\Post as Corcel;
-
-class Post extends Corcel
-{
-    protected $connection = 'wordpress';
-}
+use Corcel\Model\Post;
+use Corcel\Model\Taxonomy;
 
 class PostController extends Controller {
 
 	public function blog(Request $request)
 	{
-	    // $posts = Post::published()->get();
 	    return view('blog');
 	}
 
@@ -30,13 +24,15 @@ class PostController extends Controller {
         return view('single')->with('post', $post);
     }
 
-    public function category(Request $request)
+    public function category($category, Request $request)
     {
-        $post = Post::all();
-        // dd($post);
-    	if ($post == null) {
+    	$cat = Taxonomy::where('taxonomy', 'category')->slug($category)->first();
+        // dd($cat);
+    	if ($category == "all") {
+        	return view('category')->with('cat', $cat);
+    	} else if ($cat == null) {
     	    abort(404);
     	}
-        return view('category')->with('post', $post);
+        return view('category')->with('cat', $cat);
     }
 }

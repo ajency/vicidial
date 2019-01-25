@@ -98,7 +98,7 @@
 		color: #000;
 		text-transform: capitalize;
 		@extend .ellipsis-2;
-	    height: 55px;
+	    max-height: 58px;
 	    a{
 	    	&:hover{
 	    		color: #000;
@@ -669,7 +669,7 @@
 		    	}
 		    	&__title{
 		    		font-size: 1.4em;
-				    height: 67px;
+				    max-height: 67px;
 				    font-weight: 400;
 				    line-height: 1.4;
 				    margin-bottom: 10px;
@@ -737,6 +737,7 @@
 		&__content{
 			padding-right: 1em;
 			flex: 1.5;
+			padding-bottom: 1em;
 		}
 		&__cover{
 			margin-bottom: 0 !important;
@@ -883,6 +884,13 @@
 			left: 0;
 			top: 0;
 			background-color: rgba(0,0,0,0.08);
+		}
+		&.no-image{
+			background-color: #464646;
+			img{
+				object-fit: contain;
+				transform: scale(0.6);
+			}
 		}
 	}
 	&:hover{

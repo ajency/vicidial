@@ -118,86 +118,94 @@
           </div>
 
           <!-- More posts -->
-          <section class="more-posts mt-sm-4 pt-sm-4">
-            <hr class="mt-5">
-            <h3 class="include-title">Read Next</h3>
+          <?php
+          // Default arguments
+          $args = array(
+            'posts_per_page' => 3, // How many items to display
+            'post__not_in'   => array( get_the_ID() ), // Exclude current post
+            'no_found_rows'  => true, // We don't ned pagination so this speeds up the query
+          );
 
-            <div class="relatedposts">
-              <div class="row more-post-grid">
-                <?php
-                // Default arguments
-                $args = array(
-                  'posts_per_page' => 3, // How many items to display
-                  'post__not_in'   => array( get_the_ID() ), // Exclude current post
-                  'no_found_rows'  => true, // We don't ned pagination so this speeds up the query
-                );
+          // Check for current post category and add tax_query to the query arguments
+          $cats = wp_get_post_terms( get_the_ID(), 'category' );
+          $cats_ids = array();
+          foreach( $cats as $wpex_related_cat ) {
+            $cats_ids[] = $wpex_related_cat->term_id;
+          }
+          if ( ! empty( $cats_ids ) ) {
+            $args['category__in'] = $cats_ids;
+          }
 
-                // Check for current post category and add tax_query to the query arguments
-                $cats = wp_get_post_terms( get_the_ID(), 'category' );
-                $cats_ids = array();
-                foreach( $cats as $wpex_related_cat ) {
-                  $cats_ids[] = $wpex_related_cat->term_id;
-                }
-                if ( ! empty( $cats_ids ) ) {
-                  $args['category__in'] = $cats_ids;
-                }
+          // Query posts
+          $wpex_query = new wp_query( $args );
 
-                // Query posts
-                $wpex_query = new wp_query( $args );
+          // Loop through posts
+          if ( $wpex_query->have_posts() ) {?>
+            <section class="more-posts mt-sm-4 pt-sm-4">
+              <hr class="mt-5">
+              <h3 class="include-title">Read Next</h3>
 
-                // Loop through posts
-                if ( $wpex_query->have_posts() ) {
-                  while ( $wpex_query->have_posts() ) {
+              <div class="relatedposts">
+                <div class="row more-post-grid">
+                    <?php while ( $wpex_query->have_posts() ) {
                       $wpex_query->the_post(); ?>
-                  <div class="col-sm-4">
-                    <div class="kss-posts">
-                      <a href="<?php the_permalink(); ?>" class="d-block" title="<?php echo esc_attr( the_title_attribute( 'echo=0' ) ); ?>">
-                        <div class="kss-posts__cover mb-3">
-                          <?php the_post_thumbnail('medium', array('class' => 'd-block w-100 img-fluid')); ?>
-                        </div>
-                        <div class="kss-posts__content">
-                          <h1 class="bl-single-heading bl-single-heading--small"><?php the_title(); ?></h1>
-                          <p class="bl-single-caption bl-single-caption--small">
-                            <?php
-                            if ( has_excerpt() ) {
-                                // This post has excerpt
-                              echo wp_strip_all_tags( get_the_excerpt(), true );
-                            } else {
-                                // This post has no excerpt
-                              echo wp_trim_words( get_the_content(), 12 );
-                            }
-                            ?>
-                          </p>
-                          <div class="flex-sm-row mb-1 mr-2 post-tags">
-                            <div class="post-tags mb-1 d-flex">
-                              <!-- <p class="post-tags__title">Category :</p> -->
-                              <div class="post-tags__data">
+                      <div class="col-sm-4">
+                        <div class="kss-posts">
+                          <a href="<?php the_permalink(); ?>" class="d-block" title="<?php echo esc_attr( the_title_attribute( 'echo=0' ) ); ?>">
+                              <?php
+                                if ( has_post_thumbnail() ) { ?>
+                                <div class="kss-posts__cover mb-3">
                                 <?php
-                                    $categories = get_the_category();
-                                    $separator = ' ';
-                                    $output = '';
-                                    if ( ! empty( $categories ) ) {
-                                        foreach( $categories as $category ) {
-                                            $output .= '<a href="' . esc_url( get_category_link( $category->term_id ) ) . '" alt="' . esc_attr( sprintf( __( 'View all posts in %s', 'textdomain' ), $category->name ) ) . '"><span>' . esc_html( $category->name ) . '</span></a>' . $separator;
-                                        }
-                                        echo trim( $output, $separator );
-                                    }
+                                  the_post_thumbnail('medium', array('class' => 'd-block w-100 img-fluid', 'sizes' => '(min-width:992px) 370px, 100vw'));
+                                }
+                                else { ?>
+                                <div class="kss-posts__cover no-image mb-3">
+                                  <img src="{{CDN::asset('/img/blog/kss_logo_gray.jpg') }}" class="d-block w-100 img-fluid" />
+                              <?php } ?>
+                            </div>
+                            <div class="kss-posts__content">
+                              <h1 class="bl-single-heading bl-single-heading--small"><?php the_title(); ?></h1>
+                              <p class="bl-single-caption bl-single-caption--small">
+                                <?php
+                                if ( has_excerpt() ) {
+                                    // This post has excerpt
+                                  echo wp_strip_all_tags( get_the_excerpt(), true );
+                                } else {
+                                    // This post has no excerpt
+                                  echo wp_trim_words( get_the_content(), 12 );
+                                }
                                 ?>
+                              </p>
+                              <div class="flex-sm-row mb-1 mr-2 post-tags">
+                                <div class="post-tags mb-1 d-flex">
+                                  <!-- <p class="post-tags__title">Category :</p> -->
+                                  <div class="post-tags__data">
+                                    <?php
+                                        $categories = get_the_category();
+                                        $separator = ' ';
+                                        $output = '';
+                                        if ( ! empty( $categories ) ) {
+                                            foreach( $categories as $category ) {
+                                                $output .= '<a href="' . esc_url( get_category_link( $category->term_id ) ) . '" alt="' . esc_attr( sprintf( __( 'View all posts in %s', 'textdomain' ), $category->name ) ) . '"><span>' . esc_html( $category->name ) . '</span></a>' . $separator;
+                                            }
+                                            echo trim( $output, $separator );
+                                        }
+                                    ?>
+                                  </div>
+                                </div>
                               </div>
                             </div>
-                          </div>
+                          </a>
                         </div>
-                      </a>
-                    </div>
-                  </div>
-                <?php
-                // End loop
-                  }
-                    }
-                  wp_reset_postdata(); ?>
+                      </div>
+                    <?php
+                    // End loop
+                      } ?>
+                </div>
               </div>
-            </div>
-          </section>
+            </section>
+          <?php  }
+          wp_reset_postdata(); ?>
         </div>
       </section>
     </article>

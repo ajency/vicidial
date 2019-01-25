@@ -21,7 +21,13 @@
                   $args = array(
                         'posts_per_page' => 1,
                         'meta_key' => 'meta-checkbox',
-                        'meta_value' => 'yes'
+                        'meta_value' => 'yes',
+                        'meta_query' => array(
+                            array(
+                             'key' => '_thumbnail_id',
+                             'compare' => 'EXISTS'
+                            ),
+                        )
                     );
                     $featured = new WP_Query($args);
 
@@ -76,7 +82,13 @@
                         'posts_per_page' => 2,
                         'offset'=> 1,
                         'meta_key' => 'meta-checkbox',
-                        'meta_value' => 'yes'
+                        'meta_value' => 'yes',
+                        'meta_query' => array(
+                            array(
+                             'key' => '_thumbnail_id',
+                             'compare' => 'EXISTS'
+                            ),
+                        )
                     );
                     $featured = new WP_Query($args);
 
@@ -174,7 +186,7 @@
                                       <?php
                                       if ( has_excerpt( get_the_ID() ) ) {
                                           // This post has excerpt
-                                         echo wp_strip_all_tags( get_the_excerpt(), true );
+                                         echo wp_strip_all_tags( the_excerpt_max_charlength(80), true );
                                       } else {
                                           // This post has no excerpt
                                          echo wp_trim_words( get_the_content(), 12 );
@@ -249,7 +261,7 @@
                                 <?php
                                 if ( has_excerpt( get_the_ID() ) ) {
                                     // This post has excerpt
-                                   echo wp_strip_all_tags( get_the_excerpt(), true );
+                                   echo wp_strip_all_tags( the_excerpt_max_charlength(128), true );
                                 } else {
                                     // This post has no excerpt
                                    echo wp_trim_words( get_the_content(), 18 );
@@ -278,6 +290,9 @@
                     </article>
                  </div>
               <?php endwhile;?>
+                <div class="d-flex mt-3">
+                  <a href="<?php echo get_home_url(); ?>/category/all/" class="btn kss-btn kss-btn--mini w-auto px-3">View All Posts</a>
+                </div>
               </div>
            </div>
            <div class="col-sm-4 mt-4 d-none d-lg-block">
@@ -331,7 +346,7 @@
                             title="Visit our store"/>
                        <div class="contentWrapper text-center d-flex align-items-center">
                           <div>
-                             <span class="store-banner__caption">Just visit any one of stores near you!</span>
+                             <span class="store-banner__caption">Just visit any of our stores near you!</span>
                              <a href="/stores/" class="btn kss-btn kss-btn--small">Visit our store</a>
                           </div>
                        </div>

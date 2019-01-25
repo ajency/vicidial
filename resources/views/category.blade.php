@@ -15,13 +15,19 @@
             <div class="mt-4">
                <div class="text-center text-lg-left">
                   <h1 class="border-header">
-                     <?php single_cat_title(); ?>
+                     <?php
+                      $catname = single_cat_title("", false);
+                      if( ! empty( $catname ) ){
+                          echo $catname;
+                      } else {
+                          echo 'All Posts';
+                      }
+                      ?>
                   </h1>
                </div>
             </div>
             <div class="blog-col mt-3">
             <?php
-            $catname = single_cat_title("", false);
             $allpost = new WP_Query( array( 'category_name' => $catname, 'orderby' => 'post_date', 'order' => 'DESC'  ) );
             while ( $allpost->have_posts() ) : $allpost->the_post(); ?>
                <div class="blog-col__wrapper">
