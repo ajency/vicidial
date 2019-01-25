@@ -76,9 +76,18 @@
                   </div>
                 </div>
                 <div class="col-lg-5 order-0 order-lg-1 bl-single-img-wrapper mb-4 mb-sm-0">
-                  <?php the_post_thumbnail('medium_large', array('class' => 'd-block w-100 img-fluid')); ?>
+                    <?php
+                      if ( has_post_thumbnail() ) {
+                        the_post_thumbnail('medium_large', array('class' => 'd-block w-100 img-fluid', 'sizes' => '(min-width:1200px) 470px, (min-width:992px) 380px, 100vw'));
+                      }
+                      else { ?>
+                        <img src="{{CDN::asset('/img/blog/kss_logo_gray.jpg') }}" class="d-block w-100 img-fluid" />
+                    <?php } ?>
                   <small class="text-muted mt-2 pl-3 pl-lg-0 d-inline-block">
-                    <?php echo get_post(get_post_thumbnail_id())->post_excerpt; ?>
+                    <?php
+                      if ( has_post_thumbnail() ) {
+                        echo get_post(get_post_thumbnail_id())->post_excerpt;
+                     } ?>
                   </small>
                 </div>
               </div>

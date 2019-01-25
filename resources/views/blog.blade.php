@@ -36,7 +36,7 @@
                 <div class="featured-post">
                   <div class="featured-post__cover">
                     <a href="<?php the_permalink(); ?>" class="d-block">
-                      <?php the_post_thumbnail('medium_large', array('class' => 'd-block w-100 img-fluid cover-img')); ?>
+                      <?php the_post_thumbnail('medium_large', array('class' => 'd-block w-100 img-fluid cover-img', 'sizes' => '(min-width:992px) 770px, 100vw')); ?>
                     </a>
                   </div>
                   <div class="post-content">
@@ -97,7 +97,7 @@
                   <div class="featured-post">
                     <div class="featured-post__cover">
                       <a href="<?php the_permalink(); ?>" class="d-block">
-                        <?php the_post_thumbnail('medium_large', array('class' => 'd-block w-100 img-fluid cover-img')); ?>
+                        <?php the_post_thumbnail('medium_large', array('class' => 'd-block w-100 img-fluid cover-img', 'sizes' => '(min-width:992px) 380px, 100vw')); ?>
                       </a>
                     </div>
                     <div class="post-content">
@@ -252,9 +252,19 @@
                 <div class="blog-col__wrapper">
                   <article class="kss-posts">
                     <a href="<?php echo esc_url(the_permalink()); ?>" class="d-md-block d-none">
-                      <div class="kss-posts__cover mb-3">
-                         <?php the_post_thumbnail('medium', array('class' => 'd-block w-100 img-fluid')); ?>
-                      </div>
+                      <?php
+                        if ( has_post_thumbnail() ) { ?>
+                        <div class="kss-posts__cover mb-3">
+                        <?php
+                          the_post_thumbnail('medium', array('class' => 'd-block w-100 img-fluid'));
+                        }
+                        else { ?>
+                        <div class="kss-posts__cover no-image mb-3">
+                          <div class="aspect-maintain">
+                            <img src="{{CDN::asset('/img/blog/kss_logo_gray.jpg') }}" class="d-block w-100 img-fluid" />
+                          </div>
+                      <?php } ?>
+                        </div>
                     </a>
                     <div class="kss-posts__content">
                       <a href="<?php echo esc_url(the_permalink()); ?>" class="d-block">
