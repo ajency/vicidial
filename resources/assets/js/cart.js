@@ -200,6 +200,7 @@ $('.select-size button').click(function() {
 
 function openCart(){
     loadAngularApp();
+    $('.ng-cart-loader').addClass('cart-loader');
     $('#main-nav').removeClass('speed-in');
     $('#cd-cart').addClass("speed-in");
     $('#cd-shadow-layer').addClass('is-visible');
