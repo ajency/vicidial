@@ -10,7 +10,7 @@
 
 @section('content')
 <div id="home-slider" class="home-slider">
-    <div class="home-slide-item">
+<!--     <div class="home-slide-item">
       <a href="/shop">
         <picture>
            <source media="(orientation: landscape)"
@@ -30,29 +30,29 @@
                class="img-fluid lazyload blur-up w-100" alt="Upto 50% OFF" title="Upto 50% OFF">
         </picture>
       </a>
-    </div>
-<!--     <div class="home-slide-item">
-      <a href="/shop?rf=price:0TO499">
+    </div> -->
+    <div class="home-slide-item">
+      <a href="/shop">
         <picture>
            <source media="(orientation: landscape)"
-                  data-srcset="{{CDN::asset('/img/home-banner/flash-sale-large.jpg') }} 2000w,
-                              {{CDN::asset('/img/home-banner/flash-sale-medium.jpg') }} 1200w,
-                              {{CDN::asset('/img/home-banner/flash-sale-small.jpg') }} 700w"
+                  data-srcset="{{CDN::asset('/img/home-banner/banner_freedom_large.jpg') }} 2000w,
+                              {{CDN::asset('/img/home-banner/banner_freedom_medium.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/banner_freedom_small.jpg') }} 700w"
                   sizes="100vw">
 
            <source media="(orientation: portrait)"
-                  data-srcset="{{CDN::asset('/img/home-banner/flash-sale-portrait-large.jpg') }} 1200w,
-                              {{CDN::asset('/img/home-banner/flash-sale-portrait-medium.jpg') }} 700w,
-                              {{CDN::asset('/img/home-banner/flash-sale-portrait-small.jpg') }} 400w"
+                  data-srcset="{{CDN::asset('/img/home-banner/banner_freedom_portrait_large.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/banner_freedom_portrait_medium.jpg') }} 700w,
+                              {{CDN::asset('/img/home-banner/banner_freedom_portrait_small.jpg') }} 400w"
                   sizes="100vw">
 
-           <img src="{{CDN::asset('/img/home-banner/flash-sale-20px.jpg') }}"
+           <img src="{{CDN::asset('/img/home-banner/banner_freedom_20px.jpg') }}"
                data-sizes="100vw"
-               class="img-fluid lazyload blur-up w-100" alt="Flash Sale - Entire Store Under ₹499" title="Flash Sale - Entire Store Under ₹499">
+               class="img-fluid lazyload blur-up w-100" alt="Get Upto 69% Off This Republic Day" title="Get Upto 69% Off This Republic Day">
         </picture>
       </a>
-    </div>   -->  
-    <div class="home-slide-item">
+    </div>    
+<!--     <div class="home-slide-item">
       <a href="/stores/jaipur">
         <picture>
            <source media="(orientation: landscape)"
@@ -72,8 +72,8 @@
                class="img-fluid lazyload blur-up w-100" alt="Hello Jaipur - Your Kids's Favourite fashion destination is now coming to Jaipur!" title="Hello Jaipur - Your Kids's Favourite fashion destination is now coming to Jaipur!">
         </picture>
       </a>
-    </div>     
-    <div class="home-slide-item">
+    </div>   -->   
+ <!--    <div class="home-slide-item">
       <a href="/shop">
         <picture>
            <source media="(orientation: landscape)"
@@ -93,7 +93,7 @@
                class="img-fluid lazyload blur-up w-100" alt="Upto 50% OFF" title="Upto 50% OFF">
         </picture>
       </a>
-    </div>    
+    </div>    --> 
     <div class="home-slide-item">
       <a href="/shop">
         <picture>
