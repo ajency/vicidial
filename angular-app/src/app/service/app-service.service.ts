@@ -164,14 +164,14 @@ export class AppServiceService {
   }
 
   sortArray(array){
-    let return_array = array.sort((a,b)=>{ return(a.min_cart_value - b.min_cart_value)});
+    let return_array = array.sort((a,b)=>{ return(a.condition.value[0] - b.condition.value[0])});
     return return_array;
   }
 
   filterArray(array, order_total){
     let ret_obj = { applicable : [], non_applicable : [] };
     array.forEach((promotion)=>{
-      if(promotion.min_cart_value <= order_total)
+      if(promotion.condition.value[0] <= order_total)
         ret_obj.applicable.push(promotion);
       else
         ret_obj.non_applicable.push(promotion);
@@ -187,7 +187,7 @@ export class AppServiceService {
   }
 
   calculateDiscount(type, value ,order_total){
-    return ( type == 'cart_fixed' ? value : (order_total * value / 100) )
+    return ( type == 'value' ? value : (order_total * value / 100) )
   }
 
   sortByDiscount(array){

@@ -147,6 +147,21 @@
 			<hr>
 		</div>
 
+		<div class="cart-promotion mt-4">
+			<h4 class="mb-2 font-weight-bold">Coupon Summary</h4>
+			<div class="kss-flash kss-flash--info mb-3" (click)="enterCoupon = true">
+				<div class="d-flex align-items-center justify-content-between">
+					<div class="pr-4">
+						<p class="font-weight-normal mb-2 label-size">Your bag is eligible for <span class="mb-2 text-success">3 Coupons</span></p>
+					</div>
+					<div class="ml-auto">
+						<h5 class="m-0"><i class="fas fa-angle-right"></i></h5>
+					</div>					
+				</div>
+			</div>
+			<hr>
+		</div>
+
 
 <!-- 		<div *ngIf="promotions && promotions.length">
 			<app-promotions-list  [promotionsList]="promotions" [orderTotal]="cart.summary.sale_price_total"></app-promotions-list>	
@@ -256,6 +271,9 @@
 										<label class="control-label">
 												Enter coupon code
 										</label>
+						</div>
+						<div *ngIf="coupons && coupons.length">
+							<app-promotions-list  [promotionsList]="coupons" [orderTotal]="cart.summary.sale_price_total"></app-promotions-list>	
 						</div>
 						<div>
 								<button class="btn btn-primary btn-lg btn-block cd-coupon-apply " data-price="869">

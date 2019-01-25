@@ -28,11 +28,12 @@ export class PromotionsListComponent implements OnInit, OnChanges {
 
   updatePromotionsData(){
   	this.promotionsList =  this.appservice.sortArray(this.promotionsList);
-  	// console.log(this.promotionsList);
-		this.calculateAge();
+  	console.log(this.promotionsList);
+		// this.calculateAge();
   	let obj = this.appservice.filterArray(this.promotionsList, this.orderTotal);
   	this.applicablePromotions = obj.applicable;
   	this.nonApplicablePromotions = obj.non_applicable;
+    console.log("filtered array ==>", obj);
   }
 
   calculateAge(){
