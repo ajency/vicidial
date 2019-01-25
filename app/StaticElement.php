@@ -22,15 +22,8 @@ class StaticElement extends Model
     //fetch with seq number
     public static function fetchSeq($seq_no, $published = false)
     {
-        $getRecord = null;
-
         if (!$published) {
-
-            $getRecord = StaticElement::where('sequence', $seq_no)->where('draft', true)->orderBy('sequence', 'desc')->get()->first();
-        }
-
-        if (!is_null($getRecord)) {
-            $record = $getRecord;
+            $record = StaticElement::where('sequence', $seq_no)->where('draft', true)->orderBy('sequence', 'desc')->get()->first();
         } else {
             $record = StaticElement::where('sequence', $seq_no)->where('published', true)->orderBy('sequence', 'desc')->get()->first();
         }
@@ -56,21 +49,16 @@ class StaticElement extends Model
     //fetch all
     public static function fetch($data = [], $published = false)
     {
-        if (isset($data['type'])) {
-
-            $records = StaticElement::where('type', $data['type'])->where('published', true)->orderBy('sequence', 'asc')->get();
+        if (!$published) {
+            $mode = 'draft';
         } else {
-            $records = StaticElement::where('published', true)->orderBy('sequence', 'asc')->get();
+            $mode = 'published';
         }
 
-        if (!$published) {
-
-            if (isset($data['type'])) {
-                $draft = StaticElement::where('type', $data['type'])->where('draft', true)->orderBy('sequence', 'asc')->get();
-            } else {
-                $draft = StaticElement::where('draft', true)->orderBy('sequence', 'asc')->get();
-            }
-            $records = $records->merge($draft)->unique();
+        if (isset($data['type'])) {
+            $records = StaticElement::where('type', $data['type'])->where($mode, true)->orderBy('sequence', 'asc')->get();
+        } else {
+            $records = StaticElement::where($mode, true)->orderBy('sequence', 'asc')->get();
         }
 
         $response = array();
@@ -104,7 +92,7 @@ class StaticElement extends Model
             abort(404);
         }
 
-        StaticElement::where('sequence', $seq_no)->where('draft', true)->update(['published' => null, 'draft' => null]);
+        StaticElement::where('sequence', $seq_no)->where('draft', true)->update(['draft' => null]);
 
         $se               = new StaticElement();
         $se->sequence     = $record['sequence'];
@@ -505,14 +493,12 @@ class StaticElement extends Model
         $getpublish = Staticelement::select()->where('draft', true)->get();
 
         foreach ($getpublish as $pub) {
-            Staticelement::where('sequence', $pub->sequence)->where('published', true)->update(['published' => null, 'draft' => null]);
+            Staticelement::where('sequence', $pub->sequence)->where('published', true)->update(['published' => null]);
 
             $pub->published = true;
-            $pub->draft     = null;
             $pub->save();
         }
 
-        return (["message" => "Element published successfully", "success" => true]);
+        return (["message" => "Elements published successfully", "success" => true]);
     }
-
 }
