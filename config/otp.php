@@ -1,6 +1,6 @@
 <?php
 return [
-	"expiry" => 5,
-	"length" => 6,
+	"expiry" => 15,
+	"length" => 4,
 	"attempts" => 3,
 ];
