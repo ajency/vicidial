@@ -889,7 +889,7 @@
                     alt="Black Full Elasticated Net and Georgette Pallazo - Black"/>
              </div>
             </a>
-            <div class="kss-price kss-price--medium">₹699</div>
+            <div class="kss-price kss-price--medium">₹499</div>
           </div>
         </div>
         <div class="col-lg-3 col-md-6 col-6">
