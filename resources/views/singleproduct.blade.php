@@ -56,7 +56,9 @@
 
 				</div>
 				<!-- Product Size Selection -->
-				@include('includes.singleproduct.productsizes', ['params' => $params, 'selected_color_id' => $selected_color_id])
+				@include('includes.singleproduct.productsizes', ['params' => $params, 'selected_color_id' => $selected_color_id, 'radio_name' => 'kss-sizes'])
+				
+				<div class="text-danger d-none font-weight-bold position-relative size-select-error" style="top: -15px;">Please select a size</div>
 
 				<div class="row">
 
@@ -72,8 +74,9 @@
 							</div> -->
 							<!-- <div class="col-6 col-sm-6 col-md-6 col-xl-6 pl-1"> -->
 								@if ($params['show_button']) 
-								<button id="cd-add-to-cart" class="btn kss-btn kss-btn--big cd-add-to-cart" disabled>
-									<div class="kss-btn__wrapper d-flex align-items-center justify-content-center">SELECT SIZE</div>
+								<button id="cd-add-to-cart" class="btn kss-btn kss-btn--big cd-add-to-cart">
+									<div class="kss-btn__wrapper d-flex align-items-center justify-content-center d-md-none">SELECT SIZE</div>
+									<div class="kss-btn__wrapper d-md-flex align-items-center justify-content-center d-none"><i class="kss_icon bag-icon-fill icon-sm"></i> Add to Bag</div>
 								</button>
 								@else
 								    <div class="out-of-stock">Currently unavailable</div>
@@ -113,6 +116,9 @@
 		@include('includes.similar-products',["items"=>$similar_data_params]) 
 
 	</div>
+	
+	<!-- Size selection modal -->
+	@include('includes.singleproduct.sizeselectionmodal')
 
 
 @stop

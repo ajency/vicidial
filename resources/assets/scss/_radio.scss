@@ -101,6 +101,7 @@
             padding: 10px;
             text-align: center;
             border-color: #8e8e92;
+            border-radius: 25px;
             transition: all 0.5s ease;
             .radio-option{
                 font-weight: 600;
@@ -121,6 +122,26 @@
                         background-color: #8e8e92;
                         border-color: #8e8e92;
                         color: #fff;
+                    }
+                }
+            }
+            &:disabled{
+                & + .radio-label{
+                    position: relative;
+                    &:after{
+                        content: '';
+                        position: absolute;
+                        top: 50%;
+                        left: 11px;
+                        width: 80%;
+                        height: 1px;
+                        background-color: #565656;
+                        -webkit-transform: rotate(-45deg);
+                        transform: rotate(-29deg);
+                        @media (max-width: 767px){
+                            left: 6px;
+                            transform: rotate(-35deg);
+                        }
                     }
                 }
             }
