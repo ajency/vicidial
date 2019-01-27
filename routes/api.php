@@ -43,10 +43,10 @@ Route::group([
 			Route::get('/all', $group_app_version.'\AddressController@userFetchAddresses');
 			Route::get('/delete', $group_app_version.'\AddressController@userDeleteAddress');
 		});
-		Route::get('/get-user-info', $group_app_version.'\UserController@fetchUserInfo');
+		Route::middleware('check-user')->get('/get-user-info', $group_app_version.'\UserController@fetchUserInfo');
 		Route::post('/save-user-details', $group_app_version.'\UserController@saveUserDetails');
 		Route::get('/order/{id}/check-inventory', $group_app_version.'\OrderController@checkSubOrderInventory');
-		Route::post('/orders', $group_app_version.'\OrderController@listOrders');
+		Route::middleware('check-user')->post('/orders', $group_app_version.'\OrderController@listOrders');
 	});
 	Route::post('/product-list', $group_app_version.'\ListingController@productList');
 	Route::get('/product-with-missing-images', $group_app_version.'\ProductController@productMissingImages');
@@ -88,11 +88,11 @@ Route::group([
 				Route::get('/delete', $group_app_version.'\AddressController@userDeleteAddress');
 			});
 
-			Route::get('/get-user-info', $group_app_version.'\UserController@fetchUserInfo');
+			Route::middleware('check-user')->get('/get-user-info', $group_app_version.'\UserController@fetchUserInfo');
 			Route::post('/save-user-details', $group_app_version.'\UserController@saveUserDetails');
 
 			Route::get('/order/{id}/check-inventory', $group_app_version.'\OrderController@checkSubOrderInventory');
-			Route::post('/orders', $group_app_version.'\OrderController@listOrders');
+			Route::middleware('check-user')->post('/orders', $group_app_version.'\OrderController@listOrders');
 		});
 
 		Route::group([
