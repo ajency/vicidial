@@ -7,6 +7,7 @@
   $sub_orders = $orderDetails['sub_orders'];
   $order_summary = $orderDetails['order_summary'];
   $user_name = $order->cart->user->name;
+  $verified = ($order->cart->user->verified != null) ? true : false;
 @endphp
 
       <tr>
@@ -42,11 +43,21 @@
                   <td width="60%">
                    <div style="float: left;width: 100%;">
                       <div style="font-weight: bold;text-transform: uppercase;color: #000000;letter-spacing: 1px;">ORDER DETAILS:</div>
-                      <div style="margin-top: 20px;">Order No: <a href="{{url('/#/account/my-orders/')}}/{{$order_info['txn_no']}}" style="color:#004283;"><strong style="color: #000000;">{{$order_info['txn_no']}}</strong></a></div>
+                      <div style="margin-top: 20px;">Order No: 
+                        @if($verified)
+                        <a href="{{url('/#/account/my-orders/')}}/{{$order_info['txn_no']}}" style="color:#004283;"><strong style="color: #000000;">{{$order_info['txn_no']}}</strong></a>
+                        @else
+                         <strong style="color: #000000;">{{$order_info['txn_no']}}</strong>
+                        @endif
+                      </div>
                       <div style="margin-top: 10px;">Date: {{$order_info['order_date']}}</div>
                       <div style="margin-top: 10px;">Amount: ₹{{$order_info['total_amount']}}</div>
                       <div style="margin-top: 30px;">
+                        @if($verified)
                          <a href="{{url('/#/account/my-orders/')}}" style="text-transform: uppercase;padding: 10px;text-decoration: none;background-color: #f9bc23;color: #000;font-size: 13px;">MANAGE ORDERS</a>
+                        @else
+                         <a href="{{url('/my/order/details')}}?ordertoken={{$order_info['token']}}" style="text-transform: uppercase;padding: 10px;text-decoration: none;background-color: #f9bc23;color: #000;font-size: 13px;">VIEW ORDER</a>
+                        @endif
                       </div>
                    </div>
                 </td>
