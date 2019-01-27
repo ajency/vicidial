@@ -56,7 +56,7 @@ class StaticElement extends Model
         }
 
         if (isset($data['type'])) {
-            $records = StaticElement::where('type', $data['type'])->where($mode, true)->orderBy('sequence', 'asc')->get();
+            $records = StaticElement::where('type', 'like', $data['type'] . '%')->where($mode, true)->orderBy('sequence', 'asc')->get();
         } else {
             $records = StaticElement::where($mode, true)->orderBy('sequence', 'asc')->get();
         }
@@ -64,8 +64,7 @@ class StaticElement extends Model
         $response = array();
 
         foreach ($records as $record) {
-
-            $type   = $record->type;
+            $type   = explode('_', $record->type);
             $images = $record->getStaticImagesAll(array_keys(config('fileupload_static_element.' . $record->type . '_presets')), $record);
 
             if (!isset($response[$type])) {
@@ -75,6 +74,7 @@ class StaticElement extends Model
             array_push($response[$type], array(
                 "sequence"     => $record->sequence,
                 "element_data" => $record->element_data,
+                "type"         => $record->type,
                 "images"       => $images,
             ));
 
@@ -113,7 +113,8 @@ class StaticElement extends Model
     //save new data
     public static function saveNewData($element_data, $type, $image_upload)
     {
-        $record = StaticElement::select()->where('type', '=', $type)->where(function ($q) {
+        $select_type = explode('_', $type);
+        $record      = StaticElement::select()->where('type', 'like', $select_type[0] . '%')->where(function ($q) {
             $q->where('published', true)
                 ->orWhere('draft', true);
         })->orderBy('sequence', 'desc')->get()->first();
@@ -360,29 +361,32 @@ class StaticElement extends Model
     {
         $resp   = [];
         $config = config('fileupload_static_element');
-        foreach ($presets as $preset) {
-            foreach ($config[$im_type . '_presets'] as $cpreset => $cdepths) {
-                if (in_array($cpreset, $presets)) {
-                    $cdepth_data = [];
 
-                    $path = explode('amazonaws.com/', $file->url);
+        if (substr($file->url, -4) == '.gif') {
+            $config[$im_type . '_presets'] = ["original" => []];
+        }
 
-                    $type = explode("-", $path[1]); //getting the type from url
+        foreach ($config[$im_type . '_presets'] as $cpreset => $cdepths) {
+            if (in_array($cpreset, $presets) || $cpreset == "original") {
+                $cdepth_data = [];
 
-                    foreach ($cdepths as $cdepth => $csizes) {
+                $path = explode('amazonaws.com/', $file->url);
 
-                        $newfilepath          = str_replace($config['model'][$obj_class]['base_path'] . '/' . $obj_instance[$config['model'][$obj_class]['slug_column']] . '/', $config['model'][$obj_class]['base_path'] . '/' . $file->id . '/' . $cpreset . '/' . $cdepth . '/', $path[1]);
-                        $cdepth_data[$cdepth] = url($newfilepath);
-                    }
+                $type = explode("-", $path[1]); //getting the type from url
 
-                    if ($cpreset == "original") {
-                        $newfilepath    = str_replace($config['model'][$obj_class]['base_path'] . '/' . $obj_instance[$config['model'][$obj_class]['slug_column']] . '/', $config['model'][$obj_class]['base_path'] . '/' . $file->id . '/' . $cpreset . '/', $path[1]);
-                        $resp[$cpreset] = url($newfilepath);
-                    } else {
-                        foreach ($type as $t) {
-                            if ($cpreset == $t) {
-                                $resp[$cpreset] = $cdepth_data;
-                            }
+                foreach ($cdepths as $cdepth => $csizes) {
+
+                    $newfilepath          = str_replace($config['model'][$obj_class]['base_path'] . '/' . $obj_instance[$config['model'][$obj_class]['slug_column']] . '/', $config['model'][$obj_class]['base_path'] . '/' . $file->id . '/' . $cpreset . '/' . $cdepth . '/', $path[1]);
+                    $cdepth_data[$cdepth] = url($newfilepath);
+                }
+
+                if ($cpreset == "original") {
+                    $newfilepath    = str_replace($config['model'][$obj_class]['base_path'] . '/' . $obj_instance[$config['model'][$obj_class]['slug_column']] . '/', $config['model'][$obj_class]['base_path'] . '/' . $file->id . '/' . $cpreset . '/', $path[1]);
+                    $resp[$cpreset] = url($newfilepath);
+                } else {
+                    foreach ($type as $t) {
+                        if ($cpreset == $t) {
+                            $resp[$cpreset] = $cdepth_data;
                         }
                     }
                 }
@@ -493,10 +497,12 @@ class StaticElement extends Model
         $getpublish = Staticelement::select()->where('draft', true)->get();
 
         foreach ($getpublish as $pub) {
-            Staticelement::where('sequence', $pub->sequence)->where('published', true)->update(['published' => null]);
+            if ($pub->published == null) {
+                Staticelement::where('sequence', $pub->sequence)->where('published', true)->update(['published' => null]);
 
-            $pub->published = true;
-            $pub->save();
+                $pub->published = true;
+                $pub->save();
+            }
         }
 
         return (["message" => "Elements published successfully", "success" => true]);
