@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Cart;
 use App\User;
 use App\Variant;
-use App\Promotion;
+use App\Offer;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -117,10 +117,10 @@ class CartController extends Controller
         //     $cart->applyPromotion($cart->getBestPromotion());
         //     $cart->refresh();
         // }
-        // $promotions = Promotion::getAllPromotions($cart,'web');
+        $coupons = Offer::getAllActiveCoupons();
         
         $summary = $cart->getSummary();
-        return response()->json(['cart_count' => $cart->itemCount(), 'cart_type' => $cart->type, 'items' => $items,'promo_applied' => $cart->promotion_id, "promotions" => $promotions, "summary" => $summary, "code" => $code]);
+        return response()->json(['cart_count' => $cart->itemCount(), 'cart_type' => $cart->type, 'items' => $items,'promo_applied' => $cart->promotion_id, "coupons" => $coupons, "summary" => $summary]);
     }
 
     public function guestCartFetch(Request $request)
@@ -139,10 +139,10 @@ class CartController extends Controller
         //     $cart->applyPromotion($cart->getBestPromotion());
         //     $cart->refresh();
         // }
-        // $promotions = Promotion::getAllPromotions($cart,'web');
+        $coupons = Offer::getAllActiveCoupons();
 
         $summary = $cart->getSummary();
-        return response()->json(['cart_count' => $cart->itemCount(), 'cart_type' => $cart->type, 'items' => $items,'promo_applied' => $cart->promotion_id, "summary" => $summary, "promotions" => $promotions, "code" => $code]);
+        return response()->json(['cart_count' => $cart->itemCount(), 'cart_type' => $cart->type, 'items' => $items,'promo_applied' => $cart->promotion_id, "summary" => $summary, "coupons" => $coupons, ]);
     }
 
     public function guestCartDelete(Request $request)
@@ -162,8 +162,8 @@ class CartController extends Controller
         $cart->refresh();
         $message = "Item deleted successfully";
         $summary = $cart->getSummary();
-        $promotions = Promotion::getAllPromotions($cart,'web');
-        return response()->json(['cart_count' => $cart->itemCount(), 'message' => $message,'promo_applied' => $cart->promotion_id, "summary" => $summary, "promotions" => $promotions]);
+        $coupons = Offer::getAllActiveCoupons();
+        return response()->json(['cart_count' => $cart->itemCount(), 'message' => $message,'promo_applied' => $cart->promotion_id, "summary" => $summary, "coupons" => $coupons]);
     }
 
     public function userCartDelete($id, Request $request)
@@ -182,8 +182,8 @@ class CartController extends Controller
         $cart->refresh();
         $message = "Item deleted successfully";
         $summary = $cart->getSummary();
-        $promotions = Promotion::getAllPromotions($cart,'web');
-        return response()->json(['cart_count' => $cart->itemCount(), 'message' => $message,'promo_applied' => $cart->promotion_id, "summary" => $summary, "promotions" => $promotions]);
+        $coupons = Offer::getAllActiveCoupons();
+        return response()->json(['cart_count' => $cart->itemCount(), 'message' => $message,'promo_applied' => $cart->promotion_id, "summary" => $summary, "coupons" => $coupons]);
     }
 
     public function getCartID(Request $request)

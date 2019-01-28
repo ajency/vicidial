@@ -191,11 +191,11 @@ class Offer extends Model
         //check if offer is valid under current timeframe
         $now = Carbon::now();
         if($now < $this->start){
-            $cartData['messages']['offer_future'] => "Offer has expired";
+            $cartData['messages']['offer_future'] = "Offer has expired";
             return $cartData;
         }
         if($now > $this->expire){
-            $cartData['messages']['offer_expire'] => "Offer has expired";
+            $cartData['messages']['offer_expire'] = "Offer has expired";
             return $cartData;
         }
         //check if offer satisfies all condition

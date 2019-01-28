@@ -19,7 +19,7 @@ class Expression extends Model
     		case 'greater_than':
     			switch ('entity') {
     				case 'cart_price':
-    					return ($cartData['final_total'] >= $this->value[0])
+    					return ($cartData['final_total'] >= $this->value[0]);
     					break;
     				
     				default:
