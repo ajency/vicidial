@@ -13,7 +13,7 @@
 	</nav>
 </div>
 
-<div *ngIf="isLoggedIn()" class="account-nav">
+<div *ngIf="userInfo" class="account-nav">
 	<div *ngIf="userInfo" class="d-block text-center p-4">
          <h1 class="w-100 account-nav__username m-0 text-gray font-weight-bold ">
            Hello<span *ngIf="userInfo.name">, {{userInfo.name}}</span>

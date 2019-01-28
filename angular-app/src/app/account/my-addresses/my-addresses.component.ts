@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AppServiceService } from '../../service/app-service.service';
 import { ApiServiceService } from '../../service/api-service.service';
 import { AccountService } from '../services/account.service';
+import { Router, ActivatedRoute} from '@angular/router';
 
 import { AddressComponent } from '../../shared-components/address/address/address.component';
 declare var $: any;
@@ -23,7 +24,8 @@ export class MyAddressesComponent implements OnInit {
 
   constructor(private appservice : AppServiceService,
               private apiservice : ApiServiceService,
-              private account_service : AccountService) { }
+              private account_service : AccountService,
+              private router : Router) { }
 
   ngOnInit() {
   	this.states = this.appservice.states.length ? this.appservice.states : this.getAllStates();
@@ -47,8 +49,10 @@ export class MyAddressesComponent implements OnInit {
       .catch((error)=>{
         console.log("error ===>", error);
         this.addresses = [];
-        if(error.status == 401 || error.status == 403)
+        if(error.status == 401)
           this.account_service.userLogout();
+        else if(error.status == 403)
+          this.router.navigate(['account']);
         this.removeLoader();        
       })
     }

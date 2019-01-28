@@ -3,6 +3,7 @@ import { AppServiceService } from '../../service/app-service.service';
 import { ApiServiceService } from '../../service/api-service.service';
 import { AccountService } from '../services/account.service';
 import { EditUserPopupComponent } from '../../shared-components/edit-user/edit-user-popup/edit-user-popup.component';
+import { Router, ActivatedRoute} from '@angular/router';
 
 declare var $: any;
 
@@ -15,7 +16,8 @@ export class MyProfileComponent implements OnInit {
 
   constructor(private appservice : AppServiceService,
               private apiservice : ApiServiceService,
-              private account_service : AccountService) { }
+              private account_service : AccountService,
+              private router : Router) { }
   @ViewChild(EditUserPopupComponent)
   private editUserPopUp : EditUserPopupComponent;
 
@@ -38,8 +40,10 @@ export class MyProfileComponent implements OnInit {
       })
       .catch((error)=>{
         console.log("error in get-user-info api ==>",error);
-        if(error.status == 401 || error.status == 403)
+        if(error.status == 401)
           this.account_service.userLogout();
+        else if(error.status == 403)
+          this.router.navigate(['account']);
         this.appservice.removeLoader();
       })
     }

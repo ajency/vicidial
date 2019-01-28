@@ -47,10 +47,12 @@ export class AccountComponent implements OnInit {
       .catch((error)=>{
         console.log("error in get-user-info api ==>",error);
         this.appservice.removeLoader();
-        if(error.status == 401 || error.status == 403){
+        if(error.status == 401){
           this.appservice.userLogout();
           this.displayModal();
         }
+        else if(error.status == 403)
+          this.displayModal();
       })
     }
   }
