@@ -152,7 +152,7 @@
 			<div class="kss-flash kss-flash--info mb-3" (click)="enterCoupon = true">
 				<div class="d-flex align-items-center justify-content-between">
 					<div class="pr-4">
-						<p class="font-weight-normal mb-2 label-size">Your bag is eligible for <span class="mb-2 text-success">3 Coupons</span></p>
+						<p class="font-weight-normal mb-2 label-size">Apply Coupon<!-- Your bag is eligible for <span class="mb-2 text-success">3 Coupons</span> --></p>
 					</div>
 					<div class="ml-auto">
 						<h5 class="m-0"><i class="fas fa-angle-right"></i></h5>
@@ -273,6 +273,9 @@
 										</label>
 						</div>
 						<div *ngIf="coupons && coupons.length">
+							<div class="text-center">
+								<strong>OR</strong>
+							</div>
 							<app-promotions-list  [promotionsList]="coupons" [orderTotal]="cart.summary.sale_price_total"></app-promotions-list>	
 						</div>
 						<div>

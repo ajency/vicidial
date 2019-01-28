@@ -1,6 +1,6 @@
 
 <div *ngIf="applicablePromotions.length">
-	Choose a promotion
+	Choose a Valid Coupon
 	<br><br>
 	<div *ngFor="let coupon of applicablePromotions; let last = last">
 		<app-promotion [coupon]="coupon" [orderTotal]="orderTotal"> </app-promotion>
@@ -11,7 +11,7 @@
 <br><br>
 
 <div *ngIf="nonApplicablePromotions.length">
-	Promotions not valid for this order
+	Coupons not valid for this order
 	<br><br>
 	<div *ngFor="let coupon of nonApplicablePromotions; let last = last">
 		<app-promotion [coupon]="coupon" [orderTotal]="orderTotal"> </app-promotion>

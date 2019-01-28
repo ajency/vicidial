@@ -51,7 +51,6 @@ export class BagViewComponent implements OnInit {
     this.loadSubscription = this.appservice.listenToOpenCartEvent().subscribe(()=> { this.loadCart() });
 
     this.loginSucessListener = this.appservice.listenToLoginSuccess().subscribe(()=>{ this.loginSuccess() });
-    // this.setCoupons();
   }
 
   reloadCart(){
@@ -135,11 +134,12 @@ export class BagViewComponent implements OnInit {
 
   fetchCartSuccessHandler(response){
     this.cart = this.formattedCartDataForUI(response);   
-    this.formatPromotions(response);
-    this.setCoupons();
+    // this.formatPromotions(response);
+    // this.setCoupons();
+    this.formatCoupons(response.coupons);
     this.checkCartItemOutOfStock();
     this.appservice.removeLoader();
-    this.checkAppliedPromotionValidity();
+    // this.checkAppliedPromotionValidity();
     this.updateLocalDataAndUI(this.cart, this.cart.cart_count);
     console.log(add_to_cart_failed);
     this.checkAddToCartStatus();     
@@ -226,8 +226,8 @@ export class BagViewComponent implements OnInit {
       this.cart.promo_applied = response.promo_applied;
       this.cart.cart_count = response.cart_count;
       this.displayPromo = true;
-      this.formatPromotions(response);
-      this.setCoupons();
+      // this.formatPromotions(response);
+      // this.setCoupons();
       this.checkCartItemOutOfStock();
       this.updateLocalDataAndUI(this.cart, this.cart.cart_count);
       this.appservice.removeLoader()
@@ -475,91 +475,91 @@ export class BagViewComponent implements OnInit {
   }
 
 
-  setCoupons(){
-    let coupons = [
-      {
-        coupon_code: "COU1",
-        display_title: "COU1",
-        description: null,
-        condition: {
-          entity: "cart_price",
-          filter: "greater_than",
-          value: [500]
-        },
-        action : {
-          type: "percent",
-          value: 10
-        },
-        valid_from : "2019-01-22 18:17:05",
-        valid_till : "2019-01-31 18:17:05"
-      },
-      {
-        coupon_code: "COU2",
-        display_title: "COU2",
-        description: null,
-        condition: {
-          entity: "cart_price",
-          filter: "greater_than",
-          value: [400]
-        },
-        action : {
-          type: "value",
-          value: 50
-        },
-        valid_from : "2019-01-22 18:17:05",
-        valid_till : "2019-01-31 18:17:05"
-      },
-      {
-        coupon_code: "COU3",
-        display_title: "COU3",
-        description: null,
-        condition: {
-          entity: "cart_price",
-          filter: "greater_than",
-          value: [300]
-        },
-        action : {
-          type: "percent",
-          value: 20
-        },
-        valid_from : "2019-01-22 18:17:05",
-        valid_till : "2019-01-31 18:17:05"
-      },
-      {
-        coupon_code: "COU4",
-        display_title: "COU4",
-        description: null,
-        condition: {
-          entity: "cart_price",
-          filter: "greater_than",
-          value: [200]
-        },
-        action : {
-          type: "percent",
-          value: 30
-        },
-        valid_from : "2019-01-22 18:17:05",
-        valid_till : "2019-01-31 18:17:05"
-      },
-      {
-        coupon_code: "COU5",
-        display_title: "COU5",
-        description: null,
-        condition: {
-          entity: "cart_price",
-          filter: "greater_than",
-          value: [100]
-        },
-        action : {
-          type: "value",
-          value: 100
-        },
-        valid_from : "2019-01-22 18:17:05",
-        valid_till : "2019-01-31 18:17:05"
-      }
-    ];
+  // setCoupons(){
+  //   let coupons = [
+  //     {
+  //       coupon_code: "COU1",
+  //       display_title: "COU1",
+  //       description: null,
+  //       condition: {
+  //         entity: "cart_price",
+  //         filter: "greater_than",
+  //         value: [500]
+  //       },
+  //       action : {
+  //         type: "percent",
+  //         value: 10
+  //       },
+  //       valid_from : "2019-01-22 18:17:05",
+  //       valid_till : "2019-01-31 18:17:05"
+  //     },
+  //     {
+  //       coupon_code: "COU2",
+  //       display_title: "COU2",
+  //       description: null,
+  //       condition: {
+  //         entity: "cart_price",
+  //         filter: "greater_than",
+  //         value: [400]
+  //       },
+  //       action : {
+  //         type: "value",
+  //         value: 50
+  //       },
+  //       valid_from : "2019-01-22 18:17:05",
+  //       valid_till : "2019-01-31 18:17:05"
+  //     },
+  //     {
+  //       coupon_code: "COU3",
+  //       display_title: "COU3",
+  //       description: null,
+  //       condition: {
+  //         entity: "cart_price",
+  //         filter: "greater_than",
+  //         value: [300]
+  //       },
+  //       action : {
+  //         type: "percent",
+  //         value: 20
+  //       },
+  //       valid_from : "2019-01-22 18:17:05",
+  //       valid_till : "2019-01-31 18:17:05"
+  //     },
+  //     {
+  //       coupon_code: "COU4",
+  //       display_title: "COU4",
+  //       description: null,
+  //       condition: {
+  //         entity: "cart_price",
+  //         filter: "greater_than",
+  //         value: [200]
+  //       },
+  //       action : {
+  //         type: "percent",
+  //         value: 30
+  //       },
+  //       valid_from : "2019-01-22 18:17:05",
+  //       valid_till : "2019-01-31 18:17:05"
+  //     },
+  //     {
+  //       coupon_code: "COU5",
+  //       display_title: "COU5",
+  //       description: null,
+  //       condition: {
+  //         entity: "cart_price",
+  //         filter: "greater_than",
+  //         value: [100]
+  //       },
+  //       action : {
+  //         type: "value",
+  //         value: 100
+  //       },
+  //       valid_from : "2019-01-22 18:17:05",
+  //       valid_till : "2019-01-31 18:17:05"
+  //     }
+  //   ];
 
-    this.formatCoupons(coupons);
-  }
+  //   this.formatCoupons(coupons);
+  // }
   
 }
