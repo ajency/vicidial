@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
               private zone : NgZone) { }
 
   ngOnInit() {
-  	if(!this.appservice.isLoggedInUser()){
+  	if(!this.appservice.userInfo){
   		this.displayModal();	
   	}
   	// else
