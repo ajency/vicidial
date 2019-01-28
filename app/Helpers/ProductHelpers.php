@@ -79,7 +79,7 @@ function formatItems($result, $params){
         $product = $doc["_source"];
         $data = $product["search_result_data"];
         $listImages       = $productColor->getDefaultImage(["list-view"]);
-        $item = [
+        $item  = [
             "title" => $data["product_title"],
             "slug_name" => $data["product_slug"],
             "description" => $data["product_description"],
@@ -89,6 +89,7 @@ function formatItems($result, $params){
             "color_id" => $data['product_color_id'],
             "color_name" => $data['product_color_name'],
             "color_html" => $data['product_color_html'],
+            "brand"       => (isset($data["product_brand"])) ? $data["product_brand"] : 'KSS Fashion',
         ];
 
         //find product_availability

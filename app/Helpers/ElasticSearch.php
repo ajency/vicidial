@@ -142,10 +142,10 @@ function fetchProduct($product)
             "fabric_type"       => $data["product_att_fabric_type"],
             "product_type"      => $data["product_att_product_type"],
             "other_attribute"   => $data["product_att_other_attribute"],
-            "brand"             => false,
+            "brand"             => (isset($data["product_brand"])) ? $data["product_brand"] : 'KSS Fashion',
         ],
         "ecom_sales"        => $data["product_att_ecom_sales"],
-        "brand"             => false,
+        "brand"             => (isset($data["product_brand"])) ? $data["product_brand"] : 'KSS Fashion',
         "selected_color_id" => $selected_color_id,
         "images"            => $allImages,
         "variant_group"     => [
