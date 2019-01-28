@@ -1,13 +1,5 @@
 
 var gulp = require('gulp'),
-    cleanCSS = require('gulp-clean-css'),
-    concat = require('gulp-concat'),
-    uglify = require('gulp-uglify'),
-    csso = require('gulp-csso'),
-    prefix = require('gulp-autoprefixer'),
-    sass = require('gulp-sass'),
-    sequence = require('run-sequence'),
-    log = require('fancy-log')
     gzip = require('gulp-gzip');
     // browserSync = require('browser-sync').create()
 

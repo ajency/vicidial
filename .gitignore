@@ -47,3 +47,16 @@ yarn-error.log
 /public/js
 /public/mix-manifest.json
 /resources/assets/css/custom.css
+
+# wordpress
+/public/wordpress/wp-config.php
+/public/wordpress/wp-content/advanced-cache.php
+/public/wordpress/wp-content/backup-db/
+/public/wordpress/wp-content/backups/
+/public/wordpress/wp-content/blogs.dir/
+/public/wordpress/wp-content/cache/
+/public/wordpress/wp-content/upgrade/
+/public/wordpress/wp-content/uploads/
+/public/wordpress/wp-content/mu-plugins/
+/public/wordpress/wp-content/wp-cache-config.php
+/public/wordpress/wp-content/plugins/hello.php
