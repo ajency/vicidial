@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AppServiceService } from '../../service/app-service.service';
 import { Router, ActivatedRoute} from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
+import { AppServiceService } from '../../service/app-service.service';
+import { AccountService } from '../services/account.service';
 
 declare var $: any;
 
@@ -18,7 +19,8 @@ export class AccountComponent implements OnInit {
 
   constructor(private appservice : AppServiceService,
       			  private router : Router,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private account_service : AccountService) {
       this.loginSucessListener = this.appservice.listenToLoginSuccess().subscribe(()=>{ this.redirectToReturnUrl() });
   	}
 
@@ -36,6 +38,7 @@ export class AccountComponent implements OnInit {
     if(this.appservice.userInfo)
       this.userInfo = this.appservice.userInfo;
     else{
+      this.appservice.showLoader();
       this.appservice.getUserInfo().then((response) =>{
         this.userInfo = response.user_info;
         this.appservice.userInfo = response.user_info;
@@ -44,6 +47,12 @@ export class AccountComponent implements OnInit {
       .catch((error)=>{
         console.log("error in get-user-info api ==>",error);
         this.appservice.removeLoader();
+        if(error.status == 401){
+          this.appservice.userLogout();
+          this.displayModal();
+        }
+        else if(error.status == 403)
+          this.displayModal();
       })
     }
   }
@@ -61,9 +70,14 @@ export class AccountComponent implements OnInit {
   }
 
   redirectToReturnUrl(){
+    this.userInfo = this.appservice.userInfo;
     setTimeout(()=>{
       if(this.returnUrl)    
         this.router.navigateByUrl(this.returnUrl, { replaceUrl: true });
+      else{
+        if(!this.appservice.userInfo)
+          this.getUserInfo()
+      }
     },100)
   }
 

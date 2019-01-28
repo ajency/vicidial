@@ -13,7 +13,7 @@
 	</nav>
 </div>
 
-<div *ngIf="isLoggedIn()" class="account-nav">
+<div *ngIf="userInfo" class="account-nav">
 	<div *ngIf="userInfo" class="d-block text-center p-4">
          <h1 class="w-100 account-nav__username m-0 text-gray font-weight-bold ">
            Hello<span *ngIf="userInfo.name">, {{userInfo.name}}</span>
@@ -55,7 +55,7 @@
 	
 </div>
 
-<div *ngIf="!isLoggedIn()">
+<div *ngIf="!userInfo">
 	<h4 class="font-weight-bold mt-3 mb-0">Sign In</h4>
 	<hr>
 	<div class="mt-4 kss-flash kss-flash--info py-3">

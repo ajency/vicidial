@@ -691,6 +691,16 @@ function saveTxnid($order)
     }
 }
 
+function saveOrderToken($order)
+{
+    try {
+        $order->token = random_int(str_pad(1, 8, 0), str_pad(9, 8, 9));
+        $order->save();
+    } catch (\Exception $e) {
+        saveOrderToken($order);
+    }
+}
+
 function checkOrderInventory($order, $abort = true)
 {
     foreach ($order->subOrders as $subOrder) {

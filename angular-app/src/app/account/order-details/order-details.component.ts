@@ -9,6 +9,7 @@ import { OrderSummaryComponent } from '../components/order-summary/order-summary
 
 import { AppServiceService } from '../../service/app-service.service';
 import { ApiServiceService } from '../../service/api-service.service';
+import { AccountService } from '../services/account.service';
 
 import 'rxjs/add/operator/switchMap';
 
@@ -28,7 +29,8 @@ export class OrderDetailsComponent implements OnInit {
   
   constructor(private appservice : AppServiceService,
               private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router,
+              private account_service : AccountService) { }
   
   ngOnInit() {
     this.appservice.removeLoader();
@@ -58,6 +60,10 @@ export class OrderDetailsComponent implements OnInit {
     })
     .catch((error)=>{
       console.log("error ===>", error);
+      if(error.status == 401)
+        this.account_service.userLogout();
+      else if(error.status == 403)
+        this.router.navigate(['account']);
       this.appservice.removeLoader();
     })
   }

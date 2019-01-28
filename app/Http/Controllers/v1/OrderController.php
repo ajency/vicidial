@@ -37,6 +37,7 @@ class OrderController extends Controller
         ]);
 
         saveTxnid($order);
+        saveOrderToken($order);
 
         $order->setSubOrders();
         $order->aggregateSubOrderData();
@@ -112,16 +113,23 @@ class OrderController extends Controller
     {
         $query = $request->all();
 
-        if (!isset($query['orderid'])) {
-            abort(404);
-        }
+        if (isset($query['ordertoken'])) {
+            $order = Order::where('token', $query['ordertoken'])->first();
+            if ($order == null) {
+                abort(403);
+            }
+        } else {
+            if (!isset($query['orderid'])) {
+                abort(404);
+            }
 
-        $order = Order::where('txnid', $query['orderid'])->first();
-        if(!isset($_COOKIE['token'])) {
-            abort(401);
+            $order = Order::where('txnid', $query['orderid'])->first();
+            if(!isset($_COOKIE['token'])) {
+                abort(401);
+            }
+            $user    = User::getUserByToken('Bearer '.$_COOKIE['token']);
+            validateOrder($user, $order);
         }
-        $user    = User::getUserByToken('Bearer '.$_COOKIE['token']);
-        validateOrder($user, $order);
 
         $params = $order->getOrderDetails();
 
