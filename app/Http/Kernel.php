@@ -59,5 +59,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'check-user' => \App\Http\Middleware\CheckUserVerified::class,
         'extension-api-permissions' => \App\Http\Middleware\ExtensionApiPermissions::class,
+        'publish-static-element' => \App\Http\Middleware\PublishStaticElement::class,
     ];
 }

@@ -59,8 +59,8 @@ Route::group([
 		Route::post('/save-page-element/{seq_no}', $group_app_version . '\StaticElementController@callSave');
 		Route::get('/get-page-element', $group_app_version . '\StaticElementController@callFetch');
 		Route::get('/get-page-element/{seq_no}', $group_app_version . '\StaticElementController@callFetchSeq');
-        Route::get('/publish-page-element', $group_app_version . '\StaticElementController@callPublish');
     });
+    Route::middleware('publish-static-element')->get('/publish-page-element', $group_app_version . '\StaticElementController@callPublish');
 });
 
 $group_app_version = 'v2';
