@@ -200,6 +200,7 @@ return [
         Ajency\Comm\CommServiceProvider::class,
         GoogleMaps\ServiceProvider\GoogleMapsServiceProvider::class,
         Ajency\Connections\ConnectionsServiceProvider::class,
+        Corcel\Laravel\CorcelServiceProvider::class,
 
     ],
 

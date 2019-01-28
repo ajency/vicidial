@@ -78,6 +78,19 @@ return [
             'prefix' => '',
         ],
 
+        'wordpress' => [ // for WordPress database (used by Corcel)
+            'driver'    => 'mysql',
+            'host'      => env('WP_HOST', '127.0.0.1'),
+            'database'  => env('WP_DATABASE', 'forge'),
+            'username'  => env('WP_USERNAME', 'forge'),
+            'password'  => env('WP_PASSWORD', ''),
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => 'wp_',
+            'strict'    => false,
+            'engine'    => null,
+        ],
+
     ],
 
     /*

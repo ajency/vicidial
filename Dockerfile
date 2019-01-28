@@ -57,7 +57,7 @@ COPY nginx.conf /etc/nginx/nginx.conf
 RUN chown -R www-data:www-data /var/www/html
 RUN find /var/www/html -type f -exec chmod 644 {} \;
 RUN find /var/www/html -type d -exec chmod 755 {} \;
-RUN chmod -R ug+rwx /var/www/html/storage /var/www/html/bootstrap/cache
+RUN chmod -R ug+rwx /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/public/wordpress/wp-content
 EXPOSE 80
 RUN sed -i 's/memory_limit = .*/memory_limit = '2048M'/' /etc/php/7.2/fpm/php.ini
 

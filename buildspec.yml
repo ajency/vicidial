@@ -7,21 +7,23 @@ phases:
     commands:
       - echo Logging in to Amazon ECR...
       - aws --version
-      - $(aws ecr get-login --no-include-email --region ap-south-1) 
+      - $(aws ecr get-login --no-include-email --region ap-south-1)
       - REPOSITORY_URI=923266873336.dkr.ecr.ap-south-1.amazonaws.com/kss-laravel
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=${COMMIT_HASH:=latest}
   build:
     commands:
       - echo Build started on `date`
-      - echo Downloading env file and keys 
+      - echo Downloading env file and keys
       - aws s3 cp s3://kss-packages/laravel/prod/.env . --region ap-south-1
       - aws s3 cp s3://kss-packages/laravel/prod/oauth-private.key . --region ap-south-1
       - aws s3 cp s3://kss-packages/laravel/prod/oauth-public.key . --region ap-south-1
+      - aws s3 cp s3://kss-packages/laravel/prod/wp-config.php . --region ap-south-1
       - mv oauth-private.key storage/
       - mv oauth-public.key storage/
+      - mv wp-config.php public/wordpress/
       - sed -i s/github_token/$GITHUB_TOKEN/g Dockerfile
-      - echo Building the Docker image...          
+      - echo Building the Docker image...
       - docker build -t $REPOSITORY_URI:latest .
       - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
   post_build:

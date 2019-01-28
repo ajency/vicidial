@@ -565,6 +565,43 @@ footer .bl-1{
     color: #90ce46;
 }
 
+.fb{
+    color: #3b5998;
+}
+
+.twitter{
+    color: #1da1f2;
+}
+
+.ellipsis-4{
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+}
+.ellipsis-3{
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+.ellipsis-2{
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+// include section title
+.include-title{
+    font-size: 1.4875rem;
+    font-weight: bold;
+    margin: 1.5rem 0;
+    @media (max-width: 767px){
+        font-size: 1.25rem;
+    }
+}
+
 // whatsapp floating button
 
 .whatsapp-floating{
