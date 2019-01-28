@@ -363,7 +363,7 @@ class StaticElement extends Model
         $config = config('fileupload_static_element');
 
         if (substr($file->url, -4) == '.gif') {
-            $config[$im_type . '_presets'] = ["original" => []];
+            $config[$im_type . '_presets']['original'] = [];
         }
 
         foreach ($config[$im_type . '_presets'] as $cpreset => $cdepths) {
