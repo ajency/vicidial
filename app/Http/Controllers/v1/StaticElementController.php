@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class StaticElementController extends Controller
 {
-    public function callFetchSeq($seq_no)
+    public function callFetchSeq($seq_no, Request $request)
     {
         $request->validate(['type' => 'required']);
         $params = $request->all();
