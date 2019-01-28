@@ -1,4 +1,4 @@
-<a href="{{$story['element_data']['image']['href']}}" class="story-{{$story['sequence']}} trend-box d-block link-card kss-extension" static_element-id="{{$story['sequence']}}" static_element-display_type="Shop By Stories" static_element-type="{{$story['type']}}">
+<a href="{{$story['element_data']['image']['href']}}" class="story-{{$story['sequence']}} position-relative trend-box d-block link-card kss-extension" static_element-id="{{$story['sequence']}}" static_element-display_type="Shop By Stories" static_element-type="{{$story['type']}}">
     <p class="custom-text text-uppercase">{{$story['element_data']['text']['text1']}}</p>
     @if (isset($story['images']['original']))
     <img class="d-block w-100 img-fluid lazyload blur-up pb-1" src="{{$story['images']['default']['load']}}" 
