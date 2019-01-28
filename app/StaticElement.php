@@ -67,11 +67,11 @@ class StaticElement extends Model
             $type   = explode('_', $record->type);
             $images = $record->getStaticImagesAll(array_keys(config('fileupload_static_element.' . $record->type . '_presets')), $record);
 
-            if (!isset($response[$type])) {
-                $response[$type] = array();
+            if (!isset($response[$type[0]])) {
+                $response[$type[0]] = array();
             }
 
-            array_push($response[$type], array(
+            array_push($response[$type[0]], array(
                 "sequence"     => $record->sequence,
                 "element_data" => $record->element_data,
                 "type"         => $record->type,
