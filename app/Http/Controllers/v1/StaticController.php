@@ -86,6 +86,15 @@ class StaticController extends Controller
         return view('activities-rules')->with('params', $this->params)->with('storename', $storename);
     }
 
+    public function gender($gendername, Request $request)
+    {
+        if (!in_array($gendername, ["boys","girls","infants"])){
+            abort(404);
+        }
+        $this->params['breadcrumb']['current'] = 'Gender Landing';
+        return view('includes/landingpage/gender')->with('params', $this->params)->with('gendername', $gendername);
+    }
+
     public function productXML(Request $request)
     {
         return response(Storage::disk('s3')->get(config('ajfileupload.doc_base_root_path') . '/products.xml'), 200, [
