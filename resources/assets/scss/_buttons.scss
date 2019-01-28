@@ -186,6 +186,17 @@
             border-radius: 0;
         }
     }
+    &--dark{
+        background-color: #000;
+        color: #fff;
+        padding: 0.5em;
+        border-color: #000;
+        border-radius: 0;
+        &:hover{
+            background-color: lighten(#000, 10%);
+            color: #fff;
+        }
+    }
     &:disabled{
         &:hover{
             background-color: theme-color("primary");
