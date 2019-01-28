@@ -103,6 +103,10 @@ class Order extends Model
 
         $order_info = array('order_id' => $this->id, 'txn_no' => $this->txnid, 'total_amount' => $this->subOrderData()['you_pay'], 'order_date' => $dateInd->format('j M Y'), 'no_of_items' => count($this->cart->getItems()));
 
+        if ($this->cart->user->verified == null) {
+            $order_info['token'] = $this->token;
+        }
+
         return $order_info;
     }
 

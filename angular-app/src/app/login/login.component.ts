@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
               private zone : NgZone) { }
 
   ngOnInit() {
-  	if(!this.appservice.isLoggedInUser()){
+  	if(!this.appservice.userInfo){
   		this.displayModal();	
   	}
   	// else
@@ -91,15 +91,25 @@ export class LoginComponent implements OnInit {
     })
   }
 
-  verifyMobile(){
+  verifyMobile(verify : boolean = true){
     this.userValidation.disableVerifyOtpButton = true;
     this.userValidation.otpVerificationFailed = false;
-    let url = this.appservice.apiUrl + '/rest/v1/authenticate/login?';
-    // this.otp=this.otpCode.otp1+this.otpCode.otp2+this.otpCode.otp3+this.otpCode.otp4+this.otpCode.otp5+this.otpCode.otp6
-    let body = {
-      otp : this.otp,
-      phone : this.mobileNumber
+    let url, body;    
+    if(verify){
+      url = this.appservice.apiUrl + '/rest/v1/authenticate/login?'
+      body = {
+        otp : this.otp,
+        phone : this.mobileNumber
+      }
     }
+    else{
+      url = this.appservice.apiUrl + '/rest/v1/authenticate/skip?';
+      body = {       
+        phone : this.mobileNumber
+      }
+    }    
+    // this.otp=this.otpCode.otp1+this.otpCode.otp2+this.otpCode.otp3+this.otpCode.otp4+this.otpCode.otp5+this.otpCode.otp6
+
     url = url + $.param(body);
     this.apiservice.request(url, 'get', body, {}, true).then((response)=>{
       this.otp = null;
@@ -117,7 +127,6 @@ export class LoginComponent implements OnInit {
         this.userValidation.otpVerificationErrorMsg = response.message;
         this.userValidation.otpVerificationFailed = true;
       }
-
     })
     .catch((error)=>{
       console.log("error ===>", error);

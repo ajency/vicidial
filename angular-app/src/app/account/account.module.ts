@@ -18,7 +18,7 @@ import { ShippingAddressComponent } from './components/shipping-address/shipping
 import { PaymentInfoComponent } from './components/payment-info/payment-info.component';
 import { OrderSummaryComponent } from './components/order-summary/order-summary.component';
 
-
+import { AccountService } from './services/account.service';
 
 @NgModule({
   imports: [
@@ -39,6 +39,9 @@ import { OrderSummaryComponent } from './components/order-summary/order-summary.
   	OrderSummaryComponent,
   	MyAddressesComponent,
   	MyProfileComponent
+  ],
+  providers: [
+    AccountService
   ]
 })
 export class AccountModule { }

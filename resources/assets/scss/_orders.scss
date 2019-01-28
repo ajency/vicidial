@@ -240,7 +240,10 @@
   top: -1.3em;
   left: 5em;
   &.on-address{
-    left: 8em;
+    left: 110px;
+    @media (max-width: 767px){
+      left: 115px;
+    }
   }
 }
 

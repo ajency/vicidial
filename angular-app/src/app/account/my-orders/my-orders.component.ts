@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppServiceService } from '../../service/app-service.service';
 import { ApiServiceService } from '../../service/api-service.service';
-
+import { AccountService } from '../services/account.service';
 import { BagSummaryComponent } from '../../shared-components/bag-summary/bag-summary/bag-summary.component';
 import { OrderComponent } from '../components/order/order.component';
 
@@ -21,7 +21,8 @@ export class MyOrdersComponent implements OnInit {
   apiCallComplete : boolean = false;
   constructor(private router: Router,
 						private appservice : AppServiceService,
-						private apiservice : ApiServiceService,) { 
+						private apiservice : ApiServiceService,
+            private account_service : AccountService) { 
   }
 
   ngOnInit() {
@@ -44,8 +45,7 @@ export class MyOrdersComponent implements OnInit {
       this.apiCallComplete = true;
     }
     else{
-      this.appservice.showLoader();
-     
+      this.appservice.showLoader();     
       this.appservice.getOrders().then((response)=>{
         let formatted_data = this.appservice.formattedCartDataForUI(response.data);
         this.orders = formatted_data;
@@ -56,6 +56,10 @@ export class MyOrdersComponent implements OnInit {
       })
       .catch((error)=>{
         console.log("error ===>", error);
+        if(error.status == 401)
+          this.account_service.userLogout();
+        else if(error.status == 403)
+          this.router.navigate(['account']);
         this.appservice.removeLoader();
         this.apiCallComplete = true;
       }) 
