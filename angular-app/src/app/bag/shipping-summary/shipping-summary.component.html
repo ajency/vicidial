@@ -108,7 +108,7 @@
 				<div class="cd-cart-total">
 				  <h5 class="font-weight-bold">Total Payable<span>₹{{shippingDetails.summary.you_pay}}</span></h5>
 				</div>
-				<h5 *ngIf="shippingDetails.summary.mrp_total - shippingDetails.summary.you_pay != 0 " class="font-weight-bold text-success w-50 line-height-5">Your total savings on this order ₹{{shippingDetails.summary.mrp_total - shippingDetails.summary.you_pay}}</h5>
+				<h5 *ngIf="shippingDetails.summary.mrp_total - shippingDetails.summary.you_pay != 0 " class="font-weight-bold text-success w-50 line-height-5">Your total savings on this order ₹{{roundOff(shippingDetails.summary.mrp_total - shippingDetails.summary.you_pay)}}</h5>
 			</div>
 
 			<div *ngIf="!showUserInfoModal" class="fixed-bottom d-show pl-3 pr-3">
