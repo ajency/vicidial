@@ -5,7 +5,7 @@
 
     RewriteEngine On
 
-    RewriteCond $1 !^(blog)
+    RewriteCond $1 !^(ideas)
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .

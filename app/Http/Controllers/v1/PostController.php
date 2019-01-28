@@ -17,7 +17,6 @@ class PostController extends Controller {
     public function post($title, Request $request)
     {
         $post = Post::where('post_name',$title)->get()->first();
-        // dd($post);
     	if ($post == null) {
     	    abort(404);
     	}
@@ -27,7 +26,6 @@ class PostController extends Controller {
     public function category($category, Request $request)
     {
     	$cat = Taxonomy::where('taxonomy', 'category')->slug($category)->first();
-        // dd($cat);
     	if ($category == "all") {
         	return view('blog.category')->with('cat', $cat);
     	} else if ($cat == null) {
