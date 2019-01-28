@@ -60,7 +60,11 @@ Route::group([
 		Route::get('/get-page-element', $group_app_version . '\StaticElementController@callFetch');
 		Route::get('/get-page-element/{seq_no}', $group_app_version . '\StaticElementController@callFetchSeq');
     });
-    Route::middleware('publish-static-element')->get('/publish-page-element', $group_app_version . '\StaticElementController@callPublish');
+    Route::group([
+        'middleware' => ['auth:api', 'publish-static-element'],
+    ], function () use ($group_app_version) {
+        Route::get('/publish-page-element', $group_app_version . '\StaticElementController@callPublish');
+    });
 });
 
 $group_app_version = 'v2';
