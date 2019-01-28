@@ -188,6 +188,8 @@ class Offer extends Model
     public function applyOffer($cartData){
         $expressions = $this->expressions;
         $isApplicable = true;
+        $couponApplicable = false;
+
         //check if offer is valid under current timeframe
         $now = Carbon::now();
         if($now < $this->start){
@@ -207,7 +209,6 @@ class Offer extends Model
             return $cartData;
         }
         //if offer has coupon, check if coupon usage is still valid
-        $couponApplicable = false;
         $coupons = $this->coupons;
         $coupons->each(function ($coupon) use ($cartData,$couponApplicable){
             if($coupon->validate()) $couponApplicable = true;
@@ -220,7 +221,7 @@ class Offer extends Model
         //perform the offer action
     }
 
-    public static function processData($cartData){
+    public static function buildCartData($cartData){
         $mrp_total = 0;
         $sale_total = 0;
         
@@ -236,6 +237,12 @@ class Offer extends Model
         $cartData['discount'] = 0;
         $cartData['offersApplied'] = [];
         $cartData['messges'] = [];
+
+        return $cartData;
+    }
+
+    public static function processData($cartData){
+        $cartData = self::buildCartData($cartData);
 
         if($cartData['coupon']!= null && trim($cartData['coupon'])!=''){
             $coupon = Coupon::where('display_code',$cartData['coupon'])->first();
