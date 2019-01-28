@@ -10,8 +10,10 @@ class StaticElementController extends Controller
 {
     public function callFetchSeq($seq_no)
     {
+        $request->validate(['type' => 'required']);
+        $params = $request->all();
 
-        $fetchedData = StaticElement::fetchSeq($seq_no);
+        $fetchedData = StaticElement::fetchSeq($seq_no, $params['type']);
         return (json_encode($fetchedData));
     }
 
@@ -19,7 +21,6 @@ class StaticElementController extends Controller
     {
         $request->validate(['type' => 'sometimes', 'published' => 'sometimes']);
         $params = $request->all();
-        global $fetchedData;
 
         $data = array();
         if (isset($params['type'])) {
@@ -37,10 +38,10 @@ class StaticElementController extends Controller
     //save update
     public function callSave($seq_no, Request $request)
     {
-        $request->validate(['element_data' => 'required', 'image_upload' => 'required']);
+        $request->validate(['element_data' => 'required', 'type' => 'required', 'image_upload' => 'required']);
         $params = $request->all();
 
-        $dataSaved = StaticElement::saveData($seq_no, $params['element_data'], $params['image_upload']);
+        $dataSaved = StaticElement::saveData($seq_no, $params['element_data'], $params['type'], $params['image_upload']);
         return (json_encode($dataSaved));
     } //callSave
 

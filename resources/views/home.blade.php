@@ -110,14 +110,14 @@
 <!-- Home category -->
 @if (isset($static_elements['category']))
   <section class="section">
-  <div class="container mt-5 ">
-      <div class="row">
-          <div class="col-md-12 text-center">
-            <h2 class="font-weight-bold mb-3">Styles In Focus</h2>
-            <!-- <p>Lorem ipsum dolor sit amet</p> -->
-          </div>
-      </div>
-  </div>
+    <div class="container mt-5 ">
+        <div class="row">
+            <div class="col-md-12 text-center">
+              <h2 class="font-weight-bold mb-3">Styles In Focus</h2>
+              <!-- <p>Lorem ipsum dolor sit amet</p> -->
+            </div>
+        </div>
+    </div>
   </section>
   <section>
     <div class="container">
@@ -126,151 +126,24 @@
   </section>
 @endif
 
-
-<section class="section">
-  <div class="container mt-5 ">
-      <div class="row">
-          <div class="col-md-12 text-center">
-            <h2 class="font-weight-bold mb-3">Shop By Stories</h2>
-            <!-- <p>Lorem ipsum dolor sit amet</p> -->
-          </div>
-      </div>
-  </div>
-</section>
-
 <!-- Stories -->
-
-<!-- <section>
-  <div class="container">
-      @include('includes.stories.stories')
-  </div>
-</section> -->
-
-
-<section>
-
-<div class="container">
-    <div class="stories-grid stories-wrapper">
-      <a href="/shop?pf=tag:lines-blocks" class="story-1 trend-box d-block link-card">
-          <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
-              src="{{CDN::asset('/img/stories/story_grid9_10px.jpg') }}"
-              data-srcset="{{CDN::asset('/img/stories/story_grid9_large.jpg') }} 740w,
-                           {{CDN::asset('/img/stories/story_grid9_medium.jpg') }} 370w,
-                           {{CDN::asset('/img/stories/story_grid9_small.jpg') }} 248w"
-              data-sizes='(min-width: 1200px) 376px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 90vw,  30vw'
-              alt="Lines &amp; Blocks"
-              title="Lines &amp; Blocks"/>
-      </a>
-      <a href="/shop?pf=tag:chubby-cheeks" class="story-2 trend-box d-block link-card">
-          <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
-              src="{{CDN::asset('/img/stories/story_grid10_10px.jpg') }}"
-              data-srcset="{{CDN::asset('/img/stories/story_grid10_large.jpg') }} 740w,
-                           {{CDN::asset('/img/stories/story_grid10_medium.jpg') }} 370w,
-                           {{CDN::asset('/img/stories/story_grid10_small.jpg') }} 248w"
-              data-sizes='(min-width: 1200px) 376px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 90vw,  30vw'
-              alt="Chubby Cheeks"
-              title="Chubby Cheeks"/>
-      </a>
-      <a href="/shop?pf=tag:rock-them-up" class="story-3 trend-box d-block link-card rock-them">
-          <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
-              src="{{CDN::asset('/img/stories/story_grid11_10px.jpg') }}"
-              data-srcset="{{CDN::asset('/img/stories/story_grid11_large.jpg') }} 740w,
-                           {{CDN::asset('/img/stories/story_grid11_medium.jpg') }} 370w,
-                           {{CDN::asset('/img/stories/story_grid11_small.jpg') }} 248w"
-              data-sizes='(min-width: 1200px) 376px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 90vw,  30vw'
-              alt="Rock Them Up"
-              title="Rock Them Up"/>
-      </a>
-
-      <a href="/shop?pf=tag:cute-florals" class="story-4 trend-box d-block link-card position-relative" style="order:0;">
-          <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
-              src="{{CDN::asset('/img/stories/story_grid1_10px.jpg') }}"
-              data-srcset="{{CDN::asset('/img/stories/story_grid1_large.jpg') }} 818w,
-                           {{CDN::asset('/img/stories/story_grid1_medium.jpg') }} 409w,
-                           {{CDN::asset('/img/stories/story_grid1_small.jpg') }} 272w"
-              data-sizes='(min-width: 1200px) 376px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 90vw,  30vw'
-              alt="Cute Floral"
-              title="Cute Floral"/>
-          <p class="custom-text floral-text text-uppercase">Cute <strong>Florals</strong></p>
-      </a>
-
-      <a href="/shop?pf=tag:baby-mornings" class="story-5 trend-box d-block link-card tab-append" style="order:1;">
-          <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
-              src="{{CDN::asset('/img/stories/story_grid2_10px.jpg') }}"
-              data-srcset="{{CDN::asset('/img/stories/story_grid2_large.jpg') }} 740w,
-                           {{CDN::asset('/img/stories/story_grid2_medium.jpg') }} 370w,
-                           {{CDN::asset('/img/stories/story_grid2_small.jpg') }} 248w"
-              data-sizes='(min-width: 1200px) 376px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 90vw,  30vw'
-              alt="Baby Mornings"
-              title="Baby Mornings"/>
-      </a>
-
-      <a href="/shop?pf=tag:ice-cream" class="story-6 trend-box d-block link-card" style="order:3;">
-       <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
-            src="{{CDN::asset('/img/stories/story_grid3_10px.jpg') }}"
-            data-srcset="{{CDN::asset('/img/stories/story_grid3_large.jpg') }} 818w,
-                         {{CDN::asset('/img/stories/story_grid3_medium.jpg') }} 409w,
-                         {{CDN::asset('/img/stories/story_grid3_small.jpg') }} 272w"
-            data-sizes='(min-width: 1200px) 376px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 90vw,  30vw'
-            alt="T-shirts and Tops"
-            title="T-shirts and Tops"/>
-      </a>
-
-        <a href="/shop?pf=tag:see-spot-run" class="story-7 trend-box d-block link-card position-relative"  style="order:4;">
-
-          <img class="img-fluid lazyload blur-up" src="{{CDN::asset('/img/stories/story_grid4_10px.gif') }}"
-              data-srcset="{{CDN::asset('/img/stories/story_grid4_large.gif') }}" alt="See spot run" title="See spot run" />
-            <p class="custom-text spot-text text-uppercase">See <strong>Spot</strong> Run</p>
-        </a>      
-
-        <a href="/shop?pf=tag:teenage-drama" class="story-8 trend-box d-block link-card position-relative" style="order:5;">
-         <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
-              src="{{CDN::asset('/img/stories/story_grid5_10px.jpg') }}"
-              data-srcset="{{CDN::asset('/img/stories/story_grid5_large.jpg') }} 818w,
-                           {{CDN::asset('/img/stories/story_grid5_medium.jpg') }} 409w,
-                           {{CDN::asset('/img/stories/story_grid5_small.jpg') }} 272w"
-              data-sizes='(min-width: 1200px) 376px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 90vw,  30vw'
-              alt="Teenage Drama"
-              title="Teenage Drama"/>
-              <p class="custom-text teenage-text text-uppercase">Teenage <strong>Drama</strong></p>
-        </a>
-        <a href="/shop?pf=tag:party-shoes" class="story-9 trend-box d-block link-card position-relative party-shoes" style="order:6;">
-          <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
-              src="{{CDN::asset('/img/stories/story_grid6_10px.jpg') }}"
-              data-srcset="{{CDN::asset('/img/stories/story_grid6_large.jpg') }} 740w,
-                           {{CDN::asset('/img/stories/story_grid6_medium.jpg') }} 370w,
-                           {{CDN::asset('/img/stories/story_grid6_small.jpg') }} 248w"
-              data-sizes='(min-width: 1200px) 376px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 90vw,  30vw'
-              alt="Party shoes"
-              title="Party shoes"/>
-              <p class="custom-text party-text text-uppercase">Party <strong>Shoes</strong></p>
-        </a>        
-
-        <a href="/shop?pf=tag:how-i-wonder-what-you-are" class="story-10 trend-box d-block link-card">
-          <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
-            src="{{CDN::asset('/img/stories/story_grid7_10px.jpg') }}"
-            data-srcset="{{CDN::asset('/img/stories/story_grid7_large.jpg') }} 1553w,
-                         {{CDN::asset('/img/stories/story_grid7_medium.jpg') }} 778w,
-                         {{CDN::asset('/img/stories/story_grid7_small.jpg') }} 521w"
-            data-sizes='(min-width: 1200px) 780px, (max-width: 992px) 90vw, 63vw'
-            alt="How I Wounder What You Are"
-            title="How I Wounder What You Are"/>
-        </a>
-        <a href="/shop?pf=tag:comfy-underwear" class="story-11 trend-box d-block link-card position-relative">
-          <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
-              src="{{CDN::asset('/img/stories/story_grid8_10px.jpg') }}"
-              data-srcset="{{CDN::asset('/img/stories/story_grid8_large.jpg') }} 740w,
-                           {{CDN::asset('/img/stories/story_grid8_medium.jpg') }} 370w,
-                           {{CDN::asset('/img/stories/story_grid8_small.jpg') }} 248w"
-              data-sizes='(min-width: 1200px) 390px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 90vw,  30vw'
-              alt="Comfy Underwear"
-              title="Comfy Underwear"/>
-          <p class="custom-text comfy-text text-uppercase">Comfy <strong>Underwears</strong></p>
-        </a>
+@if (isset($static_elements['story']))
+  <section class="section">
+    <div class="container mt-5 ">
+        <div class="row">
+            <div class="col-md-12 text-center">
+              <h2 class="font-weight-bold mb-3">Shop By Stories</h2>
+              <!-- <p>Lorem ipsum dolor sit amet</p> -->
+            </div>
+        </div>
     </div>
-</div>
-
-</section>
+  </section>
+  <section>
+    <div class="container">
+      @include('includes.stories.stories', ['stories' => $static_elements['story']])
+    </div>
+  </section>
+@endif
 
 
 <!-- Our Activities -->
