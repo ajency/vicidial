@@ -119,7 +119,11 @@ class UserController extends Controller
         $UserObject->save();
 
         $id   = $UserObject->cart_id;
-        $user = ["id" => $UserObject->id, 'user_info' => $UserObject->userDetails(), 'active_cart_id' => $id];
+        $user = ["id" => $UserObject->id, 'active_cart_id' => $id];
+
+        if ($UserObject->verified) {
+            $user['user_info'] = $UserObject->userDetails();
+        }
 
         return response()->json(["message" => 'user login successful', 'user' => $user, 'token' => $tokenArr['access_token'], 'token_expires_at' => $tokenArr['expires_at'], 'success' => true]);
     }
