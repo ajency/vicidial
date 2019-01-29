@@ -159,7 +159,7 @@ return [
     ],
     'story_portrait_upload'=> [
         "default" => [
-            "size" => 160000,
+            "size" => 200000,
             "size_gif" => 500000,
             "height" => 1136,
             "width" => 818
