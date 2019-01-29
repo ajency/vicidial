@@ -467,15 +467,15 @@ export class BagViewComponent implements OnInit {
   }
 
   formatCoupons(coupons){
-    try{
-      coupons.forEach((promo)=>{ 
-        promo.actual_discount = this.appservice.calculateDiscount(promo.action.type, promo.action.value, this.cart.summary.sale_price_total);
-        console.log(promo.actual_discount);
-      });
-    }
-    catch(e){
-      console.log("error ==>",e);
-    }
+    // try{
+    //   coupons.forEach((promo)=>{ 
+    //     promo.actual_discount = this.appservice.calculateDiscount(promo.action.type, promo.action.value, this.cart.summary.sale_price_total);
+    //     console.log(promo.actual_discount);
+    //   });
+    // }
+    // catch(e){
+    //   console.log("error ==>",e);
+    // }
     this.coupons = coupons;
   }
 

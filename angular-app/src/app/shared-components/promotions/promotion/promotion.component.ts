@@ -11,6 +11,8 @@ export class PromotionComponent implements OnInit {
 
 	@Input() coupon : any;
 	@Input() orderTotal : any;
+
+  selectedCoupon : any;
   constructor(private appservice : AppServiceService) { }
 
   ngOnInit() {
@@ -19,6 +21,10 @@ export class PromotionComponent implements OnInit {
 
   getValidTill(valid_till){
   	return moment(valid_till, "YYYY-MM-DD HH:mm:ss").format("DD MMM, YYYY");
+  }
+
+  couponChanged(){
+    console.log("coupon ==>", this.selectedCoupon);
   }
 
 }
