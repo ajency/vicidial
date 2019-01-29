@@ -89,13 +89,12 @@ class Cart extends Model
 
     public function getSummary()
     {
-        $spt      = $this->getCartSalePriceTotal();
-        $discount = $this->getCartDiscount($spt);
+        $cartData = Offer::processData($this->flatData());
         return [
-            "mrp_total"        => $this->getCartMrpPriceTotal(),
-            "sale_price_total" => $spt,
-            "cart_discount"    => $discount,
-            "you_pay"          => $spt - $discount,
+            "mrp_total"        => $cartData['mrp_total'],
+            "sale_price_total" => $cartData['sale_total'],
+            "cart_discount"    => $cartData['discount'],
+            "you_pay"          => $cartData['final_total'],
         ];
     }
 
