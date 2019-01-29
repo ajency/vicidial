@@ -112,9 +112,15 @@ class CartController extends Controller
 
         $items = getCartData($cart, true, isNotProd());
         $coupons = Offer::getAllActiveCoupons();
+
+        if($cart->coupon != null){
+            $appliedCoupon = Coupon::where('display_code', $cartData['coupon'])->first()->offer->getCouponDetails();
+        }else{
+            $appliedCoupon = null;
+        }
         
         $summary = $cart->getSummary();
-        return response()->json(['cart_count' => $cart->itemCount(), 'cart_type' => $cart->type, 'items' => $items, "coupons" => $coupons, "summary" => $summary]);
+        return response()->json(['cart_count' => $cart->itemCount(), 'cart_type' => $cart->type, 'items' => $items, 'applied_coupon' => $appliedCoupon, "coupons" => $coupons, "summary" => $summary]);
     }
 
     public function guestCartFetch(Request $request)
@@ -128,11 +134,17 @@ class CartController extends Controller
         $cart->abortNotCart('cart');
         $items = getCartData($cart, true, isNotProd());
 
+        if($cart->coupon != null){
+            $appliedCoupon = Coupon::where('display_code', $cartData['coupon'])->first()->offer->getCouponDetails();
+        }else{
+            $appliedCoupon = null;
+        }
     
         $coupons = Offer::getAllActiveCoupons();
 
+
         $summary = $cart->getSummary();
-        return response()->json(['cart_count' => $cart->itemCount(), 'cart_type' => $cart->type, 'items' => $items, "summary" => $summary, "coupons" => $coupons, ]);
+        return response()->json(['cart_count' => $cart->itemCount(), 'cart_type' => $cart->type, 'items' => $items, "summary" => $summary,'applied_coupon' => $appliedCoupon, "coupons" => $coupons, ]);
     }
 
     public function guestCartDelete(Request $request)
