@@ -14,5 +14,6 @@
             alt="{{$story['element_data']['image']['img_alt']}}"
             title="{{$story['element_data']['image']['title']}}"/>
         <p class="custom-text text-uppercase">{{$story['element_data']['text']['text2']}}</p>
+         @endif
     </a>
 </div>
