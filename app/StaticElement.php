@@ -410,7 +410,7 @@ class StaticElement extends Model
                 return false;
             }
 
-            $image_size = ($presets == "original") ? $presets : ($presets . "$$" . $depth);
+            $image_size = $presets . "$$" . $depth;
             if (in_array($image_size, $map_image_size)) {
                 $obj_instance = $this;
                 $obj_class    = get_class($this);
@@ -447,7 +447,7 @@ class StaticElement extends Model
         $extarr = explode(".", $filepath);
         $ext    = (count($extarr) > 1) ? $extarr[1] : "jpg";
 
-        $image_size = ($presets == "original") ? $presets : ($presets . "$$" . $depth);
+        $image_size = $presets . "$$" . $depth;
         if ($file->image_size != null) {
             $image_size_arr = json_decode($file->image_size, true);
             if (is_array($image_size_arr)) {
