@@ -2,7 +2,7 @@
 
 return [
     'disk_name'           => 's3',
-    'base_root_path'      => env('STATICELEMENTS_PRESET').'',
+    'base_root_path'      => env('PHOTO_PRESET').'',
     'default_base_path'   => 'static_elements',
     'valid_image_formats' => ['jpg', 'jpeg', 'gif'],
     'model'               => [
