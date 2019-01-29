@@ -251,6 +251,10 @@ export class BagViewComponent implements OnInit {
     let url = window.location.href.split("#")[0];
     history.pushState({cart : false}, 'cart', url);
     this.appservice.closeCart();
+    if(document.getElementById('cd-coupon')){
+      document.getElementById('cd-coupon').classList.remove('slide-show');
+      document.querySelector('.coupon-sticky').classList.remove('fixed-bottom');
+    }
   }
 
   viewOrders(){

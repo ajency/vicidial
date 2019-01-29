@@ -10,14 +10,14 @@
 	<div>
 		<div>
 			<div class="font-weight-bold coupon-box__code">{{coupon.display_title}}</div>
-			<span class="coupon-box__desc">{{coupon.description}}</span>
+			<span class="coupon-box__desc custom-size">{{coupon.description}}</span>
 		</div>
 		<div class="my-1">
-			<div class="font-weight-bold">
+			<div class="font-weight-bold coupon-box__saving custom-size">
 				You save: <span class="text-success">Rs.{{coupon.actual_discount}}</span>
 			</div>
 		</div>
-		<div class="coupon-box__validity">
+		<div class="coupon-box__validity custom-size">
 			valid till <strong>{{getValidTill(coupon.valid_till)}}</strong>
 		</div>
 	</div>
