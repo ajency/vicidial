@@ -578,3 +578,43 @@ body{
     right: 0;
   }
 }
+
+// coupon code box
+
+.coupon-box{
+    background-color: rgba(17,218,177,.1);
+    padding: 1em;
+    border: 1px solid #aaf1aa;
+    &__code{
+        font-size: 1.15em;
+    }
+    .radio-selection{
+        color: #9a9a9a;
+        font-size: 1.35em;
+    }
+    &:hover{
+        color: initial;
+        background-color: rgba(11, 147, 119, 0.26);
+    }
+}
+
+.coupon-radio{
+    &:checked{
+        & + .radio-label{
+            color: initial;
+            background-color: rgba(11, 147, 119, 0.26);
+        }
+    }
+}
+
+.coupon-invalid{
+    pointer-events: none;
+    .coupon-box{
+        background-color: #efefef;
+        border-color: #d2d2d2;
+        color: #808080;
+        .radio-selection{
+            color: #ddd;
+        }
+    }
+}

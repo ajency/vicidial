@@ -1,8 +1,8 @@
 
 <div *ngIf="applicablePromotions.length">
-	Choose a Valid Coupon
-	<br><br>
-	<div *ngFor="let coupon of applicablePromotions; let last = last">
+	<h6 class="font-weight-bold my-3">Choose a Valid Coupon</h6>
+	<div *ngFor="let coupon of applicablePromotions; let last = last" clas
+	="radio-wrap d-flex kss_sizes wo-image mb-4">
 		<app-promotion [coupon]="coupon" [orderTotal]="orderTotal"> </app-promotion>
 		<hr *ngIf="!last">
 	</div>	
@@ -10,10 +10,10 @@
 
 <br><br>
 
-<div *ngIf="nonApplicablePromotions.length">
-	Coupons not valid for this order
-	<br><br>
-	<div *ngFor="let coupon of nonApplicablePromotions; let last = last">
+<div *ngIf="nonApplicablePromotions.length" class="coupon-invalid">
+	<h6 class="font-weight-bold my-3">Coupons not valid for this order</h6>
+	<div *ngFor="let coupon of nonApplicablePromotions; let last = last" clas
+	="radio-wrap d-flex kss_sizes wo-image mb-4">
 		<app-promotion [coupon]="coupon" [orderTotal]="orderTotal"> </app-promotion>
 		<hr *ngIf="!last">
 	</div>

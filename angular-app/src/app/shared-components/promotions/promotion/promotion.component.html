@@ -1,15 +1,22 @@
-<div>
-	<div>
-		<div>{{coupon.display_title}}</div>
-		<span>{{coupon.description}}</span>
-	</div>
-	<div>
-		<div>
-			You save: Rs. 
-			<span>{{coupon.actual_discount}}</span>
+<input class="d-none radio-input coupon-radio" type="radio" name="kss-coupon" id="coupon-{{coupon.display_title}}" />
+<label class="coupon-box radio-label w-100 d-flex" for="coupon-{{coupon.display_title}}">
+	<div class="pr-2">
+		<div class="radio-selection position-relative">
+			<i class="fas fa-check-circle"></i>
 		</div>
 	</div>
 	<div>
-		valid till {{getValidTill(coupon.valid_till)}}
+		<div>
+			<div class="font-weight-bold coupon-box__code">{{coupon.display_title}}</div>
+			<span class="coupon-box__desc">{{coupon.description}}</span>
+		</div>
+		<div class="my-1">
+			<div class="font-weight-bold">
+				You save: <span class="text-success">Rs.{{coupon.actual_discount}}</span>
+			</div>
+		</div>
+		<div class="coupon-box__validity">
+			valid till <strong>{{getValidTill(coupon.valid_till)}}</strong>
+		</div>
 	</div>
-</div>
+</label>
