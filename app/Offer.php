@@ -9,12 +9,14 @@ use Illuminate\Database\Eloquent\Model;
 class Offer extends Model
 {
     protected $fillable = ['odoo_model', 'odoo_id'];
-    protected $casts    = [
+
+    protected $casts = [
         'has_coupon' => 'boolean',
         'active'     => 'boolean',
         'global'     => 'boolean',
         'display'    => 'boolean',
     ];
+
     protected $dates = [
         'created_at',
         'updated_at',
@@ -37,7 +39,7 @@ class Offer extends Model
         return $this->hasOne('App\Action');
     }
 
-     public function getStartAttribute($value)
+    public function getStartAttribute($value)
     {
         return (new Carbon($value))->setTimezone('Asia/Kolkata');
     }
@@ -49,9 +51,9 @@ class Offer extends Model
 
     public static function sync()
     {
-        $odoo = new OdooConnect;
-        $coupons = $odoo->defaultExec(config('odoo.model.discount.name'),'search', [[['coupon_typ','=','SPECIFIC_COUPON'],['type', '=', 'discount'], ['discount_rule', '=', 'cart']]], ['limit' => 1000]);
-        $coupons->each(function ($couponID){
+        $odoo    = new OdooConnect;
+        $coupons = $odoo->defaultExec(config('odoo.model.discount.name'), 'search', [[['coupon_typ', '=', 'SPECIFIC_COUPON'], ['type', '=', 'discount'], ['discount_rule', '=', 'cart']]], ['limit' => 1000]);
+        $coupons->each(function ($couponID) {
             self::indexDiscount($couponID);
         });
     }
@@ -61,7 +63,7 @@ class Offer extends Model
         if (!$this->has_coupon) {
             return;
         }
-        $odoo = new OdooConnect;
+        $odoo             = new OdooConnect;
         $discount_coupons = $odoo->defaultExec(config('odoo.model.coupon.name'), 'search_read', [[['program_id', '=', $this->odoo_id]]], ['fields' => config('odoo.model.coupon.fields'), 'order' => 'id']);
         if ($discount_coupons->isEmpty()) {
             throw new \Exception("coupon discount ID {$this->odoo_id} has no coupons");
@@ -107,25 +109,26 @@ class Offer extends Model
         $action->entity = 'cart_price';
         switch ($discount['apply1']) {
             case 'cart_fixed':
-                $action->type   = 'value';
+                $action->type = 'value';
                 break;
             case 'by_percent':
-                $action->type   = 'percent';
+                $action->type = 'percent';
                 break;
             default:
                 # code...
                 break;
         }
-        
-        $action->value  = ['value' => $discount['discount_amt']];
+
+        $action->value = ['value' => $discount['discount_amt']];
         $this->action()->save($action);
     }
 
-    public function saveOfferData($discount){
-        $this->title      = $discount['name'];
-        $this->start      = $discount['from_date1'];
-        $this->expire     = $discount['to_date1'];
-        $this->priority   = $discount['priority1'];
+    public function saveOfferData($discount)
+    {
+        $this->title    = $discount['name'];
+        $this->start    = $discount['from_date1'];
+        $this->expire   = $discount['to_date1'];
+        $this->priority = $discount['priority1'];
         switch ($discount['coupon_typ']) {
             case 'NO_COUPON':
                 $this->has_coupon = false;
@@ -152,105 +155,119 @@ class Offer extends Model
         $offer->saveActionData($discount);
     }
 
-
-    public static function getAllActiveCoupons(){
+    public static function getAllActiveCoupons()
+    {
         $couponDiscounts = self::where('active', true)
             ->where('display', true)
             ->where('has_coupon', true)
             ->where('global', true)
             ->where('start', '<=', Carbon::now())
             ->where('expire', '>', Carbon::now())
-            ->with(['expressions','action', 'coupons'])
+            ->with(['expressions', 'action', 'coupons'])
             ->get();
         $coupons = [];
         foreach ($couponDiscounts as $discount) {
-            $coupon = [];
-            $coupon['coupon_code'] =$discount->coupons->first()->display_code;
+            $coupon                  = [];
+            $coupon['coupon_code']   = $discount->coupons->first()->display_code;
             $coupon['display_title'] = $discount->title;
-            $coupon['description'] = $discount->description;
-            $expn = $discount->expressions->first();
-            $coupon['condition'] = [
+            $coupon['description']   = $discount->description;
+            $expn                    = $discount->expressions->first();
+            $coupon['condition']     = [
                 'entity' => $expn['entity'],
                 'filter' => $expn['filter'],
-                'value' => $expn['value'] 
+                'value'  => $expn['value'],
             ];
             $coupon['action'] = [
-                'type' => $discount->action->type,
-                'value' => $discount->action->value['value']
+                'type'  => $discount->action->type,
+                'value' => $discount->action->value['value'],
             ];
             $coupon['valid_from'] = $discount->start->toDateTimeString();
             $coupon['valid_till'] = $discount->expire->toDateTimeString();
-            $coupons[] = $coupon;
+            $coupons[]            = $coupon;
         }
         return $coupons;
     }
 
-    public function applyOffer($cartData){
-        $expressions = $this->expressions;
-        $isApplicable = true;
+    public function applyOffer($cartData)
+    {
+        $expressions      = $this->expressions;
+        $isApplicable     = true;
         $couponApplicable = false;
 
         //check if offer is valid under current timeframe
         $now = Carbon::now();
-        if($now < $this->start){
+        if ($now < $this->start) {
             $cartData['messages']['offer_future'] = "Offer has expired";
             return $cartData;
         }
-        if($now > $this->expire){
+        if ($now > $this->expire) {
             $cartData['messages']['offer_expire'] = "Offer has expired";
             return $cartData;
         }
         //check if offer satisfies all condition
-        $expressions->each(function ($expression) use ($cartData,$isApplicable){
-            if(!$expression->validate($cartData)) $isApplicable=false;
-        });
-        if(!$isApplicable){
+
+        foreach ($expressions as $expression) {
+            if (!$expression->validate($cartData)) {
+                $isApplicable = false;
+            }
+        }
+        if (!$isApplicable) {
             $cartData['messages']['offer_not_applicable'] = "Offer {$this->title} not applicable on your cart";
             return $cartData;
         }
         //if offer has coupon, check if coupon usage is still valid
         $coupons = $this->coupons;
-        $coupons->each(function ($coupon) use ($cartData,$couponApplicable){
-            if($coupon->validate()) $couponApplicable = true;
-        });
-        if(!$couponApplicable){
+        foreach ($coupons as $coupon) {
+            if ($coupon->validate()) {
+                $couponApplicable = true;
+            }
+        }
+        if (!$couponApplicable) {
             $cartData['messages']['coupon_not_applicable'] = "Coupon not valid or has exceeded its limit";
             return $cartData;
         }
 
         //perform the offer action
+        $cartData = $this->action->apply($cartData);
+
+        return $cartData;
     }
 
-    public static function buildCartData($cartData){
-        $mrp_total = 0;
+    public static function buildCartData($cartData)
+    {
+        $mrp_total  = 0;
         $sale_total = 0;
-        
+
         foreach ($cartData['items'] as $id => $item) {
             $mrp_total += $item['price_mrp'];
             $sale_total += $item['price_sale'];
             $cartData['items'][$id]['price_final'] = $item['price_sale'];
 
         }
-        $cartData['mrp_total'] = $mrp_total;
-        $cartData['sale_total'] = $sale_total;
-        $cartData['final_total'] = $sale_total;
-        $cartData['discount'] = 0;
+        $cartData['mrp_total']     = $mrp_total;
+        $cartData['sale_total']    = $sale_total;
+        $cartData['final_total']   = $sale_total;
+        $cartData['discount']      = 0;
         $cartData['offersApplied'] = [];
-        $cartData['messges'] = [];
+        $cartData['messges']       = [];
 
         return $cartData;
     }
 
-    public static function processData($cartData){
+    public static function processData($cartData)
+    {
         $cartData = self::buildCartData($cartData);
 
-        if($cartData['coupon']!= null && trim($cartData['coupon'])!=''){
-            $coupon = Coupon::where('display_code',$cartData['coupon'])->first();
-            if($coupon!=null){
-                // $cartData = $coupon->offer->applyOffer($cartData);
-            }else{
-                $cartData['messges']['invalid_coupon'] = 'Your code did not match any coupons';//shift this to config
+        if ($cartData['coupon'] != null && trim($cartData['coupon']) != '') {
+            $coupon = Coupon::where('display_code', $cartData['coupon'])->first();
+            if ($coupon != null) {
+                $cartData = $coupon->offer->applyOffer($cartData);
+            } else {
+                $cartData['coupon']                    = null;
+                $cartData['messges']['invalid_coupon'] = 'Your code did not match any coupons'; //shift this to config
             }
+        }else{
+            $cartData['coupon'] = null;
         }
         return $cartData;
     }

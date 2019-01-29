@@ -17,7 +17,7 @@ class Expression extends Model
     public function validate($cartData){
     	switch($this->filter){
     		case 'greater_than':
-    			switch ('entity') {
+    			switch ($this->entity) {
     				case 'cart_price':
     					return ($cartData['final_total'] >= $this->value[0]);
     					break;

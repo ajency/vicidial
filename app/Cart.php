@@ -48,7 +48,7 @@ class Cart extends Model
             $cart_data              = $this->cart_data;
             $cart_data[$item["id"]] = ["id" => $item["id"], "quantity" => intval($item["quantity"]), 'timestamp' => Carbon::now()->timestamp];
             $this->cart_data        = $cart_data;
-            $this->applyPromotion($this->getBestPromotion());
+            // $this->applyPromotion($this->getBestPromotion());
             // \Log::info($this->cart_data);
         } else {
             return false;
