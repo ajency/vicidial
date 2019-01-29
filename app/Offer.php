@@ -238,7 +238,8 @@ class Offer extends Model
         //Add offer applied
         $cartData['offersApplied'][] = $this;
 
-        return $cartData;
+        //translate to items
+        return translateDiscountToItems($cartData);
     }
 
     public static function buildCartData($cartData)
@@ -256,6 +257,7 @@ class Offer extends Model
         $cartData['sale_total']    = $sale_total;
         $cartData['final_total']   = $sale_total;
         $cartData['discount']      = 0;
+        $cartData['round_off']     = 0;
         $cartData['offersApplied'] = [];
         $cartData['messages']      = [];
 

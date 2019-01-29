@@ -35,7 +35,7 @@ class SubOrder extends Model
                 'price_mrp'        => $variant->getLstPrice(),
                 'price_final'      => $variant->getSalePrice(),
                 'discount'         => $variant->getDiscount(),
-                'price_discounted' => $this->order->cart->getDiscountedPrice($variant),
+                'price_discounted' => $itemData['price_final'],
             ];
         }
         $this->item_data = $itemsData;
@@ -227,7 +227,7 @@ class SubOrder extends Model
     public static function rectifyOldSubOrders($subOrders)
     {
         foreach ($subOrders as $subOrder) {
-            $items     = $subOrder->getItems();
+            $items     = $subOrder->getItems(true);
             $itemsData = [];
             foreach ($items as $itemData) {
                 $itemsData[] = [
@@ -236,7 +236,7 @@ class SubOrder extends Model
                     'price_mrp'        => $itemData['item']->getLstPrice(),
                     'price_final'      => $itemData['item']->getSalePrice(),
                     'discount'         => $itemData['item']->getDiscount(),
-                    'price_discounted' => $subOrder->order->cart->getDiscountedPrice($itemData['item']),
+                    'price_discounted' => $itemData['price_final'],
                 ];
             }
             $subOrder->item_data = $itemsData;

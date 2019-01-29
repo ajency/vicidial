@@ -144,16 +144,24 @@ class Cart extends Model
         return $item;
     }
 
-    public function getItems()
+    public function getItems($offerData = false)
     {
         $items = [];
-        foreach ($this->cart_data as $cart_item) {
-            $items[] = [
-                'item'     => Variant::find($cart_item['id']),
-                'quantity' => $cart_item["quantity"],
-            ];
+        if ($offerData) {
+            $cartData = Offer::processData($this->flatData());
+            foreach ($cartData['items'] as $id => $cart_item) {
+                $cartData['items'][$id]['item'] = Variant::find($id);
+            }
+            return array_values($cartData['items']);
+        } else {
+            foreach ($this->cart_data as $cart_item) {
+                $items[] = [
+                    'item'     => Variant::find($cart_item['id']),
+                    'quantity' => $cart_item["quantity"],
+                ];
+            }
+            return $items;
         }
-        return $items;
     }
 
     public function checkCartAvailability()
@@ -211,24 +219,24 @@ class Cart extends Model
 
     public function applyCoupon($couponCode = null)
     {
-        $cartData = $this->flatData();
+        $cartData           = $this->flatData();
         $cartData['coupon'] = $couponCode;
-        $cartData = Offer::processData($cartData);
-        if(empty($cartData['messages'])){
+        $cartData           = Offer::processData($cartData);
+        if (empty($cartData['messages'])) {
             $this->coupon = $cartData['coupon'];
             $this->save();
             return [
                 'coupon_applied' => $cartData['offersApplied'][0]->getCouponDetails(),
-                'summary' => [
-                    'total' => $cartData['mrp_total'],
+                'summary'        => [
+                    'total'       => $cartData['mrp_total'],
                     'order_total' => $cartData['final_total'],
-                    'discount' => $cartData['discount'],
-                    'tax' => 0,
-                ]
+                    'discount'    => $cartData['discount'],
+                    'tax'         => 0,
+                ],
             ];
-        }else{
+        } else {
             throw new \Exception(json_encode($cartData['messages']));
-            
+
         }
     }
 
@@ -251,15 +259,16 @@ class Cart extends Model
         return $variant_discount_price;
     }
 
-    public function flatData(){
-        $items = $this->getItems();
-        $cartData = ["items"=>[], "coupon"=> $this->coupon];
+    public function flatData()
+    {
+        $items    = $this->getItems();
+        $cartData = ["items" => [], "coupon" => $this->coupon];
         foreach ($items as $item) {
-            $singleItem = [];
-            $singleItem['odoo_id'] = $item['item']->odoo_id;
-            $singleItem['quantity'] = $item['quantity'];
-            $singleItem['price_mrp'] = $item['item']->getLstPrice();
-            $singleItem['price_sale'] = $item['item']->getSalePrice();
+            $singleItem                           = [];
+            $singleItem['odoo_id']                = $item['item']->odoo_id;
+            $singleItem['quantity']               = $item['quantity'];
+            $singleItem['price_mrp']              = $item['item']->getLstPrice();
+            $singleItem['price_sale']             = $item['item']->getSalePrice();
             $cartData['items'][$item['item']->id] = $singleItem;
         }
         return $cartData;

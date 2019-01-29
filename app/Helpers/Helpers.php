@@ -436,6 +436,9 @@ function generateSubordersData($cartItems, $locations)
             $locationsData[$locationData['location_id']]['items']->push([
                 'variant'  => $cartItem['item'],
                 'quantity' => $transferQty,
+                'price_mrp' => $cartItem['price_mrp'],
+                'price_sale' => $cartItem['price_sale'],
+                'price_final' => $cartItem['price_final'],
             ]);
             $count[$locationData['location_id']] += $transferQty;
             $processedLocations[] = $locationData['location_id'];
@@ -443,6 +446,9 @@ function generateSubordersData($cartItems, $locations)
                 $locationsData[$locationData['location_id']]['remaining_items']->push([
                     'item'     => $cartItem['item'],
                     'quantity' => $cartItem['quantity'] - $transferQty,
+                    'price_mrp' => $cartItem['price_mrp'],
+                    'price_sale' => $cartItem['price_sale'],
+                    'price_final' => $cartItem['price_final'],
                 ]);
             }
         }
@@ -777,4 +783,16 @@ function defaultUserPassword($append)
     $key .= $append;
 
     return $key;
+}
+
+function translateDiscountToItems($cartData){
+    $discountRatio = $cartData['final_total']/floatval($cartData['sale_total']);
+    $total = 0;
+    foreach ($cartData['items'] as $id => $cartItem) {
+        $newPrice =  round($cartItem['price_sale']*$discountRatio,2);
+        $cartData['items'][$id]['price_final'] = $newPrice;
+        $total+= $newPrice;
+    }
+    $cartData['round_off'] = $cartData['final_total'] - $total;
+    return $cartData;
 }

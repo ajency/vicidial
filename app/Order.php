@@ -41,7 +41,7 @@ class Order extends Model
         // $locations = Location::where('use_in_inventory',true)->pluck('odoo_id');
         $address = $this->address;
         $locations = Location::getLocationDistances($address->latitude, $address->longitude);
-        $suborders  = generateSubordersData($cart->getItems(), $locations);
+        $suborders  = generateSubordersData($cart->getItems(true), $locations);
         // print_r($suborders);
         foreach ($suborders as $locationID => $items) {
             $subOrder               = new SubOrder;
