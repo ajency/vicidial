@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Promotion;
+use App\Offer;
 
 class getDiscounts extends Command
 {
@@ -38,6 +38,6 @@ class getDiscounts extends Command
      */
     public function handle()
     {
-        Promotion::getAllDiscountsFromOdoo();
+        Offer::sync();
     }
 }

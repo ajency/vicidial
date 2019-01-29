@@ -76,9 +76,6 @@ class AddressController extends Controller
                 }
             }
 
-            if (!$cart->isPromotionApplicable($cart->promotion)) {
-                abort(404, "Promotion not applicable");
-            }
         }
 
         $addresses = Address::where('user_id', '=', $user->id)->where('active', '=', true)->get();

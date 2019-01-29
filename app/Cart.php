@@ -26,11 +26,6 @@ class Cart extends Model
         return $this->belongsTo('App\User');
     }
 
-    public function promotion()
-    {
-        return $this->hasOne('App\Promotion', 'id', 'promotion_id');
-    }
-
     public function __construct()
     {
         if ($this->cart_data == null) {
@@ -48,8 +43,7 @@ class Cart extends Model
             $cart_data              = $this->cart_data;
             $cart_data[$item["id"]] = ["id" => $item["id"], "quantity" => intval($item["quantity"]), 'timestamp' => Carbon::now()->timestamp];
             $this->cart_data        = $cart_data;
-            // $this->applyPromotion($this->getBestPromotion());
-            // \Log::info($this->cart_data);
+            
         } else {
             return false;
         }
@@ -91,21 +85,6 @@ class Cart extends Model
             $total_price += $variant->getLstPrice() * $cart_item["quantity"];
         }
         return $total_price;
-    }
-
-    public function getCartDiscount($spt)
-    {
-        if ($this->promotion != null) {
-            if ($this->promotion->discount_type == "cart_fixed") {
-                $discount = $this->promotion->value;
-            } elseif ($this->promotion->discount_type == "by_percent") {
-                $discount = round($spt * $this->promotion->value / 100.0,2);
-            }
-        } else {
-            $discount = 0;
-        }
-
-        return $discount;
     }
 
     public function getSummary()
@@ -197,26 +176,6 @@ class Cart extends Model
         }
     }
 
-    public function getBestPromotion()
-    {
-        $salePrice       = $this->getCartSalePriceTotal();
-        $promotions      = Promotion::where('active', true)->where('step_quantity', '<=', $salePrice)->where('start', '<=', Carbon::now())->where('expire', '>', Carbon::now())->get();
-        $apply_promotion = null;
-        $discSalePrice   = $salePrice;
-        foreach ($promotions as $promotion) {
-            if ($promotion->discount_type == "cart_fixed") {
-                $discountedSalePrice = $salePrice - $promotion->value;
-            } elseif ($promotion->discount_type == "by_percent") {
-                $discountedSalePrice = $salePrice - ($salePrice * $promotion->value / 100.0);
-            }
-            if ($discountedSalePrice < $discSalePrice) {
-                $discSalePrice   = $discountedSalePrice;
-                $apply_promotion = $promotion->id;
-            }
-        }
-        return $apply_promotion;
-    }
-
     public function applyCoupon($couponCode = null)
     {
         $cartData           = $this->flatData();
@@ -238,17 +197,6 @@ class Cart extends Model
             throw new \Exception(json_encode($cartData['messages']));
 
         }
-    }
-
-    public function isPromotionApplicable($promotion)
-    {
-        if ($promotion == null) {
-            return true;
-        }
-        if ($promotion->active == false || $promotion->step_quantity > $this->getCartSalePriceTotal() || $promotion->start > Carbon::now() || $promotion->expire < Carbon::now()) {
-            return false;
-        }
-        return true;
     }
 
     public function getDiscountedPrice($variant)
