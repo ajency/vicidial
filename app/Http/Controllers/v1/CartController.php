@@ -217,8 +217,8 @@ class CartController extends Controller
         return response()->json(["message" => 'Items are available in store', 'success'=> true]);
     }
 
-    public function userCartPromotion($id, Request $request){
-        $request->validate(['promotion_id' => 'required|exists:promotions,id']);
+    public function userCartCoupon($id, Request $request){
+        $request->validate(['coupon_code' => 'required']);
         $params = $request->all();
 
         $cart = Cart::find($id);
@@ -228,18 +228,24 @@ class CartController extends Controller
         $cart->abortNotCart('cart');
         $user    = User::getUserByToken($request->header('Authorization'));
         validateCart($user, $cart, 'cart');
-        if($cart->isPromotionApplicable($params['promotion_id'])){
-            $cart->applyPromotion($params['promotion_id']);
+        try{
+            $apply = $cart->applyCoupon($params['coupon_code']);
             $cart->refresh();
-            return response()->json(["cart_count"=>$cart->itemCount(), "summary" => $cart->getSummary(), "message" => "promotion applied successfully", "promo_applied" => $promotion_id]);
-        }else{
-            abort(400, "Promo cannot be applied");
+            if($cart->coupon != null){
+                $apply['messages'] = ['Coupon Applied successfully']; //Take from config
+            }else{
+                $apply['messages'] = ['Coupon removed successfully'];
+            }
+            return response()->json($apply);
+        }catch (\Exception $e){
+            abort(400,$e->message);
         }
+        
     }
 
-    public function guestCartPromotion(Request $request)
+    public function guestCartCoupon(Request $request)
     {
-        $request->validate(['promotion_id' => 'required|exists:promotions,id']);
+        $request->validate(['coupon_code' => 'required']);
         $id     = $request->session()->get('active_cart_id', false);
         $params = $request->all();
 
@@ -249,12 +255,18 @@ class CartController extends Controller
         }
         $cart->anonymousCartCheckUser();
         $cart->abortNotCart('cart');
-        if($cart->isPromotionApplicable($params['promotion_id'])){
-            $cart->applyPromotion($params['promotion_id']);
+        try{
+            $apply = $cart->applyCoupon($params['coupon_code']);
             $cart->refresh();
-            return response()->json(["cart_count"=>$cart->itemCount(), "summary" => $cart->getSummary(), "message" => "promotion applied successfully", "promo_applied" => $promotion_id]);
-        }else{
-            abort(400, "Promo cannot be applied");
+            if($cart->coupon != null){
+                $apply['messages'] = ['Coupon Applied successfully']; //Take from config
+            }else{
+                $apply['messages'] = ['Coupon removed successfully'];
+            }
+            return response()->json($apply);
+        }catch (\Exception $e){
+            abort(400,$e->message);
         }
+        
     }
 }

@@ -155,6 +155,27 @@ class Offer extends Model
         $offer->saveActionData($discount);
     }
 
+    public function getCouponDetails()
+    {
+        $coupon                  = [];
+        $coupon['coupon_code']   = $this->coupons->first()->display_code;
+        $coupon['display_title'] = $this->title;
+        $coupon['description']   = $this->description;
+        $expn                    = $this->expressions->first();
+        $coupon['condition']     = [
+            'entity' => $expn['entity'],
+            'filter' => $expn['filter'],
+            'value'  => $expn['value'],
+        ];
+        $coupon['action'] = [
+            'type'  => $this->action->type,
+            'value' => $this->action->value['value'],
+        ];
+        $coupon['valid_from'] = $this->start->toDateTimeString();
+        $coupon['valid_till'] = $this->expire->toDateTimeString();
+        return $coupon;
+    }
+
     public static function getAllActiveCoupons()
     {
         $couponDiscounts = self::where('active', true)
@@ -167,23 +188,7 @@ class Offer extends Model
             ->get();
         $coupons = [];
         foreach ($couponDiscounts as $discount) {
-            $coupon                  = [];
-            $coupon['coupon_code']   = $discount->coupons->first()->display_code;
-            $coupon['display_title'] = $discount->title;
-            $coupon['description']   = $discount->description;
-            $expn                    = $discount->expressions->first();
-            $coupon['condition']     = [
-                'entity' => $expn['entity'],
-                'filter' => $expn['filter'],
-                'value'  => $expn['value'],
-            ];
-            $coupon['action'] = [
-                'type'  => $discount->action->type,
-                'value' => $discount->action->value['value'],
-            ];
-            $coupon['valid_from'] = $discount->start->toDateTimeString();
-            $coupon['valid_till'] = $discount->expire->toDateTimeString();
-            $coupons[]            = $coupon;
+            $coupons[]            = $discount->getCouponDetails();
         }
         return $coupons;
     }
@@ -230,6 +235,9 @@ class Offer extends Model
         //perform the offer action
         $cartData = $this->action->apply($cartData);
 
+        //Add offer applied
+        $cartData['offersApplied'][] = $this;
+
         return $cartData;
     }
 
@@ -249,7 +257,7 @@ class Offer extends Model
         $cartData['final_total']   = $sale_total;
         $cartData['discount']      = 0;
         $cartData['offersApplied'] = [];
-        $cartData['messges']       = [];
+        $cartData['messages']      = [];
 
         return $cartData;
     }
@@ -263,10 +271,10 @@ class Offer extends Model
             if ($coupon != null) {
                 $cartData = $coupon->offer->applyOffer($cartData);
             } else {
-                $cartData['coupon']                    = null;
-                $cartData['messges']['invalid_coupon'] = 'Your code did not match any coupons'; //shift this to config
+                $cartData['coupon']                     = null;
+                $cartData['messages']['invalid_coupon'] = 'Your code did not match any coupons'; //shift this to config
             }
-        }else{
+        } else {
             $cartData['coupon'] = null;
         }
         return $cartData;

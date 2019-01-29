@@ -22,9 +22,11 @@ class Action extends Model
                 switch ($this->type) {
                     case 'value':
                         $cartData['final_total'] -= $this->value['value'];
+                        $cartData['discount'] += $this->value['value'];
                         break;
                     case 'percent':
                         $cartData['final_total'] = round($cartData['final_total'] - $cartData['final_total'] * $this->value['value'] / (float) 100);
+                        $cartData['discount'] += round($cartData['final_total'] * $this->value['value'] / (float) 100);
                         break;
                     default:
                         # code...

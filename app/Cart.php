@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Promotion;
+use App\Offer;
 use App\Variant;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -209,12 +209,26 @@ class Cart extends Model
         return $apply_promotion;
     }
 
-    public function applyPromotion($promotion_id)
+    public function applyCoupon($couponCode = null)
     {
-        $promotion = Promotion::find($promotion_id);
-        if ($this->isPromotionApplicable($promotion)) {
-            $this->promotion_id = $promotion_id;
+        $cartData = $this->flatData();
+        $cartData['coupon'] = $couponCode;
+        $cartData = Offer::processData($cartData);
+        if(empty($cartData['messages'])){
+            $this->coupon = $cartData['coupon'];
             $this->save();
+            return [
+                'coupon_applied' => $cartData['offersApplied'][0]->getCouponDetails(),
+                'summary' => [
+                    'total' => $cartData['mrp_total'],
+                    'order_total' => $cartData['final_total'],
+                    'discount' => $cartData['discount'],
+                    'tax' => 0,
+                ]
+            ];
+        }else{
+            throw new \Exception(json_encode($cartData['messages']));
+            
         }
     }
 
