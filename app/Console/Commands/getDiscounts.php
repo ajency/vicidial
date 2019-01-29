@@ -19,7 +19,7 @@ class getDiscounts extends Command
      *
      * @var string
      */
-    protected $description = 'Add Discounts to Promotions table';
+    protected $description = 'Add Discounts to Offer table';
 
     /**
      * Create a new command instance.

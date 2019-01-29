@@ -104,7 +104,7 @@ class Cart extends Model
         $cart_data = $this->cart_data;
         unset($cart_data[$variant_id]);
         $this->cart_data = $cart_data;
-        $this->applyPromotion($this->getBestPromotion());
+        
         return $this;
     }
 
