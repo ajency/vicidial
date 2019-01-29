@@ -256,7 +256,7 @@
 				<div class="">
 					<a>
 						<img src="/img/logo-kss.png" xpreview="/img/logo-kss.png" class=" img-fluid m-0" width="180px">
-				 </a>
+					</a>
 				</div>
 				<div class="ml-auto align-self-center">
 					<h3 class="m-0 text-white kss_highlight btn-pay" (click)="closeCart()"><span aria-hidden="true">&times;</span></h3>
@@ -266,43 +266,43 @@
 	</div>
 	<div class="pr-3">
 		<div class="d-flex pt-2 ">
-				<div class="pr-3 align-items-center">
-						<h3 class="modal-title font-weight-bold">
-							<img (click)="enterCoupon = false" class="btn-back kss_highlight cd-coupon-apply" src="/img/left-arrow.png"  style="width:20px;"/>
-						</h3>
-				</div>
-				<div class="align-items-center">
-						<h3 class="modal-title font-weight-bold mt-1 mb-0">
-								Apply Coupon
-						</h3>
-				</div>
+			<div class="pr-3 align-items-center">
+				<h3 class="modal-title font-weight-bold">
+					<img (click)="enterCoupon = false" class="btn-back kss_highlight cd-coupon-apply" src="/img/left-arrow.png"  style="width:20px;"/>
+				</h3>
+			</div>
+			<div class="align-items-center">
+				<h3 class="modal-title font-weight-bold mt-1 mb-0">
+					Apply Coupon
+				</h3>
+			</div>
 		</div>
 		<hr class="mb-0"/>
 		<div class="">
-				<h4 class="mb-1 mt-4 font-weight-bold">
-						Have a coupon code?
-				</h4>
-				<div class="form-group">
-						<input class="form-control form-control-lg" id="frm-coupon" type="text"/>
-								<label class="control-label">
-										Enter coupon code
-								</label>
+			<h4 class="mb-1 mt-4 font-weight-bold">
+				Have a coupon code?
+			</h4>
+			<div class="form-group">
+				<input class="form-control form-control-lg" id="frm-coupon" type="text"/>
+				<label class="control-label">
+						Enter coupon code
+				</label>
+			</div>
+			<div *ngIf="coupons && coupons.length" class="mb-5">
+				<div class="text-center">
+					<strong class="h5 font-weight-bold">OR</strong>
 				</div>
-				<div *ngIf="coupons && coupons.length" class="mb-5">
-					<div class="text-center">
-						<strong>OR</strong>
-					</div>
-					<app-promotions-list  [promotionsList]="coupons" [orderTotal]="cart.summary.sale_price_total"></app-promotions-list>	
+				<app-promotions-list  [promotionsList]="coupons" [orderTotal]="cart.summary.sale_price_total"></app-promotions-list>	
+			</div>
+			<div class="d-block pl-3 pr-3" [ngClass]="{'fixed-bottom' : enterCoupon}">
+				<div class="py-2 pr-3">
+					<button class=" btn kss-btn kss-btn--big mt-1 mb-1" data-price="869">
+						<div class="btn-label-initial">
+							Apply
+						</div>
+					</button>
 				</div>
-				<div class="fixed-bottom d-block pl-3 pr-3">
-					<div class="py-2 pr-3">
-						<button class=" btn kss-btn kss-btn--big mt-1 mb-1" data-price="869">
-							<div class="btn-label-initial">
-									Apply
-							</div>
-						</button>
-					</div>
-				</div>
+			</div>
 		</div>
 	</div>
 </div>

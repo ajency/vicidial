@@ -1,4 +1,4 @@
-
+<!-- If valid Coupon -->
 <div *ngIf="applicablePromotions.length">
 	<h6 class="font-weight-bold my-3">Choose a Valid Coupon</h6>
 	<div *ngFor="let coupon of applicablePromotions; let last = last" clas
@@ -10,6 +10,7 @@
 
 <br><br>
 
+<!-- Invalid Coupon -->
 <div *ngIf="nonApplicablePromotions.length" class="coupon-invalid">
 	<h6 class="font-weight-bold my-3">Coupons not valid for this order</h6>
 	<div *ngFor="let coupon of nonApplicablePromotions; let last = last" clas
