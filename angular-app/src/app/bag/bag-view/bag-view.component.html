@@ -279,7 +279,7 @@
 		</div>
 		<hr class="mb-0"/>
 		<div class="">
-			<h4 class="mb-1 mt-4 font-weight-bold">
+			<!-- <h4 class="mb-1 mt-4 font-weight-bold">
 				Have a coupon code?
 			</h4>
 			<div class="form-group">
@@ -287,11 +287,11 @@
 				<label class="control-label">
 					Enter coupon code
 				</label>
-			</div>
+			</div> -->
 			<div *ngIf="coupons && coupons.length" class="mb-5">
-				<div class="text-center">
+				<!-- <div class="text-center">
 					<strong class="h5 font-weight-bold">OR</strong>
-				</div>
+				</div> -->
 				<app-promotions-list  [promotionsList]="coupons" [orderTotal]="cart.summary.sale_price_total"></app-promotions-list>	
 			</div>
 			<div class="d-block pl-3 pr-3 coupon-sticky" [ngClass]="{'fixed-bottom' : enterCoupon}">
