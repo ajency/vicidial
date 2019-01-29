@@ -1,6 +1,4 @@
-
 @extends('layouts.default')
-
 
 @php
   $delaycss = true;
@@ -11,13 +9,134 @@
 @stop
 
 @section('content')
+<div id="home-slider" class="home-slider">
+    <div class="home-slide-item">
+      <a href="/shop">
+        <picture>
+           <source media="(orientation: landscape)"
+                  data-srcset="{{CDN::asset('/img/home-banner/banner1_jan_large.jpg') }} 2000w,
+                              {{CDN::asset('/img/home-banner/banner1_jan_medium.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/banner1_jan_small.jpg') }} 700w"
+                  sizes="100vw">
 
-<!-- Banner  -->
-@if (isset($static_elements['banner'])) 
-  @include('includes.banner.slider', ['banners' => $static_elements['banner']])
-@endif
+           <source media="(orientation: portrait)"
+                  data-srcset="{{CDN::asset('/img/home-banner/banner1_jan_portrait_large.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/banner1_jan_portrait_medium.jpg') }} 700w,
+                              {{CDN::asset('/img/home-banner/banner1_jan_portrait_small.jpg') }} 400w"
+                  sizes="100vw">
 
+           <img src="{{CDN::asset('/img/home-banner/banner1_jan_20px.jpg') }}"
+               data-sizes="100vw"
+               class="img-fluid lazyload blur-up w-100" alt="Upto 50% OFF" title="Upto 50% OFF">
+        </picture>
+      </a>
+    </div>   
+<!--     <div class="home-slide-item">
+      <a href="/stores/jaipur">
+        <picture>
+           <source media="(orientation: landscape)"
+                  data-srcset="{{CDN::asset('/img/home-banner/store-jaipur-large.jpg') }} 2000w,
+                              {{CDN::asset('/img/home-banner/store-jaipur-medium.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/store-jaipur-small.jpg') }} 700w"
+                  sizes="100vw">
 
+           <source media="(orientation: portrait)"
+                  data-srcset="{{CDN::asset('/img/home-banner/store-jaipur-portrait-large.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/store-jaipur-portrait-medium.jpg') }} 700w,
+                              {{CDN::asset('/img/home-banner/store-jaipur-portrait-small.jpg') }} 400w"
+                  sizes="100vw">
+
+           <img src="{{CDN::asset('/img/home-banner/store-jaipur-20px.jpg') }}"
+               data-sizes="100vw"
+               class="img-fluid lazyload blur-up w-100" alt="Hello Jaipur - Your Kids's Favourite fashion destination is now coming to Jaipur!" title="Hello Jaipur - Your Kids's Favourite fashion destination is now coming to Jaipur!">
+        </picture>
+      </a>
+    </div>   -->   
+    <div class="home-slide-item">
+      <a href="/shop">
+        <picture>
+           <source media="(orientation: landscape)"
+                  data-srcset="{{CDN::asset('/img/home-banner/banner2_jan_large.jpg') }} 2000w,
+                              {{CDN::asset('/img/home-banner/banner2_jan_medium.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/banner2_jan_small.jpg') }} 700w"
+                  sizes="100vw">
+
+           <source media="(orientation: portrait)"
+                  data-srcset="{{CDN::asset('/img/home-banner/banner2_jan_portrait_large.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/banner2_jan_portrait_medium.jpg') }} 700w,
+                              {{CDN::asset('/img/home-banner/banner2_jan_portrait_small.jpg') }} 400w"
+                  sizes="100vw">
+
+           <img src="{{CDN::asset('/img/home-banner/banner2_jan_20px.jpg') }}"
+               data-sizes="100vw"
+               class="img-fluid lazyload blur-up w-100" alt="Upto 50% OFF" title="Upto 50% OFF">
+        </picture>
+      </a>
+    </div>    
+    <div class="home-slide-item">
+      <a href="/shop">
+        <picture>
+           <source media="(orientation: landscape)"
+                  data-srcset="{{CDN::asset('/img/home-banner/banner3_jan_large.jpg') }} 2000w,
+                              {{CDN::asset('/img/home-banner/banner3_jan_medium.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/banner3_jan_small.jpg') }} 700w"
+                  sizes="100vw">
+
+           <source media="(orientation: portrait)"
+                  data-srcset="{{CDN::asset('/img/home-banner/banner3_jan_portrait_large.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/banner3_jan_portrait_medium.jpg') }} 700w,
+                              {{CDN::asset('/img/home-banner/banner3_jan_portrait_small.jpg') }} 400w"
+                  sizes="100vw">
+
+           <img src="{{CDN::asset('/img/home-banner/banner3_jan_20px.jpg') }}"
+               data-sizes="100vw"
+               class="img-fluid lazyload blur-up w-100" alt="Free Gifts On The Purchase Of ₹3000 And Above" title="Free Gifts On The Purchase Of ₹3000 And Above">
+        </picture>
+      </a>
+    </div>  
+    <div class="home-slide-item">
+      <a href="/shop">
+        <picture>
+           <source media="(orientation: landscape)"
+                  data-srcset="{{CDN::asset('/img/home-banner/banner4_jan_large.jpg') }} 2000w,
+                              {{CDN::asset('/img/home-banner/banner4_jan_medium.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/banner4_jan_small.jpg') }} 700w"
+                  sizes="100vw">
+
+           <source media="(orientation: portrait)"
+                  data-srcset="{{CDN::asset('/img/home-banner/banner4_jan_portrait_large.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/banner4_jan_portrait_medium.jpg') }} 700w,
+                              {{CDN::asset('/img/home-banner/banner4_jan_portrait_small.jpg') }} 400w"
+                  sizes="100vw">
+
+           <img src="{{CDN::asset('/img/home-banner/banner4_jan_20px.jpg') }}"
+               data-sizes="100vw"
+               class="img-fluid lazyload blur-up" alt="₹500 OFF On Your Next Purchase" title="₹500 OFF On Your Next Purchase">
+        </picture>
+      </a>
+    </div>
+    <div class="home-slide-item">
+      <a href="/shop">
+        <picture>
+           <source media="(orientation: landscape)"
+                  data-srcset="{{CDN::asset('/img/home-banner/banner5_jan_large.jpg') }} 2000w,
+                              {{CDN::asset('/img/home-banner/banner5_jan_medium.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/banner5_jan_small.jpg') }} 700w"
+                  sizes="100vw">
+
+           <source media="(orientation: portrait)"
+                 data-srcset="{{CDN::asset('/img/home-banner/banner5_jan_portrait_large.jpg') }} 1200w,
+                              {{CDN::asset('/img/home-banner/banner5_jan_portrait_medium.jpg') }} 700w,
+                              {{CDN::asset('/img/home-banner/banner5_jan_portrait_small.jpg') }} 400w"
+                  sizes="100vw">
+
+           <img src="{{CDN::asset('/img/home-banner/banner5_jan_20px.jpg') }}"
+               data-sizes="100vw"
+               class="img-fluid lazyload blur-up" alt="Chance To Win a Super Cycle Every Week" title="Chance To Win a Super Cycle Every Week">
+        </picture>
+      </a>
+    </div>
+</div>
 <section class="mt-5">
   <div class="container mb-3">
       <div class="row">
@@ -107,43 +226,345 @@
   </div>
 </section>
 
-<!-- Home category -->
-@if (isset($static_elements['category']))
-  <section class="section">
-    <div class="container mt-5 ">
-        <div class="row">
-            <div class="col-md-12 text-center">
-              <h2 class="font-weight-bold mb-3">Styles In Focus</h2>
-              <!-- <p>Lorem ipsum dolor sit amet</p> -->
-            </div>
+<section class="section">
+<div class="container mt-5 ">
+    <div class="row">
+        <div class="col-md-12 text-center">
+          <h2 class="font-weight-bold mb-3">Styles In Focus</h2>
+          <!-- <p>Lorem ipsum dolor sit amet</p> -->
         </div>
     </div>
-  </section>
-  <section>
-    <div class="container">
-      @include('includes.homecategory.home-category', ['categories' => $static_elements['category']])
+</div>
+</section>
+
+<!-- Home category -->
+<section>
+  <div class="container">
+    <div class="cat-container">
+      <div class="cat-item cat-1">
+        <a href="/shop">
+          <img class="d-block w-100 img-fluid lazyload blur-up"
+              src="{{CDN::asset('/img/home-category/category_grid13_10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/home-category/category_grid13_large.jpg') }} 740w,
+                            {{CDN::asset('/img/home-category/category_grid13_medium.jpg') }} 370w,
+                            {{CDN::asset('/img/home-category/category_grid13_small.jpg') }} 248w"
+              data-sizes='(min-width: 1200px) 570px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 92vw,  31vw'
+              alt="New Year Super Sale - Flat 50% OFF"
+              title="New Year Super Sale - Flat 50% OFF" />
+        </a>
+      </div>
+      <div class="cat-item cat-2">
+        <a href="/stationery">
+          <img class="d-block w-100 img-fluid lazyload blur-up"
+              src="{{CDN::asset('/img/home-category/category_grid14_10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/home-category/category_grid14_large.jpg') }} 740w,
+                            {{CDN::asset('/img/home-category/category_grid14_medium.jpg') }} 370w,
+                            {{CDN::asset('/img/home-category/category_grid14_small.jpg') }} 248w"
+              data-sizes='(min-width: 1200px) 570px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 92vw,  31vw'
+              alt="Bag To School"
+              title="Bag To School" />
+        </a>
+      </div>
+      <div class="cat-item cat-3 position-relative">
+        <a href="/girls/dress">
+            <img class="d-block w-100 img-fluid lazyload blur-up"
+                        src="{{CDN::asset('/img/home-category/category_grid1_10px.jpg') }}"
+                        data-srcset="{{CDN::asset('/img/home-category/category_grid1_large.jpg') }} 818w,
+                                      {{CDN::asset('/img/home-category/category_grid1_medium.jpg') }} 409w,
+                                      {{CDN::asset('/img/home-category/category_grid1_small.jpg') }} 272w"
+                        data-sizes='(min-width: 1200px) 370px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 92vw,  31vw'
+                        alt="Dear dress with love"
+                        title="Dear dress with love"/>
+            <!-- <a href="/shop" class="shop-now-btn shop-now-btn--green">Shop Now</a> -->
+          <p class="custom-text dress-text">Dear <strong>dress</strong>, with <strong class="text-primary">Love.</strong></p>
+        </a>
+      </div>
+      <div class="cat-item cat-4 position-relative">
+        <a href="/girls/tops--woven-tops">
+          <img class="d-block w-100 img-fluid lazyload blur-up"
+              src="{{CDN::asset('/img/home-category/category_grid2_10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/home-category/category_grid2_large.jpg') }} 740w,
+                            {{CDN::asset('/img/home-category/category_grid2_medium.jpg') }} 370w,
+                            {{CDN::asset('/img/home-category/category_grid2_small.jpg') }} 246w"
+              data-sizes='(min-width: 1200px) 370px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 92vw,  31vw'
+              alt="Woven tops"
+              title="Woven tops"/>
+          <!-- <a href="/shop" class="shop-now-btn shop-now-btn--orange">Shop Now</a> -->
+        </a>
+      </div>
+      <div class="cat-item cat-5 position-relative">
+        <a href="/toys">
+          <img class="d-block w-100 img-fluid lazyload blur-up"
+              src="{{CDN::asset('/img/home-category/category_grid4_10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/home-category/category_grid4_large.jpg') }} 818w,
+                            {{CDN::asset('/img/home-category/category_grid4_medium.jpg') }} 409w,
+                            {{CDN::asset('/img/home-category/category_grid4_small.jpg') }} 271w"
+              data-sizes='(min-width: 1200px) 370px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 92vw,  31vw'
+              alt="The Super Toy Store"
+              title="The Super Toy Store"/>
+
+          <!-- <p class="custom-text ethnic-text text-uppercase font-weight-bold">Ethnic</p> -->
+          <!-- <a href="/shop" class="shop-now-btn shop-now-btn--red">Shop Now</a> -->
+        </a>
+      </div>
+      <div class="cat-item cat-6">
+        <a href="/shop?rf=price:0TO299">
+          <img class="img-fluid lazyload blur-up" src="{{CDN::asset('/img/home-category/category_grid3_jan_10px.jpg') }}"
+          data-srcset="{{CDN::asset('/img/home-category/category_grid3_jan_large.gif') }}" alt="Shop under ₹299" title="Shop under ₹299" />
+          <!-- <div class="shop-under-box d-flex align-items-center justify-content-center">
+            <p class="m-0 shop-under-box__text text-uppercase">Shop Under</p>
+          </div> -->
+        </a>
+      </div>
+      <div class="cat-item cat-7 position-relative">
+        <a href="/jeans">
+          <img class="d-block w-100 img-fluid lazyload blur-up"
+              src="{{CDN::asset('/img/home-category/category_grid5_10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/home-category/category_grid5_large.jpg') }} 818w,
+                            {{CDN::asset('/img/home-category/category_grid5_medium.jpg') }} 409w,
+                            {{CDN::asset('/img/home-category/category_grid5_small.jpg') }} 271w"
+              data-sizes='(min-width: 1200px) 370px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 92vw,  31vw'
+              alt="The Daily Denim"
+              title="The Daily Denim"/>
+          <!-- <p class="m-0 custom-text denim-text">Denim<strong>search!</strong></p> -->
+        </a>
+      </div>
+      <div class="cat-item cat-8 position-relative">
+        <a href="/short" class="d-block">
+          <img class="d-block w-100 img-fluid lazyload blur-up"
+              src="{{CDN::asset('/img/home-category/category_grid6_10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/home-category/category_grid6_large.jpg') }} 818w,
+                            {{CDN::asset('/img/home-category/category_grid6_medium.jpg') }} 409w,
+                            {{CDN::asset('/img/home-category/category_grid6_small.jpg') }} 271w"
+              data-sizes='(min-width: 1200px) 370px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 92vw,  31vw'
+              alt=""
+              title=""/>
+          <p class="custom-text text-bottoms text-uppercase"><strong>Playful</strong> Bottoms</p>
+        </a>
+        <div class="links-wrapper">
+          <a href="/short" class="links-wrapper__first"></a>
+          <a href="/short" class="links-wrapper__second"></a>
+          <a href="/short" class="links-wrapper__third"></a>
+          <a href="/short" class="links-wrapper__fourth"></a>
+          <a href="/short" class="links-wrapper__shop">Shop Now</a>
+        </div>
+      </div>
+      <div class="cat-item cat-9 position-relative">
+        <a href="/accessories/girls">
+          <img class="d-block w-100 img-fluid lazyload blur-up"
+              src="{{CDN::asset('/img/home-category/category_grid8_jan_10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/home-category/category_grid8_jan_large.jpg') }} 740w,
+                            {{CDN::asset('/img/home-category/category_grid8_jan_medium.jpg') }} 370w,
+                            {{CDN::asset('/img/home-category/category_grid8_jan_small.jpg') }} 246w"
+              data-sizes='(min-width: 1200px) 370px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 92vw,  31vww'
+              alt="Her Cute Accessory Shop"
+              title="Her Cute Accessory Shop"/>
+
+          <!-- <a href="/shop" class="shop-now-btn shop-now-btn--jewelery">Shop Now</a> -->
+        </a>
+      </div>
+      <div class="cat-item cat-10 position-relative">
+        <a href="/infant-utility">
+         <img class="d-block w-100 img-fluid lazyload blur-up"
+              src="{{CDN::asset('/img/home-category/category_grid8_10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/home-category/category_grid8_large.jpg') }} 740w,
+                            {{CDN::asset('/img/home-category/category_grid8_medium.jpg') }} 370w,
+                            {{CDN::asset('/img/home-category/category_grid8_small.jpg') }} 246w"
+              data-sizes='(min-width: 1200px) 370px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 92vw,  31vw'
+              alt="The Cute Accessory Shop"
+              title="The Cute Accessory Shop"/>
+          <p class="custom-text text-acc text-uppercase">The cute <strong>accessory</strong> shop</p>
+        </a>
+      </div>
+      <div class="cat-item cat-11 position-relative">
+        <a href="/infant-0-2-years">
+          <img class="d-block w-100 img-fluid lazyload blur-up"
+              src="{{CDN::asset('/img/home-category/category_grid9_10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/home-category/category_grid9_large.jpg') }} 740w,
+                            {{CDN::asset('/img/home-category/category_grid9_medium.jpg') }} 370w,
+                            {{CDN::asset('/img/home-category/category_grid9_small.jpg') }} 246w"
+              data-sizes='(min-width: 1200px) 370px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 92vw,  31vw'
+              alt="First Wardrobe"
+              title="First Wardrobe" />
+          <p class="custom-text text-wardrobe text-uppercase">Their <strong>first wardrobe</strong></p>
+        </a>
+      </div>
+      <div class="cat-item cat-12 position-relative">
+        <a href="/shoes">
+          <img class="d-block w-100 img-fluid lazyload blur-up"
+              src="{{CDN::asset('/img/home-category/category_grid10_jan_10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/home-category/category_grid10_jan_large.jpg') }} 1535w,
+                            {{CDN::asset('/img/home-category/category_grid10_jan_medium.jpg') }} 767w,
+                            {{CDN::asset('/img/home-category/category_grid10_jan_small.jpg') }} 511w"
+              data-sizes='(min-width: 1200px) 770px, (max-width: 992px) 92vw, 96vw'
+              alt="Shoes"
+              title="Shoes" />
+          <!-- <a href="/shop" class="shop-now-btn shop-now-btn--shoes">Shop Now</a> -->
+        </a>
+      </div>
+      <div class="cat-item cat-13">
+        <a href="/tshirt">
+          <img class="d-block w-100 img-fluid lazyload blur-up"
+              src="{{CDN::asset('/img/home-category/category_grid11_10px.gif') }}"
+              data-srcset="{{CDN::asset('/img/home-category/category_grid11_large.gif') }}"
+              alt="T-shirts and Polos"
+              title="T-shirts and Polos" />
+        </a>
+      </div>
+      <div class="cat-item cat-14">
+        <a href="/shirt">
+          <img class="d-block w-100 img-fluid lazyload blur-up"
+              src="{{CDN::asset('/img/home-category/category_grid12_jan_10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/home-category/category_grid12_jan_large.jpg') }} 570w,
+                            {{CDN::asset('/img/home-category/category_grid12_jan_medium.jpg') }} 284w,
+                            {{CDN::asset('/img/home-category/category_grid12_jan_small.jpg') }} 190w"
+              data-sizes='(min-width: 1200px) 570px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 92vw,  31vw'
+              alt="His Favourite Shirts"
+              title="His Favourite Shirts" />
+        </a>
+      </div>
     </div>
-  </section>
-@endif
+</div>
+</section>
+
+
+<section class="section">
+  <div class="container mt-5 ">
+      <div class="row">
+          <div class="col-md-12 text-center">
+            <h2 class="font-weight-bold mb-3">Shop By Stories</h2>
+            <!-- <p>Lorem ipsum dolor sit amet</p> -->
+          </div>
+      </div>
+  </div>
+</section>
 
 <!-- Stories -->
-@if (isset($static_elements['story']))
-  <section class="section">
-    <div class="container mt-5 ">
-        <div class="row">
-            <div class="col-md-12 text-center">
-              <h2 class="font-weight-bold mb-3">Shop By Stories</h2>
-              <!-- <p>Lorem ipsum dolor sit amet</p> -->
-            </div>
-        </div>
+
+<section>
+
+<div class="container">
+    <div class="stories-grid stories-wrapper">
+      <a href="/shop?pf=tag:lines-blocks" class="story-1 trend-box d-block link-card">
+          <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
+              src="{{CDN::asset('/img/stories/story_grid9_10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/stories/story_grid9_large.jpg') }} 740w,
+                           {{CDN::asset('/img/stories/story_grid9_medium.jpg') }} 370w,
+                           {{CDN::asset('/img/stories/story_grid9_small.jpg') }} 248w"
+              data-sizes='(min-width: 1200px) 376px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 90vw,  30vw'
+              alt="Lines &amp; Blocks"
+              title="Lines &amp; Blocks"/>
+      </a>
+      <a href="/shop?pf=tag:chubby-cheeks" class="story-2 trend-box d-block link-card">
+          <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
+              src="{{CDN::asset('/img/stories/story_grid10_10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/stories/story_grid10_large.jpg') }} 740w,
+                           {{CDN::asset('/img/stories/story_grid10_medium.jpg') }} 370w,
+                           {{CDN::asset('/img/stories/story_grid10_small.jpg') }} 248w"
+              data-sizes='(min-width: 1200px) 376px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 90vw,  30vw'
+              alt="Chubby Cheeks"
+              title="Chubby Cheeks"/>
+      </a>
+      <a href="/shop?pf=tag:rock-them-up" class="story-3 trend-box d-block link-card rock-them">
+          <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
+              src="{{CDN::asset('/img/stories/story_grid11_10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/stories/story_grid11_large.jpg') }} 740w,
+                           {{CDN::asset('/img/stories/story_grid11_medium.jpg') }} 370w,
+                           {{CDN::asset('/img/stories/story_grid11_small.jpg') }} 248w"
+              data-sizes='(min-width: 1200px) 376px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 90vw,  30vw'
+              alt="Rock Them Up"
+              title="Rock Them Up"/>
+      </a>
+
+      <a href="/shop?pf=tag:cute-florals" class="story-4 trend-box d-block link-card position-relative" style="order:0;">
+          <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
+              src="{{CDN::asset('/img/stories/story_grid1_10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/stories/story_grid1_large.jpg') }} 818w,
+                           {{CDN::asset('/img/stories/story_grid1_medium.jpg') }} 409w,
+                           {{CDN::asset('/img/stories/story_grid1_small.jpg') }} 272w"
+              data-sizes='(min-width: 1200px) 376px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 90vw,  30vw'
+              alt="Cute Floral"
+              title="Cute Floral"/>
+          <p class="custom-text floral-text text-uppercase">Cute <strong>Florals</strong></p>
+      </a>
+
+      <a href="/shop?pf=tag:baby-mornings" class="story-5 trend-box d-block link-card tab-append" style="order:1;">
+          <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
+              src="{{CDN::asset('/img/stories/story_grid2_10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/stories/story_grid2_large.jpg') }} 740w,
+                           {{CDN::asset('/img/stories/story_grid2_medium.jpg') }} 370w,
+                           {{CDN::asset('/img/stories/story_grid2_small.jpg') }} 248w"
+              data-sizes='(min-width: 1200px) 376px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 90vw,  30vw'
+              alt="Baby Mornings"
+              title="Baby Mornings"/>
+      </a>
+
+      <a href="/shop?pf=tag:ice-cream" class="story-6 trend-box d-block link-card" style="order:3;">
+       <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
+            src="{{CDN::asset('/img/stories/story_grid3_10px.jpg') }}"
+            data-srcset="{{CDN::asset('/img/stories/story_grid3_large.jpg') }} 818w,
+                         {{CDN::asset('/img/stories/story_grid3_medium.jpg') }} 409w,
+                         {{CDN::asset('/img/stories/story_grid3_small.jpg') }} 272w"
+            data-sizes='(min-width: 1200px) 376px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 90vw,  30vw'
+            alt="T-shirts and Tops"
+            title="T-shirts and Tops"/>
+      </a>
+
+        <a href="/shop?pf=tag:see-spot-run" class="story-7 trend-box d-block link-card position-relative"  style="order:4;">
+
+          <img class="img-fluid lazyload blur-up" src="{{CDN::asset('/img/stories/story_grid4_10px.gif') }}"
+              data-srcset="{{CDN::asset('/img/stories/story_grid4_large.gif') }}" alt="See spot run" title="See spot run" />
+            <p class="custom-text spot-text text-uppercase">See <strong>Spot</strong> Run</p>
+        </a>      
+
+        <a href="/shop?pf=tag:teenage-drama" class="story-8 trend-box d-block link-card position-relative" style="order:5;">
+         <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
+              src="{{CDN::asset('/img/stories/story_grid5_10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/stories/story_grid5_large.jpg') }} 818w,
+                           {{CDN::asset('/img/stories/story_grid5_medium.jpg') }} 409w,
+                           {{CDN::asset('/img/stories/story_grid5_small.jpg') }} 272w"
+              data-sizes='(min-width: 1200px) 376px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 90vw,  30vw'
+              alt="Teenage Drama"
+              title="Teenage Drama"/>
+              <p class="custom-text teenage-text text-uppercase">Teenage <strong>Drama</strong></p>
+        </a>
+        <a href="/shop?pf=tag:party-shoes" class="story-9 trend-box d-block link-card position-relative party-shoes" style="order:6;">
+          <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
+              src="{{CDN::asset('/img/stories/story_grid6_10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/stories/story_grid6_large.jpg') }} 740w,
+                           {{CDN::asset('/img/stories/story_grid6_medium.jpg') }} 370w,
+                           {{CDN::asset('/img/stories/story_grid6_small.jpg') }} 248w"
+              data-sizes='(min-width: 1200px) 376px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 90vw,  30vw'
+              alt="Party shoes"
+              title="Party shoes"/>
+              <p class="custom-text party-text text-uppercase">Party <strong>Shoes</strong></p>
+        </a>        
+
+        <a href="/shop?pf=tag:how-i-wonder-what-you-are" class="story-10 trend-box d-block link-card">
+          <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
+            src="{{CDN::asset('/img/stories/story_grid7_10px.jpg') }}"
+            data-srcset="{{CDN::asset('/img/stories/story_grid7_large.jpg') }} 1553w,
+                         {{CDN::asset('/img/stories/story_grid7_medium.jpg') }} 778w,
+                         {{CDN::asset('/img/stories/story_grid7_small.jpg') }} 521w"
+            data-sizes='(min-width: 1200px) 780px, (max-width: 992px) 90vw, 63vw'
+            alt="How I Wounder What You Are"
+            title="How I Wounder What You Are"/>
+        </a>
+        <a href="/shop?pf=tag:comfy-underwear" class="story-11 trend-box d-block link-card position-relative">
+          <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
+              src="{{CDN::asset('/img/stories/story_grid8_10px.jpg') }}"
+              data-srcset="{{CDN::asset('/img/stories/story_grid8_large.jpg') }} 740w,
+                           {{CDN::asset('/img/stories/story_grid8_medium.jpg') }} 370w,
+                           {{CDN::asset('/img/stories/story_grid8_small.jpg') }} 248w"
+              data-sizes='(min-width: 1200px) 390px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 90vw,  30vw'
+              alt="Comfy Underwear"
+              title="Comfy Underwear"/>
+          <p class="custom-text comfy-text text-uppercase">Comfy <strong>Underwears</strong></p>
+        </a>
     </div>
-  </section>
-  <section>
-    <div class="container">
-      @include('includes.stories.stories', ['stories' => $static_elements['story']])
-    </div>
-  </section>
-@endif
+</div>
+
+</section>
 
 
 <!-- Our Activities -->
@@ -767,17 +1188,6 @@
     'ecomm_totalvalue': '',
     'user_id': getCookie('user_id')
   });
-
-  $(function(){ 
-    // Tooltip for chrome extension  
-      if($('.update-element-btn')){ 
-        $(document).on('click',".update-element-btn",function(){ 
-            setTimeout(function() { 
-                $('[data-toggle="tooltip"]').tooltip() 
-             }, 1800); 
-        }); 
-      } 
-  })
 </script>
 
 @stop
