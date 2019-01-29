@@ -254,6 +254,7 @@ export class BagViewComponent implements OnInit {
     if(document.getElementById('cd-coupon')){
       document.getElementById('cd-coupon').classList.remove('slide-show');
       document.querySelector('.coupon-sticky').classList.remove('fixed-bottom');
+      this.enterCoupon = false;
     }
   }
 
