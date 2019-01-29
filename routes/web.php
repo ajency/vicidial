@@ -12,11 +12,11 @@
  */
 $config = config('ajfileupload');
 
-$app_version = 'v'.config('app.api_version');
+$app_version = 'v' . config('app.api_version');
 
 $group_app_version = 'v1';
 Route::group([
-  'prefix'     => '/rest/'.$group_app_version,
+    'prefix' => '/rest/' . $group_app_version,
 ], function () use ($group_app_version) {
 	Route::group([
 	  'prefix'     => '/anonymous',
@@ -44,7 +44,7 @@ Route::group([
 
 $group_app_version = 'v2';
 Route::group([
-  'prefix'     => '/rest/'.$group_app_version,
+    'prefix' => '/rest/' . $group_app_version,
 ], function () use ($group_app_version) {
 	Route::group([
 	  'prefix'     => '/anonymous',
@@ -71,17 +71,19 @@ Route::group([
 	});
 });
 
-Route::get('/', $app_version.'\HomeController@index')->name('home');
+Route::get('/', $app_version . '\HomeController@oldHome')->name('oldhome');
+Route::get('/publishedhome', $app_version . '\HomeController@index')->name('home');
+Route::get('/drafthome', $app_version . '\HomeController@drafthome')->name('drafthome');
 Route::get('/getWarehouseLevelInventory', $app_version."\ProductController@allInventory");
 Route::get('/contact-us', $app_version.'\StaticController@contact');
 Route::get('/contact', $app_version.'\StaticController@contactnew');
 Route::get('/faq', $app_version.'\StaticController@faq');
 Route::get('/about-us', $app_version.'\StaticController@about');
+Route::get('/terms-and-conditions', $app_version.'\StaticController@tc');
+Route::get('/privacy-policy', $app_version.'\StaticController@privacy');
 Route::get('/ideas', $app_version.'\PostController@blog');
 Route::get('/ideas/{title}', $app_version.'\PostController@post');
 Route::get('/ideas/category/{category}', $app_version.'\PostController@category');
-Route::get('/terms-and-conditions', $app_version.'\StaticController@tc');
-Route::get('/privacy-policy', $app_version.'\StaticController@privacy');
 Route::get('/stores', $app_version.'\StaticController@stores');
 Route::get('/stores/surat', $app_version.'\StaticController@singlestore');
 Route::get('/stores/hyderabad', $app_version.'\StaticController@singlestore');
@@ -98,5 +100,6 @@ Route::get('/my/order/details', $app_version.'\OrderController@getOrderDetails')
 Route::get('/shop/{static_page}', $app_version.'\StaticController@index')->name('shopstatic');
 Route::get('/{product_slug}/buy', $app_version.'\ProductController@index')->name('product');
 Route::get('/'.$config['base_root_path']. $config['model']["App\ProductColor"]['base_path'].'/{photo_id}/{preset}/{depth}/{image}', $app_version.'\ProductController@getImage');
+Route::get('/' . config('fileupload_static_element')['base_root_path'] . config('fileupload_static_element')['model']["App\StaticElement"]['base_path'] . '/{photo_id}/{preset}/{depth}/{image}', $app_version . '\StaticElementController@getImage');
+Route::get('/' . config('fileupload_static_element')['base_root_path'] . config('fileupload_static_element')['model']["App\StaticElement"]['base_path'] . '/{photo_id}/{preset}/{image}', $app_version . '\StaticElementController@getOriginalImage');
 Route::get('/{cat1}/{cat2?}/{cat3?}/{cat4?}', $app_version.'\ListingController@index')->name('listing');
-
