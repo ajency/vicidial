@@ -137,7 +137,7 @@ return [
         "default" => [
             "1x"=>"521X273",
             "2x"=>"778X408",
-            "3x"=>"1535X814",
+            "3x"=>"1553X814",
             "load"=>"10X5" 
         ],
     ],
@@ -146,7 +146,7 @@ return [
             "size" => 180000,
             "size_gif" => 500000,
             "height" => 814,
-            "width" => 1535
+            "width" => 1553
         ],
     ],
     'story_portrait_presets'=> [

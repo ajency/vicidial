@@ -101,4 +101,5 @@ Route::get('/shop/{static_page}', $app_version.'\StaticController@index')->name(
 Route::get('/{product_slug}/buy', $app_version.'\ProductController@index')->name('product');
 Route::get('/'.$config['base_root_path']. $config['model']["App\ProductColor"]['base_path'].'/{photo_id}/{preset}/{depth}/{image}', $app_version.'\ProductController@getImage');
 Route::get('/' . config('fileupload_static_element')['base_root_path'] . config('fileupload_static_element')['model']["App\StaticElement"]['base_path'] . '/{photo_id}/{preset}/{depth}/{image}', $app_version . '\StaticElementController@getImage');
+Route::get('/' . config('fileupload_static_element')['base_root_path'] . config('fileupload_static_element')['model']["App\StaticElement"]['base_path'] . '/{photo_id}/{preset}/{image}', $app_version . '\StaticElementController@getOriginalImage');
 Route::get('/{cat1}/{cat2?}/{cat3?}/{cat4?}', $app_version.'\ListingController@index')->name('listing');

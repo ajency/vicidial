@@ -59,6 +59,18 @@ class StaticElementController extends Controller
 
     public function getImage($photo_id, $preset, $depth, $filename)
     {
+        $imageurl = $this->fetchImage($photo_id, $preset, $depth, $filename);
+        return \Redirect::to(url($imageurl), 301);
+    }
+
+    public function getOriginalImage($photo_id, $preset, $filename)
+    {
+        $imageurl = $this->fetchImage($photo_id, $preset, '1x', $filename);
+        return \Redirect::to(url($imageurl), 301);
+    }
+
+    public function fetchImage($photo_id, $preset, $depth, $filename)
+    {
         $path          = public_path() . 'img/' . $filename;
         $staticElement = StaticElement::join('fileupload_mapping', function ($join) {
             $join->on('static_elements.id', '=', 'fileupload_mapping.object_id');
@@ -75,8 +87,7 @@ class StaticElementController extends Controller
         } else {
             $imageurl = $staticElement->resizeStaticImages($photo_id, $preset, $depth, $filename);
         }
-        return \Redirect::to(url($imageurl), 301);
-
+        return $imageurl;
     }
 
     public function callPublish()
