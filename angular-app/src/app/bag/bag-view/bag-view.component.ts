@@ -42,15 +42,18 @@ export class BagViewComponent implements OnInit {
   showLoginPopup : boolean = true;
   loginSucessListener : Subscription;
   coupons : any;
+  couponCodeListener : any;
+  couponCode : any;
   constructor( private router: Router,
                private appservice : AppServiceService,
                private apiservice : ApiServiceService,
-               private zone : NgZone
+               private zone : NgZone               
               ) { 
     this.reloadSubscription = this.appservice.listenToAddToCartEvent().subscribe(()=> { this.reloadCart() });
     this.loadSubscription = this.appservice.listenToOpenCartEvent().subscribe(()=> { this.loadCart() });
 
     this.loginSucessListener = this.appservice.listenToLoginSuccess().subscribe(()=>{ this.loginSuccess() });
+    this.couponCodeListener = this.appservice.listenToCouponCodeChange().subscribe((data)=>{ this.couponSelected(data) })
   }
 
   reloadCart(){
@@ -71,6 +74,7 @@ export class BagViewComponent implements OnInit {
     this.reloadSubscription.unsubscribe();
     this.loadSubscription.unsubscribe();
     this.loginSucessListener.unsubscribe();
+    this.couponCodeListener.unsubscribe();
   }
 
   ngOnInit() {
@@ -133,7 +137,8 @@ export class BagViewComponent implements OnInit {
 
 
   fetchCartSuccessHandler(response){
-    this.cart = this.formattedCartDataForUI(response);   
+    this.cart = this.formattedCartDataForUI(response);
+    console.log("this.cart ==>", this.cart);
     // this.formatPromotions(response);
     // this.setCoupons();
     this.formatCoupons(response.coupons);
@@ -225,9 +230,6 @@ export class BagViewComponent implements OnInit {
       this.cart.summary = response.summary;
       this.cart.promo_applied = response.promo_applied;
       this.cart.cart_count = response.cart_count;
-      this.displayPromo = true;
-      // this.formatPromotions(response);
-      // this.setCoupons();
       this.checkCartItemOutOfStock();
       this.updateLocalDataAndUI(this.cart, this.cart.cart_count);
       this.appservice.removeLoader()
@@ -467,104 +469,41 @@ export class BagViewComponent implements OnInit {
   }
 
   formatCoupons(coupons){
-    // try{
-    //   coupons.forEach((promo)=>{ 
-    //     promo.actual_discount = this.appservice.calculateDiscount(promo.action.type, promo.action.value, this.cart.summary.sale_price_total);
-    //     console.log(promo.actual_discount);
-    //   });
-    // }
-    // catch(e){
-    //   console.log("error ==>",e);
-    // }
     this.coupons = coupons;
   }
 
+  applyCoupon(){
+    console.log("inside applyCoupon function", this.couponCode);
+    this.appservice.showLoader();
+    let body = { coupon_code : this.couponCode };
+    let url = this.appservice.apiUrl + (this.appservice.isLoggedInUser() ? ("/api/rest/v1/user/cart/"+this.appservice.getCookie('cart_id')+"/apply-coupon?") : ("/rest/v1/anonymous/cart/apply-coupon?"));
+    let header = this.appservice.isLoggedInUser() ? { Authorization : 'Bearer '+this.appservice.getCookie('token') } : {};
+    url = url+$.param(body);
+    this.apiservice.request(url, 'get', body, header ).then((response)=>{
+      // this.cart.summary = response.summary;
+      this.cart.applied_coupon = response.coupon_applied;
+      // this.displayPromo = true;
+      this.enterCoupon = false;
+      this.appservice.removeLoader();
+    })
+    .catch((error)=>{
+      console.log("error ===>", error);
+      if(error.status == 401){
+        this.appservice.userLogout();
+        this.fetchCartDataFromServer();
+        this.fetchCartFailed = false; 
+      }
+      else if((error.status == 400 || error.status == 403) && this.appservice.isLoggedInUser() ){
+        this.getNewCartId();
+        this.fetchCartFailed = false; 
+      }
+      this.appservice.removeLoader();
+    })    
+  }
 
-  // setCoupons(){
-  //   let coupons = [
-  //     {
-  //       coupon_code: "COU1",
-  //       display_title: "COU1",
-  //       description: null,
-  //       condition: {
-  //         entity: "cart_price",
-  //         filter: "greater_than",
-  //         value: [500]
-  //       },
-  //       action : {
-  //         type: "percent",
-  //         value: 10
-  //       },
-  //       valid_from : "2019-01-22 18:17:05",
-  //       valid_till : "2019-01-31 18:17:05"
-  //     },
-  //     {
-  //       coupon_code: "COU2",
-  //       display_title: "COU2",
-  //       description: null,
-  //       condition: {
-  //         entity: "cart_price",
-  //         filter: "greater_than",
-  //         value: [400]
-  //       },
-  //       action : {
-  //         type: "value",
-  //         value: 50
-  //       },
-  //       valid_from : "2019-01-22 18:17:05",
-  //       valid_till : "2019-01-31 18:17:05"
-  //     },
-  //     {
-  //       coupon_code: "COU3",
-  //       display_title: "COU3",
-  //       description: null,
-  //       condition: {
-  //         entity: "cart_price",
-  //         filter: "greater_than",
-  //         value: [300]
-  //       },
-  //       action : {
-  //         type: "percent",
-  //         value: 20
-  //       },
-  //       valid_from : "2019-01-22 18:17:05",
-  //       valid_till : "2019-01-31 18:17:05"
-  //     },
-  //     {
-  //       coupon_code: "COU4",
-  //       display_title: "COU4",
-  //       description: null,
-  //       condition: {
-  //         entity: "cart_price",
-  //         filter: "greater_than",
-  //         value: [200]
-  //       },
-  //       action : {
-  //         type: "percent",
-  //         value: 30
-  //       },
-  //       valid_from : "2019-01-22 18:17:05",
-  //       valid_till : "2019-01-31 18:17:05"
-  //     },
-  //     {
-  //       coupon_code: "COU5",
-  //       display_title: "COU5",
-  //       description: null,
-  //       condition: {
-  //         entity: "cart_price",
-  //         filter: "greater_than",
-  //         value: [100]
-  //       },
-  //       action : {
-  //         type: "value",
-  //         value: 100
-  //       },
-  //       valid_from : "2019-01-22 18:17:05",
-  //       valid_till : "2019-01-31 18:17:05"
-  //     }
-  //   ];
-
-  //   this.formatCoupons(coupons);
-  // }
+  couponSelected(code){
+    console.log("couponSelected function", code);
+    this.couponCode = code;
+  }
   
 }

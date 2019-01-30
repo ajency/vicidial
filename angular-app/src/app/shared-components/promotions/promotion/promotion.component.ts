@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter } from '@angular/core';
 import { AppServiceService } from '../../../service/app-service.service';
 import * as moment from 'moment';
 
@@ -11,6 +11,8 @@ export class PromotionComponent implements OnInit {
 
 	@Input() coupon : any;
 	@Input() orderTotal : any;
+
+  // @Output() selectedCouponChanged = new EventEmitter();
 
   selectedCoupon : any;
   constructor(private appservice : AppServiceService) { }
@@ -25,6 +27,7 @@ export class PromotionComponent implements OnInit {
 
   couponChanged(){
     console.log("coupon ==>", this.selectedCoupon);
+    this.appservice.couponSelected(this.selectedCoupon);
   }
 
 }

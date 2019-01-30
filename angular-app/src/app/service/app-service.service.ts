@@ -28,6 +28,7 @@ export class AppServiceService {
   userInfo : any;
   navigatingFromBagToAddress : boolean = false;
   userMobile : any;
+  private couponCodeSelected = new Subject<any>();
 
   constructor(	private router: Router,
                 private apiservice : ApiServiceService) { 
@@ -77,6 +78,14 @@ export class AppServiceService {
 
   listenToLoginSuccess() : Observable<any> {    
     return this.loginSuccess.asObservable();
+  }
+
+  couponSelected(coupon_code){
+    this.couponCodeSelected.next(coupon_code);
+  }
+
+  listenToCouponCodeChange() : Observable<any> {    
+    return this.couponCodeSelected.asObservable();
   }
 
   getCookie(cname) {

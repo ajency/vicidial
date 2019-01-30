@@ -24,7 +24,7 @@ export class PromotionsListComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     // console.log("ngOnChanges", this.promotionsList, this.orderTotal);
     this.updatePromotionsData();
-    this.orderTotal = 1000;
+    // this.orderTotal = 1000;
   }
 
   updatePromotionsData(){
