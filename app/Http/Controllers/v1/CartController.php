@@ -240,7 +240,7 @@ class CartController extends Controller
             }
             return response()->json($apply);
         }catch (\Exception $e){
-            abort(400,$e->getMessage());
+            abort(400,json_decode($e->getMessage())[0]);
         }
         
     }

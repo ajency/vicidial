@@ -207,7 +207,7 @@ class Cart extends Model
                 ],
             ];
         } else {
-            throw new \Exception(json_encode($cartData['messages']));
+            throw new \Exception(json_encode(array_values($cartData['messages'])));
 
         }
     }
