@@ -298,7 +298,8 @@
 				<app-promotions-list  [promotionsList]="coupons" [orderTotal]="cart.summary.sale_price_total"></app-promotions-list>	
 			</div>
 			<div class="d-block pl-3 pr-3 coupon-sticky" [ngClass]="{'fixed-bottom' : enterCoupon}">
-				<div class="py-2 pr-3">
+				<div class="py-2 pr-3 d-flex">
+					<button class="btn kss-btn kss-btn--outline-secondary kss-btn--big mr-3" (click)="enterCoupon = false">Cancel</button>
 					<button class=" btn kss-btn kss-btn--big mt-1 mb-1" data-price="869" (click)="applyCoupon()" [ngClass]="{'disabled' : !couponCode}">
 						<div class="btn-label-initial">
 							Apply

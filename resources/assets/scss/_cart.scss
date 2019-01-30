@@ -582,9 +582,11 @@ body{
 // coupon code box
 
 .coupon-box{
-    background-color: rgba(17,218,177,.1);
     padding: 1em;
-    border: 1px solid #aaf1aa;
+    border: 0;
+    box-shadow: 0 0 4px #e0e0e0;
+    line-height: 1.6;
+    transition: all 0.3s;
     &__code{
         font-size: 1.15em;
     }
@@ -594,10 +596,14 @@ body{
     }
     &:hover{
         color: initial;
-        background-color: rgba(11, 147, 119, 0.26);
+        background-color: #fffad9;
     }
     .custom-size{
-        font-size: 1.05em;
+        font-size: 1.15em;
+    }
+    .new-label{
+        padding: 3px 0.5em;
+        margin: 0;
     }
 }
 
@@ -605,8 +611,26 @@ body{
     &:checked{
         & + .radio-label{
             color: initial;
-            background-color: rgba(11, 147, 119, 0.26);
+            background-color: #fffad9;
+            // .radio-selection{
+            //     color: #166f61;
+            // }
         }
+    }
+}
+
+.coupon-title{
+    font-size: 1.15em;
+}
+
+.coupon-valid{
+    .coupon-box__code{
+        display: inline-flex;
+        background-color: #fff;
+        border: 1px dashed #8e8e8e;
+        padding: 5px 1.5em;
+        border-radius: 25px;
+        margin-bottom: 5px;
     }
 }
 
@@ -618,6 +642,7 @@ body{
         color: #808080;
         .radio-selection{
             color: #ddd;
+            visibility: hidden;
         }
         .text-success{
             color: #ff353b !important;

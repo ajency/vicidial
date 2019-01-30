@@ -7,18 +7,21 @@
 			<i class="fas fa-check-circle"></i>
 		</div>
 	</div>
-	<div>
+	<div class="flex-1">
 		<div>
-			<div class="font-weight-bold coupon-box__code">{{coupon.display_title}}</div>
-			<span class="coupon-box__desc custom-size">{{coupon.description}}</span>
+			<div class="d-flex justify-content-between align-items-center">
+				<div class="font-weight-bold coupon-box__code">{{coupon.display_title}}</div>
+				<label class="bg-success new-label text-uppercase text-white">New</label>
+			</div>
+			<div *ngIf="coupon.description" class="coupon-box__desc custom-size font-weight-normal text-dark py-1">{{coupon.description}}</div>
 		</div>
-		<div class="my-1">
+		<div class="pb-1">
 			<div class="font-weight-bold coupon-box__saving custom-size">
 				You save: <span class="text-success">Rs.{{coupon.actual_discount}}</span>
 			</div>
 		</div>
-		<div class="coupon-box__validity custom-size">
-			valid till <strong>{{getValidTill(coupon.valid_till)}}</strong>
+		<div class="coupon-box__validity custom-size font-weight-normal">
+			Valid till <strong>{{getValidTill(coupon.valid_till)}}</strong>
 		</div>
 	</div>
 </label>
