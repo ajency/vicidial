@@ -229,11 +229,12 @@ export class BagViewComponent implements OnInit {
       let index = this.cart.items.findIndex(i => i.id == item.id)
       this.cart.items.splice(index,1);
       this.cart.summary = response.summary;
-      this.cart.promo_applied = response.promo_applied;
+      this.cart.applied_coupon = response.applied_coupon;
+      this.formatCoupons(response.coupons);     
       this.cart.cart_count = response.cart_count;
       this.checkCartItemOutOfStock();
       this.updateLocalDataAndUI(this.cart, this.cart.cart_count);
-      this.appservice.removeLoader()
+      this.appservice.removeLoader();
     })
     .catch((error)=>{
       console.log("error ===>", error);
