@@ -248,8 +248,8 @@ class Offer extends Model
         $sale_total = 0;
 
         foreach ($cartData['items'] as $id => $item) {
-            $mrp_total += $item['price_mrp'];
-            $sale_total += $item['price_sale'];
+            $mrp_total += $item['price_mrp']*$item['quantity'];
+            $sale_total += $item['price_sale']*$item['quantity'];
             $cartData['items'][$id]['price_final'] = $item['price_sale'];
 
         }
