@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, EventEmitter, Output } from '@angular/core';
 import { AppServiceService } from '../../service/app-service.service';
 @Component({
   selector: 'app-applied-coupon',
@@ -11,6 +11,8 @@ export class AppliedCouponComponent implements  OnInit, OnChanges {
 	@Input() promotions : any;
   @Input() orderTotal : any;
 
+  @Output() editCouponTrigger = new EventEmitter();
+
 	promo : any;
   constructor(private appservice : AppServiceService) { }
 
@@ -18,10 +20,12 @@ export class AppliedCouponComponent implements  OnInit, OnChanges {
   }
 
   ngOnChanges(){
-  	// console.log("ngOnChanges applied-coupon component ==>", this.promoApplied, this.promotions);
-  	// this.promo = this.promotions.find((promotion)=>{ return this.promoApplied == promotion.promotion_id});
     this.promoApplied.actual_discount = this.appservice.calculateDiscount(this.promoApplied.action.type, this.promoApplied.action.value, this.orderTotal);
     this.promo = this.promoApplied;
+  }
+
+  editCoupon(){
+    this.editCouponTrigger.emit(true);
   }
 
 }
