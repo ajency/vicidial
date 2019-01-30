@@ -196,7 +196,7 @@ export class AppServiceService {
   }
 
   calculateDiscount(type, value ,order_total){
-    return ( type == 'value' ? value : (order_total * value / 100) )
+    return ( type == 'value' ? value : (order_total * value / 100).toFixed(2) )
   }
 
   sortByDiscount(array){
