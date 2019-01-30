@@ -291,6 +291,9 @@
 					Enter coupon code
 				</label>
 			</div> -->
+			<div *ngIf="couponErrorMessage" class="kss-flash kss-flash--error">
+			 	{{couponErrorMessage}}
+			</div>
 			<div *ngIf="coupons && coupons.length" class="mb-5">
 				<!-- <div class="text-center">
 					<strong class="h5 font-weight-bold">OR</strong>

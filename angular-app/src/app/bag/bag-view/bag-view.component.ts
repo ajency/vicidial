@@ -44,6 +44,7 @@ export class BagViewComponent implements OnInit {
   coupons : any;
   couponCodeListener : any;
   couponCode : any;
+  couponErrorMessage : any;
   constructor( private router: Router,
                private appservice : AppServiceService,
                private apiservice : ApiServiceService,
@@ -480,24 +481,35 @@ export class BagViewComponent implements OnInit {
     let header = this.appservice.isLoggedInUser() ? { Authorization : 'Bearer '+this.appservice.getCookie('token') } : {};
     url = url+$.param(body);
     this.apiservice.request(url, 'get', body, header ).then((response)=>{
-      // this.cart.summary = response.summary;
+      this.cart.summary = response.summary;
       this.cart.applied_coupon = response.coupon_applied;
       // this.displayPromo = true;
       this.enterCoupon = false;
       this.appservice.removeLoader();
+      this.couponErrorMessage = '';
     })
     .catch((error)=>{
       console.log("error ===>", error);
       if(error.status == 401){
         this.appservice.userLogout();
+        this.enterCoupon = false;
         this.fetchCartDataFromServer();
         this.fetchCartFailed = false; 
       }
-      else if((error.status == 400 || error.status == 403) && this.appservice.isLoggedInUser() ){
-        this.getNewCartId();
-        this.fetchCartFailed = false; 
+      else{
+        if(error.status == 0){
+          this.couponErrorMessage = "No Internet Connection";  
+        }
+        else{
+          this.couponErrorMessage = error.message;
+        }        
+        this.appservice.removeLoader();
       }
-      this.appservice.removeLoader();
+      // else if(error.status == 403 && this.appservice.isLoggedInUser() ){
+      //   this.enterCoupon = false;
+      //   this.getNewCartId();
+      //   this.fetchCartFailed = false; 
+      // }      
     })    
   }
 
