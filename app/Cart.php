@@ -176,6 +176,19 @@ class Cart extends Model
         }
     }
 
+    public function checkCouponAvailability(){
+        $cartData           = $this->flatData();
+        $cartData           = Offer::processData($cartData);
+        if($cartData['coupon'] != $this->coupon){
+            $this->coupon = $cartData['coupon'];
+            $this->save();
+        }
+        return $cartData[
+            'messages' => $cartData['messages'], 
+            'coupon_applied'=> (isset($cartData['offersApplied'][0]))? $cartData['offersApplied'][0]->getCouponDetails():null,
+        ];
+    }
+
     public function applyCoupon($couponCode = null)
     {
         $cartData           = $this->flatData();
@@ -185,7 +198,7 @@ class Cart extends Model
             $this->coupon = $cartData['coupon'];
             $this->save();
             return [
-                'coupon_applied' => $cartData['offersApplied'][0]->getCouponDetails(),
+                'coupon_applied' => (isset($cartData['offersApplied'][0]))? $cartData['offersApplied'][0]->getCouponDetails():null,
                 'summary'        => [
                     'mrp_total'        => $cartData['mrp_total'],
                     'you_pay'          => $cartData['final_total'],

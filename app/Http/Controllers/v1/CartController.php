@@ -163,10 +163,11 @@ class CartController extends Controller
         $cart->removeItem($params["variant_id"]);
         $cart->save();
         $cart->refresh();
-        $message = "Item deleted successfully";
+        $available = $cart->checkCouponAvailability();
+        $available['messages']['item-delete'] = "Item deleted successfully";
         $summary = $cart->getSummary();
         $coupons = Offer::getAllActiveCoupons();
-        return response()->json(['cart_count' => $cart->itemCount(), 'message' => $message, "summary" => $summary, "coupons" => $coupons]);
+        return response()->json(array_merge(['cart_count' => $cart->itemCount(), "summary" => $summary, "coupons" => $coupons],$available));
     }
 
     public function userCartDelete($id, Request $request)
@@ -183,10 +184,11 @@ class CartController extends Controller
         $cart->removeItem($params["variant_id"]);
         $cart->save();
         $cart->refresh();
-        $message = "Item deleted successfully";
+        $available = $cart->checkCouponAvailability();
+        $available['messages']['item-delete'] = "Item deleted successfully";
         $summary = $cart->getSummary();
         $coupons = Offer::getAllActiveCoupons();
-        return response()->json(['cart_count' => $cart->itemCount(), 'message' => $message, "summary" => $summary, "coupons" => $coupons]);
+        return response()->json(array_merge(['cart_count' => $cart->itemCount(), "summary" => $summary, "coupons" => $coupons],$available));
     }
 
     public function getCartID(Request $request)
@@ -209,7 +211,7 @@ class CartController extends Controller
         foreach ($cart->cart_data as $variant_id => $variant_details) {
             $variant = Variant::find($variant_id);
             if ($variant->getQuantity() < $variant_details['quantity']) {
-                abort(404, "Quantity not available");
+                abort(404, "Quantity not available = $cart->chec");
             }
         }
 
