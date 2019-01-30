@@ -11,14 +11,16 @@ export class PromotionComponent implements OnInit {
 
 	@Input() coupon : any;
 	@Input() orderTotal : any;
-
+  @Input() appliedCoupon : any;
   // @Output() selectedCouponChanged = new EventEmitter();
 
   selectedCoupon : any;
   constructor(private appservice : AppServiceService) { }
 
   ngOnInit() {
-  	// console.log("ngOnInit promotion component ==>", this.coupon);
+  	// console.log("ngOnInit promotion component ==>", this.appliedCoupon);
+    if(this.appliedCoupon)
+      this.selectedCoupon = this.appliedCoupon.coupon_code;
   }
 
   getValidTill(valid_till){

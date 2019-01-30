@@ -11,6 +11,7 @@ export class PromotionsListComponent implements OnInit, OnChanges {
 
 	@Input() promotionsList : any;
 	@Input() orderTotal : any;
+  @Input() appliedCoupon : any;
 
 	applicablePromotions : any;
 	nonApplicablePromotions : any;
