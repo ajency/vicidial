@@ -7,6 +7,7 @@ use App\Cart;
 use App\User;
 use App\Variant;
 use App\Offer;
+use App\Coupon;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -114,7 +115,7 @@ class CartController extends Controller
         $coupons = Offer::getAllActiveCoupons();
 
         if($cart->coupon != null){
-            $appliedCoupon = Coupon::where('display_code', $cartData['coupon'])->first()->offer->getCouponDetails();
+            $appliedCoupon = Coupon::where('display_code', $cart->coupon)->first()->offer->getCouponDetails();
         }else{
             $appliedCoupon = null;
         }

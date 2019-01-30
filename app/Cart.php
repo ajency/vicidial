@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Coupon;
 use App\Offer;
 use App\Variant;
 use Carbon\Carbon;
@@ -43,7 +44,7 @@ class Cart extends Model
             $cart_data              = $this->cart_data;
             $cart_data[$item["id"]] = ["id" => $item["id"], "quantity" => intval($item["quantity"]), 'timestamp' => Carbon::now()->timestamp];
             $this->cart_data        = $cart_data;
-            
+
         } else {
             return false;
         }
@@ -103,7 +104,7 @@ class Cart extends Model
         $cart_data = $this->cart_data;
         unset($cart_data[$variant_id]);
         $this->cart_data = $cart_data;
-        
+
         return $this;
     }
 
@@ -186,10 +187,10 @@ class Cart extends Model
             return [
                 'coupon_applied' => $cartData['offersApplied'][0]->getCouponDetails(),
                 'summary'        => [
-                    'total'       => $cartData['mrp_total'],
-                    'order_total' => $cartData['final_total'],
-                    'discount'    => $cartData['discount'],
-                    'tax'         => 0,
+                    'mrp_total'        => $cartData['mrp_total'],
+                    'you_pay'          => $cartData['final_total'],
+                    'cart_discount'    => $cartData['discount'],
+                    'sale_price_total' => $cartData['sale_total'],
                 ],
             ];
         } else {
