@@ -19,8 +19,10 @@ export class PromotionComponent implements OnInit {
 
   ngOnInit() {
   	// console.log("ngOnInit promotion component ==>", this.appliedCoupon);
-    if(this.appliedCoupon)
+    if(this.appliedCoupon){
       this.selectedCoupon = this.appliedCoupon.coupon_code;
+      this.appservice.couponSelected(this.selectedCoupon);
+    }
   }
 
   getValidTill(valid_till){
