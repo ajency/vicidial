@@ -203,10 +203,12 @@ class Offer extends Model
         $now = Carbon::now();
         if ($now < $this->start) {
             $cartData['messages']['offer_future'] = "Offer has expired";
+            $cartData['coupon'] = null;
             return $cartData;
         }
         if ($now > $this->expire) {
             $cartData['messages']['offer_expire'] = "Offer has expired";
+            $cartData['coupon'] = null;
             return $cartData;
         }
         //check if offer satisfies all condition
@@ -218,6 +220,7 @@ class Offer extends Model
         }
         if (!$isApplicable) {
             $cartData['messages']['offer_not_applicable'] = "Offer {$this->title} not applicable on your cart";
+            $cartData['coupon'] = null;
             return $cartData;
         }
         //if offer has coupon, check if coupon usage is still valid
@@ -229,6 +232,7 @@ class Offer extends Model
         }
         if (!$couponApplicable) {
             $cartData['messages']['coupon_not_applicable'] = "Coupon not valid or has exceeded its limit";
+            $cartData['coupon'] = null;
             return $cartData;
         }
 
