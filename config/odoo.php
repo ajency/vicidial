@@ -93,6 +93,7 @@ return [
                 'dash_x',
                 'coupon_count',
                 'condition_id',
+                'description_sale',
             ],
         ],
         'coupon'   => [

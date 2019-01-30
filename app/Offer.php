@@ -129,6 +129,7 @@ class Offer extends Model
         $this->start    = $discount['from_date1'];
         $this->expire   = $discount['to_date1'];
         $this->priority = $discount['priority1'];
+        $this->description = $discount['description_sale'];
         switch ($discount['coupon_typ']) {
             case 'NO_COUPON':
                 $this->has_coupon = false;
@@ -188,7 +189,10 @@ class Offer extends Model
             ->get();
         $coupons = [];
         foreach ($couponDiscounts as $discount) {
-            $coupons[]            = $discount->getCouponDetails();
+            if($discount->coupons->sum('left_uses') > 0){
+                $coupons[] = $discount->getCouponDetails();
+            }
+            
         }
         return $coupons;
     }
