@@ -523,5 +523,10 @@ export class BagViewComponent implements OnInit {
     this.enterCoupon = false;
     this.couponErrorMessage = '';
   }
+
+  displayCouponSideBar(){
+    if(this.cart.cart_type == "cart")
+      this.enterCoupon = true;
+  }
   
 }
