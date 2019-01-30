@@ -9,7 +9,6 @@ use App\Variant;
 use App\Offer;
 use App\Coupon;
 use Illuminate\Http\Request;
-use app\Coupon;
 
 class CartController extends Controller
 {
