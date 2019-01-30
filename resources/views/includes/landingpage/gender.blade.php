@@ -4,18 +4,19 @@
   if ($gendername == 'boys') {
   	$title = 'Boys';
   	$years = '2 - 7 Years';
-  	$registrationDate = 'January 25th, 2019; 7:00 PM';
-  	$redirectLink = 'https://goo.gl/forms/yASCybdisxnuAhjT2';
+  	$box_1_alt= 'Boys Alt';
+  	$box_1_title= 'Boys Title';
   } else if ($gendername == 'girls') {
   	$title = 'Girls';
   	$years = '2 - 7 Years';
-  	$venue = 'G-5, G-6, G-7, F-105, Om Arcade, Anandmahal, Adajan, Surat. Gujarat - 395009.';
-  	$registrationDate = 'January 25th, 2019; 5:00 PM';
-  	$redirectLink = 'https://goo.gl/forms/gnbLVZiUuMZDE1PA2';
+  	$box_1_alt= 'Girls Alt';
+  	$box_1_title= 'Girls Title';
   }
   else{
 	$title = 'Infants';
 	$years = '0 - 2 Years';
+	$box_1_alt= 'Infant Alt';
+  	$box_1_title= 'Infant Title';
   }
 @endphp
 
@@ -34,20 +35,49 @@
 		<div class="col-sm-8">
 			<picture>
 		       <source media="(orientation: landscape)"
-		              data-srcset="{{CDN::asset('/img/our-activities/fashion-banner-large.jpg') }} 2000w,
-		                          {{CDN::asset('/img/our-activities/fashion-banner-medium.jpg') }} 1200w,
-		                          {{CDN::asset('/img/our-activities/fashion-banner-small.jpg') }} 700w"
-		              sizes="100vw">
+		       		@if ($gendername == 'boys')
+		              data-srcset="{{CDN::asset('/img/gender/boys/box-1_shirt_large.jpg') }} 1536w,
+		                          {{CDN::asset('/img/gender/boys/box-1_shirt_medium.jpg') }} 1024w,
+		                          {{CDN::asset('/img/gender/boys/box-1_shirt_small.jpg') }} 512w"
+		            @elseif ($gendername == 'girls')
+		            	data-srcset="{{CDN::asset('/img/gender/girls/box-1_dresses_large.jpg') }} 1536w,
+		                          {{CDN::asset('/img/gender/girls/box-1_dresses_medium.jpg') }} 1024w,
+		                          {{CDN::asset('/img/gender/girls/box-1_dresses_small.jpg') }} 512w"
+		            @else
+		            	data-srcset="{{CDN::asset('/img/gender/infants/box-1_dresses_large.jpg') }} 1536w,
+		                          {{CDN::asset('/img/gender/infants/box-1_dresses_medium.jpg') }} 1024w,
+		                          {{CDN::asset('/img/gender/infants/box-1_dresses_small.jpg') }} 512w"
+					@endf		                          
+		            sizes="100vw">
 
 		       <source media="(orientation: portrait)"
-		              data-srcset="{{CDN::asset('/img/our-activities/fashion-banner-portrait-large.jpg') }} 1200w,
-		                          {{CDN::asset('/img/our-activities/fashion-banner-portrait-medium.jpg') }} 700w,
-		                          {{CDN::asset('/img/our-activities/fashion-banner-portrait-small.jpg') }} 400w"
-		              sizes="100vw">
+		       		@if ($gendername == 'boys')
+		            	data-srcset="{{CDN::asset('/img/gender/boys/box-1_shirt_portrait_large.jpg') }} 1200w,
+		                          {{CDN::asset('/img/gender/boys/box-1_shirt_portrait_medium.jpg') }} 700w,
+		                          {{CDN::asset('/img/gender/boys/box-1_shirt_portrait_small.jpg') }} 400w"
+		            @elseif ($gendername == 'girls')
+		            	data-srcset="{{CDN::asset('/img/gender/girls/box-1_dresses_portrait_large.jpg') }} 1200w,
+		                          {{CDN::asset('/img/gender/girls/box-1_dresses_portrait_medium.jpg') }} 700w,
+		                          {{CDN::asset('/img/gender/girls/box-1_dresses_portrait_small.jpg') }} 400w"
+		            @else
+		            	data-srcset="{{CDN::asset('/img/gender/infants/box-1_dresses_portrait_large.jpg') }} 1200w,
+		                          {{CDN::asset('/img/gender/infants/box-1_dresses_portrait_medium.jpg') }} 700w,
+		                          {{CDN::asset('/img/gender/infants/box-1_dresses_portrait_small.jpg') }} 400w"
+					@endf
+		            sizes="100vw">
 
-		       <img src="{{CDN::asset('/img/our-activities/fashion-banner-20px.jpg') }}"
+		       <img
+		       	   @if ($gendername == 'boys') 
+		       	   	src="{{CDN::asset('/img/gender/boys/box-1_shirt_20px.jpg') }}"
+		       	   @elseif ($gendername == 'girls')
+		       	   	src="{{CDN::asset('/img/gender/girls/box-1_dresses_20px.jpg') }}"
+		       	   @else
+		       	   	src="{{CDN::asset('/img/gender/infants/box-1_dresses_20px.jpg') }}"
+		       	   @endif
 		           data-sizes="100vw"
-		           class="img-fluid lazyload blur-up w-100" alt="Jaipur - The Super Fashion Show" title="Jaipur - The Super Fashion Show">
+		           class="img-fluid lazyload blur-up w-100"
+		           alt="{{$box_1_alt}}" 
+		           title="{{$box_1_title}}">
 		    </picture>
 		</div>
 		<div class="col-sm-4">
