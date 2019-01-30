@@ -183,8 +183,8 @@ class Cart extends Model
             $this->coupon = $cartData['coupon'];
             $this->save();
         }
-        return $cartData[
-            'messages' => $cartData['messages'], 
+        return [
+            'messages'=> $cartData['messages'], 
             'coupon_applied'=> (isset($cartData['offersApplied'][0]))? $cartData['offersApplied'][0]->getCouponDetails():null,
         ];
     }
