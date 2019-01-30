@@ -271,7 +271,7 @@
 		<div class="d-flex pt-2 ">
 			<div class="pr-3 align-items-center">
 				<h3 class="modal-title font-weight-bold">
-					<img (click)="enterCoupon = false" class="btn-back kss_highlight cd-coupon-apply" src="/img/left-arrow.png"  style="width:20px;"/>
+					<img (click)="hideCouponSideBar()" class="btn-back kss_highlight cd-coupon-apply" src="/img/left-arrow.png"  style="width:20px;"/>
 				</h3>
 			</div>
 			<div class="align-items-center">
@@ -302,7 +302,7 @@
 			</div>
 			<div class="d-block pl-3 pr-3 coupon-sticky" [ngClass]="{'fixed-bottom' : enterCoupon}">
 				<div class="py-2 pr-3 d-flex">
-					<button class="btn kss-btn kss-btn--outline-secondary kss-btn--big mr-3" (click)="enterCoupon = false">Cancel</button>
+					<button class="btn kss-btn kss-btn--outline-secondary kss-btn--big mr-3" (click)="hideCouponSideBar()">Cancel</button>
 					<button class=" btn kss-btn kss-btn--big mt-1 mb-1" data-price="869" (click)="applyCoupon()" [ngClass]="{'disabled' : !couponCode}">
 						<div class="btn-label-initial">
 							Apply

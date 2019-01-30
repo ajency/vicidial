@@ -518,5 +518,10 @@ export class BagViewComponent implements OnInit {
     console.log("couponSelected function", code);
     this.couponCode = code;
   }
+
+  hideCouponSideBar(){
+    this.enterCoupon = false;
+    this.couponErrorMessage = '';
+  }
   
 }
