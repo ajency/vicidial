@@ -12,6 +12,7 @@ export class PromotionComponent implements OnInit {
 	@Input() coupon : any;
 	@Input() orderTotal : any;
   @Input() appliedCoupon : any;
+  @Input() applicable : any;
   // @Output() selectedCouponChanged = new EventEmitter();
 
   selectedCoupon : any;

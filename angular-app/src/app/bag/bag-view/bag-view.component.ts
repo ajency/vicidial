@@ -255,7 +255,7 @@ export class BagViewComponent implements OnInit {
     let url = window.location.href.split("#")[0];
     history.pushState({cart : false}, 'cart', url);
     this.appservice.closeCart();
-    this.enterCoupon = false;
+    this.hideCouponSideBar();
   }
 
   viewOrders(){
@@ -481,7 +481,7 @@ export class BagViewComponent implements OnInit {
       this.cart.summary = response.summary;
       this.cart.applied_coupon = response.coupon_applied;
       // this.displayPromo = true;
-      this.enterCoupon = false;
+      this.hideCouponSideBar()
       this.appservice.removeLoader();
       this.couponErrorMessage = '';
     })
@@ -489,7 +489,7 @@ export class BagViewComponent implements OnInit {
       console.log("error ===>", error);
       if(error.status == 401){
         this.appservice.userLogout();
-        this.enterCoupon = false;
+        this.hideCouponSideBar();
         this.fetchCartDataFromServer();
         this.fetchCartFailed = false; 
       }
@@ -503,7 +503,7 @@ export class BagViewComponent implements OnInit {
         this.appservice.removeLoader();
       }
       // else if(error.status == 403 && this.appservice.isLoggedInUser() ){
-      //   this.enterCoupon = false;
+      //   this.hideCouponSideBar();
       //   this.getNewCartId();
       //   this.fetchCartFailed = false; 
       // }      

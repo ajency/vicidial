@@ -16,8 +16,12 @@
 			<div *ngIf="coupon.description" class="coupon-box__desc custom-size font-weight-normal text-dark py-1">{{coupon.description}}</div>
 		</div>
 		<div class="pb-1">
-			<div class="font-weight-bold coupon-box__saving custom-size">
+			<div *ngIf="applicable" class="font-weight-bold coupon-box__saving custom-size">
 				You save: <span class="text-success">Rs.{{coupon.actual_discount}}</span>
+			</div>
+			<div *ngIf="!applicable" class="font-weight-bold coupon-box__saving custom-size">
+				Shop for Rs. {{coupon.condition.value[0] - orderTotal}} more to avail this coupon and save 
+				<span class="text-success"> <span *ngIf="coupon.action.type == 'value'">Rs. </span>{{coupon.action.value}} <span *ngIf="coupon.action.type == 'percent'">%</span></span>
 			</div>
 		</div>
 		<div class="coupon-box__validity custom-size font-weight-normal">
