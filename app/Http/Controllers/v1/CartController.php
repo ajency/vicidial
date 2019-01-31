@@ -114,11 +114,8 @@ class CartController extends Controller
         $items = getCartData($cart, true, isNotProd());
         $coupons = Offer::getAllActiveCoupons();
 
-        if($cart->coupon != null){
-            $appliedCoupon = Coupon::where('display_code', $cart->coupon)->first()->offer->getCouponDetails();
-        }else{
-            $appliedCoupon = null;
-        }
+        $couponAvailability = $cart->checkCouponAvailability();
+        $appliedCoupon = $couponAvailability['coupon_applied'];
         
         $summary = $cart->getSummary();
         return response()->json(['cart_count' => $cart->itemCount(), 'cart_type' => $cart->type, 'items' => $items, 'applied_coupon' => $appliedCoupon, "coupons" => $coupons, "summary" => $summary]);
@@ -135,11 +132,8 @@ class CartController extends Controller
         $cart->abortNotCart('cart');
         $items = getCartData($cart, true, isNotProd());
 
-        if($cart->coupon != null){
-            $appliedCoupon = Coupon::where('display_code', $cart->coupon)->first()->offer->getCouponDetails();
-        }else{
-            $appliedCoupon = null;
-        }
+        $couponAvailability = $cart->checkCouponAvailability();
+        $appliedCoupon = $couponAvailability['coupon_applied'];
     
         $coupons = Offer::getAllActiveCoupons();
 
