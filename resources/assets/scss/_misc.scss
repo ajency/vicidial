@@ -483,14 +483,68 @@
 }
 
 // Gender landing page
+.sublanding-container{
+	// @media(min-width: 992px){
+	// 	padding-left: 35px;
+ //    	padding-right: 35px;
+	// }
+	@media(max-width: 600px){
+		padding: 0;
+	}
+}
 
 .gender{
+	&__name{
+		font-size: 1.5em;
+	}
 	&__years{
-		font-size: 1.6em;
+		font-size: 1.5em;
 	}
 	.kss-btn--dark{
 		max-width: 200px;
-		font-size: 1.6em;
+		font-size: 1.4em;
         font-weight: 400;
+	}
+	@media (max-width: 991px){
+		&__years{
+			font-size: 1.3em;
+		}
+		.kss-btn--dark{
+			font-size: 1.2em;
+		}
+    }
+    @media (max-width: 767px){
+    	.kss-btn--dark{
+    		position: absolute;
+    		top: -60px;
+    		z-index: 1;
+    	}
+    }
+}
+
+.img-hero{
+	img{
+		height: 100%;
+		object-fit: cover;
+	}
+}
+
+.product-group{
+	border-bottom: 2px solid #d4d4d4;
+	&__col{
+		flex: 1 0 33.33%;
+		min-height: 200px;
+    	display: flex;
+    	align-items: center;
+    	padding: 0 5px;
+	}
+	@media (max-width: 600px){
+		overflow: auto;
+	    display: grid !important;
+	    grid-gap: 20px;
+	    grid-template-columns: 5px repeat(3,calc(60% - 40px)) 5px;
+	}
+	&:after,&:before{
+		content: '';
 	}
 }
