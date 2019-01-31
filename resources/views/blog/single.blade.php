@@ -1,9 +1,7 @@
 @extends('layouts.default')
 
 @section('headjs')
-  <!-- Test -->
   <?php wp_head(); ?>
-  <!-- Test end -->
 @stop
 
 @section('content')
@@ -86,7 +84,7 @@
                   <small class="text-muted mt-2 pl-3 pl-lg-0 d-inline-block">
                     <?php
                       if ( has_post_thumbnail() ) {
-                        echo get_post(get_post_thumbnail_id())->post_excerpt;
+                        echo the_post_thumbnail_caption();
                      } ?>
                   </small>
                 </div>
