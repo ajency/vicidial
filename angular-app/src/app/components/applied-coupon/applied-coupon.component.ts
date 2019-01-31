@@ -10,6 +10,7 @@ export class AppliedCouponComponent implements  OnInit, OnChanges {
 	@Input() promoApplied : any;
 	@Input() promotions : any;
   @Input() orderTotal : any;
+  @Input() cartType : any;
 
   @Output() editCouponTrigger = new EventEmitter();
 
