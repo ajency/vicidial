@@ -62,9 +62,15 @@
 @section('content')
 
 
-
-
 <div class="container sublanding-container mt-md-4 pt-md-4">
+   <!-- Breadcrumbs -->
+   <div class="row d-none d-md-block">
+      <div class="col-12">
+         <div class="mb-4">
+            @include('includes.breadcrumbs', ['breadcrumbs' => $params['breadcrumb']])
+         </div>
+      </div>
+   </div>
 	<div class="row mb-4 pb-md-4">
 		<div class="col-md-7 pr-md-0 img-hero">
 			<picture>

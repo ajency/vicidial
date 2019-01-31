@@ -91,7 +91,7 @@ class StaticController extends Controller
         if (!in_array($gendername, ["boys","girls","infants"])){
             abort(404);
         }
-        $this->params['breadcrumb']['current'] = 'Gender Landing';
+        $this->params['breadcrumb']['current'] = $gendername;
         return view('includes/landingpage/gender')->with('params', $this->params)->with('gendername', $gendername);
     }
 
