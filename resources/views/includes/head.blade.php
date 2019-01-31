@@ -10,10 +10,10 @@
 <meta name="theme-color" content="#707279" />
 <link  rel="icon" type="image/x-icon" href="/img/kss_favicon.png" />
 
-<meta name="ng-inline" content="{{CDN::asset('/views/cart/inline.bundle.js') }}">
-<meta name="ng-vendor" content="{{CDN::asset('/views/cart/vendor.bundle.js') }}">
-<meta name="ng-polyfills" content="{{CDN::asset('/views/cart/polyfills.bundle.js') }}">
-<meta name="ng-main" content="{{CDN::asset('/views/cart/main.bundle.js') }}">
+<meta name="ng-inline" content="{{CDN::asset('/js/cart/inline.bundle.js') }}">
+<meta name="ng-vendor" content="{{CDN::asset('/js/cart/vendor.bundle.js') }}">
+<meta name="ng-polyfills" content="{{CDN::asset('/js/cart/polyfills.bundle.js') }}">
+<meta name="ng-main" content="{{CDN::asset('/js/cart/main.bundle.js') }}">
 
 @empty($delaycss)
 	<link rel="stylesheet" type="text/css" href="{{CDN::mix('/css/kss.css') }}">
