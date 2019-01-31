@@ -267,7 +267,7 @@
 			</div>
 		</nav>
 	</div>
-	<div *ngIf="enterCoupon" class="pr-3">
+	<div *ngIf="enterCoupon" class="">
 		<div class="d-flex pt-2 ">
 			<div class="pr-3 align-items-center">
 				<h3 class="modal-title font-weight-bold">
@@ -294,14 +294,14 @@
 			<div *ngIf="couponErrorMessage" class="kss-flash kss-flash--error">
 			 	{{couponErrorMessage}}
 			</div>
-			<div *ngIf="coupons && coupons.length" class="mb-5">
+			<div *ngIf="coupons && coupons.length" class="mb-5 pb-5">
 				<!-- <div class="text-center">
 					<strong class="h5 font-weight-bold">OR</strong>
 				</div> -->
 				<app-promotions-list  [promotionsList]="coupons" [orderTotal]="cart.summary.sale_price_total" [appliedCoupon]="cart.applied_coupon"></app-promotions-list>	
 			</div>
 			<div class="d-block pl-3 pr-3 coupon-sticky" [ngClass]="{'fixed-bottom' : enterCoupon}">
-				<div class="py-2 pr-3 d-flex">
+				<div class="py-2 pr-3 d-flex align-items-center">
 					<button class="btn kss-btn kss-btn--outline-secondary kss-btn--big mr-3" (click)="hideCouponSideBar()">Cancel</button>
 					<button class=" btn kss-btn kss-btn--big mt-1 mb-1" data-price="869" (click)="applyCoupon()" [ngClass]="{'disabled' : !couponCode}">
 						<div class="btn-label-initial">
