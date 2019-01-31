@@ -93,6 +93,35 @@
   	<button href="javascript:void(0);" class="d-flex align-items-center justify-content-center btn more-products-btn m-auto" id="showMoreProductsBtn">
 		<i class="load-icon-cls align-middle fa-circle-notch fa-lg fa-spin fas mr-2 d-none"></i> Show more products 
 	</button>
+
+	<div class="kss-pagination">
+		<span class="kss-pagination__prev">
+			<span><i class="fas fa-chevron-left"></i></span>
+			<span>Previous Page</span>
+		</span>
+		<div>
+			<span class="kss-pagination__current">
+				1
+			</span>
+			<span class="kss-pagination__link">
+				<a href="#">2</a>
+			</span>
+			<span class="kss-pagination__link">
+				<a href="#">3</a>
+			</span>
+			<span class="kss-pagination__more">...</span>
+			<span class="kss-pagination__last">100</span>
+		</div>
+		<span class="kss-pagination__next">
+			<a href="#">
+				<span>Next Page</span>
+				<span><i class="fas fa-chevron-right"></i></span>
+			</a>
+		</span>
+	</div>
+
+
+
   </div>
 </script>
 
