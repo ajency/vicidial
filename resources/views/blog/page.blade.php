@@ -25,9 +25,7 @@
               if ( has_post_thumbnail() ) {
                 the_post_thumbnail('full', array('class' => 'd-block w-100 img-fluid', 'sizes' => '100vw'));
               }
-              else { ?>
-                <img src="{{CDN::asset('/img/blog/kss_logo_gray.jpg') }}" class="d-block w-100 img-fluid" />
-            <?php } ?>
+            ?>
         </div>
         <div class="container">
           <div class="row">
