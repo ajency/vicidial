@@ -53,7 +53,7 @@
          @if($order_summary['cart_discount'] > 0)
          <div class="d-flex justify-content-between py-1">
             <div>
-               <label class="text-muted f-w-4 m-0">Promotion Discount</label>
+               <label class="text-muted f-w-4 m-0">Coupon Discount</label>
             </div>
             <div class="text-success">
                - <span class="rs-symbol"><i class="fas fa-rupee-sign sm-font"></i></span> {{$order_summary['cart_discount']}}
