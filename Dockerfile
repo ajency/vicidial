@@ -35,7 +35,7 @@ WORKDIR /var/www/html/angular-app
 RUN npm install
 WORKDIR /var/www/html
 RUN composer config --global --auth github-oauth.github.com github_token
-RUN composer install --no-autoloader
+RUN composer install --no-autoloader --no-dev
 RUN npm install
 ADD . /var/www/html
 RUN touch storage/logs/laravel.log
