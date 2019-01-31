@@ -5,8 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build:cart_app": "ng build --prod --app app1 --output-hashing none && npm run postbuild",
-    "build:account_app": "ng build --prod --app app2 --output-hashing none && npm run postbuild_account",
+    "build:cart_app": "ng build --prod --app app1 --output-hashing none && npm run postbuild",    
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
