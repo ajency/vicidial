@@ -441,5 +441,6 @@ return [
         //["name" => "Discount High to Low", "value" => "discount_desc", "is_selected" => false],
         //["name" => "Discount Low to High", "value" => "discount_asc", "is_selected" => false],
     ],
-    "show_list_search" => true
+    "show_list_search" => true,
+    "pagination" => ["show_previous_after"=>5]
 ];
