@@ -51,7 +51,7 @@ class Offer extends Model
 
     public static function sync()
     {
-        self::update(['active' => false]);
+        self::where('active',true)->update(['active' => false]);
         $odoo    = new OdooConnect;
         $coupons = $odoo->defaultExec(config('odoo.model.discount.name'), 'search', [[['coupon_typ', '=', 'SPECIFIC_COUPON'], ['type', '=', 'discount'], ['discount_rule', '=', 'cart']]], ['limit' => 1000]);
         $coupons->each(function ($couponID) {
