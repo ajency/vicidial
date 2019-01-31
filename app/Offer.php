@@ -51,6 +51,7 @@ class Offer extends Model
 
     public static function sync()
     {
+        self::update(['active' => false]);
         $odoo    = new OdooConnect;
         $coupons = $odoo->defaultExec(config('odoo.model.discount.name'), 'search', [[['coupon_typ', '=', 'SPECIFIC_COUPON'], ['type', '=', 'discount'], ['discount_rule', '=', 'cart']]], ['limit' => 1000]);
         $coupons->each(function ($couponID) {
@@ -125,11 +126,12 @@ class Offer extends Model
 
     public function saveOfferData($discount)
     {
-        $this->title    = $discount['name'];
-        $this->start    = $discount['from_date1'];
-        $this->expire   = $discount['to_date1'];
-        $this->priority = $discount['priority1'];
-        $this->description = ($discount['description_sale'] == false)? null : $discount['description_sale'];
+        $this->title       = $discount['name'];
+        $this->start       = $discount['from_date1'];
+        $this->expire      = $discount['to_date1'];
+        $this->priority    = $discount['priority1'];
+        $this->active      = true;
+        $this->description = ($discount['description_sale'] == false) ? null : $discount['description_sale'];
         switch ($discount['coupon_typ']) {
             case 'NO_COUPON':
                 $this->has_coupon = false;
@@ -189,10 +191,10 @@ class Offer extends Model
             ->get();
         $coupons = [];
         foreach ($couponDiscounts as $discount) {
-            if($discount->coupons->sum('left_uses') > 0){
+            if ($discount->coupons->sum('left_uses') > 0) {
                 $coupons[] = $discount->getCouponDetails();
             }
-            
+
         }
         return $coupons;
     }
@@ -207,12 +209,12 @@ class Offer extends Model
         $now = Carbon::now();
         if ($now < $this->start) {
             $cartData['messages']['offer_future'] = "Offer has expired";
-            $cartData['coupon'] = null;
+            $cartData['coupon']                   = null;
             return $cartData;
         }
         if ($now > $this->expire) {
             $cartData['messages']['offer_expire'] = "Offer has expired";
-            $cartData['coupon'] = null;
+            $cartData['coupon']                   = null;
             return $cartData;
         }
         //check if offer satisfies all condition
@@ -224,7 +226,7 @@ class Offer extends Model
         }
         if (!$isApplicable) {
             $cartData['messages']['offer_not_applicable'] = "Offer {$this->title} not applicable on your cart";
-            $cartData['coupon'] = null;
+            $cartData['coupon']                           = null;
             return $cartData;
         }
         //if offer has coupon, check if coupon usage is still valid
@@ -236,7 +238,7 @@ class Offer extends Model
         }
         if (!$couponApplicable) {
             $cartData['messages']['coupon_not_applicable'] = "Coupon not valid or has exceeded its limit";
-            $cartData['coupon'] = null;
+            $cartData['coupon']                            = null;
             return $cartData;
         }
 
@@ -256,8 +258,8 @@ class Offer extends Model
         $sale_total = 0;
 
         foreach ($cartData['items'] as $id => $item) {
-            $mrp_total += $item['price_mrp']*$item['quantity'];
-            $sale_total += $item['price_sale']*$item['quantity'];
+            $mrp_total += $item['price_mrp'] * $item['quantity'];
+            $sale_total += $item['price_sale'] * $item['quantity'];
             $cartData['items'][$id]['price_final'] = $item['price_sale'];
 
         }

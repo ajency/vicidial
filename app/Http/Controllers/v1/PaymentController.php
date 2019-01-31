@@ -17,6 +17,10 @@ class PaymentController extends Controller
     	$user = $cart->user;
 
     	$order->checkInventoryForSuborders();
+    	$couponAvailability = $order->cart->checkCouponAvailability();
+    	if(!empty($couponAvailability['messages'])){
+    		abort(400,array_values($couponAvailability['messages'])[0]);
+    	}
 
     	$attributes = [
 		    'txnid' => $order->txnid, # Transaction ID.
