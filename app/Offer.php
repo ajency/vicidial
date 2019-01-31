@@ -205,6 +205,13 @@ class Offer extends Model
         $isApplicable     = true;
         $couponApplicable = false;
 
+        //check if active
+        if(!$this->active){
+            $cartData['messages']['inactive_offer'] = "Offer is disabled";
+            $cartData['coupon']                   = null;
+            return $cartData;
+        }
+
         //check if offer is valid under current timeframe
         $now = Carbon::now();
         if ($now < $this->start) {
