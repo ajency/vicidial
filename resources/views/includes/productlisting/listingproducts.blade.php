@@ -56,11 +56,13 @@
 				        		</div>
 				        	@{{else}}
 				        		<div id="kss-price-@{{../product_id}}-@{{../color_id}}" class="kss-price kss-price--smaller">
-				        		@{{#ifEquals ../display_price.max ../display_price.min}}
+				        		<!-- @{{#ifEquals ../display_price.max ../display_price.min}}
 				        			₹@{{../display_price.max}}
 				        		@{{else}}
 				        			₹@{{../display_price.min}} - ₹@{{../display_price.max}}
-				        		@{{/ifEquals}}</div>
+				        		@{{/ifEquals}} -->
+				        		₹@{{../display_price.min}}
+				        		</div>
 				        		<small class="kss-original-price text-muted">₹@{{list_price}}</small><span class="kss-discount text-danger">@{{discount_per}}% OFF</span>
 				        	@{{/ifEquals}}
 			        	@{{/ifEquals}}
