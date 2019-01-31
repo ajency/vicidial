@@ -251,16 +251,16 @@ loaded = false;
 
 function loadAngularApp(){
     if(!loaded){
-    $.getScript("/js/cart/inline.bundle.js")        
+    $.getScript("/views/cart/inline.bundle.js")        
             .done(function(script, textStatus){
                 // console.log(textStatus);
-                $.getScript("/js/cart/vendor.bundle.js")
+                $.getScript("/views/cart/vendor.bundle.js")
                     .done(function(script2, textStatus2){
                         // console.log(textStatus2);
-                        $.getScript("/js/cart/polyfills.bundle.js")
+                        $.getScript("/views/cart/polyfills.bundle.js")
                             .done(function(script3, textStatus3){
                                 // console.log(textStatus3);
-                                $.getScript("/js/cart/main.bundle.js")
+                                $.getScript("/views/cart/main.bundle.js")
                                     .done(function(script4,textStatus4){
                                         // console.log(textStatus4);
                                         loaded = true;
