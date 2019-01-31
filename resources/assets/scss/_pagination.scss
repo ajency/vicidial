@@ -1,0 +1,37 @@
+
+.kss-pagination{
+	background-color: #eee;
+    padding: 1.3em 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .controls{
+    	font-size: 1.2em;
+    	font-weight: bold;
+    }
+    a{
+    	color: theme-color('secondary');
+    	display: inline-flex;
+    }
+    .page-numbers{
+    	display: flex;
+	    min-width: 150px;
+	    justify-content: space-between;
+	    font-size: 1.2em;
+	    margin: 0 1.2em;
+    }
+    .current{
+    	font-weight: bold;
+    }
+    @media (max-width: 767px){
+    	background-color: transparent;
+	    padding: 1.3em 0;
+	    justify-content: space-around;
+	    .controls{
+	    	min-width: 120px;
+		    background-color: #dadada;
+		    padding: 10px;
+		    justify-content: center;
+	    }
+    }
+}

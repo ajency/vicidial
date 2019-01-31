@@ -95,27 +95,28 @@
 	</button>
 
 	<div class="kss-pagination">
-		<span class="kss-pagination__prev">
-			<span><i class="fas fa-chevron-left"></i></span>
-			<span>Previous Page</span>
+		<span class="kss-pagination__prev controls pr-md-4 d-flex disabled">
+			<span class="pr-1"><i class="fas fa-chevron-left"></i></span>
+			<span class="d-flex">Previous <span class="d-none d-md-block">Page</span></span>
 		</span>
-		<div>
-			<span class="kss-pagination__current">
+		<div class="page-numbers d-none d-md-flex">
+			<span class="current">
 				1
 			</span>
+			<!-- <span class="dot-more">...</span> -->
 			<span class="kss-pagination__link">
 				<a href="#">2</a>
 			</span>
 			<span class="kss-pagination__link">
 				<a href="#">3</a>
 			</span>
-			<span class="kss-pagination__more">...</span>
-			<span class="kss-pagination__last">100</span>
+			<span class="dot-more">...</span>
+			<span class="kss-pagination__last disabled">100</span>
 		</div>
-		<span class="kss-pagination__next">
+		<span class="kss-pagination__next controls pl-md-4 d-flex">
 			<a href="#">
-				<span>Next Page</span>
-				<span><i class="fas fa-chevron-right"></i></span>
+				<span class="d-flex">Next <span class="d-none d-md-block">Page</span></span>
+				<span class="pl-1"><i class="fas fa-chevron-right"></i></span>
 			</a>
 		</span>
 	</div>
