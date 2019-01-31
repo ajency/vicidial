@@ -34,13 +34,12 @@
             <div class="col-lg-12">
               <div>
                 <div class="mt-4 mb-2 d-none d-lg-block">
-                  <!-- <nav aria-label="breadcrumb" class="">
+                  <nav aria-label="breadcrumb" class="">
                     <ol class="breadcrumb mb-1 bg-transparent p-0">
                       <li class="breadcrumb-item"><a href="/">Home</a></li>
-                      <li class="breadcrumb-item"><a href="<?php echo get_home_url(); ?>">Blog</a></li>
                       <li class="breadcrumb-item active"><a><?php echo the_title() ?></a></li>
                     </ol>
-                  </nav> -->
+                  </nav>
                 </div>
 
                 <?php
