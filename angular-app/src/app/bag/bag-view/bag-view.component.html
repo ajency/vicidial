@@ -147,7 +147,7 @@
 			<hr>
 		</div>
 
-		<div *ngIf="coupons && coupons.length" class="cart-promotion mt-4">
+		<div *ngIf="coupons && coupons.length" class="cart-promotion mt-4" [ngClass]="{'d-none' : cart.cart_type == 'order' && !cart.applied_coupon}">
 			<h4 class="mb-2 font-weight-bold">Coupon Summary</h4>
 			<div *ngIf="cart.applied_coupon">
 				<app-applied-coupon [promoApplied]="cart.applied_coupon" [promotions]="coupons" [orderTotal]="cart.summary.sale_price_total" [cartType]="cart.cart_type" (editCouponTrigger)="displayCouponSideBar()"> </app-applied-coupon>
