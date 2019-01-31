@@ -72,10 +72,10 @@ gulp.task('css', function() {
     .pipe(gzip({ append: false }))
     .pipe(gulp.dest('./public/css'));
 });
-gulp.task('angular', function() {
-    gulp.src('./public/js/cart/*.js')
-    .pipe(gzip({ append: false }))
-    .pipe(gulp.dest('./public/js/cart'));
-});
+// gulp.task('angular', function() {
+//     gulp.src('./public/js/cart/*.js')
+//     .pipe(gzip({ append: false }))
+//     .pipe(gulp.dest('./public/js/cart'));
+// });
 
-gulp.task('default', ['scripts', 'css', 'angular']);
+gulp.task('default', ['scripts', 'css']);
