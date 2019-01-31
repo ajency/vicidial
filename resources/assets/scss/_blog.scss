@@ -460,10 +460,17 @@
 	    	font-size: 15px;
 	    }
 	}
+	h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
+		font-weight: 600;
+		margin-bottom: 1rem;
+	}
 	&--spacer{
 		@media (min-width: 991px){
 			padding: 0 3em 0 4em;
 		}
+	}
+	img{
+		max-width: 100%;
 	}
 }
 
