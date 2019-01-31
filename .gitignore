@@ -47,7 +47,6 @@ yarn-error.log
 /public/js
 /public/mix-manifest.json
 /resources/assets/css/custom.css
-/public/views
 
 # wordpress
 /public/wordpress/wp-config.php
