@@ -62,7 +62,7 @@
 @section('content')
 
 
-<div class="container sublanding-container mt-md-4 pt-md-4">
+<div class="container sublanding-container pt-md-4">
    <!-- Breadcrumbs -->
    <div class="row d-none d-md-block">
       <div class="col-12">
@@ -71,7 +71,13 @@
          </div>
       </div>
    </div>
-	<div class="row mb-4 pb-md-4">
+   <div class="row">
+   	<div class="col-12 gender m-heading text-center">
+   		<h3 class="gender__name font-weight-bold text-dark text-uppercase m-detach"><span>{{$title}}</span></h3>
+		<p class="gender__years text-dark m-detach d-md-none">{{$years}}</p>
+   	</div>
+   </div>
+	<div class="row mb-md-4 pb-md-4">
 		<div class="col-md-7 pr-md-0 img-hero">
 			<picture>
 		       <source media="(orientation: landscape)"
@@ -122,7 +128,7 @@
 		</div>
 		<div class="col-md-5 d-flex">
 			<div class="gender text-center d-flex align-items-center flex-column justify-content-between flex-1">
-				<div class="product-group d-flex mb-3">
+				<div class="product-group d-flex mb-md-3">
 					<div class="product-group__col">
 						@if ($gendername == 'boys') 
 						<a href="/indigo-solid-shirt-449-mid-wash/buy">
@@ -221,8 +227,8 @@
 						@endif
 					</div>
 				</div>	
-				<h3 class="gender__name font-weight-bold text-dark text-uppercase">{{$title}}</h3>
-				<p class="gender__years text-dark">{{$years}}</p>
+				<h3 class="gender__name font-weight-bold text-dark text-uppercase m-detach">{{$title}}</h3>
+				<p class="gender__years text-dark m-detach">{{$years}}</p>
 				@if ($gendername == 'boys')
 					<a href="/boys/toddler-2-7-years/shirt" class="btn kss-btn kss-btn--dark">Shop <strong>Shirts</strong></a>
 				@elseif ($gendername == 'girls')
@@ -233,7 +239,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="row mb-4 pb-md-4">
+	<div class="row mb-md-4 pb-md-4">
 		<div class="col-md-7 pr-md-0 img-hero">
 			<picture>
 		       <source media="(orientation: landscape)"
@@ -284,7 +290,7 @@
 		</div>
 		<div class="col-md-5 d-flex">
 			<div class="gender text-center d-flex align-items-center flex-column justify-content-between">
-				<div class="product-group d-flex mb-3">
+				<div class="product-group d-flex mb-md-3">
 					<div class="product-group__col">
 						@if ($gendername == 'boys') 
 						<a href="/black-essential-graphic-tshirt-927-black/buy">
@@ -389,8 +395,8 @@
 						@endif
 					</div>
 				</div>	
-				<h3 class="gender__name font-weight-bold text-dark text-uppercase">{{$title}}</h3>
-				<p class="gender__years text-dark">{{$years}}</p>
+				<h3 class="gender__name font-weight-bold text-dark text-uppercase m-detach">{{$title}}</h3>
+				<p class="gender__years text-dark m-detach">{{$years}}</p>
 				@if ($gendername == 'boys')
 					<a href="/boys/toddler-2-7-years/tshirt" class="btn kss-btn kss-btn--dark">Shop <strong>T-Shirts</strong></a>
 				@elseif ($gendername == 'girls')
@@ -401,7 +407,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="row mb-4 pb-md-4">
+	<div class="row mb-md-4 pb-md-4">
 		<div class="col-md-7 pr-md-0 img-hero">
 			<picture>
 		       <source media="(orientation: landscape)"
@@ -452,7 +458,7 @@
 		</div>
 		<div class="col-md-5 d-flex">
 			<div class="gender text-center d-flex align-items-center flex-column justify-content-between flex-1">
-				<div class="product-group d-flex mb-3">
+				<div class="product-group d-flex mb-md-3">
 					<div class="product-group__col">
 						@if ($gendername == 'boys') 
 						<a href="/boys-ethnic-wear-2235-gold/buy">
@@ -556,8 +562,8 @@
 						@endif
 					</div>
 				</div>	
-				<h3 class="gender__name font-weight-bold text-dark text-uppercase">{{$title}}</h3>
-				<p class="gender__years text-dark">{{$years}}</p>
+				<h3 class="gender__name font-weight-bold text-dark text-uppercase m-detach">{{$title}}</h3>
+				<p class="gender__years text-dark m-detach">{{$years}}</p>
 				@if ($gendername == 'boys')
 					<a href="/boys/toddler-2-7-years/ethnic" class="btn kss-btn kss-btn--dark">Shop <strong>Ethnic</strong></a>
 				@elseif ($gendername == 'girls')
@@ -568,7 +574,7 @@
 			</div>
 		</div>
 	</div>	
-	<div class="row mb-4 pb-md-4">
+	<div class="row mb-md-4 pb-md-4">
 		<div class="col-md-7 pr-md-0 img-hero">
 			<picture>
 		       <source media="(orientation: landscape)"
@@ -619,7 +625,7 @@
 		</div>
 		<div class="col-md-5 d-flex">
 			<div class="gender text-center d-flex align-items-center flex-column justify-content-between flex-1">
-				<div class="product-group d-flex mb-3">
+				<div class="product-group d-flex mb-md-3">
 					<div class="product-group__col">
 						@if ($gendername == 'boys') 
 						<a href="/fixed-waist-with-adjustable-elastic-ombre-jeans-2254-mid-wash/buy">
@@ -725,8 +731,8 @@
 						@endif
 					</div>
 				</div>
-				<h3 class="gender__name font-weight-bold text-dark text-uppercase">{{$title}}</h3>
-				<p class="gender__years text-dark">{{$years}}</p>
+				<h3 class="gender__name font-weight-bold text-dark text-uppercase m-detach">{{$title}}</h3>
+				<p class="gender__years text-dark m-detach">{{$years}}</p>
 				@if ($gendername == 'boys')
 					<a href="/boys/toddler-2-7-years/bottoms" class="btn kss-btn kss-btn--dark">Shop <strong>Bottoms</strong></a>
 				@elseif ($gendername == 'girls')
@@ -737,7 +743,7 @@
 			</div>
 		</div>
 	</div>		
-	<div class="row mb-4 pb-md-4">
+	<div class="row mb-md-4 pb-md-4">
 		<div class="col-md-7 pr-md-0 img-hero">
 			<picture>
 		       <source media="(orientation: landscape)"
@@ -788,7 +794,7 @@
 		</div>
 		<div class="col-md-5 d-flex">
 			<div class="gender text-center d-flex align-items-center flex-column justify-content-between flex-1">
-				<div class="product-group d-flex mb-3">
+				<div class="product-group d-flex mb-md-3">
 					<div class="product-group__col">
 						@if ($gendername == 'boys') 
 						<a href="/navy-world-map-printed-short-1805-navy/buy">
@@ -895,8 +901,8 @@
 						@endif
 					</div>
 				</div>
-				<h3 class="gender__name font-weight-bold text-dark text-uppercase">{{$title}}</h3>
-				<p class="gender__years text-dark">{{$years}}</p>
+				<h3 class="gender__name font-weight-bold text-dark text-uppercase m-detach">{{$title}}</h3>
+				<p class="gender__years text-dark m-detach">{{$years}}</p>
 				@if ($gendername == 'boys')
 					<a href="/boys/toddler-2-7-years/short" class="btn kss-btn kss-btn--dark">Shop <strong>Shorts</strong></a>
 				@elseif ($gendername == 'girls')
@@ -908,7 +914,7 @@
 		</div>
 	</div>
 	@if ($gendername != 'infants')		
-	<div class="row mb-4 pb-md-4">
+	<div class="row mb-md-4 pb-md-4">
 		<div class="col-md-7 pr-md-0 img-hero">
 			<picture>
 		       <source media="(orientation: landscape)"
@@ -949,7 +955,7 @@
 		</div>
 		<div class="col-md-5 d-flex">
 			<div class="gender text-center d-flex align-items-center flex-column justify-content-between flex-1">
-				<div class="product-group d-flex mb-3">
+				<div class="product-group d-flex mb-md-3">
 					<div class="product-group__col">
 						@if ($gendername == 'boys') 
 						<a href="/disney-mickey-black-shoe-2672-black/buy">
@@ -1026,8 +1032,8 @@
 						@endif
 					</div>
 				</div>
-				<h3 class="gender__name font-weight-bold text-dark text-uppercase">{{$title}}</h3>
-				<p class="gender__years text-dark">{{$years}}</p>
+				<h3 class="gender__name font-weight-bold text-dark text-uppercase m-detach">{{$title}}</h3>
+				<p class="gender__years text-dark m-detach">{{$years}}</p>
 				@if ($gendername == 'boys')
 					<a href="/boys/toddler-2-7-years" class="btn kss-btn kss-btn--dark">Shop <strong>Shoes</strong></a>
 				@elseif ($gendername == 'girls')
@@ -1038,7 +1044,7 @@
 	</div>	
 	@endif	
 	@if ($gendername == 'girls')		
-	<div class="row mb-4 pb-md-4">
+	<div class="row mb-md-4 pb-md-4">
 		<div class="col-md-7 pr-md-0 img-hero">
 			<picture>
 		       <source media="(orientation: landscape)"
@@ -1063,7 +1069,7 @@
 		</div>
 		<div class="col-md-5 d-flex">
 			<div class="gender text-center d-flex align-items-center flex-column justify-content-between flex-1">
-				<div class="product-group d-flex mb-3">
+				<div class="product-group d-flex mb-md-3">
 					<div class="product-group__col">
 						<a href="/full-elasticated-all-over-printed-woven-short-2056-brown/buy">
 							<img src="https://www.kidsuperstore.in/images/products/36459/list-view/load/upgt180901-an-7022-full-elasticated-all-over-printed-woven-short-color-brown-1.jpg" data-srcset="https://www.kidsuperstore.in/images/products/36459/list-view/1x/upgt180901-an-7022-full-elasticated-all-over-printed-woven-short-color-brown-1.jpg 270w, https://www.kidsuperstore.in/images/products/36459/list-view/2x/upgt180901-an-7022-full-elasticated-all-over-printed-woven-short-color-brown-1.jpg 540w, https://www.kidsuperstore.in/images/products/36459/list-view/3x/upgt180901-an-7022-full-elasticated-all-over-printed-woven-short-color-brown-1.jpg 810w" sizes="(min-width: 1200px) 270px,(min-width: 992px) 22vw,(min-width: 768px) 33vw, 45vw" class="card-img-top blur-up lazyloaded" title="Full Elasticated All over Printed Woven Short - Brown" alt="Full Elasticated All over Printed Woven Short - Brown" srcset="https://www.kidsuperstore.in/images/products/36459/list-view/1x/upgt180901-an-7022-full-elasticated-all-over-printed-woven-short-color-brown-1.jpg 270w, https://www.kidsuperstore.in/images/products/36459/list-view/2x/upgt180901-an-7022-full-elasticated-all-over-printed-woven-short-color-brown-1.jpg 540w, https://www.kidsuperstore.in/images/products/36459/list-view/3x/upgt180901-an-7022-full-elasticated-all-over-printed-woven-short-color-brown-1.jpg 810w">
@@ -1098,13 +1104,13 @@
 					</a>
 					</div>
 				</div>
-				<h3 class="gender__name font-weight-bold text-dark text-uppercase">{{$title}}</h3>
-				<p class="gender__years text-dark">{{$years}}</p>
+				<h3 class="gender__name font-weight-bold text-dark text-uppercase m-detach">{{$title}}</h3>
+				<p class="gender__years text-dark m-detach">{{$years}}</p>
 				<a href="/girls/toddler-2-7-years/short" class="btn kss-btn kss-btn--dark">Shop <strong>Shorts</strong></a>
 			</div>
 		</div>
 	</div>	
-	<div class="row mb-4 pb-md-4">
+	<div class="row mb-md-4 pb-md-4">
 		<div class="col-md-7 pr-md-0 img-hero">
 			<picture>
 		       <source media="(orientation: landscape)"
@@ -1129,7 +1135,7 @@
 		</div>
 		<div class="col-md-5 d-flex">
 			<div class="gender text-center d-flex align-items-center flex-column justify-content-between flex-1">
-				<div class="product-group d-flex mb-3">
+				<div class="product-group d-flex mb-md-3">
 					<div class="product-group__col">
 						<a href="/floral-party-wear-bally-1120-pink/buy">
 							<img src="https://www.kidsuperstore.in/images/products/38461/list-view/load/tuskey-241-floral-party-wear-bally-color-pink-1.jpg" data-srcset="https://www.kidsuperstore.in/images/products/38461/list-view/1x/tuskey-241-floral-party-wear-bally-color-pink-1.jpg 270w, https://www.kidsuperstore.in/images/products/38461/list-view/2x/tuskey-241-floral-party-wear-bally-color-pink-1.jpg 540w, https://www.kidsuperstore.in/images/products/38461/list-view/3x/tuskey-241-floral-party-wear-bally-color-pink-1.jpg 810w" sizes="(min-width: 1200px) 270px,(min-width: 992px) 22vw,(min-width: 768px) 33vw, 45vw" class="card-img-top blur-up lazyloaded" title="Floral Party Wear Bally - Pink" alt="Floral Party Wear Bally - Pink" srcset="https://www.kidsuperstore.in/images/products/38461/list-view/1x/tuskey-241-floral-party-wear-bally-color-pink-1.jpg 270w, https://www.kidsuperstore.in/images/products/38461/list-view/2x/tuskey-241-floral-party-wear-bally-color-pink-1.jpg 540w, https://www.kidsuperstore.in/images/products/38461/list-view/3x/tuskey-241-floral-party-wear-bally-color-pink-1.jpg 810w">
@@ -1167,13 +1173,27 @@
 					</a>
 					</div>
 				</div>
-				<h3 class="gender__name font-weight-bold text-dark text-uppercase">{{$title}}</h3>
-				<p class="gender__years text-dark">{{$years}}</p>
+				<h3 class="gender__name font-weight-bold text-dark text-uppercase m-detach">{{$title}}</h3>
+				<p class="gender__years text-dark m-detach">{{$years}}</p>
 				<a href="/shoes/girls/toddler-2-7-years" class="btn kss-btn kss-btn--dark">Shop <strong>Shoes</strong></a>
 			</div>
 		</div>
 	</div>		
 	@endif			
 </div>
+
+@stop
+
+
+@section('footjs')
+
+<script type="text/javascript">
+	// $(function(){
+	// 	$('.sublanding-container > .row').each(function(){
+	// 		var title_years = $(this).find('.m-detach').detach();
+	// 		$(this).find('.img-hero').append(title_years);
+	// 	})
+	// });
+</script>
 
 @stop
