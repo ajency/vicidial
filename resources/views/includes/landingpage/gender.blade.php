@@ -220,9 +220,9 @@
 				@if ($gendername == 'boys')
 					<a href="/boys/toddler-2-7-years/shirt" class="btn kss-btn kss-btn--dark">Shop <strong>Shirts</strong></a>
 				@elseif ($gendername == 'girls')
-					<a href="#" class="btn kss-btn kss-btn--dark">Shop <strong>Dresses</strong></a>
+					<a href="/girls/toddler-2-7-years/dress" class="btn kss-btn kss-btn--dark">Shop <strong>Dresses</strong></a>
 				@else
-					<a href="#" class="btn kss-btn kss-btn--dark">Shop <strong>Dresses</strong></a>
+					<a href="/infant-0-2-years/dress/" class="btn kss-btn kss-btn--dark">Shop <strong>Dresses</strong></a>
 				@endif	
 			</div>
 		</div>
@@ -388,9 +388,9 @@
 				@if ($gendername == 'boys')
 					<a href="/boys/toddler-2-7-years/tshirt" class="btn kss-btn kss-btn--dark">Shop <strong>T-Shirts</strong></a>
 				@elseif ($gendername == 'girls')
-					<a href="#" class="btn kss-btn kss-btn--dark">Shop <strong>T-Shirts</strong></a>
+					<a href="/girls/toddler-2-7-years/tshirt" class="btn kss-btn kss-btn--dark">Shop <strong>T-Shirts</strong></a>
 				@else
-					<a href="#" class="btn kss-btn kss-btn--dark">Shop <strong>T-Shirts</strong></a>
+					<a href="/infant-0-2-years/tshirt/" class="btn kss-btn kss-btn--dark">Shop <strong>T-Shirts</strong></a>
 				@endif	
 			</div>
 		</div>
@@ -555,9 +555,9 @@
 				@if ($gendername == 'boys')
 					<a href="/boys/toddler-2-7-years/ethnic" class="btn kss-btn kss-btn--dark">Shop <strong>Ethnic</strong></a>
 				@elseif ($gendername == 'girls')
-					<a href="#" class="btn kss-btn kss-btn--dark">Shop <strong>Woven Tops</strong></a>
+					<a href="/girls/toddler-2-7-years/woven-tops" class="btn kss-btn kss-btn--dark">Shop <strong>Woven Tops</strong></a>
 				@else
-					<a href="#" class="btn kss-btn kss-btn--dark">Shop <strong>Bottoms</strong></a>
+					<a href="/infant-0-2-years/bottoms/" class="btn kss-btn kss-btn--dark">Shop <strong>Bottoms</strong></a>
 				@endif	
 			</div>
 		</div>
@@ -724,9 +724,9 @@
 				@if ($gendername == 'boys')
 					<a href="/boys/toddler-2-7-years/bottoms" class="btn kss-btn kss-btn--dark">Shop <strong>Bottoms</strong></a>
 				@elseif ($gendername == 'girls')
-					<a href="#" class="btn kss-btn kss-btn--dark">Shop <strong>Ethnic</strong></a>
+					<a href="/girls/toddler-2-7-years/ethnic" class="btn kss-btn kss-btn--dark">Shop <strong>Ethnic</strong></a>
 				@else
-					<a href="#" class="btn kss-btn kss-btn--dark">Shop <strong>Utility</strong></a>
+					<a href="/infant-0-2-years/infant-utility/" class="btn kss-btn kss-btn--dark">Shop <strong>Utility</strong></a>
 				@endif	
 			</div>
 		</div>
@@ -894,9 +894,9 @@
 				@if ($gendername == 'boys')
 					<a href="/boys/toddler-2-7-years/short" class="btn kss-btn kss-btn--dark">Shop <strong>Shorts</strong></a>
 				@elseif ($gendername == 'girls')
-					<a href="#" class="btn kss-btn kss-btn--dark">Shop <strong>Denim</strong></a>
+					<a href="/girls/toddler-2-7-years/jeans" class="btn kss-btn kss-btn--dark">Shop <strong>Denim</strong></a>
 				@else
-					<a href="#" class="btn kss-btn kss-btn--dark">Shop <strong>Shoes</strong></a>
+					<a href="/shoes/infant-0-2-years/" class="btn kss-btn kss-btn--dark">Shop <strong>Shoes</strong></a>
 				@endif	
 			</div>
 		</div>
@@ -1025,7 +1025,7 @@
 				@if ($gendername == 'boys')
 					<a href="/boys/toddler-2-7-years" class="btn kss-btn kss-btn--dark">Shop <strong>Shoes</strong></a>
 				@elseif ($gendername == 'girls')
-					<a href="#" class="btn kss-btn kss-btn--dark">Shop <strong>Bottoms</strong></a>
+					<a href="/girls/toddler-2-7-years/bottoms" class="btn kss-btn kss-btn--dark">Shop <strong>Bottoms</strong></a>
 				@endif	
 			</div>
 		</div>
@@ -1094,7 +1094,7 @@
 				</div>
 				<h3 class="gender__name font-weight-bold text-dark text-uppercase">{{$title}}</h3>
 				<p class="gender__years text-dark">{{$years}}</p>
-				<a href="/boys/toddler-2-7-years" class="btn kss-btn kss-btn--dark">Shop <strong>Shorts</strong></a>
+				<a href="/girls/toddler-2-7-years/short" class="btn kss-btn kss-btn--dark">Shop <strong>Shorts</strong></a>
 			</div>
 		</div>
 	</div>	
@@ -1163,7 +1163,7 @@
 				</div>
 				<h3 class="gender__name font-weight-bold text-dark text-uppercase">{{$title}}</h3>
 				<p class="gender__years text-dark">{{$years}}</p>
-				<a href="/boys/toddler-2-7-years" class="btn kss-btn kss-btn--dark">Shop <strong>Shoes</strong></a>
+				<a href="/shoes/girls/toddler-2-7-years" class="btn kss-btn kss-btn--dark">Shop <strong>Shoes</strong></a>
 			</div>
 		</div>
 	</div>		
