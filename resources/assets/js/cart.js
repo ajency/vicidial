@@ -251,16 +251,16 @@ loaded = false;
 
 function loadAngularApp(){
     if(!loaded){
-        $.getScript($('meta[name="ng-inline"]').attr('content'))
+    $.getScript("/js/cart/inline.bundle.js")        
             .done(function(script, textStatus){
                 // console.log(textStatus);
-                $.getScript($('meta[name="ng-vendor"]').attr('content'))
+                $.getScript("/js/cart/vendor.bundle.js")
                     .done(function(script2, textStatus2){
                         // console.log(textStatus2);
-                        $.getScript($('meta[name="ng-polyfills"]').attr('content'))
+                        $.getScript("/js/cart/polyfills.bundle.js")
                             .done(function(script3, textStatus3){
                                 // console.log(textStatus3);
-                                $.getScript($('meta[name="ng-main"]').attr('content'))
+                                $.getScript("/js/cart/main.bundle.js")
                                     .done(function(script4,textStatus4){
                                         // console.log(textStatus4);
                                         loaded = true;
