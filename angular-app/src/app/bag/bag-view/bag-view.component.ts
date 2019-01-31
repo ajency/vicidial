@@ -518,11 +518,14 @@ export class BagViewComponent implements OnInit {
   hideCouponSideBar(){
     this.enterCoupon = false;
     this.couponErrorMessage = '';
+    $('#cd-cart').removeClass('overflow-h');
   }
 
   displayCouponSideBar(){
-    if(this.cart.cart_type == "cart")
+    if(this.cart.cart_type == "cart"){
       this.enterCoupon = true;
+      $('#cd-cart').addClass('overflow-h');
+    }
   }
   
 }
