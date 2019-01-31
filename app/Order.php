@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Ajency\Connections\OdooConnect;
 use App\Cart;
 use App\Jobs\OdooOrder;
 use App\SubOrder;
@@ -14,7 +15,7 @@ class Order extends Model
     use Payable;
 
     protected $casts = [
-        'address_data' => 'array',
+        'address_data'   => 'array',
         'aggregate_data' => 'array',
     ];
 
@@ -37,15 +38,15 @@ class Order extends Model
 
     public function setSubOrders()
     {
-        $cart       = Cart::find($this->cart_id);
+        $cart = Cart::find($this->cart_id);
         // $locations = Location::where('use_in_inventory',true)->pluck('odoo_id');
-        $address = $this->address;
+        $address   = $this->address;
         $locations = Location::getLocationDistances($address->latitude, $address->longitude);
-        $suborders  = generateSubordersData($cart->getItems(), $locations);
+        $suborders = generateSubordersData($cart->getItems(true), $locations);
         // print_r($suborders);
         foreach ($suborders as $locationID => $items) {
-            $subOrder               = new SubOrder;
-            $subOrder->order_id     = $this->id;
+            $subOrder              = new SubOrder;
+            $subOrder->order_id    = $this->id;
             $subOrder->location_id = $locationID;
             $subOrder->setItems($items);
             $subOrder->aggregateData();
@@ -66,6 +67,13 @@ class Order extends Model
         foreach ($this->subOrders as $subOrder) {
             OdooOrder::dispatch($subOrder)->onQueue('odoo_order');
         }
+        if ($this->cart->coupon != null) {
+            $odoo              = new OdooConnect;
+            $currentCouponLeft = $odoo->defaultExec('sale.order.coupon', 'search_read', [[['global_code', '=', $this->cart->coupon]]], ['fields' => ['consumed_coupon_count']])->first();
+            $odoo->defaultExec('sale.order.coupon', 'write', [[$currentCouponLeft['id']],['consumed_coupon_count' => $currentCouponLeft['consumed_coupon_count']-1]], null);
+            Coupon::where('odoo_id',$currentCouponLeft['id'])->update(['left_uses' => $currentCouponLeft['consumed_coupon_count'] -1]);
+        }
+
     }
 
     public function subOrderData()
@@ -153,7 +161,7 @@ class Order extends Model
     {
         sendSMS('order-success', [
             'to'      => $this->cart->user->phone,
-            'message' => "Your order with order id {$this->txnid} for Rs. {$this->subOrderData()['you_pay']} has been placed successfully on KidSuperStore.in. Check your order at ".url('/#/account/my-orders/')."/{$this->txnid}",
+            'message' => "Your order with order id {$this->txnid} for Rs. {$this->subOrderData()['you_pay']} has been placed successfully on KidSuperStore.in. Check your order at " . url('/#/account/my-orders/') . "/{$this->txnid}",
         ]);
     }
 

@@ -111,8 +111,8 @@ function html5blank_styles()
 {
     // wp_enqueue_style( 'wp-bootstrap-pro-fontawesome-cdn', 'https://use.fontawesome.com/releases/v5.1.0/css/all.css' );
 
-    wp_register_style('kssstyles', get_template_directory_uri() . '/css/kss.css', array(), '1.0', 'all');
-    // wp_enqueue_style('kssstyles'); // Enqueue it!
+    wp_register_style('kssstyles', get_template_directory_uri() . '/style.css', array(), '1.0', 'all');
+    wp_enqueue_style('kssstyles'); // Enqueue it!
 }
 
 // Register HTML5 Blank Navigation

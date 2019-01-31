@@ -7,12 +7,12 @@ var rootDir = path.resolve(__dirname, '../');
 var buildDir = path.resolve(__dirname, './dist'); // buildDir for cart app
 // var buildDir = path.resolve(__dirname, './dist2'); // buildDir for account app
 
-var destDir = path.resolve(rootDir, 'public/views/cart'); // destDir for cart app
+var destDir = path.resolve(rootDir, 'public/js/cart'); // destDir for cart app
 // var destDir = path.resolve(rootDir, 'public/views/my-account'); //destDir for account app
 
 let src = path.join(buildDir, 'main.bundle.js');
 
-let filesnames = ['main.bundle.js', 'polyfills.bundle.js', 'styles.bundle.css', 'vendor.bundle.js', 'inline.bundle.js', '0.chunk.js', '1.chunk.js', '2.chunk.js'];
+let filesnames = ['main.bundle.js', 'polyfills.bundle.js', 'vendor.bundle.js', 'inline.bundle.js', '0.chunk.js', '1.chunk.js', '2.chunk.js'];
 
 console.log("rootDir ==>", rootDir);
 console.log("buildDir ==>", buildDir);

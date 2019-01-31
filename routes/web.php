@@ -29,7 +29,7 @@ Route::group([
 			Route::get('/get', $group_app_version.'\CartController@guestCartFetch');
 			Route::get('/delete', $group_app_version.'\CartController@guestCartDelete');
 			Route::get('/check-status', $group_app_version.'\CartController@checkStatus');
-			Route::get('/changePromotion', $group_app_version.'\CartController@guestCartPromotion');
+			Route::get('/apply-coupon', $group_app_version.'\CartController@guestCartCoupon');
 		});
 		Route::get('/states/all', $group_app_version.'\AddressController@fetchStates');
 	});
@@ -57,7 +57,7 @@ Route::group([
 			Route::post('/update', $group_app_version.'\CartController@guestModifyItem');
 			Route::get('/get', $group_app_version.'\CartController@guestCartFetch');
 			Route::get('/delete', $group_app_version.'\CartController@guestCartDelete');
-			Route::get('/change-promotion', $group_app_version.'\CartController@guestCartPromotion');
+			Route::get('/apply-coupon', $group_app_version.'\CartController@guestCartCoupon');
 			Route::get('/check-status', $group_app_version.'\CartController@checkStatus');
 		});
 	});

@@ -62,4 +62,63 @@ return [
             'product_ids',
         ],
     ],
+
+    'model'       => [
+        'discount' => [
+            'name'   => 'product.template',
+            'fields' => [
+                'id',
+                'name',
+                'type', //discount
+                'discount_rule', //[cart price, product price]
+                'from_date1',
+                'to_date1',
+                'priority1',
+                'coupon_typ', //specific/no coupon
+                'uses_customer', //uses per customer
+                'auto_gen',
+                'uses_coup', //uses per coupon
+                'apply1', //action - apply (discount type)
+                'discount_amt',
+                'max_qty',
+                'qty_step',
+                'apply_ship',
+                'is_discard_rule', //discard other discounts
+                'free_ship',
+                'coupon_qty',
+                'code_len',
+                'code_format',
+                'code_prefix',
+                'code_suffix',
+                'dash_x',
+                'coupon_count',
+                'condition_id',
+                'description_sale',
+            ],
+        ],
+        'coupon'   => [
+            'name'   => 'sale.order.coupon',
+            'fields' => [
+                'create_uid',
+                'code',
+                'global_code',
+                'total_coupon_count',
+                'uses_customer',
+                '__last_update',
+                'expiration_date',
+                'global_discount_coupon',
+                'program_id', //product.template relation
+                'write_uid',
+                'state',
+                'consumed_coupon_count',
+                'uses_coup',
+                'write_date',
+                'create_date',
+                'partner_ids',
+                'partner_id',
+                'id',
+                'display_name',
+            ],
+        ],
+    ],
 ];

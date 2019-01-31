@@ -27,7 +27,7 @@ Route::group([
 			Route::post('/{id}/insert', $group_app_version.'\CartController@userAddItem');
 			Route::get('/{id}/get', $group_app_version.'\CartController@userCartFetch');
 			Route::get('/{id}/delete', $group_app_version.'\CartController@userCartDelete');
-			Route::get('/{id}/change-promotion', $group_app_version.'\CartController@userCartPromotion');
+			Route::get('/{id}/apply-coupon', $group_app_version.'\CartController@userCartCoupon');
 			Route::post('/{id}/create-order', $group_app_version.'\OrderController@userCreateOrder');
 			Route::post('/{id}/continue-order', $group_app_version.'\OrderController@continueOrder');
 			Route::get('/mine', $group_app_version.'\CartController@getCartID');
@@ -85,7 +85,7 @@ Route::group([
                 Route::post('/{id}/update', $group_app_version . '\CartController@userModifyItem');
                 Route::get('/{id}/get', $group_app_version . '\CartController@userCartFetch');
                 Route::get('/{id}/delete', $group_app_version . '\CartController@userCartDelete');
-                Route::get('/{id}/change-promotion', $group_app_version . '\CartController@userCartPromotion');
+	            Route::get('/{id}/apply-coupon', $group_app_version.'\CartController@userCartCoupon');
                 Route::get('/mine', $group_app_version . '\CartController@getCartID');
                 Route::get('/start-fresh', $group_app_version . '\CartController@startFresh');
                 Route::post('/{id}/create-order', $group_app_version . '\OrderController@userCreateOrder');
@@ -99,7 +99,6 @@ Route::group([
                 Route::get('/all', $group_app_version . '\AddressController@userFetchAddresses');
                 Route::get('/delete', $group_app_version . '\AddressController@userDeleteAddress');
             });
-
 			Route::middleware('check-user')->get('/get-user-info', $group_app_version.'\UserController@fetchUserInfo');
 			Route::post('/save-user-details', $group_app_version.'\UserController@saveUserDetails');
 

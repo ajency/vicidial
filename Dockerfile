@@ -29,6 +29,11 @@ RUN apt-get install git -y
 RUN npm install -g gulp
 COPY composer.json composer.lock package.json /var/www/html/
 WORKDIR /var/www/html
+RUN mkdir angular-app
+COPY angular-app/package.json angular-app/package.json
+WORKDIR /var/www/html/angular-app
+RUN npm install
+WORKDIR /var/www/html
 RUN composer config --global --auth github-oauth.github.com github_token
 RUN composer install --no-autoloader
 RUN npm install
@@ -39,6 +44,9 @@ RUN composer config --global --auth github-oauth.github.com github_token
 RUN composer install
 RUN npm run production
 RUN gulp
+WORKDIR /var/www/html/angular-app
+RUN npm run build:cart_app
+WORKDIR /var/www/html
 RUN chmod -R 777 /var/www/html/storage
 RUN echo "* * * * * cd /var/www/html && php /var/www/html/artisan schedule:run >> /dev/null 2>&1" > /etc/cron.d/artisan-schedule-run
 # Give execution rights on the cron job

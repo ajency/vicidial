@@ -1,5 +1,5 @@
 <div *ngIf="promoApplied && promo" class="kss-flash kss-flash--info mb-3">
-	<div class="d-flex align-items-center justify-content-between">
+	<div class="d-flex justify-content-between">
 		<div class="pr-4">
 			<p class="mb-2 text-success">COUPON APPLIED!</p>
 			<p class="font-weight-normal mb-2 label-size">{{promo.display_title}}</p>
@@ -7,6 +7,6 @@
 				Saved <span class="text-success">₹{{promo.actual_discount}}</span>
 			</p>
 		</div>
-		<!-- <i class="fas fa-pencil-alt edit-pencil edit-promotion cursor-pointer ml-2 mt-1"></i> -->
+		<i *ngIf="cartType == 'cart'" class="fas fa-pencil-alt edit-pencil edit-promotion cursor-pointer ml-2 mt-1" (click)="editCoupon()"></i>
 	</div>
 </div>

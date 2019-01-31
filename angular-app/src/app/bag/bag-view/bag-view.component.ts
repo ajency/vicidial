@@ -41,16 +41,20 @@ export class BagViewComponent implements OnInit {
   displayPromo : boolean = true;
   showLoginPopup : boolean = true;
   loginSucessListener : Subscription;
-
+  coupons : any;
+  couponCodeListener : any;
+  couponCode : any;
+  couponErrorMessage : any;
   constructor( private router: Router,
                private appservice : AppServiceService,
                private apiservice : ApiServiceService,
-               private zone : NgZone
+               private zone : NgZone               
               ) { 
     this.reloadSubscription = this.appservice.listenToAddToCartEvent().subscribe(()=> { this.reloadCart() });
     this.loadSubscription = this.appservice.listenToOpenCartEvent().subscribe(()=> { this.loadCart() });
 
     this.loginSucessListener = this.appservice.listenToLoginSuccess().subscribe(()=>{ this.loginSuccess() });
+    this.couponCodeListener = this.appservice.listenToCouponCodeChange().subscribe((data)=>{ this.couponSelected(data) })
   }
 
   reloadCart(){
@@ -71,6 +75,7 @@ export class BagViewComponent implements OnInit {
     this.reloadSubscription.unsubscribe();
     this.loadSubscription.unsubscribe();
     this.loginSucessListener.unsubscribe();
+    this.couponCodeListener.unsubscribe();
   }
 
   ngOnInit() {
@@ -133,11 +138,14 @@ export class BagViewComponent implements OnInit {
 
 
   fetchCartSuccessHandler(response){
-    this.cart = this.formattedCartDataForUI(response);   
-    this.formatPromotions(response);          
+    this.cart = this.formattedCartDataForUI(response);
+    console.log("this.cart ==>", this.cart);
+    // this.formatPromotions(response);
+    // this.setCoupons();
+    this.formatCoupons(response.coupons);
     this.checkCartItemOutOfStock();
     this.appservice.removeLoader();
-    this.checkAppliedPromotionValidity();
+    // this.checkAppliedPromotionValidity();
     this.updateLocalDataAndUI(this.cart, this.cart.cart_count);
     console.log(add_to_cart_failed);
     this.checkAddToCartStatus();     
@@ -221,13 +229,12 @@ export class BagViewComponent implements OnInit {
       let index = this.cart.items.findIndex(i => i.id == item.id)
       this.cart.items.splice(index,1);
       this.cart.summary = response.summary;
-      this.cart.promo_applied = response.promo_applied;
+      this.cart.applied_coupon = response.applied_coupon;
+      this.formatCoupons(response.coupons);     
       this.cart.cart_count = response.cart_count;
-      this.displayPromo = true;
-      this.formatPromotions(response);
       this.checkCartItemOutOfStock();
       this.updateLocalDataAndUI(this.cart, this.cart.cart_count);
-      this.appservice.removeLoader()
+      this.appservice.removeLoader();
     })
     .catch((error)=>{
       console.log("error ===>", error);
@@ -248,6 +255,7 @@ export class BagViewComponent implements OnInit {
     let url = window.location.href.split("#")[0];
     history.pushState({cart : false}, 'cart', url);
     this.appservice.closeCart();
+    this.hideCouponSideBar();
   }
 
   viewOrders(){
@@ -456,6 +464,68 @@ export class BagViewComponent implements OnInit {
   loginSuccess(){
     console.warn("loginSuccess navigateToShippingDetailsPage")
     this.navigateToShippingDetailsPage();
+  }
+
+  formatCoupons(coupons){
+    this.coupons = coupons;
+  }
+
+  applyCoupon(){
+    console.log("inside applyCoupon function", this.couponCode);
+    this.appservice.showLoader();
+    let body = { coupon_code : this.couponCode };
+    let url = this.appservice.apiUrl + (this.appservice.isLoggedInUser() ? ("/api/rest/v1/user/cart/"+this.appservice.getCookie('cart_id')+"/apply-coupon?") : ("/rest/v1/anonymous/cart/apply-coupon?"));
+    let header = this.appservice.isLoggedInUser() ? { Authorization : 'Bearer '+this.appservice.getCookie('token') } : {};
+    url = url+$.param(body);
+    this.apiservice.request(url, 'get', body, header ).then((response)=>{
+      this.cart.summary = response.summary;
+      this.cart.applied_coupon = response.coupon_applied;
+      // this.displayPromo = true;
+      this.hideCouponSideBar()
+      this.appservice.removeLoader();
+      this.couponErrorMessage = '';
+    })
+    .catch((error)=>{
+      console.log("error ===>", error);
+      if(error.status == 401){
+        this.appservice.userLogout();
+        this.hideCouponSideBar();
+        this.fetchCartDataFromServer();
+        this.fetchCartFailed = false; 
+      }
+      else{
+        if(error.status == 0){
+          this.couponErrorMessage = "No Internet Connection";  
+        }
+        else{
+          this.couponErrorMessage = error.message;
+        }        
+        this.appservice.removeLoader();
+      }
+      // else if(error.status == 403 && this.appservice.isLoggedInUser() ){
+      //   this.hideCouponSideBar();
+      //   this.getNewCartId();
+      //   this.fetchCartFailed = false; 
+      // }      
+    })    
+  }
+
+  couponSelected(code){
+    console.log("couponSelected function", code);
+    this.couponCode = code;
+  }
+
+  hideCouponSideBar(){
+    this.enterCoupon = false;
+    this.couponErrorMessage = '';
+    $('#cd-cart').removeClass('overflow-h');
+  }
+
+  displayCouponSideBar(){
+    if(this.cart.cart_type == "cart"){
+      this.enterCoupon = true;
+      $('#cd-cart').addClass('overflow-h');
+    }
   }
   
 }

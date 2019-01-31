@@ -1,15 +1,31 @@
-<div>
-	<div>
-		<div>{{coupon.display_title}}</div>
-		<span>{{coupon.description}}</span>
-	</div>
-	<div>
-		<div>
-			You save: Rs. 
-			<span>{{coupon.actual_discount}}</span>
+<!-- Selection Radio -->
+<input class="d-none radio-input coupon-radio" type="radio" name="kss-coupon" id="coupon-{{coupon.coupon_code}}" [value]="coupon.coupon_code" [(ngModel)]="selectedCoupon" (change)="couponChanged()"/>
+<!-- Coupon box -->
+<label class="coupon-box radio-label w-100 d-flex" for="coupon-{{coupon.coupon_code}}">
+	<div class="pr-2">
+		<div class="radio-selection position-relative">
+			<i class="fas fa-check-circle"></i>
 		</div>
 	</div>
-	<div>
-		valid till {{getValidTill(coupon.valid_till)}}
+	<div class="flex-1">
+		<div>
+			<div class="d-flex justify-content-between align-items-center">
+				<div class="font-weight-bold coupon-box__code">{{coupon.coupon_code}}</div>
+				<!-- <label class="bg-success new-label text-uppercase text-white">New</label> -->
+			</div>
+			<div *ngIf="coupon.description" class="coupon-box__desc custom-size font-weight-normal text-dark py-1">{{coupon.description}}</div>
+		</div>
+		<div class="pb-1">
+			<div *ngIf="applicable" class="font-weight-bold coupon-box__saving custom-size">
+				You save: <span class="text-success">Rs.{{coupon.actual_discount}}</span>
+			</div>
+			<div *ngIf="!applicable" class="font-weight-bold coupon-box__saving custom-size">
+				Shop for Rs. {{coupon.condition.value[0] - orderTotal}} more to avail this coupon and save 
+				<span class="text-success"> <span *ngIf="coupon.action.type == 'value'">Rs. </span>{{coupon.action.value}}<span *ngIf="coupon.action.type == 'percent'">%</span></span>
+			</div>
+		</div>
+		<div class="coupon-box__validity custom-size font-weight-normal">
+			Valid till <strong>{{getValidTill(coupon.valid_till)}}</strong>
+		</div>
 	</div>
-</div>
+</label>

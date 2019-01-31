@@ -578,3 +578,81 @@ body{
     right: 0;
   }
 }
+
+// coupon code box
+
+.coupon-box{
+    padding: 1em;
+    border: 0;
+    box-shadow: 0 0 4px #e0e0e0;
+    line-height: 1.6;
+    transition: all 0.3s;
+    &__code{
+        font-size: 1.15em;
+    }
+    .radio-selection{
+        color: #9a9a9a;
+        font-size: 1.35em;
+    }
+    &:hover{
+        color: initial;
+        background-color: #fffad9;
+    }
+    .custom-size{
+        font-size: 1.15em;
+    }
+    .new-label{
+        padding: 3px 0.5em;
+        margin: 0;
+        font-size: 0.8em;
+        letter-spacing: 0.5px;
+    }
+}
+
+.coupon-wrapper{
+    margin-bottom: 196px;
+}
+
+.coupon-radio{
+    &:checked{
+        & + .radio-label{
+            color: initial;
+            background-color: #fffad9;
+            // .radio-selection{
+            //     color: #166f61;
+            // }
+        }
+    }
+}
+
+.coupon-title{
+    font-size: 1.15em;
+}
+
+.coupon-valid{
+    .coupon-box__code{
+        display: inline-flex;
+        background-color: #fff;
+        border: 1px dashed #8e8e8e;
+        padding: 5px 1.5em;
+        border-radius: 25px;
+        margin-bottom: 5px;
+        margin-top: -3px;
+    }
+}
+
+.coupon-invalid{
+    pointer-events: none;
+    .coupon-box{
+        background-color: #efefef;
+        border-color: #d2d2d2;
+        color: #808080;
+        .radio-selection{
+            color: #ddd;
+            visibility: hidden;
+        }
+        .text-success{
+            color: #808080 !important;
+        }
+    }
+}

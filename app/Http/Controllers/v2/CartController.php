@@ -4,7 +4,7 @@ namespace App\Http\Controllers\v2;
 
 use App\Cart;
 use App\Http\Controllers\Controller;
-use App\Promotion;
+use App\Offer;
 use App\User;
 use App\Variant;
 use Illuminate\Http\Request;
@@ -54,7 +54,7 @@ class CartController extends Controller
             $item["timestamp"] = intval($cart->cart_data[$item["id"]]["timestamp"]);
         }
         $summary = $cart->getSummary();
-        return response()->json(['cart_count' => $cart->itemCount(), "message" => $message, "item" => $item, 'promo_applied' => $cart->promotion_id, "summary" => $summary]);
+        return response()->json(['cart_count' => $cart->itemCount(), "message" => $message, "item" => $item, "summary" => $summary]);
     }
 
     public function guestModifyItem(Request $request)
@@ -91,7 +91,7 @@ class CartController extends Controller
             $item["timestamp"] = intval($cart->cart_data[$item["id"]]["timestamp"]);
         }
         $summary = $cart->getSummary();
-        return response()->json(['cart_count' => $cart->itemCount(), "message" => $message, "item" => $item, 'promo_applied' => $cart->promotion_id, "summary" => $summary]);
+        return response()->json(['cart_count' => $cart->itemCount(), "message" => $message, "item" => $item,  "summary" => $summary]);
     }
 
     public function guestCartFetch(Request $request)
@@ -105,13 +105,16 @@ class CartController extends Controller
         $cart->abortNotCart('cart');
         $items = getCartData($cart, true, isNotProd());
 
-        if (!$cart->isPromotionApplicable($cart->promotion) && $cart->type == 'cart') {
-            $cart->applyPromotion($cart->getBestPromotion());
-            $cart->refresh();
-        }
+        
         $summary    = $cart->getSummary();
-        $promotions = Promotion::getAllPromotions($cart, 'web');
-        return response()->json(['cart_count' => $cart->itemCount(), 'cart_type' => $cart->type, 'items' => $items, 'promo_applied' => $cart->promotion_id, "summary" => $summary, "promotions" => $promotions]);
+        if($cart->coupon != null){
+            $appliedCoupon = Coupon::where('display_code', $cartData['coupon'])->first()->offer->getCouponDetails();
+        }else{
+            $appliedCoupon = null;
+        }
+        
+        $summary = $cart->getSummary();
+        return response()->json(['cart_count' => $cart->itemCount(), 'cart_type' => $cart->type, 'items' => $items, 'applied_coupon' => $appliedCoupon, "coupons" => $coupons, "summary" => $summary]);
     }
 
     public function guestCartDelete(Request $request)
@@ -131,13 +134,13 @@ class CartController extends Controller
         $cart->refresh();
         $message    = "Item deleted successfully";
         $summary    = $cart->getSummary();
-        $promotions = Promotion::getAllPromotions($cart, 'web');
-        return response()->json(['cart_count' => $cart->itemCount(), 'message' => $message, 'promo_applied' => $cart->promotion_id, "summary" => $summary, "promotions" => $promotions]);
+        
+        return response()->json(['cart_count' => $cart->itemCount(), 'message' => $message,  "summary" => $summary]);
     }
 
-    public function guestCartPromotion(Request $request)
+    public function guestCartCoupon(Request $request)
     {
-        $request->validate(['promotion_id' => 'required|exists:promotions,id']);
+        $request->validate(['coupon_code' => 'required']);
         $id     = $request->session()->get('active_cart_id', false);
         $params = $request->all();
 
@@ -147,12 +150,17 @@ class CartController extends Controller
         }
         $cart->anonymousCartCheckUser();
         $cart->abortNotCart('cart');
-        if ($cart->isPromotionApplicable($params['promotion_id'])) {
-            $cart->applyPromotion($params['promotion_id']);
+        try{
+            $apply = $cart->applyCoupon($params['coupon_code']);
             $cart->refresh();
-            return response()->json(["cart_count" => $cart->itemCount(), "summary" => $cart->getSummary(), "message" => "promotion applied successfully", "promo_applied" => $promotion_id]);
-        } else {
-            abort(400, "Promo cannot be applied");
+            if($cart->coupon != null){
+                $apply['messages'] = ['Coupon Applied successfully']; //Take from config
+            }else{
+                $apply['messages'] = ['Coupon removed successfully'];
+            }
+            return response()->json($apply);
+        }catch (\Exception $e){
+            abort(400,$e->message);
         }
     }
 
@@ -173,10 +181,7 @@ class CartController extends Controller
             }
         }
 
-        if (!$cart->isPromotionApplicable($cart->promotion)) {
-            abort(404, "Promotion not applicable");
-        }
-
+        
         return response()->json(["message" => 'Items are available in store', 'success' => true]);
     }
 
@@ -221,7 +226,7 @@ class CartController extends Controller
             $item["timestamp"] = intval($cart->cart_data[$item["id"]]["timestamp"]);
         }
         $summary = $cart->getSummary();
-        return response()->json(['cart_count' => $cart->itemCount(), "message" => $message, "item" => $item, 'promo_applied' => $cart->promotion_id, "summary" => $summary]);
+        return response()->json(['cart_count' => $cart->itemCount(), "message" => $message, "item" => $item,  "summary" => $summary]);
     }
 
     public function userModifyItem($id, Request $request)
@@ -256,7 +261,7 @@ class CartController extends Controller
             $item["timestamp"] = intval($cart->cart_data[$item["id"]]["timestamp"]);
         }
         $summary = $cart->getSummary();
-        return response()->json(['cart_count' => $cart->itemCount(), "message" => $message, "item" => $item, 'promo_applied' => $cart->promotion_id, "summary" => $summary]);
+        return response()->json(['cart_count' => $cart->itemCount(), "message" => $message, "item" => $item,  "summary" => $summary]);
     }
 
     public function userCartFetch($id, Request $request)
@@ -278,14 +283,15 @@ class CartController extends Controller
         }
 
         $items = getCartData($cart, true, isNotProd());
-
-        if (!$cart->isPromotionApplicable($cart->promotion) && $cart->type == 'cart') {
-            $cart->applyPromotion($cart->getBestPromotion());
-            $cart->refresh();
-        }
         $summary    = $cart->getSummary();
-        $promotions = Promotion::getAllPromotions($cart, 'web');
-        return response()->json(['cart_count' => $cart->itemCount(), 'cart_type' => $cart->type, 'items' => $items, 'promo_applied' => $cart->promotion_id, "summary" => $summary, "promotions" => $promotions]);
+        if($cart->coupon != null){
+            $appliedCoupon = Coupon::where('display_code', $cart->coupon)->first()->offer->getCouponDetails();
+        }else{
+            $appliedCoupon = null;
+        }
+        
+        $summary = $cart->getSummary();
+        return response()->json(['cart_count' => $cart->itemCount(), 'cart_type' => $cart->type, 'items' => $items, 'applied_coupon' => $appliedCoupon, "coupons" => $coupons, "summary" => $summary]);
     }
 
     public function userCartDelete($id, Request $request)
@@ -304,13 +310,12 @@ class CartController extends Controller
         $cart->refresh();
         $message    = "Item deleted successfully";
         $summary    = $cart->getSummary();
-        $promotions = Promotion::getAllPromotions($cart, 'web');
-        return response()->json(['cart_count' => $cart->itemCount(), 'message' => $message, 'promo_applied' => $cart->promotion_id, "summary" => $summary, "promotions" => $promotions]);
+        return response()->json(['cart_count' => $cart->itemCount(), 'message' => $message,  "summary" => $summary, ]);
     }
 
-    public function userCartPromotion($id, Request $request)
+    public function userCartCoupon($id, Request $request)
     {
-        $request->validate(['promotion_id' => 'required|exists:promotions,id']);
+        $request->validate(['coupon_code' => 'required']);
         $params = $request->all();
 
         $cart = Cart::find($id);
@@ -320,12 +325,17 @@ class CartController extends Controller
         $cart->abortNotCart('cart', true);
         $user = $request->user();
         validateCart($user, $cart, 'cart');
-        if ($cart->isPromotionApplicable($params['promotion_id'])) {
-            $cart->applyPromotion($params['promotion_id']);
+        try{
+            $apply = $cart->applyCoupon($params['coupon_code']);
             $cart->refresh();
-            return response()->json(["cart_count" => $cart->itemCount(), "summary" => $cart->getSummary(), "message" => "promotion applied successfully", "promo_applied" => $promotion_id]);
-        } else {
-            abort(400, "Promo cannot be applied");
+            if($cart->coupon != null){
+                $apply['messages'] = ['Coupon Applied successfully']; //Take from config
+            }else{
+                $apply['messages'] = ['Coupon removed successfully'];
+            }
+            return response()->json($apply);
+        }catch (\Exception $e){
+            abort(400,$e->message);
         }
     }
 

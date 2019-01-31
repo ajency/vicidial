@@ -46,6 +46,9 @@ class Kernel extends ConsoleKernel
             $schedule->call(function(){ 
                 ProductColor::getProductsFromOdooDiscounts(); 
             })->dailyAt('22:00');
+            $schedule->call(function (){
+                Coupon::updateCouponLeft();
+            })->everyTenMinutes();
         }
     }
 
