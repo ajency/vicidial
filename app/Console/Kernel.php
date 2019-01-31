@@ -8,6 +8,7 @@ use App\Jobs\IndexInactiveProducts;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\ProductColor;
+use App\Coupon;
 
 class Kernel extends ConsoleKernel
 {
