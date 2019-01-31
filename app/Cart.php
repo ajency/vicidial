@@ -2,7 +2,8 @@
 
 namespace App;
 
-use App\Promotion;
+use App\Coupon;
+use App\Offer;
 use App\Variant;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -26,11 +27,6 @@ class Cart extends Model
         return $this->belongsTo('App\User');
     }
 
-    public function promotion()
-    {
-        return $this->hasOne('App\Promotion', 'id', 'promotion_id');
-    }
-
     public function __construct()
     {
         if ($this->cart_data == null) {
@@ -48,8 +44,7 @@ class Cart extends Model
             $cart_data              = $this->cart_data;
             $cart_data[$item["id"]] = ["id" => $item["id"], "quantity" => intval($item["quantity"]), 'timestamp' => Carbon::now()->timestamp];
             $this->cart_data        = $cart_data;
-            $this->applyPromotion($this->getBestPromotion());
-            // \Log::info($this->cart_data);
+
         } else {
             return false;
         }
@@ -93,30 +88,14 @@ class Cart extends Model
         return $total_price;
     }
 
-    public function getCartDiscount($spt)
-    {
-        if ($this->promotion != null) {
-            if ($this->promotion->discount_type == "cart_fixed") {
-                $discount = $this->promotion->value;
-            } elseif ($this->promotion->discount_type == "by_percent") {
-                $discount = round($spt * $this->promotion->value / 100.0,2);
-            }
-        } else {
-            $discount = 0;
-        }
-
-        return $discount;
-    }
-
     public function getSummary()
     {
-        $spt      = $this->getCartSalePriceTotal();
-        $discount = $this->getCartDiscount($spt);
+        $cartData = Offer::processData($this->flatData());
         return [
-            "mrp_total"        => $this->getCartMrpPriceTotal(),
-            "sale_price_total" => $spt,
-            "cart_discount"    => $discount,
-            "you_pay"          => $spt - $discount,
+            "mrp_total"        => $cartData['mrp_total'],
+            "sale_price_total" => $cartData['sale_total'],
+            "cart_discount"    => $cartData['discount'],
+            "you_pay"          => $cartData['final_total'],
         ];
     }
 
@@ -125,7 +104,7 @@ class Cart extends Model
         $cart_data = $this->cart_data;
         unset($cart_data[$variant_id]);
         $this->cart_data = $cart_data;
-        $this->applyPromotion($this->getBestPromotion());
+
         return $this;
     }
 
@@ -144,16 +123,24 @@ class Cart extends Model
         return $item;
     }
 
-    public function getItems()
+    public function getItems($offerData = false)
     {
         $items = [];
-        foreach ($this->cart_data as $cart_item) {
-            $items[] = [
-                'item'     => Variant::find($cart_item['id']),
-                'quantity' => $cart_item["quantity"],
-            ];
+        if ($offerData) {
+            $cartData = Offer::processData($this->flatData());
+            foreach ($cartData['items'] as $id => $cart_item) {
+                $cartData['items'][$id]['item'] = Variant::find($id);
+            }
+            return array_values($cartData['items']);
+        } else {
+            foreach ($this->cart_data as $cart_item) {
+                $items[] = [
+                    'item'     => Variant::find($cart_item['id']),
+                    'quantity' => $cart_item["quantity"],
+                ];
+            }
+            return $items;
         }
-        return $items;
     }
 
     public function checkCartAvailability()
@@ -189,44 +176,40 @@ class Cart extends Model
         }
     }
 
-    public function getBestPromotion()
-    {
-        $salePrice       = $this->getCartSalePriceTotal();
-        $promotions      = Promotion::where('active', true)->where('step_quantity', '<=', $salePrice)->where('start', '<=', Carbon::now())->where('expire', '>', Carbon::now())->get();
-        $apply_promotion = null;
-        $discSalePrice   = $salePrice;
-        foreach ($promotions as $promotion) {
-            if ($promotion->discount_type == "cart_fixed") {
-                $discountedSalePrice = $salePrice - $promotion->value;
-            } elseif ($promotion->discount_type == "by_percent") {
-                $discountedSalePrice = $salePrice - ($salePrice * $promotion->value / 100.0);
-            }
-            if ($discountedSalePrice < $discSalePrice) {
-                $discSalePrice   = $discountedSalePrice;
-                $apply_promotion = $promotion->id;
-            }
-        }
-        return $apply_promotion;
-    }
-
-    public function applyPromotion($promotion_id)
-    {
-        $promotion = Promotion::find($promotion_id);
-        if ($this->isPromotionApplicable($promotion)) {
-            $this->promotion_id = $promotion_id;
+    public function checkCouponAvailability(){
+        $cartData           = $this->flatData();
+        $cartData           = Offer::processData($cartData);
+        if($cartData['coupon'] != $this->coupon){
+            $this->coupon = $cartData['coupon'];
             $this->save();
         }
+        return [
+            'messages'=> $cartData['messages'], 
+            'coupon_applied'=> (isset($cartData['offersApplied'][0]))? $cartData['offersApplied'][0]->getCouponDetails():null,
+        ];
     }
 
-    public function isPromotionApplicable($promotion)
+    public function applyCoupon($couponCode = null)
     {
-        if ($promotion == null) {
-            return true;
+        $cartData           = $this->flatData();
+        $cartData['coupon'] = $couponCode;
+        $cartData           = Offer::processData($cartData);
+        if (empty($cartData['messages'])) {
+            $this->coupon = $cartData['coupon'];
+            $this->save();
+            return [
+                'coupon_applied' => (isset($cartData['offersApplied'][0]))? $cartData['offersApplied'][0]->getCouponDetails():null,
+                'summary'        => [
+                    'mrp_total'        => $cartData['mrp_total'],
+                    'you_pay'          => $cartData['final_total'],
+                    'cart_discount'    => $cartData['discount'],
+                    'sale_price_total' => $cartData['sale_total'],
+                ],
+            ];
+        } else {
+            throw new \Exception(json_encode(array_values($cartData['messages'])));
+
         }
-        if ($promotion->active == false || $promotion->step_quantity > $this->getCartSalePriceTotal() || $promotion->start > Carbon::now() || $promotion->expire < Carbon::now()) {
-            return false;
-        }
-        return true;
     }
 
     public function getDiscountedPrice($variant)
@@ -235,5 +218,20 @@ class Cart extends Model
         $discount_ratio         = $this->getCartDiscount($spt) / floatval($spt);
         $variant_discount_price = $variant->getSalePrice() * (1 - $discount_ratio);
         return $variant_discount_price;
+    }
+
+    public function flatData()
+    {
+        $items    = $this->getItems();
+        $cartData = ["items" => [], "coupon" => $this->coupon];
+        foreach ($items as $item) {
+            $singleItem                           = [];
+            $singleItem['odoo_id']                = $item['item']->odoo_id;
+            $singleItem['quantity']               = $item['quantity'];
+            $singleItem['price_mrp']              = $item['item']->getLstPrice();
+            $singleItem['price_sale']             = $item['item']->getSalePrice();
+            $cartData['items'][$item['item']->id] = $singleItem;
+        }
+        return $cartData;
     }
 }

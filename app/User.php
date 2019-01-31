@@ -72,7 +72,7 @@ class User extends Authenticatable
         $ac = ($old_cart == null) ? $this->activeCart() : $old_cart;
         if ($replicate) {
             $cart->cart_data    = $ac->cart_data;
-            $cart->promotion_id = $ac->promotion_id;
+            $cart->coupon = $ac->coupon;
             $cart->save();
         }
         $ac->active = 0;

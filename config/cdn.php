@@ -230,7 +230,7 @@ return [
     |
     */
     'include'   => [
-        'directories' => ['public/css', 'public/fonts', 'public/img', 'public/js'],
+        'directories' => ['public/css', 'public/fonts', 'public/img', 'public/js', 'public/views/cart'],
         'extensions'  => [],
         'patterns'    => [],
     ],

@@ -157,7 +157,7 @@
                                <div style="color: #777676;margin-bottom: 10px;text-align: right;font-size: 15px;">Total Item Price :</div>
                                <div style="color: #777676;margin-bottom: 10px;text-align: right;font-size: 15px;">Sub-total :</div>
                                @if($order_summary['cart_discount'] > 0)
-                               <div style="color: #777676;margin-bottom:10px;text-align: right;font-size: 15px;">Promotion Discount :</div>
+                               <div style="color: #777676;margin-bottom:10px;text-align: right;font-size: 15px;">Coupon Discount :</div>
                                @endif
                                <div style="color: #777676;margin-bottom: 10px;text-align: right;font-size: 15px;">Shipping :</div>
                                <div style="margin-top: 20px;text-align: right;font-size: 15px;"><strong>ORDER TOTAL :</strong></div>
