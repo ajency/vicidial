@@ -129,7 +129,7 @@ class Offer extends Model
         $this->start    = $discount['from_date1'];
         $this->expire   = $discount['to_date1'];
         $this->priority = $discount['priority1'];
-        $this->description = ($this->description == false)? null : $discount['description_sale'];
+        $this->description = ($discount['description_sale'] == false)? null : $discount['description_sale'];
         switch ($discount['coupon_typ']) {
             case 'NO_COUPON':
                 $this->has_coupon = false;
