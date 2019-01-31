@@ -35,7 +35,7 @@ WORKDIR /var/www/html/angular-app
 RUN npm install
 WORKDIR /var/www/html
 RUN composer config --global --auth github-oauth.github.com github_token
-RUN composer install --no-autoloader
+RUN composer install --no-autoloader --no-dev
 RUN npm install
 ADD . /var/www/html
 RUN touch storage/logs/laravel.log
@@ -43,10 +43,10 @@ RUN chmod 777 storage/logs/laravel.log
 RUN composer config --global --auth github-oauth.github.com github_token
 RUN composer install
 RUN npm run production
-RUN gulp
 WORKDIR /var/www/html/angular-app
 RUN npm run build:cart_app
 WORKDIR /var/www/html
+RUN gulp
 RUN chmod -R 777 /var/www/html/storage
 RUN echo "* * * * * cd /var/www/html && php /var/www/html/artisan schedule:run >> /dev/null 2>&1" > /etc/cron.d/artisan-schedule-run
 # Give execution rights on the cron job
