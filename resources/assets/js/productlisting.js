@@ -25,6 +25,10 @@ Handlebars.registerHelper('ifGreaterEq', function(arg1, arg2, options) {
   return (arg1 >= arg2) ? options.fn(this) : options.inverse(this);
 });
 
+Handlebars.registerHelper('ifGreater', function(arg1, arg2, options) {
+  return (arg1 > arg2) ? options.fn(this) : options.inverse(this);
+});
+
 Handlebars.registerHelper('assign', function (varName, varValue, options) {
   if (!options.data.root) {
     options.data.root = {};
@@ -571,6 +575,29 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                   context["total_item_count"] = product_list_context.page.total_item_count;
                   context["display_limit"] = product_list_context.page.display_limit;
                   context["current"] = product_list_context.page.current;
+                  context["pagination"] = pagination_obj;
+                  context["display_pages"] = [];
+                  context["show_pagination"] = (context["show_more"] == false && context["load_prev"] == false) || (context["page"]["total"]<page_no_val)?false:true
+                  var page_display_limit = 3
+                  var endCounter = page_display_limit
+                  if(parseInt(context["current"]) >= page_display_limit)
+                    endCounter = (parseInt(context["current"])+1)
+                  if((parseInt(context["page"]["total"])-parseInt(context["current"]))<(context["pagination"]["show_previous_after"])-1)
+                    endCounter = context["page"]["total"]
+                  var startCounter = 1;
+                  if((parseInt(context["current"])) >= context["pagination"]["show_previous_after"]){
+                    if(endCounter == parseInt(context["page"]["total"]) && endCounter == parseInt(context["current"]))
+                      startCounter = ((parseInt(context["current"]))-(parseInt(page_display_limit)-1))
+                    else
+                      startCounter = ((parseInt(context["current"])+1)-(parseInt(page_display_limit)-1))
+                  }
+
+
+                  for (let i = startCounter; i <= endCounter; i++) {
+                      context["display_pages"].push(i)
+                  }
+                  context["show_first_page"] = (startCounter == 1)?false:true
+                  context["show_last_page"] = (endCounter == parseInt(context["page"]["total"]))?false:true
                   var html = template(context);
                   document.getElementById("products-list-template-content").innerHTML = html;
                   
@@ -840,11 +867,11 @@ function loadProductListing(pageval=-1,mobile_view = false,prepend = false){
     }
     else{
         pageVal = (prepend == false)?(parseInt(page)+1):(parseInt(page)-1);
-        while(jQuery.inArray( pageVal, loaded_pages ) != -1){
-          pageVal = (prepend == false)?(pageVal+1):(pageVal-1);
-        }
+        // while(jQuery.inArray( pageVal, loaded_pages ) != -1){
+        //   pageVal = (prepend == false)?(pageVal+1):(pageVal-1);
+        // }
         url = url.replace(/page=\d+/, "page="+(pageVal));
-        
+        url = (url.indexOf("?page=") == -1) && (url.indexOf("&page=") == -1)?(url+appendStr+"page="+pageVal):url;
     }
     if(call_mobile_api == false && mobile_view == true){
       return;
@@ -934,20 +961,21 @@ function loadProductListing(pageval=-1,mobile_view = false,prepend = false){
         var template = Handlebars.compile(source);
         var context = {};
         
-        if(prepend == true){
-          var list_count = Object.keys(product_list_context.products).length;
-          var product_list_items_list = product_list_context.products
-          for (var vkey in product_list_items) {
-            product_list_items_list[list_count+vkey] = product_list_items[vkey];
-          }
-          product_list_items = product_list_items_list
-        }
-        else{
-          var list_count = Object.keys(product_list_items).length;
-          for (var vkey in product_list_context.products) {
-            product_list_items[list_count+vkey] = product_list_context.products[vkey];
-          }
-        }       
+        // if(prepend == true){
+        //   var list_count = Object.keys(product_list_context.products).length;
+        //   var product_list_items_list = product_list_context.products
+        //   for (var vkey in product_list_items) {
+        //     product_list_items_list[list_count+vkey] = product_list_items[vkey];
+        //   }
+        //   product_list_items = product_list_items_list
+        // }
+        // else{
+        //   var list_count = Object.keys(product_list_items).length;
+        //   for (var vkey in product_list_context.products) {
+        //     product_list_items[list_count+vkey] = product_list_context.products[vkey];
+        //   }
+        // }
+        product_list_items = $.extend({}, product_list_context.products);       
 
         // product_list_items = $.extend(product_list_items, values);
         context["products"] = product_list_items;
@@ -969,6 +997,29 @@ function loadProductListing(pageval=-1,mobile_view = false,prepend = false){
         context["total_item_count"] = product_list_context.page.total_item_count;
         context["display_limit"] = product_list_context.page.display_limit;
         context["current"] = product_list_context.page.current;
+        context["pagination"] = pagination_obj;
+        context["display_pages"] = [];
+        context["show_pagination"] = (context["show_more"] == false && context["load_prev"] == false) || (context["page"]["total"]<page_no_val)?false:true
+        var page_display_limit = 3
+        var endCounter = page_display_limit
+        if(parseInt(context["current"]) >= page_display_limit)
+          endCounter = (parseInt(context["current"])+1)
+        if((parseInt(context["page"]["total"])-parseInt(context["current"]))<(context["pagination"]["show_previous_after"])-1)
+          endCounter = context["page"]["total"]
+        var startCounter = 1;
+        if((parseInt(context["current"])) >= context["pagination"]["show_previous_after"]){
+          if(endCounter == parseInt(context["page"]["total"]) && endCounter == parseInt(context["current"]))
+            startCounter = ((parseInt(context["current"]))-(parseInt(page_display_limit)-1))
+          else
+            startCounter = ((parseInt(context["current"])+1)-(parseInt(page_display_limit)-1))
+        }
+
+
+        for (let i = startCounter; i <= endCounter; i++) {
+            context["display_pages"].push(i)
+        }
+        context["show_first_page"] = (startCounter == 1)?false:true
+        context["show_last_page"] = (endCounter == parseInt(context["page"]["total"]))?false:true
         var html = template(context);
         document.getElementById("products-list-template-content").innerHTML = html;
 

@@ -28,7 +28,7 @@
     	  	@include('includes.productlisting.listingtitle', ['headers' => $params->headers, 'breadcrumbs' => $params->breadcrumbs, 'sort_on' => $params->sort_on, 'show_search' => $params->show_search, 'search_string' => $params->search_string ])
 
     	    <!-- List of products Blade -->
-            @include('includes.productlisting.listingproducts', ['items' => $params->items,'page' => $params->page])
+            @include('includes.productlisting.listingproducts', ['items' => $params->items,'page' => $params->page,'pagination' => $params->pagination])
 
     	  </div>
     	</div>
@@ -66,6 +66,7 @@
       var slug_value_search_result = <?= $slug_value_search_result ?>;
       var product_list_items = {};
       var first_page_loaded = false;
+      var pagination_obj = <?= json_encode($params->pagination);?>;
       Handlebars.registerPartial(
         'checkboxTemplate', '<?= $checkboxTemplate ?>'
         
