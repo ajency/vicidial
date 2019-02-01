@@ -22,12 +22,6 @@ class HomeController extends Controller
         return view('home')->with('static_elements', $static_elements);
     }
 
-    public function oldHome(Request $request)
-    {
-        setSEO('home');
-        return view('homeold');
-    }
-
     public function api(Request $request)
     {
         return $request->user();
