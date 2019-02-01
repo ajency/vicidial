@@ -78,11 +78,11 @@
   gtag('config', "{{config('analytics.google_pixel_id')}}");
 </script>
 
-<noscript>
+<!-- <noscript>
   <div style="display:inline;">
     <img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/{{config('analytics.conversion_id')}}/?label=2OLaCNSGioUBEK24rP0C&guid=ON&script=0"/>
   </div>
-</noscript>
+</noscript> -->
 
 <!-- Hotjar Tracking Code -->
 <script>
