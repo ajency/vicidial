@@ -99,7 +99,7 @@
 				});
 				// Google Conversion tracking
 				gtag('event', 'conversion', {
-			      'send_to': google_conversion_id,
+			      'send_to': google_conversion_data,
 			      'value': 1.0,
 			      'currency': 'INR',
 			      'transaction_id': transId
