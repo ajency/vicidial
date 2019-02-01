@@ -111,7 +111,7 @@
         &--left{
             margin-top: 52px;
             // border-right: 1px solid lighten($gray-400, 8%);
-            height: calc(100vh - 103px);
+            // height: calc(100vh - 103px);
             overflow-y: auto;
             overflow-x: hidden;
             background-color: lighten($gray-400, 12%);
@@ -140,7 +140,7 @@
         &--right{
             flex: 1;
             margin-top: 52px;
-            max-height: calc(100vh - 103px);
+            // max-height: calc(100vh - 103px);
             overflow: auto;
             .filter-heading{
                 display: none;

@@ -127,6 +127,9 @@ $(function(){
         jQuery(".kss_filter_mobile--left .nav-item:first-child").addClass("active");
         jQuery('.kss_filter-list').addClass('d-none');
         jQuery('.kss_filter-list[data-filter="category"]').removeClass('d-none');
+        //Get Body height minus bottom sticky for filter height issue
+        var filter_height = $('body').outerHeight() - 110;
+        $('.kss_filter_mobile--left,.kss_filter_mobile--right').height(filter_height);
         copy_filters = {}
         copy_filters = { "facet_list" : JSON.parse(JSON.stringify(facet_list)) , "range_facet_list" : JSON.parse(JSON.stringify(range_facet_list)) , "boolean_facet_list" : JSON.parse(JSON.stringify(boolean_facet_list)) , "sort_on_filter" : sort_on_filter , "search_string_filter" : search_string_filter  }
         setFiltersRequired()
