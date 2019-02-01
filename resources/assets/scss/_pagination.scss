@@ -13,6 +13,11 @@
     	color: theme-color('secondary');
     	display: inline-flex;
     }
+    .disabled{
+    	a{
+    		color: initial;
+    	}
+    }
     .page-numbers{
     	display: flex;
 	    justify-content: space-between;
