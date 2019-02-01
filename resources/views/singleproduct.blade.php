@@ -12,6 +12,10 @@
 
 	<div class="container mt-0 mt-md-4">
 		<div class="row">
+			<div class="col-md-12 d-none d-md-block">
+				<!-- Breadcrumbs -->
+				@include('includes.breadcrumbs', ['breadcrumbs' => $params['breadcrumb'], 'shop' => true])
+			</div>
 			<div class="col-sm-12 col-lg-7">
 				<!-- Product Images -->
 				@include('includes.singleproduct.productimages', ['params' => $params])
@@ -25,8 +29,6 @@
 				@include('includes.singleproduct.productcolorselection', ['params' => $params, 'selected_color_id' => $selected_color_id])
 			</div>
 			<div class="col-sm-12 col-lg-5">
-				<!-- Breadcrumbs -->
-				@include('includes.breadcrumbs', ['breadcrumbs' => $params['breadcrumb'], 'shop' => true])
 
 				<!-- Product Title & Prices Section -->
 				@include('includes.singleproduct.producttitle', ['params' => $params, 'selected_color_id' => $selected_color_id])
