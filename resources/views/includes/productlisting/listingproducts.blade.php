@@ -93,7 +93,7 @@
 		<div class="page-numbers d-none d-md-flex">
 			@{{#if show_first_page}}
 			<span class="kss-pagination__link">
-				<a href="#">1</a>
+				<a href="javascript:loadProductListing(2,false,true);">1</a>
 			</span>
 			<span class="dot-more">...</span>
 			@{{/if}}
