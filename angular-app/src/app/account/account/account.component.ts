@@ -66,6 +66,7 @@ export class AccountComponent implements OnInit {
   }
 
   displayModal(){
+    this.appservice.displaySkipOTP = false;
     this.router.navigate([{ outlets: { popup: ['user-login'] }}], { replaceUrl: true });
   }
 

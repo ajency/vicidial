@@ -271,6 +271,7 @@ export class BagViewComponent implements OnInit {
   }
 
   displayModal(){
+    this.appservice.displaySkipOTP = true;
     this.router.navigate([{ outlets: { popup: ['user-login'] }}]);
   }
 

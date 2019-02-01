@@ -29,7 +29,7 @@ export class AppServiceService {
   navigatingFromBagToAddress : boolean = false;
   userMobile : any;
   private couponCodeSelected = new Subject<any>();
-
+  displaySkipOTP : any;
   constructor(	private router: Router,
                 private apiservice : ApiServiceService) { 
     this.apiUrl = isDevMode() ? 'http://localhost:8000' : '';
