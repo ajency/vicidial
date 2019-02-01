@@ -27,10 +27,10 @@
     <div class="fixed-bottom d-block d-md-none">
         <div class="row no-gutters">
             <div class="col-6 text-center b-r">
-                 <button data-toggle="modal" data-target="#kss_sort" type="button" class="btn btn-lg btn-block text-dark h-100 text-uppercase"><i class="fa-sort-amount-down fas pr-1"></i> <span class="text-secondary">Sort</span></button>
+                 <button data-toggle="modal" data-target="#kss_sort" type="button" class="btn btn-lg btn-block h-100 text-uppercase btn-white"><i class="fa-sort-amount-down fas pr-1 text-secondary"></i> <span class="text-secondary">Sort</span></button>
             </div> 
             <div class="col-6 text-center">
-                <button id="filter" type="button" class="btn btn-lg btn-block btn-primary text-dark h-100 text-uppercase"><i class="fa-filter fas pr-1"></i> <span class="text-secondary">Filter</span></button>
+                <button id="filter" type="button" class="btn btn-lg btn-block btn-primary h-100 text-uppercase"><i class="fa-filter fas pr-1 text-secondary"></i> <span class="text-secondary">Filter</span></button>
             </div>
         </div>
     </div>

@@ -1045,7 +1045,10 @@ function loadProductListing(pageval=-1,mobile_view = false,prepend = false){
           url = (url_array[1] != undefined)?"/shop?"+url_array[1]:"/shop"
           updated_list_url = url
         }
-       window.history.pushState('categoryPageUrl', 'Category page', url);
+        window.history.pushState('categoryPageUrl', 'Category page', url);
+        $('html, body').animate({
+             scrollTop: 0
+        }, 300);
       });
 }
 

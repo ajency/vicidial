@@ -83,10 +83,10 @@
   </div>
  -->
  	@{{#if show_pagination}}
-  	<div class="kss-pagination">
+  	<div class="kss-pagination mt-5">
 		<span class="kss-pagination__prev controls pr-md-4 d-flex  @{{#if load_prev }} @{{else}} disabled @{{/if}}">
 			<a href="javascript:loadProductListing((@{{page.current}}),false,true);">
-				<span class="pr-1"><i class="fas fa-chevron-left"></i></span>
+				<span class="pr-2"><i class="fas fa-chevron-left"></i></span>
 				<span class="d-flex">Previous <span class="d-none d-md-block">Page</span></span>
 			</a>
 		</span>
@@ -118,7 +118,7 @@
 		<span class="kss-pagination__next controls pl-md-4 d-flex @{{#if show_more }} @{{else}} disabled @{{/if}}">
 			<a href="javascript:loadProductListing(@{{page.current}});">
 				<span class="d-flex">Next <span class="d-none d-md-block">Page</span></span>
-				<span class="pl-1"><i class="fas fa-chevron-right"></i></span>
+				<span class="pl-2"><i class="fas fa-chevron-right"></i></span>
 			</a>
 		</span>
 	</div>
