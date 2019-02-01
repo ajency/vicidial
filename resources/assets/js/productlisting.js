@@ -48,6 +48,13 @@ Handlebars.registerHelper('ifImagesExist', function (arg1, options) {
   var count = Object.keys(arg1).length;
   return count > 0 ? options.fn(this) : options.inverse(this);
 });
+
+function ScrollTop(duration){
+    $('html, body').animate({
+           scrollTop: 0
+    }, duration);
+}
+
 $(function(){
 
     $('.kss_sizes .radio-input').prop('checked',false);
@@ -85,8 +92,8 @@ $(function(){
           $('.custom-sort-loader').addClass('shown')
           $("#sort_filter_selectbox option:selected").prop("selected", false)
           $('#sort_filter_selectbox option[value="'+$(this).data("value")+'"]').prop('selected',true)
-          $('#sort_filter_selectbox').trigger('change')
-          
+          $('#sort_filter_selectbox').trigger('change');
+          ScrollTop(300);
         })
     }
 
@@ -1046,9 +1053,7 @@ function loadProductListing(pageval=-1,mobile_view = false,prepend = false){
           updated_list_url = url
         }
         window.history.pushState('categoryPageUrl', 'Category page', url);
-        $('html, body').animate({
-             scrollTop: 0
-        }, 300);
+        ScrollTop(300);
       });
 }
 
