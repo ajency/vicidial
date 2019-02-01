@@ -412,7 +412,8 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
           boolean_facet_list_params[citem] = facet_display_data_arr[citem]["false_facet_value"]
       }
     }
-    ajax_data = { "search_object": { "primary_filter" : facet_list,"range_filter" : range_facet_list,"boolean_filter" : boolean_facet_list_params }, "listurl": url , "page": page_val}
+    // ajax_data = { "search_object": { "primary_filter" : facet_list,"range_filter" : range_facet_list,"boolean_filter" : boolean_facet_list_params }, "listurl": url , "page": page_val}
+    ajax_data = { "search_object": { "primary_filter" : facet_list,"range_filter" : range_facet_list,"boolean_filter" : boolean_facet_list_params }, "listurl": url , "page": 1}
     if(sort_on_filter != "")
       ajax_data["sort_on"]= sort_on_filter
     if(search_string_filter != "")
