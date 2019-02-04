@@ -48,7 +48,7 @@ class StaticElement extends Model
     } //fetchSeq
 
     //fetch all
-    public static function fetch( $page_slug, $types = null, $published = true)
+    public static function fetch( $page_slug, $types = null, $published = false)
     {
         $records=[];
         $mode = (!$published) ? 'draft' : 'published';
@@ -532,7 +532,7 @@ class StaticElement extends Model
                 return (["message" => "Elements published successfully", "success" => true]);
             }
 
-            public function getProductImages($elastic_id,$type)
+            public static function getProductImages($elastic_id,$type)
             {
                 $pc = ProductColor::where('elastic_id',$elastic_id)->first();
                 $images = $pc->getDefaultImage($type);

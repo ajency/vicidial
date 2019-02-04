@@ -10,14 +10,14 @@ class HomeController extends Controller
 {
     public function index(Request $request)
     {
-        $static_elements=StaticElement::fetch([], $published=true);
+        $static_elements=StaticElement::fetch('home',[], $published=true);
         setSEO('home');
         return view('home')->with('static_elements', $static_elements);
     }
     
     public function drafthome(Request $request)
     {
-        $static_elements=StaticElement::fetch([]);
+        $static_elements=StaticElement::fetch('home',[]);
     	setSEO('home');
         return view('home')->with('static_elements', $static_elements);
     }
