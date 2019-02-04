@@ -74,8 +74,6 @@
 	@if(! empty($params['payment_status']))
 		@if($params['payment_status'] == 'success')
 			<script type="text/javascript">
-				var total = {{$params['order_info']['total_amount']}};
-				var transId = '{{$params['order_info']['txn_no']}}';
 				@php $variant_ids = []; @endphp
 				@foreach($params['sub_orders'] as $sub_order)
 					@foreach($sub_order['items'] as $item)
@@ -90,7 +88,7 @@
 				});
 				// Google pixel tracking
 				gtag('event', 'page_view', {
-					'send_to': google_pixel_id,
+					'send_to': "{{config('analytics.google_pixel_id')}}",
 					'ecomm_pagetype': 'purchase',
 					'ecomm_prodid': new Array({{implode(",",$variant_ids)}}),
 					'ecomm_totalvalue': {{$params['order_info']['total_amount']}},
@@ -98,7 +96,7 @@
 				});
 				// Google Conversion tracking
 				gtag('event', 'conversion', {
-			      'send_to': google_conversion_data,
+			      'send_to': "{{config('analytics.google_pixel_id')}}",
 			      'value': {{$params['order_info']['total_amount']}},
 			      'currency': 'INR',
 			      'transaction_id': '{{$params['order_info']['txn_no']}}'
