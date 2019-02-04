@@ -10,16 +10,16 @@ class StaticElementController extends Controller
 {
     public function callFetchSeq($seq_no, Request $request)
     {
-        $request->validate(['type' => 'required']);
+        $request->validate(['type' => 'required', 'page_slug' => 'required']);
         $params = $request->all();
 
-        $fetchedData = StaticElement::fetchSeq($seq_no, $params['type']);
+        $fetchedData = StaticElement::fetchSeq($seq_no,$params['page_slug'], $params['type']);
         return (json_encode($fetchedData));
     }
 
     public function callFetch(Request $request)
     {
-        $request->validate(['type' => 'sometimes', 'published' => 'sometimes']);
+        $request->validate(['type' => 'sometimes','page_slug' => 'required', 'published' => 'sometimes']);
         $params = $request->all();
 
         $data = array();
@@ -28,7 +28,7 @@ class StaticElementController extends Controller
         }
 
         if (isset($params['published'])) {
-            $fetchedData = StaticElement::fetch($data, $params['published']);
+            $fetchedData = StaticElement::fetch($params['page_slug'], $data, $params['published']);
         } else {
             $fetchedData = StaticElement::fetch($data);
         }
@@ -38,22 +38,22 @@ class StaticElementController extends Controller
     //save update
     public function callSave($seq_no, Request $request)
     {
-        $request->validate(['element_data' => 'required', 'type' => 'required', 'image_upload' => 'required']);
+        $request->validate(['element_data' => 'required', 'page_slug' => 'required', 'type' => 'required', 'image_upload' => 'required']);
         $params = $request->all();
 
-        $dataSaved = StaticElement::saveData($seq_no, $params['element_data'], $params['type'], $params['image_upload']);
+        $dataSaved = StaticElement::saveData($seq_no, $params['page_slug'], $params['element_data'], $params['type'], $params['image_upload']);
         return (json_encode($dataSaved));
     } //callSave
 
     //save new
     public function callSaveNew(Request $request)
     {
-        $request->validate(['element_data' => 'required', 'type' => 'required', 'images' => 'required']);
+        $request->validate(['element_data' => 'required', 'page_slug' => 'required', 'type' => 'required', 'images' => 'required']);
         $images = $request->images;
 
         $params = $request->all();
 
-        $dataInserted = StaticElement::saveNewData($params['element_data'], $params['type'], $params['images']);
+        $dataInserted = StaticElement::saveNewData($params['page_slug'],$params['element_data'], $params['type'], $params['images']);
         return (json_encode($dataInserted));
     } //callSaveNew
 
