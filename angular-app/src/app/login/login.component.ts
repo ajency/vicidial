@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit {
     otpVerificationFailed : false,
     otpVerificationErrorMsg : ''
   }
+  displaySkipOTP : any;
 
   constructor(private appservice : AppServiceService,
   						private apiservice : ApiServiceService,
@@ -42,6 +43,7 @@ export class LoginComponent implements OnInit {
               private zone : NgZone) { }
 
   ngOnInit() {
+    this.displaySkipOTP = this.appservice.displaySkipOTP;
   	if(!this.appservice.userInfo){
   		this.displayModal();	
   	}

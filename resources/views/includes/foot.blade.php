@@ -19,8 +19,13 @@
 
 <script type="text/javascript">
   // Google pixel tracking id
+  /* <![CDATA[ */
   var google_pixel_id = "{{config('analytics.google_pixel_id')}}";
-  var google_conversion_id = "{{config('analytics.conversion_id')}}";
+  var google_conversion_id = @php echo config('analytics.conversion_id'); @endphp;
+  var google_conversion_label = "{{config('analytics.conversion_label')}}";
+  var google_conversion_value = 1.0;
+  var google_conversion_data = "AW-{{config('analytics.conversion_id')}}/{{config('analytics.conversion_label')}}";
+    /* ]]> */
 </script>
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
@@ -72,6 +77,12 @@
 
   gtag('config', "{{config('analytics.google_pixel_id')}}");
 </script>
+
+<!-- <noscript>
+  <div style="display:inline;">
+    <img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/{{config('analytics.conversion_id')}}/?label=2OLaCNSGioUBEK24rP0C&guid=ON&script=0"/>
+  </div>
+</noscript> -->
 
 <!-- Hotjar Tracking Code -->
 <script>
