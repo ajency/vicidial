@@ -34,5 +34,11 @@ phases:
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo Writing image definitions file...
       - printf '[{"name":"kss-prod-laravel","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
+      
+  cache:
+    paths:
+      # Composer cache:
+      - /root/.composer/**/*
+
 artifacts:
     files: imagedefinitions.json
