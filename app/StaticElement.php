@@ -82,15 +82,30 @@ class StaticElement extends Model
                  $response[$type[0]] = array();
             }
             
+            $productImages =[];
+            if(! empty($record->element_data['products'] )){
+                $products = $record->element_data['products'];
+    
+                foreach($products as $product){
+                    $productImage = $record->getProductImages($product,["list-view"]);
+                    array_push($productImages,$productImage);
+                }
+            } //if
+
             array_push($response[$type[0]], array(
                 "sequence"     => $record->sequence,
                 "element_data" => $record->element_data,
                 "type"         => $record->type,
                 "images"       => $images,
+                "products"     => $productImages,
             ));
 
-        } //foreach
+             
+       
+       
         
+    }//foreach
+
         return ($response);
     } //fetch
 
@@ -519,6 +534,13 @@ class StaticElement extends Model
                 }
         
                 return (["message" => "Elements published successfully", "success" => true]);
+            }
+
+            public function getProductImages($elastic_id,$type)
+            {
+                $pc = ProductColor::where('elastic_id',$elastic_id)->first();
+                $images = $pc->getDefaultImage($type);
+                return $images;
             }
         }
         
