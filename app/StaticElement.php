@@ -83,15 +83,15 @@ class StaticElement extends Model
             }
             
             $productImages =[];
-            if(! empty($record->element_data['products'] )){
+            if(!empty($record->element_data['products']) || !is_null($record->element_data['products']) ){
                 $products = $record->element_data['products'];
     
                 foreach($products as $product){
                     $productImage = $record->getProductImages($product,["list-view"]);
-                    array_push($productImages,$productImage);
+                    array_push($productImages,array("images" =>$productImage['list-view'],"product-slug"=>"slug","title"=>"product-name"));
                 }
             } //if
-
+            
             array_push($response[$type[0]], array(
                 "sequence"     => $record->sequence,
                 "element_data" => $record->element_data,
@@ -99,14 +99,10 @@ class StaticElement extends Model
                 "images"       => $images,
                 "products"     => $productImages,
             ));
-
-             
-       
-       
-        
+          
     }//foreach
 
-        return ($response);
+    return ($response);
     } //fetch
 
     //update given seq number
