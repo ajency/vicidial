@@ -48,30 +48,40 @@ class StaticElement extends Model
     } //fetchSeq
 
     //fetch all
-    public static function fetch($data = [], $published = false)
+    public static function fetch( $page_slug, $types = null, $published = true)
     {
-        if (!$published) {
-            $mode = 'draft';
-        } else {
-            $mode = 'published';
+        $records=[];
+        $mode = (!$published) ? 'draft' : 'published';
+              
+        if(!is_null($types) && gettype($types)!='array'){
+            $types = [$types];
         }
-
-        if (isset($data['type'])) {
-            $records = StaticElement::where('type', 'like', $data['type'] . '%')->where($mode, true)->orderBy('sequence', 'asc')->get();
-        } else {
-            $records = StaticElement::where($mode, true)->orderBy('sequence', 'asc')->get();
+        if(is_null($types) || empty($types)){
+            $records = StaticElement::where($mode, true)->where('page_slug',$page_slug)->orderBy('sequence', 'asc')->get();
         }
-
+        else{
+            
+            $records = StaticElement::where($mode, true)->where('page_slug',$page_slug)->where(function ($q) use ($types) {
+                    foreach($types as $type){
+                        $q->where('type', 'like', $type . '%');
+                    }
+                })->orderBy('sequence', 'asc')->get();
+             
+            }
+        
+        
         $response = array();
 
         foreach ($records as $record) {
+            
             $type   = explode('_', $record->type);
+            
             $images = $record->getStaticImagesAll(array_keys(config('fileupload_static_element.' . $record->type . '_presets')), $record);
-
+            
             if (!isset($response[$type[0]])) {
-                $response[$type[0]] = array();
+                 $response[$type[0]] = array();
             }
-
+            
             array_push($response[$type[0]], array(
                 "sequence"     => $record->sequence,
                 "element_data" => $record->element_data,
@@ -80,7 +90,7 @@ class StaticElement extends Model
             ));
 
         } //foreach
-
+        
         return ($response);
     } //fetch
 
