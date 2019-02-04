@@ -154,23 +154,18 @@ export class BagViewComponent implements OnInit {
       this.isCartTypeFailure = true;
     }
     this.fetchCartFailed = false;  
-    console.log(this.google_track_response(response));
     let result = this.google_track_response(response); 
     google_pixel_tracking(result.pixel_ids, result.total_values, "cart");
     this.zone.run(() => {});    
   }
 
   google_track_response(response){
-    let pixel_ids = [], total_values = [];
+    let result = { pixel_ids : [], total_values : [] };
     response.items.forEach((item)=>{
-      pixel_ids.push(item.pixel_id);
-      total_values.push(item.attributes.price_final);
+      result.pixel_ids.push(item.pixel_id);
+      result.total_values.push(item.attributes.price_final);
     })
-    // console.log("check ==>", variant_ids, total_values);
-    let result = {
-      pixel_ids : pixel_ids.join(),
-      total_values : total_values.join()
-    }
+    console.log("check ==>", result);
     return result;  
   }
 
@@ -263,7 +258,6 @@ export class BagViewComponent implements OnInit {
   }
 
   checkLoginStatus(){
-    console.log(this.google_track_response(this.cart));
     let result = this.google_track_response(this.cart); 
     google_pixel_tracking(result.pixel_ids, result.total_values, "checkout");
     fbTrackInitiateCheckout(this.cart.summary.you_pay);
@@ -277,6 +271,7 @@ export class BagViewComponent implements OnInit {
   }
 
   displayModal(){
+    this.appservice.displaySkipOTP = true;
     this.router.navigate([{ outlets: { popup: ['user-login'] }}]);
   }
 

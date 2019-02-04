@@ -74,35 +74,32 @@
 	@if(! empty($params['payment_status']))
 		@if($params['payment_status'] == 'success')
 			<script type="text/javascript">
-				var total = {{$params['order_info']['total_amount']}};
-				var transId = {{$params['order_info']['txn_no']}};
 				@php $variant_ids = []; @endphp
 				@foreach($params['sub_orders'] as $sub_order)
 					@foreach($sub_order['items'] as $item)
 						@php $variant_ids[] = $item['product_id'] . '-' . $item['product_color_id'] @endphp
 					@endforeach
 				@endforeach
-				var content_ids = '{{implode(",",$variant_ids)}}';
 				fbq('track', 'Purchase', {
-				    value: total,
+				    value: {{$params['order_info']['total_amount']}},
 				    currency: 'INR',
-				    content_ids: content_ids,
-				    content_type: 'product_group',
+				    content_ids: '{{implode(",",$variant_ids)}}',
+				    content_type: 'product',
 				});
 				// Google pixel tracking
 				gtag('event', 'page_view', {
-					'send_to': google_pixel_id,
+					'send_to': "{{config('analytics.google_pixel_id')}}",
 					'ecomm_pagetype': 'purchase',
-					'ecomm_prodid': content_ids,
-					'ecomm_totalvalue': total,
+					'ecomm_prodid': new Array({{implode(",",$variant_ids)}}),
+					'ecomm_totalvalue': {{$params['order_info']['total_amount']}},
 					'user_id': getCookie('user_id')
 				});
 				// Google Conversion tracking
 				gtag('event', 'conversion', {
-			      'send_to': google_conversion_id,
-			      'value': 1.0,
+			      'send_to': "{{config('analytics.google_pixel_id')}}",
+			      'value': {{$params['order_info']['total_amount']}},
 			      'currency': 'INR',
-			      'transaction_id': transId
+			      'transaction_id': '{{$params['order_info']['txn_no']}}'
 			  });
 			</script>
 		@endif	

@@ -29,7 +29,7 @@ export class AppServiceService {
   navigatingFromBagToAddress : boolean = false;
   userMobile : any;
   private couponCodeSelected = new Subject<any>();
-
+  displaySkipOTP : any;
   constructor(	private router: Router,
                 private apiservice : ApiServiceService) { 
     this.apiUrl = isDevMode() ? 'http://localhost:8000' : '';
@@ -53,7 +53,8 @@ export class AppServiceService {
     if(document.getElementById('cd-shadow-layer'))
       document.getElementById('cd-shadow-layer').classList.remove('is-visible');
     if(document.getElementsByClassName("modal-backdrop")[0])
-	    document.getElementsByClassName("modal-backdrop")[0].remove();
+	    document.getElementsByClassName("modal-backdrop")[0].remove();2
+    $('#cd-cart').removeClass('overflow-h');
   }
 
   addToCartClicked() {

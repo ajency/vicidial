@@ -146,50 +146,6 @@
 @endif
 
 
-<!-- Our Activities -->
-
-<section class="section">
-  <div class="container mt-5 ">
-      <div class="row">
-          <div class="col-md-12 text-center">
-            <h2 class="font-weight-bold mb-3">Our Activities</h2>
-          </div>
-      </div>
-  </div>
-</section>
-
-<section>
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-6 mb-4 mb-lg-0">
-        <a href="/activities/jaipur">
-          <img class="d-block w-100 img-fluid lazyload blur-up custom-shadow link-card"
-              src="{{CDN::asset('/img/our-activities/fashion_10px.jpg') }}"
-              data-srcset="{{CDN::asset('/img/our-activities/fashion_large.jpg') }} 740w,
-                            {{CDN::asset('/img/our-activities/fashion_medium.jpg') }} 370w,
-                            {{CDN::asset('/img/our-activities/fashion_small.jpg') }} 248w"
-              data-sizes='(min-width: 1200px) 570px, (max-width: 991px) 95vw, 47vw'
-              alt="Jaipur - The Super Fashion Show"
-              title="Jaipur - The Super Fashion Show" />
-        </a>
-      </div>
-      <div class="col-lg-6">
-        <a href="/activities/surat">
-          <img class="d-block w-100 img-fluid lazyload blur-up custom-shadow link-card"
-              src="{{CDN::asset('/img/our-activities/painting_10px.jpg') }}"
-              data-srcset="{{CDN::asset('/img/our-activities/painting_large.jpg') }} 740w,
-                            {{CDN::asset('/img/our-activities/painting_medium.jpg') }} 370w,
-                            {{CDN::asset('/img/our-activities/painting_small.jpg') }} 248w"
-              data-sizes='(min-width: 1200px) 570px, (max-width: 991px) 95vw, 47vw'
-              alt="Surat - Kids Painting Competition"
-              title="Surat - Kids Painting Competition" />
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
-
 <!-- Product of the day -->
 
 <section class="section">
