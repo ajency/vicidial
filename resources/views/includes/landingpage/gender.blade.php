@@ -15,10 +15,6 @@
 @endphp
 
 
-@section('headjs')
-
-@stop
-
 @section('content')
 
 
