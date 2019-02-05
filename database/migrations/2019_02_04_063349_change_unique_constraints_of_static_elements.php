@@ -29,10 +29,10 @@ class ChangeUniqueConstraintsOfStaticElements extends Migration
     public function down()
     {
         Schema::table('static_elements', function (Blueprint $table) {
-            $table->unique('static_elements_sequence_type_published_unique');
-            $table->unique('static_elements_sequence_type_draft_unique');
-            $table->dropUnique(array('sequence', 'type','published','page_slug'));
-            $table->dropUnique(array('sequence','type','draft','page_slug'));
+            $table->unique(array('sequence','type','published'));
+            $table->unique(array('sequence','type','draft'));
+            $table->dropUnique('static_elements_sequence_type_published_page_slug_unique');
+            $table->dropUnique('static_elements_sequence_type_draft_page_slug_unique');
         });
     }
 }
