@@ -79,7 +79,7 @@
    </div>
    @if (isset($static_elements['banner'])) 
    @foreach($static_elements['banner'] as $banner)
-		<div static_element-id="{{$banner['sequence']}}" static_element-display_type="Banner" static_element-type="{{$banner['type']}}" class="row mb-md-4 pb-md-4 kss-extension">
+		<div static_element-id="{{$banner['sequence']}}" static_element-display_type="Banner" static_element-type="{{$banner['type']}}" class="row mb-md-4 pb-md-4 kss-extension" page_slug="{{$gendername}}" >
 			<div class="col-md-7 pr-md-0 img-hero">
 				@include('includes.landingpage.gender_banner', ['banner' => $banner])
 			</div>

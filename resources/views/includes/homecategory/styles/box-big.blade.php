@@ -1,4 +1,4 @@
-<div class="cat-item cat-{{$category['sequence']}} position-relative kss-extension" static_element-id="{{$category['sequence']}}" static_element-display_type="Styles In Focus" static_element-type="{{$category['type']}}">
+<div class="cat-item cat-{{$category['sequence']}} position-relative kss-extension" static_element-id="{{$category['sequence']}}" static_element-display_type="Styles In Focus" static_element-type="{{$category['type']}}" page_slug="home">
   <a href="{{$category['element_data']['image']['href']}}">
     <div>{!!$category['element_data']['text']['text1']!!}</div>
     @if (isset($category['images']['original']))
