@@ -83,7 +83,7 @@ class StaticElement extends Model
             }
             
             $productImages =[];
-            if(!empty($record->element_data['products']) || !is_null($record->element_data['products']) ){
+            if(isset($record->element_data['products']) ){
                 $products = $record->element_data['products'];
     
                 foreach($products as $product){
