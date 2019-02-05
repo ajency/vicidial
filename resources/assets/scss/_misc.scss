@@ -594,6 +594,9 @@
     	display: flex;
     	align-items: center;
     	padding: 0 5px;
+    	@media (min-width: 992px){
+    		min-width: 156px;
+    	}
 	}
 	@media (max-width: 600px){
 		overflow: auto;
