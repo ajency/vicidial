@@ -14,7 +14,7 @@ class AddPageSlugColumnStaticElements extends Migration
     public function up()
     {
         Schema::table('static_elements', function (Blueprint $table) {
-             $table->string('page_slug')->after('draft')->default("home1")->nullable();
+             $table->string('page_slug')->after('draft')->default("home")->nullable();
             });
     
     }
