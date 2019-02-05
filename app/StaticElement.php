@@ -522,7 +522,7 @@ class StaticElement extends Model
 
         foreach ($getpublish as $pub) {
             if ($pub->published == null) {
-                Staticelement::where('sequence', $pub->sequence)->where('type', $pub->type)->where('published', true)->update(['published' => null]);
+                Staticelement::where('sequence', $pub->sequence)->where('type', $pub->type)->where('published', true)->where('page_slug', $pub->page_slug)->update(['published' => null]);
 
                 $pub->published = true;
                 $pub->save();
