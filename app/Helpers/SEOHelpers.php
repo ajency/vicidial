@@ -31,9 +31,15 @@ function homeseo() {
     OpenGraph::addImage($domain.'/img/logo-kss.png');
     OpenGraph::setUrl($url);
 
+    OpenGraph::addImage($domain.'/img/kss_logo/kss_logo_180_110.jpg', ['width' => 180, 'height' => 110]);
+
+    OpenGraph::addImage($domain.'/img/kss_logo/kss_logo_300_157.jpg', ['width' => 300, 'height' => 157]);
+
+    OpenGraph::addImage($domain.'/img/kss_logo/kss_logo_1200_630.jpg', ['width' => 1200, 'height' => 630]);
+
     Twitter::setTitle('Online shopping for kids wear and fashion in India - KidSuperStore.in', false);
     Twitter::setDescription('Online shopping store in India for Shoes, Clothing, Dresses, Accessories for Kids. | Cash on Delivery | 30 days return.');
-    Twitter::addImage($domain.'/img/logo-kss.png');
+    Twitter::addImage($domain.'/img/kss_logo/kss_logo_300_157.jpg');
     Twitter::setUrl($url);
 }
 
@@ -102,8 +108,14 @@ function defaultseo() {
     OpenGraph::addImage($domain.'/img/logo-kss.png');
     OpenGraph::setUrl($url);
 
+    OpenGraph::addImage($domain.'/img/kss_logo/kss_logo_180_110.jpg', ['width' => 180, 'height' => 110]);
+
+    OpenGraph::addImage($domain.'/img/kss_logo/kss_logo_300_157.jpg', ['width' => 300, 'height' => 157]);
+
+    OpenGraph::addImage($domain.'/img/kss_logo/kss_logo_1200_630.jpg', ['width' => 1200, 'height' => 630]);
+
     Twitter::setTitle('Online shopping for kids wear and fashion in India - KidSuperStore.in', false);
     Twitter::setDescription('Online shopping store in India for Shoes, Clothing, Dresses, Accessories for Kids. | Cash on Delivery | 30 days return.');
-    Twitter::addImage($domain.'/img/logo-kss.png');
+    Twitter::addImage($domain.'/img/kss_logo/kss_logo_300_157.jpg');
     Twitter::setUrl($url);
 }
