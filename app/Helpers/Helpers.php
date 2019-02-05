@@ -421,7 +421,7 @@ function generateSubordersData($cartItems, $locations)
         abort(500, 'empty location collection sent to generateSubordersData');
     }
     $locationsData = $locations->keys()->combine($locations->map(function ($item, $key) {
-        return ['id' => $key, 'items' => collect(), 'remaining_items' => collect(), 'distance' => $item];
+        return ['id' => $key, 'items' => collect(), 'remaining_items' => collect(), 'score' => $item];
     }));
     $count = $locations->keys()->combine($locations->map(function ($item, $key) {
         return 0;
@@ -464,7 +464,7 @@ function generateSubordersData($cartItems, $locations)
     $max              = collect($count)->max();
     $selectedLocation = $locationsData->filter(function ($value, $key) use ($count, $max) {
         return $count[$key] == $max;
-    })->sortBy('distance')->values()->first();
+    })->sortByDesc('score')->values()->first();
     //end function that chooses the location
 
     $key = $selectedLocation['id'];
