@@ -47,7 +47,7 @@
 						@endforeach
 					</div>	
 					<h3 class="gender__name font-weight-bold text-dark text-uppercase m-detach">{{$title}}</h3>
-					<p class="gender__years text-dark m-detach">{{$years}}</p>				
+					<p class="gender__years text-dark m-detach">{{$banner['element_data']['text']['text1']}}</p>				
 						<a href="/boys/toddler-2-7-years/shirt" class="btn kss-btn kss-btn--dark">{{$banner['element_data']['text']['text2']}}</a>
 				</div>
 			</div>
