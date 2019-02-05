@@ -130,8 +130,12 @@
 
         </div>
    </div>
-    <div class="d-flex bd-highlight mb-3">
+    <div class="d-flex bd-highlight mb-3 justify-content-between flex-column flex-md-row">
         <div class="mr-auto p-2 bd-highlight">© Copyright 2018 Kidsuperstore. All rights reserved.</div>
+        <div class="d-flex align-items-center justify-content-center mt-2 mt-sm-0">
+          <img src="/img/256-encryption.png" class="img-fluid mr-4" alt="256 Encryption" title="256 Encryption" width="100">
+          <img src="/img/secured-payu.png" class="img-fluid" alt="Secured Payment Payu" title="Secured Payment Payu" width="130">
+        </div>
     </div>
 </div>
 
