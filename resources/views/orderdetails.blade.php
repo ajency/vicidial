@@ -96,7 +96,7 @@
 				});
 				// Google Conversion tracking
 				gtag('event', 'conversion', {
-			      'send_to': "{{config('analytics.google_pixel_id')}}",
+			      'send_to': "AW-{{config('analytics.conversion_id')}}/{{config('analytics.conversion_label')}}",
 			      'value': {{$params['order_info']['total_amount']}},
 			      'currency': 'INR',
 			      'transaction_id': '{{$params['order_info']['txn_no']}}'
