@@ -429,7 +429,7 @@ function generateSubordersData($cartItems, $locations)
     foreach ($cartItems as $cartItem) {
         $processedLocations = [];
         foreach ($cartItem['item']->inventory as $locationData) {
-            if (array_search($locationData['location_id'], $locations->keys()->toArray()) === false || $locationData['quantity'] < 0) {
+            if (array_search($locationData['location_id'], $locations->keys()->toArray()) === false || $locationData['quantity'] <= 0) {
                 continue;
             }
             $transferQty = ($cartItem['quantity'] <= $locationData['quantity']) ? $cartItem['quantity'] : $locationData['quantity'];
