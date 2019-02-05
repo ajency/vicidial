@@ -92,6 +92,16 @@ class StaticController extends Controller
         if (!in_array($gendername, ["boys","girls","infants"])){
             abort(404);
         }
+        $static_elements=StaticElement::fetch($gendername,[], $published=true);
+        $this->params['breadcrumb']['current'] = $gendername;
+        return view('includes/landingpage/gender')->with('params', $this->params)->with('gendername', $gendername)->with('static_elements', $static_elements);
+    }
+
+    public function draft($gendername, Request $request)
+    {
+        if (!in_array($gendername, ["boys","girls","infants"])){
+            abort(404);
+        }
         $static_elements=StaticElement::fetch($gendername,[], $published=false);
         $this->params['breadcrumb']['current'] = $gendername;
         return view('includes/landingpage/gender')->with('params', $this->params)->with('gendername', $gendername)->with('static_elements', $static_elements);
