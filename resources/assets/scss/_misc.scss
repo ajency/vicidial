@@ -489,7 +489,9 @@
  //    	padding-right: 35px;
 	// }
 	@media(max-width: 600px){
-		padding: 0;
+		.img-hero{
+			padding: 0;
+		}
 	}
 	.card-img-top{
 		transition: all 0.3s;
