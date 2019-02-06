@@ -321,6 +321,7 @@ function fbTrackAddToCart(var_id){
         currency: 'INR',
         content_ids: parent_id+'-'+selected_color_id,
         content_type: 'product',
+        product_catalog_id : product_catalog_id
     });
 }
 

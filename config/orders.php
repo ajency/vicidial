@@ -43,4 +43,8 @@ return [
         "analytic_tag_ids"   => [],
         "invoice_lines"      => [],
     ],
+    'location_scores' => [
+        'distance' => 5000000,
+        'business' => 10,
+    ],
 ];
