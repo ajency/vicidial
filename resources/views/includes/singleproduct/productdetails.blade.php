@@ -83,13 +83,13 @@
   @php if($params['metatags']) { @endphp
   <div class="">
     <div class="collapse-head border-bottom mb-0" id="headingThree">
-        <button class="btn btn-link btn-block text-left py-3 px-0 br-0" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+        <button class="btn btn-link btn-block text-left py-3 px-0 br-0 collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
             <label class="mb-0 text-body cursor-pointer">
                 Tags
             </label>
         </button>
     </div>
-    <div id="collapseThree" class="collapse show" aria-labelledby="headingThree" data-parent="#accordionExample">
+    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
         <div class="card-body pb-2 px-0">
           <ul class="list-inline d-flex flex-wrap kss-tags">
             @php foreach($params['metatags'] as $metatag) { @endphp
