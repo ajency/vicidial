@@ -107,6 +107,40 @@
   </div>
 </section>
 
+
+<!-- Theme of the week -->
+<section class="week-theme">
+  <div class="container mt-5">
+      <div class="row">
+          <div class="col-md-12 text-center">
+            <h2 class="font-weight-bold mb-3">Theme of the week</h2>
+          </div>
+      </div>
+  </div>
+  <div>
+    <a href="/shop?pf=tag:vintage-garden">
+      <picture>
+        <source media="(orientation: landscape)"
+          data-srcset="{{CDN::asset('/img/week-theme/theme_large.jpg') }} 2000w,
+                      {{CDN::asset('/img/week-theme/theme_medium.jpg') }} 1200w,
+                      {{CDN::asset('/img/week-theme/theme_small.jpg') }} 700w"
+          sizes="100vw">
+
+        <source media="(orientation: portrait)"
+          data-srcset="{{CDN::asset('/img/week-theme/theme_portrait_large.jpg') }} 1200w,
+                      {{CDN::asset('/img/week-theme/theme_portrait_medium.jpg') }} 700w,
+                      {{CDN::asset('/img/week-theme/theme_portrait_small.jpg') }} 400w"
+          sizes="100vw">
+
+        <img src="{{CDN::asset('/img/week-theme/theme_20px.jpg') }}"
+        data-sizes="100vw"
+        class="img-fluid lazyload blur-up w-100" alt="Vintage Garden" title="Vintage Garden">
+      </picture>
+    </a>
+    </div>
+</section>
+
+
 <!-- Home category -->
 @if (isset($static_elements['category']))
   <section class="section">
