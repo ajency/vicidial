@@ -93,7 +93,7 @@ class StaticController extends Controller
             abort(404);
         }
         $static_elements=StaticElement::fetch($gendername,[], $published=true);
-        $this->params['breadcrumb']['current'] = $gendername;
+        $this->params['breadcrumb']['current'] = ucwords($gendername);
         return view('includes/landingpage/gender')->with('params', $this->params)->with('gendername', $gendername)->with('static_elements', $static_elements);
     }
 
