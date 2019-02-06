@@ -91,6 +91,13 @@ function fetchMetaTags($ids)
     return $odoo->defaultExec('product.metatag', 'read', [$ids], ['fields' => ['name', 'metatag']]);
 }
 
+function fetchBrandName($brandId)
+{
+    $odoo   = new OdooConnect;
+    $brands = $odoo->defaultExec('custom.brand', 'read', [[$brandId]], ['fields' => ['display_name']])->pluck('display_name', 'id')->toArray();
+    return $brands[$brandId];
+}
+
 function sanitiseProductData($odooData)
 {
     $metatags      = fetchMetaTags($odooData['metatag_ids']);
@@ -128,6 +135,7 @@ function sanitiseProductData($odooData)
         "product_vendor"                   => ($odooData["vendor_id"]) ? $odooData["vendor_id"][1] : null,
         'product_image_available'          => false,
         'product_metatag'                  => $metatags->map(function ($item, $key) {$item['name'] = trim($item['name']);return $item;})->pluck('name')->toArray(),
+        'product_brand'                    => (isset($odooData['brand_ids'][0])) ? fetchBrandName($odooData['brand_ids'][0]) : false,
     ];
     $product_categories = explode('/', $index['product_categories']);
     $categories         = ['product_category_type', 'product_gender', 'product_age_group', 'product_subtype'];
@@ -138,7 +146,6 @@ function sanitiseProductData($odooData)
     if ($index['product_gender'] == 'Others') {
         $index['product_gender'] = 'Unisex';
     }
-    $index['product_brand'] = 'kss-fashion';
     return $index;
 }
 
@@ -436,20 +443,20 @@ function generateSubordersData($cartItems, $locations)
             }
             $transferQty = ($cartItem['quantity'] <= $locationData['quantity']) ? $cartItem['quantity'] : $locationData['quantity'];
             $locationsData[$locationData['location_id']]['items']->push([
-                'variant'  => $cartItem['item'],
-                'quantity' => $transferQty,
-                'price_mrp' => $cartItem['price_mrp'],
-                'price_sale' => $cartItem['price_sale'],
+                'variant'     => $cartItem['item'],
+                'quantity'    => $transferQty,
+                'price_mrp'   => $cartItem['price_mrp'],
+                'price_sale'  => $cartItem['price_sale'],
                 'price_final' => $cartItem['price_final'],
             ]);
             $count[$locationData['location_id']] += $transferQty;
             $processedLocations[] = $locationData['location_id'];
             if ($transferQty < $cartItem['quantity']) {
                 $locationsData[$locationData['location_id']]['remaining_items']->push([
-                    'item'     => $cartItem['item'],
-                    'quantity' => $cartItem['quantity'] - $transferQty,
-                    'price_mrp' => $cartItem['price_mrp'],
-                    'price_sale' => $cartItem['price_sale'],
+                    'item'        => $cartItem['item'],
+                    'quantity'    => $cartItem['quantity'] - $transferQty,
+                    'price_mrp'   => $cartItem['price_mrp'],
+                    'price_sale'  => $cartItem['price_sale'],
                     'price_final' => $cartItem['price_final'],
                 ]);
             }
@@ -813,13 +820,14 @@ function defaultUserPassword($append)
     return $key;
 }
 
-function translateDiscountToItems($cartData){
-    $discountRatio = $cartData['final_total']/floatval($cartData['sale_total']);
-    $total = 0;
+function translateDiscountToItems($cartData)
+{
+    $discountRatio = $cartData['final_total'] / floatval($cartData['sale_total']);
+    $total         = 0;
     foreach ($cartData['items'] as $id => $cartItem) {
-        $newPrice =  round($cartItem['price_sale']*$discountRatio,2);
+        $newPrice                              = round($cartItem['price_sale'] * $discountRatio, 2);
         $cartData['items'][$id]['price_final'] = $newPrice;
-        $total+= $newPrice;
+        $total += $newPrice;
     }
     $cartData['round_off'] = $cartData['final_total'] - $total;
     return $cartData;

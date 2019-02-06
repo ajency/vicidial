@@ -131,19 +131,21 @@ class Product
         } catch (\Exception $e) {
             \Log::warning($e->getMessage());
         }
-        $facets = ['product_category_type', 'product_gender', 'product_age_group', 'product_subtype'];
+        $facets = ['product_category_type', 'product_gender', 'product_age_group', 'product_subtype', 'product_brand'];
         foreach ($facets as $facet) {
-            try {
-                $facetObj               = new Facet;
-                $facetObj->facet_name   = $facet;
-                $facetObj->facet_value  = $product[$facet];
-                $facetObj->display_name = $product[$facet];
-                $facetObj->slug         = str_slug($product[$facet]);
-                $facetObj->sequence     = 10000;
-                $facetObj->display      = false;
-                $facetObj->save();
-            } catch (\Exception $e) {
-                \Log::warning($e->getMessage());
+            if ($product[$facet]) {
+                try {
+                    $facetObj               = new Facet;
+                    $facetObj->facet_name   = $facet;
+                    $facetObj->facet_value  = $product[$facet];
+                    $facetObj->display_name = $product[$facet];
+                    $facetObj->slug         = str_slug($product[$facet]);
+                    $facetObj->sequence     = 10000;
+                    $facetObj->display      = false;
+                    $facetObj->save();
+                } catch (\Exception $e) {
+                    \Log::warning($e->getMessage());
+                }
             }
         }
         $facets = ['product_color_html', 'variant_size_name'];
@@ -556,6 +558,18 @@ class Product
         $productColors = ProductColor::select(['product_id','elastic_id'])->whereIn('product_id',$products)->pluck('product_id','elastic_id');
         $productBrands = $productColors->map(function($productID)use($brands,$allBrands){
             $brand = $brands[$allBrands->where('id',$productID)->first()['brand_ids'][0]];
+            try {
+                $facetObj               = new Facet;
+                $facetObj->facet_name   = 'product_brand';
+                $facetObj->facet_value  = $brand;
+                $facetObj->display_name = $brand;
+                $facetObj->slug         = str_slug($brand);
+                $facetObj->sequence     = 10000;
+                $facetObj->display      = false;
+                $facetObj->save();
+            } catch (\Exception $e) {
+                \Log::warning($e->getMessage());
+            }
             return [
                 'elastic_data' => null,
                 'change' => function (&$product, &$variants) use ($brand) {
@@ -564,6 +578,8 @@ class Product
             ];
             
         });
-        ProductColor::updateElasticData($productBrands);
+        if ($productBrands->count() != 0) {
+            ProductColor::updateElasticData($productBrands);
+        }
         return ;
     }
