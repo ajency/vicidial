@@ -109,13 +109,13 @@ class StaticElement extends Model
     //update given seq number
     public static function saveData($seq_no, $page_slug, $element_data, $type, $image_upload)
     {
-        $record = StaticElement::where('sequence', '=', $seq_no)->where('type', $type)->orderBy('id', 'desc')->get()->first();
+        $record = StaticElement::where('sequence', '=', $seq_no)->where('type', $type)->where('page_slug', $page_slug)->orderBy('id', 'desc')->get()->first();
 
         if ($record == null) {
             abort(404);
         }
 
-        StaticElement::where('sequence', $seq_no)->where('type', $type)->where('draft', true)->update(['draft' => null]);
+        StaticElement::where('sequence', $seq_no)->where('type', $type)->where('draft', true)->where('page_slug', $page_slug)->update(['draft' => null]);
 
         $se               = new StaticElement();
         $se->sequence     = $record['sequence'];
@@ -518,11 +518,11 @@ class StaticElement extends Model
 
     public static function publish()
     {
-        $getpublish = Staticelement::select()->where('draft', true)->get();
+        $getpublish = StaticElement::select()->where('draft', true)->get();
 
         foreach ($getpublish as $pub) {
             if ($pub->published == null) {
-                Staticelement::where('sequence', $pub->sequence)->where('type', $pub->type)->where('published', true)->where('page_slug', $pub->page_slug)->update(['published' => null]);
+                StaticElement::where('sequence', $pub->sequence)->where('type', $pub->type)->where('published', true)->where('page_slug', $pub->page_slug)->update(['published' => null]);
 
                 $pub->published = true;
                 $pub->save();

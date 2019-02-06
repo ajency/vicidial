@@ -13,13 +13,13 @@ class StaticElementController extends Controller
         $request->validate(['type' => 'required', 'page_slug' => 'required']);
         $params = $request->all();
 
-        $fetchedData = StaticElement::fetchSeq($seq_no,$params['page_slug'], $params['type']);
+        $fetchedData = StaticElement::fetchSeq($seq_no, $params['page_slug'], $params['type']);
         return (json_encode($fetchedData));
     }
 
     public function callFetch(Request $request)
     {
-        $request->validate(['type' => 'sometimes','page_slug' => 'required', 'published' => 'sometimes']);
+        $request->validate(['type' => 'sometimes', 'page_slug' => 'required', 'published' => 'sometimes']);
         $params = $request->all();
 
         $data = array();
@@ -53,7 +53,7 @@ class StaticElementController extends Controller
 
         $params = $request->all();
 
-        $dataInserted = StaticElement::saveNewData($params['page_slug'],$params['element_data'], $params['type'], $params['images']);
+        $dataInserted = StaticElement::saveNewData($params['page_slug'], $params['element_data'], $params['type'], $params['images']);
         return (json_encode($dataInserted));
     } //callSaveNew
 
@@ -90,7 +90,7 @@ class StaticElementController extends Controller
         return $imageurl;
     }
 
-    public function callPublish()
+    public function callPublish(Request $request)
     {
         $publish = StaticElement::publish();
         return (json_encode($publish));
