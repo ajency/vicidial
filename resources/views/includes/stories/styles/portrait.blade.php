@@ -1,4 +1,4 @@
-<div class="story-{{$story['sequence']}} position-relative kss-extension" static_element-id="{{$story['sequence']}}" static_element-display_type="Shop By Stories" static_element-type="{{$story['type']}}">
+<div class="story-{{$story['sequence']}} position-relative kss-extension" static_element-id="{{$story['sequence']}}" static_element-display_type="Shop By Stories" static_element-type="{{$story['type']}}" page_slug="home">
     <a href="{{$story['element_data']['image']['href']}}" class="trend-box d-block link-card position-relative" style="order:0;">
         <div>{!!$story['element_data']['text']['text1']!!}</div>
         @if (isset($story['images']['original']))

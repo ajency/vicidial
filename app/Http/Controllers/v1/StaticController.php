@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Variant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\StaticElement;
 
 class StaticController extends Controller
 {
@@ -84,6 +85,26 @@ class StaticController extends Controller
         }
         $this->params['breadcrumb']['current'] = 'Activities Rules';
         return view('activities-rules')->with('params', $this->params)->with('storename', $storename);
+    }
+
+    public function gender($gendername, Request $request)
+    {
+        if (!in_array($gendername, ["boys","girls","infants"])){
+            abort(404);
+        }
+        $static_elements=StaticElement::fetch($gendername,[], $published=true);
+        $this->params['breadcrumb']['current'] = ucwords($gendername);
+        return view('includes/landingpage/gender')->with('params', $this->params)->with('gendername', $gendername)->with('static_elements', $static_elements);
+    }
+
+    public function draft($gendername, Request $request)
+    {
+        if (!in_array($gendername, ["boys","girls","infants"])){
+            abort(404);
+        }
+        $static_elements=StaticElement::fetch($gendername,[], $published=false);
+        $this->params['breadcrumb']['current'] = $gendername;
+        return view('includes/landingpage/gender')->with('params', $this->params)->with('gendername', $gendername)->with('static_elements', $static_elements);
     }
 
     public function productXML(Request $request)

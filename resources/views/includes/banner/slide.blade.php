@@ -1,6 +1,6 @@
 <!-- Individual slides goes here -->
 
-<div class="home-slide-item kss-extension" static_element-id="{{$banner['sequence']}}" static_element-display_type="Banner" static_element-type="{{$banner['type']}}">
+<div class="home-slide-item kss-extension" static_element-id="{{$banner['sequence']}}" static_element-display_type="Banner" static_element-type="{{$banner['type']}}" page_slug="home">
   <a href="{{$banner['element_data']['image']['href']}}">
     <picture>  
       <source media="(orientation: landscape)"
