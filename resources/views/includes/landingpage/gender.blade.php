@@ -57,3 +57,19 @@
 </div>
 
 @stop
+
+@section('footjs')
+<script type="text/javascript">  
+  $(function(){ 
+    // Tooltip for chrome extension  
+      if($('.update-element-btn')){ 
+        $(document).on('click',".update-element-btn",function(){ 
+            setTimeout(function() { 
+                $('[data-toggle="tooltip"]').tooltip() 
+             }, 1800); 
+        }); 
+      } 
+  })
+</script>
+
+@stop
