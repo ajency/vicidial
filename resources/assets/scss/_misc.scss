@@ -481,3 +481,132 @@
 		width: 150px;
 	}
 }
+
+// Gender landing page
+.sublanding-container{
+	// @media(min-width: 992px){
+	// 	padding-left: 35px;
+ //    	padding-right: 35px;
+	// }
+	@media(max-width: 600px){
+		.img-hero{
+			padding: 0;
+		}
+	}
+	.card-img-top{
+		transition: all 0.3s;
+		&:hover{
+			transform: translateY(-3px);
+		}
+	}
+}
+
+.gender{
+	&__name{
+		font-size: 1.5em;
+	}
+	&__years{
+		font-size: 1.5em;
+	}
+	.kss-btn--dark{
+		max-width: 200px;
+		font-size: 1.4em;
+        font-weight: 400;
+	}
+	@media (max-width: 991px){
+		&__years{
+			font-size: 1.3em;
+		}
+		.kss-btn--dark{
+			font-size: 1.3em;
+		}
+    }
+    @media (max-width: 767px){
+    	.kss-btn--dark{
+    		position: absolute;
+    		top: -70px;
+    		z-index: 1;
+    		padding: 0.8em;
+    	}
+    	&:not(.m-heading){
+    		.gender__name,.gender__years{
+    			display: none;
+    		}
+    	}
+    	&.m-heading{
+    		background-color: #cecece;
+    		padding-top: 0.5em;
+    		padding-bottom: 0.5em;
+    		.gender__name{
+    			font-size: 1.7em;
+    			margin-top: 10px;
+    			color: #131313 !important;
+    		}
+    		.gender__years{
+    			display: inline-block;
+			    color: #000 !important;
+			    font-weight: bold;
+    		}
+    	}
+    }
+}
+
+@media (min-width: 768px){
+	.m-heading{
+		margin-top: -1em;
+    	margin-bottom: 2em;
+    	.gender__name{
+    		font-size: 2em;
+    		color: #000 !important;
+    		display: inline-block;
+    		position: relative;
+    		padding: 5px 5em;
+    		&:before{
+    			content: '';
+    			position: absolute;
+			    top: 45%;
+			    width: 100%;
+    			left: 0;
+    			border: 4px double #9a9a9a;
+    			border-left: 0;
+    			border-right: 0;
+    		}
+    		span{
+    			background-color: #fff;
+			    position: relative;
+			    padding: 10px;
+    		}
+    	}
+	}
+	.img-hero{
+		img{
+			height: 100%;
+			object-fit: cover;
+		}
+	}
+}
+
+
+
+.product-group{
+	border-bottom: 2px solid #d4d4d4;
+	&__col{
+		flex: 1 0 33.33%;
+		min-height: 200px;
+    	display: flex;
+    	align-items: center;
+    	padding: 0 5px;
+    	@media (min-width: 992px){
+    		min-width: 156px;
+    	}
+	}
+	@media (max-width: 600px){
+		overflow: auto;
+	    display: grid !important;
+	    grid-gap: 20px;
+	    grid-template-columns: 5px repeat(3,calc(60% - 40px)) 5px;
+	}
+	&:after,&:before{
+		content: '';
+	}
+}

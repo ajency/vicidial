@@ -19,12 +19,17 @@
             	<img (click)="closeCart()" class="btn-pay btn-back kss_highlight" src="/img/close-icon.png" style="width:22px;position: relative;top: 2px;"/>
           	</h3>
 		</div> -->
-	  	<div class="align-items-center">
-			<h3 class="modal-title font-weight-bold mt-1 mb-0">
-				Bag <span class="text-muted "> <strong *ngIf="cart.items">&#183;</strong></span>
-				<small *ngIf="cart.items" class="count text-muted ">{{cart.cart_count || 0}} <span *ngIf="(cart.cart_count !==undefined && (cart.cart_count >1 || cart.cart_count == 0)) || cart.cart_count===undefined">items</span> <span *ngIf="cart.cart_count && cart.cart_count == 1">item</span>
-				</small>
-			</h3>
+	  	<div class="align-items-center w-100">
+	  		<div class="d-flex justify-content-between">
+				<h3 class="modal-title font-weight-bold mt-1 mb-0">
+					Bag <span class="text-muted "> <strong *ngIf="cart.items">&#183;</strong></span>
+					<small *ngIf="cart.items" class="count text-muted ">{{cart.cart_count || 0}} <span *ngIf="(cart.cart_count !==undefined && (cart.cart_count >1 || cart.cart_count == 0)) || cart.cart_count===undefined">items</span> <span *ngIf="cart.cart_count && cart.cart_count == 1">item</span>
+					</small>
+				</h3>
+				<div>
+					<img src="/img/secure-ssl.png" class="img-fluid" alt="100% Secure" title="100% Secure">
+				</div>
+			</div>
 	  	</div>
 <!-- 	  	<div class="ml-auto align-self-center">
 	 	 	<button class="btn btn-outline-secondary mt-1" >
@@ -200,16 +205,25 @@
 		</div>
 		<hr class="dashed">
 		<hr class="dashed d-none">
-		<div class="cd-cart-total mt-4 mb-4">
+		<div class="cd-cart-total mt-4">
 			<h5 class="font-weight-bold">Bag Total <span>₹{{cart.summary.you_pay}}</span></h5>
-			<p class="sub-text mb-3">Shipping charges will be added on checkout</p>
+			<p class="sub-text mb-3">Free Shipping</p>
+		</div>
+
+		<hr class="mt-0 mb-2">
+		<div class="d-flex align-items-center py-3 mb-4">
+			<img src="/img/shield.png" class="img-fluid" width="45" alt="100% Secure Payments" title="100% Secure Payments">
+			<div class="pl-3 genuinity">
+				<p class="mb-1">Genuine products. 7 day returns.</p>
+				<p class="my-1">100% Secure payments.</p>
+			</div>
 		</div>
 
 		<div class="seperator mb-5"></div>
 
 		<div id="kss_cart" class="p-3 fixed-bottom fixed-checkout-btn d-flex align-items-center justify-content-between">
 			<button *ngIf="cart.cart_type =='order'" id="checkout" class="btn kss-btn kss-btn--outline-secondary kss-btn--big mr-3" (click)="editBag()" >Edit Bag</button>
-			<button  id="checkout" class="btn kss-btn kss-btn--big mt-0" [ngClass]="{'disabled' : cartItemOutOfStock}" (click)="checkLoginStatus()" >Checkout</button>
+			<button  id="checkout" class="btn kss-btn kss-btn--big mt-0" [ngClass]="{'disabled' : cartItemOutOfStock}" (click)="checkLoginStatus()" >Secure Checkout</button>
 		</div>
 	</div>	
 

@@ -42,7 +42,7 @@
 		font-size: 1.15em;
 	}
 	.modal-header{
-		border-bottom: 1px solid #bfbfbf;
+		border-bottom: 1px solid #a5a5a5;
 	}
 	.modal-content{
 		border-top-left-radius: 8px;
@@ -72,6 +72,7 @@
 					    background-color: transparent;
 					    color: #000;
 					    text-align: left;
+					    transition: all 0.3s ease;
     					&:hover{
     						background-color: transparent;
     					}
@@ -80,13 +81,14 @@
     			.radio-input{
     				& + .radio-label{
     					position: relative;
-    					padding: 1.2em 10px 1.2em 45px;
-    					border-bottom: 1px solid #ddd !important;
+    					padding: 1.2em 15px 1.2em 45px;
+    					border-bottom: 1px solid rgb(165, 165, 165) !important;
     					margin-bottom: 0 !important;
     					border-radius: 0;
     					display: flex;
     					justify-content: space-between;
     					min-height: 53px;
+    					margin: 0;
 						&:before{
 						    content: "";
 							background: #fff;
@@ -107,7 +109,7 @@
     				}
     				&:checked{
     					& + .radio-label{
-    						background-color: #fbfbfb !important;
+    						box-shadow: inset 4px 0px 0px theme-color('primary');
     						&:before{
     							background-color: theme-color('primary');
     						}
@@ -128,6 +130,7 @@
     				}
     				&:disabled{
     					& + .radio-label{
+    						background-color: #e9ecef;
 							&:after{
 								top: 26px;
 	    						left: 0;
@@ -135,7 +138,7 @@
 							    width: 95%;
 							    margin: 0 auto;
 							    right: 0;
-							    background-color: #a5a3a3;
+							    background-color: rgba(86, 86, 86, 0.41);
 	    					}
     					}
     				}

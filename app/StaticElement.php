@@ -20,12 +20,12 @@ class StaticElement extends Model
     ];
 
     //fetch with seq number
-    public static function fetchSeq($seq_no, $type, $published = false)
+    public static function fetchSeq($seq_no, $page_slug, $type, $published = false)
     {
         if (!$published) {
-            $record = StaticElement::where('sequence', $seq_no)->where('type', $type)->where('draft', true)->orderBy('sequence', 'desc')->get()->first();
+            $record = StaticElement::where('sequence', $seq_no)->where('type', $type)->where('draft', true)->where('page_slug', $page_slug)->orderBy('sequence', 'desc')->get()->first();
         } else {
-            $record = StaticElement::where('sequence', $seq_no)->where('type', $type)->where('published', true)->orderBy('sequence', 'desc')->get()->first();
+            $record = StaticElement::where('sequence', $seq_no)->where('type', $type)->where('published', true)->where('page_slug', $page_slug)->orderBy('sequence', 'desc')->get()->first();
         }
 
         if (is_null($record)) {
@@ -48,35 +48,57 @@ class StaticElement extends Model
     } //fetchSeq
 
     //fetch all
-    public static function fetch($data = [], $published = false)
+    public static function fetch($page_slug, $types = null, $published = false)
     {
-        if (!$published) {
-            $mode = 'draft';
-        } else {
-            $mode = 'published';
-        }
+        $records = [];
+        $mode    = (!$published) ? 'draft' : 'published';
 
-        if (isset($data['type'])) {
-            $records = StaticElement::where('type', 'like', $data['type'] . '%')->where($mode, true)->orderBy('sequence', 'asc')->get();
+        if (!is_null($types) && gettype($types) != 'array') {
+            $types = [$types];
+        }
+        if (is_null($types) || empty($types)) {
+            $records = StaticElement::where($mode, true)->where('page_slug', $page_slug)->orderBy('sequence', 'asc')->get();
         } else {
-            $records = StaticElement::where($mode, true)->orderBy('sequence', 'asc')->get();
+
+            $records = StaticElement::where($mode, true)->where('page_slug', $page_slug)->where(function ($q) use ($types) {
+                foreach ($types as $type) {
+                    $q->where('type', 'like', $type . '%');
+                }
+            })->orderBy('sequence', 'asc')->get();
+
         }
 
         $response = array();
 
         foreach ($records as $record) {
-            $type   = explode('_', $record->type);
+
+            $type = explode('_', $record->type);
+
             $images = $record->getStaticImagesAll(array_keys(config('fileupload_static_element.' . $record->type . '_presets')), $record);
 
             if (!isset($response[$type[0]])) {
                 $response[$type[0]] = array();
             }
 
+            $productImages = [];
+            if (isset($record->element_data['products'])) {
+                $products = $record->element_data['products'];
+
+                foreach ($products as $product) {
+                    $productObj   = ProductColor::where('elastic_id', $product)->first();
+                    $productImage = $productObj->getDefaultImage(["list-view"]);
+                    $productUrl   = $productObj->getURL();
+                    $productTitle = $productObj->getTitle();
+                    array_push($productImages, array("images" => $productImage['list-view'], "product-slug" => $productUrl, "title" => $productTitle));
+                }
+            } //if
+
             array_push($response[$type[0]], array(
                 "sequence"     => $record->sequence,
                 "element_data" => $record->element_data,
                 "type"         => $record->type,
                 "images"       => $images,
+                "products"     => $productImages,
             ));
 
         } //foreach
@@ -85,19 +107,20 @@ class StaticElement extends Model
     } //fetch
 
     //update given seq number
-    public static function saveData($seq_no, $element_data, $type, $image_upload)
+    public static function saveData($seq_no, $page_slug, $element_data, $type, $image_upload)
     {
-        $record = StaticElement::where('sequence', '=', $seq_no)->where('type', $type)->orderBy('id', 'desc')->get()->first();
+        $record = StaticElement::where('sequence', '=', $seq_no)->where('type', $type)->where('page_slug', $page_slug)->orderBy('id', 'desc')->get()->first();
 
         if ($record == null) {
             abort(404);
         }
 
-        StaticElement::where('sequence', $seq_no)->where('type', $type)->where('draft', true)->update(['draft' => null]);
+        StaticElement::where('sequence', $seq_no)->where('type', $type)->where('draft', true)->where('page_slug', $page_slug)->update(['draft' => null]);
 
         $se               = new StaticElement();
         $se->sequence     = $record['sequence'];
         $se->element_data = $element_data;
+        $se->page_slug    = $page_slug;
         $se->type         = $record['type'];
         $se->save();
 
@@ -112,10 +135,10 @@ class StaticElement extends Model
     } //update given seq number
 
     //save new data
-    public static function saveNewData($element_data, $type, $image_upload)
+    public static function saveNewData($page_slug, $element_data, $type, $image_upload)
     {
         $select_type = explode('_', $type);
-        $record      = StaticElement::select()->where('type', 'like', $select_type[0] . '%')->where(function ($q) {
+        $record      = StaticElement::select()->where('type', 'like', $select_type[0] . '%')->where('page_slug', $page_slug)->where(function ($q) {
             $q->where('published', true)
                 ->orWhere('draft', true);
         })->orderBy('sequence', 'desc')->get()->first();
@@ -130,6 +153,7 @@ class StaticElement extends Model
         $se->sequence     = $sequence;
         $se->element_data = $element_data;
         $se->type         = $type;
+        $se->page_slug    = $page_slug; //
         $se->save();
 
         $se->saveNewImage($image_upload);
@@ -203,10 +227,9 @@ class StaticElement extends Model
         $upload->alt_text  = $alt;
         $upload->caption   = $caption;
         if ($base64_file != "") {
-            $upload->image_size       = json_encode(["original"]);
-            $image_size               = getimagesize($base64_file);
-            $upload->dimensions       = json_encode(["original_width" => $image_size[0], "original_height" => $image_size[1]]);
-            $upload->photo_attributes = json_encode($attributes);
+            $upload->image_size = json_encode(["original"]);
+            $image_size         = getimagesize($base64_file);
+            $upload->dimensions = json_encode(["original_width" => $image_size[0], "original_height" => $image_size[1]]);
         }
         $upload->save();
         if ($this->uploadPhoto($upload, $image, $type, $this, get_class($this), $is_watermarked, $is_public, $base64_file, $base64_file_ext, $imageName)) {
@@ -495,11 +518,11 @@ class StaticElement extends Model
 
     public static function publish()
     {
-        $getpublish = Staticelement::select()->where('draft', true)->get();
+        $getpublish = StaticElement::select()->where('draft', true)->get();
 
         foreach ($getpublish as $pub) {
             if ($pub->published == null) {
-                Staticelement::where('sequence', $pub->sequence)->where('type', $pub->type)->where('published', true)->update(['published' => null]);
+                StaticElement::where('sequence', $pub->sequence)->where('type', $pub->type)->where('published', true)->where('page_slug', $pub->page_slug)->update(['published' => null]);
 
                 $pub->published = true;
                 $pub->save();
@@ -508,4 +531,5 @@ class StaticElement extends Model
 
         return (["message" => "Elements published successfully", "success" => true]);
     }
+
 }
