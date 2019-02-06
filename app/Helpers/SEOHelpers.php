@@ -28,7 +28,6 @@ function homeseo() {
 
     OpenGraph::setTitle('Online shopping for kids wear and fashion in India - KidSuperStore.in', false);
     OpenGraph::setDescription('Online shopping store in India for Shoes, Clothing, Dresses, Accessories for Kids. | Cash on Delivery | 30 days return.');
-    OpenGraph::addImage($domain.'/img/logo-kss.png');
     OpenGraph::setUrl($url);
 
     OpenGraph::addImage($domain.'/img/kss_logo/kss_logo_180_110.jpg', ['width' => 180, 'height' => 110]);
@@ -105,7 +104,6 @@ function defaultseo() {
 
     OpenGraph::setTitle('Online shopping for kids wear and fashion in India - KidSuperStore.in', false);
     OpenGraph::setDescription('Online shopping store in India for Shoes, Clothing, Dresses, Accessories for Kids. | Cash on Delivery | 30 days return.');
-    OpenGraph::addImage($domain.'/img/logo-kss.png');
     OpenGraph::setUrl($url);
 
     OpenGraph::addImage($domain.'/img/kss_logo/kss_logo_180_110.jpg', ['width' => 180, 'height' => 110]);
