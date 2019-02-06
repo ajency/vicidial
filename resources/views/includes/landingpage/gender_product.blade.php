@@ -1,5 +1,5 @@
 <div class="product-group__col">							
-	<a href="/{{$product['product-slug']}}" class="w-100">
+	<a href="{{$product['product-slug']}}" class="w-100">
 		<img src="{{$product['images']['load']}}" 
 		data-srcset="{{$product['images']['1x']}} 270w, 
 					{{$product['images']['2x']}} 540w, 
