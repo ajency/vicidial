@@ -85,6 +85,7 @@
 				    currency: 'INR',
 				    content_ids: '{{implode(",",$variant_ids)}}',
 				    content_type: 'product',
+				    product_catalog_id : '495267047663823'
 				});
 				// Google pixel tracking
 				gtag('event', 'page_view', {

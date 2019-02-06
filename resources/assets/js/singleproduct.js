@@ -96,6 +96,7 @@ $(function(){
         currency: 'INR',
         content_ids: parent_id+'-'+selected_color_id,
         content_type: 'product_group',
+        product_catalog_id : '495267047663823'
     });
 
     // Google analytic pixel tracking
