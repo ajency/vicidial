@@ -31,6 +31,13 @@
 	    <!-- Product Info -->
 	    <div class="
 	    -body">
+	      @{{#if brand}}
+	      <a href="/@{{slug_name}}/buy" class="text-dark">
+	        <h5 class="section-heading section-heading--list mb-1 mb-sm-2">
+	          @{{brand}}
+	        </h5>
+	      </a>
+	      @{{/if}}
 	      @{{#if title}}
 	      <a href="/@{{slug_name}}/buy" class="text-dark">
 	        <h5 class="section-heading section-heading--list mb-1 mb-sm-2">

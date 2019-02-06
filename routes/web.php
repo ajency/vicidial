@@ -103,4 +103,4 @@ Route::get('/'.$config['base_root_path']. $config['model']["App\ProductColor"]['
 Route::get('/' . config('fileupload_static_element')['base_root_path'] . config('fileupload_static_element')['model']["App\StaticElement"]['base_path'] . '/{photo_id}/{preset}/{depth}/{image}', $app_version . '\StaticElementController@getImage');
 Route::get('/' . config('fileupload_static_element')['base_root_path'] . config('fileupload_static_element')['model']["App\StaticElement"]['base_path'] . '/{photo_id}/{preset}/{image}', $app_version . '\StaticElementController@getOriginalImage');
 // Route::get('/{gendername}', $app_version.'\StaticController@gender');
-Route::get('/{cat1}/{cat2?}/{cat3?}/{cat4?}', $app_version.'\ListingController@index')->name('listing');
+Route::get('/{cat1}/{cat2?}/{cat3?}/{cat4?}/{cat5?}', $app_version.'\ListingController@index')->name('listing');
