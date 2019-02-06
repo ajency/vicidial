@@ -109,13 +109,12 @@
 				  <h5 class="font-weight-bold">Total Payable<span>₹{{shippingDetails.summary.you_pay}}</span></h5>
 				</div>
 				<h5 *ngIf="shippingDetails.summary.mrp_total - shippingDetails.summary.you_pay != 0 " class="font-weight-bold text-success line-height-5">Your total savings on this order ₹{{roundOff(shippingDetails.summary.mrp_total - shippingDetails.summary.you_pay)}}</h5>
-				
-				<div class="d-flex align-items-center justify-content-center">
+				<hr>
+				<div class="d-flex align-items-center py-3">
 					<img src="/img/shield.png" class="img-fluid" width="45" alt="100% Secure Payments" title="100% Secure Payments">
 					<div class="pl-3 genuinity">
 						<p class="mb-1">Genuine products. 7 day returns.</p>
 						<p class="my-1">100% Secure payments.</p>
-						<span>Contact: <a href="tel:23456">13456</a> | <a href="/faq">Know more</a></span>
 					</div>
 				</div>
 
