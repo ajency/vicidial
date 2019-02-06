@@ -38,4 +38,6 @@ return [
         ],
     ],
     'doc_base_root_path'      => env('DOC_PRESET','').'documents',
+    'use_cdn' => env('PHOTO_UseCloudFront',false),
+    'cdn_url' => env('PHOTO_CloudFrontUrl',false),
 ];
