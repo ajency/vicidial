@@ -75,13 +75,14 @@
   @{{/each}}
   </div>
 
+  @{{#ifEquals page.total 1}}
   @{{assign "viewed_products" (multiply display_limit current)}}
-<!--   <p class="my-4 product-view text-center @{{#if show_more }} @{{else}} d-none @{{/if}}">You've viewed @{{item_count}} of  @{{total_item_count}} products</p> -->
-  <!-- progress loader -->
-<!--   <div class="kss-progress-bar @{{#if show_more }} @{{else}} d-none @{{/if}}">
-  	<div class="kss-progress-bar__loader" style="width:@{{percent viewed_products total_item_count}}%;"></div>
-  </div>
- -->
+	  <p class="my-4 product-view text-center">You've viewed @{{item_count}} of  @{{total_item_count}} @{{#ifEquals total_item_count 1}}product @{{else}}products@{{/ifEquals}}</p>
+	  <!-- progress loader -->
+	  <div class="kss-progress-bar">
+	  	<div class="kss-progress-bar__loader" style="width:@{{percent item_count total_item_count}}%;"></div>
+	  </div>
+	@{{/ifEquals}}
  	@{{#if show_pagination}}
   	<div class="kss-pagination mt-5">
 		<span class="kss-pagination__prev controls pr-md-4 d-flex  @{{#if load_prev }} @{{else}} disabled @{{/if}}">
