@@ -77,7 +77,7 @@
 
   @{{#ifEquals page.total 1}}
   @{{assign "viewed_products" (multiply display_limit current)}}
-	  <p class="my-4 product-view text-center">You've viewed @{{item_count}} @{{#ifEquals item_count 1}}product@{{else}}products@{{/ifEquals}} of  @{{total_item_count}} @{{#ifEquals total_item_count 1}}product @{{else}}products@{{/ifEquals}}</p>
+	  <p class="my-4 product-view text-center">You've viewed @{{item_count}} @{{#ifEquals item_count 1}}product@{{else}}products@{{/ifEquals}}</p>
 	  <!-- progress loader -->
 	  <div class="kss-progress-bar">
 	  	<div class="kss-progress-bar__loader" style="width:@{{percent item_count total_item_count}}%;"></div>
