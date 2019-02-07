@@ -114,6 +114,20 @@ class StaticController extends Controller
         ]);
     }
 
+    public function sitemapXML(Request $request)
+    {
+        return response(Storage::disk('s3')->get(config('ajfileupload.doc_base_root_path') . '/sitemap.xml'), 200, [
+            'Content-Type' => 'application/xml',
+        ]);
+    }
+
+    public function productlistXML(Request $request)
+    {
+        return response(Storage::disk('s3')->get(config('ajfileupload.doc_base_root_path') . '/products_list.xml'), 200, [
+            'Content-Type' => 'application/xml',
+        ]);
+    }
+
     public function getVariantDiffFile(Request $request)
     {
         return Variant::updateVariantDiffFile();

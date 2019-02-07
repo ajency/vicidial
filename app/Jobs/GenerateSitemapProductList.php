@@ -53,7 +53,7 @@ class GenerateSitemapProductList implements ShouldQueue
         $content .='</urlset>';
         \Storage::disk("public")->put('/sitemap/products_list.xml', $content);
         // dd(storage_path('app/public').'/sitemap/products_list.xml'."======".public_path()."/products_list.xml");
-        copy(storage_path('app/public').'/sitemap/products_list.xml', public_path()."/products_list.xml");
-        // \Storage::disk('public')->move('/sitemap/products_list.xml', public_path()."/products_list.xml");
+        // copy(storage_path('app/public').'/sitemap/products_list.xml', public_path()."/products_list.xml");
+        \Storage::disk('s3')->put(config('ajfileupload.doc_base_root_path') . '/products_list.xml', storage_path('app/public').'/sitemap/products_list.xml');
     }
 }

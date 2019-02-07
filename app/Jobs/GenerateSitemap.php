@@ -33,6 +33,7 @@ class GenerateSitemap implements ShouldQueue
         $content .= URL::to('/')."/products_list.xml";
         $content .= '</loc></sitemap></sitemapindex>';
         \Storage::disk("public")->put('/sitemap/sitemap.xml', $content);
-        copy(storage_path('app/public').'/sitemap/sitemap.xml', public_path()."/sitemap.xml");
+        // copy(storage_path('app/public').'/sitemap/sitemap.xml', public_path()."/sitemap.xml");
+        \Storage::disk('s3')->put(config('ajfileupload.doc_base_root_path') . '/sitemap.xml', storage_path('app/public').'/sitemap/sitemap.xml');
     }
 }
