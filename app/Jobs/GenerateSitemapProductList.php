@@ -30,7 +30,6 @@ class GenerateSitemapProductList implements ShouldQueue
      */
     public function handle()
     {
-        echo "in 223";
         $content = '<?xml version="1.0" encoding="UTF-8"?>';
         $content .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">';
 
