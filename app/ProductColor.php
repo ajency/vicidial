@@ -32,14 +32,9 @@ class ProductColor extends Model
         return $q->index();
     }
 
-    public function getURL(){
+    public function getTitleURL(){
         $elasticData = $this->getElasticData();
-        return url('/'.$elasticData["search_result_data"]["product_slug"] . "/buy");
-    }
-
-    public function getTitle(){
-        $elasticData = $this->getElasticData();
-        return $elasticData["search_result_data"]["product_title"];
+        return ['title' => $elasticData["search_result_data"]["product_title"], 'url' => url('/'.$elasticData["search_result_data"]["product_slug"] . "/buy")];
     }
 
     public static function deconstructElasticData($elastic_data)
