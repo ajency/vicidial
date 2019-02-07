@@ -27,10 +27,10 @@
 					  	<section>
 						    <header>Boys</header>
 						    <ul class="ampstart-dropdown-items list-reset m0 p0">
-						        <li class="ampstart-dropdown-item"><a href="#" class="text-decoration-none">Clothing</a></li>
-						        <li class="ampstart-dropdown-item"><a href="#" class="text-decoration-none">Shoes</a></li>
-						        <li class="ampstart-dropdown-item"><a href="#" class="text-decoration-none">Accessories</a></li>
-						        <li class="ampstart-dropdown-item"><a href="#" class="text-decoration-none">All Products</a></li>
+						        <li class="ampstart-dropdown-item"><a href="/apparels/boys" class="text-decoration-none">Clothing</a></li>
+						        <li class="ampstart-dropdown-item"><a href="/shoes/boys" class="text-decoration-none">Shoes</a></li>
+						        <li class="ampstart-dropdown-item"><a href="/accessories/boys" class="text-decoration-none">Accessories</a></li>
+						        <li class="ampstart-dropdown-item"><a href="/boys" class="text-decoration-none">All Products</a></li>
 						    </ul>
 					  	</section>
 					</amp-accordion>
@@ -42,10 +42,10 @@
 					  	<section>
 						    <header>Girls</header>
 						    <ul class="ampstart-dropdown-items list-reset m0 p0">
-						        <li class="ampstart-dropdown-item"><a href="#" class="text-decoration-none">Clothing</a></li>
-						        <li class="ampstart-dropdown-item"><a href="#" class="text-decoration-none">Shoes</a></li>
-						        <li class="ampstart-dropdown-item"><a href="#" class="text-decoration-none">Accessories</a></li>
-						        <li class="ampstart-dropdown-item"><a href="#" class="text-decoration-none">All Products</a></li>
+						        <li class="ampstart-dropdown-item"><a href="/apparels/girls" class="text-decoration-none">Clothing</a></li>
+						        <li class="ampstart-dropdown-item"><a href="/shoes/girls" class="text-decoration-none">Shoes</a></li>
+						        <li class="ampstart-dropdown-item"><a href="/accessories/girls" class="text-decoration-none">Accessories</a></li>
+						        <li class="ampstart-dropdown-item"><a href="/girls" class="text-decoration-none">All Products</a></li>
 						    </ul>
 					  	</section>
 					</amp-accordion>
@@ -57,10 +57,10 @@
 					  	<section>
 						    <header>Infants</header>
 						    <ul class="ampstart-dropdown-items list-reset m0 p0">
-						        <li class="ampstart-dropdown-item"><a href="#" class="text-decoration-none">Clothing</a></li>
-						        <li class="ampstart-dropdown-item"><a href="#" class="text-decoration-none">Shoes</a></li>
-						        <li class="ampstart-dropdown-item"><a href="#" class="text-decoration-none">Accessories</a></li>
-						        <li class="ampstart-dropdown-item"><a href="#" class="text-decoration-none">All Products</a></li>
+						        <li class="ampstart-dropdown-item"><a href="/apparels/infant-0-2-years" class="text-decoration-none">Clothing</a></li>
+						        <li class="ampstart-dropdown-item"><a href="/shoes/infant-0-2-years" class="text-decoration-none">Shoes</a></li>
+						        <li class="ampstart-dropdown-item"><a href="/accessories/infant-0-2-years" class="text-decoration-none">Accessories</a></li>
+						        <li class="ampstart-dropdown-item"><a href="/infant-0-2-years" class="text-decoration-none">All Products</a></li>
 						    </ul>
 					  	</section>
 					</amp-accordion>
@@ -72,9 +72,9 @@
 					  	<section>
 						    <header>Toys</header>
 						    <ul class="ampstart-dropdown-items list-reset m0 p0">
-						        <li class="ampstart-dropdown-item"><a href="#" class="text-decoration-none">Baby Toys</a></li>
-						        <li class="ampstart-dropdown-item"><a href="#" class="text-decoration-none">Plush</a></li>
-						        <li class="ampstart-dropdown-item"><a href="#" class="text-decoration-none">All Products</a></li>
+						        <li class="ampstart-dropdown-item"><a href="/toys/baby-toys" class="text-decoration-none">Baby Toys</a></li>
+						        <li class="ampstart-dropdown-item"><a href="/toys/plush" class="text-decoration-none">Plush</a></li>
+						        <li class="ampstart-dropdown-item"><a href="/toys" class="text-decoration-none">All Products</a></li>
 						    </ul>
 					  	</section>
 					</amp-accordion>
@@ -86,11 +86,11 @@
 					  	<section>
 						    <header>Stationery</header>
 						    <ul class="ampstart-dropdown-items list-reset m0 p0">
-						        <li class="ampstart-dropdown-item"><a href="#" class="text-decoration-none">Bags</a></li>
-						        <li class="ampstart-dropdown-item"><a href="#" class="text-decoration-none">Water Bottles</a></li>
-						        <li class="ampstart-dropdown-item"><a href="#" class="text-decoration-none">Lunch Box/Pencil Case</a></li>
-						        <li class="ampstart-dropdown-item"><a href="#" class="text-decoration-none">Birthday Decoration</a></li>
-						        <li class="ampstart-dropdown-item"><a href="#" class="text-decoration-none">All Products</a></li>
+						        <li class="ampstart-dropdown-item"><a href="/bags" class="text-decoration-none">Bags</a></li>
+						        <li class="ampstart-dropdown-item"><a href="/water-bottles" class="text-decoration-none">Water Bottles</a></li>
+						        <li class="ampstart-dropdown-item"><a href="/boxes?search_string=box" class="text-decoration-none">Lunch Box/Pencil Case</a></li>
+						        <li class="ampstart-dropdown-item"><a href="/boxes?search_string=birthday" class="text-decoration-none">Birthday Decoration</a></li>
+						        <li class="ampstart-dropdown-item"><a href="/stationery" class="text-decoration-none">All Products</a></li>
 						    </ul>
 					  	</section>
 					</amp-accordion>
