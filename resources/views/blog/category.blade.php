@@ -1,9 +1,7 @@
 @extends('layouts.default')
 
 @section('headjs')
-  <!-- Test -->
   <?php wp_head(); ?>
-  <!-- Test end -->
 @stop
 
 @section('content')
