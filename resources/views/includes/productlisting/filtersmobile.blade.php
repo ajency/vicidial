@@ -30,7 +30,7 @@
                  <button data-toggle="modal" data-target="#kss_sort" type="button" class="btn btn-lg btn-block h-100 text-uppercase btn-white"><i class="fa-sort-amount-down fas pr-1 text-black"></i> <span class="text-black">Sort</span></button>
             </div> 
             <div class="col-6 text-center">
-                <button id="filter" type="button" class="btn btn-lg btn-block btn-primary h-100 text-uppercase"><i class="fa-filter fas pr-1 text-black"></i> <span class="text-black">Filter</span></button>
+                <button id="filter" type="button" class="btn btn-lg btn-block btn-primary h-100 text-uppercase rounded-0"><i class="fa-filter fas pr-1 text-black"></i> <span class="text-black">Filter</span></button>
             </div>
         </div>
     </div>
