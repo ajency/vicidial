@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="google-site-verification" content="SntaXthhmMlR2wlwpcynb3PYim7wcDSpSpq2rrx8t0I" />
 <meta name="theme-color" content="#707279" />
-<link  rel="icon" type="image/x-icon" href="/img/kss_favicon.png" />
+<link  rel="icon" type="image/x-icon" href="/img/fav/fav-64.png" />
 
 <!-- <meta name="ng-inline" content="{{CDN::asset('/js/cart/inline.bundle.js') }}">
 <meta name="ng-vendor" content="{{CDN::asset('/js/cart/vendor.bundle.js') }}">

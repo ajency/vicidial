@@ -85,11 +85,9 @@ class StaticElement extends Model
                 $products = $record->element_data['products'];
 
                 foreach ($products as $product) {
-                    $productObj   = ProductColor::where('elastic_id', $product)->first();
-                    $productImage = $productObj->getDefaultImage(["list-view"]);
-                    $productUrl   = $productObj->getURL();
-                    $productTitle = $productObj->getTitle();
-                    array_push($productImages, array("images" => $productImage['list-view'], "product-slug" => $productUrl, "title" => $productTitle));
+                    $productObj = ProductColor::where('elastic_id', $product)->first();
+                    $titleURL   = $productObj->getTitleURL();
+                    array_push($productImages, array("images" => $productObj->getDefaultImage(["list-view"])['list-view'], "product-slug" => $titleURL['url'], "title" => $titleURL['title']));
                 }
             } //if
 
