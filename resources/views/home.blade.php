@@ -119,7 +119,7 @@
         </div>
     </div>
     @foreach($static_elements['theme'] as $theme)
-      @include('includes.banner.slide', ['banner' => $theme, 'display_type' => 'Theme of the week', 'class' => ''])
+      @include('includes.banner.slide', ['banner' => $theme, 'display_type' => 'Theme of the week', 'class' => 'position-relative'])
     @endforeach
   </section>
 @endif
