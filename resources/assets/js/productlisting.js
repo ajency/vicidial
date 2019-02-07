@@ -1048,6 +1048,12 @@ function loadProductListing(pageval=-1,mobile_view = false,prepend = false){
           document.getElementById("filter-header-template-content").innerHTML = html;
           if(has_reset_filter == true)
             $('li.nav-item.active').trigger('click')
+          var source   = document.getElementById("mobile-filter-sort-template").innerHTML;
+          var template = Handlebars.compile(source);
+          var context = {};
+          context["sort_on"] = header_context.sort_on ;
+          var html    = template(context);
+          document.getElementById("mobile-filter-sort-template-content").innerHTML = html;
         }
         
        var url_array = url.split("?")
