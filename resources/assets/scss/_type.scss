@@ -114,9 +114,11 @@ label {
     color: #000;
     margin-bottom: 0.5rem;
     &--single{
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         text-transform: capitalize;
         width: 100%;
+        color: #535665;
+        opacity: 0.8;
         @media (max-width: 767px){
             font-size: 1.05rem;
         }
