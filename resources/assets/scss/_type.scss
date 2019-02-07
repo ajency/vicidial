@@ -35,6 +35,28 @@ label {
     }
 }
 
+// Brands title
+
+.brands-title{
+    font-weight: bold;
+    color: #000;
+    &--single{
+        font-size: 1.35rem;
+        @media (max-width: 600px){
+            font-size: 1.2rem;
+        }
+    }
+    &--list{
+        font-size: 1.05rem;
+    }
+    &:hover{
+        color: #000;
+        text-decoration: underline;   
+    }
+}
+
+
+
 // Price
 .kss-price {
     font-size: 1.5rem;

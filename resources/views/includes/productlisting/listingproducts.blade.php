@@ -33,9 +33,9 @@
 	    -body">
 	      @{{#if brand}}
 	      <a href="/@{{slug_name}}/buy" class="text-dark">
-	        <h5 class="section-heading section-heading--list mb-1 mb-sm-2">
+	        <h3 class="brands-title brands-title--list mt-1 mt-sm-0 mb-sm-2">
 	          @{{brand}}
-	        </h5>
+	        </h3>
 	      </a>
 	      @{{/if}}
 	      @{{#if title}}
