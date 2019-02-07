@@ -56,7 +56,7 @@ class ProductController extends Controller
         $params['breadcrumb']['current'] = '';
 
         $facet                = Facet::where('facet_name', '=', 'product_brand')->where('facet_value', '=', $params['brand'])->first();
-        $params['brand_href'] = $facet->slug;
+        $params['brand_href'] = ($facet) ? $facet->slug : 'shop';
 
         setSEO('product', $params);
 
