@@ -11,6 +11,10 @@ use App\Jobs\FetchWarehouse;
 use App\ProductColor;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\ProductColor;
+use App\Coupon;
+use App\Jobs\GenerateSitemapProductList;
+use App\Jobs\GenerateSitemap;
 
 class Kernel extends ConsoleKernel
 {
@@ -54,6 +58,10 @@ class Kernel extends ConsoleKernel
             $schedule->call(function () {
                 Coupon::updateCouponLeft();
             })->everyTenMinutes();
+            $schedule->call(function(){
+                GenerateSitemapProductList::dispatch()->onQueue('process_sitemap_product_list');
+                GenerateSitemap::dispatch()->onQueue('process_sitemap_parent');
+            })->dailyAt('04:00');
         }
     }
 

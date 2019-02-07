@@ -133,4 +133,6 @@ class StaticController extends Controller
         return response()->json(["message"=> 'Thank you.. we will get back to you.', 'success'=> true]);
     }
 
+
+
 }
