@@ -146,6 +146,7 @@ function formatItems($result, $params){
         "has_previous" => ($params["page"]> 1),
         "has_next" => ($params["page"] < $total_pages),
         "total_item_count" => $total_items,
+        "display_limit" => $params["display_limit"]
     ];
 
     if(isset($params['search_object']) && isset($params['search_object']['search_string']))

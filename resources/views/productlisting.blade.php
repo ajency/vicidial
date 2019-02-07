@@ -28,7 +28,7 @@
     	  	@include('includes.productlisting.listingtitle', ['headers' => $params->headers, 'breadcrumbs' => $params->breadcrumbs, 'sort_on' => $params->sort_on, 'show_search' => $params->show_search, 'search_string' => $params->search_string ])
 
     	    <!-- List of products Blade -->
-            @include('includes.productlisting.listingproducts', ['items' => $params->items,'page' => $params->page])
+            @include('includes.productlisting.listingproducts', ['items' => $params->items,'page' => $params->page,'pagination' => $params->pagination])
 
     	  </div>
     	</div>
@@ -56,12 +56,17 @@
   ?>
   <script type="text/javascript">
       var config_facet_names_arr = <?= json_encode($config_facet_names_arr);?>;
+      var prod_items = <?= json_encode($params->items);?>;
+      var prod_items_count = Object.keys(prod_items).length;
+      var page_no_val = <?= json_encode($params->page_val);?>;
       var facet_value_slug_assoc = <?= $facet_value_slug_assoc ?>;
       var facet_display_data_arr = <?= $facet_display_data_arr ?>;
       var price_bucket_config_arr = <?= json_encode($price_bucket_config) ?>;
       var show_search_box = <?= json_encode($params->show_search) ?>;
       var slug_value_search_result = <?= $slug_value_search_result ?>;
       var product_list_items = {};
+      var first_page_loaded = false;
+      var pagination_obj = <?= json_encode($params->pagination);?>;
       Handlebars.registerPartial(
         'checkboxTemplate', '<?= $checkboxTemplate ?>'
         
@@ -84,6 +89,7 @@
   @yield('footjs-tag')
   @yield('footjs-filter-tags')
   @yield('footjs-products-list')
+  @yield('footjs-filter-sort-mobile')
 
  
 
