@@ -17,10 +17,10 @@ return [
             "1x"=>"700X245",
             "2x"=>"1200X420",
             "3x"=>"2000X700",
-            "load"=>"20X10"
+            "load"=>"20X7"
         ],
         "portrait" => [
-            "1x"=>"1200X933",
+            "1x"=>"400X311",
             "2x"=>"700X544",
             "3x"=>"1200X933" 
         ],
@@ -30,6 +30,56 @@ return [
             "size" => 250000,
             "height" => 700,
             "width" => 2000
+        ],
+        "portrait" => [
+            "size" => 250000,
+            "height" => 933,
+            "width" => 1200
+        ],
+    ],
+    'theme_presets'=> [
+        "landscape" => [
+            "1x"=>"700X245",
+            "2x"=>"1200X420",
+            "3x"=>"2000X700",
+            "load"=>"20X7"
+        ],
+        "portrait" => [
+            "1x"=>"400X311",
+            "2x"=>"700X544",
+            "3x"=>"1200X933" 
+        ],
+    ],
+    'theme_upload'=> [
+        "landscape" => [
+            "size" => 250000,
+            "height" => 700,
+            "width" => 2000
+        ],
+        "portrait" => [
+            "size" => 250000,
+            "height" => 933,
+            "width" => 1200
+        ],
+    ],
+    'landing_presets'=> [
+        "landscape" => [
+            "1x"=>"512X233",
+            "2x"=>"1024X466",
+            "3x"=>"1536X699",
+            "load"=>"20X9"
+        ],
+        "portrait" => [
+            "1x"=>"400X311",
+            "2x"=>"700X544",
+            "3x"=>"1200X933" 
+        ],
+    ],
+    'landing_upload'=> [
+        "landscape" => [
+            "size" => 250000,
+            "height" => 699,
+            "width" => 1536
         ],
         "portrait" => [
             "size" => 250000,

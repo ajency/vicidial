@@ -72,6 +72,8 @@ class ListingController extends Controller
             $params->show_search = (isset($parameters['query']['show_search']) && $parameters['query']['show_search'] == "true" )?true:false;
         else
             $params->show_search = config('product.show_list_search');
+        $params->page_val = $page_params["page"];
+        $params->pagination = config('product.pagination');
         return view('productlisting')->with('params',$params);
     }
 
@@ -96,7 +98,9 @@ class ListingController extends Controller
             $params->show_search = (isset($parameters['query']['show_search']) && $parameters['query']['show_search'] == "true" )?true:false;
         else
             $params->show_search = config('product.show_list_search');
-
+        $params->page_val = $page_params["page"];
+        $params->pagination = config('product.pagination');
+        // dd($page_params["page"]);
         return view('productlisting')->with('params',$params);
     }
 

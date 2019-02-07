@@ -435,11 +435,12 @@ return [
         'discount_desc' => ['field' => 'number_sort.variant_discount_percent', "order" => 'desc'],
     ],
     "sort_on"                        => [
-        ["name" => "Recommended", "value" => "", "is_selected" => true],
-        ["name" => "Price Low to High", "value" => "price_asc", "is_selected" => false],
-        ["name" => "Price High to Low", "value" => "price_desc", "is_selected" => false],
-        ["name" => "Discount High to Low", "value" => "discount_desc", "is_selected" => false],
-        ["name" => "Discount Low to High", "value" => "discount_asc", "is_selected" => false],
+        ["name" => "Recommended", "value" => "", "is_selected" => true, "class" => "popularity"],
+        ["name" => "Price Low to High", "value" => "price_asc", "is_selected" => false, "class" => "price-l"],
+        ["name" => "Price High to Low", "value" => "price_desc", "is_selected" => false, "class" => "price-h"],
+        //["name" => "Discount High to Low", "value" => "discount_desc", "is_selected" => false, "class" => "discount"],
+        //["name" => "Discount Low to High", "value" => "discount_asc", "is_selected" => false, "class" => "discount"],
     ],
-    "show_list_search" => true
+    "show_list_search" => true,
+    "pagination" => ["show_previous_after"=>5]
 ];

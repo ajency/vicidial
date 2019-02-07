@@ -74,12 +74,56 @@
 	</div>
   @{{/each}}
   </div>
-  <p class="my-4 product-view text-center d-none">You've viewed 42 of 45 products</p>
-  <div class="text-center mt-4 mb-0 mb-sm-4 pt-4 pb-0 pb-sm-4 @{{#if show_more }} @{{else}} d-none @{{/if}}">
-  	<button href="javascript:void(0);" class="d-flex align-items-center justify-content-center btn more-products-btn m-auto" id="showMoreProductsBtn">
-		<i class="load-icon-cls align-middle fa-circle-notch fa-lg fa-spin fas mr-2 d-none"></i> Show more products 
-	</button>
-  </div>
+
+  @{{#ifEquals page.total 1}}
+  @{{assign "viewed_products" (multiply display_limit current)}}
+	  <p class="my-4 product-view text-center">You've viewed @{{item_count}} @{{#ifEquals item_count 1}}product@{{else}}products@{{/ifEquals}}</p>
+	  <!-- progress loader -->
+	  <div class="kss-progress-bar">
+	  	<div class="kss-progress-bar__loader" style="width:@{{percent item_count total_item_count}}%;"></div>
+	  </div>
+	@{{/ifEquals}}
+ 	@{{#if show_pagination}}
+  	<div class="kss-pagination mt-5">
+		<span class="kss-pagination__prev controls pr-md-4 d-flex  @{{#if load_prev }} @{{else}} disabled @{{/if}}">
+			<a href="javascript:loadProductListing((@{{page.current}}),false,true);">
+				<span class="pr-2"><i class="fas fa-chevron-left"></i></span>
+				<span class="d-flex">Previous <span class="d-none d-md-block">Page</span></span>
+			</a>
+		</span>
+		<div class="page-numbers d-none d-md-flex">
+			@{{#if show_first_page}}
+			<span class="kss-pagination__link">
+				<a href="javascript:loadProductListing(2,false,true);">1</a>
+			</span>
+			<span class="dot-more">...</span>
+			@{{/if}}
+			@{{#each display_pages}}
+				@{{#ifEquals ../page.current this }}
+					<span class="current">@{{this}}</span>
+				@{{else}}
+					<span class="kss-pagination__link">
+						@{{#ifGreater ../page.current this }}
+						<a href="javascript:loadProductListing(@{{this}}+1,false,true);">@{{this}}</a>
+						@{{else}}
+						<a href="javascript:loadProductListing(@{{this}}-1);">@{{this}}</a>
+						@{{/ifGreater}}
+					</span>
+				@{{/ifEquals}}	
+			@{{/each}}
+			@{{#if show_last_page}}
+			<span class="dot-more">...</span>
+			<span class="kss-pagination__last disabled">@{{page.total}}</span>
+			@{{/if}}
+		</div>
+		<span class="kss-pagination__next controls pl-md-4 d-flex @{{#if show_more }} @{{else}} disabled @{{/if}}">
+			<a href="javascript:loadProductListing(@{{page.current}});">
+				<span class="d-flex">Next <span class="d-none d-md-block">Page</span></span>
+				<span class="pl-2"><i class="fas fa-chevron-right"></i></span>
+			</a>
+		</span>
+	</div>
+	@{{/if}}
 </script>
 
 <div id="products-list-template-content" class="productlist__row"></div>
@@ -107,8 +151,40 @@
 	});
    var context = {};
    context["products"] = <?= json_encode($items); ?>;
+   context["page"] = <?= json_encode($page); ?>;
    product_list_items = $.extend(product_list_items, context["products"]);
    context["show_more"] = <?= json_encode($page->has_next) ?>;
+   context["load_prev"] = <?= json_encode($page->has_previous) ?>;
+   context["page_val"] = page_no_val;
+   context["first_page_loaded"] = first_page_loaded;
+   context["item_count"] = prod_items_count;
+   context["total_item_count"] = <?= json_encode($page->total_item_count) ?>;
+   context["display_limit"] = <?= json_encode($page->display_limit) ?>;
+   context["current"] = <?= json_encode($page->current) ?>;
+   console.log("curr=="+context["current"])
+   context["pagination"] = <?= json_encode($pagination) ?>;
+   context["display_pages"] = [];
+   var page_display_limit = 3
+   var endCounter = page_display_limit
+   if(parseInt(context["current"]) >= page_display_limit)
+   		endCounter = (parseInt(context["current"])+1)
+   	if((parseInt(context["page"]["total"])-parseInt(context["current"]))<(context["pagination"]["show_previous_after"])-1)
+   		endCounter = context["page"]["total"]
+   	var startCounter = 1;
+  	if((parseInt(context["current"])) >= context["pagination"]["show_previous_after"]){
+  		if(endCounter == parseInt(context["page"]["total"]) && endCounter == parseInt(context["current"]))
+  			startCounter = ((parseInt(context["current"]))-(parseInt(page_display_limit)-1))
+  		else
+  			startCounter = ((parseInt(context["current"])+1)-(parseInt(page_display_limit)-1))
+  	}
+   	
+  	
+    for (let i = startCounter; i <= endCounter; i++) {
+        context["display_pages"].push(i)
+    }
+    context["show_first_page"] = (startCounter == 1)?false:true
+    context["show_last_page"] = (endCounter == parseInt(context["page"]["total"]))?false:true
+    context["show_pagination"] = ((context["show_more"] == false && context["load_prev"] == false) || (context["page"]["total"]<page_no_val))?false:true
    var html    = template(context);
    document.getElementById("products-list-template-content").innerHTML = html;
  </script>
