@@ -155,6 +155,27 @@
     // }
 }
 
+.prod_load{
+    display: inline-flex;
+    padding: 5px;
+    border-radius: 50px;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.30);
+    position: absolute;
+    top: 8em;
+    align-items: center;
+    justify-content: center;
+    right: 0;
+    left: 0;
+    width: 38px;
+    height: 38px;
+    margin: 0 auto;
+    z-index: 10;
+	.fas{
+		color: theme-color('primary');
+		font-size: 1.9em;
+	}
+}
+
 // about us
 .kss-care{
 	@media (min-width: 768px){
@@ -274,11 +295,21 @@
 	.icon-down{
 		transform: rotate(180deg);
 		transition: transform 0.5s ease;
+		font-size: 1.1em;
 	}
 	&.collapsed{
 		.icon-down{
 			transform: rotate(0deg);
 		}
+	}
+	@media (max-width: 320px){
+		font-size: 0.93em;
+	}
+}
+
+@media (max-width: 600px){
+	.hidden-footer-section{
+		border-top: 1px solid #c3c3c3;
 	}
 }
 
@@ -608,5 +639,12 @@
 	}
 	&:after,&:before{
 		content: '';
+	}
+}
+
+// Mobile footer padding for sticky btns
+@media (max-width: 767px){
+	.sticky_btn_bottom{
+		padding-bottom: 5em !important;
 	}
 }

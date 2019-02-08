@@ -126,6 +126,9 @@
 	@{{/if}}
 </script>
 
+<div class="prod_load d-none">
+	<i class="fas fa-circle-notch fa-spin fa-lg"></i>
+</div>
 <div id="products-list-template-content" class="productlist__row"></div>
 <div class="@if(count((array)$items)>0) d-none @endif productlist__na">
   @include('includes.no-products-content')

@@ -939,6 +939,9 @@ function loadProductListing(pageval=-1,mobile_view = false,prepend = false){
     if(isMobile){
       delete ajax_data["exclude_in_response"];
     }
+    ScrollTop(300);
+    $('.prod_load').removeClass('d-none');
+    $('#products-list-template-content').addClass('disabled');
     $.ajax({
         method: "POST",
         url: "/api/rest/v1/product-list",
@@ -1062,7 +1065,8 @@ function loadProductListing(pageval=-1,mobile_view = false,prepend = false){
           updated_list_url = url
         }
         window.history.pushState('categoryPageUrl', 'Category page', url);
-        ScrollTop(300);
+        $('.prod_load').addClass('d-none');
+        $('#products-list-template-content').removeClass('disabled');
       });
 }
 

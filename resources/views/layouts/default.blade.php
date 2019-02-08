@@ -19,7 +19,7 @@
 
 @include('includes.scroll')
 
-<footer class="bg-light mt-5 pb-1 pt-5">
+<footer class="bg-light mt-5 pb-1 pt-3 pt-md-5 @isset($sticky_btn) sticky_btn_bottom @endisset">
     @include('includes.footer')
 </footer>
 

@@ -2,6 +2,7 @@
 
 @php
   $delaycss = true;
+  $sticky_btn = true;
 @endphp
 
 @section('headjs')

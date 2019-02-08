@@ -1,4 +1,6 @@
 <div class="container">
+  <a class="font-weight-bold mb-2 py-2 d-block d-md-none footer-more collapsed" data-toggle="collapse" href="#moreFooter"><strong class="space-divider d-flex align-items-center justify-content-between"><span class="footer-more__title"">More about Online Shopping at KidSuperStore</span> <i class="fas fa-angle-down icon-down"></i></strong></a>
+  <div class="collapse hidden-footer-section pt-3 pt-md-0" id="moreFooter">
     <div class="row">
         <div class="col-sm-4">
             <div class="row">
@@ -108,8 +110,6 @@
 
      <div class="row">
         <div class="col-12">
-
-            <div class="collapse hidden-footer-section" id="moreFooter">
                <p class="font-weight-bold mb-3 mt-0 mt-sm-3"><strong>KidSuperStore.in: Fresh Fashion for your kids. Always!</strong></p>
 
                <p class="mb-5">
@@ -124,10 +124,6 @@
                <div class="border-bottom border-gray mt-4 mb-4 op-1">
                </div>
 
-            </div>
-
-            <a class="font-weight-bold mb-3 d-block d-sm-none footer-more collapsed" data-toggle="collapse" href="#moreFooter"><strong><span class="footer-more__title"">Fresh Fashion for your kids</span> <i class="fas fa-angle-down icon-down"></i></strong></a>
-
         </div>
    </div>
     <div class="d-flex bd-highlight mb-3 justify-content-between flex-column flex-md-row">
@@ -137,6 +133,8 @@
           <img src="/img/secured-payu.png" class="img-fluid" alt="Secured Payment Payu" title="Secured Payment Payu" width="130">
         </div>
     </div>
+
+  </div>
 </div>
 
 
