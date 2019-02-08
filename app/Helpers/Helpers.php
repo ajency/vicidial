@@ -92,13 +92,6 @@ function fetchMetaTags($ids)
     return $odoo->defaultExec('product.metatag', 'read', [$ids], ['fields' => ['name', 'metatag']]);
 }
 
-function fetchBrandName($brandId)
-{
-    $odoo   = new OdooConnect;
-    $brands = $odoo->defaultExec('custom.brand', 'read', [[$brandId]], ['fields' => ['display_name']])->pluck('display_name', 'id')->toArray();
-    return $brands[$brandId];
-}
-
 function sanitiseProductData($odooData)
 {
     $metatags      = fetchMetaTags($odooData['metatag_ids']);
@@ -136,7 +129,7 @@ function sanitiseProductData($odooData)
         "product_vendor"                   => ($odooData["vendor_id"]) ? $odooData["vendor_id"][1] : null,
         'product_image_available'          => false,
         'product_metatag'                  => $metatags->map(function ($item, $key) {$item['name'] = trim($item['name']);return $item;})->pluck('name')->toArray(),
-        'product_brand'                    => (isset($odooData['brand_ids'][0])) ? fetchBrandName($odooData['brand_ids'][0]) : false,
+        'product_brand'                    => ($odooData['brand_id'] != false) ? $odooData['brand_id'][1] : 'KSS Fashion',
     ];
     $product_categories = explode('/', $index['product_categories']);
     $categories         = ['product_category_type', 'product_gender', 'product_age_group', 'product_subtype'];
