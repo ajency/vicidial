@@ -22,7 +22,7 @@
   <div class="container mb-3">
       <div class="row">
           <div class="col-md-3 col-6 mb-md-0 mb-3">
-            <a href="/shop/infants" class="card link-card border-0 text-center pt-3" style="background-color:#EEFAFC;">
+            <a href="/infant-0-2-years/" class="card link-card border-0 text-center pt-3" style="background-color:#EEFAFC;">
                 <label class="font-weight-bold m-0 link-card_text">0-2 YEARS</label>
                 <h4 class="font-weight-bold link-card_text">Infants</h4>
                 <hr class="w-25 m-auto border-dark">
@@ -37,7 +37,7 @@
             </a>
           </div>
           <div class="col-md-3 col-6 mb-md-0 mb-3" >
-            <a href="/shop/boys" class="card link-card border-0 text-center pt-3" style="background-color:#F3F3F1;">
+            <a href="/boys/junior-7-14-years--toddler-2-7-years/" class="card link-card border-0 text-center pt-3" style="background-color:#F3F3F1;">
                 <label class="font-weight-bold m-0 link-card_text">2-14 YEARS</label>
                 <h4 class="font-weight-bold link-card_text">Boys</h4>
                 <hr class="w-25 m-auto border-dark">
@@ -52,7 +52,7 @@
             </a>
           </div>
           <div class="col-md-3 col-6" >
-            <a href="/shop/girls" class="card link-card border-0 text-center pt-3" style="background-color:#F4E6DC;">
+            <a href="/girls/junior-7-14-years--toddler-2-7-years/" class="card link-card border-0 text-center pt-3" style="background-color:#F4E6DC;">
                 <label class="font-weight-bold m-0 link-card_text">2-14 YEARS</label>
                  <h4 class="font-weight-bold link-card_text">Girls</h4>
                  <hr class="w-25 m-auto border-dark">
