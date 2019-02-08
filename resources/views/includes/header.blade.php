@@ -71,6 +71,8 @@
                           <li><a class="megamenu-link" href="/boys/junior-7-14-years--toddler-2-7-years/short/">Short</a></li>
                           <li><a class="megamenu-link" href="/boys/junior-7-14-years--toddler-2-7-years/sweatshirt/">Sweatshirt</a></li>
                           <li><a class="megamenu-link" href="/boys/junior-7-14-years--toddler-2-7-years/tshirt/">Tshirt</a></li>
+                       <!--    <li><a class="megamenu-link" href="/boys/toddler-2-7-years--junior-7-14-years--all/sets">Sets</a></li>
+                          <li><a class="megamenu-link" href="/boys/toddler-2-7-years--junior-7-14-years--all/sets">Jacket</a></li> -->
                         </ul>
                     </div>
 
@@ -206,6 +208,9 @@
                         <li><a class="megamenu-link" href="/infant-0-2-years/short/">Short</a></li>
                         <li><a class="megamenu-link" href="/infant-0-2-years/tshirt/">Tshirt</a></li>
                         <li><a class="megamenu-link" href="/infant-0-2-years/woven-tops/">Woven Tops</a></li>
+                        <!-- <li><a class="megamenu-link" href="/infant-0-2-years/ethnic">Ethnic</a></li>
+                        <li><a class="megamenu-link" href="/infant-0-2-years/sets">Sets</a></li>
+                        <li><a class="megamenu-link" href="/infant-0-2-years/jacket">Jacket</a></li> -->
                       </ul>
                   </div>
 

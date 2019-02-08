@@ -664,8 +664,11 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                     call_mobile_api = true;
                     // $('.custom-sort-loader').removeClass('shown');
                  }
-                 $('.prod_load').addClass('d-none');
-                $('#products-list-template-content').removeClass('disabled');
+                 
+                if(isMobile == false){
+                  $('.prod_load').addClass('d-none');
+                  $('#products-list-template-content').removeClass('disabled');
+                }
             });
         }
         else{
