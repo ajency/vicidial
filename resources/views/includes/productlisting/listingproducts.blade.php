@@ -2,7 +2,7 @@
 <script id="products-list-template" type="text/x-handlebars-template">
  <div id="card-list" class="row">
   @{{#each products}}
-  <div class="col-lg-4 col-md-6 mb-sm-4 col-6  ">
+  <div class="col-lg-4 col-md-6 mb-sm-4 col-12">
 
 	  <div class="card h-100 product-card">
 
