@@ -2,6 +2,7 @@
 
 use Ajency\Connections\OdooConnect;
 use App\Defaults;
+use App\Facet;
 use App\Jobs\FetchProductImages;
 use App\Location;
 use App\User;
@@ -744,6 +745,32 @@ function updateProductsWithMetaTags()
         $metatags    = $odoo->defaultExec('product.metatag', 'search_read', [[['id', '>', 0]]], ['fields' => ['product_ids'], 'offset' => $offset, 'limit' => $limit]);
         $product_ids = $metatags->map(function ($item, $key) {return $item['product_ids'];})->flatten()->unique();
         $product_ids->each(function ($product_id, $key) {IndexProduct::dispatch($product_id)->onQueue('process_product');});
+        $offset += $limit;
+    } while (count($metatags) > 0);
+}
+
+function fetchMetaTagsFromOdoo()
+{
+    $odoo   = new OdooConnect;
+    $offset = 0;
+    $limit  = config('odoo.limit');
+    do {
+        $metatags    = $odoo->defaultExec('product.metatag', 'search_read', [[['id', '>', 0], ['product_ids', '!=', false]]], ['fields' => ['name', 'metatag'], 'offset' => $offset, 'limit' => $limit]);
+        $metatagsArr = $metatags->map(function ($item, $key) {return $item['name'];})->flatten()->unique();
+        foreach ($metatagsArr as $metatag) {
+            try {
+                $facetObj               = new Facet;
+                $facetObj->facet_name   = "product_metatag";
+                $facetObj->facet_value  = $metatag;
+                $facetObj->display_name = $metatag;
+                $facetObj->slug         = str_slug($metatag);
+                $facetObj->sequence     = 10000;
+                $facetObj->display      = false;
+                $facetObj->save();
+            } catch (\Exception $e) {
+                \Log::warning($e->getMessage());
+            }
+        }
         $offset += $limit;
     } while (count($metatags) > 0);
 }

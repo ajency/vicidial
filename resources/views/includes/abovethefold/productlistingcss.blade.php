@@ -7,4 +7,7 @@
   	.megamenu .nav > li > div{opacity: 0;position: absolute;visibility: hidden;pointer-events: none;}.nav{display: flex;flex-wrap: wrap;padding-left: 0;margin-bottom: 0;list-style: none;}@media (min-width: 992px){.d-lg-block {display: block !important;}}.megamenu .nav > li > a{padding: 0 20px;line-height: 54px;font-weight: bold;}.megamenu{padding-left: 20px;}@media (max-width: 991px){.megamenu{position: fixed;width: 100vw;transform: translateX(-100vw);}}
   	.menu-toggle{color: white;font-size: 1.2rem;padding: 0.5rem 1rem 0.5rem 0;}
   	@media (max-width: 991px){.header-close-trigger {position: absolute;top: 0;left: 0;width: 100%;z-index: 9;}}
+  	@media (max-width: 767px){.sticky-xs-btn .sort-btn{width: 100%;font-size: 0.9rem;font-weight: bold;border-radius: 0;justify-content: center;} .sticky-xs-btn .sort-btn .sort-icon{width: 16px;margin-right: 0.5em;}.sticky-xs-btn .filter-btn{width: 100%;font-size: 0.9rem;font-weight: bold;border-radius: 0;}}
+  	.pl-loader {height: calc(100vh - 60px);position: fixed;width: 100%;z-index: 9999;top: 60px;left: 0;}
+  	.loader {background: #ffffff url(../img/loader_818e.gif) center center no-repeat;width: 100%;position: absolute;z-index: 999;height: 100%;}
 </style>

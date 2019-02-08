@@ -78,9 +78,9 @@ $(document).ready(function(){
             addToCart();
             $('#size-modal').modal('hide');
             $('.kss_sizes .radio-input').prop('checked', false);
-            if(isMobile){
-                $('.add-bag-btn .cd-add-to-cart').html(XSsizemsg);
-            }
+            // if(isMobile){
+            //     $('.add-bag-btn .cd-add-to-cart').html(XSsizemsg);
+            // }
         }
     });
 

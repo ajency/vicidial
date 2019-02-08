@@ -2,6 +2,7 @@
 
 @php
   $delaycss = true;
+  $sticky_btn = true;
 @endphp
 
 @section('headjs')
@@ -64,7 +65,7 @@
 
 				<div class="row">
 
-					<div class="col-sm-12 col-md-12 col-12 mobile-fixed pb-0 pb-sm-2 add-bag-btn visible">
+					<div class="col-sm-12 col-md-12 col-12 mobile-fixed pb-0 pb-sm-2 add-bag-btn visible shadow-layer">
 
 						<!-- <div class="row"> -->
 							<!-- <div class="col-6 col-sm-6 col-md-6 col-xl-6 pr-1">
@@ -77,8 +78,8 @@
 							<!-- <div class="col-6 col-sm-6 col-md-6 col-xl-6 pl-1"> -->
 								@if ($params['show_button']) 
 								<button id="cd-add-to-cart" class="btn kss-btn kss-btn--big cd-add-to-cart">
-									<div class="kss-btn__wrapper d-flex align-items-center justify-content-center d-md-none">SELECT SIZE</div>
-									<div class="kss-btn__wrapper d-md-flex align-items-center justify-content-center d-none"><i class="kss_icon bag-icon-fill icon-sm"></i> Add to Bag</div>
+									<!-- <div class="kss-btn__wrapper d-flex align-items-center justify-content-center d-md-none">SELECT SIZE</div> -->
+									<div class="kss-btn__wrapper d-flex align-items-center justify-content-center"><i class="kss_icon bag-icon-fill icon-sm"></i> Add to Bag</div>
 								</button>
 								@else
 								    <div class="out-of-stock">Currently unavailable</div>

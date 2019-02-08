@@ -1,6 +1,7 @@
 @php
  $overflow = true; 
  $sectionnotfound = true;
+ $sticky_btn = true;
 @endphp
 
 @extends('layouts.default')
