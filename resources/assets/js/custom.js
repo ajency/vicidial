@@ -559,11 +559,11 @@ $('.megamenu-open').click(function(){
 
 // Footer mobile more section
 
-$(document).on('click',".footer-more",function(){
-    $('.footer-more__title').text(function(i, v){
-       return v === 'Fresh Fashion for your kids' ? 'Less' : 'Fresh Fashion for your kids'
-    })
-});
+// $(document).on('click',".footer-more",function(){
+//     $('.footer-more__title').text(function(i, v){
+//        return v === 'Fresh Fashion for your kids' ? 'Less' : 'Fresh Fashion for your kids'
+//     })
+// });
 
 $('.megamenu-close').click(function(){
 	$('.megamenu').removeClass('active');

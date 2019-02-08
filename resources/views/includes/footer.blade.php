@@ -108,8 +108,6 @@
 
      <div class="row">
         <div class="col-12">
-
-            <div class="collapse hidden-footer-section" id="moreFooter">
                <p class="font-weight-bold mb-3 mt-0 mt-sm-3"><strong>KidSuperStore.in: Fresh Fashion for your kids. Always!</strong></p>
 
                <p class="mb-5">
@@ -123,10 +121,6 @@
                </p>
                <div class="border-bottom border-gray mt-4 mb-4 op-1">
                </div>
-
-            </div>
-
-            <a class="font-weight-bold mb-3 d-block d-sm-none footer-more collapsed" data-toggle="collapse" href="#moreFooter"><strong><span class="footer-more__title"">Fresh Fashion for your kids</span> <i class="fas fa-angle-down icon-down"></i></strong></a>
 
         </div>
    </div>
