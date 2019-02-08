@@ -1,6 +1,4 @@
 <div class="container">
-  <a class="font-weight-bold mb-2 py-2 d-block d-md-none footer-more collapsed" data-toggle="collapse" href="#moreFooter"><strong class="space-divider d-flex align-items-center justify-content-between"><span class="footer-more__title"">More about Online Shopping at KidSuperStore</span> <i class="fas fa-angle-down icon-down"></i></strong></a>
-  <div class="collapse hidden-footer-section pt-3 pt-md-0" id="moreFooter">
     <div class="row">
         <div class="col-sm-4">
             <div class="row">
@@ -133,8 +131,6 @@
           <img src="/img/secured-payu.png" class="img-fluid" alt="Secured Payment Payu" title="Secured Payment Payu" width="130">
         </div>
     </div>
-
-  </div>
 </div>
 
 

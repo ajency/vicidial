@@ -311,11 +311,11 @@
 	}
 }
 
-@media (max-width: 600px){
-	.hidden-footer-section{
-		border-top: 1px solid #c3c3c3;
-	}
-}
+// @media (max-width: 600px){
+// 	.hidden-footer-section{
+// 		border-top: 1px solid #c3c3c3;
+// 	}
+// }
 
 
 .expandSearch{
@@ -650,6 +650,10 @@
 @media (max-width: 767px){
 	.sticky_btn_bottom{
 		padding-bottom: 5.5em !important;
+		& + .hidden-footer-section{
+			padding-bottom: 5em;
+			margin-top: -5em;
+		}
 	}
 }
 

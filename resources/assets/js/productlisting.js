@@ -142,6 +142,8 @@ $(function(){
    });
 
    jQuery(document).on('click', '#kss_hide-filter-close', function() {
+        $('.prod_load').addClass('d-none');
+        $('#products-list-template-content').removeClass('disabled');
          jQuery(".kss_filter").removeClass("kss_filter_mobile");
          facet_list = copy_filters["facet_list"]
          range_facet_list = copy_filters["range_facet_list"]
@@ -223,10 +225,11 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
     var display_name = $(thisObj).data('display-name')
     var final_facet_list = facet_list
     var thisval = $(thisObj).val();
-    if(is_ajax){
+    if(is_ajax && has_reset_filter == false){
       ScrollTop(300);
       $('.prod_load').removeClass('d-none');
       $('#products-list-template-content').addClass('disabled');
+      console.log('filter-reset');
     }
     if(search_string == false){
       if(sort_on == false){
@@ -665,7 +668,7 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                     // $('.custom-sort-loader').removeClass('shown');
                  }
                  
-                if(isMobile == false){
+                if(sort_on == true || isMobile == false){
                   $('.prod_load').addClass('d-none');
                   $('#products-list-template-content').removeClass('disabled');
                 }
