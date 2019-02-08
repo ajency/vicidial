@@ -35,9 +35,22 @@ $(function(){
     if($('#size-modal')){
         $('#size-modal').on('hide.bs.modal', function (e) {
             $('.kss_sizes .radio-input').prop('checked', false);
-            buttn.html(sizemsg); 
+            // buttn.html(sizemsg); 
+            $('.size-modal .modal-title').removeClass('text-danger');
         })    
+        $('#size-modal').on('shown.bs.modal', function (e) {
+            if(isMobile){
+                $('.size-modal .cd-add-to-cart').on('click',function(){
+                    if($('input[type=radio][name=kss-sizes-display]:checked').length == 0){
+                        $(".size-modal .kss_sizes").addClass("shake");
+                        $('.size-modal .modal-title').addClass('text-danger');
+                        setTimeout(function(){$(".size-modal .kss_sizes").removeClass( "shake" );},200);
+                    }
+                });
+            } 
+        })
     }
+
 
 
     $('input[type=radio][name=kss-sizes]').change(function() {

@@ -24,16 +24,16 @@
 </script>
 <div id="mobile-filter-sort-template-content"></div>
 
-    <div class="fixed-bottom d-block d-md-none">
+    <div class="fixed-bottom d-block d-md-none sticky-xs-btn">
         <div class="row no-gutters">
             <div class="col-6 text-center b-r">
-                 <button data-toggle="modal" data-target="#kss_sort" type="button" class="btn btn-lg btn-block h-100 text-uppercase btn-white d-flex align-items-center justify-content-center">
+                 <button data-toggle="modal" data-target="#kss_sort" type="button" class="btn btn-lg btn-block h-100 text-uppercase btn-white d-flex align-items-center justify-content-center sort-btn">
                   <svg version="1.1" viewBox="0 0 24 24" enable-background="new 0 0 24 24" class="mr-2 sort-icon"><g><path d="M9,0C8.7,0,8.5,0.1,8.3,0.3l-8,8C0.1,8.5,0,8.7,0,9c0,0.3,0.1,0.5,0.3,0.7l1.4,1.4c0.2,0.2,0.5,0.3,0.7,0.3   c0.3,0,0.5-0.1,0.7-0.3l0,0l2-2C5.4,8.8,6,9,6,9.5V23c0,0.5,0.5,1,1,1h2c0.5,0,1-0.5,1-1V1c0-0.3-0.1-0.5-0.3-0.7   C9.5,0.1,9.3,0,9,0z"/><path d="m23.7,14.3l-1.4-1.4c-0.2-0.2-0.5-0.3-0.7-0.3-0.3,0-0.5,0.1-0.7,0.3l-2,2c-0.3,0.3-0.9,0.1-0.9-0.4v-13.5c0-0.5-0.5-1-1-1h-2c-0.5,0-1,0.5-1,1v22c0,0.3 0.1,0.5 0.3,0.7s0.5,0.3 0.7,0.3c0.3,0 0.5-0.1 0.7-0.3l8-8c0.2-0.2 0.3-0.4 0.3-0.7 0-0.3-0.1-0.5-0.3-0.7z"/></g>
                   </svg>
                   <span class="text-black">Sort</span></button>
             </div> 
             <div class="col-6 text-center">
-                <button id="filter" type="button" class="btn btn-lg btn-block btn-primary h-100 text-uppercase rounded-0"><i class="fa-filter fas pr-1 text-black"></i> <span class="text-black">Filter</span></button>
+                <button id="filter" type="button" class="btn btn-lg btn-block btn-primary h-100 text-uppercase rounded-0 filter-btn"><i class="fa-filter fas pr-1 text-black"></i> <span class="text-black">Filter</span></button>
             </div>
         </div>
     </div>

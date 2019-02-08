@@ -89,7 +89,7 @@ $(function(){
         $('body').on('click', '.list-sort__element li',function(){
           $(this).addClass('is-active').siblings().removeClass('is-active');
           $('#kss_sort').modal('hide');
-          $('.custom-sort-loader').addClass('shown')
+          // $('.custom-sort-loader').addClass('shown')
           $("#sort_filter_selectbox option:selected").prop("selected", false)
           $('#sort_filter_selectbox option[value="'+$(this).data("value")+'"]').prop('selected',true)
           $('#sort_filter_selectbox').trigger('change');
@@ -222,7 +222,12 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
     var slug_name = $(thisObj).data('slug')
     var display_name = $(thisObj).data('display-name')
     var final_facet_list = facet_list
-    var thisval = $(thisObj).val()
+    var thisval = $(thisObj).val();
+    if(is_ajax){
+      ScrollTop(300);
+      $('.prod_load').removeClass('d-none');
+      $('#products-list-template-content').addClass('disabled');
+    }
     if(search_string == false){
       if(sort_on == false){
         if(boolean_filter == true){
@@ -657,8 +662,10 @@ function facetCategoryChange(thisObj,is_ajax = true,range_filter = false,boolean
                    $('.kss_filter-list[data-filter="'+filter_val+'"]').removeClass('d-none');
                     $('li.nav-item.active').trigger('click')
                     call_mobile_api = true;
-                    $('.custom-sort-loader').removeClass('shown');
+                    // $('.custom-sort-loader').removeClass('shown');
                  }
+                 $('.prod_load').addClass('d-none');
+                $('#products-list-template-content').removeClass('disabled');
             });
         }
         else{

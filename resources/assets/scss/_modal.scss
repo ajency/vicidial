@@ -54,7 +54,10 @@
 		padding: 0;
 	}
 	.modal-footer{
-		padding: 0;
+		padding: 10px;
+		.cd-add-to-cart{
+			padding: 0.6rem 1rem;
+		}
 	}
 	.close{
 		outline: 0;
@@ -82,7 +85,7 @@
     				& + .radio-label{
     					position: relative;
     					padding: 1.2em 15px 1.2em 45px;
-    					border-bottom: 1px solid rgb(165, 165, 165) !important;
+    					// border-bottom: 1px solid rgb(165, 165, 165) !important;
     					margin-bottom: 0 !important;
     					border-radius: 0;
     					display: flex;

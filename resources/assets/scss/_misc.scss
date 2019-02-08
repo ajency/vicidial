@@ -156,12 +156,13 @@
 }
 
 .prod_load{
+	background-color: #fff;
     display: inline-flex;
     padding: 5px;
     border-radius: 50px;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.30);
     position: absolute;
-    top: 8em;
+    top: 10em;
     align-items: center;
     justify-content: center;
     right: 0;
@@ -173,6 +174,9 @@
 	.fas{
 		color: theme-color('primary');
 		font-size: 1.9em;
+		@media (max-width: 767px){
+			font-size: 1.8em;
+		}
 	}
 }
 
@@ -645,6 +649,15 @@
 // Mobile footer padding for sticky btns
 @media (max-width: 767px){
 	.sticky_btn_bottom{
-		padding-bottom: 5em !important;
+		padding-bottom: 5.5em !important;
+	}
+}
+
+@media (max-width: 767px){
+	.shadow-layer{
+		padding: 10px !important;
+		.cd-add-to-cart{
+			padding: 0.6rem 1rem;
+		}
 	}
 }
