@@ -1,9 +1,9 @@
 <?php
 namespace App;
 
-use App\Defaults;
 use Ajency\Connections\ElasticQuery;
 use Ajency\Connections\OdooConnect;
+use App\Defaults;
 use App\Facet;
 use App\Jobs\CreateProductJobs;
 use App\Jobs\FetchProductImages;
