@@ -166,10 +166,9 @@ class Product
             try {
                 $facetObj               = new Facet;
                 $facetObj->facet_name   = "product_metatag";
-                $facetObj->facet_value  = $metatag['name'];
-                $facetObj->display_name = $metatag['name'];
-                $facetObj->description  = $metatag['metatag'];
-                $facetObj->slug         = str_slug($metatag['name']);
+                $facetObj->facet_value  = $metatag;
+                $facetObj->display_name = $metatag;
+                $facetObj->slug         = str_slug($metatag);
                 $facetObj->sequence     = 10000;
                 $facetObj->display      = false;
                 $facetObj->save();
