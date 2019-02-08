@@ -661,3 +661,17 @@ body{
     font-weight: bold;
     color: #404040;
 }
+
+@media (max-width: 600px){
+    .secure-lock-wrapper{
+        img{
+            width: 80px;
+        }
+    }
+}
+
+@media (max-width: 320px){
+    .slide-nav-logo{
+        width: 160px;
+    }
+}
