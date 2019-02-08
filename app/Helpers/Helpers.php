@@ -755,7 +755,7 @@ function fetchMetaTagsFromOdoo()
     $offset = 0;
     $limit  = config('odoo.limit');
     do {
-        $metatags    = $odoo->defaultExec('product.metatag', 'search_read', [[['id', '>', 0]]], ['fields' => ['name', 'metatag'], 'offset' => $offset, 'limit' => $limit]);
+        $metatags    = $odoo->defaultExec('product.metatag', 'search_read', [[['id', '>', 0], ['product_ids', '!=', false]]], ['fields' => ['name', 'metatag'], 'offset' => $offset, 'limit' => $limit]);
         $metatagsArr = $metatags->map(function ($item, $key) {return $item['name'];})->flatten()->unique();
         foreach ($metatagsArr as $metatag) {
             try {
