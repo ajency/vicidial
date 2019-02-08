@@ -323,7 +323,7 @@ class Variant extends Model
 
     public function getTitle()
     {
-        return (getBrand()) ? getBrand() . ' - ' . getName() : getName();
+        return ($this->getBrand()) ? $this->getBrand() . ' - ' . $this->getName() : $this->getName();
     }
 
     /**
