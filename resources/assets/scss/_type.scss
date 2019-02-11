@@ -41,13 +41,10 @@ label {
     font-weight: bold;
     color: #000;
     &--single{
-        font-size: 1.35rem;
-        @media (max-width: 600px){
-            font-size: 1.2rem;
-        }
+        font-size: 0.95rem;
     }
     &--list{
-        font-size: 1.05rem;
+        font-size: 0.85rem;
     }
     &:hover{
         color: #000;
@@ -114,11 +111,11 @@ label {
     color: #000;
     margin-bottom: 0.5rem;
     &--single{
-        font-size: 1.1rem;
+        font-size: 1.2rem;
         text-transform: capitalize;
         width: 100%;
-        color: #535665;
-        opacity: 0.8;
+        // color: #535665;
+        // opacity: 0.8;
         @media (max-width: 767px){
             font-size: 1.05rem;
         }
