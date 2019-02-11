@@ -535,4 +535,14 @@ class Product
         }
         return $elasticData;
     }
+
+    public static function getProductDataFromIds($ids)
+    {
+        $q = new ElasticQuery();
+        $q->setIndex(config("elastic.indexes.product"));
+
+        $products = $q->mget($ids, ['search_result_data', 'variants']);
+
+        return fetchLandingProductDetails($products['docs']);
+    }
 }

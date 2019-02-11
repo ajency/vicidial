@@ -493,3 +493,21 @@ function hideZeroSizeIDProducts($q, $must)
     return $must;
 
 }
+
+function fetchLandingProductDetails($products)
+{
+    $productsData = [];
+    foreach ($products as $productSource) {
+        $product       = $productSource["_source"];
+        $id            = defaultVariant($product['variants']);
+        $productObj    = ProductColor::where('elastic_id', $productSource["_id"])->first();
+        $productImages = $productObj->getDefaultImage(["list-view"]);
+        foreach ($product['variants'] as $variant) {
+            if ($variant['variant_id'] == $id) {
+                $productsData[$productSource["_id"]] = ['title' => $product["search_result_data"]["product_title"], 'url' => url('/' . $product["search_result_data"]["product_slug"] . "/buy"), 'list_price' => $variant["variant_list_price"], 'sale_price' => $variant["variant_sale_price"], 'discount_per' => calculateDiscount($variant["variant_list_price"], $variant["variant_sale_price"]), 'images' => (isset($productImages['list-view'])) ? $productImages['list-view'] : false];
+                break;
+            }
+        }
+    }
+    return $productsData;
+}

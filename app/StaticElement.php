@@ -68,6 +68,9 @@ class StaticElement extends Model
 
         }
 
+        $allProducts  = ProductColor::select(['elastic_id'])->whereIn('elastic_id', $records->pluck('element_data')->pluck('products')->flatten()->unique()->values())->pluck('elastic_id')->toArray();
+        $productsData = Product::getProductDataFromIds($allProducts);
+
         $response = array();
 
         foreach ($records as $record) {
@@ -85,9 +88,8 @@ class StaticElement extends Model
                 $products = $record->element_data['products'];
 
                 foreach ($products as $product) {
-                    $productObj = ProductColor::where('elastic_id', $product)->first();
-                    $titleURL   = $productObj->getTitleURL();
-                    array_push($productImages, array("images" => $productObj->getDefaultImage(["list-view"])['list-view'], "product-slug" => $titleURL['url'], "title" => $titleURL['title']));
+                    $productObj = $productsData[$product];
+                    array_push($productImages, array("images" => $productObj['images'], "product-slug" => $productObj['url'], "title" => $productObj['title']));
                 }
             } //if
 
