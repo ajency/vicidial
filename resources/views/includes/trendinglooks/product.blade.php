@@ -1,16 +1,29 @@
 <div class="col-lg-3 col-md-6 col-6">
   <div class="card h-100 product-card position-relative">
-    <a href="/cap-sleeve-all-over-printed-a-line-dress-1963-pink/buy">
+    <a href="{{$trending_product['product-slug']}}">
       <div class="">
+          @php
+          if(count((array)$trending_product['images'])>0){
+            $load_10x = $trending_product['images']['load'];
+            $image_1x = $trending_product['images']['1x'];
+            $image_2x = $trending_product['images']['2x'];
+            $image_3x = $trending_product['images']['3x'];
+          } else {
+            $load_10x = CDN::asset('/img/placeholder-10x.jpg');
+            $image_1x = $image_2x = $image_3x = CDN::asset('/img/placeholder.svg');
+          }
+          @endphp
           <img 
-            src="/images/products/36267/list-view/load/ssgi180901-an-7005-cap-sleeve-all-over-printed-multi-layered-dress-color-pink-1.jpg" 
-            data-srcset="/images/products/36267/list-view/1x/ssgi180901-an-7005-cap-sleeve-all-over-printed-multi-layered-dress-color-pink-1.jpg 270w, /images/products/36267/list-view/2x/ssgi180901-an-7005-cap-sleeve-all-over-printed-multi-layered-dress-color-pink-1.jpg 540w, /images/products/36267/list-view/3x/ssgi180901-an-7005-cap-sleeve-all-over-printed-multi-layered-dress-color-pink-1.jpg 810w" 
+            src="{{$load_10x}}" 
+            data-srcset="{{$image_1x}} 270w,
+                          {{$image_2x}}  540w,
+                          {{$image_3x}} 810w" 
             data-sizes="(min-width: 1200px) 266px, (min-width: 991px) 22vw, 41vw"
             class="card-img-top blur-up lazyload" 
-            title="Cap Sleeve All over Printed A-Line dress - Pink" 
-            alt="Cap Sleeve All over Printed A-Line dress - Pink">
+            title="{{$trending_product['title']}}" 
+            alt="{{$trending_product['title']}}">
      </div>
     </a>
-    <div class="kss-price kss-price--medium">₹399</div>
+    <div class="kss-price kss-price--medium">{{$trending_product['sale_price']}}</div>
   </div>
 </div>
