@@ -96,6 +96,15 @@ $size: 20px;
             border: 1px solid #eee;
          }
     }
+    .single-tile{
+        @media (max-width: 991px) {
+          height: 280px;
+          img{
+              object-fit: contain;
+              height: 100%;
+          }
+       }
+    }
   }
   .placeholder-img{
     background-color: $placeholder;
