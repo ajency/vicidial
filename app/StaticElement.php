@@ -68,8 +68,11 @@ class StaticElement extends Model
 
         }
 
-        $allProducts  = ProductColor::select(['elastic_id'])->whereIn('elastic_id', $records->pluck('element_data')->pluck('products')->flatten()->unique()->values())->pluck('elastic_id')->toArray();
-        $productsData = Product::getProductDataFromIds($allProducts);
+        $allProducts  = ProductColor::select(['elastic_id'])->whereIn('elastic_id', $records->pluck('element_data')->pluck('products')->flatten()->unique()->values())->pluck('elastic_id');
+        $productsData = [];
+        if ($allProducts->count() > 0) {
+            $productsData = Product::getProductDataFromIds($allProducts->toArray());
+        }
 
         $response = array();
 
@@ -83,13 +86,17 @@ class StaticElement extends Model
                 $response[$type[0]] = array();
             }
 
-            $productImages = [];
+            $productDetails = [];
             if (isset($record->element_data['products'])) {
                 $products = $record->element_data['products'];
 
                 foreach ($products as $product) {
-                    $productObj = $productsData[$product];
-                    array_push($productImages, array("images" => $productObj['images'], "product-slug" => $productObj['url'], "title" => $productObj['title']));
+                    if (isset($productsData[$product])) {
+                        $productObj = $productsData[$product];
+                        array_push($productDetails, array("product_found" => true, "product_id" => $product, "images" => $productObj['images'], "product-slug" => $productObj['url'], "title" => $productObj['title']));
+                    } else {
+                        array_push($productDetails, array("product_found" => false, "product_id" => $product);
+                    }
                 }
             } //if
 
@@ -98,7 +105,7 @@ class StaticElement extends Model
                 "element_data" => $record->element_data,
                 "type"         => $record->type,
                 "images"       => $images,
-                "products"     => $productImages,
+                "products"     => $productDetails,
             ));
 
         } //foreach
