@@ -1,4 +1,4 @@
-<div class="col-lg-3 col-md-6 col-6 kss-extension" static_element-id="{{$trending_product['sequence']}}" static_element-display_type="Trending Products" static_element-type="{{$trending_product['type']}}" page_slug="home">
+<div class="col-lg-3 col-md-6 col-6 kss-extension" static_element-id="{{$sequence}}" static_element-display_type="Trending Products" static_element-type="{{$type}}" page_slug="home">
   <div class="card h-100 product-card position-relative">
     <a href="{{$trending_product['product-slug']}}">
       <div class="">
