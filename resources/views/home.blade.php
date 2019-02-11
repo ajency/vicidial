@@ -13,7 +13,7 @@
 @section('content')
 
 <!-- Banner  -->
-@if (isset($static_elements['banner'])) 
+@if (isset($static_elements['banner']))
   @include('includes.banner.slider', ['banners' => $static_elements['banner']])
 @endif
 
@@ -184,7 +184,32 @@
   </div>
 </section>
 
+<!-- Blogs section for site homepage -->
+<section class="blog-section">
+  <div class="container">
+      <div class="row">
+          <div class="col-md-12 text-center">
+            <h2 class="font-weight-bold mb-4 pb-2">Blogs</h2>
+          </div>
+      </div>
+    <div class="blog-articles d-flex flex-column flex-lg-row">
+      <!-- Recent articles -->
+      <div class="blog-articles__recent order-1 order-lg-0">
 
+        <?php echo do_shortcode( '[kss-recent-posts]' ); ?>
+
+      </div>
+      <!-- Featured articles -->
+      <div class="blog-articles__featured order-0 order-lg-1">
+
+        <div class="featured-section">
+          <?php echo do_shortcode( '[kss-featured-posts]' ); ?>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- Advt section -->
 
@@ -270,15 +295,15 @@
     'user_id': getCookie('user_id')
   });
 
-  $(function(){ 
-    // Tooltip for chrome extension  
-      if($('.update-element-btn')){ 
-        $(document).on('click',".update-element-btn",function(){ 
-            setTimeout(function() { 
-                $('[data-toggle="tooltip"]').tooltip() 
-             }, 1800); 
-        }); 
-      } 
+  $(function(){
+    // Tooltip for chrome extension
+      if($('.update-element-btn')){
+        $(document).on('click',".update-element-btn",function(){
+            setTimeout(function() {
+                $('[data-toggle="tooltip"]').tooltip()
+             }, 1800);
+        });
+      }
   })
 </script>
 

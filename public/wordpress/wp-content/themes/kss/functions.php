@@ -543,7 +543,7 @@ remove_action( 'wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0);
 // Recent posts Shortcode
 function my_recent_posts_shortcode($atts){
     $q = new WP_Query(
-       array( 'orderby' => 'date', 'posts_per_page' => '4')
+       array( 'orderby' => 'date', 'posts_per_page' => '5')
     );
 
     $list = '<div class="recent-post"><div class="recent-post__heading">Recent Posts</div>';
@@ -568,20 +568,18 @@ add_shortcode('kss-recent-posts', 'my_recent_posts_shortcode');
 
 // Featured posts Shortcode
 function my_featured_posts_shortcode($atts){
+
     $query = new WP_Query(
        array( 'posts_per_page' => '1', 'meta_key' => 'meta-checkbox', 'meta_value' => 'yes')
     );
-
-    $content = '<div class="featured-section__col cover-post"><div class="featured-post">';
-
+    $content = '<div class="featured-section"><div class="featured-section__col cover-post"><div class="featured-post">';
     while($query->have_posts()) : $query->the_post();
 
-        $thumbnail = the_post_thumbnail('large', array('class' => 'd-block w-100 img-fluid cover-img'));
-
+        $thumbnail = get_the_post_thumbnail('', 'large', array('class' => 'd-block w-100 img-fluid cover-img'));
         $categories = get_the_category();
         $link = get_permalink();
         $title = get_the_title();
-        $excerpt = the_excerpt();
+        $excerpt = get_the_excerpt();
         $separator = ' ';
         $cat = '';
         if ( ! empty( $categories ) ) {
@@ -601,6 +599,47 @@ function my_featured_posts_shortcode($atts){
         $content .= '<div class="post-content__links">';
         $content .= '<div class="post-tags mb-1 d-flex">';
         $content .= '<div class="post-tags__data">'. $cats .'</div>';
+        $content .= '</div>';
+        $content .= '</div>';
+        $content .= '</div>';
+    endwhile;
+
+    wp_reset_query();
+
+    $content .= '</div></div>';
+
+    $content .= '<div class="d-flex flex-column flex-md-row no-cover-post">';
+    $query = new WP_Query(
+       array( 'posts_per_page' => '2', 'meta_key' => 'meta-checkbox', 'offset'=> '1', 'meta_value' => 'yes')
+    );
+    while($query->have_posts()) : $query->the_post();
+
+        $thumbnail = get_the_post_thumbnail('', 'large', array('class' => 'd-block w-100 img-fluid cover-img'));
+        $categories = get_the_category();
+        $link = get_permalink();
+        $title = get_the_title();
+        $excerpt = get_the_excerpt();
+        $separator = ' ';
+        $cat = '';
+        if ( ! empty( $categories ) ) {
+            foreach( $categories as $category ) {
+                $cat .= '<a href="' . esc_url( get_category_link( $category->term_id ) ) . '" alt="' . esc_attr( sprintf( __( 'View all posts in %s', 'textdomain' ), $category->name ) ) . '"><span>' . esc_html( $category->name ) . '</span></a>' . $separator;
+                $cats = trim( $cat, $separator );
+            }
+        }
+        $content .= '<div class="featured-section__col"><div class="featured-post"><div class="featured-post__cover">';
+        $content .= '<a href="' .$link . '" class="d-block">'. $thumbnail .'</a>';
+        $content .= '</div>';
+        $content .= '<div class="post-content">';
+        $content .= '<a href="' . $link . '" class="d-block">';
+        $content .= '<h1 class="featured-post__title">' . $title .'</h1>';
+        $content .= '</a>';
+        $content .= '<!--<p class="featured-post__desc">' . $excerpt .'</p>-->';
+        $content .= '<div class="post-content__links">';
+        $content .= '<div class="post-tags mb-1 d-flex">';
+        $content .= '<div class="post-tags__data">'. $cats .'</div>';
+        $content .= '</div>';
+        $content .= '</div>';
         $content .= '</div>';
         $content .= '</div>';
         $content .= '</div>';
