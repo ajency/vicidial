@@ -176,7 +176,7 @@ class Variant extends Model
     {
 
         return array(
-            'title'        => $this->getName(),
+            'title'        => $this->getTitle(),
             'images'       => $this->getPrimaryImageSrcset(),
             'size'         => $this->getSize(),
             'price_mrp'    => $this->getLstPrice(),
@@ -302,6 +302,28 @@ class Variant extends Model
     public function getName()
     {
         return $this->elastic_data["search_result_data"]["product_title"];
+    }
+
+    /**
+     * Get variant brand
+     *
+     * @return string
+     */
+
+    public function getBrand()
+    {
+        return (isset($this->elastic_data["search_result_data"]["product_brand"]) && $this->elastic_data["search_result_data"]["product_brand"]) ? $this->elastic_data["search_result_data"]["product_brand"] : false;
+    }
+
+    /**
+     * Get display title
+     *
+     * @return string
+     */
+
+    public function getTitle()
+    {
+        return ($this->getBrand()) ? $this->getBrand() . ' - ' . $this->getName() : $this->getName();
     }
 
     /**

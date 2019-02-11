@@ -287,7 +287,7 @@
                                         {{CDN::asset('/img/menu/mm_toys_twocolumn_small.jpg') }} 1x"
                            alt="The Super Toy Store"
                            title="The Super Toy Store"/>
-                      </a><!-- 
+                      </a><!--
                       <div class="row align-items-center mt-2 mb-4 mb-lg-0">
                           <div class="col-7">
                             <div class="h5 text-primary font-weight-bold">Spotlight on</div>
@@ -343,7 +343,7 @@
                                         {{CDN::asset('/img/menu/mm_stationary_twocolumn_small.jpg') }} 1x"
                            alt="Bag To School"
                            title="Bag To School"/>
-                      </a><!-- 
+                      </a><!--
                       <div class="row align-items-center mt-2 mb-4 mb-lg-0">
                           <div class="col-7">
                             <div class="h5 text-primary font-weight-bold">Spotlight on</div>
@@ -355,6 +355,10 @@
                       </div> -->
                   </div>
               </div>
+            </li>
+
+            <li>
+              <a href="/ideas" class="d-none d-lg-block">Blog</a>
             </li>
 
 
@@ -369,7 +373,7 @@
                     <li><a class="megamenu-link" href="/faq">FAQ</a></li>
                     <li><a class="megamenu-link" href="/terms-and-conditions">Terms of Use</a></li>
                     <li><a class="megamenu-link" href="/privacy-policy">Privacy Policy</a></li>
-                    <li><a class="megamenu-link" href="http://ideas.kidsuperstore.in/">Blog</a></li>
+                    <li><a class="megamenu-link" href="/ideas">Blog</a></li>
                   </ul>
                 </div>
               </div>

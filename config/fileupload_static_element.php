@@ -215,4 +215,6 @@ return [
             "width" => 818
         ],
     ],
+    'trending_presets'=> [],
+    'trending_upload'=> [],
 ];

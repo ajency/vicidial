@@ -1,9 +1,9 @@
 <?php
 namespace App;
 
-use App\Defaults;
 use Ajency\Connections\ElasticQuery;
 use Ajency\Connections\OdooConnect;
+use App\Defaults;
 use App\Facet;
 use App\Jobs\CreateProductJobs;
 use App\Jobs\FetchProductImages;
@@ -131,19 +131,21 @@ class Product
         } catch (\Exception $e) {
             \Log::warning($e->getMessage());
         }
-        $facets = ['product_category_type', 'product_gender', 'product_age_group', 'product_subtype'];
+        $facets = ['product_category_type', 'product_gender', 'product_age_group', 'product_subtype', 'product_brand'];
         foreach ($facets as $facet) {
-            try {
-                $facetObj               = new Facet;
-                $facetObj->facet_name   = $facet;
-                $facetObj->facet_value  = $product[$facet];
-                $facetObj->display_name = $product[$facet];
-                $facetObj->slug         = str_slug($product[$facet]);
-                $facetObj->sequence     = 10000;
-                $facetObj->display      = false;
-                $facetObj->save();
-            } catch (\Exception $e) {
-                \Log::warning($e->getMessage());
+            if ($product[$facet]) {
+                try {
+                    $facetObj               = new Facet;
+                    $facetObj->facet_name   = $facet;
+                    $facetObj->facet_value  = $product[$facet];
+                    $facetObj->display_name = $product[$facet];
+                    $facetObj->slug         = str_slug($product[$facet]);
+                    $facetObj->sequence     = 10000;
+                    $facetObj->display      = false;
+                    $facetObj->save();
+                } catch (\Exception $e) {
+                    \Log::warning($e->getMessage());
+                }
             }
         }
         $facets = ['product_color_html', 'variant_size_name'];
@@ -199,7 +201,7 @@ class Product
                 default:
                     \Log::notice("Product {$response['index']['_id']} status {$response}");
                     throw new \Exception($response, 1);
-                    
+
                     break;
             }
         }
@@ -281,7 +283,7 @@ class Product
 
         $max_count = Facet::groupBy('facet_name')->select('facet_name', DB::raw('count(*) as total'))->pluck('total')->max();
 
-        $required          = ["product_category_type", "product_gender", "product_subtype", "product_age_group", "product_color_html", "product_metatag"];
+        $required          = ["product_category_type", "product_gender", "product_subtype", "product_age_group", "product_color_html", "product_metatag", "product_brand"];
         $aggs_facet_name   = $q::createAggTerms("facet_name", "search_data.string_facet.facet_name", ["include" => $required]);
         $aggs_facet_value  = $q::createAggTerms("facet_value", "search_data.string_facet.facet_value", ["size" => $max_count]);
         $aggs_facet_value  = $q::addToAggregation($aggs_facet_value, $q::createAggReverseNested('count'));
@@ -505,10 +507,10 @@ class Product
                 $changeData = [
                     $product->elastic_id => [
                         'elastic_data' => $product->getElasticData(),
-                        'change'       => function(&$product,&$variants){
+                        'change'       => function (&$product, &$variants) {
                             $product['product_image_available'] = true;
                         },
-                    ]
+                    ],
                 ];
                 ProductColor::updateElasticData($changeData);
             }
@@ -534,5 +536,53 @@ class Product
             $variant['full_text_boosted'] = implode(' ', [$variant['full_text_boosted'], $productId, $productdisplayName]);
         }
         return $elasticData;
+    }
+
+
+    public static function getProductDataFromIds($ids)
+    {
+        $q = new ElasticQuery();
+        $q->setIndex(config("elastic.indexes.product"));
+
+        $products = $q->mget($ids, ['search_result_data', 'variants']);
+
+        return fetchLandingProductDetails($products['docs']);
+    }
+
+    public static function getBrandsForProducts()
+    {
+        $odoo   = new OdooConnect;
+        $offset = 0;
+        do {
+            $allBrands     = $odoo->defaultExec('product.template', 'search_read', [[['brand_id', '!=', false]]], ['fields' => ['brand_id'], 'limit' => config('odoo.limit'), 'order' => 'id', 'offset' => $offset]);
+            $products      = $allBrands->pluck('id');
+            $productColors = ProductColor::select(['product_id', 'elastic_id'])->whereIn('product_id', $products)->pluck('product_id', 'elastic_id');
+            $productBrands = $productColors->map(function ($productID) use ($allBrands) {
+                $brand = $allBrands->where('id', $productID)->first()['brand_id'][1];
+                try {
+                    $facetObj               = new Facet;
+                    $facetObj->facet_name   = 'product_brand';
+                    $facetObj->facet_value  = $brand;
+                    $facetObj->display_name = $brand;
+                    $facetObj->slug         = str_slug($brand);
+                    $facetObj->sequence     = 10000;
+                    $facetObj->display      = false;
+                    $facetObj->save();
+                } catch (\Exception $e) {
+                    \Log::warning($e->getMessage());
+                }
+                return [
+                    'elastic_data' => null,
+                    'change'       => function (&$product, &$variants) use ($brand) {
+                        $product['product_brand'] = $brand;
+                    },
+                ];
+            });
+            if ($productBrands->count() != 0) {
+                ProductColor::updateElasticData($productBrands);
+            }
+            $offset = $offset + $allBrands->count();
+        } while ($allBrands->count() == config('odoo.limit'));
+        return;
     }
 }

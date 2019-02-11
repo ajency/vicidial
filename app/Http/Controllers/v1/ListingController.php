@@ -44,7 +44,7 @@ class ListingController extends Controller
         return ["result"=>json_decode(json_encode($params,JSON_FORCE_OBJECT)),"slug_value_search_result"=>$search_results["slug_value_search_result"]];
     }
 
-    public function index($cat1, $cat2 = null, $cat3 = null, $cat4 = null, Request $request)
+    public function index($cat1, $cat2 = null, $cat3 = null, $cat4 = null, $cat5 = null, Request $request)
     {
     	$parameters = array();
     	$parameters['categories'] = array();
@@ -52,6 +52,7 @@ class ListingController extends Controller
         if($cat2 != null ) array_push($parameters['categories'], $cat2);
         if($cat3 != null ) array_push($parameters['categories'], $cat3);
         if($cat4 != null ) array_push($parameters['categories'], $cat4);
+        if($cat5 != null ) array_push($parameters['categories'], $cat5);
     	$parameters['query'] = $request->all();
         $page_params = [];
         $page_params["page"] = (isset($parameters['query']['page']))?$parameters['query']['page']:1;

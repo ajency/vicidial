@@ -65,9 +65,11 @@ $(document).ready(function(){
             //if($(add_to_cart_element).hasClass('go-to-cart')) {/*Call Angular function*/ return;}
 
             //Show loader
-            $('.cd-add-to-cart .kss-btn__wrapper').addClass('d-none');
-            $('.cd-add-to-cart .kss-btn__wrapper').removeClass('d-flex');
+            // $('.cd-add-to-cart .kss-btn__wrapper').addClass('d-none');
+            // $('.cd-add-to-cart .kss-btn__wrapper').removeClass('d-flex');
+            $('.cd-add-to-cart .btn-contents').hide();
             $('.cd-add-to-cart .btn-icon').show();
+            console.log('first');
             $(add_to_cart_element).addClass('cartLoader');
             
             // for angular app 
@@ -123,8 +125,10 @@ $(document).ready(function(){
             dataType: 'JSON',
             success: function (data) {
                 $('.cd-add-to-cart .btn-icon').hide();
-                $('.cd-add-to-cart .kss-btn__wrapper').addClass('d-flex');
-                $('.cd-add-to-cart .kss-btn__wrapper').removeClass('d-none');
+                $('.cd-add-to-cart .btn-contents').show();
+                console.log('second');
+                // $('.cd-add-to-cart .kss-btn__wrapper').addClass('d-flex');
+                // $('.cd-add-to-cart .kss-btn__wrapper').removeClass('d-none');
                 document.cookie = "cart_count=" + data.cart_count + ";path=/";
                 add_to_cart_completed = true;
                 // set_cart_data(data.item);
@@ -161,6 +165,7 @@ $(document).ready(function(){
         add_to_cart_failure_message = error_msg=='Quantity not available' ? 'Could not add '+ $('.section-heading--single').text() +' to bag as it is out of stock' : (error_msg == "invalid cart" ? 'Hey, before you add your item to bag it looks like you were interrupted during your last checkout. You can place this existing order or edit bag to add more items.' : 'Due to the high traffic, there was an issue adding your item to bag. Please try adding the item again' );
 
         $('.cd-add-to-cart .btn-icon').hide();
+        $('.cd-add-to-cart .btn-contents').show();
         $('.cd-add-to-cart .kss-btn__wrapper').addClass('d-flex');
         $('.cd-add-to-cart .kss-btn__wrapper').removeClass('d-none');
         $('.cd-add-to-cart').removeClass('cartLoader');

@@ -205,7 +205,7 @@ function generateProductListTitle($categories,$slug_name_value_arr){
 			$cat1 = explode("--", $categories[0]);
 			if($slug_name_value_arr[$cat1[0]]["facet_name"] == "product_category_type")
 				$titile = $slug_name_value_arr[$cat1[0]]["display_name"]." at KSS";
-			if($slug_name_value_arr[$cat1[0]]["facet_name"] == "product_age_group" || $slug_name_value_arr[$cat1[0]]["facet_name"] == "product_gender")
+			if($slug_name_value_arr[$cat1[0]]["facet_name"] == "product_age_group" || $slug_name_value_arr[$cat1[0]]["facet_name"] == "product_gender" || $slug_name_value_arr[$cat1[0]]["facet_name"] == "product_brand")
 				$titile = $slug_name_value_arr[$cat1[0]]["display_name"]." fashion store";
 			if($slug_name_value_arr[$cat1[0]]["facet_name"] == "product_subtype")
 				$titile = $slug_name_value_arr[$cat1[0]]["display_name"]." at KSS";
@@ -219,7 +219,7 @@ function generateProductListTitle($categories,$slug_name_value_arr){
 				$titile = $slug_name_value_arr[$cat1[0]]["display_name"]."-".$slug_name_value_arr[$cat2[0]]["display_name"]." fashion store";
 			if($slug_name_value_arr[$cat1[0]]["facet_name"] == "product_category_type" && $slug_name_value_arr[$cat2[0]]["facet_name"] == "product_subtype")
 				$titile = $slug_name_value_arr[$cat1[0]]["display_name"]." at KSS";
-			break;		
+			break;
 		case 3:
 			$cat1 = explode("--", $categories[0]);
 			$cat2 = explode("--", $categories[1]);
@@ -230,12 +230,21 @@ function generateProductListTitle($categories,$slug_name_value_arr){
 				$titile = $slug_name_value_arr[$cat3[0]]["display_name"]." for ".$slug_name_value_arr[$cat2[0]]["display_name"];
 			if($slug_name_value_arr[$cat1[0]]["facet_name"] == "product_age_group" && $slug_name_value_arr[$cat2[0]]["facet_name"] == "product_gender" && $slug_name_value_arr[$cat3[0]]["facet_name"] == "product_subtype")
 				$titile = $slug_name_value_arr[$cat3[0]]["display_name"]." for ".$slug_name_value_arr[$cat1[0]]["display_name"]."-".$slug_name_value_arr[$cat2[0]]["display_name"];
-			break;		
+			break;
 		case 4:
 			$cat1 = explode("--", $categories[0]);
 			$cat2 = explode("--", $categories[1]);
 			$cat3 = explode("--", $categories[2]);
 			$cat4 = explode("--", $categories[3]);
+			if($slug_name_value_arr[$cat1[0]]["facet_name"] == "product_category_type" && $slug_name_value_arr[$cat2[0]]["facet_name"] == "product_age_group" && $slug_name_value_arr[$cat3[0]]["facet_name"] == "product_gender" && $slug_name_value_arr[$cat3[0]]["facet_name"] == "product_subtype")
+				$titile = $slug_name_value_arr[$cat4[0]]["display_name"]." for ".$slug_name_value_arr[$cat2[0]]["display_name"]."-".$slug_name_value_arr[$cat3[0]]["display_name"];
+			break;
+		case 5:
+			$cat1 = explode("--", $categories[0]);
+			$cat2 = explode("--", $categories[1]);
+			$cat3 = explode("--", $categories[2]);
+			$cat4 = explode("--", $categories[3]);
+			$cat5 = explode("--", $categories[4]);
 			if($slug_name_value_arr[$cat1[0]]["facet_name"] == "product_category_type" && $slug_name_value_arr[$cat2[0]]["facet_name"] == "product_age_group" && $slug_name_value_arr[$cat3[0]]["facet_name"] == "product_gender" && $slug_name_value_arr[$cat3[0]]["facet_name"] == "product_subtype")
 				$titile = $slug_name_value_arr[$cat4[0]]["display_name"]." for ".$slug_name_value_arr[$cat2[0]]["display_name"]."-".$slug_name_value_arr[$cat3[0]]["display_name"];
 			break;

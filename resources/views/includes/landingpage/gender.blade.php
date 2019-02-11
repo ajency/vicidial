@@ -43,7 +43,11 @@
 				<div class="gender text-center d-flex align-items-center flex-column justify-content-between flex-1">
 					<div class="product-group d-flex mb-md-3">
 						@foreach($landing['products'] as $product)
-							@include('includes.landingpage.gender_product', ['product' => $product])
+              @if($product['product_found'])
+							 @include('includes.landingpage.gender_product', ['product' => $product])
+              @else
+               @include('includes.landingpage.no-product', ['product' => $product])
+              @endif
 						@endforeach
 					</div>	
 					<h3 class="gender__name font-weight-bold text-dark text-uppercase m-detach">{{$title}}</h3>
