@@ -2,7 +2,7 @@
 <script id="products-list-template" type="text/x-handlebars-template">
  <div id="card-list" class="row">
   @{{#each products}}
-  <div class="col-lg-4 col-md-6 mb-sm-4 col-12">
+  <div class="col-lg-4 col-md-6 mb-sm-4 col-12 xs-single-col">
 
 	  <div class="card h-100 product-card">
 
@@ -29,8 +29,8 @@
 	      </div>
 	    </a>
 	    <!-- Product Info -->
-	    <div class="
-	    -body">
+
+	    <div class="product-card__body">
 	      @{{#if brand}}
 	      <!-- <a href="/@{{slug_name}}/buy" class="text-dark"> -->
 	        <h3 class="brands-title brands-title--list mt-1 mt-sm-0 mb-sm-2">
@@ -38,6 +38,7 @@
 	        </h3>
 	      <!-- </a> -->
 	      @{{/if}}
+
 	      @{{#if title}}
 	      <a href="/@{{slug_name}}/buy" class="text-dark">
 	        <h5 class="section-heading section-heading--list mb-1 mb-sm-2">
