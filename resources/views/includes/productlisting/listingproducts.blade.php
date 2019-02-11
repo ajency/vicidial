@@ -32,11 +32,11 @@
 	    <div class="
 	    -body">
 	      @{{#if brand}}
-	      <a href="/@{{slug_name}}/buy" class="text-dark">
+	      <!-- <a href="/@{{slug_name}}/buy" class="text-dark"> -->
 	        <h3 class="brands-title brands-title--list mt-1 mt-sm-0 mb-sm-2">
 	          @{{brand}}
 	        </h3>
-	      </a>
+	      <!-- </a> -->
 	      @{{/if}}
 	      @{{#if title}}
 	      <a href="/@{{slug_name}}/buy" class="text-dark">

@@ -10,5 +10,6 @@
   	@media (max-width: 767px){.sticky-xs-btn .sort-btn{width: 100%;font-size: 0.9rem;font-weight: bold;border-radius: 0;justify-content: center;} .sticky-xs-btn .sort-btn .sort-icon{width: 16px;margin-right: 0.5em;}.sticky-xs-btn .filter-btn{width: 100%;font-size: 0.9rem;font-weight: bold;border-radius: 0;}}
   	.pl-loader {height: calc(100vh - 60px);position: fixed;width: 100%;z-index: 9999;top: 60px;left: 0;}
   	.loader {background: #ffffff url(../img/loader_818e.gif) center center no-repeat;width: 100%;position: absolute;z-index: 999;height: 100%;}
-  	.brands-title {font-weight: bold;color: #000;}.brands-title--list {font-size: 0.85rem;}.brands-title:hover {color: #000;text-decoration: underline;}
+  	.brands-title {color: #b5b5b5;}.brands-title--list {font-size: 0.8rem;font-weight: 300;}
+  	@media (max-width: 767px) {.brands-title--list {font-size: 0.7rem;}}
 </style>
