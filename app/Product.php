@@ -89,12 +89,16 @@ class Product
         $products         = collect();
         $odoo             = new OdooConnect;
         $variants         = collect();
+        $updateVariants   = [];
         $inactiveVariants = $odoo->defaultExec("product.product", 'search', [[['product_tmpl_id', '=', $productData['product_id']], ['active', '=', false]]], [])->toArray();
         $variantsData     = $odoo->defaultExec("product.product", 'read', [array_merge($variant_ids, $inactiveVariants)], ['fields' => config('product.variant_fields')]);
         foreach ($variantsData as $variantData) {
             $attributeValues = $odoo->defaultExec('product.attribute.value', 'read', [$variantData['attribute_value_ids']], ['fields' => config('product.attribute_fields')]);
             $sanitisedData   = sanitiseVariantData($variantData, $attributeValues);
-            self::storeVariantData($sanitisedData, $productData);
+            if (!self::storeVariantData($sanitisedData, $productData)) {
+                $updateVariants[] = $sanitisedData['variant_id'];
+            }
+
             $sanitisedData['variant_availability'] = Variant::where('odoo_id', $sanitisedData['variant_id'])->first()->getAvailability();
             $variants->push($sanitisedData);
         }
@@ -104,13 +108,16 @@ class Product
 
         }
         //create update job for active and inactive variants
-        // UpdateVariantInventory::dispatch(array_merge($variant_ids, $inactiveVariants))->onQueue('update_inventory');
+        if (!empty($updateVariants)) {
+            UpdateVariantInventory::dispatch($updateVariants)->onQueue('update_inventory');
+        }
+
         return $products;
     }
 
     public static function storeVariantData($variant, $product)
     {
-
+        $exists = true;
         try {
             $elastic             = new ProductColor;
             $elastic->elastic_id = $product['product_id'] . '.' . $variant['product_color_id'];
@@ -126,6 +133,7 @@ class Product
             $object->odoo_id = $variant['variant_id'];
             if (is_null($object->inventory)) {
                 $object->inventory = [];
+                $exists            = false;
             }
             $object->product_color_id = $elastic->id;
             $object->active           = $variant['variant_active'];
@@ -179,6 +187,7 @@ class Product
                 \Log::warning($e->getMessage());
             }
         }
+        return $exists;
 
     }
 
