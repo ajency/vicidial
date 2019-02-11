@@ -48,7 +48,7 @@ class StaticElementController extends Controller
     //save new
     public function callSaveNew(Request $request)
     {
-        $request->validate(['element_data' => 'required', 'page_slug' => 'required', 'type' => 'required', 'images' => 'required']);
+        $request->validate(['element_data' => 'required', 'page_slug' => 'required', 'type' => 'required', 'images' => 'present']);
         $images = $request->images;
 
         $params = $request->all();
