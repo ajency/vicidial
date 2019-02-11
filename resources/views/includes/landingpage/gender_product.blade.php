@@ -1,7 +1,7 @@
 <div class="product-group__col">							
 	<a href="{{$product['product-slug']}}" class="w-100">
 		@php
-        if(count((array)$product->images)>0){
+        if(count((array)$product['images'])>0){
           $load_10x = $product['images']['load'];
           $image_1x = $product['images']['1x'];
           $image_2x = $product['images']['2x'];
