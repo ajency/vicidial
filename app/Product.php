@@ -1,9 +1,9 @@
 <?php
 namespace App;
 
-use App\Defaults;
 use Ajency\Connections\ElasticQuery;
 use Ajency\Connections\OdooConnect;
+use App\Defaults;
 use App\Facet;
 use App\Jobs\CreateProductJobs;
 use App\Jobs\FetchProductImages;
@@ -95,6 +95,7 @@ class Product
             $attributeValues = $odoo->defaultExec('product.attribute.value', 'read', [$variantData['attribute_value_ids']], ['fields' => config('product.attribute_fields')]);
             $sanitisedData   = sanitiseVariantData($variantData, $attributeValues);
             self::storeVariantData($sanitisedData, $productData);
+            $sanitisedData['variant_availability'] = Variant::where('odoo_id', $sanitisedData['variant_id'])->first()->getAvailability();
             $variants->push($sanitisedData);
         }
         $colorvariants = $variants->groupBy('product_color_id');
@@ -103,7 +104,7 @@ class Product
 
         }
         //create update job for active and inactive variants
-        UpdateVariantInventory::dispatch(array_merge($variant_ids, $inactiveVariants))->onQueue('update_inventory');
+        // UpdateVariantInventory::dispatch(array_merge($variant_ids, $inactiveVariants))->onQueue('update_inventory');
         return $products;
     }
 
@@ -121,9 +122,11 @@ class Product
             $elastic = ProductColor::where('elastic_id', $product['product_id'] . '.' . $variant['product_color_id'])->first();
         }
         try {
-            $object                   = Variant::firstOrNew(['odoo_id' => $variant['variant_id']]);
-            $object->odoo_id          = $variant['variant_id'];
-            $object->inventory        = [];
+            $object          = Variant::firstOrNew(['odoo_id' => $variant['variant_id']]);
+            $object->odoo_id = $variant['variant_id'];
+            if (is_null($object->inventory)) {
+                $object->inventory = [];
+            }
             $object->product_color_id = $elastic->id;
             $object->active           = $variant['variant_active'];
             $object->deleted          = false;
@@ -199,7 +202,7 @@ class Product
                 default:
                     \Log::notice("Product {$response['index']['_id']} status {$response}");
                     throw new \Exception($response, 1);
-                    
+
                     break;
             }
         }
@@ -505,10 +508,10 @@ class Product
                 $changeData = [
                     $product->elastic_id => [
                         'elastic_data' => $product->getElasticData(),
-                        'change'       => function(&$product,&$variants){
+                        'change'       => function (&$product, &$variants) {
                             $product['product_image_available'] = true;
                         },
-                    ]
+                    ],
                 ];
                 ProductColor::updateElasticData($changeData);
             }
