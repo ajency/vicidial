@@ -177,7 +177,7 @@
 </section>
 <section id="kss-clothings" class="stripe-bg-top">
   <div class="container ">
-    @include('includes.trending_looks')
+    @include('includes.trendinglooks.trending_looks')
     <div class="text-center mt-3">
       <a href="/shop" class="viewall-link">View More <i class="fas fa-chevron-right"></i></a>
     </div>
