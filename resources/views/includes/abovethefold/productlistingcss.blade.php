@@ -11,5 +11,5 @@
   	.pl-loader {height: calc(100vh - 60px);position: fixed;width: 100%;z-index: 9999;top: 60px;left: 0;}
   	.loader {background: #ffffff url(../img/loader_818e.gif) center center no-repeat;width: 100%;position: absolute;z-index: 999;height: 100%;}
   	.brands-title {color: #b5b5b5;}.brands-title--list {font-size: 0.8rem;font-weight: 300;}
-  	@media (max-width: 767px) {.brands-title--list {font-size: 0.7rem;}}
+  	@media (max-width: 767px) {.brands-title--list {font-size: 0.7rem;color: #969696;}}
 </style>
