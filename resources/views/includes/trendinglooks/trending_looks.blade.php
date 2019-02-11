@@ -5,7 +5,7 @@
     @if($trending_product['products'][0]['product_found'])
 		@include('includes.trendinglooks.product', ['trending_product' => $trending_product['products'][0], 'type' => $trending_product['type'], 'sequence' => $trending_product['sequence']])
   	@else
-   		@include('includes.trendinglooks.no-product', ['trending_product' => $trending_product['products'][0]])
+   		@include('includes.trendinglooks.no-product', ['trending_product' => $trending_product['products'][0], 'type' => $trending_product['type'], 'sequence' => $trending_product['sequence']])
   	@endif
   @endforeach
 </div>
