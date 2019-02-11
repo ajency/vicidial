@@ -99,7 +99,7 @@ class Product
                 $updateVariants[] = $sanitisedData['variant_id'];
             }
 
-            $sanitisedData['variant_availability'] = Variant::where('odoo_id', $sanitisedData['variant_id'])->first()->getAvailability();
+            $sanitisedData['variant_availability'] = Variant::select('inventory')->where('odoo_id', $sanitisedData['variant_id'])->first()->getAvailability();
             $variants->push($sanitisedData);
         }
         $colorvariants = $variants->groupBy('product_color_id');
