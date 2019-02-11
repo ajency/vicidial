@@ -139,6 +139,7 @@ class Product
         foreach ($variantsData as $variantData) {
             $attributeValues = $odoo->defaultExec('product.attribute.value', 'read', [$variantData['attribute_value_ids']], ['fields' => config('product.attribute_fields')]);
             $sanitisedData   = sanitiseVariantData($variantData, $attributeValues);
+
             if (!self::storeVariantData($sanitisedData, $productData)) {
                 $updateVariants[] = $sanitisedData['variant_id'];
             }
