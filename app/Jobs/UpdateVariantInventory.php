@@ -37,23 +37,22 @@ class UpdateVariantInventory implements ShouldQueue
     public function handle()
     {
         $inventory = Product::getVariantInventory($this->variant_ids);
-        $changes   = [];
+        // $changes   = [];
         foreach ($this->variant_ids as $variant_id) {
             $var            = Variant::where(["odoo_id" => $variant_id])->firstOrFail();
             $var->inventory = $inventory[$variant_id]["inventory"];
             $var->save();
             if ($this->active) {
-                $changes[$var->getParentElasticData()['id']] = [
+                ProductColor::updateElasticData([$var->getParentElasticData()['id'] => [
                     'elastic_data' => $var->getParentElasticData(),
                     'change'       => function (&$product, &$variants) use ($var) {
                         $variant                         = $variants[$var->odoo_id];
                         $variant['variant_availability'] = $var->getAvailability();
                         $variants[$var->odoo_id]         = $variant;
                     },
-                ];
+                ]]);
             }
 
         }
-        if ($this->active) ProductColor::updateElasticData($changes);
     }
 }

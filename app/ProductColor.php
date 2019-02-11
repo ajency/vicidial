@@ -24,6 +24,10 @@ class ProductColor extends Model
         return $q->get($this->elastic_id)['_source'];
     }
 
+    public function variants(){
+        return $this->hasMany('App\Variant');
+    }
+
     public static function saveToElastic(string $id, array $data)
     {
         $q = new ElasticQuery();
