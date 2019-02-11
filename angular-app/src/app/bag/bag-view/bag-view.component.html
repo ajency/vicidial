@@ -213,27 +213,31 @@
 			<p class="sub-text mb-3">Free Shipping</p>
 		</div>
 
-		<hr class="mt-0 mb-2">
+<!-- 		<hr class="mt-0 mb-2">
 		<div class="d-flex align-items-center py-3 mb-4">
 			<img src="/img/shield.png" class="img-fluid" width="45" alt="100% Secure Payments" title="100% Secure Payments">
 			<div class="pl-3 genuinity">
 				<p class="mb-1">Genuine products. 7 day returns.</p>
 				<p class="my-1">100% Secure payments.</p>
 			</div>
-		</div>
+		</div> -->
 
 		<div class="seperator mb-5"></div>
+		<div class="seperator mb-3"></div>
 
 		<div id="kss_cart" class="p-3 fixed-bottom fixed-checkout-btn d-flex align-items-center justify-content-between flex-column">
 				<div class="d-flex align-items-center mb-2">
-					<img src="/img/shield.png" class="img-fluid" width="45" alt="100% Secure Payments" title="100% Secure Payments">
-					<div class="pl-3 genuinity" style="line-height: 1.2;">
+					<img src="/img/shield.png" class="img-fluid" width="25" alt="100% Secure Payments" title="100% Secure Payments">
+					<div class="pl-2 genuinity">
 						<p class="mb-1">Genuine products. 7 day returns.</p>
 						<p class="my-1">100% Secure payments.</p>
 					</div>
 				</div>
-				<button *ngIf="cart.cart_type =='order'" id="checkout" class="btn kss-btn kss-btn--outline-secondary kss-btn--big mr-3" (click)="editBag()" >Edit Bag</button>
-				<button  id="checkout" class="btn kss-btn kss-btn--big mt-0" [ngClass]="{'disabled' : cartItemOutOfStock}" (click)="checkLoginStatus()" >Secure Checkout</button>
+				<div class="align-items-center d-flex justify-content-between w-100">
+					<button *ngIf="cart.cart_type =='order'" id="checkout" class="btn kss-btn kss-btn--outline-secondary kss-btn--big mr-3" (click)="editBag()" >Edit Bag</button>
+					<button  id="checkout" class="btn kss-btn kss-btn--big mt-0" [ngClass]="{'disabled' : cartItemOutOfStock}" (click)="checkLoginStatus()" >Secure Checkout</button>	
+				</div>
+				
 		</div>
 	</div>	
 

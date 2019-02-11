@@ -666,6 +666,7 @@
 	}
 }
 
+
 // Landingpage no product UI
 .no-match{
 	background-color: rgba(247, 247, 247, 0.78);
@@ -675,3 +676,10 @@
     	line-height: 1.3;
     }
 }
+
+.cd-add-to-cart{
+	.btn-contents{
+		display: flex;
+	}
+}
+
