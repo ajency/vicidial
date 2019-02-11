@@ -28,6 +28,11 @@
 		&__col{
 			padding: 0 8px;
 		}
+		.no-cover-post{
+			.featured-section__col{
+				width: 50%;
+			}
+		}
 	}
 	.post-action{
 		display: none;
@@ -42,7 +47,7 @@
 	@media (max-width: 991px){
 		&__recent{
 			border: 1px solid #cacaca;
-			background-color: transparent;
+			// background-color: transparent;
 			margin-top: 1em;
 		}
 		&__featured{
@@ -52,6 +57,35 @@
 			&__col{
 				padding: 5px 0;
 				margin-bottom: 1em;
+			}
+			.no-cover-post{
+				.featured-post{
+					padding-bottom: 0;
+				}
+				.featured-section__col{
+					width: 100%;
+				}
+				.post-content{
+					position: absolute;
+				    bottom: 0;
+				    color: #fff;
+				    z-index: 1;
+				    background-image: linear-gradient(transparent,rgba(0,0,0,0.8));
+				    width: 100%;
+				    left: 0;
+				    padding: 6em 15px 0 15px;
+				    &__links{
+				    	display: flex;
+				    	margin-top: 0;
+				    	padding-bottom: 0.8em;
+				    }
+				    .featured-post__title{
+				    	color: #fff;
+				    }
+				    .post-tags__data a{
+				    	color: #fff;
+				    }
+				}
 			}
 		}
 	}
@@ -114,18 +148,18 @@
 	    height: 62px;
 	}
 	@media (max-width: 767px){
-		&__cover,&__desc{
-			display: none;
-		}
-		&__title{
-			line-height: 1.3;
-			margin-bottom: 15px;
-		}
-		.post-content{
-			&__links{
-				margin-top: 0;
-			}
-		}
+		// &__cover,&__desc{
+		// 	display: none;
+		// }
+		// &__title{
+		// 	line-height: 1.3;
+		// 	margin-bottom: 15px;
+		// }
+		// .post-content{
+		// 	&__links{
+		// 		margin-top: 0;
+		// 	}
+		// }
 	}
 }
 
@@ -284,7 +318,7 @@
 	}
 	&__box{
 		margin: 0 -8px;
-		min-height: 175px;
+		// min-height: 175px;
 		transition: all 0.3s ease;
 		& > a{
     		width: 100%;
@@ -301,14 +335,14 @@
     	&:hover{
     		// background-color: darken(theme-color('dark'), 10%);
     	}
-    	&:nth-child(even){
+    	&:nth-child(odd){
     		background-color: darken(theme-color('dark'), 10%);
     	}
 	}
 	&__title{
     	font-size: 1.3em;
     	line-height: 1.5;
-	    height: 82px;
+	    // height: 82px;
 	    @extend .ellipsis-3;
 	}
 	&__date,.post-tags{
@@ -341,10 +375,10 @@
 			min-height: auto;
 			& > a{
 				padding: 20px 25px 5px 25px;
-				color: #000;
+				// color: #000;
 			}
 			&:nth-child(even){
-	    		background-color: #e4e4e4;
+	    		// background-color: #e4e4e4;
 	    	}
 	    	&:not(:last-child){
 	    		border-bottom: 0;
@@ -358,11 +392,11 @@
 		}
 		&__date{
 			padding: 0 25px 15px 25px;
-			color: #000;
+			// color: #000;
 		}
 		.post-tags{
 			a{
-				color: #000;
+				// color: #000;
 			}
 		}
 	}

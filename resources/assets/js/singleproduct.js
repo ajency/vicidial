@@ -72,9 +72,9 @@ $(function(){
 
         replaceURLParameter('size', this.dataset['title']);
         // jQuery('#cd-add-to-cart').prop("disabled", false);
-        if(isMobile){
-            injectHtml();
-        }
+        // if(isMobile){
+        //     injectHtml();
+        // }
 
     });   
     

@@ -68,6 +68,12 @@ class StaticElement extends Model
 
         }
 
+        $allProducts  = ProductColor::select(['elastic_id'])->whereIn('elastic_id', $records->pluck('element_data')->pluck('products')->flatten()->unique()->values())->pluck('elastic_id');
+        $productsData = [];
+        if ($allProducts->count() > 0) {
+            $productsData = Product::getProductDataFromIds($allProducts->toArray());
+        }
+
         $response = array();
 
         foreach ($records as $record) {
@@ -80,14 +86,17 @@ class StaticElement extends Model
                 $response[$type[0]] = array();
             }
 
-            $productImages = [];
+            $productDetails = [];
             if (isset($record->element_data['products'])) {
                 $products = $record->element_data['products'];
 
                 foreach ($products as $product) {
-                    $productObj = ProductColor::where('elastic_id', $product)->first();
-                    $titleURL   = $productObj->getTitleURL();
-                    array_push($productImages, array("images" => $productObj->getDefaultImage(["list-view"])['list-view'], "product-slug" => $titleURL['url'], "title" => $titleURL['title']));
+                    if (isset($productsData[$product])) {
+                        $productObj = $productsData[$product];
+                        array_push($productDetails, array("product_found" => true, "product_id" => $product, "images" => $productObj['images'], "product-slug" => $productObj['url'], "title" => $productObj['title']));
+                    } else {
+                        array_push($productDetails, array("product_found" => false, "product_id" => $product));
+                    }
                 }
             } //if
 
@@ -96,7 +105,7 @@ class StaticElement extends Model
                 "element_data" => $record->element_data,
                 "type"         => $record->type,
                 "images"       => $images,
-                "products"     => $productImages,
+                "products"     => $productDetails,
             ));
 
         } //foreach

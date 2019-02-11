@@ -2,7 +2,7 @@
 <script id="products-list-template" type="text/x-handlebars-template">
  <div id="card-list" class="row">
   @{{#each products}}
-  <div class="col-lg-4 col-md-6 mb-sm-4 col-6  ">
+  <div class="col-lg-4 col-md-6 mb-sm-4 col-12 xs-single-col">
 
 	  <div class="card h-100 product-card">
 
@@ -10,7 +10,7 @@
 	    <!-- <i class="fas fa-heart kss_heart"></i> -->
 	    <!-- Product Image Display -->
 	    <a href="/@{{slug_name}}/buy" class="position-relative" title="@{{title}}">
-	      <div class="product-card__wrapper loading d-flex align-items-center justify-content-center mb-2 mb-sm-3">
+	      <div class="product-card__wrapper loading d-flex align-items-center justify-content-center mb-2 mb-sm-3 single-tile">
 	        <div class="overlay"></div>
 	        @{{assign "image_1x" '/img/placeholder.svg'}}
 	        @{{assign "image_2x" '/img/placeholder.svg'}}
@@ -24,13 +24,19 @@
 		        @{{assign "load_10x" images.load }}
 		        @{{assign "default_placeholder_cls" "" }}
 	        @{{/ifImagesExist}}
-	        <img src="@{{@root.load_10x}}" data-srcset="@{{@root.image_1x}} 270w, @{{@root.image_2x}} 540w, @{{@root.image_3x}} 810w" sizes="(min-width: 1200px) 270px,(min-width: 992px) 22vw,(min-width: 768px) 33vw, 45vw" class="lazyload card-img-top blur-up @{{@root.default_placeholder_cls}}"  title="@{{title}}" alt="@{{title}}" />
+	        <img src="@{{@root.load_10x}}" data-srcset="@{{@root.image_1x}} 270w, @{{@root.image_2x}} 540w, @{{@root.image_3x}} 810w" sizes="(min-width: 1200px) 270px,(min-width: 992px) 22vw,(min-width: 768px) 33vw, 90vw" class="lazyload card-img-top blur-up @{{@root.default_placeholder_cls}}"  title="@{{title}}" alt="@{{title}}" />
 
 	      </div>
 	    </a>
 	    <!-- Product Info -->
-	    <div class="
-	    -body">
+
+	    <div class="product-card__body">
+	      @{{#if brand}}
+	        <h3 class="brands-title brands-title--list mt-1 mt-sm-0 mb-sm-2">
+	          @{{brand}}
+	        </h3>
+	      @{{/if}}
+
 	      @{{#if title}}
 	      <a href="/@{{slug_name}}/buy" class="text-dark">
 	        <h5 class="section-heading section-heading--list mb-1 mb-sm-2">

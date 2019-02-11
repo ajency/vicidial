@@ -31,7 +31,11 @@ class UpdateElasticData implements ShouldQueue
      */
     public function handle()
     {
-        $products = $this->changes->combine($this->changes->map(function()  {return ['elastic_data' => null, 'change' => function(){}];}));
+        $products = $this->changes->combine($this->changes->map(function()  {return ['elastic_data' => null, 'change' => function (&$product, &$variants) {
+                        if (!isset($product['product_brand']) || !$product['product_brand']) {
+                            $product['product_brand'] = 'KSS Fashion';
+                        }
+                    }];}));
         ProductColor::updateElasticData($products);
     }
 }

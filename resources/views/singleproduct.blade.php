@@ -79,7 +79,7 @@
 								@if ($params['show_button']) 
 								<button id="cd-add-to-cart" class="btn kss-btn kss-btn--big cd-add-to-cart">
 									<!-- <div class="kss-btn__wrapper d-flex align-items-center justify-content-center d-md-none">SELECT SIZE</div> -->
-									<div class="kss-btn__wrapper d-flex align-items-center justify-content-center"><i class="kss_icon bag-icon-fill icon-sm"></i> Add to Bag</div>
+									<div class="kss-btn__wrapper d-flex align-items-center justify-content-center"><span class="btn-contents align-items-center"><i class="kss_icon bag-icon-fill icon-sm"></i> Add to Bag</span> <div class="btn-icon"><i class="fas fa-circle-notch fa-spin fa-lg"></i></div></div>
 								</button>
 								@else
 								    <div class="out-of-stock">Currently unavailable</div>

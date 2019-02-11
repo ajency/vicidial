@@ -79,7 +79,7 @@ function formatItems($result, $params){
         $product = $doc["_source"];
         $data = $product["search_result_data"];
         $listImages       = $productColor->getDefaultImage(["list-view"]);
-        $item = [
+        $item  = [
             "title" => $data["product_title"],
             "slug_name" => $data["product_slug"],
             "description" => $data["product_description"],
@@ -89,6 +89,7 @@ function formatItems($result, $params){
             "color_id" => $data['product_color_id'],
             "color_name" => $data['product_color_name'],
             "color_html" => $data['product_color_html'],
+            "brand"       => (isset($data["product_brand"]) && $data["product_brand"]) ? $data["product_brand"] : 'KSS Fashion',
         ];
 
         //find product_availability
@@ -202,8 +203,7 @@ function sanitiseFilterdata($result, $params = [])
     $response           = [];
 
 
-    $facetNames =  ["product_category_type", "product_gender", "product_subtype", "product_age_group", "product_color_html", "product_metatag", "variant_size_name"];
-    // dd($facetNames);
+    $facetNames =  ["product_category_type", "product_gender", "product_subtype", "product_age_group", "product_color_html", "product_metatag", "variant_size_name", "product_brand"];
     foreach ($facetNames as $f) {
         $filter           = [];
         $facetName = $f;
@@ -362,8 +362,6 @@ function setDefaultFilters(array $params){
             $search_object[$data['filter_type']][$facet_name] = $data['implicit_filter']['default_value'];
         }
     }
-    
-    //add request params
     foreach ($params['search_object'] as $filter_type => $facet) {
         if(is_array($facet)){
             foreach ($facet as $facet_name => $values) {
@@ -381,7 +379,6 @@ function setDefaultFilters(array $params){
             $search_object[$filter_type] = $facet;
         }
     }
-
     return $search_object;
 }
 
@@ -492,4 +489,22 @@ function hideZeroSizeIDProducts($q, $must)
     $must       = $q::addToBoolQuery('must_not', $nested2, $must);
     return $must;
 
+}
+
+function fetchLandingProductDetails($products)
+{
+    $productsData = [];
+    foreach ($products as $productSource) {
+        $product       = $productSource["_source"];
+        $id            = defaultVariant($product['variants']);
+        $productObj    = ProductColor::where('elastic_id', $productSource["_id"])->first();
+        $productImages = $productObj->getDefaultImage(["list-view"]);
+        foreach ($product['variants'] as $variant) {
+            if ($variant['variant_id'] == $id) {
+                $productsData[$productSource["_id"]] = ['title' => $product["search_result_data"]["product_title"], 'url' => url('/' . $product["search_result_data"]["product_slug"] . "/buy"), 'list_price' => $variant["variant_list_price"], 'sale_price' => $variant["variant_sale_price"], 'discount_per' => calculateDiscount($variant["variant_list_price"], $variant["variant_sale_price"]), 'images' => (isset($productImages['list-view'])) ? $productImages['list-view'] : []];
+                break;
+            }
+        }
+    }
+    return $productsData;
 }

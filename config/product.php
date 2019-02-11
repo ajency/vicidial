@@ -30,7 +30,7 @@ return [
         "metatag_ids",
         // "product_own", #private/non private
         "vendor_id", #Vendor
-        "brand_ids", #Brand
+        "brand_id", #Brand
         // "parent_flag",
         // "sale_price",
         // "qty_available",
@@ -106,6 +106,7 @@ return [
                 'product_subtype',
                 'product_att_sleeves',
                 'product_metatag',
+                'product_brand',
             ],
             'variant' => [
                 'product_color_name',
@@ -160,7 +161,7 @@ return [
     ],
     "inventory_fields"               => ["product_id", "quantity", 'location_id'],
     'facet_display_data'             => [
-        'product_category_type'   => [
+        'product_category_type'    => [
             'name'                   => 'Category',
             'is_singleton'           => false,
             'is_collapsed'           => false,
@@ -181,7 +182,7 @@ return [
                 'default_value' => [],
             ],
         ],
-        'product_gender'          => [
+        'product_gender'           => [
             'name'                   => 'Gender',
             'is_singleton'           => false,
             'is_collapsed'           => false,
@@ -202,7 +203,7 @@ return [
                 'default_value' => [],
             ],
         ],
-        'product_age_group'       => [
+        'product_age_group'        => [
             'name'                   => 'Age Group',
             'is_singleton'           => false,
             'is_collapsed'           => false,
@@ -223,7 +224,7 @@ return [
                 'default_value' => [],
             ],
         ],
-        'product_subtype'         => [
+        'product_subtype'          => [
             'name'                   => 'Sub Type',
             'is_singleton'           => false,
             'is_collapsed'           => false,
@@ -244,12 +245,33 @@ return [
                 'default_value' => [],
             ],
         ],
-        'product_color_html'      => [
+        'product_brand'            => [
+            'name'                   => 'Brand',
+            'is_singleton'           => false,
+            'is_collapsed'           => true,
+            'template'               => 'brand',
+            'order'                  => 4,
+            'display_count'          => true,
+            'disabled_at_zero_count' => false,
+            "is_attribute_param"     => false,
+            "attribute_param"        => null,
+            'filter_type'            => 'primary_filter',
+            "is_essential"           => false,
+            "sort_on"                => "count",
+            "sort_order"             => "desc",
+            "custom_attributes"      => ["show_more_limit" => 10],
+            "false_facet_value"      => null,
+            "implicit_filter"        => [
+                'skip'          => true,
+                'default_value' => [],
+            ],
+        ],
+        'product_color_html'       => [
             'name'                   => 'Colour',
             'is_singleton'           => false,
             'is_collapsed'           => true,
             'template'               => 'color',
-            'order'                  => 5,
+            'order'                  => 6,
             'display_count'          => true,
             'disabled_at_zero_count' => false,
             "is_attribute_param"     => true,
@@ -265,12 +287,12 @@ return [
                 'default_value' => [],
             ],
         ],
-        'variant_sale_price'      => [
+        'variant_sale_price'       => [
             'name'                   => 'Price Range',
             'is_singleton'           => true,
             'is_collapsed'           => true,
             'template'               => 'price',
-            'order'                  => 4,
+            'order'                  => 5,
             'display_count'          => true,
             'disabled_at_zero_count' => true,
             "is_attribute_param"     => true,
@@ -286,13 +308,13 @@ return [
                 'default_value' => [],
             ],
         ],
-        'variant_availability'    => [
+        'variant_availability'     => [
             'name'                   => 'Availability',
             'item_display_name'      => 'Include Out Of Stock',
             'is_singleton'           => true,
             'is_collapsed'           => true,
             'template'               => "availability",
-            'order'                  => 6,
+            'order'                  => 7,
             'display_count'          => false,
             'disabled_at_zero_count' => true,
             "is_attribute_param"     => true,
@@ -309,7 +331,7 @@ return [
                 'default_value' => true,
             ],
         ],
-        'product_image_available' => [
+        'product_image_available'  => [
             'name'                   => 'Image',
             'item_display_name'      => 'Include no images',
             'is_singleton'           => true,
@@ -332,13 +354,13 @@ return [
                 'default_value' => true,
             ],
         ],
-        'product_att_ecom_sales' => [
+        'product_att_ecom_sales'   => [
             'name'                   => '',
             'item_display_name'      => '',
             'is_singleton'           => true,
             'is_collapsed'           => true,
             'template'               => null,
-            'order'                  => 6,
+            'order'                  => 7,
             'display_count'          => false,
             'disabled_at_zero_count' => true,
             "is_attribute_param"     => true,
@@ -352,12 +374,12 @@ return [
                 'default_value' => true,
             ],
         ],
-        'variant_size_name'      => [
+        'variant_size_name'        => [
             'name'                   => 'Size',
             'is_singleton'           => false,
             'is_collapsed'           => true,
             'template'               => 'size',
-            'order'                  => 5,
+            'order'                  => 6,
             'display_count'          => true,
             'disabled_at_zero_count' => false,
             "is_attribute_param"     => true,
@@ -373,12 +395,12 @@ return [
                 'default_value' => [],
             ],
         ],
-        'product_metatag'      => [
+        'product_metatag'          => [
             'name'                   => 'Tags',
             'is_singleton'           => false,
             'is_collapsed'           => true,
             'template'               => 'tag',
-            'order'                  => 5,
+            'order'                  => 6,
             'display_count'          => true,
             'disabled_at_zero_count' => false,
             "is_attribute_param"     => true,
@@ -394,7 +416,7 @@ return [
                 'default_value' => [],
             ],
         ],
-        'variant_discount_percent'   => [
+        'variant_discount_percent' => [
             'name'                   => 'Discount',
             'is_singleton'           => true,
             'is_collapsed'           => false,
@@ -415,9 +437,9 @@ return [
         ],
     ],
     'discount_filter'                => [
-        ["min" => 0,  "max" => 30, "display_name" => "Upto 30%",  "sequence" => 1],
+        ["min" => 0, "max" => 30, "display_name" => "Upto 30%", "sequence" => 1],
         ["min" => 30, "max" => 60, "display_name" => "30% to 60%", "sequence" => 2],
-        ["min" => 60, "max" => 100,"display_name" => "60% to 100%","sequence" => 3],
+        ["min" => 60, "max" => 100, "display_name" => "60% to 100%", "sequence" => 3],
     ],
     'breadcrumb_order'               => [
         'product_category_type',
@@ -441,6 +463,6 @@ return [
         //["name" => "Discount High to Low", "value" => "discount_desc", "is_selected" => false, "class" => "discount"],
         //["name" => "Discount Low to High", "value" => "discount_asc", "is_selected" => false, "class" => "discount"],
     ],
-    "show_list_search" => true,
+    "show_list_search"               => true,
     "pagination" => ["show_previous_after"=>5]
 ];

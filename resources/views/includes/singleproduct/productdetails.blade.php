@@ -74,6 +74,11 @@
               <dd class="col-8 col-sm-9 text-capitalize">{{$params['additional_info']->other_attribute}}</dd>
               @php } @endphp
 
+              @php if($params['additional_info']->brand) { @endphp
+              <dt class="col-4 col-sm-3"><label class="text-muted f-w-4">Brand</label></dt>
+              <dd class="col-8 col-sm-9 text-capitalize">{{$params['additional_info']->brand}}</dd>
+              @php } @endphp
+
             </dl>
         </div>
     </div>

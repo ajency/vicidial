@@ -5,7 +5,6 @@ use App\Defaults;
 use App\Facet;
 use App\Jobs\FetchProductImages;
 use App\Location;
-use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 
@@ -36,18 +35,19 @@ function makeQueryfromParams($searchObject)
 {
     $queryParams    = ['search_data' => []];
     $elasticMapping = [
-        'product_category_type'   => 'search_data.string_facet.product_category_type',
-        'product_gender'          => 'search_data.string_facet.product_gender',
-        'product_age_group'       => 'search_data.string_facet.product_age_group',
-        'product_subtype'         => 'search_data.string_facet.product_subtype',
-        'product_color_html'      => 'search_data.string_facet.product_color_html',
-        'variant_sale_price'      => 'search_data.number_facet.variant_sale_price',
-        'variant_discount_percent'=> 'search_data.number_facet.variant_discount_percent',
-        'variant_availability'    => 'search_data.boolean_facet.variant_availability',
-        'product_image_available' => 'search_data.boolean_facet.product_image_available',
-        'product_att_ecom_sales'  => 'search_data.boolean_facet.product_att_ecom_sales',
-        'product_metatag'         => 'search_data.string_facet.product_metatag',
-        'variant_size_name'       => 'search_data.string_facet.variant_size_name',
+        'product_category_type'    => 'search_data.string_facet.product_category_type',
+        'product_gender'           => 'search_data.string_facet.product_gender',
+        'product_age_group'        => 'search_data.string_facet.product_age_group',
+        'product_subtype'          => 'search_data.string_facet.product_subtype',
+        'product_color_html'       => 'search_data.string_facet.product_color_html',
+        'variant_sale_price'       => 'search_data.number_facet.variant_sale_price',
+        'variant_discount_percent' => 'search_data.number_facet.variant_discount_percent',
+        'variant_availability'     => 'search_data.boolean_facet.variant_availability',
+        'product_image_available'  => 'search_data.boolean_facet.product_image_available',
+        'product_att_ecom_sales'   => 'search_data.boolean_facet.product_att_ecom_sales',
+        'product_metatag'          => 'search_data.string_facet.product_metatag',
+        'variant_size_name'        => 'search_data.string_facet.variant_size_name',
+        'product_brand'            => 'search_data.string_facet.product_brand',
     ];
 
     foreach ($searchObject as $filterType => $params) {
@@ -129,6 +129,7 @@ function sanitiseProductData($odooData)
         "product_vendor"                   => ($odooData["vendor_id"]) ? $odooData["vendor_id"][1] : null,
         'product_image_available'          => false,
         'product_metatag'                  => $metatags->map(function ($item, $key) {$item['name'] = trim($item['name']);return $item;})->pluck('name')->toArray(),
+        'product_brand'                    => ($odooData['brand_id'] != false) ? $odooData['brand_id'][1] : 'KSS Fashion',
     ];
     $product_categories = explode('/', $index['product_categories']);
     $categories         = ['product_category_type', 'product_gender', 'product_age_group', 'product_subtype'];
@@ -139,7 +140,6 @@ function sanitiseProductData($odooData)
     if ($index['product_gender'] == 'Others') {
         $index['product_gender'] = 'Unisex';
     }
-
     return $index;
 }
 
@@ -204,6 +204,7 @@ function generateFullTextForIndexing($productData, $variant)
         $variant['variant_size_name'],
         $productData['product_id'],
         $productData['product_att_magento_display_name'],
+        $productData['product_brand'],
     ];
     return implode(' ', $textComponents);
 }
@@ -244,6 +245,7 @@ function buildProductIndexFromOdooData($productData, $variantData)
         "product_subtype"                  => $productData['product_subtype'],
         "product_vendor"                   => $productData['product_vendor'],
         "product_att_ecom_sales"           => $productData['product_att_ecom_sales'],
+        "product_brand"                    => $productData['product_brand'],
         "product_color_id"                 => $variantData->first()['product_color_id'],
         "product_color_slug"               => str_slug($variantData->first()['product_color_name']),
         "product_color_name"               => $variantData->first()['product_color_name'],
@@ -435,20 +437,20 @@ function generateSubordersData($cartItems, $locations)
             }
             $transferQty = ($cartItem['quantity'] <= $locationData['quantity']) ? $cartItem['quantity'] : $locationData['quantity'];
             $locationsData[$locationData['location_id']]['items']->push([
-                'variant'  => $cartItem['item'],
-                'quantity' => $transferQty,
-                'price_mrp' => $cartItem['price_mrp'],
-                'price_sale' => $cartItem['price_sale'],
+                'variant'     => $cartItem['item'],
+                'quantity'    => $transferQty,
+                'price_mrp'   => $cartItem['price_mrp'],
+                'price_sale'  => $cartItem['price_sale'],
                 'price_final' => $cartItem['price_final'],
             ]);
             $count[$locationData['location_id']] += $transferQty;
             $processedLocations[] = $locationData['location_id'];
             if ($transferQty < $cartItem['quantity']) {
                 $locationsData[$locationData['location_id']]['remaining_items']->push([
-                    'item'     => $cartItem['item'],
-                    'quantity' => $cartItem['quantity'] - $transferQty,
-                    'price_mrp' => $cartItem['price_mrp'],
-                    'price_sale' => $cartItem['price_sale'],
+                    'item'        => $cartItem['item'],
+                    'quantity'    => $cartItem['quantity'] - $transferQty,
+                    'price_mrp'   => $cartItem['price_mrp'],
+                    'price_sale'  => $cartItem['price_sale'],
                     'price_final' => $cartItem['price_final'],
                 ]);
             }
@@ -812,13 +814,14 @@ function defaultUserPassword($append)
     return $key;
 }
 
-function translateDiscountToItems($cartData){
-    $discountRatio = $cartData['final_total']/floatval($cartData['sale_total']);
-    $total = 0;
+function translateDiscountToItems($cartData)
+{
+    $discountRatio = $cartData['final_total'] / floatval($cartData['sale_total']);
+    $total         = 0;
     foreach ($cartData['items'] as $id => $cartItem) {
-        $newPrice =  round($cartItem['price_sale']*$discountRatio,2);
+        $newPrice                              = round($cartItem['price_sale'] * $discountRatio, 2);
         $cartData['items'][$id]['price_final'] = $newPrice;
-        $total+= $newPrice;
+        $total += $newPrice;
     }
     $cartData['round_off'] = $cartData['final_total'] - $total;
     return $cartData;

@@ -659,7 +659,10 @@ body{
 
 .genuinity{
     font-weight: bold;
-    color: #404040;
+    // color: #404040;
+    line-height: 1.2;
+    font-size: 0.78rem;
+    color: #828282;
 }
 
 @media (max-width: 600px){
