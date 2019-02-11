@@ -95,7 +95,7 @@ class StaticElement extends Model
                         $productObj = $productsData[$product];
                         array_push($productDetails, array("product_found" => true, "product_id" => $product, "images" => $productObj['images'], "product-slug" => $productObj['url'], "title" => $productObj['title']));
                     } else {
-                        array_push($productDetails, array("product_found" => false, "product_id" => $product);
+                        array_push($productDetails, array("product_found" => false, "product_id" => $product));
                     }
                 }
             } //if
