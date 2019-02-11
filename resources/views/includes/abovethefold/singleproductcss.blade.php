@@ -11,5 +11,6 @@
 	@media (max-width: 991px){.header-close-trigger {position: absolute;top: 0;left: 0;width: 100%;z-index: 9;}}
 	@media (min-width: 768px){.d-md-flex {display: -webkit-box !important;display: -ms-flexbox !important;display: flex !important;}
 	.size-modal{position: fixed;top: 0;right: 0;bottom: 0;left: 0;z-index: 1050;display: none;overflow: hidden;outline: 0;}
-	.brands-title {font-weight: bold;color: #000;} .brands-title--single {font-size: 1.35rem;}@media (max-width: 600px) {.brands-title--single {font-size: 1.2rem;}}.brands-title:hover {color: #000;text-decoration: underline;}
+	.brands-title {font-weight: bold;color: #000;} .brands-title--single {font-size: 0.95rem;}
+	.brands-title:hover {color: #000;text-decoration: underline;}
 </style>
