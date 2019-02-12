@@ -28,9 +28,10 @@
               "src/manifest.json"
             ],
             "styles": [
+              "node_modules/@fortawesome/fontawesome-free/css/all.css",
               "src/styles.scss"
             ],
-            "scripts": []            
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -55,7 +56,7 @@
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
                 }
-              ]            
+              ]
             }
           }
         },
