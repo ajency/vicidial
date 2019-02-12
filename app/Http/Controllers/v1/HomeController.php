@@ -21,13 +21,6 @@ class HomeController extends Controller
     	setSEO('home');
         return view('home')->with('static_elements', $static_elements);
     }
-    
-    public function oldhome(Request $request)
-    {
-        $static_elements=StaticElement::fetch('home',[], $published=true);
-        setSEO('home');
-        return view('oldhome')->with('static_elements', $static_elements);
-    }
 
     public function api(Request $request)
     {
