@@ -48,7 +48,7 @@ class StaticElementController extends Controller
     //save new
     public function callSaveNew(Request $request)
     {
-        $request->validate(['element_data' => 'required', 'page_slug' => 'required', 'type' => 'required', 'images' => 'required']);
+        $request->validate(['element_data' => 'required', 'page_slug' => 'required', 'type' => 'required', 'images' => 'present']);
         $images = $request->images;
 
         $params = $request->all();
@@ -86,6 +86,10 @@ class StaticElementController extends Controller
             $imageurl = $file;
         } else {
             $imageurl = $staticElement->resizeStaticImages($photo_id, $preset, $depth, $filename);
+        }
+        if(config('ajfileupload.use_cdn') &&config('ajfileupload.cdn_url') ){
+            $tempUrl = parse_url($imageurl);
+            $imageurl =  config('ajfileupload.cdn_url') . $tempUrl['path'];
         }
         return $imageurl;
     }

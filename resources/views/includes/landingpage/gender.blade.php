@@ -30,7 +30,7 @@
    <div class="row">
    	<div class="col-12 gender m-heading text-center">
    		<h3 class="gender__name font-weight-bold text-dark text-uppercase m-detach"><span>{{$title}}</span></h3>
-		<p class="gender__years text-dark m-detach d-md-none">{{$years}}</p>
+		<p class="gender__years text-dark m-detach d-md-none">{{$static_elements['landing'][0]['element_data']['text']['text1']}}</p>
    	</div>
    </div>
    @if (isset($static_elements['landing'])) 

@@ -165,7 +165,7 @@
 
 
 <!-- Product of the day -->
-
+@if (isset($static_elements['trending']))
 <section class="section">
   <div class="container mt-5">
       <div class="row">
@@ -177,12 +177,13 @@
 </section>
 <section id="kss-clothings" class="stripe-bg-top">
   <div class="container ">
-    @include('includes.trending_looks')
+    @include('includes.trendinglooks.trending_looks', ['trending' => $static_elements['trending']])
     <div class="text-center mt-3">
       <a href="/shop" class="viewall-link">View More <i class="fas fa-chevron-right"></i></a>
     </div>
   </div>
 </section>
+@endif
 
 <!-- Blogs section for site homepage -->
 <section class="blog-section">
