@@ -93,7 +93,7 @@ class StaticElement extends Model
                 foreach ($products as $product) {
                     if (isset($productsData[$product])) {
                         $productObj = $productsData[$product];
-                        array_push($productDetails, array("product_found" => true, "product_id" => $product, "images" => $productObj['images'], "product-slug" => $productObj['url'], "title" => $productObj['title']));
+                        array_push($productDetails, array("product_found" => true, "product_id" => $product, "images" => $productObj['images'], "product-slug" => $productObj['url'], "title" => $productObj['title'], "list_price" => $productObj['list_price'], "sale_price" => $productObj['sale_price'], "discount_per" => $productObj['discount_per']));
                     } else {
                         array_push($productDetails, array("product_found" => false, "product_id" => $product));
                     }

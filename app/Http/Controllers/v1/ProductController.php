@@ -103,6 +103,10 @@ class ProductController extends Controller
         } else {
             $imageurl = $productColor->resizeImages($photo_id,$preset, $depth, $filename);
         }
+        if(config('ajfileupload.use_cdn') &&config('ajfileupload.cdn_url') ){
+            $tempUrl = parse_url($imageurl);
+            $imageurl =  config('ajfileupload.cdn_url') . $tempUrl['path'];
+        }
         return \Redirect::to(url($imageurl), 301);
 
     }

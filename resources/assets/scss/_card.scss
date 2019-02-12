@@ -58,14 +58,14 @@ $size: 20px;
 
             }
         }
-        @media (max-width: 600px){
-          box-shadow: 0 0 5px rgba(0, 0, 0, 0.18);
-          border-radius: 0;
-        }
     }
     @media (max-width: 600px){
       .xs-single-col{
         margin-bottom: 0;
+        .product-card{
+          box-shadow: 0 0 5px rgba(0, 0, 0, 0.18);
+          border-radius: 0;
+        }
       }
     }
 }
@@ -106,6 +106,7 @@ $size: 20px;
     .single-tile{
         @media (max-width: 600px) {
           height: auto;
+          min-height: 130vw;
           margin-bottom: 0 !important;
           img{
               border-radius: 0;
