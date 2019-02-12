@@ -13,4 +13,7 @@
 	.size-modal{position: fixed;top: 0;right: 0;bottom: 0;left: 0;z-index: 1050;display: none;overflow: hidden;outline: 0;}
 	.brands-title {color: #b5b5b5;} .brands-title--single {font-size: 0.85rem;}
 	.brands-title:hover {color: #b5b5b5;text-decoration: underline;}
+.kss-tags li {margin-right: 0.5em;margin-bottom: 0.5em;padding: 6px 8px;min-width: 60px;border: 2px solid #8e8e92;display: inline-block;background-color: transparent;text-align: center;text-transform: uppercase;font-size: 0.75rem;font-weight: bold;color: #4c4c4c;-webkit-transition: all 0.3s ease;transition: all 0.3s ease;cursor: pointer;}
+.kss-tags li a {color: #4c4c4c;-webkit-transition: all 0.3s ease;transition: all 0.3s ease;}
+@media (max-width: 600px) {.kss-tags {overflow: auto;white-space: nowrap;}.kss-tags li {margin-right: 0.8em;min-width: auto;}}
 </style>
