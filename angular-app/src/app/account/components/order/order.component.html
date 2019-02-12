@@ -17,6 +17,10 @@
 				<span *ngIf="sub_order.state == 'sale' " class="order-label order-label--confirmed" data-toggle="tooltip" data-placement="top" title="Stock for the items has been verified and your items will be shipped out soon.">Confirmed</span>
 			</div>
 		</div>
+		<!-- Canceled date -->
+		<div class="col-12">
+			<small>*Shipment was canceled on 28 December 2018</small>
+		</div>
 	</div>
 
 	<!-- Actual order info -->
@@ -48,7 +52,16 @@
 									</span>
 								</div>
 							</div>
+							<!-- Refund initiated text -->
+							<div class="text-success mt-1">
+								Refund initiated
+							</div>
 						</div>
+					</div>
+					<!-- Action to cancel/feedback -->
+					<div class="border-top mt-3 pt-2 text-center">
+						<a class="btn mb-0 order-details-btn pb-0 text-secondary">Cancel Shipment</a>
+						<!-- <a class="btn mb-0 order-details-btn pb-0 text-secondary">Provide a Feedback <i class="fas fa-chevron-right"></i></a> -->
 					</div>
 				</div>	
 			</div>								

@@ -54,8 +54,19 @@
 
 		<!-- Order Info sidebar -->
 		<div class="col-12 mb-4 pb-3">
+			<!-- Refund details -->
+			<div class="mt-2 mb-3">
+				<div class="card shadow-sm">
+				  <div class="card-body p-3">
+				     <h3 class="kss-title font-weight-bold text-muted">When will I get my Refund?</h3>
+				     <p class="text-muted mb-2">
+						Refunds to your card/bank will usually apperar within 5-7 business days after the return is received.
+				     </p>
+				  </div>
+				</div>
+			</div>
 			<app-payment-info [payment_info]="order.payment_info"></app-payment-info>
-			<app-shipping-address [shipping_address]="order.shipping_address"></app-shipping-address>
+			<app-shipping-address [shipping_address]="order.shipping_address" class="d-block mt-3"></app-shipping-address>
 			<app-order-summary [order_summary]="order.order_summary"></app-order-summary>
 		</div>
 	</div>

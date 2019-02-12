@@ -265,6 +265,8 @@
   }
 }
 
+
+// Order labels
 .order-label{
     padding: 3px 10px;
     border-radius: 4px;
@@ -289,5 +291,10 @@
 }
 
 .payment-status{
-  font-size: 0.8rem;
+      font-size: 0.8rem;
+      background-color: #d6ab10;
+    }
+    &--processing{
+      background-color: #989898;
+    }
 }
