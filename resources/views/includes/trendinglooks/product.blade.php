@@ -24,6 +24,6 @@
             alt="{{$trending_product['title']}}">
      </div>
     </a>
-    <div class="kss-price kss-price--medium">{{$trending_product['sale_price']}}</div>
+    <div class="kss-price kss-price--medium">₹{{$trending_product['sale_price']}}</div>
   </div>
 </div>
