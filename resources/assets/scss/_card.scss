@@ -62,10 +62,10 @@ $size: 20px;
     @media (max-width: 600px){
       .xs-single-col{
         margin-bottom: 0;
-      }
-      .product-card{
+        .product-card{
           box-shadow: 0 0 5px rgba(0, 0, 0, 0.18);
           border-radius: 0;
+        }
       }
     }
 }
