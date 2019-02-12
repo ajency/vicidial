@@ -35,7 +35,10 @@ yarn-error.log
 /angular-app/typings
 /angular-app/yarn-error.log
 
-# /public/views/cart
+# home-page-pwa
+/kss-pwa-app/dist
+/kss-pwa-app/e2e
+/kss-pwa-app/node_modules
 
 #kss-pwa
 /kss-pwa-app/node_modules
