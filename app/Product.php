@@ -7,6 +7,7 @@ use App\Defaults;
 use App\Facet;
 use App\Jobs\CreateProductJobs;
 use App\Jobs\FetchProductImages;
+use App\Jobs\UpdateProduct;
 use App\Jobs\UpdateSearchText;
 use App\Jobs\UpdateVariantInventory;
 use App\ProductColor;
@@ -62,10 +63,12 @@ class Product
         } while ($variants->count() == config('odoo.limit'));
 
         Defaults::setLastVariantSync();
-        $productIds = DB::select(DB::raw('SELECT DISTINCT product_id FROM product_colors where product_colors.id in (SELECT product_color_id from variants where variants.odoo_id in (' . implode(',', $variant_ids->toArray()) . '))'));
+        if($variant_ids->count() > 0) {
+            $productIds = DB::select(DB::raw('SELECT DISTINCT product_id FROM product_colors where product_colors.id in (SELECT product_color_id from variants where variants.odoo_id in (' . implode(',', $variant_ids->toArray()) . '))'));
 
-        foreach ($productIds as $productId) {
-            UpdateProduct::dispatch($productId->product_id)->onQueue('process_product');
+            foreach ($productIds as $productId) {
+                UpdateProduct::dispatch($productId->product_id)->onQueue('process_product');
+            }
         }
     }
 
@@ -643,7 +646,7 @@ class Product
     {
         $productColor = ProductColor::where('product_id', $product_id)->first();
 
-        $var = $productColor->variants()->select('id')->get()->pluck('id')->toArray();
+        $var = $productColor->variants()->select('odoo_id')->get()->pluck('odoo_id')->toArray();
 
         $odoo         = new OdooConnect;
         $variantsData = $odoo->defaultExec("product.product", 'read', [$var], ['fields' => ['lst_price', 'sale_price']])->keyBy('id');
@@ -653,10 +656,10 @@ class Product
             'change'       => function (&$product, &$variants) use ($variantsData) {
                 foreach ($variants as $variant_id => $variant) {
                     if (isset($variantsData[$variant_id])) {
-                        $variant['variant_list_price']       = $variantsData[$variant_id]['lst_price'];
+                        $variant['variant_lst_price']       = $variantsData[$variant_id]['lst_price'];
                         $variant['variant_sale_price']       = $variantsData[$variant_id]['sale_price'];
-                        $variant['variant_discount']         = $variant['variant_list_price'] - $variant['variant_sale_price'];
-                        $variant['variant_discount_percent'] = ($variant['variant_list_price'] > 0) ? $variantData['variant_discount'] / $variant['variant_list_price'] * 100 : 0;
+                        $variant['variant_discount']         = $variant['variant_lst_price'] - $variant['variant_sale_price'];
+                        $variant['variant_discount_percent'] = ($variant['variant_lst_price'] > 0) ? $variant['variant_discount'] / $variant['variant_lst_price'] * 100 : 0;
                     }
                     $variants[$variant_id] = $variant;
                 }
