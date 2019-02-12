@@ -41,6 +41,47 @@ class Product
         Defaults::setLastProductSync();
     }
 
+    public static function updateVariantSync()
+    {
+        $variant_ids = collect();
+
+        //Active Variants
+        $offset      = 0;
+        do {
+            $variants    = self::getProductIDsFromVariants(['write' => Defaults::getLastVariantSync()], $offset);
+            $variant_ids = $variant_ids->merge($variants);
+            $offset      = $offset + $variants->count();
+        } while ($variants->count() == config('odoo.limit'));
+
+        //InActive Variants
+        $offset      = 0;
+        do {
+            $variants    = self::getProductIDsFromVariants(['write' => Defaults::getLastVariantSync(), 'active', '=', false], $offset);
+            $variant_ids = $variant_ids->merge($variants);
+            $offset      = $offset + $variants->count();
+        } while ($variants->count() == config('odoo.limit'));
+
+        Defaults::setLastVariantSync();
+        $productIds = DB::select(DB::raw('SELECT DISTINCT product_id FROM product_colors where product_colors.id in (SELECT product_color_id from variants where variants.odoo_id in (' . implode(',', $variant_ids->toArray()) . '))'));
+
+        foreach ($productIds as $productId) {
+            UpdateProduct::dispatch($productId->product_id)->onQueue('process_product');
+        }
+    }
+
+    public static function getProductIDsFromVariants($filters, $offset, $limit = false)
+    {
+        $odooFilter = OdooConnect::odooFilter($filters);
+        $odoo       = new OdooConnect;
+        $attributes = ['order' => 'id', 'offset' => $offset];
+        if ($limit) {
+            $attributes['limit'] = $limit;
+        }
+
+        $variants = $odoo->defaultExec('product.product', 'search', $odooFilter, $attributes);
+        return $variants;
+    }
+
     public static function startSync()
     {
         $first_id = ProductColor::max('product_id');
@@ -595,6 +636,33 @@ class Product
             }
             $offset = $offset + $allBrands->count();
         } while ($allBrands->count() == config('odoo.limit'));
+        return;
+    }
+
+    public static function updateProduct($product_id)
+    {
+        $productColor = ProductColor::where('product_id', $product_id)->first();
+
+        $var = $productColor->variants()->select('id')->get()->pluck('id')->toArray();
+
+        $odoo         = new OdooConnect;
+        $variantsData = $odoo->defaultExec("product.product", 'read', [$var], ['fields' => ['lst_price', 'sale_price']])->keyBy('id');
+
+        ProductColor::updateElasticData([$productColor->elastic_id => [
+            'elastic_data' => null,
+            'change'       => function (&$product, &$variants) use ($variantsData) {
+                foreach ($variants as $variant_id => $variant) {
+                    if (isset($variantsData[$variant_id])) {
+                        $variant['variant_list_price']       = $variantsData[$variant_id]['lst_price'];
+                        $variant['variant_sale_price']       = $variantsData[$variant_id]['sale_price'];
+                        $variant['variant_discount']         = $variant['variant_list_price'] - $variant['variant_sale_price'];
+                        $variant['variant_discount_percent'] = ($variant['variant_list_price'] > 0) ? $variantData['variant_discount'] / $variant['variant_list_price'] * 100 : 0;
+                    }
+                    $variants[$variant_id] = $variant;
+                }
+            },
+        ]]);
+
         return;
     }
 }

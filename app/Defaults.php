@@ -78,6 +78,27 @@ class Defaults extends Model
         $sync->save();
     }
 
+    public static function getLastVariantSync()
+    {
+        $sync = self::where('type', 'sync')->where('label', 'variant')->first();
+        if ($sync == null) {
+            $sync            = new self;
+            $sync->type      = 'sync';
+            $sync->label     = 'variant';
+            $sync->meta_data = ['time' => Carbon::now()->subDay()->startOfDay()->toDateTimeString()];
+            $sync->save();
+        }
+        return $sync->meta_data['time'];
+
+    }
+
+    public static function setLastVariantSync()
+    {
+        $sync            = self::where('type', 'sync')->where('label', 'variant')->first();
+        $sync->meta_data = ['time' => Carbon::now()->toDateTimeString()];
+        $sync->save();
+    }
+
     public static function getLastCatalogDiscountSync()
     {
         $sync = self::where('type', 'sync')->where('label', 'product')->first();
