@@ -182,7 +182,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "manifest.json",
-    "revision": "825b6b7d5a30f39d35fe81a3d18db672"
+    "revision": "89955f11dedb4e84cd57eef0a46e3ce5"
   },
   {
     "url": "img/kss_favicon.png",
