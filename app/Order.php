@@ -166,19 +166,15 @@ class Order extends Model
     }
     
     //sms to the stores
-    public function sendSupplierSMS()
+    public function sendVendorSMS()
     {   
         $numbers = array();
         foreach ($this->subOrders as $subOrder) {
             array_push($numbers,$subOrder->location->phone_number);
-            // sendSMS('order', [
-            //     'to'      => $subOrder->location->phone_number,
-            //     'message' => "Your order with order id  for Rs.  has been placed successfully on KidSuperStore.in. Check your order at " . url('/#/account/my-orders/') ,
-            // ]);
         }
-        sendSMS('order', [
+        sendSMS('order-vendor', [
             'to'      => $numbers,
-            'message' => "Your order with order id  for Rs.  has been placed successfully on KidSuperStore.in. Check your order at " . url('/#/account/my-orders/') ,
+            'message' => "Your order with order id {$this->txnid} for Rs. {$this->subOrderData()['you_pay']} has been placed successfully on KidSuperStore.in. Check your order at " . url('/#/account/my-orders/') . "/{$this->txnid}",
         ]);
     }
 

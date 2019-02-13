@@ -58,7 +58,7 @@ class PaymentController extends Controller
 			$order->cart->user->newCart();
 			$order->sendSuccessEmail();
 			$order->sendSuccessSMS();
-			$order->sendSupplierSMS();
+			$order->sendVendorSMS();
 		}else{
 			$order->status = 'payment-failed';
 			$order->save();

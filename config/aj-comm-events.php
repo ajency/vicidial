@@ -3,6 +3,9 @@ return [
     "send-otp"      => [
         "smsgupshup" => "",
     ],
+    "order-vendor"  => [
+        "smsgupshup" => "",
+    ],
     "order-success" => [
         'laravel'    => 'email.order-success',
         'smsgupshup' => "",
