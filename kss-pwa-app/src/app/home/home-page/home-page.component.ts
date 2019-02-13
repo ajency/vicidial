@@ -15,8 +15,8 @@ export class HomePageComponent implements OnInit {
   ngOnInit() {
   	console.log("ngOnInit HomePageComponent");
   	// this.menuObject = menu.menu;
-
-  	this.apiService.request('../../../assets/data/menu.json','get',{},{}).then((data)=>{
+    let url = "https://demo8558685.mockable.io/get-menu";
+  	this.apiService.request(url,'get',{},{}).then((data)=>{
   		console.log("data ==>", data);
   		this.menuObject = data.menu;
   	})
