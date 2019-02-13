@@ -12,7 +12,7 @@ class HomeController extends Controller
     {
         $static_elements=StaticElement::fetch('home',[], $published=true);
         setSEO('home');
-        return view('home_new')->with('static_elements', $static_elements);
+        return view('home')->with('static_elements', $static_elements);
     }
     
     public function drafthome(Request $request)
@@ -25,5 +25,10 @@ class HomeController extends Controller
     public function api(Request $request)
     {
         return $request->user();
+    }
+
+    public function newhome(Request $request)
+    {
+        return view('home_new');
     }
 }
