@@ -703,4 +703,20 @@ function isa_amp_featured_img( $size = 'medium' ) {
     }
 }
 
+function amp_sanitize_post_content() {
+
+     
+    global $post;
+
+    $amp_content = new AMP_Content(
+            $post->post_content,
+            amp_get_content_embed_handlers( $post->post ),
+            amp_get_content_sanitizers( $post->post ),
+            array()
+    );
+    
+    return $amp_content->get_amp_content(); 
+     
+}
+ 
 ?>

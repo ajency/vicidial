@@ -46,7 +46,7 @@
         </header>
 
         <div class="px3 mb4">
-          <?php the_content();
+          <?php echo amp_sanitize_post_content();
             wp_reset_postdata();
           ?>
         </div>
