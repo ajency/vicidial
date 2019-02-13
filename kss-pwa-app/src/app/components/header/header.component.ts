@@ -1,4 +1,5 @@
 import { Component, OnInit,  Input, OnChanges } from '@angular/core';
+declare var $: any;
 
 @Component({
   selector: 'app-header',
@@ -13,8 +14,16 @@ export class HeaderComponent implements OnInit, OnChanges {
 
   ngOnInit(){
   }
-  
+
   ngOnChanges(){
   	console.log("ngOnChanges header", this.menu);
+  }
+
+  openMenu(){
+  	$('.megamenu').addClass('active');
+		$('.megamenu--left .nav-item:first-child').addClass('active');
+		$('.megamenu--right li .megamenu-wrapper').addClass('d-none');
+		$('.megamenu--right li:first-child .megamenu-wrapper').removeClass('d-none');
+		$('body').addClass('overflow-h');
   }
 }
