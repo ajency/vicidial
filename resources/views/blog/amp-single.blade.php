@@ -49,6 +49,8 @@
           <?php echo amp_sanitize_post_content();
             wp_reset_postdata();
           ?>
+
+          <hr>
         </div>
 
 
@@ -79,12 +81,12 @@
           // Loop through posts
           if ( $wpex_query->have_posts() ) {?>
             <section class="related-articles">
-              <h3 class="mb3">Read Next</h3>
+              <h3 class="mb3" style="color:#7d7d7d;">Read Next</h3>
 
               <?php while ( $wpex_query->have_posts() ) {
                 $wpex_query->the_post(); ?>
                   <div class="kss-posts mb4">
-                    <a href="<?php the_permalink(); ?>" class="" title="<?php echo esc_attr( the_title_attribute( 'echo=0' ) ); ?>">
+                    <a href="<?php the_permalink(); ?>?amp" class="" title="<?php echo esc_attr( the_title_attribute( 'echo=0' ) ); ?>">
                       <div class="">
                         <?php
                           if ( has_post_thumbnail() ) {
@@ -93,9 +95,9 @@
                       </div>
                     </a>
                     <div class="">
-                      <a href="<?php the_permalink(); ?>" class="text-decoration-none" title="<?php echo esc_attr( the_title_attribute( 'echo=0' ) ); ?>">
+                      <a href="<?php the_permalink(); ?>?amp" class="text-decoration-none" title="<?php echo esc_attr( the_title_attribute( 'echo=0' ) ); ?>">
                         <h2 class=""><?php the_title(); ?></h2>
-                        <p class="mt1">
+                        <p class="mt1 mb1">
                           <?php
                           if ( has_excerpt() ) {
                               // This post has excerpt
@@ -107,6 +109,19 @@
                           ?>
                         </p>
                       </a>
+                      <div>
+                        <?php
+                            $categories = get_the_category();
+                            $separator = ' ';
+                            $output = '';
+                            if ( ! empty( $categories ) ) {
+                                foreach( $categories as $category ) {
+                                    $output .= '<a href="' . esc_url( get_category_link( $category->term_id ) ) . '" title="' . esc_attr( sprintf( __( 'View all posts in %s', 'textdomain' ), $category->name ) ) . '" class="text-decoration-none"><span class="ampstart-subtitle block px3 pt1 mb2">' . esc_html( $category->name ) . '</span></a>' . $separator;
+                                }
+                                echo trim( $output, $separator );
+                            }
+                        ?>
+                    </div>
                     </div>
                   </div>
               <?php
