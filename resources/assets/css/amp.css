@@ -2062,3 +2062,6 @@ h1+.ampstart-byline time {
 .aligncenter amp-img {
   margin: auto;
 }
+hr{
+  clear: both;
+}
