@@ -14,7 +14,7 @@ export class ProductComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(){
-  	console.log("ngOnChanges product ==>", this.product);
+  	// console.log("ngOnChanges product ==>", this.product);
   }
 
 }

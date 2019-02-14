@@ -14,7 +14,7 @@ export class SliderComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(){
-  	console.log("ngOnChanges row ==>", this.row);
+  	// console.log("ngOnChanges row ==>", this.row);
   }
 
 }

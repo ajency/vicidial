@@ -23,7 +23,7 @@ export class HeaderComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(){
-  	console.log("ngOnChanges header", this.menu);
+  	// console.log("ngOnChanges header", this.menu);
   }
 
   openMenu(){

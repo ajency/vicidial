@@ -15,7 +15,7 @@ export class TrendingComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngOnChanges(){
-  	console.log("trending ==>", this.trending);
+  	// console.log("trending ==>", this.trending);
   	this.chunkArray(this.trending, 4);
   }
 

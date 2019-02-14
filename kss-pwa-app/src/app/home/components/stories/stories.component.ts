@@ -15,7 +15,7 @@ export class StoriesComponent implements OnInit, OnChanges, AfterViewInit {
   }
   
   ngOnChanges(){
-  	console.log("stories ==>", this.stories);
+  	// console.log("stories ==>", this.stories);
   }
 
   ngAfterViewInit(){
