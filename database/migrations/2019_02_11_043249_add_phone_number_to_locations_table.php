@@ -14,7 +14,7 @@ class AddPhoneNumberToLocationsTable extends Migration
     public function up()
     {
         Schema::table('locations', function (Blueprint $table) {
-            $table->integer('phone_number')->after('use_in_inventory')->nullable();
+            $table->string('phone_number',10)->after('use_in_inventory')->nullable();
             
         });
     }
