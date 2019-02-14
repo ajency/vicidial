@@ -90,3 +90,141 @@
 		Can't see all your orders? <a href="javascript:void(0);" (click)="displayModal()" class="text-secondary font-weight-bold">Sign In</a>
 	</div>
 </div>	
+
+
+
+<!-- Order cancellation form -->
+<!-- Cancel Shipment section -->
+<div class="order-cancel mb-4 pb-4 d-none">
+	<div class="row">
+		<div class="col-12">
+             <div>
+	          	<div class="row no-gutter">
+					<div class="col-1">
+		             <h3 class="m-0 font-weight-bold back-to-cart">
+		               <img class="btn-back kss_highlight" src="/img/left-arrow.png" style="width:20px;">
+		             </h3>
+		           </div>
+					<div class="col-10">
+						<h3 class="modal-title font-weight-bold" id="exampleModalLabel">Order Cancellation</h3>
+					</div>
+				</div>
+				<hr>
+	      </div>
+
+		</div>
+	</div>
+
+
+	<div class="row mt-md-2 mt-0">
+		<div class="col-12">
+			<div class="d-flex row mb-3">
+				<div class="pr-2 col-8 col-sm-9">
+					<h6 class="d-block font-weight-bold m-0 kss-title">Select items for cancellation</h6>
+				</div>
+				<div class=" ml-auto col-4 col-sm-3 text-right">
+					<h6 class="mt-0">2 Selected </h6>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="cancel-od-selection">
+		<!-- Order info -->
+		<app-order-info [order_info]="order.order_info"></app-order-info>
+
+		<hr class="mb-4">
+
+		<!-- Product info -->			
+		<app-order [sub_orders]="order.sub_orders"></app-order>
+
+
+	</div>
+	
+
+	<div class="row mt-4 pt-4">
+		<div class="col-12">
+			<div class="d-flex row ">
+				<div class="pb-2 pr-2 col-9">
+					<h6 class="d-block font-weight-bold kss-title m-0">Items that cannot be cancelled</h6>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Error message -->
+	<div class="kss-flash kss-flash--error">
+		The below items cannot be cancelled as it has already been shipped. In case you are not satisfied with the product you can return it back after it has been delivered by calling our <a href="#" class="text-secondary">Customer Care</a>. Sorry for the inconvenience. 
+	</div>
+
+
+	<div class="mb-4 na-orders">
+		<!-- Order info -->
+		<div class="align-items-center card d-flex flex-row justify-content-between position-relative cancel-od-collapse">
+			<a aria-controls="collapse-nc-order" aria-expanded="false" class="d-block flex-1 font-weight-bold h6 mb-0 p-3 text-body collapsed position-relative" data-toggle="collapse" href="#collapse-nc-order" role="button" style="
+			">2 Items</a>
+			<i class="fas fa-chevron-down arrow"></i>
+		</div>
+	  	<div class="collapse" id="collapse-nc-order">
+			<app-order-info [order_info]="order.order_info"></app-order-info>
+
+			<hr class="mb-4">
+
+			<!-- Product info -->			
+			<app-order [sub_orders]="order.sub_orders"></app-order>
+
+
+		</div>
+	</div>
+
+
+	<!-- cancel info -->
+	<div class="mt-2 mb-3">
+		<div class="card shadow-sm">
+			<div class="card-body p-3">
+				<p class="text-muted mb-2">Any coupons applied to this order will be reverted</p>
+				<p class="text-muted mb-2">Refund to your card/bank will take around 5-7 business days to reflect</p>
+				<p class="text-muted mb-2">For more information, please view our <a href="/terms-and-conditions#cancellation" class="border-bottom text-secondary">cancellation policy</a></p>
+			</div>
+		</div>
+	</div>
+
+	<!-- Cancel reason inputs -->
+	<div class="my-4">
+		<h3 class="font-weight-bold kss-title mb-0 text-muted">Please tell us the reason for Cancellation</h3>
+		<div class="mt-4 mb-3">
+		    <label>
+		        Reason for Cancellation <span class="text-danger">*</span>
+		    </label>
+		    <select class="form-control">
+		        <option>Ordered by Mistake</option>
+		        <option>Ordered by Mistake</option>
+		        <option>Ordered by Mistake</option>
+		        <option>Ordered by Mistake</option>
+		    </select>
+		</div>
+		<div class="mt-4 mb-3">
+		    <label>Additional Remarks</label>
+		    <textarea class="form-control"></textarea>
+		</div>
+	</div>	
+
+	<!-- Sticky Action button -->
+	<div class="p-3 fixed-bottom fixed-checkout-btn d-flex align-items-center justify-content-between">
+		<button id="checkout" class="btn kss-btn kss-btn--outline-secondary kss-btn--big mr-3">Cancel</button>
+		<button id="checkout" class="btn kss-btn kss-btn--big mt-0">Confirm</button>	
+	</div>
+
+	<!-- Error message -->
+	<div class="kss-flash kss-flash--error">
+		This Shipment was cancelled on 28 December 2018
+	</div>
+
+	<!-- Success message -->
+	<div class="font-weight-normal kss-flash kss-flash--success">
+	    <h5 class="font-weight-bold"><i class="fa-check-circle fas pr-1 text-success"></i> Shipment Cancel Successful</h5>
+	    <p class="">Your shipment is cancelled successfully.Refund to your card/bank will take around 5-7 business days to reflect. Any coupons applied to this order will be reinstated.</p>
+	    <p class="mb-0">For more information, please view our <a href="/terms-and-conditions#cancellation" class="text-secondary border-bottom">cancellation policy</a></p>
+	</div>
+
+</div>	

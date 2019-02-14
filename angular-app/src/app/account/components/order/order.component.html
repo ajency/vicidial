@@ -17,17 +17,18 @@
 				<span *ngIf="sub_order.state == 'sale' " class="order-label order-label--confirmed" data-toggle="tooltip" data-placement="top" title="Stock for the items has been verified and your items will be shipped out soon.">Confirmed</span>
 			</div>
 		</div>
-		<!-- Canceled date -->
-		<div class="col-12">
-			<small>*Shipment was canceled on 28 December 2018</small>
-		</div>
 	</div>
 
 	<!-- Actual order info -->
 	<div class="p-md-3 p-2 mb-3 card shadow-sm">
 		<div *ngFor="let item of sub_order.items; let last = last">
 			<div class="row primary-info">
-				<div class="col-12">
+				<div class="col-12 d-flex">
+					<!-- <div class="custom-checkbox">
+			            <input type="checkbox" class="facet-category custom-control-input" id="first">
+						<label class="custom-control-label f-w-4" for="first">
+			            </label>            
+					</div> -->
 					<div class="d-flex order-card">					
 						<a href="{{item.href}}" class="order-card__image" [ngClass]="{'variant-placeholder' : item.images[0]=='/img/placeholder.svg'}">
 							<div class="product-img">
@@ -58,10 +59,52 @@
 							</div>
 						</div>
 					</div>
+					<div class="kss-order-status mt-2 w-100">
+						<!-- Bar status -->
+					    <ul class="align-items-center d-flex justify-content-center">
+							<li class="done">
+								<span class="dots"></span>
+								<span class="status-name">Placed</span>
+							</li>
+							<li class="current">
+								<span class="dots"></span>
+								<span class="status-name">Confirmed</span>
+							</li>
+							<li>
+								<span class="dots"></span>
+								<span class="status-name">Shipped</span>
+							</li>
+							<li>
+								<span class="dots"></span>
+								<span class="status-name">Delivered</span>
+							</li>
+						</ul>
+						<!-- Cancelled status -->
+						<div class="align-items-center d-flex orderState od-cancelled text-uppercase">
+						    <i class="fas fa-times-circle order-icon"></i>
+						    <span class="pl-2">Cancelled</span>
+						</div>
+						<!-- Canceled date -->
+						<div class="col-12">
+							<small>*Shipment was canceled on 28 December 2018</small>
+						</div>
+						<!-- Delivered status -->
+						<div class="align-items-center d-flex orderState od-delivered text-uppercase">
+							<span>
+							    <i class="fas fa-check-circle order-icon"></i>
+							    <span class="pl-2">Delivered</span>
+							</span>
+							<a href="#" class="border-bottom cancel-order-btn kss-anchor mb-0 ml-3 pb-0 text-secondary text-uppercase">Return Item</a>
+						</div>
+						<!-- Canceled date -->
+						<div class="col-12">
+							<small>*Shipment was delivered on 28 December 2018</small>
+						</div>
+					</div>
 					<!-- Action to cancel/feedback -->
-					<div class="border-top mt-3 pt-2 text-center">
-						<a class="btn mb-0 order-details-btn pb-0 text-secondary">Cancel Shipment</a>
-						<!-- <a class="btn mb-0 order-details-btn pb-0 text-secondary">Provide a Feedback <i class="fas fa-chevron-right"></i></a> -->
+					<div class="border-top cancel-wrapper text-center">
+						<a href="#" class="mb-0 cancel-order-btn pb-0 text-uppercase text-secondary">Cancel Shipment</a>
+						<!-- <a class="btn mb-0 order-details-btn pb-0 text-secondary">Provide Feedback <i class="fas fa-chevron-right"></i></a> -->
 					</div>
 				</div>	
 			</div>								
