@@ -1936,7 +1936,8 @@ amp-carousel .ampstart-image-with-caption {
   background-color: #343a40;
   color: #fff;
   min-width: 300px;
-  width: 300px
+  width: 300px;
+  padding-bottom: 30px;
 }
 
 .ampstart-sidebar .ampstart-icon {
@@ -2057,4 +2058,7 @@ h1+.ampstart-byline time {
 }
 .alignleft{
   float: left;
+}
+.aligncenter amp-img {
+  margin: auto;
 }
