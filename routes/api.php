@@ -62,11 +62,11 @@ Route::group([
     Route::group([
         'middleware' => ['auth:api', 'extension-api-permissions'],
     ], function () use ($group_app_version) {
-        Route::post('/save-page-element/new', $group_app_version . '\StaticElementController@callSaveNew');
-        Route::post('/save-page-element/{seq_no}', $group_app_version . '\StaticElementController@callSave');
-        Route::get('/get-page-element', $group_app_version . '\StaticElementController@callFetch');
-        Route::get('/get-page-element/{seq_no}', $group_app_version . '\StaticElementController@callFetchSeq');
+		Route::post('/save-page-element/new', $group_app_version . '\StaticElementController@callSaveNew');
+		Route::post('/save-page-element/{seq_no}', $group_app_version . '\StaticElementController@callSave');		
+		Route::get('/get-page-element/{seq_no}', $group_app_version . '\StaticElementController@callFetchSeq');
     });
+    Route::get('/get-page-element', $group_app_version . '\StaticElementController@callFetch');
     Route::group([
         'middleware' => ['auth:api', 'publish-static-element'],
     ], function () use ($group_app_version) {

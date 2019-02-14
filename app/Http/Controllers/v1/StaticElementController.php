@@ -30,7 +30,7 @@ class StaticElementController extends Controller
         if (isset($params['published'])) {
             $fetchedData = StaticElement::fetch($params['page_slug'], $data, $params['published']);
         } else {
-            $fetchedData = StaticElement::fetch($data);
+            $fetchedData = StaticElement::fetch($params['page_slug'], $data);
         }
         return (json_encode($fetchedData));
     }
