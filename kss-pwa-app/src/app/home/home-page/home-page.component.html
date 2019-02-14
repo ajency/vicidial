@@ -90,9 +90,9 @@
   </div>
 </section> -->
 
-<!-- <app-categories> </app-categories>
-<app-stories> </app-stories>
-<app-trending> </app-trending> -->
+<!-- <app-categories> </app-categories> -->
+<app-stories *ngIf="homePageElements && homePageElements.story" [stories]="homePageElements.story"> </app-stories>
+<app-trending *ngIf="homePageElements && homePageElements.trending" [trending]="homePageElements.trending"> </app-trending>
 
 <!-- <section>
   <div class="container mt-5">

@@ -7,72 +7,73 @@
       </div>
   </div>
 </section>
-<section>
+<section *ngIf="stories">
   <div class="container">
 
   	<div class="stories-grid stories-wrapper">
 		<!-- .... Box medium .... -->
-		<!-- <div class="story-{{$story['sequence']}} position-relative kss-extension" static_element-id="{{$story['sequence']}}" static_element-display_type="Shop By Stories" static_element-type="{{$story['type']}}" page_slug="home">
-		    <a href="{{$story['element_data']['image']['href']}}" class="position-relative trend-box d-block link-card" style="order:0;">
-		        <div>{!!$story['element_data']['text']['text1']!!}</div>
-		        @if (isset($story['images']['original']))
-		        <img class="d-block w-100 img-fluid lazyload blur-up pb-1" src="{{$story['images']['default']['load']}}"
-		        data-srcset="{{$story['images']['original']}}" alt="{{$story['element_data']['image']['img_alt']}}" title="{{$story['element_data']['image']['title']}}" />
-		        @else
-		        <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
-		            src="{{$story['images']['default']['load']}}"
-		            data-srcset="{{$story['images']['default']['3x']}} 818w,
-		                         {{$story['images']['default']['2x']}} 409w,
-		                         {{$story['images']['default']['1x']}} 272w"
-		            data-sizes='(min-width: 1200px) 376px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 90vw,  30vw'
-		            alt="{{$story['element_data']['image']['img_alt']}}"
-		            title="{{$story['element_data']['image']['title']}}"/>
-		        <div>{!!$story['element_data']['text']['text2']!!}</div>
-		        @endif
-		    </a>
-		</div> -->
+		<div  *ngFor="let story of stories">
+			<div *ngIf="story.type == 'story_box_medium'" class="story-{{story.sequence}} position-relative kss-extension" attr.static_element-id="{{story.sequence}}" attr.static_element-display_type="Shop By Stories" attr.static_element-type="{{story.type}}" attr.page_slug="home">
+			    <a href="{{story.element_data.image.href}}" class="position-relative trend-box d-block link-card" style="order:0;">
+			        <!-- <div>{!!$story['element_data']['text']['text1']!!}</div> -->		        
+			        <img *ngIf="story.images.original; else noOriginal" class="d-block w-100 img-fluid pb-1" src="{{story.images.original}}"
+			        alt="{{story.element_data.image.img_alt}}" title="{{story.element_data.image.title}}" />		        
+			        <ng-template #noOriginal>
+				        <img class="d-block w-100 img-fluid pb-1"
+				            src="{{story.images.default['1x']}}"
+				            srcset="{{story.images.default['3x']}} 818w,
+				                         {{story.images.default['2x']}} 409w,
+				                         {{story.images.default['1x']}} 272w"
+				            data-sizes='(min-width: 1200px) 376px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 90vw,  30vw'
+				            alt="{{story.element_data.image.img_alt}}"
+				            title="{{story.element_data.image.title}}"/>
+				        <!-- <div>{!!$story['element_data']['text']['text2']!!}</div> -->
+				    </ng-template>		        
+			    </a>
+			</div>
 
-		<!-- .... Landscape .... -->
-		<!-- <div class="story-{{$story['sequence']}} position-relative kss-extension" static_element-id="{{$story['sequence']}}" static_element-display_type="Shop By Stories" static_element-type="{{$story['type']}}" page_slug="home">
-		    <a href="{{$story['element_data']['image']['href']}}" class="position-relative trend-box d-block link-card" style="order:0;">
-		        <div>{!!$story['element_data']['text']['text1']!!}</div>
-		        @if (isset($story['images']['original']))
-		        <img class="d-block w-100 img-fluid lazyload blur-up pb-1" src="{{$story['images']['default']['load']}}"
-		        data-srcset="{{$story['images']['original']}}" alt="{{$story['element_data']['image']['img_alt']}}" title="{{$story['element_data']['image']['title']}}" />
-		        @else
-		        <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
-		            src="{{$story['images']['default']['load']}}"
-		            data-srcset="{{$story['images']['default']['3x']}} 1553w,
-		                         {{$story['images']['default']['2x']}} 778w,
-		                         {{$story['images']['default']['1x']}} 521w"
-		            data-sizes='(min-width: 1200px) 780px, (max-width: 992px) 90vw, 63vw'
-		            alt="{{$story['element_data']['image']['img_alt']}}"
-		            title="{{$story['element_data']['image']['title']}}"/>
-		        <div>{!!$story['element_data']['text']['text2']!!}</div>
-		         @endif
-		    </a>
-		</div> -->
+			<!-- .... Landscape .... -->
+			<div *ngIf="story.type == 'story_landscape'" class="story-{{story.sequence}} position-relative kss-extension" attr.static_element-id="{{story.sequence}}" attr.static_element-display_type="Shop By Stories" attr.static_element-type="{{story.type}}" attr.page_slug="home">
+			    <a href="{{story.element_data.image.href}}" class="position-relative trend-box d-block link-card" style="order:0;">
+			        <!-- <div>{!!$story['element_data']['text']['text1']!!}</div> -->
+			        
+			        <img *ngIf="story.images.original; else noOriginal2" class="d-block w-100 img-fluid pb-1" src="{{story.images.original}}"
+			        alt="{{story.element_data.image.img_alt}}" title="{{story.element_data.image.title}}" />
+			        <ng-template #noOriginal2>
+				        <img class="d-block w-100 img-fluid pb-1"
+				            src="{{story.images.default['1x']}}"
+				            srcset="{{story.images.default['3x']}} 1553w,
+				                         {{story.images.default['2x']}} 778w,
+				                         {{story.images.default['1x']}} 521w"
+				            data-sizes='(min-width: 1200px) 780px, (max-width: 992px) 90vw, 63vw'
+				            alt="{{story.element_data.image.img_alt}}"
+				            title="{{story.element_data.image.title}}"/>
+				        <!-- <div>{!!$story['element_data']['text']['text2']!!}</div> -->
+				    </ng-template>
+			    </a>
+			</div>
 
-		<!-- .... Portrait .... -->
-		<!-- <div class="story-{{$story['sequence']}} position-relative kss-extension" static_element-id="{{$story['sequence']}}" static_element-display_type="Shop By Stories" static_element-type="{{$story['type']}}" page_slug="home">
-		    <a href="{{$story['element_data']['image']['href']}}" class="trend-box d-block link-card position-relative" style="order:0;">
-		        <div>{!!$story['element_data']['text']['text1']!!}</div>
-		        @if (isset($story['images']['original']))
-		        <img class="d-block w-100 img-fluid lazyload blur-up pb-1" src="{{$story['images']['default']['load']}}"
-		        data-srcset="{{$story['images']['original']}}" alt="{{$story['element_data']['image']['img_alt']}}" title="{{$story['element_data']['image']['title']}}" />
-		        @else
-		        <img class="d-block w-100 img-fluid lazyload blur-up pb-1"
-		            src="{{$story['images']['default']['load']}}"
-		            data-srcset="{{$story['images']['default']['3x']}} 818w,
-		                         {{$story['images']['default']['2x']}} 409w,
-		                         {{$story['images']['default']['1x']}} 272w"
-		            data-sizes='(min-width: 1200px) 376px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 90vw,  30vw'
-		            alt="{{$story['element_data']['image']['img_alt']}}"
-		            title="{{$story['element_data']['image']['title']}}"/>
-		        <div>{!!$story['element_data']['text']['text2']!!}</div>
-		         @endif
-		    </a>
-		</div> -->
+			<!-- .... Portrait .... -->
+			<div *ngIf="story.type == 'story_portrait'" class="story-{{story.sequence}} position-relative kss-extension" attr.static_element-id="{{story.sequence}}" attr.static_element-display_type="Shop By Stories" attr.static_element-type="{{story.type}}" attr.page_slug="home">
+			    <a href="{{story.element_data.image.href}}" class="trend-box d-block link-card position-relative" style="order:0;">
+			        <!-- <div>{!!$story['element_data']['text']['text1']!!}</div> -->
+
+			        <img *ngIf="story.images.original; else noOriginal3" class="d-block w-100 img-fluid pb-1" src="{{story.images.original}}"
+			       	alt="{{story.element_data.image.img_alt}}" title="{{story.element_data.image.title}}" />
+			        <ng-template #noOriginal3>
+				        <img class="d-block w-100 img-fluid pb-1"
+				            src="{{story.images.default['1x']}}"
+				            srcset="{{story.images.default['3x']}} 818w,
+				                         {{story.images.default['2x']}} 409w,
+				                         {{story.images.default['1x']}} 272w"
+				            data-sizes='(min-width: 1200px) 376px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 90vw,  30vw'
+				            alt="{{story.element_data.image.img_alt}}"
+				            title="{{story.element_data.image.title}}"/>
+				        <!-- <div>{!!$story['element_data']['text']['text2']!!}</div> -->
+				    </ng-template>
+			    </a>
+			</div>
+		</div>
 	</div>
 
   </div>
