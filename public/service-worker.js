@@ -26,19 +26,19 @@ workbox.core.setCacheNameDetails({
 //     })
 // );
 // 2. images
-// workbox.routing.registerRoute(
-//     new RegExp('\.(png|svg|jpg|jpeg)$'),
-//     workbox.strategies.cacheFirst({
-//         cacheName: 'kss-images',
-//         plugins: [
-//             new workbox.expiration.Plugin({
-//                 maxAgeSeconds: 60 * 60 * 24 * 7,
-//                 maxEntries: 50,
-//                 purgeOnQuotaError: true
-//             })
-//         ]
-//     })
-// );
+workbox.routing.registerRoute(
+    /\.(?:png|gif|jpg|jpeg|svg)$/,
+    workbox.strategies.cacheFirst({
+        cacheName: 'kss-images',
+        plugins: [
+            new workbox.expiration.Plugin({
+                maxAgeSeconds: 60 * 60 * 24 * 7,
+                maxEntries: 50,
+                purgeOnQuotaError: true
+            })
+        ]
+    })
+);
 
 //3. cache apis
 workbox.routing.registerRoute(
