@@ -93,13 +93,13 @@
             <div class="col-12 col-md-6">
                <div class="card shadow-sm mb-5">
                   <img class="card-img-top lazyload blur-up"
-                      src="{{CDN::asset('/img/stores/jaipur/jp-store-10px.jpg') }}"
-                      data-srcset="{{CDN::asset('/img/stores/jaipur/jp-store-large.jpg') }} 1200w,
-                                    {{CDN::asset('/img/stores/jaipur/jp-store-medium.jpg') }} 770w,
-                                    {{CDN::asset('/img/stores/jaipur/jp-store-small.jpg') }} 480w"
+                      src="{{CDN::asset('/img/stores/jaipur/jp-store-1-10px.jpg') }}"
+                      data-srcset="{{CDN::asset('/img/stores/jaipur/jp-store-1-large.jpg') }} 1200w,
+                                    {{CDN::asset('/img/stores/jaipur/jp-store-1-medium.jpg') }} 770w,
+                                    {{CDN::asset('/img/stores/jaipur/jp-store-1-small.jpg') }} 480w"
                       data-sizes='(min-width: 1200px) 568px, (min-width: 768px) 46vw,  94vw'
-                      title="Hello Jaipur"
-                      alt="Hello Jaipur"/>
+                      title="Triton Mall, Jaipur"
+                      alt="Triton Mall, Jaipur"/>
                   <div class="card-body">
                      <div class="d-flex justify-content-between">
                         <div class="">
