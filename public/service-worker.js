@@ -44,6 +44,20 @@ workbox.core.setCacheNameDetails({
 workbox.routing.registerRoute(
     new RegExp('https://demo8558685.mockable.io/get-menu'),
     workbox.strategies.cacheFirst({
+        cacheName: 'mock-apis',
+        plugins: [
+            new workbox.expiration.Plugin({
+                maxAgeSeconds: 60 * 5,
+                maxEntries: 50,
+                purgeOnQuotaError: true
+            })
+        ]
+    })
+);
+
+workbox.routing.registerRoute(
+    new RegExp('/api/*'),
+    workbox.strategies.cacheFirst({
         cacheName: 'kss-apis',
         plugins: [
             new workbox.expiration.Plugin({
@@ -66,7 +80,7 @@ self.addEventListener('push', (event) => {
 workbox.precaching.precacheAndRoute([
   {
     "url": "views/kss-pwa/4.js",
-    "revision": "ce0b9027f8b9343e9d5c5fcce3161d71"
+    "revision": "a14367ddecf59fa930bddc6f5ebb0d6d"
   },
   {
     "url": "views/kss-pwa/fa-brands-400.eot",
@@ -130,7 +144,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "views/kss-pwa/main.js",
-    "revision": "6b400e66ecc150366ad43c2dbad624d8"
+    "revision": "cab1c8b14f3d46a5687449ec19ec6b06"
   },
   {
     "url": "views/kss-pwa/polyfills.js",

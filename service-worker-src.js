@@ -44,6 +44,20 @@ workbox.core.setCacheNameDetails({
 workbox.routing.registerRoute(
     new RegExp('https://demo8558685.mockable.io/get-menu'),
     workbox.strategies.cacheFirst({
+        cacheName: 'mock-apis',
+        plugins: [
+            new workbox.expiration.Plugin({
+                maxAgeSeconds: 60 * 5,
+                maxEntries: 50,
+                purgeOnQuotaError: true
+            })
+        ]
+    })
+);
+
+workbox.routing.registerRoute(
+    new RegExp('/api/*'),
+    workbox.strategies.cacheFirst({
         cacheName: 'kss-apis',
         plugins: [
             new workbox.expiration.Plugin({
