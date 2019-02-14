@@ -34,11 +34,11 @@ class Kernel extends ConsoleKernel
             if (!isNotProd()) {
                 $schedule->job(new ProductSync, 'create_jobs')->hourly();
                 $schedule->job(new ProductMoveSync, 'create_jobs')->everyMinute();
-                $schedule->job(new VariantSync, 'create_jobs')->hourly();
+                //$schedule->job(new VariantSync, 'create_jobs')->hourly();
             } else {
                 $schedule->job(new ProductSync, 'create_jobs')->everyTenMinutes();
                 $schedule->job(new ProductMoveSync, 'create_jobs')->everyMinute();
-                $schedule->job(new VariantSync, 'create_jobs')->everyTenMinutes();
+                //$schedule->job(new VariantSync, 'create_jobs')->everyTenMinutes();
             }
             $schedule->call(function () {
                 ProductColor::productXMLData();

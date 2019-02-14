@@ -55,19 +55,19 @@ class Product
         } while ($variants->count() == config('odoo.limit'));
 
         //InActive Variants
-        $offset      = 0;
+        /*$offset      = 0;
         do {
             $variants    = self::getProductIDsFromVariants(['write' => Defaults::getLastVariantSync(), 'active', '=', false], $offset);
             $variant_ids = $variant_ids->merge($variants);
             $offset      = $offset + $variants->count();
-        } while ($variants->count() == config('odoo.limit'));
+        } while ($variants->count() == config('odoo.limit'));*/
 
         Defaults::setLastVariantSync();
         if($variant_ids->count() > 0) {
-            $productIds = DB::select(DB::raw('SELECT DISTINCT product_id FROM product_colors where product_colors.id in (SELECT product_color_id from variants where variants.odoo_id in (' . implode(',', $variant_ids->toArray()) . '))'));
+            $productIds = DB::select(DB::raw('SELECT DISTINCT id FROM product_colors where product_colors.id in (SELECT product_color_id from variants where variants.odoo_id in (' . implode(',', $variant_ids->toArray()) . '))'));
 
             foreach ($productIds as $productId) {
-                UpdateProduct::dispatch($productId->product_id)->onQueue('process_product');
+                UpdateProduct::dispatch($productId->id)->onQueue('process_product');
             }
         }
     }
@@ -645,12 +645,12 @@ class Product
 
     public static function updateProduct($product_id)
     {
-        $productColor = ProductColor::where('product_id', $product_id)->first();
+        $productColor = ProductColor::find($product_id);
 
         $var = $productColor->variants()->select('odoo_id')->get()->pluck('odoo_id')->toArray();
 
         $odoo         = new OdooConnect;
-        $variantsData = $odoo->defaultExec("product.product", 'read', [$var], ['fields' => ['lst_price', 'sale_price']])->keyBy('id');
+        $variantsData = $odoo->defaultExec("product.product", 'read', [$var], ['fields' => ['lst_price', 'sale_price'], 'limit' => 30])->keyBy('id');
 
         ProductColor::updateElasticData([$productColor->elastic_id => [
             'elastic_data' => null,
