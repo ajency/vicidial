@@ -1,6 +1,7 @@
 @extends('layouts.default')
 
 @section('headjs')
+  <link rel="amphtml" href="<?php echo get_permalink(); ?>?amp">
   <?php wp_head(); ?>
 @stop
 

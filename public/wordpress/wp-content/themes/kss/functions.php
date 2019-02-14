@@ -671,4 +671,52 @@ function the_excerpt_max_charlength($charlength) {
     }
 }
 
+/**
+ * Template tag to show featured image on AMP
+ * @param string $size the post thumbnail size
+ */
+function isa_amp_featured_img( $size = 'medium' ) {
+
+    global $post;
+
+    if ( has_post_thumbnail( $post->ID ) ) {
+
+        $thumb_id = get_post_thumbnail_id( $post->ID );
+        $img = wp_get_attachment_image_src( $thumb_id, $size );
+        $img_src = $img[0];
+        $w = $img[1];
+        $h = $img[2];
+
+        $alt = get_post_meta($post->ID, '_wp_attachment_image_alt', true);
+
+        if(empty($alt)) {
+            $attachment = get_post( $thumb_id );
+            $alt = trim(strip_tags( $attachment->post_title ) );
+        } ?>
+        <amp-img src="<?php echo esc_url( $img_src ); ?>" layout="responsive" class="mb2" <?php
+            if ( $img_srcset = wp_get_attachment_image_srcset( $thumb_id, $size ) ) {
+                ?> srcset="<?php echo esc_attr( $img_srcset ); ?>" <?php
+            }
+            ?> alt="<?php echo esc_attr( $alt ); ?>" width="<?php echo $w; ?>" height="<?php echo $h; ?>" sizes="">
+        </amp-img>
+        <?php
+    }
+}
+
+function amp_sanitize_post_content() {
+
+     
+    global $post;
+
+    $amp_content = new AMP_Content(
+            $post->post_content,
+            amp_get_content_embed_handlers( $post->post ),
+            amp_get_content_sanitizers( $post->post ),
+            array()
+    );
+    
+    return $amp_content->get_amp_content(); 
+     
+}
+ 
 ?>

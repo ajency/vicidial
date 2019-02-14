@@ -22,7 +22,10 @@ class PostController extends Controller {
     	if ($post == null && $page == null) {
     	    abort(404);
     	} elseif ($post != null) {
-        	return view('blog.single');
+            if ($request->has('amp')) {
+        	   return view('blog.amp-single');
+            }
+            return view('blog.single');
     	} elseif ($page != null) {
         	return view('blog.page');
     	}
