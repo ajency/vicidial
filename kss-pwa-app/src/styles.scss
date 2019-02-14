@@ -32,7 +32,9 @@ $input-border-width: 2px;
 // $breadcrumb-divider: quote(">") !default;
 
 $container-max-widths: (
-  xl: 1200px
+  xl: 1200px,
+  md: 1200px,
+  sm: 1200px
 );
 @import '../node_modules/bootstrap/scss/bootstrap.scss';
 
