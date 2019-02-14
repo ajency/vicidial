@@ -475,6 +475,9 @@ footer .bl-1{
         background-color: $flash-success-bg;
         color: $flash-success-color;
     }
+    &--small{
+        font-size: 0.88rem;
+    }
 }
 
 .disabled{

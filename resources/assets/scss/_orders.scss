@@ -381,6 +381,18 @@
     color: #7d7d7d;
     font-size: 0.8rem;
   }
+  @media (max-width: 600px){
+    ul{
+      &:before{
+        width: 77%;
+      }
+    }
+  }
+  @media (max-width: 320px){
+    .status-name{
+      font-size: 0.7rem;
+    }
+  }
 }
 
 .orderState{
@@ -404,6 +416,21 @@
     margin: 2em 1em 0 1.5em;
     @media (max-width: 600px){
       margin: 2em 0.8em 0 1.8em;
+    }
+    .custom-control-label{
+      &:before{
+        background-color: transparent;
+        border: 2px solid #dee2e6;
+      }
+    }
+    .custom-control-input{
+      &:checked{
+        & + .custom-control-label{
+          &:before{
+            border-color: theme-color('primary');
+          }
+        }
+      }
     }
 }
 
