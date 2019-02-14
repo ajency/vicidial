@@ -91,7 +91,7 @@
 </section> -->
 
 <!-- <app-categories> </app-categories> -->
-<app-stories *ngIf="homePageElements && homePageElements.story" [stories]="homePageElements.story"> </app-stories>
+<app-stories *ngIf="homePageElements && homePageElements.story" [stories]="homePageElements.story" (storiesLoaded)="storiesLoaded = true"> </app-stories>
 <app-trending *ngIf="homePageElements && homePageElements.trending" [trending]="homePageElements.trending"> </app-trending>
 
 <!-- <section>

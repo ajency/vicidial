@@ -1,11 +1,11 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, AfterViewInit } from '@angular/core';
 
 @Component({
   selector: 'app-trending',
   templateUrl: './trending.component.html',
   styleUrls: ['./trending.component.scss']
 })
-export class TrendingComponent implements OnInit, OnChanges {
+export class TrendingComponent implements OnInit, OnChanges, AfterViewInit {
 
 	@Input() trending : any;
 	trendingGroup = [];
@@ -26,6 +26,10 @@ export class TrendingComponent implements OnInit, OnChanges {
   		this.trendingGroup.push(chunk);
   	}
   	console.log(this.trendingGroup);
+  }
+
+  ngAfterViewInit(){
+    console.log("ngAfterViewInit stories component");
   }
 
 }

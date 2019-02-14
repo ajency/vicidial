@@ -12,6 +12,7 @@ export class HomePageComponent implements OnInit {
 
   homePageElements : any;
 	menuObject : any
+  storiesLoaded : boolean = false;
   constructor(private apiService: ApiService,
               private appService: AppService) { }
 
