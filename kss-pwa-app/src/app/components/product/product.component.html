@@ -3,12 +3,12 @@
     <a href="{{product.products[0]['product-slug']}}">
       <div class="">
           <img *ngIf="product.products[0].images['1x']; else noImage"
-            src="product.products[0].images['1x']"
-            srcset="{{product.products[0].images['1x']}} 270w,
+            src="product.products[0].images['load']"
+            data-srcset="{{product.products[0].images['1x']}} 270w,
                           {{product.products[0].images['2x']}}  540w,
                           {{product.products[0].images['3x']}} 810w"
-            sizes="(min-width: 1200px) 266px, (min-width: 991px) 22vw, 41vw"
-            class="card-img-top"
+            data-sizes="(min-width: 1200px) 266px, (min-width: 991px) 22vw, 41vw"
+            class="card-img-top lazyload blur-up"
             title="{{product.products[0].title}}"
             alt="{{product.products[0].title}}">
             <ng-template #noImage>
@@ -18,7 +18,7 @@
 	                          /img/placeholder.svg  540w,
 	                          /img/placeholder.svg 810w"
 	            sizes="(min-width: 1200px) 266px, (min-width: 991px) 22vw, 41vw"
-	            class="card-img-top"
+	            class="card-img-top lazyload blur-up"
 	            title="{{product.products[0].title}}"
 	            alt="{{product.products[0].title}}">
             </ng-template>
