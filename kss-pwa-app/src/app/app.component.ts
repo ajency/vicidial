@@ -12,41 +12,45 @@ export class AppComponent implements OnInit {
   time : any;
   isConnected : any;
   status : any;
+  msg : any;
+  toastTimeout : any;
+  showToast : boolean = false;  
+  display : boolean = false;
   constructor(private apiService: ApiService,
               private connectionService: ConnectionService) { 
 
     this.connectionService.monitor().subscribe(isConnected => {
+      console.log("event occured", isConnected);
       this.isConnected = isConnected;
-      if (this.isConnected) {
+      if (this.isConnected) {        
         this.status = "ONLINE";
+        this.msg = "You are online!";
+        this.displayToast();
         console.log("online");
+        document.getElementsByTagName('body')[0].classList.remove('app-offline');                
       }
-      else {
+      else {        
         this.status = "OFFLINE";
-        console.log("offline")
+        this.msg = "You are offline and may be viewing outdated info!";       
+        this.displayToast();
+        console.log("offline");
+        document.getElementsByTagName('body')[0].classList.add('app-offline');
       }
     })
 
   }
 
-  ngOnInit(){
-  	// console.log("ngOnInit AppComponent");
-  	// let url = 'http://worldclockapi.com/api/json/utc/now';
-  	// this.apiService.request(url,'get',{},{}).then((response)=>{
-  	// 	console.log("response ==>", response);
-  	// 	this.time = new Date(response.currentDateTime)
-  	// })
-  	// .catch((error)=>{
-  	// 	console.log("error ==>", error);
-  	// })
+  displayToast(){
+    clearTimeout(this.toastTimeout);  
+    this.display = true;  
+    this.showToast = true;
+    this.toastTimeout = setTimeout(()=>{
+      this.showToast = false;
+    },4000)
+  }
 
-  	// url = "/rest/v1/anonymous/states/all";
-  	// this.apiService.request(url,'get',{},{}).then((response)=>{
-  	// 	console.log("response from state api ==>", response);  		
-  	// })
-  	// .catch((error)=>{
-  	// 	console.log("error ==>", error);
-  	// })
+  ngOnInit(){
+ 
   }
 
   goToHomePage(){

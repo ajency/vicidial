@@ -2477,7 +2477,7 @@ $size: 20px;
 }
 
 .app-offline{
-	filter: grayscale(0.9);
+	/*filter: grayscale(0.9);*/
 	& > *{
 		pointer-events: none;
 	}
