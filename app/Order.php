@@ -70,8 +70,8 @@ class Order extends Model
         if ($this->cart->coupon != null) {
             $odoo              = new OdooConnect;
             $currentCouponLeft = $odoo->defaultExec('sale.order.coupon', 'search_read', [[['global_code', '=', $this->cart->coupon]]], ['fields' => ['consumed_coupon_count']])->first();
-            $odoo->defaultExec('sale.order.coupon', 'write', [[$currentCouponLeft['id']],['consumed_coupon_count' => $currentCouponLeft['consumed_coupon_count']-1]], null);
-            Coupon::where('odoo_id',$currentCouponLeft['id'])->update(['left_uses' => $currentCouponLeft['consumed_coupon_count'] -1]);
+            $odoo->defaultExec('sale.order.coupon', 'write', [[$currentCouponLeft['id']], ['consumed_coupon_count' => $currentCouponLeft['consumed_coupon_count'] - 1]], null);
+            Coupon::where('odoo_id', $currentCouponLeft['id'])->update(['left_uses' => $currentCouponLeft['consumed_coupon_count'] - 1]);
         }
 
     }
@@ -162,6 +162,21 @@ class Order extends Model
         sendSMS('order-success', [
             'to'      => $this->cart->user->phone,
             'message' => "Your order with order id {$this->txnid} for Rs. {$this->subOrderData()['you_pay']} has been placed successfully on KidSuperStore.in. Check your order at " . url('/#/account/my-orders/') . "/{$this->txnid}",
+        ]);
+    }
+
+    //sms to the stores
+    public function sendVendorSMS()
+    {
+        $numbers = array();
+        foreach ($this->subOrders as $subOrder) {
+            if ($subOrder->location->phone_number) {
+                array_push($numbers, $subOrder->location->phone_number);
+            }
+        }
+        sendSMS('order-vendor', [
+            'to'      => $numbers,
+            'message' => "You have received an Order from " . $this->cart->user->name,
         ]);
     }
 
