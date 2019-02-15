@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from './services/api.service';
+import { ConnectionService } from 'ng-connection-service';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,20 @@ export class AppComponent implements OnInit {
   title = 'kss-pwa-app';
   time : any;
 
-  constructor(private apiService: ApiService) { 
+  constructor(private apiService: ApiService,
+              private connectionService: ConnectionService) { 
+
+    this.connectionService.monitor().subscribe(isConnected => {
+      this.isConnected = isConnected;
+      if (this.isConnected) {
+        this.status = "ONLINE";
+        console.log("online");
+      }
+      else {
+        this.status = "OFFLINE";
+        console.log("offline")
+      }
+    })
 
   }
 
