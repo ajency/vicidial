@@ -1,6 +1,7 @@
 <app-header [menu]="menuObject"></app-header>
 <!-- <app-banner> </app-banner> -->
 
+<app-loader *ngIf="!homePageElements"></app-loader>
 <!-- <section class="mt-5">
   <div class="container mb-3">
       <div class="row">
