@@ -718,5 +718,18 @@ function amp_sanitize_post_content() {
     return $amp_content->get_amp_content(); 
      
 }
+
+function get_post_seo_title(){
+    global $post;
+
+    return get_post_meta($post->ID, '_yoast_wpseo_title', true);
+     
+}
+
+function get_post_seo_meta_desc(){
+    global $post;
+
+    return get_post_meta($post->ID, '_yoast_wpseo_metadesc', true);
+}
  
 ?>
