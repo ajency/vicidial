@@ -32,9 +32,9 @@ $input-border-width: 2px;
 // $breadcrumb-divider: quote(">") !default;
 
 $container-max-widths: (
-  xl: 1200px,
+  sm: 1200px,
   md: 1200px,
-  sm: 1200px
+  xl: 1200px
 );
 @import '../node_modules/bootstrap/scss/bootstrap.scss';
 
@@ -2443,7 +2443,7 @@ $size: 20px;
     }
 }
 
-[static_element-type]{
+[static_element-type], .product-card{
 	position: relative;
 	.img-holder{
 		position: absolute;
@@ -2451,7 +2451,7 @@ $size: 20px;
 		left: 0;
 		width: 100%;
 		height: 100%;
-		background: #efefef;
+		background: #fffde1;
 	}
 }
 [static_element-type='story_box_medium']{
@@ -2462,4 +2462,8 @@ $size: 20px;
 }
 [static_element-type='story_landscape']{
 	padding-top: 52.41%;
+}
+
+.product-card{
+	padding-top: 133.33%;
 }
