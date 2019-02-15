@@ -9,7 +9,8 @@ export class StoriesComponent implements OnInit, OnChanges, AfterViewInit {
 	
 	@Input() stories : any;
   @Output() storiesLoaded = new EventEmitter();
-  constructor() { }
+  constructor() {     
+  }
 
   ngOnInit() {
   }
@@ -21,6 +22,10 @@ export class StoriesComponent implements OnInit, OnChanges, AfterViewInit {
   ngAfterViewInit(){
     console.log("ngAfterViewInit stories component");
     this.storiesLoaded.emit(true);
+  }
+
+  createDataSrcSet(a,b,c,d,e,f){
+    return a+ " " +b +", " +c +" "+d +", "+e +" "+f;
   }
 
 }

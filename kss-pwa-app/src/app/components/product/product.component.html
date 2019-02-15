@@ -3,21 +3,19 @@
     <a href="{{product.products[0]['product-slug']}}" class="img-holder">
       <div class="">
           <img *ngIf="product.products[0].images['1x']; else noImage"
-            src="product.products[0].images['load']"
-            srcset="{{product.products[0].images['1x']}} 270w,
-                          {{product.products[0].images['2x']}}  540w,
-                          {{product.products[0].images['3x']}} 810w"
-            sizes="(min-width: 1200px) 266px, (min-width: 991px) 22vw, 41vw"
+            
+            [useSrcset]=true
+            [offset]=100
+            [lazyLoad]="createDataSrcSet(product.products[0].images['1x'], '270w', product.products[0].images['2x'], '540w', product.products[0].images['3x'], '810w')"
             class="card-img-top"
             title="{{product.products[0].title}}"
             alt="{{product.products[0].title}}">
             <ng-template #noImage>
 	            <img
-	            src="/img/placeholder.svg"
-	            srcset="/img/placeholder.svg 270w,
-	                          /img/placeholder.svg  540w,
-	                          /img/placeholder.svg 810w"
-	            sizes="(min-width: 1200px) 266px, (min-width: 991px) 22vw, 41vw"
+              [defaultImage]="'/img/placeholder.svg'"
+              [useSrcset]=true
+              [offset]=100
+              [lazyLoad]="createDataSrcSet('/img/placeholder.svg', '270w', '/img/placeholder.svg', '540w', '/img/placeholder.svg', '810w')"
 	            class="card-img-top"
 	            title="{{product.products[0].title}}"
 	            alt="{{product.products[0].title}}">

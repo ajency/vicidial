@@ -11,6 +11,8 @@ import { ComponentsModule } from '../components/components.module';
 
 // import { DeferLoadModule } from '@trademe/ng-defer-load';
 
+import { LazyLoadImageModule, intersectionObserverPreset } from 'ng-lazyload-image';
+
 @NgModule({
   declarations: [HomePageComponent, BannerComponent, StoriesComponent, CategoriesComponent, TrendingComponent],
   imports: [
@@ -18,6 +20,9 @@ import { ComponentsModule } from '../components/components.module';
     HomeRoutingModule,
     ComponentsModule,
     // DeferLoadModule
+	LazyLoadImageModule.forRoot({
+        preset: intersectionObserverPreset
+    })
   ]
 })
 export class HomeModule { }
