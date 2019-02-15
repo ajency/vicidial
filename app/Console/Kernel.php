@@ -35,6 +35,7 @@ class Kernel extends ConsoleKernel
                 $schedule->job(new ProductSync, 'create_jobs')->hourly();
                 $schedule->job(new ProductMoveSync, 'create_jobs')->everyMinute();
                 //$schedule->job(new VariantSync, 'create_jobs')->hourly();
+                $schedule->job(new FetchWarehouse, 'process_details')->weekly();
             } else {
                 $schedule->job(new ProductSync, 'create_jobs')->everyTenMinutes();
                 $schedule->job(new ProductMoveSync, 'create_jobs')->everyMinute();

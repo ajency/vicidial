@@ -54,7 +54,7 @@ class Warehouse extends Model
             $wh->retail_area  = $warehouse['retail_area'];
             $wh->latitude     = $warehouse['latitude'];
             $wh->longitude    = $warehouse['longitude'];
-            if ($warehouse['store_manager_phone']) {
+            if ($warehouse['store_manager_phone'] && config('app.env') == 'production') {
                 $wh->phone_number = $warehouse['store_manager_phone'];
             }
             $wh->save();
