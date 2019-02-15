@@ -705,7 +705,7 @@ function isa_amp_featured_img( $size = 'medium' ) {
 
 function amp_sanitize_post_content() {
 
-     
+
     global $post;
 
     $amp_content = new AMP_Content(
@@ -714,9 +714,9 @@ function amp_sanitize_post_content() {
             amp_get_content_sanitizers( $post->post ),
             array()
     );
-    
-    return $amp_content->get_amp_content(); 
-     
+
+    return $amp_content->get_amp_content();
+
 }
 
 function generate_post_seo(){
@@ -725,8 +725,8 @@ function generate_post_seo(){
     $seo_title = ($seo_title=="") ? $post->post_title: $seo_title;
     $seo_metadesc = get_post_meta($post->ID, '_yoast_wpseo_metadesc', true);
     $seo_keyword = SEOMeta::getKeywords();
-    
-   
+
+
     if ($seo_title) {
         $html[] = "<title>$seo_title</title>";
     }
@@ -744,11 +744,39 @@ function generate_post_seo(){
         $keywords = implode(', ', $seo_keyword);
         $html[] = "<meta name=\"keywords\" content=\"{$keywords}\">";
     }
-    
+
     return implode(PHP_EOL, $html);
-     
+
 }
 
- 
- 
+
+/*
+ *$tags = ['tag1','tag2'];
+ */
+function get_post_by_tags($tags,$limit=false){
+    global $wpdb;
+
+    if(empty($tags)){
+        return false;
+    }
+
+    $limit_str = ($limit) ? ' limit '.$limit : '';
+
+    $tag_str = implode("','", $tags);
+    $term_ids = $wpdb->get_var( "SELECT GROUP_CONCAT(term_id) FROM {$wpdb->prefix}terms WHERE name IN ('".$tag_str."')");
+
+    $posts = $wpdb->get_results("select post.*,SUM(CASE When term_tax.term_id IN (".$term_ids.") THEN 1 ELSE 0 END) as tag_count
+                                    from {$wpdb->prefix}posts post
+                                    join {$wpdb->prefix}term_relationships term_rel on term_rel.`object_id` = post.ID
+                                    join {$wpdb->prefix}term_taxonomy term_tax on term_tax.term_taxonomy_id = term_rel.term_taxonomy_id
+                                    where post.`post_status`='publish' and term_tax.taxonomy ='post_tag' and term_tax.term_id IN (".$term_ids.")
+                                    group by term_rel.`object_id`
+                                    order by tag_count desc".$limit_str);
+
+
+    return $posts;
+
+}
+
+
 ?>
