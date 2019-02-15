@@ -685,7 +685,7 @@
 
 .store-single-overlay{
 	position: relative;
-	&:after{
+	.abs-overlay{
 		content: '';
 		position: absolute;
 		left: 0;
