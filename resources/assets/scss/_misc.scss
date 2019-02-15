@@ -683,22 +683,20 @@
 	}
 }
 
-.store-single-overlay{
-	position: relative;
-	.abs-overlay{
-		content: '';
-		position: absolute;
-		left: 0;
-		top: 0;
-		width: 100%;
-		height: 100%;
-		background-color: rgba(0, 0, 0, 0.18);
-	}
-}
-
 .jaipur-col{
+	.lSSlideOuter .lSSlideWrapper{
+		&:after{
+			content: '';
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0.18);
+		}
+	}
 	.lSPager{
-		li:not(:first-child){
+		li{
 			position: relative;
 			&:after{
 				content: '';

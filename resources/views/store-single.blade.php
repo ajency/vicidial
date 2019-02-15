@@ -311,7 +311,7 @@
                   title="Triton Mall, Jaipur"
                   alt="Triton Mall, Jaipur"/>
             </li>
-            <li class="item-a store-single-overlay" data-thumb="{{CDN::asset('/img/stores/jaipur/jp-store-2-small.jpg') }}">
+            <li class="item-a" data-thumb="{{CDN::asset('/img/stores/jaipur/jp-store-2-small.jpg') }}">
               <img class="card-img-top lazyload blur-up"
                   src="{{CDN::asset('/img/stores/jaipur/jp-store-2-10px.jpg') }}"
                   data-srcset="{{CDN::asset('/img/stores/jaipur/jp-store-2-large.jpg') }} 1200w,
@@ -320,9 +320,8 @@
                   data-sizes='(min-width: 1200px) 770px, (min-width: 768px) 62vw,  94vw'
                   title="Triton Mall, Jaipur"
                   alt="Triton Mall, Jaipur"/>
-              <div class="abs-overlay"></div>
             </li>
-            <li class="item-b store-single-overlay" data-thumb="{{CDN::asset('/img/stores/jaipur/jp-store-3-small.jpg') }}">
+            <li class="item-b" data-thumb="{{CDN::asset('/img/stores/jaipur/jp-store-3-small.jpg') }}">
               <img class="card-img-top lazyload blur-up"
                   src="{{CDN::asset('/img/stores/jaipur/jp-store-3-10px.jpg') }}"
                   data-srcset="{{CDN::asset('/img/stores/jaipur/jp-store-3-large.jpg') }} 1200w,
@@ -331,9 +330,8 @@
                   data-sizes='(min-width: 1200px) 770px, (min-width: 768px) 62vw,  94vw'
                   title="Triton Mall, Jaipur"
                   alt="Triton Mall, Jaipur"/>
-                  <div class="abs-overlay"></div>
             </li>
-            <li class="item-d store-single-overlay" data-thumb="{{CDN::asset('/img/stores/jaipur/jp-store-4-small.jpg') }}">
+            <li class="item-d" data-thumb="{{CDN::asset('/img/stores/jaipur/jp-store-4-small.jpg') }}">
               <img class="card-img-top lazyload blur-up"
                   src="{{CDN::asset('/img/stores/jaipur/jp-store-4-10px.jpg') }}"
                   data-srcset="{{CDN::asset('/img/stores/jaipur/jp-store-4-large.jpg') }} 1200w,
@@ -342,7 +340,6 @@
                   data-sizes='(min-width: 1200px) 770px, (min-width: 768px) 62vw,  94vw'
                   title="Triton Mall, Jaipur"
                   alt="Triton Mall, Jaipur"/>
-                  <div class="abs-overlay"></div>
             </li>
 
           </ul>          
