@@ -10,7 +10,8 @@ import { ConnectionService } from 'ng-connection-service';
 export class AppComponent implements OnInit {
   title = 'kss-pwa-app';
   time : any;
-
+  isConnected : any;
+  status : any;
   constructor(private apiService: ApiService,
               private connectionService: ConnectionService) { 
 
