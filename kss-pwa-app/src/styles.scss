@@ -2476,6 +2476,13 @@ $size: 20px;
 	}
 }
 
+.app-offline{
+	filter: grayscale(0.9);
+	& > *{
+		pointer-events: none;
+	}
+}
+
 .alert-offline{
 	position: fixed;
 	bottom: 10px;
