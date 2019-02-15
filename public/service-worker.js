@@ -144,7 +144,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "views/kss-pwa/main.js",
-    "revision": "54ca8846de564449b88a5c11fe5602ba"
+    "revision": "b0f3752338c144406c1649d2fcc97f38"
   },
   {
     "url": "views/kss-pwa/polyfills.js",
