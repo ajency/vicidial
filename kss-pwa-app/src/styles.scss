@@ -2442,3 +2442,24 @@ $size: 20px;
         font-size: 1.05em;
     }
 }
+
+[static_element-type]{
+	position: relative;
+	.img-holder{
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: #efefef;
+	}
+}
+[static_element-type='story_box_medium']{
+	padding-top: 110%;
+}
+[static_element-type='story_portrait']{
+	padding-top: 138.86%;
+}
+[static_element-type='story_landscape']{
+	padding-top: 52.41%;
+}
