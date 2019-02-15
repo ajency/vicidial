@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddPhoneNumberToLocationsTable extends Migration
+class AddPhoneNumberToWarehousesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,11 @@ class AddPhoneNumberToLocationsTable extends Migration
     public function up()
     {
         Schema::table('locations', function (Blueprint $table) {
-            $table->string('phone_number',10)->after('use_in_inventory')->nullable();
+            $table->dropColumn('phone_number');
+        });
+
+        Schema::table('warehouses', function (Blueprint $table) {
+            $table->string('phone_number',10)->nullable();
         });
     }
 
@@ -25,8 +29,12 @@ class AddPhoneNumberToLocationsTable extends Migration
      */
     public function down()
     {
-        Schema::table('locations', function (Blueprint $table) {
+        Schema::table('warehouses', function (Blueprint $table) {
             $table->dropColumn('phone_number');
+        });
+        
+        Schema::table('locations', function (Blueprint $table) {
+            $table->string('phone_number',10)->after('use_in_inventory')->nullable();
         });
     }
 }
