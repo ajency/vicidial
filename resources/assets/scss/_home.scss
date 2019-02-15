@@ -459,12 +459,6 @@
             grid-area: cat-#{$i};
         }
     }
-    // &--bottom{
-    //     grid-template-columns: 1fr 1fr;
-    //     grid-template-areas:
-    //         "cat-11 cat-12";
-    //     margin-top: 30px;
-    // }
     img{
         border-radius: 10px;
         transition: all 0.3s;
@@ -545,24 +539,6 @@
             "cat-12 cat-12"
             "cat-11 cat-14"
             "cat-13 cat-13";
-            // "cat-9 .";
-        // &--bottom{
-        //     grid-template-columns: 1fr 1fr;
-        //     grid-template-areas:
-        //         "cat-11 cat-12";
-        // }
-        // .movable-item{
-        //     display: none;
-        // }
-        // &--bottom{
-        //     grid-template-columns: 1fr 1fr;
-        //     grid-template-areas:
-        //     "cat-11 cat-12"
-        //     "cat-9 .";
-        //     .cat-9{
-        //         display: block !important;
-        //     }
-        // }
         .cat-12{
             img{
                 height: 100%;
@@ -586,12 +562,6 @@
             "cat-11"
             "cat-13"
             "cat-14";
-        // &--bottom{
-        //     grid-template-columns: 1fr;
-        //      grid-template-areas:
-        //         "cat-11"
-        //         "cat-12";
-        // }
     }
     @media (max-width: 320px){
         .dress-text{
@@ -629,6 +599,7 @@
     grid-gap: 30px;
     -ms-grid-rows: auto 30px auto 30px auto 30px auto 30px auto 30px auto;
     grid-template-areas:
+        "story-12 story-12 story-13 story-13 story-13 story-13"
         "story-1 story-1 story-2 story-2 story-3 story-3"
         "story-4 story-4 story-5 story-5 story-6 story-6"
         "story-4 story-4 story-8 story-8 story-6 story-6"
@@ -636,7 +607,7 @@
         "story-7 story-7 story-8 story-8 story-9 story-9"
         "story-10 story-10 story-10 story-10 story-11 story-11";
     // Naming areas
-    @for $i from 1 through 11 {
+    @for $i from 1 through 13 {
         .story-#{$i} {
             grid-area: story-#{$i};
         }
@@ -649,11 +620,15 @@
             "story-9 story-5"
             "story-6 story-7"
             "story-11 story-3"
-            "story-10 story-10";
+            "story-10 story-10"
+            "story-13 story-13"
+            "story-12 .";
     }
     @media (max-width: 767px){
         grid-template-columns: 1fr;
         grid-template-areas:
+            "story-12"
+            "story-13"
             "story-1"
             "story-2"
             "story-3"
