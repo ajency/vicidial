@@ -38,6 +38,14 @@ export class AppComponent implements OnInit {
       }
     })
 
+    if(!navigator.onLine){
+        this.status = "OFFLINE";
+        this.msg = "You are offline and may be viewing outdated info!";       
+        this.displayToast();
+        console.log("offline");
+        document.getElementsByTagName('body')[0].classList.add('app-offline');
+    }
+
   }
 
   displayToast(){
