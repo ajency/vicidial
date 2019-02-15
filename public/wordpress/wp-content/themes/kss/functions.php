@@ -719,17 +719,30 @@ function amp_sanitize_post_content() {
      
 }
 
-function get_post_seo_title(){
+function generate_post_seo(){
     global $post;
+    $seo_title = get_post_meta($post->ID, '_yoast_wpseo_title', true);
+    $seo_title = ($seo_title=="") ? $post->post_title: $seo_title;
+    $seo_metadesc = get_post_meta($post->ID, '_yoast_wpseo_metadesc', true);
+    $seo_keyword = SEOMeta::getKeywords();
+   
+    if ($seo_title) {
+        $html[] = "<title>$seo_title</title>";
+    }
 
-    return get_post_meta($post->ID, '_yoast_wpseo_title', true);
+    if ($seo_metadesc) {
+        $html[] = "<meta name=\"description\" content=\"{$seo_metadesc}\">";
+    }
+
+    if (!empty($seo_keyword)) {
+        $keywords = implode(', ', $seo_keyword);
+        $html[] = "<meta name=\"keywords\" content=\"{$keywords}\">";
+    }
+    
+    return implode(PHP_EOL, $html);
      
 }
 
-function get_post_seo_meta_desc(){
-    global $post;
-
-    return get_post_meta($post->ID, '_yoast_wpseo_metadesc', true);
-}
+ 
  
 ?>
