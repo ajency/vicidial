@@ -48,9 +48,6 @@
         <div class="px3 mb4">
           <?php echo amp_sanitize_post_content();
             wp_reset_postdata();
-
-            $posts = get_post_by_tags(array('tag_1','tag_2','tag_3'));
-            print_r($posts);
           ?>
 
           <hr>
