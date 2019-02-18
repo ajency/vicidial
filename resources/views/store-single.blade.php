@@ -6,7 +6,7 @@
       $location = "Anand Mahal Road, Adajan, Surat";
       $address = "G-5, G-6, G-7, F-105, Om Arcade, Anandmahal Road, Adajan, Surat, Gujarat - 395009";
       $manager = "Varoon";
-      $timings = "Monday to Sunday 11AM to 9PM";
+      $timings = "10:30am to 10:00pm";
       $phone = "9825487871";
       $email = "varoon@omniedgeretail.com";
   } else if (\Request::is('stores/coimbatore')){
@@ -14,7 +14,7 @@
       $location = "D.B. Road, R.S. Puram, Coimbatore";
       $address = "Shop No. 97, D.B. Road, R.S. Puram, Coimbatore, Tamil Nadu - 641002";
       $manager = "Chinraj";
-      $timings = "Monday to Sunday 11AM to 9PM";
+      $timings = "10:30am to 10:00pm";
       $phone = "9787046725";
       $email = "2001@omniedgeretail.com";
   } else if (\Request::is('stores/hyderabad')){
@@ -22,7 +22,7 @@
       $location = "Tyagaryaya Nagar, Kothapet, Hyderabad";
       $address = "Six Mall, Opp. Fruit Market, H.No:128, 128/2 & 129, 23-106/1, 23-106/18, 23-107, Tyagaryaya Nagar, Kothapet, Hyderabad, Telangana - 500035";
       $manager = "Shashi";
-      $timings = "Monday to Sunday 11AM to 9PM";
+      $timings = "10:30am to 10:00pm";
       $phone = "9959159192";
       $email = "2007@omniedgeretail.com";
   } else if (\Request::is('stores/jaipur')){
