@@ -31,7 +31,7 @@ export class HomePageComponent implements OnInit {
   	})
 
     // url = this.appService.apiUrl + "/api/rest/v1/get-page-element?page_slug=home";
-    url = "https://demo8558685.mockable.io/get-page-elements";
+    url = "https://demo8558685.mockable.io/get-home-page-elements-test";
     this.apiService.request(url,'get',{},{}).then((data)=>{
       console.log("home page data ==>", data);
       this.homePageElements = data;
