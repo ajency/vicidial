@@ -756,33 +756,31 @@ function generate_post_seo(){
  */
 function get_post_by_tags($tags,$limit=false){
     global $wpdb;
-
     if(empty($tags)){
         return false;
     }
-
     $limit_str = ($limit) ? ' limit '.$limit : '';
-
     $tag_str = implode("','", $tags);
-
     // get term ids
     $term_ids = $wpdb->get_var( "SELECT GROUP_CONCAT(term_id) FROM {$wpdb->prefix}terms WHERE name IN ('".$tag_str."')");
-
     /***
     get all post by tags
     order by post having most tags
     */
-    $posts = $wpdb->get_results("select post.*,SUM(CASE When term_tax.term_id IN (".$term_ids.") THEN 1 ELSE 0 END) as tag_count
+    if($term_ids!=''){
+        $posts = $wpdb->get_results("select post.*,SUM(CASE When term_tax.term_id IN (".$term_ids.") THEN 1 ELSE 0 END) as tag_count
                                     from {$wpdb->prefix}posts post
                                     join {$wpdb->prefix}term_relationships term_rel on term_rel.`object_id` = post.ID
                                     join {$wpdb->prefix}term_taxonomy term_tax on term_tax.term_taxonomy_id = term_rel.term_taxonomy_id
                                     where post.`post_status`='publish' and term_tax.taxonomy ='post_tag' and term_tax.term_id IN (".$term_ids.")
                                     group by term_rel.`object_id`
                                     order by tag_count desc ".$limit_str);
-
+    }
+    else{
+        $posts = false;
+    }
 
     return $posts;
-
 }
 
 
