@@ -8,8 +8,8 @@
   </div>
 </section>
 <section *ngIf="trendingGroup" id="kss-clothings" class="stripe-bg-top">
-  <div *ngFor="let group of trendingGroup" class="container ">
-    <app-slider [row]="group"></app-slider>
+  <div *ngFor="let group of trendingGroup" class="container"  (deferLoad)="group.show = true">
+    <app-slider *ngIf="group.show" [row]="group"></app-slider>
   </div>
   <div class="text-center mt-3">
       <a href="/shop" class="viewall-link">View More <i class="fas fa-chevron-right"></i></a>
