@@ -125,6 +125,8 @@
 		if(!empty($posts)){
 
 		?>
+
+		<div class="container">
 		  	<section class="more-posts mt-sm-4 pt-sm-4">
 			    <hr class="mt-5">
 			    <h3 class="include-title">Related Articles</h3>
@@ -136,8 +138,8 @@
 			          	$permalink = $post->guid;
 			          	$post_thumbnail = get_the_post_thumbnail($post->ID,'medium', array('class' => 'd-block w-100 img-fluid', 'sizes' => '(min-width:992px) 370px, 100vw'));
 
-			          	$post_excerpt = $post->post_content;
-			          	$post_content = $post->post_excerpt;
+			          	$post_excerpt = $post->post_excerpt;
+			          	$post_content = $post->post_content;
 
 			          	?>
 			            <div class="col-sm-4">
@@ -197,6 +199,7 @@
 			      </div>
 			    </div>
 		  	</section>
+		</div>
 		<?php } ?>
 
 	</div>
