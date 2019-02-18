@@ -92,7 +92,7 @@
 </section> -->
 
 <!-- <app-categories> </app-categories> -->
-<div *ngIf="homePageElements">
+<div *ngIf="homePageElements" class="pb-5">
   <!-- <div (deferLoad)="showStories=true"> -->
     <app-stories *ngIf="homePageElements.story" [stories]="homePageElements.story" (storiesLoaded)="storiesLoaded = true"> </app-stories>
   <!-- </div> -->
