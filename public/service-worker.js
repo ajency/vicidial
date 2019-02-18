@@ -42,7 +42,7 @@ workbox.routing.registerRoute(
 
 //3. cache apis
 workbox.routing.registerRoute(
-    new RegExp('https://demo8558685.mockable.io/get-menu'),
+    new RegExp('https://demo8558685.mockable.io/*'),
     workbox.strategies.cacheFirst({
         cacheName: 'mock-apis',
         plugins: [
@@ -80,7 +80,7 @@ self.addEventListener('push', (event) => {
 workbox.precaching.precacheAndRoute([
   {
     "url": "views/kss-pwa/4.js",
-    "revision": "225a89e586769ad39053f84c67f0cb07"
+    "revision": "e5b589f6f3141646d101812351af2c91"
   },
   {
     "url": "views/kss-pwa/fa-brands-400.eot",
@@ -144,7 +144,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "views/kss-pwa/main.js",
-    "revision": "b0f3752338c144406c1649d2fcc97f38"
+    "revision": "0899794f95749657b549f73382400261"
   },
   {
     "url": "views/kss-pwa/polyfills.js",
@@ -156,7 +156,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "views/kss-pwa/styles.css",
-    "revision": "2f2e9d09f43f9c9d63e44596ade2c654"
+    "revision": "6774e0fda6c89236f15d7d22e38ef674"
   },
   {
     "url": "assets/icons/icon1.png",
