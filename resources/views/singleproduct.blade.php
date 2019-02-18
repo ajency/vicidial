@@ -134,8 +134,8 @@
 			    <div class="relatedposts">
 			      <div class="row more-post-grid">
 			          <?php foreach ($posts as  $post) {
-			          	// $permalink = get_the_permalink($post->ID);
-			          	$permalink = $post->guid;
+			          	$permalink = get_the_permalink($post->ID);
+			          	// $permalink = $post->guid;
 			          	$post_thumbnail = get_the_post_thumbnail($post->ID,'medium', array('class' => 'd-block w-100 img-fluid', 'sizes' => '(min-width:992px) 370px, 100vw'));
 
 			          	$post_excerpt = $post->post_excerpt;
@@ -159,7 +159,7 @@
 			                </a>
 			                  <div class="kss-posts__content">
 			                    <a href="<?php echo $permalink; ?>" class="d-block" title="<?php echo esc_attr( the_title_attribute( 'echo=0' ) ); ?>">
-			                      <h1 class="bl-single-heading bl-single-heading--small"><?php $post->post_title; ?></h1>
+			                      <h1 class="bl-single-heading bl-single-heading--small"><?php echo $post->post_title; ?></h1>
 			                      <p class="bl-single-caption bl-single-caption--small">
 			                        <?php
 			                         if ( !empty($post_excerpt) ) {
