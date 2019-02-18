@@ -128,8 +128,8 @@
 
 			    <div class="relatedposts">
 			      <div class="row more-post-grid">
-			          <?php while ( $wpex_query->have_posts() ) {
-			            $wpex_query->the_post(); ?>
+			          <?php while ( $posts->have_posts() ) {
+			            $posts->the_post(); ?>
 			            <div class="col-sm-4">
 			              <div class="kss-posts">
 			                <a href="<?php the_permalink(); ?>" class="d-block" title="<?php echo esc_attr( the_title_attribute( 'echo=0' ) ); ?>">
