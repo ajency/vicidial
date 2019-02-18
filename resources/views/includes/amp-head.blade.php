@@ -15,6 +15,7 @@
 </style>
 
 @yield('headjs')
-{!! SEOMeta::generate() !!}
+{!! generate_post_seo() !!}
+{{-- SEOMeta::generate() --}}  
 {!! OpenGraph::generate() !!}
 {!! Twitter::generate() !!}
