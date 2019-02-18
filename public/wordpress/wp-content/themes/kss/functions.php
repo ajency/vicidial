@@ -725,12 +725,18 @@ function generate_post_seo(){
     $seo_title = ($seo_title=="") ? $post->post_title: $seo_title;
     $seo_metadesc = get_post_meta($post->ID, '_yoast_wpseo_metadesc', true);
     $seo_keyword = SEOMeta::getKeywords();
+    
    
     if ($seo_title) {
         $html[] = "<title>$seo_title</title>";
     }
 
     if ($seo_metadesc) {
+        $html[] = "<meta name=\"description\" content=\"{$seo_metadesc}\">";
+    }
+    else
+    {
+        $seo_metadesc = SEOMeta::getDescription();
         $html[] = "<meta name=\"description\" content=\"{$seo_metadesc}\">";
     }
 
