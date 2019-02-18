@@ -42,7 +42,7 @@ workbox.routing.registerRoute(
 
 //3. cache apis
 workbox.routing.registerRoute(
-    new RegExp('https://demo8558685.mockable.io/get-menu'),
+    new RegExp('https://demo8558685.mockable.io/*'),
     workbox.strategies.cacheFirst({
         cacheName: 'mock-apis',
         plugins: [

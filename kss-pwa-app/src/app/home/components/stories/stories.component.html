@@ -13,9 +13,9 @@
   	<div class="stories-grid stories-wrapper">
 		
 		<div *ngFor="let story of stories" class="story-{{story.sequence}} position-relative kss-extension" (deferLoad)="story.show = true">
-			<ng-container *ngIf="story.show">				
+			<!-- <ng-container *ngIf="story.show">				 -->
 				<!-- .... Box medium .... -->
-				<div *ngIf="story.type == 'story_box_medium'"  attr.static_element-id="{{story.sequence}}" attr.static_element-display_type="Shop By Stories" attr.static_element-type="{{story.type}}" attr.page_slug="home">
+				<div *ngIf="story.show && story.type == 'story_box_medium'"  attr.static_element-id="{{story.sequence}}" attr.static_element-display_type="Shop By Stories" attr.static_element-type="{{story.type}}" attr.page_slug="home">
 				    <a href="{{story.element_data.image.href}}" class="img-holder trend-box d-block link-card" style="order:0;">
 				        <!-- <div>{!!$story['element_data']['text']['text1']!!}</div> -->
 				        <img *ngIf="story.images.original; else noOriginal" class="d-block w-100 img-fluid" src="{{story.images.default.load}}" srcset="{{story.images.original}}"
@@ -35,7 +35,7 @@
 				</div>
 
 				<!-- .... Landscape .... -->
-				<div *ngIf="story.type == 'story_landscape'" class="story-{{story.sequence}} position-relative kss-extension" attr.static_element-id="{{story.sequence}}" attr.static_element-display_type="Shop By Stories" attr.static_element-type="{{story.type}}" attr.page_slug="home">
+				<div *ngIf="story.show && story.type == 'story_landscape'" class="story-{{story.sequence}} position-relative kss-extension" attr.static_element-id="{{story.sequence}}" attr.static_element-display_type="Shop By Stories" attr.static_element-type="{{story.type}}" attr.page_slug="home">
 				    <a href="{{story.element_data.image.href}}" class="img-holder trend-box d-block link-card" style="order:0;">
 				        <!-- <div>{!!$story['element_data']['text']['text1']!!}</div> -->
 
@@ -56,7 +56,7 @@
 				</div>
 
 				<!-- .... Portrait .... -->
-				<div *ngIf="story.type == 'story_portrait'" class="story-{{story.sequence}} position-relative kss-extension" attr.static_element-id="{{story.sequence}}" attr.static_element-display_type="Shop By Stories" attr.static_element-type="{{story.type}}" attr.page_slug="home">
+				<div *ngIf="story.show && story.type == 'story_portrait'" class="story-{{story.sequence}} position-relative kss-extension" attr.static_element-id="{{story.sequence}}" attr.static_element-display_type="Shop By Stories" attr.static_element-type="{{story.type}}" attr.page_slug="home">
 				    <a href="{{story.element_data.image.href}}" class="img-holder trend-box d-block link-card" style="order:0;">
 				        <!-- <div>{!!$story['element_data']['text']['text1']!!}</div> -->
 
@@ -75,7 +75,7 @@
 					    </ng-template>
 				    </a>
 				</div>
-			</ng-container>
+			<!-- </ng-container> -->
 		</div>
 	</div>
 
