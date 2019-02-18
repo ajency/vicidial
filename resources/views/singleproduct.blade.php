@@ -120,24 +120,34 @@
 
 		<?php
 		$tags = $params['metatags'];
-		$posts = get_post_by_tags($tags,'3');
-		if ( $posts->have_posts() ) {?>
+		$posts = get_post_by_tags($tags,'3'); 
+
+		if(!empty($posts)){
+
+		?>
 		  	<section class="more-posts mt-sm-4 pt-sm-4">
 			    <hr class="mt-5">
 			    <h3 class="include-title">Related Articles</h3>
 
 			    <div class="relatedposts">
 			      <div class="row more-post-grid">
-			          <?php while ( $posts->have_posts() ) {
-			            $posts->the_post(); ?>
+			          <?php foreach ($posts as  $post) {  
+			          	// $permalink = get_the_permalink($post->ID);
+			          	$permalink = $post->guid;
+			          	$post_thumbnail = get_the_post_thumbnail($post->ID,'medium', array('class' => 'd-block w-100 img-fluid', 'sizes' => '(min-width:992px) 370px, 100vw'));
+
+			          	$post_excerpt = $post->post_content;
+			          	$post_content = $post->post_excerpt;
+
+			          	?>
 			            <div class="col-sm-4">
 			              <div class="kss-posts">
-			                <a href="<?php the_permalink(); ?>" class="d-block" title="<?php echo esc_attr( the_title_attribute( 'echo=0' ) ); ?>">
+			                <a href="<?php echo $permalink; ?>" class="d-block" title="<?php echo esc_attr( the_title_attribute( 'echo=0' ) ); ?>">
 			                    <?php
-			                      if ( has_post_thumbnail() ) { ?>
+			                      if ( !empty($post_thumbnail) ) { ?>
 			                      <div class="kss-posts__cover mb-3">
 			                      <?php
-			                        the_post_thumbnail('medium', array('class' => 'd-block w-100 img-fluid', 'sizes' => '(min-width:992px) 370px, 100vw'));
+			                       echo $post_thumbnail;
 			                      }
 			                      else { ?>
 			                      <div class="kss-posts__cover no-image mb-3">
@@ -146,17 +156,17 @@
 			                  </div>
 			                </a>
 			                  <div class="kss-posts__content">
-			                    <a href="<?php the_permalink(); ?>" class="d-block" title="<?php echo esc_attr( the_title_attribute( 'echo=0' ) ); ?>">
-			                      <h1 class="bl-single-heading bl-single-heading--small"><?php the_title(); ?></h1>
+			                    <a href="<?php echo $permalink; ?>" class="d-block" title="<?php echo esc_attr( the_title_attribute( 'echo=0' ) ); ?>">
+			                      <h1 class="bl-single-heading bl-single-heading--small"><?php $post->post_title; ?></h1>
 			                      <p class="bl-single-caption bl-single-caption--small">
 			                        <?php
-			                        if ( has_excerpt() ) {
+			                         if ( !empty($post_excerpt) ) {
 			                            // This post has excerpt
-			                          echo wp_strip_all_tags( get_the_excerpt(), true );
+			                          echo wp_strip_all_tags( $post_excerpt, true );
 			                        } else {
 			                            // This post has no excerpt
-			                          echo wp_trim_words( get_the_content(), 12 );
-			                        }
+			                          echo wp_trim_words( $post_content, 12 );
+			                        } 
 			                        ?>
 			                      </p>
 			                    </a>
@@ -165,7 +175,7 @@
 			                        <!-- <p class="post-tags__title">Category :</p> -->
 			                        <div class="post-tags__data">
 			                          <?php
-			                              $categories = get_the_category();
+			                              $categories = get_the_category($post->ID);
 			                              $separator = ' ';
 			                              $output = '';
 			                              if ( ! empty( $categories ) ) {
@@ -187,7 +197,7 @@
 			      </div>
 			    </div>
 		  	</section>
-		<?php  } ?>
+		<?php } ?>
 
 	</div>
 
