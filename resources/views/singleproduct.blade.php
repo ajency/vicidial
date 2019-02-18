@@ -119,8 +119,8 @@
 		@include('includes.similar-products',["items"=>$similar_data_params])
 
 		<?php
-		$tags = $params['metatags'];
-		$posts = get_post_by_tags($tags,'3'); 
+		$wptags = $params['posts'];
+		$posts = get_post_by_tags($wptags,'3');
 
 		if(!empty($posts)){
 
@@ -131,7 +131,7 @@
 
 			    <div class="relatedposts">
 			      <div class="row more-post-grid">
-			          <?php foreach ($posts as  $post) {  
+			          <?php foreach ($posts as  $post) {
 			          	// $permalink = get_the_permalink($post->ID);
 			          	$permalink = $post->guid;
 			          	$post_thumbnail = get_the_post_thumbnail($post->ID,'medium', array('class' => 'd-block w-100 img-fluid', 'sizes' => '(min-width:992px) 370px, 100vw'));
@@ -166,7 +166,7 @@
 			                        } else {
 			                            // This post has no excerpt
 			                          echo wp_trim_words( $post_content, 12 );
-			                        } 
+			                        }
 			                        ?>
 			                      </p>
 			                    </a>
