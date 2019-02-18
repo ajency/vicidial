@@ -8,6 +8,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ApiService } from './services/api.service';
 import { AppService } from './services/app.service';
 
+import { DeferLoadModule } from '@trademe/ng-defer-load';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -15,7 +17,8 @@ import { AppService } from './services/app.service';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    DeferLoadModule
   ],
   providers: [ApiService, AppService],
   bootstrap: [AppComponent]

@@ -13,6 +13,8 @@ export class HomePageComponent implements OnInit {
   homePageElements : any;
 	menuObject : any
   storiesLoaded : boolean = false;
+  showTrendingSection : boolean = false;
+  showStories : boolean = false;
   constructor(private apiService: ApiService,
               private appService: AppService) { }
 
@@ -28,7 +30,8 @@ export class HomePageComponent implements OnInit {
   		console.log("error in fetching the json",error);
   	})
 
-    url = this.appService.apiUrl + "/api/rest/v1/get-page-element?page_slug=home";
+    // url = this.appService.apiUrl + "/api/rest/v1/get-page-element?page_slug=home";
+    url = "https://demo8558685.mockable.io/get-page-elements";
     this.apiService.request(url,'get',{},{}).then((data)=>{
       console.log("home page data ==>", data);
       this.homePageElements = data;

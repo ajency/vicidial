@@ -92,9 +92,14 @@
 </section> -->
 
 <!-- <app-categories> </app-categories> -->
-<app-stories *ngIf="homePageElements && homePageElements.story" [stories]="homePageElements.story" (storiesLoaded)="storiesLoaded = true"> </app-stories>
-<app-trending *ngIf="homePageElements && homePageElements.trending" [trending]="homePageElements.trending"> </app-trending>
-
+<div *ngIf="homePageElements">
+  <!-- <div (deferLoad)="showStories=true"> -->
+    <app-stories *ngIf="homePageElements.story" [stories]="homePageElements.story" (storiesLoaded)="storiesLoaded = true"> </app-stories>
+  <!-- </div> -->
+  <div (deferLoad)="showTrendingSection=true">
+    <app-trending *ngIf="showTrendingSection && homePageElements.trending" [trending]="homePageElements.trending"> </app-trending>
+  </div>
+</div>
 <!-- <section>
   <div class="container mt-5">
       <div class="row add-info-row">
