@@ -7,6 +7,7 @@ use App\Jobs\IndexInactiveProducts;
 use App\Jobs\ProductMoveSync;
 use App\Jobs\ProductSync;
 use App\Jobs\VariantSync;
+use App\Jobs\FetchWarehouse;
 use App\ProductColor;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
