@@ -558,25 +558,21 @@ $container-max-widths: (
             "story-6 story-7"
             "story-11 story-3"
             "story-10 story-10"
-            "story-13 story-13"
-            "story-12 .";
+            "story-12 story-12"
+            "story-13 .";
     }
     @media (max-width: 767px){
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 15px;
         grid-template-areas:
-        	"story-12"
-        	"story-13"
-            "story-1"
-            "story-2"
-            "story-3"
-            "story-4"
-            "story-5"
-            "story-6"
-            "story-7"
-            "story-8"
-            "story-9"
-            "story-10"
-            "story-11";
+        	"story-12 story-12"
+        	"story-13 story-1"
+            "story-2 story-3"
+            "story-4 story-6"
+            "story-5 story-7"
+            "story-9 story-11"
+            "story-10 story-10"
+            "story-8 .";
         }
 }
 
