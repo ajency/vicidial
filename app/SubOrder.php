@@ -24,6 +24,11 @@ class SubOrder extends Model
         return $this->belongsTo('App\Location', 'location_id', 'odoo_id');
     }
 
+    public function orderLines()
+    {
+        return $this->morphToMany('App\OrderLine', 'line_mapping');
+    }
+
     public function setItems($items)
     {
         $itemsData = [];

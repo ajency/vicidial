@@ -19,7 +19,7 @@ class Order extends Model
         'aggregate_data' => 'array',
     ];
 
-    protected $fillable = ['cart_id', 'address_id', 'address_data', 'expires_at'];
+    protected $fillable = ['cart_id', 'address_id', 'address_data', 'expires_at', 'type'];
 
     public function subOrders()
     {
@@ -36,6 +36,11 @@ class Order extends Model
         return $this->belongsTo('App\Address');
     }
 
+    public function orderLines()
+    {
+        return $this->morphToMany('App\OrderLine', 'line_mapping');
+    }
+
     public function setSubOrders()
     {
         $cart = Cart::find($this->cart_id);
@@ -48,6 +53,7 @@ class Order extends Model
             $subOrder              = new SubOrder;
             $subOrder->order_id    = $this->id;
             $subOrder->location_id = $locationID;
+            $subOrder->type        = 'New Transaction';
             $subOrder->setItems($items);
             $subOrder->aggregateData();
             $subOrder->save();

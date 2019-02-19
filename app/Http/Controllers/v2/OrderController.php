@@ -25,12 +25,12 @@ class OrderController extends Controller
         validateAddress($user, $address);
         $cart->checkCartAvailability();
 
-        
         $order = Order::create([
             'cart_id'      => $cart->id,
             'address_id'   => $address->id,
             'address_data' => $address->shippingAddress(),
             'expires_at'   => Carbon::now()->addMinutes(config('orders.expiry'))->timestamp,
+            'type'         => 'New Transaction',
         ]);
 
         saveTxnid($order);
@@ -65,7 +65,6 @@ class OrderController extends Controller
 
         checkOrderInventory($order);
 
-       
         if (isset($params['address_id'])) {
             $address = Address::find($params["address_id"]);
             validateAddress($user, $address);

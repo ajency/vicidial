@@ -30,6 +30,7 @@ class OrderController extends Controller
             'address_id'    => $address->id,
             'address_data'  => $address->shippingAddress(),
             'expires_at'    => Carbon::now()->addMinutes(config('orders.expiry'))->timestamp,
+            'type'          => 'New Transaction',
         ]);
 
         saveTxnid($order);
