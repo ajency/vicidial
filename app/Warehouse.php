@@ -11,6 +11,8 @@ class Warehouse extends Model
         'address' => 'array',
     ];
 
+    protected $fillable = ['odoo_id'];
+
     public function locations()
     {
         return $this->hasMany('App\Location', 'warehouse_odoo_id', 'odoo_id');
@@ -20,12 +22,9 @@ class Warehouse extends Model
     {
 
         $odoo       = new OdooConnect();
-        $max        = self::max('odoo_id');
-        $max        = ($max == null) ? 0 : $max;
-        $warehouses = $odoo->defaultExec("stock.warehouse", "search_read", [[['id', '>', $max]]], ["fields" => config('odoo.model_fields.warehouse')]);
+        $warehouses = $odoo->defaultExec("stock.warehouse", "search_read", [[['id', '>', 0]]], ["fields" => config('odoo.model_fields.warehouse')]);
         foreach ($warehouses as $warehouse) {
-            $wh               = new Warehouse;
-            $wh->odoo_id      = $warehouse["id"];
+            $wh               = Warehouse::firstOrNew(['odoo_id' => $warehouse["id"]]);
             $wh->name         = $warehouse["name"];
             $wh->company_name = $warehouse["company_id"][1];
             $wh->company_id   = $warehouse["company_id"][0];
@@ -33,6 +32,9 @@ class Warehouse extends Model
             $wh->retail_area  = $warehouse['retail_area'];
             $wh->latitude     = $warehouse['latitude'];
             $wh->longitude    = $warehouse['longitude'];
+            if ($warehouse['store_manager_phone'] && config('app.env') == 'production') {
+                $wh->phone_number = $warehouse['store_manager_phone'];
+            }
             $wh->save();
 
         }

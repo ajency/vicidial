@@ -170,8 +170,8 @@ class Order extends Model
     {
         $numbers = array();
         foreach ($this->subOrders as $subOrder) {
-            if ($subOrder->location->phone_number) {
-                array_push($numbers, $subOrder->location->phone_number);
+            if ($subOrder->location->warehouse->phone_number) {
+                array_push($numbers, $subOrder->location->warehouse->phone_number);
             }
         }
         sendSMS('order-vendor', [
