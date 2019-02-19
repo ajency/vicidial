@@ -775,6 +775,30 @@ function get_post_by_tags($tags,$limit=false){
                                     where post.`post_status`='publish' and term_tax.taxonomy ='post_tag' and term_tax.term_id IN (".$term_ids.")
                                     group by term_rel.`object_id`
                                     order by tag_count desc ".$limit_str);
+
+        if($limit){
+            $post_ids = array();
+            $post_count = count($posts);
+            if($limit > $post_count){
+                $limit_diff = $limit - $post_count;
+                for ($i=0; $i >= $post_count; $i++) {
+                    $post_ids[] = $posts[$i]['ID'];
+                }
+
+                $cond_str = '';
+                if(!empty($post_ids)){
+                    $post_id_str = implode(",", $post_ids);
+                    $cond_str = " and post.ID NOT IN (".$post_id_str.")";
+                }
+
+                $other_posts = $wpdb->get_results("select post.*
+                                    from {$wpdb->prefix}posts post
+                                    where post.`post_status`='publish' ".$cond_str."
+                                    order by ID desc limit ".$limit_diff);
+
+                $posts = array_merge($posts,$other_posts);
+            }
+        }
     }
     else{
         $posts = false;
