@@ -36,6 +36,7 @@ return [
             'retail_area',
             'latitude',
             'longitude',
+            'store_manager_phone',
 
         ],
         'states'     => [],
