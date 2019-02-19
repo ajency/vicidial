@@ -30,6 +30,6 @@ class FetchWarehouse implements ShouldQueue
      */
     public function handle()
     {
-        Warehouse::getUpdateAllWarehousesFromOdoo()
+        Warehouse::getAllWarehousesFromOdoo()
     }
 }

@@ -22,28 +22,6 @@ class Warehouse extends Model
     {
 
         $odoo       = new OdooConnect();
-        $max        = self::max('odoo_id');
-        $max        = ($max == null) ? 0 : $max;
-        $warehouses = $odoo->defaultExec("stock.warehouse", "search_read", [[['id', '>', $max]]], ["fields" => config('odoo.model_fields.warehouse')]);
-        foreach ($warehouses as $warehouse) {
-            $wh               = new Warehouse;
-            $wh->odoo_id      = $warehouse["id"];
-            $wh->name         = $warehouse["name"];
-            $wh->company_name = $warehouse["company_id"][1];
-            $wh->company_id   = $warehouse["company_id"][0];
-            $wh->carpet_area  = $warehouse['carpet_area'];
-            $wh->retail_area  = $warehouse['retail_area'];
-            $wh->latitude     = $warehouse['latitude'];
-            $wh->longitude    = $warehouse['longitude'];
-            $wh->save();
-
-        }
-    }
-
-    public static function getUpdateAllWarehousesFromOdoo()
-    {
-
-        $odoo       = new OdooConnect();
         $warehouses = $odoo->defaultExec("stock.warehouse", "search_read", [[['id', '>', 0]]], ["fields" => config('odoo.model_fields.warehouse')]);
         foreach ($warehouses as $warehouse) {
             $wh               = Warehouse::firstOrNew(['odoo_id' => $warehouse["id"]]);
