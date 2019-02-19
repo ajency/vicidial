@@ -14,6 +14,8 @@ class SubOrder extends Model
         'odoo_data' => 'array',
     ];
 
+    protected $orderLineIds = [];
+
     public function order()
     {
         return $this->belongsTo('App\Order');
@@ -52,8 +54,7 @@ class SubOrder extends Model
                     'product_color_id' => $variant->getVarColorId(),
                     'product_slug'     => $variant->getProductSlug(),
                 ]));
-                $this->orderLines()->attach($orderLine->id, ['type' => $this->type]);
-                $this->order->orderLines()->attach($orderLine->id, ['type' => $this->order->type]);
+                array_push($this->orderLineIds, $orderLine->id);
             }
         }
         $this->item_data = $itemsData;

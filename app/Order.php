@@ -57,6 +57,12 @@ class Order extends Model
             $subOrder->setItems($items);
             $subOrder->aggregateData();
             $subOrder->save();
+
+            $subOrder->refresh();
+            foreach ($orderLineIds as $orderLineId) {
+                $subOrder->orderLines()->attach($orderLineId, ['type' => $subOrder->type]);
+                $this->orderLines()->attach($orderLineId, ['type' => $this->type]);
+            }
         }
     }
 
