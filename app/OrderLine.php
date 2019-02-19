@@ -6,6 +6,23 @@ use Illuminate\Database\Eloquent\Model;
 
 class OrderLine extends Model
 {
+    protected $casts = [
+        'images'   => 'array',
+    ];
+
+    protected $fillable = [
+        'title',
+        'variant_id',
+        'images',
+        'size',
+        'price_mrp',
+        'price_final',
+        'discount_per',
+        'product_id',
+        'product_color_id',
+        'product_slug',
+    ];
+
     public function orders()
     {
         return $this->morphedByMany('App\Order', 'line_mapping');
