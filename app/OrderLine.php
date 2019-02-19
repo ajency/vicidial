@@ -12,6 +12,7 @@ class OrderLine extends Model
 
     protected $fillable = [
         'title',
+        'name',
         'variant_id',
         'images',
         'size',
