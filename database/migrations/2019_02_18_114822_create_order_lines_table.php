@@ -16,6 +16,7 @@ class CreateOrderLinesTable extends Migration
         Schema::create('order_lines', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
+            $table->string('name');
             $table->integer('variant_id');
             $table->json('images');
             $table->string('size');
