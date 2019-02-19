@@ -774,15 +774,15 @@ function get_post_by_tags($tags,$limit=false){
                                     join {$wpdb->prefix}term_taxonomy term_tax on term_tax.term_taxonomy_id = term_rel.term_taxonomy_id
                                     where post.`post_status`='publish' and term_tax.taxonomy ='post_tag' and term_tax.term_id IN (".$term_ids.")
                                     group by term_rel.`object_id`
-                                    order by tag_count desc ".$limit_str);
-
+                                 order by tag_count desc ".$limit_str);
+        
         if($limit){
             $post_ids = array();
-            $post_count = count($posts);
+            $post_count = count($posts);  
             if($limit > $post_count){
-                $limit_diff = $limit - $post_count;
-                for ($i=0; $i >= $post_count; $i++) {
-                    $post_ids[] = $posts[$i]['ID'];
+                $limit_diff = $limit - $post_count; echo $limit_diff;
+                for ($i=0; $i < $post_count; $i++) {                    
+                    $post_ids[] = $posts[$i]->ID;
                 }
 
                 $cond_str = '';
