@@ -103,12 +103,12 @@
 			      'transaction_id': '{{$params['order_info']['txn_no']}}'
 			  });
 
-			gtag('event', 'purchase', {
-			  "send_to": "UA-132569352-1",
-			  "transaction_id": '{{$params['order_info']['txn_no']}}',
-			  "value": {{$params['order_info']['total_amount']}},
-			  "currency": "INR"
-			});
+				gtag('event', 'purchase', {
+					"send_to": "{{config('analytics.google_id')}}",
+					"transaction_id": '{{$params['order_info']['txn_no']}}',
+					"value": {{$params['order_info']['total_amount']}},
+					"currency": "INR"
+				});
 
 
 
