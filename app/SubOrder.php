@@ -14,7 +14,7 @@ class SubOrder extends Model
         'odoo_data' => 'array',
     ];
 
-    protected $orderLineIds = [];
+    public $orderLineIds = [];
 
     public function order()
     {
