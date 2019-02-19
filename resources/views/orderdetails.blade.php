@@ -102,6 +102,17 @@
 			      'currency': 'INR',
 			      'transaction_id': '{{$params['order_info']['txn_no']}}'
 			  });
+
+				// Analytics ecommerce purchase event
+				gtag('event', 'purchase', {
+					"send_to": "{{config('analytics.google_id')}}",
+					"transaction_id": '{{$params['order_info']['txn_no']}}',
+					"value": {{$params['order_info']['total_amount']}},
+					"currency": "INR"
+				});
+
+
+
 			</script>
 		@endif	
 	@endif
