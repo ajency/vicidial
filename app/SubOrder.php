@@ -45,7 +45,7 @@ class SubOrder extends Model
 
             $item = $variant->getItemAttributes();
 
-            foreach ($itemData['quantity'] as $singleItem) {
+            for ($qty = 1; $qty <= $itemData['quantity']; $qty++) {
                 $orderLine = OrderLine::create(array_merge($item, [
                     'variant_id'       => $itemData['variant']->id,
                     'product_id'       => $variant->getParentId(),
