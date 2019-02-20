@@ -2,7 +2,6 @@
 
 namespace App;
 
-use Ajency\Connections\OdooConnect;
 use App\Variant;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -117,26 +116,23 @@ class SubOrder extends Model
 
     public function placeOrder()
     {
-        if ($this->odoo_id == null) {
-            $order_lines = [];
-            $itemsData   = [];
-            foreach ($this->item_data as $itemData) {
-                $variant            = Variant::find($itemData['id']);
-                $item               = $variant->getItemAttributes();
-                $item['quantity']   = $itemData['quantity'];
-                $item['variant_id'] = $itemData['id'];
-                $itemsData[]        = $item;
-                $order_line         = self::createOrderLine($variant, $itemData);
-                $lines[]            = $order_line;
-            }
-            $odoo_order = self::createOrderParams($lines);
-            $id         = $this->createOdooOrder($odoo_order);
-            //$order = $this->getSaleOrder($id);
+        $http = new \GuzzleHttp\Client;
 
-            $this->odoo_id     = $id;
-            $this->odoo_status = 'draft';
-            $this->save();
-        }
+        $sub_order_data = [
+            'user_external_id'      => $this->order->cart->user->odoo_id,
+            'address_external_id'   => $this->order->address->odoo_id,
+            'location_external_id'  => $this->location->odoo_id,
+            'warehouse_external_id' => $this->location->warehouse->odoo_id,
+            'company_external_id'   => $this->location->company_odoo_id,
+            'sub_order_id'          => $this->id,
+            'location_txn_id'       => $this->location->location_name . '/' . $this->order->txnid,
+            'item_data'             => $this->orderLines->toArray(),
+            'payment_data'          => $this->odoo_data,
+            'type'                  => $this->type,
+            'order_date'            => Carbon::now(),
+        ];
+
+        $http->post(config('app.report_url') . '/api/order/create-opr', ['sub_order_data' => $sub_order_data, 'placeorder' => true]);
     }
 
     public function getSubOrder()
@@ -160,88 +156,6 @@ class SubOrder extends Model
 
         return $sub_order;
     }
-
-    // public function abondonOrder()
-    // {
-    //     $items = $this->item_data;
-    //     foreach ($items as $item) {
-    //         $variant = Variant::find($item['id']);
-    //         $variant->inventory[$this->warehouse_id]['quantity'] += $item['quantity'];
-    //         $variant->save();
-    //     }
-    //     $this->item_data = [];
-    //     $this->save();
-    // }
-
-    // public function save(array $options = [])
-    // {
-    //     if ($this->id == null) {
-    //         $items = $this->item_data;
-    //         foreach ($items as $item) {
-    //             $variant = Variant::find($item['id']);
-    //             $variant->inventory[$this->warehouse_id]['quantity'] -= $item['quantity'];
-    //             $variant->save();
-    //         }
-    //     }
-    //     parent::save($options);
-    // }
-
-    public function createOrderLine(Variant $variant, array $itemData)
-    {
-        $order_line = [
-            0,
-            0,
-            array_merge(config('orders.odoo_orderline_defaults'),
-                [
-                    "product_id"      => $variant->odoo_id,
-                    "product_uom_qty" => $itemData['quantity'],
-                    "price_unit"      => $itemData['price_discounted'],
-                    "discount"        => 0,
-                    "name"            => $variant->getName(),
-                ]),
-        ];
-        return $order_line;
-    }
-
-    public function createOrderParams(array $order_lines = [])
-    {
-        $date_order     = new Carbon;
-        $address        = $this->order->address->odoo_id;
-        $generated_name = $this->location->location_name . '/' . $this->order->txnid;
-        $options        = array_merge(config('orders.odoo_order_defaults'),
-            [
-                'partner_id'          => $this->order->cart->user->odoo_id,
-                'partner_invoice_id'  => $address,
-                'partner_shipping_id' => $address,
-                'warehouse_id'        => $this->location->warehouse->odoo_id,
-                'company_id'          => $this->location->company_odoo_id,
-                'date_order'          => $date_order->toDateTimeString(),
-                'origin'              => $generated_name,
-                "name"                => $generated_name,
-                "order_line"          => $order_lines,
-            ]);
-        return $options;
-    }
-
-    public function createOdooOrder(array $params)
-    {
-        $model = "sale.order";
-        $odoo  = new OdooConnect;
-        $out   = $odoo->defaultExec($model, 'create', [$params], null);
-        try {
-            return $out[0];
-        } catch (\Exception $e) {
-            throw new \Exception($out);
-        }
-    }
-
-    /*public function getSaleOrder(int $id)
-    {
-    $model = "sale.order";
-    $odoo  = new OdooConnect;
-    $out   = $odoo->defaultExec($model, "read", [$id]);
-    return $out[0];
-    }*/
 
     public static function rectifyOldSubOrders($subOrders)
     {

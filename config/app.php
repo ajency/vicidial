@@ -53,6 +53,7 @@ return [
     */
 
     'url' => env('APP_URL', 'http://localhost'),
+    'report_url' => env('REPORT_URL', 'http://localhost'),
 
     /*
     |--------------------------------------------------------------------------
