@@ -80,7 +80,7 @@ self.addEventListener('push', (event) => {
 workbox.precaching.precacheAndRoute([
   {
     "url": "views/kss-pwa/4.js",
-    "revision": "fac0bfd87be860ec1e260db3907d9e2d"
+    "revision": "4bdbd3400c30b6cf4ed2638a6cd3465b"
   },
   {
     "url": "views/kss-pwa/fa-brands-400.eot",
@@ -144,7 +144,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "views/kss-pwa/main.js",
-    "revision": "0899794f95749657b549f73382400261"
+    "revision": "c1d8d762ea7138825bdc137450187811"
   },
   {
     "url": "views/kss-pwa/polyfills.js",
