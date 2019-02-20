@@ -1,74 +1,79 @@
-FROM ubuntu:18.04
-# Update packages and install composer and PHP dependencies.
+#PHP Dependencies
+FROM composer:1.8 as vendor
 MAINTAINER Vilas Bhumare
+WORKDIR /app
+COPY composer.json composer.lock package.json /app/
+RUN set -x \
+        && composer config --global --auth github-oauth.github.com 51b8fa003167a658f3eddd4bead506c86ad1d117 \
+        && composer install \
+    --ignore-platform-reqs \
+    --no-interaction \
+    --no-plugins \
+    --no-autoloader \
+    --no-dev
 
-RUN apt-get update && \
-	  DEBIAN_FRONTEND=noninteractive apt-get install -y \
-	  php-pear \
-          php7.2-curl \
-	  php7.2-dev \
-          php7.2-gd \
-	  php7.2-mbstring \
-	  php7.2-zip \
-	  php7.2-mysql \
-	  php7.2-xml \
-	  php7.2-xmlrpc \
-          cron \
-	  nginx \
-	  supervisor \
-	  unzip \
-	  php7.2-fpm
-
-# Nodejs and NPM installtion
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
-RUN apt-get install -y nodejs
-
-# Install Composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-RUN apt-get install git -y
+# Frontend
+FROM node:10.15 as frontend
 RUN npm install -g gulp
-COPY composer.json composer.lock package.json /var/www/html/
-WORKDIR /var/www/html
-RUN mkdir angular-app
-COPY angular-app/package.json angular-app/package.json
-WORKDIR /var/www/html/angular-app
+RUN mkdir -p /root/build/angular-app
+WORKDIR /root/build
+COPY resources/assets ./resources/assets
+COPY angular-app/package.json angular-app/package-lock.json ./angular-app/
+COPY public ./public
+COPY package.json package-lock.json gulpfile.js webpack.mix.js ./
 RUN npm install
-WORKDIR /var/www/html
-RUN composer config --global --auth github-oauth.github.com github_token
-RUN composer install --no-autoloader --no-dev
+WORKDIR /root/build/angular-app
 RUN npm install
-ADD . /var/www/html
-RUN touch storage/logs/laravel.log
-RUN chmod 777 storage/logs/laravel.log
-RUN composer config --global --auth github-oauth.github.com github_token
-RUN composer install
-RUN npm run production
-WORKDIR /var/www/html/angular-app
+COPY angular-app ./
 RUN npm run build:cart_app
-WORKDIR /var/www/html
+WORKDIR /root/build/
+ADD . /root/build/
+RUN npm run production
 RUN gulp
-RUN chmod -R 777 /var/www/html/storage
-RUN echo "* * * * * cd /var/www/html && php /var/www/html/artisan schedule:run >> /dev/null 2>&1" > /etc/cron.d/artisan-schedule-run
-# Give execution rights on the cron job
-RUN chmod 0644 /etc/cron.d/artisan-schedule-run
-RUN chmod +x /etc/cron.d/artisan-schedule-run
-# Apply cron job
-RUN crontab /etc/cron.d/artisan-schedule-run
-# Create the log file to be able to run tail
-RUN touch /var/log/cron.log
-RUN mkdir -p /var/log/laravel/
-COPY supervisor-worker.conf /etc/supervisor/conf.d/supervisor-worker.conf
-# Add Nginx Configuration
-RUN rm -f /etc/nginx/sites-enabled/default
-RUN rm -f /etc/nginx/nginx.conf
-COPY nginx.conf /etc/nginx/nginx.conf
-RUN chown -R www-data:www-data /var/www/html
-RUN find /var/www/html -type f -exec chmod 644 {} \;
-RUN find /var/www/html -type d -exec chmod 755 {} \;
-RUN chmod -R ug+rwx /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/public/wordpress/wp-content
-EXPOSE 80
-RUN sed -i 's/memory_limit = .*/memory_limit = '2048M'/' /etc/php/7.2/fpm/php.ini
+# Download Base Image from AWS ECR
+FROM 923266873336.dkr.ecr.ap-south-1.amazonaws.com/kss-nginx-php7.2:1.0
+COPY . /var/www/html
+COPY --from=vendor /app/vendor/ /var/www/html/vendor/
+WORKDIR /var/www/html
+RUN set -x \
+        && composer config --global --auth github-oauth.github.com 51b8fa003167a658f3eddd4bead506c86ad1d117 \
+        && composer install --no-dev \
+        && touch storage/logs/laravel.log \
+        && chmod 777 storage/logs/laravel.log \
+        && chmod -R 777 /var/www/html/storage
 
-RUN chmod +x /var/www/html/run.sh
+COPY --from=frontend /root/build/public/js/ /var/www/html/public/js/
+COPY --from=frontend /root/build/public/css/ /var/www/html/public/css/
+COPY --from=frontend /root/build/public/fonts/ /var/www/html/public/fonts/
+COPY --from=frontend /root/build/public/img/ /var/www/html/public/img/
+COPY --from=frontend /root/build/public/mix-manifest.json /var/www/html/public/mix-manifest.json
+COPY --from=frontend /root/build/public/views/ /var/www/html/public/views/
+
+RUN set -x \
+        && echo "* * * * * cd /var/www/html && php /var/www/html/artisan schedule:run >> /dev/null 2>&1" > /etc/cron.d/artisan-schedule-run \
+# Give execution rights on the cron job
+        && chmod 0644 /etc/cron.d/artisan-schedule-run \
+        && chmod +x /etc/cron.d/artisan-schedule-run \
+# Apply cron job
+        && crontab /etc/cron.d/artisan-schedule-run \
+# Create the log file to be able to run tail
+        && touch /var/log/cron.log \
+        && rm -f /etc/nginx/nginx.conf \
+        && rm -f /etc/nginx/sites-enabled/default \
+        && chown -R www-data:www-data /var/www/html \
+        && find /var/www/html -type f -exec chmod 644 {} \; \
+        && find /var/www/html -type d -exec chmod 755 {} \; \
+        && chmod -R ug+rwx /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/public/wordpress/wp-content \
+        && sed -i 's/memory_limit = .*/memory_limit = '2048M'/' /etc/php/7.2/fpm/php.ini \
+        && chmod +x /var/www/html/run.sh
+	
+
+COPY supervisor-worker.conf /etc/supervisor/conf.d/supervisor-worker.conf
+COPY nginx.conf /etc/nginx/nginx.conf
+# forward request and error logs to docker log collector
+RUN ln -sf /dev/stdout /var/log/nginx/access.log \
+	&& ln -sf /dev/stderr /var/log/nginx/error.log
+        
+EXPOSE 80
 ENTRYPOINT ["/var/www/html/run.sh"]
 CMD ["nginx", "-g", "daemon off;"]
