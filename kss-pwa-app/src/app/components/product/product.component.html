@@ -3,10 +3,11 @@
     <a href="{{product.products[0]['product-slug']}}" class="img-holder">
       <div class="">
           <img *ngIf="product.products[0].images['1x']; else noImage"
-            
+
             [useSrcset]=true
             [offset]=100
-            [lazyLoad]="createDataSrcSet(product.products[0].images['1x'], '270w', product.products[0].images['2x'], '540w', product.products[0].images['3x'], '810w')"
+            [defaultImage]="'/assets/img/transparent.png'"
+            [lazyLoad]="createDataSrcSet(product.products[0].images['1x'], '270w', product.products[0].images['2x'], '540w')"
             class="card-img-top"
             title="{{product.products[0].title}}"
             alt="{{product.products[0].title}}">

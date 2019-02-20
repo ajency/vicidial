@@ -6,15 +6,15 @@ import { Component, OnInit, Input, OnChanges, AfterViewInit, Output, EventEmitte
   styleUrls: ['./stories.component.scss']
 })
 export class StoriesComponent implements OnInit, OnChanges, AfterViewInit {
-	
+
 	@Input() stories : any;
   @Output() storiesLoaded = new EventEmitter();
-  constructor() {     
+  constructor() {
   }
 
   ngOnInit() {
   }
-  
+
   ngOnChanges(){
   	// console.log("stories ==>", this.stories);
   }
@@ -24,8 +24,8 @@ export class StoriesComponent implements OnInit, OnChanges, AfterViewInit {
     this.storiesLoaded.emit(true);
   }
 
-  createDataSrcSet(a,b,c,d,e,f){
-    return a+ " " +b +", " +c +" "+d +", "+e +" "+f;
+  createDataSrcSet(a,b,c,d){
+    return a+ " " +b +", " +c +" "+d;
   }
 
 }

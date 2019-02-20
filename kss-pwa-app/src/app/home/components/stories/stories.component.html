@@ -15,19 +15,20 @@
 				<!-- .... Box medium .... -->
 				<div *ngIf="story.type == 'story_box_medium'"  attr.static_element-id="{{story.sequence}}" attr.static_element-display_type="Shop By Stories" attr.static_element-type="{{story.type}}" attr.page_slug="home">
 				    <a href="{{story.element_data.image.href}}" class="img-holder trend-box d-block link-card" style="order:0;">
-				        <!-- <div>{!!$story['element_data']['text']['text1']!!}</div> -->		        
+				        <!-- <div>{!!$story['element_data']['text']['text1']!!}</div> -->
 				        <img *ngIf="story.images.original; else noOriginal" class="d-block w-100 img-fluid pb-1"  [useSrcset]="true" [lazyLoad]="story.images.original" [offset]=100
-				        alt="{{story.element_data.image.img_alt}}" title="{{story.element_data.image.title}}" />		        
+				        alt="{{story.element_data.image.img_alt}}" title="{{story.element_data.image.title}}" />
 				        <ng-template #noOriginal>
 					        <img class="d-block w-100 img-fluid pb-1"
-					            
+
 					            [useSrcset]=true
 					            [offset]=100
-					            [lazyLoad]="createDataSrcSet(story.images.default['3x'], '740w', story.images.default['2x'], '370w', story.images.default['1x'], '248w')"
+					            [defaultImage]="'/assets/img/transparent.png'"
+					            [lazyLoad]="createDataSrcSet(story.images.default['2x'], '370w', story.images.default['1x'], '248w')"
 					            alt="{{story.element_data.image.img_alt}}"
 					            title="{{story.element_data.image.title}}"/>
 					        <!-- <div>{!!$story['element_data']['text']['text2']!!}</div> -->
-					    </ng-template>	
+					    </ng-template>
 				    </a>
 				</div>
 
@@ -39,10 +40,11 @@
 				        alt="{{story.element_data.image.img_alt}}" title="{{story.element_data.image.title}}" />
 				        <ng-template #noOriginal2>
 					       <img class="d-block w-100 img-fluid pb-1"
-				            
+
 				            [useSrcset]="true"
 				            [offset]=100
-				            [lazyLoad]="createDataSrcSet(story.images.default['3x'], ' 1553w', story.images.default['2x'], '778w', story.images.default['1x'], '521w')"	
+				            [defaultImage]="'/assets/img/transparent.png'"
+				            [lazyLoad]="createDataSrcSet(story.images.default['2x'], '778w', story.images.default['1x'], '521w')"
 				            alt="{{story.element_data.image.img_alt}}"
 				            title="{{story.element_data.image.title}}"/>
 					        <!-- <div>{!!$story['element_data']['text']['text2']!!}</div> -->
@@ -59,10 +61,11 @@
 			       	alt="{{story.element_data.image.img_alt}}" title="{{story.element_data.image.title}}" />
 			        <ng-template #noOriginal3>
 				        <img class="d-block w-100 img-fluid pb-1"
-				            
+
 				            [useSrcset]="true"
 				            [offset]=100
-				            [lazyLoad]="createDataSrcSet(story.images.default['3x'], '818w', story.images.default['2x'], '409w', story.images.default['1x'], '272w')"	
+				            [defaultImage]="'/assets/img/transparent.png'"
+				            [lazyLoad]="createDataSrcSet(story.images.default['2x'], '409w', story.images.default['1x'], '272w')"
 				            alt="{{story.element_data.image.img_alt}}"
 				            title="{{story.element_data.image.title}}"/>
 				        <!-- <div>{!!$story['element_data']['text']['text2']!!}</div> -->

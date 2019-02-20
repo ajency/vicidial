@@ -17,8 +17,8 @@ export class ProductComponent implements OnInit, OnChanges {
   	// console.log("ngOnChanges product ==>", this.product);
   }
 
-  createDataSrcSet(a,b,c,d,e,f){
-    return a+ " " +b +", " +c +" "+d +", "+e +" "+f;
+  createDataSrcSet(a,b,c,d){
+    return a+ " " +b +", " +c +" "+d;
   }
 
 }
