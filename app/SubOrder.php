@@ -129,10 +129,10 @@ class SubOrder extends Model
             'item_data'             => $this->orderLines->toArray(),
             'payment_data'          => $this->odoo_data,
             'type'                  => $this->type,
-            'order_date'            => Carbon::now(),
+            'order_date'            => Carbon::now()->toDateTimeString(),
         ];
 
-        $http->post(config('app.report_url') . '/api/order/create-opr', ['sub_order_data' => $sub_order_data, 'placeorder' => true]);
+        $http->post(config('app.report_url') . '/api/order/create-opr', ['form_params' => ['sub_order_data' => $sub_order_data, 'placeorder' => true]]);
     }
 
     public function getSubOrder()
