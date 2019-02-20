@@ -22,6 +22,7 @@ class CreateOrderLinesTable extends Migration
             $table->string('size');
             $table->string('price_mrp');
             $table->string('price_final');
+            $table->string('price_discounted');
             $table->string('discount_per');
             $table->integer('product_id');
             $table->integer('product_color_id');
