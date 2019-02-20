@@ -9,7 +9,7 @@ import { CategoriesComponent } from './components/categories/categories.componen
 import { TrendingComponent } from './components/trending/trending.component';
 import { ComponentsModule } from '../components/components.module';
 
-import { DeferLoadModule } from '@trademe/ng-defer-load';
+// import { DeferLoadModule } from '@trademe/ng-defer-load';
 
 @NgModule({
   declarations: [HomePageComponent, BannerComponent, StoriesComponent, CategoriesComponent, TrendingComponent],
@@ -17,7 +17,7 @@ import { DeferLoadModule } from '@trademe/ng-defer-load';
     CommonModule,
     HomeRoutingModule,
     ComponentsModule,
-    DeferLoadModule
+    // DeferLoadModule
   ]
 })
 export class HomeModule { }

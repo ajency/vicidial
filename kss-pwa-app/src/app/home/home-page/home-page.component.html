@@ -96,9 +96,9 @@
   <!-- <div (deferLoad)="showStories=true"> -->
     <app-stories *ngIf="homePageElements.story" [stories]="homePageElements.story" (storiesLoaded)="storiesLoaded = true"> </app-stories>
   <!-- </div> -->
-  <div (deferLoad)="showTrendingSection=true">
-    <app-trending *ngIf="showTrendingSection && homePageElements.trending" [trending]="homePageElements.trending"> </app-trending>
-  </div>
+  <!-- <div (deferLoad)="showTrendingSection=true"> -->
+    <app-trending *ngIf="homePageElements.trending" [trending]="homePageElements.trending"> </app-trending>
+  <!-- </div> -->
 </div>
 <!-- <section>
   <div class="container mt-5">
