@@ -46,12 +46,15 @@ class ProductController extends Controller
         $params['breadcrumb']           = array();
         $params['breadcrumb']['list']   = array();
         $url = array();
+        $posts = array();
         $breadcrumb = config('product.breadcrumb_order');
         foreach ($breadcrumb as $category) {
             $facet = Facet::where('facet_name', '=', $category)->where('facet_value', '=', $params['category']->{$category})->first();
             $url[] = $facet->slug;
+            $posts[] = $facet->display_name;
             $params['breadcrumb']['list'][] = ['name' => $facet->display_name, 'href' => createUrl($url)];
         }
+        $params['posts'] = array_merge($posts,$params['metatags']);
 
         $params['breadcrumb']['current'] = '';
 

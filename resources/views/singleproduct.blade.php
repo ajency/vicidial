@@ -21,9 +21,9 @@
 				<!-- Product Images -->
 				@include('includes.singleproduct.productimages', ['params' => $params])
 
-				@php 
-					$selected_color_id = $params['selected_color_id']; 
-					$parent_id = $params['parent_id']; 
+				@php
+					$selected_color_id = $params['selected_color_id'];
+					$parent_id = $params['parent_id'];
 				@endphp
 
 				<!-- Product Color-selection Section -->
@@ -60,7 +60,7 @@
 				</div>
 				<!-- Product Size Selection -->
 				@include('includes.singleproduct.productsizes', ['params' => $params, 'selected_color_id' => $selected_color_id, 'radio_name' => 'kss-sizes'])
-				
+
 				<div class="text-danger d-none font-weight-bold position-relative size-select-error" style="top: -15px;">Please select a size</div>
 
 				<div class="row">
@@ -76,7 +76,7 @@
 								</button>
 							</div> -->
 							<!-- <div class="col-6 col-sm-6 col-md-6 col-xl-6 pl-1"> -->
-								@if ($params['show_button']) 
+								@if ($params['show_button'])
 								<button id="cd-add-to-cart" class="btn kss-btn kss-btn--big cd-add-to-cart">
 									<!-- <div class="kss-btn__wrapper d-flex align-items-center justify-content-center d-md-none">SELECT SIZE</div> -->
 									<div class="kss-btn__wrapper d-flex align-items-center justify-content-center"><span class="btn-contents align-items-center"><i class="kss_icon bag-icon-fill icon-sm"></i> Add to Bag</span> <div class="btn-icon"><i class="fas fa-circle-notch fa-spin fa-lg"></i></div></div>
@@ -84,7 +84,7 @@
 								@else
 								    <div class="out-of-stock">Currently unavailable</div>
 								@endif
-								
+
 							<!-- </div> -->
 						<!-- </div> -->
 					</div>
@@ -116,10 +116,94 @@
 
 			</div>
 		</div>
-		@include('includes.similar-products',["items"=>$similar_data_params]) 
+		@include('includes.similar-products',["items"=>$similar_data_params])
+
+		<?php
+		$wptags = $params['posts'];
+		$posts = get_post_by_tags($wptags,'3');
+
+		if(!empty($posts)){
+
+		?>
+
+		<div class="container">
+		  	<section class="more-posts mt-sm-4 pt-sm-4">
+			    <hr class="mt-5">
+			    <h3 class="include-title">Related Articles</h3>
+
+			    <div class="relatedposts">
+			      <div class="row more-post-grid">
+			          <?php foreach ($posts as  $post) {
+			          	$permalink = get_the_permalink($post->ID);
+			          	// $permalink = $post->guid;
+			          	$post_thumbnail = get_the_post_thumbnail($post->ID,'medium', array('class' => 'd-block w-100 img-fluid', 'sizes' => '(min-width:992px) 370px, 100vw'));
+
+			          	$post_excerpt = $post->post_excerpt;
+			          	$post_content = $post->post_content;
+
+			          	?>
+			            <div class="col-sm-4">
+			              <div class="kss-posts">
+			                <a href="<?php echo $permalink; ?>" class="d-block" title="<?php echo esc_attr( the_title_attribute( 'echo=0' ) ); ?>">
+			                    <?php
+			                      if ( !empty($post_thumbnail) ) { ?>
+			                      <div class="kss-posts__cover mb-3">
+			                      <?php
+			                       echo $post_thumbnail;
+			                      }
+			                      else { ?>
+			                      <div class="kss-posts__cover no-image mb-3">
+			                        <img src="{{CDN::asset('/img/blog/kss_logo_gray.jpg') }}" class="d-block w-100 img-fluid" />
+			                    <?php } ?>
+			                  </div>
+			                </a>
+			                  <div class="kss-posts__content">
+			                    <a href="<?php echo $permalink; ?>" class="d-block" title="<?php echo esc_attr( the_title_attribute( 'echo=0' ) ); ?>">
+			                      <h1 class="bl-single-heading bl-single-heading--small"><?php echo $post->post_title; ?></h1>
+			                      <p class="bl-single-caption bl-single-caption--small">
+			                        <?php
+			                         if ( !empty($post_excerpt) ) {
+			                            // This post has excerpt
+			                          echo wp_strip_all_tags( $post_excerpt, true );
+			                        } else {
+			                            // This post has no excerpt
+			                          echo wp_trim_words( $post_content, 12 );
+			                        }
+			                        ?>
+			                      </p>
+			                    </a>
+			                    <div class="flex-sm-row mb-1 mr-2 post-tags">
+			                      <div class="post-tags mb-1 d-flex">
+			                        <!-- <p class="post-tags__title">Category :</p> -->
+			                        <div class="post-tags__data">
+			                          <?php
+			                              $categories = get_the_category($post->ID);
+			                              $separator = ' ';
+			                              $output = '';
+			                              if ( ! empty( $categories ) ) {
+			                                  foreach( $categories as $category ) {
+			                                      $output .= '<a href="' . esc_url( get_category_link( $category->term_id ) ) . '" alt="' . esc_attr( sprintf( __( 'View all posts in %s', 'textdomain' ), $category->name ) ) . '"><span>' . esc_html( $category->name ) . '</span></a>' . $separator;
+			                                  }
+			                                  echo trim( $output, $separator );
+			                              }
+			                          ?>
+			                        </div>
+			                      </div>
+			                    </div>
+			                  </div>
+			              </div>
+			            </div>
+			          <?php
+			          // End loop
+			            } ?>
+			      </div>
+			    </div>
+		  	</section>
+		</div>
+		<?php } ?>
 
 	</div>
-	
+
 	<!-- Size selection modal -->
 	@include('includes.singleproduct.sizeselectionmodal')
 
