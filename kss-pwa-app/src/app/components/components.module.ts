@@ -13,9 +13,7 @@ import { LazyLoadImageModule, intersectionObserverPreset } from 'ng-lazyload-ima
   declarations: [HeaderComponent, FooterComponent, SliderComponent, ProductComponent, NoProductComponent, LoaderComponent, NoConnectionComponent],
   imports: [
     CommonModule,
-    LazyLoadImageModule.forRoot({
-        preset: intersectionObserverPreset
-    })
+    LazyLoadImageModule
   ],
   exports : [HeaderComponent, FooterComponent, SliderComponent, ProductComponent, NoProductComponent, LoaderComponent, NoConnectionComponent]
 })

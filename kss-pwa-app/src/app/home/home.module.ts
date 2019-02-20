@@ -20,9 +20,7 @@ import { LazyLoadImageModule, intersectionObserverPreset } from 'ng-lazyload-ima
     HomeRoutingModule,
     ComponentsModule,
     // DeferLoadModule
-	LazyLoadImageModule.forRoot({
-        preset: intersectionObserverPreset
-    })
+	LazyLoadImageModule
   ]
 })
 export class HomeModule { }

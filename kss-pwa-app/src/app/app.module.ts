@@ -20,9 +20,7 @@ import { LazyLoadImageModule, intersectionObserverPreset } from 'ng-lazyload-ima
     AppRoutingModule,
     HttpClientModule,
     // DeferLoadModule
-    LazyLoadImageModule.forRoot({
-        preset: intersectionObserverPreset
-    })
+    LazyLoadImageModule
   ],
   providers: [ApiService, AppService],
   bootstrap: [AppComponent]
