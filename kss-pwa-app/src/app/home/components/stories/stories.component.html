@@ -16,13 +16,13 @@
 				<div *ngIf="story.type == 'story_box_medium'"  attr.static_element-id="{{story.sequence}}" attr.static_element-display_type="Shop By Stories" attr.static_element-type="{{story.type}}" attr.page_slug="home">
 				    <a href="{{story.element_data.image.href}}" class="img-holder trend-box d-block link-card" style="order:0;">
 				        <!-- <div>{!!$story['element_data']['text']['text1']!!}</div> -->
-				        <img *ngIf="story.images.original; else noOriginal" class="d-block w-100 img-fluid pb-1"  [useSrcset]="true" [lazyLoad]="story.images.original" [offset]=100
+				        <img *ngIf="story.images.original; else noOriginal" class="d-block w-100 img-fluid pb-1"  [useSrcset]="true" [lazyLoad]="story.images.original" [offset]=0
 				        alt="{{story.element_data.image.img_alt}}" title="{{story.element_data.image.title}}" />
 				        <ng-template #noOriginal>
 					        <img class="d-block w-100 img-fluid pb-1"
 
 					            [useSrcset]=true
-					            [offset]=100
+					            [offset]=0
 					            [defaultImage]="'/assets/img/transparent.png'"
 					            [lazyLoad]="createDataSrcSet(story.images.default['2x'], '370w', story.images.default['1x'], '248w')"
 					            alt="{{story.element_data.image.img_alt}}"
@@ -36,13 +36,13 @@
 				<div *ngIf="story.type == 'story_landscape'" attr.static_element-id="{{story.sequence}}" attr.static_element-display_type="Shop By Stories" attr.static_element-type="{{story.type}}" attr.page_slug="home">
 				    <a href="{{story.element_data.image.href}}" class="img-holder trend-box d-block link-card" style="order:0;">
 				        <!-- <div>{!!$story['element_data']['text']['text1']!!}</div> -->
-                        <img *ngIf="story.images.original; else noOriginal2" [useSrcset]="true" class="d-block w-100 img-fluid pb-1" [lazyLoad]="story.images.original"
+                        <img *ngIf="story.images.original; else noOriginal2" [useSrcset]="true" class="d-block w-100 img-fluid pb-1" [lazyLoad]="story.images.original" [offset]=0
 				        alt="{{story.element_data.image.img_alt}}" title="{{story.element_data.image.title}}" />
 				        <ng-template #noOriginal2>
 					       <img class="d-block w-100 img-fluid pb-1"
 
 				            [useSrcset]="true"
-				            [offset]=100
+				            [offset]=0
 				            [defaultImage]="'/assets/img/transparent.png'"
 				            [lazyLoad]="createDataSrcSet(story.images.default['2x'], '778w', story.images.default['1x'], '521w')"
 				            alt="{{story.element_data.image.img_alt}}"
@@ -57,13 +57,13 @@
 				    <a href="{{story.element_data.image.href}}" class="img-holder trend-box d-block link-card" style="order:0;">
 				        <!-- <div>{!!$story['element_data']['text']['text1']!!}</div> -->
 
-		        	<img *ngIf="story.images.original; else noOriginal3" [useSrcset]="true" class="d-block w-100 img-fluid pb-1" [lazyLoad]="story.images.original"
+		        	<img *ngIf="story.images.original; else noOriginal3" [useSrcset]="true" class="d-block w-100 img-fluid pb-1" [lazyLoad]="story.images.original" [offset]=0
 			       	alt="{{story.element_data.image.img_alt}}" title="{{story.element_data.image.title}}" />
 			        <ng-template #noOriginal3>
 				        <img class="d-block w-100 img-fluid pb-1"
 
 				            [useSrcset]="true"
-				            [offset]=100
+				            [offset]=0
 				            [defaultImage]="'/assets/img/transparent.png'"
 				            [lazyLoad]="createDataSrcSet(story.images.default['2x'], '409w', story.images.default['1x'], '272w')"
 				            alt="{{story.element_data.image.img_alt}}"
