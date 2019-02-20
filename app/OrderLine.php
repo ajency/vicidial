@@ -18,6 +18,7 @@ class OrderLine extends Model
         'size',
         'price_mrp',
         'price_final',
+        'price_discounted',
         'discount_per',
         'product_id',
         'product_color_id',
