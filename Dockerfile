@@ -4,7 +4,7 @@ MAINTAINER Vilas Bhumare
 WORKDIR /app
 COPY composer.json composer.lock package.json /app/
 RUN set -x \
-        && composer config --global --auth github-oauth.github.com 51b8fa003167a658f3eddd4bead506c86ad1d117 \
+        && composer config --global --auth github-oauth.github.com github_token \
         && composer install \
     --ignore-platform-reqs \
     --no-interaction \
@@ -36,7 +36,7 @@ COPY . /var/www/html
 COPY --from=vendor /app/vendor/ /var/www/html/vendor/
 WORKDIR /var/www/html
 RUN set -x \
-        && composer config --global --auth github-oauth.github.com 51b8fa003167a658f3eddd4bead506c86ad1d117 \
+        && composer config --global --auth github-oauth.github.com github_token \
         && composer install --no-dev \
         && touch storage/logs/laravel.log \
         && chmod 777 storage/logs/laravel.log \
