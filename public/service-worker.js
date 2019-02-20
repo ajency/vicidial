@@ -191,8 +191,16 @@ workbox.precaching.precacheAndRoute([
     "revision": "652625682251933e5afc560797faa0c2"
   },
   {
+    "url": "assets/img/error.png",
+    "revision": "2cec9c62bd87fd2ab12401d00c5a1ed8"
+  },
+  {
     "url": "assets/img/logo-kss.png",
     "revision": "2f0e741422e56da4551a215da51851a1"
+  },
+  {
+    "url": "assets/img/transparent.png",
+    "revision": "978c1bee49d7ad5fc1a4d81099b13e18"
   },
   {
     "url": "manifest.json",
