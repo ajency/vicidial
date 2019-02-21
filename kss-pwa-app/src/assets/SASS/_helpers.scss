@@ -21,14 +21,13 @@
 [static_element-type='week_theme'],[static_element-type='month_theme']{
 	a{
 		padding-top: 50%;
+		position: relative;
 	}
 }
 
 [static_element-type='category'],[static_element-type='story'],[static_element-type='offer'],[static_element-type='brand']{
 	a{
 		padding-top: 100%;
-		.img-holder{
-			width: calc(100% - 30px) !important;
-		}
+		position: relative;
 	}
 }
