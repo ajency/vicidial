@@ -68,6 +68,7 @@ RUN set -x \
         && chmod +x /var/www/html/run.sh
 	
 COPY supervisor-worker.conf /etc/supervisor/conf.d/supervisor-worker.conf
+RUN mkdir -p /var/log/laravel/
 COPY nginx.conf /etc/nginx/nginx.conf        
 EXPOSE 80
 ENTRYPOINT ["/var/www/html/run.sh"]
