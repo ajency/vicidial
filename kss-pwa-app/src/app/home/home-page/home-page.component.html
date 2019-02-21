@@ -5,10 +5,10 @@
 <div *ngIf="homePageElements" class="pb-5">
 
   <!-- Gender category selection -->
-  <app-gender-category *ngIf="homePageElements.gender_tabs" [tabs]="homePageElements.gender_tabs"></app-gender-category>
+  <app-gender-category *ngIf="homePageElements.gender_tab" [tabs]="homePageElements.gender_tab"></app-gender-category>
 
    <!-- Our offers -->
-  <app-offers *ngIf="homePageElements.offers" [offers]="homePageElements.offers"></app-offers>
+  <app-offers *ngIf="homePageElements.offer" [offers]="homePageElements.offer"></app-offers>
 
 
     <!-- Theme of the week and what's happening this month section -->
@@ -26,7 +26,7 @@
   </section>
 
   <!-- Brands -->
-  <div *ngIf="homePageElements.brands" app-brands [brands]="homePageElements.brands"></div>
+  <div *ngIf="homePageElements.brand" app-brands [brands]="homePageElements.brand"></div>
 
 
   <!-- Home category -->
