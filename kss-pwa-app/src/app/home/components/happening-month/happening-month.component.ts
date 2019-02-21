@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, AfterViewInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: '[app-happening-month]',
@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HappeningMonthComponent implements OnInit {
 
+	@Input() theme : any;
   constructor() { }
 
   ngOnInit() {

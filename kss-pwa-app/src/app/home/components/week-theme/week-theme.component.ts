@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, AfterViewInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: '[app-week-theme]',
@@ -6,7 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./week-theme.component.scss']
 })
 export class WeekThemeComponent implements OnInit {
-
+	
+	@Input() theme : any;
   constructor() { }
 
   ngOnInit() {
