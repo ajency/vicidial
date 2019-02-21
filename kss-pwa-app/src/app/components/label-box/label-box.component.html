@@ -28,13 +28,26 @@
         srcset="https://via.placeholder.com/900x900 900w,
                      https://via.placeholder.com/600x600 600w,
                      https://via.placeholder.com/300x300 300w"
-        sizes='(min-width: 1200px) 168px, (max-width: 991px) 46vw'
+        sizes='(min-width: 1200px) 268px, (max-width: 991px) 46vw'
         title=""
         alt=""/>
 
 
+        <!-- Story -->
+<!-- 		<img class="d-block w-100 img-fluid"
+        src="https://via.placeholder.com/360x360"
+        srcset="https://via.placeholder.com/1080x1080 1080w,
+                     https://via.placeholder.com/720x720 7200w,
+                     https://via.placeholder.com/360x360 360w"
+        sizes='(min-width: 1200px) 368px, (min-width: 767px) 32vw, 46vw'
+        title=""
+        alt=""/> -->
+
+
 	<div class="label-box__sticky">
-		<span class="label-box__action" [ngStyle]="{'background-color' : box_data.element_data.bg_color ? box_data.element_data.bg_color : '', 'color' : box_data.element_data.text_color ? box_data.element_data.text_color : ''}" style="background-color: #fff; color: #000;" *ngIf="box_data.element_data.text.text1"> {{box_data.element_data.text.text1}} </span>
+		<span class="label-box__action" [ngStyle]="{'background-color' : box_data.element_data.bg_color ? box_data.element_data.bg_color : '', 'color' : box_data.element_data.text_color ? box_data.element_data.text_color : ''}" style="background-color: #fff; color: #000;" *ngIf="box_data.element_data.text.text1"> {{box_data.element_data.text.text1}}
+		 	<span class="cat-title">2-14 Years, Boys &amp; Girls </span>
+		 </span>
 		<span class="label-box__muted" *ngIf="box_data.element_data.text.text2">{{box_data.element_data.text.text2}}</span>
 	</div>
 </a>
