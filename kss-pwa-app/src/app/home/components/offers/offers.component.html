@@ -2,7 +2,7 @@
 <section class="mt-4">
 	<div class="container">
 		<div  class="our-offers d-sm-flex align-items-sm-center justify-content-sm-center label-box-medium mobile-overflow row" >
-			<div *ngFor="let offer of offers" class="label-box img-holder position-relative" app-label-box [box_data]="offer" [box_type]="offer"></div>
+			<div *ngFor="let offer of offers" class="label-box img-holder position-relative" attr.static_element-id="{{offer.sequence}}" attr.static_element-display_type="Our Offers" attr.static_element-type="{{offer.type}}" attr.page_slug="home" app-label-box [box_data]="offer" [box_type]="offer"></div>
 		</div>
 	</div>
 </section>

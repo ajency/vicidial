@@ -12,7 +12,7 @@
 <section class="mt-4">
   <div class="container">
     <div class="home-stories d-sm-flex align-items-sm-center justify-content-sm-center label-box-large row position-relative">
-    	<div *ngFor="let story of stories" class="label-box img-holder position-relative" app-label-box [box_data]="story" [box_type]="story"></div>
+    	<div *ngFor="let story of stories" class="label-box img-holder position-relative" attr.static_element-id="{{story.sequence}}" attr.static_element-display_type="Shop By Stories" attr.static_element-type="{{story.type}}" attr.page_slug="home" app-label-box [box_data]="story" [box_type]="story"></div>
     </div>
   </div>
 </section>

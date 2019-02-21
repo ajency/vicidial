@@ -11,7 +11,7 @@
 <section class="mt-4">
   <div class="container">
     <div class="home-category d-sm-flex align-items-sm-center justify-content-sm-center label-box-medium-sm row position-relative">
-      <div *ngFor="let category of categories" class="label-box img-holder position-relative" app-label-box [box_data]="category" [box_type]="category"></div>
+      <div *ngFor="let category of categories" class="label-box img-holder position-relative" attr.static_element-id="{{category.sequence}}" attr.static_element-display_type="Shop by Category" attr.static_element-type="{{category.type}}" attr.page_slug="home" app-label-box [box_data]="category" [box_type]="category"></div>
     </div>
   </div>
 </section>
