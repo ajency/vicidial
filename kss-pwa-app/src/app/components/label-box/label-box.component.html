@@ -33,20 +33,20 @@
         alt=""/>
 
 
-        <!-- Story -->
-<!-- 		<img class="d-block w-100 img-fluid"
-        src="https://via.placeholder.com/360x360"
-        srcset="https://via.placeholder.com/1080x1080 1080w,
-                     https://via.placeholder.com/720x720 7200w,
-                     https://via.placeholder.com/360x360 360w"
-        sizes='(min-width: 1200px) 368px, (min-width: 767px) 32vw, 46vw'
-        title=""
-        alt=""/> -->
+    <!-- Story -->
+	<img *ngIf="box_type == 'story'" class="d-block w-100 img-fluid"
+    src="https://via.placeholder.com/360x360"
+    srcset="https://via.placeholder.com/1080x1080 1080w,
+                 https://via.placeholder.com/720x720 7200w,
+                 https://via.placeholder.com/360x360 360w"
+    sizes='(min-width: 1200px) 368px, (min-width: 767px) 32vw, 46vw'
+    title=""
+    alt=""/>
 
 
 	<div class="label-box__sticky">
 		<span class="label-box__action" [ngStyle]="{'background-color' : box_data.element_data.bg_color ? box_data.element_data.bg_color : '', 'color' : box_data.element_data.text_color ? box_data.element_data.text_color : ''}" style="background-color: #fff; color: #000;" *ngIf="box_data.element_data.text.text1"> {{box_data.element_data.text.text1}}
-		 	<span class="cat-title">2-14 Years, Boys &amp; Girls </span>
+		 	<span *ngIf="box_type == 'category'" class="cat-title">2-14 Years, Boys &amp; Girls </span>
 		 </span>
 		<span class="label-box__muted" *ngIf="box_data.element_data.text.text2">{{box_data.element_data.text.text2}}</span>
 	</div>
