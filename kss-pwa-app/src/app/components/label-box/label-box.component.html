@@ -22,6 +22,16 @@
         title="{{box_data.element_data.image.title}}"
         alt="{{box_data.element_data.image.img_alt}}"/>
 
+	<!-- Home category -->
+	<img *ngIf="box_type == 'category'" class="d-block w-100 img-fluid"
+        src="https://via.placeholder.com/170x170"
+        srcset="https://via.placeholder.com/900x900 900w,
+                     https://via.placeholder.com/600x600 600w,
+                     https://via.placeholder.com/300x300 300w"
+        sizes='(min-width: 1200px) 168px, (max-width: 991px) 46vw'
+        title=""
+        alt=""/>
+
 
 	<div class="label-box__sticky">
 		<span class="label-box__action" [ngStyle]="{'background-color' : box_data.element_data.bg_color ? box_data.element_data.bg_color : '', 'color' : box_data.element_data.text_color ? box_data.element_data.text_color : ''}" style="background-color: #fff; color: #000;" *ngIf="box_data.element_data.text.text1"> {{box_data.element_data.text.text1}} </span>

@@ -2,8 +2,6 @@
 
 <app-loader *ngIf="!homePageElements"></app-loader>
 
-
-<!-- <app-categories> </app-categories> -->
 <div *ngIf="homePageElements" class="pb-5">
 
   <!-- Gender category selection -->
@@ -31,12 +29,12 @@
   <div *ngIf="homePageElements.brands" app-brands [brands]="homePageElements.brands"></div>
 
 
-<!-- Home category -->
-<div app-categories></div>
+  <!-- Home category -->
+  <div *ngIf="homePageElements.category" app-categories [categories]="homePageElements.category"></div>
 
 
   <!-- <div (deferLoad)="showStories=true"> -->
-    <app-stories *ngIf="homePageElements.story" [stories]="homePageElements.story"> </app-stories>
+    <!-- <app-stories *ngIf="homePageElements.story" [stories]="homePageElements.story"> </app-stories> -->
   <!-- </div> -->
   <!-- <div (deferLoad)="showTrendingSection=true"> -->
     <app-trending *ngIf="homePageElements.trending" [trending]="homePageElements.trending"> </app-trending>

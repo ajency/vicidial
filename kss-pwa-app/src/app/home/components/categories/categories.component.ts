@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, AfterViewInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: '[app-categories]',
@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CategoriesComponent implements OnInit {
 
+	@Input() categories : any;
   constructor() { }
 
   ngOnInit() {
