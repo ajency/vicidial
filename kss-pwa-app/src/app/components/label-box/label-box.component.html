@@ -6,7 +6,7 @@
 	<!-- Offers section -->
 	<img *ngIf="box_data.type == 'offer'" class="d-block w-100 img-fluid img-holder"
 		[useSrcset]="true"
-		[offset]=0
+		[offset]=250
 		[defaultImage]="'/assets/img/transparent.png'"
 		[lazyLoad]="createDataSrcSet(box_data.images.default['3x'], '1050w', box_data.images.default['2x'], '700w', box_data.images.default['1x'], '350w')"
         sizes='(min-width: 1200px) 328px, (min-width: 768px) 26vw,  58vw'
@@ -17,7 +17,7 @@
 	<!-- Brands box-small -->
  	<img *ngIf="box_data.type == 'brand'" class="d-block w-100 img-fluid img-holder"
 	 	[useSrcset]="true"
-		[offset]=0
+		[offset]=250
 		[defaultImage]="'/assets/img/transparent.png'"
 		[lazyLoad]="createDataSrcSet(box_data.images.default['3x'], '510w', box_data.images.default['2x'], '340w', box_data.images.default['1x'], '170w')"
         sizes='(min-width: 1200px) 168px, (max-width: 991px) 46vw'
@@ -27,7 +27,7 @@
 	<!-- Home category -->
 	<img *ngIf="box_data.type == 'category'" class="d-block w-100 img-fluid img-holder"
         [useSrcset]="true"
-        [offset]=0
+        [offset]=250
         [defaultImage]="'/assets/img/transparent.png'"
         [lazyLoad]="createDataSrcSet(box_data.images.default['3x'], '510w', box_data.images.default['2x'], '340w', box_data.images.default['1x'], '170w')"
         sizes='(min-width: 1200px) 268px, (max-width: 991px) 46vw'
@@ -38,7 +38,7 @@
     <!-- Story -->
 	<img *ngIf="box_data.type == 'story'" class="d-block w-100 img-fluid img-holder"
         [useSrcset]="true"
-        [offset]=0
+        [offset]=250
         [defaultImage]="'/assets/img/transparent.png'"
         [lazyLoad]="createDataSrcSet(box_data.images.default['3x'], '510w', box_data.images.default['2x'], '340w', box_data.images.default['1x'], '170w')"
         sizes='(min-width: 1200px) 368px, (min-width: 767px) 32vw, 46vw'

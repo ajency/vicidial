@@ -5,7 +5,7 @@
           <img *ngIf="product.products[0].images['1x']; else noImage"
 
             [useSrcset]=true
-            [offset]=0
+            [offset]=250
             [defaultImage]="'/assets/img/transparent.png'"
             [lazyLoad]="createDataSrcSet(product.products[0].images['1x'], '270w', product.products[0].images['2x'], '540w')"
             class="card-img-top"
@@ -15,7 +15,7 @@
 	            <img
               [defaultImage]="'/img/placeholder.svg'"
               [useSrcset]=true
-              [offset]=0
+              [offset]=250
               [lazyLoad]="createDataSrcSet('/img/placeholder.svg', '270w', '/img/placeholder.svg', '540w', '/img/placeholder.svg', '810w')"
 	            class="card-img-top"
 	            title="{{product.products[0].title}}"
