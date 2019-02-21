@@ -2,6 +2,8 @@
 
 <section class="mt-5">
 	<div class="container">
-		<app-gender-box></app-gender-box>
+		<div class="row gender-cat-wrapper mobile-overflow">
+			<div *ngFor="let tab of tabs" class="col" app-gender-box [tab]="tab"> </div>			
+		</div>
 	</div>
 </section>

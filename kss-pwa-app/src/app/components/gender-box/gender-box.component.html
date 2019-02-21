@@ -1,38 +1,6 @@
 <!-- Gender inner boxes -->
-<div class="row gender-cat-wrapper mobile-overflow">
-	<div class="col">
-		<a href="#" class="text-dark card gender-cat d-flex align-items-center justify-content-center">
-			<h4 class="gender-cat__name">Boys</h4>
-			<p class="gender-cat__year mb-0">2 - 7</p>
-		</a>
-	</div>
-	<div class="col">
-		<a href="#" class="text-dark card gender-cat d-flex align-items-center justify-content-center">
-			<h4 class="gender-cat__name">Boys</h4>
-			<p class="gender-cat__year mb-0">7 - 14</p>
-		</a>
-	</div>
-	<div class="col">
-		<a href="#" class="text-dark card gender-cat d-flex align-items-center justify-content-center">
-			<h4 class="gender-cat__name">Girls</h4>
-			<p class="gender-cat__year mb-0">2 - 7</p>
-		</a>
-	</div>
-	<div class="col">
-		<a href="#" class="text-dark card gender-cat d-flex align-items-center justify-content-center">
-			<h4 class="gender-cat__name">Girls</h4>
-			<p class="gender-cat__year mb-0">7 - 14</p>
-		</a>
-	</div>
-	<div class="col">
-		<a href="#" class="text-dark card gender-cat d-flex align-items-center justify-content-center">
-			<h4 class="gender-cat__name">Infants</h4>
-			<p class="gender-cat__year mb-0">0 - 2</p>
-		</a>
-	</div>
-	<div class="col">
-		<a href="#" class="text-dark card gender-cat d-flex align-items-center justify-content-center">
-			<h4 class="gender-cat__name">New <br>Arrival</h4>
-		</a>
-	</div>	
-</div>
+<a href="{{tab.element_data.link}}" class="text-dark card gender-cat d-flex align-items-center justify-content-center">
+	<h4 class="gender-cat__name" *ngIf="tab.element_data.text.text1">{{tab.element_data.text.text1}}</h4>
+	<p class="gender-cat__year mb-0" *ngIf="tab.element_data.text.text2">{{tab.element_data.text.text2}}</p>
+</a>
+

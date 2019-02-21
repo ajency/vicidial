@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, AfterViewInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: '[app-label-box]',
@@ -6,7 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./label-box.component.scss']
 })
 export class LabelBoxComponent implements OnInit {
-
+	@Input() box_data : any;
+	@Input() box_type : any;
   constructor() { }
 
   ngOnInit() {

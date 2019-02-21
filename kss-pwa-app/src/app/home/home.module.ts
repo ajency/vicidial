@@ -25,7 +25,9 @@ import { BrandsComponent } from './components/brands/brands.component';
     HomeRoutingModule,
     ComponentsModule,
     // DeferLoadModule
-	LazyLoadImageModule
+	LazyLoadImageModule.forRoot({
+        preset: intersectionObserverPreset
+	})
   ]
 })
 export class HomeModule { }

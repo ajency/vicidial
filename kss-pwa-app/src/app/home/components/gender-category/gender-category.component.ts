@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, AfterViewInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-gender-category',
@@ -7,9 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GenderCategoryComponent implements OnInit {
 
+	@Input() tabs : any;
   constructor() { }
 
   ngOnInit() {
+  }
+
+  ngOnChanges(){
+
   }
 
 }

@@ -9,7 +9,6 @@ import { ApiService } from './services/api.service';
 import { AppService } from './services/app.service';
 
 // import { DeferLoadModule } from '@trademe/ng-defer-load';
-import { LazyLoadImageModule, intersectionObserverPreset } from 'ng-lazyload-image';
 
 @NgModule({
   declarations: [
@@ -18,9 +17,8 @@ import { LazyLoadImageModule, intersectionObserverPreset } from 'ng-lazyload-ima
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
+    HttpClientModule
     // DeferLoadModule
-    LazyLoadImageModule
   ],
   providers: [ApiService, AppService],
   bootstrap: [AppComponent]

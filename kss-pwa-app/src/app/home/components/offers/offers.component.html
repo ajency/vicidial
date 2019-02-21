@@ -1,7 +1,8 @@
 
 <section class="mt-4">
 	<div class="container">
-		<div class="our-offers d-sm-flex align-items-sm-center justify-content-sm-center label-box-medium mobile-overflow row" app-label-box>
+		<div  class="our-offers d-sm-flex align-items-sm-center justify-content-sm-center label-box-medium mobile-overflow row" >
+			<div *ngFor="let offer of offers" class="label-box img-holder position-relative" app-label-box [box_data]="offer" [box_type]="offer"></div>
 		</div>
 	</div>
 </section>

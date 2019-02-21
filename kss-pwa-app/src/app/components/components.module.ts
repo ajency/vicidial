@@ -15,7 +15,9 @@ import { LabelBoxComponent } from './label-box/label-box.component';
   declarations: [HeaderComponent, FooterComponent, SliderComponent, ProductComponent, NoProductComponent, LoaderComponent, NoConnectionComponent, GenderBoxComponent, LabelBoxComponent],
   imports: [
     CommonModule,
-    LazyLoadImageModule
+    LazyLoadImageModule.forRoot({
+        preset: intersectionObserverPreset
+  	})
   ],
   exports : [HeaderComponent, FooterComponent, SliderComponent, ProductComponent, NoProductComponent, LoaderComponent, NoConnectionComponent, GenderBoxComponent, LabelBoxComponent]
 })
