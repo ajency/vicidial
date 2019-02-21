@@ -4,7 +4,7 @@
 
 
 	<!-- Offers section -->
-	<img *ngIf="box_data.type == 'offer'" class="d-block w-100 img-fluid"
+	<img *ngIf="box_data.type == 'offer'" class="d-block w-100 img-fluid img-holder"
 		[useSrcset]="true"
 		[offset]=0
 		[defaultImage]="'/assets/img/transparent.png'"
@@ -14,7 +14,7 @@
 
 
 	<!-- Brands box-small -->
- 	<img *ngIf="box_data.type == 'brand'" class="d-block w-100 img-fluid"
+ 	<img *ngIf="box_data.type == 'brand'" class="d-block w-100 img-fluid img-holder"
 	 	[useSrcset]="true"
 		[offset]=0
 		[defaultImage]="'/assets/img/transparent.png'"
@@ -23,7 +23,7 @@
         alt="{{box_data.element_data.image.img_alt}}"/>
 
 	<!-- Home category -->
-	<img *ngIf="box_data.type == 'category'" class="d-block w-100 img-fluid"
+	<img *ngIf="box_data.type == 'category'" class="d-block w-100 img-fluid img-holder"
         [useSrcset]="true"
         [offset]=0
         [defaultImage]="'/assets/img/transparent.png'"
@@ -34,7 +34,7 @@
 
 
     <!-- Story -->
-	<img *ngIf="box_data.type == 'story'" class="d-block w-100 img-fluid"
+	<img *ngIf="box_data.type == 'story'" class="d-block w-100 img-fluid img-holder"
         [useSrcset]="true"
         [offset]=0
         [defaultImage]="'/assets/img/transparent.png'"
