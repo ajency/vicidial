@@ -1,10 +1,10 @@
 
 <a href="{{box_data.element_data.image.href}}" class="d-block text-black">
-	<img src="https://via.placeholder.com/300" alt="" title="" class="d-block w-100 img-fluid pb-1">
+	<!-- <img src="https://via.placeholder.com/300" alt="" title="" class="d-block w-100 img-fluid pb-1"> -->
 
 
 	<!-- Offers section -->
-	<img *ngIf="box_type == 'offer'" class="d-block w-100 img-fluid"
+	<img *ngIf="box_data.type == 'offer'" class="d-block w-100 img-fluid"
 		[useSrcset]="true"
 		[offset]=0
 		[defaultImage]="'/assets/img/transparent.png'"
@@ -14,7 +14,7 @@
 
 
 	<!-- Brands box-small -->
- 	<img *ngIf="box_type == 'brand'" class="d-block w-100 img-fluid"
+ 	<img *ngIf="box_data.type == 'brand'" class="d-block w-100 img-fluid"
 	 	[useSrcset]="true"
 		[offset]=0
 		[defaultImage]="'/assets/img/transparent.png'"
@@ -23,30 +23,30 @@
         alt="{{box_data.element_data.image.img_alt}}"/>
 
 	<!-- Home category -->
-	<img *ngIf="box_type == 'category'" class="d-block w-100 img-fluid"
-        src="https://via.placeholder.com/170x170"
-        srcset="https://via.placeholder.com/900x900 900w,
-                     https://via.placeholder.com/600x600 600w,
-                     https://via.placeholder.com/300x300 300w"
+	<img *ngIf="box_data.type == 'category'" class="d-block w-100 img-fluid"
+        [useSrcset]="true"
+        [offset]=0
+        [defaultImage]="'/assets/img/transparent.png'"
+        [lazyLoad]="createDataSrcSet(box_data.images.default['3x'], '510w', box_data.images.default['2x'], '340w', box_data.images.default['1x'], '170w')"
         sizes='(min-width: 1200px) 268px, (max-width: 991px) 46vw'
-        title=""
-        alt=""/>
+        title="{{box_data.element_data.image.title}}"
+        alt="{{box_data.element_data.image.img_alt}}"/>
 
 
     <!-- Story -->
-	<img *ngIf="box_type == 'story'" class="d-block w-100 img-fluid"
-    src="https://via.placeholder.com/360x360"
-    srcset="https://via.placeholder.com/1080x1080 1080w,
-                 https://via.placeholder.com/720x720 7200w,
-                 https://via.placeholder.com/360x360 360w"
-    sizes='(min-width: 1200px) 368px, (min-width: 767px) 32vw, 46vw'
-    title=""
-    alt=""/>
+	<img *ngIf="box_data.type == 'story'" class="d-block w-100 img-fluid"
+        [useSrcset]="true"
+        [offset]=0
+        [defaultImage]="'/assets/img/transparent.png'"
+        [lazyLoad]="createDataSrcSet(box_data.images.default['3x'], '510w', box_data.images.default['2x'], '340w', box_data.images.default['1x'], '170w')"
+        sizes='(min-width: 1200px) 368px, (min-width: 767px) 32vw, 46vw'
+        title="{{box_data.element_data.image.title}}"
+        alt="{{box_data.element_data.image.img_alt}}"/>
 
 
 	<div class="label-box__sticky">
 		<span class="label-box__action" [ngStyle]="{'background-color' : box_data.element_data.bg_color ? box_data.element_data.bg_color : '', 'color' : box_data.element_data.text_color ? box_data.element_data.text_color : ''}" style="background-color: #fff; color: #000;" *ngIf="box_data.element_data.text.text1"> {{box_data.element_data.text.text1}}
-		 	<span *ngIf="box_type == 'category'" class="cat-title">2-14 Years, Boys &amp; Girls </span>
+		 	<span *ngIf="box_data.type == 'category'" class="cat-title">2-14 Years, Boys &amp; Girls </span>
 		 </span>
 		<span class="label-box__muted" *ngIf="box_data.element_data.text.text2">{{box_data.element_data.text.text2}}</span>
 	</div>

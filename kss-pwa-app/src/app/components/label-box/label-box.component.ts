@@ -6,12 +6,16 @@ import { AppService } from '../../services/app.service';
   templateUrl: './label-box.component.html',
   styleUrls: ['./label-box.component.scss']
 })
-export class LabelBoxComponent implements OnInit {
+export class LabelBoxComponent implements OnInit, OnChanges {
 	@Input() box_data : any;
 	@Input() box_type : any;
   constructor() { }
 
   ngOnInit() {
+  }
+
+  ngOnChanges(){
+    console.log("label-box ==>", this.box_type);
   }
 
   createDataSrcSet(a,b,c,d,e,f){
