@@ -17,3 +17,18 @@
     padding-top: 0.5rem;
     display: inline-flex;
 }
+
+[static_element-type='week_theme'],[static_element-type='month_theme']{
+	a{
+		padding-top: 50%;
+	}
+}
+
+[static_element-type='category'],[static_element-type='story'],[static_element-type='offer']{
+	a{
+		padding-top: 100%;
+		.img-holder{
+			width: calc(100% - 30px) !important;
+		}
+	}
+}
