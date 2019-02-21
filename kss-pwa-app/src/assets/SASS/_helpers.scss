@@ -10,12 +10,21 @@
 	}
 }
 
+.col-block{
+	margin-bottom: 2rem;
+}
+
 .explore-text{
 	font-size: 1.1rem;
     color: #848484;
     font-weight: bold;
     padding-top: 0.5rem;
     display: inline-flex;
+    position: absolute;
+    bottom: -30px;
+    left: 0;
+    right: 0;
+    justify-content: center;
 }
 
 [static_element-type='week_theme'],[static_element-type='month_theme']{
