@@ -80,7 +80,7 @@ self.addEventListener('push', (event) => {
 workbox.precaching.precacheAndRoute([
   {
     "url": "views/kss-pwa/4.js",
-    "revision": "ee4dfeb2f9853f2fc63feb965e170117"
+    "revision": "553655a6ddf5d327f3fa3bd4988f65a8"
   },
   {
     "url": "views/kss-pwa/fa-brands-400.eot",
@@ -144,7 +144,11 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "views/kss-pwa/main.js",
-    "revision": "469c83d938e970cbaa815065f8aabe15"
+    "revision": "9ff89cebdd26e6e678e93ddddb2ef719"
+  },
+  {
+    "url": "views/kss-pwa/manifest.json",
+    "revision": "035277ae8ad14276e9e2e4733880fe01"
   },
   {
     "url": "views/kss-pwa/polyfills.js",
@@ -156,7 +160,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "views/kss-pwa/styles.css",
-    "revision": "f327533a3f201531b6f27480914ecb43"
+    "revision": "547b8820101f79b891f9e648f2fbe56b"
   },
   {
     "url": "assets/icons/icon1.png",
