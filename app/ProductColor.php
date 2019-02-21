@@ -5,6 +5,7 @@ namespace App;
 use Ajency\Connections\ElasticQuery;
 use Ajency\Connections\OdooConnect;
 use Ajency\FileUpload\FileUpload;
+use App\EntityData;
 use App\Jobs\IndexProduct;
 use App\Jobs\UpdateElasticData;
 use Carbon\Carbon;
@@ -79,6 +80,26 @@ class ProductColor extends Model
         return ['product' => $product_data, 'variant' => $variants];
     }
 
+    public static function updateStaticData($unstructured)
+    {
+        //add static data to product
+        $productStaticData = EntityData::getOdooProductAttributes($unstructured['product']['product_id']);
+        foreach (config('product.static_fields.product') as $attribute => $defaultAttValue) {
+            $unstructured['product'][$attribute] = (isset($productStaticData[$attribute])) ? $productStaticData[$attribute] : $defaultAttValue;
+        }
+
+        //add static data to variant
+        foreach ($unstructured['variant'] as $variant_id => $variantData) {
+            $variantStaticData = EntityData::getOdooVariantAttributes($variant_id);
+            foreach (config('product.static_fields.variant') as $attribute => $defaultAttValue) {
+                $variantData[$attribute] = (isset($variantStaticData[$attribute])) ? $variantStaticData[$attribute] : $defaultAttValue;
+            }
+            $unstructured['variant'][$variant_id] = $variantData;
+        }
+
+        return $unstructured;
+    }
+
     public static function updateElasticData($products)
     {
         $elasticProducts = collect();
@@ -87,6 +108,7 @@ class ProductColor extends Model
             $change       = $productData['change'];
 
             $unstructured_data = self::deconstructElasticData($elastic_data);
+            $unstructured_data = self::updateStaticData($unstructured_data);
             $productData       = $unstructured_data['product'];
             $variantsData      = $unstructured_data['variant'];
             $changed_data      = $change($productData, $variantsData);

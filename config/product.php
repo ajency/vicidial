@@ -87,6 +87,14 @@ return [
         "is_locked",
         "lot_name",
     ],
+    'static_fields' => [
+        'product' => [
+            'product_rank' => 0,
+        ],
+        'variant' => [
+            
+        ],
+    ],
     'update_inventory'               => env('UPDATE_INVENTORY', false),
     'attribute_fields'               => [
         'id',
@@ -127,7 +135,7 @@ return [
             ],
         ],
         "number_facet"  => [
-            'product' => ['product_id'],
+            'product' => ['product_id','product_rank'],
             'variant' => [
                 'product_color_id',
                 'variant_id',
@@ -455,6 +463,7 @@ return [
         'price_desc'    => ['field' => 'number_sort.variant_sale_price', "order" => 'desc'],
         'discount_asc'  => ['field' => 'number_sort.variant_discount_percent', "order" => 'asc'],
         'discount_desc' => ['field' => 'number_sort.variant_discount_percent', "order" => 'desc'],
+        'rank_desc' => ['field' => 'number_sort.product_rank', "order" => 'desc'],
     ],
     "sort_on"                        => [
         ["name" => "Recommended", "value" => "", "is_selected" => true, "class" => "popularity"],

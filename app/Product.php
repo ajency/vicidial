@@ -430,6 +430,9 @@ class Product
         if (isset($params['sort_on']) and $params['sort_on'] != "") {
             $sort = config('product.sort.' . $params['sort_on']);
             $q->setSort([$sort['field'] => ['order' => $sort['order']]]);
+        }else{
+            $sort = config('product.sort.rank_desc');
+            $q->setSort([$sort['field'] => ['order' => $sort['order']]]);
         }
         return formatItems($q->search(), $params);
     }
