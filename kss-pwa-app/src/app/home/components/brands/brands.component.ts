@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, AfterViewInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: '[app-brands]',
@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BrandsComponent implements OnInit {
 
+	@Input() brands : any;
   constructor() { }
 
   ngOnInit() {

@@ -14,20 +14,18 @@
 
 
 	<!-- Brands box-small -->
-<!--  		<img class="d-block w-100 img-fluid"
+ 		<img *ngIf="box_type == 'brand'" class="d-block w-100 img-fluid"
         src="https://via.placeholder.com/170x170"
         srcset="https://via.placeholder.com/510x510 510w,
                      https://via.placeholder.com/340x340 340w,
                      https://via.placeholder.com/170x170 170w"
         sizes='(min-width: 1200px) 168px, (min-width: 768px) 30vw,  46vw'
         title=""
-        alt=""/> -->
-
-
+        alt=""/>
 
 
 	<div class="label-box__sticky">
-		<span class="label-box__action" style="background-color: #fff; color: #000;" *ngIf="box_data.element_data.text.text1"> {{box_data.element_data.text.text1}} </span>
+		<span class="label-box__action" [ngStyle]="{'background-color' : box_data.element_data.bg_color ? box_data.element_data.bg_color : '', 'color' : box_data.element_data.text_color ? box_data.element_data.text_color : ''}" style="background-color: #fff; color: #000;" *ngIf="box_data.element_data.text.text1"> {{box_data.element_data.text.text1}} </span>
 		<span class="label-box__muted" *ngIf="box_data.element_data.text.text2">{{box_data.element_data.text.text2}}</span>
 	</div>
 </a>

@@ -27,9 +27,8 @@
     </div>
   </section>
 
-    <!-- Brands -->
-
-    <div app-brands></div>
+  <!-- Brands -->
+  <div *ngIf="homePageElements.brands" app-brands [brands]="homePageElements.brands"></div>
 
   <!-- <div (deferLoad)="showStories=true"> -->
     <app-stories *ngIf="homePageElements.story" [stories]="homePageElements.story"> </app-stories>
