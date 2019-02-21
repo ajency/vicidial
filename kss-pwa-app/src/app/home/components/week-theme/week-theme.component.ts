@@ -13,4 +13,7 @@ export class WeekThemeComponent implements OnInit {
   ngOnInit() {
   }
 
+  createDataSrcSet(a,b,c,d,e,f){
+    return a+ " " +b +", " +c +" "+d +", " +e +" "+f;
+  }
 }

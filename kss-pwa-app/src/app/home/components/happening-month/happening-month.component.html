@@ -2,18 +2,21 @@
 	<a href="{{theme.element_data.image.href}}" class="d-block">
 		<picture>  
 		  <source media="(min-width: 768px)"
-		          srcset="{{theme.images.landscape['3x']}} 1800w,
-		                       {{theme.images.landscape['2x']}} 1200w,
-		                       {{theme.images.landscape['1x']}} 600w"
+				  [attr.defaultImage]="'/assets/img/transparent.png'"
+				  [attr.lazyLoad]="createDataSrcSet(theme.images.landscape['3x'], '1800w', theme.images.landscape['2x'], '1200w', theme.images.landscape['1x'], '600w')"
 		          sizes="48vw">
 
 		  <source media="(max-width: 767px)"
-		          srcset="{{theme.images.portrait['3x']}} 1200w,
-		                       {{theme.images.portrait['2x']}} 700w,
-		                       {{theme.images.portrait['1x']}} 400w"
+				  [attr.defaultImage]="'/assets/img/transparent.png'"
+				  [attr.lazyLoad]="createDataSrcSet(theme.images.portrait['3x'], '1200w', theme.images.portrait['2x'], '700w', theme.images.portrait['1x'], '400w')"	
 		          sizes="100vw">
-		  <img src="https://via.placeholder.com/600x300" data-sizes="100vw" class="img-fluid w-100" 
-		       alt="{{theme.element_data.image.img_alt}" title="{{theme.element_data.image.title}">
+		  <img 
+		  	[offset]=0
+			[defaultImage]="'/assets/img/transparent.png'"
+			[lazyLoad]="'https://via.placeholder.com/600x300'"
+			class="img-fluid w-100" 
+		    alt="{{theme.element_data.image.img_alt}" 
+		    title="{{theme.element_data.image.title}">
 		</picture>
 		<span class="happening-month__text text-uppercase explore-text">+Explore</span>
 	</a>

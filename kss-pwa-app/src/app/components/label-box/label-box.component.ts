@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, OnChanges, AfterViewInit, Output, EventEmitter } from '@angular/core';
+import { AppService } from '../../services/app.service';
 
 @Component({
   selector: '[app-label-box]',
@@ -11,6 +12,10 @@ export class LabelBoxComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  createDataSrcSet(a,b,c,d,e,f){
+    return a+ " " +b +", " +c +" "+d +", " +e +" "+f;
   }
 
 }

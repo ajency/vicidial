@@ -5,22 +5,20 @@
 
 	<!-- Offers section -->
 	<img *ngIf="box_type == 'offer'" class="d-block w-100 img-fluid"
-        src="https://via.placeholder.com/170x170"
-        srcset="{{box_data.images.default['3x']}} 1050w,
-                     {{box_data.images.default['2x']}} 700w,
-                     {{box_data.images.default['1x']}} 350w"
-        sizes='(min-width: 1200px) 328px, (min-width: 768px) 26vw,  58vw'
+		[useSrcset]="true"
+		[offset]=0
+		[defaultImage]="'/assets/img/transparent.png'"
+		[lazyLoad]="createDataSrcSet(box_data.images.default['3x'], '1050w', box_data.images.default['2x'], '700w', box_data.images.default['1x'], '350w')"
         title="{{box_data.element_data.image.title}}"
         alt="{{box_data.element_data.image.img_alt}}"/>
 
 
 	<!-- Brands box-small -->
  	<img *ngIf="box_type == 'brand'" class="d-block w-100 img-fluid"
-        src="https://via.placeholder.com/170x170"
-        srcset="{{box_data.images.default['3x']}} 510w,
-                     {{box_data.images.default['2x']}} 340w,
-                     {{box_data.images.default['1x']}} 170w"
-        sizes='(min-width: 1200px) 168px, (min-width: 768px) 30vw,  46vw'
+	 	[useSrcset]="true"
+		[offset]=0
+		[defaultImage]="'/assets/img/transparent.png'"
+		[lazyLoad]="createDataSrcSet(box_data.images.default['3x'], '510w', box_data.images.default['2x'], '340w', box_data.images.default['1x'], '170w')"
         title="{{box_data.element_data.image.title}}"
         alt="{{box_data.element_data.image.img_alt}}"/>
 
