@@ -92,3 +92,28 @@
 		}
 	}
 }
+
+.label-box-large{
+	.label-box{
+		@include bp(tab) {
+			flex: 1 0 33.33%;
+    		padding: 0 1rem;
+    		margin-bottom: 3rem;
+    	}
+		// @include bp(max_tab) {
+		// 	flex: 1 0 50%;
+	 //    	padding: 0 1rem;
+	 //    	margin-bottom: 3.5rem;
+	 //    	&__sticky{
+		// 		top: 83%;
+		// 	}
+		// }
+	}
+	@include bp(mobile) {
+		flex-wrap: wrap;
+		.label-box{
+			flex: 1 0 100%;
+		    margin-bottom: 3.5rem;
+		}
+	}
+}

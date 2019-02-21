@@ -23,4 +23,11 @@
 	    	padding: 0;
 	    }
 	}
+	& > .col{
+    	&:last-child{
+			.gender-cat__name{
+				padding: 0 1rem;
+			}
+		}
+	}
 }
