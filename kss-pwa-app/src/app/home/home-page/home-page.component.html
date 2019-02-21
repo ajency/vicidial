@@ -99,6 +99,26 @@
 <app-offers></app-offers>
 
 
+<!-- Theme of the week and what's happening this month section -->
+<section class="mt-5 pt-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
+        <div app-week-theme></div>
+      </div>
+      <div class="col-sm-6">
+        <div app-happening-month></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Brands -->
+
+<div app-brands></div>
+
+
+
 <!-- <app-categories> </app-categories> -->
 <div *ngIf="homePageElements" class="pb-5">
   <!-- <div (deferLoad)="showStories=true"> -->

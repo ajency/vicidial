@@ -14,9 +14,12 @@ import { ComponentsModule } from '../components/components.module';
 import { LazyLoadImageModule, intersectionObserverPreset } from 'ng-lazyload-image';
 import { GenderCategoryComponent } from './components/gender-category/gender-category.component';
 import { OffersComponent } from './components/offers/offers.component';
+import { WeekThemeComponent } from './components/week-theme/week-theme.component';
+import { HappeningMonthComponent } from './components/happening-month/happening-month.component';
+import { BrandsComponent } from './components/brands/brands.component';
 
 @NgModule({
-  declarations: [HomePageComponent, BannerComponent, StoriesComponent, CategoriesComponent, TrendingComponent, GenderCategoryComponent, OffersComponent],
+  declarations: [HomePageComponent, BannerComponent, StoriesComponent, CategoriesComponent, TrendingComponent, GenderCategoryComponent, OffersComponent, WeekThemeComponent, HappeningMonthComponent, BrandsComponent],
   imports: [
     CommonModule,
     HomeRoutingModule,
