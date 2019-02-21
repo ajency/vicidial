@@ -1,0 +1,26 @@
+@import "gender-box";
+
+.gender-cat{
+	min-height: 95px;
+	box-shadow: 1px 2px 5px rgba(45, 45, 45, 0.13);
+	border: 8px double #e6e6e6;
+	padding: 0.8rem;
+	transition: all 0.3s ease;
+	&:hover{
+		box-shadow: none;
+	}
+	@include bp(mobile) {
+		min-height: 75px;
+		padding: 0.3rem;
+	}	
+}
+
+.gender-cat-wrapper{
+	@include bp(mobile) {
+		grid-template-columns: 3px repeat(6, 125px) 3px;
+	    grid-gap: 15px;
+	    & > .col{
+	    	padding: 0;
+	    }
+	}
+}

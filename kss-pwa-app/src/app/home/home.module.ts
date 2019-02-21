@@ -12,9 +12,11 @@ import { ComponentsModule } from '../components/components.module';
 // import { DeferLoadModule } from '@trademe/ng-defer-load';
 
 import { LazyLoadImageModule, intersectionObserverPreset } from 'ng-lazyload-image';
+import { GenderCategoryComponent } from './components/gender-category/gender-category.component';
+import { OffersComponent } from './components/offers/offers.component';
 
 @NgModule({
-  declarations: [HomePageComponent, BannerComponent, StoriesComponent, CategoriesComponent, TrendingComponent],
+  declarations: [HomePageComponent, BannerComponent, StoriesComponent, CategoriesComponent, TrendingComponent, GenderCategoryComponent, OffersComponent],
   imports: [
     CommonModule,
     HomeRoutingModule,

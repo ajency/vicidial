@@ -1,0 +1,43 @@
+.label-box{
+	&__sticky{
+		position: absolute;
+	    bottom: -42px;
+	    width: 100%;
+	    left: 0;
+	    text-align: center;
+	}
+	&__action{
+		border: 2px solid #000;
+	    padding: 0.8rem 1rem;
+	    border-radius: 15px;
+	    text-transform: uppercase;
+	    font-weight: bold;
+	    font-size: 0.9rem;
+	    background-color: #fff;
+	    color: #000;
+	    display: inline-flex;
+    	justify-content: center;
+	}
+	&__muted{
+		display: block;
+	    margin-top: 0.3rem;
+	    color: #909090;
+	    font-size: 0.8rem;
+	}
+}
+
+// Medium box
+
+.label-box-medium{
+	.label-box{
+		@include bp(tab) {
+			flex-basis: 30%;
+    		padding: 0 1.5rem;
+    	}
+	}
+	@include bp(mobile) {
+		grid-template-columns: 3px repeat(3, 210px) 3px;
+    	grid-gap: 15px;
+    	padding-bottom: 3rem;
+	}
+}

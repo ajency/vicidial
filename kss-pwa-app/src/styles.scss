@@ -38,6 +38,8 @@ $container-max-widths: (
 );
 @import '../node_modules/bootstrap/scss/bootstrap.scss';
 
+@import "assets/SASS/main";
+
 
 .stripe-bg{
    // background: url(../img/bg-stripe.jpg);

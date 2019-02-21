@@ -1,0 +1,11 @@
+// Helpers/Utility classes
+
+.mobile-overflow{
+	@include bp(mobile) {
+		&:after,&:before{
+			content: '';
+		}
+		display: grid !important;
+	    overflow: auto;
+	}
+}
