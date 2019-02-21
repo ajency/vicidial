@@ -15,10 +15,24 @@
   <section class="mt-5 pt-4">
     <div class="container">
       <div class="row">
-        <div class="col-lg-6" *ngIf="homePageElements.week_theme">
+        <div class="col-lg-6 mb-4 mb-lg-0" *ngIf="homePageElements.week_theme">
+          <section class="section">
+              <div class="row">
+                  <div class="col-md-12 text-center">
+                    <h2 class="font-weight-bold mb-3">Theme of the Week</h2>
+                  </div>
+              </div>
+          </section>
           <div app-week-theme [theme]="homePageElements.week_theme[0]" ></div>
         </div>
         <div class="col-lg-6" *ngIf="homePageElements.month_theme">
+          <section class="section">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                      <h2 class="font-weight-bold mb-3">Whats happening this month</h2>
+                    </div>
+                </div>
+            </section>
           <div app-happening-month [theme]="homePageElements.month_theme[0]"></div>
         </div>
       </div>

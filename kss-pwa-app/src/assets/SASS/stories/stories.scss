@@ -10,4 +10,7 @@
 		    min-width: 210px;
 		}
 	}
+	@include bp(mobile) {
+    	padding: 0 1rem;
+	}
 }
