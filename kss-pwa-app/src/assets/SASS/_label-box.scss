@@ -48,18 +48,8 @@
 			flex: 1;
     		padding: 0 1rem;
     	}
-	    &__sticky{
-			top: 85%;
-			bottom: inherit;
-		}
-		&__action{
-			border: 1px solid #dcdcdc;
-			padding: 0.6rem 0.8rem;
-			min-width: 140px;
-			font-size: 0.75rem;
-		}
 		@include bp(max_tab) {
-			flex: 1 0 33.33%;
+			flex: 1 0 50%;
 	    	padding: 0 1rem;
 	    	margin-bottom: 1.8rem;
 	    	&__sticky{
@@ -73,6 +63,32 @@
 			flex: 1 0 50%;
 		    padding: 0 0.5rem;
 		    margin-bottom: 2rem;
+		}
+	}
+}
+
+.label-box-medium-sm{
+	.label-box{
+		@include bp(tab) {
+			flex: 1 0 25%;
+    		padding: 0 1rem;
+    		margin-bottom: 3rem;
+    	}
+		@include bp(max_tab) {
+			flex: 1 0 50%;
+	    	padding: 0 1rem;
+	    	margin-bottom: 3.5rem;
+	    	&__sticky{
+				top: 83%;
+			}
+		}
+	}
+	@include bp(mobile) {
+		flex-wrap: wrap;
+		.label-box{
+			flex: 1 0 50%;
+		    padding: 0 0.5rem;
+		    margin-bottom: 3.5rem;
 		}
 	}
 }

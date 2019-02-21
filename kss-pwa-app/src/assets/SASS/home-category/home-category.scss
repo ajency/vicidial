@@ -1,0 +1,27 @@
+.home-category{
+	.label-box{
+		&__action{
+			background-color: #fff;
+		    color: #000;
+		    flex-direction: column;
+		    padding: 0.5rem 1rem;
+		    border-color: #6f6f6f;
+		}
+		.cat-title{
+			font-size: 0.75rem;
+    		color: #696868;
+    		text-transform: capitalize;
+		}
+		&__muted{
+			font-size: 0.65rem;
+		}
+		@include bp(mobile) {
+			&__action{
+				font-size: 0.7rem;
+			}
+			.cat-title{
+				font-size: 0.6rem;
+			}
+		}
+	}
+}

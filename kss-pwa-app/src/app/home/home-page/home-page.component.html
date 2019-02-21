@@ -30,6 +30,11 @@
   <!-- Brands -->
   <div *ngIf="homePageElements.brands" app-brands [brands]="homePageElements.brands"></div>
 
+
+<!-- Home category -->
+<div app-categories></div>
+
+
   <!-- <div (deferLoad)="showStories=true"> -->
     <app-stories *ngIf="homePageElements.story" [stories]="homePageElements.story"> </app-stories>
   <!-- </div> -->

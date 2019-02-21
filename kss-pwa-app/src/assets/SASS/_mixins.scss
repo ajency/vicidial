@@ -8,6 +8,9 @@
   @else if $query == phablet {
     @media (min-width: 992px) { @content; }
   }
+   @else if $query == max_tab {
+    @media (min-width: 768px) and (max-width: 991px) { @content; }
+  }
   @else if $query == tab {
     @media (min-width: 768px)  { @content; }
   }
