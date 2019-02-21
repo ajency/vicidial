@@ -16,6 +16,12 @@
 }
 
 .gender-cat-wrapper{
+	@include bp(max_tab) {
+		& > .col{
+			flex: 1 0 33.33%;
+    		margin-bottom: 1.5rem
+		}
+	}
 	@include bp(mobile) {
 		grid-template-columns: 3px repeat(6, 125px) 3px;
 	    grid-gap: 15px;

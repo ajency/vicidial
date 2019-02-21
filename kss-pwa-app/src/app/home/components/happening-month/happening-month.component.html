@@ -1,12 +1,12 @@
 <div class="happening-month text-center col-block">
 	<a href="{{theme.element_data.image.href}}" class="d-block">
 		<picture>  
-		  <source media="(min-width: 768px)"
+		  <source media="(min-width: 992px)"
 				  [attr.defaultImage]="'/assets/img/transparent.png'"
 				  [attr.lazyLoad]="createDataSrcSet(theme.images.landscape['3x'], '1800w', theme.images.landscape['2x'], '1200w', theme.images.landscape['1x'], '600w')"
 		          sizes="48vw">
 
-		  <source media="(max-width: 767px)"
+		  <source media="(max-width: 991px)"
 				  [attr.defaultImage]="'/assets/img/transparent.png'"
 				  [attr.lazyLoad]="createDataSrcSet(theme.images.portrait['3x'], '1200w', theme.images.portrait['2x'], '700w', theme.images.portrait['1x'], '400w')"	
 		          sizes="100vw">
