@@ -1484,7 +1484,7 @@ footer .bl-1{
         overflow-y:hidden;
         display: grid;
         grid-gap: 10px;
-        grid-template-columns: 5px repeat(4, calc(50% - 40px)) 5px;
+        grid-template-columns: 0px repeat(4, calc(50% - 40px)) 3px;
         grid-template-rows: minmax(150px, 1fr);
         scroll-behavior: smooth;
         transform: translateZ(0);
