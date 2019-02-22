@@ -1,0 +1,11 @@
+.footer-link-separator{
+	margin-left: -0.5em;
+	li{
+		padding: 0 0.5em;
+		margin-bottom: 0.7em;
+		border-right: 1px solid #b1b1b1;
+		&:last-child{
+			border-right: 0;
+		}
+	}
+}
