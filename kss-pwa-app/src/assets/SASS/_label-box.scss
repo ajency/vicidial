@@ -17,12 +17,21 @@
 	    color: #000;
 	    display: inline-flex;
     	justify-content: center;
+    	transition: all 0.5s ease;
 	}
 	&__muted{
 		display: block;
 	    margin-top: 0.3rem;
 	    color: #909090;
 	    font-size: 0.8rem;
+	}
+	&:not(.brand-label-box){
+		&:hover{
+			.label-box__action{
+				background-color: #828282;
+    			color: #fff;
+			}
+		}
 	}
 }
 
