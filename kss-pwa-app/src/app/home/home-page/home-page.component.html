@@ -2,7 +2,7 @@
 
 <app-loader *ngIf="!homePageElements"></app-loader>
 
-<div *ngIf="homePageElements" class="pb-5">
+<div *ngIf="homePageElements" class="pb-3">
 
   <!-- Gender category selection -->
   <app-gender-category *ngIf="homePageElements.gender_tab" [tabs]="homePageElements.gender_tab"></app-gender-category>
