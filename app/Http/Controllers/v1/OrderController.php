@@ -7,6 +7,7 @@ use App\Address;
 use App\Cart;
 use App\Order;
 use App\User;
+use App\Jobs\OrderLineStatus;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -133,6 +134,13 @@ class OrderController extends Controller
         }
 
         return view('orderdetails')->with('params', $params);
+    }
+
+    public function updateOrderLineStatus(Request $request)
+    {
+        $request->validate(['subOrderId' => 'required', 'status' => 'required']);
+        $params = $request->all();
+        OrderLineStatus::dispatch($params["subOrderId"], $params["status"])->onQueue('odoo_order');
     }
 
     public function listOrders(Request $request){

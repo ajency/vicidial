@@ -202,4 +202,15 @@ class SubOrder extends Model
             $subOrder->save();
         }
     }
+
+    public static function updateOrderLineStatus($subOrderId, $status)
+    {
+        $subOrder = self::find($subOrderId);
+        $subOrder->odoo_status = $status;
+        $subOrder->save();
+        foreach ($subOrder->orderLines as $orderLine) {
+            $orderLine->status = $status;
+            $orderLine->save();
+        }
+    }
 }

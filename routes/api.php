@@ -118,4 +118,5 @@ Route::group([
     Route::get('/district-state/{pincode}', $group_app_version . '\AddressController@fetchPincode');
 });
 
+Route::post('/order/update-status', $app_version . '\OrderController@updateOrderLineStatus');
 Route::middleware('auth:api')->get('/user', $app_version . '\HomeController@api');
