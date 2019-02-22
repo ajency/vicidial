@@ -23,7 +23,7 @@
 	<div class="p-md-3 p-2 mb-3 card shadow-sm">
 		<div *ngFor="let item of sub_order.items; let last = last">
 			<div class="row primary-info">
-				<div class="col-12 d-flex">
+				<div class="col-12 d-flex flex-column">
 					<!-- <div class="custom-checkbox">
 			            <input type="checkbox" class="facet-category custom-control-input" id="first">
 						<label class="custom-control-label f-w-4" for="first">
@@ -101,14 +101,15 @@
 							<small>*Shipment was delivered on 28 December 2018</small>
 						</div>
 					</div>
-					<!-- Action to cancel/feedback -->
-					<div class="border-top cancel-wrapper text-center">
-						<a href="#" class="mb-0 cancel-order-btn pb-0 text-uppercase text-secondary">Cancel Shipment</a>
-						<!-- <a class="btn mb-0 order-details-btn pb-0 text-secondary">Provide Feedback <i class="fas fa-chevron-right"></i></a> -->
-					</div>
 				</div>	
 			</div>								
 			<hr *ngIf="!last" class="mt-4 mb-4">
+		</div>
+		
+		<!-- Action to cancel/feedback -->
+		<div class="border-top cancel-wrapper text-center">
+			<a href="#" class="mb-0 cancel-order-btn pb-0 text-uppercase text-secondary">Cancel Shipment</a>
+			<!-- <a class="btn mb-0 order-details-btn pb-0 text-secondary">Provide Feedback <i class="fas fa-chevron-right"></i></a> -->
 		</div>
 	</div>
 </div>
