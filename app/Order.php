@@ -5,6 +5,7 @@ namespace App;
 use Ajency\Connections\OdooConnect;
 use App\Cart;
 use App\Jobs\OdooOrder;
+use App\Jobs\OdooOrderLine;
 use App\SubOrder;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -78,7 +79,10 @@ class Order extends Model
     {
         //create a job to place order on odoo for all suborders.
         foreach ($this->subOrders as $subOrder) {
-            OdooOrder::dispatch($subOrder)->onQueue('odoo_order');
+            $subOrder->odoo_status = 'processing';
+            $subOrder->save();
+            $subOrder->orderLines->update(['status' => 'processing']);
+            OdooOrder::dispatch($subOrder, true)->onQueue('odoo_order');
         }
         if ($this->cart->coupon != null) {
             $odoo              = new OdooConnect;
@@ -203,6 +207,33 @@ class Order extends Model
                 $order->address_data = $order->address->shippingAddress();
             }
             $order->save();
+        }
+    }
+
+    public static function addOrderlinesforOldOrders($start, $end)
+    {
+        $orders = self::where('id', '>=', $start)->where('id', '<=', $end)->get();
+        foreach ($orders as $order) {
+            OdooOrderLine::dispatch($order)->onQueue('odoo_order_line');
+        }
+    }
+
+    public function addOrderlines()
+    {
+        foreach ($this->subOrders as $subOrder) {
+            $subOrder->setOrderLines();
+            $orderLineIds = $subOrder->orderLineIds;
+            foreach ($orderLineIds as $orderLineId) {
+                $subOrder->orderLines()->attach($orderLineId, ['type' => $subOrder->type]);
+                $this->orderLines()->attach($orderLineId, ['type' => $this->type]);
+            }
+            $subOrder->refresh();
+            if ($this->status == 'payment-successful') {
+                $subOrder->odoo_status = 'processing';
+                $subOrder->save();
+                $subOrder->orderLines->update(['status' => 'processing']);
+                OdooOrder::dispatch($subOrder, false)->onQueue('odoo_order');
+            }
         }
     }
 }

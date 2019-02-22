@@ -61,6 +61,27 @@ class SubOrder extends Model
         $this->item_data = $itemsData;
     }
 
+    public function setOrderLines()
+    {
+        foreach ($this->item_data as $itemData) {
+            $variant = Variant::find($itemData['id']);
+
+            $item = $variant->getItemAttributes();
+
+            for ($qty = 1; $qty <= $itemData['quantity']; $qty++) {
+                $orderLine = OrderLine::create(array_merge($item, [
+                    'variant_id'       => $variant->odoo_id,
+                    'price_discounted' => $itemData['price_discounted'],
+                    'name'             => $variant->getName(),
+                    'product_id'       => $variant->getParentId(),
+                    'product_color_id' => $variant->getVarColorId(),
+                    'product_slug'     => $variant->getProductSlug(),
+                ]));
+                array_push($this->orderLineIds, $orderLine->id);
+            }
+        }
+    }
+
     public function getItems()
     {
         $itemsData = [];
@@ -114,7 +135,7 @@ class SubOrder extends Model
         }
     }
 
-    public function placeOrder()
+    public function placeOrder($placeorder)
     {
         $http = new \GuzzleHttp\Client;
 
@@ -132,7 +153,11 @@ class SubOrder extends Model
             'order_date'            => Carbon::now()->toDateTimeString(),
         ];
 
-        $http->post(config('app.report_url') . '/api/order/create-opr', ['form_params' => ['sub_order_data' => $sub_order_data, 'placeorder' => true]]);
+        if ($this->odoo_id) {
+            $sub_order_data['external_id'] = $this->odoo_id;
+        }
+
+        $http->post(config('app.report_url') . '/api/order/create-opr', ['form_params' => ['sub_order_data' => $sub_order_data, 'placeorder' => $placeorder]]);
     }
 
     public function getSubOrder()
