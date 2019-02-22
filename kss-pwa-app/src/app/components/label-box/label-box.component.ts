@@ -15,7 +15,7 @@ export class LabelBoxComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(){
-    console.log("label-box ==>", this.box_type);
+    // console.log("label-box ==>", this.box_type);
   }
 
   createDataSrcSet(a,b,c,d,e,f){

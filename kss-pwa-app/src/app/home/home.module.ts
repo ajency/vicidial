@@ -8,7 +8,7 @@ import { StoriesComponent } from './components/stories/stories.component';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { TrendingComponent } from './components/trending/trending.component';
 import { ComponentsModule } from '../components/components.module';
-
+import { LayoutModule } from '@angular/cdk/layout';
 // import { DeferLoadModule } from '@trademe/ng-defer-load';
 
 import { LazyLoadImageModule, intersectionObserverPreset } from 'ng-lazyload-image';
@@ -24,10 +24,11 @@ import { BrandsComponent } from './components/brands/brands.component';
     CommonModule,
     HomeRoutingModule,
     ComponentsModule,
+    LayoutModule,
     // DeferLoadModule
-	LazyLoadImageModule.forRoot({
-        preset: intersectionObserverPreset
-	})
+  	LazyLoadImageModule.forRoot({
+          preset: intersectionObserverPreset
+  	})
   ]
 })
 export class HomeModule { }
