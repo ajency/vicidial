@@ -31,6 +31,6 @@ class OdooOrder implements ShouldQueue
      */
     public function handle()
     {
-        $this->subOrder->placeOrder($placeorder);
+        $this->subOrder->placeOrder($this->placeorder);
     }
 }

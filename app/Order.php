@@ -81,7 +81,10 @@ class Order extends Model
         foreach ($this->subOrders as $subOrder) {
             $subOrder->odoo_status = 'processing';
             $subOrder->save();
-            $subOrder->orderLines->update(['status' => 'processing']);
+            foreach ($subOrder->orderLines as $orderLine) {
+                $orderLine->status = 'processing';
+                $orderLine->save();
+            }
             OdooOrder::dispatch($subOrder, true)->onQueue('odoo_order');
         }
         if ($this->cart->coupon != null) {
@@ -231,7 +234,10 @@ class Order extends Model
             if ($this->status == 'payment-successful') {
                 $subOrder->odoo_status = 'processing';
                 $subOrder->save();
-                $subOrder->orderLines->update(['status' => 'processing']);
+                foreach ($subOrder->orderLines as $orderLine) {
+                    $orderLine->status = 'processing';
+                    $orderLine->save();
+                }
                 OdooOrder::dispatch($subOrder, false)->onQueue('odoo_order');
             }
         }
