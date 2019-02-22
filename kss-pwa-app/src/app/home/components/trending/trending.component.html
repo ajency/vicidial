@@ -8,10 +8,10 @@
   </div>
 </section>
 <section *ngIf="trendingGroup" id="kss-clothings" class="stripe-bg-top">
-  <div *ngFor="let group of trendingGroup" class="container">
+  <div *ngFor="let group of trendingGroup" class="container mt-4">
     <app-slider [row]="group"></app-slider>
   </div>
-  <div class="text-center mt-3">
+<!--   <div class="text-center mt-3">
       <a href="/shop" class="viewall-link">View More <i class="fas fa-chevron-right"></i></a>
-  </div>
+  </div> -->
 </section>

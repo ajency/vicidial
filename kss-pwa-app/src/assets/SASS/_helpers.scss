@@ -27,6 +27,20 @@
     justify-content: center;
 }
 
+.sh-more{
+	text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 0.9rem;
+    padding: 0.8rem;
+    transition: all 0.3s ease;
+    &.icon-turn{
+    	.sh-more__icon{
+    		transform: rotate(180deg);
+    	}
+    }
+}
+
 [static_element-type='week_theme'],[static_element-type='month_theme']{
 	a{
 		padding-top: 50%;

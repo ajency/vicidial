@@ -40,7 +40,6 @@ export class HomePageComponent implements OnInit {
       console.log("error in get-home-page-element api ==>", error);
       this.homePageElements = true;
     })
-
   }
 
 }

@@ -16,15 +16,22 @@
 			font-size: 0.65rem;
 		}
 		@include bp(mobile) {
+			&__sticky{
+				bottom: -47px;
+			}
 			&__action{
-				font-size: 0.7rem;
+				font-size: 0.75rem;
 			}
 			&__muted{
 				font-size: 0.8rem;
+				margin-top: 0.1rem;
 			}
 			.cat-title{
 				font-size: 0.6rem;
 			}
 		}
+	}
+	@include bp(mobile) {
+		transition: all 0.3s ease;
 	}
 }

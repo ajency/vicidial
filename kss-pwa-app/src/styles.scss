@@ -178,9 +178,10 @@
         position: absolute;
         bottom: 3px;
         left: 15px;
+        color: #c30e13;
         @media (max-width: 767px){
             width: 100%;
-            text-align: center;
+            // text-align: center;
             margin: 0 -15px;
             bottom: -5px;
         }
