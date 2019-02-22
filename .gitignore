@@ -14,6 +14,7 @@ yarn-error.log
 # angular dependencies
 /angular-app/node_modules
 /my-account-app/node_modules
+/kss-pwa-app/node_modules
 
 # angular compiled output
 /angular-app/dist

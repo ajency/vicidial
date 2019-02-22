@@ -209,6 +209,29 @@
 	}
 }
 
+.kss_icon {
+    background-image: url('/../assets/img/sprite.png');
+    background-repeat: no-repeat;
+    width: 30px;
+    height: 33px;
+    display: inline-block;
+    margin-bottom: -4px;
+}
+
+.profile-icon {
+    background-position: -107px -138px
+}
+
+.bag-icon {
+    background-position: -501px -275px;
+}
+
+.cart-counter {
+    position: absolute;
+    top: 20px;
+    right: 2px;
+}
+
 @media(max-width: 991px){
 	.header-close-trigger{
 		position: absolute;
