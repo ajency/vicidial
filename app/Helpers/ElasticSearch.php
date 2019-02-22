@@ -78,10 +78,28 @@ function fetchProduct($product)
 
     $product  = $product["_source"];
     $variants = [];
+    $unique_facet_names = ['product_category_type','product_gender','product_age_group','product_subtype','product_color_html','variant_size_name','product_brand'];
+    $facets = array();
+    foreach( $product['search_result_data'] as $facet_name => $facet_value){
+        if( in_array($facet_name,$unique_facet_names)){
+            array_push($facets,['facet_name' => $facet_name, 'facet_value' => $facet_value]);
+        }
+    }
+    foreach( $product['variants'] as $key => $variants){
+        foreach( $variants as $variant_name => $variant_value){
+            if( in_array($variant_name,$unique_facet_names)){
+                array_push($facets,['facet_name' => $variant_name, 'facet_value' => $variant_value]);
+            }
+        }
+    }
+    foreach( $product['search_result_data']["product_metatag"] as $facet_value){
+            array_push($facets,['facet_name' => 'product_metatag','facet_value' => $facet_value]);
+    }
+    $variants = [];
 
-    $size_facet_values = getFacetValueSize();
-
+    $facet_value_pairs = getFacetDetails($facets);
     $id = defaultVariant($product['variants']);
+    $size_facet_values = $facet_value_pairs['variant_size_name'];
     foreach ($product["variants"] as $key => $variant) {
         if (isset($size_facet_values[$variant["variant_size_name"]])) {
             $product["variants"][$key]["display_name"] = $size_facet_values[$variant["variant_size_name"]]["display_name"];
@@ -93,9 +111,7 @@ function fetchProduct($product)
             $product["variants"][$key]["sequence"]     = 10000;
         }
     }
-
     usort($product["variants"], "sortSizes");
-
     foreach ($product["variants"] as $key => $variant) {
         $variants[] = [
             "id"                  => $variant["variant_id"],
@@ -114,7 +130,7 @@ function fetchProduct($product)
 
         ];
     }
-
+    
     $data              = $product["search_result_data"];
     $selected_color_id = $data["product_color_id"];
     $productColor      = ProductColor::where([["product_id", $data["product_id"]], ["color_id", $selected_color_id]])->first();

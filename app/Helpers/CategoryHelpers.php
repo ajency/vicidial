@@ -283,3 +283,31 @@ function getFacetValueSize(){
     
     return $facet_value_slug_pairs;
 }
+
+function getFacetDetails($facets){
+	$facets = Facet::orWhere(function ($q) use ($facets) {
+		foreach ($facets as $facet) {
+			$q->orWhere([['facet_name', $facet['facet_name']],['facet_value' , $facet['facet_value']]]);
+		}
+	})->get()->groupBy('facet_name')->toArray();	
+	
+	$search_result_assoc = [];
+    $facet_value_slug_pairs = [];
+	
+	$variant_size_names = array();
+	foreach ($facets['variant_size_name'] as $variant_size_name) {
+		$variant_size_names[$variant_size_name['facet_value']] = array('display_name' => $variant_size_name['display_name'], 'slug' => $variant_size_name['slug'], 'sequence' => $variant_size_name['sequence']);
+	}
+	foreach ($facets as $key => $facet) {
+		foreach ($facet as $single_facet) {
+			if ($single_facet['facet_name'] != 'variant_size_name') {
+				$facet_value_slug_pairs[$single_facet['facet_name']] = array($single_facet['facet_value'] => array('display_name' => $single_facet['display_name'], 'slug' => $single_facet['slug'], 'sequence' => $single_facet['sequence']));
+			}
+			else {
+					$facet_value_slug_pairs[$single_facet['facet_name']] = $variant_size_names;
+			}	
+		}	
+	}
+	
+	return $facet_value_slug_pairs;
+}
