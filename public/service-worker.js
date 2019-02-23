@@ -147,20 +147,12 @@ workbox.precaching.precacheAndRoute([
     "revision": "90f86a1ab82da3393d69f97700c138ce"
   },
   {
-    "url": "views/kss-pwa/manifest.json",
-    "revision": "035277ae8ad14276e9e2e4733880fe01"
-  },
-  {
     "url": "views/kss-pwa/polyfills.js",
     "revision": "64c7b21bf2728f60c5215abddb94cec2"
   },
   {
     "url": "views/kss-pwa/runtime.js",
     "revision": "61aab71258b67c53e09dc375632f9529"
-  },
-  {
-    "url": "views/kss-pwa/scripts.js",
-    "revision": "1b87fc54c967af6ed610a4d900cd04b3"
   },
   {
     "url": "views/kss-pwa/styles.css",
@@ -232,6 +224,6 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "/newhome",
-    "revision": "d6f2b24b5a565affc1948a612ad93c0f"
+    "revision": "19a7044a059cfc411b060ce7f4d9b068"
   }
 ]);

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnChanges, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 
-declare var $: any;
+// declare var $: any;
 
 @Component({
   selector: '[app-categories]',

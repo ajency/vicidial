@@ -10,6 +10,7 @@
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#707279"/>
   <link rel="stylesheet" href="views/kss-pwa/styles.css">
+</head>
 <body>
 	<app-root></app-root>
 	<noscript>Please enable JavaScript to continue using this application.</noscript>
@@ -32,5 +33,6 @@
         }
   </script>
 
+  @include('includes.angular-foot')
 </body>
 </html>
