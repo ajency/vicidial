@@ -31,7 +31,7 @@ ADD . /root/build/
 RUN npm run production
 RUN gulp
 # Download Base Image from AWS ECR
-FROM 923266873336.dkr.ecr.ap-south-1.amazonaws.com/kss-nginx-php7.2:1.0
+FROM 923266873336.dkr.ecr.ap-south-1.amazonaws.com/kss-nginx-php7.2:1.1
 COPY . /var/www/html
 COPY --from=vendor /app/vendor/ /var/www/html/vendor/
 WORKDIR /var/www/html
