@@ -56,7 +56,7 @@ workbox.routing.registerRoute(
 );
 
 workbox.routing.registerRoute(
-    new RegExp('/api/*'),
+    new RegExp('/api/rest/v1/test/*'),
     workbox.strategies.cacheFirst({
         cacheName: 'kss-apis',
         plugins: [
@@ -80,7 +80,7 @@ self.addEventListener('push', (event) => {
 workbox.precaching.precacheAndRoute([
   {
     "url": "views/kss-pwa/4.js",
-    "revision": "80b4021db1d9bfec0011f05f7165e8d0"
+    "revision": "f32cbc19eb2c1d1d80828a65d6590479"
   },
   {
     "url": "views/kss-pwa/fa-brands-400.eot",
@@ -144,7 +144,11 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "views/kss-pwa/main.js",
-    "revision": "9ff89cebdd26e6e678e93ddddb2ef719"
+    "revision": "90f86a1ab82da3393d69f97700c138ce"
+  },
+  {
+    "url": "views/kss-pwa/manifest.json",
+    "revision": "035277ae8ad14276e9e2e4733880fe01"
   },
   {
     "url": "views/kss-pwa/polyfills.js",
@@ -155,8 +159,12 @@ workbox.precaching.precacheAndRoute([
     "revision": "61aab71258b67c53e09dc375632f9529"
   },
   {
+    "url": "views/kss-pwa/scripts.js",
+    "revision": "1b87fc54c967af6ed610a4d900cd04b3"
+  },
+  {
     "url": "views/kss-pwa/styles.css",
-    "revision": "17d8063cffb7004e105478b835cd3477"
+    "revision": "2045ddcecbfe740ac44d894d583cf39b"
   },
   {
     "url": "assets/icons/icon1.png",
@@ -191,12 +199,24 @@ workbox.precaching.precacheAndRoute([
     "revision": "652625682251933e5afc560797faa0c2"
   },
   {
+    "url": "assets/img/256-encryption.png",
+    "revision": "5fa9910c0fded4ab7bc175b7f147d0ab"
+  },
+  {
     "url": "assets/img/error.png",
     "revision": "2cec9c62bd87fd2ab12401d00c5a1ed8"
   },
   {
     "url": "assets/img/logo-kss.png",
     "revision": "2f0e741422e56da4551a215da51851a1"
+  },
+  {
+    "url": "assets/img/secured-payu.png",
+    "revision": "0e40d7acf0e9e2f7b2ccb5ff638dde1c"
+  },
+  {
+    "url": "assets/img/sprite.png",
+    "revision": "d21485823ec5604aeee210775bab5ebb"
   },
   {
     "url": "assets/img/transparent.png",

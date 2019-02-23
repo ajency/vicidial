@@ -56,7 +56,7 @@ workbox.routing.registerRoute(
 );
 
 workbox.routing.registerRoute(
-    new RegExp('/api/*'),
+    new RegExp('/api/rest/v1/test/*'),
     workbox.strategies.cacheFirst({
         cacheName: 'kss-apis',
         plugins: [
