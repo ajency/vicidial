@@ -313,7 +313,18 @@
     // &:hover{
     //   background-color: #efefef;
     // }
-    font-size: 0.85rem;
+    text-align: left;
+    padding: 0.5rem 1rem;
+    border: 1px solid #c3c3c3;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: #444444;
+    font-weight: bold;
+    transition: all 0.5s ease;
+    &:hover{
+      background-color: #696969;
+      color: #fff;
+    }
 }
 
 .kss-order-status{
