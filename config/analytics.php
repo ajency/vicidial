@@ -8,10 +8,12 @@ return [
     'pixel_id'  => env("FACEBOOK_PIXEL_ANALYTICS_ID",""),
     'fb_pixel_catalog_id' => env("FACEBOOK_PIXEL_PRODUCT_CATALOG_ID",""),
     'js_dsn'  => env("SENTRY_JS_DSN",""),
+    'google_optimize'  => env("GOOGLE_OPTIMIZE_ID",""),
+    'google_tag_manager'  => env("GOOGLE_TAGMANAGER_ID",""),
     'hotjar' =>
     [
     	'id' => env("HOTJAR_ID",""),
     	'version' => env("HOTJAR_VERSION","")
     ]
-     
+
 ];
