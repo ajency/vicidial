@@ -10,15 +10,17 @@ import { NoConnectionComponent } from './no-connection/no-connection.component';
 import { LazyLoadImageModule, intersectionObserverPreset } from 'ng-lazyload-image';
 import { GenderBoxComponent } from './gender-box/gender-box.component';
 import { LabelBoxComponent } from './label-box/label-box.component';
+import { BlogComponent } from './blog/blog.component';
+import { FeaturedBlogComponent } from './featured-blog/featured-blog.component';
 
 @NgModule({
-  declarations: [HeaderComponent, FooterComponent, SliderComponent, ProductComponent, NoProductComponent, LoaderComponent, NoConnectionComponent, GenderBoxComponent, LabelBoxComponent],
+  declarations: [HeaderComponent, FooterComponent, SliderComponent, ProductComponent, NoProductComponent, LoaderComponent, NoConnectionComponent, GenderBoxComponent, LabelBoxComponent, BlogComponent, FeaturedBlogComponent],
   imports: [
     CommonModule,
     LazyLoadImageModule.forRoot({
         preset: intersectionObserverPreset
   	})
   ],
-  exports : [HeaderComponent, FooterComponent, SliderComponent, ProductComponent, NoProductComponent, LoaderComponent, NoConnectionComponent, GenderBoxComponent, LabelBoxComponent]
+  exports : [HeaderComponent, FooterComponent, SliderComponent, ProductComponent, NoProductComponent, LoaderComponent, NoConnectionComponent, GenderBoxComponent, LabelBoxComponent, BlogComponent]
 })
 export class ComponentsModule { }
