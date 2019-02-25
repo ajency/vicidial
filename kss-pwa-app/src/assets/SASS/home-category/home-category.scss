@@ -6,6 +6,9 @@
 		    flex-direction: column;
 		    padding: 0.5rem 1rem;
 		    border-color: #6f6f6f;
+		    @include bp(mini) {
+		    	padding: 0.5rem 0.8rem;
+		    }	
 		}
 		.cat-title{
 			font-size: 0.8rem;

@@ -15,13 +15,13 @@ export class StoriesComponent implements OnInit, OnChanges, AfterViewInit {
     toggleButton = "SHOW MORE";
   @Output() storiesLoaded = new EventEmitter();
   constructor(private breakpointObserver : BreakpointObserver) {
-    this.isSmallScreen = this.breakpointObserver.isMatched('(max-width: 768px)');
+    this.isSmallScreen = this.breakpointObserver.isMatched('(max-width: 600px)');
     // console.log("isSmallScreen==>", this.isSmallScreen);
   }
 
   ngOnInit() {
     this.breakpointObserver.observe([
-    '(max-width: 768px)'
+    '(max-width: 600px)'
       ]).subscribe(result => {
         console.log(result);
         if (result.matches) {

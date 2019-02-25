@@ -20,4 +20,7 @@
   @else if $query == xs {
     @media (max-width: 600px)  { @content; }
   }
+  @else if $query == mini {
+    @media (max-width: 320px)  { @content; }
+  }
 }

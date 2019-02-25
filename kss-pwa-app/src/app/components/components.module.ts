@@ -13,15 +13,16 @@ import { LabelBoxComponent } from './label-box/label-box.component';
 import { BlogComponent } from './blog/blog.component';
 import { FeaturedBlogComponent } from './featured-blog/featured-blog.component';
 import { BackToTopComponent } from './back-to-top/back-to-top.component';
+import { MobileProductsComponent } from './mobile-products/mobile-products.component';
 
 @NgModule({
-  declarations: [HeaderComponent, FooterComponent, SliderComponent, ProductComponent, NoProductComponent, LoaderComponent, NoConnectionComponent, GenderBoxComponent, LabelBoxComponent, BlogComponent, FeaturedBlogComponent, BackToTopComponent],
+  declarations: [HeaderComponent, FooterComponent, SliderComponent, ProductComponent, NoProductComponent, LoaderComponent, NoConnectionComponent, GenderBoxComponent, LabelBoxComponent, BlogComponent, FeaturedBlogComponent, BackToTopComponent, MobileProductsComponent],
   imports: [
     CommonModule,
     LazyLoadImageModule.forRoot({
         preset: intersectionObserverPreset
   	})
   ],
-  exports : [HeaderComponent, FooterComponent, SliderComponent, ProductComponent, NoProductComponent, LoaderComponent, NoConnectionComponent, GenderBoxComponent, LabelBoxComponent, BlogComponent, BackToTopComponent]
+  exports : [HeaderComponent, FooterComponent, SliderComponent, ProductComponent, NoProductComponent, LoaderComponent, NoConnectionComponent, GenderBoxComponent, LabelBoxComponent, BlogComponent, BackToTopComponent, MobileProductsComponent]
 })
 export class ComponentsModule { }

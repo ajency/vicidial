@@ -20,5 +20,13 @@
 				min-width: 180px;
 			}
 		}
+		@include bp(mobile) {
+			&__sticky{
+				top: 88%;
+			}
+			&__action{
+				padding: 0.5rem 0.8rem;
+			}
+		}
 	}
 }
