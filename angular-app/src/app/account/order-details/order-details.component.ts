@@ -191,7 +191,7 @@ export class OrderDetailsComponent implements OnInit {
   }
 
   closeCancelOrder(){
-    $('#cd-cart').removeClass('oveflow-h');
+    $('#cd-cart').removeClass('overflow-h');
     this.cancelOrder = false;
     this.cancelReasonId = '';
     this.additionalRemark = '';
