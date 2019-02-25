@@ -12,8 +12,8 @@ export class CategoriesComponent implements OnInit {
 
 	@Input() categories : any;
 	catFlag : boolean = false;  
-  isSmallScreen : any;
-  toggleButton = "SHOW MORE";
+  	isSmallScreen : any;
+  	toggleButton = "SHOW MORE";
   constructor(private breakpointObserver : BreakpointObserver) {
     this.isSmallScreen = this.breakpointObserver.isMatched('(max-width: 768px)');
     console.log("isSmallScreen==>", this.isSmallScreen);
@@ -49,7 +49,7 @@ export class CategoriesComponent implements OnInit {
 
   categoryHeight(){
     var catHeight = document.getElementById('cat-1').clientHeight;
-    var box_height = (catHeight * 5) + 80;
+    var box_height = (catHeight + 64) * 4;
     document.getElementById('home-category').style.height = box_height + 'px';
 	   document.getElementById('home-category').classList.add('overflow-h');
     this.catFlag = true;

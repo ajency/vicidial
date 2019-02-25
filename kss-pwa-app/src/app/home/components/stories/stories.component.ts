@@ -51,7 +51,7 @@ export class StoriesComponent implements OnInit, OnChanges, AfterViewInit {
 
   storyHeight(){
     var catHeight = document.getElementById('story-1').clientHeight;
-    var box_height = (catHeight * 7);
+    var box_height = (catHeight + 56 ) * 6;
     document.getElementById('home-story').style.height = box_height + 'px';
      document.getElementById('home-story').classList.add('overflow-h');
     this.catFlag = true;
