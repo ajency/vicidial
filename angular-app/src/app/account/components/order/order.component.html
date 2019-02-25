@@ -54,23 +54,23 @@
 								</div>
 							</div>
 							<!-- Refund initiated text -->
-							<div class="text-success mt-1">
+							<div *ngIf="showStatus && item.status && item.status == 'cancelled' " class="text-success mt-1">
 								Refund initiated
 							</div>
 						</div>
 					</div>
-					<div class="kss-order-status mt-2 w-100">
+					<div *ngIf="showStatus && item.status" class="kss-order-status mt-2 w-100">
 						<!-- Bar status -->
-					    <ul class="align-items-center d-flex justify-content-center">
-							<li class="done">
+					    <ul *ngIf="item.status == 'placed' || item.status =='confirmed' || item.status =='shipped' || item.status == 'invoiced' " class="align-items-center d-flex justify-content-center"> 
+							<li [ngClass]="{'current' : item.status == 'placed', 'done' : item.status == 'confirmed' || item.status == 'shipped' || item.status == 'invoiced'}">
 								<span class="dots"></span>
 								<span class="status-name">Placed</span>
 							</li>
-							<li class="current">
+							<li [ngClass]="{'current' : item.status == 'confirmed', 'done' : item.status == 'shipped' || item.status == 'invoiced'}">
 								<span class="dots"></span>
 								<span class="status-name">Confirmed</span>
 							</li>
-							<li>
+							<li [ngClass]="{'current' : item.status == 'shipped' || item.status == 'invoiced'}">
 								<span class="dots"></span>
 								<span class="status-name">Shipped</span>
 							</li>
@@ -80,26 +80,26 @@
 							</li>
 						</ul>
 						<!-- Cancelled status -->
-						<div class="align-items-center d-flex orderState od-cancelled text-uppercase">
+						<div *ngIf="item.status == 'cancelled' " class="align-items-center d-flex orderState od-cancelled text-uppercase">
 						    <i class="fas fa-times-circle order-icon"></i>
 						    <span class="pl-2">Cancelled</span>
 						</div>
 						<!-- Canceled date -->
-						<div class="col-12">
+					<!-- 	<div class="col-12">
 							<small>*Shipment was canceled on 28 December 2018</small>
-						</div>
+						</div> -->
 						<!-- Delivered status -->
-						<div class="align-items-center d-flex orderState od-delivered text-uppercase">
+						<div *ngIf="item.status == 'delivered' " class="align-items-center d-flex orderState od-delivered text-uppercase">
 							<span>
 							    <i class="fas fa-check-circle order-icon"></i>
 							    <span class="pl-2">Delivered</span>
 							</span>
-							<a href="#" class="border-bottom cancel-order-btn kss-anchor mb-0 ml-3 pb-0 text-secondary text-uppercase">Return Item</a>
+							<!-- <a href="#" class="border-bottom cancel-order-btn kss-anchor mb-0 ml-3 pb-0 text-secondary text-uppercase">Return Item</a> -->
 						</div>
 						<!-- Canceled date -->
-						<div class="col-12">
+						<!-- <div class="col-12">
 							<small>*Shipment was delivered on 28 December 2018</small>
-						</div>
+						</div> -->
 					</div>
 				</div>	
 			</div>								

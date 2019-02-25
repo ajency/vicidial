@@ -10,7 +10,6 @@ export class OrderComponent implements OnInit, OnChanges{
 
 	@Input() sub_orders : any;
   @Input() showStatus : any;
-
   constructor() { }
 
   ngOnInit() {
