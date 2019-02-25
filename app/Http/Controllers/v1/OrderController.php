@@ -138,9 +138,9 @@ class OrderController extends Controller
 
     public function updateOrderLineStatus(Request $request)
     {
-        $request->validate(['subOrderId' => 'required', 'status' => 'required', 'external_id' => 'required']);
+        $request->validate(['subOrderId' => 'required', 'state' => 'required', 'external_id' => 'required']);
         $params = $request->all();
-        OrderLineStatus::dispatch($params["subOrderId"], $params["status"], $params["external_id"])->onQueue('odoo_order');
+        OrderLineStatus::dispatch($params["subOrderId"], $params["state"], $params["external_id"])->onQueue('odoo_order');
     }
 
     public function listOrders(Request $request){

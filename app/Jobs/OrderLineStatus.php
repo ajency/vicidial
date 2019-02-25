@@ -12,17 +12,17 @@ use Illuminate\Foundation\Bus\Dispatchable;
 class OrderLineStatus implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    protected $subOrderId, $status, $external_id;
+    protected $subOrderId, $state, $external_id;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($subOrderId, $status, $external_id)
+    public function __construct($subOrderId, $state, $external_id)
     {
         $this->subOrderId = $subOrderId;
-        $this->status = $status;
+        $this->status = $state;
         $this->external_id = $external_id;
     }
 
@@ -33,6 +33,6 @@ class OrderLineStatus implements ShouldQueue
      */
     public function handle()
     {
-        SubOrder::updateOrderLineStatus($this->subOrderId, $this->status, $this->external_id);
+        SubOrder::updateOrderLineStatus($this->subOrderId, $this->state, $this->external_id);
     }
 }

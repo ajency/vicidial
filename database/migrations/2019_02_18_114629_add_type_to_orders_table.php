@@ -21,6 +21,7 @@ class AddTypeToOrdersTable extends Migration
 
         Schema::table('sub_orders', function (Blueprint $table) {
             $table->string('type')->after('location_id');
+            $table->boolean('is_invoiced')->after('type')->default(false);
         });
 
         DB::table('sub_orders')->update(['type' => 'New Transaction']);
@@ -39,6 +40,7 @@ class AddTypeToOrdersTable extends Migration
 
         Schema::table('sub_orders', function (Blueprint $table) {
             $table->dropColumn('type');
+            $table->dropColumn('is_invoiced');
         });
     }
 }

@@ -79,10 +79,10 @@ class Order extends Model
     {
         //create a job to place order on odoo for all suborders.
         foreach ($this->subOrders as $subOrder) {
-            $subOrder->odoo_status = 'processing';
+            $subOrder->odoo_status = 'draft';
             $subOrder->save();
             foreach ($subOrder->orderLines as $orderLine) {
-                $orderLine->status = 'processing';
+                $orderLine->state = 'draft';
                 $orderLine->save();
             }
             OdooOrder::dispatch($subOrder, true)->onQueue('odoo_order');
@@ -232,10 +232,10 @@ class Order extends Model
             }
             $subOrder->refresh();
             if ($this->status == 'payment-successful') {
-                $subOrder->odoo_status = 'processing';
+                $subOrder->odoo_status = 'draft';
                 $subOrder->save();
                 foreach ($subOrder->orderLines as $orderLine) {
-                    $orderLine->status = 'processing';
+                    $orderLine->state = 'draft';
                     $orderLine->save();
                 }
                 OdooOrder::dispatch($subOrder, false)->onQueue('odoo_order');
