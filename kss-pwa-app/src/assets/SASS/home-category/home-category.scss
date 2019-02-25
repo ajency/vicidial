@@ -16,6 +16,11 @@
 		&__muted{
 			font-size: 0.65rem;
 		}
+		@include bp(max_tab) {
+			&__sticky{
+				top: 90%;
+			}
+		}
 		@include bp(mobile) {
 			&__sticky{
 				bottom: -47px;

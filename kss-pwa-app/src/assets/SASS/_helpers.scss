@@ -41,6 +41,18 @@
     }
 }
 
+[static_element-type], .product-card{
+	position: relative;
+	.img-holder{
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: #fffde1;
+	}
+}
+
 .bg-light {
     background-color: #e4e4e4!important;
 }

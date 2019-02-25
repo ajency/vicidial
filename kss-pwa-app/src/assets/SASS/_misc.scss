@@ -1410,17 +1410,6 @@ $size: 20px;
     }
 }
 
-[static_element-type], .product-card{
-	position: relative;
-	.img-holder{
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		background: #fffde1;
-	}
-}
 [static_element-type='story_box_medium']{
 	padding-top: 110%;
 }
