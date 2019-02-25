@@ -120,7 +120,8 @@
 
 		<?php
 		$wptags = $params['posts'];
-		$posts = get_post_by_tags($wptags,'3');
+		// $posts = get_post_by_tags($wptags,'3');
+		$posts = [];
 
 		if(!empty($posts)){
 
