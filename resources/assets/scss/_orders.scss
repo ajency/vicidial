@@ -467,6 +467,13 @@
       width: 90%;
     }
   }
+  .cancelable-items{
+    .order-card{
+      margin-bottom: 1em;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 1em;
+    }
+  }
 }
 
 .na-orders{
