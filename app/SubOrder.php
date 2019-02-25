@@ -182,7 +182,7 @@ class SubOrder extends Model
             ]
             $itemsData[] = $item;
         }
-        $sub_order     = array('suborder_id' => $this->id, 'total' => $this->odoo_data['you_pay'], 'number_of_items' => $this->orderLines->groupBy('variant_id')->count(), 'items' => $itemsData, 'state' => $this->state, 'is_invoiced' => $this->is_invoiced);
+        $sub_order     = array('suborder_id' => $this->id, 'total' => $this->odoo_data['you_pay'], 'number_of_items' => $this->orderLines->groupBy('variant_id')->count(), 'items' => $itemsData, 'state' => $this->odoo_status, 'is_invoiced' => $this->is_invoiced);
         $store_address = $this->location->getAddress();
         if ($store_address != null) {
             $sub_order['store_address'] = $store_address;
