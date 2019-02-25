@@ -129,7 +129,7 @@ class Order extends Model
         $dateInd = Carbon::createFromFormat('Y-m-d H:i:s', $this->created_at, 'UTC');
         $dateInd->setTimezone('Asia/Kolkata');
 
-        $order_info = array('order_id' => $this->id, 'txn_no' => $this->txnid, 'total_amount' => $this->subOrderData()['you_pay'], 'order_date' => $dateInd->format('j M Y'), 'no_of_items' => count($this->cart->getItems()));
+        $order_info = array('order_id' => $this->id, 'txn_no' => $this->txnid, 'total_amount' => $this->subOrderData()['you_pay'], 'order_date' => $dateInd->format('j M Y'), 'no_of_items' => $this->orderLines->groupBy('variant_id')->count());
 
         if ($this->cart->user->verified == null) {
             $order_info['token'] = $this->token;

@@ -178,5 +178,13 @@ class OrderController extends Controller
         return response()->json(["message" => 'Order items received successfully', 'success'=> true,'data'=>$order_details]);
     }
 
+    public function singleOrder($id, Request $request)
+    {
+        $user  = User::getUserByToken($request->header('Authorization'));
+        $order = Order::find($id);
+        $cart  = $order->cart;
+        validateCart($user, $cart, 'order');
+        return response()->json(["message" => 'Order items received successfully', 'success' => true, 'data' => $order->getOrderDetails()]);
+    }
 }
 

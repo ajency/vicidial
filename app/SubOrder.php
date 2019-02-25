@@ -165,17 +165,24 @@ class SubOrder extends Model
     public function getSubOrder()
     {
         $itemsData = [];
-        foreach ($this->item_data as $itemData) {
-            $variant                  = Variant::find($itemData['id']);
-            $item                     = $variant->getItemAttributes();
-            $item['quantity']         = $itemData['quantity'];
-            $item['variant_id']       = $itemData['id'];
-            $item['product_id']       = $variant->getParentId();
-            $item['product_color_id'] = $variant->getVarColorId();
-            $item['product_slug']     = $variant->getProductSlug();
-            $itemsData[]              = $item;
+        foreach ($this->orderLines->groupBy('variant_id') as $items) {
+            $itemData = $items->first();
+            $item     = [
+                'title'            => $itemData['title'],
+                'images'           => $itemData['images'],
+                'size'             => $itemData['size'],
+                'price_mrp'        => $itemData['price_mrp'],
+                'price_final'      => $itemData['price_final'],
+                'discount_per'     => $itemData['discount_per'],
+                'variant_id'       => $itemData['variant_id'],
+                'product_id'       => $itemData['product_id'],
+                'product_color_id' => $itemData['product_color_id'],
+                'product_slug'     => $itemData['product_slug'],
+                'quantity'         => $this->orderLines->where('variant_id', $itemData['variant_id'])->count(),
+            ]
+            $itemsData[] = $item;
         }
-        $sub_order     = array('suborder_id' => $this->id, 'total' => $this->odoo_data['you_pay'], 'number_of_items' => count($this->item_data), 'items' => $itemsData);
+        $sub_order     = array('suborder_id' => $this->id, 'total' => $this->odoo_data['you_pay'], 'number_of_items' => $this->orderLines->groupBy('variant_id')->count(), 'items' => $itemsData, 'state' => $this->state, 'is_invoiced' => $this->is_invoiced);
         $store_address = $this->location->getAddress();
         if ($store_address != null) {
             $sub_order['store_address'] = $store_address;
