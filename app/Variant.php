@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use League\Csv\Writer;
 use SoapBox\Formatter\Formatter;
+use Ajency\ServiceComm\Comm\Sync;
 
 class Variant extends Model
 {
@@ -36,6 +37,10 @@ class Variant extends Model
     {
         parent::__construct($attributes);
         $this->elastic_index = config('elastic.indexes.product');
+    }
+
+    public function getInventoryAttribute(){
+        return Sync::call('inventory','getVariantInventory',['variant'=>$this->id]);
     }
 
     public function newFromBuilder($attributes = [], $connection = null)
