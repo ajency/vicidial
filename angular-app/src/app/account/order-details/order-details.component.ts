@@ -121,18 +121,27 @@ export class OrderDetailsComponent implements OnInit {
 
   openCancelOrder(){
     this.unsubscribeGetCancelReason();
-      // let url = this.appservice.apiUrl +  "/api/rest/v1/district-state"
-    this.appservice.showLoader();
-    let url = "https://demo8558685.mockable.io/cancel-reason";
-    this.getCancelReason = this.apiservice.request(url, 'get', {}, {}, false, 'observable').subscribe((response)=>{
-      console.log("response from location api ==>", response);
-      this.cancelReasons = response.cancel;
-      this.appservice.removeLoader();     
-    },
-    (error)=>{
-      console.log("error ===>", error);
-      this.appservice.removeLoader();
-    })
+    // let url = this.appservice.apiUrl +  "/api/rest/v1/district-state"
+    if(this.account_service.cancelReasons){
+        this.cancelReasons = this.account_service.cancelReasons;
+        this.cancelReasonId = 0;
+    }
+    else{
+      this.appservice.showLoader();
+      let url = "https://demo8558685.mockable.io/cancel-reason";
+      this.getCancelReason = this.apiservice.request(url, 'get', {}, {}, false, 'observable').subscribe((response)=>{
+        console.log("response from location api ==>", response);
+        response.cancel.push({id : 0, value : '--Select--' });
+        this.account_service.cancelReasons = response.cancel;
+        this.cancelReasons = response.cancel;
+        this.cancelReasonId = 0;
+        this.appservice.removeLoader();     
+      },
+      (error)=>{
+        console.log("error ===>", error);
+        this.appservice.removeLoader();
+      })
+    }
     this.cancelOrder = true;
     this.cancelOrderFailureMsg = '';
   }
@@ -144,6 +153,7 @@ export class OrderDetailsComponent implements OnInit {
 
   checkCancelReason(){
     console.log("checkCancelReason ==>", this.cancelReasonId)
+    // this.cancelReasonId = parseInt(this.cancelReasonId);
   }
 
   callCancelOrderApi(){

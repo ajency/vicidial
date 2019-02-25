@@ -218,9 +218,8 @@
 			    <label class="cancel-reason-box__label">
 			        Reason for Cancellation <span class="text-danger">*</span>
 			    </label>
-			  	<select *ngIf="cancelReasons" class="form-control" [(ngModel)]="cancelReasonId" (ngModelChange)="checkCancelReason()">
-			  			<option>--Select--</option>
-						<option *ngFor="let option of cancelReasons" [value]="option.id">{{option.value}}</option>
+			  	<select *ngIf="cancelReasons" class="form-control" [(ngModel)]="cancelReasonId" (ngModelChange)="checkCancelReason()">			  			
+						<option *ngFor="let option of cancelReasons" [ngValue]="option.id">{{option.value}}</option>
 				</select>
 			</div>
 			<div class="mt-4">
