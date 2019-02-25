@@ -1,10 +1,13 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
+<<<<<<< HEAD
     "hash": "f2f41264b6dd49aea5d55f4e156caef2",
+=======
+>>>>>>> package and config
     "content-hash": "f473c34a5a00b4748a9e2dc379be4f28",
     "packages": [
         {
@@ -150,6 +153,44 @@
                 }
             ],
             "time": "2019-02-26 08:30:44"
+        },
+        {
+            "name": "ajency/service_comm",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ajency/laravel-microservice-comm-package.git",
+                "reference": "7c6135521bb295df7cb3eccd4be37b88f6559b3e"
+            },
+            "require": {
+                "elasticsearch/elasticsearch": "^6.0",
+                "guzzlehttp/guzzle": "^6.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Ajency\\ServiceComm\\ServiceCommServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Ajency\\ServiceComm\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "classmap": [
+                    "src/Comm/"
+                ]
+            },
+            "authors": [
+                {
+                    "name": "Shashank Shetye Saudagar",
+                    "email": "shashank@ajency.in"
+                }
+            ],
+            "time": "2019-02-25T09:58:41+00:00"
         },
         {
             "name": "alexpechkarev/geometry-library",
@@ -326,6 +367,7 @@
         },
         {
             "name": "aws/aws-sdk-php",
+<<<<<<< HEAD
             "version": "3.87.18",
             "source": {
                 "type": "git",
@@ -336,6 +378,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/fbb29745f8f67be4ba6505c83c0be2c3760fad75",
                 "reference": "fbb29745f8f67be4ba6505c83c0be2c3760fad75",
+=======
+            "version": "3.87.17",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aws/aws-sdk-php.git",
+                "reference": "2f38294b8c0ce62278e53b060f488516eb4e9163"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/2f38294b8c0ce62278e53b060f488516eb4e9163",
+                "reference": "2f38294b8c0ce62278e53b060f488516eb4e9163",
+>>>>>>> package and config
                 "shasum": ""
             },
             "require": {
@@ -404,7 +458,11 @@
                 "s3",
                 "sdk"
             ],
+<<<<<<< HEAD
             "time": "2019-02-25 19:10:35"
+=======
+            "time": "2019-02-22T19:34:32+00:00"
+>>>>>>> package and config
         },
         {
             "name": "clue/stream-filter",
@@ -2336,7 +2394,11 @@
                 "framework",
                 "laravel"
             ],
+<<<<<<< HEAD
             "time": "2019-02-19 14:37:47"
+=======
+            "time": "2019-02-19T14:37:47+00:00"
+>>>>>>> package and config
         },
         {
             "name": "laravel/nexmo-notification-channel",
@@ -2463,7 +2525,11 @@
                 "oauth",
                 "passport"
             ],
+<<<<<<< HEAD
             "time": "2019-02-14 16:29:26"
+=======
+            "time": "2019-02-14T16:29:26+00:00"
+>>>>>>> package and config
         },
         {
             "name": "laravel/slack-notification-channel",
@@ -3381,7 +3447,11 @@
                 }
             ],
             "description": "PHP Client for using Nexmo's API.",
+<<<<<<< HEAD
             "time": "2019-02-07 11:14:34"
+=======
+            "time": "2019-02-07T11:14:34+00:00"
+>>>>>>> package and config
         },
         {
             "name": "nikic/php-parser",
@@ -3432,7 +3502,11 @@
                 "parser",
                 "php"
             ],
+<<<<<<< HEAD
             "time": "2019-02-16 20:54:15"
+=======
+            "time": "2019-02-16T20:54:15+00:00"
+>>>>>>> package and config
         },
         {
             "name": "opis/closure",
@@ -3493,7 +3567,11 @@
                 "serialization",
                 "serialize"
             ],
+<<<<<<< HEAD
             "time": "2019-02-22 10:30:00"
+=======
+            "time": "2019-02-22T10:30:00+00:00"
+>>>>>>> package and config
         },
         {
             "name": "paragonie/random_compat",
@@ -3658,7 +3736,11 @@
                 "message",
                 "psr7"
             ],
+<<<<<<< HEAD
             "time": "2019-02-23 07:42:53"
+=======
+            "time": "2019-02-23T07:42:53+00:00"
+>>>>>>> package and config
         },
         {
             "name": "php-http/guzzle6-adapter",
@@ -4669,7 +4751,11 @@
                 "security",
                 "spatie"
             ],
+<<<<<<< HEAD
             "time": "2019-02-20 15:56:22"
+=======
+            "time": "2019-02-20T15:56:22+00:00"
+>>>>>>> package and config
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -6247,7 +6333,11 @@
                 "profiler",
                 "webprofiler"
             ],
+<<<<<<< HEAD
             "time": "2019-02-04 10:23:43"
+=======
+            "time": "2019-02-04T10:23:43+00:00"
+>>>>>>> package and config
         },
         {
             "name": "doctrine/instantiator",
@@ -6536,7 +6626,11 @@
                 "test double",
                 "testing"
             ],
+<<<<<<< HEAD
             "time": "2019-02-13 09:37:52"
+=======
+            "time": "2019-02-13T09:37:52+00:00"
+>>>>>>> package and config
         },
         {
             "name": "myclabs/deep-copy",
@@ -7293,7 +7387,12 @@
                 "mock",
                 "xunit"
             ],
+<<<<<<< HEAD
             "time": "2018-08-09 05:50:03"
+=======
+            "abandoned": true,
+            "time": "2018-08-09T05:50:03+00:00"
+>>>>>>> package and config
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",

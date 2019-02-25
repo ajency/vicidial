@@ -3,6 +3,7 @@
 return [
 	'auth_token' => env("SERVICE_COMM_AUTH",""),
 	'url' => [
+		'inventory' => env('INVENTORY_SERVICE_URL','')
 		'backoffice' => env("BACKOFFICE_URL","")
 	],
 	'mapping' => [
