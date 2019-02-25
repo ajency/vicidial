@@ -53,8 +53,31 @@
 	}
 }
 
+.min-height{
+	min-height: 100vh;
+}
+
 .bg-light {
     background-color: #e4e4e4!important;
+}
+
+.gray-bg{
+    background:#fbfbfb;
+    position: relative;
+}
+
+.light-bg{
+    background:#EFF3FF;
+}
+
+.custom-text{
+    position: absolute;
+    text-align: center;
+    left: 0;
+    right: 0;
+    strong{
+        font-weight: bold;
+    }
 }
 
 [static_element-type='week_theme'],[static_element-type='month_theme']{
