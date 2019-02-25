@@ -31,6 +31,8 @@ export class OrderDetailsComponent implements OnInit {
   cancelReasons : any;
   cancelReasonId : any;
   additionalRemark : any;
+  cancelSuccessful : boolean = false;
+  cancelOrderFailureMsg : any;
   constructor(private appservice : AppServiceService,
               private route: ActivatedRoute,
               private router: Router,
@@ -132,6 +134,7 @@ export class OrderDetailsComponent implements OnInit {
       this.appservice.removeLoader();
     })
     this.cancelOrder = true;
+    this.cancelOrderFailureMsg = '';
   }
 
   unsubscribeGetCancelReason(){
@@ -155,11 +158,23 @@ export class OrderDetailsComponent implements OnInit {
     body._token = $('meta[name="csrf-token"]').attr('content');
     console.log("cancel body ==>", body);
 
-    this.apiservice.request(url, 'post', body , header ).then((response)=>{
+    this.apiservice.request(url, 'post', body , header ).then((response)=>{      
+      this.closeCancelOrder();
+      this.cancelSuccessful = true;
+      this.order.cancel_allowed = false;
+      //scroll top
       this.appservice.removeLoader();
     })
     .catch((error)=>{
       console.log("error ===>", error);
+      this.closeCancelOrder();
+      if(error.status == 0){
+        this.cancelOrderFailureMsg = "Order Cancellation failed. Please check your Internet Connection";  
+      }
+      else{
+        this.cancelOrderFailureMsg = error.message;
+      }
+      //scroll top 
       this.appservice.removeLoader();
     })  
   }

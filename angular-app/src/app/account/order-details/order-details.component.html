@@ -33,6 +33,18 @@
 
 		</div>
 	</div>
+	<!-- Error message -->
+	<div *ngIf="cancelOrderFailureMsg" class="kss-flash kss-flash--error">
+		{{cancelOrderFailureMsg}}
+	</div>
+
+	<!-- Success message -->
+	<div *ngIf="cancelSuccessful" class="font-weight-normal kss-flash kss-flash--success">
+	    <h5 class="font-weight-bold"><i class="fa-check-circle fas pr-1 text-success"></i> Shipment Cancel Successful</h5>
+	    <p class="">Your shipment is cancelled successfully.Refund to your card/bank will take around 5-7 business days to reflect. Any coupons applied to this order will be reinstated.</p>
+	    <p class="mb-0">For more information, please view our <a href="/terms-and-conditions#cancellation" class="text-secondary border-bottom">cancellation policy</a></p>
+	</div>
+
 	<div *ngIf="order;else other_content" class="row mt-md-2 mt-0">
 
 		<div class="col-12">
@@ -50,8 +62,8 @@
 				</label>
 			</div> -->
 			<!-- Action to cancel/feedback -->
-			<div (click)="openCancelOrder()" class="border-top mb-5 ml-3 mt-4 pt-2 pt-3 pt-4 text-center">
-				<a href="javascript:void(0);" class="btn cancel-order-btn">Cancel Order</a>
+			<div class="border-top mb-5 ml-3 mt-4 pt-2 pt-3 pt-4 text-center">
+				<a (click)="openCancelOrder()" href="javascript:void(0);" class="btn cancel-order-btn">Cancel Order</a>
 			</div>
 
 		</div>
@@ -237,18 +249,6 @@
 			<button (click)="closeCancelOrder()" id="cancel-cancel-order" class="btn kss-btn kss-btn--outline-secondary kss-btn--big mr-3">Cancel</button>
 			<button id="confirm-cancel-order" class="btn kss-btn kss-btn--big mt-0"  [ngClass]="{'disabled' : !cancelReasonId}" (click)="callCancelOrderApi()">Confirm</button>	
 		</div>
-
-		<!-- Error message -->
-<!-- 		<div class="kss-flash kss-flash--error">
-			This Shipment was cancelled on 28 December 2018
-		</div> -->
-
-		<!-- Success message -->
-		<!-- <div class="font-weight-normal kss-flash kss-flash--success">
-		    <h5 class="font-weight-bold"><i class="fa-check-circle fas pr-1 text-success"></i> Shipment Cancel Successful</h5>
-		    <p class="">Your shipment is cancelled successfully.Refund to your card/bank will take around 5-7 business days to reflect. Any coupons applied to this order will be reinstated.</p>
-		    <p class="mb-0">For more information, please view our <a href="/terms-and-conditions#cancellation" class="text-secondary border-bottom">cancellation policy</a></p>
-		</div> -->
 	</div>
 
 </div>	
