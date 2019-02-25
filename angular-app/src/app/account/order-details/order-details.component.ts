@@ -26,7 +26,8 @@ export class OrderDetailsComponent implements OnInit {
   order : any;
   orders : any;
   showBackButton : boolean = false;
-  
+  cancelOrder : boolean = false;
+  getCancelReason : any;
   constructor(private appservice : AppServiceService,
               private route: ActivatedRoute,
               private router: Router,
@@ -49,7 +50,7 @@ export class OrderDetailsComponent implements OnInit {
   }
 
   ngOnDestroy(){
-
+    this.unsubscribeGetCancelReason();
   }
 
   getOrderDetails(){
@@ -111,6 +112,24 @@ export class OrderDetailsComponent implements OnInit {
 
   isLoggedIn(){
     return this.appservice.isLoggedInUser();
+  }
+
+  callCancelOrder(){
+    this.unsubscribeGetCancelReason();
+      // let url = this.appservice.apiUrl +  "/api/rest/v1/district-state"
+      let url = "https://demo8558685.mockable.io/cancel-reason";
+      this.getCancelReason = this.apiservice.request(url, 'get', {}, {}, false, 'observable').subscribe((response)=>{
+        console.log("response from location api ==>", response);       
+      },
+      (error)=>{
+        console.log("error ===>", error);
+    })
+    this.cancelOrder = true;
+  }
+
+  unsubscribeGetCancelReason(){
+    if(this.getCancelReason)
+      this.getCancelReason.unsubscribe();
   }
 
 }

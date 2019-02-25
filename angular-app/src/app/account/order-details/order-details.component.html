@@ -106,12 +106,12 @@
              <div>
 	          	<div class="row no-gutter">
 					<div class="col-1">
-		             <h3 class="m-0 font-weight-bold back-to-cart">
+		             <h3 class="m-0 font-weight-bold back-to-cart" (click)="cancelOrder = false">
 		               <img class="btn-back kss_highlight" src="/img/left-arrow.png" style="width:20px;">
 		             </h3>
 		           </div>
 					<div class="col-10">
-						<h3 class="modal-title font-weight-bold" id="exampleModalLabel">Cancel Order</h3>
+						<h3 class="modal-title font-weight-bold" id="exampleModalLabel">Cancel Shipment</h3>
 					</div>
 				</div>
 				<hr>
@@ -121,7 +121,7 @@
 	</div>
 
 	<div *ngIf="cancelOrder">
-		<div class="row mt-md-2 mt-0">
+<!-- 		<div class="row mt-md-2 mt-0">
 			<div class="col-12">
 				<div class="d-flex row mb-3">
 					<div class="pr-2 col-8 col-sm-9">
@@ -132,13 +132,13 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> -->
 
 		<div class="cancel-od-selection">
 			<!-- Order info -->
-			<app-order-info [order_info]="order.order_info"></app-order-info>
+			<!-- <app-order-info [order_info]="order.order_info"></app-order-info> -->
 
-			<hr class="mb-4">
+			<!-- <hr class="mb-4"> -->
 
 			<!-- Product info -->			
 			<app-order [sub_orders]="order.sub_orders"></app-order>
@@ -147,7 +147,7 @@
 		</div>
 		
 
-		<div class="row mt-4 pt-4">
+		<!-- <div class="row mt-4 pt-4">
 			<div class="col-12">
 				<div class="d-flex row ">
 					<div class="pb-2 pr-2 col-9">
@@ -155,16 +155,15 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> -->
 
 		<!-- Error message -->
-		<div class="kss-flash kss-flash--error kss-flash--small">
+	<!-- 	<div class="kss-flash kss-flash--error kss-flash--small">
 			The below items cannot be cancelled as it has already been shipped. In case you are not satisfied with the product you can return it back after it has been delivered by calling our <a href="#" class="text-secondary">Customer Care</a>. Sorry for the inconvenience. 
-		</div>
+		</div> -->
 
 
-		<div class="mb-4 na-orders">
-			<!-- Order info -->
+		<!-- <div class="mb-4 na-orders">
 			<div class="align-items-center card d-flex flex-row justify-content-between position-relative cancel-od-collapse">
 				<a aria-controls="collapse-nc-order" aria-expanded="false" class="d-block flex-1 font-weight-bold h6 mb-0 p-3 text-body collapsed position-relative" data-toggle="collapse" href="#collapse-nc-order" role="button" style="
 				">2 Items</a>
@@ -175,12 +174,11 @@
 
 				<hr class="mb-4">
 
-				<!-- Product info -->			
 				<app-order [sub_orders]="order.sub_orders"></app-order>
 
 
 			</div>
-		</div>
+		</div> -->
 
 
 		<!-- cancel info -->
@@ -228,21 +226,21 @@
 
 		<!-- Sticky Action button -->
 		<div class="p-3 fixed-bottom fixed-checkout-btn d-flex align-items-center justify-content-between">
-			<button id="checkout" class="btn kss-btn kss-btn--outline-secondary kss-btn--big mr-3">Cancel</button>
-			<button id="checkout" class="btn kss-btn kss-btn--big mt-0">Confirm</button>	
+			<button (click)="cancelOrder = false" id="cancel-cancel-order" class="btn kss-btn kss-btn--outline-secondary kss-btn--big mr-3">Cancel</button>
+			<button id="confirm-cancel-order" class="btn kss-btn kss-btn--big mt-0">Confirm</button>	
 		</div>
 
 		<!-- Error message -->
-		<div class="kss-flash kss-flash--error">
+<!-- 		<div class="kss-flash kss-flash--error">
 			This Shipment was cancelled on 28 December 2018
-		</div>
+		</div> -->
 
 		<!-- Success message -->
-		<div class="font-weight-normal kss-flash kss-flash--success">
+		<!-- <div class="font-weight-normal kss-flash kss-flash--success">
 		    <h5 class="font-weight-bold"><i class="fa-check-circle fas pr-1 text-success"></i> Shipment Cancel Successful</h5>
 		    <p class="">Your shipment is cancelled successfully.Refund to your card/bank will take around 5-7 business days to reflect. Any coupons applied to this order will be reinstated.</p>
 		    <p class="mb-0">For more information, please view our <a href="/terms-and-conditions#cancellation" class="text-secondary border-bottom">cancellation policy</a></p>
-		</div>
+		</div> -->
 	</div>
 
 </div>	
