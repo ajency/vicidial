@@ -136,11 +136,11 @@ class OrderController extends Controller
         return view('orderdetails')->with('params', $params);
     }
 
-    public function updateOrderLineStatus(Request $request)
+    public function updateSubOrderStatus(Request $request)
     {
         $request->validate(['subOrderId' => 'required', 'state' => 'required', 'is_invoiced' => 'required', 'external_id' => 'required']);
         $params = $request->all();
-        OrderLineStatus::dispatch($params["subOrderId"], $params["state"], $params["is_invoiced"], $params["external_id"])->onQueue('odoo_order');
+        SubOrderStatus::dispatch($params["subOrderId"], $params["state"], $params["is_invoiced"], $params["external_id"])->onQueue('odoo_order');
     }
 
     public function listOrders(Request $request){

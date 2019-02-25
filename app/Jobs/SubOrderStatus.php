@@ -9,7 +9,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
-class OrderLineStatus implements ShouldQueue
+class SubOrderStatus implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     protected $subOrderId, $state, $is_invoiced, $external_id;
@@ -34,6 +34,6 @@ class OrderLineStatus implements ShouldQueue
      */
     public function handle()
     {
-        SubOrder::updateOrderLineStatus($this->subOrderId, $this->state, $this->is_invoiced, $this->external_id);
+        SubOrder::updateSubOrderStatus($this->subOrderId, $this->state, $this->is_invoiced, $this->external_id);
     }
 }

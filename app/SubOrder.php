@@ -204,7 +204,7 @@ class SubOrder extends Model
         }
     }
 
-    public static function updateOrderLineStatus($subOrderId, $state, $is_invoiced, $external_id)
+    public static function updateSubOrderStatus($subOrderId, $state, $is_invoiced, $external_id)
     {
         $subOrder              = self::find($subOrderId);
         $subOrder->odoo_id     = $external_id;
