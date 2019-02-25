@@ -9,8 +9,9 @@ use Illuminate\Database\Eloquent\Model;
 class SubOrder extends Model
 {
     protected $casts = [
-        'item_data' => 'array',
-        'odoo_data' => 'array',
+        'item_data'   => 'array',
+        'odoo_data'   => 'array',
+        'is_invoiced' => 'boolean',
     ];
 
     public $orderLineIds = [];
@@ -203,14 +204,16 @@ class SubOrder extends Model
         }
     }
 
-    public static function updateOrderLineStatus($subOrderId, $state, $external_id)
+    public static function updateOrderLineStatus($subOrderId, $state, $shipment_status, $is_invoiced, $external_id)
     {
         $subOrder              = self::find($subOrderId);
         $subOrder->odoo_id     = $external_id;
-        $subOrder->odoo_status = $status;
+        $subOrder->is_invoiced = $is_invoiced;
+        $subOrder->odoo_status = $state;
         $subOrder->save();
         foreach ($subOrder->orderLines as $orderLine) {
             $orderLine->state = $state;
+            $orderLine->shipment_status = $shipment_status;
             $orderLine->save();
         }
     }
