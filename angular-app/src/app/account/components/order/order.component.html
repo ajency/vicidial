@@ -32,8 +32,8 @@
 					<app-item [item]="item" [showRefundStatus]=showStatus ></app-item>
 					<div *ngIf="item.status" class="kss-order-status mt-2 w-100">
 						<!-- Bar status -->
-					    <ul *ngIf="item.status == 'placed' || item.status =='confirmed' || item.status =='shipped' || item.status == 'invoiced' " class="align-items-center d-flex justify-content-center"> 
-							<li [ngClass]="{'current' : item.status == 'placed', 'done' : item.status == 'confirmed' || item.status == 'shipped' || item.status == 'invoiced'}">
+					    <ul *ngIf="item.status == 'processing' || item.status == 'placed' || item.status =='confirmed' || item.status =='shipped' || item.status == 'invoiced' " class="align-items-center d-flex justify-content-center"> 
+							<li [ngClass]="{'current' : item.status == 'placed' || item.status == 'processing', 'done' : item.status == 'confirmed' || item.status == 'shipped' || item.status == 'invoiced'}">
 								<span class="dots"></span>
 								<span class="status-name">Placed</span>
 							</li>
@@ -51,7 +51,7 @@
 							</li>
 						</ul>
 						<!-- Cancelled status -->
-						<div *ngIf="item.status == 'cancelled' " class="align-items-center d-flex orderState od-cancelled text-uppercase">
+						<div *ngIf="item.status == 'cancelled' || item.status == 'processing_cancel' " class="align-items-center d-flex orderState od-cancelled text-uppercase">
 						    <i class="fas fa-times-circle order-icon"></i>
 						    <span class="pl-2">Cancelled</span>
 						</div>
