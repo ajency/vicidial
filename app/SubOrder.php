@@ -179,7 +179,7 @@ class SubOrder extends Model
                 'product_color_id' => $itemData['product_color_id'],
                 'product_slug'     => $itemData['product_slug'],
                 'quantity'         => $this->orderLines->where('variant_id', $itemData['variant_id'])->count(),
-            ]
+            ];
             $itemsData[] = $item;
         }
         $sub_order     = array('suborder_id' => $this->id, 'total' => $this->odoo_data['you_pay'], 'number_of_items' => $this->orderLines->groupBy('variant_id')->count(), 'items' => $itemsData, 'state' => $this->odoo_status, 'is_invoiced' => $this->is_invoiced);
