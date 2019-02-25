@@ -204,7 +204,7 @@ class SubOrder extends Model
         }
     }
 
-    public static function updateOrderLineStatus($subOrderId, $state, $shipment_status, $is_invoiced, $external_id)
+    public static function updateOrderLineStatus($subOrderId, $state, $is_invoiced, $external_id)
     {
         $subOrder              = self::find($subOrderId);
         $subOrder->odoo_id     = $external_id;
@@ -213,7 +213,6 @@ class SubOrder extends Model
         $subOrder->save();
         foreach ($subOrder->orderLines as $orderLine) {
             $orderLine->state = $state;
-            $orderLine->shipment_status = $shipment_status;
             $orderLine->save();
         }
     }
