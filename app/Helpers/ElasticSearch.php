@@ -130,7 +130,7 @@ function fetchProduct($product)
 
         ];
     }
-    
+       
     $data              = $product["search_result_data"];
     $selected_color_id = $data["product_color_id"];
     $productColor      = ProductColor::where([["product_id", $data["product_id"]], ["color_id", $selected_color_id]])->first();
@@ -158,10 +158,12 @@ function fetchProduct($product)
             "fabric_type"       => $data["product_att_fabric_type"],
             "product_type"      => $data["product_att_product_type"],
             "other_attribute"   => $data["product_att_other_attribute"],
-            "brand"             => (isset($data["product_brand"]) && $data["product_brand"]) ? $data["product_brand"] : 'KSS Fashion',
+            "brand"             => $product_brand_slug,
+            ""
         ],
         "ecom_sales"        => $data["product_att_ecom_sales"],
-        "brand"             => (isset($data["product_brand"]) && $data["product_brand"]) ? $data["product_brand"] : 'KSS Fashion',
+        "brand"             => $product_brand_slug,
+        "brand-href"        => ($product_brand_display_name) ? $product_brand_display_name : 'shop',
         "selected_color_id" => $selected_color_id,
         "images"            => $allImages,
         "variant_group"     => [
@@ -175,8 +177,9 @@ function fetchProduct($product)
 
         ],
     ];
-
+    
     $json["variant_group"] = $json["variant_group"] + getUnSelectedVariants($data["product_id"], $selected_color_id);
+    $json["facet_value_pairs"] = $facet_value_pairs;
     // Log::debug(json_encode($json, true));
     ksort($json["variant_group"]);
     return json_encode($json, true);

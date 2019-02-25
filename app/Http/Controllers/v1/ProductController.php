@@ -49,18 +49,18 @@ class ProductController extends Controller
         $posts = array();
         $breadcrumb = config('product.breadcrumb_order');
         foreach ($breadcrumb as $category) {
-            $facet = Facet::where('facet_name', '=', $category)->where('facet_value', '=', $params['category']->{$category})->first();
-            $url[] = $facet->slug;
-            $posts[] = $facet->display_name;
-            $params['breadcrumb']['list'][] = ['name' => $facet->display_name, 'href' => createUrl($url)];
+            foreach ($json->facet_value_pairs as $facet_name => $facets) {
+                if ($facet_name == $category) {
+                        $url[] = collect($facets)->first()->slug;
+                        $posts[] = collect($facets)->first()->display_name;
+                        $params['breadcrumb']['list'][] = ['name' => collect($facets)->first()->display_name, 'href' => createUrl($url)];
+                }
+            }
         }
         $params['posts'] = array_merge($posts,$params['metatags']);
 
         $params['breadcrumb']['current'] = '';
-
-        $facet                = Facet::where('facet_name', '=', 'product_brand')->where('facet_value', '=', $params['brand'])->first();
-        $params['brand_href'] = ($facet) ? $facet->slug : 'shop';
-
+        
         setSEO('product', $params);
 
         $similar_cat_params=[];
@@ -78,7 +78,7 @@ class ProductController extends Controller
         $search_results["title"] = $search_object_arr["title"];
         $similar_products_display_limit = config('product.similar_products_display_limit');
         $parameters = Product::productListPage(["search_object" => $search_object,"display_limit"=> ($similar_products_display_limit+1),"page" =>1],$search_results["slug_value_search_result"],$search_results["slug_search_result"],$search_results["slugs_result"],$search_results["title"]);
-
+        
         // dd($parameters);
         $similar_data_params= json_decode(json_encode($parameters,JSON_FORCE_OBJECT));
         $similar_products = [];
@@ -86,7 +86,7 @@ class ProductController extends Controller
             if($similar_item->product_id != $params["parent_id"] && count($similar_products)<$similar_products_display_limit)
                 array_push($similar_products, $similar_item);
         }
-
+        
         return view('singleproduct')->with('params', $params)->with('similar_data_params', $similar_products);
     }
 
