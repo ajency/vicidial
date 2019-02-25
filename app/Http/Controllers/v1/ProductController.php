@@ -48,14 +48,12 @@ class ProductController extends Controller
         $url = array();
         $posts = array();
         $breadcrumb = config('product.breadcrumb_order');
+
         foreach ($breadcrumb as $category) {
-            foreach ($json->facet_value_pairs as $facet_name => $facets) {
-                if ($facet_name == $category) {
-                        $url[] = collect($facets)->first()->slug;
-                        $posts[] = collect($facets)->first()->display_name;
-                        $params['breadcrumb']['list'][] = ['name' => collect($facets)->first()->display_name, 'href' => createUrl($url)];
-                }
-            }
+            $facet = collect($json->facet_value_pairs->{$category})->first();
+                $url[] = $facet->slug;
+                $posts[] = $facet->display_name;
+                $params['breadcrumb']['list'][] = ['name' => $facet->display_name, 'href' => createUrl($url)];
         }
         $params['posts'] = array_merge($posts,$params['metatags']);
 

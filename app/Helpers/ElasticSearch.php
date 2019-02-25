@@ -130,7 +130,10 @@ function fetchProduct($product)
 
         ];
     }
-       
+    
+    $product_brand_slug = $facet_value_pairs['product_brand'][$product['search_result_data']['product_brand']]['slug'];
+    $product_brand_display_name = $facet_value_pairs['product_brand'][$product['search_result_data']['product_brand']]['display_name']; 
+    
     $data              = $product["search_result_data"];
     $selected_color_id = $data["product_color_id"];
     $productColor      = ProductColor::where([["product_id", $data["product_id"]], ["color_id", $selected_color_id]])->first();
@@ -158,12 +161,12 @@ function fetchProduct($product)
             "fabric_type"       => $data["product_att_fabric_type"],
             "product_type"      => $data["product_att_product_type"],
             "other_attribute"   => $data["product_att_other_attribute"],
-            "brand"             => $product_brand_slug,
+            "brand"             => $product_brand_display_name,
             ""
         ],
         "ecom_sales"        => $data["product_att_ecom_sales"],
-        "brand"             => $product_brand_slug,
-        "brand-href"        => ($product_brand_display_name) ? $product_brand_display_name : 'shop',
+        "brand"             => $product_brand_display_name,
+        "brand-href"        => ($product_brand_slug) ? $product_brand_slug : 'shop',
         "selected_color_id" => $selected_color_id,
         "images"            => $allImages,
         "variant_group"     => [
