@@ -120,6 +120,7 @@ export class OrderDetailsComponent implements OnInit {
   }
 
   openCancelOrder(){
+    $('#cd-cart').addClass('overflow-h');
     this.unsubscribeGetCancelReason();
     // let url = this.appservice.apiUrl +  "/api/rest/v1/district-state"
     if(this.account_service.cancelReasons){
@@ -190,6 +191,7 @@ export class OrderDetailsComponent implements OnInit {
   }
 
   closeCancelOrder(){
+    $('#cd-cart').removeClass('oveflow-h');
     this.cancelOrder = false;
     this.cancelReasonId = '';
     this.additionalRemark = '';
