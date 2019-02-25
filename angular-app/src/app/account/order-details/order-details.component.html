@@ -141,7 +141,18 @@
 			<!-- <hr class="mb-4"> -->
 
 			<!-- Product info -->			
-			<app-order [sub_orders]="order.sub_orders"></app-order>
+			<!-- <app-order [sub_orders]="order.sub_orders"></app-order> -->
+			
+			<div *ngFor="let sub_order of order.sub_orders; let i = index">
+				<div *ngFor="let item of sub_order.items; let last = last">
+					<div class="row primary-info">
+						<div class="col-12 d-flex flex-column">
+							<app-item [item]="item" [showRefundStatus]=false ></app-item>
+						</div>
+					</div>
+				</div>
+			</div>	
+			
 
 
 		</div>

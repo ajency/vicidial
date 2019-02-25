@@ -19,6 +19,7 @@ import { PaymentInfoComponent } from './components/payment-info/payment-info.com
 import { OrderSummaryComponent } from './components/order-summary/order-summary.component';
 
 import { AccountService } from './services/account.service';
+import { ItemComponent } from './components/item/item.component';
 
 @NgModule({
   imports: [
@@ -39,7 +40,8 @@ import { AccountService } from './services/account.service';
   	PaymentInfoComponent,
   	OrderSummaryComponent,
   	MyAddressesComponent,
-  	MyProfileComponent
+  	MyProfileComponent,
+  	ItemComponent
   ],
   providers: [
     AccountService
