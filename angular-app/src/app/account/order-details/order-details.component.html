@@ -212,10 +212,10 @@
 		</div>
 
 		<!-- Cancel reason inputs -->
-		<div class="bg-lightgray my-4 p-4">
-			<h3 class="font-weight-bold kss-title mb-0 text-muted">Please tell us the reason for Cancellation</h3>
+		<div class="bg-lightgray my-4 p-4 cancel-reason-box">
+			<h3 class="font-weight-bold kss-title mb-0 text-muted cancel-reason-box__title">Please tell us the reason for Cancellation</h3>
 			<div class="mt-4 mb-3">
-			    <label>
+			    <label class="cancel-reason-box__label">
 			        Reason for Cancellation <span class="text-danger">*</span>
 			    </label>
 			  	<select *ngIf="cancelReasons" class="form-control" [(ngModel)]="cancelReasonId" (ngModelChange)="checkCancelReason()">
@@ -224,7 +224,7 @@
 				</select>
 			</div>
 			<div class="mt-4">
-			    <label>Additional Remarks</label>
+			    <label class="cancel-reason-box__label">Additional Remarks</label>
 			    <textarea class="form-control" [(ngModel)]="additionalRemark"></textarea>
 			</div>
 		</div>
