@@ -138,6 +138,137 @@
           }
         }
       }
+    },
+    "kss-widget": {
+      "root": "projects/kss-widget/",
+      "sourceRoot": "projects/kss-widget/src",
+      "projectType": "application",
+      "prefix": "app",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "../public/views/cart",
+            "index": "projects/kss-widget/src/index.html",
+            "main": "projects/kss-widget/src/main.ts",
+            "polyfills": "projects/kss-widget/src/polyfills.ts",
+            "tsConfig": "projects/kss-widget/tsconfig.app.json",
+            "assets": [
+              "projects/kss-widget/src/favicon.ico",
+              "projects/kss-widget/src/assets"
+            ],
+            "styles": [
+              "projects/kss-widget/src/styles.css"
+            ],
+            "scripts": [
+              "../node_modules/jquery/dist/jquery.min.js"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/kss-widget/src/environments/environment.ts",
+                  "with": "projects/kss-widget/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "kss-widget:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "kss-widget:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "kss-widget:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/kss-widget/src/test.ts",
+            "polyfills": "projects/kss-widget/src/polyfills.ts",
+            "tsConfig": "projects/kss-widget/tsconfig.spec.json",
+            "karmaConfig": "projects/kss-widget/karma.conf.js",
+            "styles": [
+              "projects/kss-widget/src/styles.css"
+            ],
+            "scripts": [
+               "../node_modules/jquery/dist/jquery.min.js"
+            ],
+            "assets": [
+              "projects/kss-widget/src/favicon.ico",
+              "projects/kss-widget/src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/kss-widget/tsconfig.app.json",
+              "projects/kss-widget/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "kss-widget-e2e": {
+      "root": "projects/kss-widget-e2e/",
+      "projectType": "application",
+      "prefix": "",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/kss-widget-e2e/protractor.conf.js",
+            "devServerTarget": "kss-widget:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "kss-widget:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "projects/kss-widget-e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "kss-pwa-app"

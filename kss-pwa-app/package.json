@@ -25,6 +25,7 @@
     "bootstrap": "^4.3.1",
     "core-js": "^2.5.4",
     "jquery": "^3.3.1",
+    "moment": "^2.24.0",
     "ng-connection-service": "^1.0.4",
     "ng-lazyload-image": "^5.0.0",
     "rxjs": "~6.3.3",
