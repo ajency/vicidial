@@ -28,6 +28,9 @@ export class OrderDetailsComponent implements OnInit {
   showBackButton : boolean = false;
   cancelOrder : boolean = false;
   getCancelReason : any;
+  cancelReasons : any;
+  cancelReasonId : any;
+  additionalRemark : any;
   constructor(private appservice : AppServiceService,
               private route: ActivatedRoute,
               private router: Router,
@@ -114,15 +117,19 @@ export class OrderDetailsComponent implements OnInit {
     return this.appservice.isLoggedInUser();
   }
 
-  callCancelOrder(){
+  openCancelOrder(){
     this.unsubscribeGetCancelReason();
       // let url = this.appservice.apiUrl +  "/api/rest/v1/district-state"
-      let url = "https://demo8558685.mockable.io/cancel-reason";
-      this.getCancelReason = this.apiservice.request(url, 'get', {}, {}, false, 'observable').subscribe((response)=>{
-        console.log("response from location api ==>", response);       
-      },
-      (error)=>{
-        console.log("error ===>", error);
+    this.appservice.showLoader();
+    let url = "https://demo8558685.mockable.io/cancel-reason";
+    this.getCancelReason = this.apiservice.request(url, 'get', {}, {}, false, 'observable').subscribe((response)=>{
+      console.log("response from location api ==>", response);
+      this.cancelReasons = response.cancel;
+      this.appservice.removeLoader();     
+    },
+    (error)=>{
+      console.log("error ===>", error);
+      this.appservice.removeLoader();
     })
     this.cancelOrder = true;
   }
@@ -130,6 +137,37 @@ export class OrderDetailsComponent implements OnInit {
   unsubscribeGetCancelReason(){
     if(this.getCancelReason)
       this.getCancelReason.unsubscribe();
+  }
+
+  checkCancelReason(){
+    console.log("checkCancelReason ==>", this.cancelReasonId)
+  }
+
+  callCancelOrderApi(){
+    this.appservice.showLoader();
+    let url = this.appservice.apiUrl +  "/api/rest/v1/cance-order";
+    let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
+    let body : any = {
+      order_id : this.order.order_info.txn_no,
+      reason : this.cancelReasonId,
+      comments : this.additionalRemark
+    };
+    body._token = $('meta[name="csrf-token"]').attr('content');
+    console.log("cancel body ==>", body);
+
+    this.apiservice.request(url, 'post', body , header ).then((response)=>{
+      this.appservice.removeLoader();
+    })
+    .catch((error)=>{
+      console.log("error ===>", error);
+      this.appservice.removeLoader();
+    })  
+  }
+
+  closeCancelOrder(){
+    this.cancelOrder = false;
+    this.cancelReasonId = '';
+    this.additionalRemark = '';
   }
 
 }

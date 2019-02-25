@@ -59,7 +59,7 @@
 							</div>
 						</div>
 					</div>
-					<div *ngIf="showStatus && item.status" class="kss-order-status mt-2 w-100">
+					<div *ngIf="item.status" class="kss-order-status mt-2 w-100">
 						<!-- Bar status -->
 					    <ul *ngIf="item.status == 'placed' || item.status =='confirmed' || item.status =='shipped' || item.status == 'invoiced' " class="align-items-center d-flex justify-content-center"> 
 							<li [ngClass]="{'current' : item.status == 'placed', 'done' : item.status == 'confirmed' || item.status == 'shipped' || item.status == 'invoiced'}">

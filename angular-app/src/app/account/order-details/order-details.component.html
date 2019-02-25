@@ -50,7 +50,7 @@
 				</label>
 			</div> -->
 			<!-- Action to cancel/feedback -->
-			<div (click)="callCancelOrder()" class="border-top mb-5 ml-3 mt-4 pt-2 pt-3 pt-4 text-center">
+			<div (click)="openCancelOrder()" class="border-top mb-5 ml-3 mt-4 pt-2 pt-3 pt-4 text-center">
 				<a href="javascript:void(0);" class="btn cancel-order-btn">Cancel Order</a>
 			</div>
 
@@ -106,7 +106,7 @@
              <div>
 	          	<div class="row no-gutter">
 					<div class="col-1">
-		             <h3 class="m-0 font-weight-bold back-to-cart" (click)="cancelOrder = false">
+		             <h3 class="m-0 font-weight-bold back-to-cart" (click)="closeCancelOrder()">
 		               <img class="btn-back kss_highlight" src="/img/left-arrow.png" style="width:20px;">
 		             </h3>
 		           </div>
@@ -199,21 +199,18 @@
 			    <label>
 			        Reason for Cancellation <span class="text-danger">*</span>
 			    </label>
-			    <select class="form-control">
-			        <option>Ordered by Mistake</option>
-			        <option>Ordered by Mistake</option>
-			        <option>Ordered by Mistake</option>
-			        <option>Ordered by Mistake</option>
-			    </select>
+			  	<select *ngIf="cancelReasons" class="form-control" [(ngModel)]="cancelReasonId" (ngModelChange)="checkCancelReason()">
+						<option *ngFor="let option of cancelReasons" [value]="option.id">{{option.value}}</option>
+				</select>
 			</div>
 			<div class="mt-4 mb-3">
 			    <label>Additional Remarks</label>
-			    <textarea class="form-control"></textarea>
+			    <textarea class="form-control" [(ngModel)]="additionalRemark"></textarea>
 			</div>
 		</div>
 
 		<!-- Checkbox confirm -->
-		<div class="my-4">
+<!-- 		<div class="my-4">
 			<div class="d-flex">
 				<div class="custom-checkbox pl-4">
 		            <input type="checkbox" class="facet-category custom-control-input" id="confirm-check">
@@ -221,13 +218,13 @@
 					</label>            
 				</div>
 			</div>
-		</div>
+		</div> -->
 
 
 		<!-- Sticky Action button -->
 		<div class="p-3 fixed-bottom fixed-checkout-btn d-flex align-items-center justify-content-between">
-			<button (click)="cancelOrder = false" id="cancel-cancel-order" class="btn kss-btn kss-btn--outline-secondary kss-btn--big mr-3">Cancel</button>
-			<button id="confirm-cancel-order" class="btn kss-btn kss-btn--big mt-0">Confirm</button>	
+			<button (click)="closeCancelOrder()" id="cancel-cancel-order" class="btn kss-btn kss-btn--outline-secondary kss-btn--big mr-3">Cancel</button>
+			<button id="confirm-cancel-order" class="btn kss-btn kss-btn--big mt-0"  [ngClass]="{'disabled' : !cancelReasonId}" (click)="callCancelOrderApi()">Confirm</button>	
 		</div>
 
 		<!-- Error message -->
