@@ -55,7 +55,7 @@ export class OrderDetailsComponent implements OnInit {
   getOrderDetails(){
     this.appservice.showLoader();
     let order_id = this.route.snapshot.paramMap.get('id');    
-    let url = this.appservice.apiUrl + '/api/rest/v1/user/order/'+ 161 +'/details';
+    let url = this.appservice.apiUrl + '/api/rest/v1/user/order/'+ order_id +'/details';
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     let body : any = {
       _token : $('meta[name="csrf-token"]').attr('content')
