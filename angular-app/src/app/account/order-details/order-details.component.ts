@@ -61,8 +61,8 @@ export class OrderDetailsComponent implements OnInit {
       _token : $('meta[name="csrf-token"]').attr('content')
     };
     this.apiservice.request(url, 'get', body , header).then((response)=>{
-      let formatted_data = this.formatData(response.data);
-      this.order = formatted_data;
+      // let formatted_data = this.formatData(response.data);
+      this.order = response.data;
       console.log("order ==>", this.order);
       this.appservice.removeLoader();
     })
