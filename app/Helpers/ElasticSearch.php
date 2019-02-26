@@ -145,6 +145,11 @@ function fetchProduct($product)
     $productColor      = ProductColor::where([["product_id", $data["product_id"]], ["color_id", $selected_color_id]])->first();
     $allImages         = $productColor->getAllImages(["main", "thumb", "zoom"]);
     $thumbImages       = $productColor->getDefaultImage(["variant-thumb"]);
+    
+    $product_metatags = array();
+    foreach ($facet_value_pairs['product_metatag'] as $product_metatag) {
+        array_push($product_metatags,$product_metatag['display_name']);
+    }
     $json              = [
         "parent_id"         => $data["product_id"],
         "title"             => $data["product_title"],
@@ -156,7 +161,7 @@ function fetchProduct($product)
             "product_subtype"       => $data["product_subtype"],
         ],
         "description"       => $data["product_description"],
-        "metatags"          => (isset($data["product_metatag"])) ? $data["product_metatag"] : [],
+        "metatags"          => $product_metatags,
         "additional_info"   => [
             "product_age_group" => $facet_value_pairs['product_age_group'][$data['product_age_group']]['display_name'],
             "product_gender"    => $facet_value_pairs['product_gender'][$data['product_gender']]['display_name'],
