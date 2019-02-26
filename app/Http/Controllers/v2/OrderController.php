@@ -182,9 +182,8 @@ class OrderController extends Controller
     public function singleOrder($id, Request $request)
     {
         $user  = $request->user();
-        $order = Order::find($id);
-        $cart  = $order->cart;
-        validateCart($user, $cart, 'order');
+        $order = Order::where('txnid', $id)->first();
+        validateOrder($user, $order);
         return response()->json(["message" => 'Order items received successfully', 'success' => true, 'data' => $order->getOrderDetails()]);
     }
 }
