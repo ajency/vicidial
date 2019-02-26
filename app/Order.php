@@ -223,6 +223,10 @@ class Order extends Model
 
     public function addOrderlines()
     {
+        if ($this->status == 'payment-successful') {
+            $this->transaction_mode = 'Prepaid';
+            $this->save();
+        }
         foreach ($this->subOrders as $subOrder) {
             $subOrder->setOrderLines();
             $orderLineIds = $subOrder->orderLineIds;

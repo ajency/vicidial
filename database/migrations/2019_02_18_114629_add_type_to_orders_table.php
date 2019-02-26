@@ -15,6 +15,7 @@ class AddTypeToOrdersTable extends Migration
     {
         Schema::table('orders', function (Blueprint $table) {
             $table->string('type')->after('address_id');
+            $table->string('transaction_mode')->after('type')->nullable();
         });
 
         DB::table('orders')->update(['type' => 'New Transaction']);
@@ -36,6 +37,7 @@ class AddTypeToOrdersTable extends Migration
     {
         Schema::table('orders', function (Blueprint $table) {
             $table->dropColumn('type');
+            $table->dropColumn('transaction_mode');
         });
 
         Schema::table('sub_orders', function (Blueprint $table) {

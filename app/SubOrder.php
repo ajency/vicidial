@@ -152,6 +152,7 @@ class SubOrder extends Model
             'payment_data'          => $this->odoo_data,
             'type'                  => $this->type,
             'order_date'            => Carbon::now()->toDateTimeString(),
+            'transaction_mode'      => $this->order->transaction_mode,
         ];
 
         if ($this->odoo_id) {
