@@ -12,8 +12,9 @@
 	  	<h6 class="font-weight-bold mt-1 "><!-- <i class="far fa-calendar-alt pr-1"></i> -->{{order_info.order_date}}</h6>
 	</div>
 	<div *ngIf="showStatus" class="col-6">
-		Payment Status:
-	  	<h6 *ngIf="order_info.order_status == 'payment-successful'" class="font-weight-bold mt-1 ">Card Payment - <span class="text-success">PAID</span></h6>
+		Mode of payment
+	  	<h6 *ngIf="order_info.order_status == 'payment-successful'" class="font-weight-bold mt-1 ">Card Payment <!-- - <span class="text-success">PAID</span> --></h6>
+	  	<h6 *ngIf="order_info.order_status == 'payment-failed' || order_info.order_status == 'payment-in-progress' " class="font-weight-bold mt-1 ">Card Payment - <span class="text-warning">PENDING</span></h6>
 	  	<!-- If pending state -->
 	  	<!-- <span class="text-warning">PENDING</span> -->
 	</div>
