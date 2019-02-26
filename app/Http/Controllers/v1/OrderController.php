@@ -7,7 +7,7 @@ use App\Address;
 use App\Cart;
 use App\Order;
 use App\User;
-use App\Jobs\OrderLineStatus;
+use App\Jobs\SubOrderStatus;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 

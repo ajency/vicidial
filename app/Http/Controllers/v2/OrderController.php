@@ -5,7 +5,7 @@ namespace App\Http\Controllers\v2;
 use App\Address;
 use App\Cart;
 use App\Http\Controllers\Controller;
-use App\Jobs\OrderLineStatus;
+use App\Jobs\SubOrderStatus;
 use App\Order;
 use App\User;
 use Carbon\Carbon;
