@@ -160,7 +160,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ajency/laravel-microservice-comm-package.git",
-                "reference": "7c6135521bb295df7cb3eccd4be37b88f6559b3e"
+                "reference": "bfcfa02db29fe4231770e7e8cfce16319a72595a"
             },
             "require": {
                 "elasticsearch/elasticsearch": "^6.0",
@@ -190,7 +190,7 @@
                     "email": "shashank@ajency.in"
                 }
             ],
-            "time": "2019-02-25T09:58:41+00:00"
+            "time": "2019-02-26T08:30:44+00:00"
         },
         {
             "name": "alexpechkarev/geometry-library",
@@ -368,6 +368,7 @@
         {
             "name": "aws/aws-sdk-php",
 <<<<<<< HEAD
+<<<<<<< HEAD
             "version": "3.87.18",
             "source": {
                 "type": "git",
@@ -380,16 +381,24 @@
                 "reference": "fbb29745f8f67be4ba6505c83c0be2c3760fad75",
 =======
             "version": "3.87.17",
+=======
+            "version": "3.87.18",
+>>>>>>> Auth token implemented
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "2f38294b8c0ce62278e53b060f488516eb4e9163"
+                "reference": "fbb29745f8f67be4ba6505c83c0be2c3760fad75"
             },
             "dist": {
                 "type": "zip",
+<<<<<<< HEAD
                 "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/2f38294b8c0ce62278e53b060f488516eb4e9163",
                 "reference": "2f38294b8c0ce62278e53b060f488516eb4e9163",
 >>>>>>> package and config
+=======
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/fbb29745f8f67be4ba6505c83c0be2c3760fad75",
+                "reference": "fbb29745f8f67be4ba6505c83c0be2c3760fad75",
+>>>>>>> Auth token implemented
                 "shasum": ""
             },
             "require": {
@@ -459,10 +468,14 @@
                 "sdk"
             ],
 <<<<<<< HEAD
+<<<<<<< HEAD
             "time": "2019-02-25 19:10:35"
 =======
             "time": "2019-02-22T19:34:32+00:00"
 >>>>>>> package and config
+=======
+            "time": "2019-02-25T19:10:35+00:00"
+>>>>>>> Auth token implemented
         },
         {
             "name": "clue/stream-filter",
