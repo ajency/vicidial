@@ -27,7 +27,7 @@ class CreateOrderLinesTable extends Migration
             $table->integer('product_id');
             $table->integer('product_color_id');
             $table->string('product_slug');
-            $table->string('state');
+            $table->string('state')->nullable();
             $table->string('shipment_status')->nullable();
             $table->timestamps();
         });
