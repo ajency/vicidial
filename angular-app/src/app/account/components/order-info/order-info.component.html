@@ -14,7 +14,10 @@
 	<div *ngIf="showStatus" class="col-6">
 		Mode of payment
 	  	<h6 *ngIf="order_info.order_status == 'payment-successful'" class="font-weight-bold mt-1 ">Card Payment <!-- - <span class="text-success payment-status">PAID</span> --></h6>
-	  	<h6 *ngIf="order_info.order_status == 'payment-failed' || order_info.order_status == 'payment-in-progress' " class="font-weight-bold mt-1 ">Card Payment - <span class="text-warning payment-status">PENDING</span></h6>
+	  	<h6 *ngIf="order_info.order_status == 'payment-failed' || order_info.order_status == 'payment-in-progress' " class="font-weight-bold mt-1 ">Card Payment - 
+	  		<span *ngIf="order_info.order_status == 'payment-in-progress' " class="text-warning payment-status">PENDING</span> 
+	  		<span *ngIf="order_info.order_status == 'payment-failed' " class="text-danger payment-status">FAILED</span> 
+	  	</h6>
 	  	<!-- If pending state -->
 	  	<!-- <span class="text-warning">PENDING</span> -->
 	</div>
