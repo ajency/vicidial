@@ -30,32 +30,40 @@ export class OrderDetailsComponent implements OnInit {
   constructor(private appservice : AppServiceService,
               private route: ActivatedRoute,
               private router: Router,
-              private account_service : AccountService) { }
+              private account_service : AccountService,
+              private apiservice : ApiServiceService) { }
   
   ngOnInit() {
     this.appservice.removeLoader();
     $("#cd-my-account").scrollTop(0);
-    if(this.appservice.order){
-      this.order =  this.appservice.order;
+    if(this.appservice.order)
       this.showBackButton = true;
-    }
-    else{
-        this.getOrders(); 
-    }    
+    // if(this.appservice.order){
+    //   this.order =  this.appservice.order;
+    //   this.showBackButton = true;
+    // }
+    // else{
+    //     this.getOrders(); 
+    // }    
+    this.getOrderDetails();
   }
 
   ngOnDestroy(){
 
   }
 
-  getOrders(){
+  getOrderDetails(){
     this.appservice.showLoader();
-    this.appservice.getOrders().then((response)=>{
-      let formatted_data = this.appservice.formattedCartDataForUI(response.data);
-      this.orders = formatted_data;
-      this.appservice.myOrders = formatted_data;
-      this.findCurrentOrder();
-      console.log("orders ==>", this.orders);
+    let order_id = this.route.snapshot.paramMap.get('id');    
+    let url = this.appservice.apiUrl + '/api/rest/v1/user/order/'+ 161 +'/details';
+    let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
+    let body : any = {
+      _token : $('meta[name="csrf-token"]').attr('content')
+    };
+    this.apiservice.request(url, 'get', body , header).then((response)=>{
+      let formatted_data = this.formatData(response.data);
+      this.order = formatted_data;
+      console.log("order ==>", this.order);
       this.appservice.removeLoader();
     })
     .catch((error)=>{
@@ -66,6 +74,18 @@ export class OrderDetailsComponent implements OnInit {
         this.router.navigate(['account']);
       this.appservice.removeLoader();
     })
+  }
+
+  formatData(order){
+     order.sub_orders.forEach((sub_order)=>{
+      sub_order.items.forEach((item)=>{
+        if(item.price_mrp != item.price_final)
+          item.off_percentage = Math.round(((item.price_mrp - item.price_final) / (item.price_mrp )) * 100) + '% OFF';
+        item.href = '/' + item.product_slug +'/buy?size='+item.size;
+        item.images = Array.isArray(item.images) ? ['/img/placeholder.svg', '/img/placeholder.svg', '/img/placeholder.svg'] : Object.values(item.images);
+      })
+    })
+    return order;
   }
 
   closeWidget(){

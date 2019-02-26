@@ -7,8 +7,12 @@
 		Total amount:
 	  	<h6 class="font-weight-bold mt-1 "><span class="rs-symbol"><i class="fas fa-rupee-sign sm-font"></i></span>{{order_info.total_amount}}</h6>
 	</div>
-	<div class="col-12">
+	<div class="col-6">
 		Placed on:
 	  	<h6 class="font-weight-bold mt-1 "><!-- <i class="far fa-calendar-alt pr-1"></i> -->{{order_info.order_date}}</h6>
+	</div>
+	<div *ngIf="showStatus" class="col-6">
+		Payment Status:
+	  	<h6 class="font-weight-bold mt-1 "><!-- <i class="far fa-calendar-alt pr-1"></i> -->Pending</h6>
 	</div>
 </div>

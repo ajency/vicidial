@@ -8,6 +8,7 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
 export class OrderComponent implements OnInit, OnChanges{
 
 	@Input() sub_orders : any;
+  @Input() showStatus : any;
 
   constructor() { }
 
