@@ -2,4 +2,9 @@
 	.label-box__action{
 		min-width: 175px;
 	}
+	.label-box{
+		@include bp(max_tab) {
+			flex-basis: 33.33%;
+		}
+	}
 }
