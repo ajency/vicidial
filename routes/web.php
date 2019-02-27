@@ -73,8 +73,6 @@ Route::group([
 	});
 });
 
-Route::post('/service_comm/listen', '\Ajency\ServiceComm\ServiceCommController@serviceCommListen');
-
 Route::get('/', $app_version . '\HomeController@index')->name('home');
 Route::get('/drafthome', $app_version . '\HomeController@drafthome')->name('drafthome');
 Route::get('/getWarehouseLevelInventory', $app_version."\ProductController@allInventory");
