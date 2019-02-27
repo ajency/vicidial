@@ -14,7 +14,7 @@ class UpdateVariantInventory implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     public $tries = 3;
-    protected $variant_ids,
+    protected $variant_ids;
 
     /**
      * Create a new job instance.
