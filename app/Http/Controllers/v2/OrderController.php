@@ -135,7 +135,7 @@ class OrderController extends Controller
         return view('orderdetails')->with('params', $params);
     }
 
-    public function updateSubOrderStatus($params)
+    public static function updateSubOrderStatus($params)
     {
         SubOrderStatus::dispatch($params["subOrderId"], $params["state"], $params["is_invoiced"], $params["external_id"])->onQueue('odoo_order');
     }
