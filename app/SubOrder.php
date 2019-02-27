@@ -142,7 +142,7 @@ class SubOrder extends Model
         $sub_order_data = [
             'user_external_id'      => $this->order->cart->user->odoo_id,
             'address_external_id'   => $this->order->address->odoo_id,
-            'location_external_id'  => $this->location->odoo_id,
+            'location_external_id'  => $this->location->id,
             'warehouse_external_id' => $this->location->warehouse->odoo_id,
             'company_external_id'   => $this->location->company_odoo_id,
             'sub_order_id'          => $this->id,
