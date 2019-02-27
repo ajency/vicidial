@@ -201,7 +201,7 @@ function fetchProduct($product)
 
 function singleproduct(string $product_slug)
 {
-
+    
     $q = new ElasticQuery();
     $q->setIndex(config("elastic.indexes.product"));
 
@@ -219,7 +219,7 @@ function singleproduct(string $product_slug)
     } catch (Exception $e) {
         abort(404);
     }
-
+    
     return fetchProduct($product);
     
 }

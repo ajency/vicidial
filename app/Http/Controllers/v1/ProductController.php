@@ -16,9 +16,15 @@ class ProductController extends Controller
     {
         $json = json_decode(singleproduct($product_slug));
         $params =  (array) $json;
-
+        $posts = array();
+        
+        foreach ($params['facet_value_pairs'] as $facet_name => $facets) {
+            foreach($facets as $facet) {
+                array_push($posts,collect($facet)['display_name']); //
+            }
+        }
         $query  = $request->all();
-
+        
         $params['show_button'] = false;
 
         $available_sizes   = array();
@@ -46,17 +52,14 @@ class ProductController extends Controller
         $params['breadcrumb']           = array();
         $params['breadcrumb']['list']   = array();
         $url = array();
-        $posts = array();
         $breadcrumb = config('product.breadcrumb_order');
 
         foreach ($breadcrumb as $category) {
             $facet = collect($json->facet_value_pairs->{$category})->first();
                 $url[] = $facet->slug;
-                $posts[] = $facet->display_name;
                 $params['breadcrumb']['list'][] = ['name' => $facet->display_name, 'href' => createUrl($url)];
         }
-        $params['posts'] = array_merge($posts,$params['metatags']);
-
+        $params['posts'] =  $posts;
         $params['breadcrumb']['current'] = '';
         
         setSEO('product', $params);
