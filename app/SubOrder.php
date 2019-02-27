@@ -147,6 +147,7 @@ class SubOrder extends Model
             'company_external_id'   => $this->location->company_odoo_id,
             'sub_order_id'          => $this->id,
             'location_txn_id'       => $this->location->location_name . '/' . $this->order->txnid,
+            'address_data'          => $this->order->address_data,
             'item_data'             => $this->orderLines->toArray(),
             'payment_data'          => $this->odoo_data,
             'type'                  => $this->type,
