@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Ajency\ServiceComm\Comm\Sync;
 use App\Variant;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -138,8 +139,6 @@ class SubOrder extends Model
 
     public function placeOrder($placeorder)
     {
-        $http = new \GuzzleHttp\Client;
-
         $sub_order_data = [
             'user_external_id'      => $this->order->cart->user->odoo_id,
             'address_external_id'   => $this->order->address->odoo_id,
@@ -159,7 +158,7 @@ class SubOrder extends Model
             $sub_order_data['external_id'] = $this->odoo_id;
         }
 
-        $http->post(config('app.report_url') . '/api/order/create-opr', ['form_params' => ['sub_order_data' => $sub_order_data, 'placeorder' => $placeorder]]);
+        Sync::call('backoffice', 'createOPRJob', ['sub_order_data' => $sub_order_data, 'placeorder' => $placeorder]);
     }
 
     public function getSubOrder()
