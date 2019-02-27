@@ -215,6 +215,7 @@ class SubOrder extends Model
     public static function updateSubOrderStatus($subOrderId, $state, $is_invoiced, $external_id)
     {
         $subOrder              = self::find($subOrderId);
+        $state_old             = $subOrder->odoo_status;
         $subOrder->odoo_id     = $external_id;
         $subOrder->is_invoiced = $is_invoiced;
         $subOrder->odoo_status = $state;
@@ -222,6 +223,30 @@ class SubOrder extends Model
         foreach ($subOrder->orderLines as $orderLine) {
             $orderLine->state = $state;
             $orderLine->save();
+        }
+
+        if ($state_old == 'draft' && $state == 'sale') {
+            $itemCount = $subOrder->orderLines->count();
+            $name      = $subOrder->orderLines->first()->name;
+            if (strlen($name) > 25) {
+                $name = substr($name, 0, 25) . '...';
+            }
+            $link = url('/#/account/my-orders/') . '/' . $this->order->txnid;
+            switch ($itemCount) {
+                case '1':
+                    $message = 'Confirmed: ' . $name . ' has been processed by the seller and will be shipped shortly. Track your order at: ' . $link;
+                    break;
+                case '2':
+                    $message = 'Confirmed: ' . $name . ' & 1 other item have been processed by the seller and will be shipped shortly. Track your order at: ' . $link;
+                    break;
+                default:
+                    $message = 'Confirmed: ' . $name . ' & ' . $itemCount . ' other items have been processed by the seller and will be shipped shortly. Track your order at: ' . $link;
+                    break;
+            }
+            sendSMS('order-confirmed', [
+                'to'      => $this->order->cart->user->phone,
+                'message' => $message,
+            ]);
         }
     }
 }
