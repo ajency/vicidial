@@ -53,6 +53,7 @@ return [
     */
 
     'url' => env('APP_URL', 'http://localhost'),
+    'backoffice_url' => env('BACKOFFICE_URL', 'http://localhost'),
 
     /*
     |--------------------------------------------------------------------------

@@ -49,6 +49,7 @@ class PaymentController extends Controller
 
 		if($payment->isCaptured()) {
 			$order->status = 'payment-successful';
+			$order->transaction_mode = 'Prepaid';
 			$order->save();
 			$order->placeOrderOnOdoo();
 			request()->session()->flash('payment', "success");
