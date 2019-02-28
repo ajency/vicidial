@@ -231,7 +231,7 @@ class SubOrder extends Model
             if (strlen($name) > 25) {
                 $name = substr($name, 0, 25) . '...';
             }
-            $link = url('/#/account/my-orders/') . '/' . $this->order->txnid;
+            $link = url('/#/account/my-orders/') . '/' . $subOrder->order->txnid;
             switch ($itemCount) {
                 case '1':
                     $message = 'Confirmed: ' . $name . ' has been processed by the seller and will be shipped shortly. Track your order at: ' . $link;
@@ -244,7 +244,7 @@ class SubOrder extends Model
                     break;
             }
             sendSMS('order-confirmed', [
-                'to'      => $this->order->cart->user->phone,
+                'to'      => $subOrder->order->cart->user->phone,
                 'message' => $message,
             ]);
         }
