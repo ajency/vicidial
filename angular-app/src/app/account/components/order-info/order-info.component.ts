@@ -8,7 +8,7 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
 export class OrderInfoComponent implements OnInit {
 
 	@Input() order_info : any;
-
+  @Input() showStatus : any;
   constructor() { }
 
   ngOnInit() {

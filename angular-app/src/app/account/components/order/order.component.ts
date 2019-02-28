@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
+declare var $: any;
 
 @Component({
   selector: 'app-order',
@@ -8,6 +9,7 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
 export class OrderComponent implements OnInit, OnChanges{
 
 	@Input() sub_orders : any;
+  @Input() showStatus : any;
 
   constructor() { }
 
@@ -16,6 +18,10 @@ export class OrderComponent implements OnInit, OnChanges{
 
   ngOnChanges(){
   	this.formatOrdersData();
+  }
+
+  ngAfterViewInit(){
+    $('[data-toggle="tooltip"]').tooltip();
   }
 
   formatOrdersData(){

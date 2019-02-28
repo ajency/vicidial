@@ -3,16 +3,24 @@
 <!-- Order shipped details -->
 <div class="d-flex bd-highlight">
 	<div class="pb-2 pr-2">
-		<label class="d-block m-0">Shipment {{$loop->iteration}}</label>
+		<label class="d-block m-0">Sub Order {{$loop->iteration}}</label>
 		@if(! empty($sub_order['store_address']))
-			<span>Sold by: {{$sub_order['store_address']['store_name']}} - {{$sub_order['store_address']['locality']}}, {{$sub_order['store_address']['city']}}</span>
+			<span>Sold by: {{$sub_order['store_address']['store_name']}}</span>
 		@endif
 		<!-- <i class="fas fa-clipboard-check mr-1 text-muted"></i> <span class="text-success font-weight-bold">Order Processed</span> -->
 	</div>
 	<div class="pb-2 ml-auto">
 <!-- 		Total:
 		<h6 class="mt-1"><span class="rs-symbol"><i class="fas fa-rupee-sign sm-font"></i></span> {{$sub_order['total']}} for {{$sub_order['number_of_items']}} {{$sub_order['number_of_items'] == 1 ? "Item" : "Items"}}</h6> -->
-		<h6 class="mt-1">{{$sub_order['number_of_items']}} {{$sub_order['number_of_items'] == 1 ? "Item" : "Items"}}</h6>
+		<h6 class="text-right">{{$sub_order['number_of_items']}} {{$sub_order['number_of_items'] == 1 ? "Item" : "Items"}}</h6>
+		<div>
+			@if($sub_order['state'] == 'draft')
+				<span class="order-label order-label--processing" data-toggle="tooltip" data-placement="top" title="Your order has been placed and we are verifying item availability in the inventory.">Processing</span>
+			@endif
+			@if($sub_order['state'] == 'sale')
+				<span class="order-label order-label--confirmed" data-toggle="tooltip" data-placement="top" title="Stock for the items has been verified and your items will be shipped out soon.">Confirmed</span>
+			@endif
+		</div>
 	</div>
 </div>
 
