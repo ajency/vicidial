@@ -38,12 +38,12 @@
 		<div class="col-12">
 
 			<!-- Order info -->
-			<app-order-info [order_info]="order.order_info"></app-order-info>
+			<app-order-info [order_info]="order.order_info" [showStatus]=true></app-order-info>
 
 			<hr class="mb-4">
 
 			<!-- Product info -->			
-			<app-order [sub_orders]="order.sub_orders"></app-order>
+			<app-order [sub_orders]="order.sub_orders" [showStatus]=true></app-order>
 <!-- 			<div class="d-flex  align-self-center mb-4">
 				<label>
 					Need help with this order? <a href="#" class="kss-anchor">Visit our help center</a>

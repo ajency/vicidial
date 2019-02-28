@@ -40,6 +40,11 @@ yarn-error.log
 # packages
 /packages
 
+#kss-pwa
+/kss-pwa-app/dist
+/kss-pwa-app/e2e
+/kss-pwa-app/node_modules
+
 # static assets
 /public/css
 /public/fonts

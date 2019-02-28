@@ -165,17 +165,24 @@ class SubOrder extends Model
     public function getSubOrder()
     {
         $itemsData = [];
-        foreach ($this->item_data as $itemData) {
-            $variant                  = Variant::find($itemData['id']);
-            $item                     = $variant->getItemAttributes();
-            $item['quantity']         = $itemData['quantity'];
-            $item['variant_id']       = $itemData['id'];
-            $item['product_id']       = $variant->getParentId();
-            $item['product_color_id'] = $variant->getVarColorId();
-            $item['product_slug']     = $variant->getProductSlug();
-            $itemsData[]              = $item;
+        foreach ($this->orderLines->groupBy('variant_id') as $items) {
+            $itemData = $items->first();
+            $item     = [
+                'title'            => $itemData['title'],
+                'images'           => $itemData['images'],
+                'size'             => $itemData['size'],
+                'price_mrp'        => $itemData['price_mrp'],
+                'price_final'      => $itemData['price_final'],
+                'discount_per'     => $itemData['discount_per'],
+                'variant_id'       => $itemData['variant_id'],
+                'product_id'       => $itemData['product_id'],
+                'product_color_id' => $itemData['product_color_id'],
+                'product_slug'     => $itemData['product_slug'],
+                'quantity'         => $this->orderLines->where('variant_id', $itemData['variant_id'])->count(),
+            ];
+            $itemsData[] = $item;
         }
-        $sub_order     = array('suborder_id' => $this->id, 'total' => $this->odoo_data['you_pay'], 'number_of_items' => count($this->item_data), 'items' => $itemsData);
+        $sub_order     = array('suborder_id' => $this->id, 'total' => $this->odoo_data['you_pay'], 'number_of_items' => $this->orderLines->groupBy('variant_id')->count(), 'items' => $itemsData, 'state' => $this->odoo_status, 'is_invoiced' => $this->is_invoiced);
         $store_address = $this->location->getAddress();
         if ($store_address != null) {
             $sub_order['store_address'] = $store_address;
@@ -208,6 +215,7 @@ class SubOrder extends Model
     public static function updateSubOrderStatus($subOrderId, $state, $is_invoiced, $external_id)
     {
         $subOrder              = self::find($subOrderId);
+        $state_old             = $subOrder->odoo_status;
         $subOrder->odoo_id     = $external_id;
         $subOrder->is_invoiced = $is_invoiced;
         $subOrder->odoo_status = $state;
@@ -215,6 +223,31 @@ class SubOrder extends Model
         foreach ($subOrder->orderLines as $orderLine) {
             $orderLine->state = $state;
             $orderLine->save();
+        }
+
+        if ($state_old == 'draft' && $state == 'sale') {
+            $itemCount = $subOrder->orderLines->count();
+            $name      = $subOrder->orderLines->first()->name;
+            if (strlen($name) > 25) {
+                $name = substr($name, 0, 25) . '...';
+            }
+            $order = $subOrder->order;
+            $link  = ($order->cart->user->verified != null) ? url('/#/account/my-orders/') . '/' . $order->txnid : url('/my/order/details') . '?ordertoken=' . $order->token;
+            switch ($itemCount) {
+                case '1':
+                    $message = 'Confirmed: ' . $name . ' has been processed and will be shipped shortly. Track your order at: ' . $link;
+                    break;
+                case '2':
+                    $message = 'Confirmed: ' . $name . ' & 1 other item have been processed and will be shipped shortly. Track your order at: ' . $link;
+                    break;
+                default:
+                    $message = 'Confirmed: ' . $name . ' & ' . $itemCount . ' other items have been processed and will be shipped shortly. Track your order at: ' . $link;
+                    break;
+            }
+            sendSMS('order-confirmed', [
+                'to'      => $order->cart->user->phone,
+                'message' => $message,
+            ]);
         }
     }
 }

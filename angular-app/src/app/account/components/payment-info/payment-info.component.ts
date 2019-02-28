@@ -19,7 +19,8 @@ export class PaymentInfoComponent implements OnInit, OnChanges {
 
   getSubstr(string){
   	// console.log("string ==>", string);
-  	return string.substring(12,16);
+    if(string)
+    	return string.substring(12,16);
   }
 
 }

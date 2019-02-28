@@ -45,6 +45,7 @@ Route::group([
 		Route::post('/save-user-details', $group_app_version.'\UserController@saveUserDetails');
 		Route::get('/order/{id}/check-inventory', $group_app_version.'\OrderController@checkSubOrderInventory');
 		Route::middleware('check-user')->post('/orders', $group_app_version.'\OrderController@listOrders');
+            Route::middleware('check-user')->get('/order/{id}/details', $group_app_version.'\OrderController@singleOrder');
 	});
 	Route::post('/product-list', $group_app_version.'\ListingController@productList');
 	Route::get('/product-with-missing-images', $group_app_version.'\ProductController@productMissingImages');
@@ -104,6 +105,7 @@ Route::group([
 
 			Route::get('/order/{id}/check-inventory', $group_app_version.'\OrderController@checkSubOrderInventory');
 			Route::middleware('check-user')->post('/orders', $group_app_version.'\OrderController@listOrders');
+            Route::middleware('check-user')->get('/order/{id}/details', $group_app_version.'\OrderController@singleOrder');
 		});
 
         Route::group([

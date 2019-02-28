@@ -129,7 +129,7 @@ class Order extends Model
         $dateInd = Carbon::createFromFormat('Y-m-d H:i:s', $this->created_at, 'UTC');
         $dateInd->setTimezone('Asia/Kolkata');
 
-        $order_info = array('order_id' => $this->id, 'txn_no' => $this->txnid, 'total_amount' => $this->subOrderData()['you_pay'], 'order_date' => $dateInd->format('j M Y'), 'no_of_items' => count($this->cart->getItems()));
+        $order_info = array('order_id' => $this->id, 'txn_no' => $this->txnid, 'order_status' => $this->status, 'total_amount' => $this->subOrderData()['you_pay'], 'order_date' => $dateInd->format('j M Y'), 'no_of_items' => $this->orderLines->groupBy('variant_id')->count());
 
         if ($this->cart->user->verified == null) {
             $order_info['token'] = $this->token;
@@ -179,9 +179,10 @@ class Order extends Model
 
     public function sendSuccessSMS()
     {
+        $link = ($this->cart->user->verified != null) ? url('/#/account/my-orders/') . '/' . $this->txnid : url('/my/order/details') . '?ordertoken=' . $this->token;
         sendSMS('order-success', [
             'to'      => $this->cart->user->phone,
-            'message' => "Your order with order id {$this->txnid} for Rs. {$this->subOrderData()['you_pay']} has been placed successfully on KidSuperStore.in. Check your order at " . url('/#/account/my-orders/') . "/{$this->txnid}",
+            'message' => "Your order with order id {$this->txnid} for Rs. {$this->subOrderData()['you_pay']} has been placed successfully on KidSuperStore.in. Check your order at " . $link,
         ]);
     }
 

@@ -178,5 +178,12 @@ class OrderController extends Controller
         return response()->json(["message" => 'Order items received successfully', 'success'=> true,'data'=>$order_details]);
     }
 
+    public function singleOrder($id, Request $request)
+    {
+        $user  = User::getUserByToken($request->header('Authorization'));
+        $order = Order::where('txnid', $id)->first();
+        validateOrder($user, $order);
+        return response()->json(["message" => 'Order items received successfully', 'success' => true, 'data' => $order->getOrderDetails()]);
+    }
 }
 

@@ -264,3 +264,30 @@
     font-size: 1.3em;
   }
 }
+
+.order-label{
+    padding: 3px 10px;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 0.65rem;
+    background-color: #ddd;
+    font-weight: bold;
+    letter-spacing: 0.2px;
+    cursor: help;
+    &--shipped{
+        background-color: #1e56d8;
+    }
+    &--cancel{
+        background-color: #c51116;
+    }
+    &--confirmed{
+        background-color: #28a745;
+    }
+    &--processing{
+      background-color: #a9a9a9;
+    }
+}
+
+.payment-status{
+  font-size: 0.8rem;
+}
