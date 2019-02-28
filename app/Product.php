@@ -153,9 +153,9 @@ class Product
 
         }
         //create update job for active and inactive variants
-        if (!empty($updateVariants)) {
-            UpdateVariantInventory::dispatch($updateVariants)->onQueue('update_inventory');
-        }
+        // if (!empty($updateVariants)) {
+        //     UpdateVariantInventory::dispatch($updateVariants)->onQueue('update_inventory');
+        // }
 
         return $products;
     }
@@ -176,8 +176,8 @@ class Product
         try {
             $object          = Variant::firstOrNew(['odoo_id' => $variant['variant_id']]);
             $object->odoo_id = $variant['variant_id'];
-            if (is_null($object->inventory)) {
-                $object->inventory = [];
+            if (is_null($object->id)) {
+                // $object->inventory = [];
                 $exists            = false;
             }
             $object->product_color_id = $elastic->id;
@@ -186,6 +186,18 @@ class Product
             $object->save();
         } catch (\Exception $e) {
             \Log::warning($e->getMessage());
+        }
+        try{
+            if(!$exists){
+
+                \Ajency\ServiceComm\Comm\Sync::call('inventory','addVariant',[
+                    'id' => $object->id,
+                    'product_color_id' => $object->product_color_id,
+                    'odoo_id' => $object->odoo_id,
+                ]);
+            }
+        }catch (\Exception $e) {
+            \Log::error($e->getMessage());
         }
         $facets = ['product_category_type', 'product_gender', 'product_age_group', 'product_subtype', 'product_brand'];
         foreach ($facets as $facet) {

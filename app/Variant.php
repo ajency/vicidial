@@ -4,6 +4,7 @@ namespace App;
 
 use Ajency\Connections\ElasticQuery;
 use Ajency\Connections\OdooConnect;
+use Ajency\ServiceComm\Comm\Sync;
 use App\Facet;
 use App\Jobs\UpdateVariantInventory;
 use App\Location;
@@ -36,6 +37,11 @@ class Variant extends Model
     {
         parent::__construct($attributes);
         $this->elastic_index = config('elastic.indexes.product');
+    }
+
+    public function getInventoryAttribute()
+    {
+        return Sync::call('inventory', 'getVariantInventory', ['variant' => $this->id]);
     }
 
     public function newFromBuilder($attributes = [], $connection = null)
@@ -88,16 +94,14 @@ class Variant extends Model
      */
     public function getAvailability()
     {
-        $activeLocations = Location::where('use_in_inventory',true)->pluck('odoo_id')->toArray();
-        if (isset($this->inventory)) {
-            foreach ($this->inventory as $inventory) {
-                if ($inventory["quantity"] > 0 && in_array($inventory['location_id'], $activeLocations)) {
-                    return true;
-                }
-
+        $activeLocations = Location::where('use_in_inventory', true)->pluck('odoo_id')->toArray();
+        $invData         = $this->inventory;
+        foreach ($invData as $inventory) {
+            if ($inventory["quantity"] > 0 && in_array($inventory['location_id'], $activeLocations)) {
+                return true;
             }
-        }
 
+        }
         return false;
     }
 
@@ -333,8 +337,8 @@ class Variant extends Model
      */
     public function getQuantity()
     {
-        $total = 0;
-        $activeLocations = Location::where('use_in_inventory',true)->pluck('odoo_id')->toArray();
+        $total           = 0;
+        $activeLocations = Location::where('use_in_inventory', true)->pluck('odoo_id')->toArray();
         if (isset($this->inventory)) {
             foreach ($this->inventory as $inventory) {
                 if ($inventory["quantity"] > 0 && in_array($inventory['location_id'], $activeLocations) == true) {
@@ -352,9 +356,9 @@ class Variant extends Model
      */
     public function getQuantityStoreWise()
     {
-        $quantity_arr = array();
-        $location_arr = array();
-        $activeLocations = Location::where('use_in_inventory',true)->pluck('odoo_id')->toArray();
+        $quantity_arr    = array();
+        $location_arr    = array();
+        $activeLocations = Location::where('use_in_inventory', true)->pluck('odoo_id')->toArray();
         if (isset($this->inventory)) {
             foreach ($this->inventory as $inventory) {
                 if ($inventory["quantity"] > 0 && in_array($inventory['location_id'], $activeLocations)) {
@@ -377,19 +381,21 @@ class Variant extends Model
         return $odoo->defaultExec('product.product', 'read', [[$variant_id]], ['fields' => ['product_tmpl_id']])->first()['product_tmpl_id'][0];
     }
 
-    public static function addUpdateInventoryJobs()
+    // public static function addUpdateInventoryJobs()
+    // {
+    //     $variants = self::select('odoo_id')->get()->pluck('odoo_id')->toarray();
+    //     $job_sets = array_chunk($variants, config('odoo.update_inventory'));
+    //     foreach ($job_sets as $job_set) {
+    //         UpdateVariantInventory::dispatch($job_set)->onQueue('update_inventory');
+    //     }
+    // }
+
+    public static function updateInventory($params)
     {
-        $variants = self::select('odoo_id')->get()->pluck('odoo_id')->toarray();
-        $job_sets = array_chunk($variants, config('odoo.update_inventory'));
-        foreach ($job_sets as $job_set) {
-            UpdateVariantInventory::dispatch($job_set)->onQueue('update_inventory');
-        }
+        UpdateVariantInventory::dispatch($params['variants'])->onQueue('update_inventory');
     }
 
-    public function updateInventory()
-    {
-        UpdateVariantInventory::dispatch([$this->odoo_id])->onQueue('update_inventory');
-    }
+
 
     public static function getWarehouseInventory()
     {
