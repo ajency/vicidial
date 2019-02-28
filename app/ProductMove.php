@@ -42,11 +42,11 @@ class ProductMove
         $moveData      = $odoo->defaultExec('stock.move.line', 'read', [[$move_id]], ['fields' => config('product.move_fields')])->first();
         $sanitisedData = sanitiseMoveData($moveData, 'move_');
         $data         = self::indexElasticData($sanitisedData);
-        if (config('product.update_inventory')) {
-            if ($sanitisedData["move_to_loc"] == "Stock" or $sanitisedData["move_from_loc"] == "Stock") {
-                UpdateVariantInventory::dispatch([$sanitisedData["move_variant_id"]])->onQueue('update_inventory');
-            }
-        }
+        // if (config('product.update_inventory')) {
+        //     if ($sanitisedData["move_to_loc"] == "Stock" or $sanitisedData["move_from_loc"] == "Stock") {
+        //         UpdateVariantInventory::dispatch([$sanitisedData["move_variant_id"]])->onQueue('update_inventory');
+        //     }
+        // }
 
     }
 
