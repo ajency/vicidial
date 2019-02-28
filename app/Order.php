@@ -179,9 +179,10 @@ class Order extends Model
 
     public function sendSuccessSMS()
     {
+        $link = ($this->cart->user->verified != null) ? url('/#/account/my-orders/') . '/' . $this->txnid : url('/my/order/details') . '?ordertoken=' . $this->token;
         sendSMS('order-success', [
             'to'      => $this->cart->user->phone,
-            'message' => "Your order with order id {$this->txnid} for Rs. {$this->subOrderData()['you_pay']} has been placed successfully on KidSuperStore.in. Check your order at " . url('/#/account/my-orders/') . "/{$this->txnid}",
+            'message' => "Your order with order id {$this->txnid} for Rs. {$this->subOrderData()['you_pay']} has been placed successfully on KidSuperStore.in. Check your order at " . $link,
         ]);
     }
 

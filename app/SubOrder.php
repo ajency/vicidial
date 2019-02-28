@@ -231,20 +231,21 @@ class SubOrder extends Model
             if (strlen($name) > 25) {
                 $name = substr($name, 0, 25) . '...';
             }
-            $link = url('/#/account/my-orders/') . '/' . $subOrder->order->txnid;
+            $order = $subOrder->order;
+            $link  = ($order->cart->user->verified != null) ? url('/#/account/my-orders/') . '/' . $order->txnid : url('/my/order/details') . '?ordertoken=' . $order->token;
             switch ($itemCount) {
                 case '1':
-                    $message = 'Confirmed: ' . $name . ' has been processed by the seller and will be shipped shortly. Track your order at: ' . $link;
+                    $message = 'Confirmed: ' . $name . ' has been processed and will be shipped shortly. Track your order at: ' . $link;
                     break;
                 case '2':
-                    $message = 'Confirmed: ' . $name . ' & 1 other item have been processed by the seller and will be shipped shortly. Track your order at: ' . $link;
+                    $message = 'Confirmed: ' . $name . ' & 1 other item have been processed and will be shipped shortly. Track your order at: ' . $link;
                     break;
                 default:
-                    $message = 'Confirmed: ' . $name . ' & ' . $itemCount . ' other items have been processed by the seller and will be shipped shortly. Track your order at: ' . $link;
+                    $message = 'Confirmed: ' . $name . ' & ' . $itemCount . ' other items have been processed and will be shipped shortly. Track your order at: ' . $link;
                     break;
             }
             sendSMS('order-confirmed', [
-                'to'      => $subOrder->order->cart->user->phone,
+                'to'      => $order->cart->user->phone,
                 'message' => $message,
             ]);
         }
