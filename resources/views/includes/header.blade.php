@@ -58,11 +58,11 @@
                         </ul>
                         <div class="nav-column--heading mb-1">Top Brands</div>
                         <ul class="list-unstyled">
-                          <li><a class="megamenu-link" href="/boys/upturn">Upturn</a></li>
-                          <li><a class="megamenu-link" href="/boys/dream-theatre">Dream Theater</a></li>
-                          <li><a class="megamenu-link" href="/boys/spark">Spark</a></li>
-                          <li><a class="megamenu-link" href="/boys/kidopanti">Kidopanti</a></li>
-                          <li><a class="megamenu-link" href="/boys/bachpan">Bachpan</a></li>
+                          <li><a class="megamenu-link" href="/boys/boys/toddler-2-7-years--junior-7-14-years/upturn">Upturn</a></li>
+                          <li><a class="megamenu-link" href="/boys/boys/toddler-2-7-years--junior-7-14-years/dream-theatre">Dream Theater</a></li>
+                          <li><a class="megamenu-link" href="/boys/boys/toddler-2-7-years--junior-7-14-years/spark">Spark</a></li>
+                          <li><a class="megamenu-link" href="/boys/boys/toddler-2-7-years--junior-7-14-years/kidopanti">Kidopanti</a></li>
+                          <li><a class="megamenu-link" href="/boys/boys/toddler-2-7-years--junior-7-14-years/bachpan">Bachpan</a></li>
                         </ul>
                     </div>
 
@@ -137,11 +137,11 @@
                       </ul>
                       <div class="nav-column--heading mb-1">Top Brands</div>
                       <ul class="list-unstyled">
-                        <li><a class="megamenu-link" href="/girls/upturn">Upturn</a></li>
-                        <li><a class="megamenu-link" href="/girls/dream-theatre">Dream Theater</a></li>
-                        <li><a class="megamenu-link" href="/girls/dchica">Dchica</a></li>
-                        <li><a class="megamenu-link" href="/girls/begetter">Begetter</a></li>
-                        <li><a class="megamenu-link" href="/girls/pikaboo">Pikaboo</a></li>
+                        <li><a class="megamenu-link" href="/girls/toddler-2-7-years--junior-7-14-years/upturn">Upturn</a></li>
+                        <li><a class="megamenu-link" href="/girls/toddler-2-7-years--junior-7-14-years/dream-theatre">Dream Theater</a></li>
+                        <li><a class="megamenu-link" href="/girls/toddler-2-7-years--junior-7-14-years/dchica">Dchica</a></li>
+                        <li><a class="megamenu-link" href="/girls/toddler-2-7-years--junior-7-14-years/begetter">Begetter</a></li>
+                        <li><a class="megamenu-link" href="/girls/toddler-2-7-years--junior-7-14-years/pikaboo">Pikaboo</a></li>
                       </ul>
                   </div>
 
