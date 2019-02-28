@@ -713,17 +713,47 @@
 
 // Single related search links
 .related-search{
+	li{
+		&:first-child{
+			a{
+				margin-left: 0;
+			}
+		}
+	}
 	a{
 	    text-transform: uppercase;
 	    font-weight: bold;
 	    color: #000;
 	    font-size: 1.05rem;
 	    border-bottom: 2px solid theme-color('primary');
-	    margin: 0 0.6rem;
+	    margin: 0 1.5rem;
 	}
-}
-&.stories-links{
-	a{
-		border-color: theme-color("secondary");
+	&.stories-links{
+		a{
+			border-color: theme-color("secondary");
+		}
+	}
+	@media (max-width: 767px){
+		flex-direction: column;
+		border-bottom: 1px solid #ddd;
+		&:not(.stories-links){
+			border-top: 1px solid #ddd;
+		}
+		li{
+			width: 100%;
+		    display: flex;
+		    align-items: center;
+		    justify-content: space-between;
+		}
+		a{
+			border-bottom: 0;
+			font-size: 0.85rem;
+			margin: 0;
+			display: flex;
+		    align-items: center;
+		    justify-content: space-between;
+		    width: 100%;
+    		padding: 0.8rem 0;
+		}
 	}
 }	
