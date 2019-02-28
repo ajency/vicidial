@@ -5,6 +5,7 @@ namespace App\Http\Controllers\v2;
 use App\Address;
 use App\Cart;
 use App\Http\Controllers\Controller;
+use App\Jobs\SubOrderStatus;
 use App\Order;
 use App\User;
 use Carbon\Carbon;
@@ -25,12 +26,12 @@ class OrderController extends Controller
         validateAddress($user, $address);
         $cart->checkCartAvailability();
 
-        
         $order = Order::create([
             'cart_id'      => $cart->id,
             'address_id'   => $address->id,
             'address_data' => $address->shippingAddress(),
             'expires_at'   => Carbon::now()->addMinutes(config('orders.expiry'))->timestamp,
+            'type'         => 'New Transaction',
         ]);
 
         saveTxnid($order);
@@ -65,7 +66,6 @@ class OrderController extends Controller
 
         checkOrderInventory($order);
 
-       
         if (isset($params['address_id'])) {
             $address = Address::find($params["address_id"]);
             validateAddress($user, $address);
@@ -133,6 +133,11 @@ class OrderController extends Controller
         }
 
         return view('orderdetails')->with('params', $params);
+    }
+
+    public static function updateSubOrderStatus($params)
+    {
+        SubOrderStatus::dispatch($params["subOrderId"], $params["state"], $params["is_invoiced"], $params["external_id"])->onQueue('odoo_order');
     }
 
     public function listOrders(Request $request)

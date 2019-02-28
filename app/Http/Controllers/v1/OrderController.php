@@ -7,6 +7,7 @@ use App\Address;
 use App\Cart;
 use App\Order;
 use App\User;
+use App\Jobs\SubOrderStatus;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -30,6 +31,7 @@ class OrderController extends Controller
             'address_id'    => $address->id,
             'address_data'  => $address->shippingAddress(),
             'expires_at'    => Carbon::now()->addMinutes(config('orders.expiry'))->timestamp,
+            'type'          => 'New Transaction',
         ]);
 
         saveTxnid($order);
@@ -132,6 +134,11 @@ class OrderController extends Controller
         }
 
         return view('orderdetails')->with('params', $params);
+    }
+
+    public static function updateSubOrderStatus($params)
+    {
+        SubOrderStatus::dispatch($params["subOrderId"], $params["state"], $params["is_invoiced"], $params["external_id"])->onQueue('odoo_order');
     }
 
     public function listOrders(Request $request){

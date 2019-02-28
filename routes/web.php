@@ -10,6 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
  */
+Route::post('/service_comm/listen', '\Ajency\ServiceComm\ServiceCommController@serviceCommListen');
+
 $config = config('ajfileupload');
 
 $app_version = 'v' . config('app.api_version');

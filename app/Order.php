@@ -5,6 +5,7 @@ namespace App;
 use Ajency\Connections\OdooConnect;
 use App\Cart;
 use App\Jobs\OdooOrder;
+use App\Jobs\OdooOrderLine;
 use App\SubOrder;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -19,7 +20,7 @@ class Order extends Model
         'aggregate_data' => 'array',
     ];
 
-    protected $fillable = ['cart_id', 'address_id', 'address_data', 'expires_at'];
+    protected $fillable = ['cart_id', 'address_id', 'address_data', 'expires_at', 'type'];
 
     public function subOrders()
     {
@@ -36,6 +37,11 @@ class Order extends Model
         return $this->belongsTo('App\Address');
     }
 
+    public function orderLines()
+    {
+        return $this->morphToMany('App\OrderLine', 'line_mapping');
+    }
+
     public function setSubOrders()
     {
         $cart = Cart::find($this->cart_id);
@@ -48,9 +54,17 @@ class Order extends Model
             $subOrder              = new SubOrder;
             $subOrder->order_id    = $this->id;
             $subOrder->location_id = $locationID;
+            $subOrder->type        = 'New Transaction';
             $subOrder->setItems($items);
             $subOrder->aggregateData();
             $subOrder->save();
+
+            $orderLineIds = $subOrder->orderLineIds;
+            $subOrder->refresh();
+            foreach ($orderLineIds as $orderLineId) {
+                $subOrder->orderLines()->attach($orderLineId, ['type' => $subOrder->type]);
+                $this->orderLines()->attach($orderLineId, ['type' => $this->type]);
+            }
         }
     }
 
@@ -65,7 +79,13 @@ class Order extends Model
     {
         //create a job to place order on odoo for all suborders.
         foreach ($this->subOrders as $subOrder) {
-            OdooOrder::dispatch($subOrder)->onQueue('odoo_order');
+            $subOrder->odoo_status = 'draft';
+            $subOrder->save();
+            foreach ($subOrder->orderLines as $orderLine) {
+                $orderLine->state = 'draft';
+                $orderLine->save();
+            }
+            OdooOrder::dispatch($subOrder, true)->onQueue('odoo_order');
         }
         if ($this->cart->coupon != null) {
             $odoo              = new OdooConnect;
@@ -190,6 +210,40 @@ class Order extends Model
                 $order->address_data = $order->address->shippingAddress();
             }
             $order->save();
+        }
+    }
+
+    public static function addOrderlinesforOldOrders($start, $end)
+    {
+        $orders = self::where('id', '>=', $start)->where('id', '<=', $end)->get();
+        foreach ($orders as $order) {
+            OdooOrderLine::dispatch($order)->onQueue('odoo_order_line');
+        }
+    }
+
+    public function addOrderlines()
+    {
+        if ($this->status == 'payment-successful') {
+            $this->transaction_mode = 'Prepaid';
+            $this->save();
+        }
+        foreach ($this->subOrders as $subOrder) {
+            $subOrder->setOrderLines();
+            $orderLineIds = $subOrder->orderLineIds;
+            foreach ($orderLineIds as $orderLineId) {
+                $subOrder->orderLines()->attach($orderLineId, ['type' => $subOrder->type]);
+                $this->orderLines()->attach($orderLineId, ['type' => $this->type]);
+            }
+            $subOrder->refresh();
+            if ($this->status == 'payment-successful') {
+                $subOrder->odoo_status = 'draft';
+                $subOrder->save();
+                foreach ($subOrder->orderLines as $orderLine) {
+                    $orderLine->state = 'draft';
+                    $orderLine->save();
+                }
+                OdooOrder::dispatch($subOrder, false)->onQueue('odoo_order');
+            }
         }
     }
 }
