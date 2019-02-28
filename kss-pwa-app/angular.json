@@ -17,7 +17,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "../public/views/kss-pwa",
+            "lazyModules" : ["src/app/bag/bag.module", "src/app/shared-components/address/address.module", "src/app/shared-components/bag-summary/bag-summary.module",
+              "src/app/shared-components/edit-user/edit-user.module", "src/app/shared-components/promotions/promotions.module"],
+            "outputPath": "dist/kss-pwa-app",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -63,7 +65,7 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
+          "options": {            
             "browserTarget": "kss-pwa-app:build"
           },
           "configurations": {

@@ -1,15 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-// import { App1SharedModule } from "../../projects/kss-widget/src/app/app.module";
 
-const routes: Routes = [
-	 { path: '',  loadChildren: './home/home.module#HomeModule' }
+import { PageNotFoundComponent }    from './page-not-found/page-not-found.component';
+
+
+const routes: Routes = [	
+	{ path: '',  loadChildren: './home/home.module#HomeModule'},
+	{ path: '**', component : PageNotFoundComponent, }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)
-  			// App1SharedModule.forRoot()
-  		],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

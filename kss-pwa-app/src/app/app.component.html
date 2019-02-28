@@ -12,6 +12,7 @@
 
 <a href="javascript:void(0)" (click)="goToHomePage()">Go to shop page</a> -->
 
+<lazy-af *ngIf="loadCart" moduleName="src/app/bag/bag.module#BagModule"></lazy-af>
 
 <router-outlet></router-outlet>
 
@@ -19,3 +20,4 @@
 <div *ngIf="display" class="alert alert-dark alert-offline text-center" [ngClass]="{'slide-in-bottom': showToast, 'slide-out-bottom': !showToast}" role="alert">
   <strong>{{msg}}</strong>
 </div>
+

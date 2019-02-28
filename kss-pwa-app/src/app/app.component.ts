@@ -1,6 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+// import { Component, OnInit } from '@angular/core';
+// import { NgModule, Component, OnInit, VERSION, SystemJsNgModuleLoader, Injector, ViewContainerRef } from '@angular/core';
+import {
+    Component, Injector, NgModuleFactory, OnInit, SystemJsNgModuleLoader, ViewChild,
+    ViewContainerRef
+} from '@angular/core';
 import { ApiService } from './services/api.service';
 import { ConnectionService } from 'ng-connection-service';
+import { PlatformLocation } from '@angular/common';
+
 
 @Component({
   selector: 'app-root',
@@ -8,6 +15,9 @@ import { ConnectionService } from 'ng-connection-service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+
+  // @ViewChild('container', {read: ViewContainerRef}) container: ViewContainerRef;
+
   title = 'kss-pwa-app';
   time : any;
   isConnected : any;
@@ -16,8 +26,11 @@ export class AppComponent implements OnInit {
   toastTimeout : any;
   showToast : boolean = false;  
   display : boolean = false;
+  loadCart : boolean = false;
   constructor(private apiService: ApiService,
-              private connectionService: ConnectionService) { 
+              private connectionService: ConnectionService,
+              private loc : PlatformLocation,          
+              private loader: SystemJsNgModuleLoader, private inj: Injector) { 
 
     this.connectionService.monitor().subscribe(isConnected => {
       console.log("event occured", isConnected);
@@ -46,6 +59,20 @@ export class AppComponent implements OnInit {
         document.getElementsByTagName('body')[0].classList.add('app-offline');
     }
 
+// 
+    // this.loc.onHashChange(()=>{
+    //   console.log("hash changed", this.loc.hash);
+    //   if(this.loc.hash == '#/bag'){
+    //       this.loader.load('./bag/bag.module#BagModule')
+    //         .then(factory => {
+    //           const module = factory.create(this.injector);
+    //           var entryComponentType = module.injector.get('LAZY_ENTRY_COMPONENT')
+    //           var componentFactory = module.componentFactoryResolver.resolveComponentFactory(entryComponentType);
+    //           this.vcr.createComponent(componentFactory);
+    //         })
+    //     }
+    // })
+
   }
 
   displayToast(){
@@ -58,7 +85,13 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(){
- 
+    // this.loader.load('./bag/bag.module#BagModule').then((moduleFactory: NgModuleFactory<any>) => {
+    //         const entryComponent = (<any>moduleFactory.moduleType).entry;
+    //         const moduleRef = moduleFactory.create(this.inj);
+
+    //         const compFactory = moduleRef.componentFactoryResolver.resolveComponentFactory(entryComponent);
+    //         this.container.createComponent(compFactory);
+    //     });
   }
 
   goToHomePage(){
