@@ -56,6 +56,14 @@
                           <li><a class="megamenu-link" href="/accessories/boys">Accessories</a></li>
                           <li><a class="megamenu-link megamenu-link--primary" href="/boys">View all products</a></li>
                         </ul>
+                        <div class="nav-column--heading mb-1">Top Brands</div>
+                        <ul class="list-unstyled">
+                          <li><a class="megamenu-link" href="/boys/upturn">Upturn</a></li>
+                          <li><a class="megamenu-link" href="/boys/dream-theatre">Dream Theater</a></li>
+                          <li><a class="megamenu-link" href="/boys/spark">Spark</a></li>
+                          <li><a class="megamenu-link" href="/boys/kidopanti">Kidopanti</a></li>
+                          <li><a class="megamenu-link" href="/boys/bachpan">Bachpan</a></li>
+                        </ul>
                     </div>
 
                     <div class="nav-column">
@@ -127,6 +135,14 @@
                         <li><a class="megamenu-link" href="/accessories/girls">Accessories</a></li>
                         <li><a class="megamenu-link megamenu-link--primary" href="/girls">View all products</a></li>
                       </ul>
+                      <div class="nav-column--heading mb-1">Top Brands</div>
+                      <ul class="list-unstyled">
+                        <li><a class="megamenu-link" href="/girls/upturn">Upturn</a></li>
+                        <li><a class="megamenu-link" href="/girls/dream-theatre">Dream Theater</a></li>
+                        <li><a class="megamenu-link" href="/girls/dchica">Dchica</a></li>
+                        <li><a class="megamenu-link" href="/girls/begetter">Begetter</a></li>
+                        <li><a class="megamenu-link" href="/girls/pikaboo">Pikaboo</a></li>
+                      </ul>
                   </div>
 
                   <div class="nav-column">
@@ -194,6 +210,14 @@
                         <li><a class="megamenu-link" href="/shoes/infant-0-2-years">Shoes</a></li>
                         <li><a class="megamenu-link" href="/accessories/infant-0-2-years">Accessories</a></li>
                         <li><a class="megamenu-link megamenu-link--primary" href="/infant-0-2-years">View all products</a></li>
+                      </ul>
+                      <div class="nav-column--heading mb-1">Top Brands</div>
+                      <ul class="list-unstyled">
+                        <li><a class="megamenu-link" href="/infant-0-2-years/upturn">Upturn</a></li>
+                        <li><a class="megamenu-link" href="/infant-0-2-years/dream-theatre">Dream Theater</a></li>
+                        <li><a class="megamenu-link" href="/infant-0-2-years/kidopanti">Kidopanti</a></li>
+                        <li><a class="megamenu-link" href="/infant-0-2-years/dchica">Dchica</a></li>
+                        <li><a class="megamenu-link" href="/infant-0-2-years/begetter">Begetter</a></li>
                       </ul>
                   </div>
 
