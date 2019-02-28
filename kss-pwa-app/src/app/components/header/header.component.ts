@@ -1,5 +1,6 @@
-import { Component, OnInit,  Input, OnChanges } from '@angular/core';
+import { Component, OnInit,  Input, OnChanges, Output } from '@angular/core';
 import * as $ from 'jquery';
+import { AppServiceService } from '../../service/app-service.service';
 
 @Component({
   selector: 'app-header',
@@ -9,8 +10,7 @@ import * as $ from 'jquery';
 export class HeaderComponent implements OnInit, OnChanges {
 
 	@Input() menu : any;
-
-  constructor(){ }
+  constructor(private appservice : AppServiceService,){ }
 
   ngOnInit(){
     $('.megamenu--left .nav-item').click(function(){
@@ -39,5 +39,10 @@ export class HeaderComponent implements OnInit, OnChanges {
     $('.megamenu--left .nav-item').removeClass('active');
     $('.megamenu-wrapper').addClass('d-none');
     $('body').removeClass('overflow-h');
+  }
+
+  openCart(){
+    console.log("openCart");
+    this.appservice.loadCartTrigger();
   }
 }

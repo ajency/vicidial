@@ -26,6 +26,7 @@ export class AppServiceService {
   order : any; // used to pass data to order-details page
   myOrders : any; //used to store list of orders in my-orders page
   private loginSuccess = new Subject<any>();
+  private loadCart = new Subject<any>();
   userInfo : any;
   navigatingFromBagToAddress : boolean = false;
   userMobile : any;
@@ -88,6 +89,14 @@ export class AppServiceService {
 
   listenToCouponCodeChange() : Observable<any> {    
     return this.couponCodeSelected.asObservable();
+  }
+
+  loadCartTrigger(){
+    this.loadCart.next();
+  }
+
+  listenToLoadCartTrigger() : Observable<any> {    
+    return this.loadCart.asObservable();
   }
 
   getCookie(cname) {
