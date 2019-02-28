@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
   showToast : boolean = false;  
   display : boolean = false;
   loadCart : boolean = false;
-  loginSucessListener : Subscription;
+  loadCartListner : Subscription;
   constructor(private apiService: ApiService,
               private connectionService: ConnectionService,
               private loc : PlatformLocation,
