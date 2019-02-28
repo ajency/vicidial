@@ -13,8 +13,8 @@
 			<h6 class="mt-1"><span class="rs-symbol"><i class="fas fa-rupee-sign sm-font"></i></span> {{$sub_order['total']}} for {{$sub_order['number_of_items']}} {{$sub_order['number_of_items'] == 1 ? "Item" : "Items"}}</h6> -->
 			<h6 class="mt-1 mb-1">{{sub_order.number_of_items}} <span *ngIf="sub_order.number_of_items == 1">Item</span> <span *ngIf="sub_order.number_of_items > 1">Items</span> </h6>
 			<div *ngIf="showStatus">
-				<span *ngIf="sub_order.state == 'draft' " class="order-label order-label--processing" data-toggle="tooltip" data-placement="top" title="Your order has been placed and the seller is verifying item availability in the inventory.">Processing</span>
-				<span *ngIf="sub_order.state == 'sale' " class="order-label order-label--confirmed" data-toggle="tooltip" data-placement="top" title="Stock for the items has been verified by the seller. Your items will be shipped out soon.">Confirmed</span>
+				<span *ngIf="sub_order.state == 'draft' " class="order-label order-label--processing" data-toggle="tooltip" data-placement="top" title="Your order has been placed and we are verifying item availability in the inventory.">Processing</span>
+				<span *ngIf="sub_order.state == 'sale' " class="order-label order-label--confirmed" data-toggle="tooltip" data-placement="top" title="Stock for the items has been verified and your items will be shipped out soon.">Confirmed</span>
 			</div>
 		</div>
 	</div>

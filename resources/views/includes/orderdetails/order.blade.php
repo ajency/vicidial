@@ -15,10 +15,10 @@
 		<h6 class="mt-1 text-right">{{$sub_order['number_of_items']}} {{$sub_order['number_of_items'] == 1 ? "Item" : "Items"}}</h6>
 		<div>
 			@if($sub_order['state'] == 'draft')
-				<span class="order-label order-label--processing" data-toggle="tooltip" data-placement="top" title="Your order has been placed and the seller is verifying item availability in the inventory.">Processing</span>
+				<span class="order-label order-label--processing" data-toggle="tooltip" data-placement="top" title="Your order has been placed and we are verifying item availability in the inventory.">Processing</span>
 			@endif
 			@if($sub_order['state'] == 'sale')
-				<span class="order-label order-label--confirmed" data-toggle="tooltip" data-placement="top" title="Stock for the items has been verified by the seller. Your items will be shipped out soon.">Confirmed</span>
+				<span class="order-label order-label--confirmed" data-toggle="tooltip" data-placement="top" title="Stock for the items has been verified and your items will be shipped out soon.">Confirmed</span>
 			@endif
 		</div>
 	</div>
