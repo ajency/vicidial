@@ -176,8 +176,8 @@ class Product
         try {
             $object          = Variant::firstOrNew(['odoo_id' => $variant['variant_id']]);
             $object->odoo_id = $variant['variant_id'];
-            if (is_null($object->inventory)) {
-                $object->inventory = [];
+            if (is_null($object->id)) {
+                // $object->inventory = [];
                 $exists            = false;
             }
             $object->product_color_id = $elastic->id;
@@ -190,7 +190,7 @@ class Product
         try{
             if(!$exists){
 
-                \Ajency\ServerComm\Comm\Sync::call('inventory','addVariant',[
+                \Ajency\ServiceComm\Comm\Sync::call('inventory','addVariant',[
                     'id' => $object->id,
                     'product_color_id' => $object->product_color_id,
                     'odoo_id' => $object->odoo_id,
