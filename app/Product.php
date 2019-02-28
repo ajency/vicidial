@@ -152,10 +152,10 @@ class Product
             $products->push(buildProductIndexFromOdooData($productData, $colorVariantData));
 
         }
-        //create update job for active and inactive variants
-        // if (!empty($updateVariants)) {
-        //     UpdateVariantInventory::dispatch($updateVariants)->onQueue('update_inventory');
-        // }
+        // create update job for active and inactive variants
+        if (!empty($updateVariants)) {
+            UpdateVariantInventory::dispatch($updateVariants)->onQueue('update_inventory');
+        }
 
         return $products;
     }
