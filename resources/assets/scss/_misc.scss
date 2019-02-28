@@ -710,3 +710,20 @@
 		}
 	}
 }
+
+// Single related search links
+.related-search{
+	a{
+	    text-transform: uppercase;
+	    font-weight: bold;
+	    color: #000;
+	    font-size: 1.05rem;
+	    border-bottom: 2px solid theme-color('primary');
+	    margin: 0 0.6rem;
+	}
+}
+&.stories-links{
+	a{
+		border-color: theme-color("secondary");
+	}
+}	

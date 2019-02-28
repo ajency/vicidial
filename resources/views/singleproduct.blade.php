@@ -118,6 +118,8 @@
 		</div>
 		@include('includes.similar-products',["items"=>$similar_data_params])
 
+		@include('includes.related-searches')
+
 		<?php
 		$wptags = $params['posts'];
 		// $posts = get_post_by_tags($wptags,'3');
