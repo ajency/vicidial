@@ -10,10 +10,10 @@
   </div>
 </section>
 <section *ngIf="trendingGroup" id="kss-clothings" class="stripe-bg-top">
-  <div *ngFor="let group of trendingGroup; let ind = index" class="container mt-1 mt-md-4">
-    <div *ngIf="ind == 0" class="trending-heading d-md-none">Boys</div>
-    <div *ngIf="ind == 1" class="trending-heading d-md-none">Girls</div>
-    <div *ngIf="ind == 2" class="trending-heading d-md-none">Infants</div>
+  <div *ngFor="let group of trendingGroup; let ind = index" class="container mt-1 mt-md-5 position-relative text-center">
+    <div *ngIf="ind == 0" class="trending-heading">Boys</div>
+    <div *ngIf="ind == 1" class="trending-heading">Girls</div>
+    <div *ngIf="ind == 2" class="trending-heading">Infants</div>
     <app-slider [row]="group"></app-slider>
   </div>
 <!--   <div class="text-center mt-3">
