@@ -31,7 +31,7 @@ export class HomePageComponent implements OnInit {
   		console.log("error in fetching the json",error);
   	})
 
-    url = isDevMode() ? "https://demo8558685.mockable.io/get-home-page-elements-test" : "/api/rest/v1/test/get-page-element-dummy";
+    url = isDevMode() ? "https://demo8558685.mockable.io/get-home-page-elements-test" : "/api/rest/v1/test/get-page-element-dummy?page_slug=home";
     // url = "https://demo8558685.mockable.io/get-home-page-elements-test";
     this.apiService.request(url,'get',{},{}).then((data)=>{
       console.log("home page data ==>", data);
