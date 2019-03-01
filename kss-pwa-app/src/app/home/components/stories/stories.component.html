@@ -14,7 +14,7 @@
 <section class="mt-4">
   <div class="container">
     <div class="home-stories d-sm-flex align-items-sm-center justify-content-sm-center label-box-large row position-relative" id="home-story">
-    	<div *ngFor="let story of stories" class="label-box img-holder position-relative" attr.static_element-id="{{story.sequence}}" id="story-{{story.sequence}}" attr.static_element-display_type="Shop By Stories" attr.static_element-type="{{story.type}}" attr.page_slug="home" app-label-box [box_data]="story" [box_type]="story"></div>
+    	<div *ngFor="let story of stories" class="label-box img-holder position-relative kss-extension" attr.static_element-id="{{story.sequence}}" id="story-{{story.sequence}}" attr.static_element-display_type="Shop By Stories" attr.static_element-type="{{story.type}}" attr.page_slug="home" app-label-box [box_data]="story" [box_type]="story"></div>
     </div>
     <div *ngIf="isSmallScreen" class="sh-more more-category mb-3" id="show-more-story" (click)="showMoreStory()">{{toggleButton}}<i class="fas fa-chevron-down ml-1 sh-more__icon"></i></div>
   </div>
