@@ -337,6 +337,9 @@ return [
             "height" => 933,
             "width" => 1200
         ],
-    ]
+    ],
+
+    'gender_tab_presets'=> [],
+    'gender_tab_upload'=> [],
 
 ];
