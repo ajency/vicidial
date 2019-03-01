@@ -6,9 +6,18 @@
 	border: 8px double #e6e6e6;
 	padding: 0.8rem;
 	transition: all 0.3s ease;
+	background-color: #e9a746;
+	border-radius: 0;
+	&__name,&__year{
+		transition: all 0.5s ease;
+		color: #fff;
+	}
 	&:hover{
 		box-shadow: none;
-		border-color: lighten(theme-color('primary'), 30%);
+		border-color: #fff;
+		.gender-cat__name,.gender-cat__year{
+			color: #000;
+		}
 	}
 	@include bp(mobile) {
 		min-height: 85px;
