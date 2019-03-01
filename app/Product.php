@@ -140,9 +140,7 @@ class Product
             $attributeValues = $odoo->defaultExec('product.attribute.value', 'read', [$variantData['attribute_value_ids']], ['fields' => config('product.attribute_fields')]);
             $sanitisedData   = sanitiseVariantData($variantData, $attributeValues);
 
-            if (!self::storeVariantData($sanitisedData, $productData)) {
-                $updateVariants[] = $sanitisedData['variant_id'];
-            }
+            $updateVariants[] = self::storeVariantData($sanitisedData, $productData);
 
             $sanitisedData['variant_availability'] = Variant::select('inventory')->where('odoo_id', $sanitisedData['variant_id'])->first()->getAvailability();
             $variants->push($sanitisedData);
@@ -246,7 +244,7 @@ class Product
                 \Log::warning($e->getMessage());
             }
         }
-        return $exists;
+        return $object->id;
 
     }
 
