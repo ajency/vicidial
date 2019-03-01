@@ -23,6 +23,7 @@ export class AppComponent implements OnInit {
   display : boolean = false;
   loadCart : boolean = false;
   loadCartListner : Subscription;
+  loadFromAngular : boolean = false;
   constructor(private apiService: ApiService,
               private connectionService: ConnectionService,
               private loc : PlatformLocation,
@@ -84,11 +85,18 @@ export class AppComponent implements OnInit {
 
   loadCartModule(){
     console.log("loadCart function");
-    $('#main-nav').removeClass('speed-in');
-    $('#cd-cart').addClass("speed-in");
-    $('#cd-shadow-layer').addClass('is-visible');
-    $("body").addClass("hide-scroll");
-    this.loadCart = true;
+    if(this.appservice.loadFromAngular){
+      $('#main-nav').removeClass('speed-in');
+      $('#cd-cart').addClass("speed-in");
+      $('#cd-shadow-layer').addClass('is-visible');
+      $("body").addClass("hide-scroll");
+      setTimeout(()=>{
+        this.loadFromAngular = true;
+      },500)      
+    }
+    else{
+      this.loadCart = true;
+    }    
   }
 }
 

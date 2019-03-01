@@ -34,9 +34,10 @@
         </svg>
     </div>
 
-	<lazy-af *ngIf="loadCart" moduleName="src/app/bag/bag.module#BagModule"></lazy-af>
+	<lazy-af *ngIf="loadFromAngular" moduleName="src/app/bag/bag.module#BagModule"></lazy-af>
 </div>
 
+<lazy-af *ngIf="loadCart" moduleName="src/app/bag/bag.module#BagModule"></lazy-af>
 
 <router-outlet></router-outlet>
 

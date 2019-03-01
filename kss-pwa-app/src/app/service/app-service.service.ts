@@ -32,6 +32,7 @@ export class AppServiceService {
   userMobile : any;
   private couponCodeSelected = new Subject<any>();
   displaySkipOTP : any;
+  loadFromAngular : boolean = false;
   constructor(	private router: Router,
                 private apiservice : ApiServiceService) { 
     this.apiUrl = isDevMode() ? 'http://localhost:8000' : '';
