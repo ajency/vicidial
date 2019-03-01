@@ -290,6 +290,12 @@ function loadAngularApp(){
     //             // loadAngularApp();
     //         })
     // }
+        $("<link/>", {
+           rel: "stylesheet",
+           type: "text/css",
+           href: "/views/kss-pwa/styles.css"
+        }).appendTo("head");
+
         $.getScript("/views/kss-pwa/runtime.js")        
             .done(function(script, textStatus){
                 // console.log(textStatus);
