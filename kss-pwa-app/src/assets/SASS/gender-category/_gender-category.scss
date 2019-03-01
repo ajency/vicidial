@@ -8,6 +8,7 @@
 	transition: all 0.3s ease;
 	&:hover{
 		box-shadow: none;
+		border-color: lighten(theme-color('primary'), 30%);
 	}
 	@include bp(mobile) {
 		min-height: 85px;
