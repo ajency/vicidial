@@ -1,7 +1,7 @@
 @isset($delaycss)
-<!-- <noscript id="deferred-styles">
+<noscript id="deferred-styles">
 	<link rel="stylesheet" type="text/css" href="{{CDN::mix('/css/kss.css') }}">
-</noscript> -->
+</noscript>
 <!-- <script>
   var loadDeferredStyles = function() {
     var addStylesNode = document.getElementById("deferred-styles");
@@ -34,7 +34,7 @@
 <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-url-parser/2.3.1/purl.min.js"></script> -->
 <script src="https://apis.google.com/js/platform.js"></script>
-<!-- <script type="text/javascript" src="{{CDN::mix('/js/cart.js') }}"></script> -->
+<script type="text/javascript" src="{{CDN::mix('/js/cart.js') }}"></script>
 
 <!-- sentry code -->
 <script src="https://browser.sentry-cdn.com/4.4.1/bundle.min.js" crossorigin="anonymous"></script>
