@@ -10,7 +10,7 @@
   </div>
 </section>
 <section *ngIf="trendingGroup" id="kss-clothings" class="stripe-bg-top">
-  <div *ngFor="let group of trendingGroup; let ind = index" class="container mt-1 position-relative text-center" [ngClass]="{'mt-md-2' : ind == 0,'mt-md-5' : ind != 0}">
+  <div *ngFor="let group of trendingGroup; let ind = index" class="container mt-1 position-relative text-center" [ngClass]="{'mt-md-2' : ind == 0,'mt-md-4' : ind != 0}">
     <div *ngIf="ind == 0" class="trending-heading">Boys</div>
     <div *ngIf="ind == 1" class="trending-heading">Girls</div>
     <div *ngIf="ind == 2" class="trending-heading">Infants</div>
