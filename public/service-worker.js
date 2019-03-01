@@ -80,7 +80,7 @@ self.addEventListener('push', (event) => {
 workbox.precaching.precacheAndRoute([
   {
     "url": "views/kss-pwa/4.js",
-    "revision": "8a24392e375da96ed65f4f644582a95f"
+    "revision": "690e6453cd1b317e250f9774e2fc8ad0"
   },
   {
     "url": "views/kss-pwa/fa-brands-400.eot",
@@ -147,6 +147,10 @@ workbox.precaching.precacheAndRoute([
     "revision": "90f86a1ab82da3393d69f97700c138ce"
   },
   {
+    "url": "views/kss-pwa/manifest.json",
+    "revision": "035277ae8ad14276e9e2e4733880fe01"
+  },
+  {
     "url": "views/kss-pwa/polyfills.js",
     "revision": "64c7b21bf2728f60c5215abddb94cec2"
   },
@@ -155,8 +159,12 @@ workbox.precaching.precacheAndRoute([
     "revision": "61aab71258b67c53e09dc375632f9529"
   },
   {
+    "url": "views/kss-pwa/scripts.js",
+    "revision": "1b87fc54c967af6ed610a4d900cd04b3"
+  },
+  {
     "url": "views/kss-pwa/styles.css",
-    "revision": "58185b747253e26756b41e477d0cf009"
+    "revision": "d45932d71f4fd16c1356e513643d3506"
   },
   {
     "url": "assets/icons/icon1.png",
@@ -195,12 +203,24 @@ workbox.precaching.precacheAndRoute([
     "revision": "5fa9910c0fded4ab7bc175b7f147d0ab"
   },
   {
+    "url": "assets/img/brands-title.jpg",
+    "revision": "b52f72195eb8c173dc85ee649474b555"
+  },
+  {
+    "url": "assets/img/categories-title.jpg",
+    "revision": "d572b0f40ab81fd99effd3cccd7aea38"
+  },
+  {
     "url": "assets/img/error.png",
     "revision": "2cec9c62bd87fd2ab12401d00c5a1ed8"
   },
   {
     "url": "assets/img/logo-kss.png",
     "revision": "2f0e741422e56da4551a215da51851a1"
+  },
+  {
+    "url": "assets/img/offers-title.jpg",
+    "revision": "0dd577c99b34d880ca88b8b55444e1e0"
   },
   {
     "url": "assets/img/secured-payu.png",
@@ -211,8 +231,24 @@ workbox.precaching.precacheAndRoute([
     "revision": "d21485823ec5604aeee210775bab5ebb"
   },
   {
+    "url": "assets/img/stories-title.jpg",
+    "revision": "43400c35c8ac72c97b90d7a0dce07590"
+  },
+  {
+    "url": "assets/img/theme_week-title.jpg",
+    "revision": "f83c715cbf9081bd70b99c5deaf3f850"
+  },
+  {
     "url": "assets/img/transparent.png",
     "revision": "978c1bee49d7ad5fc1a4d81099b13e18"
+  },
+  {
+    "url": "assets/img/trending_looks-title.jpg",
+    "revision": "8d979d7673389c164e10bd7a4b067661"
+  },
+  {
+    "url": "assets/img/whats_happening-title.jpg",
+    "revision": "17f6dbaffd2802683153adb3325f6ca3"
   },
   {
     "url": "manifest.json",
