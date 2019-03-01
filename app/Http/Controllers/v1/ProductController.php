@@ -53,15 +53,13 @@ class ProductController extends Controller
         $params['breadcrumb']['list']   = array();
         $url = array();
         $breadcrumb = config('product.breadcrumb_order');
-
         foreach ($breadcrumb as $category) {
             $facet = collect($json->facet_value_pairs->{$category})->first();
-                $url[] = $facet->slug;
-                $params['breadcrumb']['list'][] = ['name' => $facet->display_name, 'href' => createUrl($url)];
+            $url[] = $facet->slug;
+            $params['breadcrumb']['list'][] = ['name' => $facet->display_name, 'href' => createUrl('list',$url)];
         }
         $params['posts'] =  $posts;
         $params['breadcrumb']['current'] = '';
-        
         setSEO('product', $params);
 
         $similar_cat_params=[];
@@ -87,7 +85,6 @@ class ProductController extends Controller
             if($similar_item->product_id != $params["parent_id"] && count($similar_products)<$similar_products_display_limit)
                 array_push($similar_products, $similar_item);
         }
-        
         return view('singleproduct')->with('params', $params)->with('similar_data_params', $similar_products);
     }
 
@@ -135,3 +132,7 @@ class ProductController extends Controller
         Variant::getWarehouseInventory();
     }
 }
+//product
+//"/value1/value2/shop/buy?color:color1,color2|tag:tag1,tag2&range:range1,range2&boolean:boolean1,boolean2"
+//list
+//"/?color:color1,color2|tag:tag1,tag2&range:range1,range2&boolean:boolean1,boolean2"

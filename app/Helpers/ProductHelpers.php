@@ -48,11 +48,35 @@ function setDefaultPrice($variants, $size = null)
 }
 
 //URL Generation
-function createUrl($slugs)
+function createUrl($type, $slugs = ['shop'], $all_filters = null)
 {
     $url = '';
-    foreach ($slugs as $slug) {
-        $url .= '/' . $slug;
+    foreach ($slugs as $value) {
+        $url .= '/' .$value;
+    }
+    if ($type == 'product') {
+        $url .= '/buy';
+    }
+    if (!is_null($all_filters)) {
+        $url .= '?';
+        $filters_with_bar = array();
+        foreach ($all_filters as $filter_type => $filter_values) {
+            $filters_with_comma = array();
+            foreach($filter_values as $filter_name => $filter_value) {
+                $filters = array();
+                foreach ($filter_value as $single_filter) {
+                    if(gettype($single_filter) == "boolean") {
+                        array_push($filters, json_encode($single_filter));
+                    }
+                    else {
+                        array_push ($filters, $single_filter);
+                    }
+                }
+                array_push($filters_with_comma, $filter_name . ':' . implode(',', $filters));
+            }
+            array_push ($filters_with_bar, $filter_type . '=' . implode('|', $filters_with_comma));
+        }
+        $url .= implode('&', $filters_with_bar);
     }
     return $url;
 }
