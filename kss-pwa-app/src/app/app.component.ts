@@ -5,6 +5,8 @@ import { PlatformLocation } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { AppServiceService } from './service/app-service.service';
 
+declare var $ : any;
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -82,6 +84,10 @@ export class AppComponent implements OnInit {
 
   loadCartModule(){
     console.log("loadCart function");
+    $('#main-nav').removeClass('speed-in');
+    $('#cd-cart').addClass("speed-in");
+    $('#cd-shadow-layer').addClass('is-visible');
+    $("body").addClass("hide-scroll");
     this.loadCart = true;
   }
 }
