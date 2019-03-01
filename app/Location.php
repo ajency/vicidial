@@ -61,6 +61,10 @@ class Location extends Model
         }
     }
 
+    public static function addVendorLocation($params){
+        
+    }
+
     public function getAddress()
     {
         if (empty($this->address)) {

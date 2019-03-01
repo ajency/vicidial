@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'dropshipping_route_id' => 39,
     'template_fields'                => [
         "name",
         "id",
@@ -52,6 +53,7 @@ return [
         "lst_price", #MRP
         "sale_price", #selling price
         "standard_price", // cost of the item
+        "route_ids",
         // 'display_name',
         // 'name',
         // 'virtual_available',
@@ -135,7 +137,7 @@ return [
             ],
         ],
         "number_facet"  => [
-            'product' => ['product_id','product_rank'],
+            'product' => ['product_id','product_rank','product_vendor_id'],
             'variant' => [
                 'product_color_id',
                 'variant_id',

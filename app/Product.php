@@ -194,6 +194,14 @@ class Product
                     'odoo_id' => $object->odoo_id,
                 ]);
             }
+
+            if(in_array(config('product.dropshipping_route_id'), $variant['variant_route_ids'])){
+                \Ajency\ServiceComm\Comm\Sync::call('inventory','addDropshippingVariant',[
+                    'id' => $object->id,
+                    'product_color_id' => $object->product_color_id,
+                    'odoo_id' => $object->odoo_id,
+                ]);
+            }
         }catch (\Exception $e) {
             \Log::error($e->getMessage());
         }
