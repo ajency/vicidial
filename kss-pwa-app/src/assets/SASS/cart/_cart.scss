@@ -679,7 +679,39 @@ body{
     }
 }
 
+.slide-out{
+    width: 30% ;
+    background:#fff;
+    position:fixed;
+    right:-1200px;
+    transition: all 0.5s ease;
+    z-index: 99999;
+    height:100vh;
+    overflow-y: auto;
+    overflow-x:hidden;
+    top: 0px;
+@media (max-width: 767.98px) {
+    width: 100%;
+  }
+@media only screen and (min-width: 768px)
+{
+    width: 400px !important;
+   }
+@media (min-width: 992px) and (min-width: 1199.98px) {
+    width: 40% !important;
+  }
+@media (min-width: 1300px) {
+    width: 30% !important;
+}
+}
+.slide-show{
+     right:0px !important;
+}
+
 .pwa-widget{
+    lazy-af{
+        padding: 0 !important;
+    }
     app-bag-view{
         display: block;
         height: 100%;
