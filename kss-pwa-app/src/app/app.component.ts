@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
   constructor(private apiService: ApiService,
               private connectionService: ConnectionService,
               private loc : PlatformLocation,
-              private appservice : AppServiceService,) { 
+              private appservice : AppServiceService) { 
 
     this.connectionService.monitor().subscribe(isConnected => {
       console.log("event occured", isConnected);
