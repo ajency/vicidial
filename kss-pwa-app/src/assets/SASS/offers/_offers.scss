@@ -6,5 +6,10 @@
 		@include bp(max_tab) {
 			flex-basis: 33.33%;
 		}
+		&:hover{
+			.label-box__action{
+				border-color: #6f6f6f;
+			}
+		}
 	}
 }
