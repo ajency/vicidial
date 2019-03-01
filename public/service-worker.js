@@ -164,7 +164,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "views/kss-pwa/styles.css",
-    "revision": "d45932d71f4fd16c1356e513643d3506"
+    "revision": "61d6f41970e9a4eb29e11df643c5e9d5"
   },
   {
     "url": "assets/icons/icon1.png",
