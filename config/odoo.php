@@ -14,6 +14,8 @@ return [
     'update_products' => env('PROD_UPDATE_COUNT',20),
     'dropshipping_warehouse_id' => env('DROPSHIPPING_WAREHOUSE',1),
     'dropshipping_warehouse_name' => 'Omni Edge Retail Private Limited',
+    'dropshipping_company_id' => env('DROPSHIPPING_COMPANY',1),
+    'dropshipping_company_name' => 'Omni Edge Retail Private Limited',
 
     'model_fields'  => [
         'location'   => [

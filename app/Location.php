@@ -65,10 +65,15 @@ class Location extends Model
         $loc = self::find($params['location']['id']);
         if(is_null($loc)){
             $loc = new self;
-            $loc->odoo_id = $params['location']['id'];
+            $loc->id = $params['location']['id'];
+            $loc->odoo_id = $params['location']['external_id'];
             $loc->display_name = $params['location']['name'];
+            $loc->name = $params['location']['name'];
             $loc->warehouse_odoo_id = config('odoo.dropshipping_warehouse_id');
             $loc->warehouse_name    = config('odoo.dropshipping_warehouse_name');
+            $loc->company_name      = config('odoo.dropshipping_company_id');
+            $loc->company_odoo_id   = config('odoo.dropshipping_company_name');
+            $loc->type         = 'dropshipping';
             $loc->address = [];
             $loc->use_in_inventory = true;
             $loc->save();
