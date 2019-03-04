@@ -221,7 +221,7 @@ function generateFullTextForIndexing($productData, $variant)
         $productData['product_brand'],
     ];
     if($productData['product_is_dropshipping']){
-        $textComponents[] = "dropshipping drop shipping"
+        $textComponents[] = "dropshipping drop shipping";
     }
     return implode(' ', $textComponents);
 }
