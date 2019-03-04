@@ -79,8 +79,32 @@ self.addEventListener('push', (event) => {
   
 workbox.precaching.precacheAndRoute([
   {
-    "url": "views/kss-pwa/4.js",
-    "revision": "24f0f260686836a4f48ceaddf1fca992"
+    "url": "views/kss-pwa/10.js",
+    "revision": "85ad99c90fc9722dcd7c60a277bbe15a"
+  },
+  {
+    "url": "views/kss-pwa/5.js",
+    "revision": "23f60f23154b9ec47f32666660ee3f82"
+  },
+  {
+    "url": "views/kss-pwa/6.js",
+    "revision": "4737658b6f96ed09395ef7fbf3986b97"
+  },
+  {
+    "url": "views/kss-pwa/7.js",
+    "revision": "d5466d698f407953d1efbd6c683bf97c"
+  },
+  {
+    "url": "views/kss-pwa/8.js",
+    "revision": "9a07f4d22aac582c10ccb7da9f8237aa"
+  },
+  {
+    "url": "views/kss-pwa/9.js",
+    "revision": "ef2b13b2da9c70a73fd8ac1318327ca4"
+  },
+  {
+    "url": "views/kss-pwa/common.js",
+    "revision": "f7730cad98dc5150e6be9a947c23a01e"
   },
   {
     "url": "views/kss-pwa/fa-brands-400.eot",
@@ -144,7 +168,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "views/kss-pwa/main.js",
-    "revision": "f089e663584f96a0f03fa468543520d1"
+    "revision": "861729bf805185bff7368af8c7f9e2b9"
   },
   {
     "url": "views/kss-pwa/manifest.json",
@@ -152,19 +176,19 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "views/kss-pwa/polyfills.js",
-    "revision": "64c7b21bf2728f60c5215abddb94cec2"
+    "revision": "416ca01da9903af05a677b882cbe7f7a"
   },
   {
     "url": "views/kss-pwa/runtime.js",
-    "revision": "61aab71258b67c53e09dc375632f9529"
+    "revision": "4a87c0ee2956a1f4b400dc4eda92a501"
   },
   {
     "url": "views/kss-pwa/scripts.js",
-    "revision": "f9ec73300dd11af08e4b152acbb30578"
+    "revision": "c5e088b34b57c3e649474523c3a9cdcc"
   },
   {
     "url": "views/kss-pwa/styles.css",
-    "revision": "27e6e097d22df4333517607549e8e15a"
+    "revision": "9da07a788c1cde234b95c866f751e410"
   },
   {
     "url": "assets/icons/icon1.png",
