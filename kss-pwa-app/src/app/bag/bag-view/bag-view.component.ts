@@ -278,7 +278,7 @@ export class BagViewComponent implements OnInit {
 
   removeModal(updateHistory : boolean = true){
     this.showLoginPopup = false;
-    $('#signin').modal('hide');
+    // $('#signin').modal('hide'); //uncomment this line once bootstrap modal is added
     $("#cd-cart").css("overflow", "auto");
   }
 
