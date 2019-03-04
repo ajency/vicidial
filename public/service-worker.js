@@ -144,7 +144,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "views/kss-pwa/main.js",
-    "revision": "90f86a1ab82da3393d69f97700c138ce"
+    "revision": "f089e663584f96a0f03fa468543520d1"
   },
   {
     "url": "views/kss-pwa/manifest.json",
@@ -259,7 +259,7 @@ workbox.precaching.precacheAndRoute([
     "revision": "1ecd0b099531329cdabf4b0a531cbca4"
   },
   {
-    "url": "/newhome",
+    "url": "/",
     "revision": "6ffea0e0153dd67b8c1657f92bbd7912"
   }
 ]);
