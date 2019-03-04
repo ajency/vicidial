@@ -193,6 +193,8 @@ export class AppServiceService {
 
   callGetAllAddressesApi(send_cart_id : boolean = false){
     let url = send_cart_id ? this.apiUrl + "/api/rest/v1/user/address/all?cart_id="+this.getCookie('cart_id') : this.apiUrl + "/api/rest/v1/user/address/all";
+    if(isDevMode())
+      url = "https://demo8558685.mockable.io/fetch-addresses";
     let header = this.isLoggedInUser() ? { Authorization : 'Bearer '+this.getCookie('token') } : {};
     return this.apiservice.request(url, 'get', {} , header);
   }
