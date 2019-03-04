@@ -1,7 +1,7 @@
 <div class="d-flex">
     <div class="mt-sm-2">
             <!-- Product Title -->
-            <a href="/{{$params['brand_href']}}" class="text-black"><h1 class="brands-title brands-title--single">{{$params['brand']}}</h1></a>
+           <a href="/{{$params['brand']->href}}" class="text-black"><h1 class="brands-title brands-title--single">{{$params['brand']->name}}</h1></a>
             <h1 class="section-heading section-heading--single">{{$params['title']}}</h1>
 
             <!-- Product Default/Selected Price -->

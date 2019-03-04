@@ -97,10 +97,9 @@
     <div id="collapseThree" class="collapse show" aria-labelledby="headingThree" data-parent="#accordionExample">
         <div class="card-body pb-2 px-0">
           <ul class="list-inline d-flex flex-sm-wrap kss-tags">
-            <li>Lines &amp; Block</li>
-            <li>Cute Floral</li>
-            <li>Rock Them Up</li>
-            <li>Chubby Cheeks</li>
+            @php foreach($params['metatags'] as $metatag) { @endphp
+              <li>{{$metatag->name}}</li>
+            @php } @endphp
           </ul>
         </div>
     </div>

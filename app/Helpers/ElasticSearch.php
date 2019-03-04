@@ -176,8 +176,7 @@ function fetchProduct($product)
             ""
         ],
         "ecom_sales"        => $data["product_att_ecom_sales"],
-        "brand"             => $product_brand_display_name,
-        "brand-href"        => $facet_value_pairs['product_brand'][$data['product_brand']]['slug'],
+        "brand"             => ["name" => $product_brand_display_name,"href" => $facet_value_pairs['product_brand'][$data['product_brand']]['slug'] ] ,
         "selected_color_id" => $selected_color_id,
         "images"            => $allImages,
         "variant_group"     => [
