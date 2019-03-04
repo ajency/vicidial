@@ -24,7 +24,7 @@ class SubOrder extends Model
 
     public function location()
     {
-        return $this->belongsTo('App\Location', 'location_id', 'odoo_id');
+        return $this->belongsTo('App\Location');
     }
 
     public function orderLines()

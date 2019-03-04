@@ -94,7 +94,7 @@ class Variant extends Model
      */
     public function getAvailability()
     {
-        $activeLocations = Location::where('use_in_inventory', true)->pluck('odoo_id')->toArray();
+        $activeLocations = Location::where('use_in_inventory', true)->pluck('id')->toArray();
         $invData         = $this->inventory;
         foreach ($invData as $inventory) {
             if ($inventory["quantity"] > 0 && in_array($inventory['location_id'], $activeLocations)) {

@@ -99,8 +99,8 @@ class Location extends Model
         });
         $distanceMatrix = array_dot(array_only(json_decode(\GoogleMaps::load('distancematrix')->setParamByKey('destinations', $destination)->setParamByKey('origins', $mappedCoordinates->toArray())->get(), true), ['rows']));
         $filtered       = array_where($distanceMatrix, function ($value, $key) {return strpos($key, 'distance.value') !== false;});
-        $distancesArray = $locations->pluck('odoo_id')->combine(collect(range(0, $locations->count() - 1))->map(function ($item, $key) use ($filtered) {return isset($filtered['rows.' . $item . '.elements.0.distance.value']) ? $filtered['rows.' . $item . '.elements.0.distance.value'] : 10000000000;}));
-        $weights = $locations->map(function ($loc) use ($distancesArray) {return ['id' => $loc->odoo_id, 'distance' => $distancesArray[$loc->odoo_id], 'business_wt' => $loc->business_pref_wt, 'loc_wt' => $loc->dist_wt];});
+        $distancesArray = $locations->pluck('id')->combine(collect(range(0, $locations->count() - 1))->map(function ($item, $key) use ($filtered) {return isset($filtered['rows.' . $item . '.elements.0.distance.value']) ? $filtered['rows.' . $item . '.elements.0.distance.value'] : 10000000000;}));
+        $weights = $locations->map(function ($loc) use ($distancesArray) {return ['id' => $loc->id, 'distance' => $distancesArray[$loc->id], 'business_wt' => $loc->business_pref_wt, 'loc_wt' => $loc->dist_wt];});
         $scores = $weights->keyBy('id')->map(function ($item) {return (config('orders.location_scores.distance') - $item['distance']) * $item['loc_wt'] / config('orders.location_scores.distance') + $item['business_wt'];});
         return $scores;
     }
