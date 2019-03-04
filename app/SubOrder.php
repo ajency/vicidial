@@ -13,6 +13,7 @@ class SubOrder extends Model
     protected $casts = [
         'item_data'   => 'array',
         'odoo_data'   => 'array',
+        'is_shipped'  => 'boolean',
         'is_invoiced' => 'boolean',
     ];
 
@@ -234,11 +235,12 @@ class SubOrder extends Model
         }
     }
 
-    public static function updateSubOrderStatus($subOrderId, $state, $is_invoiced, $external_id)
+    public static function updateSubOrderStatus($subOrderId, $state, $is_shipped, $is_invoiced, $external_id)
     {
         $subOrder              = self::find($subOrderId);
         $state_old             = $subOrder->odoo_status;
         $subOrder->odoo_id     = $external_id;
+        $subOrder->is_shipped  = $is_shipped;
         $subOrder->is_invoiced = $is_invoiced;
         $subOrder->odoo_status = $state;
         $subOrder->save();

@@ -4,6 +4,7 @@ namespace App;
 
 use Ajency\Connections\OdooConnect;
 use App\Cart;
+use App\Jobs\CancelOdooOrder;
 use App\Jobs\OdooOrder;
 use App\Jobs\OdooOrderLine;
 use App\SubOrder;
@@ -114,7 +115,7 @@ class Order extends Model
             $cancelSubOrder->order_id    = $order->id;
             $cancelSubOrder->location_id = $subOrder->location_id;
             $cancelSubOrder->type        = 'Cancelled Transaction';
-            $cancelSubOrder->item_data = $subOrder->item_data;
+            $cancelSubOrder->item_data   = $subOrder->item_data;
             $cancelSubOrder->odoo_status = 'cancel';
             $cancelSubOrder->save();
             $cancelSubOrder->refresh();
