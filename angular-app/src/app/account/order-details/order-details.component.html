@@ -62,7 +62,7 @@
 				</label>
 			</div> -->
 			<!-- Action to cancel/feedback -->
-			<div class="border-top mb-5 mt-4 pt-4 text-center">
+			<div *ngIf="order.order_info.cancel_allowed" class="border-top mb-5 mt-4 pt-4 text-center">
 				<a (click)="openCancelOrder()" href="javascript:void(0);" class="btn cancel-order-btn">Cancel Order</a>
 			</div>
 
@@ -157,7 +157,7 @@
 			
 			<div class="row primary-info cancelable-items" *ngFor="let sub_order of order.sub_orders; let i = index">
 				<div class="col-12 d-flex flex-column" *ngFor="let item of sub_order.items; let last = last">
-					<app-item [item]="item" [showRefundStatus]=false ></app-item>
+					<app-item [item]="item" [showStatus]=false ></app-item>
 				</div>
 			</div>
 			

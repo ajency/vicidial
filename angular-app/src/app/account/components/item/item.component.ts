@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
+declare var $: any;
 
 @Component({
   selector: 'app-item',
@@ -8,7 +9,7 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
 export class ItemComponent implements OnInit, OnChanges {
 
 	@Input() item : any;
-	@Input() showRefundStatus : any;
+	@Input() showStatus : any;
   constructor() { }
 
   ngOnInit() {
@@ -16,6 +17,10 @@ export class ItemComponent implements OnInit, OnChanges {
 
   ngOnChanges(){
 
+  }
+
+  ngAfterViewInit(){
+    $('[data-toggle="tooltip"]').tooltip();
   }
 
 }
