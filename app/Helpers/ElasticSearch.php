@@ -148,7 +148,7 @@ function fetchProduct($product)
     
     $product_metatags = array();
     foreach ($facet_value_pairs['product_metatag'] as $product_metatag) {
-        array_push($product_metatags,$product_metatag['display_name']);
+        array_push($product_metatags,["name" => $product_metatag['display_name'],"href" => createUrl('list',['shop'],[ "pf" => ['tag' => [$product_metatag['slug']]]] ) ] );
     }
     $json              = [
         "parent_id"         => $data["product_id"],

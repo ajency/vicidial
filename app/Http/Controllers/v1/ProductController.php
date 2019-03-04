@@ -20,7 +20,7 @@ class ProductController extends Controller
         
         foreach ($params['facet_value_pairs'] as $facet_name => $facets) {
             foreach($facets as $facet) {
-                array_push($posts,collect($facet)['display_name']); //
+                array_push($posts,collect($facet)['display_name']);
             }
         }
         $query  = $request->all();
