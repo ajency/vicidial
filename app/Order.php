@@ -165,13 +165,24 @@ class Order extends Model
         $dateInd = Carbon::createFromFormat('Y-m-d H:i:s', $this->created_at, 'UTC');
         $dateInd->setTimezone('Asia/Kolkata');
 
-        $order_info = array('order_id' => $this->id, 'txn_no' => $this->txnid, 'order_status' => $this->status, 'total_amount' => $this->subOrderData()['you_pay'], 'order_date' => $dateInd->format('j M Y'), 'no_of_items' => $this->orderLines->groupBy('variant_id')->count());
+        $order_info = array('order_id' => $this->id, 'txn_no' => $this->txnid, 'order_status' => $this->status, 'cancel_allowed' => $this->cancelAllowed(), 'total_amount' => $this->subOrderData()['you_pay'], 'order_date' => $dateInd->format('j M Y'), 'no_of_items' => $this->orderLines->groupBy('variant_id')->count());
 
         if ($this->cart->user->verified == null) {
             $order_info['token'] = $this->token;
         }
 
         return $order_info;
+    }
+
+    public function cancelAllowed()
+    {
+        foreach ($this->subOrders as $subOrder) {
+            if (($subOrder->state != 'draft' && $subOrder->state != 'sale') || $subOrder->is_shipped || $subOrder->is_invoiced) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public function getOrderDetails()

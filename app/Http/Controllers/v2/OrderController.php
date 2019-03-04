@@ -204,6 +204,10 @@ class OrderController extends Controller
         $order = Order::find($id);
         validateOrder($user, $order);
 
+        if (!$order->cancelAllowed()) {
+            abort(403, 'Cancel not allowed');
+        }
+
         $request->validate(['reason' => 'required|exists:defaults,id', 'comments' => 'present']);
         $params = $request->all();
 
