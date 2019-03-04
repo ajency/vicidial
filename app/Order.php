@@ -177,7 +177,13 @@ class Order extends Model
     public function cancelAllowed()
     {
         foreach ($this->subOrders as $subOrder) {
-            if (($subOrder->state != 'draft' && $subOrder->state != 'sale') || $subOrder->is_shipped || $subOrder->is_invoiced) {
+            if ($subOrder->is_shipped || $subOrder->is_invoiced) {
+                return false;
+            }
+        }
+
+        foreach ($this->orderLines as $orderLine) {
+            if ($orderLine->state != 'draft' && $orderLine->state != 'sale') {
                 return false;
             }
         }

@@ -191,6 +191,7 @@ class SubOrder extends Model
         foreach ($this->orderLines->groupBy('variant_id') as $items) {
             $itemData = $items->first();
             $item     = [
+                'id'               => $itemData['id'],
                 'title'            => $itemData['title'],
                 'images'           => $itemData['images'],
                 'size'             => $itemData['size'],
@@ -201,6 +202,7 @@ class SubOrder extends Model
                 'product_id'       => $itemData['product_id'],
                 'product_color_id' => $itemData['product_color_id'],
                 'product_slug'     => $itemData['product_slug'],
+                'state'            => $itemData['state'],
                 'quantity'         => $this->orderLines->where('variant_id', $itemData['variant_id'])->count(),
             ];
             $itemsData[] = $item;
