@@ -84,8 +84,8 @@ export class AddressComponent implements OnInit, OnChanges {
       $('#cd-cart').animate({scrollTop: 0}, 300);
     }    
     setTimeout(()=>{
-      $('#state').selectpicker();
-      $('[data-toggle="tooltip"]').tooltip();
+      // $('#state').selectpicker();
+      // $('[data-toggle="tooltip"]').tooltip();
     },100); 
   }
 

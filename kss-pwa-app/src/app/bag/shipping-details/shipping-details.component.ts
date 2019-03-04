@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppServiceService } from '../../service/app-service.service';
 import { ApiServiceService } from '../../service/api-service.service';
@@ -15,6 +15,8 @@ export class ShippingDetailsComponent implements OnInit {
 
   @ViewChild(AddressComponent)
   private addressComponent : AddressComponent
+
+  @Output() openShippingSummary = new EventEmitter();
 
 	addAddress = false;
   addresses : any;
@@ -94,7 +96,10 @@ export class ShippingDetailsComponent implements OnInit {
     this.appservice.selectedAddressId = this.selectedAddressId;
     if (this.cart && this.cart.cart_type == "order")
       this.appservice.continueOrder = true;
-    this.router.navigateByUrl('bag/shipping-summary');      
+    // this.router.navigateByUrl('bag/shipping-summary'); 
+    let url = window.location.href.split("#")[0] + '#/bag/shipping-summary';
+    history.pushState({bag : true}, 'bag', url);
+    this.openShippingSummary.emit(true);
   }
 
   closeCart(){

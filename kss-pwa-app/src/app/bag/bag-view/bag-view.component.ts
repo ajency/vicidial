@@ -45,6 +45,8 @@ export class BagViewComponent implements OnInit {
   couponCodeListener : any;
   couponCode : any;
   couponErrorMessage : any;
+  openShippingAddress : boolean = false;
+  openShippingSummary : boolean = false;
   constructor( private router: Router,
                private appservice : AppServiceService,
                private apiservice : ApiServiceService,
@@ -89,6 +91,7 @@ export class BagViewComponent implements OnInit {
     else{
       this.getCartData();
     }
+    this.updateUrl();
   }
 
   fetchCartDataOnAddToCartSuccess(){    
@@ -296,10 +299,17 @@ export class BagViewComponent implements OnInit {
         this.appservice.navigatingFromBagToAddress = true;
         if(this.appservice.userVerificationComplete){
           this.appservice.userVerificationComplete = false;
-          this.router.navigateByUrl('bag/shipping-address', { replaceUrl: true });
+          // this.router.navigateByUrl('bag/shipping-address', { replaceUrl: true });
+          let url = window.location.href.split("#")[0] + '#/bag/shipping-address';
+          history.pushState({bag : true}, 'bag', url);
+          this.openShippingAddress = true;
         }
-        else
-          this.router.navigateByUrl('bag/shipping-address');
+        else{
+          // this.router.navigateByUrl('bag/shipping-address');
+          let url = window.location.href.split("#")[0] + '#/bag/shipping-address';
+          history.pushState({bag : true}, 'bag', url);
+          this.openShippingAddress = true;
+        }
         this.appservice.removeLoader();
       })
       .catch((error)=>{
@@ -309,8 +319,10 @@ export class BagViewComponent implements OnInit {
       })
     }
     else{
-      this.router.navigateByUrl('bag/shipping-summary');
-      // this.router.navigate(['shipping-summary']);
+      // this.router.navigateByUrl('bag/shipping-summary');
+      let url = window.location.href.split("#")[0] + '#/bag/shipping-summary';
+      history.pushState({bag : true}, 'bag', url);
+      this.openShippingSummary = true;
       this.appservice.continueOrder = true;
     }
   }
@@ -521,6 +533,11 @@ export class BagViewComponent implements OnInit {
       this.enterCoupon = true;
       $('#cd-cart').addClass('overflow-h');
     }
+  }
+
+  updateUrl(){
+    let url = window.location.href.split("#")[0] + '#/bag';
+    history.replaceState({bag : true}, 'bag', url);
   }
   
 }

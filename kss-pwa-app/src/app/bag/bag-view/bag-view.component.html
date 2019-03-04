@@ -344,3 +344,7 @@
 		</div>
 	</div>
 </div>
+
+
+<app-shipping-details *ngIf="openShippingAddress" (openShippingSummary)="openShippingSummary=true"></app-shipping-details>
+<app-shipping-summary *ngIf="openShippingSummary"></app-shipping-summary>
