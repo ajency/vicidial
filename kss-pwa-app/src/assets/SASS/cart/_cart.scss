@@ -717,3 +717,17 @@ body{
         height: 100%;
     }
 }
+
+.fixed-bottom {
+    line-height: 60px;
+    background-color: #ffffff;
+    box-shadow: -1px 0px 22px #666;
+    z-index: $zindex-sticky;
+    h5 {
+        color: $d-blue;
+    }
+    .b-r {
+        border-right: 1px solid #ccc;
+        height: 58px;
+    }
+}
