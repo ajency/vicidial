@@ -121,7 +121,7 @@ export class AppComponent implements OnInit {
 
   listenToHashChange(){
     this.loc.onHashChange(()=>{
-      // console.log("On popstate location: ", document.location);
+      console.log("onHashChange inside angular : ");
       if(window.location.href.endsWith('#/') || window.location.href.endsWith('#') || (!window.location.href.includes("#")) ){
           this.appservice.closeCart();
         }

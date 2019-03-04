@@ -67,7 +67,8 @@ export class AccountComponent implements OnInit {
 
   displayModal(){
     this.appservice.displaySkipOTP = false;
-    this.router.navigate([{ outlets: { popup: ['user-login'] }}], { replaceUrl: true });
+    // this.router.navigate([{ outlets: { popup: ['user-login'] }}], { replaceUrl: true });
+    this.appservice.showLoginPopupTrigger();
   }
 
   redirectToReturnUrl(){
@@ -86,6 +87,10 @@ export class AccountComponent implements OnInit {
     let url = window.location.href.split("#")[0];
     history.replaceState({}, 'account', url);
     this.appservice.closeCart();
+  }
+
+  openSubSection(section){
+    console.log("openSubSection function", section);
   }
 
 }
