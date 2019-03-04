@@ -1,5 +1,5 @@
 import { Component, OnInit, isDevMode } from '@angular/core';
-import { ApiService } from '../../services/api.service';
+import { ApiServiceService } from '../../service/api-service.service';
 import { AppService } from '../../services/app.service';
 // import menu from '../../../assets/data/menu.json';
 
@@ -15,7 +15,7 @@ export class HomePageComponent implements OnInit {
   storiesLoaded : boolean = false;
   showTrendingSection : boolean = false;
   showStories : boolean = false;
-  constructor(private apiService: ApiService,
+  constructor(private apiService: ApiServiceService,
               private appService: AppService) { }
 
   ngOnInit() {

@@ -7,7 +7,7 @@ import { RouterModule } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ApiService } from './services/api.service';
+// import { ApiService } from './services/api.service';
 import { AppService } from './services/app.service';
 // import { RouteGuardService } from './services/route-guard.service';
 
@@ -35,7 +35,7 @@ import { LazyModule } from '@herodevs/lazy-af';
     LazyModule
   ],
   providers: [
-    ApiService,
+    // ApiService,
     AppService,
     AppServiceService,
     ApiServiceService,

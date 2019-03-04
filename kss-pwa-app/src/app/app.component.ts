@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from './services/api.service';
 import { ConnectionService } from 'ng-connection-service';
 import { PlatformLocation } from '@angular/common';
 import { Subscription } from 'rxjs';
@@ -24,8 +23,7 @@ export class AppComponent implements OnInit {
   loadCart : boolean = false;
   loadCartListner : Subscription;
   loadFromAngular : boolean = false;
-  constructor(private apiService: ApiService,
-              private connectionService: ConnectionService,
+  constructor(private connectionService: ConnectionService,
               private loc : PlatformLocation,
               private appservice : AppServiceService) { 
 
