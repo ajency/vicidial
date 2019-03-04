@@ -291,9 +291,8 @@
 }
 
 .payment-status{
-      font-size: 0.8rem;
-      background-color: #d6ab10;
-    }
+    font-size: 0.8rem;
+    background-color: #d6ab10;
     &--processing{
       background-color: #989898;
     }
@@ -305,14 +304,6 @@
 }
 
 .cancel-order-btn{
-    // font-size: 0.8rem;
-    // border: 1px solid #ccc;
-    // padding: 3px 10px;
-    // display: inline-block;
-    // color: #000;
-    // &:hover{
-    //   background-color: #efefef;
-    // }
     text-align: left;
     padding: 0.5rem 1rem;
     border: 1px solid #c3c3c3;

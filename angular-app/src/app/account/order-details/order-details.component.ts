@@ -51,16 +51,15 @@ export class OrderDetailsComponent implements OnInit {
     // else{
     //     this.getOrders(); 
     // }    
-    this.getOrderDetails();
+    this.getOrderDetails(this.route.snapshot.paramMap.get('id'));
   }
 
   ngOnDestroy(){
     this.unsubscribeGetCancelReason();
   }
 
-  getOrderDetails(){
-    this.appservice.showLoader();
-    let order_id = this.route.snapshot.paramMap.get('id');    
+  getOrderDetails(order_id){
+    this.appservice.showLoader();   
     let url = this.appservice.apiUrl + '/api/rest/v1/user/order/'+ order_id +'/details';
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     let body : any = {
@@ -129,7 +128,8 @@ export class OrderDetailsComponent implements OnInit {
     }
     else{
       this.appservice.showLoader();
-      let url = "https://demo8558685.mockable.io/cancel-reason";
+      // let url = "https://demo8558685.mockable.io/cancel-reason";
+      let url = this.appservice.apiUrl + "/api/rest/v1/get-all-reasons";
       this.getCancelReason = this.apiservice.request(url, 'get', {}, {}, false, 'observable').subscribe((response)=>{
         console.log("response from location api ==>", response);
         response.cancel.push({id : 0, value : '--Select--' });
@@ -159,10 +159,9 @@ export class OrderDetailsComponent implements OnInit {
 
   callCancelOrderApi(){
     this.appservice.showLoader();
-    let url = this.appservice.apiUrl +  "/api/rest/v1/cance-order";
+    let url = this.appservice.apiUrl +  "/api/rest/v1/user/order/" + this.order.order_info.order_id +"/cancel";
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     let body : any = {
-      order_id : this.order.order_info.txn_no,
       reason : this.cancelReasonId,
       comments : this.additionalRemark
     };
@@ -170,13 +169,18 @@ export class OrderDetailsComponent implements OnInit {
     console.log("cancel body ==>", body);
 
     this.apiservice.request(url, 'post', body , header ).then((response)=>{      
+      $('#cd-cart').animate({
+          scrollTop: 0
+      });
+      this.getOrderDetails(this.order.order_info.txn_no);
       this.closeCancelOrder();
       this.cancelSuccessful = true;
       this.order.cancel_allowed = false;
-      //scroll top
-      this.appservice.removeLoader();
     })
     .catch((error)=>{
+      $('#cd-cart').animate({
+          scrollTop: 0
+      });
       console.log("error ===>", error);
       this.closeCancelOrder();
       if(error.status == 0){
@@ -185,7 +189,6 @@ export class OrderDetailsComponent implements OnInit {
       else{
         this.cancelOrderFailureMsg = error.message;
       }
-      //scroll top 
       this.appservice.removeLoader();
     })  
   }
