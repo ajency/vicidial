@@ -39,6 +39,9 @@ class OrderController extends Controller
 
         $order->setSubOrders();
         $order->aggregateSubOrderData();
+        $storeData         = $order->getStoreData();
+        $order->store_ids  = $storeData['store_ids'];
+        $order->store_data = $storeData['store_data'];
         $order->save();
 
         $cart->type = 'order';

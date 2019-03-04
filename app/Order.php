@@ -18,6 +18,8 @@ class Order extends Model
     protected $casts = [
         'address_data'   => 'array',
         'aggregate_data' => 'array',
+        'store_ids'      => 'array',
+        'store_data'     => 'array',
     ];
 
     protected $fillable = ['cart_id', 'address_id', 'address_data', 'expires_at', 'type'];
@@ -246,5 +248,27 @@ class Order extends Model
                 OdooOrder::dispatch($subOrder, false)->onQueue('odoo_order');
             }
         }
+    }
+
+    public static function addStoreToOrders($start, $end)
+    {
+        $orders = self::where('id', '>=', $start)->where('id', '<=', $end)->get();
+        foreach ($orders as $order) {
+            $storeData         = $order->getStoreData();
+            $order->store_ids  = $storeData['store_ids'];
+            $order->store_data = $storeData['store_data'];
+            $order->save();
+        }
+    }
+
+    public function getStoreData()
+    {
+        $store_ids  = [];
+        $store_data = [];
+        foreach ($this->subOrders as $subOrder) {
+            array_push($store_ids, $subOrder->location->warehouse->id);
+            array_push($store_data, ['id' => $subOrder->location->warehouse->id, 'name' => $subOrder->location->warehouse->name]);
+        }
+        return ['store_ids' => $store_ids, 'store_data' => $store_data];
     }
 }
