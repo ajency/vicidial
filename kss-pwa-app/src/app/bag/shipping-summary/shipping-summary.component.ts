@@ -53,8 +53,6 @@ export class ShippingSummaryComponent implements OnInit {
     history.replaceState({cart : false}, 'cart', url);
     this.widgetOpen = false;
     this.appservice.closeCart();
-
-    // window.location.reload();
   }
 
   navigateBack(){

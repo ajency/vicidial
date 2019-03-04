@@ -1,6 +1,7 @@
 
 <div id="cd-shadow-layer"></div>
 <div id="cd-cart" class="cart-loader ng-cart-loader">
+    <!-- cart-blade php -->
 	<!-- svg loader -->
     <div class="cart-loader__wrapper">
         <svg width="45px" height="45px" viewBox="0 0 45 45" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="overflow:initial;">

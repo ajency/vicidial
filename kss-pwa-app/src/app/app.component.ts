@@ -29,6 +29,8 @@ export class AppComponent implements OnInit {
               private loc : PlatformLocation,
               private appservice : AppServiceService) { 
 
+    this.listenToHashChange();
+
     this.connectionService.monitor().subscribe(isConnected => {
       console.log("event occured", isConnected);
       this.isConnected = isConnected;
@@ -97,6 +99,18 @@ export class AppComponent implements OnInit {
     else{
       this.loadCart = true;
     }    
+  }
+
+  listenToHashChange(){
+    this.loc.onHashChange(()=>{
+      // console.log("On popstate location: ", document.location);
+      if(window.location.href.endsWith('#/') || window.location.href.endsWith('#') || (!window.location.href.includes("#")) ){
+          this.appservice.closeCart();
+        }
+      if(window.location.href.endsWith('#/bag') || window.location.href.endsWith('#/bag/shipping-address') || window.location.href.endsWith('#/bag/shipping-summary')){
+        this.appservice.updateCartViewTrigger();
+      }
+    });
   }
 }
 

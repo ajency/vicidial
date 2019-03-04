@@ -33,6 +33,8 @@ export class AppServiceService {
   private couponCodeSelected = new Subject<any>();
   displaySkipOTP : any;
   loadFromAngular : boolean = false;
+
+  private updateCartView = new Subject<any>();
   constructor(	private router: Router,
                 private apiservice : ApiServiceService) { 
     this.apiUrl = isDevMode() ? 'http://localhost:8000' : '';
@@ -56,8 +58,9 @@ export class AppServiceService {
     if(document.getElementById('cd-shadow-layer'))
       document.getElementById('cd-shadow-layer').classList.remove('is-visible');
     if(document.getElementsByClassName("modal-backdrop")[0])
-	    document.getElementsByClassName("modal-backdrop")[0].remove();2
+	    document.getElementsByClassName("modal-backdrop")[0].remove();
     $('#cd-cart').removeClass('overflow-h');
+    $('#shipping-address-container').removeClass('slide-show');
   }
 
   addToCartClicked() {
@@ -98,6 +101,14 @@ export class AppServiceService {
 
   listenToLoadCartTrigger() : Observable<any> {    
     return this.loadCart.asObservable();
+  }
+
+  updateCartViewTrigger(){
+    this.updateCartView.next();
+  }
+
+  listenToUpdateCartViewTrigger() : Observable<any> {    
+    return this.updateCartView.asObservable();
   }
 
   getCookie(cname) {

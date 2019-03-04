@@ -47,6 +47,7 @@ export class BagViewComponent implements OnInit {
   couponErrorMessage : any;
   openShippingAddress : boolean = false;
   openShippingSummary : boolean = false;
+  updateViewListner : Subscription;
   constructor( private router: Router,
                private appservice : AppServiceService,
                private apiservice : ApiServiceService,
@@ -57,6 +58,8 @@ export class BagViewComponent implements OnInit {
 
     this.loginSucessListener = this.appservice.listenToLoginSuccess().subscribe(()=>{ this.loginSuccess() });
     this.couponCodeListener = this.appservice.listenToCouponCodeChange().subscribe((data)=>{ this.couponSelected(data) })
+
+    this.updateViewListner = this.appservice.listenToUpdateCartViewTrigger().subscribe(()=>{ this.updateView() })
   }
 
   reloadCart(){
@@ -64,12 +67,16 @@ export class BagViewComponent implements OnInit {
     this.cartOpen = true;
     add_to_cart_clicked = false;
     this.fetchCartDataOnAddToCartSuccess();
+    this.openShippingAddress = false;
+    this.openShippingSummary = false;
   }
 
   loadCart(){
     console.log("listened to open cart trigger");
     this.cartOpen = true;    
     this.getCartData();
+    this.openShippingAddress = false;
+    this.openShippingSummary = false;
   }
 
   ngOnDestroy() {
@@ -78,6 +85,7 @@ export class BagViewComponent implements OnInit {
     this.loadSubscription.unsubscribe();
     this.loginSucessListener.unsubscribe();
     this.couponCodeListener.unsubscribe();
+    this.updateViewListner.unsubscribe();
   }
 
   ngOnInit() {
@@ -538,6 +546,18 @@ export class BagViewComponent implements OnInit {
   updateUrl(){
     let url = window.location.href.split("#")[0] + '#/bag';
     history.replaceState({bag : true}, 'bag', url);
+  }
+
+  updateView(){
+    console.log("update view data ==>");
+    if(window.location.href.endsWith('#/bag')){
+      this.openShippingAddress = false;
+      this.openShippingSummary = false;
+      this.fetchCartDataFromServer();
+    }
+    else if(window.location.href.endsWith('#/bag/shipping-address')){
+      this.openShippingSummary = false;
+    }
   }
   
 }

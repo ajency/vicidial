@@ -369,10 +369,10 @@ MIT
 ng-connection-service
 MIT
 
-@angular/core
+@angular/forms
 MIT
 
-@angular/forms
+@angular/core
 MIT
 
 zone.js
