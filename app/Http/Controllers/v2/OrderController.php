@@ -4,6 +4,8 @@ namespace App\Http\Controllers\v2;
 
 use App\Address;
 use App\Cart;
+use App\Comment;
+use App\Defaults;
 use App\Http\Controllers\Controller;
 use App\Jobs\OrderLineStatus;
 use App\Jobs\SubOrderStatus;
@@ -188,10 +190,10 @@ class OrderController extends Controller
         return response()->json(["message" => 'Order items received successfully', 'success' => true, 'data' => $order_details]);
     }
 
-    public function singleOrder($id, Request $request)
+    public function singleOrder($txnid, Request $request)
     {
         $user  = $request->user();
-        $order = Order::where('txnid', $id)->first();
+        $order = Order::where('txnid', $txnid)->first();
         validateOrder($user, $order);
         return response()->json(["message" => 'Order items received successfully', 'success' => true, 'data' => $order->getOrderDetails()]);
     }
@@ -202,8 +204,24 @@ class OrderController extends Controller
         $order = Order::find($id);
         validateOrder($user, $order);
 
-        $order->cancelOrderOnOdoo();
+        $request->validate(['reason' => 'required|exists:defaults,id', 'comments' => 'present']);
+        $params = $request->all();
+
+        $orderId = $order->cancelOrderOnOdoo();
+
+        $comment              = new Comment;
+        $comment->reason_id   = $params['reason'];
+        $comment->reason_type = 'cancel';
+        $comment->comments    = $params['comments'];
+        $comment->model_id    = $orderId;
+        $comment->model_type  = get_class($order);
+        $comment->save();
 
         return response()->json(["message" => 'Order cancelled successfully', 'success' => true]);
+    }
+
+    public function getAllReasons(Request $request)
+    {
+        return Defaults::getReasons();
     }
 }

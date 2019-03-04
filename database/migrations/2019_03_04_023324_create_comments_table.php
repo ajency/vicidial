@@ -18,6 +18,8 @@ class CreateCommentsTable extends Migration
             $table->integer('reason_id');
             $table->string('reason_type');
             $table->string('comments')->nullable();
+            $table->integer('model_id');
+            $table->string('model_type');
             $table->timestamps();
         });
     }
