@@ -97,64 +97,6 @@
 	}
 }
 
-.radio-wrap {
-
-    &.w-image {
-        .radio-option {
-            display: none;
-        }
-        .radio-label {
-               padding: 0px;
-                /* background-size: contain; */
-                /* background-position: center; */
-                width: 54px;
-                // height: 88px;
-        }
-    }
-    &.kss_variants{
-        .radio-label{
-            border: 2px solid transparent;
-            &:hover{
-                color: #777;
-            }
-        }
-        .radio-input:checked+.radio-label{
-            color: #777;
-            img {
-                box-shadow: 0 5px 0 0 theme-color("primary");
-            }  
-        }
-    }
-    &.wo-image {
-        .radio-label {
-            min-width: 100px;
-            padding: 10px;
-            text-align: center;
-            .radio-option{
-                font-weight: 600;
-            }
-            @media (min-width: 320px) and (max-width: 767.98px) {
-                min-width: 84px;
-            }
-        }
-        .radio-input:checked+.radio-label {
-            border-color: theme-color("primary");
-            color: darken(theme-color("primary"), 10%);
-        }
-    }   
-    @media (min-width: 320px) and (max-width: 767.98px) {
-        overflow: scroll;
-        div {
-           
-        }
-    }
-    label {
-        margin: 0px 10px 0 0;
-        div {
-            text-align: center;
-        }
-    }
-}
 
 .shipping-content-info{
     display:none;
@@ -243,28 +185,5 @@
             width: 34px;
             margin: 0;
         }
-    }
-}
-
-label{
-    font-size: .8rem;
-}
-
-.radio-label {
-    display: inline-block;
-    padding: 1em 2em;
-    margin: 0;
-    cursor: pointer;
-    border: 2px solid $gray-300;
-    transition: 0.3s;
-    user-select: none;
-    h1 {
-        font-size: 1em;
-    }
-    &:hover {
-        color: darken(theme-color("primary"), 10%);
-    }
-    &:active {
-        // transform: translateY(2px);
     }
 }
