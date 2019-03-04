@@ -22,9 +22,11 @@ export class AppComponent implements OnInit {
   display : boolean = false;
   loadCart : boolean = false;
   loadCartListner : Subscription;
-  loadFromAngular : boolean = false;
   displayLogin : boolean = false;
   loginListner : Subscription;
+  loadCartFromAngular : boolean = false;
+  loadAccount : boolean = false;
+  loadAccountFromAngular : boolean = false;
   constructor(private connectionService: ConnectionService,
               private loc : PlatformLocation,
               private appservice : AppServiceService) { 
@@ -87,18 +89,34 @@ export class AppComponent implements OnInit {
 
   loadCartModule(){
     console.log("loadCart function");
-    if(this.appservice.loadFromAngular){
-      $('#main-nav').removeClass('speed-in');
-      $('#cd-cart').addClass("speed-in");
-      $('#cd-shadow-layer').addClass('is-visible');
-      $("body").addClass("hide-scroll");
-      setTimeout(()=>{
-        this.loadFromAngular = true;
-      },500)      
+    if(window.location.href.includes("#/bag")){
+      if(this.appservice.loadCartFromAngular){
+        $('#main-nav').removeClass('speed-in');
+        $('#cd-cart').addClass("speed-in");
+        $('#cd-shadow-layer').addClass('is-visible');
+        $("body").addClass("hide-scroll");
+        setTimeout(()=>{
+          this.loadCartFromAngular = true;
+        },500)      
+      }
+      else{
+        this.loadCart = true;
+      }  
     }
-    else{
-      this.loadCart = true;
-    }    
+    else if(window.location.href.includes("#/account")){
+      if(this.appservice.loadAccountFromAngular){
+        $('#main-nav').removeClass('speed-in');
+        $('#cd-cart').addClass("speed-in");
+        $('#cd-shadow-layer').addClass('is-visible');
+        $("body").addClass("hide-scroll");
+        setTimeout(()=>{
+          this.loadAccountFromAngular = true;
+        },500)      
+      }
+      else{
+        this.loadAccount = true;
+      } 
+    }  
   }
 
   listenToHashChange(){

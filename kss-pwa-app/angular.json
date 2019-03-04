@@ -18,7 +18,7 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "lazyModules" : ["src/app/bag/bag.module", "src/app/shared-components/address/address.module", "src/app/shared-components/bag-summary/bag-summary.module",
-              "src/app/shared-components/edit-user/edit-user.module", "src/app/shared-components/promotions/promotions.module"],
+              "src/app/shared-components/edit-user/edit-user.module", "src/app/shared-components/promotions/promotions.module", "src/app/account/account.module"],
             "outputPath": "../public/views/kss-pwa",
             "index": "src/index.html",
             "main": "src/main.ts",

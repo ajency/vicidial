@@ -42,10 +42,18 @@ export class HeaderComponent implements OnInit, OnChanges {
   }
 
   openCart(){
-    this.appservice.loadFromAngular = true;
+    this.appservice.loadCartFromAngular = true;
     let url = window.location.href.split("#")[0] + '#/bag';
     history.pushState({bag : true}, 'bag', url);
     console.log("openCart");
     this.appservice.loadCartTrigger();    
+  }
+
+  openAccount(){
+    this.appservice.loadAccountFromAngular = true;
+    let url = window.location.href.split("#")[0] + '#/account';
+    history.pushState({bag : true}, 'account', url);
+    console.log("openAccount");
+    this.appservice.loadCartTrigger();
   }
 }

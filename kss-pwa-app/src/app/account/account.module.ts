@@ -42,6 +42,7 @@ import { AccountService } from './services/account.service';
   ],
   providers: [
     AccountService
-  ]
+  ],
+  bootstrap: [AccountComponent]
 })
 export class AccountModule { }

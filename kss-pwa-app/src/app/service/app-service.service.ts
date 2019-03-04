@@ -32,8 +32,8 @@ export class AppServiceService {
   userMobile : any;
   private couponCodeSelected = new Subject<any>();
   displaySkipOTP : any;
-  loadFromAngular : boolean = false;
-
+  loadCartFromAngular : boolean = false;
+  loadAccountFromAngular : boolean = false;
   private updateCartView = new Subject<any>();
   private showLoginPopup = new Subject<any>();
   constructor(	private router: Router,
