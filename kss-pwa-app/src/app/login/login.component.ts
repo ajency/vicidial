@@ -60,6 +60,8 @@ export class LoginComponent implements OnInit {
     setTimeout(()=>{
       this.mobileInput.nativeElement.focus();
     },500);
+    $('#signin').addClass('show');
+    $(".modal-backdrop").addClass('show');
   }
 
   ngOnDestroy(){
@@ -170,7 +172,11 @@ export class LoginComponent implements OnInit {
   }
 
   closeOtpModal(){
-  	this.router.navigate([{ outlets: { popup: null }}], {replaceUrl : true});
+  	// this.router.navigate([{ outlets: { popup: null }}], {replaceUrl : true});
+    $('#signin').modal('hide');
+    $("#cd-cart").css("overflow", "auto");
+    $('.modal-backdrop').remove();
+    $('body').removeClass('modal-open');
   }
 
   resetOTP(){

@@ -265,7 +265,7 @@ export class BagViewComponent implements OnInit {
   }
 
   viewOrders(){
-      this.router.navigateByUrl('account/my-orders');
+      // this.router.navigateByUrl('account/my-orders');
   }
 
   checkLoginStatus(){
@@ -282,8 +282,10 @@ export class BagViewComponent implements OnInit {
   }
 
   displayModal(){
+    console.log("displayModal function")
     this.appservice.displaySkipOTP = true;
-    this.router.navigate([{ outlets: { popup: ['user-login'] }}]);
+    // this.router.navigate([{ outlets: { popup: ['user-login'] }}]);
+    this.appservice.showLoginPopupTrigger();
   }
 
 

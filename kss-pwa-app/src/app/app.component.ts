@@ -23,6 +23,8 @@ export class AppComponent implements OnInit {
   loadCart : boolean = false;
   loadCartListner : Subscription;
   loadFromAngular : boolean = false;
+  displayLogin : boolean = false;
+  loginListner : Subscription;
   constructor(private connectionService: ConnectionService,
               private loc : PlatformLocation,
               private appservice : AppServiceService) { 
@@ -57,7 +59,7 @@ export class AppComponent implements OnInit {
     }
 
     this.loadCartListner = this.appservice.listenToLoadCartTrigger().subscribe(()=>{  this.loadCartModule() });
-
+    this.loginListner = this.appservice.listenToShowLoginPopupTriggerr().subscribe(()=>{ this.openLoginModal() })
   }
 
   displayToast(){
@@ -109,6 +111,11 @@ export class AppComponent implements OnInit {
         this.appservice.updateCartViewTrigger();
       }
     });
+  }
+
+  openLoginModal(){
+    console.log("openLoginModal function");
+    this.displayLogin = true;
   }
 }
 
