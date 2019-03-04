@@ -32,6 +32,7 @@ return [
         // "product_own", #private/non private
         "vendor_id", #Vendor
         "brand_id", #Brand
+        "route_ids",
         // "parent_flag",
         // "sale_price",
         // "qty_available",
@@ -130,6 +131,7 @@ return [
                 'product_active',
                 'product_image_available',
                 'product_att_ecom_sales',
+                'product_is_dropshipping',
             ],
             'variant' => [
                 'variant_active',

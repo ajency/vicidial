@@ -15,5 +15,9 @@ return [
 			'model' => 'App\Variant',
 			'function' => 'updateInventory',
 		],
+		'addVendorLocation' => [
+			'model' => 'App\Location',
+			'function' => 'addVendorLocation',
+		],
 	],
 ];

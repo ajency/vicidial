@@ -126,6 +126,7 @@ function sanitiseProductData($odooData)
         "product_att_fabric_type"          => $odooData["att_fabric_type"],
         "product_att_product_type"         => $odooData["att_product_type"],
         "product_att_other_attribute"      => $odooData["att_val_add1"],
+        'product_route_ids'                => $odooData['route_ids'],
         "product_att_ecom_sales"           => ($odooData["att_ecom_sales"] == "yes") ? true : false,
         "product_vendor_id"                => ($odooData["vendor_id"]) ? $odooData["vendor_id"][0] : null,
         "product_vendor"                   => ($odooData["vendor_id"]) ? $odooData["vendor_id"][1] : null,
@@ -133,6 +134,7 @@ function sanitiseProductData($odooData)
         'product_metatag'                  => $metatags->map(function ($item, $key) {$item['name'] = trim($item['name']);return $item;})->pluck('name')->toArray(),
         'product_brand'                    => ($odooData['brand_id'] != false) ? $odooData['brand_id'][1] : 'KSS Fashion',
     ];
+    $index['product_is_dropshipping'] = in_array(config('product.dropshipping_route_id'), $index['product_route_ids']);
     $product_categories = explode('/', $index['product_categories']);
     $categories         = ['product_category_type', 'product_gender', 'product_age_group', 'product_subtype'];
     foreach ($categories as $category) {

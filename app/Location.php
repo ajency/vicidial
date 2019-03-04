@@ -62,7 +62,17 @@ class Location extends Model
     }
 
     public static function addVendorLocation($params){
-        
+        $loc = self::find($params['location']['id']);
+        if(is_null($loc)){
+            $loc = new self;
+            $loc->odoo_id = $params['location']['id'];
+            $loc->display_name = $params['location']['name'];
+            $loc->warehouse_odoo_id = config('odoo.dropshipping_warehouse_id');
+            $loc->warehouse_name    = config('odoo.dropshipping_warehouse_name');
+            $loc->address = [];
+            $loc->use_in_inventory = true;
+            $loc->save();
+        }
     }
 
     public function getAddress()

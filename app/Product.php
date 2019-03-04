@@ -195,7 +195,7 @@ class Product
                 ]);
             }
 
-            if(in_array(config('product.dropshipping_route_id'), $variant['variant_route_ids'])){
+            if($product['product_is_dropshipping']){
                 \Ajency\ServiceComm\Comm\Sync::call('inventory','addDropshippingVariant',[
                     'id' => $object->id,
                     'product_color_id' => $object->product_color_id,
