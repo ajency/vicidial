@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Location extends Model
 {
-    protected const MODEL = "stock.location";
-    protected $casts      = [
+    const MODEL      = "stock.location";
+    protected $casts = [
         'address'          => 'array',
         'use_in_inventory' => 'boolean',
         'business_pref_wt' => 'double',
@@ -61,21 +61,22 @@ class Location extends Model
         }
     }
 
-    public static function addVendorLocation($params){
+    public static function addVendorLocation($params)
+    {
         $loc = self::find($params['location']['id']);
-        if(is_null($loc)){
-            $loc = new self;
-            $loc->id = $params['location']['id'];
-            $loc->odoo_id = $params['location']['external_id'];
-            $loc->display_name = $params['location']['name'];
-            $loc->name = $params['location']['name'];
+        if (is_null($loc)) {
+            $loc                    = new self;
+            $loc->id                = $params['location']['id'];
+            $loc->odoo_id           = $params['location']['external_id'];
+            $loc->display_name      = $params['location']['name'];
+            $loc->name              = $params['location']['name'];
             $loc->warehouse_odoo_id = config('odoo.dropshipping_warehouse_id');
             $loc->warehouse_name    = config('odoo.dropshipping_warehouse_name');
-            $loc->company_name      = config('odoo.dropshipping_company_id');
-            $loc->company_odoo_id   = config('odoo.dropshipping_company_name');
-            $loc->type         = 'dropshipping';
-            $loc->address = [];
-            $loc->use_in_inventory = true;
+            $loc->company_odoo_id   = config('odoo.dropshipping_company_id');
+            $loc->company_name      = config('odoo.dropshipping_company_name');
+            $loc->type              = 'dropshipping';
+            $loc->address           = [];
+            $loc->use_in_inventory  = true;
             $loc->save();
         }
     }

@@ -664,6 +664,30 @@ class Product
         return;
     }
 
+    public static function getVendorIds(){
+        $odoo   = new OdooConnect;
+        $offset = 0;
+        do{
+            $allVendors = $odoo->defaultExec('product.template', 'search_read', [[['vendor_id', '!=', false]]], ['fields' => ['vendor_id','route_ids'], 'limit' => config('odoo.limit'), 'order' => 'id','offset' => $offset]);
+            $products      = $allVendors->pluck('id');
+            $productColors = ProductColor::select(['product_id', 'elastic_id'])->whereIn('product_id', $products)->pluck('product_id', 'elastic_id');
+            $productVendors = $productColors->map(function ($productID) use ($allVendors) {
+                $odooData = $allVendors->where('id', $productID)->first();
+                return [
+                    'elastic_data' => null,
+                    'change'       => function (&$product, &$variants) use ($odooData) {
+                        $product['product_vendor_id'] = $odooData['vendor_id'][0];
+                        $product['product_vendor'] = $odooData['vendor_id'][1];
+                        $product['product_is_dropshipping'] = in_array(config('product.dropshipping_route_id'), $odooData['route_ids']);
+                    },
+                ];
+            });
+            ProductColor::updateElasticData($productVendors);
+            $offset = $offset + $allVendors->count();
+        }while ($allVendors->count() == config('odoo.limit'));
+
+    }
+
     public static function updateProduct($product_id)
     {
         $productColor = ProductColor::find($product_id);

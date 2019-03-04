@@ -259,6 +259,7 @@ function buildProductIndexFromOdooData($productData, $variantData)
         "product_subtype"                  => $productData['product_subtype'],
         "product_vendor"                   => $productData['product_vendor'],
         "product_att_ecom_sales"           => $productData['product_att_ecom_sales'],
+        "product_is_dropshipping"          => $productData['product_is_dropshipping'],
         "product_brand"                    => $productData['product_brand'],
         "product_color_id"                 => $variantData->first()['product_color_id'],
         "product_color_slug"               => str_slug($variantData->first()['product_color_name']),
