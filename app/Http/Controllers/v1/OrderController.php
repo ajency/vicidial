@@ -194,5 +194,16 @@ class OrderController extends Controller
         validateOrder($user, $order);
         return response()->json(["message" => 'Order items received successfully', 'success' => true, 'data' => $order->getOrderDetails()]);
     }
+
+    public function cancelOrder($id, Request $request)
+    {
+        $user  = User::getUserByToken($request->header('Authorization'));
+        $order = Order::find($id);
+        validateOrder($user, $order);
+
+        $order->cancelOrderOnOdoo();
+
+        return response()->json(["message" => 'Order cancelled successfully', 'success' => true]);
+    }
 }
 

@@ -98,6 +98,44 @@ class Order extends Model
 
     }
 
+    public function cancelOrderOnOdoo()
+    {
+        $order = self::create([
+            'cart_id'      => $this->cart_id,
+            'address_id'   => $this->address_id,
+            'address_data' => $this->address_data,
+            'expires_at'   => Carbon::now()->addMinutes(config('orders.expiry'))->timestamp,
+            'type'         => 'Cancelled Transaction',
+        ]);
+
+        //create a job to place order on odoo for all suborders.
+        foreach ($this->subOrders as $subOrder) {
+            $cancelSubOrder              = new SubOrder;
+            $cancelSubOrder->order_id    = $order->id;
+            $cancelSubOrder->location_id = $subOrder->location_id;
+            $cancelSubOrder->type        = 'Cancelled Transaction';
+            $cancelSubOrder->item_data = $subOrder->item_data;
+            $cancelSubOrder->odoo_status = 'cancel';
+            $cancelSubOrder->save();
+            $cancelSubOrder->refresh();
+
+            foreach ($subOrder->orderLines as $orderLine) {
+                $cancelSubOrder->orderLines()->attach($orderLine->id, ['type' => $cancelSubOrder->type]);
+                $order->orderLines()->attach($orderLine->id, ['type' => $order->type]);
+                $orderLine->state = 'cancel';
+                $orderLine->save();
+            }
+            CancelOdooOrder::dispatch($cancelSubOrder, $subOrder->id)->onQueue('odoo_order');
+        }
+        if ($this->cart->coupon != null) {
+            $odoo              = new OdooConnect;
+            $currentCouponLeft = $odoo->defaultExec('sale.order.coupon', 'search_read', [[['global_code', '=', $this->cart->coupon]]], ['fields' => ['consumed_coupon_count']])->first();
+            $odoo->defaultExec('sale.order.coupon', 'write', [[$currentCouponLeft['id']], ['consumed_coupon_count' => $currentCouponLeft['consumed_coupon_count'] - 1]], null);
+            Coupon::where('odoo_id', $currentCouponLeft['id'])->update(['left_uses' => $currentCouponLeft['consumed_coupon_count'] - 1]);
+        }
+
+    }
+
     public function subOrderData()
     {
         return $this->aggregate_data;
