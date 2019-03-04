@@ -31,7 +31,8 @@
               "node_modules/@fortawesome/fontawesome-free/css/all.css",
               "src/styles.scss"
             ],
-            "scripts": [ "../node_modules/jquery/dist/jquery.min.js" ]
+            "scripts": [ "../node_modules/jquery/dist/jquery.min.js",
+                          "../node_modules/bootstrap-sass/assets/javascripts/bootstrap/modal.js" ]
           },
           "configurations": {
             "production": {
@@ -87,7 +88,8 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": [ "../node_modules/jquery/dist/jquery.min.js" ],
+            "scripts": [ "../node_modules/jquery/dist/jquery.min.js", 
+                          "../node_modules/bootstrap-sass/assets/javascripts/bootstrap.min.js" ],
             "assets": [
               "src/favicon.ico",
               "src/assets",

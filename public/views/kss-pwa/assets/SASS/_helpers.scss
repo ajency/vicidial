@@ -1,0 +1,95 @@
+// Helpers/Utility classes
+
+.mobile-overflow{
+	@include bp(mobile) {
+		&:after,&:before{
+			content: '';
+		}
+		display: grid !important;
+	    overflow: auto;
+	}
+}
+
+.col-block{
+	margin-bottom: 2rem;
+}
+
+.explore-text{
+	font-size: 1.1rem;
+    color: #848484;
+    font-weight: bold;
+    padding-top: 0.5rem;
+    display: inline-flex;
+    position: absolute;
+    bottom: -30px;
+    left: 0;
+    right: 0;
+    justify-content: center;
+}
+
+.sh-more{
+	text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 0.9rem;
+    padding: 0.8rem;
+    transition: all 0.3s ease;
+    &.icon-turn{
+    	.sh-more__icon{
+    		transform: rotate(180deg);
+    	}
+    }
+}
+
+[static_element-type], .product-card{
+	position: relative;
+	.img-holder{
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: #fffde1;
+	}
+}
+
+.min-height{
+	min-height: 100vh;
+}
+
+.bg-light {
+    background-color: #e4e4e4!important;
+}
+
+.gray-bg{
+    background:#fbfbfb;
+    position: relative;
+}
+
+.light-bg{
+    background:#EFF3FF;
+}
+
+.custom-text{
+    position: absolute;
+    text-align: center;
+    left: 0;
+    right: 0;
+    strong{
+        font-weight: bold;
+    }
+}
+
+[static_element-type='week_theme'],[static_element-type='month_theme']{
+	a{
+		padding-top: 50%;
+		position: relative;
+	}
+}
+
+[static_element-type='categories'],[static_element-type='stories'],[static_element-type='offer'],[static_element-type='brand']{
+	a{
+		padding-top: 100%;
+		position: relative;
+	}
+}

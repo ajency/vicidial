@@ -1,0 +1,49 @@
+@import "gender-box";
+
+.gender-cat{
+	min-height: 95px;
+	box-shadow: 1px 2px 5px rgba(45, 45, 45, 0.13);
+	border: 8px double #e6e6e6;
+	padding: 0.8rem;
+	transition: all 0.3s ease;
+	background-color: #e9a746;
+	border-radius: 0;
+	&__name,&__year{
+		transition: all 0.5s ease;
+		color: #fff;
+	}
+	&:hover{
+		box-shadow: none;
+		border-color: #fff;
+		.gender-cat__name,.gender-cat__year{
+			color: #000;
+		}
+	}
+	@include bp(mobile) {
+		min-height: 85px;
+		padding: 0.5rem;
+	}	
+}
+
+.gender-cat-wrapper{
+	@include bp(max_tab) {
+		& > .col{
+			flex: 1 0 33.33%;
+    		margin-bottom: 1.5rem
+		}
+	}
+	@include bp(mobile) {
+		grid-template-columns: 3px repeat(6, 125px) 3px;
+	    grid-gap: 15px;
+	    & > .col{
+	    	padding: 0;
+	    }
+	}
+	& > .col{
+    	&:last-child{
+			.gender-cat__name{
+				padding: 0 1rem;
+			}
+		}
+	}
+}

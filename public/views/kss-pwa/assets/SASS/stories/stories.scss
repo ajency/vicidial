@@ -1,0 +1,16 @@
+.home-stories{
+	.label-box{
+		&__sticky{
+			top: 93%;
+		}
+		&__action{
+			border-color: #7d7d7d;
+		    padding: 0.6rem 1.3rem;
+		    border-radius: 20px;
+		    min-width: 210px;
+		}
+	}
+	@include bp(mobile) {
+    	padding: 0 1rem;
+	}
+}
