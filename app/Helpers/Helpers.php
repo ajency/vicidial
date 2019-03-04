@@ -220,6 +220,9 @@ function generateFullTextForIndexing($productData, $variant)
         $productData['product_att_magento_display_name'],
         $productData['product_brand'],
     ];
+    if($productData['product_is_dropshipping']){
+        $textComponents[] = "dropshipping drop shipping"
+    }
     return implode(' ', $textComponents);
 }
 
