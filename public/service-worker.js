@@ -80,31 +80,39 @@ self.addEventListener('push', (event) => {
 workbox.precaching.precacheAndRoute([
   {
     "url": "views/kss-pwa/10.js",
-    "revision": "85ad99c90fc9722dcd7c60a277bbe15a"
+    "revision": "cc0dbaa170d7cd30b14c199b5e828c75"
   },
   {
-    "url": "views/kss-pwa/5.js",
-    "revision": "23f60f23154b9ec47f32666660ee3f82"
+    "url": "views/kss-pwa/11.js",
+    "revision": "7ee0c6fa4b86214415bc055457de1c38"
+  },
+  {
+    "url": "views/kss-pwa/12.js",
+    "revision": "808112f68ba7615ea8374529dfd680df"
+  },
+  {
+    "url": "views/kss-pwa/2.js",
+    "revision": "05e2d75d37a63cf8846a727f9b5e1081"
   },
   {
     "url": "views/kss-pwa/6.js",
-    "revision": "4737658b6f96ed09395ef7fbf3986b97"
+    "revision": "2a96846ef251e8796b9d224bfb406805"
   },
   {
     "url": "views/kss-pwa/7.js",
-    "revision": "d5466d698f407953d1efbd6c683bf97c"
+    "revision": "63c811596607f9611265bc3484354f5b"
   },
   {
     "url": "views/kss-pwa/8.js",
-    "revision": "9a07f4d22aac582c10ccb7da9f8237aa"
+    "revision": "50b1e830ac459bc67d199d178f545680"
   },
   {
     "url": "views/kss-pwa/9.js",
-    "revision": "ef2b13b2da9c70a73fd8ac1318327ca4"
+    "revision": "4fa8e430b3621f3ab26ffed1f3f44e23"
   },
   {
     "url": "views/kss-pwa/common.js",
-    "revision": "f7730cad98dc5150e6be9a947c23a01e"
+    "revision": "22640e4e6a460febb959c38bf7637176"
   },
   {
     "url": "views/kss-pwa/fa-brands-400.eot",
@@ -168,7 +176,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "views/kss-pwa/main.js",
-    "revision": "861729bf805185bff7368af8c7f9e2b9"
+    "revision": "e97f2a883cbf15dbc9e4adb43790b0ab"
   },
   {
     "url": "views/kss-pwa/manifest.json",
@@ -176,7 +184,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "views/kss-pwa/polyfills.js",
-    "revision": "416ca01da9903af05a677b882cbe7f7a"
+    "revision": "82a7b35281f81eb4f07b52fcd8fcfa63"
   },
   {
     "url": "views/kss-pwa/runtime.js",
