@@ -228,3 +228,26 @@
         font-size: 1.3em;
     }
 }
+
+.kss-flash{
+    padding: 0.8em;
+    margin: 0.8em 0;
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.4;
+    &--info{
+        background-color: $flash-info-bg;
+        color: $flash-info-color;
+    }
+    &--error{
+        background-color: $flash-error-bg;
+        color: $flash-error-color;
+    }
+    &--success{
+        background-color: $flash-success-bg;
+        color: $flash-success-color;
+    }
+    &--small{
+        font-size: 0.88rem;
+    }
+}
