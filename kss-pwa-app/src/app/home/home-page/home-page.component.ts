@@ -37,9 +37,9 @@ export class HomePageComponent implements OnInit {
     this.apiService.request(url,'get',{},{}).then((data)=>{
       console.log("home page data ==>", data);
       this.homePageElements = data;
-      setTimeout(()=>{
+      // setTimeout(()=>{
         this.loadCart();
-      },2000)      
+      // },1000)      
     })
     .catch((error)=>{
       console.log("error in get-home-page-element api ==>", error);
@@ -48,8 +48,20 @@ export class HomePageComponent implements OnInit {
   }
 
   loadCart(){
-    if(window.location.href.endsWith('#/bag') || window.location.href.endsWith('#/bag/shipping-address') || window.location.href.endsWith('#/bag/shipping-summary'))
-        this.appservice.loadCartTrigger();
+    if(window.location.href.endsWith('#/bag') || window.location.href.endsWith('#/bag/shipping-address') || window.location.href.endsWith('#/bag/shipping-summary')){
+      this.appservice.loadCartFromAngular = true;
+      // let url = window.location.href.split("#")[0] + '#/bag';
+      // history.pushState({bag : true}, 'bag', url);
+      // console.log("openCart");
+      this.appservice.loadCartTrigger();
+    }
+    else if(window.location.href.endsWith('#/account') || window.location.href.endsWith('#/account/my-orders') || window.location.href.includes('#/account/my-orders/')){
+      this.appservice.loadAccountFromAngular = true;
+      // let url = window.location.href.split("#")[0] + '#/account';
+      // history.pushState({bag : true}, 'account', url);
+      // console.log("openAccount");
+      this.appservice.loadCartTrigger();
+    }        
   }
 
 }

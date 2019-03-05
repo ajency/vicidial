@@ -89,60 +89,73 @@ export class AppComponent implements OnInit {
 
   loadCartModule(){
     console.log("loadCart function");
-    if(window.location.href.includes("#/bag")){
-      if(this.appservice.loadCartFromAngular){
-        $('#main-nav').removeClass('speed-in');
-        $('#cd-cart').addClass("speed-in");
-        $('#cd-shadow-layer').addClass('is-visible');
-        $("body").addClass("hide-scroll");
-        setTimeout(()=>{
-          this.loadCartFromAngular = true;          
-        },500)      
-      }
-      else{
-        this.loadCart = true;
-      }
-      $("app-account").addClass('d-none');
-      $("app-bag-view").removeClass('d-none');  
-    }
-    else if(window.location.href.includes("#/account")){
-      if(this.appservice.loadAccountFromAngular){
-        $('#main-nav').removeClass('speed-in');
-        $('#cd-cart').addClass("speed-in");
-        $('#cd-shadow-layer').addClass('is-visible');
-        $("body").addClass("hide-scroll");
-        setTimeout(()=>{
-          this.loadAccountFromAngular = true;
-        },500)      
-      }
-      else{
-        this.loadAccount = true;
-      }
-      $("app-bag-view").addClass('d-none');
-      $("app-account").removeClass('d-none'); 
+    if(this.loadCartFromAngular || this.loadAccountFromAngular)
+      this.updateOnHashChange();
+    else{
+      this.loadModules();
     }  
   }
 
   listenToHashChange(){
     this.loc.onHashChange(()=>{
       console.log("onHashChange inside angular : ");
-      if(window.location.href.endsWith('#/') || window.location.href.endsWith('#') || (!window.location.href.includes("#")) ){
-          this.appservice.closeCart();
-        }
-      if(window.location.href.endsWith('#/bag') || window.location.href.endsWith('#/bag/shipping-address') || window.location.href.endsWith('#/bag/shipping-summary')){
-        this.appservice.updateCartViewTrigger();
-      }
-
-      if(window.location.href.endsWith('#/account') || window.location.href.endsWith('#/account/my-orders') || window.location.href.includes('#/account/my-orders/')){
-        this.appservice.updateAccountViewTrigger();
-      }
-
+      this.updateOnHashChange();
     });
   }
 
   openLoginModal(){
     console.log("openLoginModal function");
     this.displayLogin = true;
+  }
+
+  updateOnHashChange(){
+      if(window.location.href.endsWith('#/') || window.location.href.endsWith('#') || (!window.location.href.includes("#")) ){
+          this.appservice.closeCart();
+        }
+      if(window.location.href.endsWith('#/bag') || window.location.href.endsWith('#/bag/shipping-address') || window.location.href.endsWith('#/bag/shipping-summary')){
+        this.appservice.updateCartViewTrigger();
+        this.loadModules();
+      }
+
+      if(window.location.href.endsWith('#/account') || window.location.href.endsWith('#/account/my-orders') || window.location.href.includes('#/account/my-orders/')){
+        this.appservice.updateAccountViewTrigger();
+        this.loadModules();
+      }
+  }
+
+  loadModules(){
+      if(window.location.href.includes("#/bag")){
+        if(this.appservice.loadCartFromAngular){
+          $('#main-nav').removeClass('speed-in');
+          $('#cd-cart').addClass("speed-in");
+          $('#cd-shadow-layer').addClass('is-visible');
+          $("body").addClass("hide-scroll");
+          setTimeout(()=>{
+            this.loadCartFromAngular = true;          
+          },500)      
+        }
+        else{
+          this.loadCart = true;
+        }
+        $("app-account").addClass('d-none');
+        $("app-bag-view").removeClass('d-none');  
+      }
+      else if(window.location.href.includes("#/account")){
+        if(this.appservice.loadAccountFromAngular){
+          $('#main-nav').removeClass('speed-in');
+          $('#cd-cart').addClass("speed-in");
+          $('#cd-shadow-layer').addClass('is-visible');
+          $("body").addClass("hide-scroll");
+          setTimeout(()=>{
+            this.loadAccountFromAngular = true;
+          },500)      
+        }
+        else{
+          this.loadAccount = true;
+        }
+        $("app-bag-view").addClass('d-none');
+        $("app-account").removeClass('d-none'); 
+      }
   }
 }
 

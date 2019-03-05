@@ -37,8 +37,20 @@ export class AccountComponent implements OnInit {
   	this.appservice.removeLoader();
   	if(!this.appservice.isLoggedInUser())
   		this.displayModal();
-    else
-      this.getUserInfo();
+    else{
+      if(window.location.href.includes('#/account/my-orders/')){
+        this.openOrderDetails = true;
+        this.showAccount = false;
+        this.getInfo();
+      }
+      else if(window.location.href.endsWith('#/account/my-orders')){
+        this.openMyOrders = true;
+        this.showAccount = false;
+        this.getInfo();
+      }
+      else
+        this.getUserInfo();
+    }
   }
 
   getUserInfo(){
@@ -81,8 +93,10 @@ export class AccountComponent implements OnInit {
   redirectToReturnUrl(){
     this.userInfo = this.appservice.userInfo;
     setTimeout(()=>{
-      if(this.returnUrl)    
-        this.router.navigateByUrl(this.returnUrl, { replaceUrl: true });
+      if(this.returnUrl){
+        // this.router.navigateByUrl(this.returnUrl, { replaceUrl: true });
+        console.log("redirect required");
+      }    
       else{
         if(!this.appservice.userInfo)
           this.getUserInfo()
@@ -152,4 +166,23 @@ export class AccountComponent implements OnInit {
     }
   }
 
+  getInfo(){
+    if(this.appservice.userInfo)
+      this.userInfo = this.appservice.userInfo;
+    else{
+      this.appservice.getUserInfo().then((response) =>{
+        this.userInfo = response.user_info;
+        this.appservice.userInfo = response.user_info;
+      })
+      .catch((error)=>{
+        console.log("error in get-user-info api ==>",error);
+        if(error.status == 401){
+          this.appservice.userLogout();
+          this.displayModal();
+        }
+        else if(error.status == 403)
+          this.displayModal();
+      })
+    }
+  }
 }

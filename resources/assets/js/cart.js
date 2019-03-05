@@ -17,7 +17,7 @@ $(document).ready(function(){
     //Set crt count on page load
     updateCartCountInUI();
 
-    if(window.location.href.includes('#/bag') || window.location.href.includes('#/account'))
+    if((window.location.href.includes('#/bag') || window.location.href.includes('#/account')) && window.location.pathname !="/" )
         openCart();
 
     window.onhashchange = function() { 

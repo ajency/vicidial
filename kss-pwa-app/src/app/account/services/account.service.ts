@@ -11,6 +11,6 @@ export class AccountService {
 
   userLogout(){
   	this.appservice.userLogout();
-  	this.router.navigate(['account']);
+  	// this.router.navigate(['account']);
   }
 }

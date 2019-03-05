@@ -60,8 +60,9 @@ export class MyOrdersComponent implements OnInit {
         console.log("error ===>", error);
         if(error.status == 401)
           this.account_service.userLogout();
-        else if(error.status == 403)
-          this.router.navigate(['account']);
+        else if(error.status == 403){
+          // this.router.navigate(['account']);
+        }
         this.appservice.removeLoader();
         this.apiCallComplete = true;
       }) 

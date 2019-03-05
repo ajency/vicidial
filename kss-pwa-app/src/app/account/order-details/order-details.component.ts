@@ -96,7 +96,9 @@ export class OrderDetailsComponent implements OnInit {
   }
 
   openListOfOrders(){
-    this.router.navigateByUrl('account/my-orders');
+    // this.router.navigateByUrl('account/my-orders');
+    let url = window.location.href.split("#")[0] + '#/account/my-orders';
+    history.replaceState({account : true}, 'account', url);
   }
 
   isLoggedIn(){
