@@ -10,7 +10,7 @@
 			<div *ngIf="showStatus">
 				<span *ngIf="item.state == 'draft' " class="order-label order-label--processing" data-toggle="tooltip" data-placement="top" title="Your order has been placed and we are verifying item availability in the inventory">Processing</span>
 				<span *ngIf="item.state == 'cancel' || (item.state=='sale' && item.shipment_status == 'cancelled')  " class="order-label order-label--cancelled" data-toggle="tooltip" data-placement="top" title="The item has been cancelled">Cancelled</span>
-				<span *ngIf="item.state == 'process-cancel' " class="order-label order-label--processcancel" data-toggle="tooltip" data-placement="top" title="The item is being processed for cancellation">Processing Cancel</span>
+				<span *ngIf="item.state == 'processing-cancel' " class="order-label order-label--processcancel" data-toggle="tooltip" data-placement="top" title="The item is being processed for cancellation">Processing Cancel</span>
 
 				<span *ngIf="item.state == 'sale' && !item.shipment_status " class="order-label order-label--confirmed" data-toggle="tooltip" data-placement="top" title="Stock for the items has been verified and your items will be shipped out soon.">Confirmed</span>
 				<span *ngIf="item.state == 'sale' && item.shipment_status == 'shipped' " class="order-label order-label--shipped" data-toggle="tooltip" data-placement="top" title="Your item has been shipped and should reach you soon">Shipped</span>
