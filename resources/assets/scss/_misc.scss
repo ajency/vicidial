@@ -273,12 +273,12 @@
 
 .out-of-stock{
 	color: rgba(10, 0, 0, 0.63);
-    font-size: 1.7em;
-    @media (max-width: 767px){
-    	font-size: 1.5em;
-    	text-align: center;
-    	padding: 10px;
-    }
+    // font-size: 1.7em;
+    // @media (max-width: 767px){
+    // 	font-size: 1.5em;
+    // 	text-align: center;
+    // 	padding: 10px;
+    // }
     &--list{
     	font-size: 1.05em;
     }
