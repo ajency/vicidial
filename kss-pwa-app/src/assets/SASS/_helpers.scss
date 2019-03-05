@@ -84,6 +84,9 @@
 	a{
 		padding-top: 50%;
 		position: relative;
+        @media (max-width: 991px) {
+            padding-top: 77.75%;
+        }
 	}
 }
 
