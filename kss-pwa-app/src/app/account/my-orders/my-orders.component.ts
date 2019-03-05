@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter  } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppServiceService } from '../../service/app-service.service';
 import { ApiServiceService } from '../../service/api-service.service';
@@ -14,6 +14,8 @@ declare var $: any;
   styleUrls: ['./my-orders.component.css']
 })
 export class MyOrdersComponent implements OnInit {
+
+  @Output() orderDetailsClick = new EventEmitter();
 
 	orders : any = [];
   order_params = { page : 1, display_limit : 10 }
@@ -85,9 +87,11 @@ export class MyOrdersComponent implements OnInit {
   navigateToOrderDetails(order){
     console.log("Order ==>", order);
     this.appservice.order = order;
-    // this.router.navigate([OrderDetailsComponent]);
-    let order_route = 'account/my-orders/' + order.order_info.txn_no;
-    this.router.navigate([order_route]);
+    // // this.router.navigate([OrderDetailsComponent]);
+    // let order_route = 'account/my-orders/' + order.order_info.txn_no;
+    // this.router.navigate([order_route]);
+    this.appservice.order_txn_no = order.order_info.txn_no;
+    this.orderDetailsClick.emit();
   }
 
 }

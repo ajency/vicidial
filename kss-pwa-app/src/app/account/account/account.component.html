@@ -1,4 +1,4 @@
-<div class="cart-step1-header">
+<div *ngIf="showAccount" class="cart-step1-header">
 	<nav class="navbar navbar-dark bg-dark pt-3 pb-3 ">
 		<div class="d-flex align-items-center w-100">
 			<div class="">
@@ -13,7 +13,7 @@
 	</nav>
 </div>
 
-<div *ngIf="userInfo" class="account-nav">
+<div *ngIf="userInfo && showAccount" class="account-nav">
 	<div *ngIf="userInfo" class="d-block text-center p-4">
          <h1 class="w-100 account-nav__username m-0 text-gray font-weight-bold ">
            Hello<span *ngIf="userInfo.name">, {{userInfo.name}}</span>
@@ -62,3 +62,9 @@
 		Get access to your Orders, Addresses and Profile information. <a href="javascript:void(0);" (click)="displayModal()" class="text-secondary font-weight-bold">Sign In</a>
 	</div>
 </div>
+
+<app-my-addresses *ngIf="openMyAddresses" (closeMyAddresses)="updateView()"></app-my-addresses>
+<app-my-orders *ngIf="openMyOrders" (orderDetailsClick) = "openSubSection('order-details')"></app-my-orders>
+<app-my-profile *ngIf="openMyProfile" (closeMyProfile)="updateView()"></app-my-profile>
+<app-order-details *ngIf="openOrderDetails"></app-order-details>
+

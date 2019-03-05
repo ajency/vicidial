@@ -36,6 +36,8 @@ export class AppServiceService {
   loadAccountFromAngular : boolean = false;
   private updateCartView = new Subject<any>();
   private showLoginPopup = new Subject<any>();
+  private updateAccountView = new Subject<any>();
+  order_txn_no : any;
   constructor(	private router: Router,
                 private apiservice : ApiServiceService) { 
     this.apiUrl = isDevMode() ? 'http://localhost:8000' : '';
@@ -118,6 +120,14 @@ export class AppServiceService {
 
   listenToShowLoginPopupTriggerr() : Observable<any> {    
     return this.showLoginPopup.asObservable();
+  }
+
+  updateAccountViewTrigger(){
+    this.updateAccountView.next();
+  }
+
+  listenToUpdateAccountViewTrigger() : Observable<any> {    
+    return this.updateAccountView.asObservable();
   }
 
   getCookie(cname) {

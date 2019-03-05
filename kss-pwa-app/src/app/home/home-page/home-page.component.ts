@@ -1,6 +1,6 @@
 import { Component, OnInit, isDevMode } from '@angular/core';
 import { ApiServiceService } from '../../service/api-service.service';
-import { AppService } from '../../services/app.service';
+import { AppServiceService } from '../../service/app-service.service';
 // import menu from '../../../assets/data/menu.json';
 
 @Component({
@@ -16,7 +16,8 @@ export class HomePageComponent implements OnInit {
   showTrendingSection : boolean = false;
   showStories : boolean = false;
   constructor(private apiService: ApiServiceService,
-              private appService: AppService) { }
+              private appservice : AppServiceService) {
+  }
 
   ngOnInit() {
   	console.log("ngOnInit HomePageComponent");
@@ -36,11 +37,19 @@ export class HomePageComponent implements OnInit {
     this.apiService.request(url,'get',{},{}).then((data)=>{
       console.log("home page data ==>", data);
       this.homePageElements = data;
+      setTimeout(()=>{
+        this.loadCart();
+      },2000)      
     })
     .catch((error)=>{
       console.log("error in get-home-page-element api ==>", error);
       this.homePageElements = true;
     })
+  }
+
+  loadCart(){
+    if(window.location.href.endsWith('#/bag') || window.location.href.endsWith('#/bag/shipping-address') || window.location.href.endsWith('#/bag/shipping-summary'))
+        this.appservice.loadCartTrigger();
   }
 
 }

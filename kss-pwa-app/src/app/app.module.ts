@@ -9,7 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 // import { ApiService } from './services/api.service';
 import { AppService } from './services/app.service';
-// import { RouteGuardService } from './services/route-guard.service';
+import { RouteGuardService } from './services/route-guard.service';
 
 import { AppServiceService } from './service/app-service.service';
 import { ApiServiceService } from './service/api-service.service';
@@ -39,7 +39,8 @@ import { LazyModule } from '@herodevs/lazy-af';
     AppService,
     AppServiceService,
     ApiServiceService,
-    AuthGuardService
+    AuthGuardService,
+    RouteGuardService
   ],
   bootstrap: [AppComponent]
 })

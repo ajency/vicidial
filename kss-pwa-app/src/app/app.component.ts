@@ -128,6 +128,11 @@ export class AppComponent implements OnInit {
       if(window.location.href.endsWith('#/bag') || window.location.href.endsWith('#/bag/shipping-address') || window.location.href.endsWith('#/bag/shipping-summary')){
         this.appservice.updateCartViewTrigger();
       }
+
+      if(window.location.href.endsWith('#/account') || window.location.href.endsWith('#/account/my-orders') || window.location.href.includes('#/account/my-orders/')){
+        this.appservice.updateAccountViewTrigger();
+      }
+
     });
   }
 

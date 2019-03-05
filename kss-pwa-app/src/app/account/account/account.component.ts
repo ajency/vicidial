@@ -16,12 +16,19 @@ export class AccountComponent implements OnInit {
   returnUrl: string;
   userInfo : any;
   loginSucessListener : Subscription;
-
+  openMyAddresses : boolean = false;
+  openMyOrders : boolean = false;
+  openMyProfile : boolean = false;
+  openOrderDetails : boolean = false;
+  showAccount : boolean = true;
+  updateViewListner : Subscription;
   constructor(private appservice : AppServiceService,
       			  private router : Router,
               private route: ActivatedRoute,
               private account_service : AccountService) {
       this.loginSucessListener = this.appservice.listenToLoginSuccess().subscribe(()=>{ this.redirectToReturnUrl() });
+
+       this.updateViewListner = this.appservice.listenToUpdateAccountViewTrigger().subscribe(()=>{ this.updateView() })
   	}
 
   ngOnInit() {
@@ -91,6 +98,58 @@ export class AccountComponent implements OnInit {
 
   openSubSection(section){
     console.log("openSubSection function", section);
+    if(section == 'orders'){
+      let url = window.location.href.split("#")[0] + '#/account/my-orders';
+      history.pushState({account : true}, 'account', url);
+      this.openMyOrders = true;
+      this.openMyProfile = false;
+      this.openMyAddresses = false;
+      this.showAccount = false;
+      this.openOrderDetails = false;
+    }
+    else if(section == 'profile'){
+      // let url = window.location.href.split("#")[0] + '#/account/my-profile';
+      // history.pushState({account : true}, 'account', url);
+      this.openMyOrders = false;
+      this.openMyProfile = true;
+      this.openMyAddresses = false;
+      this.showAccount = false;
+      this.openOrderDetails = false;
+    }
+    else if(section == 'addresses'){
+      this.openMyOrders = false;
+      this.openMyProfile = false;
+      this.openMyAddresses = true;
+      this.showAccount = false;
+      this.openOrderDetails = false;
+    }
+    else if(section == 'order-details'){
+      let url = window.location.href.split("#")[0] + '#/account/my-orders/'+this.appservice.order_txn_no;
+      history.pushState({account : true}, 'account', url);
+      this.openMyOrders = false;
+      this.openMyProfile = false;
+      this.openMyAddresses = false;
+      this.showAccount = false;
+      this.openOrderDetails = true;
+    }
+  }
+
+  updateView(){
+    console.log("update view data ==>");
+    if(window.location.href.endsWith('#/account')){
+      this.openMyOrders = false;
+      this.openMyProfile = false;
+      this.openMyAddresses = false;
+      this.showAccount = true;
+      this.openOrderDetails = false;
+    }
+    else if(window.location.href.endsWith('#/account/my-orders')){
+      this.openMyOrders = true;
+      this.openMyProfile = false;
+      this.openMyAddresses = false;
+      this.showAccount = false;
+      this.openOrderDetails = false;
+    }
   }
 
 }

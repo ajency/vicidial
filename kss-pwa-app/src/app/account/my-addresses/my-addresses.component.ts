@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { AppServiceService } from '../../service/app-service.service';
 import { ApiServiceService } from '../../service/api-service.service';
 import { AccountService } from '../services/account.service';
@@ -14,6 +14,7 @@ declare var $: any;
 })
 export class MyAddressesComponent implements OnInit {
 
+  @Output() closeMyAddresses = new EventEmitter();
   @ViewChild(AddressComponent)
   private addressComponent : AddressComponent
 	
@@ -70,7 +71,9 @@ export class MyAddressesComponent implements OnInit {
       this.addAddress = false;
     }
     else
-      history.back();
+      this.closeMyAddresses.emit();
+
+    // history.back();
   }
 
   getAllStates(){    

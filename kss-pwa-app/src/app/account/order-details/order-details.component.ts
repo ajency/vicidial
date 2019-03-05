@@ -30,32 +30,42 @@ export class OrderDetailsComponent implements OnInit {
   constructor(private appservice : AppServiceService,
               private route: ActivatedRoute,
               private router: Router,
-              private account_service : AccountService) { }
+              private account_service : AccountService,
+              private apiservice : ApiServiceService) { }
   
   ngOnInit() {
     this.appservice.removeLoader();
     $("#cd-my-account").scrollTop(0);
-    if(this.appservice.order){
-      this.order =  this.appservice.order;
+    if(this.appservice.order)
       this.showBackButton = true;
-    }
-    else{
-        this.getOrders(); 
-    }    
+    // if(this.appservice.order){
+    //   this.order =  this.appservice.order;
+    //   this.showBackButton = true;
+    // }
+    // else{
+    //     this.getOrders(); 
+    // }    
+    this.getOrderDetails();   
   }
 
   ngOnDestroy(){
 
   }
 
-  getOrders(){
+  getOrderDetails(){
     this.appservice.showLoader();
-    this.appservice.getOrders().then((response)=>{
-      let formatted_data = this.appservice.formattedCartDataForUI(response.data);
-      this.orders = formatted_data;
-      this.appservice.myOrders = formatted_data;
-      this.findCurrentOrder();
-      console.log("orders ==>", this.orders);
+    // let order_id = this.route.snapshot.paramMap.get('id');
+    console.log("Check order_id ==>", window.location.href.substr(window.location.href.lastIndexOf('/') + 1))
+    let order_id = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
+    let url = this.appservice.apiUrl + '/api/rest/v1/user/order/'+ order_id +'/details';
+    let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
+    let body : any = {
+      _token : $('meta[name="csrf-token"]').attr('content')
+    };
+    this.apiservice.request(url, 'get', body , header).then((response)=>{
+      // let formatted_data = this.formatData(response.data);
+      this.order = response.data;
+      console.log("order ==>", this.order);
       this.appservice.removeLoader();
     })
     .catch((error)=>{
@@ -63,7 +73,8 @@ export class OrderDetailsComponent implements OnInit {
       if(error.status == 401)
         this.account_service.userLogout();
       else if(error.status == 403)
-        this.router.navigate(['account']);
+        this.order = false;
+        // this.router.navigate(['account']);
       this.appservice.removeLoader();
     })
   }
