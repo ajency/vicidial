@@ -216,6 +216,38 @@ class SubOrder extends Model
         return $sub_order;
     }
 
+    public function getSubOrderItemWise()
+    {
+        $itemsData = [];
+        $store_address = $this->location->getAddress();
+        foreach ($this->orderLines->groupBy('variant_id') as $items) {
+            $itemData = $items->first();
+            $item     = [
+                'id'               => $itemData['id'],
+                'title'            => $itemData['title'],
+                'images'           => $itemData['images'],
+                'size'             => $itemData['size'],
+                'price_mrp'        => $itemData['price_mrp'],
+                'price_final'      => $itemData['price_final'],
+                'discount_per'     => $itemData['discount_per'],
+                'variant_id'       => $itemData['variant_id'],
+                'product_id'       => $itemData['product_id'],
+                'product_color_id' => $itemData['product_color_id'],
+                'product_slug'     => $itemData['product_slug'],
+                'state'            => $itemData['state'],
+                'shipment_status'  => $itemData['shipment_status'],
+                'quantity'         => $this->orderLines->where('variant_id', $itemData['variant_id'])->count(),
+                'is_invoiced'      => $this->is_invoiced,
+            ];
+            if ($store_address != null) {
+                $item['store_address'] = $store_address;
+            }
+            $itemsData[] = $item;
+        }
+
+        return $itemsData;
+    }
+
     public static function rectifyOldSubOrders($subOrders)
     {
         foreach ($subOrders as $subOrder) {

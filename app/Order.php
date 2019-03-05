@@ -217,6 +217,32 @@ class Order extends Model
         return $params;
     }
 
+    public function getOrderDetailsItemWise()
+    {
+        $items = array();
+        foreach ($this->subOrders as $subOrder) {
+            $items = array_merge($items, $subOrder->getSubOrderItemWise());
+        }
+
+        $params = [
+            "order_info"       => $this->getOrderInfo(),
+            "items"            => $items,
+            "shipping_address" => $this->address_data,
+            "order_summary"    => $this->subOrderData(),
+        ];
+
+        $payment = $this->payments->first();
+        if ($payment != null) {
+            $params['payment_info'] = [
+                //"payment_mode" => $payment->bankcode,
+                "payment_mode" => json_decode($payment->data)->bankcode,
+                "card_num"     => $payment->cardnum,
+            ];
+        }
+
+        return $params;
+    }
+
     public function sendSuccessEmail()
     {
         sendEmail('order-success', [

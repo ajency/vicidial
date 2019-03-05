@@ -184,7 +184,7 @@ class OrderController extends Controller
         }
 
         foreach ($orders as $order) {
-            array_push($order_details, $order->getOrderDetails());
+            array_push($order_details, $order->getOrderDetailsItemWise());
         }
 
         return response()->json(["message" => 'Order items received successfully', 'success' => true, 'data' => $order_details]);
@@ -195,7 +195,7 @@ class OrderController extends Controller
         $user  = $request->user();
         $order = Order::where('txnid', $txnid)->first();
         validateOrder($user, $order);
-        return response()->json(["message" => 'Order items received successfully', 'success' => true, 'data' => $order->getOrderDetails()]);
+        return response()->json(["message" => 'Order items received successfully', 'success' => true, 'data' => $order->getOrderDetailsItemWise()]);
     }
 
     public function cancelOrder($id, Request $request)
