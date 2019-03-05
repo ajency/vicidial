@@ -30,7 +30,7 @@ export class OrderDetailsComponent implements OnInit {
   getCancelReason : any;
   cancelReasons : any;
   cancelReasonId : any;
-  additionalRemark : any;
+  additionalRemark = '';
   cancelSuccessful : boolean = false;
   cancelOrderFailureMsg : any;
   constructor(private appservice : AppServiceService,
