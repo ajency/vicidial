@@ -22,7 +22,7 @@ $(document).ready(function(){
 
     window.onhashchange = function() { 
      console.log("hash changed");
-     if(!$('#cd-cart').hasClass("speed-in") && (window.location.href.includes('#/bag') || window.location.href.includes('#/account')) ){
+     if(!$('#cd-cart').hasClass("speed-in") && (window.location.href.includes('#/bag') || window.location.href.includes('#/account')) && window.location.pathname !="/" ){
         openCart();
      }
     }    
