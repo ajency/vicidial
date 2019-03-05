@@ -98,7 +98,7 @@
         <div class="card-body pb-2 px-0">
           <ul class="list-inline d-flex flex-sm-wrap kss-tags">
             @php foreach($params['metatags'] as $metatag) { @endphp
-              <li>{{$metatag->name}}</li>
+              <li><a href="{{$metatag->href}}">{{$metatag->name}}</a></li>
             @php } @endphp
           </ul>
         </div>

@@ -118,7 +118,7 @@
 		</div>
 		@include('includes.similar-products',["items"=>$similar_data_params])
 
-		@include('includes.related-searches')
+		@include('includes.related-searches',["params"=>$params])
 
 		<?php
 		$wptags = $params['posts'];

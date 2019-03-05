@@ -17,12 +17,6 @@ class ProductController extends Controller
         $json = json_decode(singleproduct($product_slug));
         $params =  (array) $json;
         $posts = array();
-        
-        foreach ($params['facet_value_pairs'] as $facet_name => $facets) {
-            foreach($facets as $facet) {
-                array_push($posts,collect($facet)['display_name']);
-            }
-        }
         $query  = $request->all();
         
         $params['show_button'] = false;
@@ -48,6 +42,28 @@ class ProductController extends Controller
         if ($params['ecom_sales'] == false) {
             $params['show_button'] = false;
         }
+
+        $facet_names = array();
+        foreach ($params['facet_value_pairs'] as $facet_name => $facets) {
+                foreach($facets as $facet) {
+                    array_push($posts,collect($facet)['display_name']);
+                    $facet_names[$facet_name]=["display_name" => collect($facet)['display_name'], "slug" => collect($facet)['slug']];
+                }
+        }
+       
+        $related_search = array();
+        if(isset($params['size'])) {
+            $price = setDefaultPrice(collect($params['variant_group'])[$params['selected_color_id']]->variants, $params['size']);
+        }
+        else {
+            $price = setDefaultPrice(collect($params['variant_group'])[$params['selected_color_id']]->variants);
+        }
+        array_push($related_search,["name" => 'More in ' . $facet_names['product_subtype']['display_name'], "href" => createUrl('list',[$facet_names['product_subtype']['slug']] )] );
+        array_push($related_search,["name" => 'More in ' . $facet_names['product_color_html']['display_name'] . ' ' . $facet_names['product_subtype']['display_name'], "href" => createUrl('list', [$facet_names['product_subtype']['slug']], [ "pf" => ['color' => [$facet_names['product_color_html']['slug']] ]] ) ]);
+        array_push($related_search,["name" => 'More in ' . $facet_names['product_subtype']['display_name'] . ' from ' . $facet_names['product_brand']['display_name'], "href" =>createUrl('list', [$facet_names['product_subtype']['slug'], $facet_names['product_brand']['slug']] ) ]);
+        array_push($related_search,["name" => 'More in ' . $facet_names['product_subtype']['display_name'] .' below ' . $price['sale_price'], "href" => createUrl('list', [$facet_names['product_subtype']['slug']], [ "rf" => ['price' => ['0TO'.$price['sale_price']] ]] ) ]);
+        
+        $params['related_search'] = $related_search;
 
         $params['breadcrumb']           = array();
         $params['breadcrumb']['list']   = array();
