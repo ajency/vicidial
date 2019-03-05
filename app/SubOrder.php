@@ -267,7 +267,7 @@ class SubOrder extends Model
                     $message = 'Confirmed: ' . $name . ' & 1 other item have been processed and will be shipped shortly. Track your order at: ' . $link;
                     break;
                 default:
-                    $message = 'Confirmed: ' . $name . ' & ' . $itemCount . ' other items have been processed and will be shipped shortly. Track your order at: ' . $link;
+                    $message = 'Confirmed: ' . $name . ' & ' . ($itemCount - 1) . ' other items have been processed and will be shipped shortly. Track your order at: ' . $link;
                     break;
             }
             sendSMS('order-confirmed', [
