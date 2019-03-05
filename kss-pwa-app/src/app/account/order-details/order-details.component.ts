@@ -26,7 +26,13 @@ export class OrderDetailsComponent implements OnInit {
   order : any;
   orders : any;
   showBackButton : boolean = false;
-  
+  cancelOrder : boolean = false;
+  getCancelReason : any;
+  cancelReasons : any;
+  cancelReasonId : any;
+  additionalRemark = '';
+  cancelSuccessful : boolean = false;
+  cancelOrderFailureMsg : any;
   constructor(private appservice : AppServiceService,
               private route: ActivatedRoute,
               private router: Router,
@@ -49,7 +55,7 @@ export class OrderDetailsComponent implements OnInit {
   }
 
   ngOnDestroy(){
-
+    this.unsubscribeGetCancelReason();
   }
 
   getOrderDetails(){
@@ -103,6 +109,88 @@ export class OrderDetailsComponent implements OnInit {
 
   isLoggedIn(){
     return this.appservice.isLoggedInUser();
+  }
+
+    openCancelOrder(){
+    $('#cd-cart').addClass('overflow-h');
+    this.unsubscribeGetCancelReason();
+    // let url = this.appservice.apiUrl +  "/api/rest/v1/district-state"
+    if(this.account_service.cancelReasons){
+        this.cancelReasons = this.account_service.cancelReasons;
+        this.cancelReasonId = 0;
+    }
+    else{
+      this.appservice.showLoader();
+      // let url = "https://demo8558685.mockable.io/cancel-reason";
+      let url = this.appservice.apiUrl + "/api/rest/v1/get-all-reasons";
+      this.getCancelReason = this.apiservice.request(url, 'get', {}, {}, false, 'observable').subscribe((response)=>{
+        console.log("response from location api ==>", response);
+        response.cancel.push({id : 0, value : '--Select--' });
+        this.account_service.cancelReasons = response.cancel;
+        this.cancelReasons = response.cancel;
+        this.cancelReasonId = 0;
+        this.appservice.removeLoader();     
+      },
+      (error)=>{
+        console.log("error ===>", error);
+        this.appservice.removeLoader();
+      })
+    }
+    this.cancelOrder = true;
+    this.cancelOrderFailureMsg = '';
+  }
+
+  unsubscribeGetCancelReason(){
+    if(this.getCancelReason)
+      this.getCancelReason.unsubscribe();
+  }
+
+  checkCancelReason(){
+    console.log("checkCancelReason ==>", this.cancelReasonId)
+    // this.cancelReasonId = parseInt(this.cancelReasonId);
+  }
+
+  callCancelOrderApi(){
+    this.appservice.showLoader();
+    let url = this.appservice.apiUrl +  "/api/rest/v1/user/order/" + this.order.order_info.order_id +"/cancel";
+    let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
+    let body : any = {
+      reason : this.cancelReasonId,
+      comments : this.additionalRemark
+    };
+    body._token = $('meta[name="csrf-token"]').attr('content');
+    console.log("cancel body ==>", body);
+
+    this.apiservice.request(url, 'post', body , header ).then((response)=>{      
+      $('#cd-cart').animate({
+          scrollTop: 0
+      });
+      this.getOrderDetails();
+      this.closeCancelOrder();
+      this.cancelSuccessful = true;
+      this.order.cancel_allowed = false;
+    })
+    .catch((error)=>{
+      $('#cd-cart').animate({
+          scrollTop: 0
+      });
+      console.log("error ===>", error);
+      this.closeCancelOrder();
+      if(error.status == 0){
+        this.cancelOrderFailureMsg = "Order Cancellation failed. Please check your Internet Connection";  
+      }
+      else{
+        this.cancelOrderFailureMsg = error.message;
+      }
+      this.appservice.removeLoader();
+    })  
+  }
+
+  closeCancelOrder(){
+    $('#cd-cart').removeClass('overflow-h');
+    this.cancelOrder = false;
+    this.cancelReasonId = '';
+    this.additionalRemark = '';
   }
 
 }

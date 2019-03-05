@@ -49,8 +49,8 @@ export class MyOrdersComponent implements OnInit {
     else{
       this.appservice.showLoader();     
       this.appservice.getOrders().then((response)=>{
-        let formatted_data = this.appservice.formattedCartDataForUI(response.data);
-        this.orders = formatted_data;
+        // let formatted_data = this.appservice.formattedCartDataForUI(response.data);
+        this.orders = response.data;
         this.appservice.myOrders = this.orders;
         console.log("orders ==>", this.orders);
         this.appservice.removeLoader();
