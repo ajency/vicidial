@@ -37,18 +37,22 @@
 
 	<lazy-af *ngIf="loadCartFromAngular" moduleName="src/app/bag/bag.module#BagModule"></lazy-af>
     <lazy-af *ngIf="loadAccountFromAngular" moduleName="src/app/account/account.module#AccountModule"></lazy-af>
+    
+    <app-login *ngIf="displayLogin && (loadCartFromAngular || loadAccountFromAngular)"></app-login>
+    
 </div>
 
 <lazy-af *ngIf="loadCart" moduleName="src/app/bag/bag.module#BagModule"></lazy-af>
 
 <lazy-af *ngIf="loadAccount" moduleName="src/app/account/account.module#AccountModule"></lazy-af>
 
-<router-outlet></router-outlet>
+<app-login *ngIf="displayLogin && (loadCart || loadAccount)"></app-login>
 
+<router-outlet></router-outlet>
 
 <div *ngIf="display" class="alert alert-dark alert-offline text-center" [ngClass]="{'slide-in-bottom': showToast, 'slide-out-bottom': !showToast}" role="alert">
   <strong>{{msg}}</strong>
 </div>
 
-<app-login *ngIf="displayLogin"></app-login>
+
 
