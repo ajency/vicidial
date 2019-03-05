@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'dropshipping_route_id' => 39,
     'template_fields'                => [
         "name",
         "id",
@@ -31,6 +32,7 @@ return [
         // "product_own", #private/non private
         "vendor_id", #Vendor
         "brand_id", #Brand
+        "route_ids",
         // "parent_flag",
         // "sale_price",
         // "qty_available",
@@ -52,6 +54,7 @@ return [
         "lst_price", #MRP
         "sale_price", #selling price
         "standard_price", // cost of the item
+        "route_ids",
         // 'display_name',
         // 'name',
         // 'virtual_available',
@@ -128,6 +131,7 @@ return [
                 'product_active',
                 'product_image_available',
                 'product_att_ecom_sales',
+                'product_is_dropshipping',
             ],
             'variant' => [
                 'variant_active',
@@ -135,7 +139,7 @@ return [
             ],
         ],
         "number_facet"  => [
-            'product' => ['product_id','product_rank'],
+            'product' => ['product_id','product_rank','product_vendor_id'],
             'variant' => [
                 'product_color_id',
                 'variant_id',

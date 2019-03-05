@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Location extends Model
 {
-    protected const MODEL = "stock.location";
-    protected $casts      = [
+    const MODEL      = "stock.location";
+    protected $casts = [
         'address'          => 'array',
         'use_in_inventory' => 'boolean',
         'business_pref_wt' => 'double',
@@ -61,10 +61,30 @@ class Location extends Model
         }
     }
 
+    public static function addVendorLocation($params)
+    {
+        $loc = self::find($params['location']['id']);
+        if (is_null($loc)) {
+            $loc                    = new self;
+            $loc->id                = $params['location']['id'];
+            $loc->odoo_id           = $params['location']['external_id'];
+            $loc->display_name      = $params['location']['name'];
+            $loc->name              = $params['location']['name'];
+            $loc->warehouse_odoo_id = config('odoo.dropshipping_warehouse_id');
+            $loc->warehouse_name    = config('odoo.dropshipping_warehouse_name');
+            $loc->company_odoo_id   = config('odoo.dropshipping_company_id');
+            $loc->company_name      = config('odoo.dropshipping_company_name');
+            $loc->type              = 'dropshipping';
+            $loc->address           = [];
+            $loc->use_in_inventory  = true;
+            $loc->save();
+        }
+    }
+
     public function getAddress()
     {
         if (empty($this->address)) {
-            return null;
+            return array('store_name' => $this->warehouse_name, 'locality' => "", 'city' => "");
         } else {
             return array('store_name' => $this->warehouse_name, 'locality' => $this->address['street2'], 'city' => $this->address['city'] . ', ' . $this->address['state'] . ' - ' . $this->address['zip']);
         }
@@ -85,8 +105,8 @@ class Location extends Model
         });
         $distanceMatrix = array_dot(array_only(json_decode(\GoogleMaps::load('distancematrix')->setParamByKey('destinations', $destination)->setParamByKey('origins', $mappedCoordinates->toArray())->get(), true), ['rows']));
         $filtered       = array_where($distanceMatrix, function ($value, $key) {return strpos($key, 'distance.value') !== false;});
-        $distancesArray = $locations->pluck('odoo_id')->combine(collect(range(0, $locations->count() - 1))->map(function ($item, $key) use ($filtered) {return isset($filtered['rows.' . $item . '.elements.0.distance.value']) ? $filtered['rows.' . $item . '.elements.0.distance.value'] : 10000000000;}));
-        $weights = $locations->map(function ($loc) use ($distancesArray) {return ['id' => $loc->odoo_id, 'distance' => $distancesArray[$loc->odoo_id], 'business_wt' => $loc->business_pref_wt, 'loc_wt' => $loc->dist_wt];});
+        $distancesArray = $locations->pluck('id')->combine(collect(range(0, $locations->count() - 1))->map(function ($item, $key) use ($filtered) {return isset($filtered['rows.' . $item . '.elements.0.distance.value']) ? $filtered['rows.' . $item . '.elements.0.distance.value'] : 10000000000;}));
+        $weights = $locations->map(function ($loc) use ($distancesArray) {return ['id' => $loc->id, 'distance' => $distancesArray[$loc->id], 'business_wt' => $loc->business_pref_wt, 'loc_wt' => $loc->dist_wt];});
         $scores = $weights->keyBy('id')->map(function ($item) {return (config('orders.location_scores.distance') - $item['distance']) * $item['loc_wt'] / config('orders.location_scores.distance') + $item['business_wt'];});
         return $scores;
     }
