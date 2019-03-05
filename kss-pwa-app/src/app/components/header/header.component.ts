@@ -56,4 +56,8 @@ export class HeaderComponent implements OnInit, OnChanges {
     console.log("openAccount");
     this.appservice.loadCartTrigger();
   }
+
+  createDataSrcSet(a,b,c,d){
+    return a+ " " +b +", " +c +" "+d;
+  }
 }

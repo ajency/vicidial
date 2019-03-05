@@ -47,7 +47,8 @@
 		        <ul *ngIf="menu" class="nav megamenu--right">
 		            <!-- Boys -->
 		            <li *ngFor="let item of menu">
-		                <a href="javascript:void(0)" class="d-none d-lg-block">{{item.type}}</a>
+		                <a href="javascript:void(0)" *ngIf="item.type != 'Blog'" class="d-none d-lg-block">{{item.type}}</a>
+		                <a href="/ideas" *ngIf="item.type == 'Blog'" class="d-none d-lg-block">{{item.type}}</a>
 		                <div class="megamenu-wrapper" attr.data-menu="{{item.type}}">
 		                    <div *ngFor="let row of item.rows" class="nav-column">
 		                    	<div *ngFor="let menu of row.menus">
@@ -66,6 +67,14 @@
 		                                          {{CDN::asset('/img/menu/mm_boys_onecolumn_small.jpg') }} 1x"
 		                             alt="Spotlight on Boys Shirts"
 		                             title="Spotlight on Boys Shirts"/> -->
+		                             	<img  class="d-block w-100 img-fluid offer-img mt-4 mt-lg-0"
+											[useSrcset]="true"
+											[offset]=500
+											[defaultImage]="'/assets/img/transparent.png'"
+											[lazyLoad]="createDataSrcSet(item.image_section.images['2x'], '2x', item.image_section.images['2x'], '1x')"
+									        sizes='(min-width: 1200px) 328px, (min-width: 768px) 26vw,  58vw'
+									        title="{{item.image_section.title}}"
+									        alt="{{item.image_section.img_alt}}"/>
 		                        </a>
 		                        <div class="row align-items-center mt-2 mb-4 mb-lg-0">
 		                            <div class="col-7">
