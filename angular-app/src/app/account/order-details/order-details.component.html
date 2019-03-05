@@ -62,8 +62,8 @@
 				</label>
 			</div> -->
 			<!-- Action to cancel/feedback -->
-			<div *ngIf="order.order_info.cancel_allowed" class="border-top mb-5 mt-4 pt-4 text-center">
-				<a (click)="openCancelOrder()" href="javascript:void(0);" class="btn cancel-order-btn">Cancel Order</a>
+			<div *ngIf="order.order_info.cancel_allowed" class="card mb-4 py-3 shadow-sm text-center">
+				<a (click)="openCancelOrder()" href="javascript:void(0);" class="btn order-details-btn p-0 text-secondary">Cancel Order <i class="fas fa-chevron-right"></i></a>
 			</div>
 
 		</div>
