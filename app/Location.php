@@ -84,7 +84,7 @@ class Location extends Model
     public function getAddress()
     {
         if (empty($this->address)) {
-            return null;
+            return array('store_name' => $this->warehouse_name, 'locality' => "", 'city' => "");
         } else {
             return array('store_name' => $this->warehouse_name, 'locality' => $this->address['street2'], 'city' => $this->address['city'] . ', ' . $this->address['state'] . ' - ' . $this->address['zip']);
         }
