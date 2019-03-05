@@ -276,20 +276,35 @@
     font-weight: bold;
     letter-spacing: 0.2px;
     cursor: help;
-    &--shipped,&--transit{
-        background-color: #1e56d8;
+    &--shipped{
+        background-color: #2870be;
     }
-    &--cancel{
-        background-color: #c51116;
+    &--transit{
+        background-color: #2870be;
+    }
+    &--cancelled{
+        background-color: #bc6562;
+    }
+    &--outdelivery{
+      background-color: #83bf5c;      
     }
     &--confirmed{
         background-color: #000;
     }
     &--delivered{
-        background-color: #28a745;
+        background-color: #608e46;
     }
     &--processing{
-      background-color: #a9a9a9;
+      background-color: #7d7c7c;
+    }
+    &--processcancel{
+      background-color: #e0a09e;
+    }
+    &--readyship{
+      background-color: #6cb1bb;
+    }
+    &--returned{
+      background-color: #e9c466;
     }
 }
 
