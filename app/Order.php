@@ -266,8 +266,8 @@ class Order extends Model
         $store_ids  = [];
         $store_data = [];
         foreach ($this->subOrders as $subOrder) {
-            array_push($store_ids, $subOrder->location->warehouse->id);
-            array_push($store_data, ['id' => $subOrder->location->warehouse->id, 'name' => $subOrder->location->warehouse->name]);
+            array_push($store_ids, $subOrder->location->warehouse_odoo_id);
+            array_push($store_data, ['id' => $subOrder->location->warehouse_odoo_id, 'name' => $subOrder->location->warehouse_name]);
         }
         return ['store_ids' => $store_ids, 'store_data' => $store_data];
     }
