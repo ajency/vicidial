@@ -379,45 +379,45 @@
 //     }
 // }
 
-// .store-banner{
-//     .contentWrapper{
-//         position: absolute;
-//         top: 0;
-//         right: 50px;
-//         color: #fff;
-//         width: 400px;
-//         height: 100%;
-//     }
-//     &__title{
-//         font-size: 2.5em;
-//         font-weight: 600;
-//         line-height: 1.3;
-//     }
-//     &__caption{
-//         font-size: 1.6em;
-//         display: block;
-//         margin: 20px 0;
-//     }
-//     @media (max-width: 767px){
-//         .contentWrapper{
-//             right: 0;
-//             width: 100%;
-//             padding: 0 20px;
-//             justify-content:center;
-//         }
-//         &__title{
-//             font-size: 1.6em;
-//         }
-//         &__caption{
-//             font-size: 1.3em;
-//         }
-//     }
-//     @media (orientation:portrait){
-//         img{
-//             min-height: 77vw;
-//         }
-//     }
-// }
+.store-banner{
+    .contentWrapper{
+        position: absolute;
+        top: 0;
+        right: 50px;
+        color: #fff;
+        width: 400px;
+        height: 100%;
+    }
+    &__title{
+        font-size: 2.5em;
+        font-weight: 600;
+        line-height: 1.3;
+    }
+    &__caption{
+        font-size: 1.6em;
+        display: block;
+        margin: 20px 0;
+    }
+    @media (max-width: 767px){
+        .contentWrapper{
+            right: 0;
+            width: 100%;
+            padding: 0 20px;
+            justify-content:center;
+        }
+        &__title{
+            font-size: 1.6em;
+        }
+        &__caption{
+            font-size: 1.3em;
+        }
+    }
+    @media (orientation:portrait){
+        img{
+            min-height: 77vw;
+        }
+    }
+}
 
 // Home category
 
