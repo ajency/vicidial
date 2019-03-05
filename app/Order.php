@@ -123,7 +123,7 @@ class Order extends Model
             foreach ($subOrder->orderLines as $orderLine) {
                 $cancelSubOrder->orderLines()->attach($orderLine->id, ['type' => $cancelSubOrder->type]);
                 $order->orderLines()->attach($orderLine->id, ['type' => $order->type]);
-                $orderLine->state = 'cancel';
+                $orderLine->state = 'processing-cancel';
                 $orderLine->save();
             }
             CancelOdooOrder::dispatch($cancelSubOrder, $subOrder->id)->onQueue('odoo_order');
