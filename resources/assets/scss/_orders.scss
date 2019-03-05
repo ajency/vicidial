@@ -276,13 +276,16 @@
     font-weight: bold;
     letter-spacing: 0.2px;
     cursor: help;
-    &--shipped{
+    &--shipped,&--transit{
         background-color: #1e56d8;
     }
     &--cancel{
         background-color: #c51116;
     }
     &--confirmed{
+        background-color: #000;
+    }
+    &--delivered{
         background-color: #28a745;
     }
     &--processing{

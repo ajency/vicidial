@@ -20,63 +20,70 @@
 	</div>
 
 	<!-- Actual order info -->
-	<div class="p-md-3 p-2 mb-3 card shadow-sm">
-		<div *ngFor="let item of sub_order.items; let last = last">
-			<div class="row primary-info">
-				<div class="col-12 d-flex flex-column">
-					<!-- <div class="custom-checkbox">
-			            <input type="checkbox" class="facet-category custom-control-input" id="first">
-						<label class="custom-control-label f-w-4" for="first">
-			            </label>            
-					</div> -->
-					<app-item [item]="item" [showStatus]=showStatus ></app-item>
-					<div *ngIf="item.status" class="kss-order-status mt-2 w-100">
-						<!-- Bar status -->
-					    <ul *ngIf="item.status == 'processing' || item.status == 'placed' || item.status =='confirmed' || item.status =='shipped' || item.status == 'invoiced' " class="align-items-center d-flex justify-content-center"> 
-							<li [ngClass]="{'current' : item.status == 'placed' || item.status == 'processing', 'done' : item.status == 'confirmed' || item.status == 'shipped' || item.status == 'invoiced'}">
-								<span class="dots"></span>
-								<span class="status-name">Placed</span>
-							</li>
-							<li [ngClass]="{'current' : item.status == 'confirmed', 'done' : item.status == 'shipped' || item.status == 'invoiced'}">
-								<span class="dots"></span>
-								<span class="status-name">Confirmed</span>
-							</li>
-							<li [ngClass]="{'current' : item.status == 'shipped' || item.status == 'invoiced'}">
-								<span class="dots"></span>
-								<span class="status-name">Shipped</span>
-							</li>
-							<li>
-								<span class="dots"></span>
-								<span class="status-name">Delivered</span>
-							</li>
-						</ul>
-						<!-- Cancelled status -->
-						<div *ngIf="item.status == 'cancelled' || item.status == 'processing_cancel' " class="align-items-center d-flex orderState od-cancelled text-uppercase">
-						    <i class="fas fa-times-circle order-icon"></i>
-						    <span class="pl-2">Cancelled</span>
-						</div>
-						<!-- Canceled date -->
-					<!-- 	<div class="col-12">
-							<small>*Shipment was canceled on 28 December 2018</small>
-						</div> -->
-						<!-- Delivered status -->
-						<div *ngIf="item.status == 'delivered' " class="align-items-center d-flex orderState od-delivered text-uppercase">
-							<span>
-							    <i class="fas fa-check-circle order-icon"></i>
-							    <span class="pl-2">Delivered</span>
-							</span>
-							<!-- <a href="#" class="border-bottom cancel-order-btn kss-anchor mb-0 ml-3 pb-0 text-secondary text-uppercase">Return Item</a> -->
-						</div>
-						<!-- Canceled date -->
-						<!-- <div class="col-12">
-							<small>*Shipment was delivered on 28 December 2018</small>
-						</div> -->
+	<div class="p-md-3 p-2 mb-3 card shadow-sm" *ngFor="let item of sub_order.items; let last = last">
+		<div class="row primary-info">
+			<div class="col-12 d-flex flex-column">
+				<!-- <div class="custom-checkbox">
+		            <input type="checkbox" class="facet-category custom-control-input" id="first">
+					<label class="custom-control-label f-w-4" for="first">
+		            </label>            
+				</div> -->
+				<app-item [item]="item" [showStatus]=showStatus ></app-item>
+				<div *ngIf="item.status" class="kss-order-status mt-2 w-100">
+					<!-- Bar status -->
+				    <ul *ngIf="item.status == 'processing' || item.status == 'placed' || item.status =='confirmed' || item.status =='shipped' || item.status == 'invoiced' " class="align-items-center d-flex justify-content-center"> 
+						<li [ngClass]="{'current' : item.status == 'placed' || item.status == 'processing', 'done' : item.status == 'confirmed' || item.status == 'shipped' || item.status == 'invoiced'}">
+							<span class="dots"></span>
+							<span class="status-name">Placed</span>
+						</li>
+						<li [ngClass]="{'current' : item.status == 'confirmed', 'done' : item.status == 'shipped' || item.status == 'invoiced'}">
+							<span class="dots"></span>
+							<span class="status-name">Confirmed</span>
+						</li>
+						<li [ngClass]="{'current' : item.status == 'shipped' || item.status == 'invoiced'}">
+							<span class="dots"></span>
+							<span class="status-name">Shipped</span>
+						</li>
+						<li>
+							<span class="dots"></span>
+							<span class="status-name">Delivered</span>
+						</li>
+					</ul>
+					<!-- Cancelled status -->
+					<div *ngIf="item.status == 'cancelled' || item.status == 'processing_cancel' " class="align-items-center d-flex orderState od-cancelled text-uppercase">
+					    <i class="fas fa-times-circle order-icon"></i>
+					    <span class="pl-2">Cancelled</span>
 					</div>
-				</div>	
-			</div>								
-			<hr *ngIf="!last" class="mt-4 mb-4">
+					<!-- Canceled date -->
+				<!-- 	<div class="col-12">
+						<small>*Shipment was canceled on 28 December 2018</small>
+					</div> -->
+					<!-- Delivered status -->
+					<div *ngIf="item.status == 'delivered' " class="align-items-center d-flex orderState od-delivered text-uppercase">
+						<span>
+						    <i class="fas fa-check-circle order-icon"></i>
+						    <span class="pl-2">Delivered</span>
+						</span>
+						<!-- <a href="#" class="border-bottom cancel-order-btn kss-anchor mb-0 ml-3 pb-0 text-secondary text-uppercase">Return Item</a> -->
+					</div>
+					<!-- Canceled date -->
+					<!-- <div class="col-12">
+						<small>*Shipment was delivered on 28 December 2018</small>
+					</div> -->
+				</div>
+			</div>	
+		</div>								
+		<hr *ngIf="!last" class="my-3">
+		<div>
+		    <strong>Expected delivery: <span class="text-success">26th Feb</span></strong>
+			<div>Entered warehouse Bangalore,Karnataka Tue, 26th Feb 18 - 11:57am</div>
 		</div>
-		
+		<div>
+		    <strong>Processed on: <span class="">26th Feb</span></strong>
+		</div>
+		<div>
+		    <strong>Delivered on: <span class="">26th Feb</span></strong>
+		</div>
 	</div>
 </div>
 
