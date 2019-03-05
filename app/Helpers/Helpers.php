@@ -126,12 +126,15 @@ function sanitiseProductData($odooData)
         "product_att_fabric_type"          => $odooData["att_fabric_type"],
         "product_att_product_type"         => $odooData["att_product_type"],
         "product_att_other_attribute"      => $odooData["att_val_add1"],
+        'product_route_ids'                => $odooData['route_ids'],
         "product_att_ecom_sales"           => ($odooData["att_ecom_sales"] == "yes") ? true : false,
+        "product_vendor_id"                => ($odooData["vendor_id"]) ? $odooData["vendor_id"][0] : null,
         "product_vendor"                   => ($odooData["vendor_id"]) ? $odooData["vendor_id"][1] : null,
         'product_image_available'          => false,
         'product_metatag'                  => $metatags->map(function ($item, $key) {$item['name'] = trim($item['name']);return $item;})->pluck('name')->toArray(),
         'product_brand'                    => ($odooData['brand_id'] != false) ? $odooData['brand_id'][1] : 'KSS Fashion',
     ];
+    $index['product_is_dropshipping'] = in_array(config('product.dropshipping_route_id'), $index['product_route_ids']);
     $product_categories = explode('/', $index['product_categories']);
     $categories         = ['product_category_type', 'product_gender', 'product_age_group', 'product_subtype'];
     foreach ($categories as $category) {
@@ -160,6 +163,7 @@ function sanitiseVariantData($odooData, $attributeData)
         'variant_product_own'    => ($odooData['product_own']) ? 'private' : 'not private',
         'variant_style_no'       => $odooData['style_no'],
         'variant_active'         => $odooData['active'],
+        'variant_route_ids'      => $odooData['route_ids'],
         'variant_availability'   => false,
     ];
     $variantData['variant_discount']         = $odooData['lst_price'] - $odooData['sale_price'];
@@ -216,6 +220,9 @@ function generateFullTextForIndexing($productData, $variant)
         $productData['product_att_magento_display_name'],
         $productData['product_brand'],
     ];
+    if($productData['product_is_dropshipping']){
+        $textComponents[] = "dropshipping drop shipping";
+    }
     return implode(' ', $textComponents);
 }
 
@@ -255,6 +262,7 @@ function buildProductIndexFromOdooData($productData, $variantData)
         "product_subtype"                  => $productData['product_subtype'],
         "product_vendor"                   => $productData['product_vendor'],
         "product_att_ecom_sales"           => $productData['product_att_ecom_sales'],
+        "product_is_dropshipping"          => $productData['product_is_dropshipping'],
         "product_brand"                    => $productData['product_brand'],
         "product_color_id"                 => $variantData->first()['product_color_id'],
         "product_color_slug"               => str_slug($variantData->first()['product_color_name']),

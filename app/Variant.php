@@ -94,7 +94,7 @@ class Variant extends Model
      */
     public function getAvailability()
     {
-        $activeLocations = Location::where('use_in_inventory', true)->pluck('odoo_id')->toArray();
+        $activeLocations = Location::where('use_in_inventory', true)->pluck('id')->toArray();
         $invData         = $this->inventory;
         foreach ($invData as $inventory) {
             if ($inventory["quantity"] > 0 && in_array($inventory['location_id'], $activeLocations)) {
@@ -338,7 +338,7 @@ class Variant extends Model
     public function getQuantity()
     {
         $total           = 0;
-        $activeLocations = Location::where('use_in_inventory', true)->pluck('odoo_id')->toArray();
+        $activeLocations = Location::where('use_in_inventory', true)->pluck('id')->toArray();
         if (isset($this->inventory)) {
             foreach ($this->inventory as $inventory) {
                 if ($inventory["quantity"] > 0 && in_array($inventory['location_id'], $activeLocations) == true) {
@@ -358,11 +358,11 @@ class Variant extends Model
     {
         $quantity_arr    = array();
         $location_arr    = array();
-        $activeLocations = Location::where('use_in_inventory', true)->pluck('odoo_id')->toArray();
+        $activeLocations = Location::where('use_in_inventory', true)->pluck('id')->toArray();
         if (isset($this->inventory)) {
             foreach ($this->inventory as $inventory) {
                 if ($inventory["quantity"] > 0 && in_array($inventory['location_id'], $activeLocations)) {
-                    $location       = Location::where('odoo_id', $inventory["location_id"])->first();
+                    $location       = Location::where('id', $inventory["location_id"])->first();
                     $quantity_arr[] = array('warehouse' => $location->warehouse->name, 'location' => $location->name, 'quantity' => $inventory["quantity"]);
                 }
             }
