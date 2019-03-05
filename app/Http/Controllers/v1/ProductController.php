@@ -42,13 +42,18 @@ class ProductController extends Controller
         if ($params['ecom_sales'] == false) {
             $params['show_button'] = false;
         }
-
-        $facet_names = array();
-        foreach ($params['facet_value_pairs'] as $facet_name => $facets) {
-                foreach($facets as $facet) {
-                    array_push($posts,collect($facet)['display_name']);
-                    $facet_names[$facet_name]=["display_name" => collect($facet)['display_name'], "slug" => collect($facet)['slug']];
+        
+        $facet_names_for_url = array();
+        $facets = array();
+        $categories = array_keys(get_object_vars ($params['category']) );   
+        foreach ($params['facet_value_pairs'] as $facet_name => $all_facets) {
+            foreach($all_facets as $facet) {
+                if(in_array($facet_name, $categories ) ) {
+                    array_push($facets,["slug" => collect($facet)['slug']]);
                 }
+                array_push($posts,collect($facet)['display_name']);
+                $facet_names_for_url[$facet_name]=["display_name" => collect($facet)['display_name'], "slug" => collect($facet)['slug']];
+            } 
         }
        
         $related_search = array();
@@ -58,10 +63,10 @@ class ProductController extends Controller
         else {
             $price = setDefaultPrice(collect($params['variant_group'])[$params['selected_color_id']]->variants);
         }
-        array_push($related_search,["name" => 'More in ' . $facet_names['product_subtype']['display_name'], "href" => createUrl('list',[$facet_names['product_subtype']['slug']] )] );
-        array_push($related_search,["name" => 'More in ' . $facet_names['product_color_html']['display_name'] . ' ' . $facet_names['product_subtype']['display_name'], "href" => createUrl('list', [$facet_names['product_subtype']['slug']], [ "pf" => ['color' => [$facet_names['product_color_html']['slug']] ]] ) ]);
-        array_push($related_search,["name" => 'More in ' . $facet_names['product_subtype']['display_name'] . ' from ' . $facet_names['product_brand']['display_name'], "href" =>createUrl('list', [$facet_names['product_subtype']['slug'], $facet_names['product_brand']['slug']] ) ]);
-        array_push($related_search,["name" => 'More in ' . $facet_names['product_subtype']['display_name'] .' below ' . $price['sale_price'], "href" => createUrl('list', [$facet_names['product_subtype']['slug']], [ "rf" => ['price' => ['0TO'.$price['sale_price']] ]] ) ]);
+        array_push($related_search,["name" => 'More in ' . $facet_names_for_url['product_subtype']['display_name'], "href" => createUrl('list',[$facet_names_for_url['product_subtype']['slug']] )] );
+        array_push($related_search,["name" => 'More in ' . $facet_names_for_url['product_color_html']['display_name'] . ' ' . $facet_names_for_url['product_subtype']['display_name'], "href" => createUrl('list', [$facet_names_for_url['product_subtype']['slug']], [ "pf" => ['color' => [$facet_names_for_url['product_color_html']['slug']] ]] ) ]);
+        array_push($related_search,["name" => 'More in ' . $facet_names_for_url['product_subtype']['display_name'] . ' from ' . $facet_names_for_url['product_brand']['display_name'], "href" =>createUrl('list', [$facet_names_for_url['product_subtype']['slug'], $facet_names_for_url['product_brand']['slug']] ) ]);
+        array_push($related_search,["name" => 'More in ' . $facet_names_for_url['product_subtype']['display_name'] .' below ' . $price['sale_price'], "href" => createUrl('list', [$facet_names_for_url['product_subtype']['slug']], [ "rf" => ['price' => ['0TO'.$price['sale_price']] ]] ) ]);
         
         $params['related_search'] = $related_search;
 
@@ -79,12 +84,11 @@ class ProductController extends Controller
         setSEO('product', $params);
 
         $similar_cat_params=[];
-        $facets = Facet::select('slug')->whereIn('facet_value', array_values((array)$params["category"]))->get()->toArray();
         $similar_cat_params['categories'] = array_column($facets, 'slug');
         $search_object_arr = build_search_object($similar_cat_params);
-
+        
         $search_results = [];
-
+        
         $search_object = $search_object_arr["search_result"];
 
         $search_results["slug_search_result"] = $search_object_arr["slug_search_result"];
