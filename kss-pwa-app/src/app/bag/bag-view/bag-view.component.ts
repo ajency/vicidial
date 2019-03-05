@@ -266,8 +266,10 @@ export class BagViewComponent implements OnInit {
 
   viewOrders(){
       // this.router.navigateByUrl('account/my-orders');
+      this.appservice.loadAccountFromAngular = true;
       let url = window.location.href.split("#")[0] + '#/account/my-orders';
-      history.pushState({account : true}, 'account', url);
+      history.pushState({bag : true}, 'account', url);
+      this.appservice.loadCartTrigger();
   }
 
   checkLoginStatus(){
