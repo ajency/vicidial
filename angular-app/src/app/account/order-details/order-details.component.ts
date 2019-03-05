@@ -82,18 +82,6 @@ export class OrderDetailsComponent implements OnInit {
     })
   }
 
-  formatData(order){
-     order.sub_orders.forEach((sub_order)=>{
-      sub_order.items.forEach((item)=>{
-        if(item.price_mrp != item.price_final)
-          item.off_percentage = Math.round(((item.price_mrp - item.price_final) / (item.price_mrp )) * 100) + '% OFF';
-        item.href = '/' + item.product_slug +'/buy?size='+item.size;
-        item.images = Array.isArray(item.images) ? ['/img/placeholder.svg', '/img/placeholder.svg', '/img/placeholder.svg'] : Object.values(item.images);
-      })
-    })
-    return order;
-  }
-
   closeWidget(){
     let url = window.location.href.split("#")[0];
     history.replaceState({}, 'account', url);

@@ -22,14 +22,5 @@
 				</span>
 			</div>
 		</div>
-		<!-- Refund initiated text -->
-		<!-- <div *ngIf="showRefundStatus && item.status && item.status == 'cancelled' " class="text-success mt-1">
-			Refund initiated
-		</div> -->
-		<div *ngIf="showStatus">
-			<span *ngIf="item.state == 'draft' " class="order-label order-label--processing" data-toggle="tooltip" data-placement="top" title="Your order has been placed and we are verifying item availability in the inventory.">Processing</span>
-			<span *ngIf="item.state == 'sale' " class="order-label order-label--confirmed" data-toggle="tooltip" data-placement="top" title="Stock for the items has been verified and your items will be shipped out soon.">Confirmed</span>
-			<span *ngIf="item.state == 'cancel' " class="order-label" data-toggle="tooltip" data-placement="top" title="Item is cancelled an refund is initiated">Cancelled</span>
-		</div>
 	</div>
 </div>

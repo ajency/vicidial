@@ -52,7 +52,7 @@
 							</div>
 						</div>
 						<div class="collapse" [ngClass]="{'show': orders.length == 1}" id=collapse-{{getindex}} data-parent="#accordionExample">
-							<app-order [sub_orders]="order.sub_orders" [showStatus]=false></app-order>
+							<app-order [items]="order.items" [showStatus]=false></app-order>
 							<!-- Action to cancel/feedback -->
 							<!-- <div class="border-top mb-5 ml-3 mt-4 pt-2 pt-3 pt-4 text-center">
 								<a href="#" class="btn cancel-order-btn">Cancel Order</a>
