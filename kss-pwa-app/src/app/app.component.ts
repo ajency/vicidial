@@ -96,12 +96,14 @@ export class AppComponent implements OnInit {
         $('#cd-shadow-layer').addClass('is-visible');
         $("body").addClass("hide-scroll");
         setTimeout(()=>{
-          this.loadCartFromAngular = true;
+          this.loadCartFromAngular = true;          
         },500)      
       }
       else{
         this.loadCart = true;
-      }  
+      }
+      $("app-account").addClass('d-none');
+      $("app-bag-view").removeClass('d-none');  
     }
     else if(window.location.href.includes("#/account")){
       if(this.appservice.loadAccountFromAngular){
@@ -115,7 +117,9 @@ export class AppComponent implements OnInit {
       }
       else{
         this.loadAccount = true;
-      } 
+      }
+      $("app-bag-view").addClass('d-none');
+      $("app-account").removeClass('d-none'); 
     }  
   }
 
