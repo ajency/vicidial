@@ -5,6 +5,7 @@ namespace App\Http\Controllers\v2;
 use App\Address;
 use App\Cart;
 use App\Http\Controllers\Controller;
+use App\Jobs\OrderLineStatus;
 use App\Jobs\SubOrderStatus;
 use App\Order;
 use App\User;
@@ -141,6 +142,11 @@ class OrderController extends Controller
     public static function updateSubOrderStatus($params)
     {
         SubOrderStatus::dispatch($params["subOrderId"], $params["state"], $params["is_invoiced"], $params["external_id"])->onQueue('odoo_order');
+    }
+
+    public static function updateOrderLineStatus($params)
+    {
+        OrderLineStatus::dispatch($params["lineIds"], $params["status"])->onQueue('odoo_order');
     }
 
     public function listOrders(Request $request)

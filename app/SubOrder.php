@@ -3,6 +3,7 @@
 namespace App;
 
 use Ajency\ServiceComm\Comm\Sync;
+use App\OrderLine;
 use App\Variant;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;

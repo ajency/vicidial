@@ -11,6 +11,10 @@ return [
 			'model' => 'App\Http\Controllers\v1\OrderController',
 			'function' => 'updateSubOrderStatus',
 		],
+		'updateOrderLineStatus' => [
+			'model' => 'App\Http\Controllers\v1\OrderController',
+			'function' => 'updateOrderLineStatus',
+		],
 		'inventoryElasticUpdate' => [
 			'model' => 'App\Variant',
 			'function' => 'updateInventory',
