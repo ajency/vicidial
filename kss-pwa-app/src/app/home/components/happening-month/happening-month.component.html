@@ -1,6 +1,6 @@
 <div class="happening-month text-center col-block kss-extension" attr.static_element-id="{{theme.sequence}}" static_element-display_type="Theme of the Month" attr.static_element-type="{{theme.type}}" page_slug="home">
 	<a href="{{theme.element_data.image.href}}" class="d-block">
-		<picture>  
+		<picture>
 		  <source media="(min-width: 992px)"
 				  [attr.defaultImage]="'/assets/img/transparent.png'"
 				  [attr.lazyLoad]="createDataSrcSet(theme.images.landscape['3x'], '1800w', theme.images.landscape['2x'], '1200w', theme.images.landscape['1x'], '600w')"
@@ -8,14 +8,12 @@
 
 		  <source media="(max-width: 991px)"
 				  [attr.defaultImage]="'/assets/img/transparent.png'"
-				  [attr.lazyLoad]="createDataSrcSet(theme.images.portrait['3x'], '1200w', theme.images.portrait['2x'], '700w', theme.images.portrait['1x'], '400w')"	
+				  [attr.lazyLoad]="createDataSrcSet(theme.images.portrait['3x'], '1200w', theme.images.portrait['2x'], '700w', theme.images.portrait['1x'], '400w')"
 		          sizes="100vw">
-		  <img 
-		  	[offset]=500
-			[defaultImage]="'/assets/img/transparent.png'"
-			[lazyLoad]="'https://via.placeholder.com/600x300'"
-			class="img-fluid w-100 img-holder" 
-		    alt="{{theme.element_data.image.img_alt}}" 
+		  <img
+			src="/assets/img/transparent.png"
+			class="img-fluid w-100 img-holder"
+		    alt="{{theme.element_data.image.img_alt}}"
 		    title="{{theme.element_data.image.title}}">
 		</picture>
 		<span class="happening-month__text text-uppercase explore-text">+Explore</span>

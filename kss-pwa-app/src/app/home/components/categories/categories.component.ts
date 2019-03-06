@@ -11,7 +11,7 @@ import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 export class CategoriesComponent implements OnInit {
 
 	@Input() categories : any;
-	catFlag : boolean = false;  
+	catFlag : boolean = false;
   	isSmallScreen : any;
   	toggleButton = "SHOW MORE";
   constructor(private breakpointObserver : BreakpointObserver) {
@@ -49,7 +49,7 @@ export class CategoriesComponent implements OnInit {
 
   categoryHeight(){
     var catHeight = document.getElementById('cat-1').clientHeight;
-    var box_height = (catHeight + 64) * 4;
+    var box_height = (catHeight + 62) * 4;
     document.getElementById('home-category').style.height = box_height + 'px';
 	   document.getElementById('home-category').classList.add('overflow-h');
     this.catFlag = true;

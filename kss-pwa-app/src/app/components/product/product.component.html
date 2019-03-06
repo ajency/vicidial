@@ -10,7 +10,8 @@
             [lazyLoad]="createDataSrcSet(product.products[0].images['1x'], '270w', product.products[0].images['2x'], '540w')"
             class="card-img-top"
             title="{{product.products[0].title}}"
-            alt="{{product.products[0].title}}">
+            alt="{{product.products[0].title}}"
+            sizes="(min-width: 1200px) 270px, (min-width: 992px) 226px, (max-width: 991px) 38vw">
             <ng-template #noImage>
 	            <img
               [defaultImage]="'/img/placeholder.svg'"

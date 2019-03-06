@@ -386,14 +386,14 @@ footer .bl-1{
     .kss-price{
         margin-top: -1em;
         position: absolute;
-        bottom: 3px;
+        bottom: 8px;
         left: 15px;
-        color: #c30e13;
+        color: #171717;
         @media (max-width: 767px){
-            width: 100%;
-            // text-align: center;
-            margin: 0 -15px;
-            bottom: -5px;
+        //     width: 100%;
+        //     // text-align: center;
+        //     margin: 0 -15px;
+            bottom: 4px;
         }
     }
     .product-card{
