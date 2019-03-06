@@ -138,18 +138,15 @@ $(document).ready(function(){
                 // $('.kss-alert').addClass('kss-alert--success');
                 // $('.kss-alert').addClass('is-open');
                 $('.cd-add-to-cart').removeClass('cartLoader');
-                setTimeoutVariable();
-                variant_id = '';                        
+                setTimeoutVariable();                       
             },
             error: function (request, status, error) {
                 // console.log("Check ==>",request);
                 if(request.status == 401){
                     userLogout(request);
-                    variant_id = '';
                 }
                 else if(request.status == 0){
                     showErrorPopup(request);
-                    variant_id = '';
                 }
                 else if(!isLoggedInUser() && request.status == 403){
                     addToCart(variant_id);
@@ -157,8 +154,9 @@ $(document).ready(function(){
                 else{
                     if(isLoggedInUser() && request.status == 400 || request.status == 403)
                         getNewCartId(request);
-                    else
+                    else{
                         showErrorPopup(request);
+                    }
                 }
             }
         });
@@ -201,7 +199,6 @@ $(document).ready(function(){
             },
             error: function (request, status, error) {
                 showErrorPopup(request)
-                variant_id = '';
             }
         });
     }
@@ -222,7 +219,6 @@ $(document).ready(function(){
             },
             error: function (request, status, error) {
                 showErrorPopup(request)
-                variant_id = '';
             }
         });
     }
