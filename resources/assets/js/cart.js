@@ -2,7 +2,7 @@ var add_to_cart_failed = false;
 var add_to_cart_failure_message = '';
 var add_to_cart_clicked = false;
 var add_to_cart_completed = false;
-
+var variant_id = '';
 // Block scope
 const isMobile = isMobileScreen();
 
@@ -77,7 +77,8 @@ $(document).ready(function(){
             let url = window.location.href.split("#")[0] + '#/bag';
             window.location = url;
 
-            addToCart();
+            variant_id = $('input[type=radio][name=kss-sizes]:checked')[0].dataset['variant_id'];
+            addToCart(variant_id);
             $('#size-modal').modal('hide');
             $('.kss_sizes .radio-input').prop('checked', false);
             // if(isMobile){
@@ -109,8 +110,8 @@ $(document).ready(function(){
         window.location = url;
     });
     
-    function addToCart(){
-        var var_id = $('input[type=radio][name=kss-sizes]:checked')[0].dataset['variant_id'];
+    function addToCart(var_id){
+        // var var_id = $('input[type=radio][name=kss-sizes]:checked')[0].dataset['variant_id'];
         fbTrackAddToCart(var_id);
         var url = isLoggedInUser() ? ("/api/rest/v1/user/cart/"+getCookie('cart_id')+"/insert") : ("/rest/v1/anonymous/cart/insert")
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
@@ -137,16 +138,21 @@ $(document).ready(function(){
                 // $('.kss-alert').addClass('kss-alert--success');
                 // $('.kss-alert').addClass('is-open');
                 $('.cd-add-to-cart').removeClass('cartLoader');
-                setTimeoutVariable();                        
+                setTimeoutVariable();
+                variant_id = '';                        
             },
             error: function (request, status, error) {
                 // console.log("Check ==>",request);
-                if(request.status == 401)
+                if(request.status == 401){
                     userLogout(request);
-                else if(request.status == 0)
+                    variant_id = '';
+                }
+                else if(request.status == 0){
                     showErrorPopup(request);
+                    variant_id = '';
+                }
                 else if(!isLoggedInUser() && request.status == 403){
-                    addToCart();
+                    addToCart(variant_id);
                 }
                 else{
                     if(isLoggedInUser() && request.status == 400 || request.status == 403)
@@ -189,12 +195,13 @@ $(document).ready(function(){
             success: function (data) {               
                 document.cookie = "cart_id=" + data.cart_id + ";path=/";
                 if(data.cart_type == 'cart')
-                    addToCart(); 
+                    addToCart(variant_id); 
                 else
                     startFresh(request)                    
             },
             error: function (request, status, error) {
                 showErrorPopup(request)
+                variant_id = '';
             }
         });
     }
@@ -211,10 +218,11 @@ $(document).ready(function(){
             dataType: 'JSON',
             success: function (data) {
                 document.cookie = "cart_id=" + data.cart_id + ";path=/";
-                addToCart();            
+                addToCart(variant_id);            
             },
             error: function (request, status, error) {
                 showErrorPopup(request)
+                variant_id = '';
             }
         });
     }
