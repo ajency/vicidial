@@ -1,5 +1,5 @@
 import { Component, OnInit,  Input, OnChanges, Output } from '@angular/core';
-import * as $ from 'jquery';
+declare var $ : any;
 import { AppServiceService } from '../../service/app-service.service';
 
 @Component({
