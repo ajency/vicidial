@@ -162,7 +162,7 @@ export class AccountComponent implements OnInit {
       if(!this.appservice.isLoggedInUser())
         this.displayModal();
     }
-    else if(window.location.href.endsWith('#/account/my-orders')){
+    else if(window.location.href.endsWith('#/account/my-orders') && this.appservice.isLoggedInUser()){
       this.openMyOrders = true;
       this.openMyProfile = false;
       this.openMyAddresses = false;

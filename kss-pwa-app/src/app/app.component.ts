@@ -91,11 +91,12 @@ export class AppComponent implements OnInit {
 
   loadCartModule(){
     console.log("loadCart function");
-    if(window.location.pathname == "/newhome")
-      this.updateOnHashChange();
-    else{
-      this.loadModules();
-    }  
+    // if(window.location.pathname == "/newhome")
+    //   this.updateOnHashChange();
+    // else{
+    //   this.loadModules();
+    // } 
+     this.loadModules();
   }
 
   listenToHashChange(){
@@ -118,16 +119,20 @@ export class AppComponent implements OnInit {
   updateOnHashChange(){
       if(window.location.href.endsWith('#/') || window.location.href.endsWith('#') || (!window.location.href.includes("#")) ){
           this.appservice.closeCart();
-        }
-      if(window.location.href.endsWith('#/bag') || window.location.href.endsWith('#/bag/shipping-address') || window.location.href.endsWith('#/bag/shipping-summary')){
-        this.appservice.updateCartViewTrigger();
-        this.loadModules();
+      }
+      else{
+        this.loadModules()
       }
 
-      if(window.location.href.endsWith('#/account') || window.location.href.endsWith('#/account/my-orders') || window.location.href.includes('#/account/my-orders/')){
-        this.appservice.updateAccountViewTrigger();
-        this.loadModules();
-      }
+      // if(window.location.href.endsWith('#/bag') || window.location.href.endsWith('#/bag/shipping-address') || window.location.href.endsWith('#/bag/shipping-summary')){
+      //   this.appservice.updateCartViewTrigger();
+      //   this.loadModules();
+      // }
+
+      // if(window.location.href.endsWith('#/account') || window.location.href.endsWith('#/account/my-orders') || window.location.href.includes('#/account/my-orders/')){
+      //   this.appservice.updateAccountViewTrigger();
+      //   this.loadModules();
+      // }
   }
 
   loadModules(){
@@ -144,6 +149,7 @@ export class AppComponent implements OnInit {
         else{
           this.loadCart = true;
         }
+        this.appservice.updateCartViewTrigger();
         $("app-account").addClass('d-none');
         $("app-bag-view").removeClass('d-none');  
       }
@@ -160,6 +166,7 @@ export class AppComponent implements OnInit {
         else{
           this.loadAccount = true;
         }
+        this.appservice.updateAccountViewTrigger();
         $("app-bag-view").addClass('d-none');
         $("app-account").removeClass('d-none'); 
       }
