@@ -5,6 +5,7 @@ namespace App\Http\Controllers\v1;
 use App\Http\Controllers\Controller;
 use App\StaticElement;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class StaticElementController extends Controller
 {
@@ -28,7 +29,15 @@ class StaticElementController extends Controller
         }
 
         if (isset($params['published'])) {
-            $fetchedData = StaticElement::fetch($params['page_slug'], $data, $params['published']);
+            if ($params['published'] && !isset($params['type'])) {
+                $key = 'static_element_'.$params['page_slug'].'_published';
+                $fetchedData = Cache::rememberForever($key, function () {
+                    return StaticElement::fetch($params['page_slug'], $data, $params['published']);
+                });
+            } else {
+                $fetchedData = StaticElement::fetch($params['page_slug'], $data, $params['published']);
+            }
+
         } else {
             $fetchedData = StaticElement::fetch($params['page_slug'], $data);
         }
@@ -87,9 +96,9 @@ class StaticElementController extends Controller
         } else {
             $imageurl = $staticElement->resizeStaticImages($photo_id, $preset, $depth, $filename);
         }
-        if(config('ajfileupload.use_cdn') &&config('ajfileupload.cdn_url') ){
-            $tempUrl = parse_url($imageurl);
-            $imageurl =  config('ajfileupload.cdn_url') . $tempUrl['path'];
+        if (config('ajfileupload.use_cdn') && config('ajfileupload.cdn_url')) {
+            $tempUrl  = parse_url($imageurl);
+            $imageurl = config('ajfileupload.cdn_url') . $tempUrl['path'];
         }
         return $imageurl;
     }
