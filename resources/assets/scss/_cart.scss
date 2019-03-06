@@ -85,8 +85,8 @@ $L : 1200px;
 
 
 // }
-// #cd-cart, #cd-my-account {
-//     right: -100%;
+#cd-cart, #cd-my-account {
+    right: -100%;
 //     background: #FFF;
 //     @include transition(right .5s ease);
 //     &.speed-in {
@@ -167,7 +167,7 @@ $L : 1200px;
 //             right: 2em;
 //         }
 //     }
-// }
+}
 
 // Safari white screen issue fix
 // @media (min-width: 992px){
