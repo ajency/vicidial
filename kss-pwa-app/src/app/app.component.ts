@@ -27,6 +27,7 @@ export class AppComponent implements OnInit {
   loadCartFromAngular : boolean = false;
   loadAccount : boolean = false;
   loadAccountFromAngular : boolean = false;
+  hideLoginListner : Subscription;
   constructor(private connectionService: ConnectionService,
               private loc : PlatformLocation,
               private appservice : AppServiceService) { 
@@ -62,6 +63,7 @@ export class AppComponent implements OnInit {
 
     this.loadCartListner = this.appservice.listenToLoadCartTrigger().subscribe(()=>{  this.loadCartModule() });
     this.loginListner = this.appservice.listenToShowLoginPopupTriggerr().subscribe(()=>{ this.openLoginModal() })
+    this.hideLoginListner = this.appservice.listenToHideLoginPopupTriggerr().subscribe(()=>{ this.hideLoginModal() })
   }
 
   displayToast(){
@@ -106,6 +108,11 @@ export class AppComponent implements OnInit {
   openLoginModal(){
     console.log("openLoginModal function");
     this.displayLogin = true;
+  }
+
+  hideLoginModal(){
+    console.log("hideLoginModal function");
+    this.displayLogin = false; 
   }
 
   updateOnHashChange(){

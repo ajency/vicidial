@@ -29,7 +29,7 @@ export class BagViewComponent implements OnInit {
   enterCoupon = false;
   cart : any = {};
   sessionCheckInterval : any;
-  cartOpen = false;
+  cartOpenOnTrigger = false;
   reloadSubscription: Subscription;
   loadSubscription: Subscription;
   cartItemOutOfStock : boolean = false;
@@ -64,7 +64,7 @@ export class BagViewComponent implements OnInit {
 
   reloadCart(){
     console.log("listened to the add to cart trigger");
-    this.cartOpen = true;
+    this.cartOpenOnTrigger = true;
     add_to_cart_clicked = false;
     this.fetchCartDataOnAddToCartSuccess();
     this.openShippingAddress = false;
@@ -73,7 +73,7 @@ export class BagViewComponent implements OnInit {
 
   loadCart(){
     console.log("listened to open cart trigger");
-    this.cartOpen = true;    
+    this.cartOpenOnTrigger = true;    
     this.getCartData();
     this.openShippingAddress = false;
     this.openShippingSummary = false;
@@ -90,7 +90,7 @@ export class BagViewComponent implements OnInit {
 
   ngOnInit() {
     console.log("ngOnInit cart component", add_to_cart_clicked);        
-    this.cartOpen = true;
+    // this.cartOpenOnTrigger = true;
     $('.ng-cart-loader').removeClass('cart-loader')
     if(add_to_cart_clicked){      
       this.fetchCartDataOnAddToCartSuccess();
@@ -559,7 +559,10 @@ export class BagViewComponent implements OnInit {
     if(window.location.href.endsWith('#/bag')){
       this.openShippingAddress = false;
       this.openShippingSummary = false;
-      this.fetchCartDataFromServer();
+      if(this.cartOpenOnTrigger)
+        this.cartOpenOnTrigger = false;
+      else
+        this.fetchCartDataFromServer();
     }
     else if(window.location.href.endsWith('#/bag/shipping-address')){
       this.openShippingSummary = false;

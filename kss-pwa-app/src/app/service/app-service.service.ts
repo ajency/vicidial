@@ -35,7 +35,10 @@ export class AppServiceService {
   loadCartFromAngular : boolean = false;
   loadAccountFromAngular : boolean = false;
   private updateCartView = new Subject<any>();
+
   private showLoginPopup = new Subject<any>();
+  private hideLoginPopup = new Subject<any>();
+
   private updateAccountView = new Subject<any>();
   order_txn_no : any;
   constructor(	private router: Router,
@@ -120,6 +123,14 @@ export class AppServiceService {
 
   listenToShowLoginPopupTriggerr() : Observable<any> {    
     return this.showLoginPopup.asObservable();
+  }
+
+  hideLoginPopupTrigger(){
+    this.hideLoginPopup.next();
+  }
+
+  listenToHideLoginPopupTriggerr() : Observable<any> {    
+    return this.hideLoginPopup.asObservable();
   }
 
   updateAccountViewTrigger(){

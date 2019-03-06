@@ -43,6 +43,7 @@ export class LoginComponent implements OnInit {
               private zone : NgZone) { }
 
   ngOnInit() {
+    console.log("ngOnInit login component");
     this.displaySkipOTP = this.appservice.displaySkipOTP;
   	if(!this.appservice.userInfo){
   		this.displayModal();	
@@ -177,6 +178,7 @@ export class LoginComponent implements OnInit {
     $("#cd-cart").css("overflow", "auto");
     $('.modal-backdrop').remove();
     $('body').removeClass('modal-open');
+    this.appservice.hideLoginPopupTrigger();
   }
 
   resetOTP(){
