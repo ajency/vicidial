@@ -31,4 +31,9 @@ class HomeController extends Controller
     {
         return view('home_new');
     }
+
+    public function newdraft(Request $request)
+    {
+        return view('draft_new');
+    }
 }

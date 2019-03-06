@@ -3,6 +3,8 @@ import { ApiServiceService } from '../../service/api-service.service';
 import { AppServiceService } from '../../service/app-service.service';
 // import menu from '../../../assets/data/menu.json';
 
+declare var published_home: any;
+
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
@@ -33,7 +35,10 @@ export class HomePageComponent implements OnInit {
   	})
 
     url = isDevMode() ? "https://demo8558685.mockable.io/get-home-page-elements-test" : "/api/rest/v1/test/get-page-element-dummy?page_slug=home";
-    // url = "https://demo8558685.mockable.io/get-home-page-elements-test";
+
+    console.log("published_home ==>", published_home);
+    if(published_home)
+      url = url + '&published=true';
     this.apiService.request(url,'get',{},{}).then((data)=>{
       console.log("home page data ==>", data);
       this.homePageElements = data;

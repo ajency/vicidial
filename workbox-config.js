@@ -7,7 +7,7 @@ module.exports = {
     "img/kss_favicon.png"
   ],
   "templatedUrls" : {
-        '/': ['../resources/views/home_new.blade.php']
+        '/newhome': ['../resources/views/home_new.blade.php']
       },
   "swDest": "public/service-worker.js",
   "swSrc": "service-worker-src.js"
