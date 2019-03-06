@@ -17,6 +17,7 @@ export class HomePageComponent implements OnInit {
   storiesLoaded : boolean = false;
   showTrendingSection : boolean = false;
   showStories : boolean = false;
+  showLoader : boolean = true;
   constructor(private apiService: ApiServiceService,
               private appservice : AppServiceService) {
   }
@@ -41,6 +42,7 @@ export class HomePageComponent implements OnInit {
       url = url + '&published=true';
     this.apiService.request(url,'get',{},{}).then((data)=>{
       console.log("home page data ==>", data);
+      this.showLoader = false;
       this.homePageElements = data;
       // setTimeout(()=>{
         this.loadCart();
@@ -48,7 +50,8 @@ export class HomePageComponent implements OnInit {
     })
     .catch((error)=>{
       console.log("error in get-home-page-element api ==>", error);
-      this.homePageElements = true;
+      this.showLoader = false;
+      // this.homePageElements = true;
     })
   }
 

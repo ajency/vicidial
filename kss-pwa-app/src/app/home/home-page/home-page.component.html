@@ -1,6 +1,6 @@
 <app-header [menu]="menuObject"></app-header>
 
-<app-loader *ngIf="!homePageElements"></app-loader>
+<app-loader *ngIf="showLoader"></app-loader>
 
 <div *ngIf="homePageElements" class="pb-md-3">
 
@@ -44,7 +44,7 @@
   </section>
 
   <!-- Mobile products -->
-  <div app-mobile-products></div>
+  <!-- <div app-mobile-products></div> -->
 
   <!-- Brands -->
   <div *ngIf="homePageElements.brand" app-brands [brands]="homePageElements.brand"></div>
@@ -63,9 +63,11 @@
     <app-stories *ngIf="homePageElements.stories" [stories]="homePageElements.stories"> </app-stories>
   <!-- </div> -->
   
-  <!-- Back to top -->
-  <div app-back-to-top></div>
-  
-  <app-footer> </app-footer> 
-  
 </div>
+
+<app-no-connection *ngIf="!homePageElements && !showLoader"></app-no-connection>
+
+<!-- Back to top -->
+<div app-back-to-top></div>
+
+<app-footer> </app-footer> 
