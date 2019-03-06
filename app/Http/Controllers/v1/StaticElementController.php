@@ -31,7 +31,7 @@ class StaticElementController extends Controller
         if (isset($params['published'])) {
             if ($params['published'] && !isset($params['type'])) {
                 $key = 'static_element_'.$params['page_slug'].'_published';
-                $fetchedData = Cache::rememberForever($key, function () {
+                $fetchedData = Cache::rememberForever($key, function () use ($params,$data) {
                     return StaticElement::fetch($params['page_slug'], $data, $params['published']);
                 });
             } else {
