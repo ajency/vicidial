@@ -282,30 +282,5 @@ class SubOrder extends Model
             $orderLine->state = $state;
             $orderLine->save();
         }
-
-        if ($state_old == 'draft' && $state == 'sale') {
-            $itemCount = $subOrder->orderLines->count();
-            $name      = $subOrder->orderLines->first()->name;
-            if (strlen($name) > 25) {
-                $name = substr($name, 0, 25) . '...';
-            }
-            $order = $subOrder->order;
-            $link  = ($order->cart->user->verified != null) ? url('/#/account/my-orders/') . '/' . $order->txnid : url('/my/order/details') . '?ordertoken=' . $order->token;
-            switch ($itemCount) {
-                case '1':
-                    $message = 'Confirmed: ' . $name . ' has been processed and will be shipped shortly. Track your order at: ' . $link;
-                    break;
-                case '2':
-                    $message = 'Confirmed: ' . $name . ' & 1 other item have been processed and will be shipped shortly. Track your order at: ' . $link;
-                    break;
-                default:
-                    $message = 'Confirmed: ' . $name . ' & ' . ($itemCount - 1) . ' other items have been processed and will be shipped shortly. Track your order at: ' . $link;
-                    break;
-            }
-            sendSMS('order-confirmed', [
-                'to'      => $order->cart->user->phone,
-                'message' => $message,
-            ]);
-        }
     }
 }

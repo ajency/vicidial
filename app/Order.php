@@ -183,7 +183,7 @@ class Order extends Model
         }
 
         foreach ($this->orderLines as $orderLine) {
-            if ($orderLine->state != 'draft' && $orderLine->state != 'sale') {
+            if (($orderLine->state != 'draft' && $orderLine->state != 'sale') || $orderLine->shipment_status != null) {
                 return false;
             }
         }
