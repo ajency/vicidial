@@ -115,7 +115,7 @@
                               Size: {{$item['size']}} | Qty: {{$item['quantity']}}
                            </p>
                            @if(! empty($sub_order['store_address']))
-                           <p style="margin-top: 10px;color: #777676;font-size: 14px;line-height: 18px;">Sold by: {{$sub_order['store_address']['store_name']}} - {{$sub_order['store_address']['locality']}}, {{$sub_order['store_address']['city']}}</p>
+                           <p style="margin-top: 10px;color: #777676;font-size: 14px;line-height: 18px;">Sold by: {{$sub_order['store_address']['store_name']}}</p>
                             @endif
                         </td>
                         <td class="m_-1366001226154905177m_-6808368826616678290m_8600340093737608931cell-content m_-1366001226154905177m_-6808368826616678290m_8600340093737608931align-right" style="text-align:right">
