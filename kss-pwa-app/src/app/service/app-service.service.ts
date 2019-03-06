@@ -67,6 +67,7 @@ export class AppServiceService {
 	    document.getElementsByClassName("modal-backdrop")[0].remove();
     $('#cd-cart').removeClass('overflow-h');
     $('#shipping-address-container').removeClass('slide-show');
+    this.hideLoginPopupTrigger();
   }
 
   addToCartClicked() {

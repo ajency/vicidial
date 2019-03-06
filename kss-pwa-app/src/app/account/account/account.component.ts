@@ -93,9 +93,12 @@ export class AccountComponent implements OnInit {
   redirectToReturnUrl(){
     this.userInfo = this.appservice.userInfo;
     setTimeout(()=>{
-      if(this.returnUrl){
+      if(window.location.href.includes('#/account/my-orders/')){
         // this.router.navigateByUrl(this.returnUrl, { replaceUrl: true });
-        console.log("redirect required");
+        console.log("redirect to order details");
+        this.openOrderDetails = true;
+        this.showAccount = false;
+        
       }    
       else{
         if(!this.appservice.userInfo)
@@ -156,6 +159,8 @@ export class AccountComponent implements OnInit {
       this.openMyAddresses = false;
       this.showAccount = true;
       this.openOrderDetails = false;
+      if(!this.appservice.isLoggedInUser())
+        this.displayModal();
     }
     else if(window.location.href.endsWith('#/account/my-orders')){
       this.openMyOrders = true;
