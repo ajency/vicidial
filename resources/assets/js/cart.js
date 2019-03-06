@@ -2,7 +2,6 @@ var add_to_cart_failed = false;
 var add_to_cart_failure_message = '';
 var add_to_cart_clicked = false;
 var add_to_cart_completed = false;
-var variant_id = '';
 // Block scope
 const isMobile = isMobileScreen();
 
@@ -77,10 +76,9 @@ $(document).ready(function(){
             let url = window.location.href.split("#")[0] + '#/bag';
             window.location = url;
 
-            variant_id = $('input[type=radio][name=kss-sizes]:checked')[0].dataset['variant_id'];
-            addToCart(variant_id);
-            $('#size-modal').modal('hide');
-            $('.kss_sizes .radio-input').prop('checked', false);
+            addToCart();
+            // $('#size-modal').modal('hide');
+            // $('.kss_sizes .radio-input').prop('checked', false);
             // if(isMobile){
             //     $('.add-bag-btn .cd-add-to-cart').html(XSsizemsg);
             // }
@@ -110,8 +108,8 @@ $(document).ready(function(){
         window.location = url;
     });
     
-    function addToCart(var_id){
-        // var var_id = $('input[type=radio][name=kss-sizes]:checked')[0].dataset['variant_id'];
+    function addToCart(){
+        var var_id = $('input[type=radio][name=kss-sizes]:checked')[0].dataset['variant_id'];
         fbTrackAddToCart(var_id);
         var url = isLoggedInUser() ? ("/api/rest/v1/user/cart/"+getCookie('cart_id')+"/insert") : ("/rest/v1/anonymous/cart/insert")
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
@@ -125,6 +123,8 @@ $(document).ready(function(){
             data: data,
             dataType: 'JSON',
             success: function (data) {
+                $('#size-modal').modal('hide');
+                $('.kss_sizes .radio-input').prop('checked', false);
                 $('.cd-add-to-cart .btn-icon').hide();
                 $('.cd-add-to-cart .btn-contents').show();
                 console.log('second');
@@ -149,7 +149,7 @@ $(document).ready(function(){
                     showErrorPopup(request);
                 }
                 else if(!isLoggedInUser() && request.status == 403){
-                    addToCart(variant_id);
+                    addToCart();
                 }
                 else{
                     if(isLoggedInUser() && request.status == 400 || request.status == 403)
@@ -193,7 +193,7 @@ $(document).ready(function(){
             success: function (data) {               
                 document.cookie = "cart_id=" + data.cart_id + ";path=/";
                 if(data.cart_type == 'cart')
-                    addToCart(variant_id); 
+                    addToCart(); 
                 else
                     startFresh(request)                    
             },
@@ -215,7 +215,7 @@ $(document).ready(function(){
             dataType: 'JSON',
             success: function (data) {
                 document.cookie = "cart_id=" + data.cart_id + ";path=/";
-                addToCart(variant_id);            
+                addToCart();            
             },
             error: function (request, status, error) {
                 showErrorPopup(request)
