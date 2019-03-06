@@ -89,7 +89,7 @@ export class AppComponent implements OnInit {
 
   loadCartModule(){
     console.log("loadCart function");
-    if(window.location.pathname == "/")
+    if(window.location.pathname == "/newhome")
       this.updateOnHashChange();
     else{
       this.loadModules();
@@ -125,7 +125,7 @@ export class AppComponent implements OnInit {
 
   loadModules(){
       if(window.location.href.includes("#/bag")){
-        if(window.location.pathname == "/"){
+        if(window.location.pathname == "/newhome"){
           $('#main-nav').removeClass('speed-in');
           $('#cd-cart').addClass("speed-in");
           $('#cd-shadow-layer').addClass('is-visible');
@@ -141,7 +141,7 @@ export class AppComponent implements OnInit {
         $("app-bag-view").removeClass('d-none');  
       }
       else if(window.location.href.includes("#/account")){
-        if(window.location.pathname == "/"){
+        if(window.location.pathname == "/newhome"){
           $('#main-nav').removeClass('speed-in');
           $('#cd-cart').addClass("speed-in");
           $('#cd-shadow-layer').addClass('is-visible');
