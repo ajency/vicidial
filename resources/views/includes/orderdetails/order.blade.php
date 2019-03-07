@@ -13,14 +13,14 @@
 <!-- 		Total:
 		<h6 class="mt-1"><span class="rs-symbol"><i class="fas fa-rupee-sign sm-font"></i></span> {{$sub_order['total']}} for {{$sub_order['number_of_items']}} {{$sub_order['number_of_items'] == 1 ? "Item" : "Items"}}</h6> -->
 		<h6 class="text-right">{{$sub_order['number_of_items']}} {{$sub_order['number_of_items'] == 1 ? "Item" : "Items"}}</h6>
-		<div>
+<!-- 		<div>
 			@if($sub_order['state'] == 'draft')
 				<span class="order-label order-label--processing" data-toggle="tooltip" data-placement="top" title="Your order has been placed and we are verifying item availability in the inventory.">Processing</span>
 			@endif
 			@if($sub_order['state'] == 'sale')
 				<span class="order-label order-label--confirmed" data-toggle="tooltip" data-placement="top" title="Stock for the items has been verified and your items will be shipped out soon.">Confirmed</span>
 			@endif
-		</div>
+		</div> -->
 	</div>
 </div>
 
