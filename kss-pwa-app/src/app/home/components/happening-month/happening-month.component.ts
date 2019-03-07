@@ -12,8 +12,8 @@ export class HappeningMonthComponent implements OnInit {
 
   ngOnInit() {
   }
-  
-  createDataSrcSet(a,b,c,d,e,f){
-    return a+ " " +b +", " +c +" "+d +", " +e +" "+f;
+
+  createDataSrcSet(a,b,c,d){
+    return a+ " " +b +", " +c +" "+d;
   }
 }

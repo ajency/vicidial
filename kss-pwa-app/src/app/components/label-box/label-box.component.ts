@@ -18,8 +18,8 @@ export class LabelBoxComponent implements OnInit, OnChanges {
     // console.log("label-box ==>", this.box_type);
   }
 
-  createDataSrcSet(a,b,c,d,e,f){
-    return a+ " " +b +", " +c +" "+d +", " +e +" "+f;
+  createDataSrcSet(a,b,c,d){
+    return a+ " " +b +", " +c +" "+d;
   }
 
 }

@@ -6,14 +6,14 @@ import { Component, OnInit, Input, OnChanges, AfterViewInit, Output, EventEmitte
   styleUrls: ['./week-theme.component.scss']
 })
 export class WeekThemeComponent implements OnInit {
-	
+
 	@Input() theme : any;
   constructor() { }
 
   ngOnInit() {
   }
 
-  createDataSrcSet(a,b,c,d,e,f){
-    return a+ " " +b +", " +c +" "+d +", " +e +" "+f;
+  createDataSrcSet(a,b,c,d){
+    return a+ " " +b +", " +c +" "+d;
   }
 }
