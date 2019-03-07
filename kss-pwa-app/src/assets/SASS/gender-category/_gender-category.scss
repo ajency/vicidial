@@ -16,13 +16,13 @@
 		box-shadow: none;
 		border-color: #fff;
 		.gender-cat__name,.gender-cat__year{
-			color: #000;
+			// color: #000;
 		}
 	}
 	@include bp(mobile) {
 		min-height: 85px;
 		padding: 0.5rem;
-	}	
+	}
 }
 
 .gender-cat-wrapper{

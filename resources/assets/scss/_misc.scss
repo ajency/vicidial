@@ -187,17 +187,17 @@
 	}
 }
 
-// .footer-link-separator{
-// 	margin-left: -0.5em;
-// 	li{
-// 		padding: 0 0.5em;
-// 		margin-bottom: 0.7em;
-// 		border-right: 1px solid #b1b1b1;
-// 		&:last-child{
-// 			border-right: 0;
-// 		}
-// 	}
-// }
+.footer-link-separator{
+	margin-left: -0.5em;
+	li{
+		padding: 0 0.5em;
+		margin-bottom: 0.7em;
+		border-right: 1px solid #b1b1b1;
+		&:last-child{
+			border-right: 0;
+		}
+	}
+}
 
 // Similar products
 
@@ -389,24 +389,24 @@
 
 // // Footer social icon
 
-// .social-wrap{
-//     li{
-// 		&:not(:last-child){
-// 	        border-right: 1px solid #b1b1b1;
-// 	        padding-right: 0.8rem;
-// 	    }
-// 	    @media (min-width: 768px) and (max-width: 992px){
-// 	    	&:last-child{
-// 				margin-top: 0.8em;
-// 	    	}
-// 	    }
-// 	    @media (max-width: 320px){
-// 	    	&:last-child{
-// 				margin-top: 0.8em;
-// 	    	}
-// 	    }
-//     }
-// }
+.social-wrap{
+    li{
+		&:not(:last-child){
+	        border-right: 1px solid #b1b1b1;
+	        padding-right: 0.8rem;
+	    }
+	    @media (min-width: 768px) and (max-width: 992px){
+	    	&:last-child{
+				// margin-top: 0.8em;
+	    	}
+	    }
+	    @media (max-width: 320px){
+	    	&:last-child{
+				// margin-top: 0.8em;
+	    	}
+	    }
+    }
+}
 
 // .socialIcon-size{
 //     font-size: 1.6em;

@@ -13,15 +13,15 @@
 <div id="main">
 
         @yield('content')
-		@include('cart') 
-		
+		@include('cart')
+
 </div>
 
 @include('includes.scroll')
 <div class="container d-block d-md-none my-4 @isset($sticky_btn) sticky_btn_bottom @endisset">
 	<div class="row">
 		<div class="col-sm-12">
-			  <a class="mb-2 py-2 footer-more collapsed" data-toggle="collapse" href="#moreFooter"><span class="space-divider d-flex align-items-center justify-content-between"><span class="footer-more__title"">More about Online Shopping at KidSuperStore</span> <i class="fas fa-angle-down icon-down"></i></span></a>
+			  <a class="mb-2 py-2 footer-more collapsed" data-toggle="collapse" href="#moreFooter"><span class="space-divider d-flex align-items-center justify-content-between"><span class="footer-more__title">More about Online Shopping at KidSuperStore</span> <i class="fas fa-angle-down icon-down"></i></span></a>
 		</div>
 	</div>
 </div>

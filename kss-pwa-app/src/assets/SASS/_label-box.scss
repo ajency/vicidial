@@ -53,6 +53,7 @@
 
 .label-box-small{
 	.label-box{
+		transition: all 0.3s ease;
 		@include bp(tab) {
 			flex: 1;
     		padding: 0 1rem;
@@ -64,6 +65,9 @@
 	    	&__sticky{
 				top: 88%;
 			}
+		}
+		&:hover{
+			transform: scale(1.02);
 		}
 	}
 	@include bp(mobile) {
