@@ -3,6 +3,7 @@
 namespace App;
 
 use Ajency\ServiceComm\Comm\Sync;
+use App\OrderLine;
 use App\Variant;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -12,6 +13,7 @@ class SubOrder extends Model
     protected $casts = [
         'item_data'   => 'array',
         'odoo_data'   => 'array',
+        'is_shipped'  => 'boolean',
         'is_invoiced' => 'boolean',
     ];
 
@@ -162,12 +164,34 @@ class SubOrder extends Model
         Sync::call('backoffice', 'createOPRJob', ['sub_order_data' => $sub_order_data, 'placeorder' => $placeorder]);
     }
 
+    public function cancelOrder($cancelSubOrderId)
+    {
+        $sub_order_data = [
+            'user_external_id'      => $this->order->cart->user->odoo_id,
+            'address_external_id'   => $this->order->address->odoo_id,
+            'location_external_id'  => $this->location->id,
+            'warehouse_external_id' => $this->location->warehouse->odoo_id,
+            'company_external_id'   => $this->location->company_odoo_id,
+            'sub_order_id'          => $this->id,
+            'location_txn_id'       => $this->location->location_name . '/' . $this->order->txnid,
+            'address_data'          => $this->order->address_data,
+            'item_data'             => $this->orderLines->toArray(),
+            'payment_data'          => $this->odoo_data,
+            'type'                  => $this->type,
+            'order_date'            => Carbon::now()->toDateTimeString(),
+            'transaction_mode'      => $this->order->transaction_mode,
+        ];
+
+        Sync::call('backoffice', 'cancelOPRJob', ['sub_order_data' => $sub_order_data, 'cancelSubOrderId' => $cancelSubOrderId]);
+    }
+
     public function getSubOrder()
     {
         $itemsData = [];
         foreach ($this->orderLines->groupBy('variant_id') as $items) {
             $itemData = $items->first();
             $item     = [
+                'id'               => $itemData['id'],
                 'title'            => $itemData['title'],
                 'images'           => $itemData['images'],
                 'size'             => $itemData['size'],
@@ -178,6 +202,7 @@ class SubOrder extends Model
                 'product_id'       => $itemData['product_id'],
                 'product_color_id' => $itemData['product_color_id'],
                 'product_slug'     => $itemData['product_slug'],
+                'state'            => $itemData['state'],
                 'quantity'         => $this->orderLines->where('variant_id', $itemData['variant_id'])->count(),
             ];
             $itemsData[] = $item;
@@ -189,6 +214,38 @@ class SubOrder extends Model
         }
 
         return $sub_order;
+    }
+
+    public function getSubOrderItemWise()
+    {
+        $itemsData = [];
+        $store_address = $this->location->getAddress();
+        foreach ($this->orderLines->groupBy('variant_id') as $items) {
+            $itemData = $items->first();
+            $item     = [
+                'id'               => $itemData['id'],
+                'title'            => $itemData['title'],
+                'images'           => $itemData['images'],
+                'size'             => $itemData['size'],
+                'price_mrp'        => $itemData['price_mrp'],
+                'price_final'      => $itemData['price_final'],
+                'discount_per'     => $itemData['discount_per'],
+                'variant_id'       => $itemData['variant_id'],
+                'product_id'       => $itemData['product_id'],
+                'product_color_id' => $itemData['product_color_id'],
+                'product_slug'     => $itemData['product_slug'],
+                'state'            => $itemData['state'],
+                'shipment_status'  => $itemData['shipment_status'],
+                'quantity'         => $this->orderLines->where('variant_id', $itemData['variant_id'])->count(),
+                'is_invoiced'      => $this->is_invoiced,
+            ];
+            if ($store_address != null) {
+                $item['store_address'] = $store_address;
+            }
+            $itemsData[] = $item;
+        }
+
+        return $itemsData;
     }
 
     public static function rectifyOldSubOrders($subOrders)
@@ -212,42 +269,18 @@ class SubOrder extends Model
         }
     }
 
-    public static function updateSubOrderStatus($subOrderId, $state, $is_invoiced, $external_id)
+    public static function updateSubOrderStatus($subOrderId, $state, $is_shipped, $is_invoiced, $external_id)
     {
         $subOrder              = self::find($subOrderId);
         $state_old             = $subOrder->odoo_status;
         $subOrder->odoo_id     = $external_id;
+        $subOrder->is_shipped  = $is_shipped;
         $subOrder->is_invoiced = $is_invoiced;
         $subOrder->odoo_status = $state;
         $subOrder->save();
         foreach ($subOrder->orderLines as $orderLine) {
             $orderLine->state = $state;
             $orderLine->save();
-        }
-
-        if ($state_old == 'draft' && $state == 'sale') {
-            $itemCount = $subOrder->orderLines->count();
-            $name      = $subOrder->orderLines->first()->name;
-            if (strlen($name) > 25) {
-                $name = substr($name, 0, 25) . '...';
-            }
-            $order = $subOrder->order;
-            $link  = ($order->cart->user->verified != null) ? url('/#/account/my-orders/') . '/' . $order->txnid : url('/my/order/details') . '?ordertoken=' . $order->token;
-            switch ($itemCount) {
-                case '1':
-                    $message = 'Confirmed: ' . $name . ' has been processed and will be shipped shortly. Track your order at: ' . $link;
-                    break;
-                case '2':
-                    $message = 'Confirmed: ' . $name . ' & 1 other item have been processed and will be shipped shortly. Track your order at: ' . $link;
-                    break;
-                default:
-                    $message = 'Confirmed: ' . $name . ' & ' . $itemCount . ' other items have been processed and will be shipped shortly. Track your order at: ' . $link;
-                    break;
-            }
-            sendSMS('order-confirmed', [
-                'to'      => $order->cart->user->phone,
-                'message' => $message,
-            ]);
         }
     }
 }

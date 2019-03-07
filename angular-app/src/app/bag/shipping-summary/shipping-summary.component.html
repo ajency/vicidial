@@ -10,7 +10,7 @@
 							<img src="/img/logo-kss.png" xpreview="/img/logo-kss.png" class=" img-fluid m-0 slide-nav-logo" width="180px">
 					 	</a>
 					 	<div class="secure-lock-wrapper pl-2 ml-2 border-left">
-					 		<img src="/img/secure-lock.png" class="img-fluid" alt="Secure Checkout" title="Secure Checkout" width="100">
+					 		<img src="/img/secure-lock.png" class="img-fluid" alt="Secure Checkout" title="Secure Checkout" width="80">
 					 	</div>
 					</div>
 					<div class="ml-auto align-self-center">
@@ -113,11 +113,19 @@
 				</div>
 				<h5 *ngIf="shippingDetails.summary.mrp_total - shippingDetails.summary.you_pay != 0 " class="font-weight-bold text-success line-height-5">Your total savings on this order ₹{{roundOff(shippingDetails.summary.mrp_total - shippingDetails.summary.you_pay)}}</h5>
 				<hr class="mb-2">
-				<div class="d-flex align-items-center py-3">
-					<img src="/img/shield.png" class="img-fluid" width="40" alt="100% Secure Payments" title="100% Secure Payments">
-					<div class="pl-2 genuinity">
-						<p class="mb-1">Genuine products. 7 day returns.</p>
-						<p class="my-1">100% Secure payments.</p>
+				<div class="d-flex align-items-center justify-content-between pt-3 pb-2">
+					<div class="d-flex align-items-center flex-1 pr-2">
+						<img src="/img/shield.png" class="img-fluid" width="30" alt="100% Secure Payments" title="100% Secure Payments">
+						<div class="pl-2 genuinity">
+							<p class="mb-1">Genuine products.</p>
+							<p class="my-1">100% Secure payments.</p>
+						</div>
+					</div>
+					<div class="d-flex align-items-center">
+						<img src="/img/return.png" alt="7 day returns" title="7 day returns">
+						<div class="pl-1 genuinity">
+							<p class="mb-1">7 day returns.</p>
+						</div>
 					</div>
 				</div>
 				<!-- <div class="seperator mb-5"></div> -->

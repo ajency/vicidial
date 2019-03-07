@@ -4,6 +4,7 @@ namespace App;
 
 use Ajency\Connections\OdooConnect;
 use App\Cart;
+use App\Jobs\CancelOdooOrder;
 use App\Jobs\OdooOrder;
 use App\Jobs\OdooOrderLine;
 use App\SubOrder;
@@ -18,6 +19,8 @@ class Order extends Model
     protected $casts = [
         'address_data'   => 'array',
         'aggregate_data' => 'array',
+        'store_ids'      => 'array',
+        'store_data'     => 'array',
     ];
 
     protected $fillable = ['cart_id', 'address_id', 'address_data', 'expires_at', 'type'];
@@ -96,6 +99,39 @@ class Order extends Model
 
     }
 
+    public function cancelOrderOnOdoo()
+    {
+        $order = self::create([
+            'cart_id'      => $this->cart_id,
+            'address_id'   => $this->address_id,
+            'address_data' => $this->address_data,
+            'expires_at'   => Carbon::now()->addMinutes(config('orders.expiry'))->timestamp,
+            'type'         => 'Cancelled Transaction',
+        ]);
+
+        //create a job to place order on odoo for all suborders.
+        foreach ($this->subOrders as $subOrder) {
+            $cancelSubOrder              = new SubOrder;
+            $cancelSubOrder->order_id    = $order->id;
+            $cancelSubOrder->location_id = $subOrder->location_id;
+            $cancelSubOrder->type        = 'Cancelled Transaction';
+            $cancelSubOrder->item_data   = $subOrder->item_data;
+            $cancelSubOrder->odoo_status = 'cancel';
+            $cancelSubOrder->save();
+            $cancelSubOrder->refresh();
+
+            foreach ($subOrder->orderLines as $orderLine) {
+                $cancelSubOrder->orderLines()->attach($orderLine->id, ['type' => $cancelSubOrder->type]);
+                $order->orderLines()->attach($orderLine->id, ['type' => $order->type]);
+                $orderLine->state = 'processing-cancel';
+                $orderLine->save();
+            }
+            CancelOdooOrder::dispatch($cancelSubOrder, $subOrder->id)->onQueue('odoo_order');
+        }
+
+        return $order->id;
+    }
+
     public function subOrderData()
     {
         return $this->aggregate_data;
@@ -129,13 +165,30 @@ class Order extends Model
         $dateInd = Carbon::createFromFormat('Y-m-d H:i:s', $this->created_at, 'UTC');
         $dateInd->setTimezone('Asia/Kolkata');
 
-        $order_info = array('order_id' => $this->id, 'txn_no' => $this->txnid, 'order_status' => $this->status, 'total_amount' => $this->subOrderData()['you_pay'], 'order_date' => $dateInd->format('j M Y'), 'no_of_items' => $this->orderLines->groupBy('variant_id')->count());
+        $order_info = array('order_id' => $this->id, 'txn_no' => $this->txnid, 'order_status' => $this->status, 'cancel_allowed' => $this->cancelAllowed(), 'total_amount' => $this->subOrderData()['you_pay'], 'order_date' => $dateInd->format('j M Y'), 'no_of_items' => $this->orderLines->groupBy('variant_id')->count());
 
         if ($this->cart->user->verified == null) {
             $order_info['token'] = $this->token;
         }
 
         return $order_info;
+    }
+
+    public function cancelAllowed()
+    {
+        foreach ($this->subOrders as $subOrder) {
+            if ($subOrder->is_shipped || $subOrder->is_invoiced) {
+                return false;
+            }
+        }
+
+        foreach ($this->orderLines as $orderLine) {
+            if (($orderLine->state != 'draft' && $orderLine->state != 'sale') || $orderLine->shipment_status != null) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public function getOrderDetails()
@@ -148,6 +201,32 @@ class Order extends Model
         $params = [
             "order_info"       => $this->getOrderInfo(),
             "sub_orders"       => $sub_orders,
+            "shipping_address" => $this->address_data,
+            "order_summary"    => $this->subOrderData(),
+        ];
+
+        $payment = $this->payments->first();
+        if ($payment != null) {
+            $params['payment_info'] = [
+                //"payment_mode" => $payment->bankcode,
+                "payment_mode" => json_decode($payment->data)->bankcode,
+                "card_num"     => $payment->cardnum,
+            ];
+        }
+
+        return $params;
+    }
+
+    public function getOrderDetailsItemWise()
+    {
+        $items = array();
+        foreach ($this->subOrders as $subOrder) {
+            $items = array_merge($items, $subOrder->getSubOrderItemWise());
+        }
+
+        $params = [
+            "order_info"       => $this->getOrderInfo(),
+            "items"            => $items,
             "shipping_address" => $this->address_data,
             "order_summary"    => $this->subOrderData(),
         ];
@@ -246,5 +325,27 @@ class Order extends Model
                 OdooOrder::dispatch($subOrder, false)->onQueue('odoo_order');
             }
         }
+    }
+
+    public static function addStoreToOrders($start, $end)
+    {
+        $orders = self::where('id', '>=', $start)->where('id', '<=', $end)->get();
+        foreach ($orders as $order) {
+            $storeData         = $order->getStoreData();
+            $order->store_ids  = $storeData['store_ids'];
+            $order->store_data = $storeData['store_data'];
+            $order->save();
+        }
+    }
+
+    public function getStoreData()
+    {
+        $store_ids  = [];
+        $store_data = [];
+        foreach ($this->subOrders as $subOrder) {
+            array_push($store_ids, $subOrder->location->warehouse_odoo_id);
+            array_push($store_data, ['id' => $subOrder->location->warehouse_odoo_id, 'name' => $subOrder->location->warehouse_name]);
+        }
+        return ['store_ids' => $store_ids, 'store_data' => $store_data];
     }
 }

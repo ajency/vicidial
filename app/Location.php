@@ -4,6 +4,7 @@ namespace App;
 
 use Ajency\Connections\OdooConnect;
 use Illuminate\Database\Eloquent\Model;
+use App\Events\NewVendorLocation;
 
 class Location extends Model
 {
@@ -76,8 +77,10 @@ class Location extends Model
             $loc->company_name      = config('odoo.dropshipping_company_name');
             $loc->type              = 'dropshipping';
             $loc->address           = [];
-            $loc->use_in_inventory  = true;
+            $loc->use_in_inventory  = false;
             $loc->save();
+
+            event(new NewVendorLocation($loc));
         }
     }
 

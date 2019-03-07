@@ -48,7 +48,7 @@
 				<hr class="mb-4">
 
 				<!-- Product info -->
-				@include('includes.orderdetails.order', ['sub_orders' => $params['sub_orders']])
+				@include('includes.orderdetails.order', ['items' => $params['items']])
 
 				<div class="d-flex  align-self-center mb-4">
 					<label>
@@ -75,10 +75,8 @@
 		@if($params['payment_status'] == 'success')
 			<script type="text/javascript">
 				@php $variant_ids = []; @endphp
-				@foreach($params['sub_orders'] as $sub_order)
-					@foreach($sub_order['items'] as $item)
-						@php $variant_ids[] = $item['product_id'] . '-' . $item['product_color_id'] @endphp
-					@endforeach
+				@foreach($params['items'] as $item)
+					@php $variant_ids[] = $item['product_id'] . '-' . $item['product_color_id'] @endphp
 				@endforeach
 				fbq('track', 'Purchase', {
 				    value: {{$params['order_info']['total_amount']}},

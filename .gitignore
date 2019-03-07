@@ -37,6 +37,11 @@ yarn-error.log
 
 # /public/views/cart
 
+#kss-pwa
+/kss-pwa-app/node_modules
+/kss-pwa-app/dist
+/kss-pwa-app/e2e
+
 # packages
 /packages
 
