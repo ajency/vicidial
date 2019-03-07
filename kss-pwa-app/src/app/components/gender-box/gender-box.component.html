@@ -1,6 +1,6 @@
 <!-- Gender inner boxes -->
-<a href="{{tab.element_data.link}}" class="text-dark card gender-cat d-flex align-items-center justify-content-center">
-	<h4 class="gender-cat__name" *ngIf="tab.element_data.text.text1">{{tab.element_data.text.text1}}</h4>
-	<p class="gender-cat__year mb-0" *ngIf="tab.element_data.text.text2">{{tab.element_data.text.text2}}</p>
+<a href="{{tab.element_data.link}}" class="text-dark card gender-cat d-flex align-items-center justify-content-center" [ngStyle]="{'background-color' : tab.element_data.bg_color ? tab.element_data.bg_color : ''}">
+	<h4 class="gender-cat__name" *ngIf="tab.element_data.text.text1" [ngStyle]="{'color' : tab.element_data.text_color ? tab.element_data.text_color : ''}">{{tab.element_data.text.text1}}</h4>
+	<p class="gender-cat__year mb-0" *ngIf="tab.element_data.text.text2" [ngStyle]="{'color' : tab.element_data.text_color ? tab.element_data.text_color : ''}">{{tab.element_data.text.text2}}</p>
 </a>
 
