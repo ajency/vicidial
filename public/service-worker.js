@@ -84,7 +84,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "views/kss-pwa/11.js",
-    "revision": "c1b530e0e988943c52ff1c0fb2566d3d"
+    "revision": "aa18ead2b63f139838e8ca0581bb6880"
   },
   {
     "url": "views/kss-pwa/12.js",
@@ -196,7 +196,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "views/kss-pwa/styles.css",
-    "revision": "e631b050c7cd31d1e1f66cd2f0033418"
+    "revision": "fab79245e151b5144b86097e6b1fcea8"
   },
   {
     "url": "assets/icons/icon1.png",
