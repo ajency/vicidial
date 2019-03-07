@@ -26,6 +26,10 @@ export class HeaderComponent implements OnInit, OnChanges {
   	// console.log("ngOnChanges header", this.menu);
   }
 
+  ngAfterViewInit(){
+    this.appservice.updateCartCountInUI();
+  }
+
   openMenu(){
   	$('.megamenu').addClass('active');
 		$('.megamenu--left .nav-item:first-child').addClass('active');
