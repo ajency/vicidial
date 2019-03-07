@@ -41,7 +41,7 @@ export class OrderDetailsComponent implements OnInit {
   
   ngOnInit() {
     this.appservice.removeLoader();
-    $("#cd-my-account").scrollTop(0);
+    $("#cd-cart").scrollTop(0);
     if(this.appservice.order)
       this.showBackButton = true;
     // if(this.appservice.order){
