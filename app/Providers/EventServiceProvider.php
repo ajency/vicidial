@@ -13,8 +13,9 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'App\Events\Event' => [
-            'App\Listeners\EventListener',
+        'App\Events\NewVendorLocation' => [
+            'App\Listeners\NewVendorLocation\OdooAddressListener',
+            'App\Listeners\NewVendorLocation\BackofficeLocationListener',
         ],
     ];
 
