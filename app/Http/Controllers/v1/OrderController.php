@@ -127,7 +127,7 @@ class OrderController extends Controller
             validateOrder($user, $order);
         }
 
-        $params = $order->getOrderDetails();
+        $params = $order->getOrderDetailsItemWise();
 
         $params['breadcrumb']            = array();
         $params['breadcrumb']['list']    = array();
