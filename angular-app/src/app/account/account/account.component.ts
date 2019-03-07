@@ -26,6 +26,7 @@ export class AccountComponent implements OnInit {
 
   ngOnInit() {
     this.returnUrl = this.route.snapshot.queryParams['return_url'];
+    this.appservice.myOrders = '';
     console.log("this.returnUrl ==>", this.returnUrl);
   	this.appservice.removeLoader();
   	if(!this.appservice.isLoggedInUser())

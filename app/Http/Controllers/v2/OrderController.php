@@ -4,7 +4,10 @@ namespace App\Http\Controllers\v2;
 
 use App\Address;
 use App\Cart;
+use App\Comment;
+use App\Defaults;
 use App\Http\Controllers\Controller;
+use App\Jobs\OrderLineStatus;
 use App\Jobs\SubOrderStatus;
 use App\Order;
 use App\User;
@@ -39,6 +42,9 @@ class OrderController extends Controller
 
         $order->setSubOrders();
         $order->aggregateSubOrderData();
+        $storeData         = $order->getStoreData();
+        $order->store_ids  = $storeData['store_ids'];
+        $order->store_data = $storeData['store_data'];
         $order->save();
 
         $cart->type = 'order';
@@ -120,7 +126,7 @@ class OrderController extends Controller
             validateOrder($user, $order);
         }
 
-        $params = $order->getOrderDetails();
+        $params = $order->getOrderDetailsItemWise();
 
         $params['breadcrumb']            = array();
         $params['breadcrumb']['list']    = array();
@@ -138,6 +144,11 @@ class OrderController extends Controller
     public static function updateSubOrderStatus($params)
     {
         SubOrderStatus::dispatch($params["subOrderId"], $params["state"], $params["is_invoiced"], $params["external_id"])->onQueue('odoo_order');
+    }
+
+    public static function updateOrderLineStatus($params)
+    {
+        OrderLineStatus::dispatch($params["lineIds"], $params["status"])->onQueue('odoo_order');
     }
 
     public function listOrders(Request $request)
@@ -173,17 +184,48 @@ class OrderController extends Controller
         }
 
         foreach ($orders as $order) {
-            array_push($order_details, $order->getOrderDetails());
+            array_push($order_details, $order->getOrderDetailsItemWise());
         }
 
         return response()->json(["message" => 'Order items received successfully', 'success' => true, 'data' => $order_details]);
     }
 
-    public function singleOrder($id, Request $request)
+    public function singleOrder($txnid, Request $request)
     {
         $user  = $request->user();
-        $order = Order::where('txnid', $id)->first();
+        $order = Order::where('txnid', $txnid)->first();
         validateOrder($user, $order);
-        return response()->json(["message" => 'Order items received successfully', 'success' => true, 'data' => $order->getOrderDetails()]);
+        return response()->json(["message" => 'Order items received successfully', 'success' => true, 'data' => $order->getOrderDetailsItemWise()]);
+    }
+
+    public function cancelOrder($id, Request $request)
+    {
+        $user  = $request->user();
+        $order = Order::find($id);
+        validateOrder($user, $order);
+
+        if (!$order->cancelAllowed()) {
+            abort(403, 'Cancel not allowed');
+        }
+
+        $request->validate(['reason' => 'required|exists:defaults,id', 'comments' => 'present']);
+        $params = $request->all();
+
+        $orderId = $order->cancelOrderOnOdoo();
+
+        $comment              = new Comment;
+        $comment->reason_id   = $params['reason'];
+        $comment->reason_type = 'cancel';
+        $comment->comments    = $params['comments'];
+        $comment->model_id    = $orderId;
+        $comment->model_type  = get_class($order);
+        $comment->save();
+
+        return response()->json(["message" => 'Order cancelled successfully', 'success' => true]);
+    }
+
+    public function getAllReasons(Request $request)
+    {
+        return Defaults::getReasons();
     }
 }

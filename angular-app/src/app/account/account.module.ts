@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { FormsModule }   from '@angular/forms';
 import { AccountRoutingModule } from './account-routing.module';
 import { AccountComponent } from './account/account.component';
 import { MyOrdersComponent } from './my-orders/my-orders.component';
@@ -19,6 +19,7 @@ import { PaymentInfoComponent } from './components/payment-info/payment-info.com
 import { OrderSummaryComponent } from './components/order-summary/order-summary.component';
 
 import { AccountService } from './services/account.service';
+import { ItemComponent } from './components/item/item.component';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { AccountService } from './services/account.service';
     AccountRoutingModule,
     BagSummaryModule,
     AddressModule,
-    EditUserModule
+    EditUserModule,
+    FormsModule
   ],
   declarations: [
   	AccountComponent, 
@@ -38,7 +40,8 @@ import { AccountService } from './services/account.service';
   	PaymentInfoComponent,
   	OrderSummaryComponent,
   	MyAddressesComponent,
-  	MyProfileComponent
+  	MyProfileComponent,
+  	ItemComponent
   ],
   providers: [
     AccountService

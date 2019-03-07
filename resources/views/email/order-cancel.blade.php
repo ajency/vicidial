@@ -1,6 +1,6 @@
 @extends('layouts.email')
 @section('content')
-@php
+<!-- @php
   $orderDetails = $order->getOrderDetails();
   $order_info = $orderDetails['order_info'];
   $shipping_address = $orderDetails['shipping_address']; 
@@ -8,15 +8,15 @@
   $order_summary = $orderDetails['order_summary'];
   $user_name = $order->cart->user->name;
   $verified = ($order->cart->user->verified != null) ? true : false;
-@endphp
+@endphp -->
 
-      <tr>
+      <!-- <tr>
          <td style="text-align:center;padding-bottom:10px;">
             <a href="#" style="cursor: default;">
               <img src="{{CDN::asset('/img/Email-banner-full-size.jpg') }}" style="margin-bottom:0px;max-width:100%;height:auto;border:0" width="650" border="0" class="CToWUd">
             </a>
          </td>
-      </tr>
+      </tr> -->
       <!-- header ends -->
 
       <!-- Order No -->
@@ -28,8 +28,10 @@
      <tr>
        <td style="font-size:17px;text-align:left;color:#777676;padding:20px 0;line-height: 22px;">
           <strong style="display: block;margin-bottom: 5px;color: #000;">Hello {{$user_name}},</strong>
-          We are thrilled to confirm your order, and promise to ship it to you very soon! <br>
-          Get ready to experience happiness with our range of kids fashion that is all about trends, fashion, style and comfort!
+          We received your cancellation request for one or more items from your order <strong>{{$order_info['txn_no']}}</strong>. 
+          This email is to confirm we have successfully cancelled the following item(s). 
+          <br> A refund has been issued to your original form of payment. <br>
+          We hope you find a similar item(s) that fits your needs.
        </td>
      </tr>
      <!-- Intro ends -->
@@ -54,14 +56,14 @@
                       <div style="margin-top: 10px;">Amount: ₹{{$order_info['total_amount']}}</div>
                       <div style="margin-top: 30px;">
                         @if($verified)
-                         <a href="{{url('/#/account/my-orders/')}}" style="text-transform: uppercase;padding: 10px;text-decoration: none;background-color: #f9bc23;color: #000;font-size: 13px;">MANAGE ORDERS</a>
+                         <a href="{{url('/#/account/my-orders/')}}" style="text-transform: uppercase;padding: 10px;text-decoration: none;background-color: #f9bc23;color: #000;font-size: 13px;">VIEW ORDER</a>
                         @else
                          <a href="{{url('/my/order/details')}}?ordertoken={{$order_info['token']}}" style="text-transform: uppercase;padding: 10px;text-decoration: none;background-color: #f9bc23;color: #000;font-size: 13px;">VIEW ORDER</a>
                         @endif
                       </div>
                    </div>
                 </td>
-                <td width="40%">
+               <!--  <td width="40%">
                  <div style="float: left;width: 100%;">
                     <div style="font-weight: bold;text-transform: uppercase;color: #000000;letter-spacing: 1px;">YOUR ORDER WILL BE SENT TO:</div>
                     <div style="margin-top: 20px;line-height: 20px;">{{$shipping_address['name']}} <br>
@@ -74,7 +76,7 @@
                     @endif
                     </div>
                  </div>
-                </td>
+                </td> -->
               </tr>
             </tbody>
           </table>
@@ -84,7 +86,7 @@
       <!-- What you ordered -->
       <tr>
          <td style="padding-top: 20px;padding-bottom:10px;vertical-align:top">
-            <div style="font-weight: bold;text-transform: uppercase;color: #000000;letter-spacing: 1px;font-size: 15px;">HERE IS WHAT YOU ORDERED:</div>
+            <div style="font-weight: bold;text-transform: uppercase;color: #000000;letter-spacing: 1px;font-size: 15px;">ITEMS THOSE WERE CANCELLED</div>
          </td>
       </tr>
       
@@ -115,17 +117,18 @@
                               Size: {{$item['size']}} | Qty: {{$item['quantity']}}
                            </p>
                            @if(! empty($sub_order['store_address']))
-                           <p style="margin-top: 10px;color: #777676;font-size: 14px;line-height: 18px;">Sold by: {{$sub_order['store_address']['store_name']}}</p>
+                           <p style="margin-top: 10px;color: #777676;font-size: 14px;line-height: 18px;">Sold by: {{$sub_order['store_address']['store_name']}} - {{$sub_order['store_address']['locality']}}, {{$sub_order['store_address']['city']}}</p>
                             @endif
                         </td>
                         <td class="m_-1366001226154905177m_-6808368826616678290m_8600340093737608931cell-content m_-1366001226154905177m_-6808368826616678290m_8600340093737608931align-right" style="text-align:right">
-                           <strong class="m_-1366001226154905177m_-6808368826616678290m_8600340093737608931price" style="padding-right:8px;font-size: 15px;">₹{{$item['price_final']}}</strong>
+                           <!-- <strong class="m_-1366001226154905177m_-6808368826616678290m_8600340093737608931price" style="padding-right:8px;font-size: 15px;">₹{{$item['price_final']}}</strong>
                            @if($item['price_final'] != $item['price_mrp'])
                            <div style="margin-top: 8px;">
                               <small style="text-decoration: line-through;padding-left: 5px;padding-right: 5px;margin-right: 5px;color: #6c757d;font-size: 12px;border-right: 1px solid;">₹{{$item['price_mrp']}}</small>
                               <span class="kss-discount text-danger" style="color: #28a745;font-size: 12px;">{{ calculateDiscount( $item['price_mrp'],$item['price_final']) }}% OFF</span>
                            </div>
-                           @endif
+                           @endif -->
+                           <strong class="m_-1366001226154905177m_-6808368826616678290m_8600340093737608931price" style="padding-right:8px;"><span style="font-weight: 300;font-size: 14px;">Refund</span> - <span style="color: #28a745;">₹325</span></strong>
                         </td>
                      </tr>
                </tbody>
@@ -146,7 +149,7 @@
     </tr>
     <tr>
       <td style="float:right;width:100%">
-         <table class="m_-1366001226154905177m_-6808368826616678290m_8600340093737608931table-totals" cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-top: 10px;">
+         <table class="m_-1366001226154905177m_-6808368826616678290m_8600340093737608931table-totals" cellpadding="0" cellspacing="0" border="0" width="100%" style="">
             <tbody>
                <tr>
                   <table class="m_-1366001226154905177m_-6808368826616678290m_8600340093737608931table-totals" cellpadding="0" cellspacing="0" border="0" width="100%" style="">
@@ -154,22 +157,24 @@
                          <tr>
                             <td width="30%"></td>
                             <td width="50%">
-                               <div style="color: #777676;margin-bottom: 10px;text-align: right;font-size: 15px;">Total Item Price :</div>
+                               <!-- <div style="color: #777676;margin-bottom: 10px;text-align: right;font-size: 15px;">Total Item Price :</div>
                                <div style="color: #777676;margin-bottom: 10px;text-align: right;font-size: 15px;">Sub-total :</div>
                                @if($order_summary['cart_discount'] > 0)
                                <div style="color: #777676;margin-bottom:10px;text-align: right;font-size: 15px;">Coupon Discount :</div>
                                @endif
                                <div style="color: #777676;margin-bottom: 10px;text-align: right;font-size: 15px;">Shipping :</div>
-                               <div style="margin-top: 20px;text-align: right;font-size: 15px;"><strong>ORDER TOTAL :</strong></div>
+                               <div style="margin-top: 20px;text-align: right;font-size: 15px;"><strong>ORDER TOTAL :</strong></div> -->
+                                <div style="margin-top: 10px;margin-bottom:10px;"><strong>REFUND TOTAL :</strong></div>
                             </td>
                             <td width="10%">
-                               <div style="width: 75px;text-align:right;margin-bottom:10px;font-size: 15px;"><strong style="color: #000000;">₹{{$order_summary['mrp_total']}}</strong></div>
+                              <!--  <div style="width: 75px;text-align:right;margin-bottom:10px;font-size: 15px;"><strong style="color: #000000;">₹{{$order_summary['mrp_total']}}</strong></div>
                                <div style="text-align: right;width: 75px;margin-bottom:10px;font-size: 15px;"><strong style="color: #000000;">₹{{$order_summary['sale_price_total']}}</strong></div>
                                @if($order_summary['cart_discount'] > 0)
                                <div style="text-align: right;width: 75px;margin-bottom: 10px;font-size: 15px;"><strong style="color: #28a745;">- ₹{{$order_summary['cart_discount']}}</strong></div>
                                @endif
                                <div style="text-align: right;width: 75px;font-size: 15px;"><strong style="color: #000000;">₹{{$order_summary['shipping_fee']}}</strong></div>
-                               <div style="text-align: right;width: 75px;margin-top: 20px;color: #000;font-size: 15px;"><strong>₹{{$order_summary['you_pay']}}</strong></div>
+                               <div style="text-align: right;width: 75px;margin-top: 20px;color: #000;font-size: 15px;"><strong>₹{{$order_summary['you_pay']}}</strong></div> -->
+                               <div style="text-align: right;width: 75px;margin-top: 10px;color: #28a745;"><strong>₹1000</strong></div>
                             </td>
                          </tr>
                       </tbody>
