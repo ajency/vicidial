@@ -12,11 +12,11 @@ export class FooterComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-  	$('.footer-more').click(function(e){
-  		e.preventDefault();
-  		$(this).toggleClass('collapsed');
-  		$('.hidden-footer-section').toggleClass('show');
-  	});
+  	// $('.footer-more').click(function(e){
+  	// 	e.preventDefault();
+  	// 	$(this).toggleClass('collapsed');
+  	// 	$('.hidden-footer-section').toggleClass('show');
+  	// });
   }
 
 }
