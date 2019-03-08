@@ -317,12 +317,14 @@ export class BagViewComponent implements OnInit {
           let url = window.location.href.split("#")[0] + '#/bag/shipping-address';
           history.pushState({bag : true}, 'bag', url);
           this.openShippingAddress = true;
+          $('#cd-cart').addClass('overflow-h');
         }
         else{
           // this.router.navigateByUrl('bag/shipping-address');
           let url = window.location.href.split("#")[0] + '#/bag/shipping-address';
           history.pushState({bag : true}, 'bag', url);
           this.openShippingAddress = true;
+          $('#cd-cart').addClass('overflow-h');
         }
         this.appservice.removeLoader();
       })
@@ -338,6 +340,7 @@ export class BagViewComponent implements OnInit {
       history.pushState({bag : true}, 'bag', url);
       this.openShippingSummary = true;
       this.appservice.continueOrder = true;
+      $('#cd-cart').addClass('overflow-h');
     }
   }
 
@@ -563,9 +566,11 @@ export class BagViewComponent implements OnInit {
         this.cartOpenOnTrigger = false;
       else
         this.fetchCartDataFromServer();
+      $('#cd-cart').removeClass('overflow-h');
     }
     else if(window.location.href.endsWith('#/bag/shipping-address')){
       this.openShippingSummary = false;
+      $('#cd-cart').addClass('overflow-h');
     }
   }
   

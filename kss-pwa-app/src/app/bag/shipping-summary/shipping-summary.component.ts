@@ -43,7 +43,11 @@ export class ShippingSummaryComponent implements OnInit {
     })
     .catch((error)=>{
       console.log("error ===>", error);
-      this.router.navigateByUrl('/bag',{ replaceUrl: true });
+      // this.router.navigateByUrl('/bag',{ replaceUrl: true });
+      let url = window.location.href.split("#")[0] + '#/bag';
+      history.replaceState({bag : true}, 'bag', url);
+      console.log("openCart");
+      this.appservice.loadCartTrigger();    
       this.appservice.removeLoader();      
     })      
   }
@@ -78,7 +82,11 @@ export class ShippingSummaryComponent implements OnInit {
     })
     .catch((error)=>{
       console.log("error ===>", error);
-      this.router.navigateByUrl('/bag', { replaceUrl: true });
+      // this.router.navigateByUrl('/bag', { replaceUrl: true });
+      let url = window.location.href.split("#")[0] + '#/bag';
+      history.replaceState({bag : true}, 'bag', url);
+      console.log("openCart");
+      this.appservice.loadCartTrigger(); 
       this.appservice.removeLoader();      
     })  
   }
@@ -135,7 +143,7 @@ export class ShippingSummaryComponent implements OnInit {
   editShippingAddress(){
     this.appservice.editAddressFromShippingSummary = true;
     this.appservice.addressToEdit = this.shippingDetails.address;
-    this.router.navigateByUrl('/shipping-details', { skipLocationChange: true });
+    // this.router.navigateByUrl('/shipping-details', { skipLocationChange: true });
   }
 
   updateEmail(){
