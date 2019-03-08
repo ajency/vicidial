@@ -1,0 +1,9 @@
+<!-- Gender category  -->
+
+<section class="mt-4 mt-md-5">
+	<div class="container">
+		<div class="row gender-cat-wrapper mobile-overflow">
+			<div *ngFor="let tab of tabs" class="col kss-extension" attr.static_element-id="{{tab.sequence}}" static_element-display_type="Gender-box" attr.static_element-type="{{tab.type}}" page_slug="home" app-gender-box [tab]="tab"> </div>			
+		</div>
+	</div>
+</section>

@@ -1,4 +1,4 @@
-/* Custom Select */
+// /* Custom Select */
 
 .kss-custom-select {
     position: relative;
@@ -42,7 +42,7 @@ select::-ms-expand {
     background: $white;
     pointer-events: none;
 }
-/* Transition */
+// /* Transition */
 
 .kss-custom-select:hover::after {
     color: theme-color("primary");
@@ -283,29 +283,29 @@ select.custom::-ms-expand {
 
 
   .overlay-fix{
-           width: 100%;
-          height: 100vh;
-          background: rgba(0,0,0,.34);
-          transition: all .5s ease;
-          position: fixed;
-          top: 58px;
-          z-index: 99;
-          @media (min-width: 320px) and (max-width: 767.98px) {
-            top: 74px;
-          }
-         }
+	width: 100%;
+	height: 100vh;
+	background: rgba(0,0,0,.34);
+	transition: all .5s ease;
+	position: fixed;
+	top: 58px;
+	z-index: 99;
+	@media (min-width: 320px) and (max-width: 767.98px) {
+		top: 74px;
+	}
+}
 .recent-search{
     position: absolute;
     right: 7%;
     top: 58px;
     z-index: 9999;
-    @media (min-width: 320px) and (max-width: 767.98px) {
-      right:0px;
-      width:100% !important;
-      top:140px;
-        }
-    }
-  .search-input{
+	@media (min-width: 320px) and (max-width: 767.98px) {
+	  right:0px;
+	  width:100% !important;
+	  top:140px;
+	    }
+}
+.search-input{
     position: absolute;
     right: 7%;
     top: 8px;
@@ -335,25 +335,25 @@ select.custom::-ms-expand {
         color:#000;
       }
     }
-  }
+}
 @media (min-width: 320px) and (max-width: 767.98px) {
-     .search-input{
-        position: absolute;
-        top: 75px;
-        width: 100%;
-        height: 54px;
-        left: 0px;
-        z-index: 999;
-        background: #fff;
-        width: 100% !important;
-        input{
-        width: 90%;
-        height: 54px;
-        padding-left: 5px;
-        outline: none;
-          }
-       }
-    }
+ .search-input{
+    position: absolute;
+    top: 75px;
+    width: 100%;
+    height: 54px;
+    left: 0px;
+    z-index: 999;
+    background: #fff;
+    width: 100% !important;
+    input{
+    width: 90%;
+    height: 54px;
+    padding-left: 5px;
+    outline: none;
+      }
+   }
+}
 
 
     .xdsoft_autocomplete,

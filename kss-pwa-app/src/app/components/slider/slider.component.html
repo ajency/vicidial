@@ -1,0 +1,7 @@
+<div id="card-list" class="overflow-m row productGrid">
+    <div *ngFor="let trending_product of row" class="col-lg-3 col-md-6 col-6">
+      <app-product *ngIf="trending_product.products[0].product_found; else noProduct" [product]="trending_product"></app-product>
+      <ng-template #noProduct> <app-no-product [product]="trending_product"></app-no-product> </ng-template>
+    </div>
+
+</div>

@@ -1,0 +1,135 @@
+<section class="mt-3 pt-0 pt-md-3 mt-md-4">
+  <div class="container">
+      <div class="row">
+          <div class="col-md-12 text-center">
+            <h2 class="font-weight-bold mb-0">
+              <img src="../../../../assets/img/categories-title.jpg" class="img-fluid" alt="Shop by Category" title="Shop by Category">
+            </h2>
+          </div>
+      </div>
+  </div>
+</section>
+
+<section class="">
+  <div class="container">
+    <div class="home-category d-sm-flex align-items-sm-center justify-content-sm-center label-box-medium-sm row position-relative" id="home-category">
+      <div *ngFor="let category of categories" class="label-box img-holder position-relative kss-extension" id="cat-{{category.sequence}}" attr.static_element-id="{{category.sequence}}" static_element-display_type="Shop by Category" attr.static_element-type="{{category.type}}" page_slug="home" app-label-box [box_data]="category" [box_type]="category"></div>
+    </div>
+    <div *ngIf="isSmallScreen" class="sh-more more-category" id="show-more" (click)="showMoreCat()">{{toggleButton}}<i class="fas fa-chevron-down ml-1 sh-more__icon"></i></div>
+  </div>
+</section>
+
+
+
+<section class="d-none">
+  <div class="container">
+  	<div class="cat-container">
+
+  		<!-- .... Big box .... -->
+  		<!-- <div class="cat-item cat-{{$category['sequence']}} position-relative kss-extension" static_element-id="{{$category['sequence']}}" static_element-display_type="Styles In Focus" static_element-type="{{$category['type']}}" page_slug="home">
+  		  <a href="{{$category['element_data']['image']['href']}}">
+  		    <div>{!!$category['element_data']['text']['text1']!!}</div>
+  		    @if (isset($category['images']['original']))
+  		    <img class="d-block w-100 img-fluid lazyload blur-up" src="{{$category['images']['default']['load']}}"
+  		    data-srcset="{{$category['images']['original']}}" alt="{{$category['element_data']['image']['img_alt']}}" title="{{$category['element_data']['image']['title']}}" />
+  		    @else
+  		    <img class="d-block w-100 img-fluid lazyload blur-up"
+  		        src="{{$category['images']['default']['load']}}"
+  		        data-srcset="{{$category['images']['default']['3x']}} 740w,
+  		                      {{$category['images']['default']['2x']}} 370w,
+  		                      {{$category['images']['default']['1x']}} 248w"
+  		        data-sizes='(min-width: 1200px) 570px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 92vw,  31vw'
+  		        alt="{{$category['element_data']['image']['img_alt']}}"
+  		        title="{{$category['element_data']['image']['title']}}" />
+  		    @endif
+  		    <div>{!!$category['element_data']['text']['text2']!!}</div>
+  		  </a>
+  		</div> -->
+
+  		<!-- .... Medium box .... -->
+  		<!-- <div class="cat-item cat-{{$category['sequence']}} position-relative kss-extension" static_element-id="{{$category['sequence']}}" static_element-display_type="Styles In Focus" static_element-type="{{$category['type']}}" page_slug="home">
+  		  <a href="{{$category['element_data']['image']['href']}}">
+  		    <div>{!!$category['element_data']['text']['text1']!!}</div>
+  		    @if (isset($category['images']['original']))
+  		    <img class="d-block w-100 img-fluid lazyload blur-up" src="{{$category['images']['default']['load']}}"
+  		    data-srcset="{{$category['images']['original']}}" alt="{{$category['element_data']['image']['img_alt']}}" title="{{$category['element_data']['image']['title']}}" />
+  		    @else
+  		    <img class="d-block w-100 img-fluid lazyload blur-up"
+  		        src="{{$category['images']['default']['load']}}"
+  		        data-srcset="{{$category['images']['default']['3x']}} 740w,
+  		                      {{$category['images']['default']['2x']}} 370w,
+  		                      {{$category['images']['default']['1x']}} 246w"
+  		        data-sizes='(min-width: 1200px) 370px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 92vw,  31vw'
+  		        alt="{{$category['element_data']['image']['img_alt']}}"
+  		        title="{{$category['element_data']['image']['title']}}" />
+  		    @endif
+  		    <div>{!!$category['element_data']['text']['text2']!!}</div>
+  		  </a>
+  		</div> -->
+
+  		<!-- .... Small box .... -->
+  		<!-- <div class="cat-item cat-{{$category['sequence']}} position-relative kss-extension" static_element-id="{{$category['sequence']}}" static_element-display_type="Styles In Focus" static_element-type="{{$category['type']}}" page_slug="home">
+  		  <a href="{{$category['element_data']['image']['href']}}">
+  		    <div>{!!$category['element_data']['text']['text1']!!}</div>
+  		    @if (isset($category['images']['original']))
+  		    <img class="d-block w-100 img-fluid lazyload blur-up" src="{{$category['images']['default']['load']}}"
+  		    data-srcset="{{$category['images']['original']}}" alt="{{$category['element_data']['image']['img_alt']}}" title="{{$category['element_data']['image']['title']}}" />
+  		    @else
+  		    <img class="d-block w-100 img-fluid lazyload blur-up"
+  		        src="{{$category['images']['default']['load']}}"
+  		        data-srcset="{{$category['images']['default']['3x']}} 740w,
+  		                      {{$category['images']['default']['2x']}} 370w,
+  		                      {{$category['images']['default']['1x']}} 246w"
+  		        data-sizes='(min-width: 1200px) 370px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 92vw,  31vw'
+  		        alt="{{$category['element_data']['image']['img_alt']}}"
+  		        title="{{$category['element_data']['image']['title']}}" />
+  		    @endif
+  		    <div>{!!$category['element_data']['text']['text2']!!}</div>
+  		  </a>
+  		</div> -->
+
+  		<!-- .... Landscape box .... -->
+  		<!-- <div class="cat-item cat-{{$category['sequence']}} position-relative kss-extension" static_element-id="{{$category['sequence']}}" static_element-display_type="Styles In Focus" static_element-type="{{$category['type']}}" page_slug="home">
+  		  <a href="{{$category['element_data']['image']['href']}}">
+  		    <div>{!!$category['element_data']['text']['text1']!!}</div>
+  		    @if (isset($category['images']['original']))
+  		    <img class="d-block w-100 img-fluid lazyload blur-up" src="{{$category['images']['default']['load']}}"
+  		    data-srcset="{{$category['images']['original']}}" alt="{{$category['element_data']['image']['img_alt']}}" title="{{$category['element_data']['image']['title']}}" />
+  		    @else
+  		    <img class="d-block w-100 img-fluid lazyload blur-up"
+  		        src="{{$category['images']['default']['load']}}"
+  		        data-srcset="{{$category['images']['default']['3x']}} 1535w,
+  		                      {{$category['images']['default']['2x']}} 767w,
+  		                      {{$category['images']['default']['1x']}} 511w"
+  		        data-sizes='(min-width: 1200px) 770px, (max-width: 992px) 92vw, 96vw'
+  		        alt="{{$category['element_data']['image']['img_alt']}}"
+  		        title="{{$category['element_data']['image']['title']}}" />
+  		    @endif
+  		    <div>{!!$category['element_data']['text']['text2']!!}</div>
+  		  </a>
+  		</div> -->
+
+  		<!-- .... Portrait box .... -->
+  		<!-- <div class="cat-item cat-{{$category['sequence']}} position-relative kss-extension" static_element-id="{{$category['sequence']}}" static_element-display_type="Styles In Focus" static_element-type="{{$category['type']}}" page_slug="home">
+  		  <a href="{{$category['element_data']['image']['href']}}">
+  		    <div>{!!$category['element_data']['text']['text1']!!}</div>
+  		    @if (isset($category['images']['original']))
+  		    <img class="d-block w-100 img-fluid lazyload blur-up" src="{{$category['images']['default']['load']}}"
+  		    data-srcset="{{$category['images']['original']}}" alt="{{$category['element_data']['image']['img_alt']}}" title="{{$category['element_data']['image']['title']}}" />
+  		    @else
+  		    <img class="d-block w-100 img-fluid lazyload blur-up"
+  		        src="{{$category['images']['default']['load']}}"
+  		        data-srcset="{{$category['images']['default']['3x']}} 818w,
+  		                      {{$category['images']['default']['2x']}} 409w,
+  		                      {{$category['images']['default']['1x']}} 272w"
+  		        data-sizes='(min-width: 1200px) 370px, (min-width: 768px) and (max-width: 991px) 46vw, (max-width: 992px) 92vw,  31vw'
+  		        alt="{{$category['element_data']['image']['img_alt']}}"
+  		        title="{{$category['element_data']['image']['title']}}" />
+  		    @endif
+  		    <div>{!!$category['element_data']['text']['text2']!!}</div>
+  		  </a>
+  		</div> -->
+
+  	</div>
+  </div>
+</section>

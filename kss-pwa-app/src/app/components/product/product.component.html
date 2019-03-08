@@ -1,0 +1,29 @@
+<div class="kss-extension" attr.static_element-id="{{product.sequence}}" static_element-display_type="Trending Products" attr.static_element-type="{{product.type}}" page_slug="home">
+  <div class="card h-100 product-card position-relative">
+    <a href="{{product.products[0]['product-slug']}}" class="img-holder">
+      <div class="">
+          <img *ngIf="product.products[0].images['1x']; else noImage"
+
+            [useSrcset]=true
+            [offset]=500
+            [defaultImage]="'/assets/img/transparent.png'"
+            [lazyLoad]="createDataSrcSet(product.products[0].images['1x'], '270w', product.products[0].images['2x'], '540w')"
+            class="card-img-top"
+            title="{{product.products[0].title}}"
+            alt="{{product.products[0].title}}"
+            sizes="(min-width: 1200px) 270px, (min-width: 992px) 226px, (max-width: 991px) 38vw">
+            <ng-template #noImage>
+	            <img
+              [defaultImage]="'/img/placeholder.svg'"
+              [useSrcset]=true
+              [offset]=500
+              [lazyLoad]="createDataSrcSet('/img/placeholder.svg', '270w', '/img/placeholder.svg', '540w', '/img/placeholder.svg', '810w')"
+	            class="card-img-top"
+	            title="{{product.products[0].title}}"
+	            alt="{{product.products[0].title}}">
+            </ng-template>
+     </div>
+    </a>
+    <div class="kss-price kss-price--medium">₹{{product.products[0].sale_price}}</div>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+.our-offers{
+	.label-box__action{
+		min-width: 175px;
+	}
+	.label-box{
+		@include bp(tab) {
+			padding: 0;
+			margin: 0 1rem;
+		}
+		@include bp(max_tab) {
+			flex-basis: 33.33%;
+		}
+		&:hover{
+			.label-box__action{
+				border-color: #6f6f6f;
+			}
+		}
+	}
+}

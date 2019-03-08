@@ -96,7 +96,7 @@
 					</div>
 					<div class="product-detail">
 						<a href="{{item.href}}" class="kss-link kss_highlight">
-							<label class="m-0 text-capitalize">
+							<label class="m-0 text-capitalize kss_highlight">
 							{{ item.attributes.title }}
 						</label>
 						</a>
@@ -135,7 +135,7 @@
 							<div *ngIf="item.available_quantity">
 								<ul *ngFor="let array of item.available_quantity" class="product-price px-3 mt-2">
 										<li class="px-0 py-1" style="list-style: disc;border-bottom: 0;">
-											{{array.warehouse}} 
+											{{array.warehouse}}
 										</li>
 										<li class="px-0 py-1" style="list-style: disc;border-bottom: 0;">
 											{{array.location}}
@@ -163,7 +163,7 @@
 			</li>
 		</ul>
 
-		
+
 		<div class="free-shipping d-flex align-items-center justify-content-center">
 			<img src="/img/delivery-truck.png" title="Free Delivery" alt="Free Delivery" width="40">
 			<p class="mb-0 pl-3">Yay! <strong>Free Delivery</strong> on this order</p>
@@ -177,9 +177,9 @@
 			<h4 class="mb-2 font-weight-bold">Promotion Summary</h4>
 			<app-applied-coupon [promoApplied]="cart.promo_applied" [promotions]="promotions"> </app-applied-coupon>
 			<div *ngIf="cart.promo_applied">
-				<app-better-promo-available [promoApplied]="cart.promo_applied" [promotions]="promotions" [orderTotal]="cart.summary.sale_price_total"></app-better-promo-available>	
-			</div>			
-			<app-upgrade-cart [promotions]="promotions" [orderTotal]="cart.summary.sale_price_total" (noUpgradePromo)="displayPromo = false"> </app-upgrade-cart>			
+				<app-better-promo-available [promoApplied]="cart.promo_applied" [promotions]="promotions" [orderTotal]="cart.summary.sale_price_total"></app-better-promo-available>
+			</div>
+			<app-upgrade-cart [promotions]="promotions" [orderTotal]="cart.summary.sale_price_total" (noUpgradePromo)="displayPromo = false"> </app-upgrade-cart>
 			<hr>
 		</div>
 
@@ -199,7 +199,7 @@
 					</div>
 					<div class="ml-auto">
 						<h5 class="m-0"><i class="fas fa-angle-right"></i></h5>
-					</div>					
+					</div>
 				</div>
 			</div>
 			<hr>
@@ -207,9 +207,9 @@
 
 
 <!-- 		<div *ngIf="promotions && promotions.length">
-			<app-promotions-list  [promotionsList]="promotions" [orderTotal]="cart.summary.sale_price_total"></app-promotions-list>	
+			<app-promotions-list  [promotionsList]="promotions" [orderTotal]="cart.summary.sale_price_total"></app-promotions-list>
 		</div> -->
-		
+
 		<!-- <div class="row no-gutters">
 			<div class="col-7">
 	   <div class="form-group m-0">
@@ -275,11 +275,11 @@
 				</div>
 				<div class="align-items-center d-flex justify-content-between w-100"> -->
 					<button *ngIf="cart.cart_type =='order'" id="checkout" class="btn kss-btn kss-btn--outline-secondary kss-btn--big mr-3" (click)="editBag()" >Edit Bag</button>
-					<button  id="checkout" class="btn kss-btn kss-btn--big mt-0" [ngClass]="{'disabled' : cartItemOutOfStock}" (click)="checkLoginStatus()" >Secure Checkout</button>	
+					<button  id="checkout" class="btn kss-btn kss-btn--big mt-0" [ngClass]="{'disabled' : cartItemOutOfStock}" (click)="checkLoginStatus()" >Secure Checkout</button>
 				<!-- </div> -->
-				
+
 		</div>
-	</div>	
+	</div>
 
 	<div *ngIf="cart.items && cart.items.length == 0" class="empty-cart text-center d-flex align-items-center justify-content-center flex-column">
 		<img src="/img/empty-cart-icon.png" class="img-fluid pt-2 cart-bag-img" width="150">
@@ -369,7 +369,7 @@
 				<!-- <div class="text-center">
 					<strong class="h5 font-weight-bold">OR</strong>
 				</div> -->
-				<app-promotions-list  [promotionsList]="coupons" [orderTotal]="cart.summary.sale_price_total" [appliedCoupon]="cart.applied_coupon"></app-promotions-list>	
+				<app-promotions-list  [promotionsList]="coupons" [orderTotal]="cart.summary.sale_price_total" [appliedCoupon]="cart.applied_coupon"></app-promotions-list>
 			</div>
 			<div class="d-block pl-3 pr-3 coupon-sticky" [ngClass]="{'fixed-bottom' : enterCoupon}">
 				<div class="py-2 pr-3 d-flex align-items-center">

@@ -9,7 +9,7 @@
 <meta name="google-site-verification" content="SntaXthhmMlR2wlwpcynb3PYim7wcDSpSpq2rrx8t0I" />
 <meta name="theme-color" content="#707279" />
 <link  rel="icon" type="image/x-icon" href="{{CDN::asset('/img/fav/fav-64.png') }}" />
-
+<base href="/">
 <!-- <meta name="ng-inline" content="{{CDN::asset('/js/cart/inline.bundle.js') }}">
 <meta name="ng-vendor" content="{{CDN::asset('/js/cart/vendor.bundle.js') }}">
 <meta name="ng-polyfills" content="{{CDN::asset('/js/cart/polyfills.bundle.js') }}">

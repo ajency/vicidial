@@ -1,0 +1,96 @@
+
+<a href="{{box_data.element_data.image.href}}" class="d-block text-black">
+	<!-- <img src="https://via.placeholder.com/300" alt="" title="" class="d-block w-100 img-fluid pb-1"> -->
+
+
+	<!-- Offers section -->
+	<img *ngIf="box_data.type == 'offer'" class="d-block w-100 img-fluid img-holder"
+		[useSrcset]="true"
+		[offset]=500
+		[defaultImage]="'/assets/img/transparent.png'"
+		[lazyLoad]="createDataSrcSet(box_data.images.default['2x'], '700w', box_data.images.default['1x'], '350w')"
+        sizes='(min-width: 1200px) 328px, (min-width: 768px) 26vw,  56vw'
+        title="{{box_data.element_data.image.title}}"
+        alt="{{box_data.element_data.image.img_alt}}"/>
+
+
+	<!-- Brands box-small -->
+ 	<img *ngIf="box_data.type == 'brand'" class="d-block w-100 img-fluid img-holder"
+	 	[useSrcset]="true"
+		[offset]=500
+		[defaultImage]="'/assets/img/transparent.png'"
+		[lazyLoad]="createDataSrcSet(box_data.images.default['2x'], '340w', box_data.images.default['1x'], '170w')"
+        sizes='(min-width: 1200px) 168px, (max-width: 991px) 40vw'
+        title="{{box_data.element_data.image.title}}"
+        alt="{{box_data.element_data.image.img_alt}}"/>
+
+	<!-- Home category -->
+	<img *ngIf="box_data.type == 'categories'" class="d-block w-100 img-fluid img-holder"
+        [useSrcset]="true"
+        [offset]=500
+        [defaultImage]="'/assets/img/transparent.png'"
+        [lazyLoad]="createDataSrcSet(box_data.images.default['2x'], '600w', box_data.images.default['1x'], '300w')"
+        sizes='(min-width: 1200px) 268px, (max-width: 991px) 40vw'
+        title="{{box_data.element_data.image.title}}"
+        alt="{{box_data.element_data.image.img_alt}}"/>
+
+
+    <!-- Story -->
+	<img *ngIf="box_data.type == 'stories'" class="d-block w-100 img-fluid img-holder"
+        [useSrcset]="true"
+        [offset]=500
+        [defaultImage]="'/assets/img/transparent.png'"
+        [lazyLoad]="createDataSrcSet(box_data.images.default['2x'], '720w', box_data.images.default['1x'], '360w')"
+        sizes='(min-width: 1200px) 368px, (min-width: 767px) 32vw, 90vw'
+        title="{{box_data.element_data.image.title}}"
+        alt="{{box_data.element_data.image.img_alt}}"/>
+
+
+	<div class="label-box__sticky">
+		<span class="label-box__action" [ngStyle]="{'background-color' : box_data.element_data.bg_color ? box_data.element_data.bg_color : '', 'color' : box_data.element_data.text_color ? box_data.element_data.text_color : ''}" style="background-color: #fff; color: #000;" *ngIf="box_data.element_data.text.text1"> {{box_data.element_data.text.text1}}
+		 	<span *ngIf="box_data.type == 'category'" class="cat-title">2-14 Years, Boys &amp; Girls </span>
+		 </span>
+		<span class="label-box__muted" *ngIf="box_data.element_data.text.text2">{{box_data.element_data.text.text2}}</span>
+	</div>
+</a>
+
+		<!-- Offers section -->
+<!-- 		<img class="d-block w-100 img-fluid"
+            src="https://via.placeholder.com/170x170"
+            srcset="https://via.placeholder.com/1050x1050 1050w,
+                         https://via.placeholder.com/700x700 700w,
+                         https://via.placeholder.com/350x350 350w"
+            sizes='(min-width: 1200px) 328px, (min-width: 768px) 26vw,  58vw'
+            title=""
+            alt=""/> -->
+
+
+		<!-- Brands box-small -->
+<!--  		<img class="d-block w-100 img-fluid"
+            src="https://via.placeholder.com/170x170"
+            srcset="https://via.placeholder.com/510x510 510w,
+                         https://via.placeholder.com/340x340 340w,
+                         https://via.placeholder.com/170x170 170w"
+            sizes='(min-width: 1200px) 168px, (max-width: 991px) 46vw'
+            title=""
+            alt=""/> -->
+
+		<!-- Home category -->
+	<!-- 	<img class="d-block w-100 img-fluid"
+            src="https://via.placeholder.com/170x170"
+            srcset="https://via.placeholder.com/900x900 900w,
+                         https://via.placeholder.com/600x600 600w,
+                         https://via.placeholder.com/300x300 300w"
+            sizes='(min-width: 1200px) 168px, (max-width: 991px) 46vw'
+            title=""
+            alt=""/> -->
+
+<!--
+
+		<div class="label-box__sticky">
+			<span class="label-box__action" style="background-color: #fff; color: #000;"> 	Explore Now
+			  <span class="cat-title">2-14 Years, Boys &amp; Girls </span>
+			 </span>
+			<span class="label-box__muted">*On Selected Merchandize</span>
+		</div> -->
+
