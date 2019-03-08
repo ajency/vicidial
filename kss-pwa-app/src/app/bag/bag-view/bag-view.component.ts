@@ -317,12 +317,14 @@ export class BagViewComponent implements OnInit {
           let url = window.location.href.split("#")[0] + '#/bag/shipping-address';
           history.pushState({bag : true}, 'bag', url);
           this.openShippingAddress = true;
+          $('#cd-cart').addClass('overflow-h');
         }
         else{
           // this.router.navigateByUrl('bag/shipping-address');
           let url = window.location.href.split("#")[0] + '#/bag/shipping-address';
           history.pushState({bag : true}, 'bag', url);
           this.openShippingAddress = true;
+          $('#cd-cart').addClass('overflow-h');
         }
         this.appservice.removeLoader();
       })

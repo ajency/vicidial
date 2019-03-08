@@ -46,7 +46,8 @@ export class ShippingDetailsComponent implements OnInit {
 
   checkCartStatus(){
     if(!this.appservice.isLoggedInUser()){
-       this.router.navigateByUrl('/bag', { replaceUrl: true });
+       // this.router.navigateByUrl('/bag', { replaceUrl: true });
+       this.navigateBack();
     }
     else{
       this.appservice.showLoader();
@@ -65,13 +66,15 @@ export class ShippingDetailsComponent implements OnInit {
            this.getAddress();
         }
         else{
-          this.router.navigateByUrl('/bag', { replaceUrl: true });
+          // this.router.navigateByUrl('/bag', { replaceUrl: true });
+          this.navigateBack();
         }
       })
       .catch((error)=>{
         console.log("error ===>", error);
         this.appservice.removeLoader();
-        this.router.navigateByUrl('/bag', { replaceUrl: true });
+        // this.router.navigateByUrl('/bag', { replaceUrl: true });
+        this.navigateBack();
       })
     }
   }
