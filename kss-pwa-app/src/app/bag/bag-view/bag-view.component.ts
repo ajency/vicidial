@@ -338,6 +338,7 @@ export class BagViewComponent implements OnInit {
       history.pushState({bag : true}, 'bag', url);
       this.openShippingSummary = true;
       this.appservice.continueOrder = true;
+      $('#cd-cart').addClass('overflow-h');
     }
   }
 
@@ -563,9 +564,11 @@ export class BagViewComponent implements OnInit {
         this.cartOpenOnTrigger = false;
       else
         this.fetchCartDataFromServer();
+      $('#cd-cart').removeClass('overflow-h');
     }
     else if(window.location.href.endsWith('#/bag/shipping-address')){
       this.openShippingSummary = false;
+      $('#cd-cart').addClass('overflow-h');
     }
   }
   
