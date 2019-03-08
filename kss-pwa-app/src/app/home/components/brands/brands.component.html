@@ -1,0 +1,19 @@
+<section class="mt-3 mt-md-4">
+	<div class="container ">
+		<div class="row">
+			<div class="col-md-12 text-center">
+				<h2 class="font-weight-bold mb-0">
+					<img src="../../../../assets/img/brands-title.jpg" class="img-fluid" alt="Shop by Brands" title="Shop by Brands">
+				</h2>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="pb-3 pb-md-5">
+	<div class="container">
+		<div class="home-brands d-sm-flex align-items-sm-center justify-content-sm-center label-box-small row">
+			<div *ngFor="let brand of brands" class="label-box img-holder position-relative brand-label-box kss-extension" attr.static_element-id="{{brand.sequence}}" static_element-display_type="Shop by Brand" attr.static_element-type="{{brand.type}}" page_slug="home" app-label-box [box_data]="brand" [box_type]="brand"></div>
+		</div>
+	</div>
+</section>

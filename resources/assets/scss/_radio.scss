@@ -75,7 +75,7 @@
             color: #777;
             img {
                 box-shadow: 0 5px 0 0 theme-color("primary");
-            }  
+            }
         }
     }
     &.wo-image {
@@ -146,11 +146,11 @@
                 }
             }
         }
-    }    
+    }
     @media (min-width: 320px) and (max-width: 767.98px) {
         overflow: scroll;
         div {
-           
+
         }
     }
     label {

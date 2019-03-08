@@ -1,0 +1,55 @@
+.home-category{
+	.label-box{
+		&__action{
+			background-color: #fff;
+		    color: #000;
+		    flex-direction: column;
+		    padding: 0.5rem 1rem;
+		    border-color: #6f6f6f;
+		    min-width: 120px;
+		    @include bp(xs) {
+				min-width: 100px;
+		    }
+		    @include bp(mini) {
+		    	padding: 0.5rem 0.8rem;
+		    }	
+		}
+		.cat-title{
+			font-size: 0.8rem;
+    		color: #696868;
+    		text-transform: capitalize;
+    		transition: all 0.5s ease;
+		}
+		&__muted{
+			font-size: 0.65rem;
+		}
+		@include bp(max_tab) {
+			&__sticky{
+				top: 90%;
+			}
+		}
+		@include bp(mobile) {
+			&__sticky{
+				bottom: -47px;
+			}
+			&__action{
+				font-size: 0.75rem;
+			}
+			&__muted{
+				font-size: 0.8rem;
+				margin-top: 0.1rem;
+			}
+			.cat-title{
+				font-size: 0.6rem;
+			}
+		}
+		&:hover{
+			.cat-title{
+				color: #fff;
+			}
+		}
+	}
+	@include bp(mobile) {
+		transition: all 0.3s ease;
+	}
+}

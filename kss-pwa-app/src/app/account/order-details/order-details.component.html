@@ -1,0 +1,193 @@
+
+<div class="cart-step1-header">
+	<nav class="navbar navbar-dark bg-dark pt-3 pb-3 ">
+		<div class="d-flex align-items-center w-100">
+			<div class="">
+				<a>
+					<img _ngcontent-c1="" class=" img-fluid m-0" src="/img/logo-kss.png" width="180px" xpreview="/img/logo-kss.png">
+			 	</a>
+			</div>
+			<div class="ml-auto align-self-center">
+				<h3 class="m-0 text-white kss_highlight btn-pay" (click)="closeWidget()"><span aria-hidden="true">×</span></h3>
+			</div>
+		</div>
+	</nav>
+</div>
+
+<div *ngIf="isLoggedIn()" class="container mt-3 order-details p-0">
+	<div class="row">
+		<div class="col-12">
+             <div>
+	          	<div class="row no-gutter">
+					<div *ngIf="showBackButton" class="col-1">
+		             <h3 class="m-0 font-weight-bold back-to-cart">
+		               <img (click)="navigateBack()" class="btn-back kss_highlight" src="/img/left-arrow.png" style="width:20px;">
+		             </h3>
+		           </div>
+					<div class="col-10">
+						<h3 class="modal-title font-weight-bold" id="exampleModalLabel">Order Details</h3>
+					</div>
+				</div>
+				<hr>
+	      </div>
+
+		</div>
+	</div>
+
+	<!-- Error message -->
+	<div *ngIf="cancelOrderFailureMsg" class="kss-flash kss-flash--error mt-0 mb-4">
+		{{cancelOrderFailureMsg}}
+	</div>
+
+	<!-- Success message -->
+	<div *ngIf="cancelSuccessful" class="font-weight-normal kss-flash alert-warning mb-4 mt-0">
+	    <h5 class="font-weight-bold"><i class="fa-check-circle fas pr-1 text-success"></i> Shipment Cancel Successful</h5>
+	    <p class="">Your shipment is cancelled successfully. Refund to your card/bank will take around 5-7 business days to reflect. Any coupons applied to this order will be reinstated.</p>
+	    <p class="mb-0">For more information, please view our <a href="/terms-and-conditions#cancellation" class="text-secondary border-bottom">cancellation policy</a></p>
+	</div>
+
+	<div *ngIf="order;else other_content" class="row mt-md-2 mt-0">
+
+		<div class="col-12">
+
+			<!-- Order info -->
+			<app-order-info [order_info]="order.order_info" [showStatus]=true></app-order-info>
+
+			<hr class="mb-4">
+
+			<!-- Product info -->			
+			<app-order [items]="order.items" [showStatus]=true></app-order>
+<!-- 			<div class="d-flex  align-self-center mb-4">
+				<label>
+					Need help with this order? <a href="#" class="kss-anchor">Visit our help center</a>
+				</label>
+			</div> -->
+
+			<div *ngIf="order.order_info.cancel_allowed" class="card mb-4 py-3 shadow-sm text-center">
+				<a (click)="openCancelOrder()" href="javascript:void(0);" class="btn order-details-btn p-0 text-secondary">Cancel Order <i class="fas fa-chevron-right"></i></a>
+			</div>
+
+		</div>
+
+		<!-- Order Info sidebar -->
+		<div class="col-12 mb-4 pb-3">
+			<app-payment-info [payment_info]="order.payment_info"></app-payment-info>
+			<app-shipping-address [shipping_address]="order.shipping_address"></app-shipping-address>
+			<app-order-summary [order_summary]="order.order_summary"></app-order-summary>
+		</div>
+	</div>
+
+	<ng-template #other_content>
+		<div class="no-order-details d-flex align-items-center flex-column justify-content-center text-center">
+			<img src="/img/orders-empty.png" class="img-fluid" width="80">
+			<h5 _ngcontent-c1="" class="pt-4 pb-2 mb-0" style="line-height: 1.5;">Opps, it looks like this order does not exists.</h5>
+			<div class="mt-2 mb-4 pt-2 pb-3 text-center">
+				<a href="javascript:void(0);" class="btn kss-btn kss-btn--secondary-link" (click)="openListOfOrders(order)">Go to My orders <i class="fas fa-chevron-right"></i></a>
+			</div>	
+		</div>
+	</ng-template>
+
+</div>
+
+<div *ngIf="!isLoggedIn()">
+	<h4 class="font-weight-bold mt-3 mb-0">My Orders</h4>
+	<hr>
+	<div class="mt-4 kss-flash kss-flash--info py-3">
+		Can't see all your orders? <a href="javascript:void(0);" (click)="displayModal()" class="text-secondary font-weight-bold">Sign In</a>
+	</div>
+</div>	
+
+
+<!-- Order cancellation form -->
+<!-- Cancel Shipment section -->
+<!-- Add slide-show class to translate -->
+<div class="order-cancel mb-4 pb-4 slide-out p-3" [ngClass]="{'slide-show' : cancelOrder}">
+	<div class="row">
+		<div class="col-12">
+             <div>
+	          	<div class="row no-gutter">
+					<div class="col-1">
+		             <h3 class="m-0 font-weight-bold back-to-cart" (click)="closeCancelOrder()">
+		               <img class="btn-back kss_highlight" src="/img/left-arrow.png" style="width:20px;">
+		             </h3>
+		           </div>
+					<div class="col-10">
+						<h3 class="modal-title font-weight-bold" id="exampleModalLabel">Cancel Shipment</h3>
+					</div>
+				</div>
+				<hr>
+	      </div>
+
+		</div>
+	</div>
+
+	<div *ngIf="cancelOrder" class="mb-5 pb-5">
+		<div class="row mt-md-2 mt-0">
+			<div class="col-12">
+				<div class="d-flex row mb-3">
+					<div class="pr-2 col-12">
+						<h6 class="d-block font-weight-bold m-0 kss-title mb-2">The below items will be cancelled.</h6>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="cancel-od-selection">
+			
+			<div class="row primary-info cancelable-items">
+				<div class="col-12 d-flex flex-column"  *ngFor="let item of order.items; let i = index">
+					<app-item [item]="item" [showStatus]=false ></app-item>
+				</div>
+			</div>
+			
+		</div>
+
+
+		<!-- cancel info -->
+		<div class="my-3">
+			<div class="card shadow-sm cancel-coupon-details">
+				<div class="card-body p-3">
+					<p class="text-muted mb-2">Any coupons applied to this order will be reverted</p>
+					<p class="text-muted mb-2">Refund to your card/bank will take around 5-7 business days to reflect</p>
+					<p class="text-muted mb-2">For more information, please view our <a href="/terms-and-conditions#cancellation" class="border-bottom text-secondary">cancellation policy</a></p>
+				</div>
+			</div>
+		</div>
+
+		<!-- Cancel reason inputs -->
+		<div class="bg-lightgray my-4 p-4 cancel-reason-box">
+			<h3 class="font-weight-bold kss-title mb-0 text-muted cancel-reason-box__title">Please tell us the reason for Cancellation</h3>
+			<div class="mt-4 mb-3">
+			    <label class="cancel-reason-box__label">
+			        Reason for Cancellation <span class="text-danger">*</span>
+			    </label>
+			  	<select *ngIf="cancelReasons" class="form-control" [(ngModel)]="cancelReasonId" (ngModelChange)="checkCancelReason()">			  			
+						<option *ngFor="let option of cancelReasons" [ngValue]="option.id">{{option.value}}</option>
+				</select>
+			</div>
+			<div class="mt-4">
+			    <label class="cancel-reason-box__label">Additional Remarks</label>
+			    <textarea class="form-control" [(ngModel)]="additionalRemark"></textarea>
+			</div>
+		</div>
+
+		<!-- Checkbox confirm -->
+<!-- 		<div class="my-4">
+			<div class="d-flex">
+				<div class="custom-checkbox pl-4">
+		            <input type="checkbox" class="facet-category custom-control-input" id="confirm-check">
+					<label class="custom-control-label f-w-4 font-weight-bold pl-2 pt-1" for="confirm-check">I confirm that I want to cancel my order
+					</label>            
+				</div>
+			</div>
+		</div> -->
+
+
+		<!-- Sticky Action button -->
+		<div class="p-3 fixed-bottom fixed-checkout-btn d-flex align-items-center justify-content-between">
+			<button (click)="closeCancelOrder()" id="cancel-cancel-order" class="btn kss-btn kss-btn--outline-secondary kss-btn--big mr-3">Cancel</button>
+			<button id="confirm-cancel-order" class="btn kss-btn kss-btn--big mt-0"  [ngClass]="{'disabled' : !cancelReasonId}" (click)="callCancelOrderApi()">Confirm</button>	
+		</div>
+	</div>
+
+</div>	

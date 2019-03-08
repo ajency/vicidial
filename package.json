@@ -24,9 +24,11 @@
     "lodash": "^4.17.4",
     "sass": "^1.16.0",
     "sass-loader": "^7.1.0",
-    "vue": "^2.5.7"
+    "vue": "^2.5.7",
+    "workbox-cli": "^3.6.3"
   },
   "dependencies": {
+    "bootstrap": "^4.3.1",
     "handlebars": "^4.0.12",
     "laravel-mix": "^4.0.0"
   }

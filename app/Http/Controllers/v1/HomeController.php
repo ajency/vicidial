@@ -26,4 +26,14 @@ class HomeController extends Controller
     {
         return $request->user();
     }
+
+    public function newhome(Request $request)
+    {
+        return view('home_new');
+    }
+
+    public function newdraft(Request $request)
+    {
+        return view('draft_new');
+    }
 }

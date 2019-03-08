@@ -1,0 +1,55 @@
+<!-- Order info -->
+<!-- Order shipped details -->
+<div *ngFor="let sub_order of sub_orders; let i = index" class="mb-2 my-order-collapse">
+	<div class="d-flex bd-highlight row mb-3">
+		<div class="pb-2 pr-2 col-9">
+			<label class="d-block m-0">Shipment {{i+1}}</label>
+				<span *ngIf="sub_order.store_address">Sold by: {{sub_order.store_address.store_name}} - {{sub_order.store_address.locality}}, {{sub_order.store_address.city}}</span>			
+			<!-- <i class="fas fa-clipboard-check mr-1 text-muted"></i> <span class="text-success font-weight-bold">Order Processed</span> -->
+		</div>
+		<div class="pb-2 ml-auto col-3 text-right">
+	<!-- 		Total:
+			<h6 class="mt-1"><span class="rs-symbol"><i class="fas fa-rupee-sign sm-font"></i></span> {{$sub_order['total']}} for {{$sub_order['number_of_items']}} {{$sub_order['number_of_items'] == 1 ? "Item" : "Items"}}</h6> -->
+			<h6 class="mt-1">{{sub_order.number_of_items}} <span *ngIf="sub_order.number_of_items == 1">Item</span> <span *ngIf="sub_order.number_of_items > 1">Items</span> </h6>
+		</div>
+	</div>
+
+	<!-- Actual order info -->
+	<div class="p-md-3 p-2 mb-3 card shadow-sm">
+		<div *ngFor="let item of sub_order.items; let last = last">
+			<div class="row primary-info">
+				<div class="col-12">
+					<div class="d-flex order-card">					
+						<a href="{{item.href}}" class="order-card__image" [ngClass]="{'variant-placeholder' : item.images[0]=='/img/placeholder.svg'}">
+							<div class="product-img">
+								<img src="{{item.images[0]}}" class="lazyload img-fit" data-srcset="{{item.images[0]}} 50w, {{item.images[1]}} 100w, {{item.images[2]}} 150w" sizes="50px">
+							</div>
+						</a>	
+						<div class="product-detail order-card__detail">
+							<a href="{{item.href}}" class="text-dark">
+								<div class="product-name text-truncate">
+									{{item.title}}
+								</div>
+							</a>
+							<div class="product-size text-muted mb-1">
+								<span>Size: {{item.size}}</span> <span>|</span> <span>Qty: {{item.quantity}}</span>
+							</div>
+							<div class="product-price">
+								<div class="kss-price kss-price--smaller">₹{{item.price_final}}									
+									<span *ngIf="item.price_final != item.price_mrp">
+										<small class="kss-original-price text-muted">₹{{item.price_mrp}}
+									  	</small>
+									  	<span class="kss-discount text-danger">{{item.off_percentage}}</span>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>	
+			</div>								
+			<hr *ngIf="!last" class="mt-4 mb-4">
+		</div>
+	</div>
+</div>
+
+

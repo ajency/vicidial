@@ -1,72 +1,72 @@
-.kss_shipping, .kss_shipping_summary, .kss_payment{
-    .secure-label{
-        line-height:15px;
-        font-size:10px;
-        i{
-            font-size:26px
-        }
-    }
-    .scroll-container{
-        overflow:hidden;
-        margin-left:-20px;
-        margin-right:-20px;
-    }
-    .list-group{
-        label{
-            display:flex;
-        }
-    }
-}
+// .kss_shipping, .kss_shipping_summary, .kss_payment{
+//     .secure-label{
+//         line-height:15px;
+//         font-size:10px;
+//         i{
+//             font-size:26px
+//         }
+//     }
+//     .scroll-container{
+//         overflow:hidden;
+//         margin-left:-20px;
+//         margin-right:-20px;
+//     }
+//     .list-group{
+//         label{
+//             display:flex;
+//         }
+//     }
+// }
 
-#cd-cart .modal, #cd-cart .modal-backdrop {
-    position: fixed;
+// #cd-cart .modal, #cd-cart .modal-backdrop {
+//     position: fixed;
 
-}
+// }
 
-@media (max-width: 767.98px) {
-    .kss_shipping {
-        .navbar{
-                position: fixed !important;
-                width: 102%;
-                z-index: 999;
-        }
-        .padding-size{
-            padding-top:80px !important;
-        }
-    }
-}
+// @media (max-width: 767.98px) {
+//     .kss_shipping {
+//         .navbar{
+//                 position: fixed !important;
+//                 width: 102%;
+//                 z-index: 999;
+//         }
+//         .padding-size{
+//             padding-top:80px !important;
+//         }
+//     }
+// }
 
-.shipping-content-info{
-    display:none;
-        .radio-wrap{
-            display:block !important;
-            .radio-label{
-                border:0px;
-                padding:0px;
-                margin-top:10px;
-                margin-bottom:10px;
-                position:relative;
-                width:100% !important;
-                display:block !important;
-                .radio-option{
-                    text-align:left;
-                    font-weight: normal;
-                    color: #000;
-                }
-            }
-            .radio-selection{
-                position: absolute;
-                right: 5px;
-                font-size: 20px;
-                top: 5px;
-                color:#ccc;
-            }
-        }
-        .number-edit{
-            display:none;
-        }
+// .shipping-content-info{
+//     display:none;
+//         .radio-wrap{
+//             display:block !important;
+//             .radio-label{
+//                 border:0px;
+//                 padding:0px;
+//                 margin-top:10px;
+//                 margin-bottom:10px;
+//                 position:relative;
+//                 width:100% !important;
+//                 display:block !important;
+//                 .radio-option{
+//                     text-align:left;
+//                     font-weight: normal;
+//                     color: #000;
+//                 }
+//             }
+//             .radio-selection{
+//                 position: absolute;
+//                 right: 5px;
+//                 font-size: 20px;
+//                 top: 5px;
+//                 color:#ccc;
+//             }
+//         }
+//         .number-edit{
+//             display:none;
+//         }
 
-}
+// }
 .shipping-state-2{
     display:none;
 }

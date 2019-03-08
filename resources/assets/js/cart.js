@@ -2,7 +2,6 @@ var add_to_cart_failed = false;
 var add_to_cart_failure_message = '';
 var add_to_cart_clicked = false;
 var add_to_cart_completed = false;
-
 // Block scope
 const isMobile = isMobileScreen();
 
@@ -17,12 +16,12 @@ $(document).ready(function(){
     //Set crt count on page load
     updateCartCountInUI();
 
-    if(window.location.href.includes('#/bag') || window.location.href.includes('#/account'))
+    if((window.location.href.includes('#/bag') || window.location.href.includes('#/account')) && (window.location.pathname !="/newhome" || window.location.pathname !="/drafthome" ) )
         openCart();
 
     window.onhashchange = function() { 
      console.log("hash changed");
-     if(!$('#cd-cart').hasClass("speed-in") && (window.location.href.includes('#/bag') || window.location.href.includes('#/account')) ){
+     if(!$('#cd-cart').hasClass("speed-in") && (window.location.href.includes('#/bag') || window.location.href.includes('#/account')) && (window.location.pathname !="/newhome" || window.location.pathname !="/drafthome") ){
         openCart();
      }
     }    
@@ -78,8 +77,8 @@ $(document).ready(function(){
             window.location = url;
 
             addToCart();
-            $('#size-modal').modal('hide');
-            $('.kss_sizes .radio-input').prop('checked', false);
+            // $('#size-modal').modal('hide');
+            // $('.kss_sizes .radio-input').prop('checked', false);
             // if(isMobile){
             //     $('.add-bag-btn .cd-add-to-cart').html(XSsizemsg);
             // }
@@ -124,6 +123,8 @@ $(document).ready(function(){
             data: data,
             dataType: 'JSON',
             success: function (data) {
+                $('#size-modal').modal('hide');
+                $('.kss_sizes .radio-input').prop('checked', false);
                 $('.cd-add-to-cart .btn-icon').hide();
                 $('.cd-add-to-cart .btn-contents').show();
                 console.log('second');
@@ -137,22 +138,25 @@ $(document).ready(function(){
                 // $('.kss-alert').addClass('kss-alert--success');
                 // $('.kss-alert').addClass('is-open');
                 $('.cd-add-to-cart').removeClass('cartLoader');
-                setTimeoutVariable();                        
+                setTimeoutVariable();                       
             },
             error: function (request, status, error) {
                 // console.log("Check ==>",request);
-                if(request.status == 401)
+                if(request.status == 401){
                     userLogout(request);
-                else if(request.status == 0)
+                }
+                else if(request.status == 0){
                     showErrorPopup(request);
+                }
                 else if(!isLoggedInUser() && request.status == 403){
                     addToCart();
                 }
                 else{
                     if(isLoggedInUser() && request.status == 400 || request.status == 403)
                         getNewCartId(request);
-                    else
+                    else{
                         showErrorPopup(request);
+                    }
                 }
             }
         });
@@ -256,16 +260,56 @@ loaded = false;
 
 function loadAngularApp(){
     if(!loaded){
-    $.getScript("/views/cart/inline.bundle.js")        
+    // $.getScript("/views/cart/inline.bundle.js")        
+    //         .done(function(script, textStatus){
+    //             // console.log(textStatus);
+    //             $.getScript("/views/cart/vendor.bundle.js")
+    //                 .done(function(script2, textStatus2){
+    //                     // console.log(textStatus2);
+    //                     $.getScript("/views/cart/polyfills.bundle.js")
+    //                         .done(function(script3, textStatus3){
+    //                             // console.log(textStatus3);
+    //                             $.getScript("/views/cart/main.bundle.js")
+    //                                 .done(function(script4,textStatus4){
+    //                                     // console.log(textStatus4);
+    //                                     loaded = true;
+    //                                 })
+    //                                 .fail(function(jqxhr, settings, exception){
+    //                                     // console.log("angular load failed")
+    //                                     // loadAngularApp();
+    //                                 })
+    //                         })
+    //                         .fail(function(jqxhr, settings, exception){
+    //                             // console.log("angular load failed")
+    //                             // loadAngularApp();
+    //                         })
+    //                 })
+    //                 .fail(function(jqxhr, settings, exception){
+    //                     // console.log("angular load failed")
+    //                     // loadAngularApp();
+    //                 })
+    //         })
+    //         .fail(function(jqxhr, settings, exception){
+    //             // console.log("angular load failed")
+    //             // loadAngularApp();
+    //         })
+    // }
+        $("<link/>", {
+           rel: "stylesheet",
+           type: "text/css",
+           href: "/views/kss-pwa/styles.css"
+        }).appendTo("head");
+
+        $.getScript("/views/kss-pwa/runtime.js")        
             .done(function(script, textStatus){
                 // console.log(textStatus);
-                $.getScript("/views/cart/vendor.bundle.js")
+                $.getScript("/views/kss-pwa/polyfills.js")
                     .done(function(script2, textStatus2){
                         // console.log(textStatus2);
-                        $.getScript("/views/cart/polyfills.bundle.js")
-                            .done(function(script3, textStatus3){
+                        // $.getScript("/views/kss-pwa/scripts.js")
+                            // .done(function(script3, textStatus3){
                                 // console.log(textStatus3);
-                                $.getScript("/views/cart/main.bundle.js")
+                                $.getScript("/views/kss-pwa/main.js")
                                     .done(function(script4,textStatus4){
                                         // console.log(textStatus4);
                                         loaded = true;
@@ -274,11 +318,11 @@ function loadAngularApp(){
                                         // console.log("angular load failed")
                                         // loadAngularApp();
                                     })
-                            })
-                            .fail(function(jqxhr, settings, exception){
+                            // })
+                            // .fail(function(jqxhr, settings, exception){
                                 // console.log("angular load failed")
                                 // loadAngularApp();
-                            })
+                            // })
                     })
                     .fail(function(jqxhr, settings, exception){
                         // console.log("angular load failed")

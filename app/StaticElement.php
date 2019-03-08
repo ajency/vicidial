@@ -7,6 +7,7 @@ use Ajency\FileUpload\models\FileUpload_Mapping;
 use Ajency\FileUpload\models\FileUpload_Photos;
 use Ajency\FileUpload\models\FileUpload_Varients;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class StaticElement extends Model
 {
@@ -526,6 +527,10 @@ class StaticElement extends Model
     public static function publish()
     {
         $getpublish = StaticElement::select()->where('draft', true)->get();
+
+        $getpublish->pluck('page_slug')->unique()->each(function($slug){
+            Cache::forget('static_element_'.$slug.'_published');
+        });
 
         foreach ($getpublish as $pub) {
             if ($pub->published == null) {
