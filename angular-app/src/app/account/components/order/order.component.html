@@ -1,10 +1,10 @@
 <!-- Order info -->
 <!-- Order shipped details -->
 <div *ngFor="let item of items; let i = index" class="mb-2 my-order-collapse">
-	<div class="d-flex bd-highlight row mb-3">
+	<div class="d-flex bd-highlight row mb-2">
 		<div class="pb-2 pr-2 col-7">
 			<label class="d-block m-0 mb-1">Item {{i+1}} of {{items.length}}</label>
-				<span *ngIf="item.store_address">Sold by: {{item.store_address.store_name}}</span>							
+				<span *ngIf="item.store_address">Sold by: {{item.store_address.store_name}}</span>
 		</div>
 		<div class="pb-2 ml-auto col-5 text-right pl-0">
 			<div *ngIf="showStatus" class="mt-4">
@@ -21,12 +21,12 @@
 	</div>
 
 	<!-- Actual order info -->
-	<div class="p-md-3 p-2 mb-3 card shadow-sm">
+	<div class="p-md-3 p-2 mb-4 card shadow-sm">
 		<div class="row primary-info">
 			<div class="col-12 d-flex flex-column">
 				<app-item [item]="item" [showStatus]=showStatus ></app-item>
-			</div>	
-		</div>								
+			</div>
+		</div>
 		<!-- <hr *ngIf="!last" class="my-3"> -->
 <!-- 		<div>
 		    <strong>Expected delivery: <span class="text-success">26th Feb</span></strong>

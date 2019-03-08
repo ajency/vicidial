@@ -2,7 +2,7 @@
 
 <div id="cd-cart" class="default-flyout-open">
 	<div class="kss_shipping_summary slide-out custom-padding" [ngClass]="{'slide-show' : widgetOpen}">
-		<div *ngIf="shippingDetails" class="scroll-container">	
+		<div *ngIf="shippingDetails" class="scroll-container">
 			<nav class="navbar navbar-dark bg-dark pt-3 pb-3 ">
 				<div class="d-flex align-items-center w-100">
 					<div class="d-flex align-items-center justify-content-center">
@@ -19,7 +19,7 @@
 				</div>
 			</nav>
 
-			<div class="mb-5 py-3 px-3 padding-size">
+			<div class="mb-5 py-3 px-4 padding-size">
 				<div class="row no-gutter">
 					<!-- <div class="col-1">
 		             <h3 class="m-0 font-weight-bold back-to-cart">
@@ -41,7 +41,7 @@
 					<label class="w-100 text-left mb-0">
 						<div class="d-flex align-items-start address-block review-section">
 							<div class="text-left pl-2 flex-fill">
-								<h3 class="kss-title font-weight-bold d-flex align-items-center w-100">{{shippingDetails.address.name}} 
+								<h3 class="kss-title font-weight-bold d-flex align-items-center w-100">{{shippingDetails.address.name}}
 								<!-- <i class="fas fa-pencil-alt number-edit cursor-pointer ml-2 mt-1" (click)="editShippingAddress()"></i> --></h3>
 								<p class="h6 line-height-5">
 									{{shippingDetails.address.address}}, {{shippingDetails.address.city}}, {{shippingDetails.address.state}} {{shippingDetails.address.pincode}}
@@ -68,7 +68,7 @@
 				      		<!-- <div class="img" style="background-image: url('/img/thumbnail/6front@thumb.jpg');"></div> -->
 				      		<img src="{{item.attributes.images[0]}}" class="lazyload img-fit" data-srcset="{{item.attributes.images[0]}} 50w, {{item.attributes.images[1]}} 100w, {{item.attributes.images[2]}} 150w" sizes="50px">
 				      	</a>
-				        
+
 				      </div>
 				      <div class="product-detail">
 				      	<a href="{{item.href}}" class="d-inline-flex section-title text-black">
@@ -145,8 +145,8 @@
 		      </div>
 			  </div>
 			</div>
-			
+
 			<app-edit-user-popup [user_info]="shippingDetails.user_info" [showCancelButton]="showCancelButton" [showMobileNumber]=false (showPayButton)="showUserInfoModal = false" (pop_up_closed)="updateEmail()"></app-edit-user-popup>
 		</div>
 	</div>
-</div>	
+</div>
