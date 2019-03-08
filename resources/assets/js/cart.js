@@ -306,8 +306,8 @@ function loadAngularApp(){
                 $.getScript("/views/kss-pwa/polyfills.js")
                     .done(function(script2, textStatus2){
                         // console.log(textStatus2);
-                        $.getScript("/views/kss-pwa/scripts.js")
-                            .done(function(script3, textStatus3){
+                        // $.getScript("/views/kss-pwa/scripts.js")
+                            // .done(function(script3, textStatus3){
                                 // console.log(textStatus3);
                                 $.getScript("/views/kss-pwa/main.js")
                                     .done(function(script4,textStatus4){
@@ -318,11 +318,11 @@ function loadAngularApp(){
                                         // console.log("angular load failed")
                                         // loadAngularApp();
                                     })
-                            })
-                            .fail(function(jqxhr, settings, exception){
+                            // })
+                            // .fail(function(jqxhr, settings, exception){
                                 // console.log("angular load failed")
                                 // loadAngularApp();
-                            })
+                            // })
                     })
                     .fail(function(jqxhr, settings, exception){
                         // console.log("angular load failed")

@@ -33,8 +33,7 @@
               "node_modules/@fortawesome/fontawesome-free/css/all.css",
               "src/styles.scss"
             ],
-            "scripts": [ "node_modules/jquery/dist/jquery.min.js",
-                          "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js" ]
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -90,8 +89,7 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": [ "node_modules/jquery/dist/jquery.min.js", 
-                          "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js" ],
+            "scripts": [],
             "assets": [
               "src/favicon.ico",
               "src/assets",

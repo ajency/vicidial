@@ -23,7 +23,7 @@
 	<noscript>Please enable JavaScript to continue using this application.</noscript>
 	<script type="text/javascript" src="/views/kss-pwa/runtime.js"></script>
 	<script type="text/javascript" src="/views/kss-pwa/polyfills.js"></script>
-  <script type="text/javascript" src="/views/kss-pwa/scripts.js"></script>
+  <!-- <script type="text/javascript" src="/views/kss-pwa/scripts.js"></script> -->
 	<script type="text/javascript" src="/views/kss-pwa/main.js"></script>
 
     <script>
