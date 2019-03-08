@@ -116,7 +116,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "views/kss-pwa/main.js",
-    "revision": "ebeb167e82f709202e2540ba327d6b0c"
+    "revision": "6558e3e0e2475a8bb37578d44380df6b"
   },
   {
     "url": "views/kss-pwa/manifest.json",

@@ -137,7 +137,7 @@ export class AppComponent implements OnInit {
 
   loadModules(){
       if(window.location.href.includes("#/bag")){
-        if(window.location.pathname == "/newhome"){
+        if(window.location.pathname == "/newhome" || window.location.pathname == "/drafthome"){
           $('#main-nav').removeClass('speed-in');
           $('#cd-cart').addClass("speed-in");
           $('#cd-shadow-layer').addClass('is-visible');
@@ -154,7 +154,7 @@ export class AppComponent implements OnInit {
         $("app-bag-view").removeClass('d-none');  
       }
       else if(window.location.href.includes("#/account")){
-        if(window.location.pathname == "/newhome"){
+        if(window.location.pathname == "/newhome" || window.location.pathname == "/drafthome"){
           $('#main-nav').removeClass('speed-in');
           $('#cd-cart').addClass("speed-in");
           $('#cd-shadow-layer').addClass('is-visible');
