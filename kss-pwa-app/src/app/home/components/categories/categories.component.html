@@ -10,7 +10,7 @@
   </div>
 </section>
 
-<section class="mt-4">
+<section class="">
   <div class="container">
     <div class="home-category d-sm-flex align-items-sm-center justify-content-sm-center label-box-medium-sm row position-relative" id="home-category">
       <div *ngFor="let category of categories" class="label-box img-holder position-relative kss-extension" id="cat-{{category.sequence}}" attr.static_element-id="{{category.sequence}}" static_element-display_type="Shop by Category" attr.static_element-type="{{category.type}}" page_slug="home" app-label-box [box_data]="category" [box_type]="category"></div>

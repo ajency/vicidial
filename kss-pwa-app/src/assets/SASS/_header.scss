@@ -50,7 +50,7 @@
 				display: block;
 				padding: 0 20px;
 				line-height: 54px;
-				font-weight: bold;
+				font-weight: 600;
 				color: #fcfcfc;
 				transition: all 0.2s ease-out;
 			}
@@ -91,7 +91,7 @@
 			}
 			&--heading {
 				line-height: 18px;
-				font-weight: bold;
+				font-weight: 600;
 				font-size: 12px;
 				color: #b3b3b3;
 				text-transform: uppercase;
@@ -109,7 +109,7 @@
 				.megamenu-link {
 					display: block;
 					line-height: 28px;
-					font-weight: bold;
+					font-weight: 600;
 					font-size: 13px;
 					color: white;
 					position: relative;
@@ -277,7 +277,7 @@
 		        color: white;
 		        &.active{
 		            border-right: 1px solid $gray-800;
-		            font-weight: bold;
+		            font-weight: 600;
 		            box-shadow: inset 4px 0 0 theme-color("primary");
 		            background-color: $gray-800;
 		        }
