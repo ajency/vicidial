@@ -110,7 +110,7 @@
 
          <hr class="dashed">
          <div class="cd-cart-total pb-0">
-            <h5 class="font-weight-bold">
+            <h5 class="font-weight-bold d-flex justify-content-between">
                Total <span><i class="fas fa-rupee-sign"></i> {{$order_summary['you_pay']}}</span>
             </h5>
          </div>
