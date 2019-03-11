@@ -31,7 +31,7 @@
     }
 
     &--simple{
-        border: 0;
+        border: 0 !important;
         .radio-selection{
             color: #9a9a9a;
             font-size: 1.35em;

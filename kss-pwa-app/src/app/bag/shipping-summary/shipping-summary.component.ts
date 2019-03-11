@@ -186,6 +186,7 @@ export class ShippingSummaryComponent implements OnInit {
 
   updatePaymentOption(){
     console.log("payment option ==>", this.selectedPaymentOption);
+    this.showSelectPaymentError = false;
   }
 
   confirmMobile(){
