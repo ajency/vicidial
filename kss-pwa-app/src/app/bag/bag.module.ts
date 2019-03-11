@@ -11,6 +11,7 @@ import { BagSummaryModule } from '../shared-components/bag-summary/bag-summary.m
 import { PromotionsModule } from '../shared-components/promotions/promotions.module';
 import { AddressModule } from '../shared-components/address/address.module';
 import { EditUserModule } from '../shared-components/edit-user/edit-user.module';
+import { NumberModule } from '../directives/number.module';
 
 import { AppliedCouponComponent } from './components/applied-coupon/applied-coupon.component';
 import { UpgradeCartComponent } from './components/upgrade-cart/upgrade-cart.component';
@@ -27,7 +28,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     BagSummaryModule,
     PromotionsModule,
     AddressModule,
-    EditUserModule
+    EditUserModule,
+    NumberModule
   ],
   declarations: [ShippingDetailsComponent, 
   				ShippingSummaryComponent, 
