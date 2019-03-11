@@ -26,5 +26,8 @@
 	  		@endif
 	  	</h6>
 	  	@endif
+	  	@if($order_info['order_status'] =='cash-on-delivery')
+	  	<h6 class="font-weight-bold mt-1 ">Cash on Delivery</h6>
+	  	@endif
 	</div>
 </div>
