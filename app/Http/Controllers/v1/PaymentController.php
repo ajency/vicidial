@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\v1;
 
+use App\CashOnDelivery;
 use App\Http\Controllers\Controller;
 use App\Order;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Tzsk\Payu\Facade\Payment;
 
 class PaymentController extends Controller
