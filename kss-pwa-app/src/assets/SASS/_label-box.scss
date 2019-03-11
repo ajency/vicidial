@@ -45,7 +45,7 @@
     	}
 	}
 	@include bp(mobile) {
-		grid-template-columns: 3px repeat(3, 210px) 3px;
+		grid-template-columns: 3px repeat(2, 210px) 3px;
     	grid-gap: 15px;
     	padding-bottom: 3rem;
 	}
