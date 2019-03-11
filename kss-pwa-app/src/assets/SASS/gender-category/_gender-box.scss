@@ -7,8 +7,13 @@
 		font-size: 1.08rem;
 	}
 	&__year{
-		font-size: 1.1rem;
+		font-size: 1.3rem;
     	color: #909090;
+	}
+	&__muted{
+		display: block;
+	    color: #909090;
+	    font-size: .8rem;
 	}
 	@include bp(mobile) {
 		&__name,&__year {
