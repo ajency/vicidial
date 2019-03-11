@@ -16,6 +16,7 @@ import { AppliedCouponComponent } from './components/applied-coupon/applied-coup
 import { UpgradeCartComponent } from './components/upgrade-cart/upgrade-cart.component';
 import { BetterPromoAvailableComponent } from './components/better-promo-available/better-promo-available.component';
 import { VerifyCodComponent } from './verify-cod/verify-cod.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { VerifyCodComponent } from './verify-cod/verify-cod.component';
   				AppliedCouponComponent,
   				UpgradeCartComponent,
   				BetterPromoAvailableComponent,
-  				VerifyCodComponent],
+  				VerifyCodComponent,
+  				NavbarComponent],
   entryComponents: [BagViewComponent],
   bootstrap: [BagViewComponent]
 })

@@ -1,20 +1,6 @@
 <div *ngIf="cart" class="angular-app h-100">
 	<div class="cart-step1-header">
-		<nav class="navbar navbar-dark bg-dark pt-3 pb-3 ">
-			<div class="d-flex align-items-center w-100">
-				<div class="d-flex align-items-center justify-content-center">
-					<a>
-						<img src="/img/logo-kss.png" xpreview="/img/logo-kss.png" class=" img-fluid m-0 slide-nav-logo" width="180px">
-				 	</a>
-				 	<div class="secure-lock-wrapper pl-2 ml-2 border-left">
-				 		<img src="/img/secure-lock.png" class="img-fluid" alt="Secure Checkout" title="Secure Checkout" width="100">
-				 	</div>
-				</div>
-				<div class="ml-auto align-self-center">
-					<h3 class="m-0 text-white kss_highlight btn-pay" (click)="closeCart()"><span aria-hidden="true">&times;</span></h3>
-				</div>
-			</div>
-		</nav>
+		<app-navbar (closeCartTrigger)="closeCart()"> </app-navbar>
 	</div>
 	<div class="d-flex pt-2">
 		<!-- <div class="pr-3 align-items-center">
