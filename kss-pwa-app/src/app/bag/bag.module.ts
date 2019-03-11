@@ -15,6 +15,7 @@ import { EditUserModule } from '../shared-components/edit-user/edit-user.module'
 import { AppliedCouponComponent } from './components/applied-coupon/applied-coupon.component';
 import { UpgradeCartComponent } from './components/upgrade-cart/upgrade-cart.component';
 import { BetterPromoAvailableComponent } from './components/better-promo-available/better-promo-available.component';
+import { VerifyCodComponent } from './verify-cod/verify-cod.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { BetterPromoAvailableComponent } from './components/better-promo-availab
   				BagViewComponent,
   				AppliedCouponComponent,
   				UpgradeCartComponent,
-  				BetterPromoAvailableComponent],
+  				BetterPromoAvailableComponent,
+  				VerifyCodComponent],
   entryComponents: [BagViewComponent],
   bootstrap: [BagViewComponent]
 })
