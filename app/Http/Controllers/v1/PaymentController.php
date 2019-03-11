@@ -140,6 +140,36 @@ class PaymentController extends Controller
         return response()->json(isNotProd() ? array_merge($response, ['OTP' => $otp]) : $response);
     }
 
+    public function reSendCODVerifySMS($id, Request $request)
+    {
+        $user  = User::getUserByToken($request->header('Authorization'));
+        $order = Order::find($id);
+        validateOrder($user, $order);
+
+        $data      = $request->all();
+        $validator = $this->validateNumber($data);
+        if ($validator->fails()) {
+            return response()->json(["message" => $validator->errors()->first(), 'success' => false]);
+        }
+
+        $cashOnDelivery = CashOnDelivery::where(['order_id' => $id, 'phone' => $data['phone']])->get()->first();
+        if ($cashOnDelivery == null) {
+            return response()->json(["message" => 'OTP not sent to this number. Please check the number.', 'success' => false]);
+        }
+
+        $otp_expiry                 = Carbon::now()->addMinutes(config('otp.cod_expiry'));
+        $cashOnDelivery->otp_expiry = $otp_expiry->toDateTimeString();
+        $cashOnDelivery->save();
+
+        sendSMS('send-otp', [
+            'to'      => '91' . $data['phone'],
+            'message' => $cashOnDelivery->otp . ' is the code required to verify your payment of Rs.' . $order->subOrderData()['you_pay'] . ' on kidsuperstore.in. Code will expire in ' . config('otp.cod_expiry') . ' minutes.',
+        ], true);
+
+        $response = ["message" => "OTP Sent successfully", 'success' => true];
+        return response()->json(isNotProd() ? array_merge($response, ['OTP' => $cashOnDelivery->otp]) : $response);
+    }
+
     public function verifyOTP($id, Request $request)
     {
         $data      = $request->all();

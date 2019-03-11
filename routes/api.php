@@ -45,6 +45,7 @@ Route::group([
         Route::post('/save-user-details', $group_app_version . '\UserController@saveUserDetails');
         Route::get('/order/{id}/check-inventory', $group_app_version . '\OrderController@checkSubOrderInventory');
         Route::get('/order/{id}/send-otp', $group_app_version . '\PaymentController@sendCODVerifySMS');
+        Route::get('/order/{id}/resend-otp', $group_app_version . '\PaymentController@reSendCODVerifySMS');
         Route::get('/order/{id}/verify-otp', $group_app_version . '\PaymentController@verifyOTP');
         Route::group([
             'middleware' => ['check-user'],
