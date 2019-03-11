@@ -44,11 +44,11 @@ export class ShippingSummaryComponent implements OnInit {
     .catch((error)=>{
       console.log("error ===>", error);
       // this.router.navigateByUrl('/bag',{ replaceUrl: true });
+      this.appservice.removeLoader();      
       let url = window.location.href.split("#")[0] + '#/bag';
       history.replaceState({bag : true}, 'bag', url);
       console.log("openCart");
-      this.appservice.loadCartTrigger();    
-      this.appservice.removeLoader();      
+      this.appservice.loadCartTrigger();
     })      
   }
   
@@ -83,11 +83,11 @@ export class ShippingSummaryComponent implements OnInit {
     .catch((error)=>{
       console.log("error ===>", error);
       // this.router.navigateByUrl('/bag', { replaceUrl: true });
+      this.appservice.removeLoader();
       let url = window.location.href.split("#")[0] + '#/bag';
       history.replaceState({bag : true}, 'bag', url);
       console.log("openCart");
-      this.appservice.loadCartTrigger(); 
-      this.appservice.removeLoader();      
+      this.appservice.loadCartTrigger();            
     })  
   }
 
