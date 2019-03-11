@@ -204,4 +204,8 @@ export class ShippingSummaryComponent implements OnInit {
     }) 
   }
 
+  hideVerifyCOD(){
+    this.showVerifyCod = false;
+  }
+
 }

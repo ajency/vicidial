@@ -26,15 +26,14 @@
 	  <h5 class="font-weight-bold">Total Payable<span>₹{{shippingDetails.summary.you_pay}}</span></h5>
 	</div>
 
-	<hr class="mb-4"/>
+	<!-- <hr class="mb-4"/> -->
 
-	<h4>Shipping Address</h4>
+<!-- 	<h4>Shipping Address</h4>
 
 	<label class="w-100 text-left mb-0">
 		<div class="d-flex align-items-start address-block review-section">
 			<div class="text-left pl-2 flex-fill">
-				<h3 class="kss-title font-weight-bold d-flex align-items-center w-100">{{shippingDetails.address.name}}
-				<!-- <i class="fas fa-pencil-alt number-edit cursor-pointer ml-2 mt-1" (click)="editShippingAddress()"></i> --></h3>
+				<h3 class="kss-title font-weight-bold d-flex align-items-center w-100">{{shippingDetails.address.name}}</h3>
 				<p class="h6 line-height-5">
 					{{shippingDetails.address.address}}, {{shippingDetails.address.city}}, {{shippingDetails.address.state}} {{shippingDetails.address.pincode}}
 				</p>
@@ -43,7 +42,7 @@
 				</p>
 			</div>
 		</div>
-	</label>
+	</label> -->
 
 	<hr class="mb-2">
 	<div class="d-flex align-items-center py-3">
@@ -55,8 +54,9 @@
 	</div>
 
 	<div id="kss_cod_payment" class="p-3 fixed-bottom fixed-checkout-btn d-flex align-items-center justify-content-between">
-		<button  id="cancel" class="btn kss-btn kss-btn--outline-secondary kss-btn--big mr-3" (click)="cancelCOD()">Cancel</button>
+		<button  id="cancel" class="btn kss-btn kss-btn--outline-secondary kss-btn--big mr-3" (click)="showCancelModal()">Cancel</button>
 		<button  id="verify-cod" class="btn kss-btn kss-btn--big mt-0" (click)="verifyOTP()" [disabled]="!otp || otp.length != 4">Verify COD Payment</button>
 	</div>
+
+	<app-cancel-cod (cancelCODTriggered)="cancelCOD()"> </app-cancel-cod>
 </div>
-	<!-- Verify COD -->

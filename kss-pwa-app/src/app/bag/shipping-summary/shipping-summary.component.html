@@ -165,7 +165,7 @@
 				<app-edit-user-popup [user_info]="shippingDetails.user_info" [showCancelButton]="showCancelButton" [showMobileNumber]=false (showPayButton)="showUserInfoModal = false" (pop_up_closed)="updateEmail()"></app-edit-user-popup>
 			</div>
 
-			<app-verify-cod *ngIf="showVerifyCod" [shippingDetails]="shippingDetails"></app-verify-cod>
+			<app-verify-cod *ngIf="showVerifyCod" [shippingDetails]="shippingDetails" (hideVerifyCOD)="hideVerifyCOD()"></app-verify-cod>
 
 		</div>	
 	</div>

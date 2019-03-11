@@ -1,8 +1,8 @@
 <!--Order success failure messages -->
 
-<div class="alert {{$status == 'success' ? 'alert-warning' : 'alert-danger'}}  mb-4 mt-2">
+<div class="alert {{$status == 'success' || $status == 'cod' ? 'alert-warning' : 'alert-danger'}}  mb-4 mt-2">
 	
-	@if($status == 'success')
+	@if($status == 'success' || $status == 'cod')
 	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 	    <span aria-hidden="true">&times;</span>
 	</button>
@@ -49,7 +49,7 @@
 	        });
 	    }
 
-		if(status == 'success'){
+		if(status == 'success' || status == 'cod'){
 				getNewCartId();
 				document.cookie = "cart_count=" + 0 + ";path=/";
 				updateCartCountInUI();

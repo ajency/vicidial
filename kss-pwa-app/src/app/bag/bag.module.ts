@@ -18,6 +18,7 @@ import { UpgradeCartComponent } from './components/upgrade-cart/upgrade-cart.com
 import { BetterPromoAvailableComponent } from './components/better-promo-available/better-promo-available.component';
 import { VerifyCodComponent } from './verify-cod/verify-cod.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { CancelCodComponent } from './components/cancel-cod/cancel-cod.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
   				UpgradeCartComponent,
   				BetterPromoAvailableComponent,
   				VerifyCodComponent,
-  				NavbarComponent],
+  				NavbarComponent,
+  				CancelCodComponent],
   entryComponents: [BagViewComponent],
   bootstrap: [BagViewComponent]
 })

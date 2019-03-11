@@ -1,6 +1,7 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { AppServiceService } from '../../service/app-service.service';
 import { ApiServiceService } from '../../service/api-service.service';
+declare var $: any;
 
 @Component({
   selector: 'app-verify-cod',
@@ -10,6 +11,7 @@ import { ApiServiceService } from '../../service/api-service.service';
 export class VerifyCodComponent implements OnInit, OnChanges {
 
 	@Input() shippingDetails : any;
+  @Output() hideVerifyCOD = new EventEmitter();
 	otp : any;
 	otpVerificationFailed : boolean = false;
 	otpVerificationErrorMsg : any;
@@ -34,8 +36,8 @@ export class VerifyCodComponent implements OnInit, OnChanges {
       else{
       	this.otpVerificationFailed = true;
 	      this.otpVerificationErrorMsg = response.message;
+        this.appservice.removeLoader();
       }
-      this.appservice.removeLoader();
     })
     .catch((error)=>{
       console.log("error ===>", error);
@@ -45,8 +47,15 @@ export class VerifyCodComponent implements OnInit, OnChanges {
     }) 
   }
 
+  showCancelModal(){
+    $('#cancel-cod').modal('show');
+    $("#cd-cart,.kss_shipping_summary").css("overflow", "hidden");
+    $('.modal-backdrop').appendTo('.scroll-container');
+    $('body').addClass('hide-scroll');
+  }
+
   cancelCOD(){
-  	console.log("cancelCOD function");
+    this.hideVerifyCOD.emit();
   }
 
 }

@@ -559,7 +559,7 @@ export class BagViewComponent implements OnInit {
 
   updateView(){
     console.log("update view data ==>");
-    if(window.location.href.endsWith('#/bag')){
+    if(window.location.href.includes('#/bag')){
       this.openShippingAddress = false;
       this.openShippingSummary = false;
       if(this.cartOpenOnTrigger)
@@ -567,11 +567,13 @@ export class BagViewComponent implements OnInit {
       else
         this.fetchCartDataFromServer();
       $('#cd-cart').removeClass('overflow-h');
+      
+      this.updateUrl();
     }
-    else if(window.location.href.endsWith('#/bag/shipping-address')){
-      this.openShippingSummary = false;
-      $('#cd-cart').addClass('overflow-h');
-    }
+    // else if(window.location.href.endsWith('#/bag/shipping-address')){
+    //   this.openShippingSummary = false;
+    //   $('#cd-cart').addClass('overflow-h');
+    // }
   }
   
 }
