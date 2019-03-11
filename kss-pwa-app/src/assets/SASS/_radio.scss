@@ -29,11 +29,29 @@
     &:active {
         // transform: translateY(2px);
     }
+
+    &--simple{
+        border: 0;
+        .radio-selection{
+            color: #9a9a9a;
+            font-size: 1.35em;
+        }
+        .selection_label{
+            font-size: 1.1em;
+            padding-top: 2px;
+            color: #797979;
+        }
+    }
 }
 .radio-input:checked+.radio-label {
     border-color: theme-color("primary");
     color: darken(theme-color("primary"), 10%);
     &:hover {}
+    &--simple{
+        .selection_label{
+            color:$gray-800;
+        }
+    }
 }
 .radio-input:checked+.radio-label .radio-selection {
   color: theme-color("primary");
@@ -75,7 +93,7 @@
             color: #777;
             img {
                 box-shadow: 0 5px 0 0 theme-color("primary");
-            }  
+            }
         }
     }
     &.wo-image {
@@ -146,11 +164,11 @@
                 }
             }
         }
-    }    
+    }
     @media (min-width: 320px) and (max-width: 767.98px) {
         overflow: scroll;
         div {
-           
+
         }
     }
     label {
