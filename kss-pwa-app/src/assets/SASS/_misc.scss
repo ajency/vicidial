@@ -1468,11 +1468,13 @@ $size: 20px;
 	padding-top: 52.41%;
 }
 
-.product-card{
-	padding-top: 133.33%;
-	.img-holder{
-		background-color: #ececec;
-	}
+.productGrid{
+    .product-card{
+    	padding-top: 133.33%;
+    	.img-holder{
+    		background-color: #ececec;
+    	}
+    }
 }
 
 .app-offline{

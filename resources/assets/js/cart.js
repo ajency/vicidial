@@ -16,12 +16,12 @@ $(document).ready(function(){
     //Set crt count on page load
     updateCartCountInUI();
 
-    if((window.location.href.includes('#/bag') || window.location.href.includes('#/account')) && (window.location.pathname !="/newhome" || window.location.pathname !="/drafthome" ) )
+    if((window.location.href.includes('#/bag') || window.location.href.includes('#/account')) && (window.location.pathname !="/" || window.location.pathname !="/drafthome" ) )
         openCart();
 
     window.onhashchange = function() { 
      console.log("hash changed");
-     if(!$('#cd-cart').hasClass("speed-in") && (window.location.href.includes('#/bag') || window.location.href.includes('#/account')) && (window.location.pathname !="/newhome" || window.location.pathname !="/drafthome") ){
+     if(!$('#cd-cart').hasClass("speed-in") && (window.location.href.includes('#/bag') || window.location.href.includes('#/account')) && (window.location.pathname !="/" || window.location.pathname !="/drafthome") ){
         openCart();
      }
     }    
