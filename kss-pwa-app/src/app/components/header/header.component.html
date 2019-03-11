@@ -60,7 +60,7 @@
 		                        </div>
 		                    </div>
 		                    <div *ngIf="item.image_section" class="nav-column nav-column--wide d-none d-lg-block">
-		                        <a href="/boys/shirt" class="d-block">
+		                        <a href="{{item.image_section.href}}" class="d-block">
 		                          <!-- <img class="d-block w-100 img-fluid lazyload offer-img mt-4 mt-lg-0"
 		                             src="{{CDN::asset('/img/menu/mm_boys_onecolumn_10px.jpg') }}"
 		                             data-srcset="{{CDN::asset('/img/menu/mm_boys_onecolumn_medium.jpg') }} 2x,
@@ -76,13 +76,13 @@
 									        title="{{item.image_section.title}}"
 									        alt="{{item.image_section.img_alt}}"/>
 		                        </a>
-		                        <div class="row align-items-center mt-2 mb-4 mb-lg-0">
+		                        <div *ngIf="item.image_section.text" class="row align-items-center mt-2 mb-4 mb-lg-0">
 		                            <div class="col-7">
 		                              <div class="h5 text-primary font-weight-bold">Spotlight on</div>
-		                              <div class="text-white">Boys shirts</div>
+		                              <div class="text-white">href="{{item.image_section.text}}"</div>
 		                            </div>
 		                            <div class="col-5">
-		                              <a href="/boys/shirt" class="btn kss-btn kss-btn--mini">Shop now</a>
+		                              <a href="{{item.image_section.href}}" class="btn kss-btn kss-btn--mini">Shop now</a>
 		                            </div>
 		                        </div>
 		                    </div>
