@@ -1572,5 +1572,8 @@ $size: 20px;
 
 .top-offer{
     background-color: #ee4a5a;
-    color: white;
+    a{
+        color: white;
+        text-decoration: none;
+    }
 }
