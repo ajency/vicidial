@@ -24,6 +24,7 @@ export class VerifyCodComponent implements OnInit, OnChanges {
   }
 
   verifyOTP(){
+    this.appservice.showLoader();
   	console.log("verifyOTP function");
   	let url = this.appservice.apiUrl + '/api/rest/v1/user/order/' + this.shippingDetails.order_id + '/verify-otp?phone='+this.shippingDetails.address.phone+'&otp='+this.otp;
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
@@ -34,6 +35,7 @@ export class VerifyCodComponent implements OnInit, OnChanges {
       	this.otpVerificationFailed = true;
 	      this.otpVerificationErrorMsg = response.message;
       }
+      this.appservice.removeLoader();
     })
     .catch((error)=>{
       console.log("error ===>", error);

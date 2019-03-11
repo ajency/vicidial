@@ -190,10 +190,10 @@ export class ShippingSummaryComponent implements OnInit {
 
   confirmMobile(){
     console.log("inside confirm mobile");
-    this.showVerifyCod = true;
     let url = this.appservice.apiUrl + '/api/rest/v1/user/order/' + this.shippingDetails.order_id + '/send-otp?phone='+this.shippingDetails.address.phone;
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     this.apiservice.request(url, 'get', {} , header ).then((response)=>{
+        this.appservice.removeLoader();
         this.showVerifyCod = true;
     })
     .catch((error)=>{

@@ -72,7 +72,7 @@
 @section('footjs')
 	@yield('order-msg')
 	@if(! empty($params['payment_status']))
-		@if($params['payment_status'] == 'success')
+		@if($params['payment_status'] == 'success' || $params['payment_status'] == 'cod')
 			<script type="text/javascript">
 				@php $variant_ids = []; @endphp
 				@foreach($params['items'] as $item)
