@@ -10,6 +10,10 @@
 		 <small *ngIf="otpVerificationFailed" id="passwordHelpBlock" class="form-text text-danger">
 				{{otpVerificationErrorMsg}}
 		</small>
+
+		<div class="mt-2">
+			Didn't receive the code?  <a href="javascript:void(0);" class="text-secondary link-underline font-weight-bold" (click)="resendOTP()" >RESEND CODE</a>
+		</div>
 	</div>
 
 	<hr class="mb-0"/>

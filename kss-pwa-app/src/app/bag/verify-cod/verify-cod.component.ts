@@ -58,4 +58,19 @@ export class VerifyCodComponent implements OnInit, OnChanges {
     this.hideVerifyCOD.emit();
   }
 
+  resendOTP(){
+    this.appservice.showLoader();
+    let url = this.appservice.apiUrl + '/api/rest/v1/user/order/' + this.shippingDetails.order_id + '/resend-otp?phone='+this.shippingDetails.address.phone;
+    let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
+    this.apiservice.request(url, 'get', {} , header ).then((response)=>{
+        this.otp = '';
+        this.appservice.removeLoader();
+    })
+    .catch((error)=>{
+      console.log("error ===>", error);
+      // this.router.navigateByUrl('/bag',{ replaceUrl: true });
+      this.appservice.removeLoader();
+    }) 
+  }
+
 }
