@@ -96,8 +96,8 @@ Route::get('/shop', $app_version . '\ListingController@shop')->name('shoplisting
 Route::get('/products/xml', $app_version . '\StaticController@productXML');
 Route::get('/test/productlist', $app_version . '\ProductListTestController@index')->name('productListTest');
 Route::get('/variant-diff-file', $app_version . '\StaticController@getVariantDiffFile');
-Route::get('/user/order/{orderid}/payment/payu', $app_version . '\PaymentController@payment')->name('payment');
-Route::get('/user/order/{orderid}/payment/payu/status', $app_version . '\PaymentController@status')->name('paymentStatus');
+Route::get('/user/order/{orderid}/payment/{type}', $app_version . '\PaymentController@payment')->name('payment');
+Route::get('/user/order/{orderid}/payment/{type}/status', $app_version . '\PaymentController@status')->name('paymentStatus');
 Route::get('/my/order/details', $app_version . '\OrderController@getOrderDetails')->name('orderDetails');
 Route::get('/shop/{gendername}', $app_version . '\StaticController@gender');
 Route::get('/draft/{gendername}', $app_version . '\StaticController@draft');

@@ -23,7 +23,7 @@ export class HomePageComponent implements OnInit {
   }
 
   ngOnInit() {
-  	console.log("ngOnInit HomePageComponent");
+  	console.log("ngOnInit HomePageComponent", window.location.pathname);
   	// this.menuObject = menu.menu;
     // let url = "https://demo8558685.mockable.io/get-menu";
     let url = isDevMode() ? "https://demo8558685.mockable.io/get-menu" : "/api/rest/v1/test/get-menu"

@@ -11,10 +11,14 @@ import { BagSummaryModule } from '../shared-components/bag-summary/bag-summary.m
 import { PromotionsModule } from '../shared-components/promotions/promotions.module';
 import { AddressModule } from '../shared-components/address/address.module';
 import { EditUserModule } from '../shared-components/edit-user/edit-user.module';
+import { NumberModule } from '../directives/number.module';
 
 import { AppliedCouponComponent } from './components/applied-coupon/applied-coupon.component';
 import { UpgradeCartComponent } from './components/upgrade-cart/upgrade-cart.component';
 import { BetterPromoAvailableComponent } from './components/better-promo-available/better-promo-available.component';
+import { VerifyCodComponent } from './verify-cod/verify-cod.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { CancelCodComponent } from './components/cancel-cod/cancel-cod.component';
 
 
 @NgModule({
@@ -25,14 +29,18 @@ import { BetterPromoAvailableComponent } from './components/better-promo-availab
     BagSummaryModule,
     PromotionsModule,
     AddressModule,
-    EditUserModule
+    EditUserModule,
+    NumberModule
   ],
   declarations: [ShippingDetailsComponent, 
   				ShippingSummaryComponent, 
   				BagViewComponent,
   				AppliedCouponComponent,
   				UpgradeCartComponent,
-  				BetterPromoAvailableComponent],
+  				BetterPromoAvailableComponent,
+  				VerifyCodComponent,
+  				NavbarComponent,
+  				CancelCodComponent],
   entryComponents: [BagViewComponent],
   bootstrap: [BagViewComponent]
 })

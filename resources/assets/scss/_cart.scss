@@ -87,6 +87,8 @@ $L : 1200px;
 // }
 #cd-cart, #cd-my-account {
     right: -100%;
+    position: fixed;
+    top: 0;
 //     background: #FFF;
 //     @include transition(right .5s ease);
 //     &.speed-in {

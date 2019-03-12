@@ -59,7 +59,7 @@
 			</div>
 
 			<!-- Order Info sidebar -->
-			@include('includes.orderdetails.orderstats-sidebar', ['payment_info' => (!empty($params['payment_info']))? $params['payment_info'] : [], 'shipping_address' => $params['shipping_address'], 'order_summary' => $params['order_summary'] ])
+			@include('includes.orderdetails.orderstats-sidebar', ['payment_info' => (!empty($params['payment_info']))? $params['payment_info'] : [], 'shipping_address' => $params['shipping_address'], 'order_summary' => $params['order_summary'], 'amount_due' => $params['order_info']['amount_due'] ])
 
 		</div>
 
@@ -72,7 +72,7 @@
 @section('footjs')
 	@yield('order-msg')
 	@if(! empty($params['payment_status']))
-		@if($params['payment_status'] == 'success')
+		@if($params['payment_status'] == 'success' || $params['payment_status'] == 'cod')
 			<script type="text/javascript">
 				@php $variant_ids = []; @endphp
 				@foreach($params['items'] as $item)

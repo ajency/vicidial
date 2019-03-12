@@ -80,11 +80,11 @@ self.addEventListener('push', (event) => {
 workbox.precaching.precacheAndRoute([
   {
     "url": "views/kss-pwa/10.js",
-    "revision": "cfc0691d276f28c1bbfe7ea6ec91aebc"
+    "revision": "d9130075d20dc98d5c97dc5706997b67"
   },
   {
     "url": "views/kss-pwa/11.js",
-    "revision": "579afe9f2cffb2753e0903334e43d0d0"
+    "revision": "8137df3039657c9d0c578825d5acf4ba"
   },
   {
     "url": "views/kss-pwa/12.js",
@@ -108,7 +108,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "views/kss-pwa/9.js",
-    "revision": "1537cd726313315114d0de85da080185"
+    "revision": "bc4c58046af8a6e8dc1e00d20403f75a"
   },
   {
     "url": "views/kss-pwa/common.js",
@@ -116,7 +116,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "views/kss-pwa/main.js",
-    "revision": "a8df9dbb6edfd8015d29bffa7596acb0"
+    "revision": "a30e70b2d561460bd23dec7528ae1bbb"
   },
   {
     "url": "views/kss-pwa/manifest.json",
@@ -136,7 +136,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "views/kss-pwa/styles.css",
-    "revision": "95e186588a4290c3dd9eeffba4ff5558"
+    "revision": "aae6e6dbd0afa09627ea71a534b6397e"
   },
   {
     "url": "manifest.json",

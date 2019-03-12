@@ -216,7 +216,7 @@ export class AppServiceService {
 
   callFetchCartApi(){    
     let url = this.apiUrl + (this.isLoggedInUser() ? ("/api/rest/v1/user/cart/"+this.getCookie('cart_id')+"/get") : ("/rest/v1/anonymous/cart/get"))
-    if(isDevMode())
+    if(isDevMode() || window.location.host == 'localhost:8000')
       url = "https://demo8558685.mockable.io/fetch-cart";
     let header = this.isLoggedInUser() ? { Authorization : 'Bearer '+this.getCookie('token') } : {}
     return this.apiservice.request(url, 'get', {}, header);
