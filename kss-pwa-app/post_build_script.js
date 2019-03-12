@@ -16,7 +16,7 @@ fs.remove('../public/views/kss-pwa/assets/SASS')
   console.error(err)
 })
 
-const file = '../public/views/kss-pwa/.gitigore'
+const file = '../public/views/kss-pwa/.gitignore'
 fs.outputFile(file, '*')
 	.then(() => fs.readFile(file, 'utf8'))
 		.then(data => {

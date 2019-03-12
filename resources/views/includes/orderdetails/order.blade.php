@@ -11,11 +11,11 @@
 	</div>
 	<div class="pb-2 ml-auto col-5 text-right pl-0">
 			<div *ngIf="showStatus" class="mt-4">
-				@if($item['state'] == 'draft')
+				@if($item['state'] == 'draft' && !$item['shipment_status'])
 				<span class="order-label order-label--processing" data-toggle="tooltip" data-placement="top" title="Your order has been placed and we are verifying item availability in the inventory">Processing</span>
 				@endif
 
-				@if($item['state'] == 'cancel' || ($item['state']=='sale' && $item['shipment_status'] == 'cancelled'))
+				@if($item['state'] == 'cancel' ||  $item['shipment_status'] == 'cancelled')
 				<span class="order-label order-label--cancelled" data-toggle="tooltip" data-placement="top" title="The item has been cancelled">Cancelled</span>
 				@endif
 
@@ -27,15 +27,15 @@
 				<span class="order-label order-label--confirmed" data-toggle="tooltip" data-placement="top" title="Stock for the items has been verified and your items will be shipped out soon.">Confirmed</span>
 				@endif
 
-				@if($item['state'] == 'sale' && item['shipment_status'] == 'shipped')
+				@if(item['shipment_status'] == 'shipped')
 				<span class="order-label order-label--shipped" data-toggle="tooltip" data-placement="top" title="Your item has been shipped and should reach you soon">Shipped</span>
 				@endif
 
-				@if($item['state'] == 'sale' && item['shipment_status']=='out for delivery')
+				@if(item['shipment_status']=='out for delivery')
 				<span class="order-label order-label--outdelivery" data-toggle="tooltip" data-placement="top" title="Your item is out for delivery">Out for Delivery</span>
 				@endif
 
-				@if($item['state'] == 'sale' && item['shipment_status']=='delivered')
+				@if(item['shipment_status']=='delivered')
 				<span class="order-label order-label--delivered" data-toggle="tooltip" data-placement="top" title="The item has been delivered">Delivered</span>
 				@endif
 			</div>
