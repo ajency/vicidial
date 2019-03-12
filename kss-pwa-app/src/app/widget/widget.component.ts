@@ -2,20 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { AppServiceService } from '../service/app-service.service';
 
 @Component({
-  selector: 'app-page-not-found',
-  templateUrl: './page-not-found.component.html',
-  styleUrls: ['./page-not-found.component.scss']
+  selector: 'app-widget',
+  templateUrl: './widget.component.html',
+  styleUrls: ['./widget.component.scss']
 })
-export class PageNotFoundComponent implements OnInit {
+export class WidgetComponent implements OnInit {
 
   constructor(private appservice : AppServiceService,) { }
 
   ngOnInit() {
-  	console.log("ngOnInit page-not-found component");
+  	console.log("ngOnInit widget component");
   }
 
   ngAfterViewInit(){
-  	console.log("ngAfterViewInit page-not-found component");
+  	console.log("ngAfterViewInit widget component");
   	setTimeout(()=>{
 		if(window.location.href.includes('#/bag') || window.location.href.includes('#/account'))
 	        this.appservice.loadCartTrigger();
