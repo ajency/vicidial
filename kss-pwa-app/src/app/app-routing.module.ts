@@ -6,6 +6,7 @@ import { RouteGuardService as RouteGuard } from './services/route-guard.service'
 const routes: Routes = [	
 	{ path: '',  loadChildren: './home/home.module#HomeModule'},
 	{ path: 'drafthome',  loadChildren: './home/home.module#HomeModule'},
+	{ path: '/:product_slug/buy',  loadChildren: './product-page/product-page.module#ProductPageModule'},
 	{ path: '**', component : PageNotFoundComponent }
 ];
 
