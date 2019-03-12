@@ -9,7 +9,7 @@
 	    </div>
 	</div>
 
-	<div class="card shadow-sm">
+	<div *ngIf="!payment_info" class="card shadow-sm">
 	    <div class="card-body text-muted">
 	       Payment Mode: Cash On Delivery
 	       <div *ngIf="amount_due" class="mt-2">
