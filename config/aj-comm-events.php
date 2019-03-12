@@ -10,9 +10,6 @@ return [
         'laravel'    => 'email.order-success',
         'smsgupshup' => "",
     ],
-    "order-confirmed" => [
-        'smsgupshup' => "",
-    ],
     "failed-job" => [
         'laravel'    => 'email.failed-job',
     ],
