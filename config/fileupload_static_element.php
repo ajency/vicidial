@@ -339,7 +339,19 @@ return [
         ],
     ],
 
-    'gender_tab_presets'=> [],
-    'gender_tab_upload'=> [],
+    'gender_tab_presets'=> [
+        "default" => [
+            "1x"=>"125X75",
+            "2x"=>"250X150"
+        ]
+    ],
+    'gender_tab_upload'=> [
+        "default" => [
+            "size" => 40000,
+            "size_gif" => 500000,
+            "height" => 150,
+            "width" => 250
+        ]
+    ],
 
 ];

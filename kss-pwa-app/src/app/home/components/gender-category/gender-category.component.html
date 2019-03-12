@@ -95,6 +95,32 @@
 	</div>
 </section>
 
+<section *ngIf="tabs && isDraftPage" class="mt-4 mt-md-4">
+	<div class="container">
+		<div class="row gender-cat-wrapper mobile-overflow label-box-small">
+			<div *ngFor="let tab of tabs" class="col kss-extension" attr.static_element-id="{{tab.sequence}}" static_element-display_type="Gender-box" attr.static_element-type="{{tab.type}}" page_slug="home">
+				<a class="gender-cat" href="{{tab.element_data.image.href}}" style="">
+					<div class="text-dark card gender-cat--top d-flex align-items-center justify-content-center">
+						<img class="img-fluid w-100"
+							[useSrcset]="true"
+							[offset]=0
+							[defaultImage]="'/assets/img/transparent.png'"
+							[lazyLoad]="createDataSrcSet(tab.images.default['2x'], '250w', tab.images.default['1x'], '125w')"
+					        sizes='(min-width: 1200px) 250px, 125px'
+					        title="{{tab.element_data.image.title}}"
+					        alt="{{tab.element_data.image.img_alt}}"/>
+						<h4 *ngIf="tab.element_data.text.text1" class="gender-cat__name" style="">{{tab.element_data.text.text1}}</h4>
+					</div>
+					<div class="text-center">
+						<p *ngIf="tab.element_data.text.text2" class="gender-cat__year mb-0" style="">{{tab.element_data.text.text2}}</p>
+						<span *ngIf="tab.element_data.text.text3" class="gender-cat__muted">{{tab.element_data.text.text3}}</span>
+					</div>
+				</a>
+			</div>
+		</div>
+	</div>
+</section>
+
 <!-- <section class="mt-4 mt-md-5">
 	<div class="container">
 		<div class="row gender-cat-wrapper mobile-overflow">
