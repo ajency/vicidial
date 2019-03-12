@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { ProductPageRoutingModule } from './product-page-routing.module';
+
 import { ProductPageComponent } from './product-page/product-page.component';
 import { ProductImgSliderComponent } from './components/product-img-slider/product-img-slider.component';
 import { ColorOptionsComponent } from './components/color-options/color-options.component';
@@ -15,6 +17,7 @@ import { LazyLoadImageModule, intersectionObserverPreset } from 'ng-lazyload-ima
   imports: [
     CommonModule,
     ComponentsModule,
+    ProductPageRoutingModule,
     LazyLoadImageModule.forRoot({
           preset: intersectionObserverPreset
   	})
