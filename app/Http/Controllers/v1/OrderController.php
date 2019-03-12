@@ -167,8 +167,11 @@ class OrderController extends Controller
             if($user->hasPermissionTo('see other user orders', 'web') == false)
                 return response()->json(["message" => 'Access denied', 'success'=> false,'data'=>$order_details]); 
         }
-        $order_status = (isset($search_object["status"]))?$search_object["status"]:'payment-successful';
-        $orderObj = Order::join('carts', 'carts.id', '=', 'orders.cart_id')->where('carts.user_id',$user_id)->where('orders.status',$order_status)->orderBy("orders.".$sort_on,$sort_by)->select("orders.*");
+        //$order_status = (isset($search_object["status"]))?$search_object["status"]:'payment-successful';
+        $orderObj = Order::join('carts', 'carts.id', '=', 'orders.cart_id')->where('carts.user_id',$user_id)->where(function ($q) {
+            $q->where('orders.status', 'payment-successful')
+                ->orWhere('orders.status', 'cash-on-delivery');
+        })->orderBy("orders.".$sort_on,$sort_by)->select("orders.*");
 
         if(isset($search_object["order_date"]) && isset($search_object["order_date"]["start"]) && isset($search_object["order_date"]["end"])){
             $from = date($search_object["order_date"]["start"]);

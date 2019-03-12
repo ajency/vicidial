@@ -8,6 +8,7 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
 export class PaymentInfoComponent implements OnInit, OnChanges {
 
 	@Input() payment_info : any;
+  @Input() amount_due : any;
   constructor() { }
 
   ngOnInit() {

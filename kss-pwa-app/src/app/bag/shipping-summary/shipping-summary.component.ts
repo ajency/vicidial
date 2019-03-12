@@ -23,6 +23,10 @@ export class ShippingSummaryComponent implements OnInit {
   userName : any;
   userEmail : any;
   widgetOpen : boolean = true;
+  paymentOptions = ['cod', 'payu'];
+  selectedPaymentOption : any;
+  showSelectPaymentError : any;
+  showVerifyCod : boolean = false;
   constructor(private router : Router,
   			   		private appservice : AppServiceService,
               private apiservice : ApiServiceService,
@@ -34,12 +38,17 @@ export class ShippingSummaryComponent implements OnInit {
   }
 
   navigateToPaymentPage(){
+    if(!this.selectedPaymentOption){
+      this.showSelectPaymentError = true;
+      return;
+    }
+
     this.appservice.showLoader();
     let url = this.appservice.apiUrl + '/api/rest/v1/user/order/' + this.shippingDetails.order_id + '/check-inventory'
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     this.apiservice.request(url, 'get', {} , header ).then((response)=>{
       fbTrackAddPaymentInfo();
-      window.location.href = "/user/order/" + this.shippingDetails.order_id +"/payment/payu";      
+      this.checkPaymentOption()
     })
     .catch((error)=>{
       console.log("error ===>", error);
@@ -50,6 +59,20 @@ export class ShippingSummaryComponent implements OnInit {
       console.log("openCart");
       this.appservice.loadCartTrigger();
     })      
+  }
+
+  checkPaymentOption(){
+    console.log("checkPaymentOption ==>", this.selectedPaymentOption);
+    switch(this.selectedPaymentOption)
+    {
+      case 'payu' :   window.location.href = "/user/order/" + this.shippingDetails.order_id +"/payment/payu";
+                      break;
+      case 'cod' :  {
+                      this.confirmMobile();
+                    };
+                  break;
+    }
+
   }
   
   closeCart(){
@@ -159,6 +182,31 @@ export class ShippingSummaryComponent implements OnInit {
 
   roundOff(savings){
     return new Intl.NumberFormat('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(parseFloat(savings));
+  }
+
+  updatePaymentOption(){
+    console.log("payment option ==>", this.selectedPaymentOption);
+    this.showSelectPaymentError = false;
+  }
+
+  confirmMobile(){
+    console.log("inside confirm mobile");
+    let url = this.appservice.apiUrl + '/api/rest/v1/user/order/' + this.shippingDetails.order_id + '/send-otp?phone='+this.shippingDetails.address.phone;
+    let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
+    this.apiservice.request(url, 'get', {} , header ).then((response)=>{
+        this.appservice.removeLoader();
+        this.showVerifyCod = true;
+    })
+    .catch((error)=>{
+      console.log("error ===>", error);
+      // this.router.navigateByUrl('/bag',{ replaceUrl: true });
+      this.appservice.removeLoader();      
+      
+    }) 
+  }
+
+  hideVerifyCOD(){
+    this.showVerifyCod = false;
   }
 
 }

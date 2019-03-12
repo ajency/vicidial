@@ -1,16 +1,29 @@
 <!-- Order Details sidebar start -->
 <div class="col-12 col-xl-4 col-lg-4">
-   @if(!empty($payment_info) and $payment_info['payment_mode'] and $payment_info['card_num'])
+   
       <label class="">Payment Information</label>
 
       <!-- Payment Info/Mode -->
-      
+      @if(!empty($payment_info) and $payment_info['payment_mode'] and $payment_info['card_num'])
+         <div class="card shadow-sm">
+               <div class="card-body text-muted d-flex">
+                  Payment Mode:<i class="mr-1 ml-1 {{ $payment_info['payment_mode'] == 'MAST' ? 'icon-master-card' : ( $payment_info['payment_mode'] == 'VISA' ? 'icon-visa' : ($payment_info['payment_mode'] == 'rupay' ? 'icon-rupay' : 'far fa-credit-card no-card ') ) }} "></i> <strong>ending in {{substr($payment_info['card_num'], -4)}}</strong>
+               </div>
+         </div>
+      @else
       <div class="card shadow-sm">
-            <div class="card-body text-muted d-flex">
-               Payment Mode:<i class="mr-1 ml-1 {{ $payment_info['payment_mode'] == 'MAST' ? 'icon-master-card' : ( $payment_info['payment_mode'] == 'VISA' ? 'icon-visa' : ($payment_info['payment_mode'] == 'rupay' ? 'icon-rupay' : 'far fa-credit-card no-card ') ) }} "></i> <strong>ending in {{substr($payment_info['card_num'], -4)}}</strong>
+            <div class="card-body text-muted ">
+               Payment Mode: Cash On Delivery
+                @if($amount_due)
+                  <div class="mt-2">
+                     Amount Due: {{$amount_due}}
+                  </div>
+               @endif
             </div>
       </div>
-   @endif
+      @endif
+
+   
 
    <!-- Shipping Address -->
    <label class="mt-4">Shipping Address</label>
@@ -110,7 +123,7 @@
 
          <hr class="dashed">
          <div class="cd-cart-total pb-0">
-            <h5 class="font-weight-bold">
+            <h5 class="font-weight-bold d-flex justify-content-between">
                Total <span><i class="fas fa-rupee-sign"></i> {{$order_summary['you_pay']}}</span>
             </h5>
          </div>

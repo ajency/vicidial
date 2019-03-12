@@ -15,19 +15,20 @@ RUN set -x \
 # Frontend
 FROM node:10.15 as frontend
 RUN npm install -g gulp
-RUN mkdir -p /root/build/angular-app
+RUN mkdir -p /root/build/kss-pwa-app
 WORKDIR /root/build
 COPY resources/assets ./resources/assets
-COPY angular-app/package.json angular-app/package-lock.json ./angular-app/
+COPY kss-pwa-app/package.json kss-pwa-app/package-lock.json ./kss-pwa-app/
 COPY public ./public
 COPY package.json package-lock.json gulpfile.js webpack.mix.js ./
 RUN npm install
-WORKDIR /root/build/angular-app
+WORKDIR /root/build/kss-pwa-app
 RUN npm install
-COPY angular-app ./
-RUN npm run build:cart_app
+COPY kss-pwa-app ./
+RUN npm run build
 WORKDIR /root/build/
 ADD . /root/build/
+RUN npx workbox injectManifest workbox-config.js
 RUN npm run production
 RUN gulp
 # Download Base Image from AWS ECR

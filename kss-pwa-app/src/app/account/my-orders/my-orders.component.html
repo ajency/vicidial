@@ -45,6 +45,7 @@
 								  		<span *ngIf="order.order_info.order_status == 'payment-in-progress' " class="text-warning payment-status">PENDING</span> 
 								  		<span *ngIf="order.order_info.order_status == 'payment-failed' " class="text-danger payment-status">FAILED</span> 
 								  	</h6>
+								  	<h6 *ngIf="order.order_info.order_status == 'cash-on-delivery'" class="font-weight-bold pl-1 m-0 ">Cash on Delivery</h6>
 								</div>
 							</div>
 							<div class="col-3 text-right d-flex flex-column justify-content-between">

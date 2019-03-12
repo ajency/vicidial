@@ -51,7 +51,11 @@
                         @endif
                       </div>
                       <div style="margin-top: 10px;">Date: {{$order_info['order_date']}}</div>
-                      <div style="margin-top: 10px;">Amount: ₹{{$order_info['total_amount']}}</div>
+                      @if($order_info['order_status'] == 'cash-on-delivery')
+                        <div style="margin-top: 10px;">Cash on Delivery - ₹{{$order_info['total_amount']}}</div>
+                      @else
+                        <div style="margin-top: 10px;">Prepaid - Card Payment</div>
+                      @endif
                       <div style="margin-top: 30px;">
                         @if($verified)
                          <a href="{{url('/#/account/my-orders/')}}" style="text-transform: uppercase;padding: 10px;text-decoration: none;background-color: #f9bc23;color: #000;font-size: 13px;">MANAGE ORDERS</a>
