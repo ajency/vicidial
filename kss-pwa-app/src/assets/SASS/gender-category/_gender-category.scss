@@ -2,26 +2,36 @@
 
 .gender-cat{
 	min-height: 95px;
-	box-shadow: 1px 2px 5px rgba(45, 45, 45, 0.13);
-	border: 8px double #e6e6e6;
-	padding: 0.8rem;
-	transition: all 0.3s ease;
-	background-color: #e9a746;
-	border-radius: 0;
+	padding: 0;
+	&--top{
+		transition: all 0.3s ease;
+		background-color: #fff;
+		border-radius: 0;
+		box-shadow: 1px 2px 5px rgba(45, 45, 45, 0.13);
+		border: 4px solid #a1a1a1;
+	}
 	&__name,&__year{
 		transition: all 0.5s ease;
-		color: #fff;
+		color: black;
+		padding: 10px 0;
+		margin: 0;
+	}
+	&__year{
+		padding: 0;
+		margin-top: 5px;
 	}
 	&:hover{
-		box-shadow: none;
-		border-color: #fff;
-		.gender-cat__name,.gender-cat__year{
-			// color: #000;
+		.gender-cat--top{
+			box-shadow: none;
+			border-color: #e2e2e2;
+			.gender-cat__name,.gender-cat__year{
+				// color: #000;
+			}
 		}
 	}
 	@include bp(mobile) {
 		min-height: 85px;
-		padding: 0.5rem;
+		// padding: 0.5rem;
 	}
 }
 
@@ -42,7 +52,7 @@
 	& > .col{
     	&:last-child{
 			.gender-cat__name{
-				padding: 0 1rem;
+				// padding: 0 1rem;
 			}
 		}
 	}
