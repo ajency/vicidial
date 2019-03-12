@@ -133,7 +133,7 @@ class PaymentController extends Controller
 
         sendSMS('send-otp', [
             'to'      => '91' . $data['phone'],
-            'message' => $otp . ' is the code required to verify your payment of Rs.' . $order->subOrderData()['you_pay'] . ' on kidsuperstore.in. Code will expire in ' . config('otp.cod_expiry') . ' minutes.',
+            'message' => $otp . ' is the code required to verify your payment of Rs.' . $order->subOrderData()['you_pay'] . ' on kidsuperstore.in. The code will expire in ' . config('otp.cod_expiry') . ' minutes.',
         ], true);
 
         $response = ["message" => "OTP Sent successfully", 'success' => true];
@@ -163,7 +163,7 @@ class PaymentController extends Controller
 
         sendSMS('send-otp', [
             'to'      => '91' . $data['phone'],
-            'message' => $cashOnDelivery->otp . ' is the code required to verify your payment of Rs.' . $order->subOrderData()['you_pay'] . ' on kidsuperstore.in. Code will expire in ' . config('otp.cod_expiry') . ' minutes.',
+            'message' => $cashOnDelivery->otp . ' is the code required to verify your payment of Rs.' . $order->subOrderData()['you_pay'] . ' on kidsuperstore.in. The code will expire in ' . config('otp.cod_expiry') . ' minutes.',
         ], true);
 
         $response = ["message" => "OTP Sent successfully", 'success' => true];
