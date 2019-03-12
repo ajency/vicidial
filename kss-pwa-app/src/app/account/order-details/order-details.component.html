@@ -71,7 +71,7 @@
 
 		<!-- Order Info sidebar -->
 		<div class="col-12 mb-4 pb-3">
-			<app-payment-info *ngIf="order.payment_info" [payment_info]="order.payment_info"></app-payment-info>
+			<app-payment-info [payment_info]="order.payment_info" [amount_due]="order.order_info.amount_due"></app-payment-info>
 			<app-shipping-address [shipping_address]="order.shipping_address"></app-shipping-address>
 			<app-order-summary [order_summary]="order.order_summary"></app-order-summary>
 		</div>

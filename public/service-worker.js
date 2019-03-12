@@ -80,11 +80,11 @@ self.addEventListener('push', (event) => {
 workbox.precaching.precacheAndRoute([
   {
     "url": "views/kss-pwa/10.js",
-    "revision": "882bc953b34580e796fc23bb04d3f6bc"
+    "revision": "d9130075d20dc98d5c97dc5706997b67"
   },
   {
     "url": "views/kss-pwa/11.js",
-    "revision": "d23a02c70533ae0579cabe9061e5081f"
+    "revision": "8137df3039657c9d0c578825d5acf4ba"
   },
   {
     "url": "views/kss-pwa/12.js",
@@ -108,7 +108,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "views/kss-pwa/9.js",
-    "revision": "5adb8560b5661aaba742d37710fe8921"
+    "revision": "b0ca730085b063f115ed6729f854b133"
   },
   {
     "url": "views/kss-pwa/common.js",

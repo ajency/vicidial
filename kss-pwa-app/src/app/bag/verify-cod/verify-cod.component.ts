@@ -59,6 +59,7 @@ export class VerifyCodComponent implements OnInit, OnChanges {
   }
 
   resendOTP(){
+    this.otpVerificationErrorMsg = '';
     this.appservice.showLoader();
     let url = this.appservice.apiUrl + '/api/rest/v1/user/order/' + this.shippingDetails.order_id + '/resend-otp?phone='+this.shippingDetails.address.phone;
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
