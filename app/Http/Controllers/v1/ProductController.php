@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\Controller;
-use App\ProductColor;
 use App\Product;
-use App\Facet;
+use App\ProductColor;
 use App\Variant;
 use Illuminate\Http\Request;
 
@@ -14,11 +13,11 @@ class ProductController extends Controller
 
     public function index($product_slug, Request $request)
     {
-        $json = json_decode(singleproduct($product_slug));
-        $params =  (array) $json;
-        $posts = array();
+        $json   = json_decode(singleproduct($product_slug));
+        $params = (array) $json;
+        $posts  = array();
         $query  = $request->all();
-        
+
         $params['show_button'] = false;
 
         $available_sizes   = array();
@@ -32,7 +31,7 @@ class ProductController extends Controller
 
             if ($size_set->inventory_available) {
                 $available_sizes[] = $size_set;
-            } else  {
+            } else {
                 $unavailable_sizes[] = $size_set;
             }
         }
@@ -42,68 +41,69 @@ class ProductController extends Controller
         if ($params['ecom_sales'] == false) {
             $params['show_button'] = false;
         }
-        
+
         $facet_names_for_url = array();
-        $facets = array();
-        $categories = array_keys(get_object_vars ($params['category']) );   
+        $facets              = array();
+        $categories          = array_keys(get_object_vars($params['category']));
         foreach ($params['facet_value_pairs'] as $facet_name => $all_facets) {
-            foreach($all_facets as $facet) {
-                if(in_array($facet_name, $categories ) ) {
-                    array_push($facets,["slug" => collect($facet)['slug']]);
+            foreach ($all_facets as $facet) {
+                if (in_array($facet_name, $categories)) {
+                    array_push($facets, ["slug" => collect($facet)['slug']]);
                 }
-                array_push($posts,collect($facet)['display_name']);
-                $facet_names_for_url[$facet_name]=["display_name" => collect($facet)['display_name'], "slug" => collect($facet)['slug']];
-            } 
+                array_push($posts, collect($facet)['display_name']);
+                $facet_names_for_url[$facet_name] = ["display_name" => collect($facet)['display_name'], "slug" => collect($facet)['slug']];
+            }
         }
-       
+
         $related_search = array();
-        if(isset($params['size'])) {
+        if (isset($params['size'])) {
             $price = setDefaultPrice(collect($params['variant_group'])[$params['selected_color_id']]->variants, $params['size']);
-        }
-        else {
+        } else {
             $price = setDefaultPrice(collect($params['variant_group'])[$params['selected_color_id']]->variants);
         }
-        array_push($related_search,["name" => 'More in ' . $facet_names_for_url['product_subtype']['display_name'], "href" => createUrl('list',[$facet_names_for_url['product_subtype']['slug']] )] );
-        array_push($related_search,["name" => 'More in ' . $facet_names_for_url['product_color_html']['display_name'] . ' ' . $facet_names_for_url['product_subtype']['display_name'], "href" => createUrl('list', [$facet_names_for_url['product_subtype']['slug']], [ "pf" => ['color' => [$facet_names_for_url['product_color_html']['slug']] ]] ) ]);
-        array_push($related_search,["name" => 'More in ' . $facet_names_for_url['product_subtype']['display_name'] . ' from ' . $facet_names_for_url['product_brand']['display_name'], "href" =>createUrl('list', [$facet_names_for_url['product_subtype']['slug'], $facet_names_for_url['product_brand']['slug']] ) ]);
-        array_push($related_search,["name" => 'More in ' . $facet_names_for_url['product_subtype']['display_name'] .' below ' . $price['sale_price'], "href" => createUrl('list', [$facet_names_for_url['product_subtype']['slug']], [ "rf" => ['price' => ['0TO'.$price['sale_price']] ]] ) ]);
-        
+        array_push($related_search, ["name" => 'More in ' . $facet_names_for_url['product_subtype']['display_name'], "href" => createUrl('list', [$facet_names_for_url['product_subtype']['slug']])]);
+        array_push($related_search, ["name" => 'More in ' . $facet_names_for_url['product_color_html']['display_name'] . ' ' . $facet_names_for_url['product_subtype']['display_name'], "href" => createUrl('list', [$facet_names_for_url['product_subtype']['slug']], ["pf" => ['color' => [$facet_names_for_url['product_color_html']['slug']]]])]);
+        array_push($related_search, ["name" => 'More in ' . $facet_names_for_url['product_subtype']['display_name'] . ' from ' . $facet_names_for_url['product_brand']['display_name'], "href" => createUrl('list', [$facet_names_for_url['product_subtype']['slug'], $facet_names_for_url['product_brand']['slug']])]);
+        array_push($related_search, ["name" => 'More in ' . $facet_names_for_url['product_subtype']['display_name'] . ' below ' . $price['sale_price'], "href" => createUrl('list', [$facet_names_for_url['product_subtype']['slug']], ["rf" => ['price' => ['0TO' . $price['sale_price']]]])]);
+
         $params['related_search'] = $related_search;
 
-        $params['breadcrumb']           = array();
-        $params['breadcrumb']['list']   = array();
-        $url = array();
-        $breadcrumb = config('product.breadcrumb_order');
+        $params['breadcrumb']         = array();
+        $params['breadcrumb']['list'] = array();
+        $url                          = array();
+        $breadcrumb                   = config('product.breadcrumb_order');
         foreach ($breadcrumb as $category) {
-            $facet = collect($json->facet_value_pairs->{$category})->first();
-            $url[] = $facet->slug;
-            $params['breadcrumb']['list'][] = ['name' => $facet->display_name, 'href' => createUrl('list',$url)];
+            $facet                          = collect($json->facet_value_pairs->{$category})->first();
+            $url[]                          = $facet->slug;
+            $params['breadcrumb']['list'][] = ['name' => $facet->display_name, 'href' => createUrl('list', $url)];
         }
-        $params['posts'] =  $posts;
+        $params['posts']                 = $posts;
         $params['breadcrumb']['current'] = '';
         setSEO('product', $params);
 
-        $similar_cat_params=[];
+        $similar_cat_params               = [];
         $similar_cat_params['categories'] = array_column($facets, 'slug');
-        $search_object_arr = build_search_object($similar_cat_params);
-        
+        $search_object_arr                = build_search_object($similar_cat_params);
+
         $search_results = [];
-        
+
         $search_object = $search_object_arr["search_result"];
 
-        $search_results["slug_search_result"] = $search_object_arr["slug_search_result"];
+        $search_results["slug_search_result"]       = $search_object_arr["slug_search_result"];
         $search_results["slug_value_search_result"] = $search_object_arr["slug_value_search_result"];
-        $search_results["slugs_result"] = $search_object_arr["slugs_result"];
-        $search_results["title"] = $search_object_arr["title"];
-        $similar_products_display_limit = config('product.similar_products_display_limit');
-        $parameters = Product::productListPage(["search_object" => $search_object,"display_limit"=> ($similar_products_display_limit+1),"page" =>1],$search_results["slug_value_search_result"],$search_results["slug_search_result"],$search_results["slugs_result"],$search_results["title"]);
-        
+        $search_results["slugs_result"]             = $search_object_arr["slugs_result"];
+        $search_results["title"]                    = $search_object_arr["title"];
+        $similar_products_display_limit             = config('product.similar_products_display_limit');
+        $parameters                                 = Product::productListPage(["search_object" => $search_object, "display_limit" => ($similar_products_display_limit + 1), "page" => 1], $search_results["slug_value_search_result"], $search_results["slug_search_result"], $search_results["slugs_result"], $search_results["title"]);
+
         // dd($parameters);
-        $similar_data_params= json_decode(json_encode($parameters,JSON_FORCE_OBJECT));
-        $similar_products = [];
-        foreach($similar_data_params->items as $similar_item){
-            if($similar_item->product_id != $params["parent_id"] && count($similar_products)<$similar_products_display_limit)
+        $similar_data_params = json_decode(json_encode($parameters, JSON_FORCE_OBJECT));
+        $similar_products    = [];
+        foreach ($similar_data_params->items as $similar_item) {
+            if ($similar_item->product_id != $params["parent_id"] && count($similar_products) < $similar_products_display_limit) {
                 array_push($similar_products, $similar_item);
+            }
+
         }
         return view('singleproduct')->with('params', $params)->with('similar_data_params', $similar_products);
     }
@@ -116,39 +116,43 @@ class ProductController extends Controller
             $join->where('fileupload_mapping.object_type', '=', "App\ProductColor");
         })->where('fileupload_mapping.file_id', $photo_id)->select('product_colors.*')->first();
         // $productColor = ProductColor::where('elastic_id', $elastic_id)->first();
-        if($productColor == null) abort(404);
-        $imageurl     = "";
-        $file         = $productColor->getSingleImage($photo_id,$preset, $depth);
+        if ($productColor == null) {
+            abort(404);
+        }
+
+        $imageurl = "";
+        $file     = $productColor->getSingleImage($photo_id, $preset, $depth);
         if ($file) {
             $imageurl = $file;
         } else {
-            $imageurl = $productColor->resizeImages($photo_id,$preset, $depth, $filename);
+            $imageurl = $productColor->resizeImages($photo_id, $preset, $depth, $filename);
         }
-        if(config('ajfileupload.use_cdn') &&config('ajfileupload.cdn_url') ){
-            $tempUrl = parse_url($imageurl);
-            $imageurl =  config('ajfileupload.cdn_url') . $tempUrl['path'];
+        if (config('ajfileupload.use_cdn') && config('ajfileupload.cdn_url')) {
+            $tempUrl  = parse_url($imageurl);
+            $imageurl = config('ajfileupload.cdn_url') . $tempUrl['path'];
         }
         return \Redirect::to(url($imageurl), 301);
 
     }
 
-
-    public function productMissingImages(){
+    public function productMissingImages()
+    {
         $variants = Variant::leftJoin('fileupload_mapping', function ($join) {
-           $join->on('variants.product_color_id', '=', 'fileupload_mapping.object_id');
-           $join->where('fileupload_mapping.object_type', '=', "App\ProductColor");
+            $join->on('variants.product_color_id', '=', 'fileupload_mapping.object_id');
+            $join->where('fileupload_mapping.object_type', '=', "App\ProductColor");
         })->where('fileupload_mapping.id', null)->get();
 
-        $odoo_ids=[];
+        $odoo_ids = [];
         foreach ($variants as $variant) {
-          if($variant->getAvailability()) {
-           array_push($odoo_ids,$variant->odoo_id);
-          }
+            if ($variant->getAvailability()) {
+                array_push($odoo_ids, $variant->odoo_id);
+            }
         }
-        return response()->json($odoo_ids,200);
+        return response()->json($odoo_ids, 200);
     }
 
-    public function allInventory(){
+    public function allInventory()
+    {
         Variant::getWarehouseInventory();
     }
 }
