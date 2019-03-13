@@ -102,7 +102,21 @@ class SingleProduct
     private function getProductFacets(){
     	$facets = [];
     	foreach (self::PRODUCT_FACETS as $facetName) {
-    		
+    		switch ($facetName) {
+    			case 'product_color_html':
+    				$id = (isset($this->productData['product_color_id']))? $this->productData["product_color_id"]: null;
+    				break;
+    			
+    			default:
+    				$id = null;
+    				break;
+    		}
+    		$facetData = self::$facets->where('facet_name',$facetName)->where('facet_value',$this->productData[$facetName])->first();
+    		$facets[$facetName] = [
+    			'id' => $id,
+    			'name'=> $facetData['display_name'],
+    			'slug' => $facetData['slug'] 
+    		]; 
     	}
     	return $facets;
     }
@@ -113,6 +127,9 @@ class SingleProduct
     		switch ($object) {
     			case 'attributes':
     				$data['attributes'] = $this->getProductAttributes();
+    				break;
+    			case 'facets':
+    				$data['facets'] = $this->getProductFacets();
     				break;
     			default:
     				throw new \Exception("object type ".$object." not defined", 1);
