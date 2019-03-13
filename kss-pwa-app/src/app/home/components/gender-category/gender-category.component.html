@@ -5,7 +5,7 @@
  		<strong>Flat 50% OFF</strong> on selected merchandise. <strong>Shop Now</strong>
  	</a>
 </div>
-<section class="mt-4 mt-md-4">
+<!-- <section class="mt-4 mt-md-4">
 	<div class="container">
 		<div class="row gender-cat-wrapper mobile-overflow label-box-small">
 			<div class="col">
@@ -79,23 +79,11 @@
 					</div>
 				</a>
 			</div>
-
-			<!-- <div class="col kss-extension home-brands label-box img-holder position-relative brand-label-box kss-extension">
-				<a href="#" class="d-block text-black">
-					<img src="https://test.stage.kidsuperstore.in/NOV/static_elements/2726/portrait/1x/theme-portrait-170.jpeg" alt="">
-					<div class="label-box__sticky">
-						<span class="label-box__action" style="background-color: #fff; color: #000;"> Boys
-						 	<span class="cat-title">2-14 Years </span>
-						 </span>
-						<span class="label-box__muted">Explore</span>
-					</div>
-				</a>
-			</div> -->
 		</div>
 	</div>
-</section>
+</section> -->
 
-<section *ngIf="tabs && isDraftPage" class="mt-4 mt-md-4">
+<section *ngIf="tabs" class="mt-4 mt-md-4">
 	<div class="container">
 		<div class="row gender-cat-wrapper mobile-overflow label-box-small">
 			<div *ngFor="let tab of tabs" class="col kss-extension" attr.static_element-id="{{tab.sequence}}" static_element-display_type="Gender-box" attr.static_element-type="{{tab.type}}" page_slug="home">
