@@ -13,6 +13,7 @@ class ProductController extends Controller
 
     public function index($product_slug, Request $request)
     {
+        
         $json   = json_decode(singleproduct($product_slug));
         $params = (array) $json;
         $posts  = array();
@@ -43,13 +44,9 @@ class ProductController extends Controller
         }
 
         $facet_names_for_url = array();
-        $facets              = array();
         $categories          = array_keys(get_object_vars($params['category']));
         foreach ($params['facet_value_pairs'] as $facet_name => $all_facets) {
             foreach ($all_facets as $facet) {
-                if (in_array($facet_name, $categories)) {
-                    array_push($facets, ["slug" => collect($facet)['slug']]);
-                }
                 array_push($posts, collect($facet)['display_name']);
                 $facet_names_for_url[$facet_name] = ["display_name" => collect($facet)['display_name'], "slug" => collect($facet)['slug']];
             }
@@ -81,6 +78,8 @@ class ProductController extends Controller
         $params['breadcrumb']['current'] = '';
         setSEO('product', $params);
 
+
+        $facets = Facet::select('slug')->whereIn('facet_value', array_values((array)$params["category"]))->get()->toArray();
         $similar_cat_params               = [];
         $similar_cat_params['categories'] = array_column($facets, 'slug');
         $search_object_arr                = build_search_object($similar_cat_params);
