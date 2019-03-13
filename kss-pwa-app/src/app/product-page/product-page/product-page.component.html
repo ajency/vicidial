@@ -1,3 +1,106 @@
-<p>
-  product-page works!
-</p>
+<app-header [menu]="menuObject"></app-header>
+
+<app-loader *ngIf="showLoader"></app-loader>
+
+
+<div class="container mt-0 mt-md-4">
+	<div class="row">
+		<div class="col-md-12 d-none d-md-block">
+			<!-- Breadcrumbs -->
+			<app-breadcrums></app-breadcrums>
+		</div>
+		<div class="col-sm-12 col-lg-7">
+			<!-- Product Images -->
+			<app-product-img-slider></app-product-img-slider>
+
+			<!-- Color Options -->
+			<app-color-options></app-color-options>
+
+		</div>
+		<div class="col-sm-12 col-lg-5">
+			<!-- Product Title & Prices Section -->
+			<app-product-info></app-product-info>
+		</div>
+	</div>
+</div>
+
+<div id="similar" class="container">
+	<hr class="mt-5">
+	<h3 class="text-left my-4 font-weight-bold">Similar Products</h3>
+		<div id="card-list" class="row similar-products">
+      	<div class="col similar-products__col">
+            <div class="card h-100 product-card">
+              	<a href="url" >
+	                <div class="product-card__wrapper d-flex align-items-center justify-content-center">
+	                	<img src="transparent img"
+	                		data-srcset="image_1x 270w, image_2x 540w, image_3x 978w"
+	                		class="lazyload card-img-top blur-up"
+	                		sizes="(min-width: 992px) 25vw,50vw"
+	                		alt="product title"
+	                		title="product title" />
+	               	</div>
+              	</a>
+              	<div class="card-body">
+	                <a href="url" class="text-dark">
+	                  <h5 class="card-title">
+	                    product title
+	                  </h5>
+	                </a>
+
+	                <!-- <div id="kss-price-id" class="kss-price kss-price--smaller">₹599</div> -->
+	                <div id="kss-price-id" class="kss-price kss-price--smaller">₹599 <small class="kss-original-price text-muted">₹699</small><span class="kss-discount text-danger">10% OFF</span></div>
+             	</div>
+            </div>
+      	</div>
+   </div>
+</div>
+
+<!-- Mobile size selection -->
+<div class="modal fade size-modal" id="size-modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title font-weight-bold">Select a size</h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+		<!-- @Sujit: Size selection repeated, move to component -->
+		<div class="radio-wrap d-flex kss_sizes wo-image mb-4 single-radio">
+			<input class="d-none radio-input" type="radio" name="kss-sizes" id="size-4" data-variant_id="1109" data-list_price="599" data-sale_price="599" data-discount_per="0" data-title="3-4yrs">
+			<label class="radio-label" for="size-4" title="3-4yrs">
+		    	<div class="radio-option">  3-4yrs</div>
+		    </label>
+		    <input class="d-none radio-input" type="radio" name="kss-sizes" id="size-5" data-variant_id="1110" data-list_price="599" data-sale_price="599" data-discount_per="0" data-title="4-5yrs">
+		    <label class="radio-label" for="size-5" title="4-5yrs">
+		    	<div class="radio-option">  4-5yrs</div>
+		    </label>
+		    <input class="d-none radio-input" type="radio" name="kss-sizes" id="size-3" data-variant_id="1108" disabled="" data-list_price="599" data-sale_price="599" data-discount_per="0" data-title="2-3yrs">
+		    <label class="radio-label" for="size-3" title="2-3yrs. Out of Stock">
+		    	<div class="radio-option">  2-3yrs</div>
+		    </label>
+		</div>
+
+      </div>
+      <div class="modal-footer add-bag-btn">
+      	<button id="cd-add-to-cart" class="btn kss-btn kss-btn--big cd-add-to-cart">
+			<div class="kss-btn__wrapper d-flex align-items-center justify-content-center"><i class="kss_icon bag-icon-fill icon-sm"></i> Add to Bag</div>
+		</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Back to top -->
+<div app-back-to-top></div>
+
+<app-footer> </app-footer>
+
+<div class="alert kss-alert sticky-alert d-inline-flex align-items-center px-sm-4 px-3 py-4 fade show shadow rounded m-2" role="alert">
+    <i class="fas fa-times pr-sm-3 pr-2 icon alert-close cursor-pointer"></i>
+    <div class="message">
+      <strong>Add to cart failed. Please try again</strong>
+    </div>
+</div>

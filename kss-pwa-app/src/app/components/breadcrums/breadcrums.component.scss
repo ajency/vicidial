@@ -1,0 +1,12 @@
+.breadcrumb-item{
+	a{
+		color:#999;
+		font-size:12px;
+	}
+	& + .breadcrumb-item{
+		padding-left: 0.25rem;
+		&:before{
+			padding-right: 0.25rem;
+		}
+	}
+}

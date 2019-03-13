@@ -1,3 +1,121 @@
-<p>
-  product-info works!
-</p>
+<div class="d-flex">
+    <div class="mt-sm-2">
+	    <!-- Product Title -->
+	    <a href="/" class="text-black"><h2 class="brands-title brands-title--single">Upturn</h2></a>
+	    <h1 class="section-heading section-heading--single">Girls Casual Woven Short</h1>
+
+	    <!-- Product Default/Selected Price -->
+	    <app-product-price></app-product-price>
+    </div>
+</div>
+
+<hr class="my-2">
+
+<div class="d-flex justify-content-between mt-3">
+	<label class="">Select Size (Age Group)</label>
+</div>
+
+<!-- Product Size Selection -->
+<div class="radio-wrap d-flex kss_sizes wo-image mb-4 single-radio">
+	<input class="d-none radio-input" type="radio" name="kss-sizes" id="size-4" data-variant_id="1109" data-list_price="599" data-sale_price="599" data-discount_per="0" data-title="3-4yrs">
+	<label class="radio-label" for="size-4" title="3-4yrs">
+    	<div class="radio-option">  3-4yrs</div>
+    </label>
+    <input class="d-none radio-input" type="radio" name="kss-sizes" id="size-5" data-variant_id="1110" data-list_price="599" data-sale_price="599" data-discount_per="0" data-title="4-5yrs">
+    <label class="radio-label" for="size-5" title="4-5yrs">
+    	<div class="radio-option">  4-5yrs</div>
+    </label>
+    <input class="d-none radio-input" type="radio" name="kss-sizes" id="size-3" data-variant_id="1108" disabled="" data-list_price="599" data-sale_price="599" data-discount_per="0" data-title="2-3yrs">
+    <label class="radio-label" for="size-3" title="2-3yrs. Out of Stock">
+    	<div class="radio-option">  2-3yrs</div>
+    </label>
+</div>
+
+<div class="text-danger d-none font-weight-bold position-relative size-select-error" style="top: -15px;">Please select a size</div>
+
+<div class="row">
+	<div class="col-sm-12 col-md-12 col-12 mobile-fixed pb-0 pb-sm-2 add-bag-btn visible shadow-layer">
+		<button id="cd-add-to-cart" class="btn kss-btn kss-btn--big cd-add-to-cart">
+			<div class="kss-btn__wrapper d-flex align-items-center justify-content-center">
+				<span class="btn-contents align-items-center">
+					<i class="kss_icon bag-icon-fill icon-sm"></i> Add to Bag
+				</span>
+				<div class="btn-icon">
+					<i class="fas fa-circle-notch fa-spin fa-lg"></i>
+				</div>
+			</div>
+		</button>
+		<!-- <div class="out-of-stock">Currently unavailable</div> -->
+	</div>
+</div>
+
+<div class="accordion product-collapse" id="prodDetails">
+  <div class="">
+    <div class="collapse-head border-bottom mb-0" id="headingDetails">
+        <button class="btn btn-link btn-block text-left py-3 px-0 br-0 " type="button" data-toggle="collapse" data-target="#collapseDetails" aria-expanded="true" aria-controls="collapseDetails">
+            <label class="mb-0 text-body cursor-pointer">
+                Details
+            </label>
+        </button>
+    </div>
+
+    <div id="collapseDetails" class="collapse show" aria-labelledby="headingDetails" data-parent="#prodDetails">
+        <div class="card-body pb-2 px-0">
+            <p>Denim Shorts</p>
+        </div>
+    </div>
+  </div>
+
+  <div class="">
+    <div class="collapse-head border-bottom mb-0" id="headingInfo">
+        <button class="btn btn-link btn-block text-left py-3 px-0 br-0 collapsed" type="button" data-toggle="collapse" data-target="#collapseInfo" aria-expanded="false" aria-controls="collapseInfo">
+            <label class="mb-0 text-body cursor-pointer">
+                Additional Info
+            </label>
+        </button>
+    </div>
+    <div id="collapseInfo" class="collapse" aria-labelledby="headingInfo" data-parent="#prodDetails">
+        <div class="card-body pb-2 px-0">
+            <dl class="row">
+                <dt class="col-4 col-sm-3"><label class="text-muted f-w-4">Gender</label></dt>
+              	<dd class="col-8 col-sm-9 text-capitalize">Girls</dd>
+
+                <dt class="col-4 col-sm-3"><label class="text-muted f-w-4">Age Group</label></dt>
+              	<dd class="col-8 col-sm-9 text-capitalize">Toddler</dd>
+
+                <dt class="col-4 col-sm-3"><label class="text-muted f-w-4">Material</label></dt>
+              	<dd class="col-8 col-sm-9 text-capitalize">others</dd>
+
+                <dt class="col-4 col-sm-3"><label class="text-muted f-w-4">Occasion</label></dt>
+              	<dd class="col-8 col-sm-9 text-capitalize">casual</dd>
+
+                <dt class="col-4 col-sm-3"><label class="text-muted f-w-4">Wash</label></dt>
+              	<dd class="col-8 col-sm-9 text-capitalize">Enzyme</dd>
+
+                <dt class="col-4 col-sm-3"><label class="text-muted f-w-4">Fabric Type</label></dt>
+              	<dd class="col-8 col-sm-9 text-capitalize">denim</dd>
+
+              	<dt class="col-4 col-sm-3"><label class="text-muted f-w-4">Brand</label></dt>
+              	<dd class="col-8 col-sm-9 text-capitalize">Upturn</dd>
+            </dl>
+        </div>
+    </div>
+  </div>
+
+  <div class="">
+    <div class="collapse-head border-bottom mb-0" id="headingTags">
+        <button class="btn btn-link btn-block text-left py-3 px-0 br-0 collapsed" type="button" data-toggle="collapse" data-target="#collapseTags" aria-expanded="false" aria-controls="collapseTags">
+            <label class="mb-0 text-body cursor-pointer">
+                Tags
+            </label>
+        </button>
+    </div>
+    <div id="collapseTags" class="collapse" aria-labelledby="headingTags" data-parent="#prodDetails">
+        <div class="card-body pb-2 px-0">
+          <ul class="list-inline d-flex flex-wrap kss-tags">
+              <li>tagname</li>
+          </ul>
+        </div>
+    </div>
+  </div>
+</div>
