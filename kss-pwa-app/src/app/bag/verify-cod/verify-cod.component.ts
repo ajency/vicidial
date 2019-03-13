@@ -19,6 +19,7 @@ export class VerifyCodComponent implements OnInit, OnChanges {
               private apiservice : ApiServiceService) { }
 
   ngOnInit() {
+    $(".kss_shipping_summary").animate({scrollTop: $('#cod-otp-verify').scrollHeight});
   }
 
   ngOnChanges(){
@@ -48,6 +49,7 @@ export class VerifyCodComponent implements OnInit, OnChanges {
   }
 
   showCancelModal(){
+    $(".kss_shipping_summary").animate({scrollTop: 0});
     $('#cancel-cod').modal('show');
     $("#cd-cart,.kss_shipping_summary").css("overflow", "hidden");
     $('.modal-backdrop').appendTo('.scroll-container');
