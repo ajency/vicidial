@@ -131,11 +131,11 @@
 									<p class="h6 line-height-5">
 										{{shippingDetails.address.address}}, {{shippingDetails.address.city}}, {{shippingDetails.address.state}} {{shippingDetails.address.pincode}}
 									</p>
-									<p class="h6 my-3">
+									<p class="h6 my-2">
 										Mobile: <b class="font-weight-bold">{{shippingDetails.address.phone}}</b>
 									</p>
 									<p *ngIf="userEmail" class="h6 mt-4 mb-0">
-										Order Tracking emails will be sent to : <b class="font-weight-bold">{{userEmail}}</b>
+										Order Tracking emails will be sent to : <br> <b class="font-weight-bold">{{userEmail}}</b>
 										<i class="fas fa-pencil-alt number-edit cursor-pointer ml-2 mt-1" (click)="editUserInfo()"></i>
 									</p>
 								</div>
