@@ -25,15 +25,15 @@
 
 					<!-- Select Payment mode -->
 					<div class="">
-						<h6 class="font-weight-bold my-3 coupon-title">Select Mode of Payment</h6>
+						<h4 class="mb-3 font-weight-bold">Select Payment Method</h4>
 						<div *ngFor="let option of paymentOptions" class="radio-wrap d-flex wo-image mb-0">
 							<!-- Selection Radio -->
 							<input class="d-none radio-input" type="radio" name="kss-payment-option" id="{{option}}" [value]="option" [(ngModel)]="selectedPaymentOption" (change)="updatePaymentOption()" />
 							<!-- Coupon box -->
-							<label class="radio-label mb-2 w-100 d-flex" for="{{option}}">
+							<label class="radio-label radio-label--large mb-2 w-100 d-flex" for="{{option}}">
 								<div class="pr-2">
 									<div class="radio-selection position-relative">
-										<i class="fas fa-check-circle"></i>
+										<i class="far fa-circle"></i>
 									</div>
 								</div>
 								<div class="flex-1">
@@ -52,7 +52,7 @@
 					</div>
 					<!-- Select Payment mode -->
 
-					<div class="align-items-center d-flex justify-content-center py-3">
+					<div class="align-items-center d-flex py-3">
 						<img src="/img/shield.png" class="img-fluid" width="30" alt="100% Secure Payments" title="100% Secure Payments">
 						<div class="pl-2 genuinity">
 							<p class="mb-1">Genuine products. 7 day returns.</p>
@@ -60,7 +60,7 @@
 						</div>
 					</div>
 
-					<hr class="">
+					<hr class="w-shadow">
 
 					<!-- <div class="alert alert-success mb-3" role="alert">
 					  <b><i class="fas fa-truck"></i> Standard Delivery</b> (Free delivery)
@@ -105,7 +105,7 @@
 					  </li>
 					</ul>
 
-					<hr class="mt-0">
+					<hr class="mt-0 w-shadow">
 
 					<div class="cart-summary final-summary mt-4">
 					  <h4 class="mb-1 font-weight-bold">Price Summary</h4>
@@ -119,22 +119,22 @@
 					  <h5 class="font-weight-bold">Total Payable<span>₹{{shippingDetails.summary.you_pay}}</span></h5>
 					</div>
 					<h5 *ngIf="shippingDetails.summary.mrp_total - shippingDetails.summary.you_pay != 0 " class="font-weight-bold text-success line-height-5">Your total savings on this order ₹{{roundOff(shippingDetails.summary.mrp_total - shippingDetails.summary.you_pay)}}</h5>
-					<hr class="mb-2">
+					<hr class="mb-2 w-shadow">
 
 					<div>
-						<h4 class="mb-1 font-weight-bold">Deliver To</h4>
+						<h4 class="mb-1 font-weight-bold mt-4">Deliver To</h4>
 						<label class="w-100 text-left mb-0">
 							<div class="d-flex align-items-start address-block review-section mb-5">
 								<div class="text-left flex-fill">
-									<h3 class="kss-title font-weight-bold d-flex align-items-center w-100 mb-1 mt-2">{{shippingDetails.address.name}}
-									<!-- <i class="fas fa-pencil-alt number-edit cursor-pointer ml-2 mt-1" (click)="editShippingAddress()"></i> --></h3>
+									<h6 class="font-weight-bold d-flex align-items-center w-100 mb-2 mt-2">{{shippingDetails.address.name}}
+									<!-- <i class="fas fa-pencil-alt number-edit cursor-pointer ml-2 mt-1" (click)="editShippingAddress()"></i> --></h6>
 									<p class="h6 line-height-5">
 										{{shippingDetails.address.address}}, {{shippingDetails.address.city}}, {{shippingDetails.address.state}} {{shippingDetails.address.pincode}}
 									</p>
 									<p class="h6 my-3">
 										Mobile: <b class="font-weight-bold">{{shippingDetails.address.phone}}</b>
 									</p>
-									<p *ngIf="userEmail" class="h6 mt-3 mb-0">
+									<p *ngIf="userEmail" class="h6 mt-4 mb-0">
 										Order Tracking emails will be sent to : <b class="font-weight-bold">{{userEmail}}</b>
 										<i class="fas fa-pencil-alt number-edit cursor-pointer ml-2 mt-1" (click)="editUserInfo()"></i>
 									</p>
