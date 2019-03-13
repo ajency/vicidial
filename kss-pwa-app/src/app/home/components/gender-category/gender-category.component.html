@@ -8,7 +8,7 @@
 <section class="mt-4 mt-md-4">
 	<div class="container">
 		<div class="row gender-cat-wrapper mobile-overflow label-box-small">
-			<div class="col kss-extension">
+			<div class="col">
 				<a class="gender-cat" href="/boys/toddler-2-7-years" style="">
 					<div class="text-dark card gender-cat--top d-flex align-items-center justify-content-center">
 						<img src="../../../../assets/img/boys-2-7.jpg" alt="" class="img-fluid" alt="BOYS 2 - 7 Years">
@@ -20,7 +20,7 @@
 					</div>
 				</a>
 			</div>
-			<div class="col kss-extension">
+			<div class="col">
 				<a class="gender-cat" href="/boys/junior-7-14-years" style="">
 					<div class="text-dark card gender-cat--top d-flex align-items-center justify-content-center">
 						<img src="../../../../assets/img/boys-7-14.jpg" alt="" class="img-fluid" alt="BOYS 7 - 14 Years">
@@ -32,7 +32,7 @@
 					</div>
 				</a>
 			</div>
-			<div class="col kss-extension">
+			<div class="col">
 				<a class="gender-cat" href="/girls/toddler-2-7-years" style="">
 					<div class="text-dark card gender-cat--top d-flex align-items-center justify-content-center">
 						<img src="../../../../assets/img/girls2-7.jpg" alt="" class="img-fluid" alt="GIRLS 2 - 7 Years">
@@ -44,7 +44,7 @@
 					</div>
 				</a>
 			</div>
-			<div class="col kss-extension">
+			<div class="col">
 				<a class="gender-cat" href="/girls/junior-7-14-years" style="">
 					<div class="text-dark card gender-cat--top d-flex align-items-center justify-content-center">
 						<img src="../../../../assets/img/girls7-14.jpg" alt="" class="img-fluid" alt="GIRLS 7 - 14 Years">
@@ -56,7 +56,7 @@
 					</div>
 				</a>
 			</div>
-			<div class="col kss-extension">
+			<div class="col">
 				<a class="gender-cat" href="/girls--boys/infant-0-2-years" style="">
 					<div class="text-dark card gender-cat--top d-flex align-items-center justify-content-center">
 						<img src="../../../../assets/img/infants.jpg" alt="" class="img-fluid" alt="INFANTS 0 - 2 Years">
@@ -68,7 +68,7 @@
 					</div>
 				</a>
 			</div>
-			<div class="col kss-extension">
+			<div class="col">
 				<a class="gender-cat" href="/shop" style="">
 					<div class="text-dark card gender-cat--top d-flex align-items-center justify-content-center">
 						<img src="../../../../assets/img/newarrivals.jpg" alt="" class="img-fluid" alt="NEW ARRIVALS">
@@ -91,6 +91,32 @@
 					</div>
 				</a>
 			</div> -->
+		</div>
+	</div>
+</section>
+
+<section *ngIf="tabs && isDraftPage" class="mt-4 mt-md-4">
+	<div class="container">
+		<div class="row gender-cat-wrapper mobile-overflow label-box-small">
+			<div *ngFor="let tab of tabs" class="col kss-extension" attr.static_element-id="{{tab.sequence}}" static_element-display_type="Gender-box" attr.static_element-type="{{tab.type}}" page_slug="home">
+				<a class="gender-cat" href="{{tab.element_data.image.href}}" style="">
+					<div class="text-dark card gender-cat--top d-flex align-items-center justify-content-center">
+						<img class="img-fluid w-100"
+							[useSrcset]="true"
+							[offset]=0
+							[defaultImage]="'/assets/img/transparent.png'"
+							[lazyLoad]="createDataSrcSet(tab.images.default['2x'], '250w', tab.images.default['1x'], '125w')"
+					        sizes='(min-width: 1200px) 250px, 125px'
+					        title="{{tab.element_data.image.title}}"
+					        alt="{{tab.element_data.image.img_alt}}"/>
+						<h4 *ngIf="tab.element_data.text.text1" class="gender-cat__name" style="">{{tab.element_data.text.text1}}</h4>
+					</div>
+					<div class="text-center">
+						<p *ngIf="tab.element_data.text.text2" class="gender-cat__year mb-0" style="">{{tab.element_data.text.text2}}</p>
+						<span *ngIf="tab.element_data.text.text3" class="gender-cat__muted">{{tab.element_data.text.text3}}</span>
+					</div>
+				</a>
+			</div>
 		</div>
 	</div>
 </section>
