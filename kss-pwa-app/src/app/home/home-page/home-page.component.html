@@ -5,7 +5,7 @@
 <div *ngIf="homePageElements" class="pb-md-3">
 
   <!-- Gender category selection -->
-  <app-gender-category [tabs]="homePageElements.gender"></app-gender-category>
+  <app-gender-category *ngIf="homePageElements.gender" [tabs]="homePageElements.gender"></app-gender-category>
 
    <!-- Our offers -->
   <app-offers *ngIf="homePageElements.offer" [offers]="homePageElements.offer"></app-offers>
