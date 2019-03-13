@@ -595,7 +595,7 @@ body{
         font-size: 1.35em;
     }
     &:hover{
-        color: initial;
+        color: initial !important;
         background-color: #fffad9;
     }
     .custom-size{

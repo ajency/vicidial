@@ -9,6 +9,15 @@
 		border-radius: 0;
 		box-shadow: 1px 2px 5px rgba(45, 45, 45, 0.13);
 		border: 4px solid #a1a1a1;
+		padding-top: 57%;
+		img{
+			position: absolute;
+		    top: 0;
+		    left: 0;
+		    width: 100%;
+		    height: 70%;
+		    background: #fffde1;
+		}
 	}
 	&__name,&__year{
 		transition: all 0.5s ease;
@@ -32,6 +41,20 @@
 	@include bp(mobile) {
 		min-height: 85px;
 		// padding: 0.5rem;
+		.gender-cat--top{
+			padding-top: 56%;
+			img{
+				height: 65%;
+			}
+		}
+	}
+	@include bp(max_tab) {
+		.gender-cat--top{
+			padding-top: 58%;
+			img{
+				height: 78%;
+			}
+		}
 	}
 }
 
