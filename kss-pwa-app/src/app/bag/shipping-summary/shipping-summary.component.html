@@ -30,7 +30,7 @@
 							<!-- Selection Radio -->
 							<input class="d-none radio-input" type="radio" name="kss-payment-option" id="{{option}}" [value]="option" [(ngModel)]="selectedPaymentOption" (change)="updatePaymentOption()" />
 							<!-- Coupon box -->
-							<label class="radio-label radio-label--simple w-100 d-flex" for="{{option}}">
+							<label class="radio-label mb-2 w-100 d-flex" for="{{option}}">
 								<div class="pr-2">
 									<div class="radio-selection position-relative">
 										<i class="fas fa-check-circle mt-2"></i>
@@ -120,7 +120,7 @@
 					</div>
 					<h5 *ngIf="shippingDetails.summary.mrp_total - shippingDetails.summary.you_pay != 0 " class="font-weight-bold text-success line-height-5">Your total savings on this order ₹{{roundOff(shippingDetails.summary.mrp_total - shippingDetails.summary.you_pay)}}</h5>
 					<hr class="mb-2">
-					
+
 					<div>
 						<h4 class="mb-1 font-weight-bold">Deliver To</h4>
 						<label class="w-100 text-left mb-0">
@@ -142,7 +142,7 @@
 							</div>
 						</label>
 					</div>
-					
+
 				</div>
 
 				<div *ngIf="!showUserInfoModal" class="fixed-bottom d-show pl-3 pr-3">
@@ -172,6 +172,6 @@
 
 			<app-verify-cod *ngIf="showVerifyCod" [shippingDetails]="shippingDetails" (hideVerifyCOD)="hideVerifyCOD()"></app-verify-cod>
 
-		</div>	
+		</div>
 	</div>
 </div>

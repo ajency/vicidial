@@ -1,18 +1,26 @@
 <!-- Verify COD -->
 <div class="mb-5 py-3 px-4 padding-size">
 	<h3 class="modal-title font-weight-bold mt-1 mb-0">Verify COD Payment</h3>
-	<hr class="mb-0" />
-	<p class="my-2">Paying by Cash on delivery? We just need to verify the mobile number associated with your shipping address.</p>
+	<!-- <hr class="mb-0" /> -->
+	<p class="alert alert-warning align-items-start d-flex my-2 px-3 shadow-sm small text-body">
+		<span class="fa-stack fa-xs mr-1" style="top: 2px;">
+		  <i class="far fa-circle fa-stack-2x"></i>
+		  <i class="fa-info fa-stack-1x fas"></i>
+		</span>
+		<span class="flex-1">
+			Paying by Cash on delivery? We just need to verify the mobile number associated with your shipping address.
+		</span>
+	</p>
 	<div class="text-center mb-4">
-		<h6>Enter the 4 digit code sent to the below number</h6>
-		<h4 class="mb-2 mt-4 font-weight-bold">{{shippingDetails.address.phone}}</h4>
+		<h6 class="font-weight-bold mt-3">Enter the 4 digit code sent to the below number</h6>
+		<h4 class="mb-0 mt-3 font-weight-bold">{{shippingDetails.address.phone}}</h4>
 		<input type="tel" class="form-control form-control-number form-control-lg mb-2 letter-spacing-5 otp-number-field m-auto" aria-describedby="emailHelp" [(ngModel)]="otp" name="otp" placeholder="" required pattern="\d{4}$" minlength = "4" maxlength = "4" inputmode="numeric" appNumbers placeholder="Enter OTP" autocomplete="off" appKssAutoFocus>
 
 		 <small *ngIf="otpVerificationFailed" id="passwordHelpBlock" class="form-text text-danger">
 				{{otpVerificationErrorMsg}}
 		</small>
 
-		<div class="mt-2">
+		<div class="mt-2 small">
 			Didn't receive the code?  <a href="javascript:void(0);" class="text-secondary link-underline font-weight-bold" (click)="resendOTP()" >RESEND CODE</a>
 		</div>
 	</div>
