@@ -2,8 +2,9 @@
 <div class="mb-5 py-3 px-4 padding-size">
 	<h3 class="modal-title font-weight-bold mt-1 mb-0">Verify COD Payment</h3>
 	<hr class="mb-0" />
-	<p class="my-2">In order to prevent delivery fraud, we need to verify the phone number associated with your shipping address. We have sent a 4 digit code to the below mobile number.</p>
+	<p class="my-2">Paying by Cash on delivery? We just need to verify the mobile number associated with your shipping address.</p>
 	<div class="text-center mb-4">
+		<h6>Enter the 4 digit code sent to the below number</h6>
 		<h4 class="mb-2 mt-4 font-weight-bold">{{shippingDetails.address.phone}}</h4>
 		<input type="tel" class="form-control form-control-number form-control-lg mb-2 letter-spacing-5 otp-number-field m-auto" aria-describedby="emailHelp" [(ngModel)]="otp" name="otp" placeholder="" required pattern="\d{4}$" minlength = "4" maxlength = "4" inputmode="numeric" appNumbers placeholder="Enter OTP" autocomplete="off" appKssAutoFocus>
 
@@ -29,24 +30,6 @@
 	<div class="cd-cart-total">
 	  <h5 class="font-weight-bold">Total Payable<span>₹{{shippingDetails.summary.you_pay}}</span></h5>
 	</div>
-
-	<!-- <hr class="mb-4"/> -->
-
-<!-- 	<h4>Shipping Address</h4>
-
-	<label class="w-100 text-left mb-0">
-		<div class="d-flex align-items-start address-block review-section">
-			<div class="text-left pl-2 flex-fill">
-				<h3 class="kss-title font-weight-bold d-flex align-items-center w-100">{{shippingDetails.address.name}}</h3>
-				<p class="h6 line-height-5">
-					{{shippingDetails.address.address}}, {{shippingDetails.address.city}}, {{shippingDetails.address.state}} {{shippingDetails.address.pincode}}
-				</p>
-				<p class="h6 my-3">
-					Mobile: <b class="font-weight-bold">{{shippingDetails.address.phone}}</b>
-				</p>
-			</div>
-		</div>
-	</label> -->
 
 	<hr class="mb-2">
 	<div class="d-flex align-items-center py-3">
