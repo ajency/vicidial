@@ -56,7 +56,12 @@
         }
     }
     &--large{
+        color: #212529;
+        background-color: #fffde7;
         i{
+            color: #212529;
+            background-color: white;
+            border-radius: 50%;
             &:before{
                 content: "\f192";
             }
