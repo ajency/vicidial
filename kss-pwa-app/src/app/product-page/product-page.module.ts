@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { FormsModule }   from '@angular/forms';
 import { ProductPageRoutingModule } from './product-page-routing.module';
 
 import { ProductPageComponent } from './product-page/product-page.component';
@@ -17,6 +17,7 @@ import { LazyLoadImageModule, intersectionObserverPreset } from 'ng-lazyload-ima
   imports: [
     CommonModule,
     ComponentsModule,
+    FormsModule,
     ProductPageRoutingModule,
     LazyLoadImageModule.forRoot({
           preset: intersectionObserverPreset

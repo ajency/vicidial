@@ -292,4 +292,8 @@ export class AppServiceService {
     return this.apiservice.request(url, 'get', {} , header );
   }
 
+  calculateOff(list_price, sale_price){
+    return Math.round(((list_price - sale_price) / (list_price)) * 100)
+  }
+
 }

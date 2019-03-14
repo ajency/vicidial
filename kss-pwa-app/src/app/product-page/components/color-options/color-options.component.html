@@ -1,9 +1,9 @@
 <div class="colorOptions d-md-block mb-3 d-none d-sm-block">
 	<div class="d-flex justify-content-between mt-3">
 		<label class="align-items-center d-flex colorOptions__trigger cursor-pointer collapsed" href="#color-options"  aria-expanded="false" aria-controls="color-options" data-toggle="collapse">
-				<ul class="product-color product-color--single px-1"  data-toggle="tooltip" data-placement="bottom" title="black">
+				<ul class="product-color product-color--single px-1"  data-toggle="tooltip" data-placement="bottom" title="{{selectedColorVariant.name}}">
 					<li class="d-inline-flex align-middle">
-				    	<label class="mb-0" style="background-color:#000;"></label>
+				    	<label class="mb-0" [ngStyle]="{'background-color' : selectedColorVariant.hexcode ? selectedColorVariant.hexcode : (selectedColorVariant.name ? trim(selectedColorVariant.name) : '')}"></label>
 				  	</li>
 				</ul>
 			<p class="font-weight-bold kss-link mb-0"> Color options</p>
@@ -14,24 +14,22 @@
 	<div class="collapse" id="color-options">
 		<div class="card card-body border-0 p-0 mt-3 ">
 			<div class="radio-wrap w-image kss_variants d-flex align-items-baseline flex-wrap">
-			    <input class="d-none radio-input" type="radio" name="kss-variants" id="color-name" checked />
-				<label class="radio-label position-relative variant-wrapper" for="color-name" data-toggle="tooltip" data-placement="bottom" title="Black">
-					<ul class="product-color product-color--single product-color--sm position-absolute color-custom-radio p-0">
-						<li class="d-inline-flex align-middle">
-					    	<label for="black" class="m-0" style="background-color:#000;"></label>
-					  	</li>
-					</ul>
-					<div class="variant-img-wrapper">
-						<img src="https://www.kidsuperstore.in/images/products/62954/variant-thumb/1x/shorts-1018-color-navy-4.jpg"
-							class="w-100 lazyload"
-							data-srcset="https://www.kidsuperstore.in/images/products/62954/variant-thumb/1x/shorts-1018-color-navy-4.jpg 50w,
-										https://www.kidsuperstore.in/images/products/62954/variant-thumb/2x/shorts-1018-color-navy-4.jpg 100w"
-							sizes="50px"
-							alt=""
-							srcset="https://www.kidsuperstore.in/images/products/62954/variant-thumb/1x/shorts-1018-color-navy-4.jpg 50w,
-									https://www.kidsuperstore.in/images/products/62954/variant-thumb/2x/shorts-1018-color-navy-4.jpg 100w">
-					</div>
-				</label>
+				<div *ngFor="let option of colorVariants">
+				    <input class="d-none radio-input" type="radio" name="kss-variants" id="{{option.color_name}}" [checked]="option.is_selected" />
+					<label class="radio-label position-relative variant-wrapper" for="{{option.color_name}}" data-toggle="tooltip" data-placement="bottom" title="{{option.color_name}}">
+						<ul class="product-color product-color--single product-color--sm position-absolute color-custom-radio p-0">
+							<li class="d-inline-flex align-middle">
+						    	<label for="black" class="m-0" [ngStyle]="{'background-color' : option.hexcode ? option.hexcode : (option.color_name ? trim(option.color_name) : '')}"></label>
+						  	</li>
+						</ul>
+						<div class="variant-img-wrapper">
+							<img src="{{option.image}}"
+								class="w-100"
+								sizes="50px"
+								alt="">
+						</div>
+					</label>
+				</div>
 			</div>
 		</div>
 	</div>
