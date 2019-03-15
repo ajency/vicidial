@@ -29,35 +29,7 @@
 	<h3 class="text-left my-4 font-weight-bold">Similar Products</h3>
 		<div id="card-list" class="row similar-products">
       	<div *ngFor="let product of product.related_products" class="col similar-products__col">
-            <div class="card h-100 product-card">
-              	<a href="{{product.url}}" >
-	                <div class="product-card__wrapper d-flex align-items-center justify-content-center">
-                		<img
-				            [useSrcset]=true
-				            [offset]=500
-				            [defaultImage]="product.image.load"
-				            [lazyLoad]="createDataSrcSet(product.image['1x'], '270w', product.image['2x'], '540w')"
-				            class="card-img-top"
-				            title="{{product.title}}"
-				            alt="{{product.title}}"
-				            sizes="(min-width: 1200px) 270px, (min-width: 992px) 226px, (max-width: 991px) 38vw">
-	               	</div>
-              	</a>
-              	<div class="card-body">
-	                <a href="url" class="text-dark">
-	                  <h5 class="card-title">
-	                    {{product.title}}
-	                  </h5>
-	                </a>
-
-	                <!-- <div id="kss-price-id" class="kss-price kss-price--smaller">₹599</div> -->
-	                <div id="kss-price-id" class="kss-price kss-price--smaller">₹{{product.sale_price}}
-	                	<div *ngIf="product.sale_price != product.list_price">
-	                		<small class="kss-original-price text-muted">₹{{product.list_price}}</small><span class="kss-discount text-danger">{{getOffPercentage(product.list_price, product.sale_price)}}% OFF</span>
-	                	</div>
-	             	</div>
-             	</div>
-            </div>
+            <app-product-view [product]="product"></app-product-view>
       	</div>
    </div>
 </div>
