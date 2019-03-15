@@ -42,6 +42,9 @@
             color: #797979;
         }
     }
+    &--large{
+        font-size: 15px;
+    }
 }
 .radio-input:checked+.radio-label {
     border-color: theme-color("primary");
@@ -50,6 +53,18 @@
     &--simple{
         .selection_label{
             color:$gray-800;
+        }
+    }
+    &--large{
+        color: #212529 !important;
+        background-color: #fffde7;
+        i{
+            color: #212529;
+            background-color: white;
+            border-radius: 50%;
+            &:before{
+                content: "\f192";
+            }
         }
     }
 }
