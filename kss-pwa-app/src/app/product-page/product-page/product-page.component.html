@@ -2,112 +2,113 @@
 
 <app-loader *ngIf="showLoader"></app-loader>
 
+<ng-container *ngIf="product">
+	<div class="container mt-0 mt-md-4">
+		<div class="row">
+			<div class="col-md-12 d-none d-md-block">
+				<!-- Breadcrumbs -->
+				<app-breadcrums [breadcrumbs]="product.breadcrumbs"></app-breadcrums>
+			</div>
+			<div class="col-sm-12 col-lg-7">
+				<!-- Product Images -->
+				<app-product-img-slider></app-product-img-slider>
 
-<div *ngIf="product" class="container mt-0 mt-md-4">
-	<div class="row">
-		<div class="col-md-12 d-none d-md-block">
-			<!-- Breadcrumbs -->
-			<app-breadcrums [breadcrumbs]="product.breadcrumbs"></app-breadcrums>
-		</div>
-		<div class="col-sm-12 col-lg-7">
-			<!-- Product Images -->
-			<app-product-img-slider></app-product-img-slider>
+				<!-- Color Options -->
+				<app-color-options *ngIf="product.color_variants && product.color_variants.length" [colorVariants]="product.color_variants" [selectedColorVariant]="product.facets.product_color_html" ></app-color-options>
 
-			<!-- Color Options -->
-			<app-color-options *ngIf="product.color_variants && product.color_variants.length" [colorVariants]="product.color_variants" [selectedColorVariant]="product.facets.product_color_html" ></app-color-options>
-
-		</div>
-		<div class="col-sm-12 col-lg-5">
-			<!-- Product Title & Prices Section -->
-			<app-product-info [attributes]="product.attributes" [facets]="product.facets" [variants]="product.variants"></app-product-info>
+			</div>
+			<div class="col-sm-12 col-lg-5">
+				<!-- Product Title & Prices Section -->
+				<app-product-info [attributes]="product.attributes" [facets]="product.facets" [variants]="product.variants"></app-product-info>
+			</div>
 		</div>
 	</div>
-</div>
 
-<div *ngIf="product && product.related_products" id="similar" class="container">
-	<hr class="mt-5">
-	<h3 class="text-left my-4 font-weight-bold">Similar Products</h3>
-		<div id="card-list" class="row similar-products">
-      	<div *ngFor="let product of product.related_products" class="col similar-products__col">
-            <app-product-view [product]="product"></app-product-view>
-      	</div>
-   </div>
-</div>
-
-<div class="container">
-  	<section class="more-posts mt-sm-4 pt-sm-4">
-	    <hr class="mt-5">
-	    <h3 class="text-left my-4 font-weight-bold">Related Articles</h3>
-
-	    <div class="relatedposts">
-	      	<div class="row more-post-grid">
-	            <div class="col-sm-4">
-	              	<div class="kss-posts">
-		                <a href="#" class="d-block" title="title">
-		                    <!-- <div class="kss-posts__cover mb-3"> -->
-		                    <div class="kss-posts__cover no-image mb-3">
-		                        <img src="/img/blog/kss_logo_gray.jpg" class="d-block w-100 img-fluid" />
-		                  	</div>
-		                </a>
-	                  	<div class="kss-posts__content">
-		                    <a href="#" class="d-block" title="title">
-		                      <h3 class="bl-single-heading bl-single-heading--small">Post title</h3>
-		                      <p class="bl-single-caption bl-single-caption--small">
-		                        excerpt text
-		                      </p>
-		                    </a>
-		                    <div class="flex-sm-row mb-1 mr-2 post-tags">
-		                      <div class="post-tags mb-1 d-flex">
-		                        <div class="post-tags__data">
-		                        	<a href="href" alt="alt"><span>cat name</span></a>
-		                        </div>
-		                      </div>
-		                    </div>
-	                  	</div>
-	              	</div>
-	            </div>
+	<div *ngIf="product.related_products" id="similar" class="container">
+		<hr class="mt-5">
+		<h3 class="text-left my-4 font-weight-bold">Similar Products</h3>
+			<div id="card-list" class="row similar-products">
+	      	<div *ngFor="let product of product.related_products" class="col similar-products__col">
+	            <app-product-view [product]="product"></app-product-view>
 	      	</div>
+	   </div>
+	</div>
+
+	<div class="container">
+	  	<section class="more-posts mt-sm-4 pt-sm-4">
+		    <hr class="mt-5">
+		    <h3 class="text-left my-4 font-weight-bold">Related Articles</h3>
+
+		    <div class="relatedposts">
+		      	<div class="row more-post-grid">
+		            <div class="col-sm-4">
+		              	<div class="kss-posts">
+			                <a href="#" class="d-block" title="title">
+			                    <!-- <div class="kss-posts__cover mb-3"> -->
+			                    <div class="kss-posts__cover no-image mb-3">
+			                        <img src="/img/blog/kss_logo_gray.jpg" class="d-block w-100 img-fluid" />
+			                  	</div>
+			                </a>
+		                  	<div class="kss-posts__content">
+			                    <a href="#" class="d-block" title="title">
+			                      <h3 class="bl-single-heading bl-single-heading--small">Post title</h3>
+			                      <p class="bl-single-caption bl-single-caption--small">
+			                        excerpt text
+			                      </p>
+			                    </a>
+			                    <div class="flex-sm-row mb-1 mr-2 post-tags">
+			                      <div class="post-tags mb-1 d-flex">
+			                        <div class="post-tags__data">
+			                        	<a href="href" alt="alt"><span>cat name</span></a>
+			                        </div>
+			                      </div>
+			                    </div>
+		                  	</div>
+		              	</div>
+		            </div>
+		      	</div>
+		    </div>
+	  	</section>
+	</div>
+
+	<!-- Mobile size selection -->
+	<div class="modal fade size-modal" id="size-modal" tabindex="-1" role="dialog" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h6 class="modal-title font-weight-bold">Select a size</h6>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+
+			<!-- @Sujit: Size selection repeated, move to component -->
+			<div class="radio-wrap d-flex kss_sizes wo-image mb-4 single-radio">
+				<input class="d-none radio-input" type="radio" name="kss-sizes" id="size-4" data-variant_id="1109" data-list_price="599" data-sale_price="599" data-discount_per="0" data-title="3-4yrs">
+				<label class="radio-label" for="size-4" title="3-4yrs">
+			    	<div class="radio-option">  3-4yrs</div>
+			    </label>
+			    <input class="d-none radio-input" type="radio" name="kss-sizes" id="size-5" data-variant_id="1110" data-list_price="599" data-sale_price="599" data-discount_per="0" data-title="4-5yrs">
+			    <label class="radio-label" for="size-5" title="4-5yrs">
+			    	<div class="radio-option">  4-5yrs</div>
+			    </label>
+			    <input class="d-none radio-input" type="radio" name="kss-sizes" id="size-3" data-variant_id="1108" disabled="" data-list_price="599" data-sale_price="599" data-discount_per="0" data-title="2-3yrs">
+			    <label class="radio-label" for="size-3" title="2-3yrs. Out of Stock">
+			    	<div class="radio-option">  2-3yrs</div>
+			    </label>
+			</div>
+
+	      </div>
+	      <div class="modal-footer add-bag-btn">
+	      	<button id="cd-add-to-cart" class="btn kss-btn kss-btn--big cd-add-to-cart">
+				<div class="kss-btn__wrapper d-flex align-items-center justify-content-center"><i class="kss_icon bag-icon-fill icon-sm"></i> Add to Bag</div>
+			</button>
+	      </div>
 	    </div>
-  	</section>
-</div>
-
-<!-- Mobile size selection -->
-<div class="modal fade size-modal" id="size-modal" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h6 class="modal-title font-weight-bold">Select a size</h6>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-
-		<!-- @Sujit: Size selection repeated, move to component -->
-		<div class="radio-wrap d-flex kss_sizes wo-image mb-4 single-radio">
-			<input class="d-none radio-input" type="radio" name="kss-sizes" id="size-4" data-variant_id="1109" data-list_price="599" data-sale_price="599" data-discount_per="0" data-title="3-4yrs">
-			<label class="radio-label" for="size-4" title="3-4yrs">
-		    	<div class="radio-option">  3-4yrs</div>
-		    </label>
-		    <input class="d-none radio-input" type="radio" name="kss-sizes" id="size-5" data-variant_id="1110" data-list_price="599" data-sale_price="599" data-discount_per="0" data-title="4-5yrs">
-		    <label class="radio-label" for="size-5" title="4-5yrs">
-		    	<div class="radio-option">  4-5yrs</div>
-		    </label>
-		    <input class="d-none radio-input" type="radio" name="kss-sizes" id="size-3" data-variant_id="1108" disabled="" data-list_price="599" data-sale_price="599" data-discount_per="0" data-title="2-3yrs">
-		    <label class="radio-label" for="size-3" title="2-3yrs. Out of Stock">
-		    	<div class="radio-option">  2-3yrs</div>
-		    </label>
-		</div>
-
-      </div>
-      <div class="modal-footer add-bag-btn">
-      	<button id="cd-add-to-cart" class="btn kss-btn kss-btn--big cd-add-to-cart">
-			<div class="kss-btn__wrapper d-flex align-items-center justify-content-center"><i class="kss_icon bag-icon-fill icon-sm"></i> Add to Bag</div>
-		</button>
-      </div>
-    </div>
-  </div>
-</div>
+	  </div>
+	</div>
+</ng-container>
 
 <!-- Back to top -->
 <div app-back-to-top></div>

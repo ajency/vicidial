@@ -22,4 +22,9 @@ export class ColorOptionsComponent implements OnInit, OnChanges {
     return color.replace(/\s/g, "");
   }
 
+  openColorVariant(variant){
+    if(!variant.is_selected)
+      window.location.href = variant.url+'/buy';
+  }
+
 }

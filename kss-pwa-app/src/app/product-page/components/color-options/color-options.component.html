@@ -16,7 +16,7 @@
 			<div class="radio-wrap w-image kss_variants d-flex align-items-baseline flex-wrap">
 				<div *ngFor="let option of colorVariants">
 				    <input class="d-none radio-input" type="radio" name="kss-variants" id="{{option.color_name}}" [checked]="option.is_selected" />
-					<label class="radio-label position-relative variant-wrapper" for="{{option.color_name}}" data-toggle="tooltip" data-placement="bottom" title="{{option.color_name}}">
+					<label class="radio-label position-relative variant-wrapper" for="{{option.color_name}}" data-toggle="tooltip" data-placement="bottom" title="{{option.color_name}}" (click)="openColorVariant(option)">
 						<ul class="product-color product-color--single product-color--sm position-absolute color-custom-radio p-0">
 							<li class="d-inline-flex align-middle">
 						    	<label for="black" class="m-0" [ngStyle]="{'background-color' : option.hexcode ? option.hexcode : (option.color_name ? trim(option.color_name) : '')}"></label>
