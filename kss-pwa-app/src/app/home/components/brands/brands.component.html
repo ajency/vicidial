@@ -12,7 +12,36 @@
 
 <section class="pb-3 pb-md-5">
 	<div class="container">
-		<div class="home-brands d-sm-flex align-items-sm-center justify-content-sm-center label-box-small row">
+		<div class="d-flex flex-md-nowrap flex-wrap">
+			<a href="#" class="d-block mb-3 mb-md-0" static_element-type="brand_banner">
+				<picture>
+				  	<source media="(min-width: 768px)"
+						  srcset="/assets/img/brand-banner-trend.jpg 1008w, /assets/img/brand-banner-trend-1x.jpg 590w"
+				          sizes="(min-width:1200) 590px, 48vw">
+
+				  	<source media="(max-width: 767px)"
+						  srcset="/assets/img/brand-banner-trend-mob.jpg 1200w, /assets/img/brand-banner-trend-mob-1x.jpg 600w"
+				          sizes="92vw">
+
+					<img src="/assets/img/brand-banner-trend-1x.jpg" alt="Find Your Latest Trend" class="img-fluid img-holder">
+				</picture>
+			</a>
+			<a href="#" class="d-block mb-3 mb-md-0" static_element-type="brand_banner">
+				<picture>
+				  	<source media="(min-width: 768px)"
+						  srcset="/assets/img/brand-banner-cool.jpg 992w, /assets/img/brand-banner-cool-1x.jpg 590w"
+				          sizes="(min-width:1200) 590px, 48vw">
+
+				  	<source media="(max-width: 767px)"
+						  srcset="/assets/img/brand-banner-cool-mob.jpg 1200w, /assets/img/brand-banner-cool-mob-1x.jpg 600w"
+				          sizes="92vw">
+
+					<img src="/assets/img/brand-banner-cool-1x.jpg" alt="Find Your Supercool Active Wear" class="img-fluid img-holder">
+				</picture>
+			</a>
+		</div>
+
+		<div class="home-brands d-sm-flex align-items-sm-center justify-content-sm-center label-box-small row mt-4">
 			<div *ngFor="let brand of brands" class="label-box img-holder position-relative brand-label-box kss-extension" attr.static_element-id="{{brand.sequence}}" static_element-display_type="Shop by Brand" attr.static_element-type="{{brand.type}}" page_slug="home" app-label-box [box_data]="brand" [box_type]="brand"></div>
 		</div>
 	</div>
