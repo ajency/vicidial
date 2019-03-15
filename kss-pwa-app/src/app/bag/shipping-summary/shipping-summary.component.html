@@ -15,38 +15,57 @@
 			             </h3>
 			           </div> -->
 						<div class="col-8">
-							<h3 class="modal-title font-weight-bold" id="exampleModalLabel">Review your order</h3>
+							<h3 class="modal-title font-weight-bold" id="exampleModalLabel">Payment</h3>
 						</div>
 						<div class="col-4 text-right">
 							<h6 class="text-muted mt-2">STEP: 2 / 2</h6>
 						</div>
 					</div>
 					<hr>
+
+					<!-- Select Payment mode -->
+					<div class="">
+						<h4 class="mb-3 font-weight-bold">Select Payment Method</h4>
+						<div *ngFor="let option of paymentOptions" class="radio-wrap d-flex wo-image mb-0">
+							<!-- Selection Radio -->
+							<input class="d-none radio-input" type="radio" name="kss-payment-option" id="{{option}}" [value]="option" [(ngModel)]="selectedPaymentOption" (change)="updatePaymentOption()" />
+							<!-- Coupon box -->
+							<label class="radio-label radio-label--large mb-2 w-100 d-flex" for="{{option}}">
+								<div class="pr-2">
+									<div class="radio-selection position-relative">
+										<i class="far fa-circle"></i>
+									</div>
+								</div>
+								<div class="flex-1">
+									<div>
+										<div class="d-flex justify-content-between align-items-center">
+											<div *ngIf="option == 'cod'" class="font-weight-bold selection_label">Cash On Delivery</div>
+											<div *ngIf="option == 'payu'" class="font-weight-bold selection_label align-items-center d-flex">Pay via Card/Bank/UPI/Wallet</div>
+										</div>
+									</div>
+								</div>
+							</label>
+						</div>
+						<small *ngIf="showSelectPaymentError" id="passwordHelpBlock" class="form-text text-danger">
+							Please select mode of payment
+						</small>
+					</div>
+					<!-- Select Payment mode -->
+
+					<div class="align-items-center d-flex py-3">
+						<img src="/img/shield.png" class="img-fluid" width="30" alt="100% Secure Payments" title="100% Secure Payments">
+						<div class="pl-2 genuinity">
+							<p class="mb-1">Genuine products. 7 day returns.</p>
+							<p class="my-1">100% Secure payments.</p>
+						</div>
+					</div>
+
+					<hr class="w-shadow">
+
 					<!-- <div class="alert alert-success mb-3" role="alert">
 					  <b><i class="fas fa-truck"></i> Standard Delivery</b> (Free delivery)
 					</div> -->
-					<div>
-						<label class="w-100 text-left mb-0">
-							<div class="d-flex align-items-start address-block review-section">
-								<div class="text-left pl-2 flex-fill">
-									<h3 class="kss-title font-weight-bold d-flex align-items-center w-100">{{shippingDetails.address.name}}
-									<!-- <i class="fas fa-pencil-alt number-edit cursor-pointer ml-2 mt-1" (click)="editShippingAddress()"></i> --></h3>
-									<p class="h6 line-height-5">
-										{{shippingDetails.address.address}}, {{shippingDetails.address.city}}, {{shippingDetails.address.state}} {{shippingDetails.address.pincode}}
-									</p>
-									<p class="h6 my-3">
-										Mobile: <b class="font-weight-bold">{{shippingDetails.address.phone}}</b>
-									</p>
-									<p *ngIf="userEmail" class="h6 mt-3 mb-0">
-										Order Tracking emails will be sent to the following address : <b class="font-weight-bold">{{userEmail}}</b>
-										<i class="fas fa-pencil-alt number-edit cursor-pointer ml-2 mt-1" (click)="editUserInfo()"></i>
-									</p>
-								</div>
-							</div>
-						</label>
-					</div>
-
-					<hr>
+					<h4 class="mb-1 font-weight-bold">Order Items</h4>
 
 					<ul class="cd-cart-items list-unstyled mt-2 pt-2 cart-summary-items mb-1">
 					  <li class="p-0 pb-3 mb-3" *ngFor="let item of shippingDetails.items">
@@ -86,7 +105,7 @@
 					  </li>
 					</ul>
 
-					<hr class="mt-0">
+					<hr class="mt-0 w-shadow">
 
 					<div class="cart-summary final-summary mt-4">
 					  <h4 class="mb-1 font-weight-bold">Price Summary</h4>
@@ -100,47 +119,30 @@
 					  <h5 class="font-weight-bold">Total Payable<span>₹{{shippingDetails.summary.you_pay}}</span></h5>
 					</div>
 					<h5 *ngIf="shippingDetails.summary.mrp_total - shippingDetails.summary.you_pay != 0 " class="font-weight-bold text-success line-height-5">Your total savings on this order ₹{{roundOff(shippingDetails.summary.mrp_total - shippingDetails.summary.you_pay)}}</h5>
-					<hr class="mb-2">
+					<hr class="mb-2 w-shadow">
 
-					<!-- Select Payment mode -->
-					<div class="">
-						<h6 class="font-weight-bold my-3 coupon-title">Select Mode of Payment</h6>
-						<div *ngFor="let option of paymentOptions" class="radio-wrap d-flex wo-image mb-0">
-							<!-- Selection Radio -->
-							<input class="d-none radio-input" type="radio" name="kss-payment-option" id="{{option}}" [value]="option" [(ngModel)]="selectedPaymentOption" (change)="updatePaymentOption()" />
-							<!-- Coupon box -->
-							<label class="radio-label radio-label--simple w-100 d-flex" for="{{option}}">
-								<div class="pr-2">
-									<div class="radio-selection position-relative">
-										<i class="fas fa-check-circle mt-2"></i>
-									</div>
+					<div>
+						<h4 class="mb-1 font-weight-bold mt-4">Deliver To</h4>
+						<label class="w-100 text-left mb-0">
+							<div class="d-flex align-items-start address-block review-section mb-5">
+								<div class="text-left flex-fill">
+									<h6 class="font-weight-bold d-flex align-items-center w-100 mb-2 mt-2">{{shippingDetails.address.name}}
+									<!-- <i class="fas fa-pencil-alt number-edit cursor-pointer ml-2 mt-1" (click)="editShippingAddress()"></i> --></h6>
+									<p class="h6 line-height-5">
+										{{shippingDetails.address.address}}, {{shippingDetails.address.city}}, {{shippingDetails.address.state}} {{shippingDetails.address.pincode}}
+									</p>
+									<p class="h6 my-2">
+										Mobile: <b class="font-weight-bold">{{shippingDetails.address.phone}}</b>
+									</p>
+									<p *ngIf="userEmail" class="h6 mt-4 mb-0">
+										Order Tracking emails will be sent to : <br> <b class="font-weight-bold">{{userEmail}}</b>
+										<i class="fas fa-pencil-alt number-edit cursor-pointer ml-2 mt-1" (click)="editUserInfo()"></i>
+									</p>
 								</div>
-								<div class="flex-1">
-									<div>
-										<div class="d-flex justify-content-between align-items-center">
-											<div *ngIf="option == 'cod'" class="font-weight-bold selection_label">Cash On Delivery</div>
-											<div *ngIf="option == 'payu'" class="font-weight-bold selection_label align-items-center d-flex">Pay via <img src="/img/pay-u-icon.png" class="ml-2" width="50"></div>
-										</div>
-									</div>
-								</div>
-							</label>
-						</div>
-						<small *ngIf="showSelectPaymentError" id="passwordHelpBlock" class="form-text text-danger">
-							Please select mode of payment
-						</small>
-					</div>
-					<!-- Select Payment mode -->
-
-					<hr class="mb-2">
-					<div class=" mb-4 d-flex align-items-center py-3">
-						<img src="/img/shield.png" class="img-fluid" width="40" alt="100% Secure Payments" title="100% Secure Payments">
-						<div class="pl-2 genuinity">
-							<p class="mb-1">Genuine products. 7 day returns.</p>
-							<p class="my-1">100% Secure payments.</p>
-						</div>
+							</div>
+						</label>
 					</div>
 
-					
 				</div>
 
 				<div *ngIf="!showUserInfoModal" class="fixed-bottom d-show pl-3 pr-3">
@@ -170,6 +172,6 @@
 
 			<app-verify-cod *ngIf="showVerifyCod" [shippingDetails]="shippingDetails" (hideVerifyCOD)="hideVerifyCOD()"></app-verify-cod>
 
-		</div>	
+		</div>
 	</div>
 </div>

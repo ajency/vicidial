@@ -40,6 +40,7 @@ export class ShippingSummaryComponent implements OnInit {
   navigateToPaymentPage(){
     if(!this.selectedPaymentOption){
       this.showSelectPaymentError = true;
+      $(".kss_shipping_summary").animate({scrollTop: 0});
       return;
     }
 
@@ -150,6 +151,7 @@ export class ShippingSummaryComponent implements OnInit {
   }
 
   editUserInfo(){
+    $(".kss_shipping_summary").animate({scrollTop: 0});
     this.showCancelButton = true;
     this.showModal();    
   }

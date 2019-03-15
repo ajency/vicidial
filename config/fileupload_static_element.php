@@ -354,4 +354,6 @@ return [
         ]
     ],
 
+    'newoffer_presets'=> [],
+    'newoffer_upload'=> []
 ];

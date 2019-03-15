@@ -54,6 +54,9 @@ yarn-error.log
 /kss-pwa-app/e2e
 /kss-pwa-app/node_modules
 
+#service-worker file
+/public/service-worker.js
+
 # static assets
 /public/css
 /public/fonts

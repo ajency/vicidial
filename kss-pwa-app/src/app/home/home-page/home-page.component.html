@@ -4,6 +4,10 @@
 
 <div *ngIf="homePageElements" class="pb-md-3">
 
+
+  <!-- Banner -->
+  <app-banner *ngIf="homePageElements.newoffer" [banner]="homePageElements.newoffer[0]"></app-banner>
+
   <!-- Gender category selection -->
   <app-gender-category *ngIf="homePageElements.gender" [tabs]="homePageElements.gender"></app-gender-category>
 
