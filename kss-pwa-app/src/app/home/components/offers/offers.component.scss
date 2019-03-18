@@ -2,3 +2,11 @@
 	margin: 0 auto;
 	display: block;
 }
+
+[static_element-type='offer_banner']{
+	padding-top: 35.05%;
+	width: 100%;
+	@media (max-width: 767px){
+		padding-top: 77.83%;
+	}
+}
