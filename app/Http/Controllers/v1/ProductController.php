@@ -7,6 +7,7 @@ use App\Product;
 use App\ProductColor;
 use App\Variant;
 use Illuminate\Http\Request;
+use App\SingleProduct;
 
 class ProductController extends Controller
 {
@@ -153,6 +154,13 @@ class ProductController extends Controller
     public function allInventory()
     {
         Variant::getWarehouseInventory();
+    }
+
+    public function SingleProductApi(Request $request){
+        $request->validate(['slug' => 'required']);
+        $slug = $request->slug;
+        $singleProduct = new SingleProduct($slug);
+        return response()->json($singleProduct->generateSinglePageData(['attributes','facets','variants']));
     }
 }
 //product
