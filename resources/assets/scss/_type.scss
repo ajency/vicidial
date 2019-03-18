@@ -125,7 +125,14 @@ label {
         font-size: 1.08rem;
         margin-bottom: 0.75rem;
         color: #1d1d1d;
-    }    
+        @media (max-width: 600px){
+            font-size: 0.85rem;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow-x: hidden;
+            line-height: 18px;
+        }
+    }
 }
 
 .group-title{
