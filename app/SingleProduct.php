@@ -139,6 +139,31 @@ class SingleProduct
         return $facets;
     }
 
+    private function getVariantAttributes($variant){
+    	$attributes = [];
+        foreach (self::VARIANT_ATTRIBUTES as $attribute_name) {
+            $attributes[$attribute_name] = (isset($variant[$attribute_name])) ? $variant[$attribute_name] : "";
+        }
+        return $attributes;
+    }
+
+    private function getVariantFacets($variant){
+    	return [];
+    }
+
+    private function getVariants($which){
+    	$variants = [];
+    	$defaultId = defaultVariant($this->variantData);
+    	foreach ($this->variantData as $variant) {
+    		$variantInfo = [];
+    		$variantInfo['attributes'] = $this->getVariantAttributes($variant);
+    		$variantInfo['facets'] = $this->getVariantFacets($variant);
+    		$variantInfo['is_default'] = $defaultId == $variant['variant_id'];
+    		$variants[] = $variantInfo;
+    	}
+    	return $variants;
+    }
+
     public function generateSinglePageData($objects)
     {
         $data = [];
@@ -150,6 +175,9 @@ class SingleProduct
                 case 'facets':
                     $data['facets'] = $this->getProductFacets();
                     break;
+                case 'variants':
+                	$data['variants'] = $this->getVariants([]);
+                	break;
                 default:
                     throw new \Exception("object type " . $object . " not defined", 1);
 
