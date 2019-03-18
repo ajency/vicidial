@@ -33,7 +33,8 @@
               "node_modules/@fortawesome/fontawesome-free/css/all.css",
               "src/styles.scss"
             ],
-            "scripts": ["node_modules/jquery/dist/jquery.min.js"]
+            "scripts": ["node_modules/jquery/dist/jquery.min.js",
+                        "node_modules/flickity/dist/flickity.pkgd.min.js"]
           },
           "configurations": {
             "production": {
@@ -64,7 +65,7 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {            
+          "options": {
             "browserTarget": "kss-pwa-app:build"
           },
           "configurations": {
