@@ -3,10 +3,11 @@
 namespace App;
 
 use Ajency\Connections\ElasticQuery;
+use App\ProductColor;
 
 class SingleProduct
 {
-    protected $productData, $variantData;
+    protected $productData, $variantData, $productColor;
 
     protected static $facets;
 
@@ -56,10 +57,14 @@ class SingleProduct
     public function __construct($slug)
     {
         if (is_null(self::$facets)) {
-            self::$facets = Facet::select(['facet_name', 'facet_value', 'display_name', 'slug'])->get();
+            self::$facets = Facet::select(['facet_name', 'facet_value', 'display_name', 'slug','sequence'])->get();
         }
         $this->setSlugElasticData($slug);
+        $this->getProductColor();
+    }
 
+    private function getProductColor(){
+    	$this->productColor = ProductColor::where('product_id',$this->productData['product_id'])->where('color_id',$this->productData['product_color_id'])->first();
     }
 
     private function setSlugElasticData($product_slug)
@@ -148,10 +153,24 @@ class SingleProduct
     }
 
     private function getVariantFacets($variant){
-    	return [];
+    	$facets = [];
+    	foreach (self::VARIANT_FACETS as $facetName) {
+    		switch ($facetName) {
+    			case 'variant_size':
+    				$facetData          = self::$facets->where('facet_name', 'variant_size_name')->where('facet_value', $variant['variant_size_name'])->first();
+    				$facets[$facetName] = [
+    					'id' => $variant['variant_size_id'],
+    					'name' => $facetData['display_name'],
+    					'slug' => $facetData['slug'],
+    					'sequence' => $facetData['sequence'],
+    				];
+    				break;
+    		}
+    	}
+    	return $facets;
     }
 
-    private function getVariants($which){
+    private function getVariants(){
     	$variants = [];
     	$defaultId = defaultVariant($this->variantData);
     	foreach ($this->variantData as $variant) {
@@ -176,7 +195,7 @@ class SingleProduct
                     $data['facets'] = $this->getProductFacets();
                     break;
                 case 'variants':
-                	$data['variants'] = $this->getVariants([]);
+                	$data['variants'] = $this->getVariants();
                 	break;
                 default:
                     throw new \Exception("object type " . $object . " not defined", 1);
