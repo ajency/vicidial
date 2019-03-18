@@ -27,7 +27,6 @@ class SingleProduct
         "product_att_other_attribute",
         "product_vendor",
         "product_is_dropshipping",
-        "product_color_id",
         "product_rank",
     ];
 
@@ -51,7 +50,7 @@ class SingleProduct
     ];
 
     const VARIANT_FACETS = [
-    	"variant_size",
+        "variant_size",
     ];
 
     public function __construct($slug)
@@ -88,56 +87,76 @@ class SingleProduct
 
     public function getElasticData()
     {
-        return [$this->productData,$this->variantData];
+        return [$this->productData, $this->variantData];
     }
 
-    private function getProductAttributes(){
-    	$attributes = [];
-    	foreach (self::PRODUCT_ATTRIBUTES as $attribute_name) {
-    		$attributes[$attribute_name] = (isset($this->productData[$attribute_name]))? $this->productData[$attribute_name]: "";
-    	}
-    	return $attributes;
+    private function getProductAttributes()
+    {
+        $attributes = [];
+        foreach (self::PRODUCT_ATTRIBUTES as $attribute_name) {
+            $attributes[$attribute_name] = (isset($this->productData[$attribute_name])) ? $this->productData[$attribute_name] : "";
+        }
+        return $attributes;
     }
 
-    private function getProductFacets(){
-    	$facets = [];
-    	foreach (self::PRODUCT_FACETS as $facetName) {
-    		switch ($facetName) {
-    			case 'product_color_html':
-    				$id = (isset($this->productData['product_color_id']))? $this->productData["product_color_id"]: null;
-    				break;
-    			
-    			default:
-    				$id = null;
-    				break;
-    		}
-    		$facetData = self::$facets->where('facet_name',$facetName)->where('facet_value',$this->productData[$facetName])->first();
-    		$facets[$facetName] = [
-    			'id' => $id,
-    			'name'=> $facetData['display_name'],
-    			'slug' => $facetData['slug'] 
-    		]; 
-    	}
-    	return $facets;
+    private function getProductFacets()
+    {
+        $facets = [];
+        foreach (self::PRODUCT_FACETS as $facetName) {
+            switch ($facetName) {
+                case 'product_metatag':
+                    $facets[$facetName] = [];
+                    if (isset($this->productData['product_metatag']) && is_array($this->productData['product_metatag'])) {
+                        foreach ($this->productData['product_metatag'] as $metatag) {
+                            $facetData            = self::$facets->where('facet_name', $facetName)->where('facet_value', $metatag)->first();
+                            $facets[$facetName][] = [
+                                'id'   => $id,
+                                'name' => $facetData['display_name'],
+                                'slug' => $facetData['slug'],
+                            ];
+                        }
+                    }
+                    break;
+                case 'product_color_html':
+                    $id = (isset($this->productData['product_color_id'])) ? $this->productData["product_color_id"] : null;
+                    break;
+
+                default:
+                    $id = null;
+                    break;
+            }
+            if (in_array($facetName, ['product_metatag'])) {
+                continue;
+            }
+
+            $facetData          = self::$facets->where('facet_name', $facetName)->where('facet_value', $this->productData[$facetName])->first();
+            $facets[$facetName] = [
+                'id'   => $id,
+                'name' => $facetData['display_name'],
+                'slug' => $facetData['slug'],
+            ];
+        }
+        return $facets;
     }
 
-    public function generateSinglePageData($objects){
-    	$data = [];
-    	foreach ($objects as $object) {
-    		switch ($object) {
-    			case 'attributes':
-    				$data['attributes'] = $this->getProductAttributes();
-    				break;
-    			case 'facets':
-    				$data['facets'] = $this->getProductFacets();
-    				break;
-    			default:
-    				throw new \Exception("object type ".$object." not defined", 1);
-    				
-    				break;
-    		}
-    	}
-    	return $data;
+    public function generateSinglePageData($objects)
+    {
+        $data = [];
+        foreach ($objects as $object) {
+            switch ($object) {
+                case 'attributes':
+                    $data['attributes'] = $this->getProductAttributes();
+                    break;
+                case 'facets':
+                    $data['facets'] = $this->getProductFacets();
+                    break;
+                default:
+                    throw new \Exception("object type " . $object . " not defined", 1);
+
+                    break;
+            }
+        }
+        return $data;
     }
 
 }
