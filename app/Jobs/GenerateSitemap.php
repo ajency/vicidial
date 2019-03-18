@@ -8,6 +8,10 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use URL;
+use Spatie\Sitemap\SitemapIndex;
+use App\Defaults;
+use Carbon\Carbon;
+
 class GenerateSitemap implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
@@ -29,11 +33,12 @@ class GenerateSitemap implements ShouldQueue
      */
     public function handle()
     {
-        $content = '<?xml version="1.0" encoding="UTF-8"?><sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><sitemap><loc>';
-        $content .= URL::to('/')."/products_list.xml";
-        $content .= '</loc></sitemap></sitemapindex>';
-        \Storage::disk("public")->put('/sitemap/sitemap.xml', $content);
-        // copy(storage_path('app/public').'/sitemap/sitemap.xml', public_path()."/sitemap.xml");
-        \Storage::disk('s3')->put(config('ajfileupload.doc_base_root_path') . '/sitemap.xml', storage_path('app/public').'/sitemap/sitemap.xml');
+        $sitemapIndex = SitemapIndex::create();
+        $sitemapIndex->add(URL::to('/')."/products_list.xml");
+        $filename = 'sitemap'.time();
+        $filepath = config('ajfileupload.doc_base_root_path') . '/'.$filename.'.xml';
+
+        saveSitemapPath($filepath);
+        \Storage::disk('s3')->put($filepath, $sitemapIndex->render());
     }
 }

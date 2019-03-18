@@ -846,3 +846,38 @@ function translateDiscountToItems($cartData)
     $cartData['round_off'] = $cartData['final_total'] - $total;
     return $cartData;
 }
+
+function saveSitemapPath($filepath,$file="sitemap_index"){
+    $defaults = Defaults::where([["type","sitemap_config"]])->first();
+    if($defaults){
+        $meta_data = $defaults->meta_data;
+        $meta_data[$file] = [];
+        $meta_data[$file]["path"] = $filepath;
+        $meta_data[$file]["last_updated"] = Carbon::now()->toDateTimeString();
+        $defaults->meta_data = $meta_data;
+        $defaults->save();
+    }
+    else{
+        $defaults = new Defaults;
+        $defaults->type = "sitemap_config";
+        $defaults->label = "sitemap config";
+        $meta_data = [];
+        $meta_data[$file] = [];
+        $meta_data[$file]["path"] = $filepath;
+        $meta_data[$file]["last_updated"] = Carbon::now()->toDateTimeString();
+        $defaults->meta_data = $meta_data;
+        $defaults->save();
+    }
+}
+
+function getSitemapPath($file="sitemap_index"){
+    $defaults = Defaults::where([["type","sitemap_config"]])->first();
+    if($defaults){
+        $meta_data = $defaults->meta_data;
+        if(isset($meta_data[$file])){
+            return $meta_data[$file]["path"];
+        }
+        
+    }
+    return false;
+}

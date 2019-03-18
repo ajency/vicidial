@@ -8,6 +8,8 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Ajency\Connections\ElasticQuery;
+use Spatie\Sitemap\Sitemap;
+use Spatie\Sitemap\Tags\Url;
 
 class GenerateSitemapProductList implements ShouldQueue
 {
@@ -30,9 +32,8 @@ class GenerateSitemapProductList implements ShouldQueue
      */
     public function handle()
     {
-        $content = '<?xml version="1.0" encoding="UTF-8"?>';
-        $content .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">';
-
+        $changefreq = config('sitemap.changefreq');
+        $sitemap = Sitemap::create();
         $index = config('elastic.indexes.product');
         $q     = new ElasticQuery;
         $q->setIndex($index)
@@ -48,12 +49,10 @@ class GenerateSitemapProductList implements ShouldQueue
         $links    = [];
         foreach ($response["hits"]["hits"] as $item) {
             $link = url('/') . "/" . $item["_source"]["search_result_data"]["product_slug"] . "/buy";
-            $content .='<url><loc>'.$link.'</loc><xhtml:link rel="alternate" media="only screen and (max-width: 640px)" href="'.$link.'" /><changefreq>monthly</changefreq><priority>0.5</priority></url>';
+            $sitemap->add(Url::create($link)->setChangeFrequency($changefreq));
         }
-        $content .='</urlset>';
-        \Storage::disk("public")->put('/sitemap/products_list.xml', $content);
-        // dd(storage_path('app/public').'/sitemap/products_list.xml'."======".public_path()."/products_list.xml");
-        // copy(storage_path('app/public').'/sitemap/products_list.xml', public_path()."/products_list.xml");
-        \Storage::disk('s3')->put(config('ajfileupload.doc_base_root_path') . '/products_list.xml', storage_path('app/public').'/sitemap/products_list.xml');
+        $filepath = config('ajfileupload.doc_base_root_path') . '/products_list'.time().'.xml';
+        saveSitemapPath($filepath,"product_listing");
+        \Storage::disk('s3')->put($filepath, $sitemap->render());
     }
 }

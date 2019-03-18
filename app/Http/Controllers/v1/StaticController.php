@@ -116,14 +116,16 @@ class StaticController extends Controller
 
     public function sitemapXML(Request $request)
     {
-        return response(Storage::disk('s3')->get(config('ajfileupload.doc_base_root_path') . '/sitemap.xml'), 200, [
+        $sitemapPath = getSitemapPath();
+        return response(Storage::disk('s3')->get($sitemapPath), 200, [
             'Content-Type' => 'application/xml',
         ]);
     }
 
     public function productlistXML(Request $request)
     {
-        return response(Storage::disk('s3')->get(config('ajfileupload.doc_base_root_path') . '/products_list.xml'), 200, [
+        $sitemapPath = getSitemapPath("product_listing");
+        return response(Storage::disk('s3')->get($sitemapPath), 200, [
             'Content-Type' => 'application/xml',
         ]);
     }
