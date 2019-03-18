@@ -8,6 +8,7 @@
 		    padding: 0.6rem 1.3rem;
 		    border-radius: 20px;
 		    min-width: 210px;
+		    max-width: 90%;
 		}
 	}
 	@include bp(mobile) {

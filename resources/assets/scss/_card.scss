@@ -106,7 +106,7 @@ $size: 20px;
     .single-tile{
         @media (max-width: 600px) {
           height: auto;
-          min-height: 65vw;
+          height: 65vw;
           margin-bottom: 0 !important;
           img{
               border-radius: 0;
