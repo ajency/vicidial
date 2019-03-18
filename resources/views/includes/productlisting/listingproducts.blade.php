@@ -2,7 +2,7 @@
 <script id="products-list-template" type="text/x-handlebars-template">
  <div id="card-list" class="row">
   @{{#each products}}
-  <div class="col-lg-4 col-md-6 mb-sm-4 col-12 xs-single-col">
+  <div class="col-lg-4 col-md-6 mb-sm-4 col-6 ">
 
 	  <div class="card h-100 product-card">
 
@@ -24,7 +24,7 @@
 		        @{{assign "load_10x" images.load }}
 		        @{{assign "default_placeholder_cls" "" }}
 	        @{{/ifImagesExist}}
-	        <img src="@{{@root.load_10x}}" data-srcset="@{{@root.image_1x}} 270w, @{{@root.image_2x}} 540w, @{{@root.image_3x}} 810w" sizes="(min-width: 1200px) 270px,(min-width: 992px) 22vw,(min-width: 768px) 33vw, 90vw" class="lazyload card-img-top blur-up @{{@root.default_placeholder_cls}}"  title="@{{title}}" alt="@{{title}}" />
+	        <img src="@{{@root.load_10x}}" data-srcset="@{{@root.image_1x}} 270w, @{{@root.image_2x}} 540w, @{{@root.image_3x}} 810w" sizes="(min-width: 1200px) 270px,(min-width: 992px) 22vw,(min-width: 768px) 33vw, 45vw" class="lazyload card-img-top blur-up @{{@root.default_placeholder_cls}}"  title="@{{title}}" alt="@{{title}}" />
 
 	      </div>
 	    </a>
