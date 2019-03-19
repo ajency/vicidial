@@ -130,19 +130,26 @@
 				  <div class="modal-dialog" role="document">
 				    <div class="modal-content">
 				      <div class="modal-header">
-				        <h6 class="modal-title font-weight-bold">Select Payment Method</h6>
+				        <h6 class="modal-title font-weight-bold">
+				        	<span *ngIf="!showSelectPaymentError">
+				        		Select Payment Method
+				        	</span>
+				        	<span *ngIf="showSelectPaymentError" class="text-danger">
+				        		Select Payment Method
+				        	</span>
+				        </h6>
 				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				          <span aria-hidden="true">&times;</span>
 				        </button>
 				      </div>
 				      <div class="modal-body">
 						<!-- Select Payment mode -->
-						<div class="">
+						<div class="shake">
 							<div *ngFor="let option of paymentOptions" class="radio-wrap d-flex wo-image mb-0">
 								<!-- Selection Radio -->
 								<input class="d-none radio-input" type="radio" name="kss-payment-option" id="{{option}}" [value]="option" [(ngModel)]="selectedPaymentOption" (change)="updatePaymentOption()" />
 								<!-- Coupon box -->
-								<label class="radio-label radio-label--large mb-2 w-100 d-flex" for="{{option}}">
+								<label class="radio-label radio-label--simple mb-2 w-100 d-flex" for="{{option}}">
 									<div class="pr-2">
 										<div class="radio-selection position-relative">
 											<i class="far fa-circle"></i>
@@ -158,9 +165,6 @@
 									</div>
 								</label>
 							</div>
-							<small *ngIf="showSelectPaymentError" id="passwordHelpBlock" class="form-text text-danger">
-								Please select a mode of payment
-							</small>
 						</div>
 						<!-- Select Payment mode -->
 				      </div>
