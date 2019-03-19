@@ -93,10 +93,14 @@ class UserController extends Controller
 
         $userLogin->delete();
 
+        /*if (!$skip) {
+            $user['user_info'] = $userObject->userDetails();
+        }*/
+
         return $this->fetchUserDetails($data);
     }
 
-    public function skipOTP(Request $request)
+    public function getToken(Request $request)
     {
         $data      = $request->all();
         $validator = $this->validateNumber($data);
@@ -104,50 +108,54 @@ class UserController extends Controller
             return response()->json(["message" => $validator->errors()->first(), 'success' => false]);
         }
 
-        return $this->fetchUserDetails($data, true);
+        return $this->fetchUserDetails($data);
     }
 
-    public function fetchUserDetails($data, $skip = false)
+    public function fetchUserDetails($data)
     {
-        $UserObject = $this->createAuthenticateUser($data, $skip);
-        $tokenArr = createAccessToken($UserObject);
+        $authenticatedUser = $this->createAuthenticateUser($data);
+        $userObject = $authenticatedUser['userObject'];
+        $tokenArr = createAccessToken($userObject);
         $token = $tokenArr->token;
-        if ($UserObject->api_token == null) {
-            $UserObject->api_token = $token->id;
-            $UserObject->save();
+        if ($userObject->api_token == null) {
+            $userObject->api_token = $token->id;
+            $userObject->save();
         }
 
-        $id   = $UserObject->cart_id;
-        $user = ["id" => $UserObject->id, 'active_cart_id' => $id];
+        $user = ["id" => $userObject->id, 'active_cart_id' => $authenticatedUser['cart_id']];
 
-        if (!$skip) {
-            $user['user_info'] = $UserObject->userDetails();
-            $token->verified = true;
-            $token->save();
+        $token->cart_id = $authenticatedUser['cart_id'];
+        $token->save();
+
+        if($authenticatedUser['new_user']) {
+            $show_promt = false;
+            $message = '';
         } else {
-            $token->verified = false;
-            $token->save();
+            $show_promt = true;
+            $message = 'Looks like you already have an account with a save address. Sign in with OTP for faster checkout.';
         }
 
-        return response()->json(["message" => 'user login successful', 'user' => $user, 'token' => $tokenArr->access_token, 'token_expires_at' => $token->expires_at->toDateTimeString(), 'success' => true]);
+        return response()->json(["message" => $message, 'user' => $user, 'show_promt' => $show_promt, 'token' => $tokenArr->access_token, 'token_expires_at' => $token->expires_at->toDateTimeString(), 'success' => true]);
     }
 
     public function createAuthenticateUser($data)
     {
         $id = request()->session()->get('active_cart_id', false);
 
-        $UserObject = User::where('phone', '=', $data['phone'])->where('verified', '=', true)->first();
+        $userObject = User::where('phone', '=', $data['phone'])->where('verified', '=', true)->first();
 
-        if ($UserObject) {
-            $cart = $this->userCart($id, $UserObject);
+        if ($userObject) {
+            $new_user = false;
+            $cart = $this->userCart($id, $userObject);
         } else {
+            $new_user = true;
             $cart = ($id) ? Cart::find($id) : null;
             if ($cart == null || $cart->user_id != null) {
                 $cart = new Cart;
                 $cart->save();
             }
 
-            $UserObject = User::create([
+            $userObject = User::create([
                 'name'     => '',
                 'phone'    => $data['phone'],
                 'cart_id'  => $cart->id,
@@ -155,35 +163,35 @@ class UserController extends Controller
                 'password' => bcrypt(defaultUserPassword($data['phone'])),
             ]);
 
-            $cart->user_id = $UserObject->id;
+            $cart->user_id = $userObject->id;
             $cart->save();
 
-            $UserObject->verified = true;
-            $UserObject->assignRole('customer');
-            $UserObject->save();
+            $userObject->verified = true;
+            $userObject->assignRole('customer');
+            $userObject->save();
         }
 
         request()->session()->forget('active_cart_id');
 
-        Auth::guard()->login($UserObject);
+        Auth::guard()->login($userObject);
         request()->session()->regenerate();
 
-        return $UserObject;
+        return ['userObject' => $userObject, 'cart_id' => $cart->id, 'new_user' => $new_user];
     }
 
-    public function userCart($id, $UserObject)
+    public function userCart($id, $userObject)
     {
         $cart         = null;
-        $user_cart_id = $UserObject->cart_id;
+        $user_cart_id = $userObject->cart_id;
         if ($id) {
             $cart = Cart::find($id);
             if ($cart != null && $cart->user_id != null) {
                 $cart = null;
             } elseif ($cart != null) {
-                $cart->user_id = $UserObject->id;
+                $cart->user_id = $userObject->id;
                 $cart->save();
-                $UserObject->cart_id = $cart->id;
-                $UserObject->save();
+                $userObject->cart_id = $cart->id;
+                $userObject->save();
             }
         }
 

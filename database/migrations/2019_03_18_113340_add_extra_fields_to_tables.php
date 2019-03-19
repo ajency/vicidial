@@ -14,12 +14,8 @@ class AddExtraFieldsToOauthAccessTables extends Migration
     public function up()
     {
         Schema::table('oauth_access_tokens', function (Blueprint $table) {
-            $table->boolean('verified')->nullable();
+            $table->boolean('verified')->default(0);
             $table->integer('cart_id')->nullable();
-        });
-
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('cart_id')->nullable()->change();
         });
 
         Schema::table('orders', function (Blueprint $table) {
@@ -41,10 +37,6 @@ class AddExtraFieldsToOauthAccessTables extends Migration
         Schema::table('oauth_access_tokens', function (Blueprint $table) {
             $table->dropColumn('verified');
             $table->dropColumn('cart_id');
-        });
-
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('cart_id')->nullable(false)->change();
         });
 
         Schema::table('orders', function (Blueprint $table) {
