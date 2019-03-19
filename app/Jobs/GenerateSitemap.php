@@ -38,7 +38,7 @@ class GenerateSitemap implements ShouldQueue
         $filename = 'sitemap'.time();
         $filepath = config('ajfileupload.doc_base_root_path') . '/'.$filename.'.xml';
 
-        saveSitemapPath($filepath);
+        Defaults::saveSitemapPath($filepath);
         \Storage::disk('s3')->put($filepath, $sitemapIndex->render());
     }
 }

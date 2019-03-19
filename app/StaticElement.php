@@ -544,8 +544,5 @@ class StaticElement extends Model
         return (["message" => "Elements published successfully", "success" => true]);
     }
 
-    public static function textXMLDOC(){
-        GenerateSitemapProductList::dispatch()->onQueue('process_sitemap_product_list');
-        GenerateSitemap::dispatch()->onQueue('process_sitemap_parent');
-    }
+
 }

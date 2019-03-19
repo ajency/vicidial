@@ -10,6 +10,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Ajency\Connections\ElasticQuery;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\Tags\Url;
+use App\Defaults;
 
 class GenerateSitemapProductList implements ShouldQueue
 {
@@ -52,7 +53,7 @@ class GenerateSitemapProductList implements ShouldQueue
             $sitemap->add(Url::create($link)->setChangeFrequency($changefreq));
         }
         $filepath = config('ajfileupload.doc_base_root_path') . '/products_list'.time().'.xml';
-        saveSitemapPath($filepath,"product_listing");
+        Defaults::saveSitemapPath($filepath,"product_listing");
         \Storage::disk('s3')->put($filepath, $sitemap->render());
     }
 }
