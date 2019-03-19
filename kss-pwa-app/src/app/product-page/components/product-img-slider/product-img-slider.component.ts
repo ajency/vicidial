@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+declare var Flickity: any;
 
 @Component({
   selector: 'app-product-img-slider',
@@ -10,15 +11,15 @@ export class ProductImgSliderComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-  	// var elem = document.querySelector('.prod-slides');
-  	// var flkty = new Flickity( elem, {
-  	//   // options
-  	//   cellAlign: 'left',
-  	//   freeScroll: true,
-  	//   contain: true,
-  	//   lazyLoad: 2,
-  	//   pageDots: false
-  	// });
+  	var elem = document.querySelector('.prod-slides');
+  	var flkty = new Flickity( elem, {
+  	  // options
+  	  cellAlign: 'left',
+  	  freeScroll: true,
+  	  contain: true,
+  	  lazyLoad: 2,
+  	  pageDots: false
+  	});
   }
 
   ngAfterViewInit(){
