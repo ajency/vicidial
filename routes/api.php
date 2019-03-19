@@ -97,11 +97,18 @@ Route::group([
     'prefix' => '/rest/' . $group_app_version,
 ], function () use ($group_app_version) {
     Route::group([
-        'middleware' => ['auth:api-passport'],
+        'middleware' => ['auth:api-passport', 'get-token-details'],
     ], function () use ($group_app_version) {
         Route::group([
             'prefix' => '/user',
         ], function () use ($group_app_version) {
+            Route::group([
+                'prefix' => '/authenticate',
+            ], function () use ($group_app_version) {
+                Route::get('/verify-token', $group_app_version . '\UserController@verifyToken');
+                Route::get('/generate_otp', $group_app_version . '\UserController@sendSMS');
+                Route::get('/resend_otp', $group_app_version . '\UserController@reSendSMS');
+            });
             Route::group([
                 'prefix' => '/cart',
             ], function () use ($group_app_version) {

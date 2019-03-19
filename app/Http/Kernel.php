@@ -60,5 +60,6 @@ class Kernel extends HttpKernel
         'check-user' => \App\Http\Middleware\CheckUserVerified::class,
         'extension-api-permissions' => \App\Http\Middleware\ExtensionApiPermissions::class,
         'publish-static-element' => \App\Http\Middleware\PublishStaticElement::class,
+        'get-token-details' => \App\Http\Middleware\getTokenDetails::class,
     ];
 }
