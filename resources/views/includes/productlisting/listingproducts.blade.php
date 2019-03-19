@@ -47,7 +47,7 @@
 	      <!-- Calculate & Display Price -->
 	        @{{#each variants}}
 		        @{{#if is_default}}
-		        	<div class="d-sm-flex align-items-sm-center mb-2 mb-sm-0">
+		        	<div class="d-flex align-items-center mb-2 mb-sm-0">
 		        		@{{#ifEquals ../product_availability false}}
 		        			<div class="out-of-stock out-of-stock--list p-0 text-left">Currently unavailable</div>
 		        		@{{else}}
