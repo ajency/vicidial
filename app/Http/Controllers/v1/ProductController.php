@@ -8,6 +8,8 @@ use App\ProductColor;
 use App\Variant;
 use Illuminate\Http\Request;
 use App\SingleProduct;
+use Ajency\ServiceComm\Comm\Sync;
+use DB;
 
 class ProductController extends Controller
 {
@@ -161,6 +163,34 @@ class ProductController extends Controller
         $slug = $request->slug;
         $singleProduct = new SingleProduct($slug);
         return response()->json($singleProduct->generateSinglePageData(['attributes','facets','variants']));
+    }
+
+    public function SingleProductInventory(Request $request){
+        $request->validate(['product_id' => 'required|numeric', 'color_id' => 'required|numeric']);
+        $productId = $request->product_id;
+        $colorId = $request->color_id;
+        $productColors = ProductColor::where('product_id',$productId)->get();
+        $variants = DB::table('variants')->select(['id','product_color_id'])->whereIn('product_color_id',$a)->get()->map(function ($x) {return (array) $x;})
+        $availability = Ajency\ServiceComm\Comm\Sync::call('inventory', 'getVariantAvailability', ['variants' => $variants->pluck('id')]);
+        $colorVariants = [];
+        foreach ($variants->where('product_color_id',$productColors->where('color_id',$colorId)->first()->id)->pluck('id') as $variantID) {
+            $colorVariants[$variantID] = $availability[$variantID];
+        }
+        $otherColors = [];
+        foreach ($productColors as $color) {
+            $otherColors[$color['id']] = [
+                'color_id' => $color['color_id'],
+                'availability' => false
+            ];
+            foreach ($variants->where('product_color_id',$color['id'])->pluck('id') as $variantID) {
+                if($availability[$variantID]) {
+                    $otherColors[$color['id']]['availability'] = true;
+                    break;
+                }
+            }
+        }
+        $result = ['variants'=>$colorVariants,'other_colors' => $otherColors];
+        return response()->json($result);
     }
 }
 //product
