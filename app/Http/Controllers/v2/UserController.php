@@ -110,33 +110,33 @@ class UserController extends Controller
     public function fetchUserDetails($data, $skip = false)
     {
         $UserObject = $this->createAuthenticateUser($data, $skip);
-        if (isLocalSetup()) {
-            $tokenArr = $UserObject->createPersonalAccessToken();
-        } else {
-            $tokenArr = $UserObject->createPasswordGrantToken(defaultUserPassword($UserObject->phone));
+        $tokenArr = createAccessToken($UserObject);
+        $token = $tokenArr->token;
+        if ($UserObject->api_token == null) {
+            $UserObject->api_token = $token->id;
+            $UserObject->save();
         }
-        $UserObject->api_token = fetchAccessToken($UserObject)->id;
-        $UserObject->save();
 
         $id   = $UserObject->cart_id;
         $user = ["id" => $UserObject->id, 'active_cart_id' => $id];
 
-        if ($UserObject->verified) {
+        if (!$skip) {
             $user['user_info'] = $UserObject->userDetails();
+            $token->verified = true;
+            $token->save();
+        } else {
+            $token->verified = false;
+            $token->save();
         }
 
-        return response()->json(["message" => 'user login successful', 'user' => $user, 'token' => $tokenArr['access_token'], 'token_expires_at' => $tokenArr['expires_at'], 'success' => true]);
+        return response()->json(["message" => 'user login successful', 'user' => $user, 'token' => $tokenArr->access_token, 'token_expires_at' => $token->expires_at->toDateTimeString(), 'success' => true]);
     }
 
-    public function createAuthenticateUser($data, $skip)
+    public function createAuthenticateUser($data)
     {
         $id = request()->session()->get('active_cart_id', false);
 
-        if ($skip) {
-            $UserObject = null;
-        } else {
-            $UserObject = User::where('phone', '=', $data['phone'])->where('verified', '=', true)->first();
-        }
+        $UserObject = User::where('phone', '=', $data['phone'])->where('verified', '=', true)->first();
 
         if ($UserObject) {
             $cart = $this->userCart($id, $UserObject);
@@ -158,12 +158,9 @@ class UserController extends Controller
             $cart->user_id = $UserObject->id;
             $cart->save();
 
-            if (!$skip) {
-                $UserObject->verified = true;
-                $UserObject->save();
-            }
-
+            $UserObject->verified = true;
             $UserObject->assignRole('customer');
+            $UserObject->save();
         }
 
         request()->session()->forget('active_cart_id');

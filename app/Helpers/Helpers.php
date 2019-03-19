@@ -591,7 +591,7 @@ function generateOTP()
 
 function createAccessToken($UserObject)
 {
-    $UserObject->createToken('KSS_USER')->accessToken;
+    return $UserObject->createToken('KSS_USER');
 }
 
 function fetchAccessToken($UserObject)
