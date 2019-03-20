@@ -202,19 +202,24 @@ class SingleProduct
         return $this->productData['product_att_ecom_sales'];
     }
 
-    private function getColorVariants()
-    {
-        $colorVariants = [];
-        $q             = new ElasticQuery;
+    private function getColorVariantElasticData(){
+    	$q             = new ElasticQuery;
         $q->setIndex(config("elastic.indexes.product"));
         $productID  = $this->productData['product_id'];
-        $colorId    = $this->productData['product_color_id'];
         $facetName  = $q::createTerm('search_data.number_facet.facet_name', "product_id");
         $facetValue = $q::createTerm('search_data.number_facet.facet_value', $productID);
         $must       = $q::addToBoolQuery('must', [$facetName, $facetValue]);
         $nested     = $q::createNested('search_data.number_facet', $must);
         $q->setQuery($nested)->setSource(['search_result_data']);
-        $colorVariantsData = $q->search()['hits']['hits'];
+        return $q->search()['hits']['hits'];
+    }
+
+    private function getColorVariants()
+    {
+        $colorVariants = [];
+        $productID  = $this->productData['product_id'];
+        $colorId    = $this->productData['product_color_id'];
+        $colorVariantsData = $this->getColorVariantElasticData();
         foreach ($colorVariantsData as $cved) {
             $cvd                         = $cved['_source']['search_result_data'];
             $colorVariant                = [];
