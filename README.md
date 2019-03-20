@@ -57,39 +57,7 @@ Alternatively you can also add it by using "composer config --global --auth gith
 
 `cat > /etc/supervisor/conf.d/newsite-worker.conf`
 
-paste this
-
-```
-[program:newsite_product_sync]
-process_name=%(program_name)s_%(process_num)02d
-command=php /var/www/newsite/artisan queue:work --queue=update_inventory,process_move,process_product,process_product_images,create_jobs --sleep=3 --tries=3
-autostart=true
-autorestart=true
-user=root
-numprocs=1
-redirect_stderr=true
-stdout_logfile=/var/log/laravel/product_sync.log
-
-[program:newsite_order_sync]
-process_name=%(program_name)s_%(process_num)02d
-command=php /var/www/newsite/artisan queue:work --queue=odoo_order --tries=5
-autostart=true
-autorestart=true
-user=root
-numprocs=1
-redirect_stderr=true
-stdout_logfile=/var/log/laravel/order_sync.log
-
-[program:newsite_comm]
-process_name=%(program_name)s_%(process_num)02d
-command=php /var/www/newsite/artisan queue:work --queue=high,default,low --tries=3
-autostart=true
-autorestart=true
-user=root
-numprocs=1
-redirect_stderr=true
-stdout_logfile=/var/log/laravel/comm.log
-```
+copy contents of supervisor-worker.conf
 
 `sudo supervisorctl reread` 
 

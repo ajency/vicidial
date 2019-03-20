@@ -3,6 +3,8 @@
 namespace App\Console;
 
 use App\Coupon;
+use App\Jobs\GenerateSitemap;
+use App\Jobs\GenerateSitemapProductList;
 use App\Jobs\IndexInactiveProducts;
 use App\Jobs\ProductMoveSync;
 use App\Jobs\ProductSync;
@@ -54,6 +56,10 @@ class Kernel extends ConsoleKernel
             $schedule->call(function () {
                 Coupon::updateCouponLeft();
             })->everyTenMinutes();
+            $schedule->call(function () {
+                GenerateSitemapProductList::dispatch()->onQueue('process_sitemap_product_list');
+                GenerateSitemap::dispatch()->onQueue('process_sitemap_parent');
+            })->dailyAt('04:00');
         }
     }
 

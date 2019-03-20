@@ -7,6 +7,7 @@ use App\Variant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\StaticElement;
+use App\Defaults;
 
 class StaticController extends Controller
 {
@@ -114,6 +115,33 @@ class StaticController extends Controller
         ]);
     }
 
+    public function sitemapXML(Request $request)
+    {
+        $sitemapPath = Defaults::getSitemapPath();
+        if($sitemapPath){
+            return response(Storage::disk('s3')->get($sitemapPath), 200, [
+                'Content-Type' => 'application/xml',
+            ]);
+        }
+        else{
+            return response()->json(["message"=> 'Sitemap not generated!!!', 'success'=> false]);
+        }
+    }
+
+    public function productlistXML(Request $request)
+    {
+        $sitemapPath = Defaults::getSitemapPath("product_listing");
+        if($sitemapPath){
+            return response(Storage::disk('s3')->get($sitemapPath), 200, [
+                'Content-Type' => 'application/xml',
+            ]);
+        }
+        else{
+            return response()->json(["message"=> 'Sitemap not generated!!!', 'success'=> false]);
+        }
+        
+    }
+
     public function getVariantDiffFile(Request $request)
     {
         return Variant::updateVariantDiffFile();
@@ -132,5 +160,7 @@ class StaticController extends Controller
         ]);
         return response()->json(["message"=> 'Thank you.. we will get back to you.', 'success'=> true]);
     }
+
+
 
 }
