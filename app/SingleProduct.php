@@ -235,6 +235,23 @@ class SingleProduct
         return $colorVariants;
     }
 
+    private function getBreadcrumbs(){
+    	$order = config('product.breadcrumb_order');
+    	$position = 1;
+    	$breadcrumbs = [];
+    	$crumb = collect();
+    	foreach ($order as $breadcrumbKey) {
+    		$facetData = self::$facets->where('facet_name', $breadcrumbKey)->where('facet_value', $this->productData[$breadcrumbKey])->first();
+    		$crumb->push($facetData['slug']);
+    		$breadcrumbs[] = [
+    			'title' => $facetData['display_name'],
+    			'url' => url(createUrl('list',$crumb->toArray())),
+    			'position' => $position++
+    		]; 
+    	}
+    	return $breadcrumbs;
+    }
+
     public function generateSinglePageData($objects)
     {
         $data = [];
@@ -258,6 +275,9 @@ class SingleProduct
                 case 'color_variants':
                     $data['color_variants'] = $this->getColorVariants();
                     break;
+                case 'breadcrumbs':
+                	$data['breadcrumbs'] = $this->getBreadcrumbs();
+                	break;
                 default:
                     throw new \Exception("object type " . $object . " not defined", 1);
 
