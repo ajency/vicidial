@@ -106,6 +106,7 @@ export class ProductInfoComponent implements OnInit, OnChanges {
   addToBagErrorHandler(error){
     console.log("error ===>", error);
     $('.cd-add-to-cart').removeClass('cartLoader');
+    $('#size-modal').modal('hide');
     if(error.status == 401){
       this.appservice.userLogout();
     }

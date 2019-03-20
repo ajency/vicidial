@@ -5,8 +5,9 @@
 		<!-- If no image, class = "slider-placeholder-img" -->
 		<ul id="aniimated-thumbnials" class="list-unstyled m-0 mb-3 mb-sm-0 m-lg-2 prod-slides carousel">
 
-			<ng-container *ngIf="images.length != 0; else noImage" (onload)="initSlider()">
-				<li class="carousel-cell" *ngFor="let image of images">
+			<ng-container *ngIf="images.length != 0; else noImage">
+				<li class="carousel-cell" *ngFor="let image of images; let $last = last" [isLast]='$last'
+    (appNgInit)="initSlider()">
 					<img class="carousel-image"
 						alt="Girls casual woven short"
 						title="Girls casual woven short"

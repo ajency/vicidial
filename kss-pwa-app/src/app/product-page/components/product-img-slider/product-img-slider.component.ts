@@ -22,24 +22,25 @@ export class ProductImgSliderComponent implements OnInit, OnChanges {
 
   ngAfterViewInit(){
   	console.log("after view init");
-    setTimeout(()=>{
-      var elem = document.querySelector('.prod-slides');
-      var flkty = new Flickity( elem, {
+  }
+
+  initSlider(){
+    console.log("initSlider");
+    var elem = document.querySelector('.prod-slides');
+    var flkty = new Flickity( elem, {
         // options
         cellAlign: 'left',
         freeScroll: true,
         contain: true,
         lazyLoad: 2,
         pageDots: false
-      });
-
-     if(this.images.length == 1) {
+    });
+    
+    setTimeout(()=>{
+      flkty.reloadCells();
+      if(this.images.length == 1) {
          $('.flickity-button').hide();
      }
-    },500)
-  }
-
-  initSlider(){
-    console.log("initSlider function");
+    },400)
   }
 }

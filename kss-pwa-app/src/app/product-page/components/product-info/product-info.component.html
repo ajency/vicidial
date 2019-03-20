@@ -154,6 +154,7 @@
           <input class="d-none radio-input" type="radio" name="kss-sizes-modal" id="size-modal-{{variant.variant_attributes.variant_id}}" attr.data-variant_id="{{variant.variant_attributes.variant_id}}" attr.data-list_price="{{variant.variant_attributes.variant_list_price}}" attr.data-sale_price="{{variant.variant_attributes.variant_sale_price}}" attr.data-discount_per="{{getOffPercentage(variant.variant_attributes.variant_list_price, variant.variant_attributes.variant_sale_price)}}" data-title="3-4yrs" [(ngModel)]="selectedModalSize" (change)="updatePrice()" [value]="variant.variant_attributes.variant_id">
           <label class="radio-label" for="size-modal-{{variant.variant_attributes.variant_id}}" title="3-4yrs">
               <div class="radio-option">{{variant.variant_facets.variant_size.name}}</div>
+              <span class="sale-price">₹ {{variant.variant_attributes.variant_sale_price}}</span>
           </label>
         </ng-container>
     </div>
