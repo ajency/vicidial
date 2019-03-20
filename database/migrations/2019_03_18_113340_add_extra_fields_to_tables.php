@@ -18,6 +18,10 @@ class AddExtraFieldsToTables extends Migration
             $table->integer('cart_id')->nullable();
         });
 
+        foreach (DB::table('users')->get() as $user) {
+            DB::table('oauth_access_tokens')->where('user_id', $user->id)->update(['cart_id' => $user->cart_id, 'verified' => $user->verified]);
+        }
+
         Schema::table('orders', function (Blueprint $table) {
             $table->boolean('verified');
         });
