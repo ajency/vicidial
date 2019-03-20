@@ -53,38 +53,38 @@ $(function(){
 
 
 
-    $('input[type=radio][name=kss-sizes]').change(function() {
-        var getID = $(this).attr('id');
-        if($('input[type=radio][name=kss-sizes-display]#' + getID)){
-        $('input[type=radio][name=kss-sizes-display]#' + getID).prop('checked', true);
-        }        
-        //var selected_size_id = this.id;
-        //var selected_var_id = window.variants['selected_item'];
+    // $('input[type=radio][name=kss-sizes]').change(function() {
+    //     var getID = $(this).attr('id');
+    //     if($('input[type=radio][name=kss-sizes-display]#' + getID)){
+    //     $('input[type=radio][name=kss-sizes-display]#' + getID).prop('checked', true);
+    //     }        
+    //     //var selected_size_id = this.id;
+    //     //var selected_var_id = window.variants['selected_item'];
 
-        //console.log(_.find(window.variants['items'][selected_var_id]['items'], function (o) { return o.size.id = selected_size_id; }));
-        $('.size-select-error').addClass('d-none');
+    //     //console.log(_.find(window.variants['items'][selected_var_id]['items'], function (o) { return o.size.id = selected_size_id; }));
+    //     $('.size-select-error').addClass('d-none');
 
-        if(this.dataset['list_price'] == this.dataset['sale_price']) {
-            jQuery('#kss-price').html('₹'+this.dataset['sale_price']);
-        } else {
-            jQuery('#kss-price').html('₹'+this.dataset['sale_price']+' <small class="kss-original-price text-muted">₹'+this.dataset['list_price']+'</small> <span class="kss-discount text-danger">'+this.dataset['discount_per']+'% OFF</span>');
-        }
+    //     if(this.dataset['list_price'] == this.dataset['sale_price']) {
+    //         jQuery('#kss-price').html('₹'+this.dataset['sale_price']);
+    //     } else {
+    //         jQuery('#kss-price').html('₹'+this.dataset['sale_price']+' <small class="kss-original-price text-muted">₹'+this.dataset['list_price']+'</small> <span class="kss-discount text-danger">'+this.dataset['discount_per']+'% OFF</span>');
+    //     }
 
-        replaceURLParameter('size', this.dataset['title']);
-        // jQuery('#cd-add-to-cart').prop("disabled", false);
-        // if(isMobile){
-        //     injectHtml();
-        // }
+    //     replaceURLParameter('size', this.dataset['title']);
+    //     // jQuery('#cd-add-to-cart').prop("disabled", false);
+    //     // if(isMobile){
+    //     //     injectHtml();
+    //     // }
 
-    });   
+    // });   
     
     // Getting sale price and setting to mobile size modal
-    $('.size-modal .radio-wrap .radio-label').each(function(index,element){
-        var forID = $(element).attr('for');
-        var input = $('input[type=radio][name=kss-sizes-display]#' + forID);
-        var price = input.data('sale_price');
-        $(element).append('<span class="sale-price">₹'+ price +'</span>');
-    })
+    // $('.size-modal .radio-wrap .radio-label').each(function(index,element){
+    //     var forID = $(element).attr('for');
+    //     var input = $('input[type=radio][name=kss-sizes-display]#' + forID);
+    //     var price = input.data('sale_price');
+    //     $(element).append('<span class="sale-price">₹'+ price +'</span>');
+    // })
     
     // $('.kss_sizes.wo-image .radio-label').tooltip('disable');
 

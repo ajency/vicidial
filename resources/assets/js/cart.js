@@ -396,3 +396,24 @@ function google_pixel_tracking(pixel_id,price_final,pagetype){
         'user_id': getCookie('user_id')
       });
   }
+
+function fbTrackViewContent(){
+    fbq('track', 'ViewContent', {
+        value: default_price,
+        currency: 'INR',
+        content_ids: parent_id+'-'+selected_color_id,
+        content_type: 'product_group',
+        product_catalog_id : product_catalog_id
+    });
+}
+
+// Google analytic pixel tracking
+function gtagTrackPageView(){
+    gtag('event', 'page_view', {
+        'send_to': google_pixel_id,
+        'ecomm_pagetype': 'list',
+        'ecomm_prodid': parent_id+'-'+selected_color_id,
+        'ecomm_totalvalue': default_price,
+        'user_id': getCookie('user_id')
+  });
+}
