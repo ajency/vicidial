@@ -1,7 +1,7 @@
-var add_to_cart_failed = false;
-var add_to_cart_failure_message = '';
-var add_to_cart_clicked = false;
-var add_to_cart_completed = false;
+// var add_to_cart_failed = false;
+// var add_to_cart_failure_message = '';
+// var add_to_cart_clicked = false;
+// var add_to_cart_completed = false;
 // Block scope
 const isMobile = isMobileScreen();
 
@@ -44,46 +44,46 @@ $(document).ready(function(){
 
 
     //on click add to cart
-    $('.cd-add-to-cart').on('click',function(){
-        if($('input[type=radio][name=kss-sizes]:checked').length == 0){
-            if(isMobile){
-                $('#size-modal').modal('show');
-            }
-            else{
-                //Size not selected error css
-                jQuery( ".kss_sizes" ).addClass( "shake" );
-                $('.size-select-error').removeClass('d-none');
-                setTimeout(function(){jQuery( ".kss_sizes" ).removeClass( "shake" );},200); 
-            }
-        }
-        else{
-            var add_to_cart_element = this;
-            //$(add_to_cart_element).removeClass('cd-add-to-cart');
-            if($(add_to_cart_element).hasClass('cartLoader')) return;
+    // $('.cd-add-to-cart').on('click',function(){
+    //     if($('input[type=radio][name=kss-sizes]:checked').length == 0){
+    //         if(isMobile){
+    //             $('#size-modal').modal('show');
+    //         }
+    //         else{
+    //             //Size not selected error css
+    //             jQuery( ".kss_sizes" ).addClass( "shake" );
+    //             $('.size-select-error').removeClass('d-none');
+    //             setTimeout(function(){jQuery( ".kss_sizes" ).removeClass( "shake" );},200); 
+    //         }
+    //     }
+    //     else{
+    //         var add_to_cart_element = this;
+    //         //$(add_to_cart_element).removeClass('cd-add-to-cart');
+    //         if($(add_to_cart_element).hasClass('cartLoader')) return;
 
-            //if($(add_to_cart_element).hasClass('go-to-cart')) {/*Call Angular function*/ return;}
+    //         //if($(add_to_cart_element).hasClass('go-to-cart')) {/*Call Angular function*/ return;}
 
-            //Show loader
-            // $('.cd-add-to-cart .kss-btn__wrapper').addClass('d-none');
-            // $('.cd-add-to-cart .kss-btn__wrapper').removeClass('d-flex');
-            $('.cd-add-to-cart .btn-contents').hide();
-            $('.cd-add-to-cart .btn-icon').show();
-            console.log('first');
-            $(add_to_cart_element).addClass('cartLoader');
+    //         //Show loader
+    //         // $('.cd-add-to-cart .kss-btn__wrapper').addClass('d-none');
+    //         // $('.cd-add-to-cart .kss-btn__wrapper').removeClass('d-flex');
+    //         $('.cd-add-to-cart .btn-contents').hide();
+    //         $('.cd-add-to-cart .btn-icon').show();
+    //         console.log('first');
+    //         $(add_to_cart_element).addClass('cartLoader');
             
-            // for angular app 
-            add_to_cart_clicked = true;
-            let url = window.location.href.split("#")[0] + '#/bag';
-            window.location = url;
+    //         // for angular app 
+    //         add_to_cart_clicked = true;
+    //         let url = window.location.href.split("#")[0] + '#/bag';
+    //         window.location = url;
 
-            addToCart();
-            // $('#size-modal').modal('hide');
-            // $('.kss_sizes .radio-input').prop('checked', false);
-            // if(isMobile){
-            //     $('.add-bag-btn .cd-add-to-cart').html(XSsizemsg);
-            // }
-        }
-    });
+    //         addToCart();
+    //         // $('#size-modal').modal('hide');
+    //         // $('.kss_sizes .radio-input').prop('checked', false);
+    //         // if(isMobile){
+    //         //     $('.add-bag-btn .cd-add-to-cart').html(XSsizemsg);
+    //         // }
+    //     }
+    // });
 
     $('.kss-alert .alert-close').on('click',function(){
         $('.kss-alert').removeClass('is-open');

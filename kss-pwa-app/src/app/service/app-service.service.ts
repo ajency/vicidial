@@ -41,6 +41,13 @@ export class AppServiceService {
 
   private updateAccountView = new Subject<any>();
   order_txn_no : any;
+
+
+   add_to_cart_failed = false;
+   add_to_cart_failure_message = '';
+   add_to_cart_clicked = false;
+   add_to_cart_completed = false;
+
   constructor(	private router: Router,
                 private apiservice : ApiServiceService) { 
     this.apiUrl = isDevMode() ? 'http://localhost:8000' : '';

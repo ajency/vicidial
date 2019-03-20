@@ -16,7 +16,7 @@
 </div>
 
 <!-- Product Size Selection -->
-<div class="radio-wrap d-flex kss_sizes wo-image mb-4 single-radio">
+<div class="radio-wrap d-flex kss_sizes wo-image mb-4 single-radio" [ngClass]="{'shake' : shakeSizes}">
   <ng-container *ngFor="let variant of variants">
 	<input class="d-none radio-input" type="radio" name="kss-sizes" id="size-{{variant.variant_attributes.variant_id}}" attr.data-variant_id="{{variant.variant_attributes.variant_id}}" attr.data-list_price="{{variant.variant_attributes.variant_list_price}}" attr.data-sale_price="{{variant.variant_attributes.variant_sale_price}}" attr.data-discount_per="{{getOffPercentage(variant.variant_attributes.variant_list_price, variant.variant_attributes.variant_sale_price)}}" data-title="3-4yrs" [(ngModel)]="selectedSize" (change)="updatePrice()" [value]="variant.variant_attributes.variant_id">
 	<label class="radio-label" for="size-{{variant.variant_attributes.variant_id}}" title="3-4yrs">
@@ -130,6 +130,39 @@
               <li *ngFor="let tag of facets.product_metatag">{{tag.name}}</li>
           </ul>
         </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Mobile size selection -->
+<div class="modal fade size-modal" id="size-modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title font-weight-bold">Select a size</h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+    <!-- @Sujit: Size selection repeated, move to component -->
+    <div class="radio-wrap d-flex kss_sizes wo-image mb-4 single-radio">
+        <ng-container *ngFor="let variant of variants">
+          <input class="d-none radio-input" type="radio" name="kss-sizes" id="size-{{variant.variant_attributes.variant_id}}" attr.data-variant_id="{{variant.variant_attributes.variant_id}}" attr.data-list_price="{{variant.variant_attributes.variant_list_price}}" attr.data-sale_price="{{variant.variant_attributes.variant_sale_price}}" attr.data-discount_per="{{getOffPercentage(variant.variant_attributes.variant_list_price, variant.variant_attributes.variant_sale_price)}}" data-title="3-4yrs" [(ngModel)]="selectedSize" (change)="updatePrice()" [value]="variant.variant_attributes.variant_id">
+          <label class="radio-label" for="size-{{variant.variant_attributes.variant_id}}" title="3-4yrs">
+              <div class="radio-option">{{variant.variant_facets.variant_size.name}}</div>
+          </label>
+        </ng-container>
+    </div>
+
+      </div>
+      <div class="modal-footer add-bag-btn">
+        <button id="cd-add-to-cart" class="btn kss-btn kss-btn--big cd-add-to-cart" (click)="addToBag()">
+      <div class="kss-btn__wrapper d-flex align-items-center justify-content-center"><i class="kss_icon bag-icon-fill icon-sm"></i> Add to Bag</div>
+    </button>
+      </div>
     </div>
   </div>
 </div>
