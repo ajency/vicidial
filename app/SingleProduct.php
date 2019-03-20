@@ -183,6 +183,15 @@ class SingleProduct
     	return $variants;
     }
 
+    private function getImages(){
+    	$images = $this->productColor->getAllImages(['main','thumb','zoom']);
+    	$seq = 1;
+    	foreach ($images as $key => $image) {
+    		$images[$key]['sequence'] = $seq++;
+    	}
+    	return $images;
+    }
+
     public function generateSinglePageData($objects)
     {
         $data = [];
@@ -196,6 +205,9 @@ class SingleProduct
                     break;
                 case 'variants':
                 	$data['variants'] = $this->getVariants();
+                	break;
+                case 'images':
+                	$data['images'] = $this->getImages();
                 	break;
                 default:
                     throw new \Exception("object type " . $object . " not defined", 1);
