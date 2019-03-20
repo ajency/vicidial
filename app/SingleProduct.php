@@ -226,7 +226,7 @@ class SingleProduct
             $facetData                   = self::$facets->where('facet_name', 'product_color_html')->where('facet_value', $cvd['product_color_html'])->first();
             $colorVariant['color_id']    = $cvd['product_color_id'];
             $colorVariant['color_name']  = $facetData['display_name'];
-            $colorVariant['image']       = ProductColor::where('product_id', $productID)->where('color_id', $cvd['product_color_id'])->first()->getDefaultImage(["variant-thumb"])["variant-thumb"];
+            $colorVariant['image']       = getProductDefaultImage($productID,$cvd['product_color_id'],"variant-thumb");
             $colorVariant['url']         = url('/' . $cvd['product_slug'] . '/buy');
             $colorVariant['is_selected'] = $cvd['product_color_id'] == $colorId;
             $colorVariant['hexcode']     = $facetData['slug'];
@@ -276,12 +276,7 @@ class SingleProduct
         	$similarProduct = [];
         	$similarProduct['url'] = url('/'.$spd['product_slug'].'/buy');
         	$similarProduct['title'] = $spd['product_title'];
-      //   	try{
-
-      //   	}catch(\Exception $e){
-
-      //   	}
-    		// $similarProduct['image'] = ProductColor::where('product_id', $spd['product_id'])->where('color_id', $spd['product_color_id'])->first()->getDefaultImage(["list-view"])["list-view"];
+        	$similarProduct['image'] = getProductDefaultImage($spd['product_id'],$spd['product_color_id'],'list-view');
         	$variant = defaultVariant($spdVariants,false);
         	$similarProduct['sale_price'] = $variant['variant_sale_price'];
         	$similarProduct['list_price'] = $variant['variant_list_price'];
@@ -308,7 +303,8 @@ class SingleProduct
     		$productSubtype.' for '.$this->productData['product_gender'], 
     		'Buy '.$productName.' Online in India at best price only at KidSuperStore.in'
     	];
-    	$image = $this->productColor->getDefaultImage(['list-view'])['list-view']['1x'];
+    	$imgData = $this->productColor->getDefaultImage(['list-view']);
+    	$image = (isset($this->productColor->getDefaultImage(['list-view'])['list-view']))? $this->productColor->getDefaultImage(['list-view'])['list-view']['1x']:null;
 
     	return [
     		"title"=> $title,
@@ -330,7 +326,7 @@ class SingleProduct
     }
 
     public function getBlogsData(){
-    	
+
     	return [];
     }
 

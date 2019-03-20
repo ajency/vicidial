@@ -849,3 +849,10 @@ function translateDiscountToItems($cartData)
 }
 
 
+function getProductDefaultImage($productId,$colorId,$preset){
+    $productColor = App\ProductColor::where('product_id', $productId)->where('color_id', $colorId)->first();
+    if(is_null($productColor)) return null;
+    $resp = $productColor->getDefaultImage([$preset]);
+    if(empty($resp)) return null;
+    return $resp[$preset];
+}
