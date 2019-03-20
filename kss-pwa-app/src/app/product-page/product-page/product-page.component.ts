@@ -2,6 +2,7 @@ import { Component, OnInit, isDevMode } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { ApiServiceService } from '../../service/api-service.service';
 import { AppServiceService } from '../../service/app-service.service';
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 @Component({
   selector: 'app-product-page',
   templateUrl: './product-page.component.html',
@@ -12,9 +13,13 @@ export class ProductPageComponent implements OnInit {
 	product : any;
   showLoader : boolean = false;
   menuObject : any
+  isMobile : boolean = false;
   constructor(private route: ActivatedRoute,
   			  private apiService: ApiServiceService,
-              private appservice : AppServiceService) { }
+              private appservice : AppServiceService,
+              private breakpointObserver : BreakpointObserver) {
+    this.isMobile = this.breakpointObserver.isMatched('(max-width: 600px)');
+   }
 
   ngOnInit() {
     let url = isDevMode() ? "https://demo8558685.mockable.io/get-menu" : "/api/rest/v1/test/get-menu"

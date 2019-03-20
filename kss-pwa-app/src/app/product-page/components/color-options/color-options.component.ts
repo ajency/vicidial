@@ -9,13 +9,14 @@ export class ColorOptionsComponent implements OnInit, OnChanges {
 
 	@Input() colorVariants : any;
   @Input() selectedColorVariant : any;
+  @Input() collapse : any;
   constructor() { }
 
   ngOnInit() {
   }
 
   ngOnChanges(){
-  	console.log("colorVariants ==>", this.colorVariants)
+  	console.log("colorVariants ==>", this.colorVariants, this.collapse)
   }
 
   trim(color){

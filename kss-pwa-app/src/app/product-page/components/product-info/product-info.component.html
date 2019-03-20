@@ -1,8 +1,8 @@
 <div class="d-flex">
     <div class="mt-sm-2">
 	    <!-- Product Title -->
-	    <a *ngIf="facets.product_brand" href="{{facets.product_brand.slug}}" class="text-black"><h2 class="brands-title brands-title--single">{{facets.product_brand.name}}</h2></a>
-	    <h1 class="section-heading section-heading--single">{{attributes.product_name}}</h1>
+	    <a *ngIf="facets.product_brand && facets.product_brand.name" href="{{facets.product_brand.slug}}" class="text-black"><h2 class="brands-title brands-title--single">{{facets.product_brand.name}}</h2></a>
+	    <h1 class="section-heading section-heading--single">{{attributes.product_title}}</h1>
 
 	    <!-- Product Default/Selected Price -->
 	    <app-product-price [variants]="variants" [selectedVariantId]="selectedSize"></app-product-price>
@@ -134,7 +134,7 @@
   </div>
 </div>
 
-<app-color-options *ngIf="isMobile && colorVariants && colorVariants.length" [colorVariants]="colorVariants" [selectedColorVariant]="selectedColorVariant" ></app-color-options>
+<app-color-options *ngIf="isMobile && colorVariants && colorVariants.length" [colorVariants]="colorVariants" [selectedColorVariant]="selectedColorVariant" [collapse]=true></app-color-options>
 
 <!-- Mobile size selection -->
 <div class="modal fade size-modal" id="size-modal" tabindex="-1" role="dialog" aria-hidden="true">

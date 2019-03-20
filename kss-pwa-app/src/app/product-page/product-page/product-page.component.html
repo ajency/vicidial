@@ -11,10 +11,10 @@
 			</div>
 			<div class="col-sm-12 col-lg-7">
 				<!-- Product Images -->
-				<app-product-img-slider></app-product-img-slider>
+				<app-product-img-slider *ngIf="product.images" [images]="product.images"></app-product-img-slider>
 
 				<!-- Color Options -->
-				<app-color-options *ngIf="product.color_variants && product.color_variants.length" [colorVariants]="product.color_variants" [selectedColorVariant]="product.facets.product_color_html" ></app-color-options>
+				<app-color-options *ngIf="!isMobile && product.color_variants && product.color_variants.length" [colorVariants]="product.color_variants" [selectedColorVariant]="product.facets.product_color_html" ></app-color-options>
 
 			</div>
 			<div class="col-sm-12 col-lg-5">
