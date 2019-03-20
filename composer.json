@@ -57,6 +57,7 @@
         "publiux/laravelcdn": "dev-ajency",
         "soapbox/laravel-formatter": "dev-ajency",
         "spatie/laravel-permission": "^2.23",
+        "spatie/laravel-sitemap": "^5.2",
         "toin0u/geocoder-laravel": "^4.0",
         "tzsk/payu": "dev-ajency"
     },

@@ -544,4 +544,5 @@ class StaticElement extends Model
         return (["message" => "Elements published successfully", "success" => true]);
     }
 
+
 }

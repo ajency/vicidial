@@ -73,6 +73,7 @@ Route::group([
     });
 });
 
+
 Route::get('/', $app_version . '\HomeController@newhome')->name('home');
 // Route::get('/newhome', $app_version . '\HomeController@newhome')->name('home');
 Route::get('/drafthome', $app_version . '\HomeController@newdraft')->name('drafthome');
@@ -103,6 +104,9 @@ Route::get('/shop/{gendername}', $app_version . '\StaticController@gender');
 Route::get('/draft/{gendername}', $app_version . '\StaticController@draft');
 Route::get('/{product_slug}/buy', $app_version . '\ProductController@index')->name('product');
 Route::get('/' . $config['base_root_path'] . $config['model']["App\ProductColor"]['base_path'] . '/{photo_id}/{preset}/{depth}/{image}', $app_version . '\ProductController@getImage');
+Route::get('/sitemap.xml', $app_version.'\StaticController@sitemapXML');
+Route::get('/products_list.xml', $app_version.'\StaticController@productlistXML');
+
 Route::get('/' . config('fileupload_static_element')['base_root_path'] . config('fileupload_static_element')['model']["App\StaticElement"]['base_path'] . '/{photo_id}/{preset}/{depth}/{image}', $app_version . '\StaticElementController@getImage');
 Route::get('/' . config('fileupload_static_element')['base_root_path'] . config('fileupload_static_element')['model']["App\StaticElement"]['base_path'] . '/{photo_id}/{preset}/{image}', $app_version . '\StaticElementController@getOriginalImage');
 // Route::get('/{gendername}', $app_version.'\StaticController@gender');
