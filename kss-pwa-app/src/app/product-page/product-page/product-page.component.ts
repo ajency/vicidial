@@ -3,6 +3,10 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { ApiServiceService } from '../../service/api-service.service';
 import { AppServiceService } from '../../service/app-service.service';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+
+declare var fbTrackViewContent : any;
+declare var gtagTrackPageView : any;
+
 @Component({
   selector: 'app-product-page',
   templateUrl: './product-page.component.html',
@@ -14,6 +18,7 @@ export class ProductPageComponent implements OnInit {
   showLoader : boolean = false;
   menuObject : any
   isMobile : boolean = false;
+  queryParamSize : any;
   constructor(private route: ActivatedRoute,
   			  private apiService: ApiServiceService,
               private appservice : AppServiceService,
@@ -33,11 +38,24 @@ export class ProductPageComponent implements OnInit {
 
     this.showLoader = true;
   	let product_slug = this.route.snapshot.paramMap.get('product_slug');
+    console.log("query params size ==",this.route.snapshot.queryParamMap.get('size'));
+    this.queryParamSize = this.route.snapshot.queryParamMap.get('size');
   	console.log("product_slug ==>", product_slug);
 
   	url = "https://demo8558685.mockable.io/get_single_product";
   	this.apiService.request(url,'get',{},{}).then((data)=>{
   		this.product = data;
+      let variant = this.product.variants.find((v)=>{ return this.queryParamSize == v.variant_facets.variant_size.name});
+      let default_price;
+      if(variant)
+        default_price =  variant.variant_attributes.variant_sale_price;
+      else{
+        variant = this.product.variants.find((v)=>{ return v.is_default === true })
+        default_price = variant.variant_attributes.variant_sale_price;
+      }
+
+      fbTrackViewContent(default_price, this.product.attributes.product_id, this.product.facets.product_color_html.id);
+      gtagTrackPageView(default_price, this.product.attributes.product_id, this.product.facets.product_color_html.id);
       this.showLoader = false;
   		console.log("response ==>", data);
   	})

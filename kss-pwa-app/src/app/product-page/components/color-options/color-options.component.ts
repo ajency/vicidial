@@ -16,7 +16,7 @@ export class ColorOptionsComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(){
-  	console.log("colorVariants ==>", this.colorVariants, this.collapse)
+  	// console.log("colorVariants ==>", this.colorVariants, this.collapse)
   }
 
   trim(color){

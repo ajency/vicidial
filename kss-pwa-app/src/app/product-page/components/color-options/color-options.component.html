@@ -3,7 +3,7 @@
 		<label class="align-items-center d-flex colorOptions__trigger cursor-pointer collapsed" href="#color-options"  aria-expanded="false" aria-controls="color-options" data-toggle="collapse">
 				<ul class="product-color product-color--single px-1"  data-toggle="tooltip" data-placement="bottom" title="{{selectedColorVariant.name}}">
 					<li class="d-inline-flex align-middle">
-				    	<label class="mb-0" [ngStyle]="{'background-color' : selectedColorVariant.hexcode ? selectedColorVariant.hexcode : (selectedColorVariant.name ? trim(selectedColorVariant.name) : '')}"></label>
+				    	<label class="mb-0" [ngStyle]="{'background-color' : selectedColorVariant.slug ? selectedColorVariant.slug : (selectedColorVariant.name ? trim(selectedColorVariant.name) : '')}"></label>
 				  	</li>
 				</ul>
 			<p class="font-weight-bold kss-link mb-0"> Color options</p>
@@ -23,7 +23,7 @@
 						  	</li>
 						</ul>
 						<div class="variant-img-wrapper">
-							<img src="{{option.image}}"
+							<img src="{{option.image['1x']}}"
 								class="w-100"
 								sizes="50px"
 								alt="">

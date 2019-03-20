@@ -89,38 +89,38 @@ $(function(){
     // $('.kss_sizes.wo-image .radio-label').tooltip('disable');
 
 
-    if ($(window).width() < 767) {
-        // Detaching color option in mobile
-        var coloroption = $('.colorOptions').detach();
-        $('.product-collapse').after(coloroption);
-        $('.colorOptions').removeClass('d-none');
+    // if ($(window).width() < 767) {
+    //     // Detaching color option in mobile
+    //     var coloroption = $('.colorOptions').detach();
+    //     $('.product-collapse').after(coloroption);
+    //     $('.colorOptions').removeClass('d-none');
 
-        // Disable tooltip in mobile
-        $('.variant-wrapper,.product-color--single').tooltip('disable');
+    //     // Disable tooltip in mobile
+    //     $('.variant-wrapper,.product-color--single').tooltip('disable');
 
-        // $('.kss_sizes.wo-image .radio-label').tooltip('enable');
-        $('.colorOptions__trigger').click();
+    //     // $('.kss_sizes.wo-image .radio-label').tooltip('enable');
+    //     $('.colorOptions__trigger').click();
 
-    }
+    // }
 
     // FB pixel tracking for view content event
-    fbq('track', 'ViewContent', {
-        value: default_price,
-        currency: 'INR',
-        content_ids: parent_id+'-'+selected_color_id,
-        content_type: 'product_group',
-        product_catalog_id : product_catalog_id
-    });
+    // fbq('track', 'ViewContent', {
+    //     value: default_price,
+    //     currency: 'INR',
+    //     content_ids: parent_id+'-'+selected_color_id,
+    //     content_type: 'product_group',
+    //     product_catalog_id : product_catalog_id
+    // });
 
-    // Google analytic pixel tracking
+    // // Google analytic pixel tracking
 
-    gtag('event', 'page_view', {
-        'send_to': google_pixel_id,
-        'ecomm_pagetype': 'list',
-        'ecomm_prodid': parent_id+'-'+selected_color_id,
-        'ecomm_totalvalue': default_price,
-        'user_id': getCookie('user_id')
-      });
+    // gtag('event', 'page_view', {
+    //     'send_to': google_pixel_id,
+    //     'ecomm_pagetype': 'list',
+    //     'ecomm_prodid': parent_id+'-'+selected_color_id,
+    //     'ecomm_totalvalue': default_price,
+    //     'user_id': getCookie('user_id')
+    //   });
 
 })
 

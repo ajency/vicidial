@@ -21,7 +21,7 @@ export class ProductImgSliderComponent implements OnInit, OnChanges {
   }
 
   ngAfterViewInit(){
-  	console.log("after view init");
+  	// console.log("after view init");
   }
 
   initSlider(){

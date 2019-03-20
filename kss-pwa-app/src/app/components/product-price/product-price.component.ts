@@ -16,12 +16,12 @@ export class ProductPriceComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(){
-  	console.log("variants ==>",this.variants)
+  	// console.log("variants ==>",this.variants)
     if(this.selectedVariantId)
       this.selectedVariant = this.variants.find((variant)=>{ return variant.variant_attributes.variant_id === this.selectedVariantId});
     else
     	this.selectedVariant = this.variants.find((variant)=>{ return variant.is_default === true});
-  	console.log("default variant ==>", this.selectedVariant);
+  	// console.log("default variant ==>", this.selectedVariant);
   }
 
   getOffPercentage(list_price, sale_price){

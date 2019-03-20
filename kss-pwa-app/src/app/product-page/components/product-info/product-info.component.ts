@@ -15,6 +15,7 @@ export class ProductInfoComponent implements OnInit, OnChanges {
 	@Input() variants : any;
   @Input() colorVariants : any;
   @Input() selectedColorVariant : any;
+  @Input() queryParamSize : any;
   selectedSize : any;
   isMobile : any;
   shakeSizes : boolean = false;
@@ -31,16 +32,45 @@ export class ProductInfoComponent implements OnInit, OnChanges {
 
   ngOnChanges(){
   	this.variants = this.variants.sort((a,b)=>{ return a.variant_facets.variant_size.sequence - b.variant_facets.variant_size.sequence});
-  	console.log("attributes =>", this.colorVariants);
+    if(this.queryParamSize){
+      let variant = this.variants.find((v)=>{ return this.queryParamSize == v.variant_facets.variant_size.name});
+      if(variant)
+        this.selectedSize = this.selectedModalSize = variant.variant_attributes.variant_id;
+    }
+  	// console.log("attributes =>", this.colorVariants, this.queryParamSize);
   }
 
   getOffPercentage(list_price, sale_price){
   	return this.appservice.calculateOff(list_price, sale_price);
   }
 
-  updatePrice(){
+  sizeSelected(){
     console.log("inside updatePriceprice", this.selectedSize)
-    this.selectedSize = this.selectedModalSize
+    let variant = this.variants.find((v)=>{ return this.selectedSize == v.variant_attributes.variant_id});
+    this.replaceURLParameter('size', variant.variant_facets.variant_size.name)
+  }
+
+  modalSizeSelected(){
+    this.selectedSize = this.selectedModalSize;
+    this.sizeSelected();
+  }
+
+  replaceURLParameter(paramName, paramValue) {
+    let url = window.location.href;
+    let hash = window.location.hash;
+    url = url.replace(hash, '');
+    if (url.indexOf(paramName + "=") >= 0) {
+       let prefix = url.substring(0, url.indexOf(paramName));
+       let suffix = url.substring(url.indexOf(paramName));
+       suffix = suffix.substring(suffix.indexOf("=") + 1);
+       suffix = (suffix.indexOf("&") >= 0) ? suffix.substring(suffix.indexOf("&")) : "";
+       url = prefix + paramName + "=" + paramValue + suffix;
+    } else {
+       if (url.indexOf("?") < 0) url += "?" + paramName + "=" + paramValue;
+       else url += "&" + paramName + "=" + paramValue;
+    }
+    url = url.substring(url.indexOf(window.location.pathname));
+    window.history.replaceState({}, 'Kidsuperstore.in', url + hash);
   }
 
   addToBag(){
