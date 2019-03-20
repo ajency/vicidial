@@ -21,16 +21,18 @@ export class LoginComponent implements OnInit {
   @ViewChild('otp5') otp5: ElementRef;
   @ViewChild('otp6') otp6: ElementRef;
 
-	@Output() loginSuccess = new EventEmitter();
+  @Output() loginSuccess = new EventEmitter();
 
-	mobileNumberEntered = false;
+  mobileNumberState = 'mobile';
   mobileNumber : any;
   otp : any;
+  signInMsg : '';
   otpCode = {otp1:"",otp2:"",otp3:"",otp4:"",otp5:"",otp6:""}
   userValidation = {
-    disableSendOtpButton :  false,
+    disableGetTokenButton :  false,
     mobileValidationFailed : false,
     mobileValidationErrorMsg : '',
+    disableSendOtpButton : false,
     disableVerifyOtpButton : false,
     otpVerificationFailed : false,
     otpVerificationErrorMsg : ''
@@ -38,51 +40,61 @@ export class LoginComponent implements OnInit {
   displaySkipOTP : any;
 
   constructor(private appservice : AppServiceService,
-  						private apiservice : ApiServiceService,
-  						private router: Router,
+              private apiservice : ApiServiceService,
+              private router: Router,
               private zone : NgZone) { }
 
   ngOnInit() {
-    console.log("ngOnInit login component");
     this.displaySkipOTP = this.appservice.displaySkipOTP;
-  	if(!this.appservice.userInfo){
-  		this.displayModal();	
-  	}
-  	// else
-  		// this.closeOtpModal();
-  	
+    if(!this.appservice.userInfo){
+      this.displayModal();  
+    }
+    // else
+      // this.closeOtpModal();
+    
   }
 
   displayModal(){
-	 	$('#signin').modal('show');
+     $('#signin').modal('show');
     $("#cd-cart").css("overflow", "hidden");
     $('.modal-backdrop').appendTo('#cd-cart');
     $('body').addClass('hide-scroll');
     setTimeout(()=>{
       this.mobileInput.nativeElement.focus();
     },500);
-    $('#signin').addClass('show');
-    $(".modal-backdrop").addClass('show');
   }
 
   ngOnDestroy(){
-  	console.log("ngOnDestroy");
-  	$('#signin').modal('hide');
+    console.log("ngOnDestroy");
+    $('#signin').modal('hide');
     $("#cd-cart").css("overflow", "auto");
     $('.modal-backdrop').remove();
     $('body').removeClass('modal-open');
   }
 
   authenticateUser(){
-    this.userValidation.disableSendOtpButton = true;
+    this.userValidation.disableGetTokenButton = true;
     this.userValidation.mobileValidationFailed = false;
-    let url = this.appservice.apiUrl + '/rest/v1/authenticate/generate_otp?';
+    let url = this.appservice.apiUrl + '/rest/v2/authenticate/get-token?';
     let body = { phone : this.mobileNumber };
     url = url+$.param(body);
     this.apiservice.request(url, 'get', body , {}, true).then((response)=>{
-      this.userValidation.disableSendOtpButton = false;
+      this.userValidation.disableGetTokenButton = false;
       if(response.success){
-        this.mobileNumberEntered = true;
+        document.cookie='token='+ response.token + ";path=/";
+        document.cookie='cart_id=' + response.user.active_cart_id + ";path=/";
+        document.cookie='user_id=' + response.user.id + ";path=/";
+
+        if(this.displaySkipOTP) {
+          if(response.show_promt) {
+            this.signInMsg = response.message;
+            this.mobileNumberState = 'sign-in';
+          } else {
+            this.skipVerify();
+          }
+        } else {
+          this.sendOTP();
+        }
       }
       else{
         this.userValidation.mobileValidationFailed = true;
@@ -91,40 +103,76 @@ export class LoginComponent implements OnInit {
     })
     .catch((error)=>{
       console.log("error ===>", error);
-      this.userValidation.disableSendOtpButton = false;
+      this.userValidation.disableGetTokenButton = false;
       this.userValidation.mobileValidationFailed = true;
     })
   }
 
-  verifyMobile(verify : boolean = true){
+  skipVerify(){
+    this.closeOtpModal();
+    this.appservice.loginSuccessComplete();
+  }
+
+  sendOTP(){
+    this.userValidation.disableSendOtpButton = true;
+    let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
+    let url = this.appservice.apiUrl + '/api/rest/v2/user/authenticate/generate_otp?';
+    let body = {};
+    url = url+$.param(body);
+    this.apiservice.request(url, 'get', body , header, true).then((response)=>{
+      this.userValidation.disableSendOtpButton = false;
+      if(response.success){
+        this.mobileNumberState = 'verify';
+      }
+      else{
+        //
+      }
+    })
+    .catch((error)=>{
+      console.log("error ===>", error);
+      this.userValidation.disableSendOtpButton = false;
+    })
+  }
+
+  reSendOTP(){
+    this.userValidation.disableSendOtpButton = true;
+    let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
+    let url = this.appservice.apiUrl + '/api/rest/v2/user/authenticate/resend_otp?';
+    let body = {};
+    url = url+$.param(body);
+    this.apiservice.request(url, 'get', body , header, true).then((response)=>{
+      this.userValidation.disableSendOtpButton = false;
+      if(response.success){
+        this.mobileNumberState = 'verify';
+      }
+      else{
+        //
+      }
+    })
+    .catch((error)=>{
+      console.log("error ===>", error);
+      this.userValidation.disableSendOtpButton = false;
+    })
+  }
+
+  verifyMobile(){
     this.userValidation.disableVerifyOtpButton = true;
     this.userValidation.otpVerificationFailed = false;
-    let url, body;    
-    if(verify){
-      url = this.appservice.apiUrl + '/rest/v1/authenticate/login?'
-      body = {
-        otp : this.otp,
-        phone : this.mobileNumber
-      }
-    }
-    else{
-      url = this.appservice.apiUrl + '/rest/v1/authenticate/skip?';
-      body = {       
-        phone : this.mobileNumber
-      }
+    let header, url, body;
+    header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };   
+    url = this.appservice.apiUrl + '/api/rest/v2/user/authenticate/verify-token?'
+    body = {
+      otp : this.otp
     }    
     // this.otp=this.otpCode.otp1+this.otpCode.otp2+this.otpCode.otp3+this.otpCode.otp4+this.otpCode.otp5+this.otpCode.otp6
 
     url = url + $.param(body);
-    this.apiservice.request(url, 'get', body, {}, true).then((response)=>{
+    this.apiservice.request(url, 'get', body, header, true).then((response)=>{
       this.otp = null;
       this.userValidation.disableVerifyOtpButton = false;
       if(response.success){
         this.appservice.userInfo = response.user.user_info;
-        document.cookie='token='+ response.token + ";path=/";
         document.cookie='cart_id=' + response.user.active_cart_id + ";path=/";
-        document.cookie='user_id=' + response.user.id + ";path=/";
-        this.appservice.userVerificationComplete = true;
         this.closeOtpModal();
         this.appservice.loginSuccessComplete();
       }
@@ -137,7 +185,7 @@ export class LoginComponent implements OnInit {
       console.log("error ===>", error);
       this.userValidation.disableVerifyOtpButton = false;
       this.userValidation.otpVerificationFailed = true;
-    })  	
+    })    
   }
 
   onKeyDown(event,el1,el2,value) {
@@ -173,7 +221,7 @@ export class LoginComponent implements OnInit {
   }
 
   closeOtpModal(){
-  	// this.router.navigate([{ outlets: { popup: null }}], {replaceUrl : true});
+    // this.router.navigate([{ outlets: { popup: null }}], {replaceUrl : true});
     $('#signin').modal('hide');
     $("#cd-cart").css("overflow", "auto");
     $('.modal-backdrop').remove();
@@ -181,13 +229,13 @@ export class LoginComponent implements OnInit {
     this.appservice.hideLoginPopupTrigger();
   }
 
-  resetOTP(){
+  /*resetOTP(){
     console.log("resetOTP updated");    
-    this.mobileNumberEntered = false;
+    this.mobileNumberState = false;
     this.otp = null;
     this.otpCode.otp1 =''; this.otpCode.otp2 = ''; this.otpCode.otp3 = ''; this.otpCode.otp4 = ''; this.otpCode.otp5 = ''; this.otpCode.otp6='';
     this.userValidation.otpVerificationErrorMsg = '';
-  }
+  }*/
 
   otpVerificationIOS(otp){
     if(otp.length == 6){
