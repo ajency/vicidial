@@ -41,6 +41,7 @@ function makeQueryfromParams($searchObject)
         'product_age_group'        => 'search_data.string_facet.product_age_group',
         'product_subtype'          => 'search_data.string_facet.product_subtype',
         'product_color_html'       => 'search_data.string_facet.product_color_html',
+        'product_id'               => 'search_data.number_facet.product_id',
         'variant_sale_price'       => 'search_data.number_facet.variant_sale_price',
         'variant_discount_percent' => 'search_data.number_facet.variant_discount_percent',
         'variant_availability'     => 'search_data.boolean_facet.variant_availability',

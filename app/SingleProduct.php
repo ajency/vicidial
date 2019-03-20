@@ -252,6 +252,39 @@ class SingleProduct
     	return $breadcrumbs;
     }
 
+    private function getSimilarProductsElasticData(){
+    	$productID  = $this->productData['product_id'];
+    	$defaultFilters = setDefaultFilters(['search_object' => []]);
+    	$q = new ElasticQuery;
+    	$q->setIndex(config('elastic.indexes.product'));
+    	$mustFilter = setElasticFacetFilters($q, ['search_object'=>$defaultFilters],false)[0];
+    	$mustNotFilter = setElasticFacetFilters($q, ['search_object'=>['boolean_filter'=>['product_id'=> $productID]]],false)[0];
+    	$filters = $q::addToBoolQuery('must', $mustFilter);
+        $filters = $q::addToBoolQuery('must_not', $mustNotFilter, $filters);
+        $query = $q::createNested("search_data", $filters);
+        $q->setQuery($query)->setSize(4)->setSource(['search_result_data','variants']);
+        return $q->search()['hits']['hits'];
+    }
+
+    private function getSimilarProducts(){
+    	$similarProducts = [];
+    	$productID  = $this->productData['product_id'];
+        $similarProductsData = $this->getSimilarProductsElasticData();
+        foreach ($similarProductsData as $sped) {
+        	$spd = $sped['_source']['search_result_data'];
+        	$spdVariants = $sped['_source']['variants'];
+        	$similarProduct = [];
+        	$similarProduct['url'] = url('/'.$spd['product_slug'].'/buy');
+        	$similarProduct['title'] = $spd['product_title'];
+    		$similarProduct['image'] = ProductColor::where('product_id', $productID)->where('color_id', $spd['product_color_id'])->first()->getDefaultImage(["list-view"])["list-view"];
+        	$variant = defaultVariant($spdVariants,false);
+        	$similarProduct['sale_price'] = $variant['variant_sale_price'];
+        	$similarProduct['list_price'] = $variant['variant_list_price'];
+        	$similarProducts[] = $similarProduct;
+        }
+        return $similarProducts;
+    }
+
     public function generateSinglePageData($objects)
     {
         $data = [];
@@ -277,6 +310,9 @@ class SingleProduct
                     break;
                 case 'breadcrumbs':
                 	$data['breadcrumbs'] = $this->getBreadcrumbs();
+                	break;
+                case 'related_products':
+                	$data['related_products'] = $this->getSimilarProducts();
                 	break;
                 default:
                     throw new \Exception("object type " . $object . " not defined", 1);
