@@ -162,7 +162,8 @@ class ProductController extends Controller
         $request->validate(['slug' => 'required']);
         $slug = $request->slug;
         $singleProduct = new SingleProduct($slug);
-        return response()->json($singleProduct->generateSinglePageData(['attributes','facets','variants','images']));
+        $apiResponse = $singleProduct->generateSinglePageData(['attributes','facets','variants','images','is_sellable','color_variants']);
+        return response()->json($apiResponse);
     }
 
     public function SingleProductInventory(Request $request){

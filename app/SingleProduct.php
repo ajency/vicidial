@@ -192,6 +192,36 @@ class SingleProduct
     	return $images;
     }
 
+    private function isSellable(){
+    	return $this->productData['product_att_ecom_sales'];
+    }
+
+    private function getColorVariants(){
+    	$colorVariants = [];
+    	$q = new ElasticQuery;
+    	$q->setIndex(config("elastic.indexes.product"));
+    	$productID = $this->productData['product_id'];
+    	$colorId = $this->productData['product_color_id'];
+    	$facetName  = $q::createTerm('search_data.number_facet.facet_name', "product_id");
+	    $facetValue = $q::createTerm('search_data.number_facet.facet_value', $productID);
+	    $must = $q::addToBoolQuery('must', [$facetName, $facetValue]);
+	    $nested = $q::createNested('search_data.number_facet', $must);
+	    $q->setQuery($nested)->setSource(['search_result_data']);
+	    $colorVariantsData = $q->search()['hits']['hits'];
+	    foreach ($colorVariantsData as $cved) {
+	    	$cvd = $cved['_source']['search_result_data'];
+	    	$colorVariant = [];
+	    	$facetData          = self::$facets->where('facet_name', 'product_color_html')->where('facet_value', $cvd['product_color_html'])->first();
+	    	$colorVariant['color_id'] = $cvd['product_color_id'];
+	    	$colorVariant['color_name'] = $facetData['display_name'];
+	    	$colorVariant['image'] = ProductColor::where('product_id',$productID)->where('color_id',$cvd['product_color_id'])->first()->getDefaultImage(["variant-thumb"])["variant-thumb"];
+	    	$colorVariant['url'] = url('/'.$cvd['product_slug'].'/buy');
+	    	$colorVariant['is_selected'] = $cvd['product_color_id'] == $colorId;
+	    	$colorVariants[] = $colorVariant;
+	    }
+	    return $colorVariants;
+    }
+
     public function generateSinglePageData($objects)
     {
         $data = [];
@@ -209,6 +239,12 @@ class SingleProduct
                 case 'images':
                 	$data['images'] = $this->getImages();
                 	break;
+            	case 'is_sellable':
+            		$data['is_sellable'] = $this->isSellable();
+            		break;
+            	case 'color_variants':
+            		$data['color_variants'] = $this->getColorVariants();
+            		break;
                 default:
                     throw new \Exception("object type " . $object . " not defined", 1);
 
