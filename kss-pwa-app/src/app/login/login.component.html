@@ -68,8 +68,8 @@
 	              <p class="h6 my-3">{{signInMsg}} </p>
 	            </div>
 	          </form>
-	          <div class="mt-3">
-	          	<button (click)="skipVerify()" type="button" class="btn kss-btn kss-btn--big btn-verify is-enter" data-toggle="modal" data-target="#checkout-flow"><span>Cancel <i class="fas fa-circle-notch fa-spin fa-lg ml-1"></i> </span></button>
+	          <div class="mt-3 d-flex align-items-center justify-content-between">
+	          	<button (click)="skipVerify()" type="button" class="btn kss-btn kss-btn--big btn-verify is-enter mr-3" data-toggle="modal" data-target="#checkout-flow"><span>Cancel <i class="fas fa-circle-notch fa-spin fa-lg ml-1"></i> </span></button>
 
 	            <button (click)="sendOTP()" id="shipping-details" [disabled]="userValidation.disableSendOtpButton" type="button" class="btn kss-btn kss-btn--big btn-verify is-enter" data-toggle="modal" data-target="#checkout-flow"><span>Sign In <i class="fas fa-circle-notch fa-spin fa-lg ml-1" [ngClass]="{'d-none' : !userValidation.disableSendOtpButton}"></i> </span></button>
 	          </div>
@@ -102,8 +102,8 @@
 	          		</div>
 	          	</div>
 	          </form>
-	          <div class="mt-3">
-	          	<button *ngIf="displaySkipOTP" (click)="skipVerify()" type="button" class="btn kss-btn kss-btn--big btn-verify is-enter" data-toggle="modal" data-target="#checkout-flow"><span>Skip OTP <i class="fas fa-circle-notch fa-spin fa-lg ml-1"></i> </span></button>
+	          <div class="mt-3 d-flex align-items-center justify-content-between">
+	          	<button *ngIf="displaySkipOTP" (click)="skipVerify()" type="button" class="btn kss-btn kss-btn--big btn-verify is-enter mr-3" data-toggle="modal" data-target="#checkout-flow"><span>Skip OTP <i class="fas fa-circle-notch fa-spin fa-lg ml-1"></i> </span></button>
 
 	            <button (click)="verifyMobile()" id="shipping-details" [disabled]="!otpForm.valid || userValidation.disableVerifyOtpButton" type="button" class="btn kss-btn kss-btn--big btn-verify is-enter" data-toggle="modal" data-target="#checkout-flow"><span>Verify <i class="fas fa-circle-notch fa-spin fa-lg ml-1" [ngClass]="{'d-none' : !userValidation.disableVerifyOtpButton}"></i> </span></button>
 	          </div>
