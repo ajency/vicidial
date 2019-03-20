@@ -13,10 +13,12 @@ export class ProductInfoComponent implements OnInit, OnChanges {
 	@Input() attributes : any;
 	@Input() facets : any;
 	@Input() variants : any;
-
+  @Input() colorVariants : any;
+  @Input() selectedColorVariant : any;
   selectedSize : any;
   isMobile : any;
   shakeSizes : boolean = false;
+  selectedModalSize : any;
   constructor(private appservice : AppServiceService,
               private apiservice : ApiServiceService,
               private breakpointObserver : BreakpointObserver) {
@@ -29,7 +31,7 @@ export class ProductInfoComponent implements OnInit, OnChanges {
 
   ngOnChanges(){
   	this.variants = this.variants.sort((a,b)=>{ return a.variant_facets.variant_size.sequence - b.variant_facets.variant_size.sequence});
-  	console.log("attributes =>", this.attributes, this.facets);
+  	console.log("attributes =>", this.colorVariants);
   }
 
   getOffPercentage(list_price, sale_price){
@@ -38,6 +40,7 @@ export class ProductInfoComponent implements OnInit, OnChanges {
 
   updatePrice(){
     console.log("inside updatePriceprice", this.selectedSize)
+    this.selectedSize = this.selectedModalSize
   }
 
   addToBag(){

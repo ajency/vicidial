@@ -11,19 +11,20 @@ export class ProductImgSliderComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-  	var elem = document.querySelector('.prod-slides');
-  	var flkty = new Flickity( elem, {
-  	  // options
-  	  cellAlign: 'left',
-  	  freeScroll: true,
-  	  contain: true,
-  	  lazyLoad: 2,
-  	  pageDots: false
-  	});
+  	
   }
 
   ngAfterViewInit(){
   	console.log("after view init");
+    var elem = document.querySelector('.prod-slides');
+    var flkty = new Flickity( elem, {
+      // options
+      cellAlign: 'left',
+      freeScroll: true,
+      contain: true,
+      lazyLoad: 2,
+      pageDots: false
+    });
   }
 
 }
