@@ -162,7 +162,7 @@ class ProductController extends Controller
         $request->validate(['slug' => 'required']);
         $slug = $request->slug;
         $singleProduct = new SingleProduct($slug);
-        $apiResponse = $singleProduct->generateSinglePageData(['attributes','facets','variants','images','is_sellable','color_variants','breadcrumbs','related_products']);
+        $apiResponse = $singleProduct->generateSinglePageData(['attributes','facets','variants','images','is_sellable','color_variants','breadcrumbs','related_products','meta','blogs']);
         return response()->json($apiResponse);
     }
 
@@ -171,8 +171,8 @@ class ProductController extends Controller
         $productId = $request->product_id;
         $colorId = $request->color_id;
         $productColors = ProductColor::where('product_id',$productId)->get();
-        $variants = DB::table('variants')->select(['id','product_color_id'])->whereIn('product_color_id',$a)->get()->map(function ($x) {return (array) $x;});
-        $availability = Ajency\ServiceComm\Comm\Sync::call('inventory', 'getVariantAvailability', ['variants' => $variants->pluck('id')]);
+        $variants = DB::table('variants')->select(['id','product_color_id'])->whereIn('product_color_id',$productColors->pluck('id'))->get()->map(function ($x) {return (array) $x;});
+        $availability = Sync::call('inventory', 'getVariantAvailability', ['variants' => $variants->pluck('id')]);
         $colorVariants = [];
         foreach ($variants->where('product_color_id',$productColors->where('color_id',$colorId)->first()->id)->pluck('id') as $variantID) {
             $colorVariants[$variantID] = $availability[$variantID];

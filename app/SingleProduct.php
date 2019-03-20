@@ -276,13 +276,62 @@ class SingleProduct
         	$similarProduct = [];
         	$similarProduct['url'] = url('/'.$spd['product_slug'].'/buy');
         	$similarProduct['title'] = $spd['product_title'];
-    		$similarProduct['image'] = ProductColor::where('product_id', $productID)->where('color_id', $spd['product_color_id'])->first()->getDefaultImage(["list-view"])["list-view"];
+      //   	try{
+
+      //   	}catch(\Exception $e){
+
+      //   	}
+    		// $similarProduct['image'] = ProductColor::where('product_id', $spd['product_id'])->where('color_id', $spd['product_color_id'])->first()->getDefaultImage(["list-view"])["list-view"];
         	$variant = defaultVariant($spdVariants,false);
         	$similarProduct['sale_price'] = $variant['variant_sale_price'];
         	$similarProduct['list_price'] = $variant['variant_list_price'];
         	$similarProducts[] = $similarProduct;
         }
         return $similarProducts;
+    }
+
+    private function getSeoAttributes(){
+    	$productName = $this->productData['product_title'];
+    	$productColor = self::$facets->where('facet_name', 'product_color_html')->where('facet_value', $this->productData['product_color_html'])->first()['display_name'];
+    	$productSubtype = self::$facets->where('facet_name', 'product_subtype')->where('facet_value', $this->productData['product_subtype'])->first()['display_name'];
+
+    	$title = $productName.' - '.$productColor.' - '.$productSubtype.' - Kidsuperstore.in';
+    	$url = url('/'.$this->productData['product_slug'].'/buy');
+    	$description = 'Buy '.$productName.' - '.$productColor.' - only at ₹'.defaultVariant($this->variantData,false)['variant_sale_price'].' - '.$productSubtype.' for '.$this->productData['product_gender'].'  -  KidSuperStore.in';
+    	$keywords = [
+    		$productName, 
+    		$productSubtype, 
+    		$this->productData['product_gender'], 
+    		$this->productData['product_age_group'], 
+    		$this->productData['product_category_type'],
+    		$this->productData['product_category_type'].' for '.$this->productData['product_gender'], 
+    		$productSubtype.' for '.$this->productData['product_gender'], 
+    		'Buy '.$productName.' Online in India at best price only at KidSuperStore.in'
+    	];
+    	$image = $this->productColor->getDefaultImage(['list-view'])['list-view']['1x'];
+
+    	return [
+    		"title"=> $title,
+		    "description"=> $description,
+		    "og_title"=> $title,
+		    "og_description"=> $description,
+		    "og_image"=> $image,
+		    "twitter_title"=> $title,
+		    "twitter_description"=> $description,
+		    "twitter_image"=> $image,
+		    "keywords"=> $keywords,
+		    "og_url"=> $url,
+		    "og_site_name"=> 'KidSuperStore.in',
+		    "twitter_site"=> 'KidSuperStore.in',
+		    "twitter_url"=> $url,
+		    "cannonical_url" => $url,
+    	];
+
+    }
+
+    public function getBlogsData(){
+    	
+    	return [];
     }
 
     public function generateSinglePageData($objects)
@@ -313,6 +362,12 @@ class SingleProduct
                 	break;
                 case 'related_products':
                 	$data['related_products'] = $this->getSimilarProducts();
+                	break;
+                case 'meta':
+                	$data['meta'] = $this->getSeoAttributes();
+                	break;
+                case 'blogs':
+                	# code...
                 	break;
                 default:
                     throw new \Exception("object type " . $object . " not defined", 1);
