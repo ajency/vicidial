@@ -3,6 +3,22 @@
 	    <div class="modal-content ">
 	      <div class="modal-body">
 
+	        <div *ngIf="mobileNumberState == 'loader'" class="state-1">
+	          <div class="d-flex align-items-center justify-content-between">
+	            <div class="">
+	             <h3 class="modal-title font-weight-bold mt-1" id="exampleModalLabel">Verify Mobile</h3>
+	            </div>
+	            <div class="">
+	              <h3 class="modal-title font-weight-bold" data-dismiss="modal" aria-label="Close">
+	              	<span (click)="closeOtpModal()" class="modal-close-icon cursor-pointer">&times;</span>
+	                <!-- <img  class="btn-back kss_highlight" src="/img/close-icon.png" style="width:20px;"/> -->
+	              </h3>
+	            </div>
+	          </div>
+
+	          <i class="fas fa-circle-notch fa-spin fa-lg ml-1"></i>
+	        </div>
+
 	        <div *ngIf="mobileNumberState == 'mobile'" class="state-1">
 	          <div class="d-flex align-items-center justify-content-between">
 	            <div class="">

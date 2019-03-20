@@ -144,7 +144,7 @@ class UserController extends Controller
             $message    = 'Looks like you already have an account with a save address. Sign in with OTP for faster checkout.';
         }
 
-        return response()->json(["message" => $message, 'user' => $user, 'show_promt' => $show_promt, 'token' => $tokenArr->access_token, 'token_expires_at' => $token->expires_at->toDateTimeString(), 'permissions' => ['bag' => true, 'account' => false], 'success' => true]);
+        return response()->json(["message" => $message, 'user' => $user, 'show_promt' => $show_promt, 'token' => $tokenArr->accessToken, 'token_expires_at' => $token->expires_at->toDateTimeString(), 'permissions' => ['bag' => true, 'account' => false], 'success' => true]);
     }
 
     public function createAuthenticateUser($data)
@@ -191,7 +191,7 @@ class UserController extends Controller
     public function userCart($id, $userObject, $token_id)
     {
         $cart = Cart::find($id);
-        if ($cart->type != 'cart' || count($cartcheck->cart_data) > 0) {
+        if ($cart->type != 'cart' || count($cart->cart_data) > 0) {
             return $cart;
         }
 

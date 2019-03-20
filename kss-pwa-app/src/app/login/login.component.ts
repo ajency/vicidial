@@ -47,7 +47,11 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.displaySkipOTP = this.appservice.displaySkipOTP;
     if(!this.appservice.userInfo){
-      this.displayModal();  
+      this.displayModal();
+      if(this.appservice.isLoggedInUser()) {
+        this.mobileNumberState = 'loader';
+        this.sendOTP();
+      }
     }
     // else
       // this.closeOtpModal();
@@ -79,7 +83,6 @@ export class LoginComponent implements OnInit {
     let body = { phone : this.mobileNumber };
     url = url+$.param(body);
     this.apiservice.request(url, 'get', body , {}, true).then((response)=>{
-      this.userValidation.disableGetTokenButton = false;
       if(response.success){
         document.cookie='token='+ response.token + ";path=/";
         document.cookie='cart_id=' + response.user.active_cart_id + ";path=/";
