@@ -2,8 +2,8 @@
 
 use Ajency\Connections\OdooConnect;
 use App\Defaults;
-use App\Facet;
 use App\EntityData;
+use App\Facet;
 use App\Jobs\FetchProductImages;
 use App\Location;
 use Carbon\Carbon;
@@ -131,13 +131,17 @@ function sanitiseProductData($odooData)
         "product_att_ecom_sales"           => ($odooData["att_ecom_sales"] == "yes") ? true : false,
         "product_vendor_id"                => ($odooData["vendor_id"]) ? $odooData["vendor_id"][0] : null,
         "product_vendor"                   => ($odooData["vendor_id"]) ? $odooData["vendor_id"][1] : null,
+        "product_template_description_id"  => ($odooData["product_template_description_id"]) ? $odooData["product_template_description_id"][0] : null,
+        "product_template_description"     => ($odooData["product_template_description_id"]) ? $odooData["product_template_description_id"][1] : null,
+        "product_fabric_description_id"    => ($odooData["fabric_description_id"]) ? $odooData["fabric_description_id"][0] : null,
+        "product_fabric_description"       => ($odooData["fabric_description_id"]) ? $odooData["fabric_description_id"][1] : null,
         'product_image_available'          => false,
         'product_metatag'                  => $metatags->map(function ($item, $key) {$item['name'] = trim($item['name']);return $item;})->pluck('name')->toArray(),
         'product_brand'                    => ($odooData['brand_id'] != false) ? $odooData['brand_id'][1] : 'KSS Fashion',
     ];
     $index['product_is_dropshipping'] = in_array(config('product.dropshipping_route_id'), $index['product_route_ids']);
-    $product_categories = explode('/', $index['product_categories']);
-    $categories         = ['product_category_type', 'product_gender', 'product_age_group', 'product_subtype'];
+    $product_categories               = explode('/', $index['product_categories']);
+    $categories                       = ['product_category_type', 'product_gender', 'product_age_group', 'product_subtype'];
     foreach ($categories as $category) {
         $index[$category] = (isset($product_categories[$i])) ? trim($product_categories[$i]) : 'Others';
         $i++;
@@ -147,7 +151,7 @@ function sanitiseProductData($odooData)
     }
     $staticData = EntityData::getOdooProductAttributes($odooData["id"]);
     foreach (config('product.static_fields.product') as $attribute => $defaultAttValue) {
-        $index[$attribute] = (isset($staticData[$attribute]))? $staticData[$attribute] : $defaultAttValue;
+        $index[$attribute] = (isset($staticData[$attribute])) ? $staticData[$attribute] : $defaultAttValue;
     }
     return $index;
 }
@@ -191,7 +195,7 @@ function sanitiseVariantData($odooData, $attributeData)
 
     $staticData = EntityData::getOdooVariantAttributes($odooData["id"]);
     foreach (config('product.static_fields.product') as $attribute => $defaultAttValue) {
-        $index[$attribute] = (isset($staticData[$attribute]))? $staticData[$attribute] : $defaultAttValue;
+        $index[$attribute] = (isset($staticData[$attribute])) ? $staticData[$attribute] : $defaultAttValue;
     }
 
     return $variantData;
@@ -221,7 +225,7 @@ function generateFullTextForIndexing($productData, $variant)
         $productData['product_att_magento_display_name'],
         $productData['product_brand'],
     ];
-    if($productData['product_is_dropshipping']){
+    if ($productData['product_is_dropshipping']) {
         $textComponents[] = "dropshipping drop shipping";
     }
     return implode(' ', $textComponents);

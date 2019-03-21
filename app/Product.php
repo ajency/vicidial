@@ -48,7 +48,7 @@ class Product
         $variant_ids = collect();
 
         //Active Variants
-        $offset      = 0;
+        $offset = 0;
         do {
             $variants    = self::getProductIDsFromVariants(['write' => Defaults::getLastVariantSync()], $offset);
             $variant_ids = $variant_ids->merge($variants);
@@ -58,12 +58,12 @@ class Product
         //InActive Variants
         /*$offset      = 0;
         do {
-            $variants    = self::getProductIDsFromVariants(['write' => Defaults::getLastVariantSync(), 'term' => [['active', false]]], $offset);
-            $variant_ids = $variant_ids->merge($variants);
-            $offset      = $offset + $variants->count();
+        $variants    = self::getProductIDsFromVariants(['write' => Defaults::getLastVariantSync(), 'term' => [['active', false]]], $offset);
+        $variant_ids = $variant_ids->merge($variants);
+        $offset      = $offset + $variants->count();
         } while ($variants->count() == config('odoo.limit'));*/
 
-        if($variant_ids->count() > 0) {
+        if ($variant_ids->count() > 0) {
             $productIds = DB::select(DB::raw('SELECT DISTINCT id FROM product_colors where product_colors.id in (SELECT product_color_id from variants where variants.odoo_id in (' . implode(',', $variant_ids->toArray()) . '))'));
 
             foreach ($productIds as $productId) {
@@ -177,7 +177,7 @@ class Product
             $object->odoo_id = $variant['variant_id'];
             if (is_null($object->id)) {
                 // $object->inventory = [];
-                $exists            = false;
+                $exists = false;
             }
             $object->product_color_id = $elastic->id;
             $object->active           = $variant['variant_active'];
@@ -186,24 +186,24 @@ class Product
         } catch (\Exception $e) {
             \Log::warning($e->getMessage());
         }
-        try{
-            if(!$exists){
+        try {
+            if (!$exists) {
 
-                \Ajency\ServiceComm\Comm\Sync::call('inventory','addVariant',[
-                    'id' => $object->id,
+                \Ajency\ServiceComm\Comm\Sync::call('inventory', 'addVariant', [
+                    'id'               => $object->id,
                     'product_color_id' => $object->product_color_id,
-                    'odoo_id' => $object->odoo_id,
+                    'odoo_id'          => $object->odoo_id,
                 ]);
             }
 
-            if($product['product_is_dropshipping']){
-                \Ajency\ServiceComm\Comm\Sync::call('inventory','addDropshippingVariant',[
-                    'id' => $object->id,
+            if ($product['product_is_dropshipping']) {
+                \Ajency\ServiceComm\Comm\Sync::call('inventory', 'addDropshippingVariant', [
+                    'id'               => $object->id,
                     'product_color_id' => $object->product_color_id,
-                    'odoo_id' => $object->odoo_id,
+                    'odoo_id'          => $object->odoo_id,
                 ]);
             }
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             \Log::error($e->getMessage());
         }
         $facets = ['product_category_type', 'product_gender', 'product_age_group', 'product_subtype', 'product_brand'];
@@ -435,7 +435,7 @@ class Product
         if (isset($params['sort_on']) and $params['sort_on'] != "") {
             $sort = config('product.sort.' . $params['sort_on']);
             $q->setSort([$sort['field'] => ['order' => $sort['order']]]);
-        }else{
+        } else {
             $sort = config('product.sort.rank_desc');
             $q->setSort([$sort['field'] => ['order' => $sort['order']]]);
         }
@@ -603,7 +603,6 @@ class Product
         return $elasticData;
     }
 
-
     public static function getProductDataFromIds($ids)
     {
         $q = new ElasticQuery();
@@ -651,33 +650,36 @@ class Product
         return;
     }
 
-    public static function getVendorIds(){
-        $odoo   = new OdooConnect;
-        $offset = 0;
-        do{
-            $allVendors = $odoo->defaultExec('product.template', 'search_read', [[['vendor_id', '!=', false]]], ['fields' => ['vendor_id', 'product_variant_ids'], 'limit' => config('odoo.limit'), 'order' => 'id','offset' => $offset]);
-            $allBarcodes = $odoo->defaultExec('product.product','read', [$allVendors->pluck('product_variant_ids')->flatten()->toArray()], ['fields' => 'barcode']);
-            $products      = $allVendors->pluck('id');
-            $productColors = ProductColor::select(['product_id', 'elastic_id'])->whereIn('product_id', $products)->pluck('product_id', 'elastic_id');
-            $productVendors = $productColors->map(function ($productID) use ($allVendors,$allBarcodes) {
-                $odooData = $allVendors->where('id', $productID)->first();
-                $barcodeData = $allBarcodes->whereIn('id',$odooData['product_variant_ids']);
-                return [
-                    'elastic_data' => null,
-                    'change'       => function (&$product, &$variants) use ($odooData,$barcodeData) {
-                        $product['product_vendor_id'] = $odooData['vendor_id'][0];
-                        $product['product_vendor'] = $odooData['vendor_id'][1];
-                        foreach ($barcodeData as $variantData) {
-                            $variant = $variants[$variantData['id']];
-                            $variant['variant_barcode'] = $variantData['barcode'];
-                            $variants[$variantData['id']] = $variant;
-                        }
-                    },
-                ];
-            });
-            ProductColor::updateElasticData($productVendors);
-            $offset = $offset + $allVendors->count();
-        }while ($allVendors->count() == config('odoo.limit'));
+    public static function getVendorIds($products)
+    {
+        $odoo           = new OdooConnect;
+        $allVendors     = $odoo->defaultExec('product.template', 'read', [$products], ['fields' => ['vendor_id', 'product_variant_ids', 'product_template_description_id', 'fabric_description_id']]);
+        $allBarcodes    = $odoo->defaultExec('product.product', 'read', [$allVendors->pluck('product_variant_ids')->flatten()->toArray()], ['fields' => 'barcode']);
+        $products       = $allVendors->pluck('id');
+        $productColors  = ProductColor::select(['product_id', 'elastic_id'])->whereIn('product_id', $products)->pluck('product_id', 'elastic_id');
+        $productVendors = $productColors->map(function ($productID) use ($allVendors, $allBarcodes) {
+            $odooData    = $allVendors->where('id', $productID)->first();
+            $barcodeData = $allBarcodes->whereIn('id', $odooData['product_variant_ids']);
+            return [
+                'elastic_data' => null,
+                'change'       => function (&$product, &$variants) use ($odooData, $barcodeData) {
+                    $product['product_vendor_id']               = $odooData['vendor_id'][0];
+                    $product['product_vendor']                  = $odooData['vendor_id'][1];
+                    $product["product_vendor_id"]               = ($odooData["vendor_id"]) ? $odooData["vendor_id"][0] : null;
+                    $product["product_vendor"]                  = ($odooData["vendor_id"]) ? $odooData["vendor_id"][1] : null;
+                    $product["product_template_description_id"] = ($odooData["product_template_description_id"]) ? $odooData["product_template_description_id"][0] : null;
+                    $product["product_template_description"]    = ($odooData["product_template_description_id"]) ? $odooData["product_template_description_id"][1] : null;
+                    $product["product_fabric_description_id"]   = ($odooData["fabric_description_id"]) ? $odooData["fabric_description_id"][0] : null;
+                    $product["product_fabric_description"]      = ($odooData["fabric_description_id"]) ? $odooData["fabric_description_id"][1] : null;
+                    foreach ($barcodeData as $variantData) {
+                        $variant                      = $variants[$variantData['id']];
+                        $variant['variant_barcode']   = $variantData['barcode'];
+                        $variants[$variantData['id']] = $variant;
+                    }
+                },
+            ];
+        });
+        ProductColor::updateElasticData($productVendors);
     }
 
     public static function updateProduct($product_id)
@@ -694,7 +696,7 @@ class Product
             'change'       => function (&$product, &$variants) use ($variantsData) {
                 foreach ($variants as $variant_id => $variant) {
                     if (isset($variantsData[$variant_id])) {
-                        $variant['variant_lst_price']       = $variantsData[$variant_id]['lst_price'];
+                        $variant['variant_lst_price']        = $variantsData[$variant_id]['lst_price'];
                         $variant['variant_sale_price']       = $variantsData[$variant_id]['sale_price'];
                         $variant['variant_discount']         = $variant['variant_lst_price'] - $variant['variant_sale_price'];
                         $variant['variant_discount_percent'] = ($variant['variant_lst_price'] > 0) ? $variant['variant_discount'] / $variant['variant_lst_price'] * 100 : 0;
