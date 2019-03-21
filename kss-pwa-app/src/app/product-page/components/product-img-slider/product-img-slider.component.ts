@@ -10,6 +10,7 @@ declare var $ : any;
 export class ProductImgSliderComponent implements OnInit, OnChanges {
 
   @Input() images : any;
+  @Input() attributes : any;
   constructor() { }
 
   ngOnInit() {

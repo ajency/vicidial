@@ -9,8 +9,8 @@
 				<li class="carousel-cell" *ngFor="let image of images; let $last = last" [isLast]='$last'
     (appNgInit)="initSlider()">
 					<img class="carousel-image"
-						alt="Girls casual woven short"
-						title="Girls casual woven short"
+						alt="{{attributes.product_title}}"
+						title="{{attributes.product_title}}"
 						src="image.thumb['1x']"
 						srcset="{{image.main['1x']}} 1x,
 								{{image.main['2x']}} 2x,

@@ -11,7 +11,7 @@
 			</div>
 			<div class="col-sm-12 col-lg-7">
 				<!-- Product Images -->
-				<app-product-img-slider *ngIf="product.images" [images]="product.images"></app-product-img-slider>
+				<app-product-img-slider *ngIf="product.images" [images]="product.images" [attributes]="product.attributes"></app-product-img-slider>
 
 				<!-- Color Options -->
 				<app-color-options *ngIf="!isMobile && product.color_variants && product.color_variants.length > 1" [colorVariants]="product.color_variants"></app-color-options>
