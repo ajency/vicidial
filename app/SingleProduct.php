@@ -255,6 +255,12 @@ class SingleProduct
     private function getSimilarProductsElasticData(){
     	$productID  = $this->productData['product_id'];
     	$defaultFilters = setDefaultFilters(['search_object' => []]);
+    	$defaultFilters['primary_filter'] = [
+    		'product_category_type' => $this->productData['product_category_type'],
+    		'product_gender' => $this->productData['product_gender'],
+    		'product_age_group' => $this->productData['product_age_group'],
+    		'product_subtype' => $this->productData['product_subtype'],
+    	];
     	$q = new ElasticQuery;
     	$q->setIndex(config('elastic.indexes.product'));
     	$mustFilter = setElasticFacetFilters($q, ['search_object'=>$defaultFilters],false)[0];
