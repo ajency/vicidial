@@ -162,6 +162,7 @@ export class ProductInfoComponent implements OnInit, OnChanges {
     $('#size-modal').modal('hide');
     if(error.status == 401){
       this.appservice.userLogout();
+      this.showErrorPopup(error);
     }
     else if(error.status == 0){
         this.showErrorPopup(error);
