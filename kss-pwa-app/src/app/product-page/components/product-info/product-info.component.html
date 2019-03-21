@@ -29,7 +29,7 @@
 
 <div class="row">
 	<div class="col-sm-12 col-md-12 col-12 mobile-fixed pb-0 pb-sm-2 add-bag-btn visible shadow-layer">
-		<button *ngIf="inventoryData" id="cd-add-to-cart" class="btn kss-btn kss-btn--big cd-add-to-cart" (click)="addToBag()">
+		<button *ngIf="!outOfStock" id="cd-add-to-cart" class="btn kss-btn kss-btn--big cd-add-to-cart" (click)="addToBag()">
 			<div class="kss-btn__wrapper d-flex align-items-center justify-content-center">
 				<span class="btn-contents align-items-center">
 					<i class="kss_icon bag-icon-fill icon-sm"></i> Add to Bag
@@ -39,7 +39,7 @@
 				</div>
 			</div>
 		</button>
-		<!-- <div class="out-of-stock">Currently unavailable</div> -->
+		<div *ngIf="outOfStock" class="out-of-stock">Currently unavailable</div>
 	</div>
 </div>
 

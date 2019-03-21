@@ -22,11 +22,17 @@
 						    	<label for="black" class="m-0" [ngStyle]="{'background-color' : option.hexcode ? '#'+option.hexcode : (option.color_name ? trim(option.color_name) : '')}"></label>
 						  	</li>
 						</ul>
-						<div class="variant-img-wrapper">
-							<img *ngIf="option.image" src="{{option.image['1x']}}"
+						<div class="variant-img-wrapper" [ngClass]="{'variant-placeholder' : !option.image}">
+							<img *ngIf="option.image; else noImage" src="{{option.image['1x']}}"
 								class="w-100"
 								sizes="50px"
 								alt="">
+							<ng-container #noImage>	
+								<img src="/img/placeholder.svg"
+									class="w-100"
+									sizes="50px"
+									alt="">
+							</ng-container>
 						</div>
 					</label>
 				</div>
