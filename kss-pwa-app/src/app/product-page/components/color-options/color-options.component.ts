@@ -8,8 +8,9 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
 export class ColorOptionsComponent implements OnInit, OnChanges {
 
 	@Input() colorVariants : any;
-  @Input() selectedColorVariant : any;
   @Input() collapse : any;
+
+  selectedColorVariant : any;
   constructor() { }
 
   ngOnInit() {
@@ -17,6 +18,7 @@ export class ColorOptionsComponent implements OnInit, OnChanges {
 
   ngOnChanges(){
   	// console.log("colorVariants ==>", this.colorVariants, this.collapse)
+    this.selectedColorVariant = this.colorVariants.find((variant)=>{return variant.is_selected === true})
   }
 
   trim(color){
@@ -25,7 +27,7 @@ export class ColorOptionsComponent implements OnInit, OnChanges {
 
   openColorVariant(variant){
     if(!variant.is_selected)
-      window.location.href = variant.url+'/buy';
+      window.location.href = variant.url;
   }
 
 }

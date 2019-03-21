@@ -134,7 +134,7 @@
   </div>
 </div>
 
-<app-color-options *ngIf="isMobile && colorVariants && colorVariants.length" [colorVariants]="colorVariants" [selectedColorVariant]="selectedColorVariant" [collapse]=true></app-color-options>
+<app-color-options *ngIf="isMobile && colorVariants && colorVariants.length > 1" [colorVariants]="colorVariants" [collapse]=true></app-color-options>
 
 <!-- Mobile size selection -->
 <div class="modal fade size-modal" id="size-modal" tabindex="-1" role="dialog" aria-hidden="true">
