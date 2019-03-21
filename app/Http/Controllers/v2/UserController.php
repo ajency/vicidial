@@ -198,7 +198,7 @@ class UserController extends Controller
         $tokenData = DB::table('oauth_access_tokens')->where('id', '!=', $token_id)->where('user_id', $userObject->id)->where('verified', 1)->orderBy('created_at', 'ASC')->get(['id', 'verified', 'cart_id'])->last();
 
         if ($tokenData != null) {
-            $cartPrevious = Cart::find($tokenData['cart_id']);
+            $cartPrevious = Cart::find($tokenData->cart_id);
             if ($cartPrevious->type != 'order-complete') {
                 DB::table('oauth_access_tokens')->where('id', $token_id)->update(['cart_id' => $cartPrevious->id]);
                 $cart->delete();
