@@ -16,6 +16,7 @@ export class ProductInfoComponent implements OnInit, OnChanges {
   @Input() colorVariants : any;
   @Input() selectedColorVariant : any;
   @Input() queryParamSize : any;
+  @Input() inventoryData : any;
   selectedSize : any;
   isMobile : any;
   shakeSizes : boolean = false;
@@ -37,6 +38,14 @@ export class ProductInfoComponent implements OnInit, OnChanges {
       let variant = this.variants.find((v)=>{ return this.queryParamSize == v.variant_facets.variant_size.name});
       if(variant)
         this.selectedSize = this.selectedModalSize = variant.variant_attributes.variant_id;
+    }
+    if(this.inventoryData){
+      for(const [key, value] of Object.entries(this.inventoryData.variants)) {
+        console.log("key value",key,value);
+        let v = this.variants.find((v)=>{return v.variant_attributes.variant_id == key})
+        if(v && value)
+          v.is_available = true;
+      }
     }
   	// console.log("attributes =>", this.colorVariants, this.queryParamSize);
   }

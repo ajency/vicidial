@@ -19,6 +19,7 @@ export class ProductPageComponent implements OnInit {
   menuObject : any
   isMobile : boolean = false;
   queryParamSize : any;
+  inventoryData : any;
   constructor(private route: ActivatedRoute,
   			  private apiService: ApiServiceService,
               private appservice : AppServiceService,
@@ -71,6 +72,7 @@ export class ProductPageComponent implements OnInit {
     let url = this.appservice.apiUrl + '/api/rest/v1/single-product-inventory?product_id='+this.product.attributes.product_id + '&color_id='+ this.product.facets.product_color_html.id;
     this.apiService.request(url, 'get', {} , {}).then((response)=>{
       console.log("check inventory response ==>", response);
+      this.inventoryData = response;
     })
     .catch((error)=>{
       console.log("error ===>", error);

@@ -18,7 +18,7 @@
 <!-- Product Size Selection -->
 <div class="radio-wrap d-flex kss_sizes wo-image mb-4 single-radio" [ngClass]="{'shake' : shakeSizes}">
   <ng-container *ngFor="let variant of variants">
-	<input class="d-none radio-input" type="radio" name="kss-sizes" id="size-{{variant.variant_attributes.variant_id}}" attr.data-variant_id="{{variant.variant_attributes.variant_id}}" attr.data-list_price="{{variant.variant_attributes.variant_list_price}}" attr.data-sale_price="{{variant.variant_attributes.variant_sale_price}}" attr.data-discount_per="{{getOffPercentage(variant.variant_attributes.variant_list_price, variant.variant_attributes.variant_sale_price)}}" data-title="3-4yrs" [(ngModel)]="selectedSize" [value]="variant.variant_attributes.variant_id" (change)="sizeSelected()">
+	<input class="d-none radio-input" type="radio" name="kss-sizes" id="size-{{variant.variant_attributes.variant_id}}" attr.data-variant_id="{{variant.variant_attributes.variant_id}}" attr.data-list_price="{{variant.variant_attributes.variant_list_price}}" attr.data-sale_price="{{variant.variant_attributes.variant_sale_price}}" attr.data-discount_per="{{getOffPercentage(variant.variant_attributes.variant_list_price, variant.variant_attributes.variant_sale_price)}}" data-title="3-4yrs" [(ngModel)]="selectedSize" [value]="variant.variant_attributes.variant_id" (change)="sizeSelected()" [disabled]="!variant.is_available">
 	<label class="radio-label" for="size-{{variant.variant_attributes.variant_id}}">
     	<div class="radio-option">{{variant.variant_facets.variant_size.name}}</div>
   </label>
@@ -29,7 +29,7 @@
 
 <div class="row">
 	<div class="col-sm-12 col-md-12 col-12 mobile-fixed pb-0 pb-sm-2 add-bag-btn visible shadow-layer">
-		<button id="cd-add-to-cart" class="btn kss-btn kss-btn--big cd-add-to-cart" (click)="addToBag()">
+		<button *ngIf="inventoryData" id="cd-add-to-cart" class="btn kss-btn kss-btn--big cd-add-to-cart" (click)="addToBag()">
 			<div class="kss-btn__wrapper d-flex align-items-center justify-content-center">
 				<span class="btn-contents align-items-center">
 					<i class="kss_icon bag-icon-fill icon-sm"></i> Add to Bag
@@ -141,7 +141,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h6 class="modal-title font-weight-bold" ngClass="{'text-danger' : modalSizeSelectError}">Select a size</h6>
+        <h6 class="modal-title font-weight-bold" [ngClass]="{'text-danger' : modalSizeSelectError}">Select a size</h6>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
