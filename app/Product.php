@@ -655,24 +655,29 @@ class Product
         $odoo   = new OdooConnect;
         $offset = 0;
         do{
-            $allVendors = $odoo->defaultExec('product.template', 'search_read', [[['vendor_id', '!=', false]]], ['fields' => ['vendor_id','route_ids'], 'limit' => config('odoo.limit'), 'order' => 'id','offset' => $offset]);
+            $allVendors = $odoo->defaultExec('product.template', 'search_read', [[['vendor_id', '!=', false]]], ['fields' => ['vendor_id', 'product_variant_ids'], 'limit' => config('odoo.limit'), 'order' => 'id','offset' => $offset]);
+            $allBarcodes = $odoo->defaultExec('product.product','read', [$allVendors->pluck('product_variant_ids')->flatten()->toArray()], ['fields' => 'barcode']);
             $products      = $allVendors->pluck('id');
             $productColors = ProductColor::select(['product_id', 'elastic_id'])->whereIn('product_id', $products)->pluck('product_id', 'elastic_id');
-            $productVendors = $productColors->map(function ($productID) use ($allVendors) {
+            $productVendors = $productColors->map(function ($productID) use ($allVendors,$allBarcodes) {
                 $odooData = $allVendors->where('id', $productID)->first();
+                $barcodeData = $allBarcodes->whereIn('id',$odooData['product_variant_ids']);
                 return [
                     'elastic_data' => null,
-                    'change'       => function (&$product, &$variants) use ($odooData) {
+                    'change'       => function (&$product, &$variants) use ($odooData,$barcodeData) {
                         $product['product_vendor_id'] = $odooData['vendor_id'][0];
                         $product['product_vendor'] = $odooData['vendor_id'][1];
-                        $product['product_is_dropshipping'] = in_array(config('product.dropshipping_route_id'), $odooData['route_ids']);
+                        foreach ($barcodeData as $variantData) {
+                            $variant = $variants[$variantData['id']];
+                            $variant['variant_barcode'] = $variantData['barcode'];
+                            $variants[$variantData['id']] = $variant;
+                        }
                     },
                 ];
             });
             ProductColor::updateElasticData($productVendors);
             $offset = $offset + $allVendors->count();
         }while ($allVendors->count() == config('odoo.limit'));
-
     }
 
     public static function updateProduct($product_id)

@@ -118,12 +118,14 @@ return [
                 'product_att_sleeves',
                 'product_metatag',
                 'product_brand',
+                'product_vendor',
             ],
             'variant' => [
                 'product_color_name',
                 'product_color_html',
                 'variant_size_name',
                 'variant_product_own',
+                'variant_barcode',
             ],
         ],
         "boolean_facet" => [
