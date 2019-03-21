@@ -564,8 +564,14 @@ export class BagViewComponent implements OnInit {
       this.openShippingSummary = false;
       if(this.cartOpenOnTrigger)
         this.cartOpenOnTrigger = false;
-      else
-        this.fetchCartDataFromServer();
+      else{
+        if(this.appservice.add_to_cart_clicked){      
+          this.fetchCartDataOnAddToCartSuccess();
+          this.appservice.add_to_cart_clicked = false;
+        }
+        else
+          this.fetchCartDataFromServer();
+      }
       $('#cd-cart').removeClass('overflow-h');
       
       this.updateUrl();

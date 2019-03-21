@@ -88,6 +88,7 @@ export class ProductInfoComponent implements OnInit, OnChanges {
     console.log("variant id==>",this.selectedSize);
     if(this.selectedSize){
       this.appservice.loadCartFromAngular = true;
+      this.appservice.add_to_cart_clicked = true;
       let url = window.location.href.split("#")[0] + '#/bag';
       history.pushState({bag : true}, 'bag', url);
       console.log("openCart");
@@ -166,7 +167,7 @@ export class ProductInfoComponent implements OnInit, OnChanges {
     }
     else{
         if(this.appservice.isLoggedInUser() && error.status == 400 || error.status == 403){
-            // getNewCartId(error);
+            this.getNewCartId();
         }
         else{
             this.showErrorPopup(error);
