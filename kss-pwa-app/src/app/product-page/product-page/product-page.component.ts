@@ -47,7 +47,8 @@ export class ProductPageComponent implements OnInit {
     url = isDevMode() ? "https://demo8558685.mockable.io/get_single_product" : this.appservice.apiUrl + '/api/rest/v1/single-product?slug='+product_slug;
   	this.apiService.request(url,'get',{},{}).then((data)=>{
   		this.product = data;
-      this.checkSingleProductInventory();
+      if(this.product.is_sellable)
+        this.checkSingleProductInventory();
       let variant = this.product.variants.find((v)=>{ return this.queryParamSize == v.variant_facets.variant_size.name});
       let default_price;
       if(variant)
