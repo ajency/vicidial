@@ -14,7 +14,7 @@ export class ProductImgSliderComponent implements OnInit, OnChanges {
   constructor() { }
 
   ngOnInit() {
-  	
+
   }
 
   ngOnChanges(){
@@ -33,10 +33,10 @@ export class ProductImgSliderComponent implements OnInit, OnChanges {
         cellAlign: 'left',
         freeScroll: true,
         contain: true,
-        lazyLoad: 2,
+        lazyLoad: 1,
         pageDots: false
     });
-    
+
     setTimeout(()=>{
       flkty.reloadCells();
       if(this.images.length == 1) {
