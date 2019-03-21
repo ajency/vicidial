@@ -42,9 +42,11 @@ export class ProductPageComponent implements OnInit {
     this.queryParamSize = this.route.snapshot.queryParamMap.get('size');
   	console.log("product_slug ==>", product_slug);
 
-  	url = "https://demo8558685.mockable.io/get_single_product";
+  	// url = "https://demo8558685.mockable.io/get_single_product";
+    url = isDevMode() ? "https://demo8558685.mockable.io/get_single_product" : this.appservice.apiUrl + '/api/rest/v1/single-product?slug='+product_slug;
   	this.apiService.request(url,'get',{},{}).then((data)=>{
   		this.product = data;
+      this.checkSingleProductInventory();
       let variant = this.product.variants.find((v)=>{ return this.queryParamSize == v.variant_facets.variant_size.name});
       let default_price;
       if(variant)
@@ -63,6 +65,16 @@ export class ProductPageComponent implements OnInit {
   		console.log("error in fetching the json",error);
       this.showLoader = false;
   	})
+  }
+
+  checkSingleProductInventory(){
+    let url = this.appservice.apiUrl + '/api/rest/v1/single-product-inventory?product_id='+this.product.attributes.product_id + '&color_id='+ this.product.facets.product_color_html.id;
+    this.apiService.request(url, 'get', {} , {}).then((response)=>{
+      console.log("check inventory response ==>", response);
+    })
+    .catch((error)=>{
+      console.log("error ===>", error);
+    })
   }
 
   createDataSrcSet(a,b,c,d){

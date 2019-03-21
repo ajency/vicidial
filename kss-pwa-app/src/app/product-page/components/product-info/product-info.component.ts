@@ -20,6 +20,7 @@ export class ProductInfoComponent implements OnInit, OnChanges {
   isMobile : any;
   shakeSizes : boolean = false;
   selectedModalSize : any;
+  modalSizeSelectError : boolean = false;
   constructor(private appservice : AppServiceService,
               private apiservice : ApiServiceService,
               private breakpointObserver : BreakpointObserver) {
@@ -45,6 +46,7 @@ export class ProductInfoComponent implements OnInit, OnChanges {
   }
 
   sizeSelected(){
+    $('.size-select-error').addClass('d-none');
     console.log("inside updatePriceprice", this.selectedSize)
     let variant = this.variants.find((v)=>{ return this.selectedSize == v.variant_attributes.variant_id});
     this.replaceURLParameter('size', variant.variant_facets.variant_size.name)
@@ -85,14 +87,21 @@ export class ProductInfoComponent implements OnInit, OnChanges {
     }
     else{
       if(this.isMobile){
+          if($('#size-modal').hasClass('show')){
+            this.modalSizeSelectError = true;
+            this.shakeSizes = true;
+            setTimeout(()=>{
+              this.shakeSizes = false;
+            },200);
+          }
           $('#size-modal').modal('show');
       }
       else{
+          $('.size-select-error').removeClass('d-none');
           this.shakeSizes = true;
           setTimeout(()=>{
             this.shakeSizes = false;
-          },200)
-          $('.size-select-error').removeClass('d-none');
+          },200);
       }
     }
   }

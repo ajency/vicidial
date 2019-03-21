@@ -141,7 +141,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h6 class="modal-title font-weight-bold">Select a size</h6>
+        <h6 class="modal-title font-weight-bold" ngClass="{'text-danger' : modalSizeSelectError}">Select a size</h6>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -149,7 +149,7 @@
       <div class="modal-body">
 
     <!-- @Sujit: Size selection repeated, move to component -->
-    <div class="radio-wrap d-flex kss_sizes wo-image mb-4 single-radio">
+    <div class="radio-wrap d-flex kss_sizes wo-image mb-4 single-radio" [ngClass]="{'shake' : shakeSizes}">
         <ng-container *ngFor="let variant of variants">
           <input class="d-none radio-input" type="radio" name="kss-sizes-modal" id="size-modal-{{variant.variant_attributes.variant_id}}" attr.data-variant_id="{{variant.variant_attributes.variant_id}}" attr.data-list_price="{{variant.variant_attributes.variant_list_price}}" attr.data-sale_price="{{variant.variant_attributes.variant_sale_price}}" attr.data-discount_per="{{getOffPercentage(variant.variant_attributes.variant_list_price, variant.variant_attributes.variant_sale_price)}}" data-title="3-4yrs" [(ngModel)]="selectedModalSize" (change)="modalSizeSelected()" [value]="variant.variant_attributes.variant_id">
           <label class="radio-label" for="size-modal-{{variant.variant_attributes.variant_id}}" title="3-4yrs">
