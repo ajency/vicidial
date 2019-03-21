@@ -181,7 +181,7 @@ export class ProductInfoComponent implements OnInit, OnChanges {
   }
 
   showErrorPopup(error){
-      let error_msg = (error && error.message && error.message != '') ? error.message : 'Could not add to bag';
+      let error_msg = (error.error && error.error.message && error.error.message != '') ? error.error.message : 'Could not add to bag';
       this.appservice.add_to_cart_failed = true;
       this.appservice.add_to_cart_completed = true;
       this.appservice.add_to_cart_failure_message = error_msg=='Quantity not available' ? 'Could not add '+ this.attributes.product_name +' to bag as it is out of stock' : (error_msg == "invalid cart" ? 'Hey, before you add your item to bag it looks like you were interrupted during your last checkout. You can place this existing order or edit bag to add more items.' : 'Due to the high traffic, there was an issue adding your item to bag. Please try adding the item again' );
