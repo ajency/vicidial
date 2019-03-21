@@ -56,6 +56,14 @@
                           <li><a class="megamenu-link" href="/accessories/boys">Accessories</a></li>
                           <li><a class="megamenu-link megamenu-link--primary" href="/boys">View all products</a></li>
                         </ul>
+                        <div class="nav-column--heading mb-1">Shop by Brands</div>
+                        <ul class="list-unstyled">
+                          <li><a class="megamenu-link" href="/boys/toddler-2-7-years--junior-7-14-years/upturn ">Upturn</a></li>
+                          <li><a class="megamenu-link" href="/boys/toddler-2-7-years--junior-7-14-years/321-sportswear">321 Sportswear</a></li>
+                          <li><a class="megamenu-link" href="/boys/toddler-2-7-years--junior-7-14-years/dream-theatre ">Dream Theater</a></li>
+                          <li><a class="megamenu-link" href="/boys/toddler-2-7-years--junior-7-14-years/robofry">RoboFry</a></li>
+                          <li><a class="megamenu-link" href="/boys/toddler-2-7-years--junior-7-14-years/rikidoos">Rikidoos</a></li>
+                        </ul>
                     </div>
 
                     <div class="nav-column">
@@ -127,6 +135,14 @@
                         <li><a class="megamenu-link" href="/accessories/girls">Accessories</a></li>
                         <li><a class="megamenu-link megamenu-link--primary" href="/girls">View all products</a></li>
                       </ul>
+                      <div class="nav-column--heading mb-1">Shop by Brands</div>
+                      <ul class="list-unstyled">
+                        <li><a class="megamenu-link" href="/girls/toddler-2-7-years--junior-7-14-years/upturn">Upturn</a></li>
+                        <li><a class="megamenu-link" href="/girls/toddler-2-7-years--junior-7-14-years/dchica">Dchica</a></li>
+                        <li><a class="megamenu-link" href="/girls/toddler-2-7-years--junior-7-14-years/dream-theatre">Dream Theater</a></li>
+                        <li><a class="megamenu-link" href="/girls/toddler-2-7-years--junior-7-14-years/begetter">Begetter</a></li>
+                        <li><a class="megamenu-link" href="/girls/toddler-2-7-years--junior-7-14-years/321-sportswear">321 Sportswear</a></li>
+                      </ul>
                   </div>
 
                   <div class="nav-column">
@@ -194,6 +210,14 @@
                         <li><a class="megamenu-link" href="/shoes/infant-0-2-years">Shoes</a></li>
                         <li><a class="megamenu-link" href="/accessories/infant-0-2-years">Accessories</a></li>
                         <li><a class="megamenu-link megamenu-link--primary" href="/infant-0-2-years">View all products</a></li>
+                      </ul>
+                      <div class="nav-column--heading mb-1">Shop by Brands</div>
+                      <ul class="list-unstyled">
+                        <li><a class="megamenu-link" href="/infant-0-2-years/scream-shout">Scream & Shout</a></li>
+                        <li><a class="megamenu-link" href="/infant-0-2-years/tootsie-wootsie">Tootsie Wootsie</a></li>
+                        <li><a class="megamenu-link" href="/infant-0-2-years/robofry">RoboFry</a></li>
+                        <li><a class="megamenu-link" href="/infant-0-2-years/momspet">Momspet</a></li>
+                        <li><a class="megamenu-link" href="/infant-0-2-years/dream-theatre">Dream Theater</a></li>
                       </ul>
                   </div>
 
