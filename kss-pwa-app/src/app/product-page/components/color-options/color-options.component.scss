@@ -52,6 +52,14 @@
     }
 }
 
+.variant-placeholder{
+    img{
+        background-color: $placeholder;
+        padding: 0 5px;
+        object-fit: contain;
+    }
+}
+
 // .product-color {
 //   margin: 0px;
 //   text-align: left;
