@@ -162,9 +162,10 @@ class ProductController extends Controller
     public function SingleProductApi(Request $request){
         $request->validate(['slug' => 'required']);
         $slug = $request->slug;
-        $apiResponse = Cache::remember('single-product-'.$slug,60*12, function(){
+        $apiResponse = Cache::remember('single-product-'.$slug,60*12, function()use($slug){
             $singleProduct = new SingleProduct($slug);
             $apiResponse = $singleProduct->generateSinglePageData(['attributes','facets','variants','images','is_sellable','color_variants','breadcrumbs','related_products','meta','blogs']);
+            return $apiResponse;
         });
         return response()->json($apiResponse);
     }
