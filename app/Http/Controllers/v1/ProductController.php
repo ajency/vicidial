@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\SingleProduct;
 use Ajency\ServiceComm\Comm\Sync;
 use DB;
+use Illuminate\Support\Facades\Cache;
 
 class ProductController extends Controller
 {
@@ -161,8 +162,10 @@ class ProductController extends Controller
     public function SingleProductApi(Request $request){
         $request->validate(['slug' => 'required']);
         $slug = $request->slug;
-        $singleProduct = new SingleProduct($slug);
-        $apiResponse = $singleProduct->generateSinglePageData(['attributes','facets','variants','images','is_sellable','color_variants','breadcrumbs','related_products','meta','blogs']);
+        $apiResponse = Cache::remember('single-product-'.$slug,60*12, function(){
+            $singleProduct = new SingleProduct($slug);
+            $apiResponse = $singleProduct->generateSinglePageData(['attributes','facets','variants','images','is_sellable','color_variants','breadcrumbs','related_products','meta','blogs']);
+        });
         return response()->json($apiResponse);
     }
 
