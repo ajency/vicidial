@@ -24,7 +24,7 @@
 		</div>
 	</div>
 
-	<div *ngIf="product.related_products" id="similar" class="container">
+	<div *ngIf="product.related_products && product.related_products.length" id="similar" class="container">
 		<hr class="mt-5">
 		<h3 class="text-left my-4 font-weight-bold">Similar Products</h3>
 			<div id="card-list" class="row similar-products">
