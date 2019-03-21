@@ -1,0 +1,621 @@
+{
+  "menu": [
+    {
+      "type": "Boys",
+      "rows": [
+        {
+          "menus": [
+            {
+              "shop_by": "Shop by Category",
+              "data": [
+                {
+                  "title": "Clothing",
+                  "link": "/apparels/boys"
+                },
+                {
+                  "title": "Shoes",
+                  "link": "/shoes/boys"
+                },
+                {
+                  "title": "Accessories",
+                  "link": "/accessories/boys"
+                },
+                {
+                  "title": "View all products",
+                  "link": "/boys"
+                }
+              ]
+            },
+            {
+              "shop_by": "Shop by Brands",
+              "data": [
+                {
+                  "title": "Upturn",
+                  "link": "/boys/toddler-2-7-years--junior-7-14-years/upturn"
+                },
+                {
+                  "title": "321 Sportswear",
+                  "link": "/boys/toddler-2-7-years--junior-7-14-years/321-sportswear"
+                },
+                {
+                  "title": "Dream Theater",
+                  "link": "/boys/toddler-2-7-years--junior-7-14-years/dream-theatre"
+                },
+                {
+                  "title": "RoboFry",
+                  "link": "/boys/toddler-2-7-years--junior-7-14-years/robofry"
+                },
+                {
+                  "title": "Rikidoos",
+                  "link": "/boys/toddler-2-7-years--junior-7-14-years/rikidoos"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "menus": [
+            {
+              "shop_by": "Shop by Clothing",
+              "data": [
+                {
+                  "title": "Bottoms",
+                  "link": "/boys/junior-7-14-years--toddler-2-7-years/bottoms"
+                },
+                {
+                  "title": "Ethnic",
+                  "link": "/boys/junior-7-14-years--toddler-2-7-years/ethnic/"
+                },
+                {
+                  "title": "Formal Pants",
+                  "link": "/boys/junior-7-14-years--toddler-2-7-years/formal-pant/"
+                },
+                {
+                  "title": "Jeans",
+                  "link": "/boys/junior-7-14-years--toddler-2-7-years/jeans/"
+                },
+                {
+                  "title": "Shirt",
+                  "link": "/boys/junior-7-14-years--toddler-2-7-years/shirt/"
+                },
+                {
+                  "title": "Shoes",
+                  "link": "/shoes/boys/toddler-2-7-years--junior-7-14-years/"
+                },
+                {
+                  "title": "Short",
+                  "link": "/boys/junior-7-14-years--toddler-2-7-years/short/"
+                },
+                {
+                  "title": "Sweatshirt",
+                  "link": "/boys/junior-7-14-years--toddler-2-7-years/sweatshirt/"
+                },
+                {
+                  "title": "Tshirt",
+                  "link": "/boys/junior-7-14-years--toddler-2-7-years/tshirt/"
+                },
+                {
+                  "title": "Sets & Suits",
+                  "link": "/boys/toddler-2-7-years--junior-7-14-years/sets-suits-outfits"
+                },
+                {
+                  "title": "Jackets & Coats",
+                  "link": "/boys/toddler-2-7-years--junior-7-14-years/jackets-coats"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "menus": [
+            {
+              "shop_by": "Shop by Price",
+              "data": [
+                {
+                  "title": "Below Rs.500",
+                  "link": "/boys?rf=price:0TO500"
+                },
+                {
+                  "title": "Rs.500 to Rs.999",
+                  "link": "/boys?rf=price:500TO999"
+                },
+                {
+                  "title": "Rs.1000 to Rs.1499",
+                  "link": "/boys?rf=price:1000TO1499"
+                },
+                {
+                  "title": "Rs.1500 to Rs.1999",
+                  "link": "/boys?rf=price:1500TO1999"
+                }
+              ]
+            },
+            {
+              "shop_by": "Shop by Age Group",
+              "data": [
+                {
+                  "title": "2-7 years",
+                  "link": "/boys/toddler-2-7-years"
+                },
+                {
+                  "title": "7-14 years",
+                  "link": "/boys/junior-7-14-years"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "image_section": {
+        "images": {
+          "1x": "/img/menu/mm_boys_onecolumn_small.jpg",
+          "2x": "/img/menu/mm_boys_onecolumn_medium.jpg",
+          "load": "/img/menu/mm_boys_onecolumn_10px.jpg"
+        },
+        "href": "/boys/shirt",
+        "img_alt": "Spotlight on Boys Shirts",
+        "title": "Spotlight on Boys Shirts",
+        "text": "Boys shirts"
+      }
+    },
+    {
+      "type": "Girls",
+      "rows": [
+        {
+          "menus": [
+            {
+              "shop_by": "Shop by Category",
+              "data": [
+                {
+                  "title": "Clothing",
+                  "link": "/apparels/girls"
+                },
+                {
+                  "title": "Shoes",
+                  "link": "/shoes/girls"
+                },
+                {
+                  "title": "Accessories",
+                  "link": "/accessories/girls"
+                },
+                {
+                  "title": "View all products",
+                  "link": "/girls"
+                }
+              ]
+            },
+            {
+              "shop_by": "Shop by Brands",
+              "data": [
+                {
+                  "title": "Upturn",
+                  "link": "/girls/toddler-2-7-years--junior-7-14-years/upturn"
+                },
+                {
+                  "title": "Dchica",
+                  "link": "/girls/toddler-2-7-years--junior-7-14-years/dchica"
+                },
+                {
+                  "title": "Dream Theater",
+                  "link": "/girls/toddler-2-7-years--junior-7-14-years/dream-theatre"
+                },
+                {
+                  "title": "Begetter",
+                  "link": "/girls/toddler-2-7-years--junior-7-14-years/begetter"
+                },
+                {
+                  "title": "321 Sportswear",
+                  "link": "/girls/toddler-2-7-years--junior-7-14-years/321-sportswear"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "menus": [
+            {
+              "shop_by": "Shop by Clothing",
+              "data": [
+                {
+                  "title": "Bottoms",
+                  "link": "/girls/junior-7-14-years--toddler-2-7-years/bottoms/"
+                },
+                {
+                  "title": "Dress",
+                  "link": "/girls/junior-7-14-years--toddler-2-7-years/dress/"
+                },
+                {
+                  "title": "Ethnic",
+                  "link": "/girls/junior-7-14-years--toddler-2-7-years/ethnic/"
+                },
+                {
+                  "title": "Jeans",
+                  "link": "/girls/junior-7-14-years--toddler-2-7-years/jeans/"
+                },
+                {
+                  "title": "Shoes",
+                  "link": "/shoes/girls/toddler-2-7-years--junior-7-14-years/"
+                },
+                {
+                  "title": "Short",
+                  "link": "/girls/junior-7-14-years--toddler-2-7-years/short/"
+                },
+                {
+                  "title": "Skirt",
+                  "link": "/girls/junior-7-14-years--toddler-2-7-years/skirt/"
+                },
+                {
+                  "title": "Tshirt",
+                  "link": "/girls/junior-7-14-years--toddler-2-7-years/tshirt/"
+                },
+                {
+                  "title": "Woven Tops",
+                  "link": "/girls/junior-7-14-years--toddler-2-7-years/woven-tops/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "menus": [
+            {
+              "shop_by": "Shop by Price",
+              "data": [
+                {
+                  "title": "Below Rs.500",
+                  "link": "/girls?rf=price:0TO500"
+                },
+                {
+                  "title": "Rs.500 to Rs.999",
+                  "link": "/girls?rf=price:500TO999"
+                },
+                {
+                  "title": "Rs.1000 to Rs.1499",
+                  "link": "/girls?rf=price:1000TO1499"
+                },
+                {
+                  "title": "Rs.1500 to Rs.1999",
+                  "link": "/girls?rf=price:1500TO1999"
+                }
+              ]
+            },
+            {
+              "shop_by": "Shop by Age Group",
+              "data": [
+                {
+                  "title": "2-7 years",
+                  "link": "/girls/toddler-2-7-years"
+                },
+                {
+                  "title": "7-14 years",
+                  "link": "/girls/junior-7-14-years"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "image_section": {
+        "images": {
+          "1x": "/img/menu/mm_girls_onecolumn_small.jpg",
+          "2x": "/img/menu/mm_girls_onecolumn_medium.jpg",
+          "load": "/img/menu/mm_girls_onecolumn_10px.jpg"
+        },
+        "href": "/girls/ethnic",
+        "img_alt": "Spotlight on Girls Ethnic wear",
+        "title": "Spotlight on Girls Ethnic wear",
+        "text": "Girls Ethnic wear"
+      }
+    },
+    {
+      "type": "Infants",
+      "rows": [
+        {
+          "menus": [
+            {
+              "shop_by": "Shop by Category",
+              "data": [
+                {
+                  "title": "Clothing",
+                  "link": "/apparels/infant-0-2-years"
+                },
+                {
+                  "title": "Shoes",
+                  "link": "/shoes/infant-0-2-years"
+                },
+                {
+                  "title": "Accessories",
+                  "link": "/accessories/infant-0-2-years"
+                },
+                {
+                  "title": "View all products",
+                  "link": "/infant-0-2-years"
+                }
+              ]
+            },
+            {
+              "shop_by": "Shop by Brands",
+              "data": [
+                {
+                  "title": "Scream & Shout",
+                  "link": "/infant-0-2-years/scream-shout"
+                },
+                {
+                  "title": "Tootsie Wootsie",
+                  "link": "/infant-0-2-years/tootsie-wootsie"
+                },
+                {
+                  "title": "RoboFry",
+                  "link": "/infant-0-2-years/robofry"
+                },
+                {
+                  "title": "Momspet",
+                  "link": "/infant-0-2-years/momspet"
+                },
+                {
+                  "title": "Dream Theater",
+                  "link": "/infant-0-2-years/dream-theatre"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "menus": [
+            {
+              "shop_by": "Shop by Clothing",
+              "data": [
+                {
+                  "title": "Bottoms",
+                  "link": "/infant-0-2-years/bottoms/"
+                },
+                {
+                  "title": "Dress",
+                  "link": "/infant-0-2-years/dress/"
+                },
+                {
+                  "title": "Infant Utility",
+                  "link": "/infant-0-2-years/infant-utility/"
+                },
+                {
+                  "title": "Shirt",
+                  "link": "/infant-0-2-years/shirt/"
+                },
+                {
+                  "title": "Shoes",
+                  "link": "/shoes/infant-0-2-years/"
+                },
+                {
+                  "title": "Short",
+                  "link": "/infant-0-2-years/short/"
+                },
+                {
+                  "title": "Tshirt",
+                  "link": "/infant-0-2-years/tshirt/"
+                },
+                {
+                  "title": "Woven Tops",
+                  "link": "/infant-0-2-years/woven-tops/"
+                },
+                {
+                  "title": "Ethnic",
+                  "link": "/infant-0-2-years/ethnic"
+                },
+                {
+                  "title": "Sets & Suits",
+                  "link": "/infant-0-2-years/sets-suits-outfits"
+                },
+                {
+                  "title": "Jackets & Coats",
+                  "link": "/infant-0-2-years/jackets-coats"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "menus": [
+            {
+              "shop_by": "Shop by Price",
+              "data": [
+                {
+                  "title": "Below Rs.500",
+                  "link": "/infant-0-2-years?rf=price:0TO500"
+                },
+                {
+                  "title": "Rs.500 to Rs.999",
+                  "link": "/infant-0-2-years?rf=price:500TO999"
+                },
+                {
+                  "title": "Rs.1000 to Rs.1499",
+                  "link": "/infant-0-2-years?rf=price:1000TO1499"
+                },
+                {
+                  "title": "Rs.1500 to Rs.1999",
+                  "link": "/infant-0-2-years?rf=price:1500TO1999"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "image_section": {
+        "images": {
+          "1x": "/img/menu/mm_infants_onecolumn_small.jpg",
+          "2x": "/img/menu/mm_infants_onecolumn_medium.jpg",
+          "load": "/img/menu/mm_infants_onecolumn_10px.jpg"
+        },
+        "href": "/infant-0-2-years/dress",
+        "img_alt": "Spotlight on Infant Utility",
+        "title": "Spotlight on Infant Utility",
+        "text": "Infants dress"
+      }
+    },
+    {
+      "type": "Toys",
+      "rows": [
+        {
+          "menus": [
+            {
+              "shop_by": "Shop by Sub-Types",
+              "data": [
+                {
+                  "title": "Baby Toys",
+                  "link": "/toys/baby-toys"
+                },
+                {
+                  "title": "Plush",
+                  "link": "/toys/plush"
+                },
+                {
+                  "title": "View all products",
+                  "link": "/toys"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "menus": [
+            {
+              "shop_by": "Shop by Price",
+              "data": [
+                {
+                  "title": "Below Rs.500",
+                  "link": "/toys?rf=price:0TO499"
+                },
+                {
+                  "title": "Rs.500 to Rs.999",
+                  "link": "/toys?rf=price:500TO999"
+                },
+                {
+                  "title": "Rs.1000 to Rs.1499",
+                  "link": "/toys?rf=price:1000TO1499"
+                },
+                {
+                  "title": "Above Rs.1500",
+                  "link": "/toys?rf=price:1500TO7000"
+                }
+              ]
+            },
+            {
+              "shop_by": "Shop by Gender",
+              "data": [
+                {
+                  "title": "Boys",
+                  "link": "/toys/boys"
+                },
+                {
+                  "title": "Girls",
+                  "link": "/toys/girls"
+                },
+                {
+                  "title": "Unisex",
+                  "link": "/toys/unisex"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "image_section": {
+        "images": {
+          "1x": "/img/menu/mm_toys_twocolumn_small.jpg",
+          "2x": "/img/menu/mm_toys_twocolumn_medium.jpg",
+          "load": "/img/menu/mm_toys_twocolumn_10px.jpg"
+        },
+        "href": "/toys",
+        "img_alt": "The Super Toy Store",
+        "title": "The Super Toy Store"
+      }
+    },
+    {
+      "type": "Stationery",
+      "rows": [
+        {
+          "menus": [
+            {
+              "shop_by": "Shop by Sub-Types",
+              "data": [
+                {
+                  "title": "Bags",
+                  "link": "/bags"
+                },
+                {
+                  "title": "Water Bottles",
+                  "link": "/water-bottles"
+                },
+                {
+                  "title": "Lunch Box/Pencil Case",
+                  "link": "/boxes?search_string=box"
+                },
+                {
+                  "title": "Birthday Decoration",
+                  "link": "/boxes?search_string=birthday"
+                },
+                {
+                  "title": "View all products",
+                  "link": "/stationery"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "menus": [
+            {
+              "shop_by": "Shop by Price",
+              "data": [
+                {
+                  "title": "Below Rs.500",
+                  "link": "/stationery?rf=price:0TO499"
+                },
+                {
+                  "title": "Rs.500 to Rs.999",
+                  "link": "/stationery?rf=price:500TO999"
+                },
+                {
+                  "title": "Rs.1000 to Rs.1499",
+                  "link": "/stationery?rf=price:1000TO1499"
+                },
+                {
+                  "title": "Above Rs.1500",
+                  "link": "/stationery?rf=price:1500TO3000"
+                }
+              ]
+            },
+            {
+              "shop_by": "Shop by Gender",
+              "data": [
+                {
+                  "title": "Boys",
+                  "link": "/stationery/boys"
+                },
+                {
+                  "title": "Girls",
+                  "link": "/stationery/girls"
+                },
+                {
+                  "title": "Unisex",
+                  "link": "/stationery/unisex"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "image_section": {
+        "images": {
+          "1x": "/img/menu/mm_stationary_twocolumn_small.jpg",
+          "2x": "/img/menu/mm_stationary_twocolumn_medium.jpg",
+          "load": "/img/menu/mm_stationary_twocolumn_10px.jpg"
+        },
+        "href": "/stationery",
+        "img_alt": "Bag To School",
+        "title": "Bag To School"
+      }
+    },
+    {
+      "type": "Blog"
+    }
+  ]
+}
