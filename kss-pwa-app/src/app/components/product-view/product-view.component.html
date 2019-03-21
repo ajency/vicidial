@@ -1,7 +1,7 @@
 <div class="card h-100 product-card">
   	<a href="{{product.url}}" >
         <div class="product-card__wrapper d-flex align-items-center justify-content-center">
-    		<img
+    		<img *ngIf="product.image['1x']; else noImage"
 	            [useSrcset]=true
 	            [offset]=500
 	            [defaultImage]="product.image.load"
@@ -10,6 +10,17 @@
 	            title="{{product.title}}"
 	            alt="{{product.title}}"
 	            sizes="(min-width: 1200px) 270px, (min-width: 992px) 226px, (max-width: 991px) 38vw">
+          <ng-template #noImage>
+            <img
+            [defaultImage]="'/img/placeholder.svg'"
+            [useSrcset]=true
+            [offset]=500
+            [lazyLoad]="createDataSrcSet('/img/placeholder.svg', '270w', '/img/placeholder.svg', '540w')"
+            class="card-img-top img-holder"
+            title="{{product.title}}"
+            alt="{{product.title}}"
+            sizes="(min-width: 1200px) 270px, (min-width: 992px) 226px, (max-width: 991px) 38vw">
+          </ng-template>
        	</div>
   	</a>
   	<div class="card-body">
