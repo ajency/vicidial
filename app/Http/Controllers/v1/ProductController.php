@@ -171,11 +171,11 @@ class ProductController extends Controller
         $productId = $request->product_id;
         $colorId = $request->color_id;
         $productColors = ProductColor::where('product_id',$productId)->get();
-        $variants = DB::table('variants')->select(['id','product_color_id'])->whereIn('product_color_id',$productColors->pluck('id'))->get()->map(function ($x) {return (array) $x;});
+        $variants = DB::table('variants')->select(['id','odoo_id','product_color_id'])->whereIn('product_color_id',$productColors->pluck('id'))->get()->map(function ($x) {return (array) $x;});
         $availability = Sync::call('inventory', 'getVariantAvailability', ['variants' => $variants->pluck('id')]);
         $colorVariants = [];
-        foreach ($variants->where('product_color_id',$productColors->where('color_id',$colorId)->first()->id)->pluck('id') as $variantID) {
-            $colorVariants[$variantID] = $availability[$variantID];
+        foreach ($variants->where('product_color_id',$productColors->where('color_id',$colorId)->first()->id)->pluck('id','odoo_id') as $odooId => $variantID) {
+            $colorVariants[$odooId] = $availability[$variantID];
         }
         $otherColors = [];
         foreach ($productColors as $color) {
