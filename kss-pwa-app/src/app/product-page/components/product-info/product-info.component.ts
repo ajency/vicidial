@@ -151,6 +151,7 @@ export class ProductInfoComponent implements OnInit, OnChanges {
   }
 
   addToBagSuccessHandler(response){
+    this.appservice.add_to_cart_completed = true;
     document.cookie = "cart_count=" + response.cart_count + ";path=/";
     this.appservice.updateCartCountInUI();
   }
