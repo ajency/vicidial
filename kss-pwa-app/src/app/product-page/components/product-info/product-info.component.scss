@@ -205,17 +205,6 @@
     color: rgba(10, 0, 0, 0.63);
 }
 
-// Mobile footer padding for sticky btns
-@media (max-width: 767px){
-    .sticky_btn_bottom{
-        padding-bottom: 5.5em !important;
-        & + .hidden-footer-section{
-            padding-bottom: 5em;
-            margin-top: -5em;
-        }
-    }
-}
-
 @media (max-width: 767px){
     .shadow-layer{
         padding: 10px !important;
