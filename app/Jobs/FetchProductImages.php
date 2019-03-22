@@ -9,11 +9,12 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use App\Jobs\GeneratePresetImages;
 
 class FetchProductImages implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    public $tries = 3;
+    // public $tries = 3;
     protected $productId;
 
     /**
@@ -58,6 +59,7 @@ class FetchProductImages implements ShouldQueue
         $colors            = array_column($prod_images_arr, "color_name");
         $default_color_ids = [];
         $db_image_ids=[];
+        $product_color_details = [];
         foreach ($prod_images as $pIndex => $prodImage) {
             $pc            = ProductColor::where([['product_id', $this->productId], ['color_id', $prodImage["color_id"]]])->first();
             $image         = $prodImage['image'];
@@ -84,8 +86,11 @@ class FetchProductImages implements ShouldQueue
             array_push($db_image_ids, $image_id);
             $pc->mapImage($image_id, $type);
             // \Storage::disk('local')->delete($subfilepath);
+            $product_color_details[$pc->id] = ["photo_id"=>$image_id,"filename"=>$imageFullName];
+
         }
         Product::updateImageFacets($this->productId);
+        GeneratePresetImages::dispatch($this->productId,$product_color_details)->onQueue('process_product_image_presets');
         \Log::debug("count of images after processing to DB for product id");
         \Log::debug($this->productId);
         \Log::debug("=");

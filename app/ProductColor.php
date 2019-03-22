@@ -251,4 +251,36 @@ class ProductColor extends Model
         }
     }
 
+    public static function generatePresetImages(){
+        $productColors = ProductColor::join('fileupload_mapping', function ($join) {
+            $join->on('product_colors.id', '=', 'fileupload_mapping.object_id');
+            $join->where('fileupload_mapping.object_type', '=', "App\ProductColor");
+        })->whereNull('fileupload_mapping.deleted_at')->select('product_colors.id','product_colors.elastic_id','fileupload_mapping.file_id')->get();
+        $product_colors_arr = [];
+        $config        = config('ajfileupload');
+        foreach($productColors as $productColor){
+            $all_photos = $productColor->photos()->get();
+
+            if(!in_array($productColor->id, $product_colors_arr)){
+                foreach($all_photos as $single_photo){
+                    $map_image_size = json_decode($single_photo->file->image_size,true);
+                    $filedata = explode("/", $single_photo->file->url);
+                    $filename = $filedata[(count($filedata)-1)];
+                    foreach($config["presets"] as $preset => $deptharr){
+                        if($preset != "original"){
+                            foreach($deptharr as $depth => $dim){
+                                $image_size = ($preset == "original")?$preset:($preset."$$".$depth);
+                                if(in_array($image_size,$map_image_size) == false){
+                                    $imageurl = $productColor->resizeImages($single_photo->file->id,$preset, $depth, $filename);
+                                }
+                            }    
+                        }
+                        
+                    }
+                }
+                array_push($product_colors_arr,$productColor->id);
+            }
+        }
+    }
+
 }
