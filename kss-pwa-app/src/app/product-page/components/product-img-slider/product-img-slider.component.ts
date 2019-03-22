@@ -12,6 +12,7 @@ export class ProductImgSliderComponent implements OnInit, OnChanges {
   @Input() images : any;
   @Input() attributes : any;
   fadeOut : boolean = false;
+  hideLoader : boolean = false;
   constructor() { }
 
   ngOnInit() {
@@ -40,16 +41,21 @@ export class ProductImgSliderComponent implements OnInit, OnChanges {
     if(!this.images.length){
       options.prevNextButtons = false;
       this.fadeOut = true;
+      setTimeout(()=>{
+        this.hideLoader = true;
+      },500)
     }
     console.log("options ==>", options);
     let flkty = new Flickity( elem, options);
-
-    flkty.on('lazyLoad', function() {
-         this.fadeOut = true;
+    let slideLoader = this;
+    flkty.on('lazyLoad', function(event, cellElement) {
+        slideLoader.fadeOut = true;
+        console.log(this);
+        setTimeout(()=>{
+          slideLoader.hideLoader = true;
+        },500)
     });
 
-    // setTimeout(()=>{
-    //   flkty.reloadCells();
-    // },400)
+
   }
 }
