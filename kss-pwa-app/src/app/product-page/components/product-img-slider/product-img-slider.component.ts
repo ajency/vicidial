@@ -34,7 +34,8 @@ export class ProductImgSliderComponent implements OnInit, OnChanges {
       freeScroll: true,
       contain: true,
       lazyLoad: 1,
-      pageDots: false
+      pageDots: false,
+      prevNextButtons : true
     }
     if(!this.images.length){
       options.prevNextButtons = false;
