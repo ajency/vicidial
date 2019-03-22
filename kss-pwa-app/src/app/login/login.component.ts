@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit {
 
   mobileNumberState = 'mobile';
   mobileNumber : any;
+  mobileNumberDisplay : any;
   otp : any;
   signInMsg : '';
   otpCode = {otp1:"",otp2:"",otp3:"",otp4:"",otp5:"",otp6:""}
@@ -125,6 +126,7 @@ export class LoginComponent implements OnInit {
     this.apiservice.request(url, 'get', body , header, true).then((response)=>{
       this.userValidation.disableSendOtpButton = false;
       if(response.success){
+        this.mobileNumberDisplay = response.phone;
         this.mobileNumberState = 'verify';
       }
       else{
@@ -145,12 +147,6 @@ export class LoginComponent implements OnInit {
     url = url+$.param(body);
     this.apiservice.request(url, 'get', body , header, true).then((response)=>{
       this.userValidation.disableSendOtpButton = false;
-      if(response.success){
-        this.mobileNumberState = 'verify';
-      }
-      else{
-        //
-      }
     })
     .catch((error)=>{
       console.log("error ===>", error);

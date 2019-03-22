@@ -36,7 +36,7 @@ class UserController extends Controller
             'message' => $otp . ' is the OTP to verify your number with KidSuperStore. It will expire in ' . config('otp.expiry') . ' minutes.',
         ], true);
 
-        $response = ["message" => "OTP Sent successfully", 'success' => true];
+        $response = ["message" => "OTP Sent successfully", 'phone' => $userObject->phone, 'success' => true];
         return response()->json(isNotProd() ? array_merge($response, ['OTP' => $otp]) : $response);
     }
 
