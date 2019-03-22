@@ -54,6 +54,7 @@
         "laravel/tinker": "~1.0",
         "league/csv": "^9.1",
         "league/flysystem-aws-s3-v3": "^1.0",
+        "predis/predis": "^1.1",
         "publiux/laravelcdn": "dev-ajency",
         "soapbox/laravel-formatter": "dev-ajency",
         "spatie/laravel-permission": "^2.23",
