@@ -28,25 +28,17 @@ export class ProductPageComponent implements OnInit {
    }
 
   ngOnInit() {
-    let url = isDevMode() ? "https://demo8558685.mockable.io/get-menu" : "/api/rest/v1/test/get-menu"
-    this.apiService.request(url,'get',{},{}).then((data)=>{
-      console.log("data ==>", data);
-      this.menuObject = data.menu;
-    })
-    .catch((error)=>{
-      console.log("error in fetching the json",error);
-    })
+    this.getMenu();
+    this.getProductDetails();
+  }
 
+  getProductDetails(){
     this.showLoader = true;
-  	let product_slug = this.route.snapshot.paramMap.get('product_slug');
-    console.log("query params size ==",this.route.snapshot.queryParamMap.get('size'));
+    let product_slug = this.route.snapshot.paramMap.get('product_slug');
     this.queryParamSize = this.route.snapshot.queryParamMap.get('size');
-  	console.log("product_slug ==>", product_slug);
-
-  	// url = "https://demo8558685.mockable.io/get_single_product";
-    url = isDevMode() ? "https://demo8558685.mockable.io/get_single_product" : this.appservice.apiUrl + '/api/rest/v1/single-product?slug='+product_slug;
-  	this.apiService.request(url,'get',{},{}).then((data)=>{
-  		this.product = data;
+    let url = isDevMode() ? "https://demo8558685.mockable.io/get_single_product" : this.appservice.apiUrl + '/api/rest/v1/single-product?slug='+product_slug;
+    this.apiService.request(url,'get',{},{}).then((data)=>{
+      this.product = data;
       if(this.product.is_sellable)
         this.checkSingleProductInventory();
       let variant = this.product.variants.find((v)=>{ return this.queryParamSize == v.variant_facets.variant_size.name});
@@ -61,12 +53,12 @@ export class ProductPageComponent implements OnInit {
       fbTrackViewContent(default_price, this.product.attributes.product_id, this.product.facets.product_color_html.id);
       gtagTrackPageView(default_price, this.product.attributes.product_id, this.product.facets.product_color_html.id);
       this.showLoader = false;
-  		console.log("response ==>", data);
-  	})
-  	.catch((error)=>{
-  		console.log("error in fetching the json",error);
+      console.log("response ==>", data);
+    })
+    .catch((error)=>{
+      console.log("error in fetching the json",error);
       this.showLoader = false;
-  	})
+    })
   }
 
   checkSingleProductInventory(){
@@ -86,5 +78,16 @@ export class ProductPageComponent implements OnInit {
 
   getOffPercentage(list_price, sale_price){
     return this.appservice.calculateOff(list_price, sale_price);
+  }
+
+  getMenu(){
+    let url = isDevMode() ? "https://demo8558685.mockable.io/get-menu" : "/api/rest/v1/test/get-menu"
+    this.apiService.request(url,'get',{},{}).then((data)=>{
+      console.log("data ==>", data);
+      this.menuObject = data.menu;
+    })
+    .catch((error)=>{
+      console.log("error in fetching the json",error);
+    })
   }
 }

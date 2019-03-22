@@ -3,11 +3,11 @@
 	<div class="col-12 order-2 col-sm-12 col-md-12 order-sm-1 px-0 item">
 		<div class="loader"></div>
 		<!-- If no image, class = "slider-placeholder-img" -->
-		<ul id="aniimated-thumbnials" class="list-unstyled m-0 mb-3 mb-sm-0 m-lg-2 prod-slides carousel">
+		<ul id="aniimated-thumbnials" class="list-unstyled m-0 mb-3 mb-sm-0 m-lg-2 prod-slides carousel" [ngClass]="{'slider-placeholder-img' : images.length == 0}">
 
 			<ng-container *ngIf="images.length != 0; else noImage">
 				<li class="carousel-cell" *ngFor="let image of images; let $last = last" [isLast]='$last'
-    (appNgInit)="initSlider()">
+    				(appNgInit)="initSlider()">
 					<img class="carousel-image"
 						alt="{{attributes.product_title}}"
 						title="{{attributes.product_title}}"

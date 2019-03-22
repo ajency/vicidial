@@ -37,10 +37,15 @@ export class ProductImgSliderComponent implements OnInit, OnChanges {
         pageDots: false
     });
 
+    $('.prod-slides').on('lazyLoad.flickity', function() {
+         $(".loader").fadeOut(1000);
+    });
+
     setTimeout(()=>{
       flkty.reloadCells();
       if(this.images.length == 1) {
          $('.flickity-button').hide();
+         $(".loader").fadeOut(1000);
      }
     },400)
   }

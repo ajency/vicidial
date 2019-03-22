@@ -17,6 +17,7 @@ export class ProductInfoComponent implements OnInit, OnChanges {
   @Input() selectedColorVariant : any;
   @Input() queryParamSize : any;
   @Input() inventoryData : any;
+  @Input() isSellable : any;
   selectedSize : any;
   isMobile : any;
   shakeSizes : boolean = false;
