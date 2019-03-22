@@ -11,6 +11,7 @@ export class ProductImgSliderComponent implements OnInit, OnChanges {
 
   @Input() images : any;
   @Input() attributes : any;
+  fadeOut : boolean = false;
   constructor() { }
 
   ngOnInit() {
@@ -27,26 +28,27 @@ export class ProductImgSliderComponent implements OnInit, OnChanges {
 
   initSlider(){
     console.log("initSlider");
-    var elem = document.querySelector('.prod-slides');
-    var flkty = new Flickity( elem, {
-        // options
-        cellAlign: 'left',
-        freeScroll: true,
-        contain: true,
-        lazyLoad: 1,
-        pageDots: false
+    let elem = document.querySelector('.prod-slides');
+    let options = {
+      cellAlign: 'left',
+      freeScroll: true,
+      contain: true,
+      lazyLoad: 1,
+      pageDots: false
+    }
+    if(!this.images.length){
+      options.prevNextButtons = false;
+      this.fadeOut = true;
+    }
+    console.log("options ==>", options);
+    let flkty = new Flickity( elem, options);
+
+    flkty.on('lazyLoad', function() {
+         this.fadeOut = true;
     });
 
-    $('.prod-slides').on('lazyLoad.flickity', function() {
-         $(".loader").fadeOut(1000);
-    });
-
-    setTimeout(()=>{
-      flkty.reloadCells();
-      if(this.images.length == 1) {
-         $('.flickity-button').hide();
-         $(".loader").fadeOut(1000);
-     }
-    },400)
+    // setTimeout(()=>{
+    //   flkty.reloadCells();
+    // },400)
   }
 }
