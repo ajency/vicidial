@@ -21,6 +21,12 @@ export class ProductImgSliderComponent implements OnInit, OnChanges {
 
   ngOnChanges(){
     // console.log("images ==>", this.images);
+    if(!this.images.length){
+      this.fadeOut = true;
+      setTimeout(()=>{
+        this.hideLoader = true;
+      },500)
+    }
   }
 
   ngAfterViewInit(){
@@ -38,24 +44,20 @@ export class ProductImgSliderComponent implements OnInit, OnChanges {
       pageDots: false,
       prevNextButtons : true
     }
-    if(!this.images.length){
+    if(this.images.length == 1){
       options.prevNextButtons = false;
-      this.fadeOut = true;
-      setTimeout(()=>{
-        this.hideLoader = true;
-      },500)
     }
-    console.log("options ==>", options);
     let flkty = new Flickity( elem, options);
-    let slideLoader = this;
+    let that = this;
+    let imageCount = 0;
     flkty.on('lazyLoad', function(event, cellElement) {
-        slideLoader.fadeOut = true;
-        console.log(this);
-        setTimeout(()=>{
-          slideLoader.hideLoader = true;
-        },500)
+        imageCount +=1;
+        if(imageCount == that.images.length){
+          that.fadeOut = true;
+          setTimeout(()=>{
+            that.hideLoader = true;
+          },500)
+        }
     });
-
-
   }
 }
