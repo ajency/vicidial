@@ -31,6 +31,6 @@ class UpdateElasticData implements ShouldQueue
      */
     public function handle()
     {
-        Product::getVendorIds($this->productIds);
+        Product::getVendorIds($this->productIds->values()->toArray());
     }
 }

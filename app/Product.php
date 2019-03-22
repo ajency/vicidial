@@ -654,7 +654,7 @@ class Product
     {
         $odoo           = new OdooConnect;
         $allVendors     = $odoo->defaultExec('product.template', 'read', [$products], ['fields' => ['vendor_id', 'product_variant_ids', 'product_template_description_id', 'fabric_description_id']]);
-        $allBarcodes    = $odoo->defaultExec('product.product', 'read', [$allVendors->pluck('product_variant_ids')->flatten()->toArray()], ['fields' => 'barcode']);
+        $allBarcodes    = $odoo->defaultExec('product.product', 'read', [$allVendors->pluck('product_variant_ids')->flatten()->toArray()], ['fields' => ['barcode','standard_price']]);
         $products       = $allVendors->pluck('id');
         $productColors  = ProductColor::select(['product_id', 'elastic_id'])->whereIn('product_id', $products)->pluck('product_id', 'elastic_id');
         $productVendors = $productColors->map(function ($productID) use ($allVendors, $allBarcodes) {
@@ -674,6 +674,7 @@ class Product
                     foreach ($barcodeData as $variantData) {
                         $variant                      = $variants[$variantData['id']];
                         $variant['variant_barcode']   = $variantData['barcode'];
+                        $variant['variant_standard_price']   = floatval($variantData['standard_price']);
                         $variants[$variantData['id']] = $variant;
                     }
                 },
