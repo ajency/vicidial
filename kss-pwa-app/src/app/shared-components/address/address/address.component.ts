@@ -19,6 +19,7 @@ export class AddressComponent implements OnInit, OnChanges {
   @Input() hideRadio : any;
 
   @Output() addAddressFlagChanged = new EventEmitter();
+  @Output() navigateToShippingSummary = new EventEmitter();
 
 	newAddress : any = {
     name : '',
@@ -163,6 +164,8 @@ export class AddressComponent implements OnInit, OnChanges {
       this.newAddress = {};
       this.appservice.removeLoader();
       this.addAddressFlagChanged.emit(true);
+      if(this.addresses.length == 1)
+        this.navigateToShippingSummary.emit();
     })
     .catch((error)=>{
       console.log("error ===>", error);

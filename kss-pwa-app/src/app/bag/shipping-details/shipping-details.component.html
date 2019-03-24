@@ -24,7 +24,7 @@
 				</div>
 				<hr *ngIf="pincodeNotServiceable">
 
-				<app-address [addresses]="addresses" [addAddress]="addAddress" [selectedAddressId]="selectedAddressId" [states]="states" [hideRadio]=false (addAddressFlagChanged)="updateView()"></app-address>
+				<app-address [addresses]="addresses" [addAddress]="addAddress" [selectedAddressId]="selectedAddressId" [states]="states" [hideRadio]=false (addAddressFlagChanged)="updateView()" (navigateToShippingSummary)="navigateToShippingPage()"></app-address>
 
 				<div class="seperator mt-2 mb-2"></div>
 
