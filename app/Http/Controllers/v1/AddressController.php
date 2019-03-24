@@ -17,17 +17,18 @@ class AddressController extends Controller
     {
     	$request->validate(['default' => 'required', 'name' => 'required', 'phone' => 'required|digits:10', 'pincode' => 'required|digits:6', 'state_id' => 'required|numeric', 'address' => 'required', 'landmark' => 'present', 'city' => 'required']);
     	$params  = $request->all();
-    	$user_id = User::getUserByToken($request->header('Authorization'))->id;
+    	$user    = User::getUserByToken($request->header('Authorization'));
 
-    	$default = $this->defaultAddressSet($user_id, $params["default"]);
+    	$default = $this->defaultAddressSet($user->id, $params["default"]);
 
         $state = Defaults::find($params["state_id"]);
         if ($state == null) abort(403);
 
     	$address = new Address;
-        $address->address = ["name" => $params["name"], "phone" => $params["phone"], "pincode" => $params["pincode"], "state_id" => $state->id, "state_odoo_id" => $state->meta_data['odoo_id'], "state" => $state->label, "address" => $params["address"], "landmark" => $params["landmark"], "city" => $params["city"]];
-        $address->default = $default;
-        $address->user_id = $user_id;
+        $address->address  = ["name" => $params["name"], "phone" => $params["phone"], "pincode" => $params["pincode"], "state_id" => $state->id, "state_odoo_id" => $state->meta_data['odoo_id'], "state" => $state->label, "address" => $params["address"], "landmark" => $params["landmark"], "city" => $params["city"]];
+        $address->default  = $default;
+        $address->user_id  = $user->id;
+        $address->verified = ($user->verified == null) ? 0 : $user->verified;
         $address->save();
 
         return json_encode(["address"=> $address->shippingAddress(true), "message"=> "Address Added successfully", 'success'=> true]);
@@ -37,19 +38,18 @@ class AddressController extends Controller
     {
         $request->validate(['default' => 'required', 'name' => 'required', 'phone' => 'required|digits:10', 'pincode' => 'required|digits:6', 'state_id' => 'required|numeric', 'address' => 'required', 'landmark' => 'present', 'city' => 'required']);
         $params  = $request->all();
-        $user_id = User::getUserByToken($request->header('Authorization'))->id;
+        $user = User::getUserByToken($request->header('Authorization'));
 
         $address = Address::find($params["id"]);
-        if($address->user_id != $user_id) abort(403);
+        if($address->user_id != $user->id) abort(403);
 
         $state = Defaults::find($params["state_id"]);
         if ($state == null) abort(403);
 
-        $default = $this->defaultAddressSet($user_id, $params["default"], $address->id);
+        $default = $this->defaultAddressSet($user->id, $params["default"], $address->id);
 
         $address->address = ["name" => $params["name"], "phone" => $params["phone"], "pincode" => $params["pincode"], "state_id" => $state->id, "state_odoo_id" => $state->meta_data['odoo_id'], "state" => $state->label, "address" => $params["address"], "landmark" => $params["landmark"], "city" => $params["city"]];
         $address->default = $default;
-        $address->user_id = $user_id;
         $address->save();
 
         return json_encode(["address"=> $address->shippingAddress(true), "message"=> "Address Updated successfully", 'success'=> true]);

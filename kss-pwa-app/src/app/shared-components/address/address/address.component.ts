@@ -30,6 +30,12 @@ export class AddressComponent implements OnInit, OnChanges {
     state_id : '',
     default : false
   };
+  user : any = {
+    name : '',
+    email : '',
+    default : false
+  };
+  hideUserFields : boolean = false;
   hideDefaultAddressField : boolean = false;
   phoneOnBlur : boolean = false;
   pincodeBlur : boolean = false;
@@ -46,6 +52,7 @@ export class AddressComponent implements OnInit, OnChanges {
   ngOnChanges(){
   	// console.log("ngOnChanges address component ==>", this.addresses, this.addAddress, this.selectedAddressId, this.states);
     this.checkAddresses();
+    this.hideUserFields = this.appservice.hideAddressUser;
     if(this.states && this.states.length) 
       this.initSelectPicker(false); 
   }
@@ -126,6 +133,9 @@ export class AddressComponent implements OnInit, OnChanges {
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     let body : any = {};
     body = this.newAddress;
+    if(!this.hideUserFields){
+      body.user = {name:this.user.name, email:this.user.email};
+    }
     body._token = $('meta[name="csrf-token"]').attr('content');
 
     this.apiservice.request(url, 'post', body , header ).then((response)=>{
@@ -145,6 +155,9 @@ export class AddressComponent implements OnInit, OnChanges {
 
       this.addresses.forEach(address =>{ if(address.id == response.address.id) this.selectedAddressId = address.id});
       // this.selectedAddressId=response.address.id;
+      this.hideUserFields = true;
+      this.appservice.hideAddressUser = true;
+      this.selectedAddressId=response.address.id;
       this.addAddress = false;
       this.appservice.shippingAddresses = this.addresses;
       this.newAddress = {};
@@ -251,6 +264,12 @@ export class AddressComponent implements OnInit, OnChanges {
   resetStateAndCity(){
     this.newAddress.city = '';
     this.newAddress.state_id = '';
+  }
+
+  copyUserName(){
+    if(!this.hideUserFields && this.user.default){
+      this.user.name = this.newAddress.name;
+    }
   }
 
 }

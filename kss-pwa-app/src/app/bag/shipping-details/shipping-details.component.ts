@@ -86,6 +86,11 @@ export class ShippingDetailsComponent implements OnInit {
       this.addresses = response.addresses;      
       this.appservice.shippingAddresses = response.addresses;
       this.appservice.userMobile = response.user_info.mobile;
+      if(response.user_info.email){
+        this.appservice.hideAddressUser = true;
+      } else {
+        this.appservice.hideAddressUser = false;
+      }
       this.addresses.forEach((address)=> {if(address.default == true) this.selectedAddressId=address.id});
       this.removeLoader();
     })

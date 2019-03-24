@@ -30,6 +30,7 @@ export class AppServiceService {
   userInfo : any;
   navigatingFromBagToAddress : boolean = false;
   userMobile : any;
+  hideAddressUser : any;
   private couponCodeSelected = new Subject<any>();
   displaySkipOTP : any;
   loadCartFromAngular : boolean = false;
