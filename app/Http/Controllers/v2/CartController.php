@@ -62,7 +62,7 @@ class CartController extends Controller
         $request->validate(['variant_id' => 'required|exists:variants,odoo_id', 'variant_quantity' => 'required']);
         $params = $request->all();
         $id     = $request->session()->get('active_cart_id', false);
-        $cart = Cart::find($id);
+        $cart   = Cart::find($id);
         if ($cart == null) {
             abort(404, "Cart not found for this session");
         }
@@ -91,7 +91,7 @@ class CartController extends Controller
             $item["timestamp"] = intval($cart->cart_data[$item["id"]]["timestamp"]);
         }
         $summary = $cart->getSummary();
-        return response()->json(['cart_count' => $cart->itemCount(), "message" => $message, "item" => $item,  "summary" => $summary]);
+        return response()->json(['cart_count' => $cart->itemCount(), "message" => $message, "item" => $item, "summary" => $summary]);
     }
 
     public function guestCartFetch(Request $request)
@@ -105,14 +105,11 @@ class CartController extends Controller
         $cart->abortNotCart('cart');
         $items = getCartData($cart, true, isNotProd());
 
-        
-        $summary    = $cart->getSummary();
-        if($cart->coupon != null){
-            $appliedCoupon = Coupon::where('display_code', $cartData['coupon'])->first()->offer->getCouponDetails();
-        }else{
-            $appliedCoupon = null;
-        }
-        
+        $couponAvailability = $cart->checkCouponAvailability();
+        $appliedCoupon      = $couponAvailability['coupon_applied'];
+
+        $coupons = Offer::getAllActiveCoupons();
+
         $summary = $cart->getSummary();
         return response()->json(['cart_count' => $cart->itemCount(), 'cart_type' => $cart->type, 'items' => $items, 'applied_coupon' => $appliedCoupon, "coupons" => $coupons, "summary" => $summary]);
     }
@@ -132,10 +129,12 @@ class CartController extends Controller
         $cart->removeItem($params["variant_id"]);
         $cart->save();
         $cart->refresh();
-        $message    = "Item deleted successfully";
-        $summary    = $cart->getSummary();
-        
-        return response()->json(['cart_count' => $cart->itemCount(), 'message' => $message,  "summary" => $summary]);
+        $available                            = $cart->checkCouponAvailability();
+        $available['messages']['item-delete'] = "Item deleted successfully";
+        $summary                              = $cart->getSummary();
+        $coupons                              = Offer::getAllActiveCoupons();
+
+        return response()->json(array_merge(['cart_count' => $cart->itemCount(), "summary" => $summary, "coupons" => $coupons], $available));
     }
 
     public function guestCartCoupon(Request $request)
@@ -150,17 +149,17 @@ class CartController extends Controller
         }
         $cart->anonymousCartCheckUser();
         $cart->abortNotCart('cart');
-        try{
+        try {
             $apply = $cart->applyCoupon($params['coupon_code']);
             $cart->refresh();
-            if($cart->coupon != null){
+            if ($cart->coupon != null) {
                 $apply['messages'] = ['Coupon Applied successfully']; //Take from config
-            }else{
+            } else {
                 $apply['messages'] = ['Coupon removed successfully'];
             }
             return response()->json($apply);
-        }catch (\Exception $e){
-            abort(400,$e->message);
+        } catch (\Exception $e) {
+            abort(400, $e->message);
         }
     }
 
@@ -181,7 +180,6 @@ class CartController extends Controller
             }
         }
 
-        
         return response()->json(["message" => 'Items are available in store', 'success' => true]);
     }
 
@@ -226,7 +224,7 @@ class CartController extends Controller
             $item["timestamp"] = intval($cart->cart_data[$item["id"]]["timestamp"]);
         }
         $summary = $cart->getSummary();
-        return response()->json(['cart_count' => $cart->itemCount(), "message" => $message, "item" => $item,  "summary" => $summary]);
+        return response()->json(['cart_count' => $cart->itemCount(), "message" => $message, "item" => $item, "summary" => $summary]);
     }
 
     public function userModifyItem($id, Request $request)
@@ -261,7 +259,7 @@ class CartController extends Controller
             $item["timestamp"] = intval($cart->cart_data[$item["id"]]["timestamp"]);
         }
         $summary = $cart->getSummary();
-        return response()->json(['cart_count' => $cart->itemCount(), "message" => $message, "item" => $item,  "summary" => $summary]);
+        return response()->json(['cart_count' => $cart->itemCount(), "message" => $message, "item" => $item, "summary" => $summary]);
     }
 
     public function userCartFetch($id, Request $request)
@@ -278,18 +276,15 @@ class CartController extends Controller
         if ($cart->type == 'order') {
             if (checkOrderInventory($cart->order, false) == 'failure') {
                 $cart->type = 'failure';
-                $cart->save();
             }
         }
 
-        $items = getCartData($cart, true, isNotProd());
-        $summary    = $cart->getSummary();
-        if($cart->coupon != null){
-            $appliedCoupon = Coupon::where('display_code', $cart->coupon)->first()->offer->getCouponDetails();
-        }else{
-            $appliedCoupon = null;
-        }
-        
+        $items   = getCartData($cart, true, isNotProd());
+        $coupons = Offer::getAllActiveCoupons();
+
+        $couponAvailability = $cart->checkCouponAvailability();
+        $appliedCoupon      = $couponAvailability['coupon_applied'];
+
         $summary = $cart->getSummary();
         return response()->json(['cart_count' => $cart->itemCount(), 'cart_type' => $cart->type, 'items' => $items, 'applied_coupon' => $appliedCoupon, "coupons" => $coupons, "summary" => $summary]);
     }
@@ -308,9 +303,11 @@ class CartController extends Controller
         $cart->removeItem($params["variant_id"]);
         $cart->save();
         $cart->refresh();
-        $message    = "Item deleted successfully";
-        $summary    = $cart->getSummary();
-        return response()->json(['cart_count' => $cart->itemCount(), 'message' => $message,  "summary" => $summary, ]);
+        $available                            = $cart->checkCouponAvailability();
+        $available['messages']['item-delete'] = "Item deleted successfully";
+        $summary                              = $cart->getSummary();
+        $coupons                              = Offer::getAllActiveCoupons();
+        return response()->json(array_merge(['cart_count' => $cart->itemCount(), "summary" => $summary, "coupons" => $coupons], $available));
     }
 
     public function userCartCoupon($id, Request $request)
@@ -325,12 +322,12 @@ class CartController extends Controller
         $cart->abortNotCart('cart', true);
         $user = $request->user();
         validateCart($user, $cart, 'cart');
-        try{
+        try {
             $apply = $cart->applyCoupon($params['coupon_code']);
             $cart->refresh();
-            if($cart->coupon != null){
+            if ($cart->coupon != null) {
                 $apply['messages'] = ['Coupon Applied successfully']; //Take from config
-            }else{
+            } else {
                 $apply['messages'] = ['Coupon removed successfully'];
             }
             return response()->json($apply);
