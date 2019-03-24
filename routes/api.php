@@ -42,7 +42,6 @@ Route::group([
             Route::get('/all', $group_app_version . '\AddressController@userFetchAddresses');
             Route::get('/delete', $group_app_version . '\AddressController@userDeleteAddress');
         });
-        Route::middleware('check-user')->get('/get-user-info', $group_app_version . '\UserController@fetchUserInfo');
         Route::post('/save-user-details', $group_app_version . '\UserController@saveUserDetails');
         Route::get('/order/{id}/check-inventory', $group_app_version . '\OrderController@checkSubOrderInventory');
         Route::get('/order/{id}/send-otp', $group_app_version . '\PaymentController@sendCODVerifySMS');
@@ -55,7 +54,7 @@ Route::group([
             Route::get('/order/{txnid}/details', $group_app_version . '\OrderController@singleOrder');
             Route::post('/order/{id}/cancel', $group_app_version . '\OrderController@cancelOrder');
             Route::post('/sub-order/{id}/return', $group_app_version . '\OrderController@returnOrder');
-
+            Route::get('/get-user-info', $group_app_version . '\UserController@fetchUserInfo');
         });
     });
     Route::get('/single-product', $group_app_version.'\ProductController@SingleProductApi');
@@ -131,7 +130,6 @@ Route::group([
                 Route::get('/all', $group_app_version . '\AddressController@userFetchAddresses');
                 Route::get('/delete', $group_app_version . '\AddressController@userDeleteAddress');
             });
-            Route::middleware('check-user')->get('/get-user-info', $group_app_version . '\UserController@fetchUserInfo');
             Route::post('/save-user-details', $group_app_version . '\UserController@saveUserDetails');
 
             Route::get('/order/{id}/check-inventory', $group_app_version . '\OrderController@checkSubOrderInventory');
@@ -141,6 +139,7 @@ Route::group([
                 Route::post('/orders', $group_app_version . '\OrderController@listOrders');
                 Route::get('/order/{txnid}/details', $group_app_version . '\OrderController@singleOrder');
                 Route::post('/order/{id}/cancel', $group_app_version . '\OrderController@cancelOrder');
+                Route::get('/get-user-info', $group_app_version . '\UserController@fetchUserInfo');
             });
         });
 

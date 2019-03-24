@@ -130,7 +130,7 @@ export class AddressComponent implements OnInit, OnChanges {
 
   saveNewAddress(){
     this.appservice.showLoader();
-    let url = this.appservice.apiUrl + (this.newAddress.id ? "/api/rest/v1/user/address/edit" :  "/api/rest/v1/user/address/new");
+    let url = this.appservice.apiUrl + (this.newAddress.id ? "/api/rest/v2/user/address/edit" :  "/api/rest/v2/user/address/new");
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     let body : any = {};
     body = this.newAddress;
@@ -180,7 +180,7 @@ export class AddressComponent implements OnInit, OnChanges {
     let old_id = this.selectedAddressId;
     this.appservice.showLoader();
     let body = { address_id : id };
-    let url = this.appservice.apiUrl +  "/api/rest/v1/user/address/delete?";
+    let url = this.appservice.apiUrl +  "/api/rest/v2/user/address/delete?";
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     url = url+$.param(body);
     this.apiservice.request(url, 'get', body, header ).then((response)=>{
@@ -224,7 +224,7 @@ export class AddressComponent implements OnInit, OnChanges {
       console.log("make api call");
       this.showShowLoader();
       this.unsubscribeGetLocationCall();
-      let url = this.appservice.apiUrl +  "/api/rest/v1/district-state/"+pincode;
+      let url = this.appservice.apiUrl +  "/api/rest/v2/district-state/"+pincode;
       this.getLocationCall = this.apiservice.request(url, 'get', {}, {}, false, 'observable').subscribe((response)=>{
         console.log("response from location api ==>", response);
         this.newAddress.city = response.district;

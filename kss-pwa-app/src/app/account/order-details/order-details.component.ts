@@ -68,7 +68,7 @@ export class OrderDetailsComponent implements OnInit {
     // let order_id = this.route.snapshot.paramMap.get('id');
     console.log("Check order_id ==>", window.location.href.substr(window.location.href.lastIndexOf('/') + 1))
     let order_id = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
-    let url = this.appservice.apiUrl + '/api/rest/v1/user/order/'+ order_id +'/details';
+    let url = this.appservice.apiUrl + '/api/rest/v2/user/order/'+ order_id +'/details';
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     let body : any = {
       _token : $('meta[name="csrf-token"]').attr('content')
@@ -133,7 +133,7 @@ export class OrderDetailsComponent implements OnInit {
     else{
       this.appservice.showLoader();
       // let url = "https://demo8558685.mockable.io/cancel-reason";
-      let url = this.appservice.apiUrl + "/api/rest/v1/get-all-reasons";
+      let url = this.appservice.apiUrl + "/api/rest/v2/get-all-reasons";
       this.getCancelReason = this.apiservice.request(url, 'get', {}, {}, false, 'observable').subscribe((response)=>{
         console.log("response from location api ==>", response);
         response.cancel.push({id : 0, value : '--Select--' });
