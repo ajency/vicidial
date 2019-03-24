@@ -19,7 +19,7 @@ class AddExtraFieldsToTables extends Migration
         });
 
         foreach (DB::table('users')->get() as $user) {
-            DB::table('oauth_access_tokens')->where('user_id', $user->id)->update(['cart_id' => $user->cart_id, 'verified' => $user->verified]);
+            DB::table('oauth_access_tokens')->where('user_id', $user->id)->update(['cart_id' => $user->cart_id, 'verified' => ($user->verified == null) ? 0 : $user->verified]);
         }
 
         Schema::table('orders', function (Blueprint $table) {
