@@ -1,0 +1,43 @@
+// @import "../../../../../node_modules/flickity/dist/flickity.min.css";
+@import "../../../../assets/SASS/var";
+
+.slider-placeholder-img{
+  img{
+    background-color: $placeholder;
+    height: 400px;
+    padding: 0 12em;
+    @media (max-width: 767px){
+      padding: 0 4em;
+      height: 380px;
+    }
+  }
+}
+
+.prod-slides .carousel-image {
+  display: block;
+  width: auto !important;
+  @media(max-width: 767px){
+    height: 130vw;
+  }
+  @media only screen and (min-width: 768px){
+    height: 450px;
+  }
+}
+
+.carousel-image {
+	transition: opacity 0.4s;
+	opacity: 0;
+}
+
+.carousel-image.flickity-lazyloaded,
+.carousel-image.flickity-lazyerror {
+	opacity: 1;
+}
+
+.loader {
+    background: #ffffff url(../../../../assets/img/loader_818e.gif) center center no-repeat;
+    width: 100%;
+    position: absolute;
+    z-index: 999;
+    height: 100%;
+}

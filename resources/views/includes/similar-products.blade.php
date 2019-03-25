@@ -1,5 +1,6 @@
 <div id="similar" class="container">
 	<hr class="mt-5">
+  @if(!empty($similar_data_params))
 	<h3 class="text-left my-4 font-weight-bold">Similar Products</h3>
    <div id="card-list" class="row similar-products">
           @php
@@ -94,8 +95,9 @@
                   </h5>
            	    </a>
                 <div class="kss-price kss-price--smaller">₹869 <small class="kss-original-price text-muted">₹1309</small><span class="kss-discount text-danger">20% OFF</span></div>
-              </div>
-            </div> -->
+              </div> -->
+            </div> 
           </div>
    </div>
+   @endif
 </div>

@@ -1,0 +1,42 @@
+<div class="colorOptions d-md-block mb-3 d-sm-block">
+	<div class="d-flex justify-content-between mt-3">
+		<label class="align-items-center d-flex colorOptions__trigger cursor-pointer collapsed" href="#color-options"  aria-expanded="false" aria-controls="color-options" data-toggle="collapse">
+				<ul class="product-color product-color--single px-1"  data-toggle="tooltip" data-placement="bottom" title="{{selectedColorVariant.color_name}}">
+					<li class="d-inline-flex align-middle">
+				    	<label class="mb-0" [ngStyle]="{'background-color' : selectedColorVariant.hexcode ? '#'+selectedColorVariant.hexcode : (selectedColorVariant.color_name ? trim(selectedColorVariant.color_name) : '')}"></label>
+				  	</li>
+				</ul>
+			<p class="font-weight-bold kss-link mb-0"> Color options</p>
+
+				<i class="fas fa-chevron-down cursor-pointer icon-md down-arrow "></i>
+		</label>
+	</div>
+	<div class="collapse" id="color-options" [ngClass]="{'in' : collapse, 'show' : collapse}">
+		<div class="card card-body border-0 p-0 mt-3 ">
+			<div class="radio-wrap w-image kss_variants d-flex align-items-baseline flex-wrap">
+				<div *ngFor="let option of colorVariants">
+				    <input class="d-none radio-input" type="radio" name="kss-variants" id="{{option.color_name}}" [checked]="option.is_selected" />
+					<label class="radio-label position-relative variant-wrapper" for="{{option.color_name}}" data-toggle="tooltip" data-placement="bottom" title="{{option.color_name}}" (click)="openColorVariant(option)">
+						<ul class="product-color product-color--single product-color--sm position-absolute color-custom-radio p-0">
+							<li class="d-inline-flex align-middle">
+						    	<label for="black" class="m-0" [ngStyle]="{'background-color' : option.hexcode ? '#'+option.hexcode : (option.color_name ? trim(option.color_name) : '')}"></label>
+						  	</li>
+						</ul>
+						<div class="variant-img-wrapper" [ngClass]="{'variant-placeholder' : !option.image}">
+							<img *ngIf="option.image; else noImage" src="{{option.image['1x']}}"
+								class="w-100"
+								sizes="50px"
+								alt="">
+							<ng-template #noImage>	
+								<img src="/img/placeholder.svg"
+									class="w-100"
+									sizes="50px"
+									alt="">
+							</ng-template>
+						</div>
+					</label>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

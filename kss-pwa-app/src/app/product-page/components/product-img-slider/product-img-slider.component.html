@@ -1,0 +1,30 @@
+<div class="row center" >
+
+	<div class="col-12 order-2 col-sm-12 col-md-12 order-sm-1 px-0 item">
+		<div class="loader" [ngClass]="{'d-none' : hideLoader, 'fade-out' : fadeOut }"></div>
+		<!-- If no image, class = "slider-placeholder-img" -->
+		<ul id="aniimated-thumbnials" class="list-unstyled m-0 mb-3 mb-sm-0 m-lg-2 prod-slides carousel" [ngClass]="{'slider-placeholder-img' : images.length == 0}">
+
+			<ng-container *ngIf="images.length != 0; else noImage">
+				<li class="carousel-cell" *ngFor="let image of images; let $last = last" [isLast]='$last'
+    				(appNgInit)="initSlider()">
+					<img class="carousel-image"
+						alt="{{attributes.product_title}}"
+						title="{{attributes.product_title}}"
+						attr.data-flickity-lazyload-src="image.thumb['1x']"
+						attr.data-flickity-lazyload-srcset="{{image.main['1x']}} 1x,
+								{{image.main['2x']}} 2x,
+								{{image.main['3x']}} 3x">
+				</li>
+			</ng-container>
+
+			<!-- If no image -->
+			<ng-template #noImage>
+				<li class="mb-3 w-100">
+					<img src="img/placeholder.svg" class="lazyload" alt="No image" title="No image">
+				</li>
+			</ng-template>
+
+		</ul>
+	</div>
+</div>

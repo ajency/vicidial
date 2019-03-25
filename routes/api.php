@@ -55,6 +55,8 @@ Route::group([
             Route::post('/order/{id}/cancel', $group_app_version . '\OrderController@cancelOrder');
         });
     });
+    Route::get('/single-product', $group_app_version.'\ProductController@SingleProductApi');
+    Route::get('/single-product-inventory', $group_app_version.'\ProductController@SingleProductInventory');
     Route::post('/product-list', $group_app_version . '\ListingController@productList');
     Route::get('/product-with-missing-images', $group_app_version . '\ProductController@productMissingImages');
     Route::post('/send-contact-details', $group_app_version . '\StaticController@saveContactDetails');

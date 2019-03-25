@@ -39,13 +39,22 @@ function getUnSelectedVariants(int $product_id, int $selected_color_id)
     $color_groups = [
 
     ];
+    $facets             = array();
+    $unique_facet_names = ['product_color_html'];
+    foreach ($response["hits"]["hits"] as $key => $value) {
+        $var = $value["_source"]["search_result_data"];
+        foreach ($var as $facet_name => $facet_value) {
+            if (in_array($facet_name, $unique_facet_names)) {
+                array_push($facets, ['facet_name' => $facet_name, 'facet_value' => $facet_value]);
+            }
+        }
+    }
+
+    $facet_value_pairs = getFacetDetails($facets);
 
     foreach ($response["hits"]["hits"] as $key => $value) {
-        // $variants[$value["_id"]] = $value["_source"];
         $var = $value["_source"]["search_result_data"];
-
         foreach ($value["_source"]["variants"] as $variant) {
-
             $variant = [
                 "id"                  => $variant["variant_id"],
 
@@ -55,7 +64,7 @@ function getUnSelectedVariants(int $product_id, int $selected_color_id)
             $color_groups[$var["product_color_id"]]["variants"][] = $variant;
         }
 
-        $color_groups[$var["product_color_id"]]["name"]      = $var["product_color_name"];
+        $color_groups[$var["product_color_id"]]["name"]      = $facet_value_pairs['product_color_html'][$var['product_color_html']]['display_name'];
         $color_groups[$var["product_color_id"]]["html"]      = $var["product_color_html"];
         $color_groups[$var["product_color_id"]]["slug_name"] = $var["product_slug"];
         $productColor                                        = ProductColor::where([["product_id", $product_id], ["color_id", $var["product_color_id"]]])->first();
@@ -64,7 +73,6 @@ function getUnSelectedVariants(int $product_id, int $selected_color_id)
         $variants[]                                          = $variant;
 
     }
-
     return $color_groups;
 }
 
@@ -76,12 +84,30 @@ function sortSizes($variant_a, $variant_b)
 function fetchProduct($product)
 {
 
-    $product  = $product["_source"];
+    $product            = $product["_source"];
+    $variants           = [];
+    $unique_facet_names = ['product_category_type', 'product_gender', 'product_age_group', 'product_subtype', 'product_color_html', 'variant_size_name', 'product_brand'];
+    $facets             = array();
+    foreach ($product['search_result_data'] as $facet_name => $facet_value) {
+        if (in_array($facet_name, $unique_facet_names)) {
+            array_push($facets, ['facet_name' => $facet_name, 'facet_value' => $facet_value]);
+        }
+    }
+    foreach ($product['variants'] as $key => $variants) {
+        foreach ($variants as $variant_name => $variant_value) {
+            if (in_array($variant_name, $unique_facet_names)) {
+                array_push($facets, ['facet_name' => $variant_name, 'facet_value' => $variant_value]);
+            }
+        }
+    }
+    foreach ($product['search_result_data']["product_metatag"] as $facet_value) {
+        array_push($facets, ['facet_name' => 'product_metatag', 'facet_value' => $facet_value]);
+    }
     $variants = [];
 
-    $size_facet_values = getFacetValueSize();
-
-    $id = defaultVariant($product['variants']);
+    $facet_value_pairs = getFacetDetails($facets);
+    $id                = defaultVariant($product['variants']);
+    $size_facet_values = $facet_value_pairs['variant_size_name'];
     foreach ($product["variants"] as $key => $variant) {
         if (isset($size_facet_values[$variant["variant_size_name"]])) {
             $product["variants"][$key]["display_name"] = $size_facet_values[$variant["variant_size_name"]]["display_name"];
@@ -93,9 +119,7 @@ function fetchProduct($product)
             $product["variants"][$key]["sequence"]     = 10000;
         }
     }
-
     usort($product["variants"], "sortSizes");
-
     foreach ($product["variants"] as $key => $variant) {
         $variants[] = [
             "id"                  => $variant["variant_id"],
@@ -115,12 +139,18 @@ function fetchProduct($product)
         ];
     }
 
-    $data              = $product["search_result_data"];
-    $selected_color_id = $data["product_color_id"];
-    $productColor      = ProductColor::where([["product_id", $data["product_id"]], ["color_id", $selected_color_id]])->first();
-    $allImages         = $productColor->getAllImages(["main", "thumb", "zoom"]);
-    $thumbImages       = $productColor->getDefaultImage(["variant-thumb"]);
-    $json              = [
+    $data                       = $product["search_result_data"];
+    $product_brand_display_name = $facet_value_pairs['product_brand'][$data['product_brand']]['display_name'];
+    $selected_color_id          = $data["product_color_id"];
+    $productColor               = ProductColor::where([["product_id", $data["product_id"]], ["color_id", $selected_color_id]])->first();
+    $allImages                  = $productColor->getAllImages(["main", "thumb", "zoom"]);
+    $thumbImages                = $productColor->getDefaultImage(["variant-thumb"]);
+
+    $product_metatags = array();
+    foreach ($facet_value_pairs['product_metatag'] as $product_metatag) {
+        array_push($product_metatags, ["name" => $product_metatag['display_name'], "href" => createUrl('list', ['shop'], ["pf" => ['tag' => [$product_metatag['slug']]]])]);
+    }
+    $json = [
         "parent_id"         => $data["product_id"],
         "title"             => $data["product_title"],
         "slug_name"         => $data["product_slug"],
@@ -131,10 +161,10 @@ function fetchProduct($product)
             "product_subtype"       => $data["product_subtype"],
         ],
         "description"       => $data["product_description"],
-        "metatags"          => (isset($data["product_metatag"])) ? $data["product_metatag"] : [],
+        "metatags"          => $product_metatags,
         "additional_info"   => [
-            "product_age_group" => $data["product_age_group"],
-            "product_gender"    => $data["product_gender"],
+            "product_age_group" => $facet_value_pairs['product_age_group'][$data['product_age_group']]['display_name'],
+            "product_gender"    => $facet_value_pairs['product_gender'][$data['product_gender']]['display_name'],
             "material"          => $data["product_att_material"],
             "sleeves"           => $data["product_att_sleeves"],
             "occasion"          => $data["product_att_occasion"],
@@ -142,26 +172,26 @@ function fetchProduct($product)
             "fabric_type"       => $data["product_att_fabric_type"],
             "product_type"      => $data["product_att_product_type"],
             "other_attribute"   => $data["product_att_other_attribute"],
-            "brand"             => (isset($data["product_brand"]) && $data["product_brand"]) ? $data["product_brand"] : 'KSS Fashion',
+            "brand"             => $product_brand_display_name,
         ],
         "ecom_sales"        => $data["product_att_ecom_sales"],
-        "brand"             => (isset($data["product_brand"]) && $data["product_brand"]) ? $data["product_brand"] : 'KSS Fashion',
+        "brand"             => ["name" => $product_brand_display_name, "href" => $facet_value_pairs['product_brand'][$data['product_brand']]['slug']],
         "selected_color_id" => $selected_color_id,
         "images"            => $allImages,
         "variant_group"     => [
             $selected_color_id => [
-                "name"      => $data["product_color_name"],
+                "name"      => $facet_value_pairs['product_color_html'][$data['product_color_html']]['display_name'], //$data["product_color_name"],
                 "html"      => $data["product_color_html"],
-                "slug_name" => $data["product_slug"],
+                "slug_name" => $facet_value_pairs['product_color_html'][$data['product_color_html']]['slug'],
                 "images"    => (isset($thumbImages["variant-thumb"])) ? $thumbImages["variant-thumb"] : [],
                 "variants"  => $variants,
             ],
 
         ],
     ];
+    $json["variant_group"]     = $json["variant_group"] + getUnSelectedVariants($data["product_id"], $selected_color_id);
+    $json["facet_value_pairs"] = $facet_value_pairs;
 
-    $json["variant_group"] = $json["variant_group"] + getUnSelectedVariants($data["product_id"], $selected_color_id);
-    // Log::debug(json_encode($json, true));
     ksort($json["variant_group"]);
     return json_encode($json, true);
 
