@@ -29,6 +29,8 @@ return [
         "att_val_add1",
         "att_ecom_sales",
         "metatag_ids",
+        "product_template_description_id",
+        "fabric_description_id",
         // "product_own", #private/non private
         "vendor_id", #Vendor
         "brand_id", #Brand
@@ -118,12 +120,16 @@ return [
                 'product_att_sleeves',
                 'product_metatag',
                 'product_brand',
+                'product_vendor',
+                'product_template_description',
+                'product_fabric_description',
             ],
             'variant' => [
                 'product_color_name',
                 'product_color_html',
                 'variant_size_name',
                 'variant_product_own',
+                'variant_barcode',
             ],
         ],
         "boolean_facet" => [
@@ -139,7 +145,7 @@ return [
             ],
         ],
         "number_facet"  => [
-            'product' => ['product_id','product_rank','product_vendor_id'],
+            'product' => ['product_id','product_rank','product_vendor_id','product_template_description_id','product_fabric_description_id'],
             'variant' => [
                 'product_color_id',
                 'variant_id',
