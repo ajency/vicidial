@@ -243,7 +243,7 @@ class ProductColor extends Model
 
     public static function updateAllProducts()
     {
-        $ids    = ProductColor::select('elastic_id')->pluck('elastic_id');
+        $ids    = ProductColor::select('product_id')->pluck('product_id')->unique();
         $chunks = $ids->chunk(30);
 
         foreach ($chunks as $chunk) {
