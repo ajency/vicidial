@@ -734,3 +734,12 @@ body{
         height: 58px;
     }
 }
+
+.custom-padding {
+    padding-bottom: 30px!important;
+}
+@media (max-width: 767px){
+    .custom-padding {
+        padding-bottom: 100px!important;
+    }
+}
