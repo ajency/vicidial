@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\StaticElement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use App\Facet;
 
 class StaticElementController extends Controller
 {
@@ -113,6 +114,12 @@ class StaticElementController extends Controller
     {
         return response()->json(json_decode(file_get_contents(config_path() . "/static_responses/menu.json"), true));
 
+    }
+
+    public function getFacets($type,Request $request){
+        $data = [];
+        $facets = Facet::where([["facet_name",$type]])->select('slug','display_name','facet_value')->get()->toArray();
+        return response()->json(["success"=>true,"data"=>["facet_name"=>$type,"facet_values"=>$facets]],200);
     }
 
 }
