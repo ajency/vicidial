@@ -5,6 +5,7 @@
     bottom: 0px;
 }
 
+// Start comment PWA
 .colorOptions{
 	&__trigger{
 		.down-arrow{
@@ -41,6 +42,8 @@
     	// border-radius:3px;
     }
 }
+
+// End comment PWA
 
 .variant-placeholder{
 	img{
@@ -199,18 +202,18 @@
 	}
 }
 
-// Similar products
+// // Similar products
 
-.similar-products{
-	&__col{
-		max-width: 20%;
-		flex-basis: 20%;
-		@media (max-width: 767px){
-			max-width: 50%;
-			flex-basis: 50%;
-		}
-	}
-}
+// .similar-products{
+// 	&__col{
+// 		max-width: 20%;
+// 		flex-basis: 20%;
+// 		@media (max-width: 767px){
+// 			max-width: 50%;
+// 			flex-basis: 50%;
+// 		}
+// 	}
+// }
 
 /* ----------- iPhone X ----------- */
 @media only screen
@@ -290,32 +293,32 @@
 	}
 }
 
-// .footer-more{
-// 	color: #000;
-// 	&:hover,&:focus,&:active{
-// 		color: #000;
-// 		outline: 0;
-// 	}
-// 	.icon-down{
-// 		transform: rotate(180deg);
-// 		transition: transform 0.5s ease;
-// 		font-size: 1.1em;
-// 	}
-// 	&.collapsed{
-// 		.icon-down{
-// 			transform: rotate(0deg);
-// 		}
-// 	}
-// 	@media (max-width: 320px){
-// 		font-size: 0.93em;
-// 	}
-// }
+.footer-more{
+	color: #000;
+	&:hover,&:focus,&:active{
+		color: #000;
+		outline: 0;
+	}
+	.icon-down{
+		transform: rotate(180deg);
+		transition: transform 0.5s ease;
+		font-size: 1.1em;
+	}
+	&.collapsed{
+		.icon-down{
+			transform: rotate(0deg);
+		}
+	}
+	@media (max-width: 320px){
+		font-size: 0.93em;
+	}
+}
 
-// @media (max-width: 600px){
-// 	.hidden-footer-section{
-// 		border-top: 1px solid #c3c3c3;
-// 	}
-// }
+@media (max-width: 600px){
+	.hidden-footer-section{
+		border-top: 1px solid #c3c3c3;
+	}
+}
 
 
 .expandSearch{
@@ -710,3 +713,50 @@
 		}
 	}
 }
+
+// Single related search links
+.related-search{
+	li{
+		&:first-child{
+			a{
+				margin-left: 0;
+			}
+		}
+	}
+	a{
+	    text-transform: uppercase;
+	    font-weight: bold;
+	    color: #000;
+	    font-size: 1.05rem;
+	    border-bottom: 2px solid theme-color('primary');
+	    margin: 0 1.5rem;
+	}
+	&.stories-links{
+		a{
+			border-color: theme-color("secondary");
+		}
+	}
+	@media (max-width: 767px){
+		flex-direction: column;
+		border-bottom: 1px solid #ddd;
+		&:not(.stories-links){
+			border-top: 1px solid #ddd;
+		}
+		li{
+			width: 100%;
+		    display: flex;
+		    align-items: center;
+		    justify-content: space-between;
+		}
+		a{
+			border-bottom: 0;
+			font-size: 0.85rem;
+			margin: 0;
+			display: flex;
+		    align-items: center;
+		    justify-content: space-between;
+		    width: 100%;
+    		padding: 0.8rem 0;
+		}
+	}
+}	

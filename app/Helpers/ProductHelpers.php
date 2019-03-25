@@ -48,16 +48,40 @@ function setDefaultPrice($variants, $size = null)
 }
 
 //URL Generation
-function createUrl($slugs)
+function createUrl($type, $slugs = ['shop'], $all_filters = null)
 {
     $url = '';
-    foreach ($slugs as $slug) {
-        $url .= '/' . $slug;
+    foreach ($slugs as $value) {
+        $url .= '/' .$value;
+    }
+    if ($type == 'product') {
+        $url .= '/buy';
+    }
+    if (!is_null($all_filters)) {
+        $url .= '?';
+        $filters_with_bar = array();
+        foreach ($all_filters as $filter_type => $filter_values) {
+            $filters_with_comma = array();
+            foreach($filter_values as $filter_name => $filter_value) {
+                $filters = array();
+                foreach ($filter_value as $single_filter) {
+                    if(gettype($single_filter) == "boolean") {
+                        array_push($filters, json_encode($single_filter));
+                    }
+                    else {
+                        array_push ($filters, $single_filter);
+                    }
+                }
+                array_push($filters_with_comma, $filter_name . ':' . implode(',', $filters));
+            }
+            array_push ($filters_with_bar, $filter_type . '=' . implode('|', $filters_with_comma));
+        }
+        $url .= implode('&', $filters_with_bar);
     }
     return $url;
 }
 
-function defaultVariant($variants){
+function defaultVariant($variants,$isResponseId = true){
     $variants = collect($variants);
     $variants->transform(function ($item, $key) {
             $item['variant_discount'] = $item['variant_list_price'] - $item['variant_sale_price'];
@@ -67,8 +91,11 @@ function defaultVariant($variants){
     $variants = $variants->where('variant_discount', $max_discount);
     $min_sale_price = $variants->pluck('variant_sale_price')->min();
     $variants = $variants = $variants->where('variant_sale_price', $min_sale_price);
-
-    return $variants->first()['variant_id'];
+    if($isResponseId){
+        return $variants->first()['variant_id'];
+    }else{
+        return $variants->first();
+    }
 
 }
 function formatItems($result, $params){
@@ -382,7 +409,7 @@ function setDefaultFilters(array $params){
     return $search_object;
 }
 
-function setElasticFacetFilters($q, $params)
+function setElasticFacetFilters($q, $params, $isResponseNested = true)
 {
     $search_object = $params['search_object'];
     $filters = makeQueryfromParams($search_object);
@@ -425,10 +452,15 @@ function setElasticFacetFilters($q, $params)
     if (isset($search_object['search_string'])) {
         $must[] = textSearch($q, $search_object['search_string']);
     }
-    $bool = $q::addToBoolQuery('must', $must);
-    $bool = $q::addToBoolQuery('must_not', $must_not, $bool);
-    $bool = $q::createNested($path, $bool);
-    return $bool;
+    if($isResponseNested){
+        $bool = $q::addToBoolQuery('must', $must);
+        $bool = $q::addToBoolQuery('must_not', $must_not, $bool);
+        $bool = $q::createNested($path, $bool);
+        return $bool;    
+    }else{
+        return [$must,$must_not];
+    }
+    
 }
 
 

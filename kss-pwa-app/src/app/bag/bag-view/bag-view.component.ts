@@ -11,10 +11,10 @@ import { BetterPromoAvailableComponent } from '../components/better-promo-availa
 import { BagSummaryComponent } from '../../shared-components/bag-summary/bag-summary/bag-summary.component';
 
 declare var $: any;
-declare var add_to_cart_failed: any;
-declare var add_to_cart_failure_message: any;
-declare var add_to_cart_clicked: any;
-declare var add_to_cart_completed: any;
+// declare var this.appservice.add_to_cart_failed: any;
+// declare var add_to_cart_failure_message: any;
+// declare var this.appservice.add_to_cart_clicked: any;
+// declare var this.appservice.add_to_cart_completed: any;
 declare var fbTrackInitiateCheckout : any;
 declare var google_pixel_tracking : any;
 // declare var fbTrackuserRegistration : any;
@@ -65,7 +65,7 @@ export class BagViewComponent implements OnInit {
   reloadCart(){
     console.log("listened to the add to cart trigger");
     this.cartOpenOnTrigger = true;
-    add_to_cart_clicked = false;
+    this.appservice.add_to_cart_clicked = false;
     this.fetchCartDataOnAddToCartSuccess();
     this.openShippingAddress = false;
     this.openShippingSummary = false;
@@ -89,12 +89,12 @@ export class BagViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("ngOnInit cart component", add_to_cart_clicked);        
+    console.log("ngOnInit cart component", this.appservice.add_to_cart_clicked);        
     // this.cartOpenOnTrigger = true;
     $('.ng-cart-loader').removeClass('cart-loader')
-    if(add_to_cart_clicked){      
+    if(this.appservice.add_to_cart_clicked){      
       this.fetchCartDataOnAddToCartSuccess();
-      add_to_cart_clicked = false;
+      this.appservice.add_to_cart_clicked = false;
     }
     else{
       this.getCartData();
@@ -111,9 +111,9 @@ export class BagViewComponent implements OnInit {
       this.cart = {};
     
     this.sessionCheckInterval = setInterval(()=>{
-      if(add_to_cart_completed){
+      if(this.appservice.add_to_cart_completed){
         this.fetchCartDataFromServer();
-        add_to_cart_completed = false;
+        this.appservice.add_to_cart_completed = false;
         clearInterval(this.sessionCheckInterval);
       }
     this.zone.run(() => {});
@@ -158,7 +158,7 @@ export class BagViewComponent implements OnInit {
     this.appservice.removeLoader();
     // this.checkAppliedPromotionValidity();
     this.updateLocalDataAndUI(this.cart, this.cart.cart_count);
-    console.log(add_to_cart_failed);
+    console.log(this.appservice.add_to_cart_failed);
     this.checkAddToCartStatus();     
     if(this.cart.cart_type == 'failure'){
       this.editBag();
@@ -181,12 +181,12 @@ export class BagViewComponent implements OnInit {
   }
 
   checkAddToCartStatus(){
-    if(add_to_cart_failed){
-      console.log("add_to_cart_failed", add_to_cart_failure_message);
-      this.addToCartFailureMessage = add_to_cart_failure_message;
+    if(this.appservice.add_to_cart_failed){
+      console.log("this.appservice.add_to_cart_failed", this.appservice.add_to_cart_failure_message);
+      this.addToCartFailureMessage = this.appservice.add_to_cart_failure_message;
       this.addToCartFailed = true;
-      add_to_cart_failed = false;
-      add_to_cart_failure_message = '';
+      this.appservice.add_to_cart_failed = false;
+      this.appservice.add_to_cart_failure_message = '';
     }
     this.zone.run(() => {});  
   }
@@ -564,8 +564,14 @@ export class BagViewComponent implements OnInit {
       this.openShippingSummary = false;
       if(this.cartOpenOnTrigger)
         this.cartOpenOnTrigger = false;
-      else
-        this.fetchCartDataFromServer();
+      else{
+        if(this.appservice.add_to_cart_clicked){      
+          this.fetchCartDataOnAddToCartSuccess();
+          this.appservice.add_to_cart_clicked = false;
+        }
+        else
+          this.fetchCartDataFromServer();
+      }
       $('#cd-cart').removeClass('overflow-h');
       
       this.updateUrl();

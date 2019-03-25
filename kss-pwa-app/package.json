@@ -26,6 +26,7 @@
     "@trademe/ng-defer-load": "^3.0.0",
     "bootstrap": "^4.3.1",
     "core-js": "^2.5.4",
+    "flickity": "^2.2.0",
     "jquery": "^3.3.1",
     "moment": "^2.24.0",
     "ng-connection-service": "^1.0.4",

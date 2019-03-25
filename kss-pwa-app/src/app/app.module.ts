@@ -16,14 +16,15 @@ import { ApiServiceService } from './service/api-service.service';
 import { AuthGuardService } from './service/auth-guard.service';
 import { NumberModule } from './directives/number.module';
 import { LoginComponent } from './login/login.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { WidgetComponent } from './widget/widget.component';
 
 import { LazyModule } from '@herodevs/lazy-af';
+
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    PageNotFoundComponent
+    WidgetComponent
   ],
   imports: [
     BrowserModule,

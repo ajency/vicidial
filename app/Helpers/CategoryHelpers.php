@@ -256,15 +256,16 @@ function generateProductListTitle($categories,$slug_name_value_arr){
 }
 
 
-function getFacetValueSlugPairs(){
-	$facets = Facet::select('facet_name',DB::raw('group_concat(facet_value) as "facet_values",group_concat(slug) as "slugs"'))->groupBy('facet_name')->get();
+function getFacetValueSlugPairs()
+{
+    $facets              = Facet::select('facet_name', DB::raw('group_concat(facet_value) as "facet_values",group_concat(slug) as "slugs"'))->groupBy('facet_name')->get();
     $search_result_assoc = [];
-    foreach($facets as $facet){
-        $facet_values = explode(",", $facet->facet_values);
-        $facet_slugs = explode(",", $facet->slugs);
+    foreach ($facets as $facet) {
+        $facet_values           = explode(",", $facet->facet_values);
+        $facet_slugs            = explode(",", $facet->slugs);
         $facet_value_slug_pairs = [];
-        foreach($facet_values as $facet_valuesk => $facet_valuesv){
-            $facet_value_slug_pairs[$facet_valuesv]=$facet_slugs[$facet_valuesk];
+        foreach ($facet_values as $facet_valuesk => $facet_valuesv) {
+            $facet_value_slug_pairs[$facet_valuesv] = $facet_slugs[$facet_valuesk];
         }
         $search_result_assoc[$facet->facet_name] = $facet_value_slug_pairs;
     }
@@ -272,14 +273,33 @@ function getFacetValueSlugPairs(){
     return $search_result_assoc;
 }
 
-
-function getFacetValueSize(){
-	$facets = Facet::select(['facet_value', 'display_name', 'slug', 'sequence'])->where('facet_name','variant_size_name')->get();
-    $search_result_assoc = [];
+function getFacetValueSize()
+{
+    $facets                 = Facet::select(['facet_value', 'display_name', 'slug', 'sequence'])->where('facet_name', 'variant_size_name')->get();
+    $search_result_assoc    = [];
     $facet_value_slug_pairs = [];
-    foreach($facets as $facet){
+    foreach ($facets as $facet) {
         $facet_value_slug_pairs[$facet['facet_value']] = array('display_name' => $facet['display_name'], 'slug' => $facet['slug'], 'sequence' => $facet['sequence']);
     }
-    
+
+    return $facet_value_slug_pairs;
+}
+
+function getFacetDetails($facets)
+{
+    $facets = Facet::orWhere(function ($q) use ($facets) {
+        foreach ($facets as $facet) {
+            $q->orWhere([['facet_name', $facet['facet_name']], ['facet_value', $facet['facet_value']]]);
+        }
+    })->get()->groupBy('facet_name')->toArray();
+
+    $search_result_assoc    = [];
+    $facet_value_slug_pairs = [];
+
+    foreach ($facets as $key => $facet) {
+        foreach ($facet as $single_facet) {
+            $facet_value_slug_pairs[$single_facet['facet_name']][$single_facet['facet_value']] = array('display_name' => $single_facet['display_name'], 'slug' => $single_facet['slug'], 'sequence' => $single_facet['sequence']);
+        }
+    }
     return $facet_value_slug_pairs;
 }

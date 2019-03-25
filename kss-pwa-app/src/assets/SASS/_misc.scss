@@ -42,27 +42,6 @@
 	}
 }
 
-
-.section-heading{
-    font-size: 1rem;
-    color: #000;
-    margin-bottom: 0.5rem;
-    &--single{
-        font-size: 1.2rem;
-        text-transform: capitalize;
-        width: 100%;
-        @media (max-width: 767px){
-            font-size: 1.05rem;
-        }
-    }
-    &--list{
-        font-weight: 400;
-        font-size: 1rem;
-        margin-bottom: 0.75rem;
-        color: #707279;
-    }
-}
-
 .group-title{
     font-size: 1.1rem;
     font-weight: 700;
@@ -340,38 +319,6 @@ b, strong{
 }
 .fade-on {
     opacity: 0;
-}
-
-// Price
-.kss-price {
-    font-size: 1.5rem;
-    font-weight: bold;
-    &--smaller{
-      font-size: 1.1em;
-    }
-    &--medium{
-        font-size: 1.35em;
-    }
-    @media (max-width: 575.98px) {
-        font-size: 1.4rem;
-        &--smaller{
-          font-size: 1.1em;
-        }
-        &--medium{
-            font-size: 1.2em;
-        }
-    }
-}
-.kss-original-price {
-    font-size: 80%;
-    text-decoration: line-through;
-    font-weight: normal;
-    margin-left: 5px;
-    margin-right: 5px;
-}
-.kss-discount {
-    font-size: 80%;
-    font-weight: normal;
 }
 
 .seperator{
@@ -808,57 +755,6 @@ b, strong{
     }
 }
 
-.kss-tags{
-    li{
-        margin-right: 0.5em;
-        margin-bottom: 0.5em;
-        padding: 5px;
-        background-color: #8e8e92;
-        border-radius: 25px;
-        min-width: 60px;
-        display: inline-block;
-        text-align: center;
-        color: #fff;
-        // position: relative;
-        // margin-right: 1.5em;
-        // a{
-        //     margin-left: 6px;
-        //     padding: 5px 10px;
-        //     background: #bfbfbf;
-        //     color: #fff;
-        //     text-decoration: none;
-        //     border-bottom-right-radius: 4px;
-        //     border-top-right-radius: 4px;
-        //     display: block;
-        //     &:before{
-        //         content: "";
-        //         float: left;
-        //         position: absolute;
-        //         top: 0px;
-        //         left: -12px;
-        //         width: 0;
-        //         height: 0;
-        //         border-color: transparent #bfbfbf transparent transparent;
-        //         border-style: solid;
-        //         border-width: 14px 18px 16px 0;
-        //     }
-        //     &:after{
-        //         content: "";
-        //         position: absolute;
-        //         top: 13px;
-        //         left: 3px;
-        //         float: left;
-        //         width: 4px;
-        //         height: 4px;
-        //         border-radius: 2px;
-        //         background: #fff;
-        //         -webkit-box-shadow: -1px -1px 2px #004977;
-        //         box-shadow: -1px -1px 2px #bfbfbf;
-        //     }
-        // }
-    }
-}
-
 // Social colors
 
 .fb-color{
@@ -1095,48 +991,7 @@ $size: 20px;
 
 
 }
-.card {
-  &.product-card{
-    border: 0px;
-    @media (max-width: 767.98px) {
-        background:none;
-    }
-    .card-title {
-        font-weight: 400;
-        font-size:1rem;
-        @media (max-width: 575.98px) {
-            font-size:.8rem;
-        }
-    }
-    .card-img-top{
-        border-radius: 5px;
-    }
-    .card-body {
-        flex: 1 1 auto;
-        padding: 10px 0px;
-        padding: 10px 0px;
-        .price {
-            .text-muted {
-                color: $gray-500 !important;
-            }
-        }
-    }
-    .product-card__wrapper{
-        height: 380px;
-        overflow: hidden;
-         @media (max-width: 991px) {
-            height: 240px;
-            border: 1px solid #eee;
-         }
-    }
-  }
-  .placeholder-img{
-    background-color: $placeholder;
-    width: 100%;
-    height: 100%;
-  }
 
-}
 @media (max-width: 767.98px) {
     .kss_mobile-list {
         display: flex;

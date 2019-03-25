@@ -13,6 +13,7 @@ use App\Jobs\UpdateVariantInventory;
 use App\ProductColor;
 use App\Variant;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
 
 class Product
 {
@@ -263,23 +264,9 @@ class Product
         $query->initializeBulkIndexing();
         $products->each(function ($item, $key) use ($query) {
             $query->addToBulkIndexing($item['id'], $item);
+            Cache::forget('single-product-'.$item['search_result_data']['product_slug']);
         });
         $responses = $query->bulk();
-        foreach ($responses['items'] as $response) {
-            switch ($response['index']['result']) {
-                case 'created':
-                    \Log::info("Product {$response['index']['_id']} created");
-                    break;
-                case 'updated':
-                    \Log::info("Product {$response['index']['_id']} updated");
-                    break;
-                default:
-                    \Log::notice("Product {$response['index']['_id']} status {$response}");
-                    throw new \Exception($response, 1);
-
-                    break;
-            }
-        }
     }
 
     public static function fetchProductImages(int $product_id)

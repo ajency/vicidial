@@ -1,0 +1,86 @@
+<app-header [menu]="menuObject"></app-header>
+
+<app-loader *ngIf="showLoader"></app-loader>
+
+<ng-container *ngIf="product">
+	<div class="container mt-0 mt-md-4">
+		<div class="row">
+			<div class="col-md-12 d-none d-md-block">
+				<!-- Breadcrumbs -->
+				<app-breadcrums [breadcrumbs]="product.breadcrumbs"></app-breadcrums>
+			</div>
+			<div class="col-sm-12 col-lg-7">
+				<!-- Product Images -->
+				<app-product-img-slider *ngIf="product.images" [images]="product.images" [attributes]="product.attributes"></app-product-img-slider>
+
+				<!-- Color Options -->
+				<app-color-options *ngIf="!isMobile && product.color_variants && product.color_variants.length > 1" [colorVariants]="product.color_variants"></app-color-options>
+
+			</div>
+			<div class="col-sm-12 col-lg-5">
+				<!-- Product Title & Prices Section -->
+				<app-product-info [attributes]="product.attributes" [facets]="product.facets" [variants]="product.variants" [colorVariants]="product.color_variants" [selectedColorVariant]="product.facets.product_color_html" [queryParamSize]="queryParamSize" [inventoryData]="inventoryData" [isSellable]="product.is_sellable"></app-product-info>
+			</div>
+		</div>
+	</div>
+
+	<div *ngIf="product.related_products && product.related_products.length" id="similar" class="container">
+		<hr class="mt-5">
+		<h3 class="text-left my-4 font-weight-bold">Similar Products</h3>
+			<div id="card-list" class="row similar-products">
+	      	<div *ngFor="let product of product.related_products" class="col similar-products__col">
+	            <app-product-view [product]="product"></app-product-view>
+	      	</div>
+	   </div>
+	</div>
+
+<!-- 	<div class="container">
+	  	<section class="more-posts mt-sm-4 pt-sm-4">
+		    <hr class="mt-5">
+		    <h3 class="text-left my-4 font-weight-bold">Related Articles</h3>
+
+		    <div class="relatedposts">
+		      	<div class="row more-post-grid">
+		            <div class="col-sm-4">
+		              	<div class="kss-posts mb-5">
+			                <a href="#" class="d-block" title="title">
+			                    <div class="kss-posts__cover no-image mb-3">
+			                        <img src="/assets/img/kss_logo_gray.jpg" class="d-block w-100 img-fluid" />
+			                  	</div>
+			                </a>
+		                  	<div class="kss-posts__content">
+			                    <a href="#" class="d-block" title="title">
+			                      <h3 class="bl-single-heading bl-single-heading--small">Post title</h3>
+			                      <p class="bl-single-caption bl-single-caption--small">
+			                        excerpt text
+			                      </p>
+			                    </a>
+			                    <div class="flex-sm-row mb-1 mr-2 post-tags">
+			                      <div class="post-tags mb-1 d-flex">
+			                        <div class="post-tags__data">
+			                        	<a href="href" alt="alt"><span>cat name</span></a>
+			                        </div>
+			                      </div>
+			                    </div>
+		                  	</div>
+		              	</div>
+		            </div>
+		      	</div>
+		    </div>
+	  	</section>
+	</div> -->
+</ng-container>
+
+<app-page-not-found *ngIf="!showLoader && !product"></app-page-not-found>
+
+<!-- Back to top -->
+<div app-back-to-top></div>
+
+<app-footer [stickyFoot]="true"> </app-footer>
+
+<div class="alert kss-alert sticky-alert d-inline-flex align-items-center px-sm-4 px-3 py-4 fade show shadow rounded m-2" role="alert">
+    <i class="fas fa-times pr-sm-3 pr-2 icon alert-close cursor-pointer"></i>
+    <div class="message">
+      <strong>Add to cart failed. Please try again</strong>
+    </div>
+</div>

@@ -1,7 +1,7 @@
-var add_to_cart_failed = false;
-var add_to_cart_failure_message = '';
-var add_to_cart_clicked = false;
-var add_to_cart_completed = false;
+// var add_to_cart_failed = false;
+// var add_to_cart_failure_message = '';
+// var add_to_cart_clicked = false;
+// var add_to_cart_completed = false;
 // Block scope
 const isMobile = isMobileScreen();
 
@@ -44,46 +44,46 @@ $(document).ready(function(){
 
 
     //on click add to cart
-    $('.cd-add-to-cart').on('click',function(){
-        if($('input[type=radio][name=kss-sizes]:checked').length == 0){
-            if(isMobile){
-                $('#size-modal').modal('show');
-            }
-            else{
-                //Size not selected error css
-                jQuery( ".kss_sizes" ).addClass( "shake" );
-                $('.size-select-error').removeClass('d-none');
-                setTimeout(function(){jQuery( ".kss_sizes" ).removeClass( "shake" );},200); 
-            }
-        }
-        else{
-            var add_to_cart_element = this;
-            //$(add_to_cart_element).removeClass('cd-add-to-cart');
-            if($(add_to_cart_element).hasClass('cartLoader')) return;
+    // $('.cd-add-to-cart').on('click',function(){
+    //     if($('input[type=radio][name=kss-sizes]:checked').length == 0){
+    //         if(isMobile){
+    //             $('#size-modal').modal('show');
+    //         }
+    //         else{
+    //             //Size not selected error css
+    //             jQuery( ".kss_sizes" ).addClass( "shake" );
+    //             $('.size-select-error').removeClass('d-none');
+    //             setTimeout(function(){jQuery( ".kss_sizes" ).removeClass( "shake" );},200); 
+    //         }
+    //     }
+    //     else{
+    //         var add_to_cart_element = this;
+    //         //$(add_to_cart_element).removeClass('cd-add-to-cart');
+    //         if($(add_to_cart_element).hasClass('cartLoader')) return;
 
-            //if($(add_to_cart_element).hasClass('go-to-cart')) {/*Call Angular function*/ return;}
+    //         //if($(add_to_cart_element).hasClass('go-to-cart')) {/*Call Angular function*/ return;}
 
-            //Show loader
-            // $('.cd-add-to-cart .kss-btn__wrapper').addClass('d-none');
-            // $('.cd-add-to-cart .kss-btn__wrapper').removeClass('d-flex');
-            $('.cd-add-to-cart .btn-contents').hide();
-            $('.cd-add-to-cart .btn-icon').show();
-            console.log('first');
-            $(add_to_cart_element).addClass('cartLoader');
+    //         //Show loader
+    //         // $('.cd-add-to-cart .kss-btn__wrapper').addClass('d-none');
+    //         // $('.cd-add-to-cart .kss-btn__wrapper').removeClass('d-flex');
+    //         $('.cd-add-to-cart .btn-contents').hide();
+    //         $('.cd-add-to-cart .btn-icon').show();
+    //         console.log('first');
+    //         $(add_to_cart_element).addClass('cartLoader');
             
-            // for angular app 
-            add_to_cart_clicked = true;
-            let url = window.location.href.split("#")[0] + '#/bag';
-            window.location = url;
+    //         // for angular app 
+    //         add_to_cart_clicked = true;
+    //         let url = window.location.href.split("#")[0] + '#/bag';
+    //         window.location = url;
 
-            addToCart();
-            // $('#size-modal').modal('hide');
-            // $('.kss_sizes .radio-input').prop('checked', false);
-            // if(isMobile){
-            //     $('.add-bag-btn .cd-add-to-cart').html(XSsizemsg);
-            // }
-        }
-    });
+    //         addToCart();
+    //         // $('#size-modal').modal('hide');
+    //         // $('.kss_sizes .radio-input').prop('checked', false);
+    //         // if(isMobile){
+    //         //     $('.add-bag-btn .cd-add-to-cart').html(XSsizemsg);
+    //         // }
+    //     }
+    // });
 
     $('.kss-alert .alert-close').on('click',function(){
         $('.kss-alert').removeClass('is-open');
@@ -261,40 +261,6 @@ loaded = false;
 
 function loadAngularApp(){
     if(!loaded){
-    // $.getScript("/views/cart/inline.bundle.js")        
-    //         .done(function(script, textStatus){
-    //             // console.log(textStatus);
-    //             $.getScript("/views/cart/vendor.bundle.js")
-    //                 .done(function(script2, textStatus2){
-    //                     // console.log(textStatus2);
-    //                     $.getScript("/views/cart/polyfills.bundle.js")
-    //                         .done(function(script3, textStatus3){
-    //                             // console.log(textStatus3);
-    //                             $.getScript("/views/cart/main.bundle.js")
-    //                                 .done(function(script4,textStatus4){
-    //                                     // console.log(textStatus4);
-    //                                     loaded = true;
-    //                                 })
-    //                                 .fail(function(jqxhr, settings, exception){
-    //                                     // console.log("angular load failed")
-    //                                     // loadAngularApp();
-    //                                 })
-    //                         })
-    //                         .fail(function(jqxhr, settings, exception){
-    //                             // console.log("angular load failed")
-    //                             // loadAngularApp();
-    //                         })
-    //                 })
-    //                 .fail(function(jqxhr, settings, exception){
-    //                     // console.log("angular load failed")
-    //                     // loadAngularApp();
-    //                 })
-    //         })
-    //         .fail(function(jqxhr, settings, exception){
-    //             // console.log("angular load failed")
-    //             // loadAngularApp();
-    //         })
-    // }
         $("<link/>", {
            rel: "stylesheet",
            type: "text/css",
@@ -396,3 +362,26 @@ function google_pixel_tracking(pixel_id,price_final,pagetype){
         'user_id': getCookie('user_id')
       });
   }
+
+function fbTrackViewContent(default_price, parent_id, selected_color_id){
+    console.log("fbTrackViewContent ==>", default_price, parent_id, selected_color_id);
+    fbq('track', 'ViewContent', {
+        value: default_price,
+        currency: 'INR',
+        content_ids: parent_id+'-'+selected_color_id,
+        content_type: 'product_group',
+        product_catalog_id : product_catalog_id
+    });
+}
+
+// Google analytic pixel tracking
+function gtagTrackPageView(default_price, parent_id, selected_color_id){
+    console.log("gtagTrackPageView ==>", default_price, parent_id, selected_color_id)
+    gtag('event', 'page_view', {
+        'send_to': google_pixel_id,
+        'ecomm_pagetype': 'list',
+        'ecomm_prodid': parent_id+'-'+selected_color_id,
+        'ecomm_totalvalue': default_price,
+        'user_id': getCookie('user_id')
+  });
+}
