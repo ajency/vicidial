@@ -39,7 +39,7 @@
         .selection_label{
             font-size: 1.1em;
             padding-top: 2px;
-            color: #797979;
+            color: #343a40;
         }
     }
     &--large{
@@ -52,7 +52,15 @@
     &:hover {}
     &--simple{
         .selection_label{
-            color:$gray-800;
+            color:#212529;
+        }
+        i{
+            // color: #212529;
+            background-color: white;
+            border-radius: 50%;
+            &:before{
+                content: "\f192";
+            }
         }
     }
     &--large{

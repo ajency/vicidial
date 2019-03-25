@@ -27,6 +27,7 @@ export class ShippingSummaryComponent implements OnInit {
   selectedPaymentOption : any;
   showSelectPaymentError : any;
   showVerifyCod : boolean = false;
+  shakePaymentModal : boolean = false;
   constructor(private router : Router,
   			   		private appservice : AppServiceService,
               private apiservice : ApiServiceService,
@@ -40,10 +41,13 @@ export class ShippingSummaryComponent implements OnInit {
   navigateToPaymentPage(){
     if(!this.selectedPaymentOption){
       this.showSelectPaymentError = true;
-      $(".kss_shipping_summary").animate({scrollTop: 0});
+      this.shakePaymentModal = true;
+      setTimeout(()=>{
+        this.shakePaymentModal = false;
+      },200)
       return;
     }
-
+    this.closePaymentModal();
     this.appservice.showLoader();
     let url = this.appservice.apiUrl + '/api/rest/v1/user/order/' + this.shippingDetails.order_id + '/check-inventory'
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
@@ -211,4 +215,17 @@ export class ShippingSummaryComponent implements OnInit {
     this.showVerifyCod = false;
   }
 
+  openPaymentModal(){
+    $(".kss_shipping_summary").animate({scrollTop: 0});
+    $('#paymentModal').modal('show');
+    $("#cd-cart,.kss_shipping_summary").css("overflow", "hidden");
+    $('.modal-backdrop').appendTo('.scroll-container');
+    $('body').addClass('hide-scroll');
+  }
+
+  closePaymentModal(){
+    $('#paymentModal').modal('hide');
+    $("#cd-cart,.kss_shipping_summary").css("overflow", "auto");
+    $('.modal-backdrop').remove();
+  }
 }

@@ -196,7 +196,7 @@ class Order extends Model
         $amountDue = 0;
         if ($this->status == 'cash-on-delivery') {
             foreach ($this->subOrders as $subOrder) {
-                if ($subOrder->orderLines->first()->shipment_status != 'delivered') {
+                if ($subOrder->orderLines->first()->shipment_status != 'delivered' && $subOrder->orderLines->first()->state != 'cancel') {
                     $amountDue += $subOrder->odoo_data['you_pay'];
                 }
             }
