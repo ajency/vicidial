@@ -43,8 +43,14 @@ return [
         "analytic_tag_ids"   => [],
         "invoice_lines"      => [],
     ],
-    'location_scores' => [
+    "location_scores" => [
         'distance' => 5000000,
         'business' => 10,
     ],
+    "shipping" => [
+        'price'    => env('SHIPPING_PRICE'),
+        'subtypes' => explode(',', env('SHIPPING_SUBTYPES')),
+        'brands'   => explode(',', env('SHIPPING_BRANDS')),
+        'genders'  => explode(',', env('SHIPPING_GENDERS')),
+    ]
 ];

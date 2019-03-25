@@ -320,6 +320,28 @@ class Variant extends Model
     }
 
     /**
+     * Get variant subtype
+     *
+     * @return string
+     */
+
+    public function getSubtype()
+    {
+        return (isset($this->elastic_data["search_result_data"]["product_subtype"]) && $this->elastic_data["search_result_data"]["product_subtype"]) ? $this->elastic_data["search_result_data"]["product_subtype"] : false;
+    }
+
+    /**
+     * Get variant gender
+     *
+     * @return string
+     */
+
+    public function getGender()
+    {
+        return (isset($this->elastic_data["search_result_data"]["product_gender"]) && $this->elastic_data["search_result_data"]["product_gender"]) ? $this->elastic_data["search_result_data"]["product_gender"] : false;
+    }
+
+    /**
      * Get display title
      *
      * @return string

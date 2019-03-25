@@ -204,6 +204,7 @@ class Offer extends Model
         $expressions      = $this->expressions;
         $isApplicable     = true;
         $couponApplicable = false;
+        $hasShippingItems = false;
 
         //check if active
         if(!$this->active){
@@ -236,6 +237,23 @@ class Offer extends Model
             $cartData['coupon']                           = null;
             return $cartData;
         }
+
+        //if cart has shipping items, then set coupon as invalid
+        foreach ($cartData['items'] as $item) {
+            if (in_array($item['subtype'], config('orders.shipping.subtypes')) && 
+                in_array($item['brand'], config('orders.shipping.brands'))     && 
+                in_array($item['gender'], config('orders.shipping.genders')))
+            {
+                $hasShippingItems = true;
+                break;
+            }
+        }
+        if($hasShippingItems){
+            $cartData['messages']['coupon_not_valid_for_shipping'] = "Coupon not applicable for items with shipping charges";
+            $cartData['coupon']                                    = null;
+            return $cartData;   
+        }
+
         //if offer has coupon, check if coupon usage is still valid
         $coupons = $this->coupons;
         foreach ($coupons as $coupon) {
@@ -268,22 +286,24 @@ class Offer extends Model
             $mrp_total += $item['price_mrp'] * $item['quantity'];
             $sale_total += $item['price_sale'] * $item['quantity'];
             $cartData['items'][$id]['price_final'] = $item['price_sale'];
-
         }
         $cartData['mrp_total']     = $mrp_total;
         $cartData['sale_total']    = $sale_total;
         $cartData['final_total']   = $sale_total;
         $cartData['discount']      = 0;
         $cartData['round_off']     = 0;
+        $cartData['shipping']      = config('orders.shipping.price'); // shipping charge to be added to cart for shipping items
         $cartData['offersApplied'] = [];
         $cartData['messages']      = [];
-
+        
         return $cartData;
     }
 
     public static function processData($cartData)
     {
         $cartData = self::buildCartData($cartData);
+        //check if cart has shipping items and add shipping charges to cart if any
+        $cartData = self::addShippingCharges($cartData);
 
         if ($cartData['coupon'] != null && trim($cartData['coupon']) != '') {
             $coupon = Coupon::where('display_code', $cartData['coupon'])->first();
@@ -298,4 +318,20 @@ class Offer extends Model
         }
         return $cartData;
     }
+
+    public static function addShippingCharges($cartData)
+    {
+        foreach ($cartData['items'] as $item) {
+            if (in_array($item['subtype'], config('orders.shipping.subtypes'))  && 
+                in_array($item['brand'], config('orders.shipping.brands'))      && 
+                in_array($item['gender'], config('orders.shipping.genders')))
+            {
+                //add shipping charges to cart
+                $cartData['final_total'] += $cartData['shipping'];
+                break;
+            }
+        }
+        return $cartData;
+    }
+
 }
