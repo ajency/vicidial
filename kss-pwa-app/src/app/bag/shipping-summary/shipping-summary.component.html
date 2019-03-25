@@ -15,52 +15,13 @@
 			             </h3>
 			           </div> -->
 						<div class="col-8">
-							<h3 class="modal-title font-weight-bold" id="exampleModalLabel">Payment</h3>
+							<h3 class="modal-title font-weight-bold" id="exampleModalLabel">Order Summary</h3>
 						</div>
 						<div class="col-4 text-right">
 							<h6 class="text-muted mt-2">STEP: 2 / 2</h6>
 						</div>
 					</div>
 					<hr>
-
-					<!-- Select Payment mode -->
-					<div class="">
-						<h4 class="mb-3 font-weight-bold">Select Payment Method</h4>
-						<div *ngFor="let option of paymentOptions" class="radio-wrap d-flex wo-image mb-0">
-							<!-- Selection Radio -->
-							<input class="d-none radio-input" type="radio" name="kss-payment-option" id="{{option}}" [value]="option" [(ngModel)]="selectedPaymentOption" (change)="updatePaymentOption()" />
-							<!-- Coupon box -->
-							<label class="radio-label radio-label--large mb-2 w-100 d-flex" for="{{option}}">
-								<div class="pr-2">
-									<div class="radio-selection position-relative">
-										<i class="far fa-circle"></i>
-									</div>
-								</div>
-								<div class="flex-1">
-									<div>
-										<div class="d-flex justify-content-between align-items-center">
-											<div *ngIf="option == 'cod'" class="font-weight-bold selection_label">Cash On Delivery</div>
-											<div *ngIf="option == 'payu'" class="font-weight-bold selection_label align-items-center d-flex">Pay via Card/Bank/UPI/Wallet</div>
-										</div>
-									</div>
-								</div>
-							</label>
-						</div>
-						<small *ngIf="showSelectPaymentError" id="passwordHelpBlock" class="form-text text-danger">
-							Please select mode of payment
-						</small>
-					</div>
-					<!-- Select Payment mode -->
-
-					<div class="align-items-center d-flex py-3">
-						<img src="/img/shield.png" class="img-fluid" width="30" alt="100% Secure Payments" title="100% Secure Payments">
-						<div class="pl-2 genuinity">
-							<p class="mb-1">Genuine products. 7 day returns.</p>
-							<p class="my-1">100% Secure payments.</p>
-						</div>
-					</div>
-
-					<hr class="w-shadow">
 
 					<!-- <div class="alert alert-success mb-3" role="alert">
 					  <b><i class="fas fa-truck"></i> Standard Delivery</b> (Free delivery)
@@ -119,6 +80,15 @@
 					  <h5 class="font-weight-bold">Total Payable<span>₹{{shippingDetails.summary.you_pay}}</span></h5>
 					</div>
 					<h5 *ngIf="shippingDetails.summary.mrp_total - shippingDetails.summary.you_pay != 0 " class="font-weight-bold text-success line-height-5">Your total savings on this order ₹{{roundOff(shippingDetails.summary.mrp_total - shippingDetails.summary.you_pay)}}</h5>
+					<hr class="dashed">
+					<div class="align-items-center d-flex py-2">
+						<img src="/img/shield.png" class="img-fluid" width="30" alt="100% Secure Payments" title="100% Secure Payments">
+						<div class="pl-2 genuinity">
+							<p class="mb-1">Genuine products. 7 day returns.</p>
+							<p class="my-1">100% Secure payments.</p>
+						</div>
+					</div>
+
 					<hr class="mb-2 w-shadow">
 
 					<div>
@@ -146,24 +116,66 @@
 				</div>
 
 				<div *ngIf="!showUserInfoModal" class="fixed-bottom d-show pl-3 pr-3">
-				  <div class="row no-gutters py-2">
-			      <div class="col-12 text-center">
-				      	<!-- <div class="d-flex align-items-center justify-content-center my-2">
-							<img src="/img/shield.png" class="img-fluid" width="25" alt="100% Secure Payments" title="100% Secure Payments">
-							<div class="pl-2 genuinity text-left">
-								<p class="mb-1">Genuine products. 7 day returns.</p>
-								<p class="my-1">100% Secure payments.</p>
+				  	<div class="row no-gutters py-2">
+				      	<div class="col-12 text-center">
+				          	<button type="button" class=" btn kss-btn kss-btn--big mt-1 mb-1 d-flex align-items-center justify-content-center" data-target="#payment-modal" data-toggle="modal" (click)="openPaymentModal()">
+					          	<span>Continue to Payment
+				          		</span>
+				          	</button>
+				      	</div>
+				  	</div>
+				</div>
+
+				<div class="modal fade payment-modal" id="paymentModal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h6 class="modal-title font-weight-bold">
+				        	<span [ngClass]="{'text-danger' : showSelectPaymentError}">
+				        		Select Payment Method
+				        	</span>
+				        </h6>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closePaymentModal()">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-body">
+						<!-- Select Payment mode -->
+						<div [ngClass]="{'shake' : shakePaymentModal}">
+							<div *ngFor="let option of paymentOptions" class="radio-wrap d-flex wo-image mb-0">
+								<!-- Selection Radio -->
+								<input class="d-none radio-input" type="radio" name="kss-payment-option" id="{{option}}" [value]="option" [(ngModel)]="selectedPaymentOption" (change)="updatePaymentOption()" />
+								<!-- Coupon box -->
+								<label class="radio-label radio-label--simple mb-2 w-100 d-flex" for="{{option}}">
+									<div class="pr-2">
+										<div class="radio-selection position-relative">
+											<i class="far fa-circle"></i>
+										</div>
+									</div>
+									<div class="flex-1">
+										<div>
+											<div class="d-flex justify-content-between align-items-center">
+												<div *ngIf="option == 'cod'" class="font-weight-bold selection_label">Cash On Delivery</div>
+												<div *ngIf="option == 'payu'" class="font-weight-bold selection_label align-items-center d-flex">Pay via Card/Bank/UPI/Wallet</div>
+											</div>
+										</div>
+									</div>
+								</label>
 							</div>
-						</div> -->
-			          <button id="payment-details" type="button" class=" btn kss-btn kss-btn--big mt-1 mb-1 d-flex align-items-center justify-content-center" (click)="navigateToPaymentPage()">
-				          	<span *ngIf="!selectedPaymentOption">Select mode of Payment
-			          		</span>
-			          		<span *ngIf="selectedPaymentOption == 'payu'" class="d-flex align-items-center">Pay ₹{{shippingDetails.summary.you_pay}} via  <img src="/img/pay-u-icon.png" class="ml-2" width="50"> <i class="fas fa-angle-right position-absolute r-0 mt-i-1"></i>
-			          		</span>
-			          		<span *ngIf="selectedPaymentOption == 'cod'" class="d-flex align-items-center">Pay ₹{{shippingDetails.summary.you_pay}} via COD <i class="fas fa-angle-right position-absolute r-0 mt-i-1"></i>
-			          		</span>
-			          </button>
-			      </div>
+						</div>
+						<!-- Select Payment mode -->
+				      </div>
+				      <div class="modal-footer add-bag-btn">
+		      	          <button id="payment-details" type="button" class=" btn kss-btn kss-btn--big mt-1 mb-1 d-flex align-items-center justify-content-center" (click)="navigateToPaymentPage()">
+		      		          	<span *ngIf="!selectedPaymentOption">Select mode of Payment
+		      	          		</span>
+		      	          		<span *ngIf="selectedPaymentOption == 'payu'" class="d-flex align-items-center">Pay ₹{{shippingDetails.summary.you_pay}} via  <img src="/img/pay-u-icon.png" class="ml-2" width="50"> <i class="fas fa-angle-right position-absolute r-0 mt-i-1"></i>
+		      	          		</span>
+		      	          		<span *ngIf="selectedPaymentOption == 'cod'" class="d-flex align-items-center">Pay ₹{{shippingDetails.summary.you_pay}} via COD <i class="fas fa-angle-right position-absolute r-0 mt-i-1"></i>
+		      	          		</span>
+		      	          </button>
+				      </div>
+				    </div>
 				  </div>
 				</div>
 

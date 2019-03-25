@@ -1,17 +1,9 @@
 <!-- Order Details sidebar start -->
 <div class="col-12 col-xl-4 col-lg-4">
    
+      @if(!empty($order_status) and $order_status == 'cash-on-delivery')
       <label class="">Payment Information</label>
-
-      <!-- Payment Info/Mode -->
-      @if(!empty($payment_info) and $payment_info['payment_mode'] and $payment_info['card_num'])
          <div class="card shadow-sm">
-               <div class="card-body text-muted d-flex">
-                  Payment Mode:<i class="mr-1 ml-1 {{ $payment_info['payment_mode'] == 'MAST' ? 'icon-master-card' : ( $payment_info['payment_mode'] == 'VISA' ? 'icon-visa' : ($payment_info['payment_mode'] == 'rupay' ? 'icon-rupay' : 'far fa-credit-card no-card ') ) }} "></i> <strong>ending in {{substr($payment_info['card_num'], -4)}}</strong>
-               </div>
-         </div>
-      @else
-      <div class="card shadow-sm">
             <div class="card-body text-muted ">
                Payment Mode: Cash On Delivery
                 @if($amount_due)
@@ -20,7 +12,19 @@
                   </div>
                @endif
             </div>
-      </div>
+         </div>
+      @endif
+      @if(!empty($payment_info))
+      <label class="">Payment Information</label>
+         <div class="card shadow-sm">
+               <div class="card-body text-muted d-flex">
+                     Payment Mode:
+                     <i class="mr-1 ml-1 {{ $payment_info['payment_mode'] == 'MAST' ? 'icon-master-card' : ( $payment_info['payment_mode'] == 'VISA' ? 'icon-visa' : ($payment_info['payment_mode'] == 'rupay' ? 'icon-rupay' : 'far fa-credit-card no-card ') ) }} "></i> 
+                  @if($payment_info['card_num'])
+                     <strong>ending in {{substr($payment_info['card_num'], -4)}}</strong>
+                  @endif
+               </div>
+         </div>
       @endif
 
    
