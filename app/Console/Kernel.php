@@ -35,31 +35,31 @@ class Kernel extends ConsoleKernel
     {
         if (config('app.run_cron')) {
             if (!isNotProd()) {
-                $schedule->job(new ProductSync, 'create_jobs')->hourly();
+                $schedule->job(new ProductSync, 'create_jobs')->name('ProductSync')->hourly()->onOneServer();
                 //$schedule->job(new VariantSync, 'create_jobs')->hourly();
-                $schedule->job(new FetchWarehouse, 'process_details')->weekly();
+                $schedule->job(new FetchWarehouse, 'process_details')->name('FetchWarehouse')->weekly()->onOneServer();
             } else {
-                $schedule->job(new ProductSync, 'create_jobs')->everyTenMinutes();
+                $schedule->job(new ProductSync, 'create_jobs')->name('ProductSyncProd')->everyTenMinutes()->onOneServer();
                 //$schedule->job(new VariantSync, 'create_jobs')->everyTenMinutes();
             }
-            $schedule->job(new ProductMoveSync, 'create_jobs')->hourly();
+            $schedule->job(new ProductMoveSync, 'create_jobs')->name('ProductMoveSync')->hourly();
             $schedule->call(function () {
                 ProductColor::productXMLData();
-            })->dailyAt('21:30');
-            $schedule->job(new IndexInactiveProducts, 'create_jobs')->daily();
+            })->name('productXMLData')->dailyAt('21:30')->onOneServer();
+            $schedule->job(new IndexInactiveProducts, 'create_jobs')->name('IndexInactiveProducts')->daily();
             $schedule->call(function () {
                 Variant::updateVariantDiffFile();
-            })->dailyAt('19:30');
+            })->name('updateVariantDiffFile')->dailyAt('19:30')->onOneServer();
             $schedule->call(function () {
                 ProductColor::getProductsFromOdooDiscounts();
-            })->dailyAt('22:00');
+            })->name('getProductsFromOdooDiscounts')->dailyAt('22:00')->onOneServer();
             $schedule->call(function () {
                 Coupon::updateCouponLeft();
-            })->everyTenMinutes();
+            })->name('updateCouponLeft')->everyTenMinutes()->onOneServer();
             $schedule->call(function () {
                 GenerateSitemapProductList::dispatch()->onQueue('process_sitemap_product_list');
                 GenerateSitemap::dispatch()->onQueue('process_sitemap_parent');
-            })->dailyAt('04:00');
+            })->name('GenerateSitemapProductList')->dailyAt('04:00')->onOneServer();
         }
     }
 
