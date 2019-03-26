@@ -124,6 +124,21 @@
         },
         "variant_size_id": {
           "type": "long"
+        },
+        "variant_barcode": {
+          "type": "keyword"
+        },
+        "product_fabric_description": {
+          "type": "text"
+        },
+        "product_fabric_description_id": {
+          "type": "long"
+        },
+        "product_template_description": {
+          "type": "text"
+        },
+        "product_template_description_id": {
+          "type": "long"
         }
       }
     }
