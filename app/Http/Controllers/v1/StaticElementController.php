@@ -178,12 +178,11 @@ class StaticElementController extends Controller
             $photo = $sizechartImage->photos()->where('type',$image_type)->first();
             $path = explode('amazonaws.com/',$photo->file->url);
             $newFilePath = $path[1];
-            $imagesArr[$image_type] = $newFilePath;
             if($config['use_cdn'] && $config['cdn_url'] ){
-                $tempUrl = parse_url($newfilepath);
-                $newfilepath =  $config['cdn_url'] . $tempUrl['path'];
+                $tempUrl = parse_url($newFilePath);
+                $newFilePath =  $config['cdn_url'] . $tempUrl['path'];
             }
-
+            $imagesArr[$image_type] = $newFilePath;
             \Storage::disk('local')->delete($subfilepath);
         }
 
@@ -198,5 +197,44 @@ class StaticElementController extends Controller
         // $dataInserted = StaticElement::saveNewData($params['page_slug'], $params['element_data'], $params['type'], $params['images']);
         return response()->json($data,200);
     } 
+
+    public function getSizeCharts(Request $request){
+        $types = ["desktop","mobile"];
+        $request->validate(['product_gender' => 'required', 'product_subtype' => 'required', 'product_brand' => 'required']);
+        $params = $request->all();
+        $config        = config('ajfileupload');
+        $sizechartImages = SizechartImage::join('fileupload_mapping', function ($join) {
+                    $join->on('sizechart_images.id', '=', 'fileupload_mapping.object_id');
+                    $join->where('fileupload_mapping.object_type', '=', "App\SizechartImage");
+                })->where([["sizechart_images.product_gender",$params["product_gender"]],["sizechart_images.product_subtype",$params["product_subtype"]],["sizechart_images.product_brand",$params["product_brand"]]])->whereNull('fileupload_mapping.deleted_at')->select('sizechart_images.id','fileupload_mapping.file_id','fileupload_mapping.id as mapping_id','fileupload_mapping.type')->get();
+        // dd($sizechartImages);
+        foreach($sizechartImages as $sizechartImage){
+            // dd($sizechartImage->photos()->find($sizechartImage->mapping_id)->file);
+            $photo = $sizechartImage->photos()->find($sizechartImage->mapping_id)->file;
+            $path = explode('amazonaws.com/',$photo->url);
+            $newFilePath = $path[1];
+            if($config['use_cdn'] && $config['cdn_url'] ){
+                $tempUrl = parse_url($newFilePath);
+                $newFilePath =  $config['cdn_url'] . $tempUrl['path'];
+            }
+            $imagesArr[$sizechartImage->type] = $newFilePath;
+        }
+
+        if(count($imagesArr) != count($types)){
+            foreach($types as $type){
+                $imagesArr[$type]=(isset($imagesArr[$type]))?$imagesArr[$type]:"";
+            }
+        }
+        
+
+        $data["success"] = true;
+        $data["data"] = [];
+        $data["data"]["product_gender"] = ["facet_value" => $params["product_gender"]];
+        $data["data"]["product_subtype"] = ["facet_value" => $params["product_subtype"]];
+        $data["data"]["product_brand"] = ["facet_value" => $params["product_brand"]];
+        $data["data"]["images"] = $imagesArr;
+        return response()->json($data,200);
+        // dd($params);
+    }
 
 }
