@@ -7,6 +7,7 @@ use App\StaticElement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use App\Facet;
+use App\SizechartImage;
 
 class StaticElementController extends Controller
 {
@@ -121,5 +122,81 @@ class StaticElementController extends Controller
         $facets = Facet::where([["facet_name",$type]])->select('slug','display_name','facet_value')->get()->toArray();
         return response()->json(["success"=>true,"data"=>["facet_name"=>$type,"facet_values"=>$facets]],200);
     }
+
+    public function saveSizeChartImages(Request $request)
+    {
+        $request->validate(['product_gender' => 'required', 'product_subtype' => 'required', 'product_brand' => 'required', 'images' => 'present']);
+        $images = $request->images;
+
+        $params = $request->all();
+        $data = []; 
+        $config        = config('ajfileupload');
+        $sizechartImage = SizechartImage::where([["product_gender",$params["product_gender"]["facet_value"]],["product_subtype",$params["product_subtype"]["facet_value"]],["product_brand",$params["product_brand"]["facet_value"]]])->first();
+        // dd($sizechartImage);
+        $sizechartImageExist = false;
+        if(is_null($sizechartImage)){
+            $sizechartImage = new SizechartImage;
+            $sizechartImage->product_gender = $params["product_gender"]["facet_value"];
+            $sizechartImage->product_subtype = $params["product_subtype"]["facet_value"];
+            $sizechartImage->product_brand = $params["product_brand"]["facet_value"];
+            $sizechartImage->save();
+        }
+        else
+            $sizechartImageExist = true;
+        
+        $imagesArr = [];
+
+        foreach($images as $image_type =>$image){
+            if($sizechartImageExist){
+                $sizechartImageObj = SizechartImage::join('fileupload_mapping', function ($join) {
+                    $join->on('sizechart_images.id', '=', 'fileupload_mapping.object_id');
+                    $join->where('fileupload_mapping.object_type', '=', "App\SizechartImage");
+                })->where([['fileupload_mapping.type',$image_type],["sizechart_images.id",$sizechartImage->id]])->whereNull('fileupload_mapping.deleted_at')->select('sizechart_images.id','fileupload_mapping.file_id')->first();
+                    
+                if($sizechartImageObj){
+                    $sizechartImageObj->unmapImage($sizechartImageObj->file_id);
+                }
+            }
+            
+            // dd($sizechartImageObj);
+            $f            = finfo_open();
+            $actualImage   = base64_decode($image);
+            $mime_type    = finfo_buffer($f, $actualImage, FILEINFO_MIME_TYPE);
+            $extension    = str_replace("image/", "", $mime_type);
+            $imageName = $image_type . "-" . $sizechartImage->id;
+            $imageFullName = $imageName . "." . $extension;
+            $subfilepath   = '/sizechartImages/' . $imageFullName;
+            // dd($subfilepath);
+            $subpath       = 'sizechartImages/' . $imageFullName;
+            
+            \Storage::put($subfilepath, $actualImage);
+            $disk       = \Storage::disk('local');
+            $filepath   = ($disk->getDriver()->getAdapter()->getPathPrefix()) . $subpath;
+            $attributes = ["product_gender"=>$params["product_gender"],"product_subtype"=>$params["product_subtype"],"product_brand"=>$params["product_brand"]];
+            $image_id = $sizechartImage->uploadImage($filepath, false, true, true, '', '', "", $filepath, $extension, $imageName, $attributes);
+            $sizechartImage->mapImage($image_id, $image_type);
+            $photo = $sizechartImage->photos()->where('type',$image_type)->first();
+            $path = explode('amazonaws.com/',$photo->file->url);
+            $newFilePath = $path[1];
+            $imagesArr[$image_type] = $newFilePath;
+            if($config['use_cdn'] && $config['cdn_url'] ){
+                $tempUrl = parse_url($newfilepath);
+                $newfilepath =  $config['cdn_url'] . $tempUrl['path'];
+            }
+
+            \Storage::disk('local')->delete($subfilepath);
+        }
+
+        $data["success"] = true;
+        $data["message"] = "Images saved successfully!!";
+        $data["data"] = [];
+        $data["data"]["product_gender"] = $params["product_gender"];
+        $data["data"]["product_subtype"] = $params["product_subtype"];
+        $data["data"]["product_brand"] = $params["product_brand"];
+        $data["data"]["images"] = $imagesArr;
+
+        // $dataInserted = StaticElement::saveNewData($params['page_slug'], $params['element_data'], $params['type'], $params['images']);
+        return response()->json($data,200);
+    } 
 
 }
