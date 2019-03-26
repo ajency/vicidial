@@ -153,14 +153,17 @@ class StaticElementController extends Controller
             $request->validate(['images.desktop' => 'required', 'images.mobile' => 'required']);
         }
         $sizechartImage->unmapAllImages();
+        $imagetypes = $sizechartImage->aws_links;
         foreach ($request->images as $imageType => $image) {
             $image = base64_decode($image);
             $mime_type    = finfo_buffer(finfo_open(), $image, FILEINFO_MIME_TYPE);
             $imageName = $imageType.'.'.str_replace("image/", "", $mime_type);
             $imagePath = config('ajfileupload.base_root_path').'size-charts/'.$sizechartImage->id.'/'.$imageName;
             \Storage::disk(config('ajfileupload.disk_name'))->put($imagePath,$image,'public');
-            $sizechartImage->aws_links[$imageType] = $imagePath;
+            $imagetypes[$imageType] = $imagePath;
         }
+        $sizechartImage->aws_links = $imagetypes;
+        $sizechartImage->save();
         $data = [];
         $data["success"] = true;
         $data["data"] = [];
