@@ -252,6 +252,7 @@ class StaticElementController extends Controller
 
     public function temp2(Request $request){
         $request->validate(['product_gender' => 'required', 'product_subtype' => 'required', 'product_brand' => 'required']);
+        $params=$request->all();
         $sizechartImage = SizechartImage::where("product_gender",$request->product_gender)->where("product_subtype",$request->product_subtype)->where("product_brand",$request->product_brand)->first();
         $data = [];
         $data["success"] = true;

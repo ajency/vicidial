@@ -14,7 +14,7 @@ class AddS3Links extends Migration
     public function up()
     {
         Schema::table('sizechart_images', function (Blueprint $table) {
-            $table->json('aws_links')->default('[]');
+            $table->json('aws_links');
         });
     }
 
