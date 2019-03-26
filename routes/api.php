@@ -70,7 +70,7 @@ Route::group([
 		Route::post('/save-page-element/new', $group_app_version . '\StaticElementController@callSaveNew');
 		Route::post('/save-page-element/{seq_no}', $group_app_version . '\StaticElementController@callSave');		
 		Route::get('/get-page-element/{seq_no}', $group_app_version . '\StaticElementController@callFetchSeq');
-        Route::get('/facets/{type}', $group_app_version . '\StaticElementController@getFacets');
+        Route::get('/facets', $group_app_version . '\StaticElementController@getFacets');
         Route::post('/save-sizechart-images', $group_app_version . '\StaticElementController@saveSizeChartImages');
         Route::get('/get-size-charts', $group_app_version . '\StaticElementController@getSizeCharts');
     });

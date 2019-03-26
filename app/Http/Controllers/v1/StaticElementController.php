@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use App\Facet;
 use App\SizechartImage;
-
+use DB;
 class StaticElementController extends Controller
 {
     public function callFetchSeq($seq_no, Request $request)
@@ -117,10 +117,26 @@ class StaticElementController extends Controller
 
     }
 
-    public function getFacets($type,Request $request){
+    public function getFacets(Request $request){
+        $params = $request->all();
+        // dd($params["type"]);
+        $types = explode(",", $params["type"]);
         $data = [];
-        $facets = Facet::where([["facet_name",$type]])->select('slug','display_name','facet_value')->get()->toArray();
-        return response()->json(["success"=>true,"data"=>["facet_name"=>$type,"facet_values"=>$facets]],200);
+        $facets = Facet::whereIn("facet_name",$types)->select('facet_name',DB::raw('group_concat(facet_value) as "values",group_concat(display_name) as "display_names", group_concat(slug) as "slugs"'))->groupBy('facet_name')->get();
+        // dd($facets->toArray());
+        $facets_data=[];
+        foreach ($facets as $facet) {
+            
+            $facet_values = explode(",",$facet->values);
+            $display_names = explode(",",$facet->display_names);
+            $slugs = explode(",",$facet->slugs);
+            $facet_values_data = [];
+            foreach($facet_values as $facet_key => $facet_value){
+                array_push($facet_values_data,["facet_value"=>$facet_value,"slug"=>$slugs[$facet_key],"display_name"=>$display_names[$facet_key]]);
+            }
+            array_push($facets_data, ["facet_name"=>$facet->facet_name,"facet_values"=>$facet_values_data]);
+        }
+        return response()->json(["success"=>true,"data"=>$facets_data,"message"=>"facets fetched successfully!!"],200);
     }
 
     public function saveSizeChartImages(Request $request)
