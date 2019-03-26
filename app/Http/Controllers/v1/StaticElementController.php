@@ -127,7 +127,7 @@ class StaticElementController extends Controller
     {
         $request->validate(['product_gender' => 'required', 'product_subtype' => 'required', 'product_brand' => 'required', 'images' => 'present']);
         $images = $request->images;
-
+        $types = ["desktop","mobile"];
         $params = $request->all();
         $data = []; 
         $config        = config('ajfileupload');
@@ -166,24 +166,32 @@ class StaticElementController extends Controller
             $imageName = $image_type . "-" . $sizechartImage->id;
             $imageFullName = $imageName . "." . $extension;
             $subfilepath   = '/sizechartImages/' . $imageFullName;
-            // dd($subfilepath);
-            $subpath       = 'sizechartImages/' . $imageFullName;
-            
+            $subpath       = 'sizechartImages/' . $imageFullName; 
             \Storage::put($subfilepath, $actualImage);
             $disk       = \Storage::disk('local');
             $filepath   = ($disk->getDriver()->getAdapter()->getPathPrefix()) . $subpath;
             $attributes = ["product_gender"=>$params["product_gender"],"product_subtype"=>$params["product_subtype"],"product_brand"=>$params["product_brand"]];
             $image_id = $sizechartImage->uploadImage($filepath, false, true, true, '', '', "", $filepath, $extension, $imageName, $attributes);
             $sizechartImage->mapImage($image_id, $image_type);
-            $photo = $sizechartImage->photos()->where('type',$image_type)->first();
-            $path = explode('amazonaws.com/',$photo->file->url);
-            $newFilePath = $path[1];
-            if($config['use_cdn'] && $config['cdn_url'] ){
-                $tempUrl = parse_url($newFilePath);
-                $newFilePath =  $config['cdn_url'] . $tempUrl['path'];
-            }
+            $newFilePath =$sizechartImage->getSizechartImageUrlByType($image_type);
+            // $photo = $sizechartImage->photos()->where('type',$image_type)->first();
+            // $path = explode('amazonaws.com/',$photo->file->url);
+            // $newFilePath = $path[1];
+            // if($config['use_cdn'] && $config['cdn_url'] ){
+            //     $tempUrl = parse_url($newFilePath);
+            //     $newFilePath =  $config['cdn_url'] . $tempUrl['path'];
+            // }
             $imagesArr[$image_type] = $newFilePath;
             \Storage::disk('local')->delete($subfilepath);
+        }
+        if(count($imagesArr) != count($types)){
+            foreach($types as $type){
+                $imagesArr[$type]=(isset($imagesArr[$type]))?$imagesArr[$type]:"";
+                if($imagesArr[$type] == ""){
+                    $newFilePath=$sizechartImage->getSizechartImageUrlByType($type);
+                    $imagesArr[$type] = $newFilePath;
+                }
+            }
         }
 
         $data["success"] = true;
@@ -226,7 +234,6 @@ class StaticElementController extends Controller
             }
         }
         
-
         $data["success"] = true;
         $data["data"] = [];
         $data["data"]["product_gender"] = ["facet_value" => $params["product_gender"]];
