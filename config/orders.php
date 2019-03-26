@@ -48,7 +48,11 @@ return [
         'business' => 10,
     ],
     "shipping" => [
-        'price'    => env('SHIPPING_PRICE'),
-        'types' => explode(',', env('SHIPPING_SUBTYPES')),
+        'variant' => [
+            'id'   => env('SHIPPING_VARIANT_ID'),
+            'name' => env('SHIPPING_VARIANT_NAME'),
+        ],
+        'price'   => env('SHIPPING_PRICE'),
+        'types'   => explode(',', env('SHIPPING_TYPES')),
     ]
 ];

@@ -522,7 +522,7 @@ export class BagViewComponent implements OnInit {
           this.couponErrorMessage = "No Internet Connection";  
         }
         else{
-          this.couponErrorMessage = error.message;
+          this.couponErrorMessage = error.error.message;
         }        
         this.appservice.removeLoader();
       }

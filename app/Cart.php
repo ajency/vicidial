@@ -96,6 +96,7 @@ class Cart extends Model
             "sale_price_total" => $cartData['sale_total'],
             "cart_discount"    => $cartData['discount'],
             "you_pay"          => $cartData['final_total'],
+            "shipping"         => $cartData['shipping'],
         ];
     }
 
@@ -176,16 +177,17 @@ class Cart extends Model
         }
     }
 
-    public function checkCouponAvailability(){
-        $cartData           = $this->flatData();
-        $cartData           = Offer::processData($cartData);
-        if($cartData['coupon'] != $this->coupon){
+    public function checkCouponAvailability()
+    {
+        $cartData = $this->flatData();
+        $cartData = Offer::processData($cartData);
+        if ($cartData['coupon'] != $this->coupon) {
             $this->coupon = $cartData['coupon'];
             $this->save();
         }
         return [
-            'messages'=> $cartData['messages'], 
-            'coupon_applied'=> (isset($cartData['offersApplied'][0]))? $cartData['offersApplied'][0]->getCouponDetails():null,
+            'messages'       => $cartData['messages'],
+            'coupon_applied' => (isset($cartData['offersApplied'][0])) ? $cartData['offersApplied'][0]->getCouponDetails() : null,
         ];
     }
 
@@ -198,12 +200,13 @@ class Cart extends Model
             $this->coupon = $cartData['coupon'];
             $this->save();
             return [
-                'coupon_applied' => (isset($cartData['offersApplied'][0]))? $cartData['offersApplied'][0]->getCouponDetails():null,
+                'coupon_applied' => (isset($cartData['offersApplied'][0])) ? $cartData['offersApplied'][0]->getCouponDetails() : null,
                 'summary'        => [
                     'mrp_total'        => $cartData['mrp_total'],
                     'you_pay'          => $cartData['final_total'],
                     'cart_discount'    => $cartData['discount'],
                     'sale_price_total' => $cartData['sale_total'],
+                    "shipping"         => $cartData['shipping'],
                 ],
             ];
         } else {
@@ -231,7 +234,7 @@ class Cart extends Model
             $singleItem['price_mrp']              = $item['item']->getLstPrice();
             $singleItem['price_sale']             = $item['item']->getSalePrice();
             $singleItem['brand']                  = $item['item']->getBrand();
-            $singleItem['category_type']                = $item['item']->getCategoryType();
+            $singleItem['category_type']          = $item['item']->getCategoryType();
             $cartData['items'][$item['item']->id] = $singleItem;
         }
         return $cartData;
