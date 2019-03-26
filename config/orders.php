@@ -49,8 +49,6 @@ return [
     ],
     "shipping" => [
         'price'    => env('SHIPPING_PRICE'),
-        'subtypes' => explode(',', env('SHIPPING_SUBTYPES')),
-        'brands'   => explode(',', env('SHIPPING_BRANDS')),
-        'genders'  => explode(',', env('SHIPPING_GENDERS')),
+        'types' => explode(',', env('SHIPPING_SUBTYPES')),
     ]
 ];

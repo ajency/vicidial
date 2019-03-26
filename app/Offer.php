@@ -239,16 +239,7 @@ class Offer extends Model
         }
 
         //if cart has shipping items, then set coupon as invalid
-        foreach ($cartData['items'] as $item) {
-            if (in_array($item['subtype'], config('orders.shipping.subtypes')) && 
-                in_array($item['brand'], config('orders.shipping.brands'))     && 
-                in_array($item['gender'], config('orders.shipping.genders')))
-            {
-                $hasShippingItems = true;
-                break;
-            }
-        }
-        if($hasShippingItems){
+        if(checkForShippingItems($cartData['items'])){
             $cartData['messages']['coupon_not_applicable_for_products_with_shipping_charges'] = "Sorry, this coupon is not applicable to some of the products in your cart";
             $cartData['coupon']                                                               = null;
             return $cartData;   
@@ -302,8 +293,6 @@ class Offer extends Model
     public static function processData($cartData)
     {
         $cartData = self::buildCartData($cartData);
-        
-
         if ($cartData['coupon'] != null && trim($cartData['coupon']) != '') {
             $coupon = Coupon::where('display_code', $cartData['coupon'])->first();
             if ($coupon != null) {
@@ -322,16 +311,9 @@ class Offer extends Model
 
     public static function addShippingCharges($cartData)
     {
-        foreach ($cartData['items'] as $item) {
-            if (in_array($item['subtype'], config('orders.shipping.subtypes'))  && 
-                in_array($item['brand'], config('orders.shipping.brands'))      && 
-                in_array($item['gender'], config('orders.shipping.genders')))
-            {
-                //add shipping charges to cart
-                $cartData['shipping']     = config('orders.shipping.price');
-                $cartData['final_total'] += $cartData['shipping'];
-                break;
-            }
+        if(checkForShippingItems($cartData['items'])){  //check if cart has shipping items present
+            $cartData['shipping']     = config('orders.shipping.price');
+            $cartData['final_total'] += $cartData['shipping'];
         }
         return $cartData;
     }

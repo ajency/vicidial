@@ -112,6 +112,10 @@ class SubOrder extends Model
             $you_pay += $itemData['quantity'] * $itemData['price_discounted'];
             $cart_discount += $itemData['quantity'] * ($itemData['price_final'] - $itemData['price_discounted']);
         }
+        if(checkForShippingItems($items))
+        {
+            $shipping_fee = config('orders.shipping.price');  //if shipping items are present in cart then update the shipping fee
+        }
         $this->odoo_data = [
             'mrp_total'        => $mrp_total,
             'sale_price_total' => $sale_price_total,
