@@ -90,12 +90,15 @@ class StaticController extends Controller
 
     public function gender($gendername, Request $request)
     {
-        if (!in_array($gendername, ["boys","girls","infants"])){
-            abort(404);
+        if (in_array($gendername, ["boys","girls","infants"])){
+            $static_elements=StaticElement::fetch($gendername,[], $published=true);
+            $this->params['breadcrumb']['current'] = ucwords($gendername);
+            return view('includes/landingpage/gender')->with('params', $this->params)->with('gendername', $gendername)->with('static_elements', $static_elements);
         }
-        $static_elements=StaticElement::fetch($gendername,[], $published=true);
-        $this->params['breadcrumb']['current'] = ucwords($gendername);
-        return view('includes/landingpage/gender')->with('params', $this->params)->with('gendername', $gendername)->with('static_elements', $static_elements);
+        if (in_array($gendername, ["uniform"])){
+            return view('home_new');
+        }
+        abort(404);
     }
 
     public function draft($gendername, Request $request)

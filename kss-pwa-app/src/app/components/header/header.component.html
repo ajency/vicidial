@@ -47,7 +47,7 @@
 		        <ul *ngIf="menu" class="nav megamenu--right">
 		            <!-- Boys -->
 		            <li *ngFor="let item of menu">
-		                <a href="javascript:void(0)" *ngIf="item.type != 'Blog' || item.type != 'Uniform'" class="d-none d-lg-block">{{item.type}}</a>
+		                <a href="javascript:void(0)" *ngIf="item.type != 'Blog' && item.type != 'Uniform'" class="d-none d-lg-block">{{item.type}}</a>
 		                <a href="/ideas" *ngIf="item.type == 'Blog'" class="d-none d-lg-block">{{item.type}}</a>
 		                <a href="/shop/uniform" *ngIf="item.type == 'Uniform'" class="d-none d-lg-block">{{item.type}}</a>
 		                <div class="megamenu-wrapper" attr.data-menu="{{item.type}}">
