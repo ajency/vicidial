@@ -227,6 +227,7 @@ class StaticElementController extends Controller
                     $join->where('fileupload_mapping.object_type', '=', "App\SizechartImage");
                 })->where([["sizechart_images.product_gender",$params["product_gender"]],["sizechart_images.product_subtype",$params["product_subtype"]],["sizechart_images.product_brand",$params["product_brand"]]])->whereNull('fileupload_mapping.deleted_at')->select('sizechart_images.id','fileupload_mapping.file_id','fileupload_mapping.id as mapping_id','fileupload_mapping.type')->get();
         // dd($sizechartImages);
+        $imagesArr = [];
         foreach($sizechartImages as $sizechartImage){
             // dd($sizechartImage->photos()->find($sizechartImage->mapping_id)->file);
             $photo = $sizechartImage->photos()->find($sizechartImage->mapping_id)->file;
