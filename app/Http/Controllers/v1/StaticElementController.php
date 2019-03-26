@@ -139,6 +139,39 @@ class StaticElementController extends Controller
         return response()->json(["success"=>true,"data"=>$facets_data,"message"=>"facets fetched successfully!!"],200);
     }
 
+    public function temp(Request $request){
+        $request->validate(['product_gender' => 'required', 'product_subtype' => 'required', 'product_brand' => 'required', 'images' => 'present']);
+        $params = $request->all();
+        $sizechartImage = SizechartImage::firstOrNew([
+            "product_gender"=>$params["product_gender"]["facet_value"],
+            "product_subtype"=>$params["product_subtype"]["facet_value"],
+            "product_brand"=>$params["product_brand"]["facet_value"],
+        ]);
+        if(is_null($sizechartImage->id)) {
+            $sizechartImage->save();
+            $sizechartImage->aws_links = [];
+            $request->validate(['images.desktop' => 'required', 'images.mobile' => 'required']);
+        }
+        $sizechartImage->unmapAllImages();
+        foreach ($request->images as $imageType => $image) {
+            $image = base64_decode($image);
+            $mime_type    = finfo_buffer(finfo_open(), $image, FILEINFO_MIME_TYPE);
+            $imageName = $imageType.'.'.str_replace("image/", "", $mime_type);
+            $imagePath = config('ajfileupload.base_root_path').'size-charts/'.$sizechartImage->id.'/'.$imageName;
+            \Storage::disk(config('ajfileupload.disk_name'))->put($imagePath,$image,'public');
+            $sizechartImage->aws_links[$imageType] = $imagePath;
+        }
+        $data = [];
+        $data["success"] = true;
+        $data["data"] = [];
+        $data["data"]["product_gender"] = ["facet_value" => $params["product_gender"]];
+        $data["data"]["product_subtype"] = ["facet_value" => $params["product_subtype"]];
+        $data["data"]["product_brand"] = ["facet_value" => $params["product_brand"]];
+        $data["data"]["images"] = $sizechartImage->aws_links;
+        return response()->json($data,200);
+
+    }
+
     public function saveSizeChartImages(Request $request)
     {
         $request->validate(['product_gender' => 'required', 'product_subtype' => 'required', 'product_brand' => 'required', 'images' => 'present']);
@@ -216,6 +249,25 @@ class StaticElementController extends Controller
         // $dataInserted = StaticElement::saveNewData($params['page_slug'], $params['element_data'], $params['type'], $params['images']);
         return response()->json($data,200);
     } 
+
+    public function temp2(Request $request){
+        $request->validate(['product_gender' => 'required', 'product_subtype' => 'required', 'product_brand' => 'required']);
+        $sizechartImage = SizechartImage::where("product_gender",$request->product_gender)->where("product_subtype",$request->product_subtype)->where("product_brand",$request->product_brand)->first();
+        $data = [];
+        $data["success"] = true;
+        $data["data"] = [];
+        $data["data"]["product_gender"] = ["facet_value" => $params["product_gender"]];
+        $data["data"]["product_subtype"] = ["facet_value" => $params["product_subtype"]];
+        $data["data"]["product_brand"] = ["facet_value" => $params["product_brand"]];
+        $data["data"]["images"] = [
+            'desktop' => null,
+            'mobile' => null
+        ];
+        if(!is_null($sizechartImage)){
+            $data["data"]["images"] = $sizechartImage->getAwsLinks();
+        }
+        return response()->json($data,200);
+    }
 
     public function getSizeCharts(Request $request){
         $types = ["desktop","mobile"];

@@ -9,6 +9,9 @@ class SizechartImage extends Model
 {
     use FileUpload;
 
+    protected $fillable = ['product_gender','product_subtype','product_brand'];
+    protected $casts = ['aws_links'=>'array'];
+
     public function getSizechartImageUrlByType($image_type){
     	$config        = config('ajfileupload');
     	$newFilePath = "";
@@ -24,5 +27,29 @@ class SizechartImage extends Model
 	        }
     	}
         return $newFilePath;
+    }
+
+    public function getAwsLinks(){
+        $links = [];
+        
+        if(isset($this->aws_links['desktop'])){
+            if(config('ajfileupload.use_cdn') && config('ajfileupload.cdn_url')){
+                $links['desktop'] = config('ajfileupload.cdn_url') . $this->aws_links['desktop'];
+            }else{
+                $links['desktop'] = \Storage::disk(config('ajfileupload.disk_name'))->get($this->aws_links['desktop']);
+            }
+        }else{
+            $links['desktop'] = null;
+        }
+        if(isset($this->aws_links['mobile'])){
+            if(config('ajfileupload.use_cdn') && config('ajfileupload.cdn_url')){
+                $links['mobile'] = config('ajfileupload.cdn_url') . $this->aws_links['mobile'];
+            }else{
+                $links['mobile'] = \Storage::disk(config('ajfileupload.disk_name'))->get($this->aws_links['mobile']);
+            }
+        }else{
+            $links['mobile'] = null;
+        }
+        
     }
 }
