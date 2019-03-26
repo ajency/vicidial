@@ -13,7 +13,7 @@
 
 <div class="d-flex justify-content-between mt-3 mb-2">
 	<label class="">Select Size</label>
-  <a href="#" data-target="#sizechart-modal" data-toggle="modal" class="font-weight-bold text-secondary text-uppercase">View Size Chart</a>
+  <a *ngIf="sizeChart" href="#" data-target="#sizechart-modal" data-toggle="modal" class="font-weight-bold text-secondary text-uppercase">View Size Chart</a>
 </div>
 
 <!-- Product Size Selection -->
@@ -143,7 +143,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h6 class="modal-title font-weight-bold" [ngClass]="{'text-danger' : modalSizeSelectError}">Select a size</h6>
-        <a href="#" data-target="#sizechart-modal" data-toggle="modal" class="font-weight-bold mt-1 text-secondary text-uppercase">View Size Chart</a>
+        <a *ngIf="sizeChart" href="#" data-target="#sizechart-modal" data-toggle="modal" class="font-weight-bold mt-1 text-secondary text-uppercase">View Size Chart</a>
       </div>
       <div class="modal-body">
 
@@ -168,7 +168,7 @@
 </div>
 
 <!-- Size Chart modal -->
-<div class="modal fade sizechart-modal" id="sizechart-modal" tabindex="-1" role="dialog" aria-hidden="true">
+<div *ngIf="sizeChart" class="modal fade sizechart-modal" id="sizechart-modal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -180,7 +180,8 @@
         </button>
       </div>
       <div class="modal-body overflow-auto" style="max-height: 88vh">
-        <img src="/assets/img/error.png" class=" img-fluid d-block m-auto" width="">
+        <img *ngIf="isMobile" src="{{sizeChart.mobile}}" class=" img-fluid d-block m-auto" width="">
+        <img *ngIf="!isMobile" src="{{sizeChart.desktop}}" class=" img-fluid d-block m-auto" width="">
       </div>
     </div>
   </div>
