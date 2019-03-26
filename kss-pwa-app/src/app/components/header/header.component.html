@@ -47,14 +47,15 @@
 		        <ul *ngIf="menu" class="nav megamenu--right">
 		            <!-- Boys -->
 		            <li *ngFor="let item of menu">
-		                <a href="javascript:void(0)" *ngIf="item.type != 'Blog'" class="d-none d-lg-block">{{item.type}}</a>
+		                <a href="javascript:void(0)" *ngIf="item.type != 'Blog' || item.type != 'Uniform'" class="d-none d-lg-block">{{item.type}}</a>
 		                <a href="/ideas" *ngIf="item.type == 'Blog'" class="d-none d-lg-block">{{item.type}}</a>
+		                <a href="/shop/uniform" *ngIf="item.type == 'Uniform'" class="d-none d-lg-block">{{item.type}}</a>
 		                <div class="megamenu-wrapper" attr.data-menu="{{item.type}}">
 		                    <div *ngFor="let row of item.rows" class="nav-column">
 		                    	<div *ngFor="let menu of row.menus">
 			                        <div class="nav-column--heading mb-1">{{menu.shop_by}}</div>
 			                        <ul class="list-unstyled">
-			                          <li *ngFor="let type of menu.data"><a class="megamenu-link" [ngClass]="{'megamenu-link--primary' : type.title === 'View all products'}" href="{{type.link}}">{{type.title}}</a></li>			                          
+			                          <li *ngFor="let type of menu.data"><a class="megamenu-link" [ngClass]="{'megamenu-link--primary' : type.title === 'View all products'}" href="{{type.link}}">{{type.title}}</a></li>
 			                        </ul>
 
 		                        </div>
@@ -87,7 +88,7 @@
 		                        </div>
 		                    </div>
 		                </div>
-		            </li>		            
+		            </li>
 
 		            <!-- Other links -->
 		            <li class="d-lg-none align-self-end">
@@ -100,7 +101,8 @@
 		                    <li><a class="megamenu-link" href="/faq">FAQ</a></li>
 		                    <li><a class="megamenu-link" href="/terms-and-conditions">Terms of Use</a></li>
 		                    <li><a class="megamenu-link" href="/privacy-policy">Privacy Policy</a></li>
-		                    <li><a class="megamenu-link" href="http://ideas.kidsuperstore.in/">Blog</a></li>
+		                    <li><a class="megamenu-link" href="/ideas/">Blog</a></li>
+		                    <li><a class="megamenu-link" href="/shop/uniform">Uniforms</a></li>
 		                  </ul>
 		                </div>
 		              </div>
