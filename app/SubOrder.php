@@ -45,6 +45,7 @@ class SubOrder extends Model
                 'price_mrp'        => $variant->getLstPrice(),
                 'price_final'      => $variant->getSalePrice(),
                 'discount'         => $variant->getDiscount(),
+                'category_type'    => $variant->getCategoryType(),
                 'price_discounted' => $itemData['price_final'],
             ];
 
