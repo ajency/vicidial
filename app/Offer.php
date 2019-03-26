@@ -249,8 +249,8 @@ class Offer extends Model
             }
         }
         if($hasShippingItems){
-            $cartData['messages']['coupon_not_valid_for_shipping'] = "Coupon not applicable for items with shipping charges";
-            $cartData['coupon']                                    = null;
+            $cartData['messages']['coupon_not_applicable_for_products_with_shipping_charges'] = "Sorry, this coupon is not applicable to some of the products in your cart";
+            $cartData['coupon']                                                               = null;
             return $cartData;   
         }
 
@@ -292,7 +292,7 @@ class Offer extends Model
         $cartData['final_total']   = $sale_total;
         $cartData['discount']      = 0;
         $cartData['round_off']     = 0;
-        $cartData['shipping']      = config('orders.shipping.price'); // shipping charge to be added to cart for shipping items
+        $cartData['shipping']      = 0;
         $cartData['offersApplied'] = [];
         $cartData['messages']      = [];
         
@@ -302,8 +302,7 @@ class Offer extends Model
     public static function processData($cartData)
     {
         $cartData = self::buildCartData($cartData);
-        //check if cart has shipping items and add shipping charges to cart if any
-        $cartData = self::addShippingCharges($cartData);
+        
 
         if ($cartData['coupon'] != null && trim($cartData['coupon']) != '') {
             $coupon = Coupon::where('display_code', $cartData['coupon'])->first();
@@ -316,6 +315,8 @@ class Offer extends Model
         } else {
             $cartData['coupon'] = null;
         }
+        //check if cart has shipping items and add shipping charges to cart if any
+        $cartData = self::addShippingCharges($cartData);
         return $cartData;
     }
 
@@ -327,6 +328,7 @@ class Offer extends Model
                 in_array($item['gender'], config('orders.shipping.genders')))
             {
                 //add shipping charges to cart
+                $cartData['shipping']     = config('orders.shipping.price');
                 $cartData['final_total'] += $cartData['shipping'];
                 break;
             }
