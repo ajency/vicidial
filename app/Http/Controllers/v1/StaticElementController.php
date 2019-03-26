@@ -161,7 +161,17 @@ class StaticElementController extends Controller
             $sizechartImageExist = true;
         
         $imagesArr = [];
-
+        if(count($imagesArr) != count($types)){
+            foreach($types as $type){
+                $imagesArr[$type]=(isset($imagesArr[$type]))?$imagesArr[$type]:"";
+                if($imagesArr[$type] == ""){
+                    $newFilePath=$sizechartImage->getSizechartImageUrlByType($type);
+                    if($newFilePath == "" && in_array($type, array_keys($images)) == false)
+                        return response()->json(["success"=>false,"message"=>"Please send both mobile and desktop images!!"]);
+                    $imagesArr[$type] = $newFilePath;
+                }
+            }
+        }
         foreach($images as $image_type =>$image){
             if($sizechartImageExist){
                 $sizechartImageObj = SizechartImage::join('fileupload_mapping', function ($join) {
@@ -190,25 +200,10 @@ class StaticElementController extends Controller
             $image_id = $sizechartImage->uploadImage($filepath, false, true, true, '', '', "", $filepath, $extension, $imageName, $attributes);
             $sizechartImage->mapImage($image_id, $image_type);
             $newFilePath =$sizechartImage->getSizechartImageUrlByType($image_type);
-            // $photo = $sizechartImage->photos()->where('type',$image_type)->first();
-            // $path = explode('amazonaws.com/',$photo->file->url);
-            // $newFilePath = $path[1];
-            // if($config['use_cdn'] && $config['cdn_url'] ){
-            //     $tempUrl = parse_url($newFilePath);
-            //     $newFilePath =  $config['cdn_url'] . $tempUrl['path'];
-            // }
             $imagesArr[$image_type] = $newFilePath;
             \Storage::disk('local')->delete($subfilepath);
         }
-        if(count($imagesArr) != count($types)){
-            foreach($types as $type){
-                $imagesArr[$type]=(isset($imagesArr[$type]))?$imagesArr[$type]:"";
-                if($imagesArr[$type] == ""){
-                    $newFilePath=$sizechartImage->getSizechartImageUrlByType($type);
-                    $imagesArr[$type] = $newFilePath;
-                }
-            }
-        }
+        
 
         $data["success"] = true;
         $data["message"] = "Images saved successfully!!";
