@@ -34,7 +34,7 @@ class SizechartImage extends Model
         
         if(isset($this->aws_links['desktop'])){
             if(config('ajfileupload.use_cdn') && config('ajfileupload.cdn_url')){
-                $links['desktop'] = config('ajfileupload.cdn_url') . $this->aws_links['desktop'];
+                $links['desktop'] = config('ajfileupload.cdn_url') .'/'. $this->aws_links['desktop'];
             }else{
                 $links['desktop'] = \Storage::disk(config('ajfileupload.disk_name'))->url($this->aws_links['desktop']);
             }
@@ -43,7 +43,7 @@ class SizechartImage extends Model
         }
         if(isset($this->aws_links['mobile'])){
             if(config('ajfileupload.use_cdn') && config('ajfileupload.cdn_url')){
-                $links['mobile'] = config('ajfileupload.cdn_url') . $this->aws_links['mobile'];
+                $links['mobile'] = config('ajfileupload.cdn_url') .'/'. $this->aws_links['mobile'];
             }else{
                 $links['mobile'] = \Storage::disk(config('ajfileupload.disk_name'))->url($this->aws_links['mobile']);
             }
