@@ -164,6 +164,7 @@ class SubOrder extends Model
                 "quantity"         => 1,
                 "price_discounted" => $this->odoo_data['shipping_fee'],
                 "name"             => config('orders.shipping.variant.name'),
+                "carrier"          => config('orders.shipping.variant.carrier'),
             ]] : [],
         ];
 

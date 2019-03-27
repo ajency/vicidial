@@ -197,6 +197,7 @@
 		<div class="cd-cart-total mt-4">
 			<h5 class="font-weight-bold">Bag Total <span>₹{{cart.summary.you_pay}}</span></h5>
 			<p *ngIf="cart.summary.shipping == 0" class="sub-text mb-3">Free Shipping</p>
+			<p *ngIf="cart.summary.shipping > 0" class="sub-text mb-3">Shipping charges will be added at checkout</p>
 		</div>
 
 		<hr class="mt-0 mb-2">

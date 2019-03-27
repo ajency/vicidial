@@ -313,7 +313,6 @@ class Offer extends Model
     {
         if(checkForShippingItems($cartData['items'])){  //check if cart has shipping items present
             $cartData['shipping']     = config('orders.shipping.price');
-            $cartData['final_total'] += $cartData['shipping'];
         }
         return $cartData;
     }

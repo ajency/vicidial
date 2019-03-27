@@ -49,8 +49,9 @@ return [
     ],
     "shipping" => [
         'variant' => [
-            'id'   => env('SHIPPING_VARIANT_ID'),
-            'name' => env('SHIPPING_VARIANT_NAME'),
+            'id'      => env('SHIPPING_VARIANT_ID'),
+            'name'    => env('SHIPPING_VARIANT_NAME'),
+            'carrier' => env('SHIPPING_CARRIER'),
         ],
         'price'   => env('SHIPPING_PRICE'),
         'types'   => explode(',', env('SHIPPING_TYPES')),
