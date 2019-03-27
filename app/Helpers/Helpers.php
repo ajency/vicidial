@@ -860,3 +860,15 @@ function getProductDefaultImage($productId,$colorId,$preset){
     if(empty($resp)) return null;
     return $resp[$preset];
 }
+
+
+function checkForShippingItems($cartItems)
+{
+    foreach ($cartItems as $item) {
+        if (in_array($item['category_type'], config('orders.shipping.types')))
+        {
+            return true;
+        }
+    }
+    return false;
+}

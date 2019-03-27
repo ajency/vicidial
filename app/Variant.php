@@ -320,6 +320,17 @@ class Variant extends Model
     }
 
     /**
+     * Get variant subtype
+     *
+     * @return string
+     */
+
+    public function getCategoryType()
+    {
+        return (isset($this->elastic_data["search_result_data"]["product_category_type"]) && $this->elastic_data["search_result_data"]["product_category_type"]) ? $this->elastic_data["search_result_data"]["product_category_type"] : false;
+    }
+
+    /**
      * Get display title
      *
      * @return string

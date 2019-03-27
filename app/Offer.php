@@ -204,6 +204,7 @@ class Offer extends Model
         $expressions      = $this->expressions;
         $isApplicable     = true;
         $couponApplicable = false;
+        $hasShippingItems = false;
 
         //check if active
         if(!$this->active){
@@ -236,6 +237,14 @@ class Offer extends Model
             $cartData['coupon']                           = null;
             return $cartData;
         }
+
+        //if cart has shipping items, then set coupon as invalid
+        if(checkForShippingItems($cartData['items'])){
+            $cartData['messages']['coupon_not_applicable_for_products_with_shipping_charges'] = "Sorry, this coupon is not applicable to some of the products in your cart";
+            $cartData['coupon']                                                               = null;
+            return $cartData;   
+        }
+
         //if offer has coupon, check if coupon usage is still valid
         $coupons = $this->coupons;
         foreach ($coupons as $coupon) {
@@ -268,23 +277,22 @@ class Offer extends Model
             $mrp_total += $item['price_mrp'] * $item['quantity'];
             $sale_total += $item['price_sale'] * $item['quantity'];
             $cartData['items'][$id]['price_final'] = $item['price_sale'];
-
         }
         $cartData['mrp_total']     = $mrp_total;
         $cartData['sale_total']    = $sale_total;
         $cartData['final_total']   = $sale_total;
         $cartData['discount']      = 0;
         $cartData['round_off']     = 0;
+        $cartData['shipping']      = 0;
         $cartData['offersApplied'] = [];
         $cartData['messages']      = [];
-
+        
         return $cartData;
     }
 
     public static function processData($cartData)
     {
         $cartData = self::buildCartData($cartData);
-
         if ($cartData['coupon'] != null && trim($cartData['coupon']) != '') {
             $coupon = Coupon::where('display_code', $cartData['coupon'])->first();
             if ($coupon != null) {
@@ -296,6 +304,17 @@ class Offer extends Model
         } else {
             $cartData['coupon'] = null;
         }
+        //check if cart has shipping items and add shipping charges to cart if any
+        $cartData = self::addShippingCharges($cartData);
         return $cartData;
     }
+
+    public static function addShippingCharges($cartData)
+    {
+        if(checkForShippingItems($cartData['items'])){  //check if cart has shipping items present
+            $cartData['shipping']     = config('orders.shipping.price');
+        }
+        return $cartData;
+    }
+
 }
