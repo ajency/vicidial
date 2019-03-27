@@ -387,7 +387,7 @@ class SingleProduct
                     $data['meta'] = $this->getSeoAttributes();
                     break;
                 case 'size_chart':
-                    $data = $this->getSizechartUrl();
+                    $data['size_chart'] = $this->getSizechartUrl();
                     break;
                 case 'blogs':
                     # code...
