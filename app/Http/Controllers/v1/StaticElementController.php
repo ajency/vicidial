@@ -150,6 +150,7 @@ class StaticElementController extends Controller
         if(is_null($sizechartImage->id)) {
             $sizechartImage->save();
             $sizechartImage->aws_links = [];
+            $sizechartImage->clearCache();
             $request->validate(['images.desktop' => 'required', 'images.mobile' => 'required']);
         }
         $sizechartImage->unmapAllImages();
