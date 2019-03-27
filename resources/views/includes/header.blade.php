@@ -386,7 +386,7 @@
             </li>
 
             <li>
-              <a href="/shop/uniform" class="d-none d-lg-block">Uniforms</a>
+              <a href="/shop/uniforms" class="d-none d-lg-block">Uniforms</a>
             </li>
 
 
@@ -402,7 +402,7 @@
                     <li><a class="megamenu-link" href="/terms-and-conditions">Terms of Use</a></li>
                     <li><a class="megamenu-link" href="/privacy-policy">Privacy Policy</a></li>
                     <li><a class="megamenu-link" href="/ideas">Blog</a></li>
-                    <li><a class="megamenu-link" href="/shop/uniform">Uniforms</a></li>
+                    <li><a class="megamenu-link" href="/shop/uniforms">Uniforms</a></li>
                   </ul>
                 </div>
               </div>

@@ -95,7 +95,7 @@ class StaticController extends Controller
             $this->params['breadcrumb']['current'] = ucwords($gendername);
             return view('includes/landingpage/gender')->with('params', $this->params)->with('gendername', $gendername)->with('static_elements', $static_elements);
         }
-        if (in_array($gendername, ["uniform"])){
+        if (in_array($gendername, ["uniforms"])){
             return view('home_new');
         }
         abort(404);
