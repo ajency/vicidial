@@ -37,6 +37,9 @@
           <li class="nav-item" data-target="stationery">
             Stationery
           </li>
+          <li class="nav-item">
+            <a href="/shop/uniforms" class="d-inline font-weight-normal p-0" style="line-height: normal">Uniforms</a>
+          </li>
           <li class="flex-grow-1 disabled"></li>
           <li class="nav-item" data-target="otherlinks">
             Other links
@@ -402,7 +405,6 @@
                     <li><a class="megamenu-link" href="/terms-and-conditions">Terms of Use</a></li>
                     <li><a class="megamenu-link" href="/privacy-policy">Privacy Policy</a></li>
                     <li><a class="megamenu-link" href="/ideas">Blog</a></li>
-                    <li><a class="megamenu-link" href="/shop/uniforms">Uniforms</a></li>
                   </ul>
                 </div>
               </div>
