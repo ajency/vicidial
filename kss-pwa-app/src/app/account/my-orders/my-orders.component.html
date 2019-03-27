@@ -66,9 +66,9 @@
 							     </div> 
 							  </div>
 							</div>
-						  	<div *ngIf="order.order_summary.mrp_total != order.order_summary.you_pay" class="card shadow-sm mt-3 mx-2">
+						  	<div *ngIf="(order.order_summary.mrp_total + order.order_summary.shipping_fee) != order.order_summary.you_pay" class="card shadow-sm mt-3 mx-2">
 						        <div class="card-body text-success d-flex">
-						            <strong>Your Total Savings on this Order is <span> <i class="fas fa-rupee-sign sm-font pl-1"></i></span> {{order.order_summary.mrp_total - order.order_summary.you_pay}}</strong>
+						            <strong>Your Total Savings on this Order is <span> <i class="fas fa-rupee-sign sm-font pl-1"></i></span> {{order.order_summary.mrp_total + order.order_summary.shipping_fee - order.order_summary.you_pay}}</strong>
 						         </div>
 						    </div>
 

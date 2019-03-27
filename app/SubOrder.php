@@ -45,6 +45,7 @@ class SubOrder extends Model
                 'price_mrp'        => $variant->getLstPrice(),
                 'price_final'      => $variant->getSalePrice(),
                 'discount'         => $variant->getDiscount(),
+                'category_type'    => $variant->getCategoryType(),
                 'price_discounted' => $itemData['price_final'],
             ];
 
@@ -112,6 +113,9 @@ class SubOrder extends Model
             $you_pay += $itemData['quantity'] * $itemData['price_discounted'];
             $cart_discount += $itemData['quantity'] * ($itemData['price_final'] - $itemData['price_discounted']);
         }
+        if (checkForShippingItems($items)) {
+            $shipping_fee = config('orders.shipping.price'); //if shipping items are present in cart then update the shipping fee
+        }
         $this->odoo_data = [
             'mrp_total'        => $mrp_total,
             'sale_price_total' => $sale_price_total,
@@ -155,6 +159,13 @@ class SubOrder extends Model
             'type'                  => $this->type,
             'order_date'            => Carbon::now()->toDateTimeString(),
             'transaction_mode'      => $this->order->transaction_mode,
+            'shipping_items'        => ($this->odoo_data['shipping_fee'] > 0) ? [[
+                "variant_id"       => config('orders.shipping.variant.id'),
+                "quantity"         => 1,
+                "price_discounted" => $this->odoo_data['shipping_fee'],
+                "name"             => config('orders.shipping.variant.name'),
+                "carrier"          => config('orders.shipping.variant.carrier'),
+            ]] : [],
         ];
 
         if ($this->odoo_id) {
@@ -218,7 +229,7 @@ class SubOrder extends Model
 
     public function getSubOrderItemWise()
     {
-        $itemsData = [];
+        $itemsData     = [];
         $store_address = $this->location->getAddress();
         foreach ($this->orderLines->groupBy('variant_id') as $items) {
             $itemData = $items->first();

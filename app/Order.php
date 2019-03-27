@@ -154,7 +154,7 @@ class Order extends Model
 
         $total['mrp_total']        = $summary['mrp_total'];
         $total['sale_price_total'] = $summary['sale_price_total'];
-        $total['you_pay']          = $summary['you_pay'];
+        $total['you_pay']          = $summary['you_pay'] + $total['shipping_fee'];
         $total['cart_discount']    = $summary['cart_discount'];
 
         $this->aggregate_data = $total;
