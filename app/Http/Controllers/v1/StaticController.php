@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\StaticElement;
 use App\Defaults;
+use Illuminate\Support\Facades\Input;
 
 class StaticController extends Controller
 {
@@ -164,6 +165,16 @@ class StaticController extends Controller
         return response()->json(["message"=> 'Thank you.. we will get back to you.', 'success'=> true]);
     }
 
+    public function saveRankCSV(Request $request){
+        $data = $request->all();
+        if (Input::hasFile('csv')){
+            $file = Input::file('csv');
+            $name = time() . '-' . $file->getClientOriginalName();
+            $path = storage_path('app/public').'/csv'; 
+            $file->move($path, $name);
+        }
+        dd($data);
+    }
 
 
 }
