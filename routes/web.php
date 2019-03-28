@@ -28,6 +28,7 @@ Route::group([
         ], function () use ($group_app_version) {
             Route::get('/count', $group_app_version . '\CartController@guestGetCount');
             Route::post('/insert', $group_app_version . '\CartController@guestAddItem');
+            Route::post('/update', $group_app_version . '\CartController@guestModifyItem');
             Route::get('/get', $group_app_version . '\CartController@guestCartFetch');
             Route::get('/delete', $group_app_version . '\CartController@guestCartDelete');
             Route::get('/check-status', $group_app_version . '\CartController@checkStatus');
