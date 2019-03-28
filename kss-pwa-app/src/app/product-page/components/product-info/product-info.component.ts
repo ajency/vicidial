@@ -19,6 +19,7 @@ export class ProductInfoComponent implements OnInit, OnChanges {
   @Input() inventoryData : any;
   @Input() isSellable : any;
   @Input() sizeChart : any;
+  @Input() showLoader : boolean;
   selectedSize : any;
   isMobile : any;
   shakeSizes : boolean = false;
@@ -34,7 +35,9 @@ export class ProductInfoComponent implements OnInit, OnChanges {
     }
 
   ngOnInit() {
-
+    this.attributes = [];
+    this.facets = [];
+    this.facets.product_metatag = [];
   }
 
   ngOnChanges(){
@@ -111,7 +114,7 @@ export class ProductInfoComponent implements OnInit, OnChanges {
       let url = window.location.href.split("#")[0] + '#/bag';
       history.pushState({bag : true}, 'bag', url);
       console.log("openCart");
-      this.appservice.loadCartTrigger();    
+      this.appservice.loadCartTrigger();
       this.addToBagApiCall();
     }
     else{
@@ -216,7 +219,7 @@ export class ProductInfoComponent implements OnInit, OnChanges {
     this.appservice.callMineApi().then((response)=>{
       document.cookie = "cart_id=" + response.cart_id + ";path=/";
       if(response.cart_type == 'cart')
-          this.addToBagApiCall(); 
+          this.addToBagApiCall();
       else
           this.startFresh()
     })

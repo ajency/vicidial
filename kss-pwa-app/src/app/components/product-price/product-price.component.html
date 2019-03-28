@@ -1,6 +1,8 @@
-<h4 id="kss-price" class="kss-price">₹ {{selectedVariant.variant_attributes.variant_sale_price}}
+<h4 id="kss-price" class="kss-price">₹
+	<div *ngIf="showLoader" class="d-inline-block loadingBg" style="height: 28px;width: 20%;"></div>
+	{{selectedVariant.variant_attributes.variant_sale_price}}
 	<span *ngIf="selectedVariant.variant_attributes.variant_list_price != selectedVariant.variant_attributes.variant_sale_price">
-		<small class="kss-original-price text-muted">₹{{selectedVariant.variant_attributes.variant_list_price}}</small> 
+		<small class="kss-original-price text-muted">₹{{selectedVariant.variant_attributes.variant_list_price}}</small>
 		<span class="kss-discount text-danger">{{getOffPercentage(selectedVariant.variant_attributes.variant_list_price, selectedVariant.variant_attributes.variant_sale_price)}}% OFF</span>
-	</span> 
+	</span>
 </h4>

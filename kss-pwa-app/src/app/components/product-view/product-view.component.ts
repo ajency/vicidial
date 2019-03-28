@@ -9,6 +9,7 @@ import { AppServiceService } from '../../service/app-service.service';
 export class ProductViewComponent implements OnInit, OnChanges {
 
 	@Input() product : any;
+  @Input() showLoader : boolean;
   constructor(private appservice : AppServiceService) { }
 
   ngOnInit() {

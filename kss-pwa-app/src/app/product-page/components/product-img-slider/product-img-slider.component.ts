@@ -40,7 +40,7 @@ export class ProductImgSliderComponent implements OnInit, OnChanges {
       cellAlign: 'left',
       freeScroll: true,
       contain: true,
-      lazyLoad: 5,
+      lazyLoad: 1,
       pageDots: false,
       prevNextButtons : true
     }
@@ -49,15 +49,15 @@ export class ProductImgSliderComponent implements OnInit, OnChanges {
     }
     let flkty = new Flickity( elem, options);
     let that = this;
-    let imageCount = 0;
-    flkty.on('lazyLoad', function(event, cellElement) {
-        imageCount +=1;
-        if(imageCount == that.images.length){
-          that.fadeOut = true;
-          setTimeout(()=>{
-            that.hideLoader = true;
-          },500)
-        }
-    });
+    // let imageCount = 0;
+    // flkty.on('lazyLoad', function(event, cellElement) {
+    //     imageCount +=1;
+    //     if(imageCount == that.images.length){
+    //       that.fadeOut = true;
+    //       setTimeout(()=>{
+    //         that.hideLoader = true;
+    //       },500)
+    //     }
+    // });
   }
 }
