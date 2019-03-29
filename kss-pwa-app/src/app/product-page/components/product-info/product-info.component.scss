@@ -237,3 +237,11 @@
         }
     }
 }
+
+.qty-select{
+    white-space: nowrap;
+    cursor: pointer;
+    &:hover{
+        color: theme-color("primary");
+    }
+}

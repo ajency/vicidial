@@ -29,7 +29,10 @@
 <div class="text-danger d-none font-weight-bold position-relative size-select-error" style="top: -15px;">Please select a size</div>
 
 <div class="row">
-	<div class="col-sm-12 col-md-12 col-12 mobile-fixed pb-0 pb-sm-2 add-bag-btn visible shadow-layer">
+	<div class="col-sm-12 col-md-12 col-12 mobile-fixed pb-0 pb-sm-2 add-bag-btn visible shadow-layer d-flex">
+    <div class="align-items-center border d-flex font-weight-bold mr-3 px-4 py-2 qty-select" data-target="#qty-modal" data-toggle="modal">
+      Qty: 1
+    </div>
 		<button *ngIf="isSellable" id="cd-add-to-cart" class="btn kss-btn kss-btn--big cd-add-to-cart" (click)="addToBag()">
 			<div class="kss-btn__wrapper d-flex align-items-center justify-content-center">
 				<span class="btn-contents align-items-center">
