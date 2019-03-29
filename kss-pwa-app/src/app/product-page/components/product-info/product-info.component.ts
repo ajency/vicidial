@@ -24,7 +24,8 @@ export class ProductInfoComponent implements OnInit, OnChanges {
   shakeSizes : boolean = false;
   selectedModalSize : any;
   modalSizeSelectError : boolean = false;
-  outOfStock : boolean = true;
+  outOfStock : boolean = true;  
+  selectedQuantity = 1;
   constructor(private appservice : AppServiceService,
               private apiservice : ApiServiceService,
               private breakpointObserver : BreakpointObserver) {
@@ -139,7 +140,7 @@ export class ProductInfoComponent implements OnInit, OnChanges {
     let body = {
       _token: $('meta[name="csrf-token"]').attr('content'),
       variant_id : this.selectedSize,
-      variant_quantity : 1
+      variant_quantity : this.selectedQuantity
     };
     let header = this.appservice.isLoggedInUser() ? { Authorization : 'Bearer '+this.appservice.getCookie('token') } : {}
 
@@ -222,5 +223,10 @@ export class ProductInfoComponent implements OnInit, OnChanges {
       console.log("error ===>", error);
       this.showErrorPopup(error);
     })
+  }
+
+  updateQuantity(quantity){
+    console.log("quantity updated ==>",quantity);
+    this.selectedQuantity = quantity;
   }
 }
