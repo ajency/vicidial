@@ -1,0 +1,24 @@
+.qty-modal{
+    .modal-sm{
+        width: 150px;
+        margin: auto;
+    }
+    .qty-value{
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 5px 0;
+        &:hover{
+            color: darken(theme-color("primary"), 15%);
+        }
+        &.selected{
+            &:after{
+                font-family: "Font Awesome 5 Free";
+                content: "\f00c";
+                font-weight: 900;
+                font-size: 10px;
+            }
+        }
+    }
+}

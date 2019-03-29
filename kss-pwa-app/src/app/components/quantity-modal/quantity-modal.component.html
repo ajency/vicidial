@@ -1,16 +1,16 @@
 <!-- Qty Modal -->
-<div class="modal fade" id="qty-modal" tabindex="-1" role="dialog" >
+<div class="modal fade qty-modal" id="qty-modal" tabindex="-1" role="dialog" >
   <div class="modal-dialog modal-sm modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalCenterTitle">Change Quantity</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <h6 class="modal-title" id="exampleModalCenterTitle">Change Quantity</h6>
+        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
-        </button>
+        </button> -->
       </div>
       <div class="modal-body">
         <div>
-          <div  *ngFor="let option of quantity" (click)="updateQuantity(option)" data-dismiss="modal" aria-label="Close">{{option}}</div>
+          <div  *ngFor="let option of quantity" (click)="updateQuantity(option)" data-dismiss="modal" aria-label="Close" class="qty-value">{{option}}</div>
         </div>
       </div>
     </div>
