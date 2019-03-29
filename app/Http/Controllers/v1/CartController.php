@@ -101,7 +101,7 @@ class CartController extends Controller
 
     public function userModifyItem($id, Request $request)
     {
-        $request->validate(['variant_id' => 'required|exists:variants,odoo_id', 'variant_quantity' => 'required']);
+        $request->validate(['variant_id' => 'required|exists:variants,id', 'variant_quantity' => 'required']);
         $params = $request->all();
         $cart   = Cart::find($id);
         if ($cart == null) {
@@ -109,7 +109,7 @@ class CartController extends Controller
         }
         $user    = User::getUserByToken($request->header('Authorization'));
         validateCart($user, $cart, 'cart');
-        $variant = Variant::where('odoo_id', $params['variant_id'])->first();
+        $variant = Variant::find($params['variant_id']);
         $item    = $variant->getItem(true, isNotProd());
         if ($item) {
             $qty = $params['variant_quantity'];
@@ -135,12 +135,12 @@ class CartController extends Controller
 
         }
         $summary = $cart->getSummary();
-        return response()->json(array_merge(['cart_count' => $cart->itemCount(), "summary" => $summary, "message" => $message, "item" => $item, "coupons" => $coupons]), $available);
+        return response()->json(array_merge(['cart_count' => $cart->itemCount(), "summary" => $summary, "message" => $message, "item" => $item, "coupons" => $coupons], $available));
     }
 
     public function guestModifyItem(Request $request)
     {
-        $request->validate(['variant_id' => 'required|exists:variants,odoo_id', 'variant_quantity' => 'required']);
+        $request->validate(['variant_id' => 'required|exists:variants,id', 'variant_quantity' => 'required']);
         $params = $request->all();
         $id     = $request->session()->get('active_cart_id', false);
         $cart = Cart::find($id);
@@ -149,7 +149,7 @@ class CartController extends Controller
         }
         $cart->anonymousCartCheckUser();
         $cart->abortNotCart('cart');
-        $variant = Variant::where('odoo_id', $params['variant_id'])->first();
+        $variant = Variant::find($params['variant_id']);
         $item    = $variant->getItem(true, isNotProd());
         if ($item) {
             $qty = $params['variant_quantity'];
@@ -175,7 +175,7 @@ class CartController extends Controller
             $item["timestamp"] = intval($cart->cart_data[$item["id"]]["timestamp"]);
         }
         $summary = $cart->getSummary();
-        return response()->json(array_merge(['cart_count' => $cart->itemCount(), "message" => $message, "item" => $item,  "summary" => $summary, "coupons" => $coupons]), $available);
+        return response()->json(array_merge(['cart_count' => $cart->itemCount(), "message" => $message, "item" => $item,  "summary" => $summary, "coupons" => $coupons], $available));
     }
 
     public function userCartFetch($id, Request $request)
