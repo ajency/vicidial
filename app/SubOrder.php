@@ -114,7 +114,7 @@ class SubOrder extends Model
             $cart_discount += $itemData['quantity'] * ($itemData['price_final'] - $itemData['price_discounted']);
         }
         if (checkForShippingItems($items)) {
-            $shipping_fee = config('orders.shipping.price'); //if shipping items are present in cart then update the shipping fee
+            $shipping_fee = Defaults::getUniformShippingPrice(); //if shipping items are present in cart then update the shipping fee
         }
         $this->odoo_data = [
             'mrp_total'        => $mrp_total,
