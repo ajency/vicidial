@@ -215,7 +215,8 @@ export class BagViewComponent implements OnInit {
     let body = {
     //   old_item : item.id,
     //   new_item : item.related_items.size.find(size=> size.value == item.attributes.size).id,
-      quantity : item.quantity
+      variant_id : item.id;
+      variant_quantity : item.quantity
     }
     this.apiservice.request(url, 'post', body ).then((response)=>{
       console.log("response ==>", response);
