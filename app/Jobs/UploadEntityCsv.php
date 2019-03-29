@@ -31,5 +31,7 @@ class UploadEntityCsv implements ShouldQueue
     public function handle()
     {
         EntityCsv::readRankCSV();
+        EntityCsv::updateEntityData();
+        EntityCsv::updateProductRankJob();
     }
 }
