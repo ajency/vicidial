@@ -225,6 +225,7 @@ export class BagViewComponent implements OnInit {
     this.apiservice.request(url, 'post', body, header).then((response)=>{
       console.log("response ==>", response);
       item = response.item;
+      this.cart.items[this.itemIndex] = response.item;
 
       this.cart.summary = response.summary;
       this.cart.applied_coupon = response.applied_coupon;
