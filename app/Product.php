@@ -692,6 +692,10 @@ class Product
         $odoo         = new OdooConnect;
         $variantsData = $odoo->defaultExec("product.product", 'read', [$var], ['fields' => ['lst_price', 'sale_price']])->keyBy('id');
 
+        if (in_array(config('orders.shipping.variant.id'), $var)) {
+            Defaults::setUniformShippingPrice($variantsData[config('orders.shipping.variant.id')]['sale_price']);
+        }
+
         ProductColor::updateElasticData([$productColor->elastic_id => [
             'elastic_data' => null,
             'change'       => function (&$product, &$variants) use ($variantsData) {
