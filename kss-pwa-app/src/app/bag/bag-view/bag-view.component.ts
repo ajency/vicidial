@@ -224,7 +224,7 @@ export class BagViewComponent implements OnInit {
 
       this.cart.summary = response.summary;
       this.cart.applied_coupon = response.applied_coupon;
-      this.formatCoupons(response.coupons);     
+      this.formatCoupons(response.coupons);
       this.cart.cart_count = response.cart_count;
       this.checkCartItemOutOfStock();
       this.updateLocalDataAndUI(this.cart, this.cart.cart_count);
@@ -599,6 +599,8 @@ export class BagViewComponent implements OnInit {
     this.selectedQuantity = item.quantity;
     this.totalQuantity = 5;
     this.itemIndex = index;
+    // $('#qty-modal-cart').modal('show');
+    $('.modal-backdrop').appendTo('.angular-app');
   }
 
 

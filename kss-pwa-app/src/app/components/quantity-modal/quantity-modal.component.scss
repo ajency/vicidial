@@ -16,6 +16,7 @@
             color: darken(theme-color("primary"), 15%);
         }
         &.selected{
+            font-weight: 600;
             &:after{
                 font-family: "Font Awesome 5 Free";
                 content: "\f00c";
