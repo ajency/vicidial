@@ -185,15 +185,17 @@ class StaticController extends Controller
             $headers = $csv->getHeader();
             $result = array_diff(array_values($header_column_mapping),$headers);
 
-            if(!(count(array_values($header_column_mapping))==count($headers) && count($result)==0))
-                return response()->json(["success"=>false,"message"=>"CSV headers do not match!!"],200);
+            if(!(count(array_values($header_column_mapping))==count($headers) && count($result)==0)) {
+                abort(413,"CSV headers do not match!!");
+            }
 
             Storage::disk('s3')->put(config('ajfileupload.doc_base_root_path') . '/'.$name,$path."/".$name);
             Defaults::addOrUpdateLastUpdatedEntityDataFile($name);
             UploadEntityCsv::dispatch()->onQueue('upload_entity_csv');
             return response()->json(["success"=>true,"message"=>"Rank CSV saved successfully!!"],200);
+        } else {
+            abort(413,"CSV file not received!!");
         }
-        return response()->json(["success"=>false,"message"=>"CSV file not received!!"],200);
         
     }
 

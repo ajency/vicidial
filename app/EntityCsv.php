@@ -9,6 +9,7 @@ use League\Csv\Reader;
 use Carbon\Carbon;
 use App\EntityData;
 use DB;
+use App\Jobs\UpdateProductRank;
 
 class EntityCsv extends Model
 {
@@ -54,7 +55,7 @@ class EntityCsv extends Model
     	// dd($insertList);
     	$enity_data = DB::select( DB::raw("SELECT id FROM entity_data WHERE entity_data.attribute = 'product_rank' AND entity_data.id NOT IN (SELECT entity_data.id FROM entity_data JOIN entity_csv ON entity_data.entity_id = entity_csv.entity_id WHERE entity_data.attribute = 'product_rank')") );
     	$entity_data_ids = array_column($enity_data, "id");
-    	EntityData::whereIn('id',$entity_data_ids)->update(['value' => 0]);
+    	EntityData::whereIn('id',$entity_data_ids)->update(['value' => config('product.static_fields.product.product_rank')]);
 
 
     	$entity_csv_update_data = DB::table("entity_data")->join('entity_csv', function ($join) {
@@ -71,8 +72,10 @@ class EntityCsv extends Model
     public static function updateProductRankJob(){
     	$last_updated_date = Defaults::getLastUpdatedEntityData();
     	$entity_data = EntityData::where([['attribute', '=', "product_rank"],['updated_at','>',$last_updated_date]])->get();
+    	foreach ($entity_data as $entity) {
+    		UpdateProductRank::dispatch($entity->entity_id)->onQueue('update_product_rank');
+    	}
     	Defaults::setLastUpdatedEntityData();
-    	// dd($entity_data);
     }
 
 }
