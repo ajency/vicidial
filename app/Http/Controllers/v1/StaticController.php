@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Storage;
 use App\StaticElement;
 use App\Defaults;
 use Illuminate\Support\Facades\Input;
+use League\Csv\Reader;
+use Carbon\Carbon;
+use App\EntityCsv;
+use App\Jobs\UploadEntityCsv;
 
 class StaticController extends Controller
 {
@@ -166,14 +170,43 @@ class StaticController extends Controller
     }
 
     public function saveRankCSV(Request $request){
+        $header_column_mapping =  EntityCsv::getHeaderColumnMapping();
+
         $data = $request->all();
         if (Input::hasFile('csv')){
             $file = Input::file('csv');
-            $name = time() . '-' . $file->getClientOriginalName();
+            $name = time().'-'.$file->getClientOriginalName();
             $path = storage_path('app/public').'/csv'; 
             $file->move($path, $name);
+
+            //read csv file
+            $csv = Reader::createFromPath($path."/".$name, 'r');
+            $csv->setHeaderOffset(0); //set the CSV header offset
+            // $records = $csv->getRecords();
+            $headers = $csv->getHeader();
+            $result = array_diff(array_values($header_column_mapping),$headers);
+
+            if(!(count(array_values($header_column_mapping))==count($headers) && count($result)==0))
+                return response()->json(["success"=>false,"error"=>"CSV headers do not match!!"],200);
+            // $header_columns = array_flip($header_column_mapping);
+            // $insertList =[];
+            // foreach ($records as $offset => $record) {
+            //     // print_r($record);
+            //     $row_data = [];
+            //     foreach($record as $record_key => $record_value){
+            //         $row_data[$header_columns[$record_key]] = $record_value;
+            //         $row_data["created_at"] = Carbon::now()->toDateTimeString();
+            //         $row_data["updated_at"] = Carbon::now()->toDateTimeString();
+            //     }
+            //     array_push($insertList, $row_data);
+            // }
+            // dd($insertList);
+            // EntityCsv::insert($insertList);
+            Storage::disk('s3')->put(config('ajfileupload.doc_base_root_path') . '/'.$name,$path."/".$name);
+            Defaults::addOrUpdateLastUpdatedEntityDataFile($name);
+            UploadEntityCsv::dispatch()->onQueue('upload_entity_csv_test');
         }
-        dd($data);
+        return response()->json(["success"=>true,"message"=>"Rank CSV saved successfully!!"],200);
     }
 
 
