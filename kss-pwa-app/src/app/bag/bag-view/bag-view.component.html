@@ -78,17 +78,20 @@
 										<option *ngFor="let option of item.related_items.size">{{option.value}}</option>
 								</select> -->
 							  </div>
-							  <div class="qty align-self-center mt-0">
-							  	<label class="m-0">Qty:</label>
-							  </div>
-							  <div class="pl-2">
-							  	{{item.quantity}}
-<!-- 								<select class="size form-control form-control-sm br-0  border-dark custom" [(ngModel)]="item.quantity" (ngModelChange)="modifyCart(item)">
-										<option [ngValue]=1>1</option>
-										<option [ngValue]=2>2</option>
-										<option [ngValue]=3>3</option>
-										<option [ngValue]=4>4</option>
-								</select> -->
+
+							  <div class="d-flex align-items-center qty-click" data-target="#qty-modal" data-toggle="modal">
+								  <div class="qty align-self-center mt-0">
+								  	<label class="m-0">Qty:</label>
+								  </div>
+								  <div class="pl-2">
+								  	{{item.quantity}}
+	<!-- 								<select class="size form-control form-control-sm br-0  border-dark custom" [(ngModel)]="item.quantity" (ngModelChange)="modifyCart(item)">
+											<option [ngValue]=1>1</option>
+											<option [ngValue]=2>2</option>
+											<option [ngValue]=3>3</option>
+											<option [ngValue]=4>4</option>
+									</select> -->
+								  </div>
 							  </div>
 							</div>
 

@@ -22,7 +22,7 @@ declare var google_pixel_tracking : any;
 @Component({
   selector: 'app-bag-view',
   templateUrl: './bag-view.component.html',
-  styleUrls: ['./bag-view.component.css']
+  styleUrls: ['./bag-view.component.scss']
 })
 export class BagViewComponent implements OnInit {
 
@@ -51,8 +51,8 @@ export class BagViewComponent implements OnInit {
   constructor( private router: Router,
                private appservice : AppServiceService,
                private apiservice : ApiServiceService,
-               private zone : NgZone               
-              ) { 
+               private zone : NgZone
+              ) {
     this.reloadSubscription = this.appservice.listenToAddToCartEvent().subscribe(()=> { this.reloadCart() });
     this.loadSubscription = this.appservice.listenToOpenCartEvent().subscribe(()=> { this.loadCart() });
 
@@ -73,7 +73,7 @@ export class BagViewComponent implements OnInit {
 
   loadCart(){
     console.log("listened to open cart trigger");
-    this.cartOpenOnTrigger = true;    
+    this.cartOpenOnTrigger = true;
     this.getCartData();
     this.openShippingAddress = false;
     this.openShippingSummary = false;
@@ -89,10 +89,10 @@ export class BagViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("ngOnInit cart component", this.appservice.add_to_cart_clicked);        
+    console.log("ngOnInit cart component", this.appservice.add_to_cart_clicked);
     // this.cartOpenOnTrigger = true;
     $('.ng-cart-loader').removeClass('cart-loader')
-    if(this.appservice.add_to_cart_clicked){      
+    if(this.appservice.add_to_cart_clicked){
       this.fetchCartDataOnAddToCartSuccess();
       this.appservice.add_to_cart_clicked = false;
     }
@@ -102,14 +102,14 @@ export class BagViewComponent implements OnInit {
     this.updateUrl();
   }
 
-  fetchCartDataOnAddToCartSuccess(){    
+  fetchCartDataOnAddToCartSuccess(){
     this.appservice.showLoader();
     if(sessionStorage.getItem('cart_data')){
       this.cart = JSON.parse(sessionStorage.getItem('cart_data'));
     }
     else
       this.cart = {};
-    
+
     this.sessionCheckInterval = setInterval(()=>{
       if(this.appservice.add_to_cart_completed){
         this.fetchCartDataFromServer();
@@ -132,10 +132,10 @@ export class BagViewComponent implements OnInit {
   fetchCartDataFromServer(){
     this.appservice.showLoader();
     this.addToCartFailureMessage = '';
-    this.addToCartFailed = false;    
+    this.addToCartFailed = false;
     this.appservice.callFetchCartApi().then((response)=>{
-      console.log("promotions ==>", response.promotions); 
-      this.fetchCartSuccessHandler(response);                 
+      console.log("promotions ==>", response.promotions);
+      this.fetchCartSuccessHandler(response);
       this.zone.run(() => {});
     })
     .catch((error)=>{
@@ -159,15 +159,15 @@ export class BagViewComponent implements OnInit {
     // this.checkAppliedPromotionValidity();
     this.updateLocalDataAndUI(this.cart, this.cart.cart_count);
     console.log(this.appservice.add_to_cart_failed);
-    this.checkAddToCartStatus();     
+    this.checkAddToCartStatus();
     if(this.cart.cart_type == 'failure'){
       this.editBag();
       this.isCartTypeFailure = true;
     }
-    this.fetchCartFailed = false;  
-    let result = this.google_track_response(response); 
+    this.fetchCartFailed = false;
+    let result = this.google_track_response(response);
     google_pixel_tracking(result.pixel_ids, result.total_values, "cart");
-    this.zone.run(() => {});    
+    this.zone.run(() => {});
   }
 
   google_track_response(response){
@@ -177,7 +177,7 @@ export class BagViewComponent implements OnInit {
       result.total_values.push(item.attributes.price_final);
     })
     console.log("check ==>", result);
-    return result;  
+    return result;
   }
 
   checkAddToCartStatus(){
@@ -188,7 +188,7 @@ export class BagViewComponent implements OnInit {
       this.appservice.add_to_cart_failed = false;
       this.appservice.add_to_cart_failure_message = '';
     }
-    this.zone.run(() => {});  
+    this.zone.run(() => {});
   }
 
   formattedCartDataForUI(data){
@@ -236,7 +236,7 @@ export class BagViewComponent implements OnInit {
       this.cart.items.splice(index,1);
       this.cart.summary = response.summary;
       this.cart.applied_coupon = response.applied_coupon;
-      this.formatCoupons(response.coupons);     
+      this.formatCoupons(response.coupons);
       this.cart.cart_count = response.cart_count;
       this.checkCartItemOutOfStock();
       this.updateLocalDataAndUI(this.cart, this.cart.cart_count);
@@ -247,11 +247,11 @@ export class BagViewComponent implements OnInit {
       if(error.status == 401){
         this.appservice.userLogout();
         this.fetchCartDataFromServer();
-        this.fetchCartFailed = false; 
+        this.fetchCartFailed = false;
       }
       else if((error.status == 400 || error.status == 403) && this.appservice.isLoggedInUser() ){
         this.getNewCartId();
-        this.fetchCartFailed = false; 
+        this.fetchCartFailed = false;
       }
       this.appservice.removeLoader();
     })
@@ -273,7 +273,7 @@ export class BagViewComponent implements OnInit {
   }
 
   checkLoginStatus(){
-    let result = this.google_track_response(this.cart); 
+    let result = this.google_track_response(this.cart);
     google_pixel_tracking(result.pixel_ids, result.total_values, "checkout");
     fbTrackInitiateCheckout(this.cart.summary.you_pay);
     this.addToCartFailed = false;
@@ -282,7 +282,7 @@ export class BagViewComponent implements OnInit {
     }
     else{
       this.callCheckCartStatusApi();
-    }      
+    }
   }
 
   displayModal(){
@@ -410,16 +410,16 @@ export class BagViewComponent implements OnInit {
     if(error.status == 401){
       this.appservice.userLogout();
       this.fetchCartDataFromServer();
-      this.fetchCartFailed = false; 
+      this.fetchCartFailed = false;
     }
     else if((error.status == 400 || error.status == 403)){
       if(this.appservice.isLoggedInUser()){
         this.getNewCartId();
-        this.fetchCartFailed = false; 
+        this.fetchCartFailed = false;
       }
       else{
         this.fetchCartDataFromServer();
-      }        
+      }
     }
     else if(error.status == 404){
       this.cart = {
@@ -452,7 +452,7 @@ export class BagViewComponent implements OnInit {
   isSessionStorageSupported() {
     try {
       sessionStorage.setItem('test', 'test');
-      sessionStorage.removeItem('test');    
+      sessionStorage.removeItem('test');
       return true;
     } catch (e) {
       return false;
@@ -464,7 +464,7 @@ export class BagViewComponent implements OnInit {
     let promos = Object.keys(response.promotions).map((k)=>{ return response.promotions[k] });
     console.log("promos ==>",promos);
     try{
-      promos.forEach((promo)=>{ 
+      promos.forEach((promo)=>{
         promo.actual_discount = this.appservice.calculateDiscount(promo.discount_type, promo.discount_value, this.cart.summary.sale_price_total);
         console.log(promo.actual_discount);
       });
@@ -515,23 +515,23 @@ export class BagViewComponent implements OnInit {
         this.appservice.userLogout();
         this.hideCouponSideBar();
         this.fetchCartDataFromServer();
-        this.fetchCartFailed = false; 
+        this.fetchCartFailed = false;
       }
       else{
         if(error.status == 0){
-          this.couponErrorMessage = "No Internet Connection";  
+          this.couponErrorMessage = "No Internet Connection";
         }
         else{
           this.couponErrorMessage = error.error.message;
-        }        
+        }
         this.appservice.removeLoader();
       }
       // else if(error.status == 403 && this.appservice.isLoggedInUser() ){
       //   this.hideCouponSideBar();
       //   this.getNewCartId();
-      //   this.fetchCartFailed = false; 
-      // }      
-    })    
+      //   this.fetchCartFailed = false;
+      // }
+    })
   }
 
   couponSelected(code){
@@ -565,7 +565,7 @@ export class BagViewComponent implements OnInit {
       if(this.cartOpenOnTrigger)
         this.cartOpenOnTrigger = false;
       else{
-        if(this.appservice.add_to_cart_clicked){      
+        if(this.appservice.add_to_cart_clicked){
           this.fetchCartDataOnAddToCartSuccess();
           this.appservice.add_to_cart_clicked = false;
         }
@@ -573,7 +573,7 @@ export class BagViewComponent implements OnInit {
           this.fetchCartDataFromServer();
       }
       $('#cd-cart').removeClass('overflow-h');
-      
+
       this.updateUrl();
     }
     // else if(window.location.href.endsWith('#/bag/shipping-address')){
@@ -581,5 +581,5 @@ export class BagViewComponent implements OnInit {
     //   $('#cd-cart').addClass('overflow-h');
     // }
   }
-  
+
 }

@@ -1,0 +1,17 @@
+@import '../../../../node_modules/bootstrap/scss/functions';
+@import "../../../assets/SASS/var";
+
+.qty-click{
+	cursor: pointer;
+	&:hover{
+		color: darken(theme-color("primary"), 10%);
+	}
+	&:after{
+	    font-family: "Font Awesome 5 Free";
+	    content: "\f078";
+	    font-weight: 900;
+	    font-size: 10px;
+	    margin-left: 5px;
+	    margin-top: 4px;
+	}
+}
