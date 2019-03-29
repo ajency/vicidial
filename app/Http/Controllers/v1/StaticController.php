@@ -204,7 +204,7 @@ class StaticController extends Controller
             // EntityCsv::insert($insertList);
             Storage::disk('s3')->put(config('ajfileupload.doc_base_root_path') . '/'.$name,$path."/".$name);
             Defaults::addOrUpdateLastUpdatedEntityDataFile($name);
-            UploadEntityCsv::dispatch()->onQueue('upload_entity_csv_test');
+            UploadEntityCsv::dispatch()->onQueue('upload_entity_csv');
         }
         return response()->json(["success"=>true,"message"=>"Rank CSV saved successfully!!"],200);
     }
