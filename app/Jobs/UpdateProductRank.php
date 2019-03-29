@@ -31,9 +31,11 @@ class UpdateProductRank implements ShouldQueue
      */
     public function handle()
     {
-        ProductColor::updateElasticData([$this->productId => [
-            'elastic_data' => null,
-            'change'       => function (&$product, &$variants) {},
-        ]]);
+        foreach (ProductColor::where('product_id', $this->productId) as $productColor) {
+            ProductColor::updateElasticData([$productColor->elastic_id => [
+                'elastic_data' => null,
+                'change'       => function (&$product, &$variants) {},
+            ]]);
+        }
     }
 }
