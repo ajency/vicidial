@@ -138,6 +138,7 @@ export class BagViewComponent implements OnInit {
     this.appservice.showLoader();
     this.addToCartFailureMessage = '';
     this.addToCartFailed = false;
+    this.updateQuantityFailed = false;
     this.appservice.callFetchCartApi().then((response)=>{
       console.log("promotions ==>", response.promotions);
       this.fetchCartSuccessHandler(response);
@@ -254,6 +255,7 @@ export class BagViewComponent implements OnInit {
 
   deleteItem(item){
     this.addToCartFailed = false;
+    this.updateQuantityFailed = false;
     this.appservice.showLoader();
     let body = { variant_id : item.id };
     let url = this.appservice.apiUrl + (this.appservice.isLoggedInUser() ? ("/api/rest/v1/user/cart/"+this.appservice.getCookie('cart_id')+"/delete?") : ("/rest/v1/anonymous/cart/delete?"));
