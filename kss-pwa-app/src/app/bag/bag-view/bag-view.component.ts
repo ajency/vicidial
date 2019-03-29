@@ -51,6 +51,8 @@ export class BagViewComponent implements OnInit {
   selectedQuantity : any;
   totalQuantity : any;
   itemIndex : any;
+  updateQuantityFailed : any;
+  updateQuantityFailureMsg : any;
   constructor( private router: Router,
                private appservice : AppServiceService,
                private apiservice : ApiServiceService,
@@ -215,10 +217,11 @@ export class BagViewComponent implements OnInit {
     let body = {
     //   old_item : item.id,
     //   new_item : item.related_items.size.find(size=> size.value == item.attributes.size).id,
-      variant_id : item.id;
+      variant_id : item.id,
       variant_quantity : item.quantity
     }
-    this.apiservice.request(url, 'post', body ).then((response)=>{
+    let header = this.appservice.isLoggedInUser() ? { Authorization : 'Bearer '+this.appservice.getCookie('token') } : {};
+    this.apiservice.request(url, 'post', body, header).then((response)=>{
       console.log("response ==>", response);
       item = response.item;
 
@@ -232,6 +235,19 @@ export class BagViewComponent implements OnInit {
     })
     .catch((error)=>{
       console.log("error ===>", error);
+      if(error.status == 401){
+        this.appservice.userLogout();
+        this.fetchCartDataFromServer();
+        this.fetchCartFailed = false;
+      }
+      else if((error.status == 400 || error.status == 403) && this.appservice.isLoggedInUser() ){
+        this.getNewCartId();
+        this.fetchCartFailed = false;
+      }
+      else{
+        this.updateQuantityFailed = true;
+        this.updateQuantityFailureMsg = error.error.message; 
+      }
       this.appservice.removeLoader();
     })
   }
