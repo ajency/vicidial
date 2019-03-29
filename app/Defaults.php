@@ -234,4 +234,29 @@ class Defaults extends Model
         return false;
     }
 
+    public static function getUniformShippingPrice()
+    {
+        $sync = self::where('type', 'shipping_charges')->where('label', 'uniform')->first();
+        if ($sync == null) {
+            $sync            = new self;
+            $sync->type      = 'shipping_charges';
+            $sync->label     = 'uniform';
+            $sync->meta_data = ['price' => config('orders.shipping.price')];
+            $sync->save();
+        }
+        return $sync->meta_data['price'];
+
+    }
+
+    public static function setUniformShippingPrice($price)
+    {
+        $sync = self::where('type', 'shipping_charges')->where('label', 'uniform')->first();
+        if ($sync == null) {
+            $sync        = new self;
+            $sync->type  = 'shipping_charges';
+            $sync->label = 'uniform';
+        }
+        $sync->meta_data = ['price' => $price];
+        $sync->save();
+    }
 }

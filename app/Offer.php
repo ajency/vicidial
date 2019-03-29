@@ -312,7 +312,7 @@ class Offer extends Model
     public static function addShippingCharges($cartData)
     {
         if(checkForShippingItems($cartData['items'])){  //check if cart has shipping items present
-            $cartData['shipping']     = config('orders.shipping.price');
+            $cartData['shipping']     = Defaults::getUniformShippingPrice();
         }
         return $cartData;
     }
