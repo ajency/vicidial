@@ -219,7 +219,7 @@ export class BagViewComponent implements OnInit {
     //   old_item : item.id,
     //   new_item : item.related_items.size.find(size=> size.value == item.attributes.size).id,
       variant_id : item.id,
-      variant_quantity : item.quantity
+      variant_quantity : quantity
     }
     let header = this.appservice.isLoggedInUser() ? { Authorization : 'Bearer '+this.appservice.getCookie('token') } : {};
     this.apiservice.request(url, 'post', body, header).then((response)=>{
