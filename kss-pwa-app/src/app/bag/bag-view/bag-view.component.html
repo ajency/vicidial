@@ -79,7 +79,7 @@
 								</select> -->
 							  </div>
 
-							  <div class="d-flex align-items-center qty-click" data-target="#qty-modal" data-toggle="modal">
+							  <div class="d-flex align-items-center qty-click" data-target="#qty-modal-cart" data-toggle="modal">
 								  <div class="qty align-self-center mt-0">
 								  	<label class="m-0">Qty:</label>
 								  </div>
@@ -338,3 +338,7 @@
 
 <app-shipping-details *ngIf="openShippingAddress" (openShippingSummary)="openShippingSummary=true"></app-shipping-details>
 <app-shipping-summary *ngIf="openShippingSummary"></app-shipping-summary>
+
+<div class="modal fade" id="qty-modal-cart" tabindex="-1" role="dialog" >
+  <app-quantity-modal (quantityChanged)="updateQuantity($event)"></app-quantity-modal>
+</div>

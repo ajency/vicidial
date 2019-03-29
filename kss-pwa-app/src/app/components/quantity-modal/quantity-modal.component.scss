@@ -2,7 +2,7 @@
 @import "../../../assets/SASS/var";
 
 .qty-modal{
-    .modal-sm{
+    &.modal-sm{
         width: 150px;
         margin: auto;
     }
