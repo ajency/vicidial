@@ -48,6 +48,9 @@ export class BagViewComponent implements OnInit {
   openShippingAddress : boolean = false;
   openShippingSummary : boolean = false;
   updateViewListner : Subscription;
+  selectedQuantity : any;
+  totalQuantity : any;
+  itemIndex : any;
   constructor( private router: Router,
                private appservice : AppServiceService,
                private apiservice : ApiServiceService,
@@ -204,24 +207,32 @@ export class BagViewComponent implements OnInit {
     return data;
   }
 
-  modifyCart(item){
-    // console.log("inside modifyCart function ==>", item);
-    // let body;
-    // body = {
+  modifyCart(quantity){
+    this.appservice.showLoader();
+    console.log("inside modifyCart function ==>", quantity, this.itemIndex);
+    let item = this.cart.items[this.itemIndex];
+    let url = this.appservice.apiUrl + (this.appservice.isLoggedInUser() ? ("/api/rest/v1/user/cart/"+this.appservice.getCookie('cart_id')+"/update") : ("/rest/v1/anonymous/cart/update"));
+    let body = {
     //   old_item : item.id,
     //   new_item : item.related_items.size.find(size=> size.value == item.attributes.size).id,
-    //   quantity : item.quantity
-    // }
-    // console.log("Body ==>", body);
-    // let url = 'http://localhost:8000/rest/v1/anonymous/cart/update';
-    // this.apiservice.request(url, 'get', body ).then((response)=>{
-    //   console.log("response ==>", response);
-    //   item = response.item;
-    //   sessionStorage.setItem('cart_data', JSON.stringify(this.cart));
-    // })
-    // .catch((error)=>{
-    //   console.log("error ===>", error);
-    // })
+      quantity : item.quantity
+    }
+    this.apiservice.request(url, 'post', body ).then((response)=>{
+      console.log("response ==>", response);
+      item = response.item;
+
+      this.cart.summary = response.summary;
+      this.cart.applied_coupon = response.applied_coupon;
+      this.formatCoupons(response.coupons);     
+      this.cart.cart_count = response.cart_count;
+      this.checkCartItemOutOfStock();
+      this.updateLocalDataAndUI(this.cart, this.cart.cart_count);
+      this.appservice.removeLoader();
+    })
+    .catch((error)=>{
+      console.log("error ===>", error);
+      this.appservice.removeLoader();
+    })
   }
 
   deleteItem(item){
@@ -581,5 +592,14 @@ export class BagViewComponent implements OnInit {
     //   $('#cd-cart').addClass('overflow-h');
     // }
   }
+
+  updateQuantity(item, index){
+    console.log("updateQuantity ==>", item, index);
+    this.selectedQuantity = item.quantity;
+    this.totalQuantity = 5;
+    this.itemIndex = index;
+  }
+
+
 
 }

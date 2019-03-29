@@ -10,7 +10,7 @@
     </div>
     <div class="modal-body">
       <div>
-        <div  *ngFor="let option of quantity" (click)="updateQuantity(option)" data-dismiss="modal" aria-label="Close" class="qty-value">{{option}}</div>
+        <div  *ngFor="let option of quantity; let i = index" (click)="updateQuantity(i+1)" data-dismiss="modal" aria-label="Close" class="qty-value" [ngClass]="{'selected' : i+1 == selectedQuantity}">{{i+1}}</div>
       </div>
     </div>
   </div>

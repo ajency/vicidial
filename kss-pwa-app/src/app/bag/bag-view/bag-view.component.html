@@ -53,7 +53,7 @@
 
 	<div *ngIf="cart.items && cart.items.length">
 		<ul class="cd-cart-items">
-			<li *ngFor="let item of cart.items" [ngClass]="{'out-of-stock': !item.availability}">
+			<li *ngFor="let item of cart.items; let i = index" [ngClass]="{'out-of-stock': !item.availability}">
 				<div class="primary-info d-flex">
 					<div class="product-img">
 						<a href="{{item.href}}" [ngClass]="{'variant-placeholder' : item.attributes.images[0]=='/img/placeholder.svg'}">
@@ -79,18 +79,12 @@
 								</select> -->
 							  </div>
 
-							  <div class="d-flex align-items-center qty-click" data-target="#qty-modal-cart" data-toggle="modal">
+							  <div class="d-flex align-items-center qty-click" data-target="#qty-modal-cart" data-toggle="modal" (click)="updateQuantity(item,i)">
 								  <div class="qty align-self-center mt-0">
 								  	<label class="m-0">Qty:</label>
 								  </div>
 								  <div class="pl-2">
 								  	{{item.quantity}}
-	<!-- 								<select class="size form-control form-control-sm br-0  border-dark custom" [(ngModel)]="item.quantity" (ngModelChange)="modifyCart(item)">
-											<option [ngValue]=1>1</option>
-											<option [ngValue]=2>2</option>
-											<option [ngValue]=3>3</option>
-											<option [ngValue]=4>4</option>
-									</select> -->
 								  </div>
 							  </div>
 							</div>
@@ -268,6 +262,10 @@
 		</button>
 	</div>
 
+	<div class="modal fade" id="qty-modal-cart" tabindex="-1" role="dialog" >
+	  <app-quantity-modal (quantityChanged)="modifyCart($event)" [totalQuantity]="totalQuantity" [selectedQuantity]="selectedQuantity"></app-quantity-modal>
+	</div>
+
 </div>
 
 <div class="slide-out pb-4 px-3" id="cd-coupon" [ngClass]="{'slide-show' : enterCoupon}">
@@ -338,7 +336,3 @@
 
 <app-shipping-details *ngIf="openShippingAddress" (openShippingSummary)="openShippingSummary=true"></app-shipping-details>
 <app-shipping-summary *ngIf="openShippingSummary"></app-shipping-summary>
-
-<div class="modal fade" id="qty-modal-cart" tabindex="-1" role="dialog" >
-  <app-quantity-modal (quantityChanged)="updateQuantity($event)"></app-quantity-modal>
-</div>

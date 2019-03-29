@@ -234,5 +234,5 @@
 </div>
 
 <div class="modal fade" id="qty-modal" tabindex="-1" role="dialog" >
-  <app-quantity-modal (quantityChanged)="updateQuantity($event)"></app-quantity-modal>
+  <app-quantity-modal (quantityChanged)="updateQuantity($event)" [totalQuantity]="totalQuantity" [selectedQuantity]="selectedQuantity"></app-quantity-modal>
 </div>

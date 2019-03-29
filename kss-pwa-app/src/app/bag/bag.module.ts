@@ -12,6 +12,7 @@ import { PromotionsModule } from '../shared-components/promotions/promotions.mod
 import { AddressModule } from '../shared-components/address/address.module';
 import { EditUserModule } from '../shared-components/edit-user/edit-user.module';
 import { NumberModule } from '../directives/number.module';
+import { ComponentsModule } from '../components/components.module';
 
 import { AppliedCouponComponent } from './components/applied-coupon/applied-coupon.component';
 import { UpgradeCartComponent } from './components/upgrade-cart/upgrade-cart.component';
@@ -30,7 +31,8 @@ import { CancelCodComponent } from './components/cancel-cod/cancel-cod.component
     PromotionsModule,
     AddressModule,
     EditUserModule,
-    NumberModule
+    NumberModule,
+    ComponentsModule
   ],
   declarations: [ShippingDetailsComponent, 
   				ShippingSummaryComponent, 

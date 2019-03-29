@@ -7,14 +7,18 @@ import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angu
 })
 export class QuantityModalComponent implements OnInit, OnChanges {
 
+  @Input() totalQuantity : any;
+  @Input() selectedQuantity : any;
 	@Output() quantityChanged = new EventEmitter();
-	quantity = [1,2,3,4];
+	quantity : any;
   constructor() { }
 
   ngOnInit() {
   }
 
   ngOnChanges(){
+    this.quantity = new Array(this.totalQuantity);
+    console.log("quantity ==>", this.quantity.length);
   }
 
   updateQuantity(quantity){

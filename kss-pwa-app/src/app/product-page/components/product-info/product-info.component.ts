@@ -26,6 +26,7 @@ export class ProductInfoComponent implements OnInit, OnChanges {
   modalSizeSelectError : boolean = false;
   outOfStock : boolean = true;  
   selectedQuantity = 1;
+  totalQuantity = 4;
   constructor(private appservice : AppServiceService,
               private apiservice : ApiServiceService,
               private breakpointObserver : BreakpointObserver) {
