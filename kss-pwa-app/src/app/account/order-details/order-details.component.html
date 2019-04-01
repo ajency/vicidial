@@ -63,9 +63,15 @@
 				</label>
 			</div> -->
 
-			<div *ngIf="order.order_info.cancel_allowed" class="card mb-4 py-3 shadow-sm text-center">
-				<a (click)="openCancelOrder()" href="javascript:void(0);" class="btn order-details-btn p-0 text-secondary">Cancel Order <i class="fas fa-chevron-right"></i></a>
+			<div *ngIf="order.order_info.cancel_allowed" class="mb-4 py-3 text-center">
+				<a (click)="openCancelOrder()" href="javascript:void(0);" class="btn order-details-btn order-cancel-btn kss-btn kss-btn--outline-danger shadow-sm">Cancel Order</a>
 			</div>
+
+			<!-- Cancel order alert -->
+			<div class="alert alert-danger cancel-order-alert" role="alert">
+				This order cannot be cancelled as it is already shipped.
+			</div>
+			<!-- End of Cancel Order alert -->
 
 		</div>
 

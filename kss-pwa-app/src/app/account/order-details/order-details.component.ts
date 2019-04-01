@@ -18,7 +18,7 @@ declare var $: any;
 @Component({
   selector: 'app-order-details',
   templateUrl: './order-details.component.html',
-  styleUrls: ['./order-details.component.css']
+  styleUrls: ['./order-details.component.scss']
 })
 
 export class OrderDetailsComponent implements OnInit {
