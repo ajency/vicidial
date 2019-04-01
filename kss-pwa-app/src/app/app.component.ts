@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
   status : any;
   msg : any;
   toastTimeout : any;
-  showToast : boolean = false;  
+  showToast : boolean = false;
   display : boolean = false;
   loadCart : boolean = false;
   loadCartListner : Subscription;
@@ -30,23 +30,23 @@ export class AppComponent implements OnInit {
   hideLoginListner : Subscription;
   constructor(private connectionService: ConnectionService,
               private loc : PlatformLocation,
-              private appservice : AppServiceService) { 
+              private appservice : AppServiceService) {
 
     this.listenToHashChange();
 
     this.connectionService.monitor().subscribe(isConnected => {
       console.log("event occured", isConnected);
       this.isConnected = isConnected;
-      if (this.isConnected) {        
+      if (this.isConnected) {
         this.status = "ONLINE";
         this.msg = "You are online!";
         this.displayToast();
         console.log("online");
-        document.getElementsByTagName('body')[0].classList.remove('app-offline');                
+        document.getElementsByTagName('body')[0].classList.remove('app-offline');
       }
-      else {        
+      else {
         this.status = "OFFLINE";
-        this.msg = "You are offline and may be viewing outdated info!";       
+        this.msg = "You are offline and may be viewing outdated info!";
         this.displayToast();
         console.log("offline");
         document.getElementsByTagName('body')[0].classList.add('app-offline');
@@ -55,7 +55,7 @@ export class AppComponent implements OnInit {
 
     if(!navigator.onLine){
         this.status = "OFFLINE";
-        this.msg = "You are offline and may be viewing outdated info!";       
+        this.msg = "You are offline and may be viewing outdated info!";
         this.displayToast();
         console.log("offline");
         document.getElementsByTagName('body')[0].classList.add('app-offline');
@@ -67,8 +67,8 @@ export class AppComponent implements OnInit {
   }
 
   displayToast(){
-    clearTimeout(this.toastTimeout);  
-    this.display = true;  
+    clearTimeout(this.toastTimeout);
+    this.display = true;
     this.showToast = true;
     this.toastTimeout = setTimeout(()=>{
       this.showToast = false;
@@ -95,7 +95,7 @@ export class AppComponent implements OnInit {
     //   this.updateOnHashChange();
     // else{
     //   this.loadModules();
-    // } 
+    // }
      this.loadModules();
   }
 
@@ -113,7 +113,7 @@ export class AppComponent implements OnInit {
 
   hideLoginModal(){
     console.log("hideLoginModal function");
-    this.displayLogin = false; 
+    this.displayLogin = false;
   }
 
   updateOnHashChange(){
@@ -143,32 +143,32 @@ export class AppComponent implements OnInit {
           $('#cd-shadow-layer').addClass('is-visible');
           $("body").addClass("hide-scroll");
           setTimeout(()=>{
-            this.loadCartFromAngular = true;          
-          },500)      
+            this.loadCartFromAngular = true;
+          },500)
         }
         else{
           this.loadCart = true;
         }
         this.appservice.updateCartViewTrigger();
         $("app-account").addClass('d-none');
-        $("app-bag-view").removeClass('d-none');  
+        $("app-bag-view").removeClass('d-none');
       }
       else if(window.location.href.includes("#/account")){
-        if(window.location.pathname == "/" || window.location.pathname == "/drafthome" || window.location.pathname.includes('/buy') || || window.location.pathname == "/shop/uniforms" ){
+        if(window.location.pathname == "/" || window.location.pathname == "/drafthome" || window.location.pathname.includes('/buy') || window.location.pathname == "/shop/uniforms" ){
           $('#main-nav').removeClass('speed-in');
           $('#cd-cart').addClass("speed-in");
           $('#cd-shadow-layer').addClass('is-visible');
           $("body").addClass("hide-scroll");
           setTimeout(()=>{
             this.loadAccountFromAngular = true;
-          },500)      
+          },500)
         }
         else{
           this.loadAccount = true;
         }
         this.appservice.updateAccountViewTrigger();
         $("app-bag-view").addClass('d-none');
-        $("app-account").removeClass('d-none'); 
+        $("app-account").removeClass('d-none');
       }
   }
 }
