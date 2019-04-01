@@ -619,6 +619,8 @@ export class BagViewComponent implements OnInit {
     console.log("updateQuantity ==>", item, index);
     this.selectedQuantity = item.quantity;
     this.totalQuantity = 5;
+    if(item.available_quantity < 5)
+      this.totalQuantity = item.available_quantity;
     this.itemIndex = index;
     // $('#qty-modal-cart').modal('show');
     $('.modal-backdrop').appendTo('.angular-app');

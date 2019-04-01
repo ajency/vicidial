@@ -53,7 +53,9 @@ export class ProductInfoComponent implements OnInit, OnChanges {
         if(variant && this.inventoryData.variants[variant.variant_attributes.variant_id]){
           this.selectedSize = this.selectedModalSize = variant.variant_attributes.variant_id;
           this.selectedQuantity = 1;
-          this.totalQuantity = this.inventoryData.variants[this.selectedSize];
+          this.totalQuantity = 5;
+          if(this.inventoryData.variants[this.selectedSize] < 5)
+            this.totalQuantity = this.inventoryData.variants[this.selectedSize];
         }
       }
     }
@@ -71,7 +73,9 @@ export class ProductInfoComponent implements OnInit, OnChanges {
     this.replaceURLParameter('size', variant.variant_facets.variant_size.name);
 
     if(this.inventoryData.variants[this.selectedSize]){
-      this.totalQuantity = this.inventoryData.variants[this.selectedSize];
+      this.totalQuantity = 5;
+      if(this.inventoryData.variants[this.selectedSize] < 5)
+        this.totalQuantity = this.inventoryData.variants[this.selectedSize];
       this.selectedQuantity = 1;
     }
   }
