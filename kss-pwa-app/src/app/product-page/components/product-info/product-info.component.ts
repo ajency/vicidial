@@ -26,7 +26,7 @@ export class ProductInfoComponent implements OnInit, OnChanges {
   modalSizeSelectError : boolean = false;
   outOfStock : boolean = true;  
   selectedQuantity = 1;
-  totalQuantity = 4;
+  totalQuantity = 0;
   constructor(private appservice : AppServiceService,
               private apiservice : ApiServiceService,
               private breakpointObserver : BreakpointObserver) {
@@ -39,11 +39,6 @@ export class ProductInfoComponent implements OnInit, OnChanges {
 
   ngOnChanges(){
   	this.variants = this.variants.sort((a,b)=>{ return a.variant_facets.variant_size.sequence - b.variant_facets.variant_size.sequence});
-    if(this.queryParamSize){
-      let variant = this.variants.find((v)=>{ return this.queryParamSize == v.variant_facets.variant_size.name});
-      if(variant)
-        this.selectedSize = this.selectedModalSize = variant.variant_attributes.variant_id;
-    }
     if(this.inventoryData){
       for(const [key, value] of Object.entries(this.inventoryData.variants)) {
         console.log("key value",key,value);
@@ -52,6 +47,14 @@ export class ProductInfoComponent implements OnInit, OnChanges {
         let v = this.variants.find((v)=>{return v.variant_attributes.variant_id == key})
         if(v && value)
           v.is_available = true;
+      }
+      if(this.queryParamSize){
+        let variant = this.variants.find((v)=>{ return this.queryParamSize == v.variant_facets.variant_size.name});
+        if(variant && this.inventoryData.variants[variant.variant_attributes.variant_id]){
+          this.selectedSize = this.selectedModalSize = variant.variant_attributes.variant_id;
+          this.selectedQuantity = 1;
+          this.totalQuantity = this.inventoryData.variants[this.selectedSize];
+        }
       }
     }
   	// console.log("attributes =>", this.colorVariants, this.queryParamSize);
@@ -65,7 +68,12 @@ export class ProductInfoComponent implements OnInit, OnChanges {
     $('.size-select-error').addClass('d-none');
     console.log("inside updatePriceprice", this.selectedSize)
     let variant = this.variants.find((v)=>{ return this.selectedSize == v.variant_attributes.variant_id});
-    this.replaceURLParameter('size', variant.variant_facets.variant_size.name)
+    this.replaceURLParameter('size', variant.variant_facets.variant_size.name);
+
+    if(this.inventoryData.variants[this.selectedSize]){
+      this.totalQuantity = this.inventoryData.variants[this.selectedSize];
+      this.selectedQuantity = 1;
+    }
   }
 
   modalSizeSelected(){
@@ -127,6 +135,7 @@ export class ProductInfoComponent implements OnInit, OnChanges {
     $('#size-modal').modal('hide');
     // $('.kss_sizes .radio-input').prop('checked', false);
     this.selectedSize = '';
+    this.selectedModalSize = '';
     $('.cd-add-to-cart .btn-icon').hide();
     $('.cd-add-to-cart .btn-contents').show();
     $('.cd-add-to-cart').removeClass('cartLoader');
