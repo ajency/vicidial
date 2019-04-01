@@ -164,7 +164,7 @@ class ProductController extends Controller
         $slug = $request->slug;
         $apiResponse = Cache::remember('single-product-'.$slug,60*12, function()use($slug){
             $singleProduct = new SingleProduct($slug);
-            $apiResponse = $singleProduct->generateSinglePageData(['attributes','facets','variants','images','is_sellable','color_variants','breadcrumbs','related_products','meta','blogs']);
+            $apiResponse = $singleProduct->generateSinglePageData(['attributes','facets','variants','images','is_sellable','color_variants','breadcrumbs','related_products','meta','size_chart','blogs']);
             return $apiResponse;
         });
         return response()->json($apiResponse);

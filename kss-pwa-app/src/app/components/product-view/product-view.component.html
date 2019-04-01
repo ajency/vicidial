@@ -3,7 +3,7 @@
         <div class="product-card__wrapper d-flex align-items-center justify-content-center">
     		<img *ngIf="product.image && product.image['1x']; else noImage"
 	            [useSrcset]=true
-	            [offset]=500
+	            [offset]=1000
 	            [defaultImage]="product.image.load"
 	            [lazyLoad]="createDataSrcSet(product.image['1x'], '270w', product.image['2x'], '540w')"
 	            class="card-img-top img-holder"
@@ -14,7 +14,7 @@
             <img
             [defaultImage]="'/img/placeholder.svg'"
             [useSrcset]=true
-            [offset]=500
+            [offset]=1000
             [lazyLoad]="createDataSrcSet('/img/placeholder.svg', '270w', '/img/placeholder.svg', '540w')"
             class="card-img-top img-holder"
             title="{{product.title}}"

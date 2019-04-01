@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\v1;
 
+use App\Facet;
 use App\Http\Controllers\Controller;
+use App\SizechartImage;
 use App\StaticElement;
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
@@ -30,8 +33,8 @@ class StaticElementController extends Controller
 
         if (isset($params['published'])) {
             if ($params['published'] && !isset($params['type'])) {
-                $key = 'static_element_'.$params['page_slug'].'_published';
-                $fetchedData = Cache::rememberForever($key, function () use ($params,$data) {
+                $key         = 'static_element_' . $params['page_slug'] . '_published';
+                $fetchedData = Cache::rememberForever($key, function () use ($params, $data) {
                     return StaticElement::fetch($params['page_slug'], $data, $params['published']);
                 });
             } else {
@@ -113,6 +116,88 @@ class StaticElementController extends Controller
     {
         return response()->json(json_decode(file_get_contents(config_path() . "/static_responses/menu.json"), true));
 
+    }
+
+    public function getFacets(Request $request)
+    {
+        $params = $request->all();
+        // dd($params["type"]);
+        $types  = explode(",", $params["type"]);
+        $data   = [];
+        $facets = Facet::whereIn("facet_name", $types)->select('facet_name', DB::raw('group_concat(facet_value) as "values",group_concat(display_name) as "display_names", group_concat(slug) as "slugs"'))->groupBy('facet_name')->get();
+        // dd($facets->toArray());
+        $facets_data = [];
+        foreach ($facets as $facet) {
+
+            $facet_values      = explode(",", $facet->values);
+            $display_names     = explode(",", $facet->display_names);
+            $slugs             = explode(",", $facet->slugs);
+            $facet_values_data = [];
+            foreach ($facet_values as $facet_key => $facet_value) {
+                array_push($facet_values_data, ["facet_value" => $facet_value, "slug" => $slugs[$facet_key], "display_name" => $display_names[$facet_key]]);
+            }
+            array_push($facets_data, ["facet_name" => $facet->facet_name, "facet_values" => $facet_values_data]);
+        }
+        return response()->json(["success" => true, "data" => $facets_data, "message" => "facets fetched successfully!!"], 200);
+    }
+
+    public function saveSizeChartImages(Request $request)
+    {
+        $request->validate(['product_gender' => 'required', 'product_subtype' => 'required', 'product_brand' => 'required', 'images' => 'present']);
+        $params         = $request->all();
+        $sizechartImage = SizechartImage::firstOrNew([
+            "product_gender"  => stripcslashes($params["product_gender"]["facet_value"]),
+            "product_subtype" => stripcslashes($params["product_subtype"]["facet_value"]),
+            "product_brand"   => stripcslashes($params["product_brand"]["facet_value"]),
+        ]);
+        if (is_null($sizechartImage->id)) {
+            $sizechartImage->save();
+            $sizechartImage->aws_links = [];
+            $sizechartImage->clearCache();
+            $request->validate(['images.desktop' => 'required', 'images.mobile' => 'required']);
+        }
+        $sizechartImage->unmapAllImages();
+        $imagetypes = $sizechartImage->aws_links;
+        foreach ($request->images as $imageType => $image) {
+            $image     = base64_decode($image);
+            $mime_type = finfo_buffer(finfo_open(), $image, FILEINFO_MIME_TYPE);
+            $imageName = $imageType . '.' . str_replace("image/", "", $mime_type);
+            $imagePath = config('ajfileupload.base_root_path') . 'size-charts/' . $sizechartImage->id . '/' . $imageName;
+            \Storage::disk(config('ajfileupload.disk_name'))->put($imagePath, $image, 'public');
+            $imagetypes[$imageType] = $imagePath;
+        }
+        $sizechartImage->aws_links = $imagetypes;
+        $sizechartImage->save();
+        $data                            = [];
+        $data["success"]                 = true;
+        $data["data"]                    = [];
+        $data["data"]["product_gender"]  = ["facet_value" => $params["product_gender"]];
+        $data["data"]["product_subtype"] = ["facet_value" => $params["product_subtype"]];
+        $data["data"]["product_brand"]   = ["facet_value" => $params["product_brand"]];
+        $data["data"]["images"]          = $sizechartImage->aws_links;
+        return response()->json($data, 200);
+
+    }
+
+    public function getSizeCharts(Request $request)
+    {
+        $request->validate(['product_gender' => 'required', 'product_subtype' => 'required', 'product_brand' => 'required']);
+        $params                          = $request->all();
+        $sizechartImage                  = SizechartImage::where("product_gender", stripcslashes($request->product_gender))->where("product_subtype", stripcslashes($request->product_subtype))->where("product_brand", stripcslashes($request->product_brand))->first();
+        $data                            = [];
+        $data["success"]                 = true;
+        $data["data"]                    = [];
+        $data["data"]["product_gender"]  = ["facet_value" => $params["product_gender"]];
+        $data["data"]["product_subtype"] = ["facet_value" => $params["product_subtype"]];
+        $data["data"]["product_brand"]   = ["facet_value" => $params["product_brand"]];
+        $data["data"]["images"]          = [
+            'desktop' => null,
+            'mobile'  => null,
+        ];
+        if (!is_null($sizechartImage)) {
+            $data["data"]["images"] = $sizechartImage->getAwsLinks();
+        }
+        return response()->json($data, 200);
     }
 
 }
