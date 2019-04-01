@@ -99,8 +99,8 @@
 								</div>
 							</div>
 
-							<div *ngIf="item.available_quantity">
-								<ul *ngFor="let array of item.available_quantity" class="product-price px-3 mt-2">
+							<div *ngIf="item.storewise_quantity">
+								<ul *ngFor="let array of item.storewise_quantity" class="product-price px-3 mt-2">
 										<li class="px-0 py-1" style="list-style: disc;border-bottom: 0;">
 											{{array.warehouse}}
 										</li>
