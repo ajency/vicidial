@@ -4,7 +4,7 @@ const fs = require('fs-extra')
 fs.remove('../public/views/kss-pwa/assets/SASS')
 .then(() => {
   	console.log('removed sass folder');
-	fs.move('../public/views/kss-pwa/assets', '../public/assets/', function (err) {
+	fs.move('../public/views/kss-pwa/assets', '../public/assets', function (err) {
 	  if (err) {
 	    console.error(err);
 	  } else {
