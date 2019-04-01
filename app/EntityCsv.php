@@ -24,6 +24,7 @@ class EntityCsv extends Model
         $records = $csv->getRecords();
         $header_columns = array_flip(EntityCsv::$header_column_mapping);
         $insertList =[];
+        EntityCsv::truncate();
         foreach ($records as $offset => $record) {
             $row_data = [];
             foreach($record as $record_key => $record_value){
