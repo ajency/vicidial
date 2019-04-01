@@ -116,11 +116,12 @@ class Cart extends Model
             abort(404);
         }
 
-        $item                 = $variant->getItem($fetch_related, $current_quantity);
-        $item["quantity"]     = intval($this->cart_data[$item["id"]]["quantity"]);
-        $item["timestamp"]    = intval($this->cart_data[$item["id"]]["timestamp"]);
-        $item["availability"] = ($variant->getQuantity() >= $item["quantity"]);
-
+        $item                       = $variant->getItem($fetch_related, $current_quantity);
+        $item["quantity"]           = intval($this->cart_data[$item["id"]]["quantity"]);
+        $item["timestamp"]          = intval($this->cart_data[$item["id"]]["timestamp"]);
+        $item["availability"]       = ($variant->getQuantity() >= $item["quantity"]);
+        $item["available_quantity"] = $variant->getQuantity();
+        
         return $item;
     }
 
