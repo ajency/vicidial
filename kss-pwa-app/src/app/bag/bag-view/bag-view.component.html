@@ -265,8 +265,8 @@
 		</button>
 	</div>
 
-	<div class="modal fade" id="qty-modal-cart" tabindex="-1" role="dialog" >
-	  <app-quantity-modal (quantityChanged)="modifyCart($event)" [totalQuantity]="totalQuantity" [selectedQuantity]="selectedQuantity"></app-quantity-modal>
+	<div class="modal fade" id="qty-modal-cart" tabindex="-1" role="dialog" app-quantity-modal (quantityChanged)="modifyCart($event)" [totalQuantity]="totalQuantity" [selectedQuantity]="selectedQuantity">
+	  <!-- <app-quantity-modal (quantityChanged)="modifyCart($event)" [totalQuantity]="totalQuantity" [selectedQuantity]="selectedQuantity"></app-quantity-modal> -->
 	</div>
 
 </div>
