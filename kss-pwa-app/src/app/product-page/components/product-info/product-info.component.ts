@@ -140,6 +140,7 @@ export class ProductInfoComponent implements OnInit, OnChanges {
     // $('.kss_sizes .radio-input').prop('checked', false);
     this.selectedSize = '';
     this.selectedModalSize = '';
+    this.totalQuantity = 0;
     $('.cd-add-to-cart .btn-icon').hide();
     $('.cd-add-to-cart .btn-contents').show();
     $('.cd-add-to-cart').removeClass('cartLoader');
