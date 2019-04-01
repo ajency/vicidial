@@ -43,7 +43,7 @@ Route::group([
         Route::get('/skip', $group_app_version . '\UserController@skipOTP');
         Route::get('/generate_otp', $group_app_version . '\UserController@sendSMS');
     });
-    Route::get('/download-rank-csv', $group_app_version . '\StaticController@downloadRankCSV');
+    
 });
 
 $group_app_version = 'v2';
