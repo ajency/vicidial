@@ -49,46 +49,19 @@
 
 <ng-container *ngIf="facets.product_category_type.slug == 'uniform'">
   <hr class="my-4">
-
   <!-- Product shipping info -->
-  <div class="row my-4">
-    <div class="col-4 col-sm-4">
-      <div class="shipping-info-box">
-        <div class="ship-info-icon">
-          <img width="35" src="/assets/img/truck.svg">
-        </div>
-        <div class="ship-info">
-          <label class="ship-text text-grey">Shipping Fee</label>
-          <label class="ship-text"><strong>₹ 59</strong></label>
-        </div>
+  <div class="shipping-info-box d-flex my-4">
+    <div class="col-left">
+      <div class="ship-info-icon">
+        <img width="35" src="/assets/img/returns.svg">
+      </div>
+      <div class="ship-info">
+        <label class="ship-text text-grey">Return/Replace</label>
       </div>
     </div>
-
-    <div class="col-4 col-sm-4">
-      <div class="shipping-info-box">
-        <div class="ship-info-icon">
-          <img width="35" src="/assets/img/returns.svg">
-        </div>
-        <div class="ship-info">
-          <label class="ship-text text-grey">Return/Replace</label>
-          <label class="ship-text"><strong>Not allowed*</strong></label>
-          <a href="/terms-and-conditions/#return" target="_self" class="ship-link" >Know More</a>
-        </div>
-      </div>
+    <div class="col-right">
+      <p class="ship-text">This product has a 3 day return/replace policy. <a href="/terms-and-conditions/#return" target="_self" class="ship-link" >Know More</a></p>
     </div>
-
-    <div class="col-4 col-sm-4">
-      <div class="shipping-info-box">
-        <div class="ship-info-icon">
-          <img width="35" src="/assets/img/cancellation.svg">
-        </div>
-        <div class="ship-info">
-          <label class="ship-text text-grey">Cancellation</label>
-          <label class="ship-text"><strong>Allowed</strong></label>
-        </div>
-      </div>
-    </div>
-
   </div>
 </ng-container>  
 
