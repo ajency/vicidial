@@ -42,7 +42,7 @@ export class ProductInfoComponent implements OnInit, OnChanges {
     if(this.inventoryData){
       for(const [key, value] of Object.entries(this.inventoryData.variants)) {
         console.log("key value",key,value);
-        if(value === true)
+        if(value > 0)
           this.outOfStock = false
         let v = this.variants.find((v)=>{return v.variant_attributes.variant_id == key})
         if(v && value)
