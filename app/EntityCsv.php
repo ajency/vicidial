@@ -62,10 +62,12 @@ class EntityCsv extends Model
     	$entity_csv_update_data = DB::table("entity_data")->join('entity_csv', function ($join) {
             $join->on('entity_data.entity_id', '=', 'entity_csv.entity_id');
             $join->where([['entity_data.attribute', '=', "product_rank"]]);
-        })->whereColumn([['entity_data.value',"!=", 'entity_csv.value']])->select('entity_csv.*')->get();
+        })->whereColumn([['entity_data.value',"!=", 'entity_csv.value']])->select('entity_data.*','entity_csv.value as csv_value')->get();
 
         foreach($entity_csv_update_data as $entity_csv_update_entry){
-        	EntityData::where([['entity_id',$entity_csv_update_entry->entity_id],["attribute","product_rank"]])->update(['value' => $entity_csv_update_entry->value]);
+        	$entity_data = EntityData::find($entity_csv_update_entry->id);
+        	$entity_data->value = $entity_csv_update_entry->csv_value;
+        	$entity_data->save();
         }
 
     }
