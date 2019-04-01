@@ -137,7 +137,7 @@ export class AppComponent implements OnInit {
 
   loadModules(){
       if(window.location.href.includes("#/bag")){
-        if(window.location.pathname == "/" || window.location.pathname == "/drafthome" || window.location.pathname.includes('/buy')){
+        if(window.location.pathname == "/" || window.location.pathname == "/drafthome" || window.location.pathname.includes('/buy') || window.location.pathname == "/shop/uniforms" ){
           $('#main-nav').removeClass('speed-in');
           $('#cd-cart').addClass("speed-in");
           $('#cd-shadow-layer').addClass('is-visible');
@@ -154,7 +154,7 @@ export class AppComponent implements OnInit {
         $("app-bag-view").removeClass('d-none');  
       }
       else if(window.location.href.includes("#/account")){
-        if(window.location.pathname == "/" || window.location.pathname == "/drafthome" || window.location.pathname.includes('/buy')){
+        if(window.location.pathname == "/" || window.location.pathname == "/drafthome" || window.location.pathname.includes('/buy') || || window.location.pathname == "/shop/uniforms" ){
           $('#main-nav').removeClass('speed-in');
           $('#cd-cart').addClass("speed-in");
           $('#cd-shadow-layer').addClass('is-visible');
