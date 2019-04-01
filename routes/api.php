@@ -76,7 +76,6 @@ Route::group([
         Route::get('/get-size-charts', $group_app_version . '\StaticElementController@getSizeCharts');
         Route::post('/save-rank-csv', $group_app_version . '\StaticController@saveRankCSV');
     });
-    
     Route::get('/get-page-element', $group_app_version . '\StaticElementController@callFetch');
     Route::get('/test/get-page-element-dummy', $group_app_version . '\StaticElementController@callFetch');
     Route::get('/test/get-menu', $group_app_version . '\StaticElementController@getMenu');

@@ -13,6 +13,9 @@ use League\Csv\Reader;
 use Carbon\Carbon;
 use App\EntityCsv;
 use App\Jobs\UploadEntityCsv;
+use App\EntityData;
+use SplTempFileObject;
+use League\Csv\Writer;
 
 class StaticController extends Controller
 {
@@ -200,6 +203,18 @@ class StaticController extends Controller
     }
 
 
-
+    public function downloadRankCSV(Request $request){
+        $header_column_mapping =  EntityCsv::getHeaderColumnMapping();
+        $entity_data = EntityData::where('attribute','product_rank')->get()->pluck('value','entity_id');
+        $rows = [];
+        array_push($rows, array_values($header_column_mapping));
+        foreach($entity_data as $entity_id => $value){
+            array_push($rows,[$entity_id,$value]);
+        }
+        $csv = Writer::createFromFileObject(new SplTempFileObject());
+        $csv->insertAll($rows);
+        $csv->output('rank_csv.csv');
+        die;
+    }
 
 }
