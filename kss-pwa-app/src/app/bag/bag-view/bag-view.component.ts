@@ -211,6 +211,7 @@ export class BagViewComponent implements OnInit {
   }
 
   modifyCart(quantity){
+    this.addToCartFailed = false;
     this.updateQuantityFailed = false;
     this.appservice.showLoader();
     console.log("inside modifyCart function ==>", quantity, this.itemIndex);
