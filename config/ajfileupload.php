@@ -11,6 +11,10 @@ return [
             'base_path'   => 'products',
             'slug_column' => 'elastic_id',
         ],
+        'App\SizechartImage' => [
+            'base_path'   => 'sizechartImages',
+            'slug_column' => 'id',
+        ],
     ],
     'presets'=> [
         "original"   => [],

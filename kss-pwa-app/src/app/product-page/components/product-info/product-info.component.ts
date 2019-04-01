@@ -18,6 +18,7 @@ export class ProductInfoComponent implements OnInit, OnChanges {
   @Input() queryParamSize : any;
   @Input() inventoryData : any;
   @Input() isSellable : any;
+  @Input() sizeChart : any;
   selectedSize : any;
   isMobile : any;
   shakeSizes : boolean = false;
