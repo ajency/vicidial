@@ -37,6 +37,9 @@
           <li class="nav-item" data-target="stationery">
             Stationery
           </li>
+          <li class="nav-item">
+            <a href="/shop/uniforms" class="d-inline font-weight-normal p-0" style="line-height: normal">Uniforms</a>
+          </li>
           <li class="flex-grow-1 disabled"></li>
           <li class="nav-item" data-target="otherlinks">
             Other links
@@ -385,6 +388,10 @@
               <a href="/ideas" class="d-none d-lg-block">Blog</a>
             </li>
 
+            <li>
+              <a href="/shop/uniforms" class="d-none d-lg-block">Uniforms</a>
+            </li>
+
 
             <!-- Other links -->
             <li class="d-lg-none align-self-end">
@@ -406,144 +413,8 @@
       </div>
     </div>
 
-{{--
-    <div class="stellarnav header-menu ml-lg-4" id="">
-        <ul class="">
-            <li class="d-lg-none">
-                <a class="nav-link font-weight-bold" href="/">
-                    Home
-                </a>
-            </li>
-            <li class="">
-                <a class="nav-link font-weight-bold" href="#">
-                    All
-                </a>
-                <ul class="">
-                  <li><a class="dropdown-item" href="/bottoms/">Bottoms</a></li>
-                  <li><a class="dropdown-item" href="/dress/">Dress</a></li>
-                  <li><a class="dropdown-item" href="/ethnic/">Ethnic</a></li>
-                  <li><a class="dropdown-item" href="/formal-pant/">Formal Pant</a></li>
-                  <li><a class="dropdown-item" href="/infant-utility/">Infant Utility</a></li>
-                  <li><a class="dropdown-item" href="/jeans/">Jeans</a></li>
-                  <!-- <li><a class="dropdown-item" href="/others/">Others</a></li> -->
-                  <li><a class="dropdown-item" href="/shirt/">Shirt</a></li>
-                  <li><a class="dropdown-item" href="/shoes/">Shoes</a></li>
-                  <li><a class="dropdown-item" href="/short/">Short</a></li>
-                  <li><a class="dropdown-item" href="/skirt/">Skirt</a></li>
-                  <li><a class="dropdown-item" href="/sweatshirt/">Sweatshirt</a></li>
-                  <li><a class="dropdown-item" href="/tops/">Tops</a></li>
-                  <li><a class="dropdown-item" href="/tshirt/">Tshirt</a></li>
-                  <li><a class="dropdown-item" href="/woven-tops/">Woven Tops</a></li>
-                </ul>
-            </li>
-            <li class="">
-                <a class="nav-link font-weight-bold" href="#" >
-                    Boys
-                </a>
-                <ul class="">
-                  <li><a class="dropdown-item" href="/boys/junior-7-14-years--toddler-2-7-years/bottoms/">Bottoms</a></li>
-                  <li><a class="dropdown-item" href="/boys/junior-7-14-years--toddler-2-7-years/ethnic/">Ethnic</a></li>
-                  <li><a class="dropdown-item" href="/boys/junior-7-14-years--toddler-2-7-years/formal-pant/">Formal Pants</a></li>
-                  <li><a class="dropdown-item" href="/boys/junior-7-14-years--toddler-2-7-years/jeans/">Jeans</a></li>
-                  <!-- <li><a class="dropdown-item" href="/boys/junior-7-14-years--toddler-2-7-years/others/">Others</a></li> -->
-                  <li><a class="dropdown-item" href="/boys/junior-7-14-years--toddler-2-7-years/shirt/">Shirt</a></li>
-                  <li><a class="dropdown-item" href="/shoes/boys/toddler-2-7-years--junior-7-14-years/">Shoes</a></li>
-                  <li><a class="dropdown-item" href="/boys/junior-7-14-years--toddler-2-7-years/short/">Short</a></li>
-                  <li><a class="dropdown-item" href="/boys/junior-7-14-years--toddler-2-7-years/sweatshirt/">Sweatshirt</a></li>
-                  <li><a class="dropdown-item" href="/boys/junior-7-14-years--toddler-2-7-years/tshirt/">Tshirt</a></li>
-                </ul>
-            </li>
-            <li class="">
-                <a class="nav-link font-weight-bold" href="#">
-                    Girls
-                </a>
-                <ul class="">
-                  <li><a class="dropdown-item" href="/girls/junior-7-14-years--toddler-2-7-years/bottoms/">Bottoms</a></li>
-                  <li><a class="dropdown-item" href="/girls/junior-7-14-years--toddler-2-7-years/dress/">Dress</a></li>
-                  <li><a class="dropdown-item" href="/girls/junior-7-14-years--toddler-2-7-years/ethnic/">Ethnic</a></li>
-                  <li><a class="dropdown-item" href="/girls/junior-7-14-years--toddler-2-7-years/jeans/">Jeans</a></li>
-                  <!-- <li><a class="dropdown-item" href="/girls/junior-7-14-years--toddler-2-7-years/others/">Others</a></li> -->
-                  <li><a class="dropdown-item" href="/shoes/girls/toddler-2-7-years--junior-7-14-years/">Shoes</a></li>
-                  <li><a class="dropdown-item" href="/girls/junior-7-14-years--toddler-2-7-years/short/">Short</a></li>
-                  <li><a class="dropdown-item" href="/girls/junior-7-14-years--toddler-2-7-years/skirt/">Skirt</a></li>
-                  <li><a class="dropdown-item" href="/girls/junior-7-14-years--toddler-2-7-years/tshirt/">Tshirt</a></li>
-                  <li><a class="dropdown-item" href="/girls/junior-7-14-years--toddler-2-7-years/woven-tops/">Woven Tops</a></li>
-                </ul>
-            </li>
-            <li class="">
-                <a class="nav-link font-weight-bold" href="#">
-                    Infants
-                </a>
-                <ul class="">
-                  <li><a class="dropdown-item" href="/infant-0-2-years/bottoms/">Bottoms</a></li>
-                  <li><a class="dropdown-item" href="/infant-0-2-years/dress/">Dress</a></li>
-                  <li><a class="dropdown-item" href="/infant-0-2-years/infant-utility/">Infant Utility</a></li>
-                  <li><a class="dropdown-item" href="/infant-0-2-years/shirt/">Shirt</a></li>
-                  <li><a class="dropdown-item" href="/shoes/infant-0-2-years/">Shoes</a></li>
-                  <li><a class="dropdown-item" href="/infant-0-2-years/short/">Short</a></li>
-                  <li><a class="dropdown-item" href="/infant-0-2-years/tshirt/">Tshirt</a></li>
-                  <li><a class="dropdown-item" href="/infant-0-2-years/woven-tops/">Woven Tops</a></li>
-                </ul>
-            </li>
-            <li class="">
-                <a class="nav-link font-weight-bold" href="#">
-                    Kids Accessories
-                </a>
-                <ul class="">
-                  <li><a class="dropdown-item" href="/accessories/boys/">Boys</a></li>
-                  <li><a class="dropdown-item" href="/accessories/girls/">Girls</a></li>
-                  <li><a class="dropdown-item" href="/accessories/others/">Other</a></li>
-                </ul>
-            </li>
-
-            <li class="other-links d-lg-none">
-                <a class="nav-link font-weight-bold" href="#">
-                    Other Links
-                </a>
-                <ul class="">
-                  <li><a class="dropdown-item" href="/about-us">About Us</a></li>
-                  <li><a class="dropdown-item" href="/contact">Contact Us</a></li>
-                  <li><a class="dropdown-item" href="/faq">FAQ</a></li>
-                  <li><a class="dropdown-item" href="/terms-and-conditions">Terms of Use</a></li>
-                  <li><a class="dropdown-item" href="/privacy-policy">Privacy Policy</a></li>
-                  <li><a class="dropdown-item" href="http://ideas.kidsuperstore.in/">Blog</a></li>
-                </ul>
-            </li>
-        </ul>
-    </div>
---}}
-
     <div class="my-lg-0 ml-auto header-actions">
         <ul class="list-inline mb-2 pt-2">
-            <!-- <li class="list-inline-item">
-                <i class="kss_icon search-icon cursor-pointer"></i>
-                <form class="search-input" style="width: 22rem; display:none;">
-                     <input id="search" name="search" type="text" placeholder="What're we looking for ?" autocomplete="off">
-                      <span aria-hidden="true" class="hide-search h1 text-white">&times;</span>
-                </form>
-                <div class="card recent-search" style="width: 22rem; display:none;">
-                  <div class="card-header font-weight-bold">
-                    Recent Search
-                  </div>
-                  <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        <a href="#" class="recent-link text-black">
-                        New Born Baby Cloths
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="#" class="recent-link text-black">
-                         Infants Accessories
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="#" class="recent-link text-black">
-                        Best of Bath Accessories
-                        </a>
-                    </li>
-                  </ul>
-                </div>
-            </li> -->
             <li class="list-inline-item">
                 <a class="cursor-pointer" id="cd-my-account-trigger">
                     <i class="kss_icon profile-icon">
@@ -552,7 +423,6 @@
             </li>
             <li class="list-inline-item pr-0 ">
                 <div id="cd-cart-trigger" class="shopping-cart position-relative cursor-pointer">
-                <!-- <a id="cd-cart-trigger-test" href="#" class="shopping-cart"> -->
                    <i class="kss_icon bag-icon cursor-pointer">
                    </i>
                    <span class="badge badge-light cart-counter d-none"><div id="output">0</div></span>

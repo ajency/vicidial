@@ -536,6 +536,11 @@
                         <tbody>
                            <tr><th>Products</th><th>Brands</th><th>Returns Policy</th></tr>
                            <tr>
+                              <td>Uniforms</td>
+                              <td></td>
+                              <td>Within 3 days of delivery</td>
+                           </tr>
+                           <tr>
                               <td>Clothes and Footwear</td>
                               <td></td>
                               <td>Within 7 days of delivery</td>
@@ -658,6 +663,12 @@
                <li class="group-body">
                   All Users and Sellers shall comply with all the applicable laws (including without limitation Foreign Exchange Management Act, 1999 and the rules made there under, Customs Act, Information and Technology Act, 2000 as amended by the Information Technology (Amendment) Act 2008, Prevention of Money Laundering Act, 2002 and the rules made there under, Foreign Contribution Regulation Act, 1976 and the rules made there under, Income Tax Act, 1961 and the rules made there under and all other laws as may be applicable.
                </li>            
+            </ol>
+            <h5 class="group-title group-title--black">Uniform Return Policy</h5>
+            <ol>
+               <li>
+                  Our aim at KidSuperStore.in is to ensure that our customer is completely happy. In order to satisfy you, we guarantee a return of any product you consider to have a defect within a period of 3 days, from the date of delivery. You must understand that the returned product has to be unused and is in the same condition as you received it, in its original packaging to be refundable. <a title="Kidsuperstore.in" href="https://www.kidsuperstore.in/" target="_blank">Kidsuperstore.in</a> reserves the right to reject any return request if the product looks used.
+               </li>
             </ol>
          </div> 
 

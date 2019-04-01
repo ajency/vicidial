@@ -4,9 +4,9 @@
 }
 
 [static_element-type='offer_banner']{
-	padding-top: 35.05%;
+	padding-top: 35%;
 	width: 100%;
-	@media (max-width: 767px){
-		padding-top: 77.83%;
+	@media (orientation: portrait){
+		padding-top: 82.083%;
 	}
 }

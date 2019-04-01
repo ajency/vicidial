@@ -205,6 +205,30 @@
     color: rgba(10, 0, 0, 0.63);
 }
 
+//shipping info box
+.shipping-info-box {
+    .ship-info-icon {
+        img {
+            display: block;
+            margin: 0 auto;
+        }
+    }
+    .ship-info {
+        text-align: center;
+        .ship-text {
+            text-align: center;
+            display: block;
+            font-weight: 400;
+            margin-top: 5px;
+            margin-bottom: 0;
+            
+            &.text-grey {
+                color: grey;
+            }
+        }
+    }    
+}
+
 @media (max-width: 767px){
     .shadow-layer{
         padding: 10px !important;
