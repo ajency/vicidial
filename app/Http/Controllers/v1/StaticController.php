@@ -214,7 +214,6 @@ class StaticController extends Controller
         $csv = Writer::createFromFileObject(new SplTempFileObject());
         $csv->insertAll($rows);
         $csv->output('rank_csv.csv');
-        die;
     }
 
 }
