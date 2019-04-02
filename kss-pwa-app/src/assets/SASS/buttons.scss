@@ -26,6 +26,17 @@
 		    border-color: theme-color("secondary");
     	}
     }
+    &--outline-danger{
+    	background-color: transparent;
+    	border-color: $dager-light;
+    	color: $dager-light;
+    	&:hover{
+    		color: #fff;
+		    background-color: $dager-light;
+		    border-color: $dager-light;
+    	}
+    }
+
     &--link{
     	background-color: transparent;
     	border-color: transparent;

@@ -25,6 +25,7 @@ Route::group([
             'prefix' => '/cart',
         ], function () use ($group_app_version) {
             Route::post('/{id}/insert', $group_app_version . '\CartController@userAddItem');
+            Route::post('/{id}/update', $group_app_version . '\CartController@userModifyItem');
             Route::get('/{id}/get', $group_app_version . '\CartController@userCartFetch');
             Route::get('/{id}/delete', $group_app_version . '\CartController@userCartDelete');
             Route::get('/{id}/apply-coupon', $group_app_version . '\CartController@userCartCoupon');

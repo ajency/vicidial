@@ -157,12 +157,13 @@ class Variant extends Model
     public function getItem($related_items = true, $current_quantity = false)
     {
         $item = array(
-            'product_slug' => $this->getProductSlug(),
-            'availability' => $this->getAvailability(),
-            'message'      => $this->getMessage(),
-            'attributes'   => $this->getItemAttributes(),
-            "id"           => $this->id,
-            "pixel_id"     => $this->getParentId() . "-" . $this->getVarColorId(),
+            'product_slug'       => $this->getProductSlug(),
+            'availability'       => $this->getAvailability(),
+            'available_quantity' => $this->getQuantity(),
+            'message'            => $this->getMessage(),
+            'attributes'         => $this->getItemAttributes(),
+            "id"                 => $this->id,
+            "pixel_id"           => $this->getParentId() . "-" . $this->getVarColorId(),
         );
 
         if ($related_items) {
@@ -170,12 +171,12 @@ class Variant extends Model
         }
 
         if ($current_quantity) {
-            $item['available_quantity'] = $this->getQuantityStoreWise();
+            $item['storewise_quantity'] = $this->getQuantityStoreWise();
         }
 
         return $item;
-
     }
+
     public function getItemAttributes()
     {
 
@@ -405,8 +406,6 @@ class Variant extends Model
     {
         UpdateVariantInventory::dispatch($params['variants'])->onQueue('update_inventory');
     }
-
-
 
     public static function getWarehouseInventory()
     {

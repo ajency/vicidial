@@ -24,18 +24,7 @@ export class HomePageComponent implements OnInit {
 
   ngOnInit() {
   	console.log("ngOnInit HomePageComponent", window.location.pathname);
-  	// this.menuObject = menu.menu;
-    // let url = "https://demo8558685.mockable.io/get-menu";
-    let url = isDevMode() ? "https://demo8558685.mockable.io/get-menu" : "/api/rest/v1/test/get-menu"
-  	this.apiService.request(url,'get',{},{}).then((data)=>{
-  		console.log("data ==>", data);
-  		this.menuObject = data.menu;
-  	})
-  	.catch((error)=>{
-  		console.log("error in fetching the json",error);
-  	})
-
-    url = isDevMode() ? "https://demo8558685.mockable.io/get-home-page-elements-test" : "/api/rest/v1/test/get-page-element-dummy?page_slug=home";
+    let url = isDevMode() ? "https://demo8558685.mockable.io/get-home-page-elements-test" : "/api/rest/v1/test/get-page-element-dummy?page_slug=home";
 
     console.log("published_home ==>", published_home);
     if(published_home)

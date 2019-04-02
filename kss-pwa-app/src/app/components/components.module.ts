@@ -18,15 +18,16 @@ import { BreadcrumsComponent } from './breadcrums/breadcrums.component';
 import { ProductPriceComponent } from './product-price/product-price.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ProductViewComponent } from './product-view/product-view.component';
+import { QuantityModalComponent } from './quantity-modal/quantity-modal.component';
 
 @NgModule({
-  declarations: [HeaderComponent, FooterComponent, SliderComponent, ProductComponent, NoProductComponent, LoaderComponent, NoConnectionComponent, GenderBoxComponent, LabelBoxComponent, BlogComponent, FeaturedBlogComponent, BackToTopComponent, MobileProductsComponent, BreadcrumsComponent, ProductPriceComponent, PageNotFoundComponent, ProductViewComponent],
+  declarations: [HeaderComponent, FooterComponent, SliderComponent, ProductComponent, NoProductComponent, LoaderComponent, NoConnectionComponent, GenderBoxComponent, LabelBoxComponent, BlogComponent, FeaturedBlogComponent, BackToTopComponent, MobileProductsComponent, BreadcrumsComponent, ProductPriceComponent, PageNotFoundComponent, ProductViewComponent, QuantityModalComponent],
   imports: [
     CommonModule,
     LazyLoadImageModule.forRoot({
         preset: intersectionObserverPreset
   	})
   ],
-  exports : [HeaderComponent, FooterComponent, SliderComponent, ProductComponent, NoProductComponent, LoaderComponent, NoConnectionComponent, GenderBoxComponent, LabelBoxComponent, BlogComponent, BackToTopComponent, MobileProductsComponent, BreadcrumsComponent, ProductPriceComponent, PageNotFoundComponent, ProductViewComponent]
+  exports : [HeaderComponent, FooterComponent, SliderComponent, ProductComponent, NoProductComponent, LoaderComponent, NoConnectionComponent, GenderBoxComponent, LabelBoxComponent, BlogComponent, BackToTopComponent, MobileProductsComponent, BreadcrumsComponent, ProductPriceComponent, PageNotFoundComponent, ProductViewComponent, QuantityModalComponent]
 })
 export class ComponentsModule { }

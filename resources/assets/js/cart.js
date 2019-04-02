@@ -15,13 +15,12 @@ function isMobileScreen(){
 $(document).ready(function(){
     //Set crt count on page load
     updateCartCountInUI();
-
-    if((window.location.href.includes('#/bag') || window.location.href.includes('#/account')) && (window.location.pathname !="/" && window.location.pathname !="/drafthome" && window.location.pathname != "/shop/uniforms") )
+    if((window.location.href.includes('#/bag') || window.location.href.includes('#/account')) && (window.location.pathname !="/" && window.location.pathname !="/drafthome" && window.location.pathname != "/shop/uniforms"  && !window.location.pathname.includes('/buy')) )
         openCart();
 
     window.onhashchange = function() { 
      console.log("hash changed");
-     if(!$('#cd-cart').hasClass("speed-in") && (window.location.href.includes('#/bag') || window.location.href.includes('#/account')) && (window.location.pathname !="/" && window.location.pathname !="/drafthome" && window.location.pathname != "/shop/uniforms") ){
+     if(!$('#cd-cart').hasClass("speed-in") && (window.location.href.includes('#/bag') || window.location.href.includes('#/account')) && (window.location.pathname !="/" && window.location.pathname !="/drafthome" && window.location.pathname != "/shop/uniforms"  && !window.location.pathname.includes('/buy')) ){
         openCart();
      }
     }    

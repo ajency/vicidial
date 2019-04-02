@@ -29,7 +29,10 @@
 <div class="text-danger d-none font-weight-bold position-relative size-select-error" style="top: -15px;">Please select a size</div>
 
 <div class="row">
-	<div class="col-sm-12 col-md-12 col-12 mobile-fixed pb-0 pb-sm-2 add-bag-btn visible shadow-layer">
+	<div class="col-sm-12 col-md-12 col-12 mobile-fixed pb-0 pb-sm-2 add-bag-btn visible shadow-layer d-flex">
+    <div *ngIf="totalQuantity" class="align-items-center border d-flex font-weight-bold mr-2 px-4 py-2 qty-select" data-target="#qty-modal" data-toggle="modal">
+      Qty: {{selectedQuantity}}
+    </div>
 		<button *ngIf="isSellable" id="cd-add-to-cart" class="btn kss-btn kss-btn--big cd-add-to-cart" (click)="addToBag()">
 			<div class="kss-btn__wrapper d-flex align-items-center justify-content-center">
 				<span class="btn-contents align-items-center">
@@ -44,48 +47,23 @@
 	</div>
 </div>
 
-<!-- <hr class="my-4"> -->
-
-<!-- Product shipping info -->
-<!-- <div class="row my-4">
-  <div class="col-4 col-sm-4">
-    <div class="shipping-info-box">
-      <div class="ship-info-icon">
-        <img width="35" src="/assets/img/truck.svg">
-      </div>
-      <div class="ship-info">
-        <label class="ship-text text-grey">Shipping Fee</label>
-        <label class="ship-text"><strong>₹ 59</strong></label>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-4 col-sm-4">
-    <div class="shipping-info-box">
+<ng-container *ngIf="facets.product_category_type.slug == 'uniform'">
+  <hr class="my-4">
+  <!-- Product shipping info -->
+  <div class="shipping-info-box d-flex my-4">
+    <div class="col-left">
       <div class="ship-info-icon">
         <img width="35" src="/assets/img/returns.svg">
       </div>
       <div class="ship-info">
         <label class="ship-text text-grey">Return/Replace</label>
-        <label class="ship-text"><strong>Not allowed*</strong></label>
-        <a href="/terms-and-conditions/#return" target="_self" class="ship-link" >Know More</a>
       </div>
     </div>
-  </div>
-
-  <div class="col-4 col-sm-4">
-    <div class="shipping-info-box">
-      <div class="ship-info-icon">
-        <img width="35" src="/assets/img/cancellation.svg">
-      </div>
-      <div class="ship-info">
-        <label class="ship-text text-grey">Cancellation</label>
-        <label class="ship-text"><strong>Allowed</strong></label>
-      </div>
+    <div class="col-right">
+      <p class="ship-text">This product has a 3 day return/replace policy. <a href="/terms-and-conditions/#return" target="_self" class="ship-link" >Know More</a></p>
     </div>
   </div>
-
-</div> -->
+</ng-container>  
 
 <div class="accordion product-collapse" id="prodDetails">
   <div *ngIf="attributes.product_description" class="">
@@ -228,4 +206,8 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="modal fade" id="qty-modal" tabindex="-1" role="dialog" app-quantity-modal (quantityChanged)="updateQuantity($event)" [totalQuantity]="totalQuantity" [selectedQuantity]="selectedQuantity">
+  <!-- <app-quantity-modal (quantityChanged)="updateQuantity($event)" [totalQuantity]="totalQuantity" [selectedQuantity]="selectedQuantity"></app-quantity-modal> -->
 </div>
