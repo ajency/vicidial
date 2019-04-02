@@ -43,6 +43,7 @@ Route::group([
         Route::get('/skip', $group_app_version . '\UserController@skipOTP');
         Route::get('/generate_otp', $group_app_version . '\UserController@sendSMS');
     });
+    
 });
 
 $group_app_version = 'v2';

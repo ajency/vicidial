@@ -259,4 +259,51 @@ class Defaults extends Model
         $sync->meta_data = ['price' => $price];
         $sync->save();
     }
+
+    public static function getLastUpdatedEntityData()
+    {
+        $sync = self::where('type', 'sync')->where('label', 'update_entity_data')->first();
+        if ($sync == null) {
+            $sync            = new self;
+            $sync->type      = 'sync';
+            $sync->label     = 'update_entity_data';
+            $sync->meta_data = ['time' => Carbon::now()->subDay()->startOfDay()->toDateTimeString(),'filename' => ''];
+            $sync->save();
+        }
+        return $sync->meta_data['time'];
+
+    }
+
+    public static function setLastUpdatedEntityData()
+    {
+        $sync            = self::where('type', 'sync')->where('label', 'update_entity_data')->first();
+        $meta_data = $sync->meta_data;
+        $meta_data["time"] = Carbon::now()->toDateTimeString();
+        $sync->meta_data = $meta_data;
+        $sync->save();
+    }
+
+    public static function addOrUpdateLastUpdatedEntityDataFile($value)
+    {
+        $sync            = self::where('type', 'sync')->where('label', 'update_entity_data')->first();
+        if ($sync == null) {
+            $sync            = new self;
+            $sync->type      = 'sync';
+            $sync->label     = 'update_entity_data';
+            $sync->meta_data = ['time' => Carbon::now()->subDay()->startOfDay()->toDateTimeString(),'filename' => $value];
+        }
+        else{
+            $meta_data = $sync->meta_data;
+            $meta_data['filename'] = $value;
+            $sync->meta_data = $meta_data;
+        }
+        $sync->save();
+    }
+
+    public static function getLastUpdatedEntityDataFile()
+    {
+        $sync = self::where('type', 'sync')->where('label', 'update_entity_data')->first();
+        return $sync->meta_data['filename'];
+    }
+
 }
