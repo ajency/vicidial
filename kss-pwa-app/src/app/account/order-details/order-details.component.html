@@ -143,6 +143,12 @@
 			<div class="row primary-info cancelable-items">
 				<div class="col-12 d-flex flex-column"  *ngFor="let item of order.items; let i = index">
 					<app-item [item]="item" [showStatus]=false ></app-item>
+
+					<!-- item return/cancelled msg -->
+						<div class="refund-info text-dark mb-4 mt-3">
+							<i class="fas fa-info info-icon"></i> Refund should reflect in 5-7 days to your card/bank
+						</div>
+					<!-- End of item return/cancelled msg -->
 				</div>
 			</div>
 			
