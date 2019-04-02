@@ -628,12 +628,7 @@ export class BagViewComponent implements OnInit {
       this.totalQuantity = item.available_quantity;
     this.itemIndex = index;
     $('#qty-modal-cart').modal('show');
-    console.log("testtt");
-    $('#qty-modal-cart').on('shown.bs.modal', function (e) {
-    console.log("testtt 2");
-      // do something...
-      $('.modal-backdrop').appendTo('.angular-app');
-    })
+    $('.modal-backdrop').appendTo('.angular-app');
   }
 
 
