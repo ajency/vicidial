@@ -240,7 +240,7 @@ class Offer extends Model
 
         //if cart has shipping items, then set coupon as invalid
         if(checkForShippingItems($cartData['items'])){
-            $cartData['messages']['coupon_not_applicable_for_products_with_shipping_charges'] = "Sorry, this coupon is not applicable to some of the products in your cart";
+            $cartData['messages']['coupon_not_applicable_for_products_with_shipping_charges'] = "This coupon is not valid for school uniforms";
             $cartData['coupon']                                                               = null;
             return $cartData;   
         }

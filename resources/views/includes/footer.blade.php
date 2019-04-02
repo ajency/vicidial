@@ -75,7 +75,7 @@
             <div class="bd-highlight mr-4 ml-2">
               <img width="50" src="{{CDN::asset('/img/truck.svg') }}">
             </div>
-            <div class="bd-highlight align-self-center"><h5 class="font-weight-bold mb-0">Free shipping</h5>for every order</div>
+            <div class="bd-highlight align-self-center"><h5 class="font-weight-bold mb-0">Free shipping</h5>on most products</div>
           </div>
           <div class="d-flex flex-row bd-highlight mb-4">
             <div class="bd-highlight mr-4 ml-2">
