@@ -227,7 +227,12 @@ export class BagViewComponent implements OnInit {
     this.apiservice.request(url, 'post', body, header).then((response)=>{
       console.log("response ==>", response);
       item = response.item;
-      this.cart.items[this.itemIndex] = response.item;
+      if(item.attributes.price_mrp != item.attributes.price_final)
+        item.off_percentage = Math.round(((item.attributes.price_mrp - item.attributes.price_final) / (item.attributes.price_mrp )) * 100) + '% OFF';
+      item.href = '/' + item.product_slug +'/buy?size='+item.attributes.size;
+      item.attributes.images = Array.isArray(item.attributes.images) ? ['/img/placeholder.svg', '/img/placeholder.svg', '/img/placeholder.svg'] : Object.values(item.attributes.images);
+
+      this.cart.items[this.itemIndex] = item;
 
       this.cart.summary = response.summary;
       this.cart.applied_coupon = response.applied_coupon;
