@@ -1,6 +1,7 @@
-import { Component, OnInit,  Input, OnChanges, Output } from '@angular/core';
+import { Component, OnInit,  Input, OnChanges, Output, isDevMode } from '@angular/core';
 declare var $ : any;
 import { AppServiceService } from '../../service/app-service.service';
+import { ApiServiceService } from '../../service/api-service.service';
 
 @Component({
   selector: 'app-header',
@@ -9,10 +10,12 @@ import { AppServiceService } from '../../service/app-service.service';
 })
 export class HeaderComponent implements OnInit, OnChanges {
 
-	@Input() menu : any;
-  constructor(private appservice : AppServiceService,){ }
+  menu : any;
+  constructor(private appservice : AppServiceService,
+              private apiService: ApiServiceService){ }
 
   ngOnInit(){
+    this.getMenu();
     $('.megamenu--left .nav-item').click(function(){
       var menuTab = $(this);
       menuTab.addClass('active').siblings().removeClass('active');
@@ -28,6 +31,17 @@ export class HeaderComponent implements OnInit, OnChanges {
 
   ngAfterViewInit(){
     this.appservice.updateCartCountInUI();
+  }
+
+  getMenu(){
+    let url = isDevMode() ? "https://demo8558685.mockable.io/get-menu" : "/api/rest/v1/test/get-menu"
+    this.apiService.request(url,'get',{},{}).then((data)=>{
+      console.log("data ==>", data);
+      this.menu = data.menu;
+    })
+    .catch((error)=>{
+      console.log("error in fetching the json",error);
+    })
   }
 
   openMenu(){

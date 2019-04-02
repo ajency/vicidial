@@ -99,6 +99,85 @@ class CartController extends Controller
         return response()->json(['cart_count' => $cart->itemCount(), "message" => $message, "item" => $item,  "summary" => $summary]);
     }
 
+    public function userModifyItem($id, Request $request)
+    {
+        $request->validate(['variant_id' => 'required|exists:variants,id', 'variant_quantity' => 'required']);
+        $params = $request->all();
+        $cart   = Cart::find($id);
+        if ($cart == null) {
+            abort(400, "Invalid Cart");
+        }
+        $user    = User::getUserByToken($request->header('Authorization'));
+        validateCart($user, $cart, 'cart');
+        $variant = Variant::find($params['variant_id']);
+        $item    = $variant->getItem(true, isNotProd());
+        if ($item) {
+            $qty = $params['variant_quantity'];
+            if (!$cart->itemExists($item)) {
+                abort(404, "Item not found in this cart");
+            }
+
+            if ($variant->getQuantity() >= $qty && $qty > 0) {
+                $cart->insertItem(["id" => $variant->id, "quantity" => $qty]);
+                $cart->save();
+                $cart->refresh();
+                $available = $cart->checkCouponAvailability();
+                $summary = $cart->getSummary();
+                $coupons = Offer::getAllActiveCoupons();
+                $message = "Cart updated successfully";
+            } elseif ($qty < 1) {
+                abort(404, "Total Quantity should greater than 0");
+            } else {
+                abort(404, "Quantity not available");
+            }
+            $item["quantity"]  = intval($cart->cart_data[$item["id"]]["quantity"]);
+            $item["timestamp"] = intval($cart->cart_data[$item["id"]]["timestamp"]);
+
+        }
+        $summary = $cart->getSummary();
+        return response()->json(array_merge(['cart_count' => $cart->itemCount(), "summary" => $summary, "message" => $message, "item" => $item, "coupons" => $coupons], $available));
+    }
+
+    public function guestModifyItem(Request $request)
+    {
+        $request->validate(['variant_id' => 'required|exists:variants,id', 'variant_quantity' => 'required']);
+        $params = $request->all();
+        $id     = $request->session()->get('active_cart_id', false);
+        $cart = Cart::find($id);
+        if ($cart == null) {
+            abort(404, "Cart not found for this session");
+        }
+        $cart->anonymousCartCheckUser();
+        $cart->abortNotCart('cart');
+        $variant = Variant::find($params['variant_id']);
+        $item    = $variant->getItem(true, isNotProd());
+        if ($item) {
+            $qty = $params['variant_quantity'];
+            if (!$cart->itemExists($item)) {
+                abort(404, "Item not found in this cart");
+            }
+
+            if ($variant->getQuantity() >= $qty && $qty > 0) {
+                $cart->insertItem(["id" => $variant->id, "quantity" => $qty]);
+                $cart->save();
+                $cart->refresh();
+                $available = $cart->checkCouponAvailability();
+                $summary = $cart->getSummary();
+                $coupons = Offer::getAllActiveCoupons();
+                $message = "Cart updated successfully";
+            } elseif ($qty < 1) {
+                abort(404, "Total Quantity should greater than 0");
+            } else {
+                abort(404, "Quantity not available");
+            }
+            $request->session()->put('active_cart_id', $cart->id);
+            $item["quantity"]  = intval($cart->cart_data[$item["id"]]["quantity"]);
+            $item["timestamp"] = intval($cart->cart_data[$item["id"]]["timestamp"]);
+        }
+        $summary = $cart->getSummary();
+        return response()->json(array_merge(['cart_count' => $cart->itemCount(), "message" => $message, "item" => $item,  "summary" => $summary, "coupons" => $coupons], $available));
+    }
+
     public function userCartFetch($id, Request $request)
     {
         $cart = Cart::find($id);

@@ -1,0 +1,26 @@
+@import "../../../assets/SASS/_var";
+@import "../../../../node_modules/bootstrap/scss/_functions";
+
+.kss-btn{
+    &--outline-danger{
+    	background-color: transparent;
+    	border-color: $dager-light;
+    	color: $dager-light;
+    	&:hover{
+    		color: #fff;
+		    background-color: $dager-light;
+		    border-color: $dager-light;
+    	}
+    }
+}
+.order-cancel-btn {
+	font-weight: 400;
+	padding: 0.6rem 0;
+}
+
+.cancel-order-alert {
+	color: theme-color("dark");;
+	background-color: rgba(253, 99, 100, 0.1);
+	border-color: rgba(253, 99, 100, 0.5);
+	font-weight: 400;
+}

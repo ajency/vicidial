@@ -28,7 +28,6 @@ export class ProductPageComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.getMenu();
     this.getProductDetails();
   }
 
@@ -38,6 +37,7 @@ export class ProductPageComponent implements OnInit {
     this.queryParamSize = this.route.snapshot.queryParamMap.get('size');
     let url = isDevMode() ? "https://demo8558685.mockable.io/get_single_product" : this.appservice.apiUrl + '/api/rest/v1/single-product?slug='+product_slug;
     this.apiService.request(url,'get',{},{}).then((data)=>{
+      this.loadCart();
       this.product = data;
       if(this.product.is_sellable)
         this.checkSingleProductInventory();
@@ -80,14 +80,14 @@ export class ProductPageComponent implements OnInit {
     return this.appservice.calculateOff(list_price, sale_price);
   }
 
-  getMenu(){
-    let url = isDevMode() ? "https://demo8558685.mockable.io/get-menu" : "/api/rest/v1/test/get-menu"
-    this.apiService.request(url,'get',{},{}).then((data)=>{
-      console.log("data ==>", data);
-      this.menuObject = data.menu;
-    })
-    .catch((error)=>{
-      console.log("error in fetching the json",error);
-    })
+  loadCart(){
+    if(window.location.href.endsWith('#/bag') || window.location.href.endsWith('#/bag/shipping-address') || window.location.href.endsWith('#/bag/shipping-summary')){
+      this.appservice.loadCartFromAngular = true;
+      this.appservice.loadCartTrigger();
+    }
+    else if(window.location.href.endsWith('#/account') || window.location.href.endsWith('#/account/my-orders') || window.location.href.includes('#/account/my-orders/')){
+      this.appservice.loadAccountFromAngular = true;
+      this.appservice.loadCartTrigger();
+    }        
   }
 }
