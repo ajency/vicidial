@@ -62,19 +62,40 @@ class PaymentController extends Controller
     {
         $order = Order::find($orderid);
 
-        switch ($type) {
-            case 'payu':
-                $payment = Payment::capture();
-                if ($order->status != 'payment-in-progress') {
-                    abort(400);
-                }
+        try {
+            switch ($type) {
+                case 'payu':
+                    $payment = Payment::capture();
+                    if ($order->status != 'payment-in-progress') {
+                        abort(400);
+                    }
 
-                if ($payment->isCaptured()) {
-                    $order->status           = 'payment-successful';
-                    $order->transaction_mode = 'Prepaid';
+                    if ($payment->isCaptured()) {
+                        $order->status           = 'payment-successful';
+                        $order->transaction_mode = 'Prepaid';
+                        $order->save();
+                        $order->placeOrderOnOdoo();
+                        request()->session()->flash('payment', "success");
+                        $cart       = $order->cart;
+                        $cart->type = 'order-complete';
+                        $cart->save();
+                        $order->cart->user->newCart();
+                        $order->sendSuccessEmail();
+                        $order->sendSuccessSMS();
+                        $order->sendVendorSMS();
+                    } else {
+                        $order->status = 'payment-failed';
+                        $order->save();
+                        request()->session()->flash('payment', "failure");
+                    }
+                    break;
+
+                case 'cod':
+                    $order->status           = 'cash-on-delivery';
+                    $order->transaction_mode = 'COD';
                     $order->save();
                     $order->placeOrderOnOdoo();
-                    request()->session()->flash('payment', "success");
+                    request()->session()->flash('payment', "cod");
                     $cart       = $order->cart;
                     $cart->type = 'order-complete';
                     $cart->save();
@@ -82,31 +103,27 @@ class PaymentController extends Controller
                     $order->sendSuccessEmail();
                     $order->sendSuccessSMS();
                     $order->sendVendorSMS();
-                } else {
-                    $order->status = 'payment-failed';
-                    $order->save();
-                    request()->session()->flash('payment', "failure");
-                }
-                break;
+                    break;
 
-            case 'cod':
-                $order->status           = 'cash-on-delivery';
-                $order->transaction_mode = 'COD';
-                $order->save();
-                $order->placeOrderOnOdoo();
-                request()->session()->flash('payment', "cod");
-                $cart       = $order->cart;
-                $cart->type = 'order-complete';
-                $cart->save();
-                $order->cart->user->newCart();
-                $order->sendSuccessEmail();
-                $order->sendSuccessSMS();
-                $order->sendVendorSMS();
-                break;
-
-            default:
-                abort(400, 'Payment Type Not Available');
-                break;
+                default:
+                    abort(400, 'Payment Type Not Available');
+                    break;
+            }
+        } catch (\Exception $e) {
+            \Log::notice('Order Success Method Failed');
+            \Log::notice('Order id : ' . $orderid);
+            sendEmail('failed-job', [
+                'from'          => config('communication.failed-job.from'),
+                'subject'       => 'Order Success Method Failed : ' . $type . ' [' . config('app.env') . ']',
+                'template_data' => [
+                    'queue'     => $event->job->getQueue(),
+                    'job'       => 'Order Success Method',
+                    'exception' => $e->getMessage(),
+                    'body'      => 'Order id : ' . $orderid,
+                    'trace'     => $e->getTraceAsString(),
+                ],
+                'priority'      => 'default',
+            ]);
         }
 
         return redirect()->route('orderDetails', ['orderid' => $order->txnid]);
