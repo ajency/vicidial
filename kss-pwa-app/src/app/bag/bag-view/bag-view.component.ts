@@ -255,7 +255,7 @@ export class BagViewComponent implements OnInit {
       }
       else{
         this.updateQuantityFailed = true;
-        this.updateQuantityFailureMsg = error.error.message; 
+        this.updateQuantityFailureMsg = error.error.message;
       }
       this.appservice.removeLoader();
     })
@@ -628,7 +628,12 @@ export class BagViewComponent implements OnInit {
       this.totalQuantity = item.available_quantity;
     this.itemIndex = index;
     $('#qty-modal-cart').modal('show');
+    $("#cd-cart").css("overflow-y", "hidden");
     $('.modal-backdrop').appendTo('.angular-app');
+
+    $('#qty-modal-cart').on('hidden.bs.modal', function (e) {
+      $("#cd-cart").css("overflow-y", "auto");
+    })
   }
 
 
