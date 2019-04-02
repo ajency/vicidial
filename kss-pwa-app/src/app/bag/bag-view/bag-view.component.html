@@ -82,7 +82,7 @@
 								</select> -->
 							  </div>
 
-							  <div class="d-flex align-items-center qty-click" data-target="#qty-modal-cart" data-toggle="modal" (click)="updateQuantity(item,i)" [ngClass]="{'disabled' : cart.cart_type == 'order' || item.available_quantity == 0}">
+							  <div class="d-flex align-items-center qty-click" (click)="updateQuantity(item,i)" [ngClass]="{'disabled' : cart.cart_type == 'order' || item.available_quantity == 0}">
 								  <div class="qty align-self-center mt-0">
 								  	<label class="m-0">Qty:</label>
 								  </div>
