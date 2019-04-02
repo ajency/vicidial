@@ -627,8 +627,13 @@ export class BagViewComponent implements OnInit {
     if(item.available_quantity < 5)
       this.totalQuantity = item.available_quantity;
     this.itemIndex = index;
-    // $('#qty-modal-cart').modal('show');
-    $('.modal-backdrop').appendTo('.angular-app');
+    $('#qty-modal-cart').modal('show');
+    console.log("testtt");
+    $('#qty-modal-cart').on('shown.bs.modal', function (e) {
+    console.log("testtt 2");
+      // do something...
+      $('.modal-backdrop').appendTo('.angular-app');
+    })
   }
 
 
