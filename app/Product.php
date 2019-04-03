@@ -185,6 +185,7 @@ class Product
             $object->save();
         } catch (\Exception $e) {
             \Log::warning($e->getMessage());
+            $object = Variant::select('id')->where('odoo_id', $variant['variant_id'])->first();
         }
         try {
             if (!$exists) {
