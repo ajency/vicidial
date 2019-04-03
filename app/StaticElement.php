@@ -604,9 +604,6 @@ class StaticElement extends Model
         }
     }
 
-    public static function testuse(){
-        GenerateStaticElementPresetImages::dispatch(1,10,"171026-a-line-polka-dot-bow-dress-red-color-red.jpg")->onQueue('process_static_element_image_presets');
-    }
 
 
 }
