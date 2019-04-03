@@ -7,6 +7,8 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use App\StaticElement;
+use Ajency\FileUpload\models\FileUpload_Photos;
 
 class GenerateStaticElementPresetImages implements ShouldQueue
 {
@@ -31,6 +33,20 @@ class GenerateStaticElementPresetImages implements ShouldQueue
      */
     public function handle()
     {
-        //
+        $config  = config('fileupload_static_element');
+        $static_element = StaticElement::find($this->static_element_id);
+        $file_obj = FileUpload_Photos::find($this->file_id);
+        if($file_obj!=null && $static_element!=null){
+            if (substr($file_obj->url, -4) == '.gif') {
+                $config[$staticElement->type.'_presets']['original'] = ["1x"=>""];
+            }
+            foreach($config[$static_element->type."_presets"] as $preset => $deptharr){
+                foreach($deptharr as $depth => $dim){
+                    $static_element->getStaticImage($this->file_id, $preset, $depth, $this->filename);
+                }    
+                
+            }
+        } 
+
     }
 }

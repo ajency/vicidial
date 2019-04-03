@@ -8,6 +8,7 @@ use Ajency\FileUpload\models\FileUpload_Photos;
 use Ajency\FileUpload\models\FileUpload_Varients;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
+use App\Jobs\GenerateStaticElementPresetImages;
 
 class StaticElement extends Model
 {
@@ -221,6 +222,7 @@ class StaticElement extends Model
 
         $imageId = $this->uploadImageStatic($filepath, $type, false, true, '', '', $image_name, $filepath, $extension, $image_name);
 
+        GenerateStaticElementPresetImages::dispatch($id,$imageId,$image_name . "." . $extension)->onQueue('process_static_element_image_presets');
         //mapping images to model
         $this->mapImage($imageId, $im_type);
         return $image_name;
@@ -600,6 +602,10 @@ class StaticElement extends Model
                 array_push($static_elements_arr,$staticElement->id);
             }
         }
+    }
+
+    public static function testuse(){
+        GenerateStaticElementPresetImages::dispatch(1,10,"171026-a-line-polka-dot-bow-dress-red-color-red.jpg")->onQueue('process_static_element_image_presets');
     }
 
 
