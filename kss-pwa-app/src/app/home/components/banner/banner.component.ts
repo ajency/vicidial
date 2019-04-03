@@ -13,4 +13,8 @@ export class BannerComponent implements OnInit {
   ngOnInit() {
   }
 
+  createDataSrcSet(a,b,c,d){
+    return a+ " " +b +", " +c +" "+d;
+  }
+
 }

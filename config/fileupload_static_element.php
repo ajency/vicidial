@@ -355,5 +355,31 @@ return [
     ],
 
     'newoffer_presets'=> [],
-    'newoffer_upload'=> []
+    'newoffer_upload'=> [],
+
+    'newbanner_presets'=> [
+        "landscape" => [
+            "1x"=>"700X245",
+            "2x"=>"1200X420",
+            "3x"=>"2000X700",
+            "load"=>"20X7"
+        ],
+        "portrait" => [
+            "1x"=>"400X311",
+            "2x"=>"700X544",
+            "3x"=>"1200X933" 
+        ],
+    ],
+    'newbanner_upload'=> [
+        "landscape" => [
+            "size" => 250000,
+            "height" => 700,
+            "width" => 2000
+        ],
+        "portrait" => [
+            "size" => 250000,
+            "height" => 933,
+            "width" => 1200
+        ],
+    ]
 ];
