@@ -68,6 +68,7 @@ export class ProductPageComponent implements OnInit {
     .catch((error)=>{
       console.log("error in fetching the json",error);
       this.showLoader = false;
+      this.product = null;
     })
   }
 
