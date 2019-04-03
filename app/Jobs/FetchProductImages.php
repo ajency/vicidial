@@ -86,7 +86,9 @@ class FetchProductImages implements ShouldQueue
             array_push($db_image_ids, $image_id);
             $pc->mapImage($image_id, $type);
             // \Storage::disk('local')->delete($subfilepath);
-            $product_color_details[$pc->id] = ["photo_id"=>$image_id,"filename"=>$imageFullName];
+            if(!isset($product_color_details[$pc->id]))
+                $product_color_details[$pc->id] = [];
+            array_push($product_color_details[$pc->id] , ["photo_id"=>$image_id,"filename"=>$imageFullName]);
 
         }
         Product::updateImageFacets($this->productId);

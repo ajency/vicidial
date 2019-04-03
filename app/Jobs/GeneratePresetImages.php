@@ -38,12 +38,13 @@ class GeneratePresetImages implements ShouldQueue
         $productColors = ProductColor::where('product_id', $this->productId)->get();
         $config        = config('ajfileupload');
         foreach ($productColors as $pcs) {
-            foreach($config["presets"] as $preset => $deptharr){
-                if($preset != "original"){
-                    foreach($deptharr as $depth => $dim){
-                        if(isset($this->product_color_details[$pcs->id])){
-                            $product_color_detail = $this->product_color_details[$pcs->id];
-                            $pcs->getImage($product_color_detail["photo_id"], $preset, $depth, $product_color_detail["filename"]);
+            if(isset($this->product_color_details[$pcs->id])){
+                foreach($config["presets"] as $preset => $deptharr){
+                    if($preset != "original"){
+                        foreach($deptharr as $depth => $dim){
+                            foreach($this->product_color_details[$pcs->id] as $product_color_detail){
+                                $pcs->getImage($product_color_detail["photo_id"], $preset, $depth, $product_color_detail["filename"]);
+                            }
                         }
                     }    
                 }
