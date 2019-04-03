@@ -1,5 +1,8 @@
 #!/bin/bash
 cron
+mkfifo /var/www/html/storage/logs/laravel.log
+tail -f /var/www/html/storage/logs/laravel.log &
+#ln -sf /proc/$$/fd/1 /var/www/html/storage/logs/laravel.log
 service php7.2-fpm start
 #service nginx start
 php /var/www/html/artisan config:cache
