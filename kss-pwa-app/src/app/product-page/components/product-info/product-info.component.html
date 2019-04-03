@@ -1,7 +1,7 @@
 <div class="">
     <div class="mt-sm-2">
 	    <!-- Product Title -->
-	    <a *ngIf="facets.product_brand && facets.product_brand.name" href="{{facets.product_brand.slug}}" class="text-black"><h2 class="brands-title brands-title--single">{{facets.product_brand.name}}</h2></a>
+	    <a *ngIf="facets.product_brand && facets.product_brand.slug" href="{{facets.product_brand.slug}}" class="text-black"><h2 class="brands-title brands-title--single">{{facets.product_brand.name}}</h2></a>
 	    <div *ngIf="showLoader" class="loadingBg mt-4" style="height: 30px;"></div>
       <h1 class="section-heading section-heading--single">{{attributes.product_title}}</h1>
 
@@ -50,7 +50,7 @@
 	</div>
 </div>
 
-<ng-container *ngIf="facets.product_category_type.slug == 'uniform'">
+<ng-container *ngIf="facets.product_category_type && facets.product_category_type.slug == 'uniform'">
   <hr class="my-4">
   <!-- Product shipping info -->
   <div class="shipping-info-box d-flex my-4">
@@ -141,7 +141,7 @@
     </div>
   </div>
 
-  <div *ngIf="facets.product_metatag.length" class="">
+  <div *ngIf="facets.product_metatag && facets.product_metatag.length" class="">
     <div class="collapse-head border-bottom mb-0" id="headingTags">
         <button class="btn btn-link btn-block text-left py-3 px-0 br-0 collapsed" type="button" data-toggle="collapse" data-target="#collapseTags" aria-expanded="false" aria-controls="collapseTags">
             <label class="mb-0 text-body cursor-pointer">

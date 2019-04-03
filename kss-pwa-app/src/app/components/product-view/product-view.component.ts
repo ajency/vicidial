@@ -16,7 +16,8 @@ export class ProductViewComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(){
-
+    if(this.product.url)
+      this.product.url = (new URL(this.product.url)).pathname;
   }
 
   createDataSrcSet(a,b,c,d){

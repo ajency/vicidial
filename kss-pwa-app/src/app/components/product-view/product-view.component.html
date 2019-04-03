@@ -1,5 +1,5 @@
 <div class="card h-100 product-card">
-  	<a href="{{product.url}}" >
+  	<a [routerLink]="product.url" >
         <div class="product-card__wrapper d-flex align-items-center justify-content-center">
         <div *ngIf="showLoader" class="loadingBg mt-3 d-md-block d-none" style="height: 100%; width: 100%; position: absolute; top: 0; bottom: 0;
         left: 0; right: 0;"></div>
@@ -26,7 +26,7 @@
        	</div>
   	</a>
   	<div class="card-body">
-        <a href="{{product.url}}" class="text-dark">
+        <a [routerLink]="product.url" class="text-dark">
           <h5 class="card-title">
             {{product.title}}
           </h5>

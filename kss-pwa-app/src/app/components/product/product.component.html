@@ -1,6 +1,6 @@
 <div class="kss-extension" attr.static_element-id="{{product.sequence}}" static_element-display_type="Trending Products" attr.static_element-type="{{product.type}}" page_slug="home">
   <div class="card h-100 product-card position-relative">
-    <a href="{{product.products[0]['product-slug']}}" class="img-holder">
+    <a [routerLink]="product.products[0]['product-slug']" class="img-holder">
       <div class="">
           <img *ngIf="product.products[0].images['1x']; else noImage"
 

@@ -6,14 +6,14 @@
 		      <i class="fas fa-bars"></i>
 		    </div>
 
-		    <a href="/" class="header-logo">
+		    <a routerLink="/" class="header-logo">
 		      <img src="/assets/img/logo-kss.png" class=" img-fluid m-0 kss-logo" width="180px">
 		    </a>
 
 		    <div class="megamenu">
 
 		      <div class="d-flex d-lg-none justify-content-between align-items-center border-bottom border-cancel header-close-trigger">
-		        <a href="/">
+		        <a routerLink="/" >
 		          <img src="/assets/img/logo-kss.png" class=" img-fluid m-3 d-block d-lg-none" width="180px">
 		        </a>
 		        <div class="megamenu-close menu-toggle p-3" (click)="closeMenu()">
@@ -39,7 +39,7 @@
 		            Stationery
 		          </li>
 		          <li class="nav-item">
-		            <a href="/shop/uniforms" class="d-inline font-weight-normal p-0" style="line-height: normal">Uniforms</a>
+		            <a routerLink="/shop/uniforms" class="d-inline font-weight-normal p-0" style="line-height: normal">Uniforms</a>
 		          </li>
 		          <li class="flex-grow-1 disabled"></li>
 		          <li class="nav-item" data-target="otherlinks">
@@ -52,7 +52,7 @@
 		            <li *ngFor="let item of menu">
 		                <a href="javascript:void(0)" *ngIf="item.type != 'Blog' && item.type != 'Uniforms'" class="d-none d-lg-block">{{item.type}}</a>
 		                <a href="/ideas" *ngIf="item.type == 'Blog'" class="d-none d-lg-block">{{item.type}}</a>
-		                <a href="/shop/uniforms" *ngIf="item.type == 'Uniforms'" class="d-none d-lg-block">{{item.type}}</a>
+		                <a routerLink="/shop/uniforms" *ngIf="item.type == 'Uniforms'" class="d-none d-lg-block">{{item.type}}</a>
 		                <div class="megamenu-wrapper" attr.data-menu="{{item.type}}">
 		                    <div *ngFor="let row of item.rows" class="nav-column">
 		                    	<div *ngFor="let menu of row.menus">

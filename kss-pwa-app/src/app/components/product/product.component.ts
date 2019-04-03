@@ -15,6 +15,7 @@ export class ProductComponent implements OnInit, OnChanges {
 
   ngOnChanges(){
   	// console.log("ngOnChanges product ==>", this.product);
+    this.product.products[0]['product-slug'] = (new URL(this.product.products[0]['product-slug'])).pathname;
   }
 
   createDataSrcSet(a,b,c,d){

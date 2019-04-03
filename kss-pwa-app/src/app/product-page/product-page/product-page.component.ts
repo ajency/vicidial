@@ -28,16 +28,22 @@ export class ProductPageComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.getProductDetails();
-    this.showLoader = true;
-    this.product = [];
-    this.product.facets = [];
-    this.product.variants = [];
-    this.product.related_products = [1,2,3,4,5];
+    this.route.params.subscribe(routeParams => {
+      console.log("routeParams ==>", routeParams);
+      this.showLoader = true;
+      this.product = [];
+      this.product.facets = [];
+      this.product.variants = [];
+      this.product.related_products = [1,2,3,4,5];
+      this.product.breadcrumbs = []
+      this.product.size_chart = {};
+      this.product.attributes = {};
+      this.getProductDetails(routeParams.product_slug);
+    });
   }
 
-  getProductDetails(){
-    let product_slug = this.route.snapshot.paramMap.get('product_slug');
+  getProductDetails(product_slug){
+    // let product_slug = this.route.snapshot.paramMap.get('product_slug');
     this.queryParamSize = this.route.snapshot.queryParamMap.get('size');
     let url = isDevMode() ? "https://demo8558685.mockable.io/get_single_product" : this.appservice.apiUrl + '/api/rest/v1/single-product?slug='+product_slug;
     this.apiService.request(url,'get',{},{}).then((data)=>{
