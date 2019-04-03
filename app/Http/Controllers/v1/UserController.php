@@ -90,6 +90,10 @@ class UserController extends Controller
 
         if($UserObject) {
             $cart = $this->userCart($id, $UserObject);
+            $token = fetchAccessToken($UserObject);
+            if($token == null) {
+                createAccessToken($UserObject);
+            }
         }
         else {
             $cart = ($id) ? Cart::find($id) : null;
