@@ -139,7 +139,7 @@ class User extends Authenticatable
         } else {
             //update the customer if the customer already exists
             $originalValues = $this->getOriginal();
-            if ($this->name != $originalValues['name'] || $this->email_id != $originalValues['email_id']) {
+            if ($this->name != $originalValues['name'] || (isset($this->email_id) && isset($originalValues['email_id']) && $this->email_id != $originalValues['email_id'])) {
                 $this->updateCustomerOnOdoo();
             }
         }
