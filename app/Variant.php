@@ -393,14 +393,13 @@ class Variant extends Model
         return $odoo->defaultExec('product.product', 'read', [[$variant_id]], ['fields' => ['product_tmpl_id']])->first()['product_tmpl_id'][0];
     }
 
-    // public static function addUpdateInventoryJobs()
-    // {
-    //     $variants = self::select('odoo_id')->get()->pluck('odoo_id')->toarray();
-    //     $job_sets = array_chunk($variants, config('odoo.update_inventory'));
-    //     foreach ($job_sets as $job_set) {
-    //         UpdateVariantInventory::dispatch($job_set)->onQueue('update_inventory');
-    //     }
-    // }
+    public static function addUpdateInventoryJobs()
+    {
+        $job_sets = DB::table('variants')->select(['id','product_color_id'])->get()->map(function ($x) {return (array) $x;})->groupBy('product_color_id')->mapWithKeys(function ($item, $key) {return [$key => $item->pluck('id')];})->toArray();
+        foreach ($job_sets as $job_set) {
+            UpdateVariantInventory::dispatch($job_set)->onQueue('update_inventory');
+        }
+    }
 
     public static function updateInventory($params)
     {

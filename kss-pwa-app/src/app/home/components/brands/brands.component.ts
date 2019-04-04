@@ -8,9 +8,14 @@ import { Component, OnInit, Input, OnChanges, AfterViewInit, Output, EventEmitte
 export class BrandsComponent implements OnInit {
 
 	@Input() brands : any;
+	@Input() brandBanners : any;
   constructor() { }
 
   ngOnInit() {
+  }
+
+  createDataSrcSet(a,b,c,d){
+    return a+ " " +b +", " +c +" "+d;
   }
 
 }
