@@ -395,7 +395,8 @@ class StaticElement extends Model
     {
         $resp   = [];
         $config = config('fileupload_static_element');
-
+        $map_image_size = json_decode($file->image_size,true);
+        if($map_image_size == null) return false;    
         if (substr($file->url, -4) == '.gif') {
             $config[$im_type . '_presets']['original'] = [];
         }
@@ -409,21 +410,32 @@ class StaticElement extends Model
                 $type = explode("-", $path[1]); //getting the type from url
 
                 foreach ($cdepths as $cdepth => $csizes) {
-
-                    $newfilepath          = str_replace($config['model'][$obj_class]['base_path'] . '/' . $obj_instance[$config['model'][$obj_class]['slug_column']] . '/', $config['model'][$obj_class]['base_path'] . '/' . $obj_instance[$config['model'][$obj_class]['slug_column']] . '/' . $cpreset . '/' . $cdepth . '/', $path[1]);
-                    if(config('ajfileupload.use_cdn') && config('ajfileupload.cdn_url') ){
-                            $tempUrl = parse_url($newfilepath);
-                            $newfilepath =  config('ajfileupload.cdn_url') .'/'. $tempUrl['path'];
+                    $image_size = ($cpreset == "original")?$cpreset:($cpreset."$$".$cdepth);
+                    if(in_array($image_size,$map_image_size)){
+                        $newfilepath          = str_replace($config['model'][$obj_class]['base_path'] . '/' . $obj_instance[$config['model'][$obj_class]['slug_column']] . '/', $config['model'][$obj_class]['base_path'] . '/' . $obj_instance[$config['model'][$obj_class]['slug_column']] . '/' . $cpreset . '/' . $cdepth . '/', $path[1]);
+                        if(config('ajfileupload.use_cdn') && config('ajfileupload.cdn_url') ){
+                                $tempUrl = parse_url($newfilepath);
+                                $newfilepath =  config('ajfileupload.cdn_url') .'/'. $tempUrl['path'];
+                            }
+                    }
+                    else{
+                            $newfilepath = str_replace($config['model'][$obj_class]['base_path'].'/'.$obj_instance[$config['model'][$obj_class]['slug_column']].'/',$config['model'][$obj_class]['base_path'].'/'.$file->id.'/'.$cpreset.'/'.$cdepth.'/', $path[1]);
                         }
                     $cdepth_data[$cdepth] = url($newfilepath);
                 }
 
                 if ($cpreset == "original") {
-                    $newfilepath    = str_replace($config['model'][$obj_class]['base_path'] . '/' . $obj_instance[$config['model'][$obj_class]['slug_column']] . '/', $config['model'][$obj_class]['base_path'] . '/' . $obj_instance[$config['model'][$obj_class]['slug_column']] . '/' . $cpreset . '/', $path[1]);
-                    if(config('ajfileupload.use_cdn') && config('ajfileupload.cdn_url') ){
-                            $tempUrl = parse_url($newfilepath);
-                            $newfilepath =  config('ajfileupload.cdn_url') .'/'. $tempUrl['path'];
-                        }
+                    $image_size = $cpreset;
+                    if(in_array($image_size,$map_image_size)){
+                        $newfilepath    = str_replace($config['model'][$obj_class]['base_path'] . '/' . $obj_instance[$config['model'][$obj_class]['slug_column']] . '/', $config['model'][$obj_class]['base_path'] . '/' . $obj_instance[$config['model'][$obj_class]['slug_column']] . '/' . $cpreset . '/', $path[1]);
+                        if(config('ajfileupload.use_cdn') && config('ajfileupload.cdn_url') ){
+                                $tempUrl = parse_url($newfilepath);
+                                $newfilepath =  config('ajfileupload.cdn_url') .'/'. $tempUrl['path'];
+                            }
+                    }
+                    else{
+                        $newfilepath = str_replace($config['model'][$obj_class]['base_path'].'/'.$obj_instance[$config['model'][$obj_class]['slug_column']].'/',$config['model'][$obj_class]['base_path'].'/'.$file->id.'/'.$cpreset.'/', $path[1]);
+                    }
                     $resp[$cpreset] = url($newfilepath);
                 } else {
                     foreach ($type as $t) {
