@@ -20,6 +20,8 @@ export class ProductPageComponent implements OnInit {
   isMobile : boolean = false;
   queryParamSize : any;
   inventoryData : any;
+  productApiCall : any;
+  inventoryApiCall : any;
   constructor(private route: ActivatedRoute,
   			  private apiService: ApiServiceService,
               private appservice : AppServiceService,
@@ -42,11 +44,17 @@ export class ProductPageComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    this.unsubscribeProductApi();
+    this.unsubscribeInventoryApiCall();
+  }
+
   getProductDetails(product_slug){
     // let product_slug = this.route.snapshot.paramMap.get('product_slug');
+    this.unsubscribeProductApi();
     this.queryParamSize = this.route.snapshot.queryParamMap.get('size');
     let url = isDevMode() ? "https://demo8558685.mockable.io/get_single_product" : this.appservice.apiUrl + '/api/rest/v1/single-product?slug='+product_slug;
-    this.apiService.request(url,'get',{},{}).then((data)=>{
+    this.productApiCall = this.apiService.request(url,'get',{},{}, false, 'observable').subscribe((data)=>{
       this.loadCart();
       this.product = data;
       if(this.product.is_sellable)
@@ -64,23 +72,24 @@ export class ProductPageComponent implements OnInit {
       gtagTrackPageView(default_price, this.product.attributes.product_id, this.product.facets.product_color_html.id);
       this.showLoader = false;
       console.log("response ==>", data);
-    })
-    .catch((error)=>{
+    },
+    (error)=>{
       console.log("error in fetching the json",error);
       this.showLoader = false;
       this.product = null;
-    })
+    });
   }
 
   checkSingleProductInventory(){
+    this.unsubscribeInventoryApiCall();
     let url = this.appservice.apiUrl + '/api/rest/v1/single-product-inventory?product_id='+this.product.attributes.product_id + '&color_id='+ this.product.facets.product_color_html.id;
-    this.apiService.request(url, 'get', {} , {}).then((response)=>{
+    this.inventoryApiCall = this.apiService.request(url, 'get', {} , {}, false, 'observable').subscribe((response)=>{
       console.log("check inventory response ==>", response);
       this.inventoryData = response;
-    })
-    .catch((error)=>{
+    },
+    (error)=>{
       console.log("error ===>", error);
-    })
+    });
   }
 
   createDataSrcSet(a,b,c,d){
@@ -100,5 +109,15 @@ export class ProductPageComponent implements OnInit {
       this.appservice.loadAccountFromAngular = true;
       this.appservice.loadCartTrigger();
     }        
+  }
+
+  unsubscribeProductApi(){
+    if(this.productApiCall)
+      this.productApiCall.unsubscribe();
+  }
+
+  unsubscribeInventoryApiCall(){
+    if(this.inventoryApiCall)
+      this.inventoryApiCall.unsubscribe();
   }
 }
