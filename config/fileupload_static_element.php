@@ -381,5 +381,31 @@ return [
             "height" => 933,
             "width" => 1200
         ],
+    ],
+
+    'brandbanner_presets'=> [
+        "landscape" => [
+            "1x"=>"590X321",
+            "2x"=>"992X540",
+            "3x"=>"1700X925",
+            "load"=>"20X11"
+        ],
+        "portrait" => [
+            "1x"=>"400X216",
+            "2x"=>"600X324",
+            "3x"=>"1200X648" 
+        ],
+    ],
+    'brandbanner_upload'=> [
+        "landscape" => [
+            "size" => 250000,
+            "height" => 925,
+            "width" => 1700
+        ],
+        "portrait" => [
+            "size" => 250000,
+            "height" => 648,
+            "width" => 1200
+        ],
     ]
 ];
