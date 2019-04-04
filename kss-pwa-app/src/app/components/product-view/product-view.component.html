@@ -6,7 +6,7 @@
     		<img *ngIf="product.image && product.image['1x']; else noImage"
 	            [useSrcset]=true
 	            [offset]=1000
-	            [defaultImage]="product.image.load"
+	            [defaultImage]="product.image['1x']"
 	            [lazyLoad]="createDataSrcSet(product.image['1x'], '270w', product.image['2x'], '540w')"
 	            class="card-img-top img-holder"
 	            title="{{product.title}}"

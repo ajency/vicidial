@@ -40,7 +40,7 @@ export class ProductImgSliderComponent implements OnInit, OnChanges {
       cellAlign: 'left',
       freeScroll: true,
       contain: true,
-      lazyLoad: 1,
+      lazyLoad: 2,
       pageDots: false,
       prevNextButtons : true
     }
