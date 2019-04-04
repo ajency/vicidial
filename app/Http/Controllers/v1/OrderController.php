@@ -28,7 +28,7 @@ class OrderController extends Controller
         validateCart($user, $cart, 'cart');
         validateAddress($user, $address);
         $cart->checkCartAvailability();
-        $address->checkPincodeServiceable();
+        $pincode_data = $address->checkPincodeServiceable();
 
         $order = Order::create([
             'cart_id'       => $cart->id,
@@ -51,7 +51,7 @@ class OrderController extends Controller
         $cart->type = 'order';
         $cart->save();
 
-        $response = ["items" => getCartData($cart, false), "summary" => $order->subOrderData(), "order_id" => $order->id, "address" => $order->address_data, "message" => 'Order Placed successfully'];
+        $response = ["items" => getCartData($cart, false), "summary" => $order->subOrderData(), "order_id" => $order->id, "address" => $order->address_data, "pincode_serviceability" => $pincode_data, "message" => 'Order Placed successfully'];
 
         $user_info = $user->userInfo();
         if($user_info!=null) {

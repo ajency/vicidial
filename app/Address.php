@@ -94,7 +94,27 @@ class Address extends Model
 
     public function checkPincodeServiceable(){
         $pincode = $this->address["pincode"];
-        $config = config('pincode_serviceability');
-        $pincode_data = checkDelhiveryPincodeServiceability($pincode);
+        $default_shipment_service = config('pincode_serviceability.default_shipment_service');
+        switch ($default_shipment_service) {
+            case 'Delhivery':
+                $pincode_data = checkDelhiveryPincodeServiceability($pincode);
+                if($pincode_data["success"]){
+                    $postal_code_data = $pincode_data['data']['delivery_codes'][0]['postal_code'];
+                    $pre_paid = ($postal_code_data['pre_paid'] == 'Y')?true:false;
+                    $cod = ($postal_code_data['cod'] == 'Y')?true:false;
+                    if($postal_code_data['pre_paid'] == 'N' && $postal_code_data['cod'] == 'N')
+                        abort(403, "Pincode not serviceable!!");
+                    else
+                        return ["pre_paid"=>$pre_paid,"cod"=>$cod];
+                }
+                else{
+                    abort(403, $pincode_data["error"]);
+                }
+                break;
+            
+            default:
+                break;
+        }
+        abort(403, "Delivery service not configured!!");
     }
 }
