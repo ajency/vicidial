@@ -1,0 +1,43 @@
+<div id="filter-color-template-content">
+  <div class="kss_filter-list" data-filter="color">
+    <div class="filter-heading">
+      <label class="w-100 mb-0 pb-3 cursor-pointer collapsed" data-toggle="collapse" data-target="#collapseColor" aria-expanded="false" aria-controls="collapseColor">
+        Filter Title<i class="fas fa-angle-up float-right"></i>
+      </label>
+    </div>
+    <div id="collapseColor" class="collapse color-wrapper" data-field="color">
+      <div class="card-body pt-2 pb-2">
+        <!-- filter with color -->
+          <div class="custom-control custom-checkbox color-filter d-flex">
+            <input type="checkbox" class="facet-category custom-control-input" id="#FFC0CB">
+            <label class="custom-control-label f-w-4 d-flex align-items-center" for="#FFC0CB">
+              <span class="color-box" style="background-color:#FFC0CB;"></span>
+              <span class="color-name pl-2 text-capitalize">Pink</span>
+                <span class="sub-text filter-count pl-1">(165)</span>
+            </label>
+          </div>
+          <!-- End of filter with color -->
+
+          <!-- Normal filter -->
+          <div class="custom-control custom-checkbox" data-val="">
+            <input type="checkbox" class="facet-category custom-control-input" id="Infant">
+            <label class="custom-control-label f-w-4" for="Infant">0 - 2 Years
+              <span class="sub-text">(166)</span>
+            </label>
+          </div>
+          <!-- End of Normal filter -->
+
+          <!-- Disabled filter -->
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="facet-category custom-control-input" id="Shirt" disabled="disabled" >
+            <label class="custom-control-label f-w-4" for="Shirt">Shirt
+              <span class="sub-text">(0)</span>
+            </label>
+          </div>
+          <!-- End of Disabled filter -->
+
+        </div>
+        <span class="more-color">+ more</span>
+      </div>
+    </div>
+  </div>

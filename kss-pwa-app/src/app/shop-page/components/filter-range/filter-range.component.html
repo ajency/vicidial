@@ -1,0 +1,28 @@
+<div id="filter-price-template-content">
+  <div class="kss_filter-list" data-filter="price">
+    <div class="filter-heading">
+      <label class="w-100 mb-0 pb-3 cursor-pointer collapsed" data-toggle="collapse" data-target="#collapsePrice" aria-expanded="true" aria-controls="collapsePrice">
+        Price Range<i class="fas fa-angle-up float-right"></i>
+      </label>
+    </div>
+
+    <div id="collapsePrice" class="collapse" data-field="price">
+      <div class="card-body">
+        <div class="priceRange">
+          <input type="text" id="price-range" name="price" value="" class="facet-category irs-hidden-input"/>
+        </div>
+        <div class="row">
+          <div class="col-5 col-sm-5">
+            <input class="form-control form-control-lg text-muted price-change validate-number" value="0" id="price-min" type="number" placeholder="Min">
+          </div>
+          <div class="col-2 col-sm-2 text-center">
+            <h6 class="align-self-center mt-4">to</h6>
+          </div>
+          <div class="col-5 col-sm-5">
+            <input class="form-control form-control-lg text-muted price-change validate-number" value="7000" id="price-max" type="number" placeholder="Max">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,249 @@
+<app-header [menu]="menuObject"></app-header>
+
+<app-loader *ngIf="showLoader"></app-loader>
+
+
+<section class="productlist">
+	<div class="container mt-2 mt-md-4">
+	 	<div class="row">
+	 		<div class="col-sm-12 col-md-3">
+	 			<div id="accordion" class="kss_filter d-sm-block">
+		 			<div class="d-flex">
+             <!-- mobile filter -->
+             
+		 					<!-- mf top header -->
+		 					<div class="d-md-none d-block sticky-mob-filter py-0">
+							  <div class="d-flex align-items-center">
+							    <div class="filter-head">
+							      <h4 class="my-0" style="padding: 14px 0;">Filters</h4>
+							    </div>
+							    <div class="ml-auto"> <h3 id="kss_hide-filter-close" class="m-0 kss_highlight btn-pay pl-3 py-2"><span aria-hidden="true">&times;</span></h3></div>
+							  </div>
+							</div>
+							<!-- end of mf top header -->
+
+							<!-- mf tabs -->
+							<ul class="nav flex-column kss_filter_mobile--left">
+							  <li class="nav-item active" data-target="category">
+							  	Category
+									<small class="filter-count" >2</small> 
+								</li>
+								<li class="nav-item" data-target="color">
+									Color
+									<small class="filter-count" ></small> 
+								</li>
+								<li class="nav-item" data-target="price-filter">
+									Price Filter
+									<small class="filter-count" >1</small> 
+								</li>
+							</ul>
+							<!-- end of mf tabs -->
+
+		 				<!-- end of mobile filter -->
+
+            <!-- Filters go here -->  
+            <div class="kss_filter_mobile--right w-100">
+              <!-- Filter Checkbox -->
+              <app-filter-checkbox></app-filter-checkbox>  
+                        
+              <!-- Filter Range -->
+              <app-filter-range></app-filter-range>
+            
+            </div>
+            <!-- End of Filters go here -->
+
+			 			<!-- Filter actions for mobiles -->
+			 			<div class="fixed-bottom d-none footer-filter">
+				      <div class="row no-gutters">
+				          <div class="col-6 text-center d-flex">
+				            <button type="button" class="btn kss-btn kss-btn--big kss-btn--link" onclick="resetFilter();">Reset</button>
+				          </div>
+				          <div class="col-6 text-center d-flex">
+				              <button type="button" id="kss_hide-filter" class="btn kss-btn kss-btn--big">Apply</button>
+				          </div>
+				      </div>
+            </div>
+            
+				    <!-- End of Filter actions for mobiles -->
+		 			</div>
+	 			</div>
+	 		</div>
+
+	 		<div class="col-sm-12 col-md-9 bl-1">
+	 			<!-- Top Filters -->
+ 				<div id="filter-header-template-content">
+				  <div class="d-flex align-items-sm-center">
+
+				  	<!-- Products founds -->
+					    <div class="flex-fill-full">
+					        <h1 class="w-100 kss-title my-1 py-1 my-sm-0 py-sm-0 m-0 text-gray font-weight-bold">
+					            Apparels for Girls <span class="f-w-4 sub-text"> - 572 items</span>
+					        </h1>
+					    </div>
+				    <!-- End of Products founds -->
+
+				    <div class="ml-sm-auto d-none d-sm-flex flex-fill-full justify-content-end">
+
+              <!-- Search Box -->
+              <app-search-box></app-search-box>
+
+				      <!-- Sort By -->
+				      <div class="d-flex flex-row kss-select-border">
+				        <div class="size-qty align-self-center">
+				          <h6 class="m-0 f-w-4 sub-text"> Sort By:</h6>
+				        </div>
+				        <div class="pl-2 align-self-center">
+				          <select id="sort_filter_selectbox" class="size form-control  form-control-sm br-0  border-dark custom" onchange="facetCategoryChange(this,true,false,false,true);">
+				            <option value="" selected="selected">Recommended</option>
+				            <option value="price_asc">Price Low to High</option>
+				            <option value="price_desc">Price High to Low</option>
+				          </select> 
+				        </div>
+				      </div>
+							<!-- End of Sort By -->
+
+				    </div>
+				  </div>
+				</div>
+				<!-- End of Top Filters -->
+
+				<!-- Active filters -->
+					<div id="filter-tags-template-content">
+					  <div class="d-none d-md-block filter-selection">
+					    <div class="d-flex mt-3 flex-wrap">
+					        <div class="border border-dark p-1 mr-2 mb-2"><span data-slug="apparels">Apparels</span> <span class="ml-1 h6 kss_highlight" aria-hidden="true" onclick="removeFilterTag('apparels','product_category_type');">×</span></div>
+					    </div>
+					  </div>
+					</div>
+				<!-- End of Active filters -->
+
+				<hr class="d-none d-sm-block">
+
+				<!-- Product Loader -->
+				<div class="prod_load d-none">
+					<i class="fas fa-circle-notch fa-spin fa-lg"></i>
+				</div>
+				<!-- End of Product Loader -->
+
+				<!-- Product List -->
+					<div id="products-list-template-content" class="productlist__row">
+						<div id="card-list" class="row">
+							<!-- Start Product column -->
+							<div class="col-lg-4 col-md-6 mb-sm-4 col-6 ">
+								
+								<div class="card h-100 product-card">
+									<a href="/black-and-red-mickey-mouse-soft-plush-toys-2471-black/buy" class="position-relative" title="Black and Red Mickey Mouse Soft Plush Toys">
+							      <div class="product-card__wrapper d-flex align-items-center justify-content-center mb-2 mb-sm-3 single-tile image-loaded">
+							        <div class="overlay"></div><img src="https://www.kidsuperstore.in/images/products/75806/list-view/load/mbewdp0156-mickey-flopsies-toys-24-color-black-1.jpg" data-srcset="https://www.kidsuperstore.in/images/products/75806/list-view/1x/mbewdp0156-mickey-flopsies-toys-24-color-black-1.jpg 270w, https://www.kidsuperstore.in/images/products/75806/list-view/2x/mbewdp0156-mickey-flopsies-toys-24-color-black-1.jpg 540w, https://www.kidsuperstore.in/images/products/75806/list-view/3x/mbewdp0156-mickey-flopsies-toys-24-color-black-1.jpg 810w" sizes="(min-width: 1200px) 270px,(min-width: 992px) 22vw,(min-width: 768px) 33vw, 45vw" class="card-img-top blur-up lazyloaded" title="Black and Red Mickey Mouse Soft Plush Toys" alt="Black and Red Mickey Mouse Soft Plush Toys" srcset="https://www.kidsuperstore.in/images/products/75806/list-view/1x/mbewdp0156-mickey-flopsies-toys-24-color-black-1.jpg 270w, https://www.kidsuperstore.in/images/products/75806/list-view/2x/mbewdp0156-mickey-flopsies-toys-24-color-black-1.jpg 540w, https://www.kidsuperstore.in/images/products/75806/list-view/3x/mbewdp0156-mickey-flopsies-toys-24-color-black-1.jpg 810w">
+
+							      </div>
+							    </a>
+										<div class="product-card__body">
+										  <h3 class="brands-title brands-title--list mt-1 mt-sm-0 mb-sm-2">
+										    Dream Theatre
+										  </h3>
+
+										  <a href="/black-and-red-mickey-mouse-soft-plush-toys-2471-black/buy" class="text-dark">
+										    <h5 class="section-heading section-heading--list mb-1 mb-sm-2">
+										      Black and Red Mickey Mouse Soft Plush Toys
+										    </h5>
+										  </a>
+										  <!-- Calculate & Display Price -->
+											<div class="d-sm-flex align-items-sm-center mb-2 mb-sm-0">
+								    		<div id="kss-price-2471-33" class="kss-price kss-price--smaller">
+								    		₹2799
+								    		</div>
+											</div>
+										</div>
+									</div>								
+							</div>
+
+							<!-- End of Product column -->
+						</div>
+
+						<!-- Pagination -->
+
+						<div class="kss-pagination mt-5">
+
+							<span class="kss-pagination__prev controls pr-md-4 d-flex 9 disabled">
+								<a href="#">
+									<span class="pr-2"><i class="fas fa-chevron-left"></i></span>
+									<span class="d-flex">Previous <span class="d-none d-md-block">Page</span></span>
+								</a>
+							</span>
+
+							<div class="page-numbers d-none d-md-flex">
+									<span class="current">1</span>
+									<span class="kss-pagination__link">
+										<a href="#">2</a>
+									</span>
+								<span class="dot-more">...</span>
+								<span class="kss-pagination__last disabled">7</span>
+							</div>
+
+							<span class="kss-pagination__next controls pl-md-4 d-flex">
+								<a href="#">
+									<span class="d-flex">Next <span class="d-none d-md-block">Page</span></span>
+									<span class="pl-2"><i class="fas fa-chevron-right"></i></span>
+								</a>
+							</span>
+
+						</div>
+
+
+						<!-- End of Pagination -->
+
+					</div>
+				<!-- End of Product List -->
+	 		</div>
+	 	</div>
+ 	</div>
+	<!-- End of Mobile Filter -->
+
+	<!-- Mobile Sort by -->
+		<div id="mobile-filter-sort-template-content">
+		 	<div class="modal fade list-sort" id="kss_sort" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	      <div class="modal-dialog m-0 fixed-bottom" role="document">
+	        <div class="modal-content fixed-bottom">
+	          <div class="modal-header">
+	            <h6 class="modal-title text-muted" id="exampleModalLongTitle">Sort by</h6>
+	            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	              <span aria-hidden="true">&times;</span>
+	            </button>
+	          </div>
+	          <div class="">
+	            <ul class="list-group list-unstyled list-sort__element mb-0">
+	              <li class="list-group-item d-flex align-items-center is-active" data-value="">
+	                <a href="javascript:void(0)" class="font-weight-bold d-flex align-items-center"><i class="kss_icon mx-1 popularity"></i> Recommended</a>
+	              </li>
+	              <li class="list-group-item d-flex align-items-center " data-value="">
+	                <a href="javascript:void(0)" class="font-weight-bold d-flex align-items-center"><i class="kss_icon mx-1 price-l"></i> Price Low to High</a>
+	              </li>
+	            </ul>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+		</div>
+	<!-- End of Mobile Sort by -->
+
+	<div class="fixed-bottom d-block d-md-none sticky-xs-btn">
+		<div class="row no-gutters">
+			<div class="col-6 text-center b-r">
+				<button data-toggle="modal" data-target="#kss_sort" type="button" class="btn btn-lg btn-block h-100 text-uppercase btn-white d-flex align-items-center justify-content-center sort-btn">
+				<svg version="1.1" viewBox="0 0 24 24" enable-background="new 0 0 24 24" class="mr-2 sort-icon"><g><path d="M9,0C8.7,0,8.5,0.1,8.3,0.3l-8,8C0.1,8.5,0,8.7,0,9c0,0.3,0.1,0.5,0.3,0.7l1.4,1.4c0.2,0.2,0.5,0.3,0.7,0.3   c0.3,0,0.5-0.1,0.7-0.3l0,0l2-2C5.4,8.8,6,9,6,9.5V23c0,0.5,0.5,1,1,1h2c0.5,0,1-0.5,1-1V1c0-0.3-0.1-0.5-0.3-0.7   C9.5,0.1,9.3,0,9,0z"/><path d="m23.7,14.3l-1.4-1.4c-0.2-0.2-0.5-0.3-0.7-0.3-0.3,0-0.5,0.1-0.7,0.3l-2,2c-0.3,0.3-0.9,0.1-0.9-0.4v-13.5c0-0.5-0.5-1-1-1h-2c-0.5,0-1,0.5-1,1v22c0,0.3 0.1,0.5 0.3,0.7s0.5,0.3 0.7,0.3c0.3,0 0.5-0.1 0.7-0.3l8-8c0.2-0.2 0.3-0.4 0.3-0.7 0-0.3-0.1-0.5-0.3-0.7z"/></g>
+				</svg>
+				<span class="text-black">Sort</span></button>
+			</div> 
+		  <div class="col-6 text-center">
+				<button id="filter" type="button" class="btn btn-lg btn-block btn-primary h-100 text-uppercase rounded-0 filter-btn"><i class="fa-filter fas pr-1 text-black"></i> <span class="text-black">Filter</span></button>
+		  </div>
+		</div>
+	</div>
+	<!-- Mobile Filter -->
+</section>
+
+<!-- Back to top -->
+<div app-back-to-top></div>
+
+<app-footer> </app-footer>
