@@ -28,6 +28,7 @@ class OrderController extends Controller
         validateCart($user, $cart, 'cart');
         validateAddress($user, $address);
         $cart->checkCartAvailability();
+        $address->checkPincodeServiceable();
 
         $order = Order::create([
             'cart_id'       => $cart->id,
