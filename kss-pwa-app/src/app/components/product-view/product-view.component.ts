@@ -9,13 +9,15 @@ import { AppServiceService } from '../../service/app-service.service';
 export class ProductViewComponent implements OnInit, OnChanges {
 
 	@Input() product : any;
+  @Input() showLoader : boolean;
   constructor(private appservice : AppServiceService) { }
 
   ngOnInit() {
   }
 
   ngOnChanges(){
-
+    if(this.product.url)
+      this.product.url = (new URL(this.product.url)).pathname;
   }
 
   createDataSrcSet(a,b,c,d){

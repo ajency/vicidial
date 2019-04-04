@@ -40,6 +40,9 @@
             height: auto;
             top: 50%;
             transform: translateY(-50%);
+            &.img-holder{
+                background-color: transparent;
+            }
         }
     }
   }
