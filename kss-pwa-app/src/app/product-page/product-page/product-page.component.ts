@@ -67,11 +67,13 @@ export class ProductPageComponent implements OnInit {
         variant = this.product.variants.find((v)=>{ return v.is_default === true })
         default_price = variant.variant_attributes.variant_sale_price;
       }
-
-      fbTrackViewContent(default_price, this.product.attributes.product_id, this.product.facets.product_color_html.id);
-      gtagTrackPageView(default_price, this.product.attributes.product_id, this.product.facets.product_color_html.id);
       this.showLoader = false;
-      console.log("response ==>", data);
+      try {
+        fbTrackViewContent(default_price, this.product.attributes.product_id, this.product.facets.product_color_html.id);
+        gtagTrackPageView(default_price, this.product.attributes.product_id, this.product.facets.product_color_html.id);
+      } catch (e) {
+        console.log("error in fb or gtag tracking ==>", e);
+      }
     },
     (error)=>{
       console.log("error in fetching the json",error);
