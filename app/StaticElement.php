@@ -9,6 +9,7 @@ use Ajency\FileUpload\models\FileUpload_Varients;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use App\Jobs\GenerateStaticElementPresetImages;
+use App\Jobs\GenerateExistingStaticElementPresetImages;
 
 class StaticElement extends Model
 {
@@ -589,28 +590,10 @@ class StaticElement extends Model
             $join->where('fileupload_mapping.object_type', '=', "App\StaticElement");
         })->whereNull('fileupload_mapping.deleted_at')->select('static_elements.id','static_elements.type','fileupload_mapping.file_id')->get();
         $static_elements_arr = [];
-        $config  = config('fileupload_static_element');
+        
         foreach($staticElements as $staticElement){
-            $all_photos = $staticElement->photos()->get();
-            // dd($all_photos);
             if(!in_array($staticElement->id, $static_elements_arr)){
-                foreach($all_photos as $single_photo){
-                    $map_image_size = json_decode($single_photo->file->image_size,true);
-                    $filedata = explode("/", $single_photo->file->url);
-                    $filename = $filedata[(count($filedata)-1)];
-                    if (substr($single_photo->file->url, -4) == '.gif') {
-                        $config[$staticElement->type.'_presets']['original'] = ["1x"=>""];
-                    }
-                    foreach($config[$staticElement->type."_presets"] as $preset => $deptharr){
-                        foreach($deptharr as $depth => $dim){
-                            $image_size = ($preset == "original")?$preset:($preset."$$".$depth);
-                            if(in_array($image_size,$map_image_size) == false){
-                                $imageurl = $staticElement->resizeStaticImages($single_photo->file->id,$preset, $depth, $filename);
-                            }
-                        }    
-                        
-                    }
-                }
+                GenerateExistingStaticElementPresetImages::dispatch($staticElement)->onQueue('process_static_element_image_presets');
                 array_push($static_elements_arr,$staticElement->id);
             }
         }
