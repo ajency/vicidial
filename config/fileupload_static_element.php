@@ -355,5 +355,57 @@ return [
     ],
 
     'newoffer_presets'=> [],
-    'newoffer_upload'=> []
+    'newoffer_upload'=> [],
+
+    'newbanner_presets'=> [
+        "landscape" => [
+            "1x"=>"700X245",
+            "2x"=>"1200X420",
+            "3x"=>"2000X700",
+            "load"=>"20X7"
+        ],
+        "portrait" => [
+            "1x"=>"400X329",
+            "2x"=>"600X493",
+            "3x"=>"1200X985" 
+        ],
+    ],
+    'newbanner_upload'=> [
+        "landscape" => [
+            "size" => 250000,
+            "height" => 700,
+            "width" => 2000
+        ],
+        "portrait" => [
+            "size" => 250000,
+            "height" => 985,
+            "width" => 1200
+        ],
+    ],
+
+    'brandbanner_presets'=> [
+        "landscape" => [
+            "1x"=>"590X321",
+            "2x"=>"992X540",
+            "3x"=>"1000X539",
+            "load"=>"20X11"
+        ],
+        "portrait" => [
+            "1x"=>"400X216",
+            "2x"=>"600X324",
+            "3x"=>"1200X648" 
+        ],
+    ],
+    'brandbanner_upload'=> [
+        "landscape" => [
+            "size" => 250000,
+            "height" => 539,
+            "width" => 1000
+        ],
+        "portrait" => [
+            "size" => 250000,
+            "height" => 648,
+            "width" => 1200
+        ],
+    ]
 ];

@@ -20,6 +20,8 @@ export class ProductPageComponent implements OnInit {
   isMobile : boolean = false;
   queryParamSize : any;
   inventoryData : any;
+  productApiCall : any;
+  inventoryApiCall : any;
   constructor(private route: ActivatedRoute,
   			  private apiService: ApiServiceService,
               private appservice : AppServiceService,
@@ -28,15 +30,31 @@ export class ProductPageComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.getProductDetails();
+    this.route.params.subscribe(routeParams => {
+      console.log("routeParams ==>", routeParams);
+      this.showLoader = true;
+      this.product = [];
+      this.product.facets = [];
+      this.product.variants = [];
+      this.product.related_products = [1,2,3,4,5];
+      this.product.breadcrumbs = []
+      this.product.size_chart = {};
+      this.product.attributes = {};
+      this.getProductDetails(routeParams.product_slug);
+    });
   }
 
-  getProductDetails(){
-    this.showLoader = true;
-    let product_slug = this.route.snapshot.paramMap.get('product_slug');
+  ngOnDestroy() {
+    this.unsubscribeProductApi();
+    this.unsubscribeInventoryApiCall();
+  }
+
+  getProductDetails(product_slug){
+    // let product_slug = this.route.snapshot.paramMap.get('product_slug');
+    this.unsubscribeProductApi();
     this.queryParamSize = this.route.snapshot.queryParamMap.get('size');
     let url = isDevMode() ? "https://demo8558685.mockable.io/get_single_product" : this.appservice.apiUrl + '/api/rest/v1/single-product?slug='+product_slug;
-    this.apiService.request(url,'get',{},{}).then((data)=>{
+    this.productApiCall = this.apiService.request(url,'get',{},{}, false, 'observable').subscribe((data)=>{
       this.loadCart();
       this.product = data;
       if(this.product.is_sellable)
@@ -49,27 +67,31 @@ export class ProductPageComponent implements OnInit {
         variant = this.product.variants.find((v)=>{ return v.is_default === true })
         default_price = variant.variant_attributes.variant_sale_price;
       }
-
-      fbTrackViewContent(default_price, this.product.attributes.product_id, this.product.facets.product_color_html.id);
-      gtagTrackPageView(default_price, this.product.attributes.product_id, this.product.facets.product_color_html.id);
       this.showLoader = false;
-      console.log("response ==>", data);
-    })
-    .catch((error)=>{
+      try {
+        fbTrackViewContent(default_price, this.product.attributes.product_id, this.product.facets.product_color_html.id);
+        gtagTrackPageView(default_price, this.product.attributes.product_id, this.product.facets.product_color_html.id);
+      } catch (e) {
+        console.log("error in fb or gtag tracking ==>", e);
+      }
+    },
+    (error)=>{
       console.log("error in fetching the json",error);
       this.showLoader = false;
-    })
+      this.product = null;
+    });
   }
 
   checkSingleProductInventory(){
+    this.unsubscribeInventoryApiCall();
     let url = this.appservice.apiUrl + '/api/rest/v1/single-product-inventory?product_id='+this.product.attributes.product_id + '&color_id='+ this.product.facets.product_color_html.id;
-    this.apiService.request(url, 'get', {} , {}).then((response)=>{
+    this.inventoryApiCall = this.apiService.request(url, 'get', {} , {}, false, 'observable').subscribe((response)=>{
       console.log("check inventory response ==>", response);
       this.inventoryData = response;
-    })
-    .catch((error)=>{
+    },
+    (error)=>{
       console.log("error ===>", error);
-    })
+    });
   }
 
   createDataSrcSet(a,b,c,d){
@@ -89,5 +111,15 @@ export class ProductPageComponent implements OnInit {
       this.appservice.loadAccountFromAngular = true;
       this.appservice.loadCartTrigger();
     }        
+  }
+
+  unsubscribeProductApi(){
+    if(this.productApiCall)
+      this.productApiCall.unsubscribe();
+  }
+
+  unsubscribeInventoryApiCall(){
+    if(this.inventoryApiCall)
+      this.inventoryApiCall.unsubscribe();
   }
 }

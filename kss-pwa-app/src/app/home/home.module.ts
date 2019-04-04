@@ -17,9 +17,10 @@ import { OffersComponent } from './components/offers/offers.component';
 import { WeekThemeComponent } from './components/week-theme/week-theme.component';
 import { HappeningMonthComponent } from './components/happening-month/happening-month.component';
 import { BrandsComponent } from './components/brands/brands.component';
+import { NewOfferComponent } from './components/new-offer/new-offer.component';
 
 @NgModule({
-  declarations: [HomePageComponent, BannerComponent, StoriesComponent, CategoriesComponent, TrendingComponent, GenderCategoryComponent, OffersComponent, WeekThemeComponent, HappeningMonthComponent, BrandsComponent],
+  declarations: [HomePageComponent, BannerComponent, StoriesComponent, CategoriesComponent, TrendingComponent, GenderCategoryComponent, OffersComponent, WeekThemeComponent, HappeningMonthComponent, BrandsComponent, NewOfferComponent],
   imports: [
     CommonModule,
     HomeRoutingModule,

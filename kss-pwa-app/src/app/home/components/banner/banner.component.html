@@ -1,6 +1,28 @@
-<div *ngIf="banner.element_data.text.text1" class="text-center p-2 top-offer kss-extension" [ngStyle]="{'background-color' : banner.element_data.bg_color ? banner.element_data.bg_color : ''}" attr.static_element-id="{{banner.sequence}}" static_element-display_type="New offer" attr.static_element-type="{{banner.type}}" page_slug="home">
-	<a href="{{banner.element_data.link}}" [ngStyle]="{'color' : banner.element_data.text_color ? banner.element_data.text_color : ''}">
- 		<!-- <strong>Flat 50% OFF</strong> on selected merchandise. <strong>Shop Now</strong> -->
- 		<strong>{{banner.element_data.text.text1}}</strong>
- 	</a>
-</div>
+<section class="mt-3 mt-lg-5">
+  <div class="container">
+    <div class="row">
+	    <div class="col-md-12 kss-extension" attr.static_element-id="{{banner.sequence}}" static_element-display_type="Banner" attr.static_element-type="{{banner.type}}" page_slug="home">
+	    	<a href="{{banner.element_data.image.href}}" class="d-block">
+				<picture>
+				  	<source media="(orientation: landscape)"
+						  [attr.defaultImage]="'/assets/img/transparent.png'"
+						  [attr.lazyLoad]="createDataSrcSet(banner.images.landscape['2x'], '1200w', banner.images.landscape['1x'], '700w')"
+				          sizes="(min-width:1200px) 1120px, 96vw">
+
+				  	<source media="(orientation: portrait)"
+						  [attr.defaultImage]="'/assets/img/transparent.png'"
+						  [attr.lazyLoad]="createDataSrcSet(banner.images.portrait['2x'], '600w', banner.images.portrait['1x'], '400w')"
+				          sizes="100vw">
+				    <img
+		    			[offset]=500
+		    			[defaultImage]="'/assets/img/transparent.png'"
+		    			[lazyLoad]="banner.images.portrait['1x']"
+		    		  	class="img-fluid w-100 img-holder"
+		    		    alt="{{banner.element_data.image.img_alt}}"
+		    		    title="{{banner.element_data.image.title}}">
+				</picture>
+			</a>
+	    </div>
+    </div>
+  </div>
+</section>

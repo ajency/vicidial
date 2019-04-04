@@ -48,6 +48,8 @@ export class AppServiceService {
    add_to_cart_clicked = false;
    add_to_cart_completed = false;
 
+   menuObject : any;
+
   constructor(	private router: Router,
                 private apiservice : ApiServiceService) { 
     this.apiUrl = isDevMode() ? 'http://localhost:8000' : '';

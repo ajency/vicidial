@@ -1,11 +1,12 @@
-<div class="d-flex">
+<div class="">
     <div class="mt-sm-2">
 	    <!-- Product Title -->
-	    <a *ngIf="facets.product_brand && facets.product_brand.name" href="{{facets.product_brand.slug}}" class="text-black"><h2 class="brands-title brands-title--single">{{facets.product_brand.name}}</h2></a>
-	    <h1 class="section-heading section-heading--single">{{attributes.product_title}}</h1>
+	    <a *ngIf="facets.product_brand && facets.product_brand.slug" href="{{facets.product_brand.slug}}" class="text-black"><h2 class="brands-title brands-title--single">{{facets.product_brand.name}}</h2></a>
+	    <div *ngIf="showLoader" class="loadingBg mt-4" style="height: 30px;"></div>
+      <h1 class="section-heading section-heading--single">{{attributes.product_title}}</h1>
 
 	    <!-- Product Default/Selected Price -->
-	    <app-product-price [variants]="variants" [selectedVariantId]="selectedSize"></app-product-price>
+	    <app-product-price [variants]="variants" [selectedVariantId]="selectedSize" [showLoader]="showLoader"></app-product-price>
     </div>
 </div>
 
@@ -18,6 +19,7 @@
 
 <!-- Product Size Selection -->
 <div class="radio-wrap d-flex kss_sizes wo-image mb-4 single-radio" [ngClass]="{'shake' : shakeSizes}">
+  <div *ngIf="showLoader" class="loadingBg" style="height: 43px;"></div>
   <ng-container *ngFor="let variant of variants">
 	<input class="d-none radio-input" type="radio" name="kss-sizes" id="size-{{variant.variant_attributes.variant_id}}" attr.data-variant_id="{{variant.variant_attributes.variant_id}}" attr.data-list_price="{{variant.variant_attributes.variant_list_price}}" attr.data-sale_price="{{variant.variant_attributes.variant_sale_price}}" attr.data-discount_per="{{getOffPercentage(variant.variant_attributes.variant_list_price, variant.variant_attributes.variant_sale_price)}}" data-title="3-4yrs" [(ngModel)]="selectedSize" [value]="variant.variant_attributes.variant_id" (change)="sizeSelected()" [disabled]="!variant.is_available">
 	<label class="radio-label" for="size-{{variant.variant_attributes.variant_id}}">
@@ -33,6 +35,7 @@
     <div *ngIf="totalQuantity" class="align-items-center border d-flex font-weight-bold mr-2 px-4 py-2 qty-select" data-target="#qty-modal" data-toggle="modal">
       Qty: {{selectedQuantity}}
     </div>
+    <div *ngIf="showLoader" class="loadingBg" style="height: 58px;"></div>
 		<button *ngIf="isSellable" id="cd-add-to-cart" class="btn kss-btn kss-btn--big cd-add-to-cart" (click)="addToBag()">
 			<div class="kss-btn__wrapper d-flex align-items-center justify-content-center">
 				<span class="btn-contents align-items-center">
@@ -43,11 +46,11 @@
 				</div>
 			</div>
 		</button>
-		<div *ngIf="!isSellable" class="out-of-stock">Currently unavailable</div>
+		<div *ngIf="!isSellable && !showLoader" class="out-of-stock">Currently unavailable</div>
 	</div>
 </div>
 
-<ng-container *ngIf="facets.product_category_type.slug == 'uniform'">
+<ng-container *ngIf="facets.product_category_type && facets.product_category_type.slug == 'uniform'">
   <hr class="my-4">
   <!-- Product shipping info -->
   <div class="shipping-info-box d-flex my-4">
@@ -138,7 +141,7 @@
     </div>
   </div>
 
-  <div *ngIf="facets.product_metatag.length" class="">
+  <div *ngIf="facets.product_metatag && facets.product_metatag.length" class="">
     <div class="collapse-head border-bottom mb-0" id="headingTags">
         <button class="btn btn-link btn-block text-left py-3 px-0 br-0 collapsed" type="button" data-toggle="collapse" data-target="#collapseTags" aria-expanded="false" aria-controls="collapseTags">
             <label class="mb-0 text-body cursor-pointer">

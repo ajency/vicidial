@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-
+import { Router }  from '@angular/router';
 @Component({
   selector: 'app-color-options',
   templateUrl: './color-options.component.html',
@@ -11,7 +11,7 @@ export class ColorOptionsComponent implements OnInit, OnChanges {
   @Input() collapse : any;
 
   selectedColorVariant : any;
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
@@ -27,7 +27,8 @@ export class ColorOptionsComponent implements OnInit, OnChanges {
 
   openColorVariant(variant){
     if(!variant.is_selected)
-      window.location.href = variant.url;
+      this.router.navigateByUrl((new URL(variant.url)).pathname);
+      // window.location.href = variant.url;
   }
 
 }

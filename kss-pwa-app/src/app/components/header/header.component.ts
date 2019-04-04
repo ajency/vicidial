@@ -34,14 +34,19 @@ export class HeaderComponent implements OnInit, OnChanges {
   }
 
   getMenu(){
-    let url = isDevMode() ? "https://demo8558685.mockable.io/get-menu" : "/api/rest/v1/test/get-menu"
-    this.apiService.request(url,'get',{},{}).then((data)=>{
-      console.log("data ==>", data);
-      this.menu = data.menu;
-    })
-    .catch((error)=>{
-      console.log("error in fetching the json",error);
-    })
+    if(this.appservice.menuObject)
+      this.menu = this.appservice.menuObject;
+    else{
+      let url = isDevMode() ? "https://demo8558685.mockable.io/get-menu" : "/api/rest/v1/test/get-menu"
+      this.apiService.request(url,'get',{},{}).then((data)=>{
+        console.log("data ==>", data);
+        this.menu = data.menu;
+        this.appservice.menuObject = this.menu;
+      })
+      .catch((error)=>{
+        console.log("error in fetching the json",error);
+      })
+    }
   }
 
   openMenu(){

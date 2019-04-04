@@ -5,11 +5,14 @@
 <div *ngIf="homePageElements" class="pb-md-3">
 
 
-  <!-- Banner -->
-  <app-banner *ngIf="homePageElements.newoffer" [banner]="homePageElements.newoffer[0]"></app-banner>
+  <!-- New offer -->
+  <app-new-offer *ngIf="homePageElements.newoffer" [newOffer]="homePageElements.newoffer[0]"></app-new-offer>
 
   <!-- Gender category selection -->
   <app-gender-category *ngIf="homePageElements.gender" [tabs]="homePageElements.gender"></app-gender-category>
+
+  <!-- Banner -->
+  <app-banner  *ngIf="homePageElements.newbanner" [banner]="homePageElements.newbanner[0]"></app-banner>
 
    <!-- Our offers -->
   <app-offers *ngIf="homePageElements.offer" [offers]="homePageElements.offer"></app-offers>
@@ -51,7 +54,7 @@
   <!-- <div app-mobile-products></div> -->
 
   <!-- Brands -->
-  <div *ngIf="homePageElements.brand" app-brands [brands]="homePageElements.brand"></div>
+  <div app-brands [brands]="homePageElements.brand" [brandBanners]="homePageElements.brandbanner"></div>
 
   <!-- Blogs -->
   <!-- <div app-blog></div> -->

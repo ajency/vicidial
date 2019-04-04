@@ -9,10 +9,13 @@ export class ProductPriceComponent implements OnInit, OnChanges {
 
 	@Input() variants : any;
   @Input() selectedVariantId : any;
+  @Input() showLoader : boolean;
 	selectedVariant : any;
   constructor(private appservice : AppServiceService) { }
 
   ngOnInit() {
+    this.selectedVariant = [];
+    this.selectedVariant.variant_attributes = [];
   }
 
   ngOnChanges(){
