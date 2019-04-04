@@ -399,8 +399,8 @@ return [
     'brandbanner_upload'=> [
         "landscape" => [
             "size" => 250000,
-            "height" => 925,
-            "width" => 1700
+            "height" => 539,
+            "width" => 1000
         ],
         "portrait" => [
             "size" => 250000,
