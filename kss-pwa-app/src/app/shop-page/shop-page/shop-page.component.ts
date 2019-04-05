@@ -12,4 +12,15 @@ export class ShopPageComponent implements OnInit {
   ngOnInit() {
   }
 
+  status: boolean = false;
+  mobilefilter: boolean = false;
+
+  clickEvent(){
+    this.status = !this.status;       
+  }
+
+  showMobileFilter(){
+    this.mobilefilter = !this.mobilefilter;       
+  }
+
 }
