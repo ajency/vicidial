@@ -48,6 +48,10 @@ class Product
         $variant_ids = collect();
         $limit = 100000;
 
+        $limit = 100000;
+
+        $last_variant_date = $odoo->defaultExec('product.product', 'search_read', [[['id','>','0']]], ['order' => 'write_date DESC', 'limit' => 1, 'fields' => ['write_date']])->first()['write_date'];
+
         //Active Variants
         $offset = 0;
         do {
@@ -71,7 +75,7 @@ class Product
                 UpdateProduct::dispatch($productId->id)->onQueue('process_product');
             }
         }
-        Defaults::setLastVariantSync();
+        Defaults::setLastVariantSync($last_variant_date);
     }
 
     public static function getProductIDsFromVariants($filters, $offset, $limit = false)
