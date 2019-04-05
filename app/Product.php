@@ -12,8 +12,8 @@ use App\Jobs\UpdateSearchText;
 use App\Jobs\UpdateVariantInventory;
 use App\ProductColor;
 use App\Variant;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class Product
 {
@@ -50,7 +50,8 @@ class Product
 
         $limit = 100000;
 
-        $last_variant_date = $odoo->defaultExec('product.product', 'search_read', [[['id','>','0']]], ['order' => 'write_date DESC', 'limit' => 1, 'fields' => ['write_date']])->first()['write_date'];
+        $odoo              = new OdooConnect;
+        $last_variant_date = $odoo->defaultExec('product.product', 'search_read', [[['id', '>', '0']]], ['order' => 'write_date DESC', 'limit' => 1, 'fields' => ['write_date']])->first()['write_date'];
 
         //Active Variants
         $offset = 0;
@@ -270,7 +271,7 @@ class Product
         $query->initializeBulkIndexing();
         $products->each(function ($item, $key) use ($query) {
             $query->addToBulkIndexing($item['id'], $item);
-            Cache::forget('single-product-'.$item['search_result_data']['product_slug']);
+            Cache::forget('single-product-' . $item['search_result_data']['product_slug']);
         });
         $responses = $query->bulk();
     }
@@ -660,7 +661,7 @@ class Product
     {
         $odoo           = new OdooConnect;
         $allVendors     = $odoo->defaultExec('product.template', 'read', [$products], ['fields' => ['vendor_id', 'product_variant_ids', 'product_template_description_id', 'fabric_description_id']]);
-        $allBarcodes    = $odoo->defaultExec('product.product', 'read', [$allVendors->pluck('product_variant_ids')->flatten()->toArray()], ['fields' => ['barcode','standard_price']]);
+        $allBarcodes    = $odoo->defaultExec('product.product', 'read', [$allVendors->pluck('product_variant_ids')->flatten()->toArray()], ['fields' => ['barcode', 'standard_price']]);
         $products       = $allVendors->pluck('id');
         $productColors  = ProductColor::select(['product_id', 'elastic_id'])->whereIn('product_id', $products)->pluck('product_id', 'elastic_id');
         $productVendors = $productColors->map(function ($productID) use ($allVendors, $allBarcodes) {
@@ -678,10 +679,10 @@ class Product
                     $product["product_fabric_description_id"]   = ($odooData["fabric_description_id"]) ? $odooData["fabric_description_id"][0] : null;
                     $product["product_fabric_description"]      = ($odooData["fabric_description_id"]) ? $odooData["fabric_description_id"][1] : null;
                     foreach ($barcodeData as $variantData) {
-                        $variant                      = $variants[$variantData['id']];
-                        $variant['variant_barcode']   = $variantData['barcode'];
-                        $variant['variant_standard_price']   = floatval($variantData['standard_price']);
-                        $variants[$variantData['id']] = $variant;
+                        $variant                           = $variants[$variantData['id']];
+                        $variant['variant_barcode']        = $variantData['barcode'];
+                        $variant['variant_standard_price'] = floatval($variantData['standard_price']);
+                        $variants[$variantData['id']]      = $variant;
                     }
                 },
             ];
