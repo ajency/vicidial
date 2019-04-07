@@ -395,7 +395,7 @@ class Variant extends Model
 
     public static function addUpdateInventoryJobs()
     {
-        $job_sets = DB::table('variants')->select(['id','product_color_id'])->get()->map(function ($x) {return (array) $x;})->groupBy('product_color_id')->mapWithKeys(function ($item, $key) {return [$key => $item->pluck('id')];})->toArray();
+        $job_sets = \DB::table('variants')->select(['id','product_color_id'])->get()->map(function ($x) {return (array) $x;})->groupBy('product_color_id')->mapWithKeys(function ($item, $key) {return [$key => $item->pluck('id')];})->toArray();
         foreach ($job_sets as $job_set) {
             UpdateVariantInventory::dispatch($job_set)->onQueue('update_inventory');
         }
