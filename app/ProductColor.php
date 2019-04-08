@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use SoapBox\Formatter\Formatter;
+use App\Jobs\GenerateExistingPresetImages;
 
 class ProductColor extends Model
 {
@@ -248,6 +249,20 @@ class ProductColor extends Model
 
         foreach ($chunks as $chunk) {
             UpdateElasticData::dispatch($chunk)->onQueue('process_product');
+        }
+    }
+
+    public static function generatePresetImages(){
+        $productColors = ProductColor::join('fileupload_mapping', function ($join) {
+            $join->on('product_colors.id', '=', 'fileupload_mapping.object_id');
+            $join->where('fileupload_mapping.object_type', '=', "App\ProductColor");
+        })->whereNull('fileupload_mapping.deleted_at')->select('product_colors.id','product_colors.elastic_id','fileupload_mapping.file_id')->get();
+        $product_colors_arr = [];
+        foreach($productColors as $productColor){
+            if(!in_array($productColor->id, $product_colors_arr)){
+                GenerateExistingPresetImages::dispatch($productColor)->onQueue('process_product_image_presets');
+                array_push($product_colors_arr,$productColor->id);
+            }
         }
     }
 
