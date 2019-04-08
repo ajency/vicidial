@@ -106,6 +106,7 @@
          }).done(function( response ) {
             if(response["success"]){
                document.getElementById("contact-form").reset();
+               $('.form-control').removeClass('has-value');
                $('.alert-success').addClass('show slide-in-bottom');
          		$('#submitContactForm i').addClass('d-none');
                $('#submitContactForm').removeClass('disabled');
