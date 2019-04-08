@@ -209,7 +209,7 @@ export class AddressComponent implements OnInit, OnChanges {
         this.newAddress.city = response.district;
         this.newAddress.state_id = response.state_id;
         if(response.pincode_serviceability && !response.pincode_serviceability.cod)
-          this.pincodeErrorMsg = "COD is not serviceable for this pincode.";
+          this.pincodeErrorMsg = "COD service is not available for the above pincode";
         this.removeLoader();
       },
       (error)=>{
