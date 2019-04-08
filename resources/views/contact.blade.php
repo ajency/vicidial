@@ -30,11 +30,11 @@
    </div>
    <div class="row justify-content-center">
       <!-- Contact form -->
-      
+
       <div class="col-sm-8 pb-3 pb-sm-5 pb-md-0 contactForm">
          <form id="contact-form" method="post" >
          <div class="row ml-0 p-md-4 mr-3 shadow no-shadow-mobile">
-         
+
             <div class="col-md-12">
                <h4 class="text-center mb-sm-3 font-weight-bold">Send us a message to let us know how we can help</h4>
                <!--firstName-->
@@ -62,19 +62,19 @@
                </div>
             </div>
             <div class="col-md-12">
-               <div class="form-group mt-3">
-                  <button type="submit" class="btn btn-primary btn-lg btn-block" id="submitContactForm">Submit</button>
-                  <div class="alert kss-flash alert-success p-3 alert-dismissible fade hide"><i class="fas fa-check-circle pr-1"></i> Thank you for contacting us. We will get back to you. 
-                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+               <div class="form-group my-0 py-3 overflow-h">
+                  <button type="submit" class="btn btn-primary btn-lg btn-block" id="submitContactForm">Submit <i class="fas fa-circle-notch fa-spin d-none"></i></button>
+                  <div class="alert kss-flash alert-success p-3 alert-dismissible submit-success"><i class="fas fa-check-circle pr-1"></i> Thank you for contacting us. We will get back to you.
+                     <button type="button" class="success-close close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                   </div>
                </div>
             </div>
-            
+
          </div>
          </form>
       </div>
 
-      
+
       <div class="col-sm-4 mb-sm-3">
          <div class="row m-0">
             <div class="col-sm-12 shadow no-shadow-mobile p-sm-4 text-center">
@@ -95,8 +95,8 @@
    $(document).ready(function(){
       $("#contact-form").submit(function(event){
          event.preventDefault();
-         $('.alert-success').addClass('hide')
-         $('.alert-success').removeClass('show')
+         $('#submitContactForm').addClass('disabled');
+         $('#submitContactForm i').removeClass('d-none');
          $.ajax({
              method: "POST",
              url: "/api/rest/v1/send-contact-details",
@@ -105,14 +105,30 @@
              // contentType: "application/json"
          }).done(function( response ) {
             if(response["success"]){
-               $('.alert-success').removeClass('hide')
-               $('.alert-success').addClass('show')
+               document.getElementById("contact-form").reset();
+               $('.form-control').removeClass('has-value');
+               $('.alert-success').addClass('show slide-in-bottom');
+         		$('#submitContactForm i').addClass('d-none');
+               $('#submitContactForm').removeClass('disabled');
+
             }
          });
-         
       })
-      
+
+      function dismissSuccess(){
+        $('.alert-success').removeClass('slide-in-bottom');
+        $('.alert-success').addClass('slide-out-bottom');
+         setTimeout(function(){
+           $('.alert-success').removeClass('slide-out-bottom');
+           $('.alert-success').removeClass('show');
+         }, 4500);
+      };
+
+      $(document).on('click', '.success-close', function(){
+         dismissSuccess();
+      });
+
    })
-   
+
 </script>
 @stop
