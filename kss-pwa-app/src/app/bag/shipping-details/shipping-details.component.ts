@@ -163,6 +163,7 @@ export class ShippingDetailsComponent implements OnInit {
       // this.router.navigateByUrl('/bag', { replaceUrl: true });
       this.appservice.removeLoader();
       if(error.status == 403){
+        $(".kss_shipping").animate({scrollTop: 0});
         this.pincodeNotServiceable = true;
       }
       else{
