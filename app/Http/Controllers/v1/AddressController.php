@@ -150,7 +150,9 @@ class AddressController extends Controller
         if($pincode_entry == null){
             abort(403);
         }
+
+        $pincode_data = $address->checkPincodeServiceable();
         
-        return json_encode(['district' => $pincode_entry['district'], 'state_id' => $pincode_entry['state_id']]);
+        return json_encode(['district' => $pincode_entry['district'], 'state_id' => $pincode_entry['state_id'], "pincode_serviceability" => $pincode_data]);
     }
 }
