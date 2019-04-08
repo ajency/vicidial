@@ -46,14 +46,15 @@ class Product
     public static function updateVariantSync()
     {
         $variant_ids = collect();
+        $limit = 100000;
 
         //Active Variants
         $offset = 0;
         do {
-            $variants    = self::getProductIDsFromVariants(['write' => Defaults::getLastVariantSync()], $offset);
+            $variants    = self::getProductIDsFromVariants(['write' => Defaults::getLastVariantSync()], $offset, $limit);
             $variant_ids = $variant_ids->merge($variants);
             $offset      = $offset + $variants->count();
-        } while ($variants->count() == config('odoo.limit'));
+        } while ($variants->count() == $limit);
 
         //InActive Variants
         /*$offset      = 0;
