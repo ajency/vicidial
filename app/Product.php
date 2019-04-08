@@ -6,8 +6,8 @@ use Ajency\Connections\OdooConnect;
 use App\Defaults;
 use App\Facet;
 use App\Jobs\CreateProductJobs;
+use App\Jobs\CreateUpdateProductJobs;
 use App\Jobs\FetchProductImages;
-use App\Jobs\UpdateProduct;
 use App\Jobs\UpdateSearchText;
 use App\Jobs\UpdateVariantInventory;
 use App\ProductColor;
@@ -46,7 +46,6 @@ class Product
     public static function updateVariantSync()
     {
         $variant_ids = collect();
-        $limit = 100000;
 
         $limit = 100000;
 
@@ -70,10 +69,12 @@ class Product
         } while ($variants->count() == config('odoo.limit'));*/
 
         if ($variant_ids->count() > 0) {
-            $productIds = DB::select(DB::raw('SELECT DISTINCT id FROM product_colors where product_colors.id in (SELECT product_color_id from variants where variants.odoo_id in (' . implode(',', $variant_ids->toArray()) . '))'));
+            $productIds = collect(DB::select(DB::raw('SELECT DISTINCT id FROM product_colors where product_colors.id in (SELECT product_color_id from variants where variants.odoo_id in (' . implode(',', $variant_ids->toArray()) . '))')));
 
-            foreach ($productIds as $productId) {
-                UpdateProduct::dispatch($productId->id)->onQueue('process_product');
+            $chunks = $productIds->chunk(30);
+
+            foreach ($chunks as $chunk) {
+                CreateUpdateProductJobs::dispatch($chunk->toArray())->onQueue('create_jobs');
             }
         }
         Defaults::setLastVariantSync($last_variant_date);
