@@ -207,6 +207,8 @@ export class AddressComponent implements OnInit, OnChanges {
         console.log("response from location api ==>", response);
         this.newAddress.city = response.district;
         this.newAddress.state_id = response.state_id;
+        if(response.pincode_serviceability && !response.pincode_serviceability.cod)
+          this.pincodeErrorMsg = "COD is not serviceable for this pincode.";
         this.removeLoader();
       },
       (error)=>{
