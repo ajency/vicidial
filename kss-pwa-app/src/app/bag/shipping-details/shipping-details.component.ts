@@ -140,6 +140,7 @@ export class ShippingDetailsComponent implements OnInit {
     this.addAddress = this.addressComponent ? this.addressComponent.addAddress: this.addAddress;
     this.selectedAddressId = this.addressComponent ? this.addressComponent.selectedAddressId : this.selectedAddressId;
     this.pincodeNotServiceable = false;
+    console.log(this.selectedAddressId);
   }
 
   callOrderApi(){

@@ -90,6 +90,8 @@ export class AddressComponent implements OnInit, OnChanges {
   }
 
   addNewAddress(){
+    this.pincodeErrorMsg = "";
+    this.pincodeBlur = false;
     this.hideDefaultAddressField = false;
     this.addAddress = true;
     this.addAddressFlagChanged.emit(true);
@@ -141,7 +143,6 @@ export class AddressComponent implements OnInit, OnChanges {
 
       this.selectedAddressId=response.address.id;
       this.addAddress = false;
-      this.addAddressFlagChanged.emit(false);
       this.appservice.shippingAddresses = this.addresses;
       this.newAddress = {};
       this.appservice.removeLoader();
