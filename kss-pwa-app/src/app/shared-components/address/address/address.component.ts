@@ -141,7 +141,8 @@ export class AddressComponent implements OnInit, OnChanges {
       if(response.address.default)
         this.changeAddreessDefault(response.address.id);
 
-      this.selectedAddressId=response.address.id;
+      this.addresses.forEach(address =>{ if(address.id == response.address.id) this.selectedAddressId = address.id});
+      // this.selectedAddressId=response.address.id;
       this.addAddress = false;
       this.appservice.shippingAddresses = this.addresses;
       this.newAddress = {};
