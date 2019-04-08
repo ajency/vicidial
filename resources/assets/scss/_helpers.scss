@@ -835,4 +835,13 @@ form{
     width: 16px;
 }
 
+.submit-success{
+    position: absolute;
+    width: 100%;
+    bottom: -100px;
+    left: 0;
+    &.show{
+        bottom: 0;
+    }
+}
 

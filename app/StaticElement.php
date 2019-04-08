@@ -8,6 +8,8 @@ use Ajency\FileUpload\models\FileUpload_Photos;
 use Ajency\FileUpload\models\FileUpload_Varients;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
+use App\Jobs\GenerateStaticElementPresetImages;
+use App\Jobs\GenerateExistingStaticElementPresetImages;
 
 class StaticElement extends Model
 {
@@ -221,6 +223,7 @@ class StaticElement extends Model
 
         $imageId = $this->uploadImageStatic($filepath, $type, false, true, '', '', $image_name, $filepath, $extension, $image_name);
 
+        GenerateStaticElementPresetImages::dispatch($id,$imageId,$image_name . "." . $extension)->onQueue('process_static_element_image_presets');
         //mapping images to model
         $this->mapImage($imageId, $im_type);
         return $image_name;
@@ -393,7 +396,8 @@ class StaticElement extends Model
     {
         $resp   = [];
         $config = config('fileupload_static_element');
-
+        $map_image_size = json_decode($file->image_size,true);
+        if($map_image_size == null) return false;    
         if (substr($file->url, -4) == '.gif') {
             $config[$im_type . '_presets']['original'] = [];
         }
@@ -407,13 +411,32 @@ class StaticElement extends Model
                 $type = explode("-", $path[1]); //getting the type from url
 
                 foreach ($cdepths as $cdepth => $csizes) {
-
-                    $newfilepath          = str_replace($config['model'][$obj_class]['base_path'] . '/' . $obj_instance[$config['model'][$obj_class]['slug_column']] . '/', $config['model'][$obj_class]['base_path'] . '/' . $file->id . '/' . $cpreset . '/' . $cdepth . '/', $path[1]);
+                    $image_size = ($cpreset == "original")?$cpreset:($cpreset."$$".$cdepth);
+                    if(in_array($image_size,$map_image_size)){
+                        $newfilepath          = str_replace($config['model'][$obj_class]['base_path'] . '/' . $obj_instance[$config['model'][$obj_class]['slug_column']] . '/', $config['model'][$obj_class]['base_path'] . '/' . $obj_instance[$config['model'][$obj_class]['slug_column']] . '/' . $cpreset . '/' . $cdepth . '/', $path[1]);
+                        if(config('ajfileupload.use_cdn') && config('ajfileupload.cdn_url') ){
+                                $tempUrl = parse_url($newfilepath);
+                                $newfilepath =  config('ajfileupload.cdn_url') .'/'. $tempUrl['path'];
+                            }
+                    }
+                    else{
+                            $newfilepath = str_replace($config['model'][$obj_class]['base_path'].'/'.$obj_instance[$config['model'][$obj_class]['slug_column']].'/',$config['model'][$obj_class]['base_path'].'/'.$file->id.'/'.$cpreset.'/'.$cdepth.'/', $path[1]);
+                        }
                     $cdepth_data[$cdepth] = url($newfilepath);
                 }
 
                 if ($cpreset == "original") {
-                    $newfilepath    = str_replace($config['model'][$obj_class]['base_path'] . '/' . $obj_instance[$config['model'][$obj_class]['slug_column']] . '/', $config['model'][$obj_class]['base_path'] . '/' . $file->id . '/' . $cpreset . '/', $path[1]);
+                    $image_size = $cpreset;
+                    if(in_array($image_size,$map_image_size)){
+                        $newfilepath    = str_replace($config['model'][$obj_class]['base_path'] . '/' . $obj_instance[$config['model'][$obj_class]['slug_column']] . '/', $config['model'][$obj_class]['base_path'] . '/' . $obj_instance[$config['model'][$obj_class]['slug_column']] . '/' . $cpreset . '/', $path[1]);
+                        if(config('ajfileupload.use_cdn') && config('ajfileupload.cdn_url') ){
+                                $tempUrl = parse_url($newfilepath);
+                                $newfilepath =  config('ajfileupload.cdn_url') .'/'. $tempUrl['path'];
+                            }
+                    }
+                    else{
+                        $newfilepath = str_replace($config['model'][$obj_class]['base_path'].'/'.$obj_instance[$config['model'][$obj_class]['slug_column']].'/',$config['model'][$obj_class]['base_path'].'/'.$file->id.'/'.$cpreset.'/', $path[1]);
+                    }
                     $resp[$cpreset] = url($newfilepath);
                 } else {
                     foreach ($type as $t) {
@@ -512,6 +535,7 @@ class StaticElement extends Model
             $new_img = $new_img->stream();
 
             $fp = $config['base_root_path'] . $config['model'][$obj_class]['base_path'] . '/' . $obj_instance[$config['model'][$obj_class]['slug_column']] . '/' . $presets . '/' . $depth . '/' . $filename;
+
             if ($disk->put($fp, $new_img->__toString(), 'public')) {
                 $file->save();
                 $newfilepathfullurl = str_replace($config['model'][$obj_class]['base_path'] . '/' . $obj_instance[$config['model'][$obj_class]['slug_column']] . '/', $config['model'][$obj_class]['base_path'] . '/' . $obj_instance[$config['model'][$obj_class]['slug_column']] . '/' . $presets . '/' . $depth . '/', $file->url);
@@ -543,6 +567,38 @@ class StaticElement extends Model
 
         return (["message" => "Elements published successfully", "success" => true]);
     }
+
+    public function getStaticImage($photo_id, $preset, $depth, $filename)
+    {   
+        $imageurl     = "";
+        $file         = $this->getSingleStaticImage($photo_id,$preset, $depth);
+        if ($file) {
+            $imageurl = $file;
+        } else {
+            $imageurl = $this->resizeStaticImages($photo_id,$preset, $depth, $filename);
+        }
+        if(config('ajfileupload.use_cdn') && config('ajfileupload.cdn_url') ){
+            $tempUrl = parse_url($imageurl);
+            $imageurl =  config('ajfileupload.cdn_url') . $tempUrl['path'];
+        }
+        return $imageurl;
+    }
+
+    public static function generatePresetImages(){
+        $staticElements = StaticElement::join('fileupload_mapping', function ($join) {
+            $join->on('static_elements.id', '=', 'fileupload_mapping.object_id');
+            $join->where('fileupload_mapping.object_type', '=', "App\StaticElement");
+        })->whereNull('fileupload_mapping.deleted_at')->select('static_elements.id','static_elements.type','fileupload_mapping.file_id')->get();
+        $static_elements_arr = [];
+        
+        foreach($staticElements as $staticElement){
+            if(!in_array($staticElement->id, $static_elements_arr)){
+                GenerateExistingStaticElementPresetImages::dispatch($staticElement)->onQueue('process_static_element_image_presets');
+                array_push($static_elements_arr,$staticElement->id);
+            }
+        }
+    }
+
 
 
 }
