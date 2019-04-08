@@ -32,3 +32,10 @@ function checkDelhiveryPincodeServiceability($pincode)
 	}
 	return $data;
 }
+
+function checkCODServiceable($cod)
+{
+    if (!$cod) {
+        abort(403, "COD not serviceable!!");
+    }
+}
