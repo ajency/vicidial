@@ -202,6 +202,8 @@ export class AddressComponent implements OnInit, OnChanges {
   }
 
   getCityState(pincode){
+    this.pincodeErrorMsg = "";
+    this.pincodeWarning = "";
     if(pincode.length == 6){
       console.log("make api call");
       this.showShowLoader();
@@ -211,7 +213,6 @@ export class AddressComponent implements OnInit, OnChanges {
         console.log("response from location api ==>", response);
         this.newAddress.city = response.district;
         this.newAddress.state_id = response.state_id;
-        this.pincodeErrorMsg = "";
         if(response.pincode_serviceability && !response.pincode_serviceability.cod)
           this.pincodeWarning = "COD service is not available for the above pincode";
         this.removeLoader();
@@ -220,7 +221,6 @@ export class AddressComponent implements OnInit, OnChanges {
         console.log("error ===>", error);
         this.resetStateAndCity();
         this.removeLoader();
-        this.pincodeWarning = "";
         if(error.status == 403)
           this.pincodeErrorMsg = "We do not service this pincode.";
         else if(error.status == 0)
@@ -232,8 +232,6 @@ export class AddressComponent implements OnInit, OnChanges {
     else{
       this.unsubscribeGetLocationCall();
       this.resetStateAndCity();
-      this.pincodeErrorMsg = "";
-      this.pincodeWarning = "";
     }
   }
 
