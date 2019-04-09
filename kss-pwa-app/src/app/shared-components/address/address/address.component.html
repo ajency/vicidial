@@ -49,7 +49,7 @@
 						<label class="control-label">Pincode <span class="pl-1 text-danger">*</span></label>
 						<small class="form-text text-danger">
 							<span *ngIf="pincodeBlur && newAddress.pincode.length != 6; else otherError">Please enter a valid 6 digit pincode</span>
-							<ng-template #otherError>{{pincodeErrorMsg}}</ng-template>
+							<ng-template #otherError><span>{{pincodeErrorMsg}}</span><span>{{pincodeWarning}}</span></ng-template>
 						</small>
 					</div>
 				</div>

@@ -35,6 +35,7 @@ export class AddressComponent implements OnInit, OnChanges {
   pincodeBlur : boolean = false;
   getLocationCall : any;
   pincodeErrorMsg : any;
+  pincodeWarning : any;
   showPicodeLoader : boolean = false;
   constructor(private appservice : AppServiceService,
               private apiservice : ApiServiceService) { }
@@ -91,6 +92,7 @@ export class AddressComponent implements OnInit, OnChanges {
 
   addNewAddress(){
     this.pincodeErrorMsg = "";
+    this.pincodeWarning = "";
     this.pincodeBlur = false;
     this.hideDefaultAddressField = false;
     this.addAddress = true;
@@ -209,14 +211,16 @@ export class AddressComponent implements OnInit, OnChanges {
         console.log("response from location api ==>", response);
         this.newAddress.city = response.district;
         this.newAddress.state_id = response.state_id;
+        this.pincodeErrorMsg = "";
         if(response.pincode_serviceability && !response.pincode_serviceability.cod)
-          this.pincodeErrorMsg = "COD service is not available for the above pincode";
+          this.pincodeWarning = "COD service is not available for the above pincode";
         this.removeLoader();
       },
       (error)=>{
         console.log("error ===>", error);
         this.resetStateAndCity();
         this.removeLoader();
+        this.pincodeWarning = "";
         if(error.status == 403)
           this.pincodeErrorMsg = "We do not service this pincode.";
         else if(error.status == 0)
@@ -229,6 +233,7 @@ export class AddressComponent implements OnInit, OnChanges {
       this.unsubscribeGetLocationCall();
       this.resetStateAndCity();
       this.pincodeErrorMsg = "";
+      this.pincodeWarning = "";
     }
   }
 
