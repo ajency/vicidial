@@ -289,9 +289,20 @@ class SubOrder extends Model
         $subOrder->is_invoiced = $is_invoiced;
         $subOrder->odoo_status = $state;
         $subOrder->save();
+
+        $variantQuantity = [];
         foreach ($subOrder->orderLines as $orderLine) {
             $orderLine->state = $state;
             $orderLine->save();
+            if (!isset($variantQuantity[$orderLine->variant->odoo_id])) {
+                $variantQuantity[$orderLine->variant->odoo_id] = 0;
+            }
+            $variantQuantity[$orderLine->variant->odoo_id] += 1;
+        }
+        if ($state_old == 'draft' && $state == 'sale') {
+            $inventoryData                         = [];
+            $inventoryData[$subOrder->location_id] = $variantQuantity;
+            Sync::call('inventory', 'unreserveInventory', ['inventoryData' => $inventoryData]);
         }
     }
 }

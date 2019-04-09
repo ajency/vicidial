@@ -3,6 +3,7 @@
 namespace App;
 
 use Ajency\Connections\OdooConnect;
+use Ajency\ServiceComm\Comm\Sync;
 use App\Cart;
 use App\Jobs\CancelOdooOrder;
 use App\Jobs\OdooOrder;
@@ -81,15 +82,23 @@ class Order extends Model
     public function placeOrderOnOdoo()
     {
         //create a job to place order on odoo for all suborders.
+        $inventoryData   = [];
+        $variantQuantity = [];
         foreach ($this->subOrders as $subOrder) {
             $subOrder->odoo_status = 'draft';
             $subOrder->save();
             foreach ($subOrder->orderLines as $orderLine) {
                 $orderLine->state = 'draft';
                 $orderLine->save();
+                if (!isset($variantQuantity[$orderLine->variant->odoo_id])) {
+                    $variantQuantity[$orderLine->variant->odoo_id] = 0;
+                }
+                $variantQuantity[$orderLine->variant->odoo_id] += 1;
             }
+            $inventoryData[$subOrder->location_id] = $variantQuantity;
             OdooOrder::dispatch($subOrder, true)->onQueue('odoo_order');
         }
+        Sync::call('inventory', 'reserveInventory', ['inventoryData' => $inventoryData]);
         /*if ($this->cart->coupon != null) {
             $odoo              = new OdooConnect;
             $currentCouponLeft = $odoo->defaultExec('sale.order.coupon', 'search_read', [[['global_code', '=', $this->cart->coupon]]], ['fields' => ['consumed_coupon_count']])->first();
