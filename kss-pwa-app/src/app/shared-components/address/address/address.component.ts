@@ -35,6 +35,7 @@ export class AddressComponent implements OnInit, OnChanges {
   pincodeBlur : boolean = false;
   getLocationCall : any;
   pincodeErrorMsg : any;
+  pincodeWarning : any;
   showPicodeLoader : boolean = false;
   constructor(private appservice : AppServiceService,
               private apiservice : ApiServiceService) { }
@@ -90,6 +91,9 @@ export class AddressComponent implements OnInit, OnChanges {
   }
 
   addNewAddress(){
+    this.pincodeErrorMsg = "";
+    this.pincodeWarning = "";
+    this.pincodeBlur = false;
     this.hideDefaultAddressField = false;
     this.addAddress = true;
     this.addAddressFlagChanged.emit(true);
@@ -139,9 +143,9 @@ export class AddressComponent implements OnInit, OnChanges {
       if(response.address.default)
         this.changeAddreessDefault(response.address.id);
 
-      this.selectedAddressId=response.address.id;
+      this.addresses.forEach(address =>{ if(address.id == response.address.id) this.selectedAddressId = address.id});
+      // this.selectedAddressId=response.address.id;
       this.addAddress = false;
-      this.addAddressFlagChanged.emit(false);
       this.appservice.shippingAddresses = this.addresses;
       this.newAddress = {};
       this.appservice.removeLoader();
@@ -198,6 +202,8 @@ export class AddressComponent implements OnInit, OnChanges {
   }
 
   getCityState(pincode){
+    this.pincodeErrorMsg = "";
+    this.pincodeWarning = "";
     if(pincode.length == 6){
       console.log("make api call");
       this.showShowLoader();
@@ -207,6 +213,8 @@ export class AddressComponent implements OnInit, OnChanges {
         console.log("response from location api ==>", response);
         this.newAddress.city = response.district;
         this.newAddress.state_id = response.state_id;
+        if(response.pincode_serviceability && !response.pincode_serviceability.cod)
+          this.pincodeWarning = "COD service is not available for the above pincode";
         this.removeLoader();
       },
       (error)=>{
@@ -224,7 +232,6 @@ export class AddressComponent implements OnInit, OnChanges {
     else{
       this.unsubscribeGetLocationCall();
       this.resetStateAndCity();
-      this.pincodeErrorMsg = "";
     }
   }
 

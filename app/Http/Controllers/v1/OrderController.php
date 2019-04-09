@@ -28,6 +28,7 @@ class OrderController extends Controller
         validateCart($user, $cart, 'cart');
         validateAddress($user, $address);
         $cart->checkCartAvailability();
+        $pincode_data = $address->checkPincodeServiceable();
 
         $order = Order::create([
             'cart_id'       => $cart->id,
@@ -50,7 +51,7 @@ class OrderController extends Controller
         $cart->type = 'order';
         $cart->save();
 
-        $response = ["items" => getCartData($cart, false), "summary" => $order->subOrderData(), "order_id" => $order->id, "address" => $order->address_data, "message" => 'Order Placed successfully'];
+        $response = ["items" => getCartData($cart, false), "summary" => $order->subOrderData(), "order_id" => $order->id, "address" => $order->address_data, "pincode_serviceability" => $pincode_data, "message" => 'Order Placed successfully'];
 
         $user_info = $user->userInfo();
         if($user_info!=null) {
@@ -75,15 +76,17 @@ class OrderController extends Controller
         if(isset($params['address_id'])) {
             $address = Address::find($params["address_id"]);
             validateAddress($user, $address);
+            $pincode_data = $address->checkPincodeServiceable();
             $order->address_id      = $address->id;
             $order->address_data    = $address->shippingAddress();
             $order->save();
         }
         else {
             $address = $order->address;
+            $pincode_data = $address->checkPincodeServiceable();
         }
 
-        $response = ["items" => getCartData($cart, false), "summary" => $order->subOrderData(), "order_id" => $order->id, "address" => $order->address_data, "message" => 'Order Placed successfully'];
+        $response = ["items" => getCartData($cart, false), "summary" => $order->subOrderData(), "order_id" => $order->id, "address" => $order->address_data, "pincode_serviceability" => $pincode_data, "message" => 'Order Placed successfully'];
 
         $user_info = $user->userInfo();
         if($user_info!=null) {

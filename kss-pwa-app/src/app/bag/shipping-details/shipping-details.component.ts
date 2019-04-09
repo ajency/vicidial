@@ -24,6 +24,7 @@ export class ShippingDetailsComponent implements OnInit {
   states : any;
   cart : any;
   widgetOpen : boolean = true;
+  pincodeNotServiceable : boolean = false;
   constructor( private router : Router,
                private appservice : AppServiceService,
                private apiservice : ApiServiceService
@@ -95,16 +96,6 @@ export class ShippingDetailsComponent implements OnInit {
     })
   }
 
-  navigateToShippingPage(){
-    this.appservice.selectedAddressId = this.selectedAddressId;
-    if (this.cart && this.cart.cart_type == "order")
-      this.appservice.continueOrder = true;
-    // this.router.navigateByUrl('bag/shipping-summary'); 
-    let url = window.location.href.split("#")[0] + '#/bag/shipping-summary';
-    history.pushState({bag : true}, 'bag', url);
-    this.openShippingSummary.emit(true);
-  }
-
   closeCart(){
     let url = window.location.href.split("#")[0];
     history.replaceState({cart : false}, 'cart', url);
@@ -148,5 +139,40 @@ export class ShippingDetailsComponent implements OnInit {
     console.log("inside updateView function");
     this.addAddress = this.addressComponent ? this.addressComponent.addAddress: this.addAddress;
     this.selectedAddressId = this.addressComponent ? this.addressComponent.selectedAddressId : this.selectedAddressId;
+    this.pincodeNotServiceable = false;
+    console.log(this.selectedAddressId);
+  }
+
+  callOrderApi(){
+    this.appservice.showLoader();
+    let url = this.appservice.apiUrl + '/api/rest/v1/user/cart/' + this.appservice.getCookie('cart_id') + '/create-order';
+    let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
+    let body : any = {
+      _token : $('meta[name="csrf-token"]').attr('content'),
+      address_id : this.selectedAddressId
+    };
+    
+    this.apiservice.request(url, 'post', body , header ).then((response)=>{
+      this.appservice.shippingDetails = response;
+      let url = window.location.href.split("#")[0] + '#/bag/shipping-summary';
+      history.pushState({bag : true}, 'bag', url);
+      this.openShippingSummary.emit(true);
+      this.appservice.removeLoader();
+    })
+    .catch((error)=>{
+      console.log("error ===>", error);
+      // this.router.navigateByUrl('/bag', { replaceUrl: true });
+      this.appservice.removeLoader();
+      if(error.status == 403){
+        $(".kss_shipping").animate({scrollTop: 0});
+        this.pincodeNotServiceable = true;
+      }
+      else{
+        let url = window.location.href.split("#")[0] + '#/bag';
+        history.replaceState({bag : true}, 'bag', url);
+        console.log("openCart");
+        this.appservice.loadCartTrigger();
+      }
+    })  
   }
 }
