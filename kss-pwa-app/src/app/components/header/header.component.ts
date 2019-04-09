@@ -1,5 +1,6 @@
 import { Component, OnInit,  Input, OnChanges, Output, isDevMode } from '@angular/core';
 import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 declare var $ : any;
 import { AppServiceService } from '../../service/app-service.service';
 import { ApiServiceService } from '../../service/api-service.service';
@@ -15,7 +16,8 @@ export class HeaderComponent implements OnInit, OnChanges {
   @Input() browserback : any;
   constructor(private appservice : AppServiceService,
               private apiService: ApiServiceService,
-              private location: Location){ }
+              private location: Location,
+              private route: Router){ }
 
   ngOnInit(){
     this.getMenu();
@@ -72,7 +74,7 @@ export class HeaderComponent implements OnInit, OnChanges {
     let url = window.location.href.split("#")[0] + '#/bag';
     history.pushState({bag : true}, 'bag', url);
     console.log("openCart");
-    this.appservice.loadCartTrigger();    
+    this.appservice.loadCartTrigger();
   }
 
   openAccount(){
@@ -88,6 +90,10 @@ export class HeaderComponent implements OnInit, OnChanges {
   }
 
   backToPrev(){
-    this.location.back();
+    if (window.history.length > 2) {
+      this.location.back()
+    } else {
+      this.route.navigate(['/'])
+    }
   }
 }
