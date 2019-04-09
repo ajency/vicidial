@@ -102,10 +102,10 @@ class Defaults extends Model
 
     }
 
-    public static function setLastVariantSync()
+    public static function setLastVariantSync($last_variant_date)
     {
         $sync            = self::where('type', 'sync')->where('label', 'variant')->first();
-        $sync->meta_data = ['time' => Carbon::now()->toDateTimeString()];
+        $sync->meta_data = ['time' => $last_variant_date];
         $sync->save();
     }
 

@@ -36,11 +36,11 @@ class Kernel extends ConsoleKernel
         if (config('app.run_cron')) {
             if (!isNotProd()) {
                 $schedule->job(new ProductSync, 'create_jobs')->name('ProductSync')->cron('0 */4 * * *')->onOneServer();
-                //$schedule->job(new VariantSync, 'create_jobs')->hourly();
+                $schedule->job(new VariantSync, 'create_jobs')->cron('0 */2 * * *')->onOneServer();
                 $schedule->job(new FetchWarehouse, 'process_details')->name('FetchWarehouse')->weekly()->onOneServer();
             } else {
                 $schedule->job(new ProductSync, 'create_jobs')->name('ProductSyncProd')->everyTenMinutes()->onOneServer();
-                //$schedule->job(new VariantSync, 'create_jobs')->everyTenMinutes();
+                $schedule->job(new VariantSync, 'create_jobs')->everyTenMinutes()->onOneServer();
             }
             $schedule->job(new ProductMoveSync, 'create_jobs')->name('ProductMoveSync')->dailyAt('21:00')->onOneServer();
             $schedule->call(function () {
