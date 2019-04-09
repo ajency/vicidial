@@ -82,11 +82,11 @@ class Order extends Model
     public function placeOrderOnOdoo()
     {
         //create a job to place order on odoo for all suborders.
-        $inventoryData   = [];
-        $variantQuantity = [];
+        $inventoryData   = [];  
         foreach ($this->subOrders as $subOrder) {
             $subOrder->odoo_status = 'draft';
             $subOrder->save();
+            $variantQuantity = [];
             foreach ($subOrder->orderLines as $orderLine) {
                 $orderLine->state = 'draft';
                 $orderLine->save();
