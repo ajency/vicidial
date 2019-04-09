@@ -134,6 +134,7 @@ class PaymentController extends Controller
         $user  = User::getUserByToken($request->header('Authorization'));
         $order = Order::find($id);
         validateOrder($user, $order);
+        checkCODServiceable($order->address->checkPincodeServiceable()["cod"]);
 
         $data      = $request->all();
         $validator = $this->validateNumber($data);

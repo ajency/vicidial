@@ -19,6 +19,11 @@
 				</div>
 				<hr>
 
+				<div *ngIf="pincodeNotServiceable" class="kss-flash kss-flash--error">
+				 	Sorry, the selected address pincode cannot be serviced. Please select or add another address.
+				</div>
+				<hr *ngIf="pincodeNotServiceable">
+
 				<app-address [addresses]="addresses" [addAddress]="addAddress" [selectedAddressId]="selectedAddressId" [states]="states" [hideRadio]=false (addAddressFlagChanged)="updateView()"></app-address>
 
 				<div class="seperator mt-2 mb-2"></div>
@@ -26,7 +31,7 @@
 				<div class="fixed-bottom d-block pl-3 pr-3">
 					 <div *ngIf="!addAddress && addresses && addresses.length" class="row no-gutters py-2 shipping-state-2" style="display: flex;">
 						<div class="col-12 text-center">
-							<button id="shipping-summary" type="button" class=" btn kss-btn kss-btn--big mt-1 mb-1" (click)="navigateToShippingPage()">Proceed</button>
+							<button id="shipping-summary" type="button" class=" btn kss-btn kss-btn--big mt-1 mb-1" (click)="callOrderApi()">Proceed</button>
 						</div>
 					</div>
 				</div>

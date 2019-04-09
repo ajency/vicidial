@@ -91,4 +91,9 @@ class Address extends Model
         $this->longitude = $coordinates->getLongitude();
         parent::save($options);
     }
+
+    public function checkPincodeServiceable(){
+        $pincode = $this->address["pincode"];
+        return checkPincodeServiceableHelper($pincode);
+    }
 }

@@ -373,12 +373,7 @@ export class BagViewComponent implements OnInit {
       })
     }
     else{
-      // this.router.navigateByUrl('bag/shipping-summary');
-      let url = window.location.href.split("#")[0] + '#/bag/shipping-summary';
-      history.pushState({bag : true}, 'bag', url);
-      this.openShippingSummary = true;
-      this.appservice.continueOrder = true;
-      $('#cd-cart').addClass('overflow-h');
+      this.continueOrder();
     }
   }
 
@@ -636,6 +631,28 @@ export class BagViewComponent implements OnInit {
     })
   }
 
+  continueOrder(){
+    this.appservice.showLoader();
+    let url = this.appservice.apiUrl + '/api/rest/v1/user/cart/' + this.appservice.getCookie('cart_id') + '/continue-order';
+    let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
+    
+    this.apiservice.request(url, 'post', {} , header ).then((response)=>{
+      this.appservice.shippingDetails = response;
+      let url = window.location.href.split("#")[0] + '#/bag/shipping-summary';
+      history.pushState({bag : true}, 'bag', url);
+      this.openShippingSummary = true;
+      $('#cd-cart').addClass('overflow-h');
+      this.appservice.removeLoader();
+    })
+    .catch((error)=>{
+      console.log("error ===>", error);
+      // this.router.navigateByUrl('/bag', { replaceUrl: true });
+      this.appservice.removeLoader();
+      if(error.status == 403){
+        this.editBag();
+      }
+    })  
+  }
 
 
 }

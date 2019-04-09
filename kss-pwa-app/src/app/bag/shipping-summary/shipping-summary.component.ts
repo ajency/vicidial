@@ -35,7 +35,8 @@ export class ShippingSummaryComponent implements OnInit {
   					) { }
 
   ngOnInit() {
-    this.callOrderApi();
+    this.shippingDetails = this.getProductUrl(this.appservice.shippingDetails);
+    this.setUserName();
   }
 
   navigateToPaymentPage(){
@@ -89,34 +90,6 @@ export class ShippingSummaryComponent implements OnInit {
 
   navigateBack(){
     history.back();
-  }
-
-  callOrderApi(){
-    this.appservice.showLoader();
-    let url = this.getRequestUrl();
-    let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
-    let body : any = {
-      _token : $('meta[name="csrf-token"]').attr('content')
-    };
-    if(this.appservice.selectedAddressId){
-      body.address_id = this.appservice.selectedAddressId;      
-    }
-    this.appservice.selectedAddressId = '';
-
-    this.apiservice.request(url, 'post', body , header ).then((response)=>{
-      this.shippingDetails = this.getProductUrl(response);
-      this.setUserName();
-      this.appservice.removeLoader();
-    })
-    .catch((error)=>{
-      console.log("error ===>", error);
-      // this.router.navigateByUrl('/bag', { replaceUrl: true });
-      this.appservice.removeLoader();
-      let url = window.location.href.split("#")[0] + '#/bag';
-      history.replaceState({bag : true}, 'bag', url);
-      console.log("openCart");
-      this.appservice.loadCartTrigger();            
-    })  
   }
 
   getRequestUrl(){

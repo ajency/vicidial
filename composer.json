@@ -76,7 +76,8 @@
             "app/Helpers/Helpers.php",
             "app/Helpers/ProductHelpers.php",
             "app/Helpers/CategoryHelpers.php",
-            "app/Helpers/SEOHelpers.php"
+            "app/Helpers/SEOHelpers.php",
+            "app/Helpers/PincodeServiceability.php"
         ],
         "classmap": [
             "database/seeds",
