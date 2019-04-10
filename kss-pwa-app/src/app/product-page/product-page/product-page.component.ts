@@ -58,8 +58,6 @@ export class ProductPageComponent implements OnInit {
     this.productApiCall = this.apiService.request(url,'get',{},{}, false, 'observable').subscribe((data)=>{
       this.loadCart();
       this.product = data;
-      if(this.product.is_sellable)
-        this.checkSingleProductInventory();
       let variant = this.product.variants.find((v)=>{ return this.queryParamSize == v.variant_facets.variant_size.name});
       let default_price;
       if(variant)
@@ -68,11 +66,14 @@ export class ProductPageComponent implements OnInit {
         variant = this.product.variants.find((v)=>{ return v.is_default === true })
         default_price = variant.variant_attributes.variant_sale_price;
       }
+      if(this.product.is_sellable)
+        this.checkSingleProductInventory(default_price);
       this.showLoader = false;
       try {
         fbTrackViewContent(default_price, this.product.attributes.product_id, this.product.facets.product_color_html.id);
         gtagTrackPageView(default_price, this.product.attributes.product_id, this.product.facets.product_color_html.id);
-        runMicrodataScript(this.product, default_price);
+        if(!this.product.is_sellable)
+          runMicrodataScript(this.product, default_price,false);
       } catch (e) {
         console.log("error in fb or gtag tracking ==>", e);
       }
@@ -84,12 +85,24 @@ export class ProductPageComponent implements OnInit {
     });
   }
 
-  checkSingleProductInventory(){
+  checkSingleProductInventory(default_price){
     this.unsubscribeInventoryApiCall();
     let url = this.appservice.apiUrl + '/api/rest/v1/single-product-inventory?product_id='+this.product.attributes.product_id + '&color_id='+ this.product.facets.product_color_html.id;
     this.inventoryApiCall = this.apiService.request(url, 'get', {} , {}, false, 'observable').subscribe((response)=>{
       console.log("check inventory response ==>", response);
       this.inventoryData = response;
+      let in_stock = false;
+      for(const [key, value] of Object.entries(this.inventoryData.variants)) {
+        if(value > 0)
+          in_stock = true;
+      }
+      try {
+        in_stock ? runMicrodataScript(this.product, default_price,true) : runMicrodataScript(this.product, default_price,false);;  
+      }
+      catch (e) {
+        console.log("error in runMicrodataScript function", e);
+      }
+      
     },
     (error)=>{
       console.log("error ===>", error);

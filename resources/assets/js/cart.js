@@ -385,7 +385,7 @@ function gtagTrackPageView(default_price, parent_id, selected_color_id){
   });
 }
 
-  function runMicrodataScript(product, price){
+  function runMicrodataScript(product, price, in_stock = true){
     console.log("runMicrodataScript function", product);
     var el = document.createElement('script');
     el.type = 'application/ld+json';
@@ -396,7 +396,7 @@ function gtagTrackPageView(default_price, parent_id, selected_color_id){
        "name": product.attributes.product_title,
        "description": product.attributes.product_description,
        "url": window.location.href,
-       "image": "",
+       "image": product.images.length ? product.images[0].main['1x'] : 'https://kidsuperstore.in/img/placeholder.svg',
        "brand": product.facets.product_brand.slug,
        "offers":[
           {
@@ -404,7 +404,7 @@ function gtagTrackPageView(default_price, parent_id, selected_color_id){
             "price": price,
             "priceCurrency":"INR",
             "itemCondition":"new",
-            "availability":"in-stock"
+            "availability": in_stock ? 'in stock' : 'out of stock'
           }
        ]
     }
