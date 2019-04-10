@@ -384,3 +384,30 @@ function gtagTrackPageView(default_price, parent_id, selected_color_id){
         'user_id': getCookie('user_id')
   });
 }
+
+  function runMicrodataScript(product, price){
+    console.log("runMicrodataScript function", product);
+    var el = document.createElement('script');
+    el.type = 'application/ld+json';
+    var productMicrodata = {
+       "@context":"https://schema.org",
+       "@type":"Product",
+       "productID": product.attributes.product_id+'-'+product.facets.product_color_html.id,
+       "name": product.attributes.product_title,
+       "description": product.attributes.product_description,
+       "url": window.location.href,
+       "image": "",
+       "brand": product.facets.product_brand.slug,
+       "offers":[
+          {
+            "@type":"Offer",
+            "price": price,
+            "priceCurrency":"INR",
+            "itemCondition":"new",
+            "availability":"in-stock"
+          }
+       ]
+    }
+    el.text = JSON.stringify(productMicrodata);
+    document.querySelector('body').appendChild(el);
+  }

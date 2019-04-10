@@ -6,6 +6,7 @@ import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 
 declare var fbTrackViewContent : any;
 declare var gtagTrackPageView : any;
+declare var runMicrodataScript : any;
 
 @Component({
   selector: 'app-product-page',
@@ -71,6 +72,7 @@ export class ProductPageComponent implements OnInit {
       try {
         fbTrackViewContent(default_price, this.product.attributes.product_id, this.product.facets.product_color_html.id);
         gtagTrackPageView(default_price, this.product.attributes.product_id, this.product.facets.product_color_html.id);
+        runMicrodataScript(this.product, default_price);
       } catch (e) {
         console.log("error in fb or gtag tracking ==>", e);
       }
