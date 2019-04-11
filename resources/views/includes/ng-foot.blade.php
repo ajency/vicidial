@@ -6,7 +6,7 @@
   var google_conversion_label = "{{config('analytics.conversion_label')}}";
   var google_conversion_value = 1.0;
   var google_conversion_data = "AW-{{config('analytics.conversion_id')}}/{{config('analytics.conversion_label')}}";
-  var product_catalog_id = "{{config('analytics.fb_pixel_catalog_id')}}"
+  // var product_catalog_id = "{{config('analytics.fb_pixel_catalog_id')}}"
     /* ]]> */
 </script>
 
