@@ -6,6 +6,7 @@ use Ajency\Connections\OdooConnect;
 use App\Defaults;
 use App\Facet;
 use App\Jobs\CreateProductJobs;
+use App\Jobs\CreateRefreshCacheJobs;
 use App\Jobs\CreateUpdateProductJobs;
 use App\Jobs\FetchProductImages;
 use App\Jobs\RefreshProductCache;
@@ -733,11 +734,13 @@ class Product
                 ]]
             )
             ->setSource(["search_result_data.product_slug"])
-            ->setSize(100000);
+            ->setSize(10000);
 
         $response = $q->search();
-        foreach ($response["hits"]["hits"] as $item) {
-            RefreshProductCache::dispatch($item["_source"]["search_result_data"]["product_slug"])->onQueue('refresh_cache');
+        $chunks   = collect($response["hits"]["hits"])->chunk(30);
+
+        foreach ($chunks as $chunk) {
+            CreateRefreshCacheJobs::dispatch($chunk->toArray())->onQueue('create_cache_jobs');
         }
     }
 }
