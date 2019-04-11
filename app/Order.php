@@ -90,10 +90,10 @@ class Order extends Model
             foreach ($subOrder->orderLines as $orderLine) {
                 $orderLine->state = 'draft';
                 $orderLine->save();
-                if (!isset($variantQuantity[$orderLine->variant->odoo_id])) {
-                    $variantQuantity[$orderLine->variant->odoo_id] = 0;
+                if (!isset($variantQuantity[$orderLine->variant_id])) {
+                    $variantQuantity[$orderLine->variant_id] = 0;
                 }
-                $variantQuantity[$orderLine->variant->odoo_id] += 1;
+                $variantQuantity[$orderLine->variant_id] += 1;
             }
             $inventoryData[$subOrder->location_id] = $variantQuantity;
             OdooOrder::dispatch($subOrder, true)->onQueue('odoo_order');
