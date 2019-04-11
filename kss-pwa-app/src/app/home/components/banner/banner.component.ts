@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewEncapsulation  } from '@angular/core';
+import { Component, OnInit, Input, ViewEncapsulation, OnChanges } from '@angular/core';
 
 @Component({
   selector: 'app-banner',
@@ -8,9 +8,10 @@ import { Component, OnInit, Input, ViewEncapsulation  } from '@angular/core';
               './banner.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class BannerComponent implements OnInit {
+export class BannerComponent implements OnInit, OnChanges {
 
 	@Input() banners : any;
+  banner_length : any;
   customOptions: any = {
     loop: true,
     mouseDrag: true,
@@ -41,6 +42,12 @@ export class BannerComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  ngOnChanges(){
+    this.banner_length = this.banners.length;
+    console.log("this.banner_length ===>", this.banner_length);
+    this.banners = this.banners.filter(banner => banner.element_data.display !== 0)
   }
 
   createDataSrcSet(a,b,c,d){
