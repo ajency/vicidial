@@ -8,11 +8,11 @@ use App\Facet;
 use App\Jobs\CreateProductJobs;
 use App\Jobs\CreateUpdateProductJobs;
 use App\Jobs\FetchProductImages;
+use App\Jobs\RefreshProductCache;
 use App\Jobs\UpdateSearchText;
 use App\Jobs\UpdateVariantInventory;
 use App\ProductColor;
 use App\Variant;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class Product
@@ -272,7 +272,7 @@ class Product
         $query->initializeBulkIndexing();
         $products->each(function ($item, $key) use ($query) {
             $query->addToBulkIndexing($item['id'], $item);
-            Cache::forget('single-product-' . $item['search_result_data']['product_slug']);
+            RefreshProductCache::dispatch($item['search_result_data']['product_slug'])->onQueue('refresh_cache');
         });
         $responses = $query->bulk();
     }
