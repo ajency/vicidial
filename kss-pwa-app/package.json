@@ -31,6 +31,7 @@
     "moment": "^2.24.0",
     "ng-connection-service": "^1.0.4",
     "ng-lazyload-image": "^5.0.0",
+    "ngx-owl-carousel-o": "^1.1.1",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",
     "zone.js": "~0.8.26"

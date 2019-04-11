@@ -7,7 +7,33 @@ import { Component, OnInit, Input  } from '@angular/core';
 })
 export class BannerComponent implements OnInit {
 
-	@Input() banner : any;
+	@Input() banners : any;
+  customOptions: any = {
+    loop: true,
+    mouseDrag: false,
+    touchDrag: false,
+    pullDrag: false,
+    dots: false,
+    navSpeed: 700,
+    navText: ['prev', 'next'],
+    autoplay : true,
+    autoplaySpeed : 1000,
+    responsive: {
+      0: {
+        items: 1
+      },
+      400: {
+        items: 2
+      },
+      740: {
+        items: 1
+      },
+      940: {
+        items: 1
+      }
+    },
+    nav: true
+  }
   constructor() { }
 
   ngOnInit() {
