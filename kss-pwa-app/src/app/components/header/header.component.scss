@@ -1,0 +1,180 @@
+@import "../../../../node_modules/bootstrap/scss/functions";
+@import "../../../assets/SASS/var";
+
+$text-color: #212529;
+
+@media (max-width: 991px){
+    .megamenu {
+        background: #fff;
+        &__contents {
+            padding-top: 61px;
+        }
+        .header-top {
+            background: $gray-800;
+        }
+        &--left {
+            background: #fff;
+        }
+
+        .nav {
+            > li {
+                &:hover {
+                    background-color: #fff;
+                    border-right: 1px solid #fff;
+                }
+                > a {
+                    color: $text-color;
+                }
+            }
+            &-item {
+                border-bottom: 1px solid #fff;
+                color: $text-color;
+                border-right: 1px solid #E0E0E0;
+                background-color: #E0E0E0;
+
+                &.active {
+                    border-right: 1px solid #fff;
+                    background-color: #fff;
+                }
+            }
+            .nav-column {
+                &:first-child {
+                    padding-top: 0;
+                }
+                &--heading {
+                    color: #343a40;
+                    box-shadow: none;
+                    text-shadow: none;
+                    background: #e0e0e0;
+                    border-radius: 2px;
+                    padding: 5px 5px 5px 10px;                    
+                }
+                li {
+                    border-bottom: 0;                    
+                    .megamenu-link {
+                        color: $text-color;                      
+                        span {
+                            display: block;
+                            line-height: normal;
+                        }
+
+                        &::after {
+                            display: none;
+                        }
+                    }
+                    img {
+                        width: auto;
+                    }
+                }
+            }
+        }
+    }
+    .go-to-shop {
+        float: right;
+        color: #707279;
+        text-transform: capitalize;
+    }
+    .layout {
+        &--category {
+            display: flex;
+            flex-wrap: wrap;
+            margin-left: -10px;
+            margin-right: -10px;
+
+            > li {
+                flex: 0 0 33.333333%;
+                max-width: 33.333333%;
+                margin-bottom: 10px;
+                padding: 5px 10px;
+                a {
+                    text-align: center;  
+                    padding: 0;                  
+                }                
+            }
+        }
+        &--price {
+            display: flex;
+            flex-wrap: wrap;
+            margin-left: -10px;
+            margin-right: -10px;
+            > li {
+                flex: 0 0 33.333333%;
+                max-width: 33.333333%;
+                padding: 5px 10px;
+                margin-bottom: 10px;
+
+                a {
+                    text-align: center;  
+                    background: #ffe602;
+                    padding: 13px 5px;
+                    color: $text-color;
+                    font-weight: 600 !important;
+
+                    .title {
+                        font-weight: 400;
+                    }                 
+                }
+            }
+        }
+        &--age_group {
+            display: flex;
+            flex-wrap: wrap;
+            margin-left: -10px;
+            margin-right: -10px;
+
+            > li {
+                flex: 0 0 50%;
+                max-width: 50%;
+                margin-bottom: 10px;               
+                padding: 5px 10px;
+
+                a {
+                    text-align: left;
+                    padding: 0;
+                    .title {
+                        font-weight: 600;
+                    }
+                    .sub-title {
+                        font-weight: 400;
+                    }
+                }
+            }
+        }
+        &--supper_offers {
+            display: flex;
+            flex-wrap: wrap;
+            margin-left: -10px;
+            margin-right: -10px;
+            > li {
+                flex: 0 0 50%;
+                max-width: 50%;
+                margin-bottom: 10px;               
+                padding: 5px 10px;
+                &:nth-child(3n){
+                    flex: 0 0 100%;
+                    max-width: 100%;
+                }
+
+                a {
+                    padding: 0;
+                }
+            }
+        }
+    }
+    .menu-banner-item {
+        img {
+            width: auto;
+        }
+    }
+}
+
+@media (max-width: 767px) {
+    .layout {
+        &--price {
+            > li {
+                flex: 0 0 50%;
+                max-width: 50%;
+            }
+        }
+    }
+}
