@@ -1,23 +1,27 @@
-import { Component, OnInit, Input  } from '@angular/core';
+import { Component, OnInit, Input, ViewEncapsulation  } from '@angular/core';
 
 @Component({
   selector: 'app-banner',
   templateUrl: './banner.component.html',
-  styleUrls: ['./banner.component.scss']
+  styleUrls: ['../../../../../node_modules/ngx-owl-carousel-o/lib/styles/scss/owl.carousel.scss',
+              '../../../../../node_modules/ngx-owl-carousel-o/lib/styles/scss/owl.theme.default.scss',
+              './banner.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class BannerComponent implements OnInit {
 
 	@Input() banners : any;
   customOptions: any = {
     loop: true,
-    mouseDrag: false,
-    touchDrag: false,
-    pullDrag: false,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: true,
     dots: false,
-    navSpeed: 700,
-    navText: ['prev', 'next'],
+    navSpeed: 500,
+    navText: ['<i class="fas fa-chevron-left"></i>', '<i class="fas fa-chevron-right"></i>'],
     autoplay : true,
     autoplaySpeed : 1000,
+    autoplayTimeout : 5000,
     responsive: {
       0: {
         items: 1
