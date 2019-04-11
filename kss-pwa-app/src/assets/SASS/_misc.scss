@@ -1438,4 +1438,15 @@ $size: 20px;
 
 .flickity-page-dots{
   bottom: 10px;
+  .dot{
+    width: 8px;
+    height: 8px;
+    margin: 0 5px;
+    background-color: #fff;
+    opacity: 0.5;
+    box-shadow: 0 0px 1px 1px rgba(0, 0, 0, 0.3);
+    &.is-selected{
+        background-color: theme-color("primary");
+    }
+  }
 }
