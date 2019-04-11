@@ -2,28 +2,30 @@
   <div class="container">
     <div class="">
     	<owl-carousel-o [options]="customOptions">
-		    <div *ngFor="let banner of banners" class=" kss-extension" attr.static_element-id="{{banner.sequence}}" static_element-display_type="Banner" attr.static_element-type="{{banner.type}}" page_slug="home">
+		    <ng-container *ngFor="let banner of banners">
 		    	<ng-template carouselSlide>
-			    	<a href="{{banner.element_data.image.href}}" class="d-block">
-						 <picture>
-						  	<source media="(orientation: landscape)"
-								  src="/assets/img/transparent.png"
-								  srcset="{{banner.images.landscape['2x']}} 1200w, {{banner.images.landscape['1x']}} 700w"
-						          sizes="(min-width:1200px) 1120px, 96vw">
+		    		<div class="kss-extension" attr.static_element-id="{{banner.sequence}}" static_element-display_type="Banner" attr.static_element-type="{{banner.type}}" page_slug="home">
+				    	<a href="{{banner.element_data.image.href}}" class="d-block">
+							 <picture>
+							  	<source media="(orientation: landscape)"
+									  src="/assets/img/transparent.png"
+									  srcset="{{banner.images.landscape['2x']}} 1200w, {{banner.images.landscape['1x']}} 700w"
+							          sizes="(min-width:1200px) 1120px, 96vw">
 
-						  	<source media="(orientation: portrait)"
-								  src="/assets/img/transparent.png"
-								  srcset="{{banner.images.portrait['2x']}} 600w, {{banner.images.portrait['1x']}} 400w"
-						          sizes="10 0vw">
-						    <img
-				    			[src]="banner.images.portrait['1x']"
-				    		  	class="img-fluid w-100 img-holder d-block"
-				    		    alt="{{banner.element_data.image.img_alt}}"
-				    		    title="{{banner.element_data.image.title}}">
-						</picture>
-					</a>
+							  	<source media="(orientation: portrait)"
+									  src="/assets/img/transparent.png"
+									  srcset="{{banner.images.portrait['2x']}} 600w, {{banner.images.portrait['1x']}} 400w"
+							          sizes="10 0vw">
+							    <img
+					    			[src]="banner.images.portrait['1x']"
+					    		  	class="img-fluid w-100 img-holder d-block"
+					    		    alt="{{banner.element_data.image.img_alt}}"
+					    		    title="{{banner.element_data.image.title}}">
+							</picture>
+						</a>
+					</div>
 				</ng-template>
-		    </div>
+		    </ng-container>
 		</owl-carousel-o>
     </div>
   </div>
