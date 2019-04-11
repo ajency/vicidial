@@ -14,11 +14,10 @@ class CreateReturnPoliciesTable extends Migration
     public function up()
     {
         Schema::create('return_policies', function (Blueprint $table) {
-             $table->increments('id');
+            $table->increments('id');
             $table->string('title');
             $table->boolean('active')->default(1);
             $table->boolean('display')->default(1);
-            
         });
     }
 
