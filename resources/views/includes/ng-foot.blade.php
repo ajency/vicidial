@@ -6,7 +6,7 @@
   var google_conversion_label = "{{config('analytics.conversion_label')}}";
   var google_conversion_value = 1.0;
   var google_conversion_data = "AW-{{config('analytics.conversion_id')}}/{{config('analytics.conversion_label')}}";
-  var product_catalog_id = "{{config('analytics.fb_pixel_catalog_id')}}"
+  // var product_catalog_id = "{{config('analytics.fb_pixel_catalog_id')}}"
     /* ]]> */
 </script>
 
@@ -24,7 +24,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
 <!-- Facebook Pixel Code -->
-<script>
+<!-- <script>
   !function(f,b,e,v,n,t,s)
   {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
   n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -38,7 +38,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </script>
 <noscript><img height="1" width="1" style="display:none"
   src="https://www.facebook.com/tr?id={{config('analytics.pixel_id')}}&ev=PageView&noscript=1"
-/></noscript>
+/></noscript> -->
 <!-- End Facebook Pixel Code -->
 
 <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous"> -->
@@ -57,7 +57,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script>Sentry.init({ dsn: '{{config("analytics.js_dsn")}}', environment : '{{config("app.env")}}' });</script>
 
 <!-- Google pixel tracking -->
-<script async src="https://www.googletagmanager.com/gtag/js?id={{config('analytics.google_pixel_id')}}"></script>
+<!-- <script async src="https://www.googletagmanager.com/gtag/js?id={{config('analytics.google_pixel_id')}}"></script>
 
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -65,7 +65,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   gtag('js', new Date());
 
   gtag('config', "{{config('analytics.google_pixel_id')}}");
-</script>
+</script> -->
 
 <!-- <noscript>
   <div style="display:inline;">
