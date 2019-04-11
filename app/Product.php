@@ -721,4 +721,23 @@ class Product
 
         return;
     }
+
+    public static function refreshAllCache()
+    {
+        $index = config('elastic.indexes.product');
+        $q     = new ElasticQuery;
+        $q->setIndex($index)
+            ->setQuery(
+                ["match_all" => [
+                    "boost" => 1.0,
+                ]]
+            )
+            ->setSource(["search_result_data.product_slug"])
+            ->setSize(100000);
+
+        $response = $q->search();
+        foreach ($response["hits"]["hits"] as $item) {
+            RefreshProductCache::dispatch($item["_source"]["search_result_data"]["product_slug"])->onQueue('refresh_cache');
+        }
+    }
 }

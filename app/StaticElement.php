@@ -554,6 +554,13 @@ class StaticElement extends Model
         return (["message" => "Elements published successfully", "success" => true]);
     }
 
+    public static function refreshAllCache()
+    {
+        StaticElement::select()->where('published', true)->pluck('page_slug')->unique()->each(function ($slug) {
+            RefreshStaticCache::dispatch($slug)->onQueue('refresh_cache');
+        });
+    }
+
     public function getStaticImage($photo_id, $preset, $depth, $filename)
     {
         $imageurl = "";
