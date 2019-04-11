@@ -8,8 +8,8 @@ use Ajency\FileUpload\models\FileUpload_Photos;
 use Ajency\FileUpload\models\FileUpload_Varients;
 use App\Jobs\GenerateExistingStaticElementPresetImages;
 use App\Jobs\GenerateStaticElementPresetImages;
+use App\Jobs\RefreshStaticCache;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Cache;
 
 class StaticElement extends Model
 {
@@ -538,10 +538,6 @@ class StaticElement extends Model
     {
         $getpublish = StaticElement::select()->where('draft', true)->get();
 
-        $getpublish->pluck('page_slug')->unique()->each(function ($slug) {
-            Cache::forget('static_element_' . $slug . '_published');
-        });
-
         foreach ($getpublish as $pub) {
             if ($pub->published == null) {
                 StaticElement::where('sequence', $pub->sequence)->where('type', $pub->type)->where('published', true)->where('page_slug', $pub->page_slug)->update(['published' => null]);
@@ -550,6 +546,10 @@ class StaticElement extends Model
                 $pub->save();
             }
         }
+
+        $getpublish->pluck('page_slug')->unique()->each(function ($slug) {
+            RefreshStaticCache::dispatch($slug)->onQueue('refresh_cache');
+        });
 
         return (["message" => "Elements published successfully", "success" => true]);
     }
