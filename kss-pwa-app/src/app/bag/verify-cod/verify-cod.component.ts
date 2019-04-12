@@ -42,9 +42,16 @@ export class VerifyCodComponent implements OnInit, OnChanges {
     })
     .catch((error)=>{
       console.log("error ===>", error);
-      this.otpVerificationFailed = true;
-      this.otpVerificationErrorMsg = error.message;
-      this.appservice.removeLoader();      
+      if(error.status == 410){
+        let url = window.location.href.split("#")[0] + '#/bag';
+        history.replaceState({bag : true}, 'bag', url);
+        this.appservice.loadCartTrigger();
+      }
+      else{
+        this.otpVerificationFailed = true;
+        this.otpVerificationErrorMsg = error.message;
+        this.appservice.removeLoader();
+      }
     }) 
   }
 
