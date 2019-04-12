@@ -56,6 +56,10 @@ $text-color: #212529;
                         display: block;
                         margin: 0 auto;
                     }
+
+                    &:first-child {
+                        padding-top: 0;
+                    }                    
                 }
             }
         }
@@ -64,9 +68,27 @@ $text-color: #212529;
 
 .megamenu {
     .nav {
-        .nav-column {
-            &:first-child {
-                padding-top: 0;
+        .nav-column {            
+            li {
+                border-bottom: 0; 
+
+                .megamenu-link {                    
+                    span {
+                        display: block;
+                        line-height: normal;
+                        font-size: 12px;
+                    }
+
+                    &::after,
+                    &::before {
+                        display: none;
+                    }
+                }
+                img {
+                    width: auto;
+                    display: block;
+                    margin: 0 auto;
+                }
             }
             &--heading {
                 color: #343a40;
@@ -75,6 +97,15 @@ $text-color: #212529;
                 background: #e0e0e0;
                 border-radius: 2px;
                 padding: 5px 5px 5px 10px;                    
+            }
+            &--wide {
+                flex-grow: 1.5;
+            }
+
+            > div {
+                &:not(:last-child) {
+                    margin-bottom: 20px;
+                }
             }
         }
     }
@@ -109,8 +140,8 @@ $text-color: #212529;
         margin-left: -10px;
         margin-right: -10px;
         > li {
-            flex: 0 0 33.333333%;
-            max-width: 33.333333%;
+            flex: 0 0 50%;
+            max-width: 50%;
             padding: 5px 10px;
             margin-bottom: 10px;
             display: flex;
@@ -125,6 +156,9 @@ $text-color: #212529;
                 align-items: center;
                 justify-content: center;
                 width: 100%;
+                &:hover {
+                    color: $text-color;
+                }
 
                 .title {
                     font-weight: 600;
@@ -186,6 +220,16 @@ $text-color: #212529;
     }
 }
 
+@media screen and (max-width: 991px) and (min-width: 768px) {
+    .layout {
+        &--tags {
+            > li {
+                flex: 0 0 33.333333%;
+                max-width: 33.333333%;
+            }
+        }
+    }
+}
 @media (max-width: 767px) {
     .layout {
         &--tags {
