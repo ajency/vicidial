@@ -66,7 +66,7 @@
 												<div class="nav-column d-lg-none">
 													<div>
 															<div class="nav-column--heading mt-1 mb-2">Supper Offers</div>
-															<ul class="list-unstyled layout--supper_offers">
+															<ul class="list-unstyled layout--offers">
 																<li>
 																	<a href="/#" class="megamenu-link">
 																		<img src="https://place-hold.it/600x250" class="menu-item-img img-fluid d-lg-none">
@@ -89,7 +89,7 @@
 		                    <div *ngFor="let row of item.rows" class="nav-column">
 		                    	<div *ngFor="let menu of row.menus">
 			                        <div class="nav-column--heading mt-1 mb-2">{{menu.shop_by}} <a href="/shop" target="_self" class="go-to-shop d-lg-none">Shop All ></a></div>
-			                        <ul class="list-unstyled layout--price">
+			                        <ul class="list-unstyled layout--tags">
 			                          <li *ngFor="let type of menu.data">																	
 																	<a class="megamenu-link" [ngClass]="{'megamenu-link--primary' : type.title === 'View all products'}" href="{{type.link}}">
 																		<!-- img src="https://place-hold.it/500x500" class="menu-item-img img-fluid mb-1 d-lg-none" -->
