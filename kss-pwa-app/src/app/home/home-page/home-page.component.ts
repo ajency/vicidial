@@ -25,9 +25,7 @@ export class HomePageComponent implements OnInit {
   ngOnInit() {
   	console.log("ngOnInit HomePageComponent", window.location.pathname);
     let url = isDevMode() ? "https://demo8558685.mockable.io/get-home-page-elements-test" : "/api/rest/v1/test/get-page-element-dummy?page_slug=home";
-
-    console.log("published_home ==>", published_home);
-    if(published_home)
+    if(window.location.pathname == '/')
       url = url + '&published=true';
     this.apiService.request(url,'get',{},{}).then((data)=>{
       console.log("home page data ==>", data);
