@@ -557,7 +557,7 @@ class StaticElement extends Model
     public static function refreshAllCache()
     {
         StaticElement::select()->where('published', true)->pluck('page_slug')->unique()->each(function ($slug) {
-            RefreshStaticCache::dispatch($slug)->onQueue('refresh_cache');
+            RefreshStaticCache::dispatch($slug)->onQueue('refresh_static_cache');
         });
     }
 
