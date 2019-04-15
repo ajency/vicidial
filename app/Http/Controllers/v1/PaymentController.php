@@ -190,6 +190,9 @@ class PaymentController extends Controller
 
     public function verifyOTP($id, Request $request)
     {
+        $order = Order::find($id);
+        $order->checkInventoryForSuborders();
+
         $data      = $request->all();
         $validator = $this->validateOTP($data);
         if ($validator->fails()) {
