@@ -37,7 +37,7 @@ class ReturnPoliciesTableSeeder extends Seeder
        'entity' => 'days' ,
             'filter' => 'less_than',
             'value' => '3',
-            'parent_type' => 'App\return_policies',
+            'parent_type' => 'App\ReturnPolicy',
             'parent_id' => DB::table('return_policies')->where('title', 'Uniform')->value('id'),
             'active' => '1',
      ),
@@ -45,7 +45,7 @@ class ReturnPoliciesTableSeeder extends Seeder
        'entity' => 'days' ,
             'filter' => 'less_than',
             'value' => '0',
-            'parent_type' => 'App\return_policies',
+            'parent_type' => 'App\ReturnPolicy',
             'parent_id' => DB::table('return_policies')->where('title', 'Undergarments')->value('id'),
             'active' => '1',
      ),
@@ -53,26 +53,26 @@ class ReturnPoliciesTableSeeder extends Seeder
        'entity' => 'days' ,
             'filter' => 'less_than',
             'value' => '7',
-            'parent_type' => 'App\return_policies',
+            'parent_type' => 'App\ReturnPolicy',
             'parent_id' => DB::table('return_policies')->where('title', 'Other')->value('id'),
             'active' => '1',
      ),
    ));
 
 
-        DB::table('facet_returnpolicies')->insert(array(
+        DB::table('facet_return_policy')->insert(array(
      array(
 
        
             'facet_id' => DB::table('facets')->where('facet_name', 'product_category_type')->where('facet_value', 'Uniform')->value('id'),
             
-            'returnpolicies_id' => DB::table('return_policies')->where('title', 'Uniform')->value('id'),
+            'return_policy_id' => DB::table('return_policies')->where('title', 'Uniform')->value('id'),
             
      ),
      array(
        'facet_id' => DB::table('facets')->where('facet_name', 'product_subtype')->where('facet_value', 'Undergarments')->value('id'),
             
-            'returnpolicies_id' => DB::table('return_policies')->where('title', 'Undergarments')->value('id'),
+            'return_policy_id' => DB::table('return_policies')->where('title', 'Undergarments')->value('id'),
      ),
     
    ));   

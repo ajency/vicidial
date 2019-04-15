@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-
+use App\ReturnPolicy;
 use Illuminate\Database\Eloquent\Model;
 use Ajency\Connections\OdooConnect;
 
@@ -11,6 +11,12 @@ class Facet extends Model
         'display' => 'boolean',
     ];
 	
+      public function return_policies()
+    {
+        return $this->belongsToMany('App\ReturnPolicy');
+    }
+
+
 	public static function updateAttribute($attribute)
     {
         $offset	        = 0;

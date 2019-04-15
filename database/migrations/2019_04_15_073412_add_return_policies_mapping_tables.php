@@ -4,8 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddReturnPolicyToTables extends Migration
-
+class AddReturnPoliciesMappingTables extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +12,32 @@ class AddReturnPolicyToTables extends Migration
      * @return void
      */
     public function up()
-    {
+    {   
+        
+
+       Schema::create('return_policies', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('title');
+            $table->boolean('active')->default(1);
+            $table->boolean('display')->default(1);
+        });
+        
+
+        Schema::create('facet_return_policy', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('facet_id');
+            $table->integer('return_policy_id');
+        });
+        
+
         Schema::table('orders', function (Blueprint $table) {
 
             //creating column to store parent order id
 
             $table->integer('new_transaction_id')->nullable();
         });
+
+
 
         Schema::table('sub_orders', function (Blueprint $table) {
 
@@ -48,11 +66,19 @@ class AddReturnPolicyToTables extends Migration
      * @return void
      */
     public function down()
-    {
-        Schema::table('orders', function (Blueprint $table) {
+    {   
+        
+        Schema::dropIfExists('return_policies');
+
+        Schema::dropIfExists('facet_return_policy');
+        
+
+       Schema::table('orders', function (Blueprint $table) {
             //
             $table->dropColumn('new_transaction_id');
         });
+
+
 
         Schema::table('sub_orders', function (Blueprint $table) {
             //

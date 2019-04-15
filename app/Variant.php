@@ -331,6 +331,12 @@ class Variant extends Model
         return (isset($this->elastic_data["search_result_data"]["product_category_type"]) && $this->elastic_data["search_result_data"]["product_category_type"]) ? $this->elastic_data["search_result_data"]["product_category_type"] : false;
     }
 
+
+    public function getSubType()
+    {
+        return (isset($this->elastic_data["search_result_data"]["product_subtype"]) && $this->elastic_data["search_result_data"]["product_subtype"]) ? $this->elastic_data["search_result_data"]["product_subtype"] : false;
+    }
+
     /**
      * Get display title
      *
