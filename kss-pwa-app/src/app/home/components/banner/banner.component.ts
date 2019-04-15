@@ -48,6 +48,12 @@ export class BannerComponent implements OnInit, OnChanges {
     this.banner_length = this.banners.length;
     console.log("this.banner_length ===>", this.banner_length);
     this.banners = this.banners.filter(banner => banner.element_data.display !== 0)
+    if(this.banners.length == 1){
+      this.customOptions.loop = false;
+      this.customOptions.mouseDrag = false;
+      this.customOptions.touchDrag = false;
+      this.customOptions.pullDrag = false;
+    }
   }
 
   createDataSrcSet(a,b,c,d){
