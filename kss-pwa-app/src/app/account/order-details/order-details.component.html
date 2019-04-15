@@ -1,4 +1,3 @@
-
 <div class="cart-step1-header">
 	<nav class="navbar navbar-dark bg-dark pt-3 pb-3 ">
 		<div class="d-flex align-items-center w-100">
@@ -101,29 +100,27 @@
 	<div class="mt-4 kss-flash kss-flash--info py-3">
 		Can't see all your orders? <a href="javascript:void(0);" (click)="displayModal()" class="text-secondary font-weight-bold">Sign In</a>
 	</div>
-</div>	
-
+</div>
 
 <!-- Order cancellation form -->
 <!-- Cancel Shipment section -->
 <!-- Add slide-show class to translate -->
-<div class="order-cancel mb-4 pb-4 slide-out p-3" [ngClass]="{'slide-show' : cancelOrder}">
+<div class="order-cancel mb-4 pb-4 slide-out p-3" [ngClass]="{'slide-show' : (cancelOrder || returnItem)}">
 	<div class="row">
 		<div class="col-12">
-             <div>
-	          	<div class="row no-gutter">
+			<div>
+				<div class="row no-gutter">
 					<div class="col-1">
-		             <h3 class="m-0 font-weight-bold back-to-cart" (click)="closeCancelOrder()">
-		               <img class="btn-back kss_highlight" src="/img/left-arrow.png" style="width:20px;">
-		             </h3>
-		           </div>
+						<h3 class="m-0 font-weight-bold back-to-cart" (click)="closeCancelOrder()">
+							<img class="btn-back kss_highlight" src="/img/left-arrow.png" style="width:20px;">
+						</h3>
+					</div>
 					<div class="col-10">
 						<h3 class="modal-title font-weight-bold" id="exampleModalLabel">Cancel Shipment</h3>
 					</div>
 				</div>
 				<hr>
-	      </div>
-
+			</div>
 		</div>
 	</div>
 
@@ -142,8 +139,11 @@
 			
 			<div class="row primary-info cancelable-items">
 				<div class="col-12 d-flex flex-column"  *ngFor="let item of order.items; let i = index">
-					<app-item [item]="item" [showStatus]=false ></app-item>
-
+					<app-item [item]="item" [showStatus]=false ></app-item>					
+				</div>
+			</div>
+			<div class="row refund-info-msg">
+				<div class="col-12">
 					<!-- item return/cancelled msg -->
 						<div class="refund-info text-dark mb-4 mt-3">
 							<i class="fas fa-info info-icon"></i> Refund should reflect in 5-7 days to your card/bank
@@ -151,7 +151,6 @@
 					<!-- End of item return/cancelled msg -->
 				</div>
 			</div>
-			
 		</div>
 
 
@@ -201,5 +200,4 @@
 			<button id="confirm-cancel-order" class="btn kss-btn kss-btn--big mt-0"  [ngClass]="{'disabled' : !cancelReasonId}" (click)="callCancelOrderApi()">Confirm</button>	
 		</div>
 	</div>
-
-</div>	
+</div>

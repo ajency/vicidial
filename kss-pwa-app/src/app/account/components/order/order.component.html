@@ -28,17 +28,35 @@
 				<app-item [item]="item" [showStatus]=showStatus ></app-item>
 			</div>
 		</div>
-		<!-- <hr *ngIf="!last" class="my-3"> -->
-<!-- 		<div>
-		    <strong>Expected delivery: <span class="text-success">26th Feb</span></strong>
-			<div>Entered warehouse Bangalore,Karnataka Tue, 26th Feb 18 - 11:57am</div>
+		<div class="row secoundary-info">
+			<div class="col-12 item-order-info">
+				<hr *ngIf="showStatus && (item.state != 'draft')" class="mt-0">
+
+				<div *ngIf="showStatus" class="order-item-info" [ngClass]="{'mb-3' : item.state == 'delivered' && showReturnbtn == true }">
+					<label *ngIf="item.state == 'sale' && !item.shipment_status" class="item-info text-dark mb-0"><strong>Processed On:</strong><span class="grey"> 26 February 2019</span></label>
+				
+					<label *ngIf="item.shipment_status == 'shipped' "  class="item-info text-dark"><strong>Expected Delivery:</strong><span class="green"> 26 February 2019</span></label>
+					<label *ngIf="item.shipment_status == 'shipped' " class="item-info text-dark mb-0">Entered warehouse Bangalore, Karnataka<br>Tue, 26th Feb 18 - 11:57am</label>	
+				
+					<label *ngIf="item.shipment_status == 'delivered' "  class="item-info text-dark mb-0"><strong>Delivered on:</strong><span class="grey"> 26 February 2019</span></label>
+					
+					<!-- label *ngIf="item.shipment_status == 'return' "  class="item-info text-dark"><strong>Refund Initiated:</strong><span class="grey"> 26 February 2019</span></label -->	
+				
+					<!-- label *ngIf="item.shipment_status == 'retured' "  class="item-info text-dark"><strong>Refund Processed:</strong><span class="grey"> 26 February 2019</span></label -->
+				
+					<label *ngIf="item.state == 'processing-cancel'" class="item-info text-dark mb-0">Cancellation request has been sent and is currently being processed</label>
+				
+					<label *ngIf="item.state == 'cancel'"  class="item-info text-dark mb-0"><strong>Cancelled on:</strong><span class="grey"> 26 February 2019</span></label>
+				</div>
+				
+				<!-- Return Item -->
+				<div *ngIf="showStatus && (item.state == 'delivered' || item.state == 'draft' )" class="return-item-section">
+					<hr class="mt-0">
+					<a href="javascript:void(0);" (click)="openReturnItem()" class="btn kss-btn kss-btn--outline-secondary return-item-btn">Return Item <i class="fas fa-chevron-right"></i></a>
+				</div>
+				<!-- End of Return Item -->
+			</div>
 		</div>
-		<div>
-		    <strong>Processed on: <span class="">26th Feb</span></strong>
-		</div>
-		<div>
-		    <strong>Delivered on: <span class="">26th Feb</span></strong>
-		</div> -->
 	</div>
 </div>
 

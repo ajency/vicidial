@@ -9,7 +9,8 @@ declare var $: any;
 export class ItemComponent implements OnInit, OnChanges {
 
 	@Input() item : any;
-	@Input() showStatus : any;
+  @Input() showStatus : any;
+  @Input() showReturnbtn : any;  
   constructor() { }
 
   ngOnInit() {
