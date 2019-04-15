@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { OrderDetailsComponent } from '../../../account/order-details/order-details.component';
 
 declare var $: any;
 
@@ -13,7 +14,7 @@ export class OrderComponent implements OnInit, OnChanges{
   @Input() showStatus : any;
   returnItem : boolean = false;
 
-  constructor() { }
+  constructor(private orderDetailsComponent : OrderDetailsComponent) { }
 
   ngOnInit() {
   }
@@ -33,5 +34,8 @@ export class OrderComponent implements OnInit, OnChanges{
       item.href = '/' + item.product_slug +'/buy?size='+item.size;
       item.images = Array.isArray(item.images) ? ['/img/placeholder.svg', '/img/placeholder.svg', '/img/placeholder.svg'] : Object.values(item.images);
     })
+  }
+  openReturnItem(){    
+    this.orderDetailsComponent.openReturnItem();
   }
 }

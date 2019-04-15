@@ -192,6 +192,13 @@ export class OrderDetailsComponent implements OnInit {
     this.cancelOrder = false;
     this.cancelReasonId = '';
     this.additionalRemark = '';
+
+    this.returnItem = false;
+  }
+
+  openReturnItem(){
+    $('#cd-cart').addClass('overflow-h');
+    this.returnItem = true;
   }
   
 }
