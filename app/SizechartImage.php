@@ -6,6 +6,7 @@ use Ajency\Connections\ElasticQuery;
 use Ajency\FileUpload\FileUpload;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
+use App\Jobs\RefreshProductCache;
 
 class SizechartImage extends Model
 {
@@ -72,7 +73,7 @@ class SizechartImage extends Model
         $products = $q->search()['hits']['hits'];
 
         foreach ($products as $product) {
-            Cache::forget('single-product-' . $product['_source']['search_result_data']['product_slug']);
+            RefreshProductCache::dispatch($product['_source']['search_result_data']['product_slug'])->onQueue('refresh_cache');
         }
     }
 }

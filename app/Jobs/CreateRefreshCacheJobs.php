@@ -2,26 +2,26 @@
 
 namespace App\Jobs;
 
-use App\Jobs\UpdateProduct;
+use App\Jobs\RefreshProductCache;
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 
-class CreateUpdateProductJobs implements ShouldQueue
+class CreateRefreshCacheJobs implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    protected $productIds;
+    protected $items;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($productIds)
+    public function __construct($items)
     {
-        $this->productIds = $productIds;
+        $this->items = $items;
     }
 
     /**
@@ -31,8 +31,8 @@ class CreateUpdateProductJobs implements ShouldQueue
      */
     public function handle()
     {
-        foreach ($this->productIds as $productId) {
-            UpdateProduct::dispatch($productId->id)->onQueue('process_product');
+        foreach ($this->items as $item) {
+            RefreshProductCache::dispatch($item["_source"]["search_result_data"]["product_slug"])->onQueue('refresh_cache');
         }
     }
 }

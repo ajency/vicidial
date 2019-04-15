@@ -289,6 +289,7 @@ class SubOrder extends Model
         $subOrder->is_invoiced = $is_invoiced;
         $subOrder->odoo_status = $state;
         $subOrder->save();
+
         foreach ($subOrder->orderLines as $orderLine) {
             $orderLine->state = $state;
             $orderLine->save();
