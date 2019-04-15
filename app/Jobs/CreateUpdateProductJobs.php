@@ -32,7 +32,7 @@ class CreateUpdateProductJobs implements ShouldQueue
     public function handle()
     {
         foreach ($this->productIds as $productId) {
-            UpdateProduct::dispatch($productId->id)->onQueue('sale_process_product');
+            UpdateProduct::dispatch($productId->id)->onQueue('process_product');
         }
     }
 }

@@ -75,7 +75,7 @@ class Product
             $chunks = $productIds->chunk(30);
 
             foreach ($chunks as $chunk) {
-                CreateUpdateProductJobs::dispatch($chunk->toArray())->onQueue('sale_create_jobs');
+                CreateUpdateProductJobs::dispatch($chunk->toArray())->onQueue('create_jobs');
             }
         }
         Defaults::setLastVariantSync($last_variant_date);
