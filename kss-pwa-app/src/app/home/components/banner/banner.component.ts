@@ -1,16 +1,53 @@
-import { Component, OnInit, Input  } from '@angular/core';
+import { Component, OnInit, Input, ViewEncapsulation, OnChanges } from '@angular/core';
 
 @Component({
   selector: 'app-banner',
   templateUrl: './banner.component.html',
-  styleUrls: ['./banner.component.scss']
+  styleUrls: ['../../../../../node_modules/ngx-owl-carousel-o/lib/styles/scss/owl.carousel.scss',
+              '../../../../../node_modules/ngx-owl-carousel-o/lib/styles/scss/owl.theme.default.scss',
+              './banner.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
-export class BannerComponent implements OnInit {
+export class BannerComponent implements OnInit, OnChanges {
 
-	@Input() banner : any;
+	@Input() banners : any;
+  banner_length : any;
+  customOptions: any = {
+    loop: true,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: true,
+    dots: false,
+    navSpeed: 500,
+    navText: ['<i class="fas fa-chevron-left"></i>', '<i class="fas fa-chevron-right"></i>'],
+    autoplay : true,
+    autoplaySpeed : 1000,
+    autoplayTimeout : 5000,
+    responsive: {
+      0: {
+        items: 1
+      },
+      400: {
+        items: 1
+      },
+      740: {
+        items: 1
+      },
+      940: {
+        items: 1
+      }
+    },
+    nav: true
+  }
   constructor() { }
 
   ngOnInit() {
+  }
+
+  ngOnChanges(){
+    this.banner_length = this.banners.length;
+    console.log("this.banner_length ===>", this.banner_length);
+    this.banners = this.banners.filter(banner => banner.element_data.display !== 0)
   }
 
   createDataSrcSet(a,b,c,d){

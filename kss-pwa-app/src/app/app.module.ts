@@ -19,6 +19,7 @@ import { LoginComponent } from './login/login.component';
 import { WidgetComponent } from './widget/widget.component';
 
 import { LazyModule } from '@herodevs/lazy-af';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { LazyModule } from '@herodevs/lazy-af';
     HttpClientModule,
     NumberModule,
     RouterModule,
-    LazyModule
+    LazyModule,
+    BrowserAnimationsModule    
   ],
   providers: [
     // ApiService,

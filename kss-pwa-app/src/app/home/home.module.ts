@@ -10,6 +10,7 @@ import { TrendingComponent } from './components/trending/trending.component';
 import { ComponentsModule } from '../components/components.module';
 import { LayoutModule } from '@angular/cdk/layout';
 // import { DeferLoadModule } from '@trademe/ng-defer-load';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 
 import { LazyLoadImageModule, intersectionObserverPreset } from 'ng-lazyload-image';
 import { GenderCategoryComponent } from './components/gender-category/gender-category.component';
@@ -26,6 +27,7 @@ import { NewOfferComponent } from './components/new-offer/new-offer.component';
     HomeRoutingModule,
     ComponentsModule,
     LayoutModule,
+    CarouselModule,
     // DeferLoadModule
   	LazyLoadImageModule.forRoot({
           preset: intersectionObserverPreset
