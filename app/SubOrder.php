@@ -74,6 +74,7 @@ class SubOrder extends Model
             $item = $variant->getItemAttributes();
 
             for ($qty = 1; $qty <= $itemData['quantity']; $qty++) {
+
                 $orderLine = OrderLine::create(array_merge($item, [
                     'variant_id'       => $variant->odoo_id,
                     'price_discounted' => $itemData['price_discounted'],
@@ -81,6 +82,11 @@ class SubOrder extends Model
                     'product_id'       => $variant->getParentId(),
                     'product_color_id' => $variant->getVarColorId(),
                     'product_slug'     => $variant->getProductSlug(),
+                    //new fields data
+                    'product_type'     => $variant->getCategoryType(),
+                    'product_subtype'  => $variant->getSubType(),
+                    'return_policy'    => ReturnPolicy::getReturnPolicy($variant->odoo_id),
+
                 ]));
                 array_push($this->orderLineIds, $orderLine->id);
             }
@@ -249,6 +255,7 @@ class SubOrder extends Model
                 'shipment_status'  => $itemData['shipment_status'],
                 'quantity'         => $this->orderLines->where('variant_id', $itemData['variant_id'])->count(),
                 'is_invoiced'      => $this->is_invoiced,
+                'return_policy'    => ReturnPolicy::getReturnPolicy($itemData['variant_id']),
             ];
             if ($store_address != null) {
                 $item['store_address'] = $store_address;
