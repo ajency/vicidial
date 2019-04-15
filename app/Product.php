@@ -6,13 +6,14 @@ use Ajency\Connections\OdooConnect;
 use App\Defaults;
 use App\Facet;
 use App\Jobs\CreateProductJobs;
+use App\Jobs\CreateRefreshCacheJobs;
 use App\Jobs\CreateUpdateProductJobs;
 use App\Jobs\FetchProductImages;
+use App\Jobs\RefreshProductCache;
 use App\Jobs\UpdateSearchText;
 use App\Jobs\UpdateVariantInventory;
 use App\ProductColor;
 use App\Variant;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class Product
@@ -272,7 +273,7 @@ class Product
         $query->initializeBulkIndexing();
         $products->each(function ($item, $key) use ($query) {
             $query->addToBulkIndexing($item['id'], $item);
-            Cache::forget('single-product-' . $item['search_result_data']['product_slug']);
+            RefreshProductCache::dispatch($item['search_result_data']['product_slug'])->onQueue('refresh_cache');
         });
         $responses = $query->bulk();
     }
@@ -720,5 +721,26 @@ class Product
         ]]);
 
         return;
+    }
+
+    public static function refreshAllCache()
+    {
+        $index = config('elastic.indexes.product');
+        $q     = new ElasticQuery;
+        $q->setIndex($index)
+            ->setQuery(
+                ["match_all" => [
+                    "boost" => 1.0,
+                ]]
+            )
+            ->setSource(["search_result_data.product_slug"])
+            ->setSize(10000);
+
+        $response = $q->search();
+        $chunks   = collect($response["hits"]["hits"])->chunk(30);
+
+        foreach ($chunks as $chunk) {
+            CreateRefreshCacheJobs::dispatch($chunk->toArray())->onQueue('create_cache_jobs');
+        }
     }
 }
