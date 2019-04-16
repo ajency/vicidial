@@ -82,7 +82,7 @@
 				    <div class="ml-sm-auto d-none d-sm-flex flex-fill-full justify-content-end">
 
 					<!-- Search Box -->
-					<app-search-box></app-search-box>
+					<app-search-box (updateList)="applyFilter($event)" [defaultText]="'shirts'"></app-search-box>
 
 				      <!-- Sort By -->
 				      <div class="d-flex flex-row kss-select-border">
@@ -90,10 +90,8 @@
 				          <h6 class="m-0 f-w-4 sub-text"> Sort By:</h6>
 				        </div>
 				        <div class="pl-2 align-self-center">
-				          <select id="sort_filter_selectbox" class="size form-control  form-control-sm br-0  border-dark custom" onchange="facetCategoryChange(this,true,false,false,true);">
-				            <option value="" selected="selected">Recommended</option>
-				            <option value="price_asc">Price Low to High</option>
-				            <option value="price_desc">Price High to Low</option>
+				          <select id="sort_filter_selectbox" class="size form-control  form-control-sm br-0  border-dark custom" [(ngModel)]="sortOn" (change)="sortBy()">
+				            <option *ngFor="let option of sort_on" value="{{option.value}}" [attr.selected]="option.is_selected">{{option.name}}</option>
 				          </select> 
 				        </div>
 				      </div>
@@ -127,171 +125,12 @@
 						<div *ngIf="listPage" id="card-list" class="row">
 							<!-- Start Product column -->
 							<div *ngFor="let item of listPage.items" class="col-lg-3 col-md-6 mb-sm-4 col-6 layout-type-1">								
-								<!-- <div class="card h-100 product-card">
-									<a href="/black-and-red-mickey-mouse-soft-plush-toys-2471-black/buy" class="position-relative" title="Black and Red Mickey Mouse Soft Plush Toys">
-										<div class="product-card__wrapper d-flex align-items-center justify-content-center mb-2 mb-sm-2 single-tile image-loaded">
-											<div class="overlay"></div>
-											<img src="{{item.value.images['load']}}" 
-											sizes="(min-width: 1200px) 270px,(min-width: 992px) 22vw,(min-width: 768px) 33vw, 45vw" 
-											class="card-img-top blur-up lazyloaded" 
-											title="Black and Red Mickey Mouse Soft Plush Toys" 
-											alt="Black and Red Mickey Mouse Soft Plush Toys" 
-											srcset="{{item.value.images['1x']}} 270w, {{item.value.images['2x']}} 540w, {{item.value.images['3x']}} 810w">
-										</div>
-									</a>
-									<div class="product-card__body">
-										<h3 class="brands-title brands-title--list mt-1 mt-sm-0 mb-sm-2">
-											{{item.value.brand}}
-										</h3>
-										<a href="/black-and-red-mickey-mouse-soft-plush-toys-2471-black/buy" class="text-dark">
-											<h5 class="section-heading section-heading--list mb-1 mb-sm-2">
-												{{item.value.title}}
-											</h5>
-										</a>
-										<div class="d-sm-flex align-items-sm-center mb-2 mb-sm-0">
-											<div id="kss-price-2471-33" class="kss-price kss-price--smaller">
-											₹2799
-											</div>
-										</div>
-									</div>
-								</div> -->	
 								<app-product-view [product]="item" [showLoader]="showLoader" [listPage]=true></app-product-view>
 							</div>
-							
-<!-- 							<div class="col-lg-3 col-md-6 mb-sm-4 col-6 layout-type-2">
-								<div class="card h-100 product-card" [ngClass]="status ? 'card-active' : ''">
-									<a href="/black-and-red-mickey-mouse-soft-plush-toys-2471-black/buy" class="position-relative" title="Black and Red Mickey Mouse Soft Plush Toys">
-										<div class="product-card__wrapper d-flex align-items-center justify-content-center mb-2 mb-sm-2 single-tile image-loaded">
-											<div class="overlay"></div><img src="https://images.kidsuperstore.in/images/products/3265.32/list-view/3x/809-navy-blue-polka-dots-designer-anti-skid-booties-for-girls-color-navy-1.jpg" data-srcset="https://images.kidsuperstore.in/images/products/3265.32/list-view/3x/809-navy-blue-polka-dots-designer-anti-skid-booties-for-girls-color-navy-1.jpg 270w, https://images.kidsuperstore.in/images/products/3265.32/list-view/3x/809-navy-blue-polka-dots-designer-anti-skid-booties-for-girls-color-navy-1.jpg 540w, https://images.kidsuperstore.in/images/products/3265.32/list-view/3x/809-navy-blue-polka-dots-designer-anti-skid-booties-for-girls-color-navy-1.jpg 810w" sizes="(min-width: 1200px) 270px,(min-width: 992px) 22vw,(min-width: 768px) 33vw, 45vw" class="card-img-top blur-up lazyloaded" title="Black and Red Mickey Mouse Soft Plush Toys" alt="Black and Red Mickey Mouse Soft Plush Toys" srcset="https://images.kidsuperstore.in/images/products/3265.32/list-view/3x/809-navy-blue-polka-dots-designer-anti-skid-booties-for-girls-color-navy-1.jpg 270w, https://images.kidsuperstore.in/images/products/3265.32/list-view/3x/809-navy-blue-polka-dots-designer-anti-skid-booties-for-girls-color-navy-1.jpg 540w, https://images.kidsuperstore.in/images/products/3265.32/list-view/3x/809-navy-blue-polka-dots-designer-anti-skid-booties-for-girls-color-navy-1.jpg 810w">
-										</div>
-									</a>
-									<div class="product-card__body">
-										<div class="addtocart-box">
-											<div class="button-wrapper">
-												<button type="button" class="btn kss-btn add-to-cart" (click)="clickEvent()">ADD TO BAG</button>
-											</div>											
-										</div>
-										<div class="product-attribute-bx">
-												<div class="d-flex justify-content-between align-items-center attr-label">
-													<label>Select Size</label>
-													<button _ngcontent-c2="" class="btn close-attr" type="button" (click)="clickEvent()">x</button>
-												</div>
-											<ul>
-												<li>
-													<input type="radio" class="option" id="attr-1" name="size">
-													<label for="attr-1">2-3 yrs</label>
-												</li>
-												<li>
-													<input type="radio" class="option" id="attr-2" name="size">
-													<label for="attr-2">4-5 yrs</label>
-												</li>
-												<li>
-													<input type="radio" class="option" id="attr-3" name="size">
-													<label for="attr-3">5-6 yrs</label>
-												</li>
-												<li>
-														<input type="radio" class="option" id="attr-4" name="size">
-														<label for="attr-4">7-8 yrs</label>
-												</li>
-											</ul>	
-										</div>
-										<div class="product-loop-info">
-											<h3 class="brands-title brands-title--list mt-1 mt-sm-0 mb-sm-2">
-												Dream Theatre
-											</h3>
-
-											<a href="/black-and-red-mickey-mouse-soft-plush-toys-2471-black/buy" class="text-dark">
-												<h5 class="section-heading section-heading--list mb-1 mb-sm-2">
-													Black and Red Mickey Mouse Soft Plush Toys
-												</h5>
-											</a>
-											<div class="d-sm-flex align-items-sm-center mb-2 mb-sm-0">
-												<div id="kss-price-2471-33" class="kss-price kss-price--smaller">
-												₹2799
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div> -->
-
-<!-- 							<div class="col-lg-3 col-md-6 mb-sm-4 col-6 layout-type-3">
-								<div class="card h-100 product-card">
-									<div class="position-relative">
-										<div class="product-card__wrapper d-flex align-items-center justify-content-center mb-2 mb-sm-2 single-tile image-loaded">
-												<div class="overlay">
-													add to cart box
-													<div class="product-view-block pos-center-hidden">
-														<div class="product-attribute clearfix">
-															<select>
-																<option>Select Size</option>
-																<option value="small">Small</option>
-																<option value="medium">Medium</option>
-																<option value="large">Large</option>
-															</select>
-														</div>
-														<button href="#" class="kss-btn btn add-cart">ADD TO BAG</button>
-													</div>
-													End of add to cart box
-												</div>
-												<img src="https://images.kidsuperstore.in/images/products/3254.187/list-view/3x/s01-brown-soft-dog-design-booties-for-boys-color-brown-1.jpg" data-srcset="https://images.kidsuperstore.in/images/products/3254.187/list-view/3x/s01-brown-soft-dog-design-booties-for-boys-color-brown-1.jpg 270w, https://images.kidsuperstore.in/images/products/3254.187/list-view/3x/s01-brown-soft-dog-design-booties-for-boys-color-brown-1.jpg 540w, https://images.kidsuperstore.in/images/products/3254.187/list-view/3x/s01-brown-soft-dog-design-booties-for-boys-color-brown-1.jpg 810w" sizes="(min-width: 1200px) 270px,(min-width: 992px) 22vw,(min-width: 768px) 33vw, 45vw" class="card-img-top blur-up lazyloaded" title="Black and Red Mickey Mouse Soft Plush Toys" alt="Black and Red Mickey Mouse Soft Plush Toys" srcset="https://images.kidsuperstore.in/images/products/3254.187/list-view/3x/s01-brown-soft-dog-design-booties-for-boys-color-brown-1.jpg 270w, https://images.kidsuperstore.in/images/products/3254.187/list-view/3x/s01-brown-soft-dog-design-booties-for-boys-color-brown-1.jpg 540w, https://images.kidsuperstore.in/images/products/3254.187/list-view/3x/s01-brown-soft-dog-design-booties-for-boys-color-brown-1.jpg 810w">
-										</div>
-									</div>
-									<div class="product-card__body">
-										<h3 class="brands-title brands-title--list mt-1 mt-sm-0 mb-sm-2">
-											Dream Theatre
-										</h3>
-
-										<a href="/black-and-red-mickey-mouse-soft-plush-toys-2471-black/buy" class="text-dark">
-											<h5 class="section-heading section-heading--list mb-1 mb-sm-2">
-												Black and Red Mickey Mouse Soft Plush Toys
-											</h5>
-										</a>
-										Calculate & Display Price --
-										<div class="d-sm-flex align-items-sm-center mb-2 mb-sm-0">
-											<div id="kss-price-2471-33" class="kss-price kss-price--smaller">
-											₹2799
-											</div>
-										</div>
-									</div>
-								</div>
-							</div> -->
-
-<!-- 							<div class="col-lg-3 col-md-6 mb-sm-4 col-6 ">
-								<div class="card h-100 product-card">
-									<a href="/black-and-red-mickey-mouse-soft-plush-toys-2471-black/buy" class="position-relative" title="Black and Red Mickey Mouse Soft Plush Toys">
-										<div class="product-card__wrapper d-flex align-items-center justify-content-center mb-2 mb-sm-2 single-tile image-loaded">
-											<div class="overlay"></div><img src="https://images.kidsuperstore.in/images/products/3262.28/list-view/1x/703-red-designer-party-anti-skid-booties-for-girls-color-red-1.jpg" data-srcset="https://images.kidsuperstore.in/images/products/3262.28/list-view/1x/703-red-designer-party-anti-skid-booties-for-girls-color-red-1.jpg 270w, https://images.kidsuperstore.in/images/products/3262.28/list-view/1x/703-red-designer-party-anti-skid-booties-for-girls-color-red-1.jpg 540w, https://images.kidsuperstore.in/images/products/3262.28/list-view/1x/703-red-designer-party-anti-skid-booties-for-girls-color-red-1.jpg 810w" sizes="(min-width: 1200px) 270px,(min-width: 992px) 22vw,(min-width: 768px) 33vw, 45vw" class="card-img-top blur-up lazyloaded" title="Black and Red Mickey Mouse Soft Plush Toys" alt="Black and Red Mickey Mouse Soft Plush Toys" srcset="https://images.kidsuperstore.in/images/products/3262.28/list-view/1x/703-red-designer-party-anti-skid-booties-for-girls-color-red-1.jpg 270w, https://images.kidsuperstore.in/images/products/3262.28/list-view/1x/703-red-designer-party-anti-skid-booties-for-girls-color-red-1.jpg 540w, https://images.kidsuperstore.in/images/products/3262.28/list-view/1x/703-red-designer-party-anti-skid-booties-for-girls-color-red-1.jpg 810w">
-
-										</div>
-									</a>
-									<div class="product-card__body">
-										<h3 class="brands-title brands-title--list mt-1 mt-sm-0 mb-sm-2">
-											Dream Theatre
-										</h3>
-
-										<a href="/black-and-red-mickey-mouse-soft-plush-toys-2471-black/buy" class="text-dark">
-											<h5 class="section-heading section-heading--list mb-1 mb-sm-2">
-												Black and Red Mickey Mouse Soft Plush Toys
-											</h5>
-										</a>
-										<div class="d-sm-flex align-items-sm-center mb-2 mb-sm-0">
-											<div id="kss-price-2471-33" class="kss-price kss-price--smaller">
-											₹2799
-											</div>
-										</div>
-									</div>
-								</div>
-
-							</div> -->
-
-							<!-- End of Product column -->
 						</div>
 
 						<!-- Pagination -->
-
 						<div class="kss-pagination mt-5">
-
 							<span class="kss-pagination__prev controls pr-md-4 d-flex 9 disabled">
 								<a href="#">
 									<span class="pr-2"><i class="fas fa-chevron-left"></i></span>
@@ -316,10 +155,7 @@
 							</span>
 
 						</div>
-
-
 						<!-- End of Pagination -->
-
 					</div>
 				<!-- End of Product List -->
 	 		</div>

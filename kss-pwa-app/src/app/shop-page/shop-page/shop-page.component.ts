@@ -13,6 +13,27 @@ export class ShopPageComponent implements OnInit {
   listApiCall : any;
   listPage : any;
   showLoader : boolean = false;
+  sortOn : any = 'recommended';
+  sort_on = [
+    {
+      name: "Recommended",
+      value: "recommended",
+      is_selected: true,
+      class: "popularity"
+    },
+    {
+      name: "Price Low to High",
+      value : "price_asc",
+      is_selected: false,
+      class: "price-l"
+    },
+    {
+      name: "Price High to Low",
+      value: "price_desc",
+      is_selected: false,
+      class: "price-h"
+    }
+  ]
   constructor(private apiService: ApiServiceService,
               private appservice : AppServiceService,
               private route: ActivatedRoute,) { }
@@ -58,6 +79,14 @@ export class ShopPageComponent implements OnInit {
   unsubscribeListPageApi(){
     if(this.listApiCall)
       this.listApiCall.unsubscribe();
+  }
+
+  applyFilter(search_text){
+    console.log("applyFilter", search_text);
+  }
+
+  sortBy(){
+    console.log("sortBy ==>", this.sortOn);
   }
 
 }
