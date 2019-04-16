@@ -16,16 +16,19 @@ class ReturnPoliciesTableSeeder extends Seeder
           DB::table('return_policies')->insert(array(
      array(
        'title' => 'Uniform',
+       'display_name' => 'Uniform',
        'active' => '1',
        'display' => '1',
      ),
      array(
        'title' => 'Undergarments',
+       'display_name' => 'Undergarments',
        'active' => '1',
        'display' => '1',
      ),
      array(
        'title' => 'Other',
+       'display_name' => 'Other',
        'active' => '1',
        'display' => '1',
      ),

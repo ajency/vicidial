@@ -8,6 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class ReturnPolicy extends Model
 {
+    protected $casts = [
+        'id'           => 'integer',
+        'title'        => 'string',
+        'display_name' => 'string',
+    ];
     public function facet()
     {
         return $this->belongsToMany('App\Facet');
@@ -15,68 +20,38 @@ class ReturnPolicy extends Model
 
     public static function getReturnPolicy($variant_odoo_id)
     {
-        //$var = [];
         $variant = Variant::where('odoo_id', $variant_odoo_id)->first();
 
         $cat_type = $variant->getCategoryType();
         $sub_type = $variant->getSubType();
 
-        $facet    = Facet::where('facet_value', $cat_type)->first();
-        $facet_id = $facet->id;
+        $facets = Facet::whereHas('return_policies', function ($query) use ($cat_type, $sub_type) {
+            $query->where('facet_value', $cat_type)->orWhere('facet_value', $sub_type);
+        })->get();
 
-        $f = Facet::find($facet_id);
-        $v = $f->return_policies()->first();
+        $facet_cattype = $facets->where('facet_name', 'product_category_type')->first();
+        // dd($facet_cattype);
+        $facet_subtype = $facets->where('facet_name', 'product_subtype')->first();
 
-        if ($v) {
+        if ($facet_cattype) {
+            $facet = $facet_cattype->return_policies()->first();
+            
 
-            return $v->title;
+            $returnPolicy = array('id' => $facet->id, 'title' => $facet->title, 'display_name' => $facet->display_name);
+            //return $returnPolicy;
+            //return json_encode($returnPolicy);
+            return response()->json($returnPolicy);
 
-        } 
-
-        else {
-
-            $facet    = Facet::where('facet_value', $sub_type)->first();
-            $facet_id = $facet->id;
-
-            $f = Facet::find($facet_id);
-            $v = $f->return_policies()->first();
-
-            if ($v) {
-
-                return $v->title;
-                
-            } else {
-                $v = 'Other';
-
-                return $v;
-
-            }
+        } elseif ($facet_subtype) {
+            $facet = $facet_subtype->return_policies()->first();
+            $returnPolicy = array('id' => $facet->id, 'title' => $facet->title, 'display_name' => $facet->display_name);
+            
+        } else {
+            $returnPolicy = 'Other';
         }
 
-        /* //$facet    = \DB::table('facets')->where('facet_value', $cat_type)->first();
-
-    $return   = \DB::table('facet_returnpolicies')->where('facet_id', $facet_id)->first();
-    if ($return) {
-    //dd($return);
-    $ret           = $return->returnpolicies_id;
-    $return_type   = \DB::table('return_policies')->where('id', $ret)->first();
-    $return_policy = $return_type->title;
-    return $return_policy;
-    } else {
-    $facet    = \DB::table('facets')->where('facet_value', $sub_type)->first();
-    $facet_id = $facet->id;
-    $return   = \DB::table('facet_returnpolicies')->where('facet_id', $facet_id)->first();
-    if ($return) {
-    $ret           = $return->returnpolicies_id;
-    $return_type   = \DB::table('return_policies')->where('id', $ret)->first();
-    $return_policy = $return_type->title;
-    return $return_policy;
-    } else {
-    $return_policy = 'Other';
-    return $return_policy;
-    }
-
-    }*/
+        //return json_encode($returnPolicy);
+        return response()->json($returnPolicy);
 
     }
 
