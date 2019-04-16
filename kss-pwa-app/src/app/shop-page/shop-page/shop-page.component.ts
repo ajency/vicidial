@@ -11,7 +11,8 @@ import { AppServiceService } from '../../service/app-service.service';
 export class ShopPageComponent implements OnInit {
 
   listApiCall : any;
-
+  listPage : any;
+  showLoader : boolean = false;
   constructor(private apiService: ApiServiceService,
               private appservice : AppServiceService,
               private route: ActivatedRoute,) { }
@@ -32,13 +33,25 @@ export class ShopPageComponent implements OnInit {
   }
 
   callListPageApi(){
+    this.showLoader = true;
     this.unsubscribeListPageApi();
     let url = isDevMode() ? "https://demo8558685.mockable.io/product-list" : this.appservice.apiUrl + '/api/rest/v1/product-list';
     this.listApiCall = this.apiService.request(url, 'get', {} , {}, false, 'observable').subscribe((response)=>{
-      console.log("check inventory response ==>", response);
+      response.items.forEach(item=>{
+        item.url = '/'+item.attributes.product_slug+'/buy';
+        item.image = item.images[0].main;
+        item.title = item.attributes.product_title;
+        let default_variant = item.variants.find((variant)=>{return variant.is_default === true});
+        item.sale_price = default_variant.variant_attributes.variant_sale_price;
+        item.list_price = default_variant.variant_attributes.variant_list_price;
+      })
+      this.listPage = response;
+      this.showLoader = false;
+      console.log("check inventory response ==>",this.listPage);
     },
     (error)=>{
       console.log("error ===>", error);
+      this.showLoader = false;
     });
   }
 
