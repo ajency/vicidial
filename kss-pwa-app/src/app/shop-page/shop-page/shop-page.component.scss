@@ -5,99 +5,99 @@
 
 /** Product View **/
 .card {
-    &.product-card{
-      border: 0px;
-      @media (max-width: 767.98px) {
-          background:none;
-      }
-      .card-title {
-          font-weight: 400;
-          font-size:1rem;
-          margin-bottom: 0.25rem;
-          @media (max-width: 575.98px) {
-              font-size:.8rem;
-          }
-      }
-      .card-img-top{
-          border-radius: 5px;
-      }
-      .card-body {
-          flex: 1 1 auto;
-          padding: 10px 0px;
-          margin-bottom: 10px;
-          .price {
-              .text-muted {
-                  color: $gray-500 !important;
-              }
-          }
-      }
-      .product-card__wrapper{          
-          overflow: hidden;
-          position: relative;        
-          @media (max-width: 991px) {       	
-              border: 1px solid #eee;
-          }       
-          
-          @media (min-width: 601px){
-              padding-top: 120%;
-              img{
-                height: auto;
-                position: absolute;
-                left: 0;
-                right: 0;
-                top: 0;
-                bottom: 0;
-              }
-          }
-          @media (min-width:992px){
-              padding-top: 130%;
-          }
-      }
+  &.product-card{
+    border: 0px;
+    @media (max-width: 767.98px) {
+        background:none;
     }
-    .placeholder-img{
-      background-color: $placeholder;
-      width: 100%;
-      height: 100%;
-    }
-  }
-  
-  .brands-title--list {
-      font-size: .8rem;
-      font-weight: 300;
-  
-      @media (max-width: 767px) {
-          font-size: .7rem;
-          color: #969696;
-      }
-  }
-  
-  .brands-title {
-      color: #b5b5b5;
-  }
-  
-  @media (max-width: 600px) {
-    .product-card__body {
-      padding: 5px 10px;
-      background-color: rgba(238, 238, 238, 0.5);
-    }
-    .card.product-card {
-        .single-tile {
-          height: 65vw;
-          margin-bottom: 0!important;
+    .card-title {
+        font-weight: 400;
+        font-size:1rem;
+        margin-bottom: 0.25rem;
+        @media (max-width: 575.98px) {
+            font-size:.8rem;
         }
     }
-    .section-heading {
-        &--list {
-              font-size: $font-size-base;
-              white-space: nowrap;
-              text-overflow: ellipsis;
-              overflow-x: hidden;
-              line-height: 18px;
+    .card-img-top{
+        border-radius: 5px;
+    }
+    .card-body {
+        flex: 1 1 auto;
+        padding: 10px 0px;
+        margin-bottom: 10px;
+        .price {
+            .text-muted {
+                color: $gray-500 !important;
+            }
+        }
+    }
+    .product-card__wrapper{
+        overflow: hidden;
+        position: relative;
+        @media (max-width: 991px) {
+            border: 1px solid #eee;
+        }
+
+        @media (min-width: 601px){
+            padding-top: 120%;
+            img{
+              height: auto;
+              position: absolute;
+              left: 0;
+              right: 0;
+              top: 0;
+              bottom: 0;
+            }
+        }
+        @media (min-width:992px){
+            padding-top: 130%;
         }
     }
   }
-  
-  /** End of Product View **/
+  .placeholder-img{
+    background-color: $placeholder;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.brands-title--list {
+    font-size: .8rem;
+    font-weight: 300;
+
+    @media (max-width: 767px) {
+        font-size: .7rem;
+        color: #969696;
+    }
+}
+
+.brands-title {
+    color: #b5b5b5;
+}
+
+@media (max-width: 600px) {
+  .card__body {
+    padding: 5px 10px;
+    background-color: rgba(238, 238, 238, 0.5);
+  }
+  .card.product-card {
+      .single-tile {
+        height: 65vw;
+        margin-bottom: 0!important;
+      }
+  }
+  .section-heading {
+      &--list {
+            font-size: $font-size-base;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow-x: hidden;
+            line-height: 18px;
+      }
+  }
+}
+
+/** End of Product View **/
 
 
 /** Pagination **/
@@ -173,7 +173,7 @@
     .close-attr {
         padding: 0px 8px;
         font-size: 1rem;
-        font-family: inherit;                
+        font-family: inherit;
     }
     .attr-label {
         label {
@@ -189,7 +189,7 @@
         right: 0;
         padding: 5px 8px 0;
         transition: all .5s ease;
-        transform: translateY(100%);        
+        transform: translateY(100%);
 
         ul {
             list-style: none;
@@ -241,9 +241,9 @@
         background: #fff;
         left: 0;
         right: 0;
-        padding: 10px 10px;   
+        padding: 10px 10px;
         transition: all .5s ease;
-        transform: translateY(100%); 
+        transform: translateY(100%);
     }
     .product-card {
         &__body {
@@ -258,7 +258,7 @@
         &:focus {
             .addtocart-box{
                 transform: translateY(0);
-            }     
+            }
         }
         &.card-active {
             box-shadow: 0px 2px 16px 4px rgba(40, 44, 63, 0.07);
@@ -274,12 +274,12 @@
 
 .layout-type-3 {
     .product-card {
-        &:hover {            
-            .overlay {                
+        &:hover {
+            .overlay {
                 opacity: 1;
                 background-color: rgba(255,255,255,0.9);
                 //border: 1px solid rgba(0, 0, 0, 0.1);
-                transition: all 0.5s ease;                
+                transition: all 0.5s ease;
                 .product-view-block {
                     opacity: 1;
                     top: 50%;
@@ -291,11 +291,11 @@
         width: 160px;
         margin: auto;
         text-align: center;
-        &.pos-center-hidden {    
+        &.pos-center-hidden {
             position: absolute;
             left: 0;
             right: 0;
-            transform: translateY(-50%);        
+            transform: translateY(-50%);
             opacity: 0;
             top: 100%;
             transition: all 0.5s ease;
@@ -313,4 +313,19 @@
             }
         }
     }
+}
+
+@media (max-width: 575px){
+  #card-list .col-lg-3 {
+      padding: 8px;
+  }
+}
+
+.active-filter{
+  border-radius: 4px;
+  font-size: 0.9em;
+  font-weight: 600;
+  &:hover{
+    background-color: $placeholder;
+  }
 }

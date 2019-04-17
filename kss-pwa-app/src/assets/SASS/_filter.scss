@@ -50,6 +50,7 @@
         }
     }
     .custom-control-label::before {
+          background:#fff;
           border:1px solid #c5c5c5;
           width: 1.2rem;
           height: 1.2rem;
@@ -197,7 +198,8 @@
         width: 15px;
         height: 15px;
         display: inline-block;
-        border: 1px solid #eee;
+        border: 1px solid #b9b9b9;
+        border-radius: 56%;
     }
 }
 
@@ -207,13 +209,10 @@
 
 .color-wrapper{
     @media (min-width: 768px){
-/*        .card-body{
-            height: 243px;
+        .card-body{
+            max-height: 243px;
             overflow: hidden;
-            &.is-open{
-                height: auto;
-            }
-        } */
+        }
         .more-color{
             display: block;
             color: #004283;
@@ -257,6 +256,141 @@
     }
 }
 
-.close {
-    outline: 0;
+.badge {
+    &-label {
+        padding-right: 35px;
+        width: 100%;
+    }
+    &-count{
+        float: right;
+        font-size: 0.6875rem;
+        line-height: 1;
+        padding: 4px 10px;
+        border-radius: 10px;
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        text-align: center;
+        min-width: 10px;
+        background: rgba(84,84,84,0.08);
+        color: rgba(84,84,84,0.8) !important;
+        font-weight: 600;
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
 }
+
+.productlist {
+    @media (min-width: 1200px){
+        .col-left {
+            flex: 0 0 23%;
+            max-width: 23%;
+        }
+        .col-right {
+            flex: 0 0 77%;
+            max-width: 77%;
+        }
+    }
+
+    @media screen and (min-width: 768px) and (max-width: 991px){
+        .col-left {
+            flex: 0 0 28%;
+            max-width: 28%;
+        }
+        .col-right {
+            flex: 0 0 72%;
+            max-width: 72%;
+        }
+    }
+}
+
+.kss_filter {
+    .filter-heading {
+        label {
+            font-weight: 600;
+        }
+    }
+    .kss_filter {
+        &-list {
+            .card-body {
+                padding: 0;
+            }
+        }
+    }
+    .custom-control {
+        &-label {
+            color: #818181;
+            font-size: 0.83rem;
+
+            &::before {
+                width: 0.938rem;
+                height: 0.938rem;
+                border-color: #c3c2c9;
+                border-radius: 2px !important;
+                top: 0.22rem;
+            }
+            &::after {
+                left: -1.65rem;
+            }
+        }
+        @media (min-width: 768px){
+            margin-bottom: 0;
+        }
+    }
+    .custom-checkbox {
+        .custom-control {
+            &-input {
+                &:checked {
+                    &~ .custom-control-label {
+                        &::before {
+                            border-color: theme-color('primary');
+                        }
+                    }
+                }
+                &:disabled {
+                    &~ .custom-control {
+                        &-label {
+                            color: #d2d2d2;
+                            &::before {
+                                border-color: #ddd;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .card-body {
+        @media (min-width: 768px){
+            &-scrollbar {
+                height: auto;
+                max-height: 243px;
+                overflow-x: hidden;
+                overflow-y: auto;
+            }
+        }
+    }
+}
+
+.color-filter {
+    .color-box {
+        margin-bottom: 2px;
+    }
+}
+
+
+@media (min-width: 768px){
+    .card-body-scrollbar {
+        padding-right: 15px !important;
+        &::-webkit-scrollbar-thumb {
+            height:24px;
+            background-color: #b3b3b3
+        }
+
+        &::-webkit-scrollbar {
+            width: 8px;
+            background-color: #e6e6e6
+        }
+    }
+}
+
