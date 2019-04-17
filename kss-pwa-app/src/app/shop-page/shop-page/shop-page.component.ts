@@ -11,7 +11,7 @@ import { AppServiceService } from '../../service/app-service.service';
 export class ShopPageComponent implements OnInit {
 
   listApiCall : any;
-  listPage : any;
+  listPage : any = {};
   showLoader : boolean = false;
   sortOn : any = 'recommended';
   sort_on = [
@@ -55,6 +55,7 @@ export class ShopPageComponent implements OnInit {
 
   callListPageApi(){
     this.showLoader = true;
+    this.createDummyList();
     this.unsubscribeListPageApi();
     let url = isDevMode() ? "https://demo8558685.mockable.io/product-list" : this.appservice.apiUrl + '/api/rest/v1/product-list';
     url = "https://demo8558685.mockable.io/product-list";
@@ -75,6 +76,20 @@ export class ShopPageComponent implements OnInit {
       console.log("error ===>", error);
       this.showLoader = false;
     });
+  }
+
+  createDummyList(){
+    let product = {
+      url : '',
+      image : '',
+      title : '',
+      sale_price : '',
+      list_price : ''
+    }
+    this.listPage.items = [];
+    for (let i = 0; i < 8; i++){
+      this.listPage.items.push(product);
+    }
   }
 
   unsubscribeListPageApi(){
