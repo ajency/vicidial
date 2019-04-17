@@ -41,4 +41,9 @@ class HomeController extends Controller
     {
         return view('home_new');
     }
+    
+    public function shop(Request $request)
+    {
+        return view('home_new');
+    }
 }

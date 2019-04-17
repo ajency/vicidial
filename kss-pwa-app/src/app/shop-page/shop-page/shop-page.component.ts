@@ -57,6 +57,7 @@ export class ShopPageComponent implements OnInit {
     this.showLoader = true;
     this.unsubscribeListPageApi();
     let url = isDevMode() ? "https://demo8558685.mockable.io/product-list" : this.appservice.apiUrl + '/api/rest/v1/product-list';
+    url = "https://demo8558685.mockable.io/product-list";
     this.listApiCall = this.apiService.request(url, 'get', {} , {}, false, 'observable').subscribe((response)=>{
       response.items.forEach(item=>{
         item.url = '/'+item.attributes.product_slug+'/buy';

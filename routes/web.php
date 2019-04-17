@@ -79,6 +79,7 @@ Route::group([
 Route::get('/', $app_version . '\HomeController@newhome')->name('home');
 // Route::get('/newhome', $app_version . '\HomeController@newhome')->name('home');
 Route::get('/drafthome', $app_version . '\HomeController@newdraft')->name('drafthome');
+Route::get('/newshop', $app_version . '\HomeController@shop')->name('shop');
 Route::get('/getWarehouseLevelInventory', $app_version . "\ProductController@allInventory");
 Route::get('/contact-us', $app_version . '\StaticController@contact');
 Route::get('/contact', $app_version . '\StaticController@contactnew');
