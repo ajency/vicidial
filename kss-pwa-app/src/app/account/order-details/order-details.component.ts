@@ -192,8 +192,6 @@ export class OrderDetailsComponent implements OnInit {
     this.cancelOrder = false;
     this.cancelReasonId = '';
     this.additionalRemark = '';
-
-    this.returnItem = false;
   }
 
   openReturnItem(){
