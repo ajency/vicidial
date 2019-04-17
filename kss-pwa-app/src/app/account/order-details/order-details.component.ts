@@ -33,7 +33,6 @@ export class OrderDetailsComponent implements OnInit {
   additionalRemark = '';
   cancelSuccessful : boolean = false;
   cancelOrderFailureMsg : any;
-
   returnItem : boolean = false;
   constructor(private appservice : AppServiceService,
               private route: ActivatedRoute,
@@ -193,13 +192,6 @@ export class OrderDetailsComponent implements OnInit {
     this.cancelOrder = false;
     this.cancelReasonId = '';
     this.additionalRemark = '';
-
-    this.returnItem = false;
   }
-
-  openReturnItem(){
-    $('#cd-cart').addClass('overflow-h');
-    this.returnItem = true;
-  }
-
+  
 }

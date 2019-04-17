@@ -54,6 +54,9 @@
 
 			<hr class="mb-4">
 
+			<!-- Header for Return/Cancel order -->			
+			<h5 class="mb-3"><strong>Returns</strong> <label class="d-block m-0 mb-1 float-right">Item 1 of 1</label></h5>
+
 			<!-- Product info -->			
 			<app-order [items]="order.items" [showStatus]=true></app-order>
 <!-- 			<div class="d-flex  align-self-center mb-4">
@@ -105,7 +108,7 @@
 <!-- Order cancellation form -->
 <!-- Cancel Shipment section -->
 <!-- Add slide-show class to translate -->
-<div class="order-cancel mb-4 pb-4 slide-out p-3" [ngClass]="{'slide-show' : (cancelOrder || returnItem)}">
+<div class="order-cancel mb-4 pb-4 slide-out p-3" [ngClass]="{'slide-show' : cancelOrder}">
 	<div class="row">
 		<div class="col-12">
 			<div>
