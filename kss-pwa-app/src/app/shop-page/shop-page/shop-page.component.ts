@@ -13,6 +13,7 @@ export class ShopPageComponent implements OnInit {
   listApiCall : any;
   listPage : any = {};
   showLoader : boolean = false;
+  filters : any;
   sortOn : any = 'recommended';
   sort_on = [
     {
@@ -39,6 +40,7 @@ export class ShopPageComponent implements OnInit {
               private route: ActivatedRoute,) { }
 
   ngOnInit() {
+    this.getFilters();
     this.callListPageApi();
   }
 
@@ -70,11 +72,23 @@ export class ShopPageComponent implements OnInit {
       })
       this.listPage = response;
       this.showLoader = false;
-      console.log("check inventory response ==>",this.listPage);
+      console.log("product list api response ==>",this.listPage);
     },
     (error)=>{
       console.log("error ===>", error);
       this.showLoader = false;
+    });
+  }
+
+  getFilters(){
+    let url = isDevMode() ? "https://demo8558685.mockable.io/get-filters" : this.appservice.apiUrl + '/api/rest/v1/get-filters';
+    url = "https://demo8558685.mockable.io/get-filters";
+    this.apiService.request(url, 'get', {} , {}, false, 'promise').then((response)=>{
+      console.log("get filters api response ==>",response);
+      this.filters = response.filters;
+    })
+    .catch((error)=>{
+      console.log("error ===>", error);
     });
   }
 
@@ -101,8 +115,13 @@ export class ShopPageComponent implements OnInit {
     console.log("applyFilter", search_text);
   }
 
-  sortBy(){
-    console.log("sortBy ==>", this.sortOn);
+  sortBy(mobile_sort : any = ''){
+    if(mobile_sort){
+      //close modal and call get filters and get product list api
+      console.log("mobile sort by ==>", mobile_sort);
+    }
+    else
+      console.log("sortBy ==>", this.sortOn);
   }
 
 }

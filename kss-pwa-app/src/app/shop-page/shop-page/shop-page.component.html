@@ -81,8 +81,9 @@
 				            <!-- Filters go here -->
 				            <div class="kss_filter_mobile--right w-100">
 				              <!-- Filter Checkbox -->
-				              <app-filter-checkbox></app-filter-checkbox>
-
+				              	<ng-container *ngFor="let filter of filters">
+					            	<app-filter-checkbox [filter]="filter"></app-filter-checkbox>
+					            </ng-container>
 				              <!-- Filter Range -->
 				              <app-filter-range></app-filter-range>
 
@@ -180,11 +181,8 @@
 	          </div>
 	          <div class="">
 	            <ul class="list-group list-unstyled list-sort__element mb-0">
-	              <li class="list-group-item d-flex align-items-center is-active" data-value="">
-	                <a href="javascript:void(0)" class="font-weight-bold d-flex align-items-center"><i class="kss_icon mx-1 popularity"></i> Recommended</a>
-	              </li>
-	              <li class="list-group-item d-flex align-items-center " data-value="">
-	                <a href="javascript:void(0)" class="font-weight-bold d-flex align-items-center"><i class="kss_icon mx-1 price-l"></i> Price Low to High</a>
+	              <li *ngFor="let option of sort_on" class="list-group-item d-flex align-items-center" [ngClass]="{'is-active' : option.is_selected}" data-value="" (click)="sortBy(option.value)">
+	                <a href="javascript:void(0)" class="font-weight-bold d-flex align-items-center"><i class="kss_icon mx-1 {{option.class}}"></i>{{option.name}}</a>
 	              </li>
 	            </ul>
 	          </div>
