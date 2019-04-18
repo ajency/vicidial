@@ -62,17 +62,9 @@
 
 							<!-- mf tabs -->
 							<ul class="nav flex-column kss_filter_mobile--left">
-							  <li class="nav-item active" data-target="category">
-							  	Category
-									<small class="filter-count" >2</small>
-								</li>
-								<li class="nav-item" data-target="color">
-									Color
-									<small class="filter-count" ></small>
-								</li>
-								<li class="nav-item" data-target="price-filter">
-									Price Filter
-									<small class="filter-count" >1</small>
+							  <li *ngFor="let filter of filters" class="nav-item" [attr.data-target]="'#'+filter.header.facet_name" (click)="selectedFilterCategory = filter.header.facet_name" [ngClass]="{'active' : selectedFilterCategory == filter.header.facet_name}">
+							  	{{filter.header.display_name}}
+									<!-- <small class="filter-count" >2</small> -->
 								</li>
 							</ul>
 							<!-- end of mf tabs -->
@@ -82,10 +74,10 @@
 				            <div class="kss_filter_mobile--right w-100">
 				              <!-- Filter Checkbox -->
 				              	<ng-container *ngFor="let filter of filters">
-					            	<app-filter-checkbox [filter]="filter"></app-filter-checkbox>
+					            	<app-filter-checkbox [filter]="filter" [isMobile]="isMobile" [selectedFilterCategory]="selectedFilterCategory"></app-filter-checkbox>
 					            </ng-container>
 				              <!-- Filter Range -->
-				              <app-filter-range></app-filter-range>
+				              <!-- <app-filter-range></app-filter-range> -->
 
 				            </div>
 				            <!-- End of Filters go here -->

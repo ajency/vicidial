@@ -2,6 +2,7 @@ import { Component, OnInit, isDevMode } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { ApiServiceService } from '../../service/api-service.service';
 import { AppServiceService } from '../../service/app-service.service';
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-shop-page',
@@ -15,6 +16,8 @@ export class ShopPageComponent implements OnInit {
   showLoader : boolean = false;
   filters : any;
   sortOn : any = 'recommended';
+  isMobile : boolean = false;
+  selectedFilterCategory : any;
   sort_on = [
     {
       name: "Recommended",
@@ -37,7 +40,10 @@ export class ShopPageComponent implements OnInit {
   ]
   constructor(private apiService: ApiServiceService,
               private appservice : AppServiceService,
-              private route: ActivatedRoute,) { }
+              private route: ActivatedRoute,
+              private breakpointObserver : BreakpointObserver) {
+      this.isMobile = this.breakpointObserver.isMatched('(max-width: 600px)');
+    }
 
   ngOnInit() {
     this.getFilters();
@@ -85,6 +91,8 @@ export class ShopPageComponent implements OnInit {
     url = "https://demo8558685.mockable.io/get-filters";
     this.apiService.request(url, 'get', {} , {}, false, 'promise').then((response)=>{
       console.log("get filters api response ==>",response);
+      response.filters = response.filters.sort((a,b)=>{ return(a.order - b.order) });
+      this.selectedFilterCategory = response.filters[0].header.facet_name;
       this.filters = response.filters;
     })
     .catch((error)=>{
