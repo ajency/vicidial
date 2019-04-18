@@ -38,6 +38,15 @@ export class ShopPageComponent implements OnInit {
       class: "price-h"
     }
   ]
+
+  page : any = {
+    current : 1,
+    display_limit : 30,
+    has_next : true,
+    has_previous : false,
+    total : 21,
+    total_item_count : 618
+  }
   constructor(private apiService: ApiServiceService,
               private appservice : AppServiceService,
               private route: ActivatedRoute,
@@ -130,6 +139,10 @@ export class ShopPageComponent implements OnInit {
     }
     else
       console.log("sortBy ==>", this.sortOn);
+  }
+
+  pageChanged(page:number){
+    console.log("pageChanged ==>", page);
   }
 
 }

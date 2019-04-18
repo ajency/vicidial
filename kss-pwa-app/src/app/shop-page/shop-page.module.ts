@@ -9,6 +9,7 @@ import { ComponentsModule } from '../components/components.module';
 import { FilterCheckboxComponent } from './components/filter-checkbox/filter-checkbox.component';
 import { FilterRangeComponent } from './components/filter-range/filter-range.component';
 import { Ng5SliderModule } from 'ng5-slider';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 @NgModule({
   declarations: [ShopPageComponent, FilterCheckboxComponent, FilterRangeComponent],
@@ -17,7 +18,8 @@ import { Ng5SliderModule } from 'ng5-slider';
     ComponentsModule,
     FormsModule,
     ShopPageRoutingModule,
-    Ng5SliderModule
+    Ng5SliderModule,
+    NgxPaginationModule
   ]
 })
 export class ShopPageModule { }
