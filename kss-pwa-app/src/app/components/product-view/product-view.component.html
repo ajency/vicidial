@@ -33,7 +33,10 @@
        	</div>
   	</a>
   	<div class="card-body">
-        <a [routerLink]="product.url" class="text-dark">
+      <h3 class="brands-title brands-title--list mt-1 mt-sm-0 mb-1">
+        Brand Name
+      </h3>
+        <a [routerLink]="product.url" class="text-dark" title="{{product.title}}">
           <h5 class="card-title">
             {{product.title}}
           </h5>
