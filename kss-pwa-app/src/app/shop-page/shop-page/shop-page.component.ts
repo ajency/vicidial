@@ -128,7 +128,7 @@ export class ShopPageComponent implements OnInit {
       this.listApiCall.unsubscribe();
   }
 
-  applyFilter(search_text){
+  searchByText(search_text){
     console.log("applyFilter", search_text);
   }
 

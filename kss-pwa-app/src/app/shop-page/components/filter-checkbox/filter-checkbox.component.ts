@@ -12,11 +12,15 @@ export class FilterCheckboxComponent implements OnInit, OnChanges {
 	@Input() selectedFilterCategory : any;
 	minValue: number = 0;
 	maxValue: number = 7000;
+	range : any = {}
+	previous_Range : any = {};
 	options: Options = {
 		floor: 0,
 		ceil: 7000,
 		step: 100,
     hidePointerLabels: true,
+    minLimit: 0,
+    maxLimit: 7000,
 		translate: (value: number): string => {
 	      return '₹' + value;
 	    },
@@ -34,8 +38,12 @@ export class FilterCheckboxComponent implements OnInit, OnChanges {
   	if(this.filter.filter_type == 'range_filter'){
   		this.options.floor = this.filter.bucket_range.start;
   		this.options.ceil = this.filter.bucket_range.end;
-  		this.minValue = this.filter.selected_range.start;
-  		this.maxValue = this.filter.selected_range.end;
+  		this.options.minLimit = this.filter.bucket_range.start;
+  		this.options.maxLimit = this.filter.bucket_range.end;
+  		this.range = this.filter.selected_range;
+  		this.previous_Range = Object.assign({}, this.filter.selected_range);
+  		// this.minValue = this.filter.selected_range.start;
+  		// this.maxValue = this.filter.selected_range.end;
   	}
   }
 
@@ -45,6 +53,16 @@ export class FilterCheckboxComponent implements OnInit, OnChanges {
   			return b[this.filter.sort_on] - a[this.filter.sort_on]
   		return a[this.filter.sort_on] - b[this.filter.sort_on]
   	})
+  }
+
+  applyFilter(filter, item){
+  	console.log("applyFilter ==>",filter, item)
+  }
+
+  applyPriceRange(){
+  	// console.log("applyPriceRange filter", this.range);
+  	if(this.range.start != this.previous_Range.start || this.range.end != this.previous_Range.end)
+  		console.log("applyPriceRange filter", this.range);
   }
 
 }

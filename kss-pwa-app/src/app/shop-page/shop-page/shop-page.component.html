@@ -22,7 +22,7 @@
 		    <div class="ml-sm-auto d-none d-sm-flex flex-fill-full justify-content-end">
 
 			<!-- Search Box -->
-			<app-search-box (updateList)="applyFilter($event)" [defaultText]="'shirts'"></app-search-box>
+			<app-search-box (updateList)="searchByText($event)" [defaultText]="'shirts'"></app-search-box>
 
 		      <!-- Sort By -->
 		      <div class="d-flex flex-row kss-select-border">
