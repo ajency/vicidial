@@ -16,6 +16,7 @@ export class FilterCheckboxComponent implements OnInit, OnChanges {
 		floor: 0,
 		ceil: 7000,
 		step: 100,
+    hidePointerLabels: true,
 		translate: (value: number): string => {
 	      return '₹' + value;
 	    },
@@ -39,7 +40,7 @@ export class FilterCheckboxComponent implements OnInit, OnChanges {
   }
 
   sortFilterItems(){
-  	this.filter.items = this.filter.items.sort((a,b)=>{ 
+  	this.filter.items = this.filter.items.sort((a,b)=>{
   		if(this.filter.sort_order == 'desc')
   			return b[this.filter.sort_on] - a[this.filter.sort_on]
   		return a[this.filter.sort_on] - b[this.filter.sort_on]
