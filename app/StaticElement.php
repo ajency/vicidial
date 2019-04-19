@@ -548,7 +548,7 @@ class StaticElement extends Model
         }
 
         $getpublish->pluck('page_slug')->unique()->each(function ($slug) {
-            RefreshStaticCache::dispatch($slug)->onQueue('refresh_cache');
+            RefreshStaticCache::dispatch($slug)->onQueue('refresh_static_cache');
         });
 
         return (["message" => "Elements published successfully", "success" => true]);
