@@ -46,7 +46,7 @@ class Kernel extends ConsoleKernel
             $schedule->call(function () {
                 ProductColor::productXMLData();
             })->name('productXMLData')->dailyAt('21:30')->onOneServer();
-            $schedule->job(new IndexInactiveProducts, 'create_jobs')->name('IndexInactiveProducts')->daily()->onOneServer();
+            //$schedule->job(new IndexInactiveProducts, 'create_jobs')->name('IndexInactiveProducts')->daily()->onOneServer();
             $schedule->call(function () {
                 Variant::updateVariantDiffFile();
             })->name('updateVariantDiffFile')->dailyAt('19:30')->onOneServer();
