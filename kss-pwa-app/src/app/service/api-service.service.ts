@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject, asapScheduler, pipe, of, from, interval, merge, fromEvent } from 'rxjs';
 import { map, filter, scan } from 'rxjs/operators';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +37,7 @@ export class ApiServiceService {
 	  
 	  let httpEvent;
 		if(type == 'get'){
-		  httpEvent = this.http.get(url,{headers: headers});
+		  httpEvent = this.http.get(url,{params : this.toHttpParams(body), headers: headers});
 		}
 		else if(type == 'post'){
 		  httpEvent = this.http.post(url,body,{headers: headers})
@@ -74,6 +74,11 @@ export class ApiServiceService {
 	    catch(e){
 	      return error;
 	    }
+	}
+
+	toHttpParams(params) {
+    return Object.getOwnPropertyNames(params)
+                 .reduce((p, key) => p.set(key, params[key]), new HttpParams());
 	}
 
 
