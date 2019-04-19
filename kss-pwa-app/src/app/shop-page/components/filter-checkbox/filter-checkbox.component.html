@@ -23,17 +23,17 @@
         <ng-container *ngIf="filter.template == 'price'">
             <div class="priceRange">
               <!-- <input type="text" id="price-range" name="price" value="" class="facet-category irs-hidden-input"/> -->
-              <ng5-slider [(value)]="range.start" [(highValue)]="range.end" [options]="options" (userChangeEnd)="applyPriceRange()"></ng5-slider>
+              <ng5-slider [(value)]="range.start" [(highValue)]="range.end" [options]="options" (userChangeEnd)="applyPriceRange(filter)"></ng5-slider>
             </div>
             <div class="row mb-3">
               <div class="col-5 col-sm-5 d-flex align-items-baseline">
-              ₹   <input type="number" step="{{options.step}}" [(ngModel)]="range.start" id="price-min" class="ml-1 pb-0 form-control text-muted price-change validate-number" placeholder="Min" (blur)="applyPriceRange()">
+              ₹   <input type="number" step="{{options.step}}" [(ngModel)]="range.start" id="price-min" class="ml-1 pb-0 form-control text-muted price-change validate-number" placeholder="Min" (blur)="applyPriceRange(filter)">
               </div>
               <div class="col-2 col-sm-2 text-center">
                 <h6 class="align-self-center mt-3">to</h6>
               </div>
               <div class="col-5 col-sm-5 d-flex align-items-baseline">
-                ₹ <input type="number" step="{{options.step}}" [(ngModel)]="range.end" id="price-max" class="ml-1 pb-0 form-control text-muted price-change validate-number" placeholder="Max" (blur)="applyPriceRange()">
+                ₹ <input type="number" step="{{options.step}}" [(ngModel)]="range.end" id="price-max" class="ml-1 pb-0 form-control text-muted price-change validate-number" placeholder="Max" (blur)="applyPriceRange(filter)">
               </div>
             </div>
         </ng-container>

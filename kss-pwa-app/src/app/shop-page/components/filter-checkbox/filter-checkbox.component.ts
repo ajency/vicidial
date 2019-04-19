@@ -10,6 +10,10 @@ export class FilterCheckboxComponent implements OnInit, OnChanges {
 	@Input() filter : any;
 	@Input() isMobile : any;
 	@Input() selectedFilterCategory : any;
+
+	@Output() filterApplied = new EventEmitter();
+	@Output() rangeFilterApplied = new EventEmitter();
+
 	minValue: number = 0;
 	maxValue: number = 7000;
 	range : any = {}
@@ -56,13 +60,16 @@ export class FilterCheckboxComponent implements OnInit, OnChanges {
   }
 
   applyFilter(filter, item){
-  	console.log("applyFilter ==>",filter, item)
+  	// console.log("applyFilter ==>",filter, item)
+  	this.filterApplied.emit({category : filter.header.facet_name, value : item.facet_value, apply : item.is_selected })
   }
 
-  applyPriceRange(){
+  applyPriceRange(filter){
   	// console.log("applyPriceRange filter", this.range);
-  	if(this.range.start != this.previous_Range.start || this.range.end != this.previous_Range.end)
+  	if(this.range.start != this.previous_Range.start || this.range.end != this.previous_Range.end){
   		console.log("applyPriceRange filter", this.range);
+  		this.rangeFilterApplied.emit({category : filter.header.facet_name, value : this.range})		
+  	}
   }
 
 }

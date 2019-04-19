@@ -18,6 +18,7 @@ export class ShopPageComponent implements OnInit {
   sortOn : any = 'recommended';
   isMobile : boolean = false;
   selectedFilterCategory : any;
+  queryObject : any = {};
   sort_on = [
     {
       name: "Recommended",
@@ -76,7 +77,7 @@ export class ShopPageComponent implements OnInit {
     this.unsubscribeListPageApi();
     let url = isDevMode() ? "https://demo8558685.mockable.io/product-list" : this.appservice.apiUrl + '/api/rest/v1/product-list';
     url = "https://demo8558685.mockable.io/product-list";
-    this.listApiCall = this.apiService.request(url, 'get', {} , {}, false, 'observable').subscribe((response)=>{
+    this.listApiCall = this.apiService.request(url, 'get', this.queryObject , {}, false, 'observable').subscribe((response)=>{
       response.items.forEach(item=>{
         item.url = '/'+item.attributes.product_slug+'/buy';
         item.image = item.images[0].main;
@@ -84,6 +85,7 @@ export class ShopPageComponent implements OnInit {
         let default_variant = item.variants.find((variant)=>{return variant.is_default === true});
         item.sale_price = default_variant.variant_attributes.variant_sale_price;
         item.list_price = default_variant.variant_attributes.variant_list_price;
+        item.brand = item.facets.product_brand.name;
       })
       this.listPage = response;
       this.showLoader = false;
@@ -130,19 +132,48 @@ export class ShopPageComponent implements OnInit {
 
   searchByText(search_text){
     console.log("applyFilter", search_text);
+    this.queryObject.search_string = search_text;
+    console.log("queryObject ==>", this.queryObject);
+    this.callListPageApi();
   }
 
   sortBy(mobile_sort : any = ''){
     if(mobile_sort){
       //close modal and call get filters and get product list api
       console.log("mobile sort by ==>", mobile_sort);
+      this.queryObject.sort_on = mobile_sort;
     }
-    else
+    else{
       console.log("sortBy ==>", this.sortOn);
+      this.queryObject.sort_on = this.sortOn;
+    }
+    console.log("queryObject ==>", this.queryObject);
+    this.callListPageApi();
   }
 
   pageChanged(page:number){
     console.log("pageChanged ==>", page);
+    this.queryObject.page = page;
+    console.log("queryObject ==>", this.queryObject);
+    this.callListPageApi();
+  }
+
+  applyCheckboxFilter(filter){
+    console.log("applyCheckboxFilter ==>", filter);
+    if(filter.apply)
+      this.queryObject[filter.category] ? this.queryObject[filter.category].push(filter.value) : this.queryObject[filter.category] = [filter.value];
+    else
+      this.queryObject[filter.category] = this.queryObject[filter.category].filter((value)=> {return value != filter.value});
+
+    console.log("queryObject ==>", this.queryObject);
+    this.callListPageApi();
+  }
+
+  applyRangeFilter(filter){
+    this.queryObject.min_price = filter.value.start;
+    this.queryObject.max_price = filter.value.end;
+    console.log("queryObject ==>", this.queryObject);
+    this.callListPageApi();
   }
 
 }

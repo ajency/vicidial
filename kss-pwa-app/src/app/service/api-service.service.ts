@@ -37,7 +37,7 @@ export class ApiServiceService {
 	  
 	  let httpEvent;
 		if(type == 'get'){
-		  httpEvent = this.http.get(url,{headers: headers});
+		  httpEvent = this.http.get(url, {params : body}, {headers: headers});
 		}
 		else if(type == 'post'){
 		  httpEvent = this.http.post(url,body,{headers: headers})
