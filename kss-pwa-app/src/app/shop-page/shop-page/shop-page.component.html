@@ -86,10 +86,10 @@
 			 			<div class="fixed-bottom d-none footer-filter">
 							<div class="row no-gutters">
 								<div class="col-6 text-center d-flex">
-									<button type="button" class="btn kss-btn kss-btn--big kss-btn--link" onclick="resetFilter();">Reset</button>
+									<button type="button" class="btn kss-btn kss-btn--big kss-btn--link" (click)="resetFilters()">Reset</button>
 								</div>
 								<div class="col-6 text-center d-flex">
-									<button type="button" id="kss_hide-filter" class="btn kss-btn kss-btn--big">Apply</button>
+									<button type="button" id="kss_hide-filter" class="btn kss-btn kss-btn--big" (click)="callListPageApi()">Apply</button>
 								</div>
 							</div>
 			            </div>

@@ -48,6 +48,8 @@ export class ShopPageComponent implements OnInit {
     total : 21,
     total_item_count : 618
   }
+  filtersCopy : any;
+
   constructor(private apiService: ApiServiceService,
               private appservice : AppServiceService,
               private route: ActivatedRoute,
@@ -58,6 +60,7 @@ export class ShopPageComponent implements OnInit {
   ngOnInit() {
     this.getFilters();
     this.callListPageApi();
+    this.getFiltersCount();
   }
 
   status: boolean = false;
@@ -72,6 +75,7 @@ export class ShopPageComponent implements OnInit {
   }
 
   callListPageApi(){
+    this.mobilefilter = false;
     this.showLoader = true;
     this.createDummyList();
     this.unsubscribeListPageApi();
@@ -105,6 +109,21 @@ export class ShopPageComponent implements OnInit {
       response.filters = response.filters.sort((a,b)=>{ return(a.order - b.order) });
       this.selectedFilterCategory = response.filters[0].header.facet_name;
       this.filters = response.filters;
+      this.filtersCopy = Object.assign([], this.filters);
+    })
+    .catch((error)=>{
+      console.log("error ===>", error);
+    });
+  }
+
+  getFiltersCount(){
+    let url = isDevMode() ? "https://demo8558685.mockable.io/get-filters" : this.appservice.apiUrl + '/api/rest/v1/get-filters';
+    url = "https://demo8558685.mockable.io/get-filters";
+    this.apiService.request(url, 'get', this.queryObject , {}, false, 'promise').then((response)=>{
+      console.log("get filters api response ==>",response);
+      response.filters = response.filters.sort((a,b)=>{ return(a.order - b.order) });
+      this.selectedFilterCategory = response.filters[0].header.facet_name;
+      this.filters = response.filters;
     })
     .catch((error)=>{
       console.log("error ===>", error);
@@ -134,7 +153,7 @@ export class ShopPageComponent implements OnInit {
     console.log("applyFilter", search_text);
     this.queryObject.search_string = search_text;
     console.log("queryObject ==>", this.queryObject);
-    this.callListPageApi();
+    this.updateListPage();
   }
 
   sortBy(mobile_sort : any = ''){
@@ -148,14 +167,14 @@ export class ShopPageComponent implements OnInit {
       this.queryObject.sort_on = this.sortOn;
     }
     console.log("queryObject ==>", this.queryObject);
-    this.callListPageApi();
+    this.updateListPage();
   }
 
   pageChanged(page:number){
     console.log("pageChanged ==>", page);
     this.queryObject.page = page;
     console.log("queryObject ==>", this.queryObject);
-    this.callListPageApi();
+    this.updateListPage();
   }
 
   applyCheckboxFilter(filter){
@@ -166,14 +185,24 @@ export class ShopPageComponent implements OnInit {
       this.queryObject[filter.category] = this.queryObject[filter.category].filter((value)=> {return value != filter.value});
 
     console.log("queryObject ==>", this.queryObject);
-    this.callListPageApi();
+    this.updateListPage();
   }
 
   applyRangeFilter(filter){
     this.queryObject.min_price = filter.value.start;
     this.queryObject.max_price = filter.value.end;
     console.log("queryObject ==>", this.queryObject);
-    this.callListPageApi();
+    this.updateListPage();
+  }
+
+  updateListPage(){
+    this.isMobile ? this.getFiltersCount() : this.callListPageApi();
+  }
+
+  resetFilters(){
+    this.filters = Object.assign([], this.filtersCopy);
+    console.log("on reset filter ==>", this.filters)
+    this.mobilefilter = false;
   }
 
 }
