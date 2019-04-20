@@ -28,6 +28,7 @@ export class AppComponent implements OnInit {
   loadAccount : boolean = false;
   loadAccountFromAngular : boolean = false;
   hideLoginListner : Subscription;
+  laravelRoutes = ["/contact-us", "/contact", "/faq", "/about-us", "/terms-and-conditions", "/privacy-policy", "/ideas", "/stores", "/stores/hyderabad", "/stores/coimbatore", "/stores/jaipur", "/activities", "/my/order/details", "/shop/boys", "/shop/girls", "/shop/infants", "/draft/boys", "/draft/girls", "/draft/infants"]
   constructor(private connectionService: ConnectionService,
               private loc : PlatformLocation,
               private appservice : AppServiceService) {
@@ -137,11 +138,8 @@ export class AppComponent implements OnInit {
 
   loadModules(){
       if(window.location.href.includes("#/bag")){
-        if(window.location.pathname == "/" || window.location.pathname == "/drafthome" || window.location.pathname.includes('/buy') || window.location.pathname == "/shop/uniforms" ){
-          $('#main-nav').removeClass('speed-in');
-          $('#cd-cart').addClass("speed-in");
-          $('#cd-shadow-layer').addClass('is-visible');
-          $("body").addClass("hide-scroll");
+        if(!this.laravelRoutes.includes(window.location.pathname)){
+          this.handleWidgetContainer();
           setTimeout(()=>{
             this.loadCartFromAngular = true;
           },500)
@@ -154,11 +152,8 @@ export class AppComponent implements OnInit {
         $("app-bag-view").removeClass('d-none');
       }
       else if(window.location.href.includes("#/account")){
-        if(window.location.pathname == "/" || window.location.pathname == "/drafthome" || window.location.pathname.includes('/buy') || window.location.pathname == "/shop/uniforms" ){
-          $('#main-nav').removeClass('speed-in');
-          $('#cd-cart').addClass("speed-in");
-          $('#cd-shadow-layer').addClass('is-visible');
-          $("body").addClass("hide-scroll");
+        if(!this.laravelRoutes.includes(window.location.pathname)){
+          this.handleWidgetContainer();
           setTimeout(()=>{
             this.loadAccountFromAngular = true;
           },500)
@@ -170,6 +165,13 @@ export class AppComponent implements OnInit {
         $("app-bag-view").addClass('d-none');
         $("app-account").removeClass('d-none');
       }
+  }
+
+  handleWidgetContainer(){
+    $('#main-nav').removeClass('speed-in');
+    $('#cd-cart').addClass("speed-in");
+    $('#cd-shadow-layer').addClass('is-visible');
+    $("body").addClass("hide-scroll");
   }
 }
 
