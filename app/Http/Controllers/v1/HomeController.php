@@ -36,9 +36,4 @@ class HomeController extends Controller
     {
         return view('draft_new');
     }
-
-    public function singleProduct($product_slug, Request $request)
-    {
-        return view('home_new');
-    }
 }

@@ -9,99 +9,14 @@ use App\Facet;
 use DB;
 class ListingController extends Controller
 {
-    public function search_object($params,$page_params,$search_obj = null)
-    {
-        if($search_obj == null){
-            $valid = validate_category_urls($params);
-            if($valid == false){
-                abort(404);
-            }
-        }
-
-        $search_object_arr = build_search_object($params);
-        $search_results = [];
-        if($search_obj == null){
-            $search_object = $search_object_arr["search_result"];
-        }
-        else{
-            $search_object = $search_obj;
-        }
-        $search_results["slug_search_result"] = $search_object_arr["slug_search_result"];
-        $search_results["slug_value_search_result"] = $search_object_arr["slug_value_search_result"];
-        $search_results["slugs_result"] = $search_object_arr["slugs_result"];
-        $search_results["title"] = $search_object_arr["title"];
-        if(!isset($page_params["display_limit"]))
-            $page_params["display_limit"] = config('product.list_page_display_limit');
-
-        $params_arr = ["search_object" => $search_object,"display_limit"=> $page_params["display_limit"],"page" =>$page_params["page"]];
-        if(isset($page_params["sort_on"]))
-            $params_arr["sort_on"]=$page_params["sort_on"];
-        if(isset($page_params["exclude_in_response"]))
-            $params_arr["exclude_in_response"] = $page_params["exclude_in_response"];
-
-        $params = Product::productListPage($params_arr,$search_results["slug_value_search_result"],$search_results["slug_search_result"],$search_results["slugs_result"],$search_results["title"]);
-
-        return ["result"=>json_decode(json_encode($params,JSON_FORCE_OBJECT)),"slug_value_search_result"=>$search_results["slug_value_search_result"]];
-    }
 
     public function index($cat1, $cat2 = null, $cat3 = null, $cat4 = null, $cat5 = null, Request $request)
     {
-    	$parameters = array();
-    	$parameters['categories'] = array();
-        array_push($parameters['categories'], $cat1);
-        if($cat2 != null ) array_push($parameters['categories'], $cat2);
-        if($cat3 != null ) array_push($parameters['categories'], $cat3);
-        if($cat4 != null ) array_push($parameters['categories'], $cat4);
-        if($cat5 != null ) array_push($parameters['categories'], $cat5);
-    	$parameters['query'] = $request->all();
-        $page_params = [];
-        $page_params["page"] = (isset($parameters['query']['page']))?$parameters['query']['page']:1;
-        if(isset($parameters['query']['sort_on']))
-            $page_params["sort_on"] = $parameters['query']['sort_on'];
-        if(isset($parameters['query']['exclude_in_response']))
-            $page_params["exclude_in_response"]=$parameters['query']['exclude_in_response'];
-
-        $search_data = $this->search_object($parameters,$page_params);
-    	$params = $search_data["result"];
-        $params->slug_value_search_result = $search_data["slug_value_search_result"];
-
-        if(empty((array)$params->filters)) return view('noproducts');
-
-        $params->search_result_assoc = getFacetValueSlugPairs();
-        
-        if(isset($parameters['query']['show_search']))
-            $params->show_search = (isset($parameters['query']['show_search']) && $parameters['query']['show_search'] == "true" )?true:false;
-        else
-            $params->show_search = config('product.show_list_search');
-        $params->page_val = $page_params["page"];
-        $params->pagination = config('product.pagination');
         return view('productlisting')->with('params',$params);
     }
 
     public function shop(Request $request)
     {
-        $parameters = array();
-        $parameters['categories'] = array();
-        $parameters['query'] = $request->all();
-        $page_params = [];
-        $page_params["page"] = (isset($parameters['query']['page']))?$parameters['query']['page']:1;
-        if(isset($parameters['query']['sort_on']))
-            $page_params["sort_on"] = $parameters['query']['sort_on'];
-        if(isset($parameters['query']['exclude_in_response']))
-            $page_params["exclude_in_response"]=$parameters['query']['exclude_in_response'];
-
-        $search_data = $this->search_object($parameters,$page_params);
-        $params = $search_data["result"];
-        $params->slug_value_search_result = $search_data["slug_value_search_result"];
-        $params->search_result_assoc = getFacetValueSlugPairs();
-
-        if(isset($parameters['query']['show_search']))
-            $params->show_search = (isset($parameters['query']['show_search']) && $parameters['query']['show_search'] == "true" )?true:false;
-        else
-            $params->show_search = config('product.show_list_search');
-        $params->page_val = $page_params["page"];
-        $params->pagination = config('product.pagination');
-        // dd($page_params["page"]);
         return view('productlisting')->with('params',$params);
     }
 

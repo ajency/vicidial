@@ -102,65 +102,7 @@ function formatItems($result, $params){
     $items = [];
     $response = ["results_found" => ($result["hits"]["total"] > 0)];
     foreach ($result['hits']['hits'] as  $doc) {
-        $productColor      = ProductColor::where("elastic_id", $doc["_id"])->first();
-        $product = $doc["_source"];
-        $data = $product["search_result_data"];
-        $listImages       = $productColor->getDefaultImage(["list-view"]);
-        $item  = [
-            "title" => $data["product_title"],
-            "slug_name" => $data["product_slug"],
-            "description" => $data["product_description"],
-            "images" => (isset($listImages["list-view"])) ? $listImages["list-view"] : [],
-            "variants" => [],
-            "product_id" => $data["product_id"],
-            "color_id" => $data['product_color_id'],
-            "color_name" => $data['product_color_name'],
-            "color_html" => $data['product_color_html'],
-            "brand"       => (isset($data["product_brand"]) && $data["product_brand"]) ? $data["product_brand"] : 'KSS Fashion',
-        ];
-
-        //find product_availability
-        $item['product_availability'] = false;
-        foreach ($product["variants"] as $variant) {
-            if($variant['variant_availability']){
-                $item['product_availability']  = true;
-                break;
-            }
-        }
-        // display price
-        $variants           = collect($product['variants']);
-        $prices             = $variants->pluck('variant_sale_price')->unique();
-        $item['sale_price'] = ["min" => $prices->min(), "max" => $prices->max()];
-        $list_price         = $variants->pluck('variant_list_price');
-        $item['mrp']        = ["min" => $list_price->min(), "max" => $list_price->max()];
-        $variants->transform(function ($item, $key) {
-            $item['variant_discount'] = $item['variant_list_price'] - $item['variant_sale_price'];
-            return $item;
-        });
-        $discounts             = $variants->pluck('variant_discount');
-        $item['discount']      = ["min" => $discounts->min(), "max" => $discounts->max()];
-        $item['display_price'] = $item['sale_price'];
-
-        $item['default_mrp']        = $item['mrp']['min'];
-        $item['default_sale_price'] = $item['sale_price']['min'];
-        $item['default_discount']    = $item['discount']['max'];
-        
-        $id = defaultVariant($product['variants']);
-        foreach ($product["variants"] as $variant) {
-            $item["variants"][] = [
-                "list_price" => $variant["variant_list_price"],
-                "sale_price" => $variant["variant_sale_price"],
-                "is_default" => ($id == $variant["variant_id"]),
-                "size" => [
-                    "size_id" => $variant["variant_size_id"],
-                    "size_name" => $variant["variant_size_name"],
-                ],
-                "inventory_available" => $variant["variant_availability"],
-                "variant_id" => $variant["variant_id"],
-                "discount_per" => calculateDiscount($variant["variant_list_price"],$variant["variant_sale_price"])
-            ];
-        }
-        $items[] = $item;
+        $items[] = $product["search_result_data"]["product_slug"];
     }
 
     $response["items"] = $items;
@@ -177,10 +119,6 @@ function formatItems($result, $params){
         "display_limit" => $params["display_limit"]
     ];
 
-    if(isset($params['search_object']) && isset($params['search_object']['search_string']))
-        $response['search_string'] = $params['search_object']['search_string'];
-    else
-        $response['search_string'] = null;
     return $response;
 }
 

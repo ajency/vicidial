@@ -424,33 +424,6 @@ class Product
         return sanitiseFilterdata($q->search());
     }
 
-    /**
-     * Function to return the Data for RHS of Product List View
-     *
-     * @return array
-     */
-    public static function getItemsWithFilters($params)
-    {
-        $params['search_object'] = setDefaultFilters($params);
-        $size                    = $params["display_limit"];
-        $offset                  = ($params["page"] - 1) * $size;
-        $index                   = config('elastic.indexes.product');
-        $q                       = new ElasticQuery;
-        $q->setIndex($index);
-        $must = setElasticFacetFilters($q, $params);
-        $q->setQuery($must)
-            ->setSource(["search_result_data", "variants"])
-            ->setSize($size)->setFrom($offset);
-        if (isset($params['sort_on']) and $params['sort_on'] != "") {
-            $sort = config('product.sort.' . $params['sort_on']);
-            $q->setSort([$sort['field'] => ['order' => $sort['order']]]);
-        } else {
-            $sort = config('product.sort.rank_desc');
-            $q->setSort([$sort['field'] => ['order' => $sort['order']]]);
-        }
-        return formatItems($q->search(), $params);
-    }
-
     public static function productListPage($params, $slug_value_search_result, $slug_search_result, $slugs_result, $title = "")
     {
         $output                         = [];
@@ -496,11 +469,6 @@ class Product
         // $params = $filter_params ;
         if ((!isset($params["exclude_in_response"])) || (isset($params["exclude_in_response"]) && !in_array("filters", $params["exclude_in_response"]))) {
             $output["filters"] = self::getProductCategoriesWithFilter($filter_params);
-        }
-
-        // dd($output["filters"]);
-        if ((!isset($params["exclude_in_response"])) || (isset($params["exclude_in_response"]) && !in_array("items", $params["exclude_in_response"]))) {
-            $results = self::getItemsWithFilters($params);
         }
 
         $facet_names         = array_keys($facet_display_data);

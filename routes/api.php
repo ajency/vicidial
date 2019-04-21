@@ -141,7 +141,6 @@ Route::group([
         });
     });
 
-    Route::get('/product-details', $group_app_version . '\ProductController@singleProductAPI');
     Route::get('/states/all', $group_app_version . '\AddressController@fetchStates');
     Route::get('/district-state/{pincode}', $group_app_version . '\AddressController@fetchPincode');
     Route::get('/get-all-reasons', $group_app_version . '\OrderController@getAllReasons');
