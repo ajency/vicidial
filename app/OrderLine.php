@@ -8,6 +8,7 @@ class OrderLine extends Model
 {
     protected $casts = [
         'images'   => 'array',
+        'return_policy'   => 'array',
     ];
 
     protected $fillable = [
@@ -23,6 +24,8 @@ class OrderLine extends Model
         'product_id',
         'product_color_id',
         'product_slug',
+        'product_type',
+        'product_subtype',
     ];
 
     public function orders()

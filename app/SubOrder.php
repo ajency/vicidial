@@ -59,6 +59,8 @@ class SubOrder extends Model
                     'product_id'       => $variant->getParentId(),
                     'product_color_id' => $variant->getVarColorId(),
                     'product_slug'     => $variant->getProductSlug(),
+                    'product_type'     => $variant->getCategoryType(),
+                    'product_subtype'  => $variant->getSubType(),
                 ]));
                 array_push($this->orderLineIds, $orderLine->id);
             }
@@ -74,7 +76,6 @@ class SubOrder extends Model
             $item = $variant->getItemAttributes();
 
             for ($qty = 1; $qty <= $itemData['quantity']; $qty++) {
-
                 $orderLine = OrderLine::create(array_merge($item, [
                     'variant_id'       => $variant->odoo_id,
                     'price_discounted' => $itemData['price_discounted'],
@@ -82,11 +83,8 @@ class SubOrder extends Model
                     'product_id'       => $variant->getParentId(),
                     'product_color_id' => $variant->getVarColorId(),
                     'product_slug'     => $variant->getProductSlug(),
-                    //new fields data
                     'product_type'     => $variant->getCategoryType(),
                     'product_subtype'  => $variant->getSubType(),
-                    'return_policy'    => ReturnPolicy::getReturnPolicy($variant->odoo_id),
-
                 ]));
                 array_push($this->orderLineIds, $orderLine->id);
             }
@@ -248,14 +246,15 @@ class SubOrder extends Model
                 'price_final'      => $itemData['price_final'],
                 'discount_per'     => $itemData['discount_per'],
                 'variant_id'       => $itemData['variant_id'],
+                'suborder_id'      => $this->id,
                 'product_id'       => $itemData['product_id'],
                 'product_color_id' => $itemData['product_color_id'],
                 'product_slug'     => $itemData['product_slug'],
                 'state'            => $itemData['state'],
                 'shipment_status'  => $itemData['shipment_status'],
+                'return_policy'    => ReturnPolicy::fetchReturnPolicy($itemData['id']),
                 'quantity'         => $this->orderLines->where('variant_id', $itemData['variant_id'])->count(),
                 'is_invoiced'      => $this->is_invoiced,
-                'return_policy'    => ReturnPolicy::getReturnPolicy($itemData['variant_id']),
             ];
             if ($store_address != null) {
                 $item['store_address'] = $store_address;

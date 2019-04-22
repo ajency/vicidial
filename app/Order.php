@@ -2,12 +2,12 @@
 
 namespace App;
 
-use Ajency\Connections\OdooConnect;
 use Ajency\ServiceComm\Comm\Sync;
 use App\Cart;
 use App\Jobs\CancelOdooOrder;
 use App\Jobs\OdooOrder;
 use App\Jobs\OdooOrderLine;
+use App\Jobs\SaveReturnPolicies;
 use App\SubOrder;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -70,6 +70,7 @@ class Order extends Model
                 $this->orderLines()->attach($orderLineId, ['type' => $this->type]);
             }
         }
+        SaveReturnPolicies::dispatch($this->id)->onQueue('odoo_order_line');
     }
 
     public function checkInventoryForSuborders()

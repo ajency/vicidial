@@ -152,7 +152,7 @@ class OrderController extends Controller
 
     public static function updateOrderLineStatus($params)
     {
-        OrderLineStatus::dispatch($params["lineIds"], $params["status"])->onQueue('odoo_order');
+        OrderLineStatus::dispatch($params["lineIds"], $params["status"], $params["status_datetime"])->onQueue('odoo_order');
     }
 
     public function listOrders(Request $request){
