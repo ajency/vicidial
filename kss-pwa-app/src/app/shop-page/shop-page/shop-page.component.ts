@@ -106,7 +106,7 @@ export class ShopPageComponent implements OnInit {
     this.listApiCall = this.apiService.request(url, 'get', {} , {}, false, 'observable').subscribe((response)=>{
       response.items.forEach(item=>{
         item.url = '/'+item.attributes.product_slug+'/buy';
-        item.image = item.images[0].main;
+        item.image = item.images.length ? item.images[0].main : null;
         item.title = item.attributes.product_title;
         let default_variant = item.variants.find((variant)=>{return variant.is_default === true});
         item.sale_price = default_variant.variant_attributes.variant_sale_price;
