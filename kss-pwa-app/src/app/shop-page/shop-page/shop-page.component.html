@@ -13,6 +13,7 @@
 		  	<!-- Products founds -->
 		    <div class="flex-fill-full">
 	    	    <app-breadcrums [breadcrumbs]=""></app-breadcrums>
+	    	    <div *ngIf="showLoader" class="loadingBg" style="height: 15px; width: 180px"></div>
 		        <h1 *ngIf="listPage && listPage.headers" class="w-100 kss-title my-1 py-1 my-sm-0 py-sm-0 m-0 text-gray font-weight-bold">
 		            {{listPage.headers.page_title}} <span class="f-w-4 sub-text"> - {{listPage.headers.product_count}} items</span>
 		        </h1>
@@ -73,34 +74,18 @@
 				            <!-- Filters go here -->
 				            <div class="kss_filter_mobile--right w-100">
 				            	<div *ngIf="showFilterLoader">
-				            		<div class="loadingBg w-100 mb-3" style="height: 21px;"></div>
-				            		<ul class="list-unstyled">
-				            			<li class="mb-2">
-				            				<div class="d-flex w-100">
-				            					<div class="loadingBg" style="height: 15px; width: 15px; margin-right: 15px;"></div>
-				            					<div class="loadingBg" style="height: 15px; width: 100px"></div>
-				            				</div>
-				            			</li>
-				            			<li class="mb-2">
-				            				<div class="d-flex w-100">
-				            					<div class="loadingBg" style="height: 15px; width: 15px; margin-right: 15px;"></div>
-				            					<div class="loadingBg" style="height: 15px; width: 100px"></div>
-				            				</div>
-				            			</li>
-				            			<li class="mb-2">
-				            				<div class="d-flex w-100">
-				            					<div class="loadingBg" style="height: 15px; width: 15px; margin-right: 15px;"></div>
-				            					<div class="loadingBg" style="height: 15px; width: 100px"></div>
-				            				</div>
-				            			</li>
-				            			<li class="mb-2">
-				            				<div class="d-flex w-100">
-				            					<div class="loadingBg" style="height: 15px; width: 15px; margin-right: 15px;"></div>
-				            					<div class="loadingBg" style="height: 15px; width: 100px"></div>
-				            				</div>
-				            			</li>
-				            		</ul>
-				            		<hr>
+				            		<div *ngFor="let dummy of ' '.repeat(4).split(''), let x = index">
+					            		<div class="loadingBg w-100 mb-3" style="height: 21px;"></div>
+					            		<ul class="list-unstyled" *ngFor="let dummy of ' '.repeat(4).split(''), let x = index">
+					            			<li class="mb-2">
+					            				<div class="d-flex w-100">
+					            					<div class="loadingBg" style="height: 15px; width: 15px; margin-right: 15px;"></div>
+					            					<div class="loadingBg" style="height: 15px; width: 100px"></div>
+					            				</div>
+					            			</li>
+					            		</ul>
+					            		<hr>
+				            		</div>
 				            	</div>
 				              <!-- Filter Checkbox -->
 				              	<ng-container *ngFor="let filter of filters">

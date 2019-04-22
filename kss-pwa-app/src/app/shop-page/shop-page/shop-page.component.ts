@@ -135,8 +135,8 @@ export class ShopPageComponent implements OnInit {
     // url = "https://demo8558685.mockable.io/get-filters";
     this.apiService.request(url, 'get', {} , {}, false, 'promise').then((response)=>{
       console.log("get filters api response ==>",response);
-      response.filters = response.filters.sort((a,b)=>{ return(a.order - b.order) });
       this.showFilterLoader = false;
+      response.filters = response.filters.sort((a,b)=>{ return(a.order - b.order) });
       this.selectedFilterCategory = response.filters[0].header.facet_name;
       this.filters = response.filters;
       this.filtersCopy = Object.assign([], this.filters);
