@@ -22,7 +22,7 @@ class ListingController extends Controller
     public function productList(Request $request)
     {
         $params      = $request->all();
-        $listingPage = new ListingPage($slug);
+        $listingPage = new ListingPage($params);
         $apiResponse = $listingPage->generateSinglePageData(['items', 'page', 'headers', 'results_found']);
         return response()->json($apiResponse);
     }
