@@ -52,14 +52,14 @@ export class ShopPageComponent implements OnInit {
     }
   ]
 
-  // page : any = {
-  //   current : 1,
-  //   display_limit : 30,
-  //   has_next : true,
-  //   has_previous : false,
-  //   total : 21,
-  //   total_item_count : 618
-  // }
+  page : any = {
+    current : 1,
+    display_limit : 30,
+    has_next : true,
+    has_previous : false,
+    total : 21,
+    total_item_count : 618
+  }
   filtersCopy : any;
 
   public config: PaginationInstance = {
