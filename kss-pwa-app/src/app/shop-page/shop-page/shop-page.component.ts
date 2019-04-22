@@ -227,14 +227,17 @@ export class ShopPageComponent implements OnInit {
   }
 
   applyRangeFilter(filter){
-    this.queryObject.min_price = filter.value.start;
-    this.queryObject.max_price = filter.value.end;
+    this.queryObject.price = {};
+    this.queryObject.price['min'] = filter.value.start;
+    this.queryObject.price['max'] = filter.value.end;
     console.log("queryObject ==>", this.queryObject);
     this.updateListPage();
   }
 
   updateListPage(){
-    this.isMobile ? this.getFiltersCount() : this.callListPageApi();
+    // this.isMobile ? this.getFiltersCount() : this.callListPageApi();
+    if(!this.isMobile)
+      this.callListPageApi();
   }
 
   resetFilters(){
