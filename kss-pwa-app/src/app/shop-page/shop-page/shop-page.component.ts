@@ -34,7 +34,7 @@ export class ShopPageComponent implements OnInit {
   sort_on = [
     {
       name: "Recommended",
-      value: "recommended",
+      value: "",
       is_selected: true,
       class: "popularity"
     },
@@ -94,6 +94,7 @@ export class ShopPageComponent implements OnInit {
   }
 
   callListPageApi(){
+    window.scrollTo(0, 0)
     this.mobilefilter = false;
     this.showLoader = true;
     this.createDummyList();
@@ -205,11 +206,18 @@ export class ShopPageComponent implements OnInit {
 
   applyCheckboxFilter(filter){
     console.log("applyCheckboxFilter ==>", filter);
-    if(filter.apply)
-      this.queryObject[filter.category] ? this.queryObject[filter.category].push(filter.value) : this.queryObject[filter.category] = [filter.value];
-    else
-      this.queryObject[filter.category] = this.queryObject[filter.category].filter((value)=> {return value != filter.value});
-
+    if(filter.filter_type != "boolean_filter"){
+      if(filter.apply)
+        this.queryObject[filter.category] ? this.queryObject[filter.category].push(filter.value) : this.queryObject[filter.category] = [filter.value];
+      else
+        this.queryObject[filter.category] = this.queryObject[filter.category].filter((value)=> {return value != filter.value});
+    }
+    else{
+      if(filter.apply)
+        this.queryObject[filter.category] = filter.value;
+      else
+        delete this.queryObject[filter.category]
+    }
     console.log("queryObject ==>", this.queryObject);
     this.updateListPage();
   }
