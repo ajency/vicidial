@@ -13,8 +13,8 @@
 		  	<!-- Products founds -->
 		    <div class="flex-fill-full">
 	    	    <app-breadcrums [breadcrumbs]=""></app-breadcrums>
-		        <h1 class="w-100 kss-title my-1 py-1 my-sm-0 py-sm-0 m-0 text-gray font-weight-bold">
-		            Apparels for Girls <span class="f-w-4 sub-text"> - 572 items</span>
+		        <h1 *ngIf="listPage && listPage.headers" class="w-100 kss-title my-1 py-1 my-sm-0 py-sm-0 m-0 text-gray font-weight-bold">
+		            {{listPage.headers.page_title}} <span class="f-w-4 sub-text"> - {{listPage.headers.product_count}} items</span>
 		        </h1>
 		    </div>
 		    <!-- End of Products founds -->
@@ -118,10 +118,10 @@
 				<!-- End of Product Loader -->
 
 				<!-- Product List -->
-					<div id="products-list-template-content" class="productlist__row">
-						<div *ngIf="listPage" id="card-list" class="row">
+					<div *ngIf="listPage" id="products-list-template-content" class="productlist__row">
+						<div  id="card-list" class="row">
 							<!-- Start Product column -->
-							<div *ngFor="let item of listPage.items | paginate: { id: 'list-page', itemsPerPage: page.display_limit, currentPage: page.current, totalItems:page.total_item_count}" class="col-lg-3 col-md-6 mb-sm-4 col-6 layout-type-1">
+							<div *ngFor="let item of listPage.items | paginate: { id: 'list-page', itemsPerPage: listPage.page.display_limit, currentPage: listPage.page.current, totalItems:listPage.page.total_item_count}" class="col-lg-3 col-md-6 mb-sm-4 col-6 layout-type-1">
 								<app-product-view [product]="item" [showLoader]="showLoader" [listPage]=true></app-product-view>
 							</div>
 						</div>
@@ -152,13 +152,15 @@
 							</span>
 
 						</div> -->
-						<pagination-controls  id="list-page"
-						                      (pageChange)="pageChanged($event)"
-						                      responsive="true"
-						                      previousLabel="Previous Page"
-						                      nextLabel="Next Page"
-						                      maxSize="6">
-						</pagination-controls>
+						<ng-container *ngIf="listPage && listPage.page">
+							<pagination-controls  id="list-page"
+							                      (pageChange)="pageChanged($event)"
+							                      responsive="true"
+							                      previousLabel="Previous Page"
+							                      nextLabel="Next Page"
+							                      maxSize="6">
+							</pagination-controls>
+						</ng-container>
 						<!-- End of Pagination -->
 					</div>
 				<!-- End of Product List -->

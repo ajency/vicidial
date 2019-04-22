@@ -145,7 +145,9 @@ export class ShopPageComponent implements OnInit {
       sale_price : '',
       list_price : ''
     }
-    this.listPage.items = [];
+    this.listPage = {};
+    this.listPage['page'] = this.page;
+    this.listPage['items'] = [];
     for (let i = 0; i < 8; i++){
       this.listPage.items.push(product);
     }
