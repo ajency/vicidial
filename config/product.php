@@ -465,7 +465,7 @@ return [
         'product_gender',
         'product_subtype',
     ], //Used for breadcrumbs on single product page
-    "list_page_display_limit"        => 30,
+    "list_page_display_limit"        => 40,
     "similar_products_display_limit" => 5,
     "price_filter_bucket_range"      => ["min" => 0, "max" => 7000],
     "sort"                           => [

@@ -226,12 +226,12 @@ class ListingPage
 
     private function getTitle()
     {
-        return $this->getElasticData()["page"];
+        return ['page_title' => generateProductListTitle($this->params['search_object'], self::$facets->groupBy('facet_name')), 'product_count' => $this->getElasticData()["page"]["total_item_count"]];
     }
 
     private function getResultsFoundBoolean()
     {
-        return ['page_title' => generateProductListTitle($this->params['search_object'], self::$facets->groupBy('facet_name')), 'product_count' => $this->getElasticData()["page"]["total_item_count"]];
+        return $this->getElasticData()["results_found"];
     }
 
     private function getSearchString()
