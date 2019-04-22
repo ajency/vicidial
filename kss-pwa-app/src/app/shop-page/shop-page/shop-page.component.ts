@@ -115,6 +115,10 @@ export class ShopPageComponent implements OnInit {
       })
       this.listPage = response;
       this.showLoader = false;
+       
+      this.config.itemsPerPage = this.listPage.page.display_limit;
+      this.config.currentPage = this.listPage.page.current;
+      this.config.totalItems = this.listPage.page.total_item_count;
       console.log("product list api response ==>",this.listPage);
     },
     (error)=>{
@@ -201,7 +205,7 @@ export class ShopPageComponent implements OnInit {
     console.log("pageChanged ==>", page);
     this.queryObject.page = page;
     console.log("queryObject ==>", this.queryObject);
-    this.updateListPage();
+    this.callListPageApi();
   }
 
   applyCheckboxFilter(filter){
