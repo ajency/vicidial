@@ -26,6 +26,7 @@ export class ShopPageComponent implements OnInit {
     }
   };
   showLoader : boolean = false;
+  showFilterLoader : boolean = false;
   filters : any;
   sortOn : any = 'recommended';
   isMobile : boolean = false;
@@ -115,7 +116,7 @@ export class ShopPageComponent implements OnInit {
       })
       this.listPage = response;
       this.showLoader = false;
-       
+
       this.config.itemsPerPage = this.listPage.page.display_limit;
       this.config.currentPage = this.listPage.page.current;
       this.config.totalItems = this.listPage.page.total_item_count;
@@ -129,17 +130,20 @@ export class ShopPageComponent implements OnInit {
   }
 
   getFilters(){
+    this.showFilterLoader = true;
     let url = isDevMode() ? "https://demo8558685.mockable.io/get-filters" : this.appservice.apiUrl + '/api/rest/v1/get-filters';
     // url = "https://demo8558685.mockable.io/get-filters";
     this.apiService.request(url, 'get', {} , {}, false, 'promise').then((response)=>{
       console.log("get filters api response ==>",response);
       response.filters = response.filters.sort((a,b)=>{ return(a.order - b.order) });
+      this.showFilterLoader = false;
       this.selectedFilterCategory = response.filters[0].header.facet_name;
       this.filters = response.filters;
       this.filtersCopy = Object.assign([], this.filters);
     })
     .catch((error)=>{
       console.log("error ===>", error);
+      this.showFilterLoader = false;
     });
   }
 
