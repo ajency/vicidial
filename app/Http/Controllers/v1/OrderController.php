@@ -272,7 +272,7 @@ class OrderController extends Controller
 
         sendEmail('return-email', [
             'from'          => ["name" => [$user->name], "id" => [$user->email]],
-            'subject'       => 'Return Item - ' . $data[""],
+            'subject'       => 'Return Item',
             'template_data' => [
                 'data' => $data,
             ],
