@@ -3,6 +3,8 @@
 // var add_to_cart_clicked = false;
 // var add_to_cart_completed = false;
 // Block scope
+var laravelRoutes = ["/contact-us", "/contact", "/faq", "/about-us", "/terms-and-conditions", "/privacy-policy", "/ideas", "/stores", "/stores/hyderabad", "/stores/coimbatore", "/stores/jaipur", "/activities", "/my/order/details", "/shop/boys", "/shop/girls", "/shop/infants", "/draft/boys", "/draft/girls", "/draft/infants"]
+
 const isMobile = isMobileScreen();
 
 function isMobileScreen(){
@@ -15,12 +17,12 @@ function isMobileScreen(){
 $(document).ready(function(){
     //Set crt count on page load
     updateCartCountInUI();
-    if((window.location.href.includes('#/bag') || window.location.href.includes('#/account')) && (window.location.pathname !="/" && window.location.pathname !="/drafthome" && window.location.pathname != "/shop/uniforms"  && !window.location.pathname.includes('/buy')) )
+    if((window.location.href.includes('#/bag') || window.location.href.includes('#/account')) && (laravelRoutes.includes(window.location.pathname)) )
         openCart();
 
     window.onhashchange = function() { 
      console.log("hash changed");
-     if(!$('#cd-cart').hasClass("speed-in") && (window.location.href.includes('#/bag') || window.location.href.includes('#/account')) && (window.location.pathname !="/" && window.location.pathname !="/drafthome" && window.location.pathname != "/shop/uniforms"  && !window.location.pathname.includes('/buy')) ){
+     if(!$('#cd-cart').hasClass("speed-in") && (window.location.href.includes('#/bag') || window.location.href.includes('#/account')) && (laravelRoutes.includes(window.location.pathname)) ){
         openCart();
      }
     }    

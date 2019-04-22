@@ -2,7 +2,9 @@ import { Component, OnInit, isDevMode } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { ApiServiceService } from '../../service/api-service.service';
 import { AppServiceService } from '../../service/app-service.service';
-import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+
+declare var $: any;
 
 @Component({
   selector: 'app-shop-page',
@@ -80,8 +82,9 @@ export class ShopPageComponent implements OnInit {
     this.createDummyList();
     this.unsubscribeListPageApi();
     let url = isDevMode() ? "https://demo8558685.mockable.io/product-list" : this.appservice.apiUrl + '/api/rest/v1/product-list';
-    url = "https://demo8558685.mockable.io/product-list";
-    this.listApiCall = this.apiService.request(url, 'get', this.queryObject , {}, false, 'observable').subscribe((response)=>{
+    // url = "https://demo8558685.mockable.io/product-list";
+    url = url + $.param(this.queryObject);
+    this.listApiCall = this.apiService.request(url, 'get', {} , {}, false, 'observable').subscribe((response)=>{
       response.items.forEach(item=>{
         item.url = '/'+item.attributes.product_slug+'/buy';
         item.image = item.images[0].main;
@@ -103,7 +106,7 @@ export class ShopPageComponent implements OnInit {
 
   getFilters(){
     let url = isDevMode() ? "https://demo8558685.mockable.io/get-filters" : this.appservice.apiUrl + '/api/rest/v1/get-filters';
-    url = "https://demo8558685.mockable.io/get-filters";
+    // url = "https://demo8558685.mockable.io/get-filters";
     this.apiService.request(url, 'get', {} , {}, false, 'promise').then((response)=>{
       console.log("get filters api response ==>",response);
       response.filters = response.filters.sort((a,b)=>{ return(a.order - b.order) });
@@ -117,9 +120,10 @@ export class ShopPageComponent implements OnInit {
   }
 
   getFiltersCount(){
-    let url = isDevMode() ? "https://demo8558685.mockable.io/get-filters" : this.appservice.apiUrl + '/api/rest/v1/get-filters';
-    url = "https://demo8558685.mockable.io/get-filters";
-    this.apiService.request(url, 'get', this.queryObject , {}, false, 'promise').then((response)=>{
+    let url = isDevMode() ? "https://demo8558685.mockable.io/get-filters" : this.appservice.apiUrl + '/api/rest/v1/get-filters-count';
+    // url = "https://demo8558685.mockable.io/get-filters";
+    url = url + $.param(this.queryObject);
+    this.apiService.request(url, 'get', {} , {}, false, 'promise').then((response)=>{
       console.log("get filters api response ==>",response);
       response.filters = response.filters.sort((a,b)=>{ return(a.order - b.order) });
       this.selectedFilterCategory = response.filters[0].header.facet_name;
