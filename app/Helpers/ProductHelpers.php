@@ -102,7 +102,7 @@ function formatItems($result, $params){
     $items = [];
     $response = ["results_found" => ($result["hits"]["total"] > 0)];
     foreach ($result['hits']['hits'] as  $doc) {
-        $items[] = $product["search_result_data"]["product_slug"];
+        $items[] = $doc["_source"]["search_result_data"]["product_slug"];
     }
 
     $response["items"] = $items;

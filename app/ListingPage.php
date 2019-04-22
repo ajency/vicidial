@@ -2,8 +2,10 @@
 
 namespace App;
 
+use Ajency\Connections\ElasticQuery;
 use App\Facet;
 use App\SingleProduct;
+use Illuminate\Support\Facades\Cache;
 
 class ListingPage
 {
@@ -49,7 +51,7 @@ class ListingPage
             foreach ($params['pf'] as $slugs) {
                 $slugs_arr = explode('--', $slugs);
                 $pf        = self::$facets->whereIn('facet_name', array_keys($this->primary_base_filters))->whereIn('slug', $slugs_arr);
-                if ($pf->count() != count($slugs_arr)) {
+                if ($pf->count() != count($slugs_arr) || $pf->groupBy('facet_name')->count() != 1) {
                     abort(404, "pf not valid");
                 }
                 $facet_name = $pf->first()->facet_name;
