@@ -47,11 +47,11 @@ class ReturnPolicy extends Model
     {
         $now        = Carbon::now();
         $policyList = array();
-        $orderLine = OrderLine::find($orderLine_id);
-        if (!$orderLine->return_policy) {
+        $orderLine  = OrderLine::find($orderLine_id);
+        if (!$orderLine->orders->returnAllowed() || !$orderLine->return_policy) {
             $policyList[] = [null => false];
-        }
-        else{
+        } 
+        else {
             $returnPolicyIds = collect($orderLine->return_policy)->pluck('id');
             $returnPolicies  = ReturnPolicy::whereIn('id', $returnPolicyIds)->get();
             foreach ($returnPolicies as $returnPolicy) {

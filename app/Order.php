@@ -371,4 +371,14 @@ class Order extends Model
         }
         return ['store_ids' => $store_ids, 'store_data' => $store_data];
     }
+
+    public function returnAllowed()
+    {
+        if($this->orderlines->first()->shipment_status == 'delivered'){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 }

@@ -9,6 +9,7 @@ class OrderLine extends Model
     protected $casts = [
         'images'   => 'array',
         'return_policy'   => 'array',
+        'is_returned'   => 'boolean',
     ];
 
     protected $fillable = [

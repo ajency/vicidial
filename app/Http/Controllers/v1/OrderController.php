@@ -234,18 +234,24 @@ class OrderController extends Controller
         return Defaults::getReasons();
     }
 
-    public function returnOrder($sub_order_id, Request $request)
+    public function returnOrder($id, Request $request)
     {
         $user      = User::getUserByToken($request->header('Authorization'));
         $sub_order = SubOrder::find($sub_order_id);
         validateSubOrder($user, $sub_order);
 
-        $request->validate(['reason' => 'required|exists:defaults,id', 'comments' => 'present', 'variant_id' => 'required|exists:variant,id', 'quantity' => 'required']);
+        $request->validate(['reason' => 'required|exists:defaults,id', 'comments' => 'present', 'variant_id' => 'required|exists:variants,odoo_id', 'quantity' => 'required|']);
         $params = $request->all();
+       
+        if (!$sub_order->order->returnAllowed()) {
+            abort(403, 'Return not allowed');
+        }
 
-        $order_lines = $sub_order->orderLines->where('variant_id', $param['variant_id'])->limit($param['quantity']);
+        $order_lines = $sub_order->orderLines->where('variant_id', $param['variant_id'])->where('is_returned', false);
 
-        foreach ($order_lines as $order_line) {
+
+
+        foreach ($order_lines->limit($param['quantity']) as $order_line) {
 
             $comment              = new Comment;
             $comment->reason_id   = $params['reason'];
@@ -255,7 +261,7 @@ class OrderController extends Controller
             $comment->model_type  = get_class($order_line);
             $comment->save();
 
-            $order_line->is_returned = 1;
+            $order_line->is_returned = true;
             $order_line->save();
         }
 
