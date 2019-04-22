@@ -233,5 +233,54 @@ class OrderController extends Controller
     {
         return Defaults::getReasons();
     }
-}
 
+    public function returnOrder($sub_order_id, Request $request)
+    {
+        $user      = User::getUserByToken($request->header('Authorization'));
+        $sub_order = SubOrder::find($sub_order_id);
+        validateSubOrder($user, $sub_order);
+
+        $request->validate(['reason' => 'required|exists:defaults,id', 'comments' => 'present', 'variant_id' => 'required|exists:variant,id', 'quantity' => 'required']);
+        $params = $request->all();
+
+        $order_lines = $sub_order->orderLines->where('variant_id', $param['variant_id'])->limit($param['quantity']);
+
+        foreach ($order_lines as $order_line) {
+
+            $comment              = new Comment;
+            $comment->reason_id   = $params['reason'];
+            $comment->reason_type = 'return';
+            $comment->comments    = $params['comments'];
+            $comment->model_id    = $order_line->id;
+            $comment->model_type  = get_class($order_line);
+            $comment->save();
+
+            $order_line->is_returned = 1;
+            $order_line->save();
+        }
+
+        $data = [
+            'from'     => $user->name,
+            'mobile'   => $user->phone,
+            'email'    => $user->email,
+            'txnid'    => $sub_order->order->txnid,
+            'item'     => $order_line[0]->title,
+            'quantity' => $param['quantity'],
+            'reason'   => $param['reason'],
+            'comments' => $param['comments'],
+        ];
+
+        sendEmail('return-email', [
+            'from'          => ["name" => [$user->name], "id" => [$user->email]],
+            'subject'       => 'Return Item - ' . $data[""],
+            'template_data' => [
+                'data' => $data,
+            ],
+            'priority'      => 'default',
+        ]);
+
+        return response()->json(["message" => 'Return request placed successfully', 'success' => true]);
+
+    }
+
+}

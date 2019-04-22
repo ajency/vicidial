@@ -16,4 +16,7 @@ return [
      "contact-us" => [
         'laravel'    => 'email.contact-us',
     ],
+    "return-email" => [
+        'laravel'    => 'email.return-email',
+    ],
 ];
