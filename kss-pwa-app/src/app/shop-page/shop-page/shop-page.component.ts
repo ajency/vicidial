@@ -3,6 +3,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { ApiServiceService } from '../../service/api-service.service';
 import { AppServiceService } from '../../service/app-service.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { PaginationInstance } from 'ngx-pagination';
 
 declare var $: any;
 
@@ -14,7 +15,16 @@ declare var $: any;
 export class ShopPageComponent implements OnInit {
 
   listApiCall : any;
-  listPage : any = {};
+  listPage : any = {
+    page : {
+      current : 1,
+      display_limit : 30,
+      has_next : true,
+      has_previous : false,
+      total : 21,
+      total_item_count : 618
+    }
+  };
   showLoader : boolean = false;
   filters : any;
   sortOn : any = 'recommended';
@@ -42,15 +52,22 @@ export class ShopPageComponent implements OnInit {
     }
   ]
 
-  page : any = {
-    current : 1,
-    display_limit : 30,
-    has_next : true,
-    has_previous : false,
-    total : 21,
-    total_item_count : 618
-  }
+  // page : any = {
+  //   current : 1,
+  //   display_limit : 30,
+  //   has_next : true,
+  //   has_previous : false,
+  //   total : 21,
+  //   total_item_count : 618
+  // }
   filtersCopy : any;
+
+  public config: PaginationInstance = {
+      id: 'list-page',
+      itemsPerPage: this.listPage.page.display_limit,
+      currentPage: this.listPage.page.current,
+      totalItems: this.listPage.page.total_item_count
+  };
 
   constructor(private apiService: ApiServiceService,
               private appservice : AppServiceService,
@@ -69,11 +86,11 @@ export class ShopPageComponent implements OnInit {
   mobilefilter: boolean = false;
 
   clickEvent(){
-    this.status = !this.status;       
+    this.status = !this.status;
   }
 
   showMobileFilter(){
-    this.mobilefilter = !this.mobilefilter;       
+    this.mobilefilter = !this.mobilefilter;
   }
 
   callListPageApi(){
