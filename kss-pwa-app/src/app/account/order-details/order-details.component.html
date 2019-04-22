@@ -120,6 +120,7 @@
 					</div>
 					<div class="col-10">
 						<h3 class="modal-title font-weight-bold" id="exampleModalLabel">Cancel Shipment</h3>
+						<!-- h3 class="modal-title font-weight-bold" id="exampleModalLabel">Return Item</h3 -->
 					</div>
 				</div>
 				<hr>
@@ -132,7 +133,8 @@
 			<div class="col-12">
 				<div class="d-flex row mb-3">
 					<div class="pr-2 col-12">
-						<h6 class="d-block font-weight-bold m-0 kss-title mb-2">The below items will be cancelled.</h6>
+						<h6 class="d-block font-weight-bold m-0 kss-title mb-2">The below items to be returned.</h6>
+						<!--h6 class="d-block font-weight-bold m-0 kss-title mb-2">The below items will be cancelled.</h6 -->
 					</div>
 				</div>
 			</div>
@@ -142,7 +144,8 @@
 			
 			<div class="row primary-info cancelable-items">
 				<div class="col-12 d-flex flex-column"  *ngFor="let item of order.items; let i = index">
-					<app-item [item]="item" [showStatus]=false ></app-item>					
+					<app-item [item]="item" [showStatus]=false ></app-item>
+					<!-- div class="modal fade" id="qty-modal-cart" tabindex="-1" role="dialog" app-quantity-modal (quantityChanged)="modifyCart($event)" [totalQuantity]="totalQuantity" [selectedQuantity]="selectedQuantity"></div -->			
 				</div>
 			</div>
 			<div class="row refund-info-msg">
@@ -171,10 +174,14 @@
 		<!-- Cancel reason inputs -->
 		<div class="bg-lightgray my-4 p-4 cancel-reason-box">
 			<h3 class="font-weight-bold kss-title mb-0 text-muted cancel-reason-box__title">Please tell us the reason for Cancellation</h3>
+			<!-- h3 class="font-weight-bold kss-title mb-0 text-muted cancel-reason-box__title">Please tell us the reason for Return</h3 -->
 			<div class="mt-4 mb-3">
 			    <label class="cancel-reason-box__label">
 			        Reason for Cancellation <span class="text-danger">*</span>
 			    </label>
+			    <!-- label class="cancel-reason-box__label">
+			        Reason for Return <span class="text-danger">*</span>
+			    </label -->
 			  	<select *ngIf="cancelReasons" class="form-control" [(ngModel)]="cancelReasonId" (ngModelChange)="checkCancelReason()">			  			
 						<option *ngFor="let option of cancelReasons" [ngValue]="option.id">{{option.value}}</option>
 				</select>

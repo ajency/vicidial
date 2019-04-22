@@ -10,7 +10,11 @@ export class ItemComponent implements OnInit, OnChanges {
 
 	@Input() item : any;
   @Input() showStatus : any;
-  @Input() showReturnbtn : any;  
+  @Input() showReturnbtn : any;
+  selectedQuantity : any;
+  totalQuantity : any;
+  itemIndex : any;
+
   constructor() { }
 
   ngOnInit() {
@@ -23,5 +27,21 @@ export class ItemComponent implements OnInit, OnChanges {
   ngAfterViewInit(){
     $('[data-toggle="tooltip"]').tooltip();
   }
+
+  updateQuantity(item, index){
+    console.log("updateQuantity ==>", item, index);
+    this.selectedQuantity = item.quantity;
+    this.totalQuantity = 5;
+    if(item.available_quantity < 5)
+      this.totalQuantity = item.available_quantity;
+    this.itemIndex = index;
+    $('#qty-modal-cart').modal('show');
+    $("#cd-cart").css("overflow-y", "hidden");
+    $('.modal-backdrop').appendTo('.angular-app');
+
+    $('#qty-modal-cart').on('hidden.bs.modal', function (e) {
+      $("#cd-cart").css("overflow-y", "auto");
+    })
+   }
 
 }
