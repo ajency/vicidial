@@ -10,18 +10,19 @@ class Expression extends Model
     {
         return $this->morphTo();
     }
+
     public function validate($data){
-        switch($this->filter){
-            case 'greater_than':
-                switch ($this->entity) {
-                    case 'cart_price':
-                        return ($data['final_total'] >= $this->value[0]);
-                        break;      
-                    default:
-                        return false;
-                        break;
-                }
-                break;
+    	switch($this->filter){
+    		case 'greater_than':
+    			switch ($this->entity) {
+    				case 'cart_price':
+    					return ($data['final_total'] >= $this->value[0]);
+    					break;		
+    				default:
+    					return false;
+    					break;
+    			}
+    			break;
             case 'less_than':        
                 switch ($this->entity) {
                     case 'days':
@@ -29,9 +30,9 @@ class Expression extends Model
                         break;          
                 }
                 break; 
-            default:
-                return false;
-                break;
-        }
+    		default:
+    			return false;
+    			break;
+    	}
     }
 }
