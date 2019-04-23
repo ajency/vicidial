@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 
 declare var $: any;
 
@@ -9,9 +9,9 @@ declare var $: any;
 })
 export class OrderComponent implements OnInit, OnChanges{
 
+  @Output() returnItemTrigger = new EventEmitter();
 	@Input() items : any;
   @Input() showStatus : any;
-  returnItem : boolean = false;
 
   constructor() { }
 
@@ -33,5 +33,10 @@ export class OrderComponent implements OnInit, OnChanges{
       item.href = '/' + item.product_slug +'/buy?size='+item.size;
       item.images = Array.isArray(item.images) ? ['/img/placeholder.svg', '/img/placeholder.svg', '/img/placeholder.svg'] : Object.values(item.images);
     })
+  }
+
+  returnItem(item){
+    console.log("return item ==>",  item);
+    this.returnItemTrigger.emit(item);
   }
 }

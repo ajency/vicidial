@@ -11,6 +11,7 @@ import { MyProfileComponent } from './my-profile/my-profile.component';
 import { BagSummaryModule } from '../shared-components/bag-summary/bag-summary.module';
 import { AddressModule } from '../shared-components/address/address.module';
 import { EditUserModule } from '../shared-components/edit-user/edit-user.module';
+import { ComponentsModule } from '../components/components.module';
 
 import { OrderInfoComponent } from './components/order-info/order-info.component';
 import { OrderComponent } from './components/order/order.component';
@@ -28,7 +29,8 @@ import { ItemComponent } from './components/item/item.component';
     BagSummaryModule,
     AddressModule,
     EditUserModule,
-    FormsModule
+    FormsModule,
+    ComponentsModule
   ],
   declarations: [
   	AccountComponent, 

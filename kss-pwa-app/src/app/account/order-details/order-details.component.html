@@ -58,7 +58,7 @@
 			<h5 class="mb-3"><strong>Returns</strong> <label class="d-block m-0 mb-1 float-right">Item 1 of 1</label></h5>
 
 			<!-- Product info -->			
-			<app-order [items]="order.items" [showStatus]=true></app-order>
+			<app-order [items]="order.items" [showStatus]=true (returnItemTrigger)="openReturnItem($event)"></app-order>
 <!-- 			<div class="d-flex  align-self-center mb-4">
 				<label>
 					Need help with this order? <a href="#" class="kss-anchor">Visit our help center</a>
@@ -108,7 +108,7 @@
 <!-- Order cancellation form -->
 <!-- Cancel Shipment section -->
 <!-- Add slide-show class to translate -->
-<div class="order-cancel mb-4 pb-4 slide-out p-3" [ngClass]="{'slide-show' : cancelOrder}">
+<div class="order-cancel mb-4 pb-4 slide-out p-3" [ngClass]="{'slide-show' : cancelOrder || returnItem}">
 	<div class="row">
 		<div class="col-12">
 			<div>
@@ -119,8 +119,8 @@
 						</h3>
 					</div>
 					<div class="col-10">
-						<h3 class="modal-title font-weight-bold" id="exampleModalLabel">Cancel Shipment</h3>
-						<!-- h3 class="modal-title font-weight-bold" id="exampleModalLabel">Return Item</h3 -->
+						<h3 *ngIf="cancelOrder" class="modal-title font-weight-bold" id="exampleModalLabel">Cancel Shipment</h3>
+						<h3 *ngIf="returnItem" class="modal-title font-weight-bold" id="exampleModalLabel">Return Item</h3>
 					</div>
 				</div>
 				<hr>
@@ -128,13 +128,13 @@
 		</div>
 	</div>
 
-	<div *ngIf="cancelOrder" class="mb-5 pb-5">
+	<div *ngIf="cancelOrder || returnItem" class="mb-5 pb-5">
 		<div class="row mt-md-2 mt-0">
 			<div class="col-12">
 				<div class="d-flex row mb-3">
 					<div class="pr-2 col-12">
-						<h6 class="d-block font-weight-bold m-0 kss-title mb-2">The below items to be returned.</h6>
-						<!--h6 class="d-block font-weight-bold m-0 kss-title mb-2">The below items will be cancelled.</h6 -->
+						<h6 *ngIf="returnItem" class="d-block font-weight-bold m-0 kss-title mb-2">The below item is to be returned.</h6>
+						<h6 *ngIf="cancelOrder" class="d-block font-weight-bold m-0 kss-title mb-2">The below items will be cancelled.</h6>
 					</div>
 				</div>
 			</div>
@@ -143,9 +143,8 @@
 		<div class="cancel-od-selection">
 			
 			<div class="row primary-info cancelable-items">
-				<div class="col-12 d-flex flex-column"  *ngFor="let item of order.items; let i = index">
-					<app-item [item]="item" [showStatus]=false ></app-item>
-					<!-- div class="modal fade" id="qty-modal-cart" tabindex="-1" role="dialog" app-quantity-modal (quantityChanged)="modifyCart($event)" [totalQuantity]="totalQuantity" [selectedQuantity]="selectedQuantity"></div -->			
+				<div class="col-12 d-flex flex-column"  *ngFor="let item of cancelItemsList; let i = index">
+					<app-item [item]="item" [showStatus]=false [returnItem]="returnItem" (openQuantityModalTrigger)="openQuantityModal()"></app-item>			
 				</div>
 			</div>
 			<div class="row refund-info-msg">
@@ -158,7 +157,6 @@
 				</div>
 			</div>
 		</div>
-
 
 		<!-- cancel info -->
 		<div class="my-3">
@@ -173,17 +171,16 @@
 
 		<!-- Cancel reason inputs -->
 		<div class="bg-lightgray my-4 p-4 cancel-reason-box">
-			<h3 class="font-weight-bold kss-title mb-0 text-muted cancel-reason-box__title">Please tell us the reason for Cancellation</h3>
-			<!-- h3 class="font-weight-bold kss-title mb-0 text-muted cancel-reason-box__title">Please tell us the reason for Return</h3 -->
+			<h3 *ngIf="cancelOrder" class="font-weight-bold kss-title mb-0 text-muted cancel-reason-box__title">Please tell us the reason for Cancellation</h3>
+			<h3 *ngIf="returnItem" class="font-weight-bold kss-title mb-0 text-muted cancel-reason-box__title">Please tell us the reason for Return</h3>
 			<div class="mt-4 mb-3">
 			    <label class="cancel-reason-box__label">
-			        Reason for Cancellation <span class="text-danger">*</span>
+			       <span *ngIf="cancelOrder">Reason for Cancellation</span>
+			       <span *ngIf="returnItem">Reason for Return</span>
+			       <span class="text-danger">*</span>
 			    </label>
-			    <!-- label class="cancel-reason-box__label">
-			        Reason for Return <span class="text-danger">*</span>
-			    </label -->
-			  	<select *ngIf="cancelReasons" class="form-control" [(ngModel)]="cancelReasonId" (ngModelChange)="checkCancelReason()">			  			
-						<option *ngFor="let option of cancelReasons" [ngValue]="option.id">{{option.value}}</option>
+			  	<select *ngIf="reasons" class="form-control" [(ngModel)]="cancelReasonId" (ngModelChange)="checkCancelReason()">			  			
+						<option *ngFor="let option of reasons" [ngValue]="option.id">{{option.value}}</option>
 				</select>
 			</div>
 			<div class="mt-4">
@@ -192,22 +189,11 @@
 			</div>
 		</div>
 
-		<!-- Checkbox confirm -->
-<!-- 		<div class="my-4">
-			<div class="d-flex">
-				<div class="custom-checkbox pl-4">
-		            <input type="checkbox" class="facet-category custom-control-input" id="confirm-check">
-					<label class="custom-control-label f-w-4 font-weight-bold pl-2 pt-1" for="confirm-check">I confirm that I want to cancel my order
-					</label>            
-				</div>
-			</div>
-		</div> -->
-
-
 		<!-- Sticky Action button -->
 		<div class="p-3 fixed-bottom fixed-checkout-btn d-flex align-items-center justify-content-between">
 			<button (click)="closeCancelOrder()" id="cancel-cancel-order" class="btn kss-btn kss-btn--outline-secondary kss-btn--big mr-3">Cancel</button>
-			<button id="confirm-cancel-order" class="btn kss-btn kss-btn--big mt-0"  [ngClass]="{'disabled' : !cancelReasonId}" (click)="callCancelOrderApi()">Confirm</button>	
+			<button id="confirm-cancel-order" class="btn kss-btn kss-btn--big mt-0"  [ngClass]="{'disabled' : !cancelReasonId}" (click)="confirm()">Confirm</button>	
 		</div>
 	</div>
+	<div class="modal fade" id="qty-modal-account" tabindex="-1" role="dialog" app-quantity-modal (quantityChanged)="updateQuantity($event)" [totalQuantity]="quantity" [selectedQuantity]="quantity">
 </div>
