@@ -372,6 +372,13 @@ class Order extends Model
         return ['store_ids' => $store_ids, 'store_data' => $store_data];
     }
 
+    public static function saveDeliveryDate($order_from_id, $order_to_id){
+        $orders = self::where('id', '>=', $order_from_id)->where('id', '<=', $order_to_id)->get()->pluck('id');
+        foreach ($orders as $order_id) {
+            OrderLineDeliveryDate::dispatch($order_id)->onQueue('orderline_delivery_date');
+        }
+    }
+
     public function returnAllowed()
     {
         if($this->orderlines->first()->shipment_status == 'delivered'){
