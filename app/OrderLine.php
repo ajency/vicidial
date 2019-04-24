@@ -67,4 +67,9 @@ class OrderLine extends Model
     {
         return $this->morphedByMany('App\SubOrder', 'line_mapping')->wherePivot('type', 'Returned Transaction');
     }
+
+    public function return_policy()
+    {
+        return $this->belongsTo('App\ReturnPolicy');
+    }
 }

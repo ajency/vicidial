@@ -272,15 +272,15 @@ class OrderController extends Controller
             'mobile'   => $user->phone,
             'email'    => $user->email,
             'txnid'    => $sub_order->order->txnid,
-            'item'     => $order_line[0]->title,
+            'item'     => $order_lines->first()->title,
             'quantity' => $param['quantity'],
-            'reason'   => $param['reason'],
+            'reason'   => Defaults::getReason($param['reason']),
             'comments' => $param['comments'],
         ];
 
         sendEmail('return-email', [
             'from'          => ["name" => [$user->name], "id" => [$user->email]],
-            'subject'       => 'Return Item',
+            'subject'       => 'Request for Return - ' . $sub_order->order->txnid,
             'template_data' => [
                 'data' => $data,
             ],

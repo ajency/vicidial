@@ -6,7 +6,7 @@
 <br>
 <div><b>Email</b> : {{$data["email"]}}</div>
 <br>
-<div><b>TxnNo</b> : {{$data["txnno"]}}</div>
+<div><b>OrderNo</b> : {{$data["txnno"]}}</div>
 <br>
 <div><b>Item</b> : {{$data["item"]}}</div>
 <br>

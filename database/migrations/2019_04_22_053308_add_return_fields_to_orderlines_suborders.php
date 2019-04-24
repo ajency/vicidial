@@ -23,8 +23,8 @@ class AddReturnFieldsToOrderlinesSuborders extends Migration
         });
 
         Schema::table('order_lines', function (Blueprint $table) {
-            $table->date('shipment_delivery_date')->nullable();
-            $table->integer('return_policy')->nullable();
+            $table->timestamp('shipment_delivery_date')->nullable();
+            $table->integer('return_policy_id')->nullable();
             $table->string('product_type')->nullable();
             $table->string('product_subtype')->nullable();
             $table->boolean('is_returned')->default(false);
@@ -49,7 +49,7 @@ class AddReturnFieldsToOrderlinesSuborders extends Migration
 
         Schema::table('order_lines', function (Blueprint $table) {
             $table->dropColumn('shipment_delivery_date');
-            $table->dropColumn('return_policy');
+            $table->dropColumn('return_policy_id');
             $table->dropColumn('product_type');
             $table->dropColumn('product_subtype');
             $table->dropColumn('is_returned');

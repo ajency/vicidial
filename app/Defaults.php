@@ -42,6 +42,12 @@ class Defaults extends Model
         return $reasons;
     }
 
+    public static function getReason($reason_id)
+    {
+        $reason = self::find($reason_id);
+        return $reason->meta_data['name'];
+    }
+
     public static function getLastProductMoveSync()
     {
         $move = self::where('type', 'sync')->where('label', 'product_move')->first();
