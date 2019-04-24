@@ -239,7 +239,7 @@ class Offer extends Model
         }
 
         //if cart has shipping items, then set coupon as invalid
-        if(checkForShippingItems($cartData['items'])){
+        if(checkForOfferItems($cartData['items'])){
             $cartData['messages']['coupon_not_applicable_for_products_with_shipping_charges'] = "This coupon is not valid for school uniforms";
             $cartData['coupon']                                                               = null;
             return $cartData;   
@@ -311,7 +311,7 @@ class Offer extends Model
 
     public static function addShippingCharges($cartData)
     {
-        if(checkForShippingItems($cartData['items'])){  //check if cart has shipping items present
+        if(checkForOfferItems($cartData['items'])){  //check if cart has shipping items present
             $cartData['shipping']     = Defaults::getUniformShippingPrice();
         }
         return $cartData;

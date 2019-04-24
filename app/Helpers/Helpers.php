@@ -861,11 +861,21 @@ function getProductDefaultImage($productId,$colorId,$preset){
     return $resp[$preset];
 }
 
-
 function checkForShippingItems($cartItems)
 {
     foreach ($cartItems as $item) {
         if (in_array($item['category_type'], config('orders.shipping.types')))
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+function checkForOfferItems($cartItems)
+{
+    foreach ($cartItems as $item) {
+        if (in_array($item['category_type'], config('orders.offer.types')))
         {
             return true;
         }
