@@ -1,10 +1,15 @@
 // Mobile footer padding for sticky btns
-@media (max-width: 767px){
+@media (max-width: 991px){
     .sticky_btn_bottom{
         padding-bottom: 4.5em !important;
+        position: relative;
+        top: calc(100vh - 220px);
+        background: white;
         & + .hidden-footer-section{
             padding-bottom: 5em;
             margin-top: -6em;
+            position: relative;
+            top: calc(100vh - 225px);
         }
     }
 }

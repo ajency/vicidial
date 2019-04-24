@@ -27,7 +27,7 @@ export class ProductPageComponent implements OnInit {
   			  private apiService: ApiServiceService,
               private appservice : AppServiceService,
               private breakpointObserver : BreakpointObserver) {
-    this.isMobile = this.breakpointObserver.isMatched('(max-width: 600px)');
+    this.isMobile = this.breakpointObserver.isMatched('(max-width: 991px)');
    }
 
   ngOnInit() {
@@ -125,7 +125,7 @@ export class ProductPageComponent implements OnInit {
     else if(window.location.href.endsWith('#/account') || window.location.href.endsWith('#/account/my-orders') || window.location.href.includes('#/account/my-orders/')){
       this.appservice.loadAccountFromAngular = true;
       this.appservice.loadCartTrigger();
-    }        
+    }
   }
 
   unsubscribeProductApi(){

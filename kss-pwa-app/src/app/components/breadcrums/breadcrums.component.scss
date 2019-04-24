@@ -9,4 +9,15 @@
 			padding-right: 0.25rem;
 		}
 	}
+	@media(max-width: 991px){
+		a{
+			color: #fff;
+			font-weight: 600;
+		}
+		& + .breadcrumb-item{
+			&:before{
+				color: #ffffff;
+			}
+		}
+	}
 }

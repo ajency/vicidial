@@ -35,7 +35,7 @@
     <div *ngIf="totalQuantity" class="align-items-center border d-flex font-weight-bold mr-2 px-4 py-2 qty-select" data-target="#qty-modal" data-toggle="modal">
       Qty: {{selectedQuantity}}
     </div>
-    <div *ngIf="showLoader" class="loadingBg" style="height: 58px;"></div>
+    <div *ngIf="showLoader" class="loadingBg w-100" style="height: 58px;"></div>
 		<button *ngIf="isSellable" id="cd-add-to-cart" class="btn kss-btn kss-btn--big cd-add-to-cart" (click)="addToBag()">
 			<div class="kss-btn__wrapper d-flex align-items-center justify-content-center">
 				<span class="btn-contents align-items-center">
@@ -66,7 +66,7 @@
       <p class="ship-text">This product has a 3 day return/replace policy. <a href="/terms-and-conditions/#return" target="_self" class="ship-link" >Know More</a></p>
     </div>
   </div>
-</ng-container>  
+</ng-container>
 
 <div class="accordion product-collapse" id="prodDetails">
   <div *ngIf="attributes.product_description" class="">

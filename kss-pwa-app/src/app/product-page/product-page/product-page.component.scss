@@ -7,7 +7,7 @@
 	&__col{
 		max-width: 20%;
 		flex-basis: 20%;
-		@media (max-width: 767px){
+		@media (max-width: 991px){
 			max-width: 50%;
 			flex-basis: 50%;
 		}
@@ -16,7 +16,22 @@
 
 .sliderLoader{
 	height: 450px;
-	@media (max-width: 767px){
-		height: 120vw;
+	@media (max-width: 991px){
+		// height: 120vw;
+		height: calc(100vh - 225px);
 	}
+}
+
+@media (max-width: 991px){
+	.prodinfo-wrapper{
+	    top: calc(100vh - 225px);
+	    position: relative;
+	    background: #fff;
+	}
+}
+
+.mobile-bar{
+	position: fixed;
+	width: 100%;
+	background-color: #57575f;
 }

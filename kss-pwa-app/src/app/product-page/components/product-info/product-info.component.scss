@@ -221,10 +221,10 @@
     }
     .col-left {
         width: auto;
-    }   
+    }
 }
 
-@media (max-width: 767px){
+@media (max-width: 991px){
     .shadow-layer{
         padding: 10px !important;
         .cd-add-to-cart{
@@ -246,4 +246,8 @@
     &:hover{
         color: theme-color("primary");
     }
+}
+
+.prodinfo-wrapper{
+    // padding-top: calc(100vh - 225px);
 }
