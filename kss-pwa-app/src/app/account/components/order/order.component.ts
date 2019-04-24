@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
-
+import { AppServiceService } from '../../../service/app-service.service';
+import * as moment from 'moment';
 declare var $: any;
 
 @Component({
@@ -13,7 +14,7 @@ export class OrderComponent implements OnInit, OnChanges{
 	@Input() items : any;
   @Input() showStatus : any;
 
-  constructor() { }
+  constructor(private appservice : AppServiceService) { }
 
   ngOnInit() {
   }
@@ -38,5 +39,15 @@ export class OrderComponent implements OnInit, OnChanges{
   returnItem(item){
     console.log("return item ==>",  item);
     this.returnItemTrigger.emit(item);
+  }
+
+  isReturnPolicyValid(date){
+    if(this.appservice.getAge(date) < 0)
+      return true
+    return false;
+  }
+
+  getValidTill(date){
+    return moment(date, "YYYY-MM-DD HH:mm:ss").format("DD MMM, YYYY");
   }
 }

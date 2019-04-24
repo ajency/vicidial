@@ -30,17 +30,17 @@
 		</div>
 		<div class="row secoundary-info">
 			<div class="col-12 item-order-info">
-				<hr *ngIf="showStatus && (item.state == 'draft')" class="mt-0">
+				<!-- <hr *ngIf="showStatus && (item.state == 'draft')" class="mt-0"> -->
 
 
 				<div *ngIf="showStatus" class="order-item-info" [ngClass]="{'mb-3' : item.state == 'delivered' && showReturnbtn == true }">
-					<label class="item-info mb-0 sm-font text-dark">
-						<i class="fa fa-info-circle mr-1"></i> Return policy was valid till 4th May
+					<label *ngIf="item.return_policy.date && !isReturnPolicyValid(item.return_policy.date)" class="item-info mb-0 sm-font text-dark">
+						<i class="fa fa-info-circle mr-1"></i> Return policy was valid till {{getValidTill(item.return_policy.date)}}
 					</label>
 
-					<label class="item-info mb-0 sm-font text-dark">
+					<!-- <label class="item-info mb-0 sm-font text-dark">
 						<i class="fa fa-info-circle mr-1"></i> This item cannot be returned
-					</label>
+					</label> -->
 				<!-- 	<label *ngIf="item.state == 'sale' && !item.shipment_status" class="item-info text-dark mb-0"><strong>Processed On:</strong><span class="grey"> 26 February 2019</span></label>
 
 					<label *ngIf="item.shipment_status == 'shipped' "  class="item-info text-dark"><strong>Expected Delivery:</strong><span class="green"> 26 February 2019</span></label>
@@ -64,8 +64,8 @@
 				<!-- Return Item -->
 				<div *ngIf="showStatus && item.return_policy.return_allowed" class="return-item-section">
 					<hr class="mt-0">
-					<label class="item-info mb-0 sm-font text-dark">
-						<i class="fa fa-info-circle mr-1"></i> Return policy valid till 4th May
+					<label *ngIf="item.return_policy.date && isReturnPolicyValid(item.return_policy.date)" class="item-info mb-0 sm-font text-dark">
+						<i class="fa fa-info-circle mr-1"></i> Return policy valid till {{getValidTill(item.return_policy.date)}}
 					</label>
 					<a href="javascript:void(0);"  class="btn kss-btn kss-btn--outline-secondary return-item-btn mt-3" (click)="returnItem(item)">Return Item <i class="fas fa-chevron-right"></i></a>
 				</div>
