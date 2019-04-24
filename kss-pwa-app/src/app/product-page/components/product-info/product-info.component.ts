@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, HostListener } from '@angular/core';
 import { AppServiceService } from '../../../service/app-service.service';
 import { ApiServiceService } from '../../../service/api-service.service';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
@@ -25,9 +25,10 @@ export class ProductInfoComponent implements OnInit, OnChanges {
   shakeSizes : boolean = false;
   selectedModalSize : any;
   modalSizeSelectError : boolean = false;
-  outOfStock : boolean = true;  
+  outOfStock : boolean = true;
   selectedQuantity = 1;
   totalQuantity = 0;
+  btnSticky : boolean = false;
   constructor(private appservice : AppServiceService,
               private apiservice : ApiServiceService,
               private breakpointObserver : BreakpointObserver) {
@@ -247,4 +248,10 @@ export class ProductInfoComponent implements OnInit, OnChanges {
     console.log("quantity updated ==>",quantity);
     this.selectedQuantity = quantity;
   }
+
+  @HostListener('window:scroll', ['$event'])
+    scrollHandler(event) {
+      console.log("Scroll Event");
+      this.btnSticky = true;
+    }
 }

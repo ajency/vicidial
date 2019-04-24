@@ -1,9 +1,12 @@
-<app-header [browserback]="true"></app-header>
+<app-header [browserback]="false"></app-header>
 
 <!-- <app-loader *ngIf="showLoader"></app-loader> -->
 
 <ng-container *ngIf="product">
-	<div class="mobile-bar p-2">
+	<div class="mobile-bar d-flex align-items-center">
+		<div (click)="backToPrev()" class="back-to-shop d-lg-none d-block" >
+			<i class="fas fa-arrow-left"></i>
+		</div>
 		<app-breadcrums [breadcrumbs]="product.breadcrumbs" *ngIf="isMobile"></app-breadcrums>
 	</div>
 	<div *ngIf="showLoader && isMobile" class="loadingBg sliderLoader"></div>

@@ -18,7 +18,7 @@
   width: auto !important;
   @media(max-width: 991px){
     // height: 120vw;
-    height: calc(100vh - 260px);
+    height: calc(100vh - 262px);
   }
   @media only screen and (min-width: 992px){
     height: 450px;
@@ -46,6 +46,6 @@
 @media (max-width: 991px){
   .prodslider-wrapper{
     position: fixed;
-    top: 85px;
+    top: 98px;
   }
 }

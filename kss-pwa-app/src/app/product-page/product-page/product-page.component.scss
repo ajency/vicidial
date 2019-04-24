@@ -18,20 +18,34 @@
 	height: 450px;
 	@media (max-width: 991px){
 		// height: 120vw;
-		height: calc(100vh - 225px);
+		height: calc(100vh - 214px);
 	}
 }
 
 @media (max-width: 991px){
 	.prodinfo-wrapper{
-	    top: calc(100vh - 225px);
+	    top: calc(100vh - 214px);
 	    position: relative;
 	    background: #fff;
+	    box-shadow: 0 -1px 5px rgba(128, 128, 128, 0.35);
+	}
+	.mobile-bar{
+		position: fixed;
+		width: 100%;
+		background-color: #57575f;
 	}
 }
 
-.mobile-bar{
-	position: fixed;
-	width: 100%;
-	background-color: #57575f;
+@media (min-width: 992px){
+	.mobile-bar{
+		display: none;
+	}
+}
+
+.back-to-shop {
+	padding: 12px;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    display: none;
 }

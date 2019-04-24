@@ -2,7 +2,9 @@ import { Component, OnInit, isDevMode } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { ApiServiceService } from '../../service/api-service.service';
 import { AppServiceService } from '../../service/app-service.service';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 
 declare var fbTrackViewContent : any;
 declare var gtagTrackPageView : any;
@@ -26,7 +28,9 @@ export class ProductPageComponent implements OnInit {
   constructor(private route: ActivatedRoute,
   			  private apiService: ApiServiceService,
               private appservice : AppServiceService,
-              private breakpointObserver : BreakpointObserver) {
+              private breakpointObserver : BreakpointObserver,
+              private location: Location,
+              private router: Router) {
     this.isMobile = this.breakpointObserver.isMatched('(max-width: 991px)');
    }
 
@@ -136,5 +140,13 @@ export class ProductPageComponent implements OnInit {
   unsubscribeInventoryApiCall(){
     if(this.inventoryApiCall)
       this.inventoryApiCall.unsubscribe();
+  }
+
+  backToPrev(){
+    if (window.history.length > 2) {
+      this.location.back()
+    } else {
+      this.router.navigate(['/'])
+    }
   }
 }
