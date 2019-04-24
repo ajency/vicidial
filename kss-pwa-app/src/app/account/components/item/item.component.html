@@ -11,7 +11,7 @@
 					{{item.title}}
 				</div>
 			</a>
-			<i class="fa fa-info-circle text-gray" data-toggle="tooltip" data-placement="top" title="Return policy text"></i>
+			<i *ngIf="showStatus && item.return_policy.name" class="fa fa-info-circle text-gray" data-toggle="tooltip" data-placement="top" attr.title="{{item.return_policy.name}}"></i>
 		</div>
 		<!--div class="product-size text-muted mb-1">
 			<span>Size: {{item.size}}</span> <span>|</span> <span>Qty: {{item.quantity}}</span>

@@ -182,7 +182,7 @@ export class OrderDetailsComponent implements OnInit {
     let body : any = {
       reason : this.cancelReasonId,
       comments : this.additionalRemark,
-      varaint_id : this.cancelItemsList[0].variant_id,
+      variant_id : this.cancelItemsList[0].variant_id,
       quantity : this.cancelItemsList[0].quantity
     };
     console.log("cancel body ==>", body);
