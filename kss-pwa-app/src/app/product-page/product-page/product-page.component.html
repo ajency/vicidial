@@ -14,7 +14,7 @@
 		<app-product-img-slider *ngIf="product.images && isMobile" [images]="product.images" [attributes]="product.attributes"></app-product-img-slider>
 	</div>
 	<div class="prodinfo-wrapper">
-		<div class="container mt-0 mt-md-4 pt-3">
+		<div class="container mt-0 mt-md-4 pt-2">
 			<div class="row">
 				<div class="col-md-12 d-none d-md-block">
 					<!-- Breadcrumbs -->
@@ -92,7 +92,9 @@
 <!-- Back to top -->
 <div app-back-to-top></div>
 
-<app-footer [stickyFoot]="true"> </app-footer>
+<div class="prod-page-footer">
+	<app-footer [stickyFoot]="true"> </app-footer>
+</div>
 
 <div class="alert kss-alert sticky-alert d-inline-flex align-items-center px-sm-4 px-3 py-4 fade show shadow rounded m-2" role="alert">
     <i class="fas fa-times pr-sm-3 pr-2 icon alert-close cursor-pointer"></i>
