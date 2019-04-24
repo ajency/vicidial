@@ -852,21 +852,35 @@ function translateDiscountToItems($cartData)
     return $cartData;
 }
 
-
-function getProductDefaultImage($productId,$colorId,$preset){
+function getProductDefaultImage($productId, $colorId, $preset)
+{
     $productColor = App\ProductColor::where('product_id', $productId)->where('color_id', $colorId)->first();
-    if(is_null($productColor)) return null;
+    if (is_null($productColor)) {
+        return null;
+    }
+
     $resp = $productColor->getDefaultImage([$preset]);
-    if(empty($resp)) return null;
+    if (empty($resp)) {
+        return null;
+    }
+
     return $resp[$preset];
 }
-
 
 function checkForShippingItems($cartItems)
 {
     foreach ($cartItems as $item) {
-        if (in_array($item['category_type'], config('orders.shipping.types')))
-        {
+        if (in_array($item['category_type'], config('orders.shipping.types'))) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function checkForOfferItems($cartItems)
+{
+    foreach ($cartItems as $item) {
+        if (in_array($item['category_type'], config('orders.offer.types'))) {
             return true;
         }
     }
