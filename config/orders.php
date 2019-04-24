@@ -54,9 +54,9 @@ return [
             'carrier' => env('SHIPPING_CARRIER'),
         ],
         'price'   => env('SHIPPING_PRICE'),
-        'types'   => explode(',', env('SHIPPING_TYPES')),
+        'types'   => explode(',', env('SHIPPING_TYPES', '')),
     ]
     "offer" => [
-        'types'   => explode(',', env('OFFER_TYPES')),
+        'types'   => explode(',', env('OFFER_TYPES', '')),
     ]
 ];
