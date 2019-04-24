@@ -49,11 +49,11 @@ class ReturnPolicy extends Model
         $policyList = array();
         $orderLine  = OrderLine::find($orderLine_id);
         if (!$orderLine->return_policy) {
-            return ['name' => null, 'return_allowed' => false];
+            return ['name' => null, 'return_allowed' => false, 'date' => null];
         } else {
             $returnPolicy = $orderLine->return_policy;
             if ($orderLine->shipment_status != 'delivered' || !$orderLine->shipment_delivery_date || $orderLine->is_returned) {
-                return ['name' => $returnPolicy['display_name'], 'return_allowed' => false];
+                return ['name' => $returnPolicy['display_name'], 'return_allowed' => false, 'date' => null];
             }
             $d         = explode("-", explode(" ", $orderLine->shipment_delivery_date)[0]);
             $orderDate = Carbon::createFromDate($d[0], $d[1], $d[2], "Asia/Kolkata");
@@ -67,7 +67,8 @@ class ReturnPolicy extends Model
                     break;
                 }
             }
+            $date = $orderDate->endOfDay()->addDays($returnPolicy->expressions->first()->value[0]);
+            return ['name' => $returnPolicy['display_name'], 'return_allowed' => $return_allowed, 'date' => $date];
         }
-        return ['name' => $returnPolicy['display_name'], 'return_allowed' => $return_allowed];
     }
 }

@@ -6,7 +6,7 @@
 <br>
 <div><b>Order No</b> : {{$data["txnno"]}}</div>
 <br>
-<div><b>Item</b> : <a href="{{{{url('/')}}/{{$data['product_slug']}}/buy?size={{$data['size']}}}}">{{$data["item"]}}</a></div>
+<div><b>Item</b> : <a href="{{url('/')}}/{{$data['product_slug']}}/buy?size={{$data['size']}}">{{$data["item"]}}</a></div>
 <br>
 <div><b>Quantity</b> : {{$data["quantity"]}}</div>
 <br>
