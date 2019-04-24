@@ -281,7 +281,7 @@ class OrderController extends Controller
         ];
 
         sendEmail('return-email', [
-            'from'          => ["name" => [$user->name], "id" => [$user->email]],
+            'from'          => ["name" => [$user->name], "id" => [$user->email_id]],
             'subject'       => 'Request for Return - ' . $sub_order->order->txnid,
             'template_data' => [
                 'data' => $data,
