@@ -40,7 +40,11 @@
 				
 					<label *ngIf="item.shipment_status == 'delivered' && item.state == 'draft' "  class="item-info text-dark mb-0"><strong>Delivered on:</strong><span class="grey"> 26 February 2019</span></label> -->
 					
-					<label *ngIf="item.is_returned"  class="item-info text-dark"><strong>Return Initiated</strong><!--span class="grey"> 26 February 2019</span--></label>	
+					<label *ngIf="item.is_returned"  class="item-info text-dark"><strong>Return Initiated</strong> <br>
+						<span class="grey">
+							Our team will get in touch with you to process your request
+						</span>
+					</label>	
 				
 					<!-- <label *ngIf="item.shipment_status == 'retured' "  class="item-info text-dark"><strong>Refund Processed:</strong><span class="grey"> 26 February 2019</span></label> -->
 				
