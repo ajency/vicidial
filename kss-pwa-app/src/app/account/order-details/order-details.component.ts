@@ -226,7 +226,8 @@ export class OrderDetailsComponent implements OnInit {
 
   openReturnItem(item){
     console.log("item to be returned ==>", item);
-    this.cancelItemsList = [item];
+    let item_copy = Object.assign({}, item);
+    this.cancelItemsList = [item_copy];
     this.quantity = item.quantity;
     this.returnItem = true;
     this.callGetReasonsApi();
