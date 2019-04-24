@@ -41,8 +41,8 @@
 	<!-- Success message -->
 	<div *ngIf="cancelSuccessful || returnSuccessful" class="font-weight-normal kss-flash alert-warning mb-4 mt-0">
 	    <h5 class="font-weight-bold"><i class="fa-check-circle fas pr-1 text-success"></i> 
-	    	<ng-container *ngIf="cancelSuccessful">Shipment Cancel Successful<ng-container>
-	    	<ng-container *ngIf="returnSuccessful">Item Return Initiated<ng-container>
+	    	<ng-container *ngIf="cancelSuccessful">Shipment Cancel Successful</ng-container>
+	    	<ng-container *ngIf="returnSuccessful">Item Return Initiated</ng-container>
 		</h5>
 	    <p *ngIf="cancelSuccessful">Your shipment is cancelled successfully. Refund to your card/bank will take around 5-7 business days to reflect. Any coupons applied to this order will be reinstated.</p>
 	    <p *ngIf="returnSuccessful">Item retun initiated succsussfully.</p>

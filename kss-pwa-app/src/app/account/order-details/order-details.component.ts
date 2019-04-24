@@ -195,7 +195,7 @@ export class OrderDetailsComponent implements OnInit {
       $('#cd-cart').animate({
           scrollTop: 0
       });
-      this.cancelOrder ? this.cancelSuccessful = true; : this.returnSuccessful = true;
+      this.cancelOrder ? this.cancelSuccessful = true : this.returnSuccessful = true;
       this.getOrderDetails();
       this.closeCancelOrder();
     })
