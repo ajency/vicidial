@@ -32,6 +32,7 @@ export class OrderDetailsComponent implements OnInit {
   cancelReasonId : any;
   additionalRemark = '';
   cancelSuccessful : boolean = false;
+  returnSuccessful : boolean = false;
   cancelOrderFailureMsg : any;
   returnItem : boolean = false;
   cancelItemsList : any = [];
@@ -194,9 +195,9 @@ export class OrderDetailsComponent implements OnInit {
       $('#cd-cart').animate({
           scrollTop: 0
       });
+      this.cancelOrder ? this.cancelSuccessful = true; : this.returnSuccessful = true;
       this.getOrderDetails();
       this.closeCancelOrder();
-      this.cancelSuccessful = true;
     })
     .catch((error)=>{
       $('#cd-cart').animate({
