@@ -50,7 +50,7 @@
 				</div>
 				
 				<!-- Return Item -->
-				<div *ngIf="showStatus && item.returnable" class="return-item-section">
+				<div *ngIf="showStatus && item.return_policy.return_allowed" class="return-item-section">
 					<hr>
 					<a href="javascript:void(0);"  class="btn kss-btn kss-btn--outline-secondary return-item-btn" (click)="returnItem(item)">Return Item <i class="fas fa-chevron-right"></i></a>
 				</div>
