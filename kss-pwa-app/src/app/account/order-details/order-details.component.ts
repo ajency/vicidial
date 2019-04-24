@@ -172,30 +172,7 @@ export class OrderDetailsComponent implements OnInit {
       comments : this.additionalRemark
     };
     console.log("cancel body ==>", body);
-
-    this.apiservice.request(url, 'post', body , header ).then((response)=>{      
-      $('#cd-cart').animate({
-          scrollTop: 0
-      });
-      this.getOrderDetails();
-      this.closeCancelOrder();
-      this.cancelSuccessful = true;
-      this.order.cancel_allowed = false;
-    })
-    .catch((error)=>{
-      $('#cd-cart').animate({
-          scrollTop: 0
-      });
-      console.log("error ===>", error);
-      this.closeCancelOrder();
-      if(error.status == 0){
-        this.cancelOrderFailureMsg = "Order Cancellation failed. Please check your Internet Connection";  
-      }
-      else{
-        this.cancelOrderFailureMsg = error.error.message;
-      }
-      this.appservice.removeLoader();
-    })  
+    this.updateOrder(url,body,header)
   }
 
   callReturnOrderApi(){
@@ -209,7 +186,10 @@ export class OrderDetailsComponent implements OnInit {
       quantity : this.cancelItemsList[0].quantity
     };
     console.log("cancel body ==>", body);
+    this.updateOrder(url,body,header)
+  }
 
+  updateOrder(url, body, header){
     this.apiservice.request(url, 'post', body , header ).then((response)=>{      
       $('#cd-cart').animate({
           scrollTop: 0
@@ -217,7 +197,6 @@ export class OrderDetailsComponent implements OnInit {
       this.getOrderDetails();
       this.closeCancelOrder();
       this.cancelSuccessful = true;
-      this.order.cancel_allowed = false;
     })
     .catch((error)=>{
       $('#cd-cart').animate({
@@ -232,8 +211,10 @@ export class OrderDetailsComponent implements OnInit {
         this.cancelOrderFailureMsg = error.error.message;
       }
       this.appservice.removeLoader();
-    })  
+    }) 
   }
+
+
 
   closeCancelOrder(){
     $('#cd-cart').removeClass('overflow-h');
