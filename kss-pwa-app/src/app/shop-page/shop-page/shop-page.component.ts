@@ -28,7 +28,7 @@ export class ShopPageComponent implements OnInit {
   showLoader : boolean = false;
   showFilterLoader : boolean = false;
   filters : any;
-  sortOn : any = 'recommended';
+  sortOn : any = '';
   isMobile : boolean = false;
   selectedFilterCategory : any;
   queryObject : any = {};
