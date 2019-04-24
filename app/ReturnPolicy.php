@@ -25,7 +25,7 @@ class ReturnPolicy extends Model
 
     public static function getReturnPolicyForFacet($category_type, $sub_type)
     {
-        $facets = Facet::whereHas('return_policies', function ($query) use ($category_type, $sub_type) {
+        $facets = Facet::whereHas('returnPolicies', function ($query) use ($category_type, $sub_type) {
             $query->where('facet_value', $category_type)->orWhere('facet_value', $sub_type);
         })->get();
         $facet_cattype = $facets->where('facet_name', 'product_category_type')->first();
