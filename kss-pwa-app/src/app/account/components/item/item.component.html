@@ -1,15 +1,18 @@
-<div class="d-flex order-card">					
+<div class="d-flex order-card">
 	<a href="{{item.href}}" class="order-card__image" [ngClass]="{'variant-placeholder' : item.images[0]=='/img/placeholder.svg'}">
 		<div class="product-img">
 			<img src="{{item.images[0]}}" class="lazyload img-fit" data-srcset="{{item.images[0]}} 50w, {{item.images[1]}} 100w, {{item.images[2]}} 150w" sizes="50px">
 		</div>
-	</a>	
+	</a>
 	<div class="product-detail order-card__detail">
-		<a href="{{item.href}}" class="text-dark">
-			<div class="product-name text-truncate">
-				{{item.title}}
-			</div>
-		</a>
+		<div class="align-items-center d-flex justify-content-between">
+			<a href="{{item.href}}" class="text-dark">
+				<div class="product-name text-truncate">
+					{{item.title}}
+				</div>
+			</a>
+			<i class="fa fa-info-circle text-gray" data-toggle="tooltip" data-placement="top" title="Return policy text"></i>
+		</div>
 		<!--div class="product-size text-muted mb-1">
 			<span>Size: {{item.size}}</span> <span>|</span> <span>Qty: {{item.quantity}}</span>
 		</div -->
@@ -18,7 +21,7 @@
 				<label class="m-0">Size:</label>
 			</div>
 			<div class="pl-2 pr-1 align-self-center">
-				{{item.size}} 
+				{{item.size}}
 			</div>
 			|
 			<div class="d-flex align-items-center pl-1" [ngClass]="{'qty-click' : returnItem}" (click)="openQuantityModal()">
@@ -32,7 +35,7 @@
 		</div>
 
 		<div class="product-price">
-			<div class="kss-price kss-price--smaller">₹{{item.price_final}}									
+			<div class="kss-price kss-price--smaller">₹{{item.price_final}}
 				<span *ngIf="item.price_final != item.price_mrp">
 					<small class="kss-original-price text-muted">₹{{item.price_mrp}}
 				  	</small>
