@@ -47,10 +47,13 @@ class ReturnPolicy extends Model
         $now        = Carbon::now();
         $policyList = array();
         $orderLine  = OrderLine::find($orderLine_id);
-        if ($orderLine->shipment_status != 'delivered' || !$orderLine->shipment_delivery_date || $orderLine->is_returned || !$orderLine->return_policy) {
+        if (!$orderLine->return_policy) {
             return ['name' => null, 'return_allowed' => false];
         } else {
-            $returnPolicy   = $orderLine->return_policy;
+            $returnPolicy = $orderLine->return_policy;
+            if ($orderLine->shipment_status != 'delivered' || !$orderLine->shipment_delivery_date || $orderLine->is_returned) {
+                return ['name' => $returnPolicy['display_name'], 'return_allowed' => false];
+            }
             $orderDate      = new Carbon($orderLine->shipment_delivery_date);
             $data           = ['days' => $orderDate->diff($now)->days];
             $return_allowed = true;

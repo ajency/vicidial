@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Jobs\OrderLineStatus;
 use App\Jobs\SubOrderStatus;
 use App\Order;
+use App\SubOrder;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -241,7 +242,7 @@ class OrderController extends Controller
     public function returnOrder($id, Request $request)
     {
         $user      = User::getUserByToken($request->header('Authorization'));
-        $sub_order = SubOrder::find($sub_order_id);
+        $sub_order = SubOrder::find($id);
         validateSubOrder($user, $sub_order);
 
         $request->validate(['reason' => 'required|exists:defaults,id', 'comments' => 'present', 'variant_id' => 'required|exists:variants,odoo_id', 'quantity' => 'required|integer|min:1']);
@@ -288,7 +289,6 @@ class OrderController extends Controller
         ]);
 
         return response()->json(["message" => 'Return request placed successfully', 'success' => true]);
-
     }
 
 }
