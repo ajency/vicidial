@@ -31,9 +31,9 @@ class ReturnPolicy extends Model
         $facet_cattype = $facets->where('facet_name', 'product_category_type')->first();
         $facet_subtype = $facets->where('facet_name', 'product_subtype')->first();
         if ($facet_cattype) {
-            $return_policy = $facet_cattype->return_policies()->first();
+            $return_policy = $facet_cattype->returnPolicies()->first();
         } elseif ($facet_subtype) {
-            $return_policy = $facet_subtype->return_policies()->first();
+            $return_policy = $facet_subtype->returnPolicies()->first();
         } else {
             $default_return_policy = config('orders.default_return_policy');
             $return_policy         = ReturnPolicy::where('title', $default_return_policy)->first();
