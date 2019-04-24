@@ -36,7 +36,7 @@ class ReturnPoliciesTableSeeder extends Seeder
             array(
                 'entity'      => 'days',
                 'filter'      => 'less_than',
-                'value'       => array(3),
+                'value'       => '[3]',
                 'parent_type' => 'App\ReturnPolicy',
                 'parent_id'   => DB::table('return_policies')->where('title', 'Uniform')->value('id'),
                 'active'      => '1',
@@ -44,7 +44,7 @@ class ReturnPoliciesTableSeeder extends Seeder
             array(
                 'entity'      => 'days',
                 'filter'      => 'less_than',
-                'value'       => array(0),
+                'value'       => '[0]',
                 'parent_type' => 'App\ReturnPolicy',
                 'parent_id'   => DB::table('return_policies')->where('title', 'Undergarments')->value('id'),
                 'active'      => '1',
@@ -52,7 +52,7 @@ class ReturnPoliciesTableSeeder extends Seeder
             array(
                 'entity'      => 'days',
                 'filter'      => 'less_than',
-                'value'       => array(7),
+                'value'       => '[7]',
                 'parent_type' => 'App\ReturnPolicy',
                 'parent_id'   => DB::table('return_policies')->where('title', 'Other')->value('id'),
                 'active'      => '1',
