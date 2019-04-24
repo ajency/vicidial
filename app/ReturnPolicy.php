@@ -44,7 +44,8 @@ class ReturnPolicy extends Model
 
     public static function fetchReturnPolicy($orderLine_id)
     {
-        $now        = Carbon::now();
+        $now = Carbon::now();
+        $now->setTimezone('Asia/Kolkata');
         $policyList = array();
         $orderLine  = OrderLine::find($orderLine_id);
         if (!$orderLine->return_policy) {
@@ -54,7 +55,10 @@ class ReturnPolicy extends Model
             if ($orderLine->shipment_status != 'delivered' || !$orderLine->shipment_delivery_date || $orderLine->is_returned) {
                 return ['name' => $returnPolicy['display_name'], 'return_allowed' => false];
             }
-            $orderDate      = new Carbon($orderLine->shipment_delivery_date);
+            $d         = explode("-", explode(" ", $orderLine->shipment_delivery_date)[0]);
+            $orderDate = Carbon::createFromDate($d[0], $d[1], $d[2], "Asia/Kolkata");
+            $orderDate->startOfDay();
+
             $data           = ['days' => $orderDate->diff($now)->days];
             $return_allowed = true;
             foreach ($returnPolicy->expressions as $expression) {
