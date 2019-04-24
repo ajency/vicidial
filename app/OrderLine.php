@@ -7,9 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class OrderLine extends Model
 {
     protected $casts = [
-        'images'   => 'array',
-        'return_policy'   => 'array',
-        'is_returned'   => 'boolean',
+        'images'      => 'array',
+        'is_returned' => 'boolean',
     ];
 
     protected $fillable = [

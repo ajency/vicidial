@@ -25,22 +25,21 @@ class ReturnPolicy extends Model
 
     public static function getReturnPolicyForFacet($category_type, $sub_type)
     {
-        $returnPolicies = array();
-        $facets         = Facet::whereHas('return_policies', function ($query) use ($category_type, $sub_type) {
+        $facets = Facet::whereHas('return_policies', function ($query) use ($category_type, $sub_type) {
             $query->where('facet_value', $category_type)->orWhere('facet_value', $sub_type);
         })->get();
         $facet_cattype = $facets->where('facet_name', 'product_category_type')->first();
         $facet_subtype = $facets->where('facet_name', 'product_subtype')->first();
         if ($facet_cattype) {
-            $facet = $facet_cattype->return_policies()->first();
+            $return_policy = $facet_cattype->return_policies()->first();
         } elseif ($facet_subtype) {
-            $facet = $facet_subtype->return_policies()->first();
+            $return_policy = $facet_subtype->return_policies()->first();
         } else {
-            $default_title = collect(Defaults::where('type', 'return_policy')->where('label', 'default')->first()->meta_data)['title'];
-            $facet         = ReturnPolicy::where('title', $default_title)->first();
+            $default_return_policy = config('orders.default_return_policy');
+            $return_policy         = ReturnPolicy::where('title', $default_return_policy)->first();
         }
-        $returnPolicies[] = ['id' => $facet->id, 'title' => $facet->title, 'display_name' => $facet->display_name];
-        return $returnPolicies;
+
+        return $return_policy->id;
     }
 
     public static function fetchReturnPolicy($orderLine_id)
@@ -48,28 +47,20 @@ class ReturnPolicy extends Model
         $now        = Carbon::now();
         $policyList = array();
         $orderLine  = OrderLine::find($orderLine_id);
-        if (!$orderLine->orders->returnAllowed() || !$orderLine->return_policy) {
-            $policyList[] = [null => false];
-        } 
-        else {
-            $returnPolicyIds = collect($orderLine->return_policy)->pluck('id');
-            $returnPolicies  = ReturnPolicy::whereIn('id', $returnPolicyIds)->get();
-            foreach ($returnPolicies as $returnPolicy) {
-                if ($orderLine->shipment_delivery_date) {
-                    foreach ($returnPolicy->expressions as $expression) {
-                        $orderDate    = new Carbon($orderLine->shipment_delivery_date);
-                        $data['days'] = $orderDate->diff($now)->days;
-                        if ($expression->validate($data)) {
-                            $policyList[] = [$returnPolicy['display_name'] => true];
-                        } else {
-                            $policyList[] = [$returnPolicy['display_name'] => false];
-                        }
-                    }
-                } else {
-                    $policyList[] = [$returnPolicy['display_name'] => false];
+        if ($orderLine->shipment_status != 'delivered' || !$orderLine->shipment_delivery_date || $orderLine->is_returned || !$orderLine->return_policy) {
+            return ['name' => null, 'return_allowed' => false];
+        } else {
+            $returnPolicy   = $orderLine->return_policy;
+            $orderDate      = new Carbon($orderLine->shipment_delivery_date);
+            $data           = ['days' => $orderDate->diff($now)->days];
+            $return_allowed = true;
+            foreach ($returnPolicy->expressions as $expression) {
+                if (!$expression->validate($data)) {
+                    $return_allowed = false;
+                    break;
                 }
             }
         }
-        return $policyList;
+        return ['name' => $returnPolicy['display_name'], 'return_allowed' => $return_allowed];
     }
 }

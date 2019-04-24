@@ -83,7 +83,7 @@ class Order extends Model
     public function placeOrderOnOdoo()
     {
         //create a job to place order on odoo for all suborders.
-        $inventoryData   = [];  
+        $inventoryData = [];
         foreach ($this->subOrders as $subOrder) {
             $subOrder->odoo_status = 'draft';
             $subOrder->save();
@@ -101,11 +101,11 @@ class Order extends Model
         }
         Sync::call('inventory', 'reserveInventory', ['inventoryData' => $inventoryData]);
         /*if ($this->cart->coupon != null) {
-            $odoo              = new OdooConnect;
-            $currentCouponLeft = $odoo->defaultExec('sale.order.coupon', 'search_read', [[['global_code', '=', $this->cart->coupon]]], ['fields' => ['consumed_coupon_count']])->first();
-            $odoo->defaultExec('sale.order.coupon', 'write', [[$currentCouponLeft['id']], ['consumed_coupon_count' => $currentCouponLeft['consumed_coupon_count'] - 1]], null);
-            Coupon::where('odoo_id', $currentCouponLeft['id'])->update(['left_uses' => $currentCouponLeft['consumed_coupon_count'] - 1]);
-        }*/
+    $odoo              = new OdooConnect;
+    $currentCouponLeft = $odoo->defaultExec('sale.order.coupon', 'search_read', [[['global_code', '=', $this->cart->coupon]]], ['fields' => ['consumed_coupon_count']])->first();
+    $odoo->defaultExec('sale.order.coupon', 'write', [[$currentCouponLeft['id']], ['consumed_coupon_count' => $currentCouponLeft['consumed_coupon_count'] - 1]], null);
+    Coupon::where('odoo_id', $currentCouponLeft['id'])->update(['left_uses' => $currentCouponLeft['consumed_coupon_count'] - 1]);
+    }*/
     }
 
     public function cancelOrderOnOdoo()
@@ -372,20 +372,11 @@ class Order extends Model
         return ['store_ids' => $store_ids, 'store_data' => $store_data];
     }
 
-    public static function saveDeliveryDate($order_from_id, $order_to_id){
+    public static function saveDeliveryDate($order_from_id, $order_to_id)
+    {
         $orders = self::where('id', '>=', $order_from_id)->where('id', '<=', $order_to_id)->get()->pluck('id');
         foreach ($orders as $order_id) {
             OrderLineDeliveryDate::dispatch($order_id)->onQueue('orderline_delivery_date');
-        }
-    }
-
-    public function returnAllowed()
-    {
-        if($this->orderlines->first()->shipment_status == 'delivered'){
-            return true;
-        }
-        else{
-            return false;
         }
     }
 }

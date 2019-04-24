@@ -235,7 +235,7 @@ class SubOrder extends Model
     {
         $itemsData     = [];
         $store_address = $this->location->getAddress();
-        foreach ($this->orderLines->groupBy('variant_id') as $items) {
+        foreach ($this->orderLines->groupBy('variant_id', 'is_returned') as $items) {
             $itemData = $items->first();
             $item     = [
                 'id'               => $itemData['id'],
@@ -252,6 +252,7 @@ class SubOrder extends Model
                 'product_slug'     => $itemData['product_slug'],
                 'state'            => $itemData['state'],
                 'shipment_status'  => $itemData['shipment_status'],
+                'is_returned'      => $itemData['is_returned'],
                 'return_policy'    => ReturnPolicy::fetchReturnPolicy($itemData['id']),
                 'quantity'         => $this->orderLines->where('variant_id', $itemData['variant_id'])->count(),
                 'is_invoiced'      => $this->is_invoiced,
