@@ -148,10 +148,18 @@
 		</div>
 
 		<div class="cancel-od-selection">
-			
+
 			<div class="row primary-info cancelable-items">
 				<div class="col-12 d-flex flex-column"  *ngFor="let item of cancelItemsList; let i = index">
-					<app-item [item]="item" [showStatus]=false [returnItem]="returnItem" (openQuantityModalTrigger)="openQuantityModal()"></app-item>			
+					<app-item [item]="item" [showStatus]=false [returnItem]="returnItem" (openQuantityModalTrigger)="openQuantityModal()"></app-item>
+				</div>
+			</div>
+			<div class="row secoundary-info">
+				<div class="col-12 item-order-info">
+					<hr class="mt-0">
+					<label class="item-info mb-0 sm-font text-dark">
+						<i class="fa fa-info-circle mr-1"></i> Return policy valid till 4th May
+					</label>
 				</div>
 			</div>
 			<div class="row refund-info-msg">
