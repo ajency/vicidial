@@ -1,0 +1,14 @@
+.back-to-shop {
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    display: none;
+}
+
+@media (max-width: 991px){
+    .menu-toggle {
+        &.d-none {
+            display: none !important;
+        }
+    }
+}

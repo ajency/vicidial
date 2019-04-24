@@ -1,4 +1,5 @@
 import { Component, OnInit,  Input, OnChanges, Output, isDevMode } from '@angular/core';
+import { Location } from '@angular/common';
 declare var $ : any;
 import { AppServiceService } from '../../service/app-service.service';
 import { ApiServiceService } from '../../service/api-service.service';
@@ -11,8 +12,10 @@ import { ApiServiceService } from '../../service/api-service.service';
 export class HeaderComponent implements OnInit, OnChanges {
 
   menu : any;
+  @Input() browserback : any;
   constructor(private appservice : AppServiceService,
-              private apiService: ApiServiceService){ }
+              private apiService: ApiServiceService,
+              private location: Location){ }
 
   ngOnInit(){
     this.getMenu();
@@ -82,5 +85,9 @@ export class HeaderComponent implements OnInit, OnChanges {
 
   createDataSrcSet(a,b,c,d){
     return a+ " " +b +", " +c +" "+d;
+  }
+
+  backToPrev(){
+    this.location.back();
   }
 }
