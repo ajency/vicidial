@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Jobs\OrderLineStatus;
 use App\Jobs\SubOrderStatus;
 use App\Order;
+use App\ReturnPolicy;
 use App\SubOrder;
 use App\User;
 use Carbon\Carbon;
@@ -248,13 +249,13 @@ class OrderController extends Controller
         $request->validate(['reason' => 'required|exists:defaults,id', 'comments' => 'present', 'variant_id' => 'required|exists:variants,odoo_id', 'quantity' => 'required|integer|min:1']);
         $params = $request->all();
 
-        $order_lines = $sub_order->orderLines->where('variant_id', $param['variant_id'])->where('shipment_status', 'delivered')->where('is_returned', false);
+        $order_lines = $sub_order->orderLines->where('variant_id', $params['variant_id'])->where('shipment_status', 'delivered')->where('is_returned', false);
 
         if (!ReturnPolicy::fetchReturnPolicy($order_lines->first())['return_allowed']) {
             abort(403, 'Return not allowed');
         }
 
-        foreach ($order_lines->limit($param['quantity']) as $order_line) {
+        foreach ($order_lines->limit($params['quantity']) as $order_line) {
 
             $comment              = new Comment;
             $comment->reason_id   = $params['reason'];
@@ -274,9 +275,9 @@ class OrderController extends Controller
             'email'    => $user->email,
             'txnid'    => $sub_order->order->txnid,
             'item'     => $order_lines->first()->title,
-            'quantity' => $param['quantity'],
-            'reason'   => Defaults::getReason($param['reason']),
-            'comments' => $param['comments'],
+            'quantity' => $params['quantity'],
+            'reason'   => Defaults::getReason($params['reason']),
+            'comments' => $params['comments'],
         ];
 
         sendEmail('return-email', [
