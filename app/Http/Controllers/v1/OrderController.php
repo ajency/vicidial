@@ -270,11 +270,12 @@ class OrderController extends Controller
         }
 
         $data = [
-            'from'     => $user->name,
+            'name'     => $user->name,
             'mobile'   => $user->phone,
-            'email'    => $user->email,
-            'txnid'    => $sub_order->order->txnid,
+            'txnno'    => $sub_order->order->txnid,
             'item'     => $order_lines->first()->title,
+            'product_slug'     => $order_lines->first()->product_slug,
+            'size'     => $order_lines->first()->size,
             'quantity' => $params['quantity'],
             'reason'   => Defaults::getReason($params['reason']),
             'comments' => $params['comments'],

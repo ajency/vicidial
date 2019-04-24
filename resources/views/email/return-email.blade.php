@@ -4,11 +4,9 @@
 <br>
 <div><b>Mobile No</b> : {{$data["mobile"]}}</div>
 <br>
-<div><b>Email</b> : {{$data["email"]}}</div>
+<div><b>Order No</b> : {{$data["txnno"]}}</div>
 <br>
-<div><b>OrderNo</b> : {{$data["txnno"]}}</div>
-<br>
-<div><b>Item</b> : {{$data["item"]}}</div>
+<div><b>Item</b> : <a href="{{{{url('/')}}/{{$data['product_slug']}}/buy?size={{$data['size']}}}}">{{$data["item"]}}</a></div>
 <br>
 <div><b>Quantity</b> : {{$data["quantity"]}}</div>
 <br>
