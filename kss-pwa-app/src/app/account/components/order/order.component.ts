@@ -32,7 +32,12 @@ export class OrderComponent implements OnInit, OnChanges{
       if(item.price_mrp != item.price_final)
         item.off_percentage = Math.round(((item.price_mrp - item.price_final) / (item.price_mrp )) * 100) + '% OFF';
       item.href = '/' + item.product_slug +'/buy?size='+item.size;
-      item.images = Array.isArray(item.images) ? ['/img/placeholder.svg', '/img/placeholder.svg', '/img/placeholder.svg'] : Object.values(item.images);
+      if(Array.isArray(item.images)){
+        item.images = {};
+        item['1x'] = '/img/placeholder.svg';
+        item['2x'] = '/img/placeholder.svg';
+        item['3x'] = '/img/placeholder.svg';
+      }
     })
   }
 

@@ -43,7 +43,7 @@ export class MyOrdersComponent implements OnInit {
 
   getOrders(){
     if(this.appservice.myOrders){
-      this.orders = Object.assign({}, this.appservice.myOrders);
+      this.orders = this.appservice.myOrders;
       this.apiCallComplete = true;
     }
     else{
@@ -51,7 +51,7 @@ export class MyOrdersComponent implements OnInit {
       this.appservice.getOrders().then((response)=>{
         // let formatted_data = this.appservice.formattedCartDataForUI(response.data);
         this.orders = response.data;
-        this.appservice.myOrders = Object.assign({}, this.orders);
+        this.appservice.myOrders = this.orders;
         console.log("orders ==>", this.orders);
         this.appservice.removeLoader();
         this.apiCallComplete = true;
