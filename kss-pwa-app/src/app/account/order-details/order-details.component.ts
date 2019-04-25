@@ -247,5 +247,9 @@ export class OrderDetailsComponent implements OnInit {
   updateQuantity(quantity){
     this.cancelItemsList[0].quantity = quantity;
   }
+
+  getValidTill(date){
+    return moment(date, "YYYY-MM-DD HH:mm:ss").format("DD MMM, YYYY");
+  }
   
 }
