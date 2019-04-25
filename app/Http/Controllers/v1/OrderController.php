@@ -251,7 +251,7 @@ class OrderController extends Controller
 
         $order_lines = $sub_order->orderLines->where('variant_id', $params['variant_id'])->where('shipment_status', 'delivered')->where('is_returned', false);
 
-        if (!ReturnPolicy::fetchReturnPolicy($order_lines->first()->id)['return_allowed']) {
+        if (!ReturnPolicy::fetchReturnPolicy($order_lines->first())['return_allowed']) {
             abort(403, 'Return not allowed');
         }
 
