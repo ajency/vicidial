@@ -250,6 +250,7 @@ export class ShopPageComponent implements OnInit {
 
   searchByText(search_text){
     this.searchString = search_text;
+    this.pageNumber = '';
     this.setRouteParam();
   }
 
@@ -259,6 +260,7 @@ export class ShopPageComponent implements OnInit {
       console.log("mobile sort by ==>", mobile_sort);
       this.sortOn = mobile_sort;
     }
+    this.pageNumber = '';
     this.setRouteParam();
   }
 
@@ -284,6 +286,7 @@ export class ShopPageComponent implements OnInit {
           delete this.booleanFilter[filter.filter.attribute_param]
       }
     }
+    this.pageNumber = '';
     this.setRouteParam();
   }
 
