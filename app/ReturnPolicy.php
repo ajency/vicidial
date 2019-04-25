@@ -46,8 +46,7 @@ class ReturnPolicy extends Model
     {
         $now = Carbon::now();
         $now->setTimezone('Asia/Kolkata');
-        $policyList = array();
-        $orderLine  = OrderLine::find($orderLine_id);
+        $orderLine = OrderLine::find($orderLine_id);
         if (!$orderLine->return_policy) {
             return ['name' => null, 'return_allowed' => false, 'date' => null];
         } else {
@@ -67,7 +66,7 @@ class ReturnPolicy extends Model
                     break;
                 }
             }
-            $date = $orderDate->endOfDay()->addDays($returnPolicy->expressions->first()->value[0])->toDateTimeString();
+            $date = ($returnPolicy->expressions->first()->value[0] == 0) ? null : $orderDate->endOfDay()->addDays($returnPolicy->expressions->first()->value[0] - 1)->toDateTimeString();
             return ['name' => $returnPolicy['display_name'], 'return_allowed' => $return_allowed, 'date' => $date];
         }
     }

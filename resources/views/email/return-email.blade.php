@@ -8,6 +8,8 @@
 <br>
 <div><b>Item</b> : <a href="{{url('/')}}/{{$data['product_slug']}}/buy?size={{$data['size']}}">{{$data["item"]}}</a></div>
 <br>
+<div><b>Size</b> : {{$data["size"]}}</div>
+<br>
 <div><b>Quantity</b> : {{$data["quantity"]}}</div>
 <br>
 <div><b>Reason</b> : {{$data["reason"]}}</div>

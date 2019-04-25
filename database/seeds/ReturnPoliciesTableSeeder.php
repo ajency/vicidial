@@ -14,19 +14,19 @@ class ReturnPoliciesTableSeeder extends Seeder
         DB::table('return_policies')->insert(array(
             array(
                 'title'        => 'Uniform',
-                'display_name' => '3 day Policy',
+                'display_name' => 'This item can be returned within 3 days of delivery',
                 'active'       => '1',
                 'display'      => '1',
             ),
             array(
                 'title'        => 'Undergarments',
-                'display_name' => 'No Returns',
+                'display_name' => 'This item cannot be returned',
                 'active'       => '1',
                 'display'      => '1',
             ),
             array(
                 'title'        => 'Other',
-                'display_name' => '7 day Policy',
+                'display_name' => 'This item can be returned within 7 days of delivery',
                 'active'       => '1',
                 'display'      => '1',
             ),

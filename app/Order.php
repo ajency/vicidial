@@ -71,7 +71,7 @@ class Order extends Model
                 $this->orderLines()->attach($orderLineId, ['type' => $this->type]);
             }
         }
-        SaveReturnPolicies::dispatch($this->id)->onQueue('odoo_order_line');
+        SaveReturnPolicies::dispatch($this->id)->onQueue('orderline_return_policy');
     }
 
     public function checkInventoryForSuborders()
@@ -377,7 +377,7 @@ class Order extends Model
     {
         $orders = self::where('id', '>=', $order_from_id)->where('id', '<=', $order_to_id)->get()->pluck('id');
         foreach ($orders as $order_id) {
-            OrderLineDeliveryDate::dispatch($order_id)->onQueue('orderline_delivery_date');
+            OrderLineDeliveryDate::dispatch($order_id)->onQueue('orderline_return_policy');
         }
     }
 }

@@ -235,7 +235,7 @@ class SubOrder extends Model
     {
         $itemsData     = [];
         $store_address = $this->location->getAddress();
-        foreach ($this->orderLines->groupBy('variant_id', 'is_returned') as $items) {
+        foreach ($this->orderLines->groupBy(function ($item, $key) {return $item["variant_id"] . "-" . $item["is_returned"];}) as $items) {
             $itemData = $items->first();
             $item     = [
                 'id'               => $itemData['id'],

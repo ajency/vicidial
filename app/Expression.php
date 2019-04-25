@@ -26,6 +26,10 @@ class Expression extends Model
             case 'less_than':        
                 switch ($this->entity) {
                     case 'days':
+                        if ($this->value[0] == 0) {
+                            return false;
+                            break;
+                        }
                         return ($data['days'] <= $this->value[0]);
                         break;          
                 }
