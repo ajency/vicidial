@@ -38,7 +38,7 @@ class OrderLineStatus implements ShouldQueue
         foreach ($this->lineIds as $lineId) {
             $ol = OrderLine::find($lineId);
             if ($ol) {
-                $d         = explode("-", explode(" ", $this->delivery_date)[0]);
+                $d         = explode("-", explode("T", explode(" ", $this->delivery_date)[0])[0]);
                 $orderDate = Carbon::createFromDate($d[0], $d[1], $d[2], "Asia/Kolkata");
                 $orderDate->startOfDay();
                 $return_expiry_date = null;

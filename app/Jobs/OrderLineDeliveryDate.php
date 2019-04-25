@@ -54,8 +54,8 @@ class OrderLineDeliveryDate implements ShouldQueue
 
                 $return_policy      = ReturnPolicy::find($return_policy_data['id']);
                 $return_expiry_date = null;
-                if($shipped_date && $return_policy){
-                    $d         = explode("-", explode(" ", $shipped_date)[0]);
+                if ($shipped_date && $return_policy) {
+                    $d         = explode("-", explode("T", explode(" ", $shipped_date)[0])[0]);
                     $orderDate = Carbon::createFromDate($d[0], $d[1], $d[2], "Asia/Kolkata");
                     $orderDate->startOfDay();
                     $return_expiry_date = ($return_policy->expressions->first()->value[0] == 0) ? null : $orderDate->endOfDay()->addDays($return_policy->expressions->first()->value[0] - 1)->toDateTimeString();
