@@ -32,6 +32,7 @@ const routes: Routes = [
 	{ path: ':cat1/:cat2', loadChildren : './shop-page/shop-page.module#ShopPageModule'},
 	{ path: ':cat1/:cat2/:cat3', loadChildren : './shop-page/shop-page.module#ShopPageModule'},
 	{ path: ':cat1/:cat2/:cat3/:cat4', loadChildren : './shop-page/shop-page.module#ShopPageModule'},
+	{ path: ':cat1/:cat2/:cat3/:cat4/:cat5', loadChildren : './shop-page/shop-page.module#ShopPageModule'},
 	{ path: '**', component : WidgetComponent }	
 ];
 

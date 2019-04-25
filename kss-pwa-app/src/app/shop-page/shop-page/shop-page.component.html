@@ -179,7 +179,7 @@
 
 				                     <div class="kss-pagination mt-5">
 				                     	<span class="kss-pagination__prev controls pr-md-4 d-flex 9" [class.disabled]="p.isFirstPage()">
-				                     		<a  (click)="p.previous()" >
+				                     		<a (click)="p.previous()" >
 				                     			<span class="pr-2"><i class="fas fa-chevron-left"></i></span>
 				                     			<span class="d-flex">Previous <span class="d-none d-md-block">Page</span></span>
 				                     		</a>
@@ -195,7 +195,7 @@
 				                     	</div>
 
 				                     	<span class="kss-pagination__next controls pl-md-4 d-flex" [class.disabled]="p.isLastPage()">
-				                     		<a *ngIf="!p.isLastPage()" (click)="p.next()">
+				                     		<a (click)="p.next()">
 				                     			<span class="d-flex">Next <span class="d-none d-md-block">Page</span></span>
 				                     			<span class="pl-2"><i class="fas fa-chevron-right"></i></span>
 				                     		</a>

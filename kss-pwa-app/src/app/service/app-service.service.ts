@@ -49,7 +49,7 @@ export class AppServiceService {
    add_to_cart_completed = false;
 
    menuObject : any;
-
+   filters : any;
   constructor(	private router: Router,
                 private apiservice : ApiServiceService) { 
     this.apiUrl = isDevMode() ? 'http://localhost:8000' : '';

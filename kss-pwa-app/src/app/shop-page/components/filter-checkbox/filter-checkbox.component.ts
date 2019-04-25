@@ -61,7 +61,7 @@ export class FilterCheckboxComponent implements OnInit, OnChanges {
 
   applyFilter(filter, item){
   	// console.log("applyFilter ==>",filter, item)
-  	this.filterApplied.emit({category : filter.attribute_param, value : item.slug, apply : item.is_selected, filter_type:filter.filter_type })
+  	this.filterApplied.emit({filter : filter, value : item.slug, apply : item.is_selected })
   }
 
   applyPriceRange(filter){
