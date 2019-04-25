@@ -11,6 +11,7 @@ import { AppServiceService } from '../../service/app-service.service';
 import { ApiServiceService } from '../../service/api-service.service';
 import { AccountService } from '../services/account.service';
 
+import * as moment from 'moment';
 // import 'rxjs/add/operator/switchMap';
 
 declare var $: any;
