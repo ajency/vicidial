@@ -38,7 +38,7 @@
 						<i class="fa fa-info-circle mr-1"></i> Item was returnable till {{getValidTill(item.return_policy.date)}}
 					</label>
 
-					<label *ngIf="!item.return_policy.return_allowed && item.shipment_status=='delivered'" class="item-info mb-0 sm-font text-dark">
+					<label *ngIf="!item.return_policy.return_allowed && item.shipment_status=='delivered' && !item.is_returned" class="item-info mb-0 sm-font text-dark">
 						<i class="fa fa-info-circle mr-1"></i> This item cannot be returned
 					</label>
 				<!-- 	<label *ngIf="item.state == 'sale' && !item.shipment_status" class="item-info text-dark mb-0"><strong>Processed On:</strong><span class="grey"> 26 February 2019</span></label>
