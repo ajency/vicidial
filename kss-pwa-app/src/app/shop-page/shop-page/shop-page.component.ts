@@ -35,26 +35,7 @@ export class ShopPageComponent implements OnInit {
   isMobile : boolean = false;
   selectedFilterCategory : any;
   queryObject : any = {};
-  sort_on = [
-    {
-      name: "Recommended",
-      value: "",
-      is_selected: true,
-      class: "popularity"
-    },
-    {
-      name: "Price Low to High",
-      value : "price_asc",
-      is_selected: false,
-      class: "price-l"
-    },
-    {
-      name: "Price High to Low",
-      value: "price_desc",
-      is_selected: false,
-      class: "price-h"
-    }
-  ]
+  sort_on : any
 
   page : any = {
     current : 1,
@@ -77,6 +58,8 @@ export class ShopPageComponent implements OnInit {
   primaryFilters = {};
   rangeFilter = {};
   booleanFilter = {};
+  searchString : any = '';
+  pageNumber : any;
 
   constructor(private apiService: ApiServiceService,
               private appservice : AppServiceService,
@@ -103,6 +86,12 @@ export class ShopPageComponent implements OnInit {
             this.formatRangeFilter(results.query.rf);
           if(results.query.bf)
             this.formatBooleanParams(results.query.bf);
+          if(results.query.search_string)
+            this.queryObject.search_string = results.query.search_string;
+          if(results.query.sort_on)
+            this.queryObject.sort_on = results.query.sort_on;
+          if(results.query.page)
+            this.queryObject.page = results.query.page;
 
           this.callListPageApi();
           this.getFiltersCount();
@@ -196,6 +185,8 @@ export class ShopPageComponent implements OnInit {
         response.filters = response.filters.sort((a,b)=>{ return(a.order - b.order) });
         this.selectedFilterCategory = response.filters[0].header.facet_name;
         this.filters = response.filters;
+        this.sort_on = response.sort_on;
+        this.searchString = response.search_string;
         this.appservice.filters = this.filters;
         this.filtersCopy = Object.assign([], this.filters);
       })
@@ -216,6 +207,11 @@ export class ShopPageComponent implements OnInit {
       response.filters = response.filters.sort((a,b)=>{ return(a.order - b.order) });
       this.selectedFilterCategory = response.filters[0].header.facet_name;
       this.filters = response.filters;
+      this.sort_on = response.sort_on;
+      let sort_by = this.sort_on.find(item => { return item.is_selected });
+      console.log("sort by==>", sort_by);
+      this.sortOn = sort_by.value;
+      this.searchString = response.search_string;
       // this.urlRoutes = {}; // uncomment once filter count api is ready
       // this.primaryFilters = {};
       this.filters.forEach(filter =>{
@@ -253,31 +249,23 @@ export class ShopPageComponent implements OnInit {
   }
 
   searchByText(search_text){
-    // console.log("applyFilter", search_text);
-    this.queryObject.search_string = search_text;
-    console.log("queryObject ==>", this.queryObject);
-    this.updateListPage();
+    this.searchString = search_text;
+    this.setRouteParam();
   }
 
   sortBy(mobile_sort : any = ''){
     if(mobile_sort){
       //close modal and call get filters and get product list api
       console.log("mobile sort by ==>", mobile_sort);
-      this.queryObject.sort_on = mobile_sort;
+      this.sortOn = mobile_sort;
     }
-    else{
-      console.log("sortBy ==>", this.sortOn);
-      this.queryObject.sort_on = this.sortOn;
-    }
-    console.log("queryObject ==>", this.queryObject);
-    this.updateListPage();
+    this.setRouteParam();
   }
 
   pageChanged(page:number){
     console.log("pageChanged ==>", page);
-    this.queryObject.page = page;
-    console.log("queryObject ==>", this.queryObject);
-    this.callListPageApi();
+    this.pageNumber = page;
+    this.setRouteParam();
   }
 
   applyCheckboxFilter(filter){
@@ -297,8 +285,6 @@ export class ShopPageComponent implements OnInit {
       }
     }
     this.setRouteParam();
-    // console.log("queryObject ==>", this.queryObject);
-    // this.updateListPage();
   }
 
   setRouteParam(){
@@ -306,30 +292,17 @@ export class ShopPageComponent implements OnInit {
     let path = '';
 
     for (const prop in this.urlRoutes) {
-      // console.log(`obj.${prop} = ${obj[prop]}`);
       if( this.urlRoutes[prop].length )
         path = path + '/' + this.urlRoutes[prop].join('--');
     }
-
-    // for(const [key,value] of Object.entries(this.urlRoutes)){
-    //   if(value && Object.keys(value).length){
-    //     path = path + '/' + value.join('--');
-    //   }
-    // }
 
     let query_params = ''
     for (const prop in this.primaryFilters) {
       if( this.primaryFilters[prop].length )
         query_params ? query_params = query_params + '|'  + prop + ':' + this.primaryFilters[prop].join(',') : query_params = query_params + prop + ':' + this.primaryFilters[prop].join(',')
     }
-    // for(const [key,value] of Object.entries(this.primaryFilters)){
-    //   if(value && Object.keys(value).length){
-    //     query_params ? query_params = query_params + '|'  + key + ':' + value.join(',') : query_params = query_params + key + ':' + value.join(',')
-    //   }
-    // }
     if(query_params)
       query_params = '?pf=' + query_params;
-    
 
     if(this.rangeFilter['price'])
       query_params ? query_params = query_params + '&rf=' + this.rangeFilter['price'] : query_params =  '?rf=' + this.rangeFilter['price']
@@ -339,14 +312,18 @@ export class ShopPageComponent implements OnInit {
       if( this.booleanFilter[prop].length )
         boolean_filters ? boolean_filters = boolean_filters + '|'  + prop + ':' + this.booleanFilter[prop] : boolean_filters = boolean_filters + prop + ':' + this.booleanFilter[prop];
     }
-    // for(const [key,value] of Object.entries(this.booleanFilter)){
-    //   if(value && Object.keys(value).length){
-    //     boolean_filters ? boolean_filters = boolean_filters + '|'  + key + ':' + value : boolean_filters = boolean_filters + key + ':' + value;
-    //   }
-    // }
 
     if(boolean_filters)
       query_params ? query_params = query_params + '&bf=' + boolean_filters : query_params =  '?bf=' + boolean_filters;
+
+    if(this.searchString)
+      query_params ? query_params = query_params + '&search_string=' + this.searchString : query_params =  '?search_string=' + this.searchString; 
+
+    if(this.sortOn)
+      query_params ? query_params = query_params + '&sort_on=' + this.sortOn : query_params =  '?sort_on=' + this.sortOn;
+
+    if(this.pageNumber)
+      query_params ? query_params = query_params + '&page=' + this.pageNumber : query_params =  '?page=' + this.pageNumber;    
 
     if(!path)
       path = '/shop'
@@ -376,6 +353,7 @@ export class ShopPageComponent implements OnInit {
   applyRangeFilter(filter){
     this.rangeFilter['price'] = '';
     this.rangeFilter['price'] = 'price:'+ filter.value.start + 'TO' + filter.value.end;
+    this.setRouteParam();
   }
 
   updateListPage(){
