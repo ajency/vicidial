@@ -76,6 +76,7 @@ export class ShopPageComponent implements OnInit {
       .pipe(map(results => ({route: results[0], query: results[1]})))
         .subscribe(results => {
           // console.log(results);
+          this.queryObject = {};
           for (const [key,value] of Object.entries(results.route)){
             this.queryObject['pf'] ? this.queryObject['pf'].push(value) : this.queryObject['pf'] = [value];
           }
