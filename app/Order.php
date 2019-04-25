@@ -375,7 +375,7 @@ class Order extends Model
 
     public static function saveDeliveryDate($order_from_id, $order_to_id)
     {
-        $orders = self::where('id', '>=', $order_from_id)->where('id', '<=', $order_to_id)->get()->pluck('id');
+        $orders = self::select('id')->where('id', '>=', 79)->where('id', '<=', 80)->get()->pluck('id');
         foreach ($orders as $order_id) {
             OrderLineDeliveryDate::dispatch($order_id)->onQueue('orderline_return_policy');
         }

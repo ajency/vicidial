@@ -3,6 +3,8 @@
 namespace App\Jobs;
 
 use App\OrderLine;
+use App\ReturnPolicy;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -36,8 +38,15 @@ class OrderLineStatus implements ShouldQueue
         foreach ($this->lineIds as $lineId) {
             $ol = OrderLine::find($lineId);
             if ($ol) {
+                $d         = explode("-", explode(" ", $this->delivery_date)[0]);
+                $orderDate = Carbon::createFromDate($d[0], $d[1], $d[2], "Asia/Kolkata");
+                $orderDate->startOfDay();
+                $return_policy      = ReturnPolicy::find($ol->return_policy['id']);
+                $return_expiry_date = ($return_policy->expressions->first()->value[0] == 0) ? null : $orderDate->endOfDay()->addDays($return_policy->expressions->first()->value[0] - 1)->toDateTimeString();
+
                 $ol->shipment_status        = $this->status;
                 $ol->shipment_delivery_date = $this->delivery_date;
+                $ol->return_expiry_date     = $return_expiry_date;
                 $ol->save();
             }
         }

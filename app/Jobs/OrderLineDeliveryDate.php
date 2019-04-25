@@ -11,6 +11,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Carbon\Carbon;
 
 class OrderLineDeliveryDate implements ShouldQueue
 {
@@ -34,15 +35,21 @@ class OrderLineDeliveryDate implements ShouldQueue
     public function handle()
     {
         $order = Order::find($this->order_id);
+        $variant_ids = $order->orderLines->pluck('variant_id')->all();
+        $variants       = Variant::whereIn('odoo_id', $variant_ids)->get();
+        foreach ($variants as $variant) {
+            $variants_data[$variant->odoo_id] = ['category_type' => $variant->getCategoryType(), 'sub_type' => $variant->getSubType()];
+        }
+
         foreach ($order->subOrders as $subOrder) {
             $shipped_date = null;
             if ($subOrder->orderLines->first()->shipment_status == 'delivered') {
                 $shipped_date = Sync::call('backoffice', 'fetchOrderDeliveryDate', ['sub_order_id' => $subOrder->id]);
             }
+            
             foreach ($subOrder->orderLines as $orderLine) {
-                $variant       = Variant::where('odoo_id', $orderLine->variant_id)->first();
-                $category_type = $variant->getCategoryType();
-                $sub_type      = $variant->getSubType();
+                $category_type = $variants_data[$orderLine->variant_id]['category_type'];
+                $sub_type = $variants_data[$orderLine->variant_id]['sub_type'];
                 $return_policy_data = ReturnPolicy::getReturnPolicyForFacet($category_type, $sub_type);
                 $return_policy      = ReturnPolicy::find($return_policy_data['id']);
 
