@@ -1,0 +1,79 @@
+<app-header></app-header>
+
+<app-loader *ngIf="showLoader"></app-loader>
+
+<!-- Banner -->
+<div class="kss_banner_sm justify-content-center d-flex p-3 p-md-5 text-white bg-dark">
+  <div class="align-self-center text-center">
+     <h1 class="display-6 bold mt-4 mb-1 banner-title">KidSuperStore Stores - Triton Mall, Jaipur</h1>
+  </div>
+</div>
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-12 col-md-8 mb-3">
+      <ul id="storeSlider" class="cs-hidden">
+        <li class="item-a" data-thumb="../../../assets/img/stores/jaipur/jp-store-1-small.jpg">
+          <img class="card-img-top lazyload"
+              src="../../../assets/img/stores/jaipur/jp-store-1-large.jpg"
+              title="Triton Mall, Jaipur"
+              alt="Triton Mall, Jaipur"/>
+        </li>
+        <li class="item-b" data-thumb="./../../assets/img/stores/jaipur/jp-store-2-small.jpg">
+          <img class="card-img-top lazyload"
+              src="../../../assets/img/stores/jaipur/jp-store-2-large.jpg"
+              title="Triton Mall, Jaipur"
+              alt="Triton Mall, Jaipur"/>
+        </li>
+        <li class="item-c" data-thumb="../../../assets/img/stores/jaipur/jp-store-3-small.jpg">
+          <img class="card-img-top lazyload"
+              src="../../../assets/img/stores/jaipur/jp-store-3-large.jpg"
+              title="Triton Mall, Jaipur"
+              alt="Triton Mall, Jaipur"/>
+        </li>
+        <li class="item-d" data-thumb="../../../assets/img/stores/jaipur/jp-store-4-small.jpg">
+          <img class="card-img-top lazyload"
+              src="../../../assets/img/stores/jaipur/jp-store-4-large.jpg"
+              title="Triton Mall, Jaipur"
+              alt="Triton Mall, Jaipur"/>
+        </li>
+      </ul>
+    </div>
+    <div class="col-12 col-md-4">
+        <h4 class="font-weight-bold mb-2">Location</h4>
+        <div class="h5 text-gray line-height-5">Triton Mall, Jhotwara Rd, Jaipur</div>
+
+        <h4 class="font-weight-bold mt-5 mb-2">Address</h4>
+        <div class="h5 text-gray line-height-5">Triton Mall, Plot No 1/1, Near Chomu Pulia Circle, Jhotwara Rd, Jaipur</div>
+
+        
+        <a href="https://www.google.com/maps/search/?api=1&query=26.941362,75.771318" target="_blank" class="btn btn-primary my-2 font-weight-bold">View on Google Maps</a>
+
+        <h4 class="font-weight-bold mt-5 mb-2">Store Manager</h4>
+        <div class="h5 text-gray line-height-5">Sameer Khan</div>
+
+        <h4 class="font-weight-bold mt-5 mb-2">Timings</h4>
+        <div class="h5 text-gray line-height-5">10:30am to 10:00pm</div>
+
+        <h4 class="font-weight-bold mt-5 mb-2">Contact</h4>
+        <div class="h5 text-gray line-height-5">Phone: 8949127903</div>
+        <div class="h5 text-gray line-height-5">Email: 2009_sm@omniedgeretail.com</div>
+
+      </div>
+  </div>
+</div>
+
+
+<app-why-visit-us></app-why-visit-us>
+
+<!-- Back to top -->
+<div app-back-to-top></div>
+
+<app-footer></app-footer>
+
+<div class="alert kss-alert sticky-alert d-inline-flex align-items-center px-sm-4 px-3 py-4 fade show shadow rounded m-2" role="alert">
+  <i class="fas fa-times pr-sm-3 pr-2 icon alert-close cursor-pointer"></i>
+  <div class="message">
+    <strong>Add to cart failed. Please try again</strong>
+  </div>
+</div>

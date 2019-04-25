@@ -1,0 +1,76 @@
+<app-header></app-header>
+
+<app-loader *ngIf="showLoader"></app-loader>
+
+<!-- Banner -->
+<div class="kss_banner_sm justify-content-center d-flex p-3 p-md-5 text-white bg-dark">
+  <div class="align-self-center text-center">
+     <h1 class="display-6 bold mt-4 mb-1 banner-title">KidSuperStore Stores - Kothapet, Hyderabad</h1>
+  </div>
+</div>
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-12 col-md-8 mb-3">
+      <ul id="storeSlider" class="cs-hidden ">
+        <li class="item-a" data-thumb="../../../assets/img/stores/hyderabad/hyderabad3-small.jpg">
+          <img class="card-img-top lazyload"
+              src="../../../assets/img/stores/hyderabad/hyderabad3-large.jpg"
+              title="Kothapet, Hyderabad"
+              alt="Kothapet, Hyderabad"/>
+        </li>
+        <li class="item-b" data-thumb="./../../assets/img/stores/hyderabad/hyderabad1-small.jpg">
+          <img class="card-img-top lazyload"
+              src="../../../assets/img/stores/hyderabad/hyderabad1-large.jpg"
+              title="Kothapet, Hyderabad"
+              alt="Kothapet, Hyderabad"/>
+        </li>
+        <li class="item-b" data-thumb="./../../assets/img/stores/hyderabad/hyderabad2-small.jpg">
+          <img class="card-img-top lazyload"
+              src="../../../assets/img/stores/hyderabad/hyderabad2-large.jpg"
+              title="Kothapet, Hyderabad"
+              alt="Kothapet, Hyderabad"/>
+        </li>
+        <li class="item-d" data-thumb="../../../assets/img/stores/hyderabad/hyderabad4-small.jpg">
+          <img class="card-img-top lazyload"
+              src="../../../assets/img/stores/hyderabad/hyderabad4-large.jpg"
+              title="Kothapet, Hyderabad"
+              alt="Kothapet, Hyderabad"/>
+        </li>
+      </ul>
+    </div>
+    <div class="col-12 col-md-4">
+        <h4 class="font-weight-bold mb-2">Location</h4>
+        <div class="h5 text-gray line-height-5">Tyagaryaya Nagar, Kothapet, Hyderabad</div>
+
+        <h4 class="font-weight-bold mt-5 mb-2">Address</h4>
+        <div class="h5 text-gray line-height-5">Six Mall, Opp. Fruit Market, H.No:128, 128/2 & 129, 23-106/1, 23-106/18, 23-107, Tyagaryaya Nagar, Kothapet, Hyderabad, Telangana - 500035</div>
+
+        <h4 class="font-weight-bold mt-5 mb-2">Store Manager</h4>
+        <div class="h5 text-gray line-height-5">Shashi</div>
+
+        <h4 class="font-weight-bold mt-5 mb-2">Timings</h4>
+        <div class="h5 text-gray line-height-5">10:30am to 10:00pm</div>
+
+        <h4 class="font-weight-bold mt-5 mb-2">Contact</h4>
+        <div class="h5 text-gray line-height-5">Phone: 9959159192</div>
+        <div class="h5 text-gray line-height-5">Email: 2007@omniedgeretail.com</div>
+
+      </div>
+  </div>
+</div>
+
+
+<app-why-visit-us></app-why-visit-us>
+
+<!-- Back to top -->
+<div app-back-to-top></div>
+
+<app-footer></app-footer>
+
+<div class="alert kss-alert sticky-alert d-inline-flex align-items-center px-sm-4 px-3 py-4 fade show shadow rounded m-2" role="alert">
+  <i class="fas fa-times pr-sm-3 pr-2 icon alert-close cursor-pointer"></i>
+  <div class="message">
+    <strong>Add to cart failed. Please try again</strong>
+  </div>
+</div>
