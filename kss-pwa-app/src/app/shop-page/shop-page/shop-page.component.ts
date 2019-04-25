@@ -212,8 +212,11 @@ export class ShopPageComponent implements OnInit {
       console.log("sort by==>", sort_by);
       this.sortOn = sort_by.value;
       this.searchString = response.search_string;
-      // this.urlRoutes = {}; // uncomment once filter count api is ready
-      // this.primaryFilters = {};
+      this.urlRoutes = {}; 
+      this.primaryFilters = {};
+      this.rangeFilter = {};
+      this.booleanFilter = {};
+      
       this.filters.forEach(filter =>{
         filter.items.forEach(item =>{
           // separately handle for route and query params
