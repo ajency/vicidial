@@ -206,38 +206,38 @@ export class ShopPageComponent implements OnInit {
   }
 
   getFiltersCount(){
-    this.unsubscribeFilterCountApiCall();
-    let url = isDevMode() ? "https://demo8558685.mockable.io/get-filters" : this.appservice.apiUrl + '/api/rest/v1/get-filters-count';
-    // url = "https://demo8558685.mockable.io/get-filters";
-    if(Object.keys(this.queryObject).length != 0)
-      url = url + '?' + $.param(this.queryObject);
-    this.filterCountApiCall = this.apiService.request(url, 'get', {} , {}, false, 'observable').subscribe((response)=>{
-      // console.log("get filters api response ==>",response);
-      response.filters = response.filters.sort((a,b)=>{ return(a.order - b.order) });
-      if(!this.selectedFilterCategory)
-        this.selectedFilterCategory = response.filters[0].header.facet_name;
-      this.filters = response.filters;
-      this.sort_on = response.sort_on;
-      let sort_by = this.sort_on.find(item => { return item.is_selected });
-      console.log("sort by==>", sort_by);
-      this.sortOn = sort_by.value;
-      this.searchString = response.search_string;
-      this.urlRoutes = {}; 
-      this.primaryFilters = {};
-      this.rangeFilter = {};
-      this.booleanFilter = {};
+    // this.unsubscribeFilterCountApiCall();
+    // let url = isDevMode() ? "https://demo8558685.mockable.io/get-filters" : this.appservice.apiUrl + '/api/rest/v1/get-filters-count';
+    // // url = "https://demo8558685.mockable.io/get-filters";
+    // if(Object.keys(this.queryObject).length != 0)
+    //   url = url + '?' + $.param(this.queryObject);
+    // this.filterCountApiCall = this.apiService.request(url, 'get', {} , {}, false, 'observable').subscribe((response)=>{
+    //   // console.log("get filters api response ==>",response);
+    //   response.filters = response.filters.sort((a,b)=>{ return(a.order - b.order) });
+    //   if(!this.selectedFilterCategory)
+    //     this.selectedFilterCategory = response.filters[0].header.facet_name;
+    //   this.filters = response.filters;
+    //   this.sort_on = response.sort_on;
+    //   let sort_by = this.sort_on.find(item => { return item.is_selected });
+    //   console.log("sort by==>", sort_by);
+    //   this.sortOn = sort_by.value;
+    //   this.searchString = response.search_string;
+    //   this.urlRoutes = {}; 
+    //   this.primaryFilters = {};
+    //   this.rangeFilter = {};
+    //   this.booleanFilter = {};
       
-      this.filters.forEach(filter =>{
-        filter.items.forEach(item =>{
-          // separately handle for route and query params
-          if(item.is_selected)
-            this.updateUrlRoute(filter.attribute_param, item.slug, true);
-        })
-      })
-    },
-    (error)=>{
-      console.log("error ===>", error);
-    });
+    //   this.filters.forEach(filter =>{
+    //     filter.items.forEach(item =>{
+    //       // separately handle for route and query params
+    //       if(item.is_selected)
+    //         this.updateUrlRoute(filter.attribute_param, item.slug, true);
+    //     })
+    //   })
+    // },
+    // (error)=>{
+    //   console.log("error ===>", error);
+    // });
   }
 
   createDummyList(){
@@ -289,23 +289,34 @@ export class ShopPageComponent implements OnInit {
   }
 
   applyCheckboxFilter(filter){
-    // console.log("applyCheckboxFilter ==>", filter);
+    console.log("applyCheckboxFilter ==>", filter);
+    try{
+      console.log(filter.filter);
+    }
+    catch(error){
+      console.log("error ==>", error);
+    }
+    try{
     if(!filter.filter.is_attribute_param){
-      this.updateUrlRoute(filter.filter.attribute_param, filter.value, filter.apply);
-    }
-    else{
-      if(filter.filter.filter_type == "primary_filter"){
-        this.updatePrimaryQueryParam(filter.filter.attribute_param, filter.value, filter.apply);
+        this.updateUrlRoute(filter.filter.attribute_param, filter.value, filter.apply);
       }
-      else if(filter.filter.filter_type == "boolean_filter"){
-        if(filter.apply)
-          this.booleanFilter[filter.filter.attribute_param] = filter.value;
-        else
-          delete this.booleanFilter[filter.filter.attribute_param]
+      else{
+        if(filter.filter.filter_type == "primary_filter"){
+          this.updatePrimaryQueryParam(filter.filter.attribute_param, filter.value, filter.apply);
+        }
+        else if(filter.filter.filter_type == "boolean_filter"){
+          if(filter.apply)
+            this.booleanFilter[filter.filter.attribute_param] = filter.value;
+          else
+            delete this.booleanFilter[filter.filter.attribute_param]
+        }
       }
-    }
-    this.pageNumber = '';
-    this.setRouteParam();
+      }
+      catch(error){
+        console.log("error in if else ==>", error);
+      }
+      this.pageNumber = '';
+      this.setRouteParam();
   }
 
   setRouteParam(callProductListForMobile : boolean = false){
@@ -406,6 +417,16 @@ export class ShopPageComponent implements OnInit {
     this.filters = Object.assign([], this.filtersCopy);
     console.log("on reset filter ==>", this.filters)
     this.mobilefilter = false;
+  }
+
+  removeFilter(filter, item){
+    if(filter.attribute_param != 'price'){
+      item.is_selected = false;
+      console.log("filter ===========>", filter)
+      this.applyCheckboxFilter({filter : filter, value : item.slug, apply : false })
+    }
+    // else
+    //   this.applyRangeFilter({category : filter.attribute_param, value : filter.bucket_range}) 
   }
 
 }

@@ -119,7 +119,18 @@
 					<div id="filter-tags-template-content">
 					  <div class="d-none d-md-block filter-selection">
 					    <div class="d-flex flex-wrap">
-					        <div class="border border-dark py-1 px-2 mr-2 mb-2 active-filter"><span data-slug="apparels">Apparels</span> <span class="ml-1 h6 kss_highlight" aria-hidden="true" onclick="removeFilterTag('apparels','product_category_type');">×</span></div>
+					    	<ng-container *ngFor="let filter of filters">
+					    		<ng-container *ngIf="filter.items">
+						    		<ng-container *ngFor="let item of filter.items">
+								        <div *ngIf="item.is_selected" class="border border-dark py-1 px-2 mr-2 mb-2 active-filter"><span data-slug="apparels">{{item.display_name}}</span> <span class="ml-1 h6 kss_highlight" aria-hidden="true" (click)="removeFilter(filter, item)">×</span></div>
+								    </ng-container>
+							    </ng-container>
+							    <!-- <ng-container *ngIf="filter.attribute_param == 'price'">
+						    		<ng-container *ngFor="let item of filter.items">
+								        <div class="border border-dark py-1 px-2 mr-2 mb-2 active-filter"><span data-slug="apparels">{{item.display_name}}</span> <span class="ml-1 h6 kss_highlight" aria-hidden="true" (click)="removeFilter(filter, item);">×</span></div>
+								    </ng-container>
+							    </ng-container> -->
+						    </ng-container>
 					    </div>
 					  </div>
 					</div>
