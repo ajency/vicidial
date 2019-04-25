@@ -33,7 +33,7 @@ class SaveReturnPolicies implements ShouldQueue
     {
         $order = Order::find($this->order_id);
         foreach ($order->orderLines as $orderLine) {
-            $orderLine->return_policy_id = ReturnPolicy::getReturnPolicyForFacet($orderLine->product_type, $orderLine->product_subtype);
+            $orderLine->return_policy = ReturnPolicy::getReturnPolicyForFacet($orderLine->product_type, $orderLine->product_subtype);
             $orderLine->save();
         }
     }

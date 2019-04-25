@@ -40,11 +40,20 @@ class OrderLineDeliveryDate implements ShouldQueue
                 $shipped_date = Sync::call('backoffice', 'fetchOrderDeliveryDate', ['sub_order_id' => $subOrder->id]);
             }
             foreach ($subOrder->orderLines as $orderLine) {
-                $variant                           = Variant::where('odoo_id', $orderLine->variant_id)->first();
-                $category_type                     = $variant->getCategoryType();
-                $sub_type                          = $variant->getSubType();
+                $variant       = Variant::where('odoo_id', $orderLine->variant_id)->first();
+                $category_type = $variant->getCategoryType();
+                $sub_type      = $variant->getSubType();
+                $return_policy_data = ReturnPolicy::getReturnPolicyForFacet($category_type, $sub_type);
+                $return_policy      = ReturnPolicy::find($return_policy_data['id']);
+
+                $d         = explode("-", explode(" ", $shipped_date)[0]);
+                $orderDate = Carbon::createFromDate($d[0], $d[1], $d[2], "Asia/Kolkata");
+                $orderDate->startOfDay();
+                $return_expiry_date                = ($return_policy->expressions->first()->value[0] == 0) ? null : $orderDate->endOfDay()->addDays($return_policy->expressions->first()->value[0] - 1)->toDateTimeString();
+
                 $orderLine->shipment_delivery_date = $shipped_date;
-                $orderLine->return_policy_id       = ReturnPolicy::getReturnPolicyForFacet($category_type, $sub_type);
+                $orderLine->return_expiry_date     = $return_expiry_date;
+                $orderLine->return_policy          = $return_policy_data;
                 $orderLine->save();
             }
         }

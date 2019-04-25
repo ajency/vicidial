@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class OrderLine extends Model
 {
     protected $casts = [
-        'images'      => 'array',
-        'is_returned' => 'boolean',
+        'images'        => 'array',
+        'return_policy' => 'array',
+        'is_returned'   => 'boolean',
     ];
 
     protected $fillable = [
@@ -68,8 +69,7 @@ class OrderLine extends Model
         return $this->morphedByMany('App\SubOrder', 'line_mapping')->wherePivot('type', 'Returned Transaction');
     }
 
-    public function return_policy()
-    {
-        return $this->belongsTo('App\ReturnPolicy');
-    }
+    public function returnAllowed(){
+        
+    } 
 }

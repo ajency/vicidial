@@ -38,36 +38,24 @@ class ReturnPolicy extends Model
             $default_return_policy = config('orders.default_return_policy');
             $return_policy         = ReturnPolicy::where('title', $default_return_policy)->first();
         }
-
-        return $return_policy->id;
+        $return_policy_days = $return_policy->expressions->first()->value[0];
+        return ['id' => $return_policy->id, 'title' => $return_policy->title, 'display_name' => $return_policy->display_name, 'days' => $return_policy_days];
     }
 
-    public static function fetchReturnPolicy($orderLine_id)
+    public static function fetchReturnPolicy($orderLine)
     {
-        $now = Carbon::now();
-        $now->setTimezone('Asia/Kolkata');
-        $orderLine = OrderLine::find($orderLine_id);
-        if (!$orderLine->return_policy) {
+        $now = Carbon::now()->setTimezone('Asia/Kolkata');
+        if (!$orderLine['return_policy']) {
             return ['name' => null, 'return_allowed' => false, 'date' => null];
         } else {
-            $returnPolicy = $orderLine->return_policy;
-            if ($orderLine->shipment_status != 'delivered' || !$orderLine->shipment_delivery_date || $orderLine->is_returned) {
-                return ['name' => $returnPolicy['display_name'], 'return_allowed' => false, 'date' => null];
+            $returnPolicy = $orderLine['return_policy'];
+            if ($orderLine['shipment_status'] != 'delivered' || !$orderLine['shipment_delivery_date'] || $orderLine['is_returned']) {
+                return ['name' => $returnPolicy['display_name'], 'return_allowed' => false, 'date' => $orderLine['return_expiry_date']];
             }
-            $d         = explode("-", explode(" ", $orderLine->shipment_delivery_date)[0]);
-            $orderDate = Carbon::createFromDate($d[0], $d[1], $d[2], "Asia/Kolkata");
-            $orderDate->startOfDay();
+            $return_expiry_date = new Carbon($orderLine['return_expiry_date']);
 
-            $data           = ['days' => $orderDate->diff($now)->days];
-            $return_allowed = true;
-            foreach ($returnPolicy->expressions as $expression) {
-                if (!$expression->validate($data)) {
-                    $return_allowed = false;
-                    break;
-                }
-            }
-            $date = ($returnPolicy->expressions->first()->value[0] == 0) ? null : $orderDate->endOfDay()->addDays($returnPolicy->expressions->first()->value[0] - 1)->toDateTimeString();
-            return ['name' => $returnPolicy['display_name'], 'return_allowed' => $return_allowed, 'date' => $date];
+            $return_allowed = ($now->greaterThan($return_expiry_date)) ? false : true;
+            return ['name' => $returnPolicy['display_name'], 'return_allowed' => $return_allowed, 'date' => $orderLine['return_expiry_date']];
         }
     }
 }
