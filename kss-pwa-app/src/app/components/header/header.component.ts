@@ -13,11 +13,12 @@ import { ApiServiceService } from '../../service/api-service.service';
 export class HeaderComponent implements OnInit, OnChanges {
 
   menu : any;
+  hideMenu : boolean = false;
   @Input() browserback : any;
   constructor(private appservice : AppServiceService,
               private apiService: ApiServiceService,
               private location: Location,
-              private route: Router){ }
+              private router: Router){ }
 
   ngOnInit(){
     this.getMenu();
@@ -93,7 +94,15 @@ export class HeaderComponent implements OnInit, OnChanges {
     if (window.history.length > 2) {
       this.location.back()
     } else {
-      this.route.navigate(['/'])
+      this.router.navigate(['/'])
     }
+  }
+
+  openMenuLink(link){
+    this.hideMenu = true;
+    this.router.navigateByUrl(link);
+    setTimeout(()=>{
+      this.hideMenu = false;
+    });
   }
 }
