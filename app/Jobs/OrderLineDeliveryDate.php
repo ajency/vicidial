@@ -51,12 +51,15 @@ class OrderLineDeliveryDate implements ShouldQueue
                 $category_type      = $variants_data[$orderLine->variant_id]['category_type'];
                 $sub_type           = $variants_data[$orderLine->variant_id]['sub_type'];
                 $return_policy_data = ReturnPolicy::getReturnPolicyForFacet($category_type, $sub_type);
-                $return_policy      = ReturnPolicy::find($return_policy_data['id']);
 
-                $d         = explode("-", explode(" ", $shipped_date)[0]);
-                $orderDate = Carbon::createFromDate($d[0], $d[1], $d[2], "Asia/Kolkata");
-                $orderDate->startOfDay();
-                $return_expiry_date = ($return_policy->expressions->first()->value[0] == 0) ? null : $orderDate->endOfDay()->addDays($return_policy->expressions->first()->value[0] - 1)->toDateTimeString();
+                $return_policy      = ReturnPolicy::find($return_policy_data['id']);
+                $return_expiry_date = null;
+                if($shipped_date && $return_policy){
+                    $d         = explode("-", explode(" ", $shipped_date)[0]);
+                    $orderDate = Carbon::createFromDate($d[0], $d[1], $d[2], "Asia/Kolkata");
+                    $orderDate->startOfDay();
+                    $return_expiry_date = ($return_policy->expressions->first()->value[0] == 0) ? null : $orderDate->endOfDay()->addDays($return_policy->expressions->first()->value[0] - 1)->toDateTimeString();
+                }
 
                 $orderLine->shipment_delivery_date = $shipped_date;
                 $orderLine->return_expiry_date     = $return_expiry_date;

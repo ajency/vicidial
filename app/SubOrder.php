@@ -254,7 +254,7 @@ class SubOrder extends Model
                 'shipment_status'  => $itemData['shipment_status'],
                 'is_returned'      => $itemData['is_returned'],
                 'return_policy'    => ReturnPolicy::fetchReturnPolicy($itemData),
-                'quantity'         => $this->orderLines->where('variant_id', $itemData['variant_id'])->groupBy('is_returned')->count(),
+                'quantity'         => $this->orderLines->where('variant_id', $itemData['variant_id'])->groupBy('is_returned')[$itemData['is_returned']]->count(),
                 'is_invoiced'      => $this->is_invoiced,
             ];
             if ($store_address != null) {
