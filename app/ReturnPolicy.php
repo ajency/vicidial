@@ -49,11 +49,11 @@ class ReturnPolicy extends Model
             return ['name' => null, 'return_allowed' => false, 'date' => null];
         } else {
             $returnPolicy = $orderLine['return_policy'];
-            if ($orderLine['shipment_status'] != 'delivered' || !$orderLine['shipment_delivery_date'] || $orderLine['is_returned' || !$orderLine['return_expiry_date']]) {
+            
+            if ($orderLine['shipment_status'] != 'delivered' || !$orderLine['shipment_delivery_date'] || $orderLine['is_returned'] || !$orderLine['return_expiry_date']) {
                 return ['name' => $returnPolicy['display_name'], 'return_allowed' => false, 'date' => null];
             }
             $return_expiry_date = new Carbon($orderLine['return_expiry_date']);
-
             $return_allowed = ($now->greaterThan($return_expiry_date)) ? false : true;
             return ['name' => $returnPolicy['display_name'], 'return_allowed' => $return_allowed, 'date' => $orderLine['return_expiry_date']];
         }
