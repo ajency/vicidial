@@ -18,13 +18,13 @@
 	height: 450px;
 	@media (max-width: 991px){
 		// height: 120vw;
-		height: calc(100vh - 214px);
+		height: calc(100vh - 218px);
 	}
 }
 
 @media (max-width: 991px){
 	.prodinfo-wrapper{
-	    top: calc(100vh - 214px);
+	    top: calc(100vh - 218px);
 	    position: relative;
 	    background: #fff;
 	    // box-shadow: 0 -1px 5px rgba(128, 128, 128, 0.35);

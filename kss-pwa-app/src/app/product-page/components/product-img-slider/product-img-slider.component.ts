@@ -46,6 +46,7 @@ export class ProductImgSliderComponent implements OnInit, OnChanges {
     }
     if(this.images.length == 1){
       options.prevNextButtons = false;
+      options.pageDots = false;
     }
     if ( matchMedia('screen and (min-width: 992px)').matches ) {
       options.pageDots = false;
