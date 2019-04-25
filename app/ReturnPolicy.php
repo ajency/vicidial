@@ -67,7 +67,7 @@ class ReturnPolicy extends Model
                     break;
                 }
             }
-            $date = $orderDate->endOfDay()->addDays($returnPolicy->expressions->first()->value[0]);
+            $date = $orderDate->endOfDay()->addDays($returnPolicy->expressions->first()->value[0])->toDateTimeString();
             return ['name' => $returnPolicy['display_name'], 'return_allowed' => $return_allowed, 'date' => $date];
         }
     }
