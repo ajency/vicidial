@@ -190,7 +190,8 @@ export class ShopPageComponent implements OnInit {
         // console.log("get filters api response ==>",response);
         this.showFilterLoader = false;
         response.filters = response.filters.sort((a,b)=>{ return(a.order - b.order) });
-        this.selectedFilterCategory = response.filters[0].header.facet_name;
+        if(!this.selectedFilterCategory)
+          this.selectedFilterCategory = response.filters[0].header.facet_name;
         this.filters = response.filters;
         this.sort_on = response.sort_on;
         this.searchString = response.search_string;
@@ -213,7 +214,8 @@ export class ShopPageComponent implements OnInit {
     this.filterCountApiCall = this.apiService.request(url, 'get', {} , {}, false, 'observable').subscribe((response)=>{
       // console.log("get filters api response ==>",response);
       response.filters = response.filters.sort((a,b)=>{ return(a.order - b.order) });
-      this.selectedFilterCategory = response.filters[0].header.facet_name;
+      if(!this.selectedFilterCategory)
+        this.selectedFilterCategory = response.filters[0].header.facet_name;
       this.filters = response.filters;
       this.sort_on = response.sort_on;
       let sort_by = this.sort_on.find(item => { return item.is_selected });
