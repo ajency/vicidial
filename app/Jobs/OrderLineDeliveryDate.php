@@ -6,12 +6,12 @@ use Ajency\ServiceComm\Comm\Sync;
 use App\Order;
 use App\ReturnPolicy;
 use App\Variant;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Carbon\Carbon;
 
 class OrderLineDeliveryDate implements ShouldQueue
 {
@@ -34,9 +34,9 @@ class OrderLineDeliveryDate implements ShouldQueue
      */
     public function handle()
     {
-        $order = Order::find($this->order_id);
-        $variant_ids = $order->orderLines->pluck('variant_id')->all();
-        $variants       = Variant::whereIn('odoo_id', $variant_ids)->get();
+        $order       = Order::find($this->order_id);
+        $variant_ids = $order->orderLines->pluck('variant_id')->unique()->all();
+        $variants    = Variant::whereIn('odoo_id', $variant_ids)->get();
         foreach ($variants as $variant) {
             $variants_data[$variant->odoo_id] = ['category_type' => $variant->getCategoryType(), 'sub_type' => $variant->getSubType()];
         }
@@ -46,17 +46,17 @@ class OrderLineDeliveryDate implements ShouldQueue
             if ($subOrder->orderLines->first()->shipment_status == 'delivered') {
                 $shipped_date = Sync::call('backoffice', 'fetchOrderDeliveryDate', ['sub_order_id' => $subOrder->id]);
             }
-            
+
             foreach ($subOrder->orderLines as $orderLine) {
-                $category_type = $variants_data[$orderLine->variant_id]['category_type'];
-                $sub_type = $variants_data[$orderLine->variant_id]['sub_type'];
+                $category_type      = $variants_data[$orderLine->variant_id]['category_type'];
+                $sub_type           = $variants_data[$orderLine->variant_id]['sub_type'];
                 $return_policy_data = ReturnPolicy::getReturnPolicyForFacet($category_type, $sub_type);
                 $return_policy      = ReturnPolicy::find($return_policy_data['id']);
 
                 $d         = explode("-", explode(" ", $shipped_date)[0]);
                 $orderDate = Carbon::createFromDate($d[0], $d[1], $d[2], "Asia/Kolkata");
                 $orderDate->startOfDay();
-                $return_expiry_date                = ($return_policy->expressions->first()->value[0] == 0) ? null : $orderDate->endOfDay()->addDays($return_policy->expressions->first()->value[0] - 1)->toDateTimeString();
+                $return_expiry_date = ($return_policy->expressions->first()->value[0] == 0) ? null : $orderDate->endOfDay()->addDays($return_policy->expressions->first()->value[0] - 1)->toDateTimeString();
 
                 $orderLine->shipment_delivery_date = $shipped_date;
                 $orderLine->return_expiry_date     = $return_expiry_date;
