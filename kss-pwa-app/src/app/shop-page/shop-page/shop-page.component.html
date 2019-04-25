@@ -247,7 +247,7 @@
 	          </div>
 	          <div class="">
 	            <ul class="list-group list-unstyled list-sort__element mb-0">
-	              <li *ngFor="let option of sort_on" class="list-group-item d-flex align-items-center" [ngClass]="{'is-active' : option.is_selected}" data-value="" (click)="sortBy(option.value)">
+	              <li *ngFor="let option of sort_on" class="list-group-item d-flex align-items-center" [ngClass]="{'is-active' : option.is_selected}" data-value="" (click)="sortBy(option.value)" data-dismiss="modal">
 	                <a href="javascript:void(0)" class="font-weight-bold d-flex align-items-center"><i class="kss_icon mx-1 {{option.class}}"></i>{{option.name}}</a>
 	              </li>
 	            </ul>

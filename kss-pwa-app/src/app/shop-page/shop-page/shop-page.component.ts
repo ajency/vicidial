@@ -18,6 +18,7 @@ declare var $: any;
 export class ShopPageComponent implements OnInit {
 
   listApiCall : any;
+  filterCountApiCall : any;
   listPage : any = {
     page : {
       current : 1,
@@ -138,6 +139,11 @@ export class ShopPageComponent implements OnInit {
     this.mobilefilter = !this.mobilefilter;
   }
 
+  ngOnDestroy(){
+    this.unsubscribeListPageApi();
+
+  }
+
   callListPageApi(){
     window.scrollTo(0, 0)
     this.mobilefilter = false;
@@ -199,11 +205,12 @@ export class ShopPageComponent implements OnInit {
   }
 
   getFiltersCount(){
+    this.unsubscribeFilterCountApiCall();
     let url = isDevMode() ? "https://demo8558685.mockable.io/get-filters" : this.appservice.apiUrl + '/api/rest/v1/get-filters-count';
     // url = "https://demo8558685.mockable.io/get-filters";
     if(Object.keys(this.queryObject).length != 0)
       url = url + '?' + $.param(this.queryObject);
-    this.apiService.request(url, 'get', {} , {}, false, 'promise').then((response)=>{
+    this.filterCountApiCall = this.apiService.request(url, 'get', {} , {}, false, 'observable').subscribe((response)=>{
       // console.log("get filters api response ==>",response);
       response.filters = response.filters.sort((a,b)=>{ return(a.order - b.order) });
       this.selectedFilterCategory = response.filters[0].header.facet_name;
@@ -225,8 +232,8 @@ export class ShopPageComponent implements OnInit {
             this.updateUrlRoute(filter.attribute_param, item.slug, true);
         })
       })
-    })
-    .catch((error)=>{
+    },
+    (error)=>{
       console.log("error ===>", error);
     });
   }
@@ -252,6 +259,11 @@ export class ShopPageComponent implements OnInit {
       this.listApiCall.unsubscribe();
   }
 
+  unsubscribeFilterCountApiCall(){
+    if(this.filterCountApiCall)
+      this.filterCountApiCall.unsubscribe(); 
+  }
+
   searchByText(search_text){
     this.searchString = search_text;
     this.pageNumber = '';
@@ -265,13 +277,13 @@ export class ShopPageComponent implements OnInit {
       this.sortOn = mobile_sort;
     }
     this.pageNumber = '';
-    this.setRouteParam();
+    this.setRouteParam(true);
   }
 
   pageChanged(page:number){
     console.log("pageChanged ==>", page);
     this.pageNumber = page;
-    this.setRouteParam();
+    this.setRouteParam(true);
   }
 
   applyCheckboxFilter(filter){
@@ -294,7 +306,7 @@ export class ShopPageComponent implements OnInit {
     this.setRouteParam();
   }
 
-  setRouteParam(){
+  setRouteParam(callProductListForMobile : boolean = false){
     console.log("this.urlRoutes ==>", this.urlRoutes);
     let path = '';
 
@@ -336,7 +348,26 @@ export class ShopPageComponent implements OnInit {
       path = '/shop'
     let url = path + query_params;
     console.log("check path ==>", url);
-    this.router.navigateByUrl(url);
+    if(!this.isMobile || callProductListForMobile)
+      this.router.navigateByUrl(url);
+    else{
+      this.createQueryObjectForCountApi()
+    }
+  }
+
+  createQueryObjectForCountApi(){
+    this.queryObject = {};
+    this.queryObject = Object.assign({}, this.urlRoutes, this.primaryFilters, this.booleanFilter);
+    if(this.rangeFilter['price'])
+      this.formatRangeFilter(this.rangeFilter['price']);
+    if(this.searchString)
+      this.queryObject['search_string'] = this.searchString;
+    if(this.sortOn)
+      this.queryObject['sort_on'] = this.sortOn;
+    if(this.pageNumber)
+      this.queryObject['page'] = this.pageNumber;
+
+    this.getFiltersCount();
   }
 
   updateUrlRoute(cat,value,apply){
