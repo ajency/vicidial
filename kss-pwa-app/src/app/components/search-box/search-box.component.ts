@@ -25,4 +25,16 @@ export class SearchBoxComponent implements OnInit, OnChanges {
   	if(this.searchText)
   		this.updateList.emit(this.searchText);
   }
+
+  clearSearch(){
+    this.searchText = '';
+  }
+
+  enterclick(){
+    if (event.keyCode === 13) {
+        // $('.is-enter').click();
+        console.log("enter is clicked");
+        this.searchProduct();
+    }
+  }
 }
