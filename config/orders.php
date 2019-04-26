@@ -58,5 +58,6 @@ return [
     ],
     "offer" => [
         'types'   => explode(',', env('OFFER_TYPES', '')),
-    ]
+    ],
+    "default_return_policy" => "Other"
 ];

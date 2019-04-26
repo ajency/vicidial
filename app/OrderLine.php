@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class OrderLine extends Model
 {
     protected $casts = [
-        'images'   => 'array',
+        'images'        => 'array',
+        'return_policy' => 'array',
+        'is_returned'   => 'boolean',
     ];
 
     protected $fillable = [
@@ -23,6 +25,8 @@ class OrderLine extends Model
         'product_id',
         'product_color_id',
         'product_slug',
+        'product_type',
+        'product_subtype',
     ];
 
     public function orders()
@@ -64,4 +68,5 @@ class OrderLine extends Model
     {
         return $this->morphedByMany('App\SubOrder', 'line_mapping')->wherePivot('type', 'Returned Transaction');
     }
+
 }

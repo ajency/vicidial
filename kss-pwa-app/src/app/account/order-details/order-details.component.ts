@@ -11,6 +11,7 @@ import { AppServiceService } from '../../service/app-service.service';
 import { ApiServiceService } from '../../service/api-service.service';
 import { AccountService } from '../services/account.service';
 
+import * as moment from 'moment';
 // import 'rxjs/add/operator/switchMap';
 
 declare var $: any;
@@ -28,11 +29,15 @@ export class OrderDetailsComponent implements OnInit {
   showBackButton : boolean = false;
   cancelOrder : boolean = false;
   getCancelReason : any;
-  cancelReasons : any;
+  reasons : any;
   cancelReasonId : any;
   additionalRemark = '';
   cancelSuccessful : boolean = false;
+  returnSuccessful : boolean = false;
   cancelOrderFailureMsg : any;
+  returnItem : boolean = false;
+  cancelItemsList : any = [];
+  quantity = 1;
   constructor(private appservice : AppServiceService,
               private route: ActivatedRoute,
               private router: Router,
@@ -111,12 +116,18 @@ export class OrderDetailsComponent implements OnInit {
     return this.appservice.isLoggedInUser();
   }
 
-    openCancelOrder(){
+  openCancelOrder(){
+    this.cancelItemsList = Object.assign([], this.order.items)
+    this.cancelOrder = true;
+    this.callGetReasonsApi();
+  }
+
+  callGetReasonsApi(){
     $('#cd-cart').addClass('overflow-h');
     this.unsubscribeGetCancelReason();
     // let url = this.appservice.apiUrl +  "/api/rest/v1/district-state"
-    if(this.account_service.cancelReasons){
-        this.cancelReasons = this.account_service.cancelReasons;
+    if(this.account_service.reasons){
+        this.reasons = this.cancelOrder ? this.account_service.reasons.cancel : this.account_service.reasons.return;
         this.cancelReasonId = 0;
     }
     else{
@@ -126,8 +137,9 @@ export class OrderDetailsComponent implements OnInit {
       this.getCancelReason = this.apiservice.request(url, 'get', {}, {}, false, 'observable').subscribe((response)=>{
         console.log("response from location api ==>", response);
         response.cancel.push({id : 0, value : '--Select--' });
-        this.account_service.cancelReasons = response.cancel;
-        this.cancelReasons = response.cancel;
+        response.return.push({id : 0, value : '--Select--' });
+        this.account_service.reasons = response;
+        this.reasons = this.cancelOrder ? this.account_service.reasons.cancel : this.account_service.reasons.return;
         this.cancelReasonId = 0;
         this.appservice.removeLoader();     
       },
@@ -136,7 +148,6 @@ export class OrderDetailsComponent implements OnInit {
         this.appservice.removeLoader();
       })
     }
-    this.cancelOrder = true;
     this.cancelOrderFailureMsg = '';
   }
 
@@ -150,6 +161,10 @@ export class OrderDetailsComponent implements OnInit {
     // this.cancelReasonId = parseInt(this.cancelReasonId);
   }
 
+  confirm(){
+    this.cancelOrder ? this.callCancelOrderApi() : this.callReturnOrderApi();
+  }
+
   callCancelOrderApi(){
     this.appservice.showLoader();
     let url = this.appservice.apiUrl +  "/api/rest/v1/user/order/" + this.order.order_info.order_id +"/cancel";
@@ -158,17 +173,32 @@ export class OrderDetailsComponent implements OnInit {
       reason : this.cancelReasonId,
       comments : this.additionalRemark
     };
-    body._token = $('meta[name="csrf-token"]').attr('content');
     console.log("cancel body ==>", body);
+    this.updateOrder(url,body,header)
+  }
 
+  callReturnOrderApi(){
+    this.appservice.showLoader();
+    let url = this.appservice.apiUrl +  "/api/rest/v1/user/sub-order/" + this.cancelItemsList[0].suborder_id +"/return";
+    let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
+    let body : any = {
+      reason : this.cancelReasonId,
+      comments : this.additionalRemark,
+      variant_id : this.cancelItemsList[0].variant_id,
+      quantity : this.cancelItemsList[0].quantity
+    };
+    console.log("cancel body ==>", body);
+    this.updateOrder(url,body,header)
+  }
+
+  updateOrder(url, body, header){
     this.apiservice.request(url, 'post', body , header ).then((response)=>{      
       $('#cd-cart').animate({
           scrollTop: 0
       });
+      this.cancelOrder ? this.cancelSuccessful = true : this.returnSuccessful = true;
       this.getOrderDetails();
       this.closeCancelOrder();
-      this.cancelSuccessful = true;
-      this.order.cancel_allowed = false;
     })
     .catch((error)=>{
       $('#cd-cart').animate({
@@ -177,20 +207,50 @@ export class OrderDetailsComponent implements OnInit {
       console.log("error ===>", error);
       this.closeCancelOrder();
       if(error.status == 0){
-        this.cancelOrderFailureMsg = "Order Cancellation failed. Please check your Internet Connection";  
+        this.cancelOrderFailureMsg = "Item return failed. Please check your Internet Connection";  
       }
       else{
-        this.cancelOrderFailureMsg = error.message;
+        this.cancelOrderFailureMsg = error.error.message;
       }
       this.appservice.removeLoader();
-    })  
+    }) 
   }
+
+
 
   closeCancelOrder(){
     $('#cd-cart').removeClass('overflow-h');
     this.cancelOrder = false;
+    this.returnItem = false;
     this.cancelReasonId = '';
     this.additionalRemark = '';
   }
 
+  openReturnItem(item){
+    console.log("item to be returned ==>", item);
+    let item_copy = Object.assign({}, item);
+    this.cancelItemsList = [item_copy];
+    this.quantity = item.quantity;
+    this.returnItem = true;
+    this.callGetReasonsApi();
+  }
+
+  openQuantityModal(){
+    $('#qty-modal-account').modal('show');
+    $("#cd-my-account").css("overflow-y", "hidden");
+    $('.modal-backdrop').appendTo('.order-cancel');
+
+    $('#qty-modal-cart').on('hidden.bs.modal', function (e) {
+      $("#cd-cart").css("overflow-y", "auto");
+    })
+  }
+
+  updateQuantity(quantity){
+    this.cancelItemsList[0].quantity = quantity;
+  }
+
+  getValidTill(date){
+    return moment(date, "YYYY-MM-DD HH:mm:ss").format("DD MMM, YYYY");
+  }
+  
 }

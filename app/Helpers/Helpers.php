@@ -886,3 +886,11 @@ function checkForOfferItems($cartItems)
     }
     return false;
 }
+
+
+function validateSubOrder($user, $subOrder)
+{
+    if ($subOrder == null || $subOrder->order->cart->user_id != $user->id) {
+        abort(403);
+    }
+}

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, EventEmitter, Output } from '@angular/core';
 declare var $: any;
 
 @Component({
@@ -9,7 +9,13 @@ declare var $: any;
 export class ItemComponent implements OnInit, OnChanges {
 
 	@Input() item : any;
-	@Input() showStatus : any;
+  @Input() showStatus : any;
+  @Input() showReturnbtn : any;
+  @Input() returnItem : any;
+  @Output() openQuantityModalTrigger = new EventEmitter()
+  selectedQuantity : any;
+  totalQuantity : any;
+
   constructor() { }
 
   ngOnInit() {
@@ -22,5 +28,10 @@ export class ItemComponent implements OnInit, OnChanges {
   ngAfterViewInit(){
     $('[data-toggle="tooltip"]').tooltip();
   }
+
+  openQuantityModal(){
+    if(this.returnItem)
+      this.openQuantityModalTrigger.emit(this.item);
+   }
 
 }

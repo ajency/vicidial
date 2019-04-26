@@ -78,3 +78,4 @@ yarn-error.log
 /public/wordpress/wp-content/mu-plugins/
 /public/wordpress/wp-content/wp-cache-config.php
 /public/wordpress/wp-content/plugins/hello.php
+\.DS_Store
