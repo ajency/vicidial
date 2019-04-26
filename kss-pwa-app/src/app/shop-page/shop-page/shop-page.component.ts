@@ -225,13 +225,7 @@ export class ShopPageComponent implements OnInit {
     //   this.rangeFilter = {};
     //   this.booleanFilter = {};
     //   this.isRangeFilterActive();
-    //   this.filters.forEach(filter =>{
-    //     filter.items.forEach(item =>{
-    //       // separately handle for route and query params
-    //       if(item.is_selected)
-    //         this.updateQueryObjects({filter : filter, value : item.slug, apply : item.is_selected })
-    //     })
-    //   })
+    //   this.setFilters()
     // },
     // (error)=>{
     //   console.log("error ===>", error);
@@ -252,6 +246,16 @@ export class ShopPageComponent implements OnInit {
     for (let i = 0; i < 8; i++){
       this.listPage.items.push(product);
     }
+  }
+
+  setFilters(){
+    this.filters.forEach(filter =>{
+      filter.items.forEach(item =>{
+        // separately handle for route and query params
+        if(item.is_selected)
+          this.updateQueryObjects({filter : filter, value : item.slug, apply : item.is_selected })
+      })
+    })
   }
 
   unsubscribeListPageApi(){
@@ -316,7 +320,7 @@ export class ShopPageComponent implements OnInit {
       }
     }
     catch(error){
-      console.log("error in if else ==>", error);
+      // console.log("error in if else ==>", error);
     }
   }
 
@@ -423,7 +427,18 @@ export class ShopPageComponent implements OnInit {
   resetFilters(){
     this.filters = JSON.parse(JSON.stringify( this.filtersCopy ));
     console.log("on reset filter ==>", this.filters)
+    this.resetFilterQueryObject();
     this.mobilefilter = false;
+  }
+
+  resetFilterQueryObject(){
+    this.filters.forEach(filter =>{
+      filter.items.forEach(item =>{
+        // separately handle for route and query params
+        // if(item.is_selected)
+          this.updateQueryObjects({filter : filter, value : item.slug, apply : item.is_selected })
+      })
+    })
   }
 
   removeFilter(filter, item){
