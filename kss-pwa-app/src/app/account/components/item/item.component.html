@@ -1,20 +1,41 @@
-<div class="d-flex order-card">					
-	<a href="{{item.href}}" class="order-card__image" [ngClass]="{'variant-placeholder' : item.images[0]=='/img/placeholder.svg'}">
+<div class="d-flex order-card">
+	<a href="{{item.href}}" class="order-card__image" [ngClass]="{'variant-placeholder' : item.images['1x']=='/img/placeholder.svg'}">
 		<div class="product-img">
-			<img src="{{item.images[0]}}" class="lazyload img-fit" data-srcset="{{item.images[0]}} 50w, {{item.images[1]}} 100w, {{item.images[2]}} 150w" sizes="50px">
+			<img src="{{item.images['1x']}}" class="lazyload img-fit" data-srcset="{{item.images['1x']}} 50w, {{item.images['2x']}} 100w, {{item.images['3x']}} 150w" sizes="50px">
 		</div>
-	</a>	
+	</a>
 	<div class="product-detail order-card__detail">
-		<a href="{{item.href}}" class="text-dark">
-			<div class="product-name text-truncate">
-				{{item.title}}
-			</div>
-		</a>
-		<div class="product-size text-muted mb-1">
-			<span>Size: {{item.size}}</span> <span>|</span> <span>Qty: {{item.quantity}}</span>
+		<div class="align-items-center justify-content-between">
+			<a href="{{item.href}}" class="text-dark">
+				<div class="product-name text-truncate">
+					{{item.title}}
+				</div>
+			</a>
+			<!-- <i *ngIf="showStatus && item.return_policy.name" class="fa fa-info-circle text-gray" data-toggle="tooltip" data-placement="top" attr.title="{{item.return_policy.name}}"></i> -->
 		</div>
+		<!--div class="product-size text-muted mb-1">
+			<span>Size: {{item.size}}</span> <span>|</span> <span>Qty: {{item.quantity}}</span>
+		</div -->
+		<div class="d-flex flex-row align-items-center py-1">
+			<div class="size-qty align-self-center">
+				<label class="m-0">Size:</label>
+			</div>
+			<div class="pl-2 pr-1 align-self-center">
+				{{item.size}}
+			</div>
+			|
+			<div class="d-flex align-items-center pl-1" [ngClass]="{'qty-click' : returnItem}" (click)="openQuantityModal()">
+				<div class="qty align-self-center mt-0">
+					<label class="m-0">Qty:</label>
+				</div>
+				<div class="pl-2">
+					{{item.quantity}}
+				</div>
+			</div>
+		</div>
+
 		<div class="product-price">
-			<div class="kss-price kss-price--smaller">₹{{item.price_final}}									
+			<div class="kss-price kss-price--smaller">₹{{item.price_final}}
 				<span *ngIf="item.price_final != item.price_mrp">
 					<small class="kss-original-price text-muted">₹{{item.price_mrp}}
 				  	</small>
