@@ -291,27 +291,6 @@ class Order extends Model
         ]);
     }
 
-    public function sendReturnEmail()
-    {
-        sendEmail('return-initiate', [
-            'to'            => $this->cart->user->email_id,
-            'from'          => config('communication.return-initiate.from'),
-            'subject'       => 'Your return has been initiated at Kidsuperstore.in',
-            'template_data' => [
-                'order' => $this,
-            ],
-            'priority'      => 'default',
-        ]);
-    }
-    public function sendReturnSMS()
-    {
-        $link = ($this->cart->user->verified != null) ? url('/#/account/my-orders/') . '/' . $this->txnid : url('/my/order/details') . '?ordertoken=' . $this->token;
-        sendSMS('return-initiate', [
-            'to'      => $this->cart->user->phone,
-            'message' => "Your order with order id {$this->txnid} has been initated for return successfully on KidSuperStore.in. Check your order at " . $link,
-        ]);
-    }
-
     //sms to the stores
     public function sendVendorSMS()
     {
@@ -443,9 +422,6 @@ class Order extends Model
             $order_line->is_returned = true;
             $order_line->save();
         }
-        $order->sendReturnEmail();
-        $order->sendReturnSMS();
-
         ReturnOdooOrder::dispatch($returnSubOrder)->onQueue('odoo_order');
     }
 }

@@ -20,9 +20,4 @@ return [
             'id' => 'admin@kidsuperstore.in',
         ],
     ],
-    'return-initiate' => [
-        'from' => [
-            'id' => 'order-update@kidsuperstore.in',
-        ],
-    ],
 ];

@@ -18,9 +18,5 @@ return [
     ],
     "return-email"    => [
         'laravel' => 'email.return-email',
-    ],
-    "return-initiate" => [
-        'laravel'    => 'email.return-initiate',
-        'smsgupshup' => "",
-    ],
+    ]
 ];
