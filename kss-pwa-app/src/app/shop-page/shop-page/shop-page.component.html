@@ -32,7 +32,7 @@
 		        </div>
 		        <div class="pl-2 align-self-center">
 		          <select id="sort_filter_selectbox" class="size form-control  form-control-sm br-0  border-dark custom" [(ngModel)]="sortOn" (change)="sortBy()">
-		            <option *ngFor="let option of sort_on" value="{{option.value}}" [attr.selected]="option.is_selected">{{option.name}}</option>
+		            <option *ngFor="let option of sort_on" value="{{option.value}}" >{{option.name}}</option>
 		          </select>
 		        </div>
 		      </div>
