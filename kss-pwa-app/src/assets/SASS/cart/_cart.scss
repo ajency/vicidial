@@ -334,7 +334,7 @@ $L : 1200px;
 }
 #cd-cart,#cd-my-account {
     .product-name{
-        width: 250px;
+        // width: 250px;
         @media (max-width: 600px){
             width: auto;
         }

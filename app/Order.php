@@ -2,12 +2,13 @@
 
 namespace App;
 
-use Ajency\Connections\OdooConnect;
 use Ajency\ServiceComm\Comm\Sync;
 use App\Cart;
 use App\Jobs\CancelOdooOrder;
 use App\Jobs\OdooOrder;
 use App\Jobs\OdooOrderLine;
+use App\Jobs\OrderLineDeliveryDate;
+use App\Jobs\SaveReturnPolicies;
 use App\SubOrder;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -70,6 +71,7 @@ class Order extends Model
                 $this->orderLines()->attach($orderLineId, ['type' => $this->type]);
             }
         }
+        SaveReturnPolicies::dispatch($this->id)->onQueue('orderline_return_policy');
     }
 
     public function checkInventoryForSuborders()
@@ -82,7 +84,7 @@ class Order extends Model
     public function placeOrderOnOdoo()
     {
         //create a job to place order on odoo for all suborders.
-        $inventoryData   = [];  
+        $inventoryData = [];
         foreach ($this->subOrders as $subOrder) {
             $subOrder->odoo_status = 'draft';
             $subOrder->save();
@@ -100,11 +102,11 @@ class Order extends Model
         }
         Sync::call('inventory', 'reserveInventory', ['inventoryData' => $inventoryData]);
         /*if ($this->cart->coupon != null) {
-            $odoo              = new OdooConnect;
-            $currentCouponLeft = $odoo->defaultExec('sale.order.coupon', 'search_read', [[['global_code', '=', $this->cart->coupon]]], ['fields' => ['consumed_coupon_count']])->first();
-            $odoo->defaultExec('sale.order.coupon', 'write', [[$currentCouponLeft['id']], ['consumed_coupon_count' => $currentCouponLeft['consumed_coupon_count'] - 1]], null);
-            Coupon::where('odoo_id', $currentCouponLeft['id'])->update(['left_uses' => $currentCouponLeft['consumed_coupon_count'] - 1]);
-        }*/
+    $odoo              = new OdooConnect;
+    $currentCouponLeft = $odoo->defaultExec('sale.order.coupon', 'search_read', [[['global_code', '=', $this->cart->coupon]]], ['fields' => ['consumed_coupon_count']])->first();
+    $odoo->defaultExec('sale.order.coupon', 'write', [[$currentCouponLeft['id']], ['consumed_coupon_count' => $currentCouponLeft['consumed_coupon_count'] - 1]], null);
+    Coupon::where('odoo_id', $currentCouponLeft['id'])->update(['left_uses' => $currentCouponLeft['consumed_coupon_count'] - 1]);
+    }*/
     }
 
     public function cancelOrderOnOdoo()
@@ -369,5 +371,13 @@ class Order extends Model
             array_push($store_data, ['id' => $subOrder->location->warehouse_odoo_id, 'name' => $subOrder->location->warehouse_name]);
         }
         return ['store_ids' => $store_ids, 'store_data' => $store_data];
+    }
+
+    public static function saveDeliveryDate($order_from_id, $order_to_id)
+    {
+        $orders = self::select('id')->where('id', '>=', $order_from_id)->where('id', '<=', $order_to_id)->get()->pluck('id');
+        foreach ($orders as $order_id) {
+            OrderLineDeliveryDate::dispatch($order_id)->onQueue('orderline_return_policy');
+        }
     }
 }

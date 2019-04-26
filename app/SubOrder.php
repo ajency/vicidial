@@ -59,6 +59,8 @@ class SubOrder extends Model
                     'product_id'       => $variant->getParentId(),
                     'product_color_id' => $variant->getVarColorId(),
                     'product_slug'     => $variant->getProductSlug(),
+                    'product_type'     => $variant->getCategoryType(),
+                    'product_subtype'  => $variant->getSubType(),
                 ]));
                 array_push($this->orderLineIds, $orderLine->id);
             }
@@ -81,6 +83,8 @@ class SubOrder extends Model
                     'product_id'       => $variant->getParentId(),
                     'product_color_id' => $variant->getVarColorId(),
                     'product_slug'     => $variant->getProductSlug(),
+                    'product_type'     => $variant->getCategoryType(),
+                    'product_subtype'  => $variant->getSubType(),
                 ]));
                 array_push($this->orderLineIds, $orderLine->id);
             }
@@ -231,7 +235,7 @@ class SubOrder extends Model
     {
         $itemsData     = [];
         $store_address = $this->location->getAddress();
-        foreach ($this->orderLines->groupBy('variant_id') as $items) {
+        foreach ($this->orderLines->groupBy(function ($item, $key) {return $item["variant_id"] . "-" . $item["is_returned"];}) as $items) {
             $itemData = $items->first();
             $item     = [
                 'id'               => $itemData['id'],
@@ -242,12 +246,15 @@ class SubOrder extends Model
                 'price_final'      => $itemData['price_final'],
                 'discount_per'     => $itemData['discount_per'],
                 'variant_id'       => $itemData['variant_id'],
+                'suborder_id'      => $this->id,
                 'product_id'       => $itemData['product_id'],
                 'product_color_id' => $itemData['product_color_id'],
                 'product_slug'     => $itemData['product_slug'],
                 'state'            => $itemData['state'],
                 'shipment_status'  => $itemData['shipment_status'],
-                'quantity'         => $this->orderLines->where('variant_id', $itemData['variant_id'])->count(),
+                'is_returned'      => $itemData['is_returned'],
+                'return_policy'    => ReturnPolicy::fetchReturnPolicy($itemData),
+                'quantity'         => $this->orderLines->where('variant_id', $itemData['variant_id'])->groupBy('is_returned')[$itemData['is_returned']]->count(),
                 'is_invoiced'      => $this->is_invoiced,
             ];
             if ($store_address != null) {
