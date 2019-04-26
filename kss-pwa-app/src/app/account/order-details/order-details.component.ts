@@ -238,7 +238,7 @@ export class OrderDetailsComponent implements OnInit {
   openQuantityModal(){
     $('#qty-modal-account').modal('show');
     $("#cd-my-account").css("overflow-y", "hidden");
-    $('.modal-backdrop').appendTo('.angular-app');
+    $('.modal-backdrop').appendTo('#cd-cart');
 
     $('#qty-modal-cart').on('hidden.bs.modal', function (e) {
       $("#cd-cart").css("overflow-y", "auto");
