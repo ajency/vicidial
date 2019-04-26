@@ -50,6 +50,7 @@ export class AppServiceService {
 
    menuObject : any;
    filters : any;
+   sort_on : any;
   constructor(	private router: Router,
                 private apiservice : ApiServiceService) { 
     this.apiUrl = isDevMode() ? 'http://localhost:8000' : '';

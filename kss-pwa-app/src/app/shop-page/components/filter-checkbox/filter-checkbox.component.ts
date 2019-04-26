@@ -67,6 +67,7 @@ export class FilterCheckboxComponent implements OnInit, OnChanges {
   applyPriceRange(filter){
   	// console.log("applyPriceRange filter", this.range);
   	if(this.range.start != this.previous_Range.start || this.range.end != this.previous_Range.end){
+      filter.selected_range = this.range;
   		console.log("applyPriceRange filter", this.range);
   		this.rangeFilterApplied.emit({category : filter.attribute_param, value : this.range})		
   	}

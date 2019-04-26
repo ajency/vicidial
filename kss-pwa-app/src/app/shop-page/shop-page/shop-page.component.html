@@ -125,11 +125,9 @@
 								        <div *ngIf="item.is_selected" class="border border-dark py-1 px-2 mr-2 mb-2 active-filter"><span data-slug="apparels">{{item.display_name}}</span> <span class="ml-1 h6 kss_highlight" aria-hidden="true" (click)="removeFilter(filter, item)">×</span></div>
 								    </ng-container>
 							    </ng-container>
-							    <!-- <ng-container *ngIf="filter.attribute_param == 'price'">
-						    		<ng-container *ngFor="let item of filter.items">
-								        <div class="border border-dark py-1 px-2 mr-2 mb-2 active-filter"><span data-slug="apparels">{{item.display_name}}</span> <span class="ml-1 h6 kss_highlight" aria-hidden="true" (click)="removeFilter(filter, item);">×</span></div>
-								    </ng-container>
-							    </ng-container> -->
+							    <ng-container *ngIf="filter.attribute_param == 'price' && showRangeFilter">
+								        <div class="border border-dark py-1 px-2 mr-2 mb-2 active-filter"><span data-slug="apparels">{{filter.selected_range.start}}TO{{filter.selected_range.end}}</span> <span class="ml-1 h6 kss_highlight" aria-hidden="true" (click)="removeFilter(filter, item);">×</span></div>
+							    </ng-container>
 						    </ng-container>
 					    </div>
 					  </div>

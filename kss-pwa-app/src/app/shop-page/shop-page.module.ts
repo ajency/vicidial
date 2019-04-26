@@ -7,12 +7,11 @@ import { ShopPageComponent } from './shop-page/shop-page.component';
 
 import { ComponentsModule } from '../components/components.module';
 import { FilterCheckboxComponent } from './components/filter-checkbox/filter-checkbox.component';
-import { FilterRangeComponent } from './components/filter-range/filter-range.component';
 import { Ng5SliderModule } from 'ng5-slider';
-import {NgxPaginationModule} from 'ngx-pagination';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
-  declarations: [ShopPageComponent, FilterCheckboxComponent, FilterRangeComponent],
+  declarations: [ShopPageComponent, FilterCheckboxComponent],
   imports: [
     CommonModule,
     ComponentsModule,

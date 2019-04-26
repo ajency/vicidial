@@ -19,16 +19,7 @@ export class ShopPageComponent implements OnInit {
 
   listApiCall : any;
   filterCountApiCall : any;
-  listPage : any = {
-    page : {
-      current : 1,
-      display_limit : 30,
-      has_next : true,
-      has_previous : false,
-      total : 21,
-      total_item_count : 618
-    }
-  };
+  listPage : any = {};
   showLoader : boolean = false;
   showFilterLoader : boolean = false;
   filters : any;
@@ -37,10 +28,9 @@ export class ShopPageComponent implements OnInit {
   selectedFilterCategory : any;
   queryObject : any = {};
   sort_on : any
-
   page : any = {
     current : 1,
-    display_limit : 30,
+    display_limit : 40,
     has_next : true,
     has_previous : false,
     total : 21,
@@ -50,9 +40,9 @@ export class ShopPageComponent implements OnInit {
 
   public config: PaginationInstance = {
       id: 'list-page',
-      itemsPerPage: this.listPage.page.display_limit,
-      currentPage: this.listPage.page.current,
-      totalItems: this.listPage.page.total_item_count
+      itemsPerPage: 40,
+      currentPage: 1,
+      totalItems: 618
   };
 
   urlRoutes = {};
@@ -61,6 +51,7 @@ export class ShopPageComponent implements OnInit {
   booleanFilter = {};
   searchString : any = '';
   pageNumber : any;
+  showRangeFilter : any;
 
   constructor(private apiService: ApiServiceService,
               private appservice : AppServiceService,
@@ -72,11 +63,11 @@ export class ShopPageComponent implements OnInit {
 
   ngOnInit() {
     console.log("%%%%%%%%%%% ngOnInit %%%%%%%%%%%%%%");
+    this.listPage['page'] = this.page;
     this.getFilters();
     combineLatest(this.route.params, this.route.queryParams)
       .pipe(map(results => ({route: results[0], query: results[1]})))
         .subscribe(results => {
-          // console.log(results);
           this.queryObject = {};
           for (const [key,value] of Object.entries(results.route)){
             this.queryObject['pf'] ? this.queryObject['pf'].push(value) : this.queryObject['pf'] = [value];
@@ -128,12 +119,7 @@ export class ShopPageComponent implements OnInit {
     }))
   }
 
-  status: boolean = false;
   mobilefilter: boolean = false;
-
-  clickEvent(){
-    this.status = !this.status;
-  }
 
   showMobileFilter(){
     this.mobilefilter = !this.mobilefilter;
@@ -141,7 +127,7 @@ export class ShopPageComponent implements OnInit {
 
   ngOnDestroy(){
     this.unsubscribeListPageApi();
-
+    this.unsubscribeFilterCountApiCall();
   }
 
   callListPageApi(){
@@ -165,12 +151,8 @@ export class ShopPageComponent implements OnInit {
         item.brand = item.facets.product_brand.name;
       })
       this.listPage = response;
+      this.setPaginationDefaults();
       this.showLoader = false;
-
-      this.config.itemsPerPage = this.listPage.page.display_limit;
-      this.config.currentPage = this.listPage.page.current;
-      this.config.totalItems = this.listPage.page.total_item_count;
-      // console.log("product list api response ==>",this.listPage);
     },
     (error)=>{
       console.log("error ===>", error);
@@ -179,9 +161,17 @@ export class ShopPageComponent implements OnInit {
     });
   }
 
+  setPaginationDefaults(){
+    this.config.itemsPerPage = this.listPage.page.display_limit;
+    this.config.currentPage = this.listPage.page.current;
+    this.config.totalItems = this.listPage.page.total_item_count;
+  }
+
   getFilters(){
-    if(this.appservice.filters)
+    if(this.appservice.filters){
       this.filters = this.appservice.filters
+      this.sort_on = this.appservice.sort_on;
+    }
     else{
       this.showFilterLoader = true;
       let url = isDevMode() ? "https://demo8558685.mockable.io/get-filters" : this.appservice.apiUrl + '/api/rest/v1/get-filters';
@@ -196,6 +186,7 @@ export class ShopPageComponent implements OnInit {
         this.sort_on = response.sort_on;
         this.searchString = response.search_string;
         this.appservice.filters = this.filters;
+        this.appservice.sort_on = this.sort_on;
         this.filtersCopy = Object.assign([], this.filters);
       })
       .catch((error)=>{
@@ -226,12 +217,12 @@ export class ShopPageComponent implements OnInit {
     //   this.primaryFilters = {};
     //   this.rangeFilter = {};
     //   this.booleanFilter = {};
-      
+    //   this.isRangeFilterActive();
     //   this.filters.forEach(filter =>{
     //     filter.items.forEach(item =>{
     //       // separately handle for route and query params
     //       if(item.is_selected)
-    //         this.updateUrlRoute(filter.attribute_param, item.slug, true);
+    //         this.updateQueryObjects({filter : filter, value : item.slug, apply : item.is_selected })
     //     })
     //   })
     // },
@@ -274,7 +265,6 @@ export class ShopPageComponent implements OnInit {
 
   sortBy(mobile_sort : any = ''){
     if(mobile_sort){
-      //close modal and call get filters and get product list api
       console.log("mobile sort by ==>", mobile_sort);
       this.sortOn = mobile_sort;
     }
@@ -296,8 +286,14 @@ export class ShopPageComponent implements OnInit {
     catch(error){
       console.log("error ==>", error);
     }
+    this.updateQueryObjects(filter);    
+    this.pageNumber = '';
+    this.setRouteParam();
+  }
+
+  updateQueryObjects(filter){
     try{
-    if(!filter.filter.is_attribute_param){
+      if(!filter.filter.is_attribute_param){
         this.updateUrlRoute(filter.filter.attribute_param, filter.value, filter.apply);
       }
       else{
@@ -311,12 +307,10 @@ export class ShopPageComponent implements OnInit {
             delete this.booleanFilter[filter.filter.attribute_param]
         }
       }
-      }
-      catch(error){
-        console.log("error in if else ==>", error);
-      }
-      this.pageNumber = '';
-      this.setRouteParam();
+    }
+    catch(error){
+      console.log("error in if else ==>", error);
+    }
   }
 
   setRouteParam(callProductListForMobile : boolean = false){
@@ -403,14 +397,20 @@ export class ShopPageComponent implements OnInit {
 
   applyRangeFilter(filter){
     this.rangeFilter['price'] = '';
-    this.rangeFilter['price'] = 'price:'+ filter.value.start + 'TO' + filter.value.end;
+    this.isRangeFilterActive();
     this.setRouteParam();
   }
 
-  updateListPage(){
-    // this.isMobile ? this.getFiltersCount() : this.callListPageApi();
-    if(!this.isMobile)
-      this.callListPageApi();
+  isRangeFilterActive(){
+    let range_filter = this.filters.find((filter)=>{ return filter.attribute_param === 'price' });
+    console.log("range_filter ==>",range_filter);
+    if(range_filter.bucket_range.start != range_filter.selected_range.start || range_filter.bucket_range.end != range_filter.selected_range.end){
+      this.showRangeFilter = true;
+      this.rangeFilter['price'] = 'price:'+ range_filter.selected_range.start + 'TO' + range_filter.selected_range.end;
+    }
+    else{
+      this.showRangeFilter = false;
+    }
   }
 
   resetFilters(){
@@ -425,8 +425,10 @@ export class ShopPageComponent implements OnInit {
       console.log("filter ===========>", filter)
       this.applyCheckboxFilter({filter : filter, value : item.slug, apply : false })
     }
-    // else
-    //   this.applyRangeFilter({category : filter.attribute_param, value : filter.bucket_range}) 
+    else{
+      filter.selected_range = Object.assign({}, filter.bucket_range);
+      this.applyRangeFilter({category : filter.attribute_param, value : filter.bucket_range}) 
+    }
   }
 
 }
