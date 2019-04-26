@@ -9,6 +9,7 @@ import { combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 declare var $: any;
+declare var gtagTrackListPage : any;
 
 @Component({
   selector: 'app-shop-page',
@@ -149,6 +150,12 @@ export class ShopPageComponent implements OnInit {
         item.sale_price = default_variant.variant_attributes.variant_sale_price;
         item.list_price = default_variant.variant_attributes.variant_list_price;
         item.brand = item.facets.product_brand.name;
+        try{
+          gtagTrackListPage();
+        }
+        catch(e){
+          console.log("gtagTrackListPage error ==>", e);
+        }
       })
       this.listPage = response;
       this.setPaginationDefaults();
