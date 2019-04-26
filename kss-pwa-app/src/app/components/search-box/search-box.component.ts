@@ -22,18 +22,17 @@ export class SearchBoxComponent implements OnInit, OnChanges {
 
   searchProduct(){
   	console.log("searchProduct ==>", this.searchText);
-  	if(this.searchText)
+  	if(this.searchText != this.defaultText)
   		this.updateList.emit(this.searchText);
   }
 
   clearSearch(){
     this.searchText = '';
+    this.searchProduct();
   }
 
   enterclick(event){
     if (event.keyCode === 13) {
-        // $('.is-enter').click();
-        console.log("enter is clicked");
         this.searchProduct();
     }
   }
