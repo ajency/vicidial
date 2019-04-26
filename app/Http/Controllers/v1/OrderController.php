@@ -248,7 +248,7 @@ class OrderController extends Controller
         $request->validate(['reason' => 'required|exists:defaults,id', 'comments' => 'present', 'variant_id' => 'required|exists:variants,odoo_id', 'quantity' => 'required|integer|min:1']);
         $params = $request->all();
 
-        $sub_order->order->placeReturnRequest($params, $sub_order);
+        $sub_order->order->placeReturnRequest($params, $sub_order, $user);
 
         return response()->json(["message" => 'Return request placed successfully', 'success' => true]);
     }

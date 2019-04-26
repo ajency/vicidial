@@ -383,11 +383,11 @@ class Order extends Model
         }
     }
 
-    public function placeReturnRequest($params, $sub_order)
+    public function placeReturnRequest($params, $sub_order, $user)
     {
-        $order_lines = $this->orderLines->where('variant_id', $params['variant_id'])->where('shipment_status', 'delivered')->where('is_returned', false);
-        $order_line  = $order_lines->first();
-        if ($order_lines->count() < $params['quantity'] || !ReturnPolicy::fetchReturnPolicy($order_line)['return_allowed']) {
+        $order_lines      = $this->orderLines->where('variant_id', $params['variant_id'])->where('shipment_status', 'delivered')->where('is_returned', false);
+        $order_line_first = $order_lines->first();
+        if ($order_lines->count() < $params['quantity'] || !ReturnPolicy::fetchReturnPolicy($order_line_first)['return_allowed']) {
             abort(403, 'Return not allowed');
         }
 
@@ -400,12 +400,12 @@ class Order extends Model
             'new_transaction_id' => $this->id,
         ]);
 
-
         $returnSubOrder                     = new SubOrder;
         $returnSubOrder->order_id           = $order->id;
         $returnSubOrder->location_id        = $sub_order->location_id;
         $returnSubOrder->type               = 'Return Transaction';
         $returnSubOrder->item_data          = [];
+        $returnSubOrder->odoo_data          = ['you_pay' => $params['quantity'] * $order_line_first['price_discounted']];
         $returnSubOrder->odoo_status        = 'return';
         $returnSubOrder->new_transaction_id = $sub_order->id;
         $returnSubOrder->save();
@@ -429,9 +429,9 @@ class Order extends Model
             'name'         => $user->name,
             'mobile'       => $user->phone,
             'txnno'        => $sub_order->order->txnid,
-            'item'         => $order_line->title,
-            'product_slug' => $order_line->product_slug,
-            'size'         => $order_line->size,
+            'item'         => $order_line_first->title,
+            'product_slug' => $order_line_first->product_slug,
+            'size'         => $order_line_first->size,
             'quantity'     => $params['quantity'],
             'reason'       => Defaults::getReason($params['reason']),
             'comments'     => $params['comments'],
