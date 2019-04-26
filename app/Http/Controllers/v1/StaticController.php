@@ -41,50 +41,58 @@ class StaticController extends Controller
 
     public function contact(Request $request)
     {
-        $this->params['breadcrumb']['current'] = 'Contact Us';
-        return view('contact-us')->with('params', $this->params);
+        // $this->params['breadcrumb']['current'] = 'Contact Us';
+        // return view('contact-us')->with('params', $this->params);
+        return view('home_new');
     }
 
     public function contactnew(Request $request)
     {
-        $this->params['breadcrumb']['current'] = 'Contact Us';
-        return view('contact')->with('params', $this->params);
+        // $this->params['breadcrumb']['current'] = 'Contact Us';
+        // return view('contact')->with('params', $this->params);
+        return view('home_new');
     }
 
     public function faq(Request $request)
     {
-        $this->params['breadcrumb']['current'] = 'Faq';
-        return view('faq')->with('params', $this->params);
+        // $this->params['breadcrumb']['current'] = 'Faq';
+        // return view('faq')->with('params', $this->params);
+        return view('home_new');
     }
 
     public function about(Request $request)
     {
-        $this->params['breadcrumb']['current'] = 'About Us';
-        return view('about-us')->with('params', $this->params);
+        // $this->params['breadcrumb']['current'] = 'About Us';
+        // return view('about-us')->with('params', $this->params);
+        return view('home_new');
     }
 
     public function tc(Request $request)
     {
-        $this->params['breadcrumb']['current'] = 'Terms and Conditions';
-        return view('terms-and-conditions')->with('params', $this->params);
+        // $this->params['breadcrumb']['current'] = 'Terms and Conditions';
+        // return view('terms-and-conditions')->with('params', $this->params);
+        return view('home_new');
     }
 
     public function privacy(Request $request)
     {
-        $this->params['breadcrumb']['current'] = 'Privacy Policy';
-        return view('privacy-policy')->with('params', $this->params);
+        // $this->params['breadcrumb']['current'] = 'Privacy Policy';
+        // return view('privacy-policy')->with('params', $this->params);
+        return view('home_new');
     }
 
     public function stores(Request $request)
     {
-        $this->params['breadcrumb']['current'] = 'Stores';
-        return view('stores')->with('params', $this->params);
+        // $this->params['breadcrumb']['current'] = 'Stores';
+        // return view('stores')->with('params', $this->params);
+        return view('home_new');
     }
 
     public function singlestore(Request $request)
     {
-        $this->params['breadcrumb']['current'] = 'Store';
-        return view('store-single')->with('params', $this->params);
+        // $this->params['breadcrumb']['current'] = 'Store';
+        // return view('store-single')->with('params', $this->params);
+        return view('home_new');   
     }
 
     public function activities($storename, Request $request)
