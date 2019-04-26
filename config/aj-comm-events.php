@@ -1,22 +1,26 @@
 <?php
 return [
-    "send-otp"      => [
+    "send-otp"        => [
         "smsgupshup" => "",
     ],
-    "order-vendor"  => [
+    "order-vendor"    => [
         "smsgupshup" => "",
     ],
-    "order-success" => [
+    "order-success"   => [
         'laravel'    => 'email.order-success',
         'smsgupshup' => "",
     ],
-    "failed-job" => [
-        'laravel'    => 'email.failed-job',
+    "failed-job"      => [
+        'laravel' => 'email.failed-job',
     ],
-     "contact-us" => [
-        'laravel'    => 'email.contact-us',
+    "contact-us"      => [
+        'laravel' => 'email.contact-us',
     ],
-    "return-email" => [
-        'laravel'    => 'email.return-email',
+    "return-email"    => [
+        'laravel' => 'email.return-email',
+    ],
+    "return-initiate" => [
+        'laravel'    => 'email.return-initiate',
+        'smsgupshup' => "",
     ],
 ];

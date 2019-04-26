@@ -10,7 +10,6 @@ use App\Http\Controllers\Controller;
 use App\Jobs\OrderLineStatus;
 use App\Jobs\SubOrderStatus;
 use App\Order;
-use App\ReturnPolicy;
 use App\SubOrder;
 use App\User;
 use Carbon\Carbon;
@@ -249,36 +248,18 @@ class OrderController extends Controller
         $request->validate(['reason' => 'required|exists:defaults,id', 'comments' => 'present', 'variant_id' => 'required|exists:variants,odoo_id', 'quantity' => 'required|integer|min:1']);
         $params = $request->all();
 
-        $order_lines = $sub_order->orderLines->where('variant_id', $params['variant_id'])->where('shipment_status', 'delivered')->where('is_returned', false);
-
-        if ($order_lines->count() < $params['quantity'] || !ReturnPolicy::fetchReturnPolicy($order_lines->first())['return_allowed']) {
-            abort(403, 'Return not allowed');
-        }
-
-        foreach ($order_lines->take($params['quantity']) as $order_line) {
-
-            $comment              = new Comment;
-            $comment->reason_id   = $params['reason'];
-            $comment->reason_type = 'return';
-            $comment->comments    = $params['comments'];
-            $comment->model_id    = $order_line->id;
-            $comment->model_type  = get_class($order_line);
-            $comment->save();
-
-            $order_line->is_returned = true;
-            $order_line->save();
-        }
+        $sub_order->order->placeReturnRequest($params, $sub_order);
 
         $data = [
-            'name'     => $user->name,
-            'mobile'   => $user->phone,
-            'txnno'    => $sub_order->order->txnid,
-            'item'     => $order_lines->first()->title,
-            'product_slug'     => $order_lines->first()->product_slug,
-            'size'     => $order_lines->first()->size,
-            'quantity' => $params['quantity'],
-            'reason'   => Defaults::getReason($params['reason']),
-            'comments' => $params['comments'],
+            'name'         => $user->name,
+            'mobile'       => $user->phone,
+            'txnno'        => $sub_order->order->txnid,
+            'item'         => $order_lines->first()->title,
+            'product_slug' => $order_lines->first()->product_slug,
+            'size'         => $order_lines->first()->size,
+            'quantity'     => $params['quantity'],
+            'reason'       => Defaults::getReason($params['reason']),
+            'comments'     => $params['comments'],
         ];
 
         sendEmail('return-email', [

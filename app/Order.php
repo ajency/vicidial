@@ -8,7 +8,9 @@ use App\Jobs\CancelOdooOrder;
 use App\Jobs\OdooOrder;
 use App\Jobs\OdooOrderLine;
 use App\Jobs\OrderLineDeliveryDate;
+use App\Jobs\ReturnOdooOrder;
 use App\Jobs\SaveReturnPolicies;
+use App\ReturnPolicy;
 use App\SubOrder;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -289,6 +291,27 @@ class Order extends Model
         ]);
     }
 
+    public function sendReturnEmail()
+    {
+        sendEmail('return-initiate', [
+            'to'            => $this->cart->user->email_id,
+            'from'          => config('communication.return-initiate.from'),
+            'subject'       => 'Your return has been initiated at Kidsuperstore.in',
+            'template_data' => [
+                'order' => $this,
+            ],
+            'priority'      => 'default',
+        ]);
+    }
+    public function sendReturnSMS()
+    {
+        $link = ($this->cart->user->verified != null) ? url('/#/account/my-orders/') . '/' . $this->txnid : url('/my/order/details') . '?ordertoken=' . $this->token;
+        sendSMS('return-initiate', [
+            'to'      => $this->cart->user->phone,
+            'message' => "Your order with order id {$this->txnid} has been initated for return successfully on KidSuperStore.in. Check your order at " . $link,
+        ]);
+    }
+
     //sms to the stores
     public function sendVendorSMS()
     {
@@ -379,5 +402,50 @@ class Order extends Model
         foreach ($orders as $order_id) {
             OrderLineDeliveryDate::dispatch($order_id)->onQueue('orderline_return_policy');
         }
+    }
+
+    public function placeReturnRequest($params, $sub_order)
+    {
+        $order_lines = $this->orderLines->where('variant_id', $params['variant_id'])->where('shipment_status', 'delivered')->where('is_returned', false);
+        if ($order_lines->count() < $params['quantity'] || !ReturnPolicy::fetchReturnPolicy($order_lines->first())['return_allowed']) {
+            abort(403, 'Return not allowed');
+        }
+
+        $order = self::create([
+            'cart_id'            => $this->cart_id,
+            'address_id'         => $this->address_id,
+            'address_data'       => $this->address_data,
+            'expires_at'         => Carbon::now()->addMinutes(config('orders.expiry'))->timestamp,
+            'type'               => 'Return Transaction',
+            'new_transaction_id' => $this->id,
+        ]);
+
+        $returnSubOrder                     = new SubOrder;
+        $returnSubOrder->order_id           = $order->id;
+        $returnSubOrder->location_id        = $sub_order->location_id;
+        $returnSubOrder->type               = 'Return Transaction';
+        $returnSubOrder->item_data          = $sub_order->item_data;
+        $returnSubOrder->odoo_status        = 'return';
+        $returnSubOrder->new_transaction_id = $sub_order->id;
+        $returnSubOrder->save();
+        $returnSubOrder->refresh();
+
+        foreach ($order_lines->take($params['quantity']) as $order_line) {
+            $returnSubOrder->orderLines()->attach($order_line->id, ['type' => $returnSubOrder->type]);
+            $order->orderLines()->attach($order_line->id, ['type' => $order->type]);
+            $comment              = new Comment;
+            $comment->reason_id   = $params['reason'];
+            $comment->reason_type = 'return';
+            $comment->comments    = $params['comments'];
+            $comment->model_id    = $order_line->id;
+            $comment->model_type  = get_class($order_line);
+            $comment->save();
+            $order_line->is_returned = true;
+            $order_line->save();
+        }
+        $order->sendReturnEmail();
+        $order->sendReturnSMS();
+
+        ReturnOdooOrder::dispatch($returnSubOrder)->onQueue('odoo_order');
     }
 }
