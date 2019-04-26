@@ -60,7 +60,6 @@ export class ProductPageComponent implements OnInit {
     this.queryParamSize = this.route.snapshot.queryParamMap.get('size');
     let url = isDevMode() ? "https://demo8558685.mockable.io/get_single_product" : this.appservice.apiUrl + '/api/rest/v1/single-product?slug='+product_slug;
     this.productApiCall = this.apiService.request(url,'get',{},{}, false, 'observable').subscribe((data)=>{
-      this.loadCart();
       this.product = data;
       let variant = this.product.variants.find((v)=>{ return this.queryParamSize == v.variant_facets.variant_size.name});
       let default_price;
@@ -119,17 +118,6 @@ export class ProductPageComponent implements OnInit {
 
   getOffPercentage(list_price, sale_price){
     return this.appservice.calculateOff(list_price, sale_price);
-  }
-
-  loadCart(){
-    if(window.location.href.endsWith('#/bag') || window.location.href.endsWith('#/bag/shipping-address') || window.location.href.endsWith('#/bag/shipping-summary')){
-      this.appservice.loadCartFromAngular = true;
-      this.appservice.loadCartTrigger();
-    }
-    else if(window.location.href.endsWith('#/account') || window.location.href.endsWith('#/account/my-orders') || window.location.href.includes('#/account/my-orders/')){
-      this.appservice.loadAccountFromAngular = true;
-      this.appservice.loadCartTrigger();
-    }
   }
 
   unsubscribeProductApi(){

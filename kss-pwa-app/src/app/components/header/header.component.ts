@@ -37,6 +37,7 @@ export class HeaderComponent implements OnInit, OnChanges {
 
   ngAfterViewInit(){
     this.appservice.updateCartCountInUI();
+    this.loadCart();
   }
 
   getMenu(){
@@ -104,5 +105,16 @@ export class HeaderComponent implements OnInit, OnChanges {
     setTimeout(()=>{
       this.hideMenu = false;
     });
+  }
+
+  loadCart(){
+    if(window.location.href.endsWith('#/bag') || window.location.href.endsWith('#/bag/shipping-address') || window.location.href.endsWith('#/bag/shipping-summary')){
+      this.appservice.loadCartFromAngular = true;
+      this.appservice.loadCartTrigger();
+    }
+    else if(window.location.href.endsWith('#/account') || window.location.href.endsWith('#/account/my-orders') || window.location.href.includes('#/account/my-orders/')){
+      this.appservice.loadAccountFromAngular = true;
+      this.appservice.loadCartTrigger();
+    }
   }
 }

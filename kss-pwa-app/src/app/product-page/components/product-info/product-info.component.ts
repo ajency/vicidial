@@ -251,7 +251,6 @@ export class ProductInfoComponent implements OnInit, OnChanges {
 
   @HostListener('window:scroll', ['$event'])
     scrollHandler(event) {
-      console.log("Scroll Event");
       this.btnSticky = true;
     }
 }

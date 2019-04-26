@@ -24,39 +24,21 @@ export class HomePageComponent implements OnInit {
 
   ngOnInit() {
   	console.log("ngOnInit HomePageComponent", window.location.pathname);
-    let url = isDevMode() ? "https://demo8558685.mockable.io/get-home-page-elements-test" : "/api/rest/v1/test/get-page-element-dummy?page_slug=home";
+    let url =  "/api/rest/v1/test/get-page-element-dummy?page_slug=home";
     if(window.location.pathname == '/')
       url = url + '&published=true';
+    if(isDevMode())
+      url = "https://demo8558685.mockable.io/get-home-page-elements-test";
     this.apiService.request(url,'get',{},{}).then((data)=>{
       console.log("home page data ==>", data);
       this.showLoader = false;
-      this.homePageElements = data;
-      // setTimeout(()=>{
-        this.loadCart();
-      // },1000)      
+      this.homePageElements = data;     
     })
     .catch((error)=>{
       console.log("error in get-home-page-element api ==>", error);
       this.showLoader = false;
       // this.homePageElements = true;
     })
-  }
-
-  loadCart(){
-    if(window.location.href.endsWith('#/bag') || window.location.href.endsWith('#/bag/shipping-address') || window.location.href.endsWith('#/bag/shipping-summary')){
-      this.appservice.loadCartFromAngular = true;
-      // let url = window.location.href.split("#")[0] + '#/bag';
-      // history.pushState({bag : true}, 'bag', url);
-      // console.log("openCart");
-      this.appservice.loadCartTrigger();
-    }
-    else if(window.location.href.endsWith('#/account') || window.location.href.endsWith('#/account/my-orders') || window.location.href.includes('#/account/my-orders/')){
-      this.appservice.loadAccountFromAngular = true;
-      // let url = window.location.href.split("#")[0] + '#/account';
-      // history.pushState({bag : true}, 'account', url);
-      // console.log("openAccount");
-      this.appservice.loadCartTrigger();
-    }        
   }
 
 }
