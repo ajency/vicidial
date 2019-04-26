@@ -250,27 +250,6 @@ class OrderController extends Controller
 
         $sub_order->order->placeReturnRequest($params, $sub_order);
 
-        $data = [
-            'name'         => $user->name,
-            'mobile'       => $user->phone,
-            'txnno'        => $sub_order->order->txnid,
-            'item'         => $order_lines->first()->title,
-            'product_slug' => $order_lines->first()->product_slug,
-            'size'         => $order_lines->first()->size,
-            'quantity'     => $params['quantity'],
-            'reason'       => Defaults::getReason($params['reason']),
-            'comments'     => $params['comments'],
-        ];
-
-        sendEmail('return-email', [
-            'from'          => ["name" => [$user->name], "id" => [$user->email_id]],
-            'subject'       => 'Request for Return - ' . $sub_order->order->txnid,
-            'template_data' => [
-                'data' => $data,
-            ],
-            'priority'      => 'default',
-        ]);
-
         return response()->json(["message" => 'Return request placed successfully', 'success' => true]);
     }
 

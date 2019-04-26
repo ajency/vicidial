@@ -386,7 +386,8 @@ class Order extends Model
     public function placeReturnRequest($params, $sub_order)
     {
         $order_lines = $this->orderLines->where('variant_id', $params['variant_id'])->where('shipment_status', 'delivered')->where('is_returned', false);
-        if ($order_lines->count() < $params['quantity'] || !ReturnPolicy::fetchReturnPolicy($order_lines->first())['return_allowed']) {
+        $order_line  = $order_lines->first();
+        if ($order_lines->count() < $params['quantity'] || !ReturnPolicy::fetchReturnPolicy($order_line)['return_allowed']) {
             abort(403, 'Return not allowed');
         }
 
@@ -399,11 +400,12 @@ class Order extends Model
             'new_transaction_id' => $this->id,
         ]);
 
+
         $returnSubOrder                     = new SubOrder;
         $returnSubOrder->order_id           = $order->id;
         $returnSubOrder->location_id        = $sub_order->location_id;
         $returnSubOrder->type               = 'Return Transaction';
-        $returnSubOrder->item_data          = $sub_order->item_data;
+        $returnSubOrder->item_data          = [];
         $returnSubOrder->odoo_status        = 'return';
         $returnSubOrder->new_transaction_id = $sub_order->id;
         $returnSubOrder->save();
@@ -422,6 +424,28 @@ class Order extends Model
             $order_line->is_returned = true;
             $order_line->save();
         }
+
+        $data = [
+            'name'         => $user->name,
+            'mobile'       => $user->phone,
+            'txnno'        => $sub_order->order->txnid,
+            'item'         => $order_line->title,
+            'product_slug' => $order_line->product_slug,
+            'size'         => $order_line->size,
+            'quantity'     => $params['quantity'],
+            'reason'       => Defaults::getReason($params['reason']),
+            'comments'     => $params['comments'],
+        ];
+
+        sendEmail('return-email', [
+            'from'          => ["name" => [$user->name], "id" => [$user->email_id]],
+            'subject'       => 'Request for Return - ' . $sub_order->order->txnid,
+            'template_data' => [
+                'data' => $data,
+            ],
+            'priority'      => 'default',
+        ]);
+
         ReturnOdooOrder::dispatch($returnSubOrder)->onQueue('odoo_order');
     }
 }
