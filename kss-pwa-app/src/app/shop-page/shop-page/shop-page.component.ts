@@ -182,7 +182,7 @@ export class ShopPageComponent implements OnInit {
     else{
       this.showFilterLoader = true;
       let url = isDevMode() ? "https://demo8558685.mockable.io/get-filters" : this.appservice.apiUrl + '/api/rest/v1/get-filters';
-      // url = "https://demo8558685.mockable.io/get-filters";
+      url = "https://demo8558685.mockable.io/get-filters";
       this.apiService.request(url, 'get', {} , {}, false, 'promise').then((response)=>{
         // console.log("get filters api response ==>",response);
         this.showFilterLoader = false;
