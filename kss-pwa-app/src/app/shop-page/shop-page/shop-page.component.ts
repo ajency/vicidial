@@ -373,6 +373,11 @@ export class ShopPageComponent implements OnInit {
     }
   }
 
+  applyFilter(){
+    this.setRouteParam(true);
+    this.mobilefilter = false;
+  }
+
   createQueryObjectForCountApi(){
     this.queryObject = {};
     this.queryObject = Object.assign({}, this.urlRoutes, this.primaryFilters, this.booleanFilter);
@@ -425,18 +430,16 @@ export class ShopPageComponent implements OnInit {
   }
 
   resetFilters(){
-    this.filters = JSON.parse(JSON.stringify( this.filtersCopy ));
+    // this.filters = JSON.parse(JSON.stringify( this.filtersCopy ));
     console.log("on reset filter ==>", this.filters)
     this.resetFilterQueryObject();
-    this.mobilefilter = false;
   }
 
   resetFilterQueryObject(){
     this.filters.forEach(filter =>{
       filter.items.forEach(item =>{
-        // separately handle for route and query params
-        // if(item.is_selected)
-          this.updateQueryObjects({filter : filter, value : item.slug, apply : item.is_selected })
+          item.is_selected = false;
+          this.updateQueryObjects({filter : filter, value : item.slug, apply : false })
       })
     })
   }
@@ -451,6 +454,12 @@ export class ShopPageComponent implements OnInit {
       filter.selected_range = Object.assign({}, filter.bucket_range);
       this.applyRangeFilter({category : filter.attribute_param, value : filter.bucket_range}) 
     }
+  }
+
+  revertFilters(){
+    this.filters = JSON.parse(JSON.stringify( this.filtersCopy ));
+    this.setFilters();
+    this.mobilefilter = false;
   }
 
 }
