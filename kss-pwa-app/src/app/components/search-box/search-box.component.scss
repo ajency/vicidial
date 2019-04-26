@@ -10,6 +10,13 @@
 			width: 230px;
 			padding-right: 30px;
 		}
+    	.clear-search{
+			position: absolute;
+		    right: 30px;
+		    color: #c1c1c1;
+		    font-size: 1.1em;
+		    cursor: pointer;
+		}
 	}
 	@media (max-width: 767px){
  		display: none !important;
