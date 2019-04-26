@@ -30,7 +30,7 @@ export class SearchBoxComponent implements OnInit, OnChanges {
     this.searchText = '';
   }
 
-  enterclick(){
+  enterclick(event){
     if (event.keyCode === 13) {
         // $('.is-enter').click();
         console.log("enter is clicked");
