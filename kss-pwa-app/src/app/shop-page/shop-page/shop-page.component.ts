@@ -187,7 +187,7 @@ export class ShopPageComponent implements OnInit {
         this.searchString = response.search_string;
         this.appservice.filters = this.filters;
         this.appservice.sort_on = this.sort_on;
-        this.filtersCopy = Object.assign([], this.filters);
+        this.filtersCopy = JSON.parse(JSON.stringify( this.filters ));
       })
       .catch((error)=>{
         console.log("error ===>", error);
@@ -414,7 +414,7 @@ export class ShopPageComponent implements OnInit {
   }
 
   resetFilters(){
-    this.filters = Object.assign([], this.filtersCopy);
+    this.filters = JSON.parse(JSON.stringify( this.filtersCopy ));
     console.log("on reset filter ==>", this.filters)
     this.mobilefilter = false;
   }
