@@ -1,4 +1,5 @@
 import { Component, OnInit, Input  } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-offer',
@@ -8,9 +9,13 @@ import { Component, OnInit, Input  } from '@angular/core';
 export class NewOfferComponent implements OnInit {
 
 	@Input() newOffer : any;
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
+  }
+
+  navigateTo(link){
+    this.router.navigateByUrl((new URL(link)).pathname);
   }
 
 }

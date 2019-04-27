@@ -1,5 +1,5 @@
 <div *ngIf="newOffer.element_data.text.text1" class="text-center p-2 top-offer kss-extension" [ngStyle]="{'background-color' : newOffer.element_data.bg_color ? newOffer.element_data.bg_color : ''}" attr.static_element-id="{{newOffer.sequence}}" static_element-display_type="New offer" attr.static_element-type="{{newOffer.type}}" page_slug="home">
-	<a href="{{newOffer.element_data.link}}" [ngStyle]="{'color' : newOffer.element_data.text_color ? newOffer.element_data.text_color : ''}">
+	<a href="javascript:void(0)" (click)="navigateTo(newOffer.element_data.link)" [ngStyle]="{'color' : newOffer.element_data.text_color ? newOffer.element_data.text_color : ''}">
  		<!-- <strong>Flat 50% OFF</strong> on selected merchandise. <strong>Shop Now</strong> -->
  		<strong>{{newOffer.element_data.text.text1}}</strong>
  	</a>

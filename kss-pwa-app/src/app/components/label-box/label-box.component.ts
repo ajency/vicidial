@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, OnChanges, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { AppService } from '../../services/app.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: '[app-label-box]',
@@ -9,7 +10,7 @@ import { AppService } from '../../services/app.service';
 export class LabelBoxComponent implements OnInit, OnChanges {
 	@Input() box_data : any;
 	@Input() box_type : any;
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
@@ -22,4 +23,7 @@ export class LabelBoxComponent implements OnInit, OnChanges {
     return a+ " " +b +", " +c +" "+d;
   }
 
+  navigateTo(link){
+    this.router.navigateByUrl((new URL(link)).pathname);
+  }
 }

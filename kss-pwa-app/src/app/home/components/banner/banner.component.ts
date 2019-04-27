@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewEncapsulation, OnChanges } from '@angular/core';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-banner',
   templateUrl: './banner.component.html',
@@ -39,7 +39,7 @@ export class BannerComponent implements OnInit, OnChanges {
     },
     nav: true
   }
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
@@ -58,6 +58,10 @@ export class BannerComponent implements OnInit, OnChanges {
 
   createDataSrcSet(a,b,c,d){
     return a+ " " +b +", " +c +" "+d;
+  }
+
+  navigateTo(link){
+    this.router.navigateByUrl((new URL(link)).pathname);
   }
 
 }
