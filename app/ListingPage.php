@@ -323,7 +323,7 @@ class ListingPage
                 "slug"              => $facet['slug'],
                 "sequence"          => $facet['sequence'],
                 "is_selected"       => ($count) ? (isset($this->params['search_object']['primary_filter'][$facet_name]) && in_array($facet['facet_value'], $this->params['search_object']['primary_filter'][$facet_name])) ? true : false : null,
-                "count"             => ($count) ? (isset(getElasticFilters()[$facet_name][$facet['facet_value']])) ? getElasticFilters()[$facet_name][$facet['facet_value']] : 0 : null,
+                "count"             => ($count) ? (isset($this->getElasticFilters()[$facet_name][$facet['facet_value']])) ? $this->getElasticFilters()[$facet_name][$facet['facet_value']] : 0 : null,
             ]);
         }
         return $items;
