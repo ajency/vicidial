@@ -150,13 +150,13 @@ export class ShopPageComponent implements OnInit {
         item.sale_price = default_variant.variant_attributes.variant_sale_price;
         item.list_price = default_variant.variant_attributes.variant_list_price;
         item.brand = item.facets.product_brand.name;
-        try{
-          gtagTrackListPage();
-        }
-        catch(e){
-          console.log("gtagTrackListPage error ==>", e);
-        }
       })
+      try{
+        gtagTrackListPage();
+      }
+      catch(e){
+        console.log("gtagTrackListPage error ==>", e);
+      }
       this.listPage = response;
       this.setPaginationDefaults();
       this.showLoader = false;
@@ -184,17 +184,9 @@ export class ShopPageComponent implements OnInit {
       let url = isDevMode() ? "https://demo8558685.mockable.io/get-filters" : this.appservice.apiUrl + '/api/rest/v1/get-filters';
       url = "https://demo8558685.mockable.io/get-filters";
       this.apiService.request(url, 'get', {} , {}, false, 'promise').then((response)=>{
-        // console.log("get filters api response ==>",response);
         this.showFilterLoader = false;
-        response.filters = response.filters.sort((a,b)=>{ return(a.order - b.order) });
-        if(!this.selectedFilterCategory)
-          this.selectedFilterCategory = response.filters[0].header.facet_name;
-        this.filters = response.filters;
-        this.sort_on = response.sort_on;
-        this.searchString = response.search_string;
-        this.appservice.filters = this.filters;
-        this.appservice.sort_on = this.sort_on;
-        this.filtersCopy = JSON.parse(JSON.stringify( this.filters ));
+        this.formatFilters(response);
+        this.appservice.filters = response.filters.sort((a,b)=>{ return(a.order - b.order) });
       })
       .catch((error)=>{
         console.log("error ===>", error);
@@ -210,16 +202,7 @@ export class ShopPageComponent implements OnInit {
     // if(Object.keys(this.queryObject).length != 0)
     //   url = url + '?' + $.param(this.queryObject);
     // this.filterCountApiCall = this.apiService.request(url, 'get', {} , {}, false, 'observable').subscribe((response)=>{
-    //   // console.log("get filters api response ==>",response);
-    //   response.filters = response.filters.sort((a,b)=>{ return(a.order - b.order) });
-    //   if(!this.selectedFilterCategory)
-    //     this.selectedFilterCategory = response.filters[0].header.facet_name;
-    //   this.filters = response.filters;
-    //   this.sort_on = response.sort_on;
-    //   let sort_by = this.sort_on.find(item => { return item.is_selected });
-    //   console.log("sort by==>", sort_by);
-    //   this.sortOn = sort_by.value;
-    //   this.searchString = response.search_string;
+    //   this.formatFilters(response);
     //   this.urlRoutes = {}; 
     //   this.primaryFilters = {};
     //   this.rangeFilter = {};
@@ -230,6 +213,19 @@ export class ShopPageComponent implements OnInit {
     // (error)=>{
     //   console.log("error ===>", error);
     // });
+  }
+
+  formatFilters(response){
+    response.filters = response.filters.sort((a,b)=>{ return(a.order - b.order) });
+    if(!this.selectedFilterCategory)
+      this.selectedFilterCategory = response.filters[0].header.facet_name;
+    this.filters = response.filters;
+    this.sort_on = response.sort_on;
+    let sort_by = this.sort_on.find(item => { return item.is_selected });
+    this.sortOn = sort_by.value;
+    this.searchString = response.search_string;
+    this.appservice.sort_on = this.sort_on;
+    this.filtersCopy = JSON.parse(JSON.stringify( this.filters ));
   }
 
   createDummyList(){
@@ -251,7 +247,6 @@ export class ShopPageComponent implements OnInit {
   setFilters(){
     this.filters.forEach(filter =>{
       filter.items.forEach(item =>{
-        // separately handle for route and query params
         if(item.is_selected)
           this.updateQueryObjects({filter : filter, value : item.slug, apply : item.is_selected })
       })
@@ -430,7 +425,6 @@ export class ShopPageComponent implements OnInit {
   }
 
   resetFilters(){
-    // this.filters = JSON.parse(JSON.stringify( this.filtersCopy ));
     console.log("on reset filter ==>", this.filters)
     this.resetFilterQueryObject();
   }
