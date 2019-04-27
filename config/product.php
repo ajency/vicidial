@@ -458,6 +458,8 @@ return [
                 ["min" => 60, "max" => 100, "display_name" => "60% to 100%", "sequence" => 3],
             ],
             "is_essential"           => false,
+            "sort_on"                => "sequence",
+            "sort_order"             => "asc",
             "custom_attributes"      => [],
             "false_facet_value"      => null,
             "implicit_filter"        => [

@@ -32,7 +32,7 @@ class ListingController extends Controller
     {
         $params      = $request->all();
         $listingPage = new ListingPage($params);
-        $apiResponse = $listingPage->generateSinglePageData(['filters_with_count', 'filters_without_count', 'search_string', 'sort_on']);
+        $apiResponse = $listingPage->generateSinglePageData(['filters_with_count', 'search_string', 'sort_on']);
         return response()->json($apiResponse);
     }
 
@@ -40,7 +40,7 @@ class ListingController extends Controller
     {
         $apiResponse = Cache::rememberForever('list-filters', function () {
             $listingPage = new ListingPage([]);
-            $apiResponse = $listingPage->generateSinglePageData(['filters_with_count', 'filters_without_count', 'search_string', 'sort_on']);
+            $apiResponse = $listingPage->generateSinglePageData(['filters_without_count', 'search_string', 'sort_on']);
             return $apiResponse;
         });
         return response()->json($apiResponse);

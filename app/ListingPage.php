@@ -307,8 +307,8 @@ class ListingPage
         $q    = self::buildBaseQuery($available);
         $must = setElasticFacetFilters($q, $params);
         $q->setQuery($must);
-        $response               = $q->search();
-        $this->$elastic_filters = sanitiseFilterdata($response);
+        $response              = $q->search();
+        $this->elastic_filters = sanitiseFilterdata($response);
     }
 
     private function getPrimaryFilterItems($facet_name, $count)
@@ -322,7 +322,7 @@ class ListingPage
                 "display_name"      => $facet['display_name'],
                 "slug"              => $facet['slug'],
                 "sequence"          => $facet['sequence'],
-                "is_selected"       => ($count) ? (isset($this->params['search_object']['primary_filter'][$facet_name])) ? true : false : null,
+                "is_selected"       => ($count) ? (isset($this->params['search_object']['primary_filter'][$facet_name]) && in_array($facet['facet_value'], $this->params['search_object']['primary_filter'][$facet_name])) ? true : false : null,
                 "count"             => ($count) ? (isset(getElasticFilters()[$facet_name][$facet['facet_value']])) ? getElasticFilters()[$facet_name][$facet['facet_value']] : 0 : null,
             ]);
         }
@@ -347,6 +347,7 @@ class ListingPage
             $item_data["sort_on"]                = $facet_config['sort_on'];
             $item_data["sort_order"]             = $facet_config['sort_order'];
             $item_data["items"]                  = $this->getPrimaryFilterItems($facet_name, $count);
+            array_push($filters, $item_data);
         }
         return $filters;
     }
@@ -369,8 +370,9 @@ class ListingPage
             $item_data["sort_on"]                = $facet_config['sort_on'];
             $item_data["sort_order"]             = $facet_config['sort_order'];
             $item_data["items"]                  = [];
-            $item_data["bucket_range"]           = ['start' => $facet_config['min'], 'end' => $facet_config['max']];
-            $item_data["selected_range"]         = ($count) ? ['start' => 0, 'end' => 0] : ['start' => $facet_config['min'], 'end' => $facet_config['max']];
+            $item_data["bucket_range"]           = ['start' => $facet_config['range']['min'], 'end' => $facet_config['range']['max']];
+            $item_data["selected_range"]         = ($count) ? (isset($this->params['search_object']['range_filter'][$facet_name])) ? ['start' => $this->params['search_object']['range_filter'][$facet_name]['min'], 'end' => $this->params['search_object']['range_filter'][$facet_name]['max']] : ['start' => $facet_config['range']['min'], 'end' => $facet_config['range']['max']] : ['start' => $facet_config['range']['min'], 'end' => $facet_config['range']['max']];
+            array_push($filters, $item_data);
         }
         return $filters;
     }
@@ -397,8 +399,9 @@ class ListingPage
                 "facet_value"       => $facet_config['facet_value'],
                 "false_facet_value" => $facet_config['false_facet_value'],
                 "slug"              => $facet_config['facet_value'],
-                "is_selected"       => ($count) ? (isset($this->params['search_object']['boolean_filter'][$facet_name])) ? true : false : null,
+                "is_selected"       => ($count) ? (isset($this->params['search_object']['boolean_filter'][$facet_name]) && in_array($facet_config['facet_value'], $this->params['search_object']['boolean_filter'][$facet_name])) ? true : false : null,
             ]];
+            array_push($filters, $item_data);
         }
         return $filters;
     }
@@ -438,7 +441,7 @@ class ListingPage
         return $sort_on;
     }
 
-    public function getSortOn()
+    public function clearListFilterCache()
     {
         Cache::forget('list-filters');
     }
