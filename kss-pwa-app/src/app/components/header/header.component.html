@@ -58,7 +58,7 @@
 												<!-- Mobile Menu Banner -->
 												<div class="nav-column d-lg-none">
 													<div class="menu-banner-item">
-														<img src="../../../assets/img/menu/mobile-banner.jpeg" class="menu-item-img img-fluid mb-0 d-lg-none">
+														<img src="../../../assets/img/menu/mobile-banner.jpeg" class="menu-item-img img-fluid mb-0 d-lg-none" title="offers">
 													</div>
 												</div>
 
@@ -88,10 +88,10 @@
 
 		                    <div *ngFor="let row of item.rows" class="nav-column">
 		                    	<div *ngFor="let menu of row.menus">
-			                        <div class="nav-column--heading mt-1 mb-2">{{menu.shop_by}} <a *ngIf=" menu.shop_by == 'Shop by Category'" href="/shop" target="_self" class="go-to-shop">Shop All ></a></div>
+			                        <div class="nav-column--heading mt-1 mb-2">{{menu.shop_by}} <a *ngIf=" menu.shop_by == 'Shop by Category'" href="/shop" title="Shop All" target="_self" class="go-to-shop">Shop All ></a></div>
 															<ul class="list-unstyled" [ngClass]="{'layout--3-col' : menu.shop_by == 'Shop by Category' || menu.shop_by == 'Shop by Clothing' || menu.shop_by == 'Shop by Brands' || menu.shop_by == 'Shop by Sub-Types' || menu.shop_by == 'Shop by Gender', 'layout--tags' : menu.shop_by == 'Shop by Price', 'layout--2-col' : menu.shop_by == 'Shop by Age Group'}">
 			                          <li *ngFor="let type of menu.data">																	
-																	<a class="megamenu-link" href="{{type.link}}">
+																	<a class="megamenu-link" href="{{type.link}}" title="{{type.title}}">
 																		<img *ngIf="menu.shop_by == 'Shop by Category'" src="../../../assets/img/menu/menu-item1.jpeg" class="menu-item-img img-fluid mb-1">
 																		<img *ngIf="menu.shop_by == 'Shop by Clothing'" src="../../../assets/img/menu/menu-item2.jpeg" class="menu-item-img img-fluid mb-1">
 																		<img *ngIf="menu.shop_by == 'Shop by Brands'" src="../../../assets/img/menu/menu-item3.jpeg" class="menu-item-img img-fluid mb-1">
@@ -128,7 +128,7 @@
 		                              <div class="text-white">{{item.image_section.text}}</div>
 		                            </div>
 		                            <div class="col-5">
-		                              <a href="{{item.image_section.href}}" class="btn kss-btn kss-btn--mini">Shop now</a>
+		                              <a href="{{item.image_section.href}}" title="Shop now" class="btn kss-btn kss-btn--mini">Shop now</a>
 		                            </div>
 		                        </div>
 		                    </div>
