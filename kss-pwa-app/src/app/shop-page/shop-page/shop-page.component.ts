@@ -184,7 +184,7 @@ export class ShopPageComponent implements OnInit {
     else{
       this.showFilterLoader = true;
       let url = isDevMode() ? "https://demo8558685.mockable.io/get-filters" : this.appservice.apiUrl + '/api/rest/v1/get-filters';
-      url = "https://demo8558685.mockable.io/get-filters";
+      // url = "https://demo8558685.mockable.io/get-filters";
       this.apiService.request(url, 'get', {} , {}, false, 'promise').then((response)=>{
         this.showFilterLoader = false;
         this.formatFilters(response);
@@ -198,23 +198,23 @@ export class ShopPageComponent implements OnInit {
   }
 
   getFiltersCount(){
-    // this.unsubscribeFilterCountApiCall();
-    // let url = isDevMode() ? "https://demo8558685.mockable.io/get-filters" : this.appservice.apiUrl + '/api/rest/v1/get-filters-count';
-    // // url = "https://demo8558685.mockable.io/get-filters";
-    // if(Object.keys(this.queryObject).length != 0)
-    //   url = url + '?' + $.param(this.queryObject);
-    // this.filterCountApiCall = this.apiService.request(url, 'get', {} , {}, false, 'observable').subscribe((response)=>{
-    //   this.formatFilters(response);
-    //   this.urlRoutes = {}; 
-    //   this.primaryFilters = {};
-    //   this.rangeFilter = {};
-    //   this.booleanFilter = {};
-    //   this.isRangeFilterActive();
-    //   this.setFilters()
-    // },
-    // (error)=>{
-    //   console.log("error ===>", error);
-    // });
+    this.unsubscribeFilterCountApiCall();
+    let url = isDevMode() ? "https://demo8558685.mockable.io/get-filters" : this.appservice.apiUrl + '/api/rest/v1/get-filters-count';
+    // url = "https://demo8558685.mockable.io/get-filters";
+    if(Object.keys(this.queryObject).length != 0)
+      url = url + '?' + $.param(this.queryObject);
+    this.filterCountApiCall = this.apiService.request(url, 'get', {} , {}, false, 'observable').subscribe((response)=>{
+      this.formatFilters(response);
+      this.urlRoutes = {}; 
+      this.primaryFilters = {};
+      this.rangeFilter = {};
+      this.booleanFilter = {};
+      this.isRangeFilterActive();
+      this.setFilters()
+    },
+    (error)=>{
+      console.log("error ===>", error);
+    });
   }
 
   formatFilters(response){
