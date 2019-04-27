@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Cache;
 class ListingPage
 {
     protected static $facets;
-    protected $params, $elastic_data, $search_string, $sort_on;
+    protected $params, $elastic_data, $elastic_filters, $search_string, $sort_on;
     protected $primary_filters, $primary_filter_keys, $primary_base_filters, $primary_base_filter_keys, $boolean_filters, $boolean_filter_keys, $range_filters, $range_filter_keys;
 
     public function __construct($params)
@@ -234,8 +234,212 @@ class ListingPage
         return $this->getElasticData()["results_found"];
     }
 
+    private function getBreadcrumbs()
+    {
+        return [];
+    }
+
+    private function getElasticFilters()
+    {
+        if (is_null($this->elastic_filters)) {
+            $this->getFilterCounts();
+        }
+        return $this->elastic_filters;
+    }
+
+    private function buildBaseQuery($variant_availability = "skip")
+    {
+        $q = new ElasticQuery;
+
+        $max_count = self::$facets->groupBy('facet_name')->max()->count();
+
+        $required          = ["product_category_type", "product_gender", "product_subtype", "product_age_group", "product_color_html", "product_metatag", "product_brand"];
+        $aggs_facet_name   = $q::createAggTerms("facet_name", "search_data.string_facet.facet_name", ["include" => $required]);
+        $aggs_facet_value  = $q::createAggTerms("facet_value", "search_data.string_facet.facet_value", ["size" => $max_count]);
+        $aggs_facet_value  = $q::addToAggregation($aggs_facet_value, $q::createAggReverseNested('count'));
+        $aggs_facet_name   = $q::addToAggregation($aggs_facet_name, $aggs_facet_value);
+        $aggs_string_facet = $q::createAggNested("agg_string_facet", "search_data.string_facet");
+        $aggs_string_facet = $q::addToAggregation($aggs_string_facet, $aggs_facet_name);
+
+        $aggFacetNameP = $q::createAggTerms("facet_name", "search_data.number_facet.facet_name", ["include" => ['variant_sale_price']]);
+        $aggMax        = $q::createAggMax('facet_value_max', 'search_data.number_facet.facet_value');
+        $aggMin        = $q::createAggMin('facet_value_min', 'search_data.number_facet.facet_value');
+        $minMax        = $q::addToAggregation($aggFacetNameP, array_merge($aggMax, $aggMin));
+        $aggsPrice     = $q::createAggNested("agg_price", "search_data.number_facet");
+        $priceQ        = $q::addToAggregation($aggsPrice, $minMax);
+
+        $required    = ["variant_size_name"];
+        $facet_names = [];
+
+        foreach ($required as $facet_name) {
+            $reverse          = $q::createAggReverseNested('count');
+            $size             = $q::createAggTerms($facet_name, "variants." . $facet_name, ["size" => $max_count]);
+            $aggs_facet_value = $q::addToAggregation($size, $reverse);
+            $facet_names      = $facet_names + $aggs_facet_value;
+        }
+
+        if ($variant_availability === "skip") {
+            $filterAgg = $q::createAggFilter("available", ["match_all" => new \stdClass()]);
+        } else {
+            $filterAgg = $q::createAggFilter("available", ["term" => ["variants.variant_availability" => $variant_availability]]);
+        }
+
+        $facet_name = $q::addToAggregation($filterAgg, $facet_names);
+        $nestedAgg  = $q::createAggNested("variant_aggregation", "variants");
+        $aggs       = $q::addToAggregation($nestedAgg, $facet_name);
+
+        $q->setIndex(config('elastic.indexes.product'))
+            ->initAggregation()->setAggregation(array_merge($priceQ, $aggs_string_facet, $aggs))
+            ->setSize(0);
+
+        return $q;
+    }
+
+    private function getFilterCounts()
+    {
+        $params                  = $this->params;
+        $params['search_object'] = setDefaultFilters($params);
+        $available               = "skip";
+        if (isset($params['search_object']['boolean_filter']['variant_availability'])) {
+            $available = $params['search_object']['boolean_filter']['variant_availability'];
+        }
+
+        $q    = self::buildBaseQuery($available);
+        $must = setElasticFacetFilters($q, $params);
+        $q->setQuery($must);
+        $response               = $q->search();
+        $this->$elastic_filters = sanitiseFilterdata($response);
+    }
+
+    private function getPrimaryFilterItems($facet_name, $count)
+    {
+        $items       = [];
+        $facet_items = self::$facets->where('facet_name', $facet_name);
+        foreach ($facet_items as $facet) {
+            array_push($items, [
+                "facet_value"       => $facet['facet_value'],
+                "false_facet_value" => null,
+                "display_name"      => $facet['display_name'],
+                "slug"              => $facet['slug'],
+                "sequence"          => $facet['sequence'],
+                "is_selected"       => ($count) ? (isset($this->params['search_object']['primary_filter'][$facet_name])) ? true : false : null,
+                "count"             => ($count) ? (isset(getElasticFilters()[$facet_name][$facet['facet_value']])) ? getElasticFilters()[$facet_name][$facet['facet_value']] : 0 : null,
+            ]);
+        }
+        return $items;
+    }
+
+    private function getPrimaryFilters($count)
+    {
+        $filters = [];
+        foreach ($this->primary_filters as $facet_name => $facet_config) {
+            $item_data                           = [];
+            $item_data['header']                 = ['facet_name' => $facet_name, 'display_name' => $facet_config['name']];
+            $item_data["is_singleton"]           = $facet_config['is_singleton'];
+            $item_data["is_collapsed"]           = $facet_config['is_collapsed'];
+            $item_data["display"]                = $facet_config['display'];
+            $item_data["attribute_param"]        = $facet_config['attribute_param'];
+            $item_data["order"]                  = $facet_config['order'];
+            $item_data["display_count"]          = $facet_config['display_count'];
+            $item_data["disabled_at_zero_count"] = $facet_config['disabled_at_zero_count'];
+            $item_data["is_attribute_param"]     = $facet_config['is_attribute_param'];
+            $item_data["filter_type"]            = $facet_config['filter_type'];
+            $item_data["sort_on"]                = $facet_config['sort_on'];
+            $item_data["sort_order"]             = $facet_config['sort_order'];
+            $item_data["items"]                  = $this->getPrimaryFilterItems($facet_name, $count);
+        }
+        return $filters;
+    }
+
+    private function getRangeFilters($count)
+    {
+        $filters = [];
+        foreach ($this->range_filters as $facet_name => $facet_config) {
+            $item_data                           = [];
+            $item_data['header']                 = ['facet_name' => $facet_name, 'display_name' => $facet_config['name']];
+            $item_data["is_singleton"]           = $facet_config['is_singleton'];
+            $item_data["is_collapsed"]           = $facet_config['is_collapsed'];
+            $item_data["display"]                = $facet_config['display'];
+            $item_data["attribute_param"]        = $facet_config['attribute_param'];
+            $item_data["order"]                  = $facet_config['order'];
+            $item_data["display_count"]          = $facet_config['display_count'];
+            $item_data["disabled_at_zero_count"] = $facet_config['disabled_at_zero_count'];
+            $item_data["is_attribute_param"]     = $facet_config['is_attribute_param'];
+            $item_data["filter_type"]            = $facet_config['filter_type'];
+            $item_data["sort_on"]                = $facet_config['sort_on'];
+            $item_data["sort_order"]             = $facet_config['sort_order'];
+            $item_data["items"]                  = [];
+            $item_data["bucket_range"]           = ['start' => $facet_config['min'], 'end' => $facet_config['max']];
+            $item_data["selected_range"]         = ($count) ? ['start' => 0, 'end' => 0] : ['start' => $facet_config['min'], 'end' => $facet_config['max']];
+        }
+        return $filters;
+    }
+
+    private function getBooleanFilters($count)
+    {
+        $filters = [];
+        foreach ($this->boolean_filters as $facet_name => $facet_config) {
+            $item_data                           = [];
+            $item_data['header']                 = ['facet_name' => $facet_name, 'display_name' => $facet_config['name']];
+            $item_data["is_singleton"]           = $facet_config['is_singleton'];
+            $item_data["is_collapsed"]           = $facet_config['is_collapsed'];
+            $item_data["display"]                = $facet_config['display'];
+            $item_data["attribute_param"]        = $facet_config['attribute_param'];
+            $item_data["order"]                  = $facet_config['order'];
+            $item_data["display_count"]          = $facet_config['display_count'];
+            $item_data["disabled_at_zero_count"] = $facet_config['disabled_at_zero_count'];
+            $item_data["is_attribute_param"]     = $facet_config['is_attribute_param'];
+            $item_data["filter_type"]            = $facet_config['filter_type'];
+            $item_data["sort_on"]                = $facet_config['sort_on'];
+            $item_data["sort_order"]             = $facet_config['sort_order'];
+            $item_data["items"]                  = [[
+                "display_name"      => $facet_config['item_display_name'],
+                "facet_value"       => $facet_config['facet_value'],
+                "false_facet_value" => $facet_config['false_facet_value'],
+                "slug"              => $facet_config['facet_value'],
+                "is_selected"       => ($count) ? (isset($this->params['search_object']['boolean_filter'][$facet_name])) ? true : false : null,
+            ]];
+        }
+        return $filters;
+    }
+
+    private function getFiltersWithoutCount()
+    {
+        $primary_filters = $this->getPrimaryFilters(false);
+        $range_filters   = $this->getRangeFilters(false);
+        $boolean_filters = $this->getBooleanFilters(false);
+        return array_merge($primary_filters, $range_filters, $boolean_filters);
+    }
+
+    private function getFiltersWithCount()
+    {
+        $primary_filters = $this->getPrimaryFilters(true);
+        $range_filters   = $this->getRangeFilters(true);
+        $boolean_filters = $this->getBooleanFilters(true);
+        return array_merge($primary_filters, $range_filters, $boolean_filters);
+    }
+
     private function getSearchString()
     {
         return $this->search_string;
+    }
+
+    private function getSortOn()
+    {
+        $sort_on = [];
+        foreach (config('product.sort_on') as $sort_items) {
+            array_push($sort_on, [
+                "name"        => $sort_items['name'],
+                "value"       => $sort_items['value'],
+                "is_selected" => ($this->sort_on) ? ($this->sort_on == $sort_items['value']) ? true : false : $sort_items['is_selected'],
+                "class"       => $sort_items['class'],
+            ]);
+        }
+        return $sort_on;
+    }
+
+    public function getSortOn()
+    {
+        Cache::forget('list-filters');
     }
 }
