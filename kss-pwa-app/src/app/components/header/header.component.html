@@ -62,7 +62,7 @@
 		                    	<div *ngFor="let menu of row.menus">
 			                        <div class="nav-column--heading mb-1">{{menu.shop_by}}</div>
 			                        <ul class="list-unstyled">
-			                          <li *ngFor="let type of menu.data"><a class="megamenu-link" [ngClass]="{'megamenu-link--primary' : type.title === 'View all products'}" (click)="openMenuLink(type.link)">{{type.title}}</a></li>
+			                          <li *ngFor="let type of menu.data"><a class="megamenu-link" [ngClass]="{'megamenu-link--primary' : type.title === 'View all products'}" (click)="openMenuLink(type.link)" href="javascript:void(0)">{{type.title}}</a></li>
 			                        </ul>
 
 		                        </div>
