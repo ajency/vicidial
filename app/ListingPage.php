@@ -16,7 +16,7 @@ class ListingPage
     public function __construct($params)
     {
         if (is_null(self::$facets)) {
-            self::$facets = Facet::select(['facet_name', 'facet_value', 'display_name', 'slug', 'sequence'])->get();
+            self::$facets = Facet::select(['facet_name', 'facet_value', 'display_name', 'slug', 'sequence', 'display'])->get();
         }
 
         $this->primary_filters = array_filter(config('product.facet_display_data'), function ($value) {
@@ -253,7 +253,9 @@ class ListingPage
 
         $max_count = self::$facets->groupBy('facet_name')->max()->count();
 
-        $required          = ["product_category_type", "product_gender", "product_subtype", "product_age_group", "product_color_html", "product_metatag", "product_brand"];
+        $variants_required = ["variant_size_name"];
+        $required          = array_diff(array_keys($this->primary_filters), $variants_required);
+
         $aggs_facet_name   = $q::createAggTerms("facet_name", "search_data.string_facet.facet_name", ["include" => $required]);
         $aggs_facet_value  = $q::createAggTerms("facet_value", "search_data.string_facet.facet_value", ["size" => $max_count]);
         $aggs_facet_value  = $q::addToAggregation($aggs_facet_value, $q::createAggReverseNested('count'));
@@ -268,10 +270,9 @@ class ListingPage
         $aggsPrice     = $q::createAggNested("agg_price", "search_data.number_facet");
         $priceQ        = $q::addToAggregation($aggsPrice, $minMax);
 
-        $required    = ["variant_size_name"];
         $facet_names = [];
 
-        foreach ($required as $facet_name) {
+        foreach ($variants_required as $facet_name) {
             $reverse          = $q::createAggReverseNested('count');
             $size             = $q::createAggTerms($facet_name, "variants." . $facet_name, ["size" => $max_count]);
             $aggs_facet_value = $q::addToAggregation($size, $reverse);
@@ -297,7 +298,7 @@ class ListingPage
 
     private function getFilterCounts()
     {
-        $params                  = $this->params;
+        $params                  = setListingFilters($this->params);
         $params['search_object'] = setDefaultFilters($params);
         $available               = "skip";
         if (isset($params['search_object']['boolean_filter']['variant_availability'])) {
@@ -321,6 +322,7 @@ class ListingPage
                 "false_facet_value" => null,
                 "display_name"      => $facet['display_name'],
                 "slug"              => $facet['slug'],
+                "display"           => $facet['display'],
                 "sequence"          => $facet['sequence'],
                 "is_selected"       => ($count) ? (isset($this->params['search_object']['primary_filter'][$facet_name]) && in_array($facet['facet_value'], $this->params['search_object']['primary_filter'][$facet_name])) ? true : false : null,
                 "count"             => ($count) ? (isset($this->getElasticFilters()[$facet_name][$facet['facet_value']])) ? $this->getElasticFilters()[$facet_name][$facet['facet_value']] : 0 : null,
@@ -399,7 +401,8 @@ class ListingPage
                 "facet_value"       => $facet_config['facet_value'],
                 "false_facet_value" => $facet_config['false_facet_value'],
                 "slug"              => $facet_config['facet_value'],
-                "is_selected"       => ($count) ? (isset($this->params['search_object']['boolean_filter'][$facet_name]) && in_array($facet_config['facet_value'], $this->params['search_object']['boolean_filter'][$facet_name])) ? true : false : null,
+                "display"           => $facet_config['display'],
+                "is_selected"       => ($count) ? (isset($this->params['search_object']['boolean_filter'][$facet_name]) && $this->params['search_object']['boolean_filter'][$facet_name] == $facet_config['facet_value']) ? true : false : null,
             ]];
             array_push($filters, $item_data);
         }
