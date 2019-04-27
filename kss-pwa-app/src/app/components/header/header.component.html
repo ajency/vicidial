@@ -41,7 +41,7 @@
 		          <li class="nav-item">
 		            <a routerLink="/shop/uniforms" class="d-inline font-weight-normal p-0" style="line-height: normal">Uniforms</a>
 		          </li>
-		          <li class="flex-grow-1 disabled"></li>
+		          <!--li class="flex-grow-1 disabled"></li-->
 		          <li class="nav-item" data-target="otherlinks">
 		            Other links
 		          </li>
@@ -91,7 +91,7 @@
 			                        <div class="nav-column--heading mt-1 mb-2">{{menu.shop_by}} <a *ngIf=" menu.shop_by == 'Shop by Category'" href="/shop" title="Shop All" target="_self" class="go-to-shop">Shop All ></a></div>
 															<ul class="list-unstyled" [ngClass]="{'layout--3-col' : menu.shop_by == 'Shop by Category' || menu.shop_by == 'Shop by Clothing' || menu.shop_by == 'Shop by Brands' || menu.shop_by == 'Shop by Sub-Types' || menu.shop_by == 'Shop by Gender', 'layout--tags' : menu.shop_by == 'Shop by Price', 'layout--2-col' : menu.shop_by == 'Shop by Age Group'}">
 			                          <li *ngFor="let type of menu.data">																	
-																	<a class="megamenu-link" href="{{type.link}}" title="{{type.title}}">
+																	<a class="megamenu-link" href="{{type.link}}" title="{{type.title}}" [ngClass]="{active: isActive('type.link')}">
 																		<img *ngIf="menu.shop_by == 'Shop by Category'" src="../../../assets/img/menu/menu-item1.jpeg" class="menu-item-img img-fluid mb-1">
 																		<img *ngIf="menu.shop_by == 'Shop by Clothing'" src="../../../assets/img/menu/menu-item2.jpeg" class="menu-item-img img-fluid mb-1">
 																		<img *ngIf="menu.shop_by == 'Shop by Brands'" src="../../../assets/img/menu/menu-item3.jpeg" class="menu-item-img img-fluid mb-1">
@@ -136,7 +136,7 @@
 		            </li>
 
 		            <!-- Other links -->
-		            <li class="d-lg-none align-self-end">
+		            <li class="d-lg-none align-self-start">
 		              <div class="megamenu-wrapper" data-menu="otherlinks">
 		                <div class="nav-column mb-0">
 		                  <ul class="list-unstyled">
@@ -145,7 +145,7 @@
 		                    <li><a href="https://cutshort.io/company/omni-edge-retail-private-ltd?career_page=true" class="megamenu-link">Careers</a></li>
 		                    <li><a class="megamenu-link" href="/faq">FAQ</a></li>
 		                    <li><a class="megamenu-link" href="/terms-and-conditions">Terms of Use</a></li>
-		                    <li><a class="megamenu-link" href="/privacy-policy">Privacy Policy</a></li>
+		                    <li><a class="megamenu-link" href="/privacy-policy" [ngClass]="{active: isActive('/privacy-policy')}">Privacy Policy</a></li>
 		                    <li><a class="megamenu-link" href="/ideas/">Blog</a></li>
 		                  </ul>
 		                </div>
