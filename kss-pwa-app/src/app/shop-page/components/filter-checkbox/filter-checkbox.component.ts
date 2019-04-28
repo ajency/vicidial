@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { Options } from 'ng5-slider';
+import { AppServiceService } from '../../../service/app-service.service';
+
 @Component({
   selector: 'app-filter-checkbox',
   templateUrl: './filter-checkbox.component.html',
@@ -10,6 +12,7 @@ export class FilterCheckboxComponent implements OnInit, OnChanges {
 	@Input() filter : any;
 	@Input() isMobile : any;
 	@Input() selectedFilterCategory : any;
+  @Input() collapse : any;
 
 	@Output() filterApplied = new EventEmitter();
 	@Output() rangeFilterApplied = new EventEmitter();
@@ -32,14 +35,14 @@ export class FilterCheckboxComponent implements OnInit, OnChanges {
 	      return 'from ' + minValue + ' up to ' + maxValue;
 	    }
 	};
-  constructor() { }
+  constructor(private appservice : AppServiceService) { }
 
   ngOnInit() {
   }
 
   ngOnChanges(){
   	this.sortFilterItems();
-  	if(this.filter.filter_type == 'range_filter'){
+  	if(this.filter.attribute_param == 'price'){
   		this.options.floor = this.filter.bucket_range.start;
   		this.options.ceil = this.filter.bucket_range.end;
   		this.options.minLimit = this.filter.bucket_range.start;
@@ -71,6 +74,18 @@ export class FilterCheckboxComponent implements OnInit, OnChanges {
   		console.log("applyPriceRange filter", this.range);
   		this.rangeFilterApplied.emit({category : filter.attribute_param, value : this.range})		
   	}
+  }
+
+  updateCollapseArray(){
+    // let collase_obj = this.appservice.filterCollpaseArray.find(item => { return item.attribute_param == this.collapse.attribute_param})
+    // if(collase_obj){
+    //   collase_obj.is_collapsed = !this.collapse.is_collapsed
+    //   console.log(collase_obj);
+    // }
+
+    setTimeout(()=>{
+      this.collapse.is_collapsed = !this.collapse.is_collapsed
+    },100);
   }
 
 }

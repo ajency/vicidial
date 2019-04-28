@@ -88,8 +88,8 @@
 				            		</div>
 				            	</div>
 				              <!-- Filter Checkbox -->
-				              	<ng-container *ngFor="let filter of filters">
-					            	<app-filter-checkbox [filter]="filter" [isMobile]="isMobile" [selectedFilterCategory]="selectedFilterCategory" (filterApplied)="applyCheckboxFilter($event)" (rangeFilterApplied)="applyRangeFilter($event)"></app-filter-checkbox>
+				              	<ng-container *ngFor="let filter of filters; let i = index">
+					            	<app-filter-checkbox [filter]="filter" [isMobile]="isMobile" [selectedFilterCategory]="selectedFilterCategory" (filterApplied)="applyCheckboxFilter($event)" (rangeFilterApplied)="applyRangeFilter($event)" [collapse]="filterCollpaseArray[i]"></app-filter-checkbox>
 					            </ng-container>
 				              <!-- Filter Range -->
 				              <!-- <app-filter-range></app-filter-range> -->

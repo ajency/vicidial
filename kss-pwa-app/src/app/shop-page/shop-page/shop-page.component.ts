@@ -53,6 +53,7 @@ export class ShopPageComponent implements OnInit {
   searchString : any = '';
   pageNumber : any;
   showRangeFilter : any;
+  filterCollpaseArray = [];
 
   constructor(private apiService: ApiServiceService,
               private appservice : AppServiceService,
@@ -179,7 +180,8 @@ export class ShopPageComponent implements OnInit {
   getFilters(){
     if(this.appservice.filters){
       this.filters = this.appservice.filters
-      this.sort_on = this.appservice.sort_on;
+      this.filterCollpaseArray = this.appservice.filterCollpaseArray;
+      // this.sort_on = this.appservice.sort_on;
     }
     else{
       this.showFilterLoader = true;
@@ -189,6 +191,9 @@ export class ShopPageComponent implements OnInit {
         this.showFilterLoader = false;
         this.formatFilters(response);
         this.appservice.filters = response.filters.sort((a,b)=>{ return(a.order - b.order) });
+        this.filterCollpaseArray = []
+        this.filters.forEach(filter => {this.filterCollpaseArray.push({type:filter.attribute_param,is_collapsed : filter.is_collapsed})})
+        this.appservice.filterCollpaseArray = this.filterCollpaseArray;
       })
       .catch((error)=>{
         console.log("error ===>", error);
@@ -205,6 +210,10 @@ export class ShopPageComponent implements OnInit {
       url = url + '?' + $.param(this.queryObject);
     this.filterCountApiCall = this.apiService.request(url, 'get', {} , {}, false, 'observable').subscribe((response)=>{
       this.formatFilters(response);
+      this.sort_on = response.sort_on;
+      let sort_by = this.sort_on.find(item => { return item.is_selected });
+      this.sortOn = sort_by.value;
+      this.appservice.sort_on = this.sort_on;
       this.urlRoutes = {}; 
       this.primaryFilters = {};
       this.rangeFilter = {};
@@ -222,11 +231,7 @@ export class ShopPageComponent implements OnInit {
     if(!this.selectedFilterCategory)
       this.selectedFilterCategory = response.filters[0].header.facet_name;
     this.filters = response.filters;
-    this.sort_on = response.sort_on;
-    let sort_by = this.sort_on.find(item => { return item.is_selected });
-    this.sortOn = sort_by.value;
     this.searchString = response.search_string;
-    this.appservice.sort_on = this.sort_on;
     this.filtersCopy = JSON.parse(JSON.stringify( this.filters ));
   }
 
