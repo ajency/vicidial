@@ -3,6 +3,7 @@ import { AppServiceService } from '../../../service/app-service.service';
 import { ApiServiceService } from '../../../service/api-service.service';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 declare var $ : any;
+declare var fbTrackAddToCart : any;
 @Component({
   selector: 'app-product-info',
   templateUrl: './product-info.component.html',
@@ -154,6 +155,8 @@ export class ProductInfoComponent implements OnInit, OnChanges {
     $('.cd-add-to-cart .btn-contents').hide();
     $('.cd-add-to-cart .btn-icon').show();
     $('.cd-add-to-cart').addClass('cartLoader');
+
+    fbTrackAddToCart(this.selectedSize);
 
     let url = this.appservice.apiUrl + (this.appservice.isLoggedInUser() ? ("/api/rest/v1/user/cart/"+this.appservice.getCookie('cart_id')+"/insert") : ("/rest/v1/anonymous/cart/insert") )
     let body = {
