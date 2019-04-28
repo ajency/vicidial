@@ -104,16 +104,20 @@ function setListingFilters($params)
     $filter_params                  = [];
     $filter_params["search_object"] = [];
     $facet_display_data             = config('product.facet_display_data');
-    foreach ($params["search_object"]["primary_filter"] as $paramk => $paramv) {
-        if ($facet_display_data[$paramk]["is_essential"] == false) {
-            $fields = $paramv;
-            array_push($fields, "all");
-            $filter_params["search_object"]["primary_filter"][$paramk] = $fields;
-        } else {
-            $filter_params["search_object"]["primary_filter"][$paramk] = $paramv;
-        }
 
+    if (isset($params["search_object"]["primary_filter"])) {
+        foreach ($params["search_object"]["primary_filter"] as $paramk => $paramv) {
+            if ($facet_display_data[$paramk]["is_essential"] == false) {
+                $fields = $paramv;
+                array_push($fields, "all");
+                $filter_params["search_object"]["primary_filter"][$paramk] = $fields;
+            } else {
+                $filter_params["search_object"]["primary_filter"][$paramk] = $paramv;
+            }
+
+        }
     }
+    
     if (isset($params["search_object"]["range_filter"])) {
         $filter_params["search_object"]["range_filter"] = $params["search_object"]["range_filter"];
     }
@@ -121,12 +125,14 @@ function setListingFilters($params)
     if (isset($params["search_object"]["boolean_filter"])) {
         $filter_params["search_object"]["boolean_filter"] = $params["search_object"]["boolean_filter"];
     }
+
     if (isset($params["search_object"]["search_string"])) {
         $filter_params["search_object"]["search_string"] = $params["search_object"]["search_string"];
     }
 
     $filter_params["display_limit"] = $params["display_limit"];
     $filter_params["page"]          = $params["page"];
+    
     if (isset($params["sort_on"])) {
         $filter_params["sort_on"] = $params["sort_on"];
     }

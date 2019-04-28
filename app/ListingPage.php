@@ -254,7 +254,7 @@ class ListingPage
         $max_count = self::$facets->groupBy('facet_name')->max()->count();
 
         $variants_required = ["variant_size_name"];
-        $required          = array_diff(array_keys($this->primary_filters), $variants_required);
+        $required          = array_values(array_diff(array_keys($this->primary_filters), $variants_required));
 
         $aggs_facet_name   = $q::createAggTerms("facet_name", "search_data.string_facet.facet_name", ["include" => $required]);
         $aggs_facet_value  = $q::createAggTerms("facet_value", "search_data.string_facet.facet_value", ["size" => $max_count]);
