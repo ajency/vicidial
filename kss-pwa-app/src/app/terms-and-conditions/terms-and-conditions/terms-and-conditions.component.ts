@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-terms-and-conditions',
   templateUrl: './terms-and-conditions.component.html',
@@ -15,11 +16,11 @@ export class TermsAndConditionsComponent implements OnInit {
   @ViewChild('shipping') shipping : ElementRef;
   @ViewChild('return') return : ElementRef;
   @ViewChild('cancellation') cancellation : ElementRef;
-
+  routeSubscribtion:Subscription
   constructor(private route : ActivatedRoute) { }
 
   ngOnInit() {
-    this.route.fragment.subscribe(fragment => { 
+    this.routeSubscribtion = this.route.fragment.subscribe(fragment => { 
       console.log(fragment);
       if(fragment == 'shipping')
         this.shipping.nativeElement.scrollIntoView()
@@ -30,4 +31,7 @@ export class TermsAndConditionsComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(){
+    this.routeSubscribtion.unsubscribe()
+  }
 }
