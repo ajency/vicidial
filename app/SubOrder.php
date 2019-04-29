@@ -258,7 +258,7 @@ class SubOrder extends Model
     {
         $itemsData     = [];
         $store_address = $this->location->getAddress();
-        foreach ($this->orderLines->groupBy(function ($item, $key) {return $item["variant_id"] . "-" . $item["is_returned"];}) as $items) {
+        foreach ($this->orderLines->groupBy(function ($item, $key) {return $item["variant_id"] . "-" . $item["shipment_status"] . "-" . $item["is_returned"];}) as $items) {
             $itemData = $items->first();
             $item     = [
                 'id'               => $itemData['id'],
@@ -277,7 +277,7 @@ class SubOrder extends Model
                 'shipment_status'  => $itemData['shipment_status'],
                 'is_returned'      => $itemData['is_returned'],
                 'return_policy'    => ReturnPolicy::fetchReturnPolicy($itemData),
-                'quantity'         => $this->orderLines->where('variant_id', $itemData['variant_id'])->groupBy('is_returned')[$itemData['is_returned']]->count(),
+                'quantity'         => $this->orderLines->where('variant_id', $itemData['variant_id'])->groupBy(function ($item, $key) {return $item["shipment_status"] . "-" . $item["is_returned"];})[$itemData["shipment_status"] . "-" . $itemData['is_returned']]->count(),
                 'is_invoiced'      => $this->is_invoiced,
             ];
             if ($store_address != null) {
@@ -310,7 +310,7 @@ class SubOrder extends Model
         }
     }
 
-    public static function updateSubOrderStatus($subOrderId, $state, $is_shipped, $is_invoiced, $external_id)
+    public static function updateSubOrderStatus($subOrderId, $state, $is_shipped, $is_invoiced, $external_id, $lines_status)
     {
         $subOrder              = self::find($subOrderId);
         $state_old             = $subOrder->odoo_status;
@@ -321,8 +321,14 @@ class SubOrder extends Model
         $subOrder->save();
 
         foreach ($subOrder->orderLines as $orderLine) {
-            $orderLine->state = $state;
-            $orderLine->save();
+            if (empty($lines_status)) {
+                $orderLine->state = $state;
+                $orderLine->save();
+            }
+            if (array_key_exists($orderLine->id, $lines_status)) {
+                $orderLine->state = $lines_status[$orderLine->id];
+                $orderLine->save();
+            }
         }
     }
 }

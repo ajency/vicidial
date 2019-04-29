@@ -147,7 +147,7 @@ class OrderController extends Controller
 
     public static function updateSubOrderStatus($params)
     {
-        SubOrderStatus::dispatch($params["subOrderId"], $params["state"], $params["is_shipped"], $params["is_invoiced"], $params["external_id"])->onQueue('odoo_order');
+        SubOrderStatus::dispatch($params["subOrderId"], $params["state"], $params["is_shipped"], $params["is_invoiced"], $params["external_id"], $params["lines_status"])->onQueue('odoo_order');
     }
 
     public static function updateOrderLineStatus($params)
