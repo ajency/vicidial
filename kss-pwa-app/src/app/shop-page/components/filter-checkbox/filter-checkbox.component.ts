@@ -16,6 +16,7 @@ export class FilterCheckboxComponent implements OnInit, OnChanges {
 
 	@Output() filterApplied = new EventEmitter();
 	@Output() rangeFilterApplied = new EventEmitter();
+  manualRefresh: EventEmitter<void> = new EventEmitter<void>();
 
 	minValue: number = 0;
 	maxValue: number = 7000;
@@ -43,14 +44,12 @@ export class FilterCheckboxComponent implements OnInit, OnChanges {
   ngOnChanges(){
   	this.sortFilterItems();
   	if(this.filter.attribute_param == 'price'){
-  		this.options.floor = this.filter.bucket_range.start;
-  		this.options.ceil = this.filter.bucket_range.end;
-  		this.options.minLimit = this.filter.bucket_range.start;
-  		this.options.maxLimit = this.filter.bucket_range.end;
-  		this.range = this.filter.selected_range;
-  		this.previous_Range = Object.assign({}, this.filter.selected_range);
-  		// this.minValue = this.filter.selected_range.start;
-  		// this.maxValue = this.filter.selected_range.end;
+        this.options.floor = this.filter.bucket_range.start;
+        this.options.ceil = this.filter.bucket_range.end;
+        this.options.minLimit = this.filter.bucket_range.start;
+        this.options.maxLimit = this.filter.bucket_range.end;
+        this.range = this.filter.selected_range;
+        this.previous_Range = Object.assign({}, this.filter.selected_range);
   	}
   }
 
@@ -76,16 +75,12 @@ export class FilterCheckboxComponent implements OnInit, OnChanges {
   	}
   }
 
-  updateCollapseArray(){
-    // let collase_obj = this.appservice.filterCollpaseArray.find(item => { return item.attribute_param == this.collapse.attribute_param})
-    // if(collase_obj){
-    //   collase_obj.is_collapsed = !this.collapse.is_collapsed
-    //   console.log(collase_obj);
-    // }
-
+  updateCollapseArray(attribute_param){
     setTimeout(()=>{
       this.collapse.is_collapsed = !this.collapse.is_collapsed
     },100);
+    if(attribute_param == 'price')
+      this.manualRefresh.emit();
   }
 
 }

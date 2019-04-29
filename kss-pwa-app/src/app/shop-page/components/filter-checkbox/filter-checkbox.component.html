@@ -1,6 +1,6 @@
 <div *ngIf="filter.display" id="filter-color-template-content">
   <div class="kss_filter-list pb-3" data-filter="color" [ngClass]="{'d-none' : isMobile && selectedFilterCategory != filter.header.facet_name}">
-    <div class="filter-heading" (click)="updateCollapseArray()">
+    <div class="filter-heading" (click)="updateCollapseArray(filter.attribute_param)">
       <label class="w-100 mb-0 cursor-pointer" data-toggle="collapse" [attr.data-target]="'#'+filter.header.facet_name" aria-expanded="false" aria-controls="collapseColor" [ngClass]="{'collapsed' : (collapse.type == filter.attribute_param && collapse.is_collapsed || collapse.type != filter.attribute_param && filter.is_collapsed ) && !isMobile}">
         {{filter.header.display_name}}<i class="fas fa-angle-up float-right"></i>
       </label>
@@ -25,7 +25,7 @@
         <ng-container *ngIf="filter.attribute_param == 'price'">
             <div class="priceRange">
               <!-- <input type="text" id="price-range" name="price" value="" class="facet-category irs-hidden-input"/> -->
-              <ng5-slider [(value)]="range.start" [(highValue)]="range.end" [options]="options" (userChangeEnd)="applyPriceRange(filter)"></ng5-slider>
+              <ng5-slider [(value)]="range.start" [(highValue)]="range.end" [options]="options" (userChangeEnd)="applyPriceRange(filter)" [manualRefresh]="manualRefresh"></ng5-slider>
             </div>
             <div class="row mb-3">
               <div class="col-5 col-sm-5 d-flex align-items-baseline">
