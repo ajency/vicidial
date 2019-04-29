@@ -51,6 +51,7 @@ export class FilterCheckboxComponent implements OnInit, OnChanges {
         this.range = this.filter.selected_range;
         this.previous_Range = Object.assign({}, this.filter.selected_range);
   	}
+    this.manualRefresh.emit();
   }
 
   sortFilterItems(){

@@ -63,10 +63,12 @@
 
 							<!-- mf tabs -->
 							<ul class="nav flex-column kss_filter_mobile--left">
-							  <li *ngFor="let filter of filters" class="nav-item" [attr.data-target]="'#'+filter.header.facet_name" (click)="selectedFilterCategory = filter.header.facet_name" [ngClass]="{'active' : selectedFilterCategory == filter.header.facet_name}">
-							  	{{filter.header.display_name}}
-									<small class="filter-count">{{getSelectedItemCount(filter)}}</small>
-								</li>
+								<ng-container *ngFor="let filter of filters">
+								  	<li *ngIf="filter.display" class="nav-item" [attr.data-target]="'#'+filter.header.facet_name" (click)="selectedFilterCategory = filter.header.facet_name" [ngClass]="{'active' : selectedFilterCategory == filter.header.facet_name}">
+								  	{{filter.header.display_name}}
+										<small class="filter-count">{{getSelectedItemCount(filter)}}</small>
+									</li>
+								</ng-container>
 							</ul>
 							<!-- end of mf tabs -->
 		 				<!-- end of mobile filter -->

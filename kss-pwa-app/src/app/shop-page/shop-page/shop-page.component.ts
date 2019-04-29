@@ -202,14 +202,14 @@ export class ShopPageComponent implements OnInit {
     }
   }
 
-  getFiltersCount(){
+  getFiltersCount(updateFilterCopy : boolean = true){
     this.unsubscribeFilterCountApiCall();
     let url = isDevMode() ? "https://demo8558685.mockable.io/get-filters" : this.appservice.apiUrl + '/api/rest/v1/get-filters-count';
     // url = "https://demo8558685.mockable.io/get-filters";
     if(Object.keys(this.queryObject).length != 0)
       url = url + '?' + $.param(this.queryObject);
     this.filterCountApiCall = this.apiService.request(url, 'get', {} , {}, false, 'observable').subscribe((response)=>{
-      this.formatFilters(response);
+      this.formatFilters(response, updateFilterCopy);
       this.sort_on = response.sort_on;
       let sort_by = this.sort_on.find(item => { return item.is_selected });
       this.sortOn = sort_by.value;
@@ -226,13 +226,15 @@ export class ShopPageComponent implements OnInit {
     });
   }
 
-  formatFilters(response){
+  formatFilters(response, updateFilterCopy : boolean = true){
     response.filters = response.filters.sort((a,b)=>{ return(a.order - b.order) });
     if(!this.selectedFilterCategory)
       this.selectedFilterCategory = response.filters[0].header.facet_name;
     this.filters = response.filters;
     this.searchString = response.search_string;
-    this.filtersCopy = JSON.parse(JSON.stringify( this.filters ));
+
+    if(updateFilterCopy)
+      this.filtersCopy = JSON.parse(JSON.stringify( this.filters ));
   }
 
   createDummyList(){
@@ -252,6 +254,7 @@ export class ShopPageComponent implements OnInit {
   }
 
   setFilters(){
+    this.urlRoutes = {}; 
     this.filters.forEach(filter =>{
       filter.items.forEach(item =>{
         if(item.is_selected)
@@ -392,7 +395,7 @@ export class ShopPageComponent implements OnInit {
     if(this.pageNumber)
       this.queryObject['page'] = this.pageNumber;
 
-    this.getFiltersCount();
+    this.getFiltersCount(false);
   }
 
   updateUrlRoute(cat,value,apply){
@@ -458,6 +461,7 @@ export class ShopPageComponent implements OnInit {
   }
 
   revertFilters(){
+    this.unsubscribeFilterCountApiCall();
     this.filters = JSON.parse(JSON.stringify( this.filtersCopy ));
     this.setFilters();
     this.mobilefilter = false;
