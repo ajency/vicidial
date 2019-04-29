@@ -202,13 +202,15 @@ class SubOrder extends Model
 
     public function returnOrder()
     {
-        $sub_order_data = [
+        $original_sub_order = SubOrder::find($this->new_transaction_id);
+        $sub_order_data     = [
             'user_external_id'      => $this->order->cart->user->odoo_id,
             'address_external_id'   => $this->order->address->odoo_id,
             'location_external_id'  => $this->location->id,
             'warehouse_external_id' => $this->location->warehouse->odoo_id,
             'company_external_id'   => $this->location->company_odoo_id,
             'sub_order_id'          => $this->id,
+            'original_odoo_id'      => $original_sub_order->odoo_id,
             'location_txn_id'       => $this->location->location_name . '/' . $this->order->txnid,
             'address_data'          => $this->order->address_data,
             'item_data'             => $this->orderLines->toArray(),
