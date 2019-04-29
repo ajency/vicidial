@@ -331,10 +331,10 @@ function fbTrackuserRegistration(){
     // fbq('track', 'CompleteRegistration');
 }
 
-function fbTrackAddToCart(var_id){    
-    var variant = variants[selected_color_id].variants.find((variant)=> {return variant.id == var_id});
+function fbTrackAddToCart(sale_price,parent_id,selected_color_id){    
+    // var variant = variants[selected_color_id].variants.find((variant)=> {return variant.id == var_id});
     fbq('track', 'AddToCart', {
-        value: variant.sale_price,
+        value: sale_price,
         currency: 'INR',
         content_ids: parent_id+'-'+selected_color_id,
         content_type: 'product',
