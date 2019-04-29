@@ -80,10 +80,6 @@ export class HeaderComponent implements OnInit, OnChanges {
     this.appservice.loadCartTrigger();
   }
 
-  isActive(path){
-    return (window.location.pathname.substr(0, path.length) === path) ? 'active' : '';
-  }
-
   createDataSrcSet(a,b,c,d){
     return a+ " " +b +", " +c +" "+d;
   }

@@ -54,36 +54,18 @@
                     <div class="nav-column">
                         <div class="nav-column--heading mb-1">Shop by Category</div>
                         <ul class="list-unstyled">
-                          <li><a class="megamenu-link" href="/apparels/boys">Clothing 
-                            <img src="{{asset('/img/menu/menu-item1.jpeg')}}" class="menu-item-img img-fluid mb-1">
-                          </a></li>
-                          <li><a class="megamenu-link" href="/shoes/boys">Shoes 
-                            <img src="{{asset('/img/menu/menu-item1.jpeg')}}" class="menu-item-img img-fluid mb-1">
-                          </a></li>
-                          <li><a class="megamenu-link" href="/accessories/boys">Accessories 
-                            <img src="{{asset('/img/menu/menu-item1.jpeg')}}" class="menu-item-img img-fluid mb-1">
-                          </a></li>
-                          <li><a class="megamenu-link megamenu-link--primary" href="/boys">View all products 
-                            <img src="{{asset('/img/menu/menu-item1.jpeg')}}" class="menu-item-img img-fluid mb-1">
-                          </a></li>
+                          <li><a class="megamenu-link" href="/apparels/boys">Clothing</a></li>
+                          <li><a class="megamenu-link" href="/shoes/boys">Shoes</a></li>
+                          <li><a class="megamenu-link" href="/accessories/boys">Accessories</a></li>
+                          <li><a class="megamenu-link megamenu-link--primary" href="/boys">View all products</a></li>
                         </ul>
                         <div class="nav-column--heading mb-1">Shop by Brands</div>
                         <ul class="list-unstyled">
-                          <li><a class="megamenu-link" href="/boys/toddler-2-7-years--junior-7-14-years/upturn ">Upturn
-                            <img src="{{asset('/img/menu/menu-item3.jpeg')}}" class="menu-item-img img-fluid mb-1">
-                          </a></li>
-                          <li><a class="megamenu-link" href="/boys/toddler-2-7-years--junior-7-14-years/321-sportswear">321 Sportswear
-                            <img src="{{asset('/img/menu/menu-item3.jpeg')}}" class="menu-item-img img-fluid mb-1">
-                          </a></li>
-                          <li><a class="megamenu-link" href="/boys/toddler-2-7-years--junior-7-14-years/dream-theatre ">Dream Theater
-                            <img src="{{asset('/img/menu/menu-item3.jpeg')}}" class="menu-item-img img-fluid mb-1">
-                          </a></li>
-                          <li><a class="megamenu-link" href="/boys/toddler-2-7-years--junior-7-14-years/robofry">RoboFry
-                            <img src="{{asset('/img/menu/menu-item3.jpeg')}}" class="menu-item-img img-fluid mb-1">
-                          </a></li>
-                          <li><a class="megamenu-link" href="/boys/toddler-2-7-years--junior-7-14-years/rikidoos">Rikidoos
-                            <img src="{{asset('/img/menu/menu-item3.jpeg')}}" class="menu-item-img img-fluid mb-1">
-                          </a></li>
+                          <li><a class="megamenu-link" href="/boys/toddler-2-7-years--junior-7-14-years/upturn ">Upturn</a></li>
+                          <li><a class="megamenu-link" href="/boys/toddler-2-7-years--junior-7-14-years/321-sportswear">321 Sportswear</a></li>
+                          <li><a class="megamenu-link" href="/boys/toddler-2-7-years--junior-7-14-years/dream-theatre ">Dream Theater</a></li>
+                          <li><a class="megamenu-link" href="/boys/toddler-2-7-years--junior-7-14-years/robofry">RoboFry</a></li>
+                          <li><a class="megamenu-link" href="/boys/toddler-2-7-years--junior-7-14-years/rikidoos">Rikidoos</a></li>
                         </ul>
                     </div>
 
