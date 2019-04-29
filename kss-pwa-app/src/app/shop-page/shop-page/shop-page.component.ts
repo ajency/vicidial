@@ -463,4 +463,10 @@ export class ShopPageComponent implements OnInit {
     this.mobilefilter = false;
   }
 
+  getSelectedItemCount(filter){
+    let count = filter.items.filter(i => i.is_selected === true).length;
+    if(count)
+      return count;
+  }
+
 }

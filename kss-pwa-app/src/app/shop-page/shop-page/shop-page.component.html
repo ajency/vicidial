@@ -65,7 +65,7 @@
 							<ul class="nav flex-column kss_filter_mobile--left">
 							  <li *ngFor="let filter of filters" class="nav-item" [attr.data-target]="'#'+filter.header.facet_name" (click)="selectedFilterCategory = filter.header.facet_name" [ngClass]="{'active' : selectedFilterCategory == filter.header.facet_name}">
 							  	{{filter.header.display_name}}
-									<!-- <small class="filter-count" >2</small> -->
+									<small class="filter-count">{{getSelectedItemCount(filter)}}</small>
 								</li>
 							</ul>
 							<!-- end of mf tabs -->
