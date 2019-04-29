@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, OnChanges, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
+import { AppServiceService } from '../../../service/app-service.service';
 
 @Component({
   selector: '[app-brands]',
@@ -10,7 +11,8 @@ export class BrandsComponent implements OnInit {
 
 	@Input() brands : any;
 	@Input() brandBanners : any;
-  constructor(private router: Router) { }
+  constructor(private router: Router,
+              private appservice : AppServiceService) { }
 
   ngOnInit() {
   }
@@ -20,7 +22,7 @@ export class BrandsComponent implements OnInit {
   }
 
   navigateTo(link){
-    this.router.navigateByUrl((new URL(link)).pathname);
+    this.router.navigateByUrl(this.appservice.getLink(link));
   }
 
 }

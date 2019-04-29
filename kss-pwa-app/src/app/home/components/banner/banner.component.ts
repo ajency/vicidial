@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, ViewEncapsulation, OnChanges } from '@angular/core';
 import { Router } from '@angular/router';
+import { AppServiceService } from '../../../service/app-service.service';
+
 @Component({
   selector: 'app-banner',
   templateUrl: './banner.component.html',
@@ -39,7 +41,8 @@ export class BannerComponent implements OnInit, OnChanges {
     },
     nav: true
   }
-  constructor(private router: Router) { }
+  constructor(private router: Router,
+              private appservice : AppServiceService) { }
 
   ngOnInit() {
   }
@@ -61,7 +64,7 @@ export class BannerComponent implements OnInit, OnChanges {
   }
 
   navigateTo(link){
-    this.router.navigateByUrl((new URL(link)).pathname);
+    this.router.navigateByUrl(this.appservice.getLink(link));
   }
 
 }

@@ -307,4 +307,9 @@ export class AppServiceService {
     return Math.round(((list_price - sale_price) / (list_price)) * 100)
   }
 
+  getLink(link){
+    let path = (new URL(link)).pathname
+    return path.endsWith('/') ? path.slice(0,-1) : path;
+  }
+
 }

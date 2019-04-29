@@ -11,8 +11,8 @@
           <!-- Normal filter -->
           <ng-container *ngIf="filter.items">
             <ng-container *ngFor="let item of filter.items">
-              <div *ngIf="item.display" class="custom-control custom-checkbox" [ngClass]="{'color-filter d-flex' : filter.attribute_param == 'color'}" data-val="">
-                <input type="checkbox" class="facet-category custom-control-input" id="{{item.facet_value}}" [disabled]="filter.disabled_at_zero_count && item.count === 0" (change)="applyFilter(filter, item)" [(ngModel)]="item.is_selected">
+              <div *ngIf="item.display" class="custom-control custom-checkbox" [ngClass]="{'color-filter d-flex' : filter.attribute_param == 'color' , 'disabled' : filter.disabled_at_zero_count && item.count === 0}" data-val="">
+                <input type="checkbox" class="facet-category custom-control-input" id="{{item.facet_value}}" (change)="applyFilter(filter, item)" [(ngModel)]="item.is_selected">
                 <label class="custom-control-label badge-label f-w-4" for="{{item.facet_value}}" [ngClass]="{'d-flex align-items-center' : filter.attribute_param == 'color'}">
                   <span *ngIf="filter.attribute_param == 'color'" class="color-box mr-2" [ngStyle]="{'background-color' : item.facet_value}" style="background-color:#FFC0CB;"></span>  {{item.display_name}}
                   <span *ngIf="filter.display_count" class="sub-text badge-count">{{item.count}}</span>
