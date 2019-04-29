@@ -27,40 +27,50 @@
      <!-- Contact form -->
 
      <div class="col-sm-8 pb-3 pb-sm-5 pb-md-0 contactForm">
-        <form id="contact-form" method="post" >
+        <form id="contact-form" #contactForm="ngForm" (ngSubmit)="register(contactForm)">
         <div class="row ml-0 p-md-4 mr-3 shadow no-shadow-mobile">
 
            <div class="col-md-12">
               <h4 class="text-center mb-sm-3 font-weight-bold">Send us a message to let us know how we can help</h4>
               <!--firstName-->
               <div class="form-group ">
-                 <input class="form-control form-control-lg" id="names" name="name" type="text" required="true">
+                 <input class="form-control form-control-lg" name="name" type="text" required ngModel [ngClass]="{'has-value' : contactForm.value.name}">
                  <label class="control-label">Name<span class="text-danger">*</span></label>
+                 <small *ngIf="contactForm.submitted && !contactForm.controls.name.value" class="form-text text-danger">Please fill in this field</small>
               </div>
            </div>
            <div class="col-md-12">
               <div class="form-group ">
-                 <input class="form-control form-control-lg" id="mobile" name="mobile" type="tel" required="true">
+                 <input class="form-control form-control-lg" name="mobile" required ngModel [ngClass]="{'has-value' : contactForm.value.mobile}" type="tel" minlength = "10" maxlength = "10" pattern="^[789]\d{9}$" inputmode="numeric" appNumbers>
                  <label class="control-label" >Mobile No<span class="text-danger">*</span></label>
+                 <small *ngIf="contactForm.submitted && !contactForm.controls.mobile.value " class="form-text text-danger">Please fill in this field</small>
+                 <small *ngIf="contactForm.submitted && contactForm.controls.mobile.value && contactForm.controls.mobile.invalid" class="form-text text-danger">Please enter correct mobile number</small>
               </div>
            </div>
            <div class="col-md-12">
               <div class="form-group ">
-                 <input class="form-control form-control-lg" id="mobile" name="email" type="email" required="true">
+                 <input class="form-control form-control-lg" name="email" type="email" required ngModel [ngClass]="{'has-value' : contactForm.value.email}">
                  <label class="control-label" >Email<span class="text-danger">*</span></label>
+                 <small *ngIf="contactForm.submitted && !contactForm.controls.email.value" class="form-text text-danger">Please fill in this field</small>
               </div>
            </div>
            <div class="col-md-12">
               <div class="form-group ">
-                 <input class="form-control form-control-lg" id="mobile" name="comments" type="text" required="true">
+                 <input class="form-control form-control-lg" name="comments" type="text" required ngModel [ngClass]="{'has-value' : contactForm.value.comments}">
                  <label class="control-label" >Comments<span class="text-danger">*</span></label>
+                 <small *ngIf="contactForm.submitted && !contactForm.controls.comments.value" class="form-text text-danger">Please fill in this field</small>
               </div>
            </div>
            <div class="col-md-12">
               <div class="form-group my-0 py-3 overflow-h">
-                 <button type="submit" class="btn btn-primary btn-lg btn-block" id="submitContactForm">Submit <i class="fas fa-circle-notch fa-spin d-none"></i></button>
-                 <div class="alert kss-flash alert-success p-3 alert-dismissible submit-success"><i class="fas fa-check-circle pr-1"></i> Thank you for contacting us. We will get back to you.
-                    <button type="button" class="success-close close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                 <button type="submit" class="btn btn-primary btn-lg btn-block" id="submitContactForm" [disabled]="submitLoader"> 
+                  <span [ngClass]="{'d-none' : submitLoader}">Submit</span> 
+                  <i class="fas fa-circle-notch fa-spin d-none" [ngClass]="{'d-block' : submitLoader}"></i>
+                </button>
+                 <div class="alert kss-flash p-3 alert-dismissible submit-success" [ngClass]="{'show slide-in-bottom' : contactApiSuccess || contactApiFailure, 'alert-success' : contactApiSuccess, 'alert-danger' : contactApiFailure}">
+                  <span *ngIf="contactApiSuccess"> <i class="fas fa-check-circle pr-1"></i>  Thank you for contacting us. We will get back to you.</span> 
+                  <span *ngIf="contactApiFailure"> <i class="fas fa-times-circle pr-1"></i> Something went wrong. Please try again</span> 
+                    <button type="button" class="success-close close" aria-label="Close" (click)="contactApiSuccess = false; contactApiFailure = false;"><span aria-hidden="true">&times;</span></button>
                  </div>
               </div>
            </div>
