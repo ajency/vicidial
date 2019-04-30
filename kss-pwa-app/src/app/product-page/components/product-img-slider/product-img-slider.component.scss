@@ -6,7 +6,7 @@
     background-color: $placeholder;
     height: 400px;
     padding: 0 12em;
-    @media (max-width: 767px){
+    @media (max-width: 991px){
       padding: 0 4em;
       height: 380px;
     }
@@ -16,10 +16,12 @@
 .prod-slides .carousel-image {
   display: block;
   width: auto !important;
-  @media(max-width: 767px){
-    height: 130vw;
+  @media(max-width: 991px){
+    // height: 120vw;
+    height: calc(100vh - 281px);
+    margin-right: 5px;
   }
-  @media only screen and (min-width: 768px){
+  @media only screen and (min-width: 992px){
     height: 450px;
   }
 }
@@ -40,4 +42,11 @@
     position: absolute;
     z-index: 999;
     height: 100%;
+}
+
+@media (max-width: 991px){
+  .prodslider-wrapper{
+    position: fixed;
+    top: 98px;
+  }
 }

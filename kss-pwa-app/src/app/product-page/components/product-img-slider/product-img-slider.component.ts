@@ -41,11 +41,16 @@ export class ProductImgSliderComponent implements OnInit, OnChanges {
       freeScroll: true,
       contain: true,
       lazyLoad: 2,
-      pageDots: false,
-      prevNextButtons : true
+      pageDots: true,
+      prevNextButtons : false
     }
     if(this.images.length == 1){
       options.prevNextButtons = false;
+      options.pageDots = false;
+    }
+    if ( matchMedia('screen and (min-width: 992px)').matches ) {
+      options.pageDots = false;
+      options.prevNextButtons = true;
     }
     let flkty = new Flickity( elem, options);
     let that = this;

@@ -1,8 +1,9 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, HostListener } from '@angular/core';
 import { AppServiceService } from '../../../service/app-service.service';
 import { ApiServiceService } from '../../../service/api-service.service';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 declare var $ : any;
+declare var fbTrackAddToCart : any;
 @Component({
   selector: 'app-product-info',
   templateUrl: './product-info.component.html',
@@ -25,9 +26,10 @@ export class ProductInfoComponent implements OnInit, OnChanges {
   shakeSizes : boolean = false;
   selectedModalSize : any;
   modalSizeSelectError : boolean = false;
-  outOfStock : boolean = true;  
+  outOfStock : boolean = true;
   selectedQuantity = 1;
   totalQuantity = 0;
+  btnSticky : boolean = false;
   constructor(private appservice : AppServiceService,
               private apiservice : ApiServiceService,
               private breakpointObserver : BreakpointObserver) {
@@ -154,6 +156,9 @@ export class ProductInfoComponent implements OnInit, OnChanges {
     $('.cd-add-to-cart .btn-icon').show();
     $('.cd-add-to-cart').addClass('cartLoader');
 
+    let selected_variant =  this.variants.find((variant)=>{ return variant.variant_attributes.variant_id === this.selectedSize});
+    fbTrackAddToCart(selected_variant.variant_attributes.variant_sale_price, this.attributes.product_id, this.facets.product_color_html.id);
+
     let url = this.appservice.apiUrl + (this.appservice.isLoggedInUser() ? ("/api/rest/v1/user/cart/"+this.appservice.getCookie('cart_id')+"/insert") : ("/rest/v1/anonymous/cart/insert") )
     let body = {
       _token: $('meta[name="csrf-token"]').attr('content'),
@@ -247,4 +252,9 @@ export class ProductInfoComponent implements OnInit, OnChanges {
     console.log("quantity updated ==>",quantity);
     this.selectedQuantity = quantity;
   }
+
+  @HostListener('window:scroll', ['$event'])
+    scrollHandler(event) {
+      this.btnSticky = true;
+    }
 }

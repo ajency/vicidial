@@ -20,12 +20,13 @@ import { WidgetComponent } from './widget/widget.component';
 
 import { LazyModule } from '@herodevs/lazy-af';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Ng5SliderModule } from 'ng5-slider';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    WidgetComponent
+    WidgetComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,7 +36,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NumberModule,
     RouterModule,
     LazyModule,
-    BrowserAnimationsModule    
+    BrowserAnimationsModule,
+    Ng5SliderModule
   ],
   providers: [
     // ApiService,

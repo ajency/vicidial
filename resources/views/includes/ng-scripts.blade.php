@@ -77,6 +77,16 @@
 		el.text = JSON.stringify(productMicrodata);
 		document.querySelector('body').appendChild(el);
 	}
+
+	function gtagTrackListPage(){
+		gtag('event', 'page_view', {
+		  'send_to': google_pixel_id,
+		  'ecomm_pagetype': 'category',
+		  'ecomm_prodid': '',
+		  'ecomm_totalvalue': '',
+		  'user_id': getCookie('user_id')
+		});
+	}
 </script>
 
 <noscript><img height="1" width="1" style="display:none"

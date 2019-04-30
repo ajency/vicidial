@@ -49,7 +49,9 @@ export class AppServiceService {
    add_to_cart_completed = false;
 
    menuObject : any;
-
+   filters : any;
+   sort_on : any;
+   filterCollpaseArray : any;
   constructor(	private router: Router,
                 private apiservice : ApiServiceService) { 
     this.apiUrl = isDevMode() ? 'http://localhost:8000' : '';
@@ -303,6 +305,11 @@ export class AppServiceService {
 
   calculateOff(list_price, sale_price){
     return Math.round(((list_price - sale_price) / (list_price)) * 100)
+  }
+
+  getLink(link){
+    let path = (new URL(link)).pathname
+    return path.endsWith('/') ? path.slice(0,-1) : path;
   }
 
 }

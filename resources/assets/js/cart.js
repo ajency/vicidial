@@ -3,6 +3,8 @@
 // var add_to_cart_clicked = false;
 // var add_to_cart_completed = false;
 // Block scope
+var laravelRoutes = ["/contact-us", "/contact", "/faq", "/about-us", "/terms-and-conditions", "/privacy-policy", "/ideas", "/stores", "/stores/hyderabad", "/stores/coimbatore", "/stores/jaipur", "/activities", "/my/order/details", "/shop/boys", "/shop/girls", "/shop/infants", "/draft/boys", "/draft/girls", "/draft/infants"]
+
 const isMobile = isMobileScreen();
 
 function isMobileScreen(){
@@ -15,12 +17,12 @@ function isMobileScreen(){
 $(document).ready(function(){
     //Set crt count on page load
     updateCartCountInUI();
-    if((window.location.href.includes('#/bag') || window.location.href.includes('#/account')) && (window.location.pathname !="/" && window.location.pathname !="/drafthome" && window.location.pathname != "/shop/uniforms"  && !window.location.pathname.includes('/buy')) )
+    if((window.location.href.includes('#/bag') || window.location.href.includes('#/account')) && (window.location.pathname == '/shop/boys' || window.location.pathname == '/shop/girls' || window.location.pathname == '/shop/infants' || window.location.pathname == '/draft/boys' || window.location.pathname == '/draft/girls' || window.location.pathname == '/draft/infants' || window.location.pathname.includes('/ideas') || window.location.pathname.includes('/my/order/details') || window.location.pathname.includes('/activities') ) )
         openCart();
 
     window.onhashchange = function() { 
-     console.log("hash changed");
-     if(!$('#cd-cart').hasClass("speed-in") && (window.location.href.includes('#/bag') || window.location.href.includes('#/account')) && (window.location.pathname !="/" && window.location.pathname !="/drafthome" && window.location.pathname != "/shop/uniforms"  && !window.location.pathname.includes('/buy')) ){
+     console.log("hash changed", window.location.pathname);
+     if(!$('#cd-cart').hasClass("speed-in") && (window.location.href.includes('#/bag') || window.location.href.includes('#/account')) && (window.location.pathname == '/shop/boys' || window.location.pathname == '/shop/girls' || window.location.pathname == 'shop/infants' || window.location.pathname == 'draft/boys' || window.location.pathname == 'draft/girls' || window.location.pathname == '/draft/infants' || window.location.pathname.includes('/ideas') || window.location.pathname.includes('/my/order/details') || window.location.pathname.includes('/activities') ) ){
         openCart();
      }
     }    
@@ -329,10 +331,10 @@ function fbTrackuserRegistration(){
     // fbq('track', 'CompleteRegistration');
 }
 
-function fbTrackAddToCart(var_id){    
-    var variant = variants[selected_color_id].variants.find((variant)=> {return variant.id == var_id});
+function fbTrackAddToCart(sale_price,parent_id,selected_color_id){    
+    // var variant = variants[selected_color_id].variants.find((variant)=> {return variant.id == var_id});
     fbq('track', 'AddToCart', {
-        value: variant.sale_price,
+        value: sale_price,
         currency: 'INR',
         content_ids: parent_id+'-'+selected_color_id,
         content_type: 'product',

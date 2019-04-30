@@ -17,8 +17,13 @@ export class WidgetComponent implements OnInit {
   ngAfterViewInit(){
   	console.log("ngAfterViewInit widget component");
   	setTimeout(()=>{
-		if(window.location.href.includes('#/bag') || window.location.href.includes('#/account'))
-	        this.appservice.loadCartTrigger();
+      try{
+          if(window.location.href.includes('#/bag') || window.location.href.includes('#/account'))
+            this.appservice.loadCartTrigger();
+      }
+      catch(error){
+        console.log("error ==>",error)
+      }
   	},500)  	
   }
 

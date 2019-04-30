@@ -27,13 +27,13 @@
          </div>
       </div>
    </div>
+   @if (isset($static_elements['landing'])) 
    <div class="row">
    	<div class="col-12 gender m-heading text-center">
    		<h3 class="gender__name font-weight-bold text-dark text-uppercase m-detach"><span>{{$title}}</span></h3>
 		<p class="gender__years text-dark m-detach d-md-none">{{$static_elements['landing'][0]['element_data']['text']['text1']}}</p>
    	</div>
    </div>
-   @if (isset($static_elements['landing'])) 
    @foreach($static_elements['landing'] as $landing)
 		<div static_element-id="{{$landing['sequence']}}" static_element-display_type="Section" static_element-type="{{$landing['type']}}" class="row mb-md-4 pb-md-4 kss-extension position-relative" page_slug="{{$gendername}}" >
 			<div class="col-md-7 pr-md-0 img-hero">

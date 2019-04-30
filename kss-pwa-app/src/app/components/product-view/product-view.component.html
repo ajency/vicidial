@@ -3,22 +3,26 @@
         <div class="product-card__wrapper d-flex align-items-center justify-content-center">
         <div *ngIf="showLoader" class="loadingBg mt-3 d-md-block d-none" style="height: 100%; width: 100%; position: absolute; top: 0; bottom: 0;
         left: 0; right: 0;"></div>
-    		 <!--  <img *ngIf="product.image && product.image['1x']; else noImage"
-	            [useSrcset]=true
-	            [offset]=1000
-	            [defaultImage]="product.image['1x']"
-	            [lazyLoad]="createDataSrcSet(product.image['1x'], '270w', product.image['2x'], '540w')"
-	            class="card-img-top img-holder"
-	            title="{{product.title}}"
-	            alt="{{product.title}}"
-	            sizes="(min-width: 1200px) 270px, (min-width: 992px) 226px, (max-width: 991px) 38vw"> -->
-            <img *ngIf="product.image && product.image['1x']; else noImage"
-              src="{{product.image['1x']}}"
-              srcset="{{product.image['1x']}} 270w, {{product.image['2x']}} 540w"
-              class="card-img-top img-holder"
-              title="{{product.title}}"
-              alt="{{product.title}}"
-              sizes="(min-width: 1200px) 270px, (min-width: 992px) 226px, (max-width: 991px) 38vw"/>
+            <ng-container *ngIf="listPage">
+        		  <img *ngIf="listPage && product.image && product.image['1x']; else noImage"
+    	            [useSrcset]=true
+    	            [offset]=500
+    	            [defaultImage]="product.image['1x']"
+    	            [lazyLoad]="createDataSrcSet(product.image['1x'], '270w', product.image['2x'], '540w')"
+    	            class="card-img-top img-holder"
+    	            title="{{product.title}}"
+    	            alt="{{product.title}}"
+    	            sizes="(min-width: 1200px) 270px, (min-width: 992px) 226px, (max-width: 991px) 38vw">
+            </ng-container>
+            <ng-container *ngIf="!listPage">
+              <img *ngIf="product.image && product.image['1x']; else noImage"
+                src="{{product.image['1x']}}"
+                srcset="{{product.image['1x']}} 270w, {{product.image['2x']}} 540w"
+                class="card-img-top img-holder"
+                title="{{product.title}}"
+                alt="{{product.title}}"
+                sizes="(min-width: 1200px) 270px, (min-width: 992px) 226px, (max-width: 991px) 38vw"/>
+          </ng-container>
           <ng-template #noImage>
             <img
             [defaultImage]="'/img/placeholder.svg'"
@@ -33,7 +37,10 @@
        	</div>
   	</a>
   	<div class="card-body">
-        <a [routerLink]="product.url" class="text-dark">
+      <h3 *ngIf="product.brand" class="brands-title brands-title--list mt-1 mt-sm-0 mb-1">
+        {{product.brand}}
+      </h3>
+        <a [routerLink]="product.url" class="text-dark" title="{{product.title}}">
           <h5 class="card-title">
             {{product.title}}
           </h5>
