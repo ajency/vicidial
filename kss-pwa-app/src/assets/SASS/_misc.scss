@@ -44,7 +44,7 @@
 
 .group-title{
     font-size: 1.1rem;
-    font-weight: 700;
+    font-weight: 600;
     color: theme-color("secondary");
     margin-top: 1rem;
     &--black{
@@ -1071,7 +1071,7 @@ $size: 20px;
 }
 .banner-title {
     color: $d-blue;
-    font-weight: bold;
+    font-weight: 600;
     @media (max-width: 575.98px) {
         font-size: 30px;
     }
@@ -1434,4 +1434,19 @@ $size: 20px;
         color: white;
         text-decoration: none;
     }
+}
+
+.flickity-page-dots{
+  bottom: -15px;
+  .dot{
+    width: 8px;
+    height: 8px;
+    margin: 0 5px;
+    background-color: #fff;
+    opacity: 0.5;
+    box-shadow: 0 0px 1px 1px rgba(0, 0, 0, 0.3);
+    &.is-selected{
+        background-color: theme-color("primary");
+    }
+  }
 }

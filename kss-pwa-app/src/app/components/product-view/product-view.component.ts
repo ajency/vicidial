@@ -10,13 +10,14 @@ export class ProductViewComponent implements OnInit, OnChanges {
 
 	@Input() product : any;
   @Input() showLoader : boolean;
+  @Input() listPage : any;
   constructor(private appservice : AppServiceService) { }
 
   ngOnInit() {
   }
 
   ngOnChanges(){
-    if(this.product.url)
+    if(!this.listPage && this.product && this.product.url)
       this.product.url = (new URL(this.product.url)).pathname;
   }
 

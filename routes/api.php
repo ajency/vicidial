@@ -60,7 +60,9 @@ Route::group([
     });
     Route::get('/single-product', $group_app_version.'\ProductController@SingleProductApi');
     Route::get('/single-product-inventory', $group_app_version.'\ProductController@SingleProductInventory');
-    Route::post('/product-list', $group_app_version . '\ListingController@productList');
+    Route::get('/product-list', $group_app_version . '\ListingController@productList');
+    Route::get('/get-filters', $group_app_version . '\ListingController@filtersWithoutCount');
+    Route::get('/get-filters-count', $group_app_version . '\ListingController@filtersWithCount');
     Route::get('/product-with-missing-images', $group_app_version . '\ProductController@productMissingImages');
     Route::post('/send-contact-details', $group_app_version . '\StaticController@saveContactDetails');
 
@@ -141,7 +143,6 @@ Route::group([
         });
     });
 
-    Route::get('/product-details', $group_app_version . '\ProductController@singleProductAPI');
     Route::get('/states/all', $group_app_version . '\AddressController@fetchStates');
     Route::get('/district-state/{pincode}', $group_app_version . '\AddressController@fetchPincode');
     Route::get('/get-all-reasons', $group_app_version . '\OrderController@getAllReasons');

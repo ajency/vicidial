@@ -14,7 +14,7 @@
 	<div class="container">
 		<div class="d-flex flex-md-nowrap flex-wrap" *ngIf="brandBanners">
 			<div *ngFor="let banner of brandBanners" class="kss-extension" attr.static_element-id="{{banner.sequence}}" static_element-display_type="Brand Banner" attr.static_element-type="{{banner.type}}" page_slug="home">
-				<a href="{{banner.element_data.image.href}}" class="d-block mb-3 mb-md-0">
+				<a href="javascript:void(0)" (click)="navigateTo(banner.element_data.image.href)" class="d-block mb-3 mb-md-0">
 					<picture>
 					  	<source media="(min-width: 768px)"
 							  [attr.defaultImage]="'/assets/img/transparent.png'"

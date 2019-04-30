@@ -1,4 +1,6 @@
 import { Component, OnInit,  Input, OnChanges, Output, isDevMode } from '@angular/core';
+import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 declare var $ : any;
 import { AppServiceService } from '../../service/app-service.service';
 import { ApiServiceService } from '../../service/api-service.service';
@@ -11,8 +13,12 @@ import { ApiServiceService } from '../../service/api-service.service';
 export class HeaderComponent implements OnInit, OnChanges {
 
   menu : any;
+  hideMenu : boolean = false;
+  @Input() browserback : any;
   constructor(private appservice : AppServiceService,
-              private apiService: ApiServiceService){ }
+              private apiService: ApiServiceService,
+              private location: Location,
+              private router: Router){ }
 
   ngOnInit(){
     this.getMenu();
@@ -31,6 +37,7 @@ export class HeaderComponent implements OnInit, OnChanges {
 
   ngAfterViewInit(){
     this.appservice.updateCartCountInUI();
+    this.loadCart();
   }
 
   getMenu(){
@@ -69,7 +76,7 @@ export class HeaderComponent implements OnInit, OnChanges {
     let url = window.location.href.split("#")[0] + '#/bag';
     history.pushState({bag : true}, 'bag', url);
     console.log("openCart");
-    this.appservice.loadCartTrigger();    
+    this.appservice.loadCartTrigger();
   }
 
   openAccount(){
@@ -82,5 +89,32 @@ export class HeaderComponent implements OnInit, OnChanges {
 
   createDataSrcSet(a,b,c,d){
     return a+ " " +b +", " +c +" "+d;
+  }
+
+  backToPrev(){
+    if (window.history.length > 2) {
+      this.location.back()
+    } else {
+      this.router.navigate(['/'])
+    }
+  }
+
+  openMenuLink(link){
+    this.hideMenu = true;
+    this.router.navigateByUrl(link);
+    setTimeout(()=>{
+      this.hideMenu = false;
+    });
+  }
+
+  loadCart(){
+    if(window.location.href.endsWith('#/bag') || window.location.href.endsWith('#/bag/shipping-address') || window.location.href.endsWith('#/bag/shipping-summary')){
+      this.appservice.loadCartFromAngular = true;
+      this.appservice.loadCartTrigger();
+    }
+    else if(window.location.href.endsWith('#/account') || window.location.href.endsWith('#/account/my-orders') || window.location.href.includes('#/account/my-orders/')){
+      this.appservice.loadAccountFromAngular = true;
+      this.appservice.loadCartTrigger();
+    }
   }
 }

@@ -1,0 +1,39 @@
+/** Search **/
+
+.expandSearch {
+	position: absolute;
+	right: 15px;
+	top: 0;
+
+	&.showSearch {
+		.custom-expand-search {
+			width: 230px;
+			padding-right: 30px;
+		}
+    	.clear-search{
+			position: absolute;
+		    right: 30px;
+		    color: #c1c1c1;
+		    font-size: 1.1em;
+		    cursor: pointer;
+		}
+	}
+	@media (max-width: 767px){
+ 		display: none !important;
+
+ 		&.showSearch {
+			.custom-expand-search {
+				width: 200px;
+			}
+		}
+	}
+}
+
+/* clears the 'X' from Internet Explorer and Chrome */
+input[type=search]::-ms-clear {  display: none; width : 0; height: 0; }
+input[type=search]::-ms-reveal {  display: none; width : 0; height: 0; }
+
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration { display: none; }
