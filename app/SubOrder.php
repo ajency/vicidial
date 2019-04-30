@@ -321,10 +321,6 @@ class SubOrder extends Model
         $subOrder->save();
 
         foreach ($subOrder->orderLines as $orderLine) {
-            if (empty($lines_status)) {
-                $orderLine->state = $state;
-                $orderLine->save();
-            }
             if (array_key_exists($orderLine->id, $lines_status)) {
                 $orderLine->state = $lines_status[$orderLine->id];
                 $orderLine->save();
