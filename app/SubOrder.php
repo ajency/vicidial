@@ -258,7 +258,7 @@ class SubOrder extends Model
     {
         $itemsData     = [];
         $store_address = $this->location->getAddress();
-        foreach ($this->orderLines->groupBy(function ($item, $key) {return $item["variant_id"] . "-" . $item["shipment_status"] . "-" . $item["is_returned"];}) as $items) {
+        foreach ($this->orderLines->groupBy(function ($item, $key) {return $item["variant_id"] . "-" . $item["state"] . "-" . $item["shipment_status"] . "-" . $item["is_returned"];}) as $items) {
             $itemData = $items->first();
             $item     = [
                 'id'               => $itemData['id'],
@@ -277,7 +277,7 @@ class SubOrder extends Model
                 'shipment_status'  => $itemData['shipment_status'],
                 'is_returned'      => $itemData['is_returned'],
                 'return_policy'    => ReturnPolicy::fetchReturnPolicy($itemData),
-                'quantity'         => $this->orderLines->where('variant_id', $itemData['variant_id'])->groupBy(function ($item, $key) {return $item["shipment_status"] . "-" . $item["is_returned"];})[$itemData["shipment_status"] . "-" . $itemData['is_returned']]->count(),
+                'quantity'         => $this->orderLines->where('variant_id', $itemData['variant_id'])->groupBy(function ($item, $key) {return $item["state"] . "-" . $item["shipment_status"] . "-" . $item["is_returned"];})[$itemData["state"] . "-" . $itemData["shipment_status"] . "-" . $itemData['is_returned']]->count(),
                 'is_invoiced'      => $this->is_invoiced,
             ];
             if ($store_address != null) {
