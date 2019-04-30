@@ -98,69 +98,53 @@ function defaultVariant($variants,$isResponseId = true){
     }
 
 }
+
+function setListingFilters($params)
+{
+    $filter_params                  = [];
+    $filter_params["search_object"] = [];
+    $facet_display_data             = config('product.facet_display_data');
+
+    if (isset($params["search_object"]["primary_filter"])) {
+        foreach ($params["search_object"]["primary_filter"] as $paramk => $paramv) {
+            if ($facet_display_data[$paramk]["is_essential"] == false) {
+                $fields = $paramv;
+                array_push($fields, "all");
+                $filter_params["search_object"]["primary_filter"][$paramk] = $fields;
+            } else {
+                $filter_params["search_object"]["primary_filter"][$paramk] = $paramv;
+            }
+
+        }
+    }
+    
+    if (isset($params["search_object"]["range_filter"])) {
+        $filter_params["search_object"]["range_filter"] = $params["search_object"]["range_filter"];
+    }
+
+    if (isset($params["search_object"]["boolean_filter"])) {
+        $filter_params["search_object"]["boolean_filter"] = $params["search_object"]["boolean_filter"];
+    }
+
+    if (isset($params["search_object"]["search_string"])) {
+        $filter_params["search_object"]["search_string"] = $params["search_object"]["search_string"];
+    }
+
+    $filter_params["display_limit"] = $params["display_limit"];
+    $filter_params["page"]          = $params["page"];
+    
+    if (isset($params["sort_on"])) {
+        $filter_params["sort_on"] = $params["sort_on"];
+    }
+
+    return $filter_params;
+}
+
 function formatItems($result, $params){
     $items = [];
     $response = ["results_found" => ($result["hits"]["total"] > 0)];
     foreach ($result['hits']['hits'] as  $doc) {
-        $productColor      = ProductColor::where("elastic_id", $doc["_id"])->first();
-        $product = $doc["_source"];
-        $data = $product["search_result_data"];
-        $listImages       = $productColor->getDefaultImage(["list-view"]);
-        $item  = [
-            "title" => $data["product_title"],
-            "slug_name" => $data["product_slug"],
-            "description" => $data["product_description"],
-            "images" => (isset($listImages["list-view"])) ? $listImages["list-view"] : [],
-            "variants" => [],
-            "product_id" => $data["product_id"],
-            "color_id" => $data['product_color_id'],
-            "color_name" => $data['product_color_name'],
-            "color_html" => $data['product_color_html'],
-            "brand"       => (isset($data["product_brand"]) && $data["product_brand"]) ? $data["product_brand"] : 'KSS Fashion',
-        ];
-
-        //find product_availability
-        $item['product_availability'] = false;
-        foreach ($product["variants"] as $variant) {
-            if($variant['variant_availability']){
-                $item['product_availability']  = true;
-                break;
-            }
-        }
-        // display price
-        $variants           = collect($product['variants']);
-        $prices             = $variants->pluck('variant_sale_price')->unique();
-        $item['sale_price'] = ["min" => $prices->min(), "max" => $prices->max()];
-        $list_price         = $variants->pluck('variant_list_price');
-        $item['mrp']        = ["min" => $list_price->min(), "max" => $list_price->max()];
-        $variants->transform(function ($item, $key) {
-            $item['variant_discount'] = $item['variant_list_price'] - $item['variant_sale_price'];
-            return $item;
-        });
-        $discounts             = $variants->pluck('variant_discount');
-        $item['discount']      = ["min" => $discounts->min(), "max" => $discounts->max()];
-        $item['display_price'] = $item['sale_price'];
-
-        $item['default_mrp']        = $item['mrp']['min'];
-        $item['default_sale_price'] = $item['sale_price']['min'];
-        $item['default_discount']    = $item['discount']['max'];
-        
-        $id = defaultVariant($product['variants']);
-        foreach ($product["variants"] as $variant) {
-            $item["variants"][] = [
-                "list_price" => $variant["variant_list_price"],
-                "sale_price" => $variant["variant_sale_price"],
-                "is_default" => ($id == $variant["variant_id"]),
-                "size" => [
-                    "size_id" => $variant["variant_size_id"],
-                    "size_name" => $variant["variant_size_name"],
-                ],
-                "inventory_available" => $variant["variant_availability"],
-                "variant_id" => $variant["variant_id"],
-                "discount_per" => calculateDiscount($variant["variant_list_price"],$variant["variant_sale_price"])
-            ];
-        }
-        $items[] = $item;
+        $items[] = $doc["_source"]["search_result_data"]["product_slug"];
     }
 
     $response["items"] = $items;
@@ -177,33 +161,10 @@ function formatItems($result, $params){
         "display_limit" => $params["display_limit"]
     ];
 
-    if(isset($params['search_object']) && isset($params['search_object']['search_string']))
-        $response['search_string'] = $params['search_object']['search_string'];
-    else
-        $response['search_string'] = null;
     return $response;
 }
 
-
-/**
- * Function to sort Items in LHS response
- * 
- */
-function sortLHSItems($items, $facet_name){
-    $items = collect($items);
-    $sort_on = config('product.facet_display_data.'.$facet_name.".sort_on");
-    $sort_order = config('product.facet_display_data.'.$facet_name.".sort_order");
-    
-    if($sort_order === 'asc'){
-        $items = $items->sortBy($sort_on);  
-    }elseif ($sort_order === "desc") {
-        $items = $items->sortByDesc($sort_on);  
-
-    }
-    return $items->values()->all();
-}
-
-function sanitiseFilterdata($result, $params = [])
+function sanitiseFilterdata($result)
 {
     $filterResponse = [];
     foreach ($result["aggregations"]["agg_string_facet"]["facet_name"]["buckets"] as $facet_name) {
@@ -220,163 +181,14 @@ function sanitiseFilterdata($result, $params = [])
         }
     }
 
-    $priceFilter = [
+    /*$priceFilter = [
         "max" => (isset($result["aggregations"]["agg_price"]["facet_name"]["buckets"][0])) ? $result["aggregations"]["agg_price"]["facet_name"]["buckets"][0]['facet_value_max']['value'] : null,
         "min" => (isset($result["aggregations"]["agg_price"]["facet_name"]["buckets"][0])) ? $result["aggregations"]["agg_price"]["facet_name"]["buckets"][0]['facet_value_min']['value'] : null,
     ];
     $priceFilter["min"] = (int) floor($priceFilter["min"] / 100) * 100;
-    $priceFilter["max"] = (int) ceil($priceFilter["max"] / 100) * 100;
-    $attributes         = ['is_singleton', 'is_collapsed', 'template', 'order', 'display_count', 'disabled_at_zero_count', 'is_attribute_param', 'filter_type','sort_on','sort_order','custom_attributes'];
-    $response           = [];
+    $priceFilter["max"] = (int) ceil($priceFilter["max"] / 100) * 100;*/
 
-
-    $facetNames =  ["product_category_type", "product_gender", "product_subtype", "product_age_group", "product_color_html", "product_metatag", "variant_size_name", "product_brand"];
-    foreach ($facetNames as $f) {
-        $filter           = [];
-        $facetName = $f;
-        $facetValues = isset($filterResponse[$facetName])? $filterResponse[$facetName]:null;
-        $facets           = Facet::where('facet_name', $facetName)->where("display",true)->get();
-        $filter['header'] = [
-            'facet_name'   => $facetName,
-            'display_name' => config('product.facet_display_data.' . $facetName . '.name'),
-        ];
-        $filter['items'] = [];
-
-        $is_collapsed    = 0;
-        foreach ($facets as $facet) {
-            if (isset($params["search_object"]['primary_filter'][$facet->facet_name])) {
-                $is_selected = (array_search($facet->facet_value, $params["search_object"]['primary_filter'][$facet->facet_name]) === false) ? false : true;
-            } else {
-                $is_selected = false;
-            }
-
-            $filter['items'][] = [
-                'facet_value'  => $facet->facet_value,
-                "false_facet_value" =>  config('product.facet_display_data.'.$facet->facetName.'.false_facet_value'),
-                'display_name' => $facet->display_name,
-                'slug'         => $facet->slug,
-                'is_selected'  => $is_selected,
-                'sequence'     => $facet->sequence,
-                'count'        => (isset($facetValues[$facet->facet_value])) ? $facetValues[$facet->facet_value] : 0,
-            ];
-            $is_collapsed += $is_selected;
-        }
-        foreach ($attributes as $attribute) {
-            $filter[$attribute] = config('product.facet_display_data.' . $facetName . '.' . $attribute);
-        }
-        //change made by Tanvi to is_collapsed value
-        $filter["is_collapsed"] = (!boolval($is_collapsed) == true)?(config('product.facet_display_data.' . $facetName . '.is_collapsed')):!boolval($is_collapsed);
-        $response[] = $filter;
-        
-    }
-
-    //le price filter
-    $filter           = [];
-    $filter['header'] = [
-        'facet_name'   => 'variant_sale_price',
-        'display_name' => config('product.facet_display_data.variant_sale_price.name'),
-    ];
-    foreach ($attributes as $attribute) {
-        $filter[$attribute] = config('product.facet_display_data.variant_sale_price.' . $attribute);
-    }
-    $filter["items"]                   = [];
-    $filter["is_collapsed"]            = false;
-    $filter["bucket_range"]            = [];
-    // $filter["bucket_range"]["start"]   = $priceFilter['min'];
-    // $filter["bucket_range"]["end"]     = $priceFilter['max'];
-    
-    /** change made by Tanvi to bucket range as a workaround to handle price filters **/
-    $filter["bucket_range"]["start"]   = config('product.price_filter_bucket_range.min');
-    $filter["bucket_range"]["end"]     = config('product.price_filter_bucket_range.max');
-    /** change made by Tanvi to bucket range as a workaround to handle price filters **/
-    $filter["selected_range"]          = [];
-    $filter["selected_range"]["start"] = (isset($params["search_object"]['range_filter']['variant_sale_price'])) ? $params["search_object"]['range_filter']['variant_sale_price']['min'] : $filter["bucket_range"]["start"];
-    // $filter["selected_range"]["start"] = ($filter["selected_range"]["start"] < $filter["bucket_range"]["start"])? $filter["bucket_range"]["start"] : $filter["selected_range"]["start"];
-    $filter["selected_range"]["end"]   = (isset($params["search_object"]['range_filter']['variant_sale_price'])) ? $params["search_object"]['range_filter']['variant_sale_price']['max'] : $filter["bucket_range"]["end"];
-    // $filter["selected_range"]["end"] = ($filter["selected_range"]["end"] > $filter["bucket_range"]["end"])? $filter["bucket_range"]["end"] : $filter["selected_range"]["end"];
-    $response[] = $filter;
-
-
-    // $filter           = [];
-    // $facet_name = "variant_discount_percent";
-    // $filter['header'] = [
-    //     'facet_name'   => $facet_name,
-    //     'display_name' => config('product.facet_display_data.'.$facet_name.'.name'),
-    // ];
-    // foreach ($attributes as $attribute) {
-    //     $filter[$attribute] = config('product.facet_display_data.'.$facet_name.'.'. $attribute);
-    // }
-
-    // $bucket = isset($params['search_object']['range_filter']['variant_discount_percent']) ? $params['search_object']['range_filter']['variant_discount_percent']: [];
-    // // dd($bucket);
-    // $filter["items"] = collect(config('product.discount_filter'))->transform(function ($item, $key) use ($bucket) {
-    //     $item['is_selected'] = $item["min"] == $bucket['min'] and $item["max"] == $bucket['max'];
-    //     return $item;
-    // })->toArray();
-    // $response[] = $filter;
-
-    
-    $response[] = boolFilterResponse("variant_availability", $attributes, $params);
-
-    foreach ($response as &$filter) {
-        $filter['items'] = sortLHSItems($filter['items'],  $filter['header']['facet_name']);
-    }
-
-    // image availability filter
-
-        // image availability filter
-    $response[] = boolFilterResponse("product_image_available", $attributes, $params);
-    // ecomm filter
-    $response[] = boolFilterResponse("product_att_ecom_sales", $attributes, $params);
-    
-    return $response;
-}
-
-
-function boolFilterResponse($facet_name, $attributes, $params){
-    $filter           = [];
-    $filter['header'] = [
-        'facet_name'   => $facet_name,
-        'display_name' => config('product.facet_display_data.'.$facet_name.'.name'),
-    ];
-    foreach ($attributes as $attribute) {
-        $filter[$attribute] = config('product.facet_display_data.'.$facet_name.'.'.$attribute);
-    }
-    $config = config('product.facet_display_data.'.$facet_name);
-    $filter['items'] = [
-        [
-            "display_name" => $config['item_display_name'],
-            "facet_value"  => $config['facet_value'],
-            "is_selected"  => selectBool($params, $facet_name, $config['facet_value']),
-            "count" => 20,
-            "false_facet_value" => $config['false_facet_value'],
-            "slug" => str_slug($config['facet_value']),
-        ],
-    ];
-    $filter['attribute_slug'] = config('product.facet_display_data.'.$facet_name.'attribute_slug');
-    return $filter;
-}
-
-
-function selectBool($params, $name, $value){
-    if (isset($params['search_object']['boolean_filter'][$name])) {
-        if ($params['search_object']['boolean_filter'][$name] === $value) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    return true;
-}
-
-
-function getProductThumbImages($variantId){
-    $variant = Variant::find($variantId);
-    $default_imgs = $variant->productColor->getDefaultImage(["variant-thumb"]);
-    if(isset($default_imgs["variant-thumb"]))
-        return $default_imgs["variant-thumb"];
-    else
-        return $default_imgs;
+    return $filterResponse;
 }
 
 function setDefaultFilters(array $params){

@@ -105,7 +105,7 @@ Route::get('/user/order/{orderid}/payment/{type}/status', $app_version . '\Payme
 Route::get('/my/order/details', $app_version . '\OrderController@getOrderDetails')->name('orderDetails');
 Route::get('/shop/{gendername}', $app_version . '\StaticController@gender');
 Route::get('/draft/{gendername}', $app_version . '\StaticController@draft');
-Route::get('/{product_slug}/buy', $app_version . '\HomeController@singleProduct')->name('product');
+Route::get('/{product_slug}/buy', $app_version . '\ProductController@singleProduct')->name('product');
 Route::get('/' . $config['base_root_path'] . $config['model']["App\ProductColor"]['base_path'] . '/{photo_id}/{preset}/{depth}/{image}', $app_version . '\ProductController@getImage');
 Route::get('/sitemap.xml', $app_version.'\StaticController@sitemapXML');
 Route::get('/products_list.xml', $app_version.'\StaticController@productlistXML');
