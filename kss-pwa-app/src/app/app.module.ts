@@ -26,7 +26,7 @@ import { Ng5SliderModule } from 'ng5-slider';
   declarations: [
     AppComponent,
     LoginComponent,
-    WidgetComponent
+    WidgetComponent,
   ],
   imports: [
     BrowserModule,

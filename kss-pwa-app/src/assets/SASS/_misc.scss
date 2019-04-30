@@ -44,7 +44,7 @@
 
 .group-title{
     font-size: 1.1rem;
-    font-weight: 700;
+    font-weight: 600;
     color: theme-color("secondary");
     margin-top: 1rem;
     &--black{
@@ -1071,7 +1071,7 @@ $size: 20px;
 }
 .banner-title {
     color: $d-blue;
-    font-weight: bold;
+    font-weight: 600;
     @media (max-width: 575.98px) {
         font-size: 30px;
     }

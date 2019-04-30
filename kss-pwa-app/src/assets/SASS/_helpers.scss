@@ -386,3 +386,54 @@ $loader-highlight: lighten($loader-base, 7%);
     transform: translate3d(100%, 0, 0);
   }
 }
+
+.submit-success{
+  position: absolute;
+  width: 100%;
+  bottom: -100px;
+  left: 0;
+  &.show{
+      bottom: 0;
+  }
+}
+
+.ngx-gallery {
+  &-image {
+    border-top-left-radius: calc(.25rem - 1px);
+    border-top-right-radius: calc(.25rem - 1px);
+  }
+  &-arrow-left {
+      .ngx-gallery-icon-content {
+        background-image: url(./assets/img/controls.png);
+        background-position: 0 0;
+      }
+  }
+  &-arrow-right {
+      .ngx-gallery-icon-content {
+        background-image: url(./assets/img/controls.png);
+        background-position: -32px 0;                    
+      }
+  }
+  &-icon-content {
+    width: 32px;
+    display: block;
+    height: 32px;            
+    cursor: pointer;
+    z-index: 99;
+    margin-top: -16px;
+    opacity: .5;
+    -webkit-transition: opacity .35s linear 0s;
+    transition: opacity .35s linear 0s;
+    &::before {
+      display: none;
+    }
+    &:hover {
+      opacity: 1;
+    }
+  }
+  &-thumbnails {
+    .ngx-gallery-thumbnail {
+      border-radius: 3px;
+    }
+  }
+}
