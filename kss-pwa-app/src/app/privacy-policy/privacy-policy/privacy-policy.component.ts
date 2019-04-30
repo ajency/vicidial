@@ -9,7 +9,7 @@ export class PrivacyPolicyComponent implements OnInit {
 
   breadcrumbs : any = [
     {position: 1, title: 'Home', url: '/'},
-    {position: 2, title: 'Privacy Policy', url: ''},
+    {position: 2, title: 'Privacy Policy', url: '/privacy-policy'},
   ];
 
   constructor() { }

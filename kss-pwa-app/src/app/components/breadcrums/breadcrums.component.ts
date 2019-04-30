@@ -15,6 +15,7 @@ export class BreadcrumsComponent implements OnInit, OnChanges {
 
   ngOnChanges(){
   	this.breadcrumbs = this.breadcrumbs.sort((a,b)=>{ return a.position - b.position});
+    this.breadcrumbs.forEach(breadcrumb =>{ breadcrumb.url = (new URL(breadcrumb.url)).pathname;})
   	console.log("breadcrumbs ==>", this.breadcrumbs);
   }
 

@@ -10,7 +10,7 @@ export class TermsAndConditionsComponent implements OnInit {
 
   breadcrumbs : any = [
     {position: 1, title: 'Home', url: '/'},
-    {position: 2, title: 'Terms and Conditions', url: ''},
+    {position: 2, title: 'Terms and Conditions', url: '/terms-and-conditions'},
   ];
 
   @ViewChild('shipping') shipping : ElementRef;

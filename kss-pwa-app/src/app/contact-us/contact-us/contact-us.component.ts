@@ -11,7 +11,7 @@ export class ContactUsComponent implements OnInit {
 
   breadcrumbs : any = [
     {position: 1, title: 'Home', url: '/'},
-    {position: 2, title: 'Contact Us', url: ''},
+    {position: 2, title: 'Contact Us', url: '/contact'},
   ];
   submitLoader : boolean = false;
   contactApiSuccess : boolean = false;

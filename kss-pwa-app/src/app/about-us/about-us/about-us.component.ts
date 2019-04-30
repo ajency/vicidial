@@ -9,7 +9,7 @@ export class AboutUsComponent implements OnInit {
 
   breadcrumbs : any = [
       {position: 1, title: 'Home', url: '/'},
-      {position: 2, title: 'About Us', url: ''},
+      {position: 2, title: 'About Us', url: '/about-us'},
   ];
 
   constructor() { }
