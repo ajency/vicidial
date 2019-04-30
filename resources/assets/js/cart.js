@@ -17,12 +17,12 @@ function isMobileScreen(){
 $(document).ready(function(){
     //Set crt count on page load
     updateCartCountInUI();
-    if((window.location.href.includes('#/bag') || window.location.href.includes('#/account')) && (laravelRoutes.includes(window.location.pathname)) )
+    if((window.location.href.includes('#/bag') || window.location.href.includes('#/account')) && (window.location.pathname == '/shop/boys' || window.location.pathname == '/shop/girls' || window.location.pathname == '/shop/infants' || window.location.pathname == '/draft/boys' || window.location.pathname == '/draft/girls' || window.location.pathname == '/draft/infants' || window.location.pathname.includes('/ideas') || window.location.pathname.includes('/my/order/details') || window.location.pathname.includes('/activities') ) )
         openCart();
 
     window.onhashchange = function() { 
-     console.log("hash changed");
-     if(!$('#cd-cart').hasClass("speed-in") && (window.location.href.includes('#/bag') || window.location.href.includes('#/account')) && (laravelRoutes.includes(window.location.pathname)) ){
+     console.log("hash changed", window.location.pathname);
+     if(!$('#cd-cart').hasClass("speed-in") && (window.location.href.includes('#/bag') || window.location.href.includes('#/account')) && (window.location.pathname == '/shop/boys' || window.location.pathname == '/shop/girls' || window.location.pathname == 'shop/infants' || window.location.pathname == 'draft/boys' || window.location.pathname == 'draft/girls' || window.location.pathname == '/draft/infants' || window.location.pathname.includes('/ideas') || window.location.pathname.includes('/my/order/details') || window.location.pathname.includes('/activities') ) ){
         openCart();
      }
     }    

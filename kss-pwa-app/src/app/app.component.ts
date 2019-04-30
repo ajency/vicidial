@@ -138,28 +138,28 @@ export class AppComponent implements OnInit {
 
   loadModules(){
       if(window.location.href.includes("#/bag")){
-        if(!this.laravelRoutes.includes(window.location.pathname)){
+        if(window.location.pathname == '/shop/boys' || window.location.pathname == '/shop/girls' || window.location.pathname == '/shop/infants' || window.location.pathname == '/draft/boys' || window.location.pathname == '/draft/girls' || window.location.pathname == '/draft/infants' || window.location.pathname.includes('/ideas') || window.location.pathname.includes('/my/order/details') || window.location.pathname.includes('/activities') ){
+            this.loadCart = true;
+        }
+        else{
           this.handleWidgetContainer();
           setTimeout(()=>{
             this.loadCartFromAngular = true;
           },500)
-        }
-        else{
-          this.loadCart = true;
         }
         this.appservice.updateCartViewTrigger();
         $("app-account").addClass('d-none');
         $("app-bag-view").removeClass('d-none');
       }
       else if(window.location.href.includes("#/account")){
-        if(!this.laravelRoutes.includes(window.location.pathname)){
+        if(window.location.pathname == '/shop/boys' || window.location.pathname == '/shop/girls' || window.location.pathname == '/shop/infants' || window.location.pathname == '/draft/boys' || window.location.pathname == '/draft/girls' || window.location.pathname == '/draft/infants' || window.location.pathname.includes('/ideas') || window.location.pathname.includes('/my/order/details') || window.location.pathname.includes('/activities') ){
+            this.loadAccount = true;
+        }
+        else{
           this.handleWidgetContainer();
           setTimeout(()=>{
             this.loadAccountFromAngular = true;
           },500)
-        }
-        else{
-          this.loadAccount = true;
         }
         this.appservice.updateAccountViewTrigger();
         $("app-bag-view").addClass('d-none');

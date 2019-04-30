@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-
+import { AppServiceService } from '../../service/app-service.service';
 declare var $ : any;
 
 @Component({
@@ -11,7 +11,7 @@ export class FooterComponent implements OnInit {
 
   @Input() stickyFoot : any;
 
-  constructor() { }
+  constructor(private appservice : AppServiceService) { }
 
   ngOnInit() {
   	// $('.footer-more').click(function(e){
@@ -19,6 +19,16 @@ export class FooterComponent implements OnInit {
   	// 	$(this).toggleClass('collapsed');
   	// 	$('.hidden-footer-section').toggleClass('show');
   	// });
+  }
+
+  openAccount(path = ''){
+    this.appservice.loadAccountFromAngular = true;
+    let url = window.location.href.split("#")[0] + '#/account';
+    if(path)
+      url = url + '/' + path;
+    history.pushState({bag : true}, 'account', url);
+    console.log("openAccount");
+    this.appservice.loadCartTrigger();
   }
 
 }
