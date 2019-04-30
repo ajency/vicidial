@@ -3,14 +3,53 @@ import { Component, OnInit, Input, OnChanges, AfterViewInit, Output, EventEmitte
 @Component({
   selector: 'app-offers',
   templateUrl: './offers.component.html',
-  styleUrls: ['./offers.component.scss']
+  styleUrls: ['../../../../../node_modules/ngx-owl-carousel-o/lib/styles/scss/owl.carousel.scss',
+              '../../../../../node_modules/ngx-owl-carousel-o/lib/styles/scss/owl.theme.default.scss',
+              './offers.component.scss']
 })
 export class OffersComponent implements OnInit {
 
-	@Input() offers : any;
+  @Input() offers : any;
+  @Input() banners : any;
+  banner_length : any;
+  customOptions: any = {
+    loop: true,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: true,
+    dots: false,
+    navSpeed: 500,
+    navText: ['<i class="fas fa-chevron-left"></i>', '<i class="fas fa-chevron-right"></i>'],
+    autoplay : false,
+    //autoplaySpeed : 1000,
+    //autoplayTimeout : 5000,
+    items: 3,
+    responsive: {      
+      767: {
+        items: 2
+      },
+      991: {
+        items: 3
+      },
+    },   
+    nav: true
+  }
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  ngOnChanges(){
+    this.banner_length = this.banners.length;
+    console.log("this.banner_length ===>", this.banner_length);
+    this.banners = this.banners.filter(banner => banner.element_data.display !== 0)
+    if(this.banners.length == 1){
+      this.customOptions.loop = false;
+      this.customOptions.mouseDrag = false;
+      this.customOptions.touchDrag = false;
+      this.customOptions.pullDrag = false;
+    }
   }
 
 }
