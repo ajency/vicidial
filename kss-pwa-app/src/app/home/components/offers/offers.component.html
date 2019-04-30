@@ -12,22 +12,18 @@
 
 <section class="">
 	<div class="container">
-		<!--div class="our-offers d-sm-flex align-items-sm-center justify-content-sm-center label-box-medium mobile-overflow row mb-md-4 mb-lg-0" >
-			<div *ngFor="let offer of offers" class="label-box img-holder position-relative kss-extension" attr.static_element-id="{{offer.sequence}}" static_element-display_type="Our Offers" attr.static_element-type="{{offer.type}}" page_slug="home" app-label-box [box_data]="offer" [box_type]="offer"></div>
-		</div -->
-		<!-- our-offers d-sm-flex align-items-sm-center justify-content-sm-center label-box-medium mobile-overflow row mb-md-4 mb-lg-0 -->
-		<div class="our-offers mb-md-4 mb-lg-0">
+		<div class="our-offers mb-md-4 mb-lg-0 cs-row">
 			<owl-carousel-o [options]="customOptions">
 				<ng-container *ngFor="let offer of offers">
-					<ng-template carouselSlide>
-							<div class="label-box img-holder position-relative kss-extension" attr.static_element-id="{{offer.sequence}}" static_element-display_type="Our Offers" attr.static_element-type="{{offer.type}}" page_slug="home" app-label-box [box_data]="offer" [box_type]="offer"></div>
+					<ng-template carouselSlide [width]="360">
+						<div class="label-box img-holder position-relative kss-extension" attr.static_element-id="{{offer.sequence}}" static_element-display_type="Our Offers" attr.static_element-type="{{offer.type}}" page_slug="home" app-label-box [box_data]="offer" [box_type]="offer"></div>
 					</ng-template>
-				</ng-container>
+				</ng-container>			
 				<ng-container *ngFor="let offer of offers">
-					<ng-template carouselSlide>
-							<div class="label-box img-holder position-relative kss-extension" attr.static_element-id="{{offer.sequence}}" static_element-display_type="Our Offers" attr.static_element-type="{{offer.type}}" page_slug="home" app-label-box [box_data]="offer" [box_type]="offer"></div>
+					<ng-template carouselSlide [width]="360">
+						<div class="label-box img-holder position-relative kss-extension" attr.static_element-id="{{offer.sequence}}" static_element-display_type="Our Offers" attr.static_element-type="{{offer.type}}" page_slug="home" app-label-box [box_data]="offer" [box_type]="offer"></div>
 					</ng-template>
-				</ng-container>
+				</ng-container>			
 			</owl-carousel-o>
 		</div>
 	</div>

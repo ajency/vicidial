@@ -11,9 +11,10 @@ export class OffersComponent implements OnInit {
 
   @Input() offers : any;
   @Input() banners : any;
+  @Input() width : any;
   banner_length : any;
   customOptions: any = {
-    loop: true,
+    loop: false,
     mouseDrag: true,
     touchDrag: true,
     pullDrag: true,
@@ -23,13 +24,13 @@ export class OffersComponent implements OnInit {
     autoplay : false,
     //autoplaySpeed : 1000,
     //autoplayTimeout : 5000,
-    items: 3,
-    responsive: {      
-      767: {
-        items: 2
+    responsive: {
+      0: {
+        items: 1,        
       },
-      991: {
-        items: 3
+      768: {
+        items: 3,
+        autoWidth: true,
       },
     },   
     nav: true
