@@ -308,7 +308,7 @@ return [
         'variant_sale_price'       => [
             'name'                   => 'Price Range',
             'is_singleton'           => true,
-            'is_collapsed'           => true,
+            'is_collapsed'           => false,
             'display'                => true,
             'order'                  => 5,
             'display_count'          => true,
