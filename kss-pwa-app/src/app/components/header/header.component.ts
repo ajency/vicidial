@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 declare var $ : any;
 import { AppServiceService } from '../../service/app-service.service';
 import { ApiServiceService } from '../../service/api-service.service';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-header',
@@ -14,11 +15,15 @@ export class HeaderComponent implements OnInit, OnChanges {
 
   menu : any;
   hideMenu : boolean = false;
+  isMobile : boolean = false;
   @Input() browserback : any;
   constructor(private appservice : AppServiceService,
               private apiService: ApiServiceService,
               private location: Location,
-              private router: Router){ }
+              private router: Router,
+              private breakpointObserver : BreakpointObserver){
+          this.isMobile = this.breakpointObserver.isMatched('(max-width: 600px)');
+        }
 
   ngOnInit(){
     this.getMenu();
@@ -102,6 +107,8 @@ export class HeaderComponent implements OnInit, OnChanges {
   openMenuLink(link){
     this.hideMenu = true;
     this.router.navigateByUrl(link);
+    if(this.isMobile)
+      this.closeMenu();
     setTimeout(()=>{
       this.hideMenu = false;
     });
