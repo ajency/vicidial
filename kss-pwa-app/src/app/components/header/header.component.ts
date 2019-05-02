@@ -34,6 +34,13 @@ export class HeaderComponent implements OnInit, OnChanges {
       $('.megamenu-wrapper').addClass('d-none');
       $('.megamenu-wrapper[data-menu="'+mobMenuName+'"]').removeClass('d-none');
     });
+
+    $(document).on('click','.active-link', function(){
+      $('.megamenu').removeClass('active');
+      $('.megamenu--left .nav-item').removeClass('active');
+      $('.megamenu-wrapper').addClass('d-none');
+      $('body').removeClass('overflow-h');
+    });    
   }
 
   ngOnChanges(){
@@ -124,4 +131,9 @@ export class HeaderComponent implements OnInit, OnChanges {
       this.appservice.loadCartTrigger();
     }
   }
+
+  isActive(path){
+    return (window.location.pathname.substr(0, path.length) === path) ? 'active' : '';
+  }
+
 }

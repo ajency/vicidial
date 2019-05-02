@@ -42,10 +42,10 @@
 		          <li class="nav-item" data-target="Stationery">
 		            Stationery
 		          </li>
-		          <li routerLink="/shop/uniforms" (click)="closeMenu()" class="nav-item">
+		          <li routerLink="/shop/uniforms" (click)="closeMenu()" class="nav-item" [ngClass]="{'active-link' : isActive('/shop/uniforms')}">
 		            <a class="d-inline font-weight-normal p-0" style="line-height: normal">Uniforms</a>
 		          </li>
-		          <li class="flex-grow-1 disabled"></li>
+		          <!--li class="flex-grow-1 disabled"></li-->
 		          <li class="nav-item" data-target="otherlinks">
 		            Other links
 		          </li>
@@ -58,11 +58,54 @@
 		                <a href="/ideas" *ngIf="item.type == 'Blog'" class="d-none d-lg-block">{{item.type}}</a>
 		                <a routerLink="/shop/uniforms" *ngIf="item.type == 'Uniforms'" class="d-none d-lg-block">{{item.type}}</a>
 		                <div class="megamenu-wrapper" attr.data-menu="{{item.type}}">
+
+												<!-- Mobile Menu Banner -->
+												<div class="nav-column d-lg-none">
+													<div class="menu-banner-item">
+														<img src="../../../assets/img/menu/mobile-banner.jpeg" class="menu-item-img img-fluid mb-0 d-lg-none" title="offers">
+													</div>
+												</div>
+
+												<!-- Supper Offers -->
+												<div class="nav-column d-lg-none">
+													<div>
+															<div class="nav-column--heading mt-1 mb-2">Supper Offers</div>
+															<ul class="list-unstyled layout--offers">
+																<li>
+																	<a href="/#" class="megamenu-link">
+																		<img src="../../../assets/img/menu/offer1.jpeg" class="menu-item-img img-fluid d-lg-none">
+																	</a>
+																</li>
+																<li>
+																	<a href="/#" class="megamenu-link">
+																		<img src="../../../assets/img/menu/offer2.jpeg" class="menu-item-img img-fluid d-lg-none">
+																	</a>
+																</li>
+																<li>
+																	<a href="/#" class="megamenu-link">
+																		<img src="../../../assets/img/menu/offer3.jpeg" class="menu-item-img img-fluid d-lg-none">
+																	</a>
+																</li>
+															</ul>
+													</div>													
+												</div>
+
 		                    <div *ngFor="let row of item.rows" class="nav-column">
 		                    	<div *ngFor="let menu of row.menus">
-			                        <div class="nav-column--heading mb-1">{{menu.shop_by}}</div>
-			                        <ul class="list-unstyled">
-			                          <li *ngFor="let type of menu.data"><a class="megamenu-link" [ngClass]="{'megamenu-link--primary' : type.title === 'View all products'}" (click)="openMenuLink(type.link)" href="javascript:void(0)">{{type.title}}</a></li>
+			                        <div class="nav-column--heading mt-1 mb-2">{{menu.shop_by}} <a *ngIf=" menu.shop_by == 'Shop by Category'" href="/shop" title="Shop All" target="_self" class="go-to-shop d-lg-none">Shop All ></a></div>
+			                        <ul class="list-unstyled" [ngClass]="{'layout--3-col' : menu.shop_by == 'Shop by Category' || menu.shop_by == 'Shop by Clothing' || menu.shop_by == 'Shop by Brands' || menu.shop_by == 'Shop by Sub-Types' || menu.shop_by == 'Shop by Gender', 'layout--tags' : menu.shop_by == 'Shop by Price', 'layout--2-col' : menu.shop_by == 'Shop by Age Group'}">
+			                          <li *ngFor="let type of menu.data">
+																	<a class="megamenu-link" [ngClass]="{'megamenu-link--primary' : type.title === 'View all products'}" (click)="openMenuLink(type.link)" href="javascript:void(0)" title="{{type.title}}" [ngClass]="{active: isActive('type.link')}">
+																		<img *ngIf="menu.shop_by == 'Shop by Category'" src="../../../assets/img/menu/menu-item1.jpeg" class="menu-item-img img-fluid mb-1">
+																		<img *ngIf="menu.shop_by == 'Shop by Clothing'" src="../../../assets/img/menu/menu-item2.jpeg" class="menu-item-img img-fluid mb-1">
+																		<img *ngIf="menu.shop_by == 'Shop by Brands'" src="../../../assets/img/menu/menu-item3.jpeg" class="menu-item-img img-fluid mb-1">
+																		<img *ngIf="menu.shop_by == 'Shop by Age Group'" src="../../../assets/img/menu/menu-item4.jpeg" class="menu-item-img img-fluid mb-1">
+																		<img *ngIf="menu.shop_by == 'Shop by Sub-Types'" src="../../../assets/img/menu/menu-item5.jpeg" class="menu-item-img img-fluid mb-1">
+																		<img *ngIf="menu.shop_by == 'Shop by Gender'" src="../../../assets/img/menu/menu-item6.jpeg" class="menu-item-img img-fluid mb-1">
+																		<span *ngIf="menu.shop_by == 'Shop by Age Group'" class="sub-title">Juniors</span>
+																		<span class="title">{{type.title}}</span>	
+																	</a>
+																</li>
 			                        </ul>
 
 		                        </div>
