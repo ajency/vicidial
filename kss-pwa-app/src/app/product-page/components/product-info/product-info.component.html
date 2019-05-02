@@ -1,7 +1,7 @@
 <div class="">
     <div class="mt-sm-2">
 	    <!-- Product Title -->
-	    <a *ngIf="facets.product_brand && facets.product_brand.slug" href="{{facets.product_brand.slug}}" class="text-black"><h2 class="brands-title brands-title--single">{{facets.product_brand.name}}</h2></a>
+	    <a *ngIf="facets.product_brand && facets.product_brand.slug" [routerLink]="'/'+facets.product_brand.slug" class="text-black"><h2 class="brands-title brands-title--single">{{facets.product_brand.name}}</h2></a>
 	    <div *ngIf="showLoader" class="loadingBg mt-4" style="height: 30px;"></div>
       <h1 class="section-heading section-heading--single">{{attributes.product_title}}</h1>
 
@@ -63,7 +63,7 @@
       </div>
     </div>
     <div class="col-right">
-      <p class="ship-text">This product has a 3 day return/replace policy. <a href="/terms-and-conditions/#return" target="_self" class="ship-link" >Know More</a></p>
+      <p class="ship-text">This product has a 3 day return/replace policy. <a routerLink="/terms-and-conditions/#return" target="_self" class="ship-link" >Know More</a></p>
     </div>
   </div>
 </ng-container>
