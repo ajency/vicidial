@@ -52,6 +52,9 @@ export class AppServiceService {
    filters : any;
    sort_on : any;
    filterCollpaseArray : any;
+
+   laravelRoutes = ["/ideas", "/shop/boys", "/shop/girls", "/shop/infants", "/activities"];
+   kssDomains = ["https://pre-prod.stage.kidsuperstore.in", "https://www.kidsuperstore.in"];
   constructor(	private router: Router,
                 private apiservice : ApiServiceService) { 
     this.apiUrl = isDevMode() ? 'http://localhost:8000' : '';
@@ -308,8 +311,24 @@ export class AppServiceService {
   }
 
   getLink(link){
-    let path = (new URL(link)).pathname
-    return path.endsWith('/') ? path.slice(0,-1) : path;
+    let url = (new URL(link))
+    console.log("link ==>", link,url)
+    let laravel_route = false;
+    if(this.kssDomains.includes(url.origin)){
+      this.laravelRoutes.forEach(route => {
+        if(url.pathname.startsWith(route))
+          laravel_route = true;
+      })
+      console.log("laravel_route ==>", laravel_route);
+      if(laravel_route)
+        return '';
+      else{
+        let path = url.pathname + url.search;
+        console.log("check path ==>", path)
+        return path.endsWith('/') ? path.slice(0,-1) : path;
+      }
+    }
+    return ''
   }
 
 }
