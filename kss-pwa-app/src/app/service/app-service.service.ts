@@ -321,14 +321,14 @@ export class AppServiceService {
       })
       console.log("laravel_route ==>", laravel_route);
       if(laravel_route)
-        return false;
+        return '';
       else{
         let path = url.pathname + url.search;
         console.log("check path ==>", path)
         return path.endsWith('/') ? path.slice(0,-1) : path;
       }
     }
-    return false
+    return ''
   }
 
 }
