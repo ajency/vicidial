@@ -397,8 +397,9 @@ class Order extends Model
             'address_data'       => $this->address_data,
             'expires_at'         => Carbon::now()->addMinutes(config('orders.expiry'))->timestamp,
             'type'               => 'Return Transaction',
-            'new_transaction_id' => $this->id,
         ]);
+        $order->new_transaction_id = $this->id;
+        $order->save();
 
         $returnSubOrder                     = new SubOrder;
         $returnSubOrder->order_id           = $order->id;
