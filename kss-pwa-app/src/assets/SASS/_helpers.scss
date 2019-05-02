@@ -437,3 +437,31 @@ $loader-highlight: lighten($loader-base, 7%);
     }
   }
 }
+
+.our-offers {
+	.owl-theme {
+		.owl-nav {
+			margin-top: 0;
+			[class*=owl-]{
+				position: absolute;
+        top: calc(50% - 25px);
+				transform: translateY(-50%);
+				background: rgba(255, 255, 255, 0.25);
+				color: rgba(0, 0, 0, 0.25);
+				font-size: 24px;
+				&.owl-prev{
+					left: 20px; 
+				}
+				&.owl-next{
+					right: 20px;
+				}
+			}
+		}
+  }
+  .owl-carousel .owl-stage {
+    margin: 0 auto;
+  }
+  .owl-theme .owl-nav .disabled {
+      pointer-events: visible;
+  }
+}
