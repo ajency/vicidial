@@ -383,7 +383,7 @@ class Order extends Model
         }
     }
 
-    public function placeReturnRequest($params, $sub_order, $user)
+    public function placeReturnRequest($params, $sub_order)
     {
         $order_lines      = $this->orderLines->where('variant_id', $params['variant_id'])->where('shipment_status', 'delivered')->where('is_returned', false);
         $order_line_first = $order_lines->first();
@@ -425,27 +425,6 @@ class Order extends Model
             $order_line->is_returned = true;
             $order_line->save();
         }
-
-        $data = [
-            'name'         => $user->name,
-            'mobile'       => $user->phone,
-            'txnno'        => $sub_order->order->txnid,
-            'item'         => $order_line_first->title,
-            'product_slug' => $order_line_first->product_slug,
-            'size'         => $order_line_first->size,
-            'quantity'     => $params['quantity'],
-            'reason'       => Defaults::getReason($params['reason']),
-            'comments'     => $params['comments'],
-        ];
-
-        sendEmail('return-email', [
-            'from'          => ["name" => [$user->name], "id" => [$user->email_id]],
-            'subject'       => 'Request for Return - ' . $sub_order->order->txnid,
-            'template_data' => [
-                'data' => $data,
-            ],
-            'priority'      => 'default',
-        ]);
 
         ReturnOdooOrder::dispatch($returnSubOrder)->onQueue('odoo_order');
     }
