@@ -64,7 +64,10 @@ export class BannerComponent implements OnInit, OnChanges {
   }
 
   navigateTo(link){
-    this.router.navigateByUrl(this.appservice.getLink(link));
+    if(this.appservice.getLink(link))
+      this.router.navigateByUrl(this.appservice.getLink(link));
+    else
+      window.location.href = link;
   }
 
 }
