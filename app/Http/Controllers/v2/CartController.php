@@ -68,7 +68,7 @@ class CartController extends Controller
         }
         $cart->anonymousCartCheckUser();
         $cart->abortNotCart('cart');
-        $variant = Variant::where('odoo_id', $params['variant_id'])->first();
+        $variant = Variant::find($params['variant_id']);
         $item    = $variant->getItem(true, isNotProd());
         if ($item) {
             $qty = $params['variant_quantity'];
@@ -237,7 +237,7 @@ class CartController extends Controller
         }
         $user = $request->user();
         validateCart($user, $cart, 'cart');
-        $variant = Variant::where('odoo_id', $params['variant_id'])->first();
+        $variant = Variant::find($params['variant_id']);
         $item    = $variant->getItem(true, isNotProd());
         if ($item) {
             $qty = $params['variant_quantity'];

@@ -142,7 +142,8 @@ Route::group([
                 Route::get('/get-user-info', $group_app_version . '\UserController@fetchUserInfo');
             });
         });
-
+        Route::get('/single-product', $group_app_version.'\ProductController@SingleProductApi');
+        Route::get('/single-product-inventory', $group_app_version.'\ProductController@SingleProductInventory');
         Route::group([
             'prefix' => '/authenticate',
         ], function () use ($group_app_version) {
