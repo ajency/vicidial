@@ -10,7 +10,24 @@
 		<!-- <i class="fas fa-clipboard-check mr-1 text-muted"></i> <span class="text-success font-weight-bold">Order Processed</span> -->
 	</div>
 	<div class="pb-2 ml-auto col-5 text-right pl-0">
-			<div *ngIf="showStatus" class="mt-4">
+		@if($item['is_returned'])
+			<div class="mt-4">
+				@switch($item['shipment_status'])
+					@case('received')
+							<span class="order-label order-label--returned" data-toggle="tooltip" data-placement="top" title="The item has been received">Item Returned</span>
+					@break
+					@case('in transit')
+							<span class="order-label order-label--transit" data-toggle="tooltip" data-placement="top" title="The item is in transit">In Transit</span>
+					@break
+					@case('out for pickup')
+							<span class="order-label order-label--outdelivery" data-toggle="tooltip" data-placement="top" title="The kss representative is out for pick up">Out For Pickup</span>
+					@break
+					@default
+							<span class="order-label order-label--confirmed" data-toggle="tooltip" data-placement="top" title="Our team will get in touch with you to process your request">Return Initiated</span>
+				@endswitch
+			</div>
+		@else
+			<div class="mt-4">
 				@if($item['state'] == 'draft' && !$item['shipment_status'])
 				<span class="order-label order-label--processing" data-toggle="tooltip" data-placement="top" title="Your order has been placed and we are verifying item availability in the inventory">Processing</span>
 				@endif
@@ -39,6 +56,7 @@
 				<span class="order-label order-label--delivered" data-toggle="tooltip" data-placement="top" title="The item has been delivered">Delivered</span>
 				@endif
 			</div>
+		@endif
 	</div>
 </div>
 
