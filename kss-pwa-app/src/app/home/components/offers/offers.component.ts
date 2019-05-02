@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnChanges, AfterViewInit, Output, EventEmitter } from '@angular/core';
-
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 @Component({
   selector: 'app-offers',
   templateUrl: './offers.component.html',
@@ -34,8 +34,11 @@ export class OffersComponent implements OnInit {
     },   
     nav: true
   }
+  isMobile : boolean = false;
 
-  constructor() { }
+  constructor(private breakpointObserver : BreakpointObserver) {
+    this.isMobile = this.breakpointObserver.isMatched('(max-width: 768px)');
+  }
 
   ngOnInit() {
   }
@@ -44,7 +47,8 @@ export class OffersComponent implements OnInit {
     this.offer_length = this.offers.length;
     console.log("this.offer_length ===>", this.offer_length);
     this.offers = this.offers.filter(offer => offer.element_data.display !== 0)
-    if(this.offers.length < 4){
+
+    if((this.offers.length < 4 && !this.isMobile) || (this.isMobile && this.offers.length == 1)){
       this.customOptions.loop = false;
       this.customOptions.mouseDrag = false;
       this.customOptions.touchDrag = false;
