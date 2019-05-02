@@ -10,11 +10,10 @@ import { Component, OnInit, Input, OnChanges, AfterViewInit, Output, EventEmitte
 export class OffersComponent implements OnInit {
 
   @Input() offers : any;
-  @Input() banners : any;
   @Input() width : any;
-  banner_length : any;
+  offer_length : any;
   customOptions: any = {
-    loop: false,
+    loop: true,
     mouseDrag: true,
     touchDrag: true,
     pullDrag: true,
@@ -42,10 +41,10 @@ export class OffersComponent implements OnInit {
   }
 
   ngOnChanges(){
-    this.banner_length = this.banners.length;
-    console.log("this.banner_length ===>", this.banner_length);
-    this.banners = this.banners.filter(banner => banner.element_data.display !== 0)
-    if(this.banners.length == 1){
+    this.offer_length = this.offers.length;
+    console.log("this.offer_length ===>", this.offer_length);
+    this.offers = this.offers.filter(offer => offer.element_data.display !== 0)
+    if(this.offers.length < 4){
       this.customOptions.loop = false;
       this.customOptions.mouseDrag = false;
       this.customOptions.touchDrag = false;
