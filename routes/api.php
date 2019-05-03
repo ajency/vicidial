@@ -81,9 +81,8 @@ Route::group([
         Route::post('/save-rank-csv', $group_app_version . '\StaticController@saveRankCSV');
         Route::get('/download-rank-csv', $group_app_version . '\StaticController@downloadRankCSV');
     });
-    Route::get('/get-page-element', $group_app_version . '\StaticElementController@callFetch');
-    Route::get('/test/get-page-element-dummy', $group_app_version . '\StaticElementController@callFetch');
-    Route::get('/test/get-menu', $group_app_version . '\StaticElementController@getMenu');
+    Route::get('/get-page-elements', $group_app_version . '\StaticElementController@callFetch');
+    Route::get('/get-menu', $group_app_version . '\StaticElementController@getMenu');
     Route::group([
         'middleware' => ['auth:api', 'publish-static-element'],
     ], function () use ($group_app_version) {

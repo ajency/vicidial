@@ -56,7 +56,7 @@ export class HeaderComponent implements OnInit, OnChanges {
     if(this.appservice.menuObject)
       this.menu = this.appservice.menuObject;
     else{
-      let url = isDevMode() ? "https://demo8558685.mockable.io/get-menu" : "/api/rest/v1/test/get-menu"
+      let url = isDevMode() ? "https://demo8558685.mockable.io/get-menu" : "/api/rest/v1/get-menu"
       this.apiService.request(url,'get',{},{}).then((data)=>{
         console.log("data ==>", data);
         this.menu = data.menu;
