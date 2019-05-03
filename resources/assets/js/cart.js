@@ -330,3 +330,25 @@ function getCookie(cname) {
 function fbTrackuserRegistration(){
     // fbq('track', 'CompleteRegistration');
 }
+
+function fbTrackInitiateCheckout(order_total){    
+    fbq('track', 'InitiateCheckout', {
+        value: order_total,
+        currency: 'INR',
+    });
+}
+
+function fbTrackAddPaymentInfo(){
+    fbq('track', 'AddPaymentInfo');
+}
+
+// Google pixel tracking
+function google_pixel_tracking(pixel_id,price_final,pagetype){
+      gtag('event', 'page_view', {
+        'send_to': google_pixel_id,
+        'ecomm_pagetype': pagetype,
+        'ecomm_prodid': pixel_id,
+        'ecomm_totalvalue': price_final,
+        'user_id': getCookie('user_id')
+      });
+}
