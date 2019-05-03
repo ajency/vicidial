@@ -200,6 +200,29 @@ class SubOrder extends Model
         Sync::call('backoffice', 'cancelOPRJob', ['sub_order_data' => $sub_order_data, 'cancelSubOrderId' => $cancelSubOrderId]);
     }
 
+    public function returnOrder()
+    {
+        $original_sub_order = SubOrder::find($this->new_transaction_id);
+        $sub_order_data     = [
+            'user_external_id'      => $this->order->cart->user->odoo_id,
+            'address_external_id'   => $this->order->address->odoo_id,
+            'location_external_id'  => $this->location->id,
+            'warehouse_external_id' => $this->location->warehouse->odoo_id,
+            'company_external_id'   => $this->location->company_odoo_id,
+            'sub_order_id'          => $this->id,
+            'original_odoo_id'      => $original_sub_order->odoo_id,
+            'location_txn_id'       => $this->location->location_name . '/' . $this->order->txnid,
+            'address_data'          => $this->order->address_data,
+            'item_data'             => $this->orderLines->toArray(),
+            'payment_data'          => $this->odoo_data,
+            'type'                  => $this->type,
+            'order_date'            => Carbon::now()->toDateTimeString(),
+            'transaction_mode'      => $this->order->transaction_mode,
+        ];
+
+        Sync::call('backoffice', 'returnOPRJob', ['sub_order_data' => $sub_order_data]);
+    }
+
     public function getSubOrder()
     {
         $itemsData = [];
@@ -235,7 +258,7 @@ class SubOrder extends Model
     {
         $itemsData     = [];
         $store_address = $this->location->getAddress();
-        foreach ($this->orderLines->groupBy(function ($item, $key) {return $item["variant_id"] . "-" . $item["is_returned"];}) as $items) {
+        foreach ($this->orderLines->groupBy(function ($item, $key) {return $item["variant_id"] . "-" . $item["state"] . "-" . $item["shipment_status"] . "-" . $item["is_returned"];}) as $items) {
             $itemData = $items->first();
             $item     = [
                 'id'               => $itemData['id'],
@@ -254,7 +277,7 @@ class SubOrder extends Model
                 'shipment_status'  => $itemData['shipment_status'],
                 'is_returned'      => $itemData['is_returned'],
                 'return_policy'    => ReturnPolicy::fetchReturnPolicy($itemData),
-                'quantity'         => $this->orderLines->where('variant_id', $itemData['variant_id'])->groupBy('is_returned')[$itemData['is_returned']]->count(),
+                'quantity'         => $this->orderLines->where('variant_id', $itemData['variant_id'])->groupBy(function ($item, $key) {return $item["state"] . "-" . $item["shipment_status"] . "-" . $item["is_returned"];})[$itemData["state"] . "-" . $itemData["shipment_status"] . "-" . $itemData['is_returned']]->count(),
                 'is_invoiced'      => $this->is_invoiced,
             ];
             if ($store_address != null) {
@@ -287,7 +310,7 @@ class SubOrder extends Model
         }
     }
 
-    public static function updateSubOrderStatus($subOrderId, $state, $is_shipped, $is_invoiced, $external_id)
+    public static function updateSubOrderStatus($subOrderId, $state, $is_shipped, $is_invoiced, $external_id, $lines_status)
     {
         $subOrder              = self::find($subOrderId);
         $state_old             = $subOrder->odoo_status;
@@ -298,8 +321,10 @@ class SubOrder extends Model
         $subOrder->save();
 
         foreach ($subOrder->orderLines as $orderLine) {
-            $orderLine->state = $state;
-            $orderLine->save();
+            if (array_key_exists($orderLine->id, $lines_status)) {
+                $orderLine->state = $lines_status[$orderLine->id];
+                $orderLine->save();
+            }
         }
     }
 }

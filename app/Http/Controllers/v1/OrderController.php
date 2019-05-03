@@ -10,7 +10,6 @@ use App\Http\Controllers\Controller;
 use App\Jobs\OrderLineStatus;
 use App\Jobs\SubOrderStatus;
 use App\Order;
-use App\ReturnPolicy;
 use App\SubOrder;
 use App\User;
 use Carbon\Carbon;
@@ -148,7 +147,7 @@ class OrderController extends Controller
 
     public static function updateSubOrderStatus($params)
     {
-        SubOrderStatus::dispatch($params["subOrderId"], $params["state"], $params["is_shipped"], $params["is_invoiced"], $params["external_id"])->onQueue('odoo_order');
+        SubOrderStatus::dispatch($params["subOrderId"], $params["state"], $params["is_shipped"], $params["is_invoiced"], $params["external_id"], $params["lines_status"])->onQueue('odoo_order');
     }
 
     public static function updateOrderLineStatus($params)
@@ -249,46 +248,7 @@ class OrderController extends Controller
         $request->validate(['reason' => 'required|exists:defaults,id', 'comments' => 'present', 'variant_id' => 'required|exists:variants,odoo_id', 'quantity' => 'required|integer|min:1']);
         $params = $request->all();
 
-        $order_lines = $sub_order->orderLines->where('variant_id', $params['variant_id'])->where('shipment_status', 'delivered')->where('is_returned', false);
-
-        if ($order_lines->count() < $params['quantity'] || !ReturnPolicy::fetchReturnPolicy($order_lines->first())['return_allowed']) {
-            abort(403, 'Return not allowed');
-        }
-
-        foreach ($order_lines->take($params['quantity']) as $order_line) {
-
-            $comment              = new Comment;
-            $comment->reason_id   = $params['reason'];
-            $comment->reason_type = 'return';
-            $comment->comments    = $params['comments'];
-            $comment->model_id    = $order_line->id;
-            $comment->model_type  = get_class($order_line);
-            $comment->save();
-
-            $order_line->is_returned = true;
-            $order_line->save();
-        }
-
-        $data = [
-            'name'     => $user->name,
-            'mobile'   => $user->phone,
-            'txnno'    => $sub_order->order->txnid,
-            'item'     => $order_lines->first()->title,
-            'product_slug'     => $order_lines->first()->product_slug,
-            'size'     => $order_lines->first()->size,
-            'quantity' => $params['quantity'],
-            'reason'   => Defaults::getReason($params['reason']),
-            'comments' => $params['comments'],
-        ];
-
-        sendEmail('return-email', [
-            'from'          => ["name" => [$user->name], "id" => [$user->email_id]],
-            'subject'       => 'Request for Return - ' . $sub_order->order->txnid,
-            'template_data' => [
-                'data' => $data,
-            ],
-            'priority'      => 'default',
-        ]);
+        $sub_order->order->placeReturnRequest($params, $sub_order);
 
         return response()->json(["message" => 'Return request placed successfully', 'success' => true]);
     }
