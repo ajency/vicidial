@@ -94,20 +94,19 @@
 		                    	<div *ngFor="let menu of row.menus">
 			                        <div class="nav-column--heading mt-1 mb-2">{{menu.shop_by}} <a *ngIf=" menu.shop_by == 'Shop by Category'" href="/shop" title="Shop All" target="_self" class="go-to-shop d-lg-none">Shop All ></a></div>
 			                        <ul class="list-unstyled" [ngClass]="{'layout--3-col' : menu.shop_by == 'Shop by Category' || menu.shop_by == 'Shop by Clothing' || menu.shop_by == 'Shop by Brands' || menu.shop_by == 'Shop by Sub-Types' || menu.shop_by == 'Shop by Gender', 'layout--tags' : menu.shop_by == 'Shop by Price', 'layout--2-col' : menu.shop_by == 'Shop by Age Group'}">
-			                          <li *ngFor="let type of menu.data">
-																	<a class="megamenu-link" [ngClass]="{'megamenu-link--primary' : type.title === 'View all products'}" (click)="openMenuLink(type.link)" href="javascript:void(0)" title="{{type.title}}" [ngClass]="{active: isActive('type.link')}">
-																		<img *ngIf="menu.shop_by == 'Shop by Category'" src="../../../assets/img/menu/menu-item1.jpeg" class="menu-item-img img-fluid mb-1">
-																		<img *ngIf="menu.shop_by == 'Shop by Clothing'" src="../../../assets/img/menu/menu-item2.jpeg" class="menu-item-img img-fluid mb-1">
-																		<img *ngIf="menu.shop_by == 'Shop by Brands'" src="../../../assets/img/menu/menu-item3.jpeg" class="menu-item-img img-fluid mb-1">
-																		<img *ngIf="menu.shop_by == 'Shop by Age Group'" src="../../../assets/img/menu/menu-item4.jpeg" class="menu-item-img img-fluid mb-1">
-																		<img *ngIf="menu.shop_by == 'Shop by Sub-Types'" src="../../../assets/img/menu/menu-item5.jpeg" class="menu-item-img img-fluid mb-1">
-																		<img *ngIf="menu.shop_by == 'Shop by Gender'" src="../../../assets/img/menu/menu-item6.jpeg" class="menu-item-img img-fluid mb-1">
-																		<span *ngIf="menu.shop_by == 'Shop by Age Group'" class="sub-title">Juniors</span>
-																		<span class="title">{{type.title}}</span>	
-																	</a>
-																</li>
+			                          	<li *ngFor="let type of menu.data">
+											<a class="megamenu-link" [ngClass]="{'megamenu-link--primary' : type.title === 'View all products'}" (click)="openMenuLink(type.link)" href="javascript:void(0)" title="{{type.title}}" [ngClass]="{active: isActive('type.link')}">
+												<img *ngIf="menu.shop_by == 'Shop by Category'" src="../../../assets/img/menu/menu-item1.jpeg" class="menu-item-img img-fluid mb-1">
+												<img *ngIf="menu.shop_by == 'Shop by Clothing'" src="../../../assets/img/menu/menu-item2.jpeg" class="menu-item-img img-fluid mb-1">
+												<img *ngIf="menu.shop_by == 'Shop by Brands'" src="../../../assets/img/menu/menu-item3.jpeg" class="menu-item-img img-fluid mb-1">
+												<img *ngIf="menu.shop_by == 'Shop by Age Group'" src="../../../assets/img/menu/menu-item4.jpeg" class="menu-item-img img-fluid mb-1">
+												<img *ngIf="menu.shop_by == 'Shop by Sub-Types'" src="../../../assets/img/menu/menu-item5.jpeg" class="menu-item-img img-fluid mb-1">
+												<img *ngIf="menu.shop_by == 'Shop by Gender'" src="../../../assets/img/menu/menu-item6.jpeg" class="menu-item-img img-fluid mb-1">
+												<span *ngIf="menu.shop_by == 'Shop by Age Group'" class="sub-title">Juniors</span>
+												<span class="title">{{type.title}}</span>	
+											</a>
+										</li>
 			                        </ul>
-
 		                        </div>
 		                    </div>
 		                    <div *ngIf="item.image_section" class="nav-column nav-column--wide d-none d-lg-block">
