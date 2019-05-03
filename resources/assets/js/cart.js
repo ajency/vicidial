@@ -331,17 +331,6 @@ function fbTrackuserRegistration(){
     // fbq('track', 'CompleteRegistration');
 }
 
-function fbTrackAddToCart(sale_price,parent_id,selected_color_id){    
-    // var variant = variants[selected_color_id].variants.find((variant)=> {return variant.id == var_id});
-    fbq('track', 'AddToCart', {
-        value: sale_price,
-        currency: 'INR',
-        content_ids: parent_id+'-'+selected_color_id,
-        content_type: 'product',
-        product_catalog_id : product_catalog_id
-    });
-}
-
 function fbTrackInitiateCheckout(order_total){    
     fbq('track', 'InitiateCheckout', {
         value: order_total,
@@ -362,54 +351,4 @@ function google_pixel_tracking(pixel_id,price_final,pagetype){
         'ecomm_totalvalue': price_final,
         'user_id': getCookie('user_id')
       });
-  }
-
-// function fbTrackViewContent(default_price, parent_id, selected_color_id){
-//     console.log("fbTrackViewContent ==>", default_price, parent_id, selected_color_id);
-//     fbq('track', 'ViewContent', {
-//         value: default_price,
-//         currency: 'INR',
-//         content_ids: parent_id+'-'+selected_color_id,
-//         content_type: 'product_group',
-//         product_catalog_id : product_catalog_id
-//     });
-// }
-
-// // Google analytic pixel tracking
-// function gtagTrackPageView(default_price, parent_id, selected_color_id){
-//     console.log("gtagTrackPageView ==>", default_price, parent_id, selected_color_id)
-//     gtag('event', 'page_view', {
-//         'send_to': google_pixel_id,
-//         'ecomm_pagetype': 'list',
-//         'ecomm_prodid': parent_id+'-'+selected_color_id,
-//         'ecomm_totalvalue': default_price,
-//         'user_id': getCookie('user_id')
-//   });
-// }
-
-//   function runMicrodataScript(product, price, in_stock = true){
-//     console.log("runMicrodataScript function", product);
-//     var el = document.createElement('script');
-//     el.type = 'application/ld+json';
-//     var productMicrodata = {
-//        "@context":"https://schema.org",
-//        "@type":"Product",
-//        "productID": product.attributes.product_id+'-'+product.facets.product_color_html.id,
-//        "name": product.attributes.product_title,
-//        "description": product.attributes.product_description,
-//        "url": window.location.href,
-//        "image": product.images.length ? product.images[0].main['1x'] : 'https://kidsuperstore.in/img/placeholder.svg',
-//        "brand": product.facets.product_brand.slug,
-//        "offers":[
-//           {
-//             "@type":"Offer",
-//             "price": price,
-//             "priceCurrency":"INR",
-//             "itemCondition":"new",
-//             "availability": in_stock ? 'in stock' : 'out of stock'
-//           }
-//        ]
-//     }
-//     el.text = JSON.stringify(productMicrodata);
-//     document.querySelector('body').appendChild(el);
-//   }
+}

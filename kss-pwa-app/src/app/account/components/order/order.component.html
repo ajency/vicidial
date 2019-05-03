@@ -8,15 +8,23 @@
 		</div>
 		<div class="pb-2 ml-auto col-5 text-right pl-0">
 			<div *ngIf="showStatus" class="mt-4">
-				<span *ngIf="item.state == 'draft' && !item.shipment_status" class="order-label order-label--processing" data-toggle="tooltip" data-placement="top" title="Your order has been placed and we are verifying item availability in the inventory">Processing</span>
-				<span *ngIf="item.state == 'cancel' || item.shipment_status == 'cancelled' " class="order-label order-label--cancelled" data-toggle="tooltip" data-placement="top" title="The item has been cancelled">Cancelled</span>
-				<span *ngIf="item.state == 'processing-cancel' " class="order-label order-label--processcancel" data-toggle="tooltip" data-placement="top" title="The item is being processed for cancellation">Processing Cancel</span>
-
-				<span *ngIf="item.state == 'sale' && !item.shipment_status " class="order-label order-label--confirmed" data-toggle="tooltip" data-placement="top" title="Stock for the items has been verified and your items will be shipped out soon.">Confirmed</span>
-
-				<span *ngIf="item.shipment_status == 'shipped' " class="order-label order-label--shipped" data-toggle="tooltip" data-placement="top" title="Your item has been shipped and should reach you soon">Shipped</span>
-				<span *ngIf="item.shipment_status=='out for delivery' " class="order-label order-label--outdelivery" data-toggle="tooltip" data-placement="top" title="Your item is out for delivery">Out for Delivery</span>
-				<span *ngIf="item.shipment_status=='delivered' " class="order-label order-label--delivered" data-toggle="tooltip" data-placement="top" title="The item has been delivered">Delivered</span>
+				<ng-container *ngIf="item.is_returned; else otherStatus">
+					<ng-container [ngSwitch]="item.shipment_status">
+					  <span *ngSwitchCase="'received'" class="order-label order-label--returned" data-toggle="tooltip" data-placement="top" title="The item has been received">Item Returned</span>
+					  <span *ngSwitchCase="'in transit'" class="order-label order-label--transit" data-toggle="tooltip" data-placement="top" title="The item is in transit">In Transit</span>
+					  <span *ngSwitchCase="'out for pickup'" class="order-label order-label--outdelivery" data-toggle="tooltip" data-placement="top" title="The kss representative is out for pick up">Out For Pickup</span>		
+					  <span *ngSwitchDefault class="order-label order-label--confirmed" data-toggle="tooltip" data-placement="top" title="Our team will get in touch with you to process your request">Return Initiated</span>				
+					</ng-container>
+				</ng-container>
+				<ng-template #otherStatus>
+					<span *ngIf="item.state == 'draft' && !item.shipment_status" class="order-label order-label--processing" data-toggle="tooltip" data-placement="top" title="Your order has been placed and we are verifying item availability in the inventory">Processing</span>
+					<span *ngIf="item.state == 'cancel' || item.shipment_status == 'cancelled' " class="order-label order-label--cancelled" data-toggle="tooltip" data-placement="top" title="The item has been cancelled">Cancelled</span>
+					<span *ngIf="item.state == 'processing-cancel' " class="order-label order-label--processcancel" data-toggle="tooltip" data-placement="top" title="The item is being processed for cancellation">Processing Cancel</span>
+					<span *ngIf="item.state == 'sale' && !item.shipment_status " class="order-label order-label--confirmed" data-toggle="tooltip" data-placement="top" title="Stock for the items has been verified and your items will be shipped out soon.">Confirmed</span>
+					<span *ngIf="item.shipment_status == 'shipped' " class="order-label order-label--shipped" data-toggle="tooltip" data-placement="top" title="Your item has been shipped and should reach you soon">Shipped</span>
+					<span *ngIf="item.shipment_status=='out for delivery' " class="order-label order-label--outdelivery" data-toggle="tooltip" data-placement="top" title="Your item is out for delivery">Out for Delivery</span>
+					<span *ngIf="item.shipment_status=='delivered' " class="order-label order-label--delivered" data-toggle="tooltip" data-placement="top" title="The item has been delivered">Delivered</span>
+				</ng-template>
 			</div>
 		</div>
 	</div>
@@ -48,11 +56,11 @@
 
 					<label *ngIf="item.shipment_status == 'delivered' && item.state == 'draft' "  class="item-info text-dark mb-0"><strong>Delivered on:</strong><span class="grey"> 26 February 2019</span></label> -->
 
-					<label *ngIf="item.is_returned"  class="item-info text-dark"><strong>Return Initiated</strong> <br>
+					<!-- <label *ngIf="item.is_returned"  class="item-info text-dark"><strong>Return Initiated</strong> <br>
 						<span class="grey">
 							Our team will get in touch with you to process your request
 						</span>
-					</label>
+					</label> -->
 
 					<!-- <label *ngIf="item.shipment_status == 'retured' "  class="item-info text-dark"><strong>Refund Processed:</strong><span class="grey"> 26 February 2019</span></label> -->
 

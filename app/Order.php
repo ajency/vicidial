@@ -8,7 +8,9 @@ use App\Jobs\CancelOdooOrder;
 use App\Jobs\OdooOrder;
 use App\Jobs\OdooOrderLine;
 use App\Jobs\OrderLineDeliveryDate;
+use App\Jobs\ReturnOdooOrder;
 use App\Jobs\SaveReturnPolicies;
+use App\ReturnPolicy;
 use App\SubOrder;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -379,5 +381,51 @@ class Order extends Model
         foreach ($orders as $order_id) {
             OrderLineDeliveryDate::dispatch($order_id)->onQueue('orderline_return_policy');
         }
+    }
+
+    public function placeReturnRequest($params, $sub_order)
+    {
+        $order_lines      = $this->orderLines->where('variant_id', $params['variant_id'])->where('shipment_status', 'delivered')->where('is_returned', false);
+        $order_line_first = $order_lines->first();
+        if ($order_lines->count() < $params['quantity'] || !ReturnPolicy::fetchReturnPolicy($order_line_first)['return_allowed']) {
+            abort(403, 'Return not allowed');
+        }
+
+        $order = self::create([
+            'cart_id'            => $this->cart_id,
+            'address_id'         => $this->address_id,
+            'address_data'       => $this->address_data,
+            'expires_at'         => Carbon::now()->addMinutes(config('orders.expiry'))->timestamp,
+            'type'               => 'Return Transaction',
+        ]);
+        $order->new_transaction_id = $this->id;
+        $order->save();
+
+        $returnSubOrder                     = new SubOrder;
+        $returnSubOrder->order_id           = $order->id;
+        $returnSubOrder->location_id        = $sub_order->location_id;
+        $returnSubOrder->type               = 'Return Transaction';
+        $returnSubOrder->item_data          = [];
+        $returnSubOrder->odoo_data          = ['you_pay' => $params['quantity'] * $order_line_first['price_discounted']];
+        $returnSubOrder->odoo_status        = 'return';
+        $returnSubOrder->new_transaction_id = $sub_order->id;
+        $returnSubOrder->save();
+        $returnSubOrder->refresh();
+
+        foreach ($order_lines->take($params['quantity']) as $order_line) {
+            $returnSubOrder->orderLines()->attach($order_line->id, ['type' => $returnSubOrder->type]);
+            $order->orderLines()->attach($order_line->id, ['type' => $order->type]);
+            $comment              = new Comment;
+            $comment->reason_id   = $params['reason'];
+            $comment->reason_type = 'return';
+            $comment->comments    = $params['comments'];
+            $comment->model_id    = $order_line->id;
+            $comment->model_type  = get_class($order_line);
+            $comment->save();
+            $order_line->is_returned = true;
+            $order_line->save();
+        }
+
+        ReturnOdooOrder::dispatch($returnSubOrder)->onQueue('odoo_order');
     }
 }
