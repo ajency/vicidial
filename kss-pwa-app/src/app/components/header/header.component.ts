@@ -34,6 +34,7 @@ export class HeaderComponent implements OnInit, OnChanges {
       var mobMenuName = menuTab.data('target');
       $('.megamenu-wrapper').addClass('d-none');
       $('.megamenu-wrapper[data-menu="'+mobMenuName+'"]').removeClass('d-none');
+      $('.megamenu--right').scrollTop(0);
     });
 
     $(document).on('click','.active-link', function(){

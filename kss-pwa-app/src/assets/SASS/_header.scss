@@ -1,7 +1,15 @@
+body {
+	padding-top: 50px;
+	@media (min-width: 992px){
+		padding-top: 54px; 
+	}
+}
 .header {
     background-color: theme-color("dark");
-    position: sticky;
+    position: fixed;
     top: 0;
+    right: 0;
+    left: 0;
     z-index: 1030;
     a {
         color: white;
