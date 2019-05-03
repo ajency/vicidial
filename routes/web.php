@@ -14,6 +14,8 @@ Route::post('/service_comm/listen', '\Ajency\ServiceComm\ServiceCommController@s
 
 $config = config('ajfileupload');
 
+Route::get('/test/productlist', 'v1\ProductListTestController@index')->name('productListTest');
+
 $app_version = 'v' . config('app.api_version');
 
 $group_app_version = 'v1';
@@ -76,7 +78,7 @@ Route::group([
 Route::get('/', $app_version . '\HomeController@newhome')->name('home');
 // Route::get('/newhome', $app_version . '\HomeController@newhome')->name('home');
 Route::get('/drafthome', $app_version . '\HomeController@newdraft')->name('drafthome');
-Route::get('/newshop', $app_version . '\HomeController@shop')->name('shop');
+Route::get('/newshop', $app_version . '\ListingController@shop')->name('shop');
 Route::get('/getWarehouseLevelInventory', $app_version . "\ProductController@allInventory");
 Route::get('/contact-us', $app_version . '\StaticController@contact');
 Route::get('/contact', $app_version . '\StaticController@contactnew');
@@ -95,7 +97,7 @@ Route::get('/stores/jaipur', $app_version . '\StaticController@singlestore');
 Route::get('/activities/{storename}', $app_version . '\StaticController@activities');
 Route::get('/shop', $app_version . '\ListingController@shop')->name('shoplisting');
 Route::get('/products/xml', $app_version . '\StaticController@productXML');
-Route::get('/test/productlist', $app_version . '\ProductListTestController@index')->name('productListTest');
+
 Route::get('/variant-diff-file', $app_version . '\StaticController@getVariantDiffFile');
 Route::get('/user/order/{orderid}/payment/{type}', $app_version . '\PaymentController@payment')->name('payment');
 Route::get('/user/order/{orderid}/payment/{type}/status', $app_version . '\PaymentController@status')->name('paymentStatus');
