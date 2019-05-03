@@ -143,6 +143,7 @@ Route::group([
                 Route::post('/orders', $group_app_version . '\OrderController@listOrders');
                 Route::get('/order/{txnid}/details', $group_app_version . '\OrderController@singleOrder');
                 Route::post('/order/{id}/cancel', $group_app_version . '\OrderController@cancelOrder');
+                Route::post('/sub-order/{id}/return', $group_app_version . '\OrderController@returnOrder');
                 Route::get('/get-user-info', $group_app_version . '\UserController@fetchUserInfo');
             });
         });

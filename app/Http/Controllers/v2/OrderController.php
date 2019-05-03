@@ -234,4 +234,18 @@ class OrderController extends Controller
     {
         return Defaults::getReasons();
     }
+    
+    public function returnOrder($id, Request $request)
+    {
+        $user      = $request->user();
+        $sub_order = SubOrder::find($id);
+        validateSubOrder($user, $sub_order);
+
+        $request->validate(['reason' => 'required|exists:defaults,id', 'comments' => 'present', 'variant_id' => 'required|exists:variants,odoo_id', 'quantity' => 'required|integer|min:1']);
+        $params = $request->all();
+
+        $sub_order->order->placeReturnRequest($params, $sub_order);
+
+        return response()->json(["message" => 'Return request placed successfully', 'success' => true]);
+    }
 }
