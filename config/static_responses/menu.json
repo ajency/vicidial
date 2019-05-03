@@ -11,7 +11,7 @@
                 {
                   "title": "Clothing",
                   "link": "/apparels/boys",
-                  "image" : "/assets/img/menu/boys/categories/Clothing.jpg"
+                  "image" : "/assets/img/menu/boys/categories/Clothings.jpg"
                 },
                 {
                   "title": "Shoes",
@@ -476,15 +476,13 @@
               "data": [
                 {
                   "title": "Baby Toys",
-                  "link": "/toys/baby-toys"
+                  "link": "/toys/baby-toys",
+                   "image" : "/assets/img/menu/toys/baby.jpg"
                 },
                 {
                   "title": "Plush",
-                  "link": "/toys/plush"
-                },
-                {
-                  "title": "View all products",
-                  "link": "/toys"
+                  "link": "/toys/plush",
+                  "image" : "/assets/img/menu/toys/plush.jpg"
                 }
               ]
             }
@@ -510,23 +508,6 @@
                 {
                   "title": "Above Rs.1500",
                   "link": "/toys?rf=price:1500TO7000"
-                }
-              ]
-            },
-            {
-              "shop_by": "Shop by Gender",
-              "data": [
-                {
-                  "title": "Boys",
-                  "link": "/toys/boys"
-                },
-                {
-                  "title": "Girls",
-                  "link": "/toys/girls"
-                },
-                {
-                  "title": "Unisex",
-                  "link": "/toys/unisex"
                 }
               ]
             }
@@ -559,19 +540,18 @@
                 },
                 {
                   "title": "Water Bottles",
-                  "link": "/water-bottles"
+                  "link": "/water-bottles",
+                  "image" : "/assets/img/menu/stationary/water-bottle.jpg"
                 },
                 {
                   "title": "Lunch Box/Pencil Case",
-                  "link": "/boxes?search_string=box"
+                  "link": "/boxes?search_string=box",
+                  "image" : "/assets/img/menu/stationary/pencil-box.jpg"
                 },
                 {
                   "title": "Birthday Decoration",
-                  "link": "/boxes?search_string=birthday"
-                },
-                {
-                  "title": "View all products",
-                  "link": "/stationery"
+                  "link": "/boxes?search_string=birthday",
+                  "image" : "/assets/img/menu/stationary/birthday-cap.jpg"
                 }
               ]
             }
@@ -597,23 +577,6 @@
                 {
                   "title": "Above Rs.1500",
                   "link": "/stationery?rf=price:1500TO3000"
-                }
-              ]
-            },
-            {
-              "shop_by": "Shop by Gender",
-              "data": [
-                {
-                  "title": "Boys",
-                  "link": "/stationery/boys"
-                },
-                {
-                  "title": "Girls",
-                  "link": "/stationery/girls"
-                },
-                {
-                  "title": "Unisex",
-                  "link": "/stationery/unisex"
                 }
               ]
             }
