@@ -17,6 +17,7 @@ export class HeaderComponent implements OnInit, OnChanges {
   hideMenu : boolean = false;
   isMobile : boolean = false;
   @Input() browserback : any;
+  cdnUrl : any;
   constructor(private appservice : AppServiceService,
               private apiService: ApiServiceService,
               private location: Location,
@@ -59,6 +60,7 @@ export class HeaderComponent implements OnInit, OnChanges {
       let url = isDevMode() ? "https://demo8558685.mockable.io/get-menu" : "/api/rest/v1/get-menu"
       this.apiService.request(url,'get',{},{}).then((data)=>{
         console.log("data ==>", data);
+        this.cdnUrl = data.cdn_url;
         this.menu = data.menu;
         this.appservice.menuObject = this.menu;
       })

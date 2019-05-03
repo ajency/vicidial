@@ -11,12 +11,12 @@
                 {
                   "title": "Clothing",
                   "link": "/apparels/boys",
-                  "image" : "/assets/img/menu/boys/categories/Clothings.jpg"
+                  "image" : "img/menu/boys/categories/Clothings.jpg"
                 },
                 {
                   "title": "Shoes",
                   "link": "/shoes/boys",
-                  "image" : "/assets/img/menu/boys/categories/Shoes.jpg"
+                  "image" : "img/menu/boys/categories/Shoes.jpg"
                 }
               ]
             },
@@ -26,27 +26,27 @@
                 {
                   "title": "Upturn",
                   "link": "/boys/toddler-2-7-years--junior-7-14-years/upturn",
-                  "image" : "/assets/img/menu/boys/brand/upturn.jpg"
+                  "image" : "img/menu/boys/brand/upturn.jpg"
                 },
                 {
                   "title": "321 Sportswear",
                   "link": "/boys/toddler-2-7-years--junior-7-14-years/321-sportswear",
-                  "image" : "/assets/img/menu/boys/brand/321-sportswear.jpg"
+                  "image" : "img/menu/boys/brand/321-sportswear.jpg"
                 },
                 {
                   "title": "RoboFry",
                   "link": "/boys/toddler-2-7-years--junior-7-14-years/robofry",
-                  "image" : "/assets/img/menu/boys/brand/robofry.jpg"
+                  "image" : "img/menu/boys/brand/robofry.jpg"
                 },
                 {
                   "title": "Parrot Crow",
                   "link": "/boys/toddler-2-7-years--junior-7-14-years/parrot-crow",
-                  "image" : "/assets/img/menu/boys/brand/parrot-crow.jpg"
+                  "image" : "img/menu/boys/brand/parrot-crow.jpg"
                 },
                 {
                   "title": "Whaou",
                   "link": "/boys/toddler-2-7-years--junior-7-14-years/whaou",
-                  "image" : "/assets/img/menu/boys/brand/whaou.jpg"
+                  "image" : "img/menu/boys/brand/whaou.jpg"
                 }
               ]
             }
@@ -60,47 +60,47 @@
                 {
                   "title": "Bottoms",
                   "link": "/boys/junior-7-14-years--toddler-2-7-years/bottoms",
-                  "image" : "/assets/img/menu/boys/categories/Bottoms.jpg"
+                  "image" : "img/menu/boys/categories/Bottoms.jpg"
                 },
                 {
                   "title": "Ethnic",
                   "link": "/boys/junior-7-14-years--toddler-2-7-years/ethnic",
-                  "image" : "/assets/img/menu/boys/categories/Ethnic.jpg"
+                  "image" : "img/menu/boys/categories/Ethnic.jpg"
                 },
                 {
                   "title": "Jeans",
                   "link": "/boys/junior-7-14-years--toddler-2-7-years/jeans",
-                  "image" : "/assets/img/menu/boys/categories/Jeans.jpg"
+                  "image" : "img/menu/boys/categories/Jeans.jpg"
                 },
                 {
                   "title": "Shirt",
                   "link": "/boys/junior-7-14-years--toddler-2-7-years/shirt",
-                  "image" : "/assets/img/menu/boys/categories/Shirt.jpg"
+                  "image" : "img/menu/boys/categories/Shirt.jpg"
                 },
                 {
                   "title": "Shoes",
                   "link": "/shoes/boys/toddler-2-7-years--junior-7-14-years",
-                  "image" : "/assets/img/menu/boys/categories/Shoes.jpg"
+                  "image" : "img/menu/boys/categories/Shoes.jpg"
                 },
                 {
                   "title": "Short",
                   "link": "/boys/junior-7-14-years--toddler-2-7-years/short",
-                  "image" : "/assets/img/menu/boys/categories/Shorts.jpg"
+                  "image" : "img/menu/boys/categories/Shorts.jpg"
                 },
                 {
                   "title": "Tshirt",
                   "link": "/boys/junior-7-14-years--toddler-2-7-years/tshirt",
-                  "image" : "/assets/img/menu/boys/categories/Tshirt.jpg"
+                  "image" : "img/menu/boys/categories/Tshirt.jpg"
                 },
                 {
                   "title": "Sets & Suits",
                   "link": "/boys/toddler-2-7-years--junior-7-14-years/sets-suits-outfits",
-                  "image" : "/assets/img/menu/boys/categories/Suit.jpg"
+                  "image" : "img/menu/boys/categories/Suit.jpg"
                 },
                 {
                   "title": "Jackets & Coats",
                   "link": "/boys/toddler-2-7-years--junior-7-14-years/jackets-coats",
-                  "image" : "/assets/img/menu/boys/categories/Coat.jpg"
+                  "image" : "img/menu/boys/categories/Coat.jpg"
                 }
               ]
             }
@@ -135,12 +135,12 @@
                 {
                   "title": "2-7 years",
                   "link": "/boys/toddler-2-7-years",
-                  "image" : "/assets/img/menu/boys/age/2-7.jpg"
+                  "image" : "img/menu/boys/age/2-7.jpg"
                 },
                 {
                   "title": "7-14 years",
                   "link": "/boys/junior-7-14-years",
-                  "image" : "/assets/img/menu/boys/age/7-14.jpg"
+                  "image" : "img/menu/boys/age/7-14.jpg"
                 }
               ]
             }
@@ -170,12 +170,12 @@
                 {
                   "title": "Clothing",
                   "link": "/apparels/girls",
-                  "image" : "/assets/img/menu/girls/categories/woven-tops.jpg"
+                  "image" : "img/menu/girls/categories/woven-tops.jpg"
                 },
                 {
                   "title": "Shoes",
                   "link": "/shoes/girls",
-                  "image" : "/assets/img/menu/girls/categories/shoe.jpg"
+                  "image" : "img/menu/girls/categories/shoe.jpg"
                 }              ]
             },
             {
@@ -184,27 +184,27 @@
                 {
                   "title": "Upturn",
                   "link": "/girls/toddler-2-7-years--junior-7-14-years/upturn",
-                  "image" : "/assets/img/menu/girls/brand/upturn.jpg"
+                  "image" : "img/menu/girls/brand/upturn.jpg"
                 },
                 {
                   "title": "Dchica",
                   "link": "/girls/toddler-2-7-years--junior-7-14-years/dchica",
-                  "image" : "/assets/img/menu/girls/brand/dchica.jpg"
+                  "image" : "img/menu/girls/brand/dchica.jpg"
                 },
                 {
                   "title": "321 Sportswear",
                   "link": "/girls/toddler-2-7-years--junior-7-14-years/321-sportswear",
-                  "image" : "/assets/img/menu/girls/brand/321-sportswear.jpg"
+                  "image" : "img/menu/girls/brand/321-sportswear.jpg"
                 },
                 {
                   "title": "Parrot Crow",
                   "link": "/girls/toddler-2-7-years--junior-7-14-years/parrot-crow",
-                  "image" : "/assets/img/menu/girls/brand/parrot-crow.jpg"
+                  "image" : "img/menu/girls/brand/parrot-crow.jpg"
                 },
                 {
                   "title": "Scream & Shout",
                   "link": "/girls/toddler-2-7-years--junior-7-14-years/scream-shout",
-                  "image" : "/assets/img/menu/girls/brand/scream-shout.jpg"
+                  "image" : "img/menu/girls/brand/scream-shout.jpg"
                 }
               ]
             }
@@ -218,42 +218,42 @@
                 {
                   "title": "Bottoms",
                   "link": "/girls/junior-7-14-years--toddler-2-7-years/bottoms",
-                  "image" : "/assets/img/menu/girls/categories/bottoms.jpg"
+                  "image" : "img/menu/girls/categories/bottoms.jpg"
                 },
                 {
                   "title": "Dress",
                   "link": "/girls/junior-7-14-years--toddler-2-7-years/dress",
-                  "image" : "/assets/img/menu/girls/categories/dress.jpg"
+                  "image" : "img/menu/girls/categories/dress.jpg"
                 },
                 {
                   "title": "Ethnic",
                   "link": "/girls/junior-7-14-years--toddler-2-7-years/ethnic",
-                  "image" : "/assets/img/menu/girls/categories/ethnic.jpg"
+                  "image" : "img/menu/girls/categories/ethnic.jpg"
                 },
                 {
                   "title": "Jeans",
                   "link": "/girls/junior-7-14-years--toddler-2-7-years/jeans",
-                  "image" : "/assets/img/menu/girls/categories/jeans.jpg"
+                  "image" : "img/menu/girls/categories/jeans.jpg"
                 },
                 {
                   "title": "Shoes",
                   "link": "/shoes/girls/toddler-2-7-years--junior-7-14-years",
-                  "image" : "/assets/img/menu/girls/categories/shoe.jpg"
+                  "image" : "img/menu/girls/categories/shoe.jpg"
                 },
                 {
                   "title": "Short",
                   "link": "/girls/junior-7-14-years--toddler-2-7-years/short",
-                  "image" : "/assets/img/menu/girls/categories/shorts.jpg"
+                  "image" : "img/menu/girls/categories/shorts.jpg"
                 },
                 {
                   "title": "Tshirt",
                   "link": "/girls/junior-7-14-years--toddler-2-7-years/tshirt",
-                  "image" : "/assets/img/menu/girls/categories/tshirt.jpg"
+                  "image" : "img/menu/girls/categories/tshirt.jpg"
                 },
                 {
                   "title": "Woven Tops",
                   "link": "/girls/junior-7-14-years--toddler-2-7-years/woven-tops",
-                  "image" : "/assets/img/menu/girls/categories/woven-tops.jpg"
+                  "image" : "img/menu/girls/categories/woven-tops.jpg"
                 }
               ]
             }
@@ -288,12 +288,12 @@
                 {
                   "title": "2-7 years",
                   "link": "/girls/toddler-2-7-years",
-                  "image" : "/assets/img/menu/girls/age/2-7.jpg"
+                  "image" : "img/menu/girls/age/2-7.jpg"
                 },
                 {
                   "title": "7-14 years",
                   "link": "/girls/junior-7-14-years",
-                  "image" : "/assets/img/menu/girls/age/7-14.jpg"
+                  "image" : "img/menu/girls/age/7-14.jpg"
                 }
               ]
             }
@@ -323,12 +323,12 @@
                 {
                   "title": "Clothing",
                   "link": "/apparels/infant-0-2-years",
-                  "image" : "/assets/img/menu/infant/categories/sets-suits.jpg"
+                  "image" : "img/menu/infant/categories/sets-suits.jpg"
                 },
                 {
                   "title": "Shoes",
                   "link": "/shoes/infant-0-2-years",
-                  "image" : "/assets/img/menu/infant/categories/shoes.jpg"
+                  "image" : "img/menu/infant/categories/shoes.jpg"
                 }
               ]
             },
@@ -338,27 +338,27 @@
                 {
                   "title": "Scream & Shout",
                   "link": "/infant-0-2-years/scream-shout",
-                  "image" : "/assets/img/menu/infant/brand/scream-shout.jpg"
+                  "image" : "img/menu/infant/brand/scream-shout.jpg"
                 },
                 {
                   "title": "RoboFry",
                   "link": "/infant-0-2-years/robofry",
-                  "image" : "/assets/img/menu/infant/brand/robo-fry.jpg"
+                  "image" : "img/menu/infant/brand/robo-fry.jpg"
                 },
                 {
                   "title": "Upturn",
                   "link": "/infant-0-2-years/upturn",
-                  "image" : "/assets/img/menu/infant/brand/upturn.jpg"
+                  "image" : "img/menu/infant/brand/upturn.jpg"
                 },
                 {
                   "title": "Whaou",
                   "link": "/infant-0-2-years/whaou",
-                  "image" : "/assets/img/menu/infant/brand/whaou.jpg"
+                  "image" : "img/menu/infant/brand/whaou.jpg"
                 },                
                 {
                   "title": "321 Sportswear",
                   "link": "/infant-0-2-years/321-sportswear",
-                  "image" : "/assets/img/menu/infant/brand/321-sportswear.jpg"
+                  "image" : "img/menu/infant/brand/321-sportswear.jpg"
                 }
               ]
             }
@@ -372,57 +372,57 @@
                 {
                   "title": "Bottoms",
                   "link": "/infant-0-2-years/bottoms",
-                  "image" : "/assets/img/menu/infant/categories/bottoms.jpg"
+                  "image" : "img/menu/infant/categories/bottoms.jpg"
                 },
                 {
                   "title": "Dress",
                   "link": "/infant-0-2-years/dress",
-                  "image" : "/assets/img/menu/infant/categories/dress.jpg"
+                  "image" : "img/menu/infant/categories/dress.jpg"
                 },
                 {
                   "title": "Infant Utility",
                   "link": "/infant-0-2-years/infant-utility",
-                  "image" : "/assets/img/menu/infant/categories/utilities.jpg"
+                  "image" : "img/menu/infant/categories/utilities.jpg"
                 },
                 {
                   "title": "Shirt",
                   "link": "/infant-0-2-years/shirt",
-                  "image" : "/assets/img/menu/infant/categories/shirt.jpg"
+                  "image" : "img/menu/infant/categories/shirt.jpg"
                 },
                 {
                   "title": "Shoes",
                   "link": "/shoes/infant-0-2-years",
-                  "image" : "/assets/img/menu/infant/categories/shoes.jpg"
+                  "image" : "img/menu/infant/categories/shoes.jpg"
                 },
                 {
                   "title": "Short",
                   "link": "/infant-0-2-years/short",
-                  "image" : "/assets/img/menu/infant/categories/shorts.jpg"
+                  "image" : "img/menu/infant/categories/shorts.jpg"
                 },
                 {
                   "title": "Tshirt",
                   "link": "/infant-0-2-years/tshirt",
-                  "image" : "/assets/img/menu/infant/categories/tshirt.jpg"
+                  "image" : "img/menu/infant/categories/tshirt.jpg"
                 },
                 {
                   "title": "Woven Tops",
                   "link": "/infant-0-2-years/woven-tops",
-                  "image" : "/assets/img/menu/infant/categories/woven-tops.jpg"
+                  "image" : "img/menu/infant/categories/woven-tops.jpg"
                 },
                 {
                   "title": "Ethnic",
                   "link": "/infant-0-2-years/ethnic",
-                  "image" : "/assets/img/menu/infant/categories/ethnic.jpg"
+                  "image" : "img/menu/infant/categories/ethnic.jpg"
                 },
                 {
                   "title": "Sets & Suits",
                   "link": "/infant-0-2-years/sets-suits-outfits",
-                  "image" : "/assets/img/menu/infant/categories/sets-suits.jpg"
+                  "image" : "img/menu/infant/categories/sets-suits.jpg"
                 },
                 {
                   "title": "Jackets & Coats",
                   "link": "/infant-0-2-years/jackets-coats",
-                  "image" : "/assets/img/menu/infant/categories/jackets.jpg"
+                  "image" : "img/menu/infant/categories/jackets.jpg"
                 }
               ]
             }
@@ -477,12 +477,12 @@
                 {
                   "title": "Baby Toys",
                   "link": "/toys/baby-toys",
-                   "image" : "/assets/img/menu/toys/baby.jpg"
+                   "image" : "img/menu/toys/baby.jpg"
                 },
                 {
                   "title": "Plush",
                   "link": "/toys/plush",
-                  "image" : "/assets/img/menu/toys/plush.jpg"
+                  "image" : "img/menu/toys/plush.jpg"
                 }
               ]
             }
@@ -536,22 +536,22 @@
                 {
                   "title": "Bags",
                   "link": "/bags",
-                  "image" : "/assets/img/menu/stationary/bag.jpg"
+                  "image" : "img/menu/stationary/bag.jpg"
                 },
                 {
                   "title": "Water Bottles",
                   "link": "/water-bottles",
-                  "image" : "/assets/img/menu/stationary/water-bottle.jpg"
+                  "image" : "img/menu/stationary/water-bottle.jpg"
                 },
                 {
                   "title": "Lunch Box/Pencil Case",
                   "link": "/boxes?search_string=box",
-                  "image" : "/assets/img/menu/stationary/pencil-box.jpg"
+                  "image" : "img/menu/stationary/pencil-box.jpg"
                 },
                 {
                   "title": "Birthday Decoration",
                   "link": "/boxes?search_string=birthday",
-                  "image" : "/assets/img/menu/stationary/birthday-cap.jpg"
+                  "image" : "img/menu/stationary/birthday-cap.jpg"
                 }
               ]
             }

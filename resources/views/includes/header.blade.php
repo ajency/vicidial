@@ -54,8 +54,8 @@
                   
                     <!-- Mobile Menu Banner -->
                     <div class="nav-column d-lg-none">
-                      <div class="menu-banner-item">
-                        <img src="{{asset('/img/menu/mobile-banner.jpeg')}}" class="menu-item-img img-fluid mb-0 d-lg-none" title="offers">
+                      <div class="menu-banner-item" href="/boys--girls/toddler-2-7-years--junior-7-14-years/tshirt">
+                        <img src="{{CDN::asset('/img/menu/banners/tshirts.jpg')}}" class="menu-item-img img-fluid mb-0 d-lg-none" title="offers">
                       </div>
                     </div>
 
@@ -65,18 +65,13 @@
                           <div class="nav-column--heading mt-1 mb-2">Supper Offers</div>
                           <ul class="list-unstyled layout--offers">
                             <li>
-                              <a href="/#" class="megamenu-link">
-                                <img src="{{asset('/img/menu/offer1.jpeg')}}" class="menu-item-img img-fluid d-lg-none">
+                              <a href="/shop?pf=tag:flat-50" class="megamenu-link">
+                                <img src="{{CDN::asset('/img/menu/offer/50-off.jpg')}}" class="menu-item-img img-fluid d-lg-none">
                               </a>
                             </li>
                             <li>
-                              <a href="/#" class="megamenu-link">
-                                <img src="{{asset('/img/menu/offer2.jpeg')}}" class="menu-item-img img-fluid d-lg-none">
-                              </a>
-                            </li>
-                            <li>
-                              <a href="/#" class="megamenu-link">
-                                <img src="{{asset('/img/menu/offer3.jpeg')}}" class="menu-item-img img-fluid d-lg-none">
+                              <a href="/shop?pf=tag:flat-50" class="megamenu-link">
+                                <img src="{{CDN::asset('/img/menu/offer/holiday-off.jpg')}}" class="menu-item-img img-fluid d-lg-none">
                               </a>
                             </li>
                           </ul>
@@ -87,43 +82,36 @@
                         <div class="nav-column--heading mb-1">Shop by Category <a href="/shop" title="Shop All" target="_self" class="go-to-shop d-lg-none">Shop All ></a></div>
                         <ul class="list-unstyled layout--3-col">
                           <li><a class="megamenu-link" href="/apparels/boys">
-                            <img src="{{asset('/img/menu/menu-item1.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                            <img src="{{CDN::asset('/img/menu/boys/categories/Clothings.jpg')}}" class="menu-item-img img-fluid mb-1">
                             Clothing
                           </a></li>
                           <li><a class="megamenu-link" href="/shoes/boys">                             
-                            <img src="{{asset('/img/menu/menu-item1.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                            <img src="{{CDN::asset('/img/menu/boys/categories/Shoes.jpg')}}" class="menu-item-img img-fluid mb-1">
                             Shoes
                           </a></li>
-                          <li><a class="megamenu-link" href="/accessories/boys"> 
-                            <img src="{{asset('/img/menu/menu-item1.jpeg')}}" class="menu-item-img img-fluid mb-1">
-                            Accessories
-                          </a></li>
-                          <li><a class="megamenu-link megamenu-link--primary" href="/boys">
-                            <img src="{{asset('/img/menu/menu-item1.jpeg')}}" class="menu-item-img img-fluid mb-1">
-                            View all products
-                          </a></li>
                         </ul>
+
                         <div class="nav-column--heading mb-1">Shop by Brands</div>
                         <ul class="list-unstyled layout--3-col">
                           <li><a class="megamenu-link" href="/boys/toddler-2-7-years--junior-7-14-years/upturn ">
-                            <img src="{{asset('/img/menu/menu-item3.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                            <img src="{{CDN::asset('/img/menu/boys/brand/upturn.jpg')}}" class="menu-item-img img-fluid mb-1">
                             Upturn
                           </a></li>
                           <li><a class="megamenu-link" href="/boys/toddler-2-7-years--junior-7-14-years/321-sportswear">
-                            <img src="{{asset('/img/menu/menu-item3.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                            <img src="{{CDN::asset('/img/menu/boys/brand/321-sportswear.jpg')}}" class="menu-item-img img-fluid mb-1">
                             321 Sportswear
                           </a></li>
-                          <li><a class="megamenu-link" href="/boys/toddler-2-7-years--junior-7-14-years/dream-theatre ">
-                            <img src="{{asset('/img/menu/menu-item3.jpeg')}}" class="menu-item-img img-fluid mb-1">
-                            Dream Theater
-                          </a></li>
                           <li><a class="megamenu-link" href="/boys/toddler-2-7-years--junior-7-14-years/robofry">
-                            <img src="{{asset('/img/menu/menu-item3.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                            <img src="{{CDN::asset('/img/menu/boys/brand/robofry.jpg')}}" class="menu-item-img img-fluid mb-1">
                             RoboFry
                           </a></li>
-                          <li><a class="megamenu-link" href="/boys/toddler-2-7-years--junior-7-14-years/rikidoos">
-                            <img src="{{asset('/img/menu/menu-item3.jpeg')}}" class="menu-item-img img-fluid mb-1">
-                            Rikidoos
+                          <li><a class="megamenu-link" href="/boys/toddler-2-7-years--junior-7-14-years/parrot-crow">
+                            <img src="{{CDN::asset('/img/menu/boys/brand/parrot-crow.jpg')}}" class="menu-item-img img-fluid mb-1">
+                            Parrot Crow
+                          </a></li>
+                          <li><a class="megamenu-link" href="/boys/toddler-2-7-years--junior-7-14-years/whaou">
+                            <img src="{{CDN::asset('/img/menu/boys/brand/whaou.jpg')}}" class="menu-item-img img-fluid mb-1">
+                            Whaou
                           </a></li>
                         </ul>
                     </div>
@@ -132,48 +120,48 @@
                         <div class="nav-column--heading mb-1">Shop by Clothing</div>
                         <ul class="list-unstyled layout--3-col">
                           <li><a class="megamenu-link" href="/boys/junior-7-14-years--toddler-2-7-years/bottoms/">
-                            <img src="{{asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                            <img src="{{CDN::asset('/img/menu/boys/categories/Bottoms.jpg')}}" class="menu-item-img img-fluid mb-1">
                             Bottoms
                           </a></li>
                           <li><a class="megamenu-link" href="/boys/junior-7-14-years--toddler-2-7-years/ethnic/">
-                            <img src="{{asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                            <img src="{{CDN::asset('/img/menu/boys/categories/Ethnic.jpg')}}" class="menu-item-img img-fluid mb-1">
                             Ethnic
                           </a></li>
                           <li><a class="megamenu-link" href="/boys/junior-7-14-years--toddler-2-7-years/formal-pant/">
-                            <img src="{{asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                            <img src="{{CDN::asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
                             Formal Pants
                           </a></li>
                           <li><a class="megamenu-link" href="/boys/junior-7-14-years--toddler-2-7-years/jeans/">
-                            <img src="{{asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                            <img src="{{CDN::asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
                             Jeans
                           </a></li>
                           <!-- <li><a class="megamenu-link" href="/boys/junior-7-14-years--toddler-2-7-years/others/">Others</a></li> -->
                           <li><a class="megamenu-link" href="/boys/junior-7-14-years--toddler-2-7-years/shirt/">
-                            <img src="{{asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                            <img src="{{CDN::asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
                             Shirt
                           </a></li>
                           <li><a class="megamenu-link" href="/shoes/boys/toddler-2-7-years--junior-7-14-years/">
-                            <img src="{{asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                            <img src="{{CDN::asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
                             Shoes
                           </a></li>
                           <li><a class="megamenu-link" href="/boys/junior-7-14-years--toddler-2-7-years/short/">
-                            <img src="{{asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                            <img src="{{CDN::asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
                             Short
                           </a></li>
                           <li><a class="megamenu-link" href="/boys/junior-7-14-years--toddler-2-7-years/sweatshirt/">
-                            <img src="{{asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                            <img src="{{CDN::asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
                             Sweatshirt
                           </a></li>
                           <li><a class="megamenu-link" href="/boys/junior-7-14-years--toddler-2-7-years/tshirt/">
-                            <img src="{{asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                            <img src="{{CDN::asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
                             Tshirt
                           </a></li>
                           <li><a class="megamenu-link" href="/boys/toddler-2-7-years--junior-7-14-years/sets-suits-outfits">
-                            <img src="{{asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                            <img src="{{CDN::asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
                             Sets &amp; Suits
                           </a></li>
                           <li><a class="megamenu-link" href="/boys/toddler-2-7-years--junior-7-14-years/jackets-coats">
-                            <img src="{{asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                            <img src="{{CDN::asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
                             Jackets &amp; Coats
                           </a></li>
                         </ul>
@@ -192,12 +180,12 @@
                         <div class="nav-column--heading mb-1">Shop by Age Group</div>
                         <ul class="list-unstyled layout--2-col">
                           <li><a class="megamenu-link" href="/boys/toddler-2-7-years">
-                            <img src="{{asset('/img/menu/menu-item4.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                            <img src="{{CDN::asset('/img/menu/menu-item4.jpeg')}}" class="menu-item-img img-fluid mb-1">
                             <span class="title">Toddler</span>
                             <span class="sub-title">2-7 years</span>   
                           </a></li>
                           <li><a class="megamenu-link" href="/boys/junior-7-14-years">
-                            <img src="{{asset('/img/menu/menu-item4.jpeg')}}" class="menu-item-img img-fluid mb-1">                            
+                            <img src="{{CDN::asset('/img/menu/menu-item4.jpeg')}}" class="menu-item-img img-fluid mb-1">                            
                             <span class="title">Junior</span>
                             <span class="sub-title">7-14 years</span>
                           </a></li>
@@ -234,7 +222,7 @@
                   <!-- Mobile Menu Banner -->
                   <div class="nav-column d-lg-none">
                     <div class="menu-banner-item">
-                      <img src="{{asset('/img/menu/mobile-banner.jpeg')}}" class="menu-item-img img-fluid mb-0 d-lg-none" title="offers">
+                      <img src="{{CDN::asset('/img/menu/mobile-banner.jpeg')}}" class="menu-item-img img-fluid mb-0 d-lg-none" title="offers">
                     </div>
                   </div>
 
@@ -245,17 +233,17 @@
                         <ul class="list-unstyled layout--offers">
                           <li>
                             <a href="/#" class="megamenu-link">
-                              <img src="{{asset('/img/menu/offer1.jpeg')}}" class="menu-item-img img-fluid d-lg-none">
+                              <img src="{{CDN::asset('/img/menu/offer1.jpeg')}}" class="menu-item-img img-fluid d-lg-none">
                             </a>
                           </li>
                           <li>
                             <a href="/#" class="megamenu-link">
-                              <img src="{{asset('/img/menu/offer2.jpeg')}}" class="menu-item-img img-fluid d-lg-none">
+                              <img src="{{CDN::asset('/img/menu/offer2.jpeg')}}" class="menu-item-img img-fluid d-lg-none">
                             </a>
                           </li>
                           <li>
                             <a href="/#" class="megamenu-link">
-                              <img src="{{asset('/img/menu/offer3.jpeg')}}" class="menu-item-img img-fluid d-lg-none">
+                              <img src="{{CDN::asset('/img/menu/offer3.jpeg')}}" class="menu-item-img img-fluid d-lg-none">
                             </a>
                           </li>
                         </ul>
@@ -266,42 +254,42 @@
                       <div class="nav-column--heading mb-1">Shop by Category <a href="/shop" title="Shop All" target="_self" class="go-to-shop d-lg-none">Shop All ></a></div>
                       <ul class="list-unstyled layout--3-col">
                         <li><a class="megamenu-link" href="/apparels/girls">
-                          <img src="{{asset('/img/menu/menu-item1.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item1.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Clothing
                         </a></li>
                         <li><a class="megamenu-link" href="/shoes/girls">
-                          <img src="{{asset('/img/menu/menu-item1.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item1.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Shoes
                         </a></li>
                         <li><a class="megamenu-link" href="/accessories/girls">
-                          <img src="{{asset('/img/menu/menu-item1.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item1.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Accessories
                         </a></li>
                         <li><a class="megamenu-link megamenu-link--primary" href="/girls">
-                          <img src="{{asset('/img/menu/menu-item1.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item1.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           View all products
                         </a></li>
                       </ul>
                       <div class="nav-column--heading mb-1">Shop by Brands</div>
                       <ul class="list-unstyled layout--3-col">
                         <li><a class="megamenu-link" href="/girls/toddler-2-7-years--junior-7-14-years/upturn">
-                          <img src="{{asset('/img/menu/menu-item3.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item3.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Upturn
                         </a></li>
                         <li><a class="megamenu-link" href="/girls/toddler-2-7-years--junior-7-14-years/dchica">
-                          <img src="{{asset('/img/menu/menu-item3.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item3.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Dchica
                         </a></li>
                         <li><a class="megamenu-link" href="/girls/toddler-2-7-years--junior-7-14-years/dream-theatre">
-                          <img src="{{asset('/img/menu/menu-item3.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item3.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Dream Theater
                         </a></li>
                         <li><a class="megamenu-link" href="/girls/toddler-2-7-years--junior-7-14-years/begetter">
-                          <img src="{{asset('/img/menu/menu-item3.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item3.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Begetter
                         </a></li>
                         <li><a class="megamenu-link" href="/girls/toddler-2-7-years--junior-7-14-years/321-sportswear">
-                          <img src="{{asset('/img/menu/menu-item3.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item3.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           321 Sportswear
                         </a></li>
                       </ul>
@@ -311,39 +299,39 @@
                       <div class="nav-column--heading mb-1">Shop by Clothing</div>
                       <ul class="list-unstyled layout--3-col">
                         <li><a class="megamenu-link" href="/girls/junior-7-14-years--toddler-2-7-years/bottoms/">
-                          <img src="{{asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Bottoms
                         </a></li>
                         <li><a class="megamenu-link" href="/girls/junior-7-14-years--toddler-2-7-years/dress/">
-                          <img src="{{asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Dress
                         </a></li>
                         <li><a class="megamenu-link" href="/girls/junior-7-14-years--toddler-2-7-years/ethnic/">
-                          <img src="{{asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Ethnic
                         </a></li>
                         <li><a class="megamenu-link" href="/girls/junior-7-14-years--toddler-2-7-years/jeans/">
-                          <img src="{{asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Jeans
                         </a></li>
                         <li><a class="megamenu-link" href="/shoes/girls/toddler-2-7-years--junior-7-14-years/">
-                          <img src="{{asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Shoes
                         </a></li>
                         <li><a class="megamenu-link" href="/girls/junior-7-14-years--toddler-2-7-years/short/">
-                          <img src="{{asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Short
                         </a></li>
                         <li><a class="megamenu-link" href="/girls/junior-7-14-years--toddler-2-7-years/skirt/">
-                          <img src="{{asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Skirt
                         </a></li>
                         <li><a class="megamenu-link" href="/girls/junior-7-14-years--toddler-2-7-years/tshirt/">
-                          <img src="{{asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Tshirt
                         </a></li>
                         <li><a class="megamenu-link" href="/girls/junior-7-14-years--toddler-2-7-years/woven-tops/">
-                          <img src="{{asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Woven Tops
                         </a></li>
                       </ul>
@@ -362,12 +350,12 @@
                       <div class="nav-column--heading mb-1">Shop by Age Group</div>
                       <ul class="list-unstyled layout--2-col">
                         <li><a class="megamenu-link" href="/girls/toddler-2-7-years">
-                          <img src="{{asset('/img/menu/menu-item4.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item4.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           <span class="title">Toddler</span>
                           <span class="sub-title">2-7 years</span>                          
                         </a></li>
                         <li><a class="megamenu-link" href="/girls/junior-7-14-years">
-                          <img src="{{asset('/img/menu/menu-item4.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item4.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           <span class="title">Junior</span>
                           <span class="sub-title">7-14 years</span>
                         </a></li>
@@ -404,7 +392,7 @@
                   <!-- Mobile Menu Banner -->
                   <div class="nav-column d-lg-none">
                     <div class="menu-banner-item">
-                      <img src="{{asset('/img/menu/mobile-banner.jpeg')}}" class="menu-item-img img-fluid mb-0 d-lg-none" title="offers">
+                      <img src="{{CDN::asset('/img/menu/mobile-banner.jpeg')}}" class="menu-item-img img-fluid mb-0 d-lg-none" title="offers">
                     </div>
                   </div>
 
@@ -415,17 +403,17 @@
                         <ul class="list-unstyled layout--offers">
                           <li>
                             <a href="/#" class="megamenu-link">
-                              <img src="{{asset('/img/menu/offer1.jpeg')}}" class="menu-item-img img-fluid d-lg-none">
+                              <img src="{{CDN::asset('/img/menu/offer1.jpeg')}}" class="menu-item-img img-fluid d-lg-none">
                             </a>
                           </li>
                           <li>
                             <a href="/#" class="megamenu-link">
-                              <img src="{{asset('/img/menu/offer2.jpeg')}}" class="menu-item-img img-fluid d-lg-none">
+                              <img src="{{CDN::asset('/img/menu/offer2.jpeg')}}" class="menu-item-img img-fluid d-lg-none">
                             </a>
                           </li>
                           <li>
                             <a href="/#" class="megamenu-link">
-                              <img src="{{asset('/img/menu/offer3.jpeg')}}" class="menu-item-img img-fluid d-lg-none">
+                              <img src="{{CDN::asset('/img/menu/offer3.jpeg')}}" class="menu-item-img img-fluid d-lg-none">
                             </a>
                           </li>
                         </ul>
@@ -436,42 +424,42 @@
                       <div class="nav-column--heading mb-1">Shop by Category <a href="/shop" title="Shop All" target="_self" class="go-to-shop d-lg-none">Shop All ></a></div>
                       <ul class="list-unstyled layout--3-col">
                         <li><a class="megamenu-link" href="/apparels/infant-0-2-years">
-                          <img src="{{asset('/img/menu/menu-item1.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item1.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Clothing
                         </a></li>
                         <li><a class="megamenu-link" href="/shoes/infant-0-2-years">
-                          <img src="{{asset('/img/menu/menu-item1.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item1.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Shoes
                         </a></li>
                         <li><a class="megamenu-link" href="/accessories/infant-0-2-years">
-                          <img src="{{asset('/img/menu/menu-item1.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item1.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Accessories
                         </a></li>
                         <li><a class="megamenu-link megamenu-link--primary" href="/infant-0-2-years">
-                          <img src="{{asset('/img/menu/menu-item1.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item1.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           View all products
                         </a></li>
                       </ul>
                       <div class="nav-column--heading mb-1">Shop by Brands</div>
                       <ul class="list-unstyled layout--3-col">
                         <li><a class="megamenu-link" href="/infant-0-2-years/scream-shout">
-                          <img src="{{asset('/img/menu/menu-item3.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item3.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Scream & Shout
                         </a></li>
                         <li><a class="megamenu-link" href="/infant-0-2-years/tootsie-wootsie">
-                          <img src="{{asset('/img/menu/menu-item3.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item3.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Tootsie Wootsie
                         </a></li>
                         <li><a class="megamenu-link" href="/infant-0-2-years/robofry">
-                          <img src="{{asset('/img/menu/menu-item3.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item3.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           RoboFry
                         </a></li>
                         <li><a class="megamenu-link" href="/infant-0-2-years/momspet">
-                          <img src="{{asset('/img/menu/menu-item3.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item3.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Momspet
                         </a></li>
                         <li><a class="megamenu-link" href="/infant-0-2-years/dream-theatre">
-                          <img src="{{asset('/img/menu/menu-item3.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item3.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Dream Theater
                         </a></li>
                       </ul>
@@ -481,47 +469,47 @@
                       <div class="nav-column--heading mb-1">Shop by Clothing</div>
                       <ul class="list-unstyled layout--3-col">
                         <li><a class="megamenu-link" href="/infant-0-2-years/bottoms/">
-                          <img src="{{asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Bottoms
                         </a></li>
                         <li><a class="megamenu-link" href="/infant-0-2-years/dress/">
-                          <img src="{{asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Dress
                         </a></li>
                         <li><a class="megamenu-link" href="/infant-0-2-years/infant-utility/">
-                          <img src="{{asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Infant Utility
                         </a></li>
                         <li><a class="megamenu-link" href="/infant-0-2-years/shirt/">
-                          <img src="{{asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Shirt
                         </a></li>
                         <li><a class="megamenu-link" href="/shoes/infant-0-2-years/">
-                          <img src="{{asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Shoes
                         </a></li>
                         <li><a class="megamenu-link" href="/infant-0-2-years/short/">
-                          <img src="{{asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Short
                         </a></li>
                         <li><a class="megamenu-link" href="/infant-0-2-years/tshirt/">
-                          <img src="{{asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Tshirt
                         </a></li>
                         <li><a class="megamenu-link" href="/infant-0-2-years/woven-tops/">
-                          <img src="{{asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Woven Tops
                         </a></li>
                         <li><a class="megamenu-link" href="/infant-0-2-years/ethnic">
-                          <img src="{{asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Ethnic
                         </a></li>
                         <li><a class="megamenu-link" href="/infant-0-2-years/sets-suits-outfits">
-                          <img src="{{asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Sets &amp; Suits
                         </a></li>
                         <li><a class="megamenu-link" href="/infant-0-2-years/jackets-coats">
-                          <img src="{{asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item2.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Jackets &amp; Coats
                         </a></li>
                       </ul>
@@ -569,7 +557,7 @@
                   <!-- Mobile Menu Banner -->
                   <div class="nav-column d-lg-none">
                     <div class="menu-banner-item">
-                      <img src="{{asset('/img/menu/mobile-banner.jpeg')}}" class="menu-item-img img-fluid mb-0 d-lg-none" title="offers">
+                      <img src="{{CDN::asset('/img/menu/mobile-banner.jpeg')}}" class="menu-item-img img-fluid mb-0 d-lg-none" title="offers">
                     </div>
                   </div>
 
@@ -580,17 +568,17 @@
                         <ul class="list-unstyled layout--offers">
                           <li>
                             <a href="/#" class="megamenu-link">
-                              <img src="{{asset('/img/menu/offer1.jpeg')}}" class="menu-item-img img-fluid d-lg-none">
+                              <img src="{{CDN::asset('/img/menu/offer1.jpeg')}}" class="menu-item-img img-fluid d-lg-none">
                             </a>
                           </li>
                           <li>
                             <a href="/#" class="megamenu-link">
-                              <img src="{{asset('/img/menu/offer2.jpeg')}}" class="menu-item-img img-fluid d-lg-none">
+                              <img src="{{CDN::asset('/img/menu/offer2.jpeg')}}" class="menu-item-img img-fluid d-lg-none">
                             </a>
                           </li>
                           <li>
                             <a href="/#" class="megamenu-link">
-                              <img src="{{asset('/img/menu/offer3.jpeg')}}" class="menu-item-img img-fluid d-lg-none">
+                              <img src="{{CDN::asset('/img/menu/offer3.jpeg')}}" class="menu-item-img img-fluid d-lg-none">
                             </a>
                           </li>
                         </ul>
@@ -601,16 +589,16 @@
                       <div class="nav-column--heading mb-1">Shop by Sub-Types</div>
                       <ul class="list-unstyled layout--3-col">
                         <li><a class="megamenu-link" href="/toys/baby-toys">
-                          <img src="{{asset('/img/menu/menu-item5.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item5.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Baby Toys
                         </a></li>
                         <li><a class="megamenu-link" href="/toys/plush">
-                          <img src="{{asset('/img/menu/menu-item5.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item5.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Plush
                         </a></li>
                         <!-- <li><a class="megamenu-link" href="/bedsheets">Bedsheets</a></li> -->
                         <li><a class="megamenu-link megamenu-link--primary" href="/toys">
-                          <img src="{{asset('/img/menu/menu-item5.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item5.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           View all products
                         </a></li>
                       </ul>
@@ -628,15 +616,15 @@
                       <div class="nav-column--heading mb-1">Shop by Gender</div>
                       <ul class="list-unstyled layout--3-col">
                         <li><a class="megamenu-link" href="/toys/boys">
-                          <img src="{{asset('/img/menu/menu-item6.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item6.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Boys
                         </a></li>
                         <li><a class="megamenu-link" href="/toys/girls">
-                          <img src="{{asset('/img/menu/menu-item6.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item6.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Girls
                         </a></li>
                         <li><a class="megamenu-link" href="/toys/unisex">
-                          <img src="{{asset('/img/menu/menu-item6.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item6.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Unisex
                         </a></li>
                       </ul>
@@ -673,7 +661,7 @@
                   <!-- Mobile Menu Banner -->
                   <div class="nav-column d-lg-none">
                     <div class="menu-banner-item">
-                      <img src="{{asset('/img/menu/mobile-banner.jpeg')}}" class="menu-item-img img-fluid mb-0 d-lg-none" title="offers">
+                      <img src="{{CDN::asset('/img/menu/mobile-banner.jpeg')}}" class="menu-item-img img-fluid mb-0 d-lg-none" title="offers">
                     </div>
                   </div>
 
@@ -684,17 +672,17 @@
                         <ul class="list-unstyled layout--offers">
                           <li>
                             <a href="/#" class="megamenu-link">
-                              <img src="{{asset('/img/menu/offer1.jpeg')}}" class="menu-item-img img-fluid d-lg-none">
+                              <img src="{{CDN::asset('/img/menu/offer1.jpeg')}}" class="menu-item-img img-fluid d-lg-none">
                             </a>
                           </li>
                           <li>
                             <a href="/#" class="megamenu-link">
-                              <img src="{{asset('/img/menu/offer2.jpeg')}}" class="menu-item-img img-fluid d-lg-none">
+                              <img src="{{CDN::asset('/img/menu/offer2.jpeg')}}" class="menu-item-img img-fluid d-lg-none">
                             </a>
                           </li>
                           <li>
                             <a href="/#" class="megamenu-link">
-                              <img src="{{asset('/img/menu/offer3.jpeg')}}" class="menu-item-img img-fluid d-lg-none">
+                              <img src="{{CDN::asset('/img/menu/offer3.jpeg')}}" class="menu-item-img img-fluid d-lg-none">
                             </a>
                           </li>
                         </ul>
@@ -705,23 +693,23 @@
                       <div class="nav-column--heading mb-1">Shop by Sub-Types</div>
                       <ul class="list-unstyled layout--3-col">
                         <li><a class="megamenu-link" href="/bags">
-                          <img src="{{asset('/img/menu/menu-item5.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item5.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Bags
                         </a></li>
                         <li><a class="megamenu-link" href="/water-bottles">
-                          <img src="{{asset('/img/menu/menu-item5.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item5.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Water Bottles
                         </a></li>
                         <li><a class="megamenu-link" href="/boxes?search_string=box">
-                          <img src="{{asset('/img/menu/menu-item5.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item5.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Lunch Box/Pencil Case
                         </a></li>
                         <li><a class="megamenu-link" href="/boxes?search_string=birthday">
-                          <img src="{{asset('/img/menu/menu-item5.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item5.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Birthday Decoration
                         </a></li>
                         <li><a class="megamenu-link megamenu-link--primary" href="/stationery">
-                          <img src="{{asset('/img/menu/menu-item5.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item5.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           View all products
                         </a></li>
                       </ul>
@@ -740,15 +728,15 @@
                       <div class="nav-column--heading mb-1">Shop by Gender</div>
                       <ul class="list-unstyled layout--3-col">
                         <li><a class="megamenu-link" href="/stationery/boys">
-                          <img src="{{asset('/img/menu/menu-item6.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item6.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Boys
                         </a></li>
                         <li><a class="megamenu-link" href="/stationery/girls">
-                          <img src="{{asset('/img/menu/menu-item6.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item6.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Girls
                         </a></li>
                         <li><a class="megamenu-link" href="/stationery/unisex">
-                          <img src="{{asset('/img/menu/menu-item6.jpeg')}}" class="menu-item-img img-fluid mb-1">
+                          <img src="{{CDN::asset('/img/menu/menu-item6.jpeg')}}" class="menu-item-img img-fluid mb-1">
                           Unisex
                         </a></li>
                       </ul>
