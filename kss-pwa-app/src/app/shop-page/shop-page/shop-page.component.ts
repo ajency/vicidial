@@ -72,9 +72,13 @@ export class ShopPageComponent implements OnInit {
         .subscribe(results => {
           console.log("results ==>", results);
           this.queryObject = {};
-          for (const [key,value] of Object.entries(results.route)){
-            if(value)
-              this.queryObject['pf'] ? this.queryObject['pf'].push(value) : this.queryObject['pf'] = [value];
+          // for (const [key,value] of Object.entries(results.route)){
+          //   if(value)
+          //     this.queryObject['pf'] ? this.queryObject['pf'].push(value) : this.queryObject['pf'] = [value];
+          // }
+          for (const key in results.route) {
+            if(results.route[key])
+              this.queryObject['pf'] ? this.queryObject['pf'].push(results.route[key]) : this.queryObject['pf'] = [results.route[key]];
           }
 
           if(results.query.pf)
