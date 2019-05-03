@@ -46,6 +46,7 @@ class OrderController extends Controller
         $storeData         = $order->getStoreData();
         $order->store_ids  = $storeData['store_ids'];
         $order->store_data = $storeData['store_data'];
+        $order->verified   = $params["token_verified"];
         $order->save();
 
         $cart->type = 'order';
@@ -79,6 +80,7 @@ class OrderController extends Controller
             $pincode_data        = $address->checkPincodeServiceable();
             $order->address_id   = $address->id;
             $order->address_data = $address->shippingAddress();
+            $order->verified     = $params["token_verified"];
             $order->save();
         } else {
             $address      = $order->address;
@@ -234,7 +236,7 @@ class OrderController extends Controller
     {
         return Defaults::getReasons();
     }
-    
+
     public function returnOrder($id, Request $request)
     {
         $user      = $request->user();

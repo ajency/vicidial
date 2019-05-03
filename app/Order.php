@@ -25,6 +25,7 @@ class Order extends Model
         'aggregate_data' => 'array',
         'store_ids'      => 'array',
         'store_data'     => 'array',
+        'verified'       => 'boolean',
     ];
 
     protected $fillable = ['cart_id', 'address_id', 'address_data', 'expires_at', 'type'];
@@ -392,11 +393,11 @@ class Order extends Model
         }
 
         $order = self::create([
-            'cart_id'            => $this->cart_id,
-            'address_id'         => $this->address_id,
-            'address_data'       => $this->address_data,
-            'expires_at'         => Carbon::now()->addMinutes(config('orders.expiry'))->timestamp,
-            'type'               => 'Return Transaction',
+            'cart_id'      => $this->cart_id,
+            'address_id'   => $this->address_id,
+            'address_data' => $this->address_data,
+            'expires_at'   => Carbon::now()->addMinutes(config('orders.expiry'))->timestamp,
+            'type'         => 'Return Transaction',
         ]);
         $order->new_transaction_id = $this->id;
         $order->save();

@@ -104,7 +104,12 @@ class UserController extends Controller
 
         DB::table('oauth_access_tokens')->where('id', $data['token_id'])->update(['verified' => 1]);
 
-        $cart = $this->userCart($data['active_cart'], $userObject, $data['token_id']);
+        $cart  = $this->userCart($data['active_cart'], $userObject, $data['token_id']);
+        $order = $cart->order;
+        if ($order != null) {
+            $order->verified = true;
+            $order->save();
+        }
 
         return response()->json(["message" => '', 'user' => ["id" => $userObject->id, 'active_cart_id' => $cart->id, 'user_info' => $userObject->userDetails()], 'permissions' => ['bag' => true, 'account' => true], 'success' => true]);
     }

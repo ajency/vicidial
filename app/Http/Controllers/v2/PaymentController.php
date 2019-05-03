@@ -139,22 +139,24 @@ class PaymentController extends Controller
         $data      = $request->all();
         $validator = $this->validateNumber($data);
         if ($validator->fails()) {
-            return response()->json(["message" => $validator->errors()->first(), 'success' => false]);
+            return response()->json(["message" => $validator->errors()->first(), 'success' => false, 'verified' => false]);
         }
+        if ($params["token_verified"] == true && $data['phone'] == $user->phone) {
+            return response()->json(["message" => "User verified successfully", 'success' => true, 'verified' => true]);
+        } else {
+            $otp                        = generateOTP();
+            $otp_expiry                 = Carbon::now()->addMinutes(config('otp.cod_expiry'));
+            $cashOnDelivery             = CashOnDelivery::firstOrNew(['order_id' => $id, 'phone' => $data['phone']]);
+            $cashOnDelivery->otp        = $otp;
+            $cashOnDelivery->otp_expiry = $otp_expiry->toDateTimeString();
+            $cashOnDelivery->save();
 
-        $otp                        = generateOTP();
-        $otp_expiry                 = Carbon::now()->addMinutes(config('otp.cod_expiry'));
-        $cashOnDelivery             = CashOnDelivery::firstOrNew(['order_id' => $id, 'phone' => $data['phone']]);
-        $cashOnDelivery->otp        = $otp;
-        $cashOnDelivery->otp_expiry = $otp_expiry->toDateTimeString();
-        $cashOnDelivery->save();
-
-        sendSMS('send-otp', [
-            'to'      => '91' . $data['phone'],
-            'message' => $otp . ' is the code required to verify your payment of Rs.' . $order->subOrderData()['you_pay'] . ' on kidsuperstore.in. The code will expire in ' . config('otp.cod_expiry') . ' minutes.',
-        ], true);
-
-        $response = ["message" => "OTP Sent successfully", 'success' => true];
+            sendSMS('send-otp', [
+                'to'      => '91' . $data['phone'],
+                'message' => $otp . ' is the code required to verify your payment of Rs.' . $order->subOrderData()['you_pay'] . ' on kidsuperstore.in. The code will expire in ' . config('otp.cod_expiry') . ' minutes.',
+            ], true);
+        }
+        $response = ["message" => "OTP Sent successfully", 'success' => true, 'verified' => false];
         return response()->json(isNotProd() ? array_merge($response, ['OTP' => $otp]) : $response);
     }
 
