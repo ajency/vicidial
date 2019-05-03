@@ -141,7 +141,7 @@ class PaymentController extends Controller
         if ($validator->fails()) {
             return response()->json(["message" => $validator->errors()->first(), 'success' => false, 'verified' => false]);
         }
-        if ($params["token_verified"] == true && $data['phone'] == $user->phone) {
+        if ($data["token_verified"] && $data['phone'] == $user->phone) {
             return response()->json(["message" => "User verified successfully", 'success' => true, 'verified' => true]);
         } else {
             $otp                        = generateOTP();
