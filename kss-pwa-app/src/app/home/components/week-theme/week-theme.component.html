@@ -1,5 +1,5 @@
 <div class="week-theme text-center col-block kss-extension" attr.static_element-id="{{theme.sequence}}" static_element-display_type="Theme of the Week" attr.static_element-type="{{theme.type}}" page_slug="home">
-	<a href="javascript:void(0)" (click)="navigateTo(theme.element_data.image.href)" class="d-block">
+	<a (click)="navigateTo(theme.element_data.image.href)" class="d-block cursor-pointer">
 		<picture>
 		  	<source media="(min-width: 992px)"
 				  [attr.defaultImage]="'/assets/img/transparent.png'"
