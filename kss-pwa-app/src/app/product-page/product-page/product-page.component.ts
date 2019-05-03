@@ -95,8 +95,12 @@ export class ProductPageComponent implements OnInit {
       console.log("check inventory response ==>", response);
       this.inventoryData = response;
       let in_stock = false;
-      for(const [key, value] of Object.entries(this.inventoryData.variants)) {
-        if(value > 0)
+      // for(const [key, value] of Object.entries(this.inventoryData.variants)) {
+      //   if(value > 0)
+      //     in_stock = true;
+      // }
+      for (const key in this.inventoryData.variants) {
+        if(this.inventoryData.variants[key] > 0)
           in_stock = true;
       }
       try {
