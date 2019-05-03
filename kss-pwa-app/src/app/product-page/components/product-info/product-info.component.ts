@@ -157,7 +157,12 @@ export class ProductInfoComponent implements OnInit, OnChanges {
     $('.cd-add-to-cart').addClass('cartLoader');
 
     let selected_variant =  this.variants.find((variant)=>{ return variant.variant_attributes.variant_id === this.selectedSize});
-    fbTrackAddToCart(selected_variant.variant_attributes.variant_sale_price, this.attributes.product_id, this.facets.product_color_html.id);
+    try{
+      fbTrackAddToCart(selected_variant.variant_attributes.variant_sale_price, this.attributes.product_id, this.facets.product_color_html.id);
+    }
+    catch(error){
+      console.log("error in fbTrackAddToCart ==>", error)
+    }
 
     let url = this.appservice.apiUrl + (this.appservice.isLoggedInUser() ? ("/api/rest/v1/user/cart/"+this.appservice.getCookie('cart_id')+"/insert") : ("/rest/v1/anonymous/cart/insert") )
     let body = {
