@@ -87,6 +87,17 @@
 		  'user_id': getCookie('user_id')
 		});
 	}
+
+
+	function fbTrackAddToCart(sale_price,parent_id,selected_color_id){    
+	    fbq('track', 'AddToCart', {
+	        value: sale_price,
+	        currency: 'INR',
+	        content_ids: parent_id+'-'+selected_color_id,
+	        content_type: 'product',
+	        product_catalog_id : product_catalog_id
+	    });
+	}
 </script>
 
 <noscript><img height="1" width="1" style="display:none"
