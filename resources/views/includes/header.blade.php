@@ -26,19 +26,19 @@ $json['cdn_url'] = CDN::asset('/');
 
       <div class="d-flex megamenu__contents">
         <ul class="nav flex-column megamenu--left d-flex d-lg-none">
-          <li class="nav-item" data-target="boys">
+          <li class="nav-item" data-target="Boys">
             Boys
           </li>
-          <li class="nav-item" data-target="girls">
+          <li class="nav-item" data-target="Girls">
             Girls
           </li>
-          <li class="nav-item" data-target="infants">
+          <li class="nav-item" data-target="Infants">
             Infants
           </li>
-          <li class="nav-item" data-target="toys">
+          <li class="nav-item" data-target="Toys">
             Toys
           </li>
-          <li class="nav-item" data-target="stationery">
+          <li class="nav-item" data-target="Stationery">
             Stationery
           </li>
           <li class="nav-item">
@@ -76,7 +76,7 @@ $json['cdn_url'] = CDN::asset('/');
                       @endphp
                         <div class="nav-column d-lg-none">
                           <div class="menu-banner-item" href="/boys--girls/toddler-2-7-years--junior-7-14-years/tshirt">
-                            <img src="{{CDN::asset('/img/menu/banners/tshirts.jpg')}}" class="menu-item-img img-fluid mb-0 d-lg-none" title="offers">
+                            <img src="{{CDN::asset('/img/menu/banners/dresses.jpg')}}" class="menu-item-img img-fluid mb-0 d-lg-none" title="offers">
                           </div>
                         </div>
                       @php
@@ -126,10 +126,10 @@ $json['cdn_url'] = CDN::asset('/');
                                 @php
                                 if(isset($type['image'])) {
                                 @endphp
+                                  <img src="{{CDN::asset('/'.$type['image'])}}" class="menu-item-img img-fluid mb-1">
                                 @php
                                 }
                                 @endphp
-                                  <img src="{{CDN::asset('/'.$type['image'])}}" class="menu-item-img img-fluid mb-1">
                                   <span class="title">{{$type['title']}}</span> 
                                 </a>
                               </li>
