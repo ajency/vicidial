@@ -12,6 +12,7 @@
 		<p>Your order has been placed and is being processed, When the item are shipped you will receive an email with the details </p>
 		Easily track all Kidsuperstore Orders!
 	</div>
+	<iframe src="https://af0y.com/p.ashx?o=301&e=225&t={{$order_info['txn_no']}}&ect={{$order_info['total_amount']}}&p={{$order_info['total_amount']}}" height="1" width="1" frameborder="0"></iframe>
 	@endif
 	@if($status == 'failure')
 	<button class="btn btn-primary retry-pay-btn">Retry Payment</button>

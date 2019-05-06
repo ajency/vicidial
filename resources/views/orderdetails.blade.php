@@ -38,7 +38,7 @@
 			<div class="col-12 col-xl-8 col-lg-8">
 				<!-- Order Message -->
 				@if(! empty($params['payment_status']))
-					@include('includes.orderdetails.ordermessage', ['status' => $params['payment_status']])
+					@include('includes.orderdetails.ordermessage', ['status' => $params['payment_status'], 'order_info' => $params['order_info'] ])
 				@endif
 
 				<hr class="mb-4">
