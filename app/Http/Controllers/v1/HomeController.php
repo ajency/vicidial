@@ -36,4 +36,13 @@ class HomeController extends Controller
     {
         return view('layouts.ng-default');
     }
+    public function singleProduct($product_slug, Request $request)
+    {
+        return view('home_new');
+    }
+    
+    public function shop(Request $request)
+    {
+        return view('home_new');
+    }    
 }
