@@ -32,6 +32,7 @@ $text-color: #212529;
         }
         &--right {
             display: block;
+            -webkit-overflow-scrolling: touch;
         }
         .nav {
             > li {
