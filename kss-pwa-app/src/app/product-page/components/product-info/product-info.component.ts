@@ -43,7 +43,17 @@ export class ProductInfoComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(){
-  	this.variants = this.variants.sort((a,b)=>{ return a.variant_facets.variant_size.sequence - b.variant_facets.variant_size.sequence || a.variant_facets.variant_size.name - b.variant_facets.variant_size.name});
+  	this.variants = this.variants.sort((a,b)=>{ 
+      if(a.variant_facets.variant_size.sequence === b.variant_facets.variant_size.sequence){
+        let v1 = a.variant_facets.variant_size.name.toLowerCase();
+        let v2 = b.variant_facets.variant_size.name.toLowerCase();
+        if(v1 < v2)
+          return -1
+        else
+          return 1
+      }
+      return a.variant_facets.variant_size.sequence - b.variant_facets.variant_size.sequence;
+    });
     if(this.inventoryData){
       for (const key in this.inventoryData.variants) {
         if(this.inventoryData.variants[key] > 0)
