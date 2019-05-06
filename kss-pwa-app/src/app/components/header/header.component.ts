@@ -41,7 +41,7 @@ export class HeaderComponent implements OnInit, OnChanges {
       $('.megamenu').removeClass('active');
       $('.megamenu--left .nav-item').removeClass('active');
       $('.megamenu-wrapper').addClass('d-none');
-      $('body').removeClass('overflow-h');
+      $('html,body').removeClass('overflow-h');
     });    
   }
 
@@ -79,14 +79,14 @@ export class HeaderComponent implements OnInit, OnChanges {
 		$('.megamenu--left .nav-item:first-child').addClass('active');
 		$('.megamenu--right li .megamenu-wrapper').addClass('d-none');
 		$('.megamenu--right li:first-child .megamenu-wrapper').removeClass('d-none');
-		$('body').addClass('overflow-h');
+		$('html,body').addClass('overflow-h');
   }
 
   closeMenu(){
     $('.megamenu').removeClass('active');
     $('.megamenu--left .nav-item').removeClass('active');
     $('.megamenu-wrapper').addClass('d-none');
-    $('body').removeClass('overflow-h');
+    $('html,body').removeClass('overflow-h');
   }
 
   openCart(){
