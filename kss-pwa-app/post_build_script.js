@@ -1,5 +1,5 @@
 const fs = require('fs-extra')
-
+const path = require('path');
 
 fs.remove('../public/js/kss-pwa/assets/SASS')
 .then(() => {
@@ -26,3 +26,41 @@ fs.outputFile(file, '*')
   		console.error(err)
 	})
 
+
+let file_hash = [];
+
+function fromDir(startPath,filter){
+    if (!fs.existsSync(startPath)){
+        console.log("no dir ",startPath);
+        return;
+    }
+
+    var files=fs.readdirSync(startPath);
+    for(var i=0;i<files.length;i++){
+        if (files[i].indexOf(filter)>=0) {
+            console.log('-- found: ',files[i]);
+            file_hash.push(
+                {
+                    name: files[i].split('.')[0],
+                    hash: files[i].split('.')[1]
+                }
+            )
+        };
+    };
+};
+
+let files = ["runtime.", "polyfills.", "scripts." , "main.", "styles."]
+
+for(let i = 0; i<files.length; i++){
+    fromDir('../public/js/kss-pwa/', files[i]);
+}
+
+console.log("file hash ==>", file_hash);
+
+fs.writeJson('../public/angular_file_hash.json', file_hash)
+.then(() => {
+  console.log('success!')
+})
+.catch(err => {
+  console.error(err)
+})
