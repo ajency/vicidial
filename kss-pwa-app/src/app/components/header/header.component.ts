@@ -106,7 +106,7 @@ export class HeaderComponent implements OnInit, OnChanges {
   }
 
   createDataSrcSet(a,b,c,d){
-    return a+ " " +b +", " +c +" "+d;
+    return this.cdnUrl+a+ " " +b +", " +this.cdnUrl+c +" "+d;
   }
 
   backToPrev(){

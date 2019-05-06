@@ -149,9 +149,9 @@
       ],
       "image_section": {
         "images": {
-          "1x": "/img/menu/mm_boys_onecolumn_small.jpg",
-          "2x": "/img/menu/mm_boys_onecolumn_medium.jpg",
-          "load": "/img/menu/mm_boys_onecolumn_10px.jpg"
+          "1x": "img/menu/mm_boys_onecolumn_small.jpg",
+          "2x": "img/menu/mm_boys_onecolumn_medium.jpg",
+          "load": "img/menu/mm_boys_onecolumn_10px.jpg"
         },
         "href": "/boys/shirt",
         "img_alt": "Spotlight on Boys Shirts",
@@ -302,9 +302,9 @@
       ],
       "image_section": {
         "images": {
-          "1x": "/img/menu/mm_girls_onecolumn_small.jpg",
-          "2x": "/img/menu/mm_girls_onecolumn_medium.jpg",
-          "load": "/img/menu/mm_girls_onecolumn_10px.jpg"
+          "1x": "img/menu/mm_girls_onecolumn_small.jpg",
+          "2x": "img/menu/mm_girls_onecolumn_medium.jpg",
+          "load": "img/menu/mm_girls_onecolumn_10px.jpg"
         },
         "href": "/girls/ethnic",
         "img_alt": "Spotlight on Girls Ethnic wear",
@@ -456,9 +456,9 @@
       ],
       "image_section": {
         "images": {
-          "1x": "/img/menu/mm_infants_onecolumn_small.jpg",
-          "2x": "/img/menu/mm_infants_onecolumn_medium.jpg",
-          "load": "/img/menu/mm_infants_onecolumn_10px.jpg"
+          "1x": "img/menu/mm_infants_onecolumn_small.jpg",
+          "2x": "img/menu/mm_infants_onecolumn_medium.jpg",
+          "load": "img/menu/mm_infants_onecolumn_10px.jpg"
         },
         "href": "/infant-0-2-years/dress",
         "img_alt": "Spotlight on Infant Utility",
@@ -516,9 +516,9 @@
       ],
       "image_section": {
         "images": {
-          "1x": "/img/menu/mm_toys_twocolumn_small.jpg",
-          "2x": "/img/menu/mm_toys_twocolumn_medium.jpg",
-          "load": "/img/menu/mm_toys_twocolumn_10px.jpg"
+          "1x": "img/menu/mm_toys_twocolumn_small.jpg",
+          "2x": "img/menu/mm_toys_twocolumn_medium.jpg",
+          "load": "img/menu/mm_toys_twocolumn_10px.jpg"
         },
         "href": "/toys",
         "img_alt": "The Super Toy Store",
@@ -585,9 +585,9 @@
       ],
       "image_section": {
         "images": {
-          "1x": "/img/menu/mm_stationary_twocolumn_small.jpg",
-          "2x": "/img/menu/mm_stationary_twocolumn_medium.jpg",
-          "load": "/img/menu/mm_stationary_twocolumn_10px.jpg"
+          "1x": "img/menu/mm_stationary_twocolumn_small.jpg",
+          "2x": "img/menu/mm_stationary_twocolumn_medium.jpg",
+          "load": "img/menu/mm_stationary_twocolumn_10px.jpg"
         },
         "href": "/stationery",
         "img_alt": "Bag To School",
