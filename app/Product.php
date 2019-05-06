@@ -9,6 +9,7 @@ use App\Jobs\CreateProductJobs;
 use App\Jobs\CreateRefreshCacheJobs;
 use App\Jobs\CreateUpdateProductJobs;
 use App\Jobs\FetchProductImages;
+use App\Jobs\RefreshFacetCache;
 use App\Jobs\RefreshProductCache;
 use App\Jobs\UpdateSearchText;
 use App\Jobs\UpdateVariantInventory;
@@ -169,7 +170,8 @@ class Product
 
     public static function storeVariantData($variant, $product)
     {
-        $exists = true;
+        $exists    = true;
+        $new_facet = false;
         try {
             $elastic             = new ProductColor;
             $elastic->elastic_id = $product['product_id'] . '.' . $variant['product_color_id'];
@@ -227,6 +229,7 @@ class Product
                     $facetObj->sequence     = 10000;
                     $facetObj->display      = false;
                     $facetObj->save();
+                    $new_facet = true;
                 } catch (\Exception $e) {
                     \Log::warning($e->getMessage());
                 }
@@ -243,6 +246,7 @@ class Product
                 $facetObj->sequence     = 10000;
                 $facetObj->display      = false;
                 $facetObj->save();
+                $new_facet = true;
             } catch (\Exception $e) {
                 \Log::warning($e->getMessage());
             }
@@ -258,10 +262,16 @@ class Product
                 $facetObj->sequence     = 10000;
                 $facetObj->display      = false;
                 $facetObj->save();
+                $new_facet = true;
             } catch (\Exception $e) {
                 \Log::warning($e->getMessage());
             }
         }
+
+        if ($new_facet) {
+            RefreshFacetCache::dispatch()->onQueue('create_cache_jobs');
+        }
+
         return $object->id;
 
     }
@@ -495,6 +505,8 @@ class Product
 
     public static function refreshAllCache()
     {
+        RefreshFacetCache::dispatch()->onQueue('create_cache_jobs');
+
         $index = config('elastic.indexes.product');
         $q     = new ElasticQuery;
         $q->setIndex($index)

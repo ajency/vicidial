@@ -41,7 +41,7 @@ class RefreshProductCache implements ShouldQueue
         });
         Cache::forget('list-product-' . $slug);
         $apiResponse = Cache::rememberForever('list-product-' . $slug, function () use ($singleProduct) {
-            $apiResponse   = $singleProduct->generateSinglePageData(['attributes', 'facets', 'variants', 'images', 'is_sellable']);
+            $apiResponse   = $singleProduct->generateSinglePageData(['attributes', 'facets', 'variants', 'images', 'is_sellable', 'is_available']);
             return $apiResponse;
         });
     }
