@@ -43,16 +43,8 @@ export class ProductInfoComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(){
-  	this.variants = this.variants.sort((a,b)=>{ return a.variant_facets.variant_size.sequence - b.variant_facets.variant_size.sequence});
+  	this.variants = this.variants.sort((a,b)=>{ return a.variant_facets.variant_size.sequence - b.variant_facets.variant_size.sequence || a.variant_facets.variant_size.name - b.variant_facets.variant_size.name});
     if(this.inventoryData){
-      // for(const [key, value] of Object.entries(this.inventoryData.variants)) {
-      //   console.log("key value",key,value);
-      //   if(value > 0)
-      //     this.outOfStock = false
-      //   let v = this.variants.find((v)=>{return v.variant_attributes.variant_id == key})
-      //   if(v && value)
-      //     v.is_available = true;
-      // }
       for (const key in this.inventoryData.variants) {
         if(this.inventoryData.variants[key] > 0)
           this.outOfStock = false
@@ -72,7 +64,6 @@ export class ProductInfoComponent implements OnInit, OnChanges {
         }
       }
     }
-  	// console.log("attributes =>", this.colorVariants, this.queryParamSize);
   }
 
   getOffPercentage(list_price, sale_price){
