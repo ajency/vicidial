@@ -3,8 +3,10 @@ import { ConnectionService } from 'ng-connection-service';
 import { PlatformLocation } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { AppServiceService } from './service/app-service.service';
+import { Router, Event, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
 
 declare var $ : any;
+declare var fbq : any
 
 @Component({
   selector: 'app-root',
@@ -31,7 +33,8 @@ export class AppComponent implements OnInit {
   laravelRoutes = ["/contact-us", "/contact", "/faq", "/about-us", "/terms-and-conditions", "/privacy-policy", "/ideas", "/stores", "/stores/hyderabad", "/stores/coimbatore", "/stores/jaipur", "/activities", "/my/order/details", "/shop/boys", "/shop/girls", "/shop/infants", "/draft/boys", "/draft/girls", "/draft/infants"]
   constructor(private connectionService: ConnectionService,
               private loc : PlatformLocation,
-              private appservice : AppServiceService) {
+              private appservice : AppServiceService,
+              private router: Router) {
 
     this.listenToHashChange();
 
@@ -65,6 +68,32 @@ export class AppComponent implements OnInit {
     this.loadCartListner = this.appservice.listenToLoadCartTrigger().subscribe(()=>{  this.loadCartModule() });
     this.loginListner = this.appservice.listenToShowLoginPopupTriggerr().subscribe(()=>{ this.openLoginModal() })
     this.hideLoginListner = this.appservice.listenToHideLoginPopupTriggerr().subscribe(()=>{ this.hideLoginModal() })
+
+    this.router.events.subscribe((event: Event) => {
+        if (event instanceof NavigationStart) {
+            // Show loading indicator
+            console.log("navigattion start");
+        }
+
+        if (event instanceof NavigationEnd) {
+            // Hide loading indicator
+            console.log("navigattion end");
+            try{
+              fbq('track', 'PageView');
+            }
+            catch(error){
+              console.log("error in fbq page view tracking");
+            }
+        }
+
+        if (event instanceof NavigationError) {
+            // Hide loading indicator
+
+            // Present error to user
+            console.log(event.error);
+        }
+    });
+
   }
 
   displayToast(){

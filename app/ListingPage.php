@@ -9,15 +9,15 @@ use Illuminate\Support\Facades\Cache;
 
 class ListingPage
 {
-    protected static $facets;
+    protected $facets;
     protected $params, $elastic_data, $elastic_filters, $search_string, $sort_on;
     protected $primary_filters, $primary_filter_keys, $primary_base_filters, $primary_base_filter_keys, $boolean_filters, $boolean_filter_keys, $range_filters, $range_filter_keys;
 
     public function __construct($params)
     {
-        if (is_null(self::$facets)) {
-            self::$facets = Facet::select(['facet_name', 'facet_value', 'display_name', 'slug', 'sequence', 'display'])->get();
-        }
+        $this->facets = Cache::rememberForever('db-facets', function () {
+            return Facet::select(['facet_name', 'facet_value', 'display_name', 'slug', 'sequence', 'display'])->get();
+        });
 
         $this->primary_filters = array_filter(config('product.facet_display_data'), function ($value) {
             return ($value['filter_type'] == 'primary_filter');
@@ -50,7 +50,7 @@ class ListingPage
             $param_arr['search_object']['primary_filter'] = [];
             foreach ($params['pf'] as $slugs) {
                 $slugs_arr = explode('--', $slugs);
-                $pf        = self::$facets->whereIn('facet_name', array_keys($this->primary_base_filters))->whereIn('slug', $slugs_arr);
+                $pf        = $this->facets->whereIn('facet_name', array_keys($this->primary_base_filters))->whereIn('slug', $slugs_arr);
                 if ($pf->count() != count($slugs_arr) || $pf->groupBy('facet_name')->count() != 1) {
                     abort(404, "pf not valid");
                 }
@@ -69,7 +69,7 @@ class ListingPage
                 if (!isset($param_arr['search_object']['primary_filter'])) {
                     $param_arr['search_object']['primary_filter'] = [];
                 }
-                $pf = self::$facets->where('facet_name', $facet_name)->whereIn('slug', $params[$param_key]);
+                $pf = $this->facets->where('facet_name', $facet_name)->whereIn('slug', $params[$param_key]);
                 if ($pf->count() != count($params[$param_key])) {
                     abort(404, $param_key . " not valid");
                 }
@@ -211,7 +211,7 @@ class ListingPage
         foreach ($this->getElasticData()["items"] as $slug) {
             $apiResponse = Cache::rememberForever('list-product-' . $slug, function () use ($slug) {
                 $singleProduct = new SingleProduct($slug);
-                $apiResponse   = $singleProduct->generateSinglePageData(['attributes', 'facets', 'variants', 'images', 'is_sellable']);
+                $apiResponse   = $singleProduct->generateSinglePageData(['attributes', 'facets', 'variants', 'images', 'is_sellable', 'is_available']);
                 return $apiResponse;
             });
             array_push($items, $apiResponse);
@@ -226,7 +226,7 @@ class ListingPage
 
     private function getTitle()
     {
-        return ['page_title' => generateProductListTitle($this->params['search_object'], self::$facets->groupBy('facet_name')), 'product_count' => $this->getElasticData()["page"]["total_item_count"]];
+        return ['page_title' => generateProductListTitle($this->params['search_object'], $this->facets->groupBy('facet_name')), 'product_count' => $this->getElasticData()["page"]["total_item_count"]];
     }
 
     private function getResultsFoundBoolean()
@@ -251,7 +251,7 @@ class ListingPage
     {
         $q = new ElasticQuery;
 
-        $max_count = self::$facets->groupBy('facet_name')->max()->count();
+        $max_count = $this->facets->groupBy('facet_name')->max()->count();
 
         $variants_required = ["variant_size_name"];
         $required          = array_values(array_diff(array_keys($this->primary_filters), $variants_required));
@@ -315,7 +315,7 @@ class ListingPage
     private function getPrimaryFilterItems($facet_name, $count)
     {
         $items       = [];
-        $facet_items = self::$facets->where('facet_name', $facet_name);
+        $facet_items = $this->facets->where('facet_name', $facet_name);
         foreach ($facet_items as $facet) {
             array_push($items, [
                 "facet_value"       => $facet['facet_value'],
@@ -442,10 +442,5 @@ class ListingPage
             ]);
         }
         return $sort_on;
-    }
-
-    public function clearListFilterCache()
-    {
-        Cache::forget('list-filters');
     }
 }
