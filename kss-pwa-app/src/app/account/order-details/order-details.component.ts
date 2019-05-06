@@ -125,7 +125,7 @@ export class OrderDetailsComponent implements OnInit {
   callGetReasonsApi(){
     $('#cd-cart').addClass('overflow-h');
     this.unsubscribeGetCancelReason();
-    // let url = this.appservice.apiUrl +  "/api/rest/v1/district-state"
+    // let url = this.appservice.apiUrl +  "/api/rest/v2/district-state"
     if(this.account_service.reasons){
         this.reasons = this.cancelOrder ? this.account_service.reasons.cancel : this.account_service.reasons.return;
         this.cancelReasonId = 0;
@@ -167,7 +167,7 @@ export class OrderDetailsComponent implements OnInit {
 
   callCancelOrderApi(){
     this.appservice.showLoader();
-    let url = this.appservice.apiUrl +  "/api/rest/v1/user/order/" + this.order.order_info.order_id +"/cancel";
+    let url = this.appservice.apiUrl +  "/api/rest/v2/user/order/" + this.order.order_info.order_id +"/cancel";
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     let body : any = {
       reason : this.cancelReasonId,
@@ -179,7 +179,7 @@ export class OrderDetailsComponent implements OnInit {
 
   callReturnOrderApi(){
     this.appservice.showLoader();
-    let url = this.appservice.apiUrl +  "/api/rest/v1/user/sub-order/" + this.cancelItemsList[0].suborder_id +"/return";
+    let url = this.appservice.apiUrl +  "/api/rest/v2/user/sub-order/" + this.cancelItemsList[0].suborder_id +"/return";
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     let body : any = {
       reason : this.cancelReasonId,

@@ -212,7 +212,7 @@ export class BagViewComponent implements OnInit {
     this.appservice.showLoader();
     console.log("inside modifyCart function ==>", quantity, this.itemIndex);
     let item = this.cart.items[this.itemIndex];
-    let url = this.appservice.apiUrl + (this.appservice.isLoggedInUser() ? ("/api/rest/v1/user/cart/"+this.appservice.getCookie('cart_id')+"/update") : ("/rest/v1/anonymous/cart/update"));
+    let url = this.appservice.apiUrl + (this.appservice.isLoggedInUser() ? ("/api/rest/v2/user/cart/"+this.appservice.getCookie('cart_id')+"/update") : ("/rest/v2/anonymous/cart/update"));
     let body = {
     //   old_item : item.id,
     //   new_item : item.related_items.size.find(size=> size.value == item.attributes.size).id,
@@ -631,7 +631,7 @@ export class BagViewComponent implements OnInit {
 
   continueOrder(){
     this.appservice.showLoader();
-    let url = this.appservice.apiUrl + '/api/rest/v1/user/cart/' + this.appservice.getCookie('cart_id') + '/continue-order';
+    let url = this.appservice.apiUrl + '/api/rest/v2/user/cart/' + this.appservice.getCookie('cart_id') + '/continue-order';
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     
     this.apiservice.request(url, 'post', {} , header ).then((response)=>{

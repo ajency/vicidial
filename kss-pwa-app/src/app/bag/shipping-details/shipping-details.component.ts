@@ -150,7 +150,7 @@ export class ShippingDetailsComponent implements OnInit {
 
   callOrderApi(){
     this.appservice.showLoader();
-    let url = this.appservice.apiUrl + '/api/rest/v1/user/cart/' + this.appservice.getCookie('cart_id') + '/create-order';
+    let url = this.appservice.apiUrl + '/api/rest/v2/user/cart/' + this.appservice.getCookie('cart_id') + '/create-order';
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     let body : any = {
       _token : $('meta[name="csrf-token"]').attr('content'),

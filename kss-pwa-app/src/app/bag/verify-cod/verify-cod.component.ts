@@ -29,7 +29,7 @@ export class VerifyCodComponent implements OnInit, OnChanges {
   verifyOTP(){
     this.appservice.showLoader();
   	console.log("verifyOTP function");
-  	let url = this.appservice.apiUrl + '/api/rest/v1/user/order/' + this.shippingDetails.order_id + '/verify-otp?phone='+this.shippingDetails.address.phone+'&otp='+this.otp;
+  	let url = this.appservice.apiUrl + '/api/rest/v2/user/order/' + this.shippingDetails.order_id + '/verify-otp?phone='+this.shippingDetails.address.phone+'&otp='+this.otp;
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     this.apiservice.request(url, 'get', {} , header ).then((response)=>{
     	if(response.success)
@@ -70,7 +70,7 @@ export class VerifyCodComponent implements OnInit, OnChanges {
   resendOTP(){
     this.otpVerificationErrorMsg = '';
     this.appservice.showLoader();
-    let url = this.appservice.apiUrl + '/api/rest/v1/user/order/' + this.shippingDetails.order_id + '/resend-otp?phone='+this.shippingDetails.address.phone;
+    let url = this.appservice.apiUrl + '/api/rest/v2/user/order/' + this.shippingDetails.order_id + '/resend-otp?phone='+this.shippingDetails.address.phone;
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     this.apiservice.request(url, 'get', {} , header ).then((response)=>{
         this.otp = '';
