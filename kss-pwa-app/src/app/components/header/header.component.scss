@@ -81,13 +81,16 @@ $text-color: #212529;
                     }                   
                 }
                 &--heading {
-                    color: #343a40;
-                    box-shadow: none;
+                    color: #fff;
                     text-shadow: none;
-                    background: #e0e0e0;
-                    border-radius: 2px;
                     padding: 5px 5px 5px 10px;
-                    cursor: default;                  
+                    box-shadow: 0 2px 0 0 rgba(158, 157, 157, 0.65);                                       
+                    background: rgb(249,187,35);
+                    background: -moz-linear-gradient(45deg, #9E9E9E 0%, #9E9E9E 69%, #9E9E9E 69%, rgba(255,255,255,1) 70%, rgba(255,255,255,1) 100%);
+                    background: -webkit-linear-gradient(45deg, #9E9E9E 0%,#9E9E9E 69%,#9E9E9E 69%,rgba(255,255,255,1) 70%,rgba(255,255,255,1) 100%);
+                    background: linear-gradient(45deg, #9E9E9E 0%,#9E9E9E 70%,#9E9E9E 70%,rgba(255,255,255,1) 70%,rgba(255,255,255,1) 100%);
+                    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9bb23', endColorstr='#ffffff',GradientType=1 );
+                    cursor: default;  
                 }
             }
         }        
@@ -277,7 +280,8 @@ $text-color: #212529;
                     color: #fff;
                     box-shadow: none;
                     cursor: default;  
-                    box-shadow: 0 2px 0 0 #ffe605;           
+                    box-shadow: 0 2px 0 0 #ffe605;
+                    padding-bottom: 8px;        
                 }
             }
         }
