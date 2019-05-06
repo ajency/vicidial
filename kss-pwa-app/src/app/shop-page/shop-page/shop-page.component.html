@@ -3,7 +3,7 @@
 <!-- <app-loader *ngIf="showLoader"></app-loader> -->
 
 
-<section class="productlist">
+<section *ngIf="listPage !== null; else pageNotFound" class="productlist" >
 	<div class="container mt-2 mt-md-4">
 
 		<!-- Top Filters -->
