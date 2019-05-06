@@ -66,6 +66,7 @@ Route::group([
             Route::get('/apply-coupon', $group_app_version . '\CartController@guestCartCoupon');
             Route::get('/check-status', $group_app_version . '\CartController@checkStatus');
         });
+        Route::get('/states/all', $group_app_version . '\AddressController@fetchStates');
     });
     Route::group([
         'prefix' => '/authenticate',
@@ -73,8 +74,6 @@ Route::group([
         Route::get('/get-token', $group_app_version . '\UserController@getToken');
     });
 });
-
-
 Route::get('/', $app_version . '\HomeController@newhome')->name('home');
 // Route::get('/newhome', $app_version . '\HomeController@newhome')->name('home');
 Route::get('/drafthome', $app_version . '\HomeController@newdraft')->name('drafthome');

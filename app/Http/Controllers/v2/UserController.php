@@ -116,27 +116,27 @@ class UserController extends Controller
 
     public function getToken(Request $request)
     {
+
         $data      = $request->all();
         $validator = $this->validateNumber($data);
         if ($validator->fails()) {
             return response()->json(["message" => $validator->errors()->first(), 'success' => false]);
         }
-
         return $this->fetchUserDetails($data);
     }
 
     public function fetchUserDetails($data)
     {
         $authenticatedUser = $this->createAuthenticateUser($data);
-        $userObject        = $authenticatedUser['userObject'];
-        $tokenArr          = createAccessToken($userObject);
-        $token             = $tokenArr->token;
+        $userObject = $authenticatedUser['userObject'];
+        $tokenArr   = createAccessToken($userObject);
+        $token      = $tokenArr->token;
         if ($userObject->api_token == null) {
             $userObject->api_token = $token->id;
             $userObject->save();
         }
 
-        $user = ["id" => $userObject->id, 'active_cart_id' => $authenticatedUser['cart_id']];
+        $user = ["id" => $userObject->id, 'active_cart_id' => $authenticatedUser['cart_id'], "verified" => $authenticatedUser['verified']];
 
         $token->cart_id = $authenticatedUser['cart_id'];
         $token->save();
@@ -154,7 +154,8 @@ class UserController extends Controller
 
     public function createAuthenticateUser($data)
     {
-        $id = request()->session()->get('active_cart_id', false);
+        $verified = false;
+        $id       = request()->session()->get('active_cart_id', false);
 
         $userObject = User::where('phone', '=', $data['phone'])->where('verified', '=', true)->first();
 
@@ -165,7 +166,11 @@ class UserController extends Controller
         }
 
         if ($userObject) {
-            $new_user = false;
+            $new_user             = false;
+            $verified_user_tokens = DB::table('oauth_access_tokens')->where('user_id', $userObject->user_id)->where('verified', 1)->get();
+            if ($verified_user_tokens) {
+                $verified = true;
+            }
         } else {
             $new_user = true;
 
@@ -181,7 +186,6 @@ class UserController extends Controller
             $userObject->assignRole('customer');
             $userObject->save();
         }
-
         $cart->user_id = $userObject->id;
         $cart->save();
 
@@ -190,7 +194,7 @@ class UserController extends Controller
         Auth::guard()->login($userObject);
         request()->session()->regenerate();
 
-        return ['userObject' => $userObject, 'cart_id' => $cart->id, 'new_user' => $new_user];
+        return ['userObject' => $userObject, 'cart_id' => $cart->id, 'new_user' => $new_user, 'verified' => $verified];
     }
 
     public function userCart($id, $userObject, $token_id)

@@ -19,11 +19,11 @@ class AddExtraFieldsToTables extends Migration
         });
 
         Schema::table('orders', function (Blueprint $table) {
-            $table->boolean('verified');
+            $table->boolean('verified')->default(false);
         });
 
         Schema::table('addresses', function (Blueprint $table) {
-            $table->boolean('verified');
+            $table->boolean('verified')->default(false);
         });
 
         foreach (DB::table('users')->get() as $user) {
