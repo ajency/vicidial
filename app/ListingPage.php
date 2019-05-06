@@ -15,7 +15,7 @@ class ListingPage
 
     public function __construct($params)
     {
-        $this->$facets = Cache::rememberForever('db-facets', function () {
+        $this->facets = Cache::rememberForever('db-facets', function () {
             return Facet::select(['facet_name', 'facet_value', 'display_name', 'slug', 'sequence', 'display'])->get();
         });
 
@@ -50,7 +50,7 @@ class ListingPage
             $param_arr['search_object']['primary_filter'] = [];
             foreach ($params['pf'] as $slugs) {
                 $slugs_arr = explode('--', $slugs);
-                $pf        = $this->$facets->whereIn('facet_name', array_keys($this->primary_base_filters))->whereIn('slug', $slugs_arr);
+                $pf        = $this->facets->whereIn('facet_name', array_keys($this->primary_base_filters))->whereIn('slug', $slugs_arr);
                 if ($pf->count() != count($slugs_arr) || $pf->groupBy('facet_name')->count() != 1) {
                     abort(404, "pf not valid");
                 }
@@ -69,7 +69,7 @@ class ListingPage
                 if (!isset($param_arr['search_object']['primary_filter'])) {
                     $param_arr['search_object']['primary_filter'] = [];
                 }
-                $pf = $this->$facets->where('facet_name', $facet_name)->whereIn('slug', $params[$param_key]);
+                $pf = $this->facets->where('facet_name', $facet_name)->whereIn('slug', $params[$param_key]);
                 if ($pf->count() != count($params[$param_key])) {
                     abort(404, $param_key . " not valid");
                 }
@@ -226,7 +226,7 @@ class ListingPage
 
     private function getTitle()
     {
-        return ['page_title' => generateProductListTitle($this->params['search_object'], $this->$facets->groupBy('facet_name')), 'product_count' => $this->getElasticData()["page"]["total_item_count"]];
+        return ['page_title' => generateProductListTitle($this->params['search_object'], $this->facets->groupBy('facet_name')), 'product_count' => $this->getElasticData()["page"]["total_item_count"]];
     }
 
     private function getResultsFoundBoolean()
@@ -251,7 +251,7 @@ class ListingPage
     {
         $q = new ElasticQuery;
 
-        $max_count = $this->$facets->groupBy('facet_name')->max()->count();
+        $max_count = $this->facets->groupBy('facet_name')->max()->count();
 
         $variants_required = ["variant_size_name"];
         $required          = array_values(array_diff(array_keys($this->primary_filters), $variants_required));
@@ -315,7 +315,7 @@ class ListingPage
     private function getPrimaryFilterItems($facet_name, $count)
     {
         $items       = [];
-        $facet_items = $this->$facets->where('facet_name', $facet_name);
+        $facet_items = $this->facets->where('facet_name', $facet_name);
         foreach ($facet_items as $facet) {
             array_push($items, [
                 "facet_value"       => $facet['facet_value'],
