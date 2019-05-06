@@ -265,19 +265,19 @@ function loadAngularApp(){
         $("<link/>", {
            rel: "stylesheet",
            type: "text/css",
-           href: "/views/kss-pwa/styles.css"
+           href: cdn_url+"js/kss-pwa/styles.css"
         }).appendTo("head");
 
-        $.getScript("/views/kss-pwa/runtime.js")        
+        $.getScript(cdn_url+"js/kss-pwa/runtime.js")        
             .done(function(script, textStatus){
                 // console.log(textStatus);
-                $.getScript("/views/kss-pwa/polyfills.js")
+                $.getScript(cdn_url+"js/kss-pwa/polyfills.js")
                     .done(function(script2, textStatus2){
                         // console.log(textStatus2);
-                        // $.getScript("/views/kss-pwa/scripts.js")
+                        // $.getScript(cdn_url+"js/kss-pwa/scripts.js")
                             // .done(function(script3, textStatus3){
                                 // console.log(textStatus3);
-                                $.getScript("/views/kss-pwa/main.js")
+                                $.getScript(cdn_url+"js/kss-pwa/main.js")
                                     .done(function(script4,textStatus4){
                                         // console.log(textStatus4);
                                         loaded = true;

@@ -34,7 +34,7 @@ class HomeController extends Controller
 
     public function newdraft(Request $request)
     {
-        return view('draft_new');
+        return view('home_new');
     }
     
     public function singleProduct($product_slug, Request $request)

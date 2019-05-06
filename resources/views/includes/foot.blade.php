@@ -20,6 +20,7 @@
 <script type="text/javascript">
   // Google pixel tracking id
   /* <![CDATA[ */
+  var cdn_url = "{{CDN::asset('/')}}";
   var google_pixel_id = "{{config('analytics.google_pixel_id')}}";
   var google_conversion_id = @php echo config('analytics.conversion_id'); @endphp;
   var google_conversion_label = "{{config('analytics.conversion_label')}}";
