@@ -4,7 +4,9 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod --output-hashing none --deploy-url=/views/kss-pwa/",
+    "build:local": "ng build --prod --output-hashing none --deploy-url=/js/kss-pwa/",
+    "build:prod": "ng build --prod --output-hashing none --deploy-url=https://static.kidsuperstore.in/public/js/kss-pwa",
+    "build:pre-prod": "ng build --prod --output-hashing none --deploy-url=https://d34use2w6yizv9.cloudfront.net/pre_prod/public/js/kss-pwa",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
