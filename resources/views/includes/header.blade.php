@@ -15,7 +15,7 @@ $json['cdn_url'] = CDN::asset('/');
 
     <div class="megamenu">
 
-      <div class="d-flex d-lg-none justify-content-between align-items-center border-bottom border-cancel header-close-trigger">
+      <div class="d-flex d-lg-none justify-content-between align-items-center border-bottom border-cancel header-close-trigger header-top">
         <a href="/">
           <img src="{{CDN::asset('/img/logo-kss.png') }}" class=" img-fluid m-3 d-block d-lg-none" width="180px">
         </a>
@@ -152,7 +152,7 @@ $json['cdn_url'] = CDN::asset('/');
                         <div class="nav-column nav-column--wide d-none d-lg-block">
                             <a href="{{$item['image_section']['href']}}" class="d-block">
                               <img  class="d-block w-100 img-fluid offer-img mt-4 mt-lg-0"
-                                 src="{{CDN::asset('/assets/img/transparent.png')}}"
+                                 src="{{CDN::asset('/'.$item['image_section']['images']['1x'])}}"
                                  data-srcset="{{CDN::asset('/'.$item['image_section']['images']['2x'])}} 2x,
                                               {{CDN::asset('/'.$item['image_section']['images']['1x'])}} 1x"
                                  alt="{{$item['image_section']['img_alt']}}"
