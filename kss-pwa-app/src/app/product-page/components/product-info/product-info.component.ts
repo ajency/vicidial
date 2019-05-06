@@ -200,6 +200,8 @@ export class ProductInfoComponent implements OnInit, OnChanges {
     console.log("error ===>", error);
     $('.cd-add-to-cart').removeClass('cartLoader');
     $('#size-modal').modal('hide');
+    if(error.status == 419)
+      window.location.reload();
     if(error.status == 401){
       this.appservice.userLogout();
       this.showErrorPopup(error);
