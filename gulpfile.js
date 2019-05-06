@@ -83,4 +83,4 @@ gulp.task('pwa-css', function() {
     .pipe(gulp.dest('./public/js/kss-pwa'));
 });
 
-gulp.task('default', ['scripts', 'css']);
+gulp.task('default', ['scripts', 'css', 'pwa-js', 'pwa-css']);
