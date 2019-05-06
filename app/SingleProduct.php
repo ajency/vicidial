@@ -10,7 +10,7 @@ class SingleProduct
 {
     protected $productData, $variantData, $productColor;
 
-    protected static $facets;
+    protected $facets;
 
     const PRODUCT_ATTRIBUTES = [
         "product_title",
@@ -57,9 +57,9 @@ class SingleProduct
 
     public function __construct($slug)
     {
-        if (is_null(self::$facets)) {
-            self::$facets = Facet::select(['facet_name', 'facet_value', 'display_name', 'slug', 'sequence'])->get();
-        }
+        $this->$facets = Cache::rememberForever('db-facets', function () {
+            return Facet::select(['facet_name', 'facet_value', 'display_name', 'slug', 'sequence', 'display'])->get();
+        });
         $this->setSlugElasticData($slug);
         $this->getProductColor();
     }
@@ -115,7 +115,7 @@ class SingleProduct
                     $facets[$facetName] = [];
                     if (isset($this->productData['product_metatag']) && is_array($this->productData['product_metatag'])) {
                         foreach ($this->productData['product_metatag'] as $metatag) {
-                            $facetData            = self::$facets->where('facet_name', $facetName)->where('facet_value', $metatag)->first();
+                            $facetData = $this->$facets->where('facet_name', $facetName)->filter(function ($facet) use ($metatag) {return strtolower($facet['facet_value']) == strtolower($metatag);})->first();
                             $facets[$facetName][] = [
                                 'id'   => $id,
                                 'name' => $facetData['display_name'],
@@ -136,7 +136,8 @@ class SingleProduct
                 continue;
             }
 
-            $facetData          = self::$facets->where('facet_name', $facetName)->where('facet_value', $this->productData[$facetName])->first();
+            $facet_value = $this->productData[$facetName];
+            $facetData   = $this->$facets->where('facet_name', $facetName)->filter(function ($facet) use ($facet_value) {return strtolower($facet['facet_value']) == strtolower($facet_value);})->first();
             $facets[$facetName] = [
                 'id'   => $id,
                 'name' => $facetData['display_name'],
@@ -161,7 +162,8 @@ class SingleProduct
         foreach (self::VARIANT_FACETS as $facetName) {
             switch ($facetName) {
                 case 'variant_size':
-                    $facetData          = self::$facets->where('facet_name', 'variant_size_name')->where('facet_value', $variant['variant_size_name'])->first();
+                    $facet_value = $variant['variant_size_name'];
+                    $facetData   = $this->$facets->where('facet_name', 'variant_size_name')->filter(function ($facet) use ($facet_value) {return strtolower($facet['facet_value']) == strtolower($facet_value);})->first();
                     $facets[$facetName] = [
                         'id'       => $variant['variant_size_id'],
                         'name'     => $facetData['display_name'],
@@ -223,9 +225,10 @@ class SingleProduct
         $colorId           = $this->productData['product_color_id'];
         $colorVariantsData = $this->getColorVariantElasticData();
         foreach ($colorVariantsData as $cved) {
-            $cvd                         = $cved['_source']['search_result_data'];
-            $colorVariant                = [];
-            $facetData                   = self::$facets->where('facet_name', 'product_color_html')->where('facet_value', $cvd['product_color_html'])->first();
+            $cvd          = $cved['_source']['search_result_data'];
+            $colorVariant = [];
+            $facet_value  = $cvd['product_color_html'];
+            $facetData    = $this->$facets->where('facet_name', 'product_color_html')->filter(function ($facet) use ($facet_value) {return strtolower($facet['facet_value']) == strtolower($facet_value);})->first();
             $colorVariant['color_id']    = $cvd['product_color_id'];
             $colorVariant['color_name']  = $facetData['display_name'];
             $colorVariant['image']       = getProductDefaultImage($productID, $cvd['product_color_id'], "variant-thumb");
@@ -244,7 +247,8 @@ class SingleProduct
         $breadcrumbs = [];
         $crumb       = collect();
         foreach ($order as $breadcrumbKey) {
-            $facetData = self::$facets->where('facet_name', $breadcrumbKey)->where('facet_value', $this->productData[$breadcrumbKey])->first();
+            $facet_value = $this->productData[$breadcrumbKey];
+            $facetData   = $this->$facets->where('facet_name', $breadcrumbKey)->filter(function ($facet) use ($facet_value) {return strtolower($facet['facet_value']) == strtolower($facet_value);})->first();
             $crumb->push($facetData['slug']);
             $breadcrumbs[] = [
                 'title'    => $facetData['display_name'],
@@ -298,9 +302,11 @@ class SingleProduct
 
     private function getSeoAttributes()
     {
-        $productName    = $this->productData['product_title'];
-        $productColor   = self::$facets->where('facet_name', 'product_color_html')->where('facet_value', $this->productData['product_color_html'])->first()['display_name'];
-        $productSubtype = self::$facets->where('facet_name', 'product_subtype')->where('facet_value', $this->productData['product_subtype'])->first()['display_name'];
+        $productName  = $this->productData['product_title'];
+        $facet_value  = $this->productData['product_color_html'];
+        $productColor = $this->$facets->where('facet_name', 'product_color_html')->filter(function ($facet) use ($facet_value) {return strtolower($facet['facet_value']) == strtolower($facet_value);})->first()['display_name'];
+        $facet_value    = $this->productData['product_subtype'];
+        $productSubtype = $this->$facets->where('facet_name', 'product_subtype')->filter(function ($facet) use ($facet_value) {return strtolower($facet['facet_value']) == strtolower($facet_value);})->first()['display_name'];
 
         $title       = $productName . ' - ' . $productColor . ' - ' . $productSubtype . ' - Kidsuperstore.in';
         $url         = url('/' . $this->productData['product_slug'] . '/buy');
