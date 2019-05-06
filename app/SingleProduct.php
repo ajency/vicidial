@@ -5,6 +5,7 @@ namespace App;
 use Ajency\Connections\ElasticQuery;
 use App\ProductColor;
 use App\SizechartImage;
+use Illuminate\Support\Facades\Cache;
 
 class SingleProduct
 {
@@ -205,6 +206,16 @@ class SingleProduct
         return $this->productData['product_att_ecom_sales'];
     }
 
+    private function isAvailable()
+    {
+        foreach ($this->variantData as $variant) {
+            if ($variant['variant_availability']) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private function getColorVariantElasticData()
     {
         $q = new ElasticQuery;
@@ -379,6 +390,9 @@ class SingleProduct
                     break;
                 case 'is_sellable':
                     $data['is_sellable'] = $this->isSellable();
+                    break;
+                case 'is_available':
+                    $data['is_available'] = $this->isAvailable();
                     break;
                 case 'color_variants':
                     $data['color_variants'] = $this->getColorVariants();

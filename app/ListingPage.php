@@ -211,7 +211,7 @@ class ListingPage
         foreach ($this->getElasticData()["items"] as $slug) {
             $apiResponse = Cache::rememberForever('list-product-' . $slug, function () use ($slug) {
                 $singleProduct = new SingleProduct($slug);
-                $apiResponse   = $singleProduct->generateSinglePageData(['attributes', 'facets', 'variants', 'images', 'is_sellable']);
+                $apiResponse   = $singleProduct->generateSinglePageData(['attributes', 'facets', 'variants', 'images', 'is_sellable', 'is_available']);
                 return $apiResponse;
             });
             array_push($items, $apiResponse);
