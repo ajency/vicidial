@@ -27,7 +27,7 @@ fs.outputFile(file, '*')
 	})
 
 
-let file_hash = [];
+let file_hash = {};
 
 function fromDir(startPath,filter){
     if (!fs.existsSync(startPath)){
@@ -39,12 +39,7 @@ function fromDir(startPath,filter){
     for(var i=0;i<files.length;i++){
         if (files[i].indexOf(filter)>=0) {
             console.log('-- found: ',files[i]);
-            file_hash.push(
-                {
-                    name: files[i].split('.')[0],
-                    hash: files[i].split('.')[1]
-                }
-            )
+            file_hash[files[i].split('.')[0]] = files[i].split('.')[1];
         };
     };
 };

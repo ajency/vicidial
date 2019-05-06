@@ -21,6 +21,7 @@
   // Google pixel tracking id
   /* <![CDATA[ */
   var cdn_url = "{{CDN::asset('/')}}";
+  var file_hashes = {{file_get_contents(public_path().'/angular_file_hash.json')}};
   var google_pixel_id = "{{config('analytics.google_pixel_id')}}";
   var google_conversion_id = @php echo config('analytics.conversion_id'); @endphp;
   var google_conversion_label = "{{config('analytics.conversion_label')}}";
