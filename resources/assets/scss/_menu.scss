@@ -14,7 +14,7 @@
 				padding: 0 20px;
 				line-height: 54px;
 				font-weight: bold;
-				color: #fcfcfc;
+				color: #fcfcfc !important;
 				transition: all 0.2s ease-out;
 			}
 			>div {
@@ -51,17 +51,7 @@
 			flex: 1;
 			&--wide{
 				flex-grow: 2;
-			}
-			&--heading {
-				line-height: 18px;
-				font-weight: bold;
-				font-size: 12px;
-				color: #b3b3b3;
-				text-transform: uppercase;
-				padding-bottom: 10px;
-				box-shadow: 0px 2px 0px 0px #585858;
-				text-shadow: 0 2px 1px #1b1b1b;
-			}
+			}			
 			> ul{
 				margin-bottom: 30px;
 				&:last-child{
@@ -298,7 +288,21 @@ $text-color: #212529;
                     }                   
                 }
             }
-        }
+		}
+		.nav {
+			.nav-column {
+				&--heading {
+					line-height: 18px;
+					font-weight: bold;
+					font-size: 12px;
+					color: #b3b3b3;
+					text-transform: uppercase;
+					padding-bottom: 10px;
+					box-shadow: 0px 2px 0px 0px #585858;
+					text-shadow: 0 2px 1px #1b1b1b;
+				}
+			}
+		}
     }
 }
 
@@ -325,15 +329,6 @@ $text-color: #212529;
                     display: block;
                     margin: 0 auto;
                 }
-            }
-            &--heading {
-                color: #343a40;
-                box-shadow: none;
-                text-shadow: none;
-                background: #e0e0e0;
-                border-radius: 2px;
-                padding: 5px 5px 5px 10px;
-                cursor: default;                  
             }
             &--wide {
                 flex-grow: 1.8;  
@@ -480,6 +475,24 @@ $text-color: #212529;
             > li {
                 flex: 0 0 50%;
                 max-width: 50%;
+            }
+        }
+    }
+}
+@media (min-width: 992px){
+    .megamenu-wrapper {
+        max-height: 85vh;
+        overflow-x: auto !important;        
+    }
+    .megamenu {
+        .nav {
+            .nav-column {
+                &--heading {
+                    color: #fff;
+                    box-shadow: none;
+                    cursor: default;  
+                    box-shadow: 0 2px 0 0 #ffe605;           
+                }
             }
         }
     }
