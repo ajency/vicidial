@@ -7,13 +7,12 @@ import { RouterModule } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-// import { ApiService } from './services/api.service';
-import { AppService } from './services/app.service';
-import { RouteGuardService } from './services/route-guard.service';
 
 import { AppServiceService } from './service/app-service.service';
 import { ApiServiceService } from './service/api-service.service';
 import { AuthGuardService } from './service/auth-guard.service';
+import { GlobalErrorHandlerService } from './service/global-error-handler.service';
+
 import { NumberModule } from './directives/number.module';
 import { LoginComponent } from './login/login.component';
 import { WidgetComponent } from './widget/widget.component';
@@ -40,12 +39,10 @@ import { Ng5SliderModule } from 'ng5-slider';
     Ng5SliderModule
   ],
   providers: [
-    // ApiService,
-    AppService,
     AppServiceService,
     ApiServiceService,
     AuthGuardService,
-    RouteGuardService
+    GlobalErrorHandlerService
   ],
   bootstrap: [AppComponent]
 })

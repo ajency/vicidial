@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { WidgetComponent } from './widget/widget.component';
-import { RouteGuardService as RouteGuard } from './services/route-guard.service';
 
 const routes: Routes = [
 	{ path: '',  loadChildren: './home/home.module#HomeModule'},
@@ -38,7 +37,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {scrollPositionRestoration : 'enabled', anchorScrolling: 'enabled',})],
+  imports: [RouterModule.forRoot(routes, {scrollPositionRestoration : 'enabled'})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

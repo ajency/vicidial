@@ -42,20 +42,6 @@ workbox.routing.registerRoute(
 
 //3. cache apis
 // workbox.routing.registerRoute(
-//     new RegExp('https://demo8558685.mockable.io/*'),
-//     workbox.strategies.cacheFirst({
-//         cacheName: 'mock-apis',
-//         plugins: [
-//             new workbox.expiration.Plugin({
-//                 maxAgeSeconds: 60 * 5,
-//                 maxEntries: 50,
-//                 purgeOnQuotaError: true
-//             })
-//         ]
-//     })
-// );
-
-// workbox.routing.registerRoute(
 //     new RegExp('/api/rest/v1/test/*'),
 //     workbox.strategies.cacheFirst({
 //         cacheName: 'kss-apis',
@@ -69,12 +55,5 @@ workbox.routing.registerRoute(
 //     })
 // );
 
-self.addEventListener('push', (event) => {
-  const title = 'Get Started With Workbox';
-  const options = {
-    body: event.data.text()
-  };
-  event.waitUntil(self.registration.showNotification(title, options));
-});
   
 workbox.precaching.precacheAndRoute([]);
