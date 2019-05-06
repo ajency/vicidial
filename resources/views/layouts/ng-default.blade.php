@@ -17,10 +17,10 @@
 	@endphp
 
 	<noscript>Please enable JavaScript to continue using this application.</noscript>
-	<script type="text/javascript" src="{{CDN::asset('/js/kss-pwa/runtime.'$fileHashes['runtime']'.js') }}"></script>
-	<script type="text/javascript" src="{{CDN::asset('/js/kss-pwa/polyfills.'$fileHashes['polyfills']'.js') }}"></script>
-	<script type="text/javascript" src="{{CDN::asset('/js/kss-pwa/scripts.'$fileHashes['scripts']'.js') }}"></script>
-	<script type="text/javascript" src="{{CDN::asset('/js/kss-pwa/main.'$fileHashes['main']'.js') }}"></script>
+	<script type="text/javascript" src="{{CDN::asset('/js/kss-pwa/runtime.'.$fileHashes['runtime'].'.js') }}"></script>
+	<script type="text/javascript" src="{{CDN::asset('/js/kss-pwa/polyfills.'.$fileHashes['polyfills'].'.js') }}"></script>
+	<script type="text/javascript" src="{{CDN::asset('/js/kss-pwa/scripts.'.$fileHashes['scripts'].'.js') }}"></script>
+	<script type="text/javascript" src="{{CDN::asset('/js/kss-pwa/main.'.$fileHashes['main'].'.js') }}"></script>
 	<script>
 	      if ('serviceWorker' in navigator ) {
 	        window.addEventListener('load', function() {
