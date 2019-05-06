@@ -25,7 +25,7 @@ RUN npm install
 WORKDIR /root/build/kss-pwa-app
 RUN npm install
 COPY kss-pwa-app ./
-RUN npm run build
+RUN npm run build:prod && npm run postbuild
 WORKDIR /root/build/
 ADD . /root/build/
 RUN npx workbox injectManifest workbox-config.js
