@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Facet;
 use App\ListingPage;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
