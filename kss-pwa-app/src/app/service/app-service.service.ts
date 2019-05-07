@@ -49,6 +49,7 @@ export class AppServiceService {
    add_to_cart_completed = false;
 
    menuObject : any;
+   cdnUrl : any;
    filters : any;
    sort_on : any;
    filterCollpaseArray : any;

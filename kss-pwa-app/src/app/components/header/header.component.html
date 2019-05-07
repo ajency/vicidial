@@ -16,7 +16,7 @@
 
 		    <div class="megamenu">
 
-		      <div class="d-flex d-lg-none justify-content-between align-items-center border-bottom border-cancel header-close-trigger">
+		      <div class="d-flex d-lg-none justify-content-between align-items-center border-bottom border-cancel header-close-trigger header-top">
 		        <a routerLink="/" >
 		          <img src="/assets/img/logo-kss.png" class=" img-fluid m-3 d-block d-lg-none" width="180px">
 		        </a>
@@ -42,10 +42,9 @@
 		          <li class="nav-item" data-target="Stationery">
 		            Stationery
 		          </li>
-		          <li routerLink="/shop/uniforms" (click)="closeMenu()" class="nav-item">
-		            <a class="d-inline font-weight-normal p-0" style="line-height: normal">Uniforms</a>
+		          <li routerLink="/shop/uniforms" (click)="closeMenu()" class="nav-item" [ngClass]="{'active-link' : isActive('/shop/uniforms')}">
+		          	Uniforms
 		          </li>
-		          <li class="flex-grow-1 disabled"></li>
 		          <li class="nav-item" data-target="otherlinks">
 		            Other links
 		          </li>
@@ -54,21 +53,60 @@
 		        <ul *ngIf="menu" class="nav megamenu--right">
 		            <!-- Boys -->
 		            <li *ngFor="let item of menu">
-		                <a href="javascript:void(0)" *ngIf="item.type != 'Blog' && item.type != 'Uniforms'" class="d-none d-lg-block">{{item.type}}</a>
+		                <a *ngIf="item.type != 'Blog' && item.type != 'Uniforms'" class="d-none d-lg-block cursor-pointer">{{item.type}}</a>
 		                <a href="/ideas" *ngIf="item.type == 'Blog'" class="d-none d-lg-block">{{item.type}}</a>
 		                <a routerLink="/shop/uniforms" *ngIf="item.type == 'Uniforms'" class="d-none d-lg-block">{{item.type}}</a>
 		                <div class="megamenu-wrapper" attr.data-menu="{{item.type}}">
+
+												<!-- Mobile Menu Banner -->
+												<div *ngIf="item.type == 'Boys' " class="nav-column d-lg-none">
+													<div (click)="openMenuLink('/boys/junior-7-14-years--toddler-2-7-years/tshirt')" class="menu-banner-item cursor-pointer">
+														<img src="{{cdnUrl}}img/menu/banners/tshirts.jpg" class="menu-item-img img-fluid mb-0 d-lg-none" title="offers">
+													</div>
+												</div>
+												<div *ngIf="item.type == 'Girls' " class="nav-column d-lg-none">
+													<div class="menu-banner-item cursor-pointer" (click)="openMenuLink('/girls/junior-7-14-years--toddler-2-7-years/dress')">
+														<img src="{{cdnUrl}}img/menu/banners/dresses.jpg" class="menu-item-img img-fluid mb-0 d-lg-none" title="offers">
+													</div>
+												</div>
+
+												<!-- Supper Offers -->
+												<div *ngIf="item.type == 'Boys' || item.type == 'Girls' || item.type == 'Infants'" class="nav-column d-lg-none">
+													<div>
+															<div class="nav-column--heading mt-1 mb-2">Supper Offers</div>
+															<ul class="list-unstyled layout--offers">
+																<li>
+																	<a (click)="openMenuLink('/shop?pf=tag:flat-50')" class="megamenu-link cursor-pointer">
+																		<img src="{{cdnUrl}}img/menu/offer/50-off.jpg" class="menu-item-img img-fluid d-lg-none">
+																	</a>
+																</li>
+																<li>
+																	<a (click)="openMenuLink('/shop?pf=tag:flat-50')" class="megamenu-link cursor-pointer">
+																		<img src="{{cdnUrl}}img/menu/offer/holiday-off.jpg" class="menu-item-img img-fluid d-lg-none">
+																	</a>
+																</li>
+															</ul>
+													</div>													
+												</div>
+
 		                    <div *ngFor="let row of item.rows" class="nav-column">
 		                    	<div *ngFor="let menu of row.menus">
-			                        <div class="nav-column--heading mb-1">{{menu.shop_by}}</div>
-			                        <ul class="list-unstyled">
-			                          <li *ngFor="let type of menu.data"><a class="megamenu-link" [ngClass]="{'megamenu-link--primary' : type.title === 'View all products'}" (click)="openMenuLink(type.link)" href="javascript:void(0)">{{type.title}}</a></li>
+			                        <div class="nav-column--heading mt-1 mb-2">{{menu.shop_by}} 
+			                        	<!-- <a *ngIf=" menu.shop_by == 'Shop by Category'" href="/shop" title="Shop All" target="_self" class="go-to-shop d-lg-none">Shop All ></a> -->
+			                        </div>
+			                        <ul class="list-unstyled" [ngClass]="{'layout--3-col' : menu.shop_by == 'Shop by Category' || menu.shop_by == 'Shop by Clothing' || menu.shop_by == 'Shop by Brands' || menu.shop_by == 'Shop by Sub-Types' || menu.shop_by == 'Shop by Gender', 'layout--tags' : menu.shop_by == 'Shop by Price', 'layout--2-col' : menu.shop_by == 'Shop by Age Group'}">
+			                          	<li *ngFor="let type of menu.data">
+											<a class="megamenu-link cursor-pointer" [ngClass]="{'megamenu-link--primary' : type.title === 'View all products'}" (click)="openMenuLink(type.link)" title="{{type.title}}" [ngClass]="{active: isActive('type.link')}">
+												<img *ngIf="type.image" [src]=cdnUrl+type.image class="menu-item-img img-fluid mb-1">
+												<!-- <span *ngIf="menu.shop_by == 'Shop by Age Group'" class="sub-title">Juniors</span> -->
+												<span class="title">{{type.title}}</span>	
+											</a>
+										</li>
 			                        </ul>
-
 		                        </div>
 		                    </div>
 		                    <div *ngIf="item.image_section" class="nav-column nav-column--wide d-none d-lg-block">
-		                        <a href="javascript:void(0)" (click)="openMenuLink(item.image_section.href)" class="d-block">
+		                        <a (click)="openMenuLink(item.image_section.href)" class="d-block cursor-pointer">
 		                          <!-- <img class="d-block w-100 img-fluid lazyload offer-img mt-4 mt-lg-0"
 		                             src="{{CDN::asset('/img/menu/mm_boys_onecolumn_10px.jpg') }}"
 		                             data-srcset="{{CDN::asset('/img/menu/mm_boys_onecolumn_medium.jpg') }} 2x,
@@ -90,7 +128,7 @@
 		                              <div class="text-white">{{item.image_section.text}}</div>
 		                            </div>
 		                            <div class="col-5">
-		                              <a href="javascript:void(0)" (click)="openMenuLink(item.image_section.href)" class="btn kss-btn kss-btn--mini">Shop now</a>
+		                              <a (click)="openMenuLink(item.image_section.href)" class="btn kss-btn kss-btn--mini cursor-pointer">Shop now</a>
 		                            </div>
 		                        </div>
 		                    </div>
