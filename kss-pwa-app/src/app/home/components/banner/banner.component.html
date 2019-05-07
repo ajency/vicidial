@@ -8,7 +8,7 @@
 		    <ng-container *ngFor="let banner of banners">
 		    	<ng-template carouselSlide>
 		    		<div attr.static_element-id="{{banner.sequence}}" static_element-display_type="Banner" attr.static_element-type="{{banner.type}}" page_slug="home">
-				    	<a  href="javascript:void(0)" (click)="navigateTo(banner.element_data.image.href)" class="d-block">
+				    	<a (click)="navigateTo(banner.element_data.image.href)" class="d-block cursor-pointer">
 							 <picture>
 							  	<source media="(orientation: landscape)"
 									  src="/assets/img/transparent.png"

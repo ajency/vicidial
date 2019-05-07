@@ -17,6 +17,7 @@ export class HeaderComponent implements OnInit, OnChanges {
   hideMenu : boolean = false;
   isMobile : boolean = false;
   @Input() browserback : any;
+  cdnUrl : any;
   constructor(private appservice : AppServiceService,
               private apiService: ApiServiceService,
               private location: Location,
@@ -33,7 +34,15 @@ export class HeaderComponent implements OnInit, OnChanges {
       var mobMenuName = menuTab.data('target');
       $('.megamenu-wrapper').addClass('d-none');
       $('.megamenu-wrapper[data-menu="'+mobMenuName+'"]').removeClass('d-none');
+      $('.megamenu--right').scrollTop(0);
     });
+
+    $(document).on('click','.active-link', function(){
+      $('.megamenu').removeClass('active');
+      $('.megamenu--left .nav-item').removeClass('active');
+      $('.megamenu-wrapper').addClass('d-none');
+      $('html,body').removeClass('overflow-h');
+    });    
   }
 
   ngOnChanges(){
@@ -46,12 +55,16 @@ export class HeaderComponent implements OnInit, OnChanges {
   }
 
   getMenu(){
-    if(this.appservice.menuObject)
+    if(this.appservice.menuObject){
       this.menu = this.appservice.menuObject;
+      this.cdnUrl = this.appservice.cdnUrl;
+    }
     else{
-      let url = isDevMode() ? "https://demo8558685.mockable.io/get-menu" : "/api/rest/v1/test/get-menu"
+      let url = isDevMode() ? "https://demo8558685.mockable.io/get-menu" : "/api/rest/v1/get-menu"
       this.apiService.request(url,'get',{},{}).then((data)=>{
         console.log("data ==>", data);
+        this.cdnUrl = data.cdn_url;
+        this.appservice.cdnUrl = this.cdnUrl;
         this.menu = data.menu;
         this.appservice.menuObject = this.menu;
       })
@@ -66,14 +79,14 @@ export class HeaderComponent implements OnInit, OnChanges {
 		$('.megamenu--left .nav-item:first-child').addClass('active');
 		$('.megamenu--right li .megamenu-wrapper').addClass('d-none');
 		$('.megamenu--right li:first-child .megamenu-wrapper').removeClass('d-none');
-		$('body').addClass('overflow-h');
+		$('html,body').addClass('overflow-h');
   }
 
   closeMenu(){
     $('.megamenu').removeClass('active');
     $('.megamenu--left .nav-item').removeClass('active');
     $('.megamenu-wrapper').addClass('d-none');
-    $('body').removeClass('overflow-h');
+    $('html,body').removeClass('overflow-h');
   }
 
   openCart(){
@@ -93,7 +106,7 @@ export class HeaderComponent implements OnInit, OnChanges {
   }
 
   createDataSrcSet(a,b,c,d){
-    return a+ " " +b +", " +c +" "+d;
+    return this.cdnUrl+a+ " " +b +", " +this.cdnUrl+c +" "+d;
   }
 
   backToPrev(){
@@ -124,4 +137,9 @@ export class HeaderComponent implements OnInit, OnChanges {
       this.appservice.loadCartTrigger();
     }
   }
+
+  isActive(path){
+    return (window.location.pathname.substr(0, path.length) === path) ? 'active' : '';
+  }
+
 }

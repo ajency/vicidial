@@ -114,8 +114,10 @@ class StaticElementController extends Controller
 
     public function getMenu(Request $request)
     {
-        return response()->json(json_decode(file_get_contents(config_path() . "/static_responses/menu.json"), true));
-
+        $json = json_decode(file_get_contents(config_path() . "/static_responses/menu.json"), true);
+        $json['cdn_url'] = \CDN::asset('/');
+        $json['site_url'] = url('/');
+        return response()->json($json);
     }
 
     public function getFacets(Request $request)

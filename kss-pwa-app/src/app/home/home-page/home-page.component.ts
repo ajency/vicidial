@@ -24,7 +24,7 @@ export class HomePageComponent implements OnInit {
 
   ngOnInit() {
   	console.log("ngOnInit HomePageComponent", window.location.pathname);
-    let url =  "/api/rest/v1/test/get-page-element-dummy?page_slug=home";
+    let url =  "/api/rest/v1/get-page-elements?page_slug=home";
     if(window.location.pathname == '/')
       url = url + '&published=true';
     if(isDevMode())
