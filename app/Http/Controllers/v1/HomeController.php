@@ -29,21 +29,21 @@ class HomeController extends Controller
 
     public function newhome(Request $request)
     {
-        return view('home_new');
+        return view('layouts.ng-default');
     }
 
     public function newdraft(Request $request)
     {
-        return view('home_new');
+        return view('layouts.ng-default');
     }
     
     public function singleProduct($product_slug, Request $request)
     {
-        return view('home_new');
+        return view('layouts.ng-default');
     }
     
     public function shop(Request $request)
     {
-        return view('home_new');
+        return view('layouts.ng-default');
     }
 }
