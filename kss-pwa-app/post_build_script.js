@@ -4,7 +4,7 @@ const path = require('path');
 fs.remove('../public/js/kss-pwa/assets/SASS')
 .then(() => {
   	console.log('removed sass folder');
-	fs.copy('../public/js/kss-pwa/assets', '../public/assets', function (err) {
+	fs.move('../public/js/kss-pwa/assets', '../public/assets', function (err) {
 	  if (err) {
 	    console.error(err);
 	  } else {
