@@ -7,6 +7,7 @@
     "build:local": "ng build --prod --deploy-url=/js/kss-pwa/",
     "build:prod": "ng build --prod --deploy-url=https://static.kidsuperstore.in/public/js/kss-pwa/",
     "build:pre-prod": "ng build --prod --deploy-url=https://d34use2w6yizv9.cloudfront.net/pre_prod/public/js/kss-pwa/",
+    "build:old" : "ng build --prod --output-hashing none --deploy-url=/views/kss-pwa/ --outputPath=../public/views/kss-pwa",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
