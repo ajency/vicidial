@@ -6,7 +6,7 @@ module.exports = {
     "manifest.json"
   ],
   "templatedUrls" : {
-        '/': ['../resources/views/layouts/ng-default.php']
+        '/': ['../resources/views/layouts/ng-default.blade.php']
       },
   "swDest": "public/service-worker.js",
   "swSrc": "service-worker-src.js"
