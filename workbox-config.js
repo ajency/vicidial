@@ -2,7 +2,7 @@ module.exports = {
   "globDirectory": "public/",
   "globPatterns": [
     // "views/kss-pwa/*.{css,ico,eot,svg,ttf,woff,woff2,js,json}",
-    "views/kss-pwa/*.{css,js,json}",
+    "js/kss-pwa/*.{css,js,json}",
     "manifest.json"
   ],
   "templatedUrls" : {
