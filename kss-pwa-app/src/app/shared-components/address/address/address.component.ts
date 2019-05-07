@@ -54,6 +54,7 @@ export class AddressComponent implements OnInit, OnChanges {
   	// console.log("ngOnChanges address component ==>", this.addresses, this.addAddress, this.selectedAddressId, this.states);
     this.checkAddresses();
     this.hideUserFields = this.appservice.hideAddressUser;
+    console.log("ngOnChanges address component ==>",this.hideUserFields);
     if(this.states && this.states.length) 
       this.initSelectPicker(false); 
   }

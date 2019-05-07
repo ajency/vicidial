@@ -109,7 +109,7 @@
 			</div>
 		</div>	
 	</form>
-	<div *ngIf="!hideUserFields" class="d-block">
+	<div *ngIf="!hideUserFields && addAddress" class="d-block">
 		<hr>
 		<div class="">
 			<h3 class="">Account Information</h3>
@@ -173,7 +173,7 @@
 				<button [disabled]="!addresses.length" type="button" class="shipping-details-save btn kss-btn kss-btn--link kss-btn--big mt-1 mb-1 ml-auto mr-auto" (click)="updatedAddAddress()" >Cancel </button>
 			</div>
 			<div class="col-6 text-center">
-				<button [disabled]="!myForm.valid || !(newAddress.state_id && newAddress.city) || (!hideUserFields && !userInfo.valid)"  type="button" class="shipping-details-save btn kss-btn kss-btn--big mt-1 mb-1 ml-auto mr-auto" (click)="saveNewAddress()"> Save </button>
+				<button [disabled]="!myForm.valid || !(newAddress.state_id && newAddress.city) || (!hideUserFields && userInfo && !userInfo.valid)"  type="button" class="shipping-details-save btn kss-btn kss-btn--big mt-1 mb-1 ml-auto mr-auto" (click)="saveNewAddress()"> Save </button>
 			</div>
 		</div>
 	</div>

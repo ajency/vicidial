@@ -339,6 +339,11 @@ export class BagViewComponent implements OnInit {
     if(this.cart.cart_type == "cart"){
       this.appservice.showLoader();
       this.appservice.callGetAllAddressesApi(true).then((response)=>{
+        if(response.user_info.email){
+          this.appservice.hideAddressUser = true;
+        } else {
+          this.appservice.hideAddressUser = false;
+        }
         this.appservice.shippingAddresses = response.addresses;
         this.appservice.userMobile = response.user_info.mobile;
         $("#cd-cart").css("overflow", "auto");
