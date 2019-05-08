@@ -8,6 +8,7 @@ use App\Jobs\CancelOdooOrder;
 use App\Jobs\OdooOrder;
 use App\Jobs\OdooOrderLine;
 use App\Jobs\OrderLineDeliveryDate;
+use App\Jobs\OrderlineIndex;
 use App\Jobs\ReturnOdooOrder;
 use App\Jobs\SaveReturnPolicies;
 use App\ReturnPolicy;
@@ -72,6 +73,7 @@ class Order extends Model
             foreach ($orderLineIds as $orderLineId) {
                 $subOrder->orderLines()->attach($orderLineId, ['type' => $subOrder->type]);
                 $this->orderLines()->attach($orderLineId, ['type' => $this->type]);
+                OrderlineIndex::dispatch($orderLineId)->onQueue('order_index');
             }
         }
         SaveReturnPolicies::dispatch($this->id)->onQueue('orderline_return_policy');
