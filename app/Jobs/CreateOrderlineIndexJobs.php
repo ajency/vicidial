@@ -30,8 +30,8 @@ class CreateOrderlineIndexJobs implements ShouldQueue
      */
     public function handle()
     {
-        $ids->each(function ($id) {
-            OrderlineIndex::dispatch($id);
+        $this->ids->each(function ($id) {
+            OrderlineIndex::dispatch($id)->onQueue('order_index');
         });
     }
 }

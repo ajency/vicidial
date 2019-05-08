@@ -55,6 +55,9 @@ class OrderlineIndex implements ShouldQueue
         $indexData['orderline_product_type'] = $orderline->product_type;
         $indexData['orderline_product_subtype'] = $orderline->product_subtype;
         $indexData['orderline_is_returned'] = $orderline->is_returned;
+        $indexData['orderline_created_at'] = $orderline->created_at->timestamp;
+        $indexData['orderline_updated_at'] = $orderline->updated_at->timestamp;
+
         $indexData['order_address_id'] = $orderline->address_id;
         $indexData['order_type'] = $orderline->ordersNew->first()->type;
         $indexData['order_transaction_mode'] = $orderline->ordersNew->first()->transaction_mode;
@@ -62,6 +65,7 @@ class OrderlineIndex implements ShouldQueue
         $indexData['order_aggregate_data'] = $orderline->ordersNew->first()->aggregate_data;
         $indexData['order_status'] = $orderline->ordersNew->first()->status;
         $indexData['order_txnid'] = $orderline->ordersNew->first()->txnid;
+        
         $indexData['suborder_is_shipped'] = $orderline->subOrdersNew->first()->is_shipped;
         $indexData['suborder_is_invoiced'] = $orderline->subOrdersNew->first()->is_invoiced;
         $indexData['location_id'] = $orderline->subOrdersNew->first()->location->warehouse_odoo_id;
@@ -70,8 +74,11 @@ class OrderlineIndex implements ShouldQueue
         $q = new ElasticQuery;
         $q->setIndex('web_orders');
         $q->createIndexParams($orderline->id.'N', $indexData);
-        $q->index();
+        $result = $q->index();
 
-        
+        if(!isset($result['result']) && !($result['result'] == 'created' || $result['result'] == 'updated')  ){
+            throw new Exception(json_encode($result));
+            
+        }
     }
 }

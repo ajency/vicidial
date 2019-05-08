@@ -87,6 +87,14 @@
         "orderline_product_subtype": {
           "type" : "keyword"
         },
+        "orderline_created_at": {
+          "type" : "date",
+          "format": "epoch_second"
+        },
+        "orderline_updated_at": {
+          "type" : "date",
+          "format": "epoch_second"
+        },
         "orderline_is_returned": {
           "type" : "boolean"
         },
