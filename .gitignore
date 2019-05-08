@@ -65,6 +65,7 @@ yarn-error.log
 /public/mix-manifest.json
 /resources/assets/css/custom.css
 /public/assets
+/public/angular_file_hash.json
 
 # wordpress
 /public/wordpress/wp-config.php

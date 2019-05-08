@@ -11,20 +11,35 @@ workbox.core.setCacheNameDetails({
   });
   
 // runtime cache
-// 1. stylesheet
-// workbox.routing.registerRoute(
-//     new RegExp('\.css$'),
-//     workbox.strategies.cacheFirst({
-//         cacheName: 'My-awesome-cache-Stylesheets',
-//         plugins: [
-//             new workbox.expiration.Plugin({
-//                 maxAgeSeconds: 60 * 60 * 24 * 7, // cache for one week
-//                 maxEntries: 20, // only cache 20 request
-//                 purgeOnQuotaError: true
-//             })
-//         ]
-//     })
-// );
+// 1. js and css
+workbox.routing.registerRoute(
+    new RegExp('https://d34use2w6yizv9.cloudfront.net/pre_prod/public/js/kss-pwa/*'),
+    new workbox.strategies.StaleWhileRevalidate({
+        cacheName: 'kss-pwa-pre-prod',
+        plugins: [
+            new workbox.expiration.Plugin({
+                maxAgeSeconds: 60 * 60 * 24 * 7, // cache for one week
+                maxEntries: 50, // only cache 20 request
+                purgeOnQuotaError: true
+            })
+        ]
+    })
+);
+
+workbox.routing.registerRoute(
+    new RegExp('https://static.kidsuperstore.in/public/js/kss-pwa/*'),
+    new workbox.strategies.StaleWhileRevalidate({
+        cacheName: 'kss-pwa-prod',
+        plugins: [
+            new workbox.expiration.Plugin({
+                maxAgeSeconds: 60 * 60 * 24 * 7, // cache for one week
+                maxEntries: 50, // only cache 20 request
+                purgeOnQuotaError: true
+            })
+        ]
+    })
+);
+
 // 2. images
 workbox.routing.registerRoute(
     /\.(?:png|gif|jpg|jpeg|svg)$/,

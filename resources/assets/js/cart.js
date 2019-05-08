@@ -261,23 +261,24 @@ function updateCartCountInUI() {
 loaded = false;
 
 function loadAngularApp(){
+    console.log("Check ==>", cdn_url, file_hashes)
     if(!loaded){
         $("<link/>", {
            rel: "stylesheet",
            type: "text/css",
-           href: "/views/kss-pwa/styles.css"
+           href: cdn_url+"js/kss-pwa/styles." + file_hashes.styles +".css"
         }).appendTo("head");
 
-        $.getScript("/views/kss-pwa/runtime.js")        
+        $.getScript(cdn_url+"js/kss-pwa/runtime." + file_hashes.runtime +".js")        
             .done(function(script, textStatus){
                 // console.log(textStatus);
-                $.getScript("/views/kss-pwa/polyfills.js")
+                $.getScript(cdn_url+"js/kss-pwa/polyfills." + file_hashes.polyfills +".js")
                     .done(function(script2, textStatus2){
                         // console.log(textStatus2);
-                        // $.getScript("/views/kss-pwa/scripts.js")
+                        // $.getScript(cdn_url+"js/kss-pwa/scripts.js")
                             // .done(function(script3, textStatus3){
                                 // console.log(textStatus3);
-                                $.getScript("/views/kss-pwa/main.js")
+                                $.getScript(cdn_url+"js/kss-pwa/main." + file_hashes.main +".js")
                                     .done(function(script4,textStatus4){
                                         // console.log(textStatus4);
                                         loaded = true;
