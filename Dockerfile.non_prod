@@ -9,8 +9,7 @@ RUN set -x \
     --ignore-platform-reqs \
     --no-interaction \
     --no-plugins \
-    --no-autoloader \
-    --no-dev
+    --no-autoloader
 
 # Frontend
 FROM node:10.15 as frontend
@@ -26,7 +25,7 @@ WORKDIR /root/build/kss-pwa-app
 RUN npm install
 COPY kss-pwa-app ./
 RUN npm run build:old
-RUN npm run build:prod && npm run postbuild
+RUN npm run build:pre-prod && npm run postbuild 
 WORKDIR /root/build/
 ADD . /root/build/
 RUN npx workbox injectManifest workbox-config.js
@@ -39,7 +38,7 @@ COPY --from=vendor /app/vendor/ /var/www/html/vendor/
 WORKDIR /var/www/html
 RUN set -x \
         && composer config --global --auth github-oauth.github.com github_token \
-        && composer install --no-dev \
+        && composer install \
         && touch storage/logs/laravel.log \
         && chmod 777 storage/logs/laravel.log \
         && chmod -R 777 /var/www/html/storage

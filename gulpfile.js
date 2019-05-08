@@ -72,10 +72,15 @@ gulp.task('css', function() {
     .pipe(gzip({ append: false }))
     .pipe(gulp.dest('./public/css'));
 });
-// gulp.task('angular', function() {
-//     gulp.src('./public/js/cart/*.js')
+gulp.task('pwa', function() {
+    gulp.src('./public/js/kss-pwa/*')
+    .pipe(gzip({ append: false }))
+    .pipe(gulp.dest('./public/js/kss-pwa'));
+});
+// gulp.task('pwa-css', function() {
+//     gulp.src('./public/js/kss-pwa/*.css')
 //     .pipe(gzip({ append: false }))
-//     .pipe(gulp.dest('./public/js/cart'));
+//     .pipe(gulp.dest('./public/js/kss-pwa'));
 // });
 
-gulp.task('default', ['scripts', 'css']);
+gulp.task('default', ['scripts', 'css', 'pwa']);
