@@ -173,11 +173,29 @@
         "suborder_is_invoiced" : {
           "type": "boolean"
         },
+        "suborder_status" : {
+          "type": "keyword"
+        },
         "location_id" : {
           "type": "long"
         },
         "location_name" : {
           "type": "keyword"
+        },
+        "user_id" :{
+          "type": "long"
+        },
+        "user_name" : {
+          "type" : "text"
+        },
+        "user_email": {
+          "type":"text"
+        },
+        "user_phone": {
+          "type": "keyword"
+        },
+        "delivery_waybill": {
+          "type" : "keyword"
         }
 			}
 		}

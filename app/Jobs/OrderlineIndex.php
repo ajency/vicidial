@@ -49,8 +49,8 @@ class OrderlineIndex implements ShouldQueue
         $indexData['orderline_product_slug'] = $orderline->product_slug;
         $indexData['orderline_state'] = $orderline->state;
         $indexData['orderline_shipment_status'] = $orderline->shipment_status;
-        $indexData['orderline_shipment_delivery_date'] = $orderline->shipment_delivery_date;
-        $indexData['orderline_return_expiry_date'] = $orderline->return_expiry_date;
+        if($orderline->shipment_delivery_date) $indexData['orderline_shipment_delivery_date'] = $orderline->shipment_delivery_date->timestamp;
+        if($orderline->return_expiry_date) $indexData['orderline_return_expiry_date'] = $orderline->return_expiry_date->timestamp;
         $indexData['orderline_return_policy'] = $orderline->return_policy;
         $indexData['orderline_product_type'] = $orderline->product_type;
         $indexData['orderline_product_subtype'] = $orderline->product_subtype;
@@ -66,13 +66,19 @@ class OrderlineIndex implements ShouldQueue
         $indexData['order_status'] = $orderline->ordersNew->first()->status;
         $indexData['order_txnid'] = $orderline->ordersNew->first()->txnid;
         
+        $indexData['suborder_status'] = $orderline->subOrdersNew->first()->odoo_status;
         $indexData['suborder_is_shipped'] = $orderline->subOrdersNew->first()->is_shipped;
         $indexData['suborder_is_invoiced'] = $orderline->subOrdersNew->first()->is_invoiced;
         $indexData['location_id'] = $orderline->subOrdersNew->first()->location->warehouse_odoo_id;
         $indexData['location_name'] = $orderline->subOrdersNew->first()->location->warehouse_name;
 
+        $indexData['user_id'] =  $orderline->ordersNew->first()->cart->user->id;
+        $indexData['user_email'] =  $orderline->ordersNew->first()->cart->user->email_id;
+        $indexData['user_phone'] =  $orderline->ordersNew->first()->cart->user->phone;
+        $indexData['user_name'] = $orderline->ordersNew->first()->cart->user->name;
+
         $q = new ElasticQuery;
-        $q->setIndex('web_orders');
+        $q->setIndex(config('elastic.indexes.weborder'));
         $q->createIndexParams($orderline->id.'N', $indexData);
         $result = $q->index();
 
