@@ -71,7 +71,7 @@ class OrderLine extends Model
     }
 
     public static function indexAllOrderLines($min = false, $max = false){
-        $orderLines = self::select('id')
+        $orderLines = self::select('id');
         if($min){
             $orderlines->where('id','>', $min);
         }
@@ -80,7 +80,7 @@ class OrderLine extends Model
         }
         $orderlines->pluck('id')->chunk(30)->each(function ($chunkedOrderLines) {
             CreateOrderlineIndexJobs::dispatch($chunkedOrderLines);
-        })
+        });
     }
 
 }
