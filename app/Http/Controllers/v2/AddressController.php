@@ -34,8 +34,8 @@ class AddressController extends Controller
         $address->save();
 
         if (isset($params['user'])) {
-            $user->name     = $data['name'];
-            $user->email_id = $data['email'];
+            $user->name     = $params['name'];
+            $user->email_id = $params['email'];
             $user->save();
         }
 
