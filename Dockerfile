@@ -52,6 +52,7 @@ COPY --from=frontend /root/build/public/img/ /var/www/html/public/img/
 COPY --from=frontend /root/build/public/mix-manifest.json /var/www/html/public/mix-manifest.json
 COPY --from=frontend /root/build/public/views/ /var/www/html/public/views/
 COPY --from=frontend /root/build/public/service-worker.js /var/www/html/public/service-worker.js
+COPY --from=frontend /root/build/public/angular_file_hash.json /var/www/html/public/angular_file_hash.json
 COPY --from=frontend /root/build/public/assets/ /var/www/html/public/assets/
 
 RUN set -x \
