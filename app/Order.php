@@ -95,6 +95,11 @@ class Order extends Model
             foreach ($subOrder->orderLines as $orderLine) {
                 $orderLine->state = 'draft';
                 $orderLine->save();
+                try {
+                    $orderLine->update(['orderline_state' => 'draft']);
+                } catch (\Exception $e) {
+                    \Log::error($e->message);
+                }
                 if (!isset($variantQuantity[$orderLine->variant_id])) {
                     $variantQuantity[$orderLine->variant_id] = 0;
                 }

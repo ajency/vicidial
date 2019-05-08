@@ -324,6 +324,17 @@ class SubOrder extends Model
             if (array_key_exists($orderLine->id, $lines_status)) {
                 $orderLine->state = $lines_status[$orderLine->id];
                 $orderLine->save();
+                try{
+                    $changes = [
+                        'suborder_is_shipped'   => $is_shipped,
+                        'suborder_is_invoiced'  => $is_invoiced,
+                        'suborder_status'       => $state,
+                        'orderline_state'       => $lines_status[$orderLine->id]
+                    ];
+                    $orderLine->updateIndex($changes);
+                }catch (\Exception $e){
+                    \Log::error($e->message);
+                }
             }
         }
     }

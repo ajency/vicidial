@@ -52,6 +52,16 @@ class OrderLineStatus implements ShouldQueue
                 $ol->shipment_delivery_date = $this->delivery_date;
                 $ol->return_expiry_date     = $return_expiry_date;
                 $ol->save();
+                try {
+                    $changes = [
+                        'orderline_return_expiry_date'     => $return_expiry_date,
+                        'orderline_shipment_delivery_date' => $this->delivery_date,
+                        'orderline_shipment_status'        => $this->status,
+                    ];
+                    $ol->updateIndex($changes);
+                } catch (\Exception $e) {
+                    \Log::error($e->message);
+                }
             }
         }
     }

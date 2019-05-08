@@ -2,8 +2,10 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Jobs\CreateOrderlineIndexJobs;
+use App\Jobs\OrderlineIndex;
+use Ajency\Connections\ElasticQuery;
+use Illuminate\Database\Eloquent\Model;
 
 class OrderLine extends Model
 {
@@ -70,17 +72,35 @@ class OrderLine extends Model
         return $this->morphedByMany('App\SubOrder', 'line_mapping')->wherePivot('type', 'Returned Transaction');
     }
 
-    public static function indexAllOrderLines($min = false, $max = false){
+    public static function indexAllOrderLines($min = false, $max = false)
+    {
         $orderlines = self::select('id');
-        if($min){
-            $orderlines->where('id','>', $min);
+        if ($min) {
+            $orderlines->where('id', '>', $min);
         }
-        if($max){
-            $orderlines->where('id','<', $max);
+        if ($max) {
+            $orderlines->where('id', '<', $max);
         }
         $orderlines->pluck('id')->chunk(30)->each(function ($chunkedOrderLines) {
             CreateOrderlineIndexJobs::dispatch($chunkedOrderLines)->onQueue('order_index');
         });
+    }
+
+    public function index()
+    {
+        OrderlineIndex::dispatch($this->id)->onQueue('order_index');
+    }
+
+    public function updateIndex($changes)
+    {
+        $q = new ElasticQuery;
+        $q->setIndex(config('elastic.indexes.weborder'));
+        $q->createUpdateParams($this->id.'N',$changes);
+        $result = $q->update();
+        if(!isset($result['result']) && $result['result'] != 'updated'){
+            throw new Exception(json_encode($result));
+            
+        }
     }
 
 }
