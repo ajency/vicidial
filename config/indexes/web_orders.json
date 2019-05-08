@@ -1,0 +1,177 @@
+{
+	"mappings": {
+		"_doc": {
+			"properties": {
+				"orderline_id":{
+          "type": "long"
+        },
+        "orderline_title":{
+          "type": "text"
+        },        
+        "orderline_name":{
+          "type": "text"
+        },
+        "orderline_variant_id":{
+          "type": "long"
+        },
+        "orderline_images":{
+          "properties": {
+            "1x" : {
+              "type" : "text"
+            },
+            "2x" : {
+              "type" : "text"
+            },
+            "3x" : {
+              "type" : "text"
+            }
+          } 
+        },
+        "orderline_size":{
+          "type": "keyword"
+        },
+        "orderline_price_mrp": {
+          "type" : "long"
+        },
+        "orderline_price_final": {
+          "type" : "long"
+        },
+        "orderline_price_discounted": {
+          "type" : "long"
+        },
+        "orderline_discount_per": {
+          "type" : "long"
+        },
+        "orderline_product_id": {
+          "type" : "long"
+        },
+        "orderline_product_color_id": {
+          "type" : "long"
+        },
+        "orderline_product_slug": {
+          "type" : "text"
+        },
+        "orderline_state": {
+          "type" : "keyword"
+        },
+        "orderline_shipment_status": {
+          "type" : "keyword"
+        },
+        "orderline_shipment_delivery_date": {
+          "type" : "date",
+          "format": "epoch_second"
+        },
+        "orderline_return_expiry_date": {
+          "type" : "date",
+          "format": "epoch_second"
+        },
+        "orderline_return_policy": {
+          "properties": {
+            "id": {
+              "type": "long"
+            },
+            "days": {
+              "type": "long"
+            },
+            "title": {
+              "type": "keyword"
+            },
+            "display_name": {
+              "type": "text"
+            }
+          }
+        },
+        "orderline_product_type": {
+          "type" : "keyword"
+        },
+        "orderline_product_subtype": {
+          "type" : "keyword"
+        },
+        "orderline_is_returned": {
+          "type" : "boolean"
+        },
+        "order_address_id": {
+          "type": "long"
+        },
+        "order_type": {
+          "type": "keyword"
+        },
+        "order_transaction_mode": {
+          "type": "keyword"
+        },
+        "order_address_data": {
+          "properties": {
+            "id": {
+              "type": "long"
+            },
+            "city": {
+              "type": "keyword",
+              "ignore_above": 256
+            },
+            "name": {
+              "type": "text"
+            },
+            "phone":{
+              "type" : "keyword"
+            },
+            "state": {
+              "type": "keyword"
+            },
+            "address": {
+              "type": "text"
+            },
+            "default": {
+              "type": "boolean"
+            },
+            "pincode": {
+              "type": "long"
+            },
+            "landmark": {
+              "type": "text"
+            },
+            "state_id": {
+              "type" : "long"
+            }
+          }
+        },
+        "order_aggregate_data": {
+          "properties" : {
+            "you_pay": {
+              "type" : "long"
+            },
+            "mrp_total": {
+              "type": "long"
+            },
+            "shipping_fee" : {
+              "type" : "long"
+            },
+            "cart_discount": {
+              "type": "long"
+            },
+            "sale_price_total" : {
+              "type" : "long"
+            }
+          }
+        },
+        "order_status": {
+          "type": "keyword"
+        },
+        "order_txnid": {
+          "type": "keyword"
+        },
+        "suborder_is_shipped" : {
+          "type": "boolean"
+        },
+        "suborder_is_invoiced" : {
+          "type": "boolean"
+        },
+        "location_id" : {
+          "type": "long"
+        },
+        "location_name" : {
+          "type": "keyword"
+        }
+			}
+		}
+	}
+}

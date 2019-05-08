@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Jobs\CreateOrderlineIndexJobs;
 
 class OrderLine extends Model
 {
@@ -67,6 +68,19 @@ class OrderLine extends Model
     public function subOrdersReturned()
     {
         return $this->morphedByMany('App\SubOrder', 'line_mapping')->wherePivot('type', 'Returned Transaction');
+    }
+
+    public static function indexAllOrderLines($min = false, $max = false){
+        $orderLines = self::select('id')
+        if($min){
+            $orderlines->where('id','>', $min);
+        }
+        if($max){
+            $orderlines->where('id','<', $max);
+        }
+        $orderlines->pluck('id')->chunk(30)->each(function ($chunkedOrderLines) {
+            CreateOrderlineIndexJobs::dispatch($chunkedOrderLines);
+        })
     }
 
 }
