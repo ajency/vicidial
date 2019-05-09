@@ -12,15 +12,15 @@ use Illuminate\Queue\SerializesModels;
 class MapUnverifiedUsers implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    protected $userId;
+    protected $unverified_user;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($userId)
+    public function __construct($user)
     {
-        $this->userId = $userId;
+        $this->unverified_user = $user;
     }
 
     /**
@@ -30,18 +30,16 @@ class MapUnverifiedUsers implements ShouldQueue
      */
     public function handle()
     {
-        $unverified_user = User::find($this->userId);
-        $verified_user   = User::where('phone', $unverified_user->phone)->where('verified', true)->first();
-        if (!$verified_user) {
-            $unverified_user->verified = true;
-            $unverified_user->save();
-        } 
-        else {
-            foreach ($unverified_user->carts as $cart) {            
+        $verified_user = User::where('phone', $this->unverified_user->phone)->where('verified', true)->first();
+        if (is_null($verified_user)) {
+            $this->unverified_user->verified = true;
+            $this->unverified_user->save();
+        } else {
+            foreach ($this->unverified_user->carts as $cart) {
                 $cart->user_id = $verified_user->id;
                 $cart->save();
             }
-            foreach ($unverified_user->addresses as $address) {
+            foreach ($this->unverified_user->addresses as $address) {
                 $address->user_id = $verified_user->id;
                 $address->save();
             }
