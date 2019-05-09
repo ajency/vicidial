@@ -98,11 +98,11 @@
         "orderline_is_returned": {
           "type" : "boolean"
         },
-        "order_address_id": {
+        "order_id":{
           "type": "long"
         },
-        "order_type": {
-          "type": "keyword"
+        "order_address_id": {
+          "type": "long"
         },
         "order_transaction_mode": {
           "type": "keyword"
@@ -167,6 +167,36 @@
         "order_txnid": {
           "type": "keyword"
         },
+        "return_order_id": {
+          "type": "long"
+        },
+        "return_order_txnid": {
+          "type": "keyword"
+        },
+        "return_order_reason_id":{
+          "type":"long"
+        },
+        "return_order_reason_additional_text": {
+          "type": "text"
+        },
+        "cancelled_by": {
+          "type" : "keyword"
+        },
+        "cancel_order_id": {
+          "type": "long"
+        },
+        "cancel_order_txnid": {
+          "type": "keyword"
+        },
+        "cancel_order_reason_id":{
+          "type":"long"
+        },
+        "cancel_order_reason_additional_text": {
+          "type": "text"
+        },
+        "suborder_id": {
+          "type": "long"
+        },
         "suborder_is_shipped" : {
           "type": "boolean"
         },
@@ -175,6 +205,12 @@
         },
         "suborder_status" : {
           "type": "keyword"
+        },
+        "return_suborder_id": {
+          "type" : "long"
+        },
+        "cancel_suborder_id": {
+          "type" : "long"
         },
         "location_id" : {
           "type": "long"

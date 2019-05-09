@@ -145,6 +145,7 @@ class Order extends Model
                 $order->orderLines()->attach($orderLine->id, ['type' => $order->type]);
                 $orderLine->state = 'processing-cancel';
                 $orderLine->save();
+                $orderLine->index();
             }
             CancelOdooOrder::dispatch($cancelSubOrder, $subOrder->id)->onQueue('odoo_order');
         }
@@ -436,6 +437,7 @@ class Order extends Model
             $comment->save();
             $order_line->is_returned = true;
             $order_line->save();
+            $order_line->index();
         }
 
         ReturnOdooOrder::dispatch($returnSubOrder)->onQueue('odoo_order');
