@@ -35,12 +35,12 @@
 	          <p class="sub-text w-75 mt-3">Your Shipping and payment details will be associated with this number</p>
 	          <form #mobileForm="ngForm">
 	            <div class="form-group mb-0">
-	              <input #mobileInput type="tel" class="form-control form-control-number form-control-lg" (keyup)="enterclick($event)" [ngClass]="{'has-error' : userValidation.mobileValidationFailed, 'has-value' : mobileNumber}" id="frm-mobile" name="mobile" [(ngModel)]="mobileNumber" required minlength = "10" maxlength = "10" pattern="^[789]\d{9}$" inputmode="numeric" appNumbers appKssAutoFocus>
+	              <input #mobileInput type="tel" class="form-control form-control-number form-control-lg" (keyup)="enterclick($event)" [ngClass]="{'has-error' : userValidation.mobileValidationFailed, 'has-value' : mobileNumber}" id="frm-mobile" name="mobile" [(ngModel)]="mobileNumber" required minlength = "10" maxlength = "10" pattern="^[6789]\d{9}$" inputmode="numeric" appNumbers appKssAutoFocus>
 	              <label class="control-label">Enter Mobile Number</label>
 	               <small *ngIf="userValidation.mobileValidationFailed" id="passwordHelpBlock" class="form-text text-danger">
 						{{userValidation.mobileValidationErrorMsg}}
 					</small>
-					<small *ngIf="mobileNumber<7000000000 && mobileNumber.length== 10" id="passwordHelpBlock" class="form-text text-danger">
+					<small *ngIf="mobileNumber<6000000000 && mobileNumber.length== 10" id="passwordHelpBlock" class="form-text text-danger">
 						Please enter a valid Indian Mobile Number
 					</small>
 	            </div>

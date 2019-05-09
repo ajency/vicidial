@@ -14,11 +14,11 @@
 					</div>
 				</div>
 				<div class="col-md-12">
-					<div class="form-group" [ngClass]="{'has-error' : newAddress.phone<7000000000 && newAddress.phone.length== 10 }">
-						<input class="form-control form-control-lg" id="mobile" type="tel" minlength = "10" maxlength = "10" pattern="^[789]\d{9}$" inputmode="numeric" name="mobile" for="inputError" [(ngModel)]="newAddress.phone" required appNumbers [ngClass]="{'has-value' : newAddress.phone}" (blur)="phoneBlur = true" (focus)="phoneBlur = false">
+					<div class="form-group" [ngClass]="{'has-error' : newAddress.phone<6000000000 && newAddress.phone.length== 10 }">
+						<input class="form-control form-control-lg" id="mobile" type="tel" minlength = "10" maxlength = "10" pattern="^[6789]\d{9}$" inputmode="numeric" name="mobile" for="inputError" [(ngModel)]="newAddress.phone" required appNumbers [ngClass]="{'has-value' : newAddress.phone}" (blur)="phoneBlur = true" (focus)="phoneBlur = false">
 						 <label class="control-label" for="inputError">Mobile Number <span class="pl-1 text-danger">*</span></label>
 						  <i class="fas fa-info-circle mobile-info-icon on-address" data-toggle="tooltip" data-placement="top" title="We will use this number to contact you at the time of delivery"></i>
-						 <small *ngIf="(newAddress.phone<7000000000 && newAddress.phone.length== 10) || (phoneBlur && newAddress.phone.length != 10) " id="passwordHelpBlock" class="form-text text-danger">
+						 <small *ngIf="(newAddress.phone<6000000000 && newAddress.phone.length == 10) || (phoneBlur && newAddress.phone.length != 10) " id="passwordHelpBlock" class="form-text text-danger">
 							Please enter a valid Indian Mobile Number
 						</small>
 					</div>
