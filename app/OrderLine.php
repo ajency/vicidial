@@ -2,9 +2,9 @@
 
 namespace App;
 
+use Ajency\Connections\ElasticQuery;
 use App\Jobs\CreateOrderlineIndexJobs;
 use App\Jobs\OrderlineIndex;
-use Ajency\Connections\ElasticQuery;
 use Illuminate\Database\Eloquent\Model;
 
 class OrderLine extends Model
@@ -72,6 +72,11 @@ class OrderLine extends Model
         return $this->morphedByMany('App\SubOrder', 'line_mapping')->wherePivot('type', 'Returned Transaction');
     }
 
+    public function comments()
+    {
+        return $this->morphMany('App\Comment','model');
+    }
+
     public static function indexAllOrderLines($min = false, $max = false)
     {
         $orderlines = self::select('id');
@@ -95,11 +100,11 @@ class OrderLine extends Model
     {
         $q = new ElasticQuery;
         $q->setIndex(config('elastic.indexes.weborder'));
-        $q->createUpdateParams($this->id.'N',$changes);
+        $q->createUpdateParams($this->id, $changes);
         $result = $q->update();
-        if(!isset($result['result']) && $result['result'] != 'updated'){
+        if (!isset($result['result']) && $result['result'] != 'updated') {
             throw new Exception(json_encode($result));
-            
+
         }
     }
 

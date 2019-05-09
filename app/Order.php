@@ -51,6 +51,11 @@ class Order extends Model
         return $this->morphToMany('App\OrderLine', 'line_mapping');
     }
 
+    public function comments()
+    {
+        return $this->morphMany('App\Comment','model');
+    }
+
     public function setSubOrders()
     {
         $cart = Cart::find($this->cart_id);

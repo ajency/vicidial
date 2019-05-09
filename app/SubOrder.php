@@ -33,6 +33,11 @@ class SubOrder extends Model
     {
         return $this->morphToMany('App\OrderLine', 'line_mapping');
     }
+    
+    public function comments()
+    {
+        return $this->morphMany('App\Comment','model');
+    }
 
     public function setItems($items)
     {

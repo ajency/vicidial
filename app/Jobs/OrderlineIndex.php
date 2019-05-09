@@ -74,14 +74,18 @@ class OrderlineIndex implements ShouldQueue
 
         if($orderline->ordersReturned->first() !== null){
             $indexData['return_order_id'] =  $orderline->ordersReturned->first()->id;
-            $indexData['return_order_txnid']=  $orderline->ordersReturned->first()->txnid; 
+            $indexData['return_order_txnid']=  $orderline->ordersReturned->first()->txnid;
+            $indexData['return_order_reason_id']=  $orderline->ordersReturned->first()->comments->first()->reason_id;
+            $indexData['return_order_reason_additional_text']=  $orderline->ordersReturned->first()->comments->first()->comments;
             $indexData['return_suborder_id']  = $orderline->subOrdersReturned->first()->id;
         }
         
         if($orderline->ordersCancelled->first() !== null){
-            $indexData['return_order_id'] =  $orderline->ordersCancelled->first()->id;
-            $indexData['return_order_txnid']=  $orderline->ordersCancelled->first()->txnid; 
-            $indexData['return_suborder_id']  = $orderline->subOrdersCancelled->first()->id;  
+            $indexData['cancel_order_id'] =  $orderline->ordersCancelled->first()->id;
+            $indexData['cancel_order_txnid']=  $orderline->ordersCancelled->first()->txnid;
+            $indexData['cancel_order_reason_id']=  $orderline->ordersCancelled->first()->comments->first()->reason_id;
+            $indexData['cancel_order_reason_additional_text']=  $orderline->ordersCancelled->first()->comments->first()->comments; 
+            $indexData['cancel_suborder_id']  = $orderline->subOrdersCancelled->first()->id;  
         }
 
         $indexData['suborder_id']          = $orderline->subOrdersNew->first()->id;
