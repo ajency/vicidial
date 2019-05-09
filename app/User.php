@@ -2,12 +2,13 @@
 
 namespace App;
 
-use App\Cart;
 use Ajency\Connections\OdooConnect;
+use App\Cart;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use App\Jobs\MapUnverifiedUsers;
 
 class User extends Authenticatable
 {
@@ -69,8 +70,8 @@ class User extends Authenticatable
         $cart->save();
         $ac = ($old_cart == null) ? $this->activeCart() : $old_cart;
         if ($replicate) {
-            $cart->cart_data    = $ac->cart_data;
-            $cart->coupon = $ac->coupon;
+            $cart->cart_data = $ac->cart_data;
+            $cart->coupon    = $ac->coupon;
             $cart->save();
         }
         $ac->active = 0;
@@ -167,5 +168,13 @@ class User extends Authenticatable
         $response['mobile'] = $this->phone;
 
         return $response;
+    }
+
+    public static function mapUnverifiedUsers($from_id, $to_id)
+    {
+        $users = self::select('id')->where('id', '>=', $from_id)->where('id', '<=', $to_id)->where('verified', false)->get()->pluck('id');
+        foreach ($users as $user_id) {
+            MapUnverifiedUsers::dispatch($user_id)->onQueue('map_users');
+        }
     }
 }
