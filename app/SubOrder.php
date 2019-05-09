@@ -33,10 +33,10 @@ class SubOrder extends Model
     {
         return $this->morphToMany('App\OrderLine', 'line_mapping');
     }
-    
+
     public function comments()
     {
-        return $this->morphMany('App\Comment','model');
+        return $this->morphMany('App\Comment', 'model');
     }
 
     public function setItems($items)
@@ -329,17 +329,13 @@ class SubOrder extends Model
             if (array_key_exists($orderLine->id, $lines_status)) {
                 $orderLine->state = $lines_status[$orderLine->id];
                 $orderLine->save();
-                try{
-                    $changes = [
-                        'suborder_is_shipped'   => $is_shipped,
-                        'suborder_is_invoiced'  => $is_invoiced,
-                        'suborder_status'       => $state,
-                        'orderline_state'       => $lines_status[$orderLine->id]
-                    ];
-                    $orderLine->updateIndex($changes);
-                }catch (\Exception $e){
-                    \Log::error($e->message);
-                }
+                $changes = [
+                    'suborder_is_shipped'  => $is_shipped,
+                    'suborder_is_invoiced' => $is_invoiced,
+                    'suborder_status'      => $state,
+                    'orderline_state'      => $lines_status[$orderLine->id],
+                ];
+                $orderLine->updateIndex($changes);
             }
         }
     }

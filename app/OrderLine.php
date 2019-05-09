@@ -2,9 +2,10 @@
 
 namespace App;
 
-use Ajency\Connections\ElasticQuery;
+
 use App\Jobs\CreateOrderlineIndexJobs;
 use App\Jobs\OrderlineIndex;
+use App\Jobs\UpdateOrderLineIndex;
 use Illuminate\Database\Eloquent\Model;
 
 class OrderLine extends Model
@@ -98,13 +99,13 @@ class OrderLine extends Model
 
     public function updateIndex($changes)
     {
-        $q = new ElasticQuery;
-        $q->setIndex(config('elastic.indexes.weborder'));
-        $q->createUpdateParams($this->id, $changes);
-        $result = $q->update();
-        if (!isset($result['result']) && $result['result'] != 'updated') {
-            throw new Exception(json_encode($result));
+        UpdateOrderLineIndex::dispatch($this->id,$changes)->onQueue('order_index');
+    }
 
+    public static function updateMultipleIndex($params){
+        foreach ($params['orderLines'] as $key => $changes) {
+            $ol = self::find($key);
+            $ol->updateIndex($changes);
         }
     }
 

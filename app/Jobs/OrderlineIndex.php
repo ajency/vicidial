@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use Ajency\Connections\ElasticQuery;
 use App\OrderLine;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -50,11 +51,13 @@ class OrderlineIndex implements ShouldQueue
         $indexData['orderline_state']            = $orderline->state;
         $indexData['orderline_shipment_status']  = $orderline->shipment_status;
         if ($orderline->shipment_delivery_date) {
-            $indexData['orderline_shipment_delivery_date'] = $orderline->shipment_delivery_date->timestamp;
+            //remind the idiots to fix their mistake
+            $indexData['orderline_shipment_delivery_date'] = (new Carbon($orderline->shipment_delivery_date))->timestamp;
         }
 
         if ($orderline->return_expiry_date) {
-            $indexData['orderline_return_expiry_date'] = $orderline->return_expiry_date->timestamp;
+            //ugh same thing again
+            $indexData['orderline_return_expiry_date'] = (new Carbon($orderline->return_expiry_date))->timestamp;
         }
 
         $indexData['orderline_return_policy']   = $orderline->return_policy;
@@ -75,8 +78,8 @@ class OrderlineIndex implements ShouldQueue
         if($orderline->ordersReturned->first() !== null){
             $indexData['return_order_id'] =  $orderline->ordersReturned->first()->id;
             $indexData['return_order_txnid']=  $orderline->ordersReturned->first()->txnid;
-            $indexData['return_order_reason_id']=  $orderline->ordersReturned->first()->comments->first()->reason_id;
-            $indexData['return_order_reason_additional_text']=  $orderline->ordersReturned->first()->comments->first()->comments;
+            $indexData['return_order_reason_id']=  ->comments->first()->reason_id;
+            $indexData['return_order_reason_additional_text']=  ->comments->first()->comments;
             $indexData['return_suborder_id']  = $orderline->subOrdersReturned->first()->id;
         }
         

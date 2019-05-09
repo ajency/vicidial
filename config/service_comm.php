@@ -23,5 +23,9 @@ return [
 			'model' => 'App\Location',
 			'function' => 'addVendorLocation',
 		],
+		'updateOrderLineIndex' => [
+			'model' => "App\OrderLine",
+			'function' => 'updateMultipleIndex'
+		],
 	],
 ];
