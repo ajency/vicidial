@@ -48,7 +48,7 @@ Route::group([
         Route::get('/order/{id}/resend-otp', $group_app_version . '\PaymentController@reSendCODVerifySMS');
         Route::get('/order/{id}/verify-otp', $group_app_version . '\PaymentController@verifyOTP');
         Route::group([
-            'middleware' => ['check-user'],
+            'middleware' => ['check-user:' . $group_app_version],
         ], function () use ($group_app_version) {
             Route::post('/orders', $group_app_version . '\OrderController@listOrders');
             Route::get('/order/{txnid}/details', $group_app_version . '\OrderController@singleOrder');
@@ -138,7 +138,7 @@ Route::group([
             Route::get('/order/{id}/resend-otp', $group_app_version . '\PaymentController@reSendCODVerifySMS');
             Route::get('/order/{id}/verify-otp', $group_app_version . '\PaymentController@verifyOTP');
             Route::group([
-                'middleware' => ['check-user'],
+                'middleware' => ['check-user:' . $group_app_version],
             ], function () use ($group_app_version) {
                 Route::post('/orders', $group_app_version . '\OrderController@listOrders');
                 Route::get('/order/{txnid}/details', $group_app_version . '\OrderController@singleOrder');

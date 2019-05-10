@@ -4,11 +4,11 @@ namespace App;
 
 use Ajency\Connections\OdooConnect;
 use App\Cart;
+use App\Jobs\MapUnverifiedUsers;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
-use App\Jobs\MapUnverifiedUsers;
 
 class User extends Authenticatable
 {
@@ -59,6 +59,23 @@ class User extends Authenticatable
     {
         $token = explode('Bearer ', $token)[1];
         $user  = self::where('api_token', $token)->first();
+        return $user;
+    }
+
+    public static function getUserByPassportToken(string $token)
+    {
+        $token_parts        = explode('.', $token);
+        $token_header       = $token_parts[0];
+        $token_header_json  = base64_decode($token_header);
+        $token_header_array = json_decode($token_header_json, true);
+        $user_token         = $token_header_array['jti'];
+
+        $tokenData = \DB::table('oauth_access_tokens')->where('id', $user_token)->first(['user_id']);
+        if (is_null($tokenData)) {
+            abort(403);
+        }
+
+        $user = self::find($tokenData->user_id);
         return $user;
     }
 

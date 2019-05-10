@@ -127,7 +127,7 @@ class OrderController extends Controller
             if (!isset($_COOKIE['token'])) {
                 abort(401);
             }
-            $user = User::getUserByToken('Bearer ' . $_COOKIE['token']);
+            $user = User::getUserByPassportToken($_COOKIE['token']);
             validateOrder($user, $order);
         }
 

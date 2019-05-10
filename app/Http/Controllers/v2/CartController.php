@@ -86,7 +86,6 @@ class CartController extends Controller
             } else {
                 abort(404, "Quantity not available");
             }
-            $request->session()->put('active_cart_id', $cart->id);
             $item["quantity"]  = intval($cart->cart_data[$item["id"]]["quantity"]);
             $item["timestamp"] = intval($cart->cart_data[$item["id"]]["timestamp"]);
         }
@@ -346,14 +345,17 @@ class CartController extends Controller
     public function startFresh(Request $request)
     {
         $request->validate(['cart_id' => 'sometimes|exists:carts,id']);
-        $user = $request->user();
+        $params = $request->all();
+        $user   = $request->user();
+        
         if (isset($params['cart_id'])) {
             $old_cart = Cart::find($params['cart_id']);
             validateCart($user, $old_cart);
-            $cart = $user->newCart(true, $old_cart);
         } else {
-            $cart = $user->newCart(true);
+            $old_cart = Cart::find($params['active_cart']);
         }
+        $cart = $user->newCart(true, $old_cart);
+
         return response()->json(['cart_id' => $cart->id]);
     }
 }

@@ -13,12 +13,23 @@ class CheckUserVerified
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next, $version)
     {
-        if ($request->user()->verified == true) {
-            return $next($request);
-        } else {
-            abort(403);
+        switch ($version) {
+            case 'v1':
+                if ($request->user()->verified == true) {
+                    return $next($request);
+                } else {
+                    abort(403);
+                }
+                break;
+            case 'v2':
+                if ($request->all()['token_verified'] == true) {
+                    return $next($request);
+                } else {
+                    abort(403);
+                }
+                break;
         }
     }
 }

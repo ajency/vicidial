@@ -79,7 +79,7 @@ class PaymentController extends Controller
                         $cart       = $order->cart;
                         $cart->type = 'order-complete';
                         $cart->save();
-                        $order->cart->user->newCart();
+                        $order->cart->user->newCart(false, $cart);
                         $order->sendSuccessEmail();
                         $order->sendSuccessSMS();
                         $order->sendVendorSMS();
@@ -99,7 +99,7 @@ class PaymentController extends Controller
                     $cart       = $order->cart;
                     $cart->type = 'order-complete';
                     $cart->save();
-                    $order->cart->user->newCart();
+                    $order->cart->user->newCart(false, $cart);
                     $order->sendSuccessEmail();
                     $order->sendSuccessSMS();
                     $order->sendVendorSMS();
