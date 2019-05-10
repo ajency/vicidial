@@ -1,1 +1,0 @@
-importScripts("https://kidsuperstore-in.pushengage.com/service-worker.js?ver=2.0.0");

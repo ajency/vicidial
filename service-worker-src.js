@@ -1,4 +1,5 @@
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js');
+importScripts("https://kidsuperstore-in.pushengage.com/service-worker.js?ver=2.0.0");
 
 workbox.skipWaiting();
 workbox.clientsClaim();
