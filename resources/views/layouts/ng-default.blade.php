@@ -34,7 +34,7 @@
 	        });
 	    }
 	</script>
-	<script> window._peq = window._peq || []; window._peq.push(["init"]); </script>
+	<script> window._peq = window._peq || []; window._peq.push(["init"]); var pathvars={workerStatus: false};</script>
 	<script src="https://clientcdn.pushengage.com/core/c9eafc08eddfe6530ece153bdd5f12c3.js" async></script>
 
 	@include('includes.ng-foot')
