@@ -7,7 +7,6 @@
 			<p class="sub-text w-75 mt-3">Enter the address where your items will be shipped</p>
 			<div class="row">
 				<div class="col-md-12">
-					<!--firstName-->
 					<div class="form-group ">
 						<input class="form-control form-control-lg" id="names" type="text" name="name" [(ngModel)]="newAddress.name" required [ngClass]="{'has-value' : newAddress.name}" (ngModelChange)="copyUserName(newAddress.pincode)">
 						<label class="control-label">Full Name <span class="pl-1 text-danger">*</span></label>
@@ -22,13 +21,7 @@
 							Please enter a valid Indian Mobile Number
 						</small>
 					</div>
-				</div>
-<!-- 							<div class="col-md-12">
-					<div class="form-group">
-						<input class="form-control form-control-lg" id="email-address" type="email" name="email" [(ngModel)]="newAddress.email" required [ngClass]="{'has-value' : newAddress.email}">
-						<label class="control-label">Email Address <span class="pl-1 text-danger">*</span></label>
-					</div>
-				</div>		 -->					
+				</div>					
 			</div>
 			<div class="row">
 				<div class="col-md-12">
@@ -65,12 +58,6 @@
 						</div>
 					</div>
 				</div>
-<!-- 				<div class="col-md-6">
-					<div class="form-group">
-						<input class="form-control form-control-lg" id="locality" type="text" name="locality" [(ngModel)]="newAddress.locality" required [ngClass]="{'has-value' : newAddress.locality}">
-						<label class="control-label">Locality/Town <span class="pl-1 text-danger">*</span></label>
-					</div>
-				</div> -->
 			</div>
 			<div class="text-center d-none" [ngClass]="{'d-block': showPicodeLoader}" ><i class="fa-circle-notch fa-lg fa-spin fas text-primary"></i></div>
 			<div class="row" *ngIf="newAddress.state_id && newAddress.city">
@@ -81,18 +68,6 @@
 					</div>
 				</div>
 				<div class="col-md-6">
-<!-- 						<div class="form-group">
-						<input class="form-control form-control-lg" id="state" type="text" name="state" [(ngModel)]="newAddress.state" required [ngClass]="{'has-value' : newAddress.state}">
-						<label class="control-label">State<span class="pl-1 text-danger">*</span></label>
-					</div> -->
-					<!-- <div class="form-group custom-bs-select"> -->
-						<!-- <select name="" id="state" class="form-control form-control-lg has-value"  name="state" data-style="form-control" [(ngModel)]="newAddress.state_id" required data-live-search="true">
-							<option value="">--Select--</option>
-							<option *ngFor="let state of states" value="{{state.id}}">{{state.state}}</option>
-						</select> -->
-						<!-- <input class="form-control form-control-lg" id="state" type="text" name="state" [(ngModel)]="newAddress.state_id" required [ngClass]="{'has-value' : newAddress.state}">
-						<label class="control-label">State <span class="pl-1 text-danger">*</span></label> -->						
-					<!-- </div> -->
 					<div class="form-group ">
 						<input disabled class="form-control form-control-lg" id="state" type="text" name="state" required value="{{getStateName(newAddress.state_id)}}" [ngClass]="{'has-value' : newAddress.city}">
 						<label class="control-label">State<span class="pl-1 text-danger">*</span></label>
@@ -107,33 +82,34 @@
 					</div>
 				</div>
 			</div>
-		</div>	
-	</form>
-	<div *ngIf="!hideUserFields && addAddress" class="d-block">
-		<hr>
-		<div class="">
-			<h3 class="">Account Information</h3>
 		</div>
-		<p class="sub-text w-75 mt-3">We will be sending your order updates on the information provided below. This is a one time requirement. You can edit this information under your profile in My Account section.</p>
-		<form #userInfo="ngForm">
-			<div class="form-group mb-0">
-				<input type="email" class="form-control form-control-lg" id="frm-email" name="email" required [(ngModel)]="user.email" [ngClass]="{'has-value' : user.email}" pattern="[^ @]+@[^ @]+\.[^ @]+">
-				<label class="control-label">Email Id</label>
+		<div *ngIf="!hideUserFields && addAddress" class="d-block">
+			<hr>
+			<div class="">
+				<h3 class="">Account Information</h3>
 			</div>
-			<div class="form-group mb-0">
-				<input type="text" class="form-control form-control-lg" id="frm-name" name="name" required [(ngModel)]="user.name" [disabled]="user.default" [ngClass]="{'has-value' : user.name}">
-				<label class="control-label">Full Name</label>			              
-			</div>
-		</form>
-		<div class="row mt-4 mb-3">
-			<div class="col-md-12">
-				<div class="custom-control custom-checkbox">
-					<input type="checkbox" class="custom-control-input" id="customCheck2" name="default" [(ngModel)]="user.default" (change)="copyUserName()">
-					<label class="custom-control-label font-weight-normal" for="customCheck2">Same as my Shipping name</label>
+			<p class="sub-text w-75 mt-3">We will be sending your order updates on the information provided below. This is a one time requirement. You can edit this information under your profile in My Account section.</p>
+			<!-- <form #userInfo="ngForm"> -->
+				<div class="form-group mb-0">
+					<input type="email" class="form-control form-control-lg" id="frm-email" name="email" required [(ngModel)]="user.email" [ngClass]="{'has-value' : user.email}" pattern="[^ @]+@[^ @]+\.[^ @]+">
+					<label class="control-label">Email Id</label>
+				</div>
+				<div class="form-group mb-0">
+					<input type="text" class="form-control form-control-lg" id="frm-name" name="account_name" required [(ngModel)]="user.name" [disabled]="user.default" [ngClass]="{'has-value' : user.name}">
+					<label class="control-label">Full Name</label>			              
+				</div>
+			<!-- </form> -->
+			<div class="row mt-4 mb-3">
+				<div class="col-md-12">
+					<div class="custom-control custom-checkbox">
+						<input type="checkbox" class="custom-control-input" id="customCheck2" name="default" [(ngModel)]="user.default" (change)="copyUserName()">
+						<label class="custom-control-label font-weight-normal" for="customCheck2">Same as my Shipping name</label>
+					</div>
 				</div>
 			</div>
-		</div>
-	</div>
+		</div>	
+	</form>
+
 
 
 	<div *ngIf="!addAddress && addresses" class="shipping-content-info mb-4" style="display: block;">
@@ -173,7 +149,7 @@
 				<button [disabled]="!addresses.length" type="button" class="shipping-details-save btn kss-btn kss-btn--link kss-btn--big mt-1 mb-1 ml-auto mr-auto" (click)="updatedAddAddress()" >Cancel </button>
 			</div>
 			<div class="col-6 text-center">
-				<button [disabled]="!myForm.valid || !(newAddress.state_id && newAddress.city) || (!hideUserFields && userInfo && !userInfo.valid)"  type="button" class="shipping-details-save btn kss-btn kss-btn--big mt-1 mb-1 ml-auto mr-auto" (click)="saveNewAddress()"> Save </button>
+				<button [disabled]="!myForm.valid || !(newAddress.state_id && newAddress.city)"  type="button" class="shipping-details-save btn kss-btn kss-btn--big mt-1 mb-1 ml-auto mr-auto" (click)="saveNewAddress()"> Save </button>
 			</div>
 		</div>
 	</div>

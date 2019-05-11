@@ -221,6 +221,7 @@ export class AddressComponent implements OnInit, OnChanges {
   getCityState(pincode){
     this.pincodeErrorMsg = "";
     this.pincodeWarning = "";
+    this.resetStateAndCity();
     if(pincode.length == 6){
       console.log("make api call");
       this.showShowLoader();
@@ -236,7 +237,6 @@ export class AddressComponent implements OnInit, OnChanges {
       },
       (error)=>{
         console.log("error ===>", error);
-        this.resetStateAndCity();
         this.removeLoader();
         if(error.status == 403)
           this.pincodeErrorMsg = "We do not service this pincode.";
@@ -248,7 +248,6 @@ export class AddressComponent implements OnInit, OnChanges {
     }
     else{
       this.unsubscribeGetLocationCall();
-      this.resetStateAndCity();
     }
   }
 
