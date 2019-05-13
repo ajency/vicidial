@@ -173,8 +173,12 @@ export class ShippingSummaryComponent implements OnInit {
     let url = this.appservice.apiUrl + '/api/rest/v2/user/order/' + this.shippingDetails.order_id + '/send-otp?phone='+this.shippingDetails.address.phone;
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     this.apiservice.request(url, 'get', {} , header ).then((response)=>{
-        this.appservice.removeLoader();
-        this.showVerifyCod = true;
+        if(response.verified)
+          window.location.href = "/user/order/" + this.shippingDetails.order_id +"/payment/cod";
+        else{
+          this.appservice.removeLoader();
+          this.showVerifyCod = true;
+        }
     })
     .catch((error)=>{
       console.log("error ===>", error);
