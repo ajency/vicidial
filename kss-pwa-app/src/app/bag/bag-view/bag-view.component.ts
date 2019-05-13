@@ -527,10 +527,10 @@ export class BagViewComponent implements OnInit {
     this.coupons = coupons;
   }
 
-  applyCoupon(){
-    console.log("inside applyCoupon function", this.couponCode);
+  applyCoupon(code){
+    // console.log("inside applyCoupon function", this.couponCode);
     this.appservice.showLoader();
-    let body = { coupon_code : this.couponCode };
+    let body = { coupon_code : code };
     let url = this.appservice.apiUrl + (this.appservice.isLoggedInUser() ? ("/api/rest/v1/user/cart/"+this.appservice.getCookie('cart_id')+"/apply-coupon?") : ("/rest/v1/anonymous/cart/apply-coupon?"));
     let header = this.appservice.isLoggedInUser() ? { Authorization : 'Bearer '+this.appservice.getCookie('token') } : {};
     url = url+$.param(body);
@@ -570,6 +570,7 @@ export class BagViewComponent implements OnInit {
   couponSelected(code){
     console.log("couponSelected function", code);
     this.couponCode = code;
+    this.applyCoupon(this.couponCode); 
   }
 
   hideCouponSideBar(){
@@ -653,15 +654,5 @@ export class BagViewComponent implements OnInit {
       }
     })  
   }
-
-  validateCoupon(coupon: string){
-    console.log('input length', coupon);
-    if(coupon){      
-      $('.apply-btn-wrap').removeClass('btn-disabled');
-    } else {
-      $('.apply-btn-wrap').addClass('btn-disabled');
-    }
-  }
-
 
 }

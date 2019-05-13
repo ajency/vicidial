@@ -318,9 +318,9 @@
 			</div>
 			<div class="coupon-inp-wrapper mt-4 mb-5 pos-rel">
 				<div class="input-group mb-3">
-					<input type="text" class="form-control inp-coupon" placeholder="Enter Coupon Code" #couponcode (keyup)="validateCoupon(couponcode.value)" aria-label="Enter Coupon Code">
+					<input type="text" class="form-control inp-coupon" placeholder="Enter Coupon Code" [(ngModel)]="couponCode" aria-label="Enter Coupon Code">
 					<div class="input-group-append pos-fixed apply-btn-wrap btn-disabled">
-						<button type="button" class="btn btn-primary inp-apply-btn">Apply</button>
+						<button type="button" class="btn btn-primary inp-apply-btn"[ngClass]="{'disabled' : !couponCode}" (click)="applyCoupon(couponCode)" >Apply</button>
 					</div>
 				</div>
 			</div>
