@@ -574,6 +574,7 @@ export class BagViewComponent implements OnInit {
   }
 
   hideCouponSideBar(){
+    this.couponCode = '';
     this.enterCoupon = false;
     this.couponErrorMessage = '';
     $('#cd-cart').removeClass('overflow-h');
