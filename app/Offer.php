@@ -51,7 +51,7 @@ class Offer extends Model
 
     public static function sync()
     {
-        self::where('active',true)->update(['active' => false]);
+        self::where('active', true)->update(['active' => false]);
         $odoo    = new OdooConnect;
         $coupons = $odoo->defaultExec(config('odoo.model.discount.name'), 'search', [[['coupon_typ', '=', 'SPECIFIC_COUPON'], ['type', '=', 'discount'], ['discount_rule', '=', 'cart']]], ['limit' => 1000]);
         $coupons->each(function ($couponID) {
@@ -130,6 +130,7 @@ class Offer extends Model
         $this->start       = $discount['from_date1'];
         $this->expire      = $discount['to_date1'];
         $this->priority    = $discount['priority1'];
+        $this->visibility  = $discount['coupon_visibility'];
         $this->active      = true;
         $this->description = ($discount['description_sale'] == false) ? null : $discount['description_sale'];
         switch ($discount['coupon_typ']) {
@@ -185,6 +186,7 @@ class Offer extends Model
             ->where('display', true)
             ->where('has_coupon', true)
             ->where('global', true)
+            ->where('visibility', 'public')
             ->where('start', '<=', Carbon::now())
             ->where('expire', '>', Carbon::now())
             ->with(['expressions', 'action', 'coupons'])
@@ -207,9 +209,9 @@ class Offer extends Model
         $hasShippingItems = false;
 
         //check if active
-        if(!$this->active){
+        if (!$this->active) {
             $cartData['messages']['inactive_offer'] = "Offer is disabled";
-            $cartData['coupon']                   = null;
+            $cartData['coupon']                     = null;
             return $cartData;
         }
 
@@ -239,10 +241,10 @@ class Offer extends Model
         }
 
         //if cart has shipping items, then set coupon as invalid
-        if(checkForOfferItems($cartData['items'])){
+        if (checkForOfferItems($cartData['items'])) {
             $cartData['messages']['coupon_not_applicable_for_products_with_shipping_charges'] = "This coupon is not valid for school uniforms";
             $cartData['coupon']                                                               = null;
-            return $cartData;   
+            return $cartData;
         }
 
         //if offer has coupon, check if coupon usage is still valid
@@ -286,7 +288,7 @@ class Offer extends Model
         $cartData['shipping']      = 0;
         $cartData['offersApplied'] = [];
         $cartData['messages']      = [];
-        
+
         return $cartData;
     }
 
@@ -311,8 +313,9 @@ class Offer extends Model
 
     public static function addShippingCharges($cartData)
     {
-        if(checkForShippingItems($cartData['items'])){  //check if cart has shipping items present
-            $cartData['shipping']     = Defaults::getUniformShippingPrice();
+        if (checkForShippingItems($cartData['items'])) {
+            //check if cart has shipping items present
+            $cartData['shipping'] = Defaults::getUniformShippingPrice();
         }
         return $cartData;
     }
