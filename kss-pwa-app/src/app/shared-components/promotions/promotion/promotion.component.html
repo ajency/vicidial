@@ -1,5 +1,5 @@
 <!-- Selection Radio -->
-<input class="d-none radio-input coupon-radio" type="radio" name="kss-coupon" id="coupon-{{coupon.coupon_code}}" [value]="coupon.coupon_code" [(ngModel)]="selectedCoupon" (change)="couponChanged()"/>
+<input class="d-none radio-input coupon-radio" type="radio" name="kss-coupon" id="coupon-{{coupon.coupon_code}}" [value]="coupon.coupon_code" [(ngModel)]="selectedCoupon"/>
 <!-- Coupon box -->
 <label class="coupon-box w-100 d-flex mb-3" for="coupon-{{coupon.coupon_code}}">
 	<div class="flex-1">
@@ -24,6 +24,6 @@
 		</div>
 	</div>
 	<div>
-		<button type="button" class="btn btn-primary apply-coupon">Apply</button>
+		<button type="button" class="btn btn-primary apply-coupon" couponChanged(coupon.coupon_code)>Apply</button>
 	</div>
 </label>
