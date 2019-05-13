@@ -6,11 +6,6 @@
 <body>
 
 	<app-root></app-root>
-	<script type="text/javascript">
-		var published_home = true;
-	</script>
-
-	@include('includes.ng-scripts')
 
 	@php
 		$fileHashes = json_decode(file_get_contents(public_path().'/angular_file_hash.json'),true);
@@ -21,6 +16,9 @@
 	<script type="text/javascript" src="{{CDN::asset('/js/kss-pwa/polyfills.'.$fileHashes['polyfills'].'.js') }}"></script>
 	<script type="text/javascript" src="{{CDN::asset('/js/kss-pwa/scripts.'.$fileHashes['scripts'].'.js') }}"></script>
 	<script type="text/javascript" src="{{CDN::asset('/js/kss-pwa/main.'.$fileHashes['main'].'.js') }}"></script>
+
+	@include('includes.ng-scripts')
+
 	<script>
 	      if ('serviceWorker' in navigator ) {
 	        window.addEventListener('load', function() {
