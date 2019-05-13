@@ -8,7 +8,7 @@
 	s.parentNode.insertBefore(t,s)}(window, document,'script',
 	'https://connect.facebook.net/en_US/fbevents.js');
 	fbq('init', '{{config("analytics.pixel_id")}}');
-	// fbq('track', 'PageView');
+	fbq('track', 'PageView');
 
 	var product_catalog_id = "{{config('analytics.fb_pixel_catalog_id')}}"
 
