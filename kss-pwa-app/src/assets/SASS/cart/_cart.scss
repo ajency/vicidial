@@ -589,6 +589,20 @@ body{
 .apply-coupon {
     padding: .275rem .75rem;
     font-size: .8rem;
+    background: transparent;
+    border: 1px solid #f9bb23;
+    border-radius: 20px;
+    padding: .25rem .85rem;
+    font-size: .75rem;
+    color: #f9bb23;
+    font-weight: 600;
+    text-transform: uppercase;
+
+    &:hover {
+        background: #f9bb23;
+        color: #fff;
+        border-color: #f9bb23;
+    }
 }
 
 .coupon-inp-wrapper {
@@ -603,6 +617,12 @@ body{
         padding: .275rem 1rem;
         font-size: .8rem;
         cursor: pointer;
+        background: transparent;
+        border: 0;
+        font-size: .75rem;
+        color: #f9bb23;
+        text-transform: uppercase;
+        font-weight: 600;
     }
     .pos-rel {
         position: relative;
@@ -612,6 +632,7 @@ body{
         right: 0;
         top: 0;
         bottom: 1px;
+        z-index: 3;
     }
     .inp-coupon {
         padding-right: 72px;
