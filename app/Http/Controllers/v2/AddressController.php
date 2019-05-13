@@ -167,6 +167,6 @@ class AddressController extends Controller
 
         $pincode_data = checkPincodeServiceableHelper($pincode);
         
-        return json_encode(['district' => $pincode_entry['district'], 'state_id' => $pincode_entry['state_id']]);
+        return json_encode(['district' => $pincode_entry['district'], 'state_id' => $pincode_entry['state_id'], "pincode_serviceability" => $pincode_data]);
     }
 }

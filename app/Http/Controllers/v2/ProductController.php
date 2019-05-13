@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\v2;
 
 use App\Http\Controllers\Controller;
+use App\Product;
 use App\ProductColor;
 use App\Variant;
 use Illuminate\Http\Request;

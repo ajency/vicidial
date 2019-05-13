@@ -11,6 +11,7 @@ use App\Jobs\OrderLineStatus;
 use App\Jobs\SubOrderStatus;
 use App\Order;
 use App\User;
+use App\SubOrder;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 

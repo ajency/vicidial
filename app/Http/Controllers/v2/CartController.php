@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\v2;
 
 use App\Cart;
+use App\Coupon;
 use App\Http\Controllers\Controller;
 use App\Offer;
 use App\User;
@@ -14,9 +15,11 @@ class CartController extends Controller
 
     public function guestGetCount(Request $request)
     {
+        // \Log::info('enters guest_get_count function');
         $id   = $request->session()->get('active_cart_id', false);
         $cart = Cart::find($id);
         if ($cart !== null) {
+            // \Log::debug('cart = '.$cart);
             $cart->anonymousCartCheckUser();
             $cart->abortNotCart('cart');
             return response()->json(['cart_count' => $cart->itemCount()]);
@@ -80,7 +83,10 @@ class CartController extends Controller
                 $cart->insertItem(["id" => $variant->id, "quantity" => $qty]);
                 $cart->save();
                 $cart->refresh();
-                $message = "Item updated successfully";
+                $available = $cart->checkCouponAvailability();
+                $summary   = $cart->getSummary();
+                $coupons   = Offer::getAllActiveCoupons();
+                $message   = "Item updated successfully";
             } elseif ($qty < 1) {
                 abort(404, "Total Quantity should greater than 0");
             } else {
@@ -90,7 +96,7 @@ class CartController extends Controller
             $item["timestamp"] = intval($cart->cart_data[$item["id"]]["timestamp"]);
         }
         $summary = $cart->getSummary();
-        return response()->json(['cart_count' => $cart->itemCount(), "message" => $message, "item" => $item, "summary" => $summary]);
+        return response()->json(array_merge(['cart_count' => $cart->itemCount(), "message" => $message, "item" => $item, "summary" => $summary, "coupons" => $coupons], $available));
     }
 
     public function guestCartFetch(Request $request)
@@ -248,7 +254,10 @@ class CartController extends Controller
                 $cart->insertItem(["id" => $variant->id, "quantity" => $qty]);
                 $cart->save();
                 $cart->refresh();
-                $message = "Item added successfully";
+                $available = $cart->checkCouponAvailability();
+                $summary   = $cart->getSummary();
+                $coupons   = Offer::getAllActiveCoupons();
+                $message   = "Item added successfully";
             } elseif ($qty < 1) {
                 abort(404, "Total Quantity should greater than 0");
             } else {
@@ -258,7 +267,7 @@ class CartController extends Controller
             $item["timestamp"] = intval($cart->cart_data[$item["id"]]["timestamp"]);
         }
         $summary = $cart->getSummary();
-        return response()->json(['cart_count' => $cart->itemCount(), "message" => $message, "item" => $item, "summary" => $summary]);
+        return response()->json(array_merge(['cart_count' => $cart->itemCount(), "summary" => $summary, "message" => $message, "item" => $item, "coupons" => $coupons], $available));
     }
 
     public function userCartFetch($id, Request $request)
@@ -347,7 +356,7 @@ class CartController extends Controller
         $request->validate(['cart_id' => 'sometimes|exists:carts,id']);
         $params = $request->all();
         $user   = $request->user();
-        
+
         if (isset($params['cart_id'])) {
             $old_cart = Cart::find($params['cart_id']);
             validateCart($user, $old_cart);
