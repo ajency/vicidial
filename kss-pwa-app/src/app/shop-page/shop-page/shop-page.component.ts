@@ -157,7 +157,7 @@ export class ShopPageComponent implements OnInit {
         item.sale_price = default_variant.variant_attributes.variant_sale_price;
         item.list_price = default_variant.variant_attributes.variant_list_price;
         item.brand = item.facets.product_brand.name;
-        item.is_available = items.is_available;
+        item.is_available = item.is_available;
         item.is_sellable = item.is_sellable;
       })
       try{
