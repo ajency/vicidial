@@ -654,5 +654,14 @@ export class BagViewComponent implements OnInit {
     })  
   }
 
+  validateCoupon(coupon: string){
+    console.log('input length', coupon);
+    if(coupon){      
+      $('.apply-btn-wrap').removeClass('btn-disabled');
+    } else {
+      $('.apply-btn-wrap').addClass('btn-disabled');
+    }
+  }
+
 
 }

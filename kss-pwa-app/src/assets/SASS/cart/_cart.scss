@@ -586,6 +586,39 @@ body{
 
 // coupon code box
 
+.apply-coupon {
+    padding: .275rem .75rem;
+    font-size: .8rem;
+}
+
+.coupon-inp-wrapper {
+    .btn-disabled {
+        opacity: 0;
+        visibility: hidden;
+        .inp-apply-btn {
+            pointer-events: none;            
+        }
+    }
+    .inp-apply-btn {
+        padding: .275rem 1rem;
+        font-size: .8rem;
+        cursor: pointer;
+    }
+    .pos-rel {
+        position: relative;
+    }
+    .pos-fixed {
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 1px;
+    }
+    .inp-coupon {
+        padding-right: 72px;
+        border-bottom: 1px solid transparent;
+    }
+}
+
 .coupon-box{
     padding: 1em;
     border: 0;
@@ -594,17 +627,18 @@ body{
     transition: all 0.3s;
     &__code{
         font-size: 1.15em;
+        color: #8e8e8e;
     }
     .radio-selection{
         color: #9a9a9a;
         font-size: 1.35em;
     }
-    &:hover{
-        color: initial !important;
-        background-color: #fffad9;
-    }
     .custom-size{
         font-size: 1.15em;
+        &.valid-till {
+            font-size: 0.95em;
+            color: #8e8e8e;
+        }
     }
     .new-label{
         padding: 3px 0.5em;
