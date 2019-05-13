@@ -47,9 +47,8 @@ class PaymentController extends Controller
                 break;
 
             case 'cod':
-                $order->status = 'cash-on-delivery';
-                $order->save();
-                return redirect('/user/order/' . $orderid . '/payment/cod/status');
+                //return redirect('/user/order/' . $orderid . '/payment/cod/status');
+                $this->status($orderid, $type);
                 break;
 
             default:
