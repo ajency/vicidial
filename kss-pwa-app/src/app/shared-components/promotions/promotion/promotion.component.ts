@@ -22,7 +22,7 @@ export class PromotionComponent implements OnInit {
   	// console.log("ngOnInit promotion component ==>", this.appliedCoupon);
     if(this.appliedCoupon){
       this.selectedCoupon = this.appliedCoupon.coupon_code;
-      this.appservice.couponSelected(this.selectedCoupon);
+      // this.appservice.couponSelected(this.selectedCoupon);
     }
   }
 

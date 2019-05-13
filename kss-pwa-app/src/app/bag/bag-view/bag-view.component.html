@@ -131,7 +131,7 @@
 		</ul>
 
 		<!-- Promotion summary -->
-		<div *ngIf="promotions && promotions.length && (displayPromo || cart.promo_applied )" class="cart-promotion mt-4">
+<!-- 		<div *ngIf="promotions && promotions.length && (displayPromo || cart.promo_applied )" class="cart-promotion mt-4">
 			<h4 class="mb-2 font-weight-bold">Promotion Summary</h4>
 			<app-applied-coupon [promoApplied]="cart.promo_applied" [promotions]="promotions"> </app-applied-coupon>
 			<div *ngIf="cart.promo_applied">
@@ -139,9 +139,9 @@
 			</div>
 			<app-upgrade-cart [promotions]="promotions" [orderTotal]="cart.summary.sale_price_total" (noUpgradePromo)="displayPromo = false"> </app-upgrade-cart>
 			<hr>
-		</div>
+		</div> -->
 
-		<div *ngIf="coupons && coupons.length" class="cart-promotion mt-4" [ngClass]="{'d-none' : cart.cart_type == 'order' && !cart.applied_coupon}">
+		<div class="cart-promotion mt-4" [ngClass]="{'d-none' : cart.cart_type == 'order' && !cart.applied_coupon}">
 			<h4 class="mb-2 font-weight-bold">Coupon Summary</h4>
 			<div *ngIf="cart.applied_coupon">
 				<app-applied-coupon [promoApplied]="cart.applied_coupon" [promotions]="coupons" [orderTotal]="cart.summary.sale_price_total" [cartType]="cart.cart_type" (editCouponTrigger)="displayCouponSideBar()"> </app-applied-coupon>
@@ -319,8 +319,8 @@
 			<div class="coupon-inp-wrapper mt-4 mb-5 pos-rel">
 				<div class="input-group mb-3">
 					<input type="text" class="form-control inp-coupon" placeholder="Enter Coupon Code" [(ngModel)]="couponCode" aria-label="Enter Coupon Code">
-					<div class="input-group-append pos-fixed apply-btn-wrap btn-disabled">
-						<button type="button" class="btn btn-primary inp-apply-btn"[ngClass]="{'disabled' : !couponCode}" (click)="applyCoupon(couponCode)" >Apply</button>
+					<div class="input-group-append pos-fixed apply-btn-wrap" [ngClass]="{'btn-disabled' : !couponCode}">
+						<button type="button" class="btn btn-primary inp-apply-btn" (click)="applyCoupon(couponCode)" >Apply</button>
 					</div>
 				</div>
 			</div>
