@@ -235,7 +235,7 @@ export class BagViewComponent implements OnInit {
       this.cart.items[this.itemIndex] = item;
 
       this.cart.summary = response.summary;
-      this.cart.applied_coupon = response.applied_coupon;
+      this.cart.coupon_applied = response.coupon_applied;
       this.formatCoupons(response.coupons);
       this.cart.cart_count = response.cart_count;
       this.checkCartItemOutOfStock();
@@ -273,7 +273,7 @@ export class BagViewComponent implements OnInit {
       let index = this.cart.items.findIndex(i => i.id == item.id)
       this.cart.items.splice(index,1);
       this.cart.summary = response.summary;
-      this.cart.applied_coupon = response.applied_coupon;
+      this.cart.coupon_applied = response.coupon_applied;
       this.formatCoupons(response.coupons);
       this.cart.cart_count = response.cart_count;
       this.checkCartItemOutOfStock();
@@ -536,7 +536,7 @@ export class BagViewComponent implements OnInit {
     url = url+$.param(body);
     this.apiservice.request(url, 'get', body, header ).then((response)=>{
       this.cart.summary = response.summary;
-      this.cart.applied_coupon = response.coupon_applied;
+      this.cart.coupon_applied = response.coupon_applied;
       // this.displayPromo = true;
       this.hideCouponSideBar()
       this.appservice.removeLoader();
