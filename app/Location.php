@@ -62,6 +62,46 @@ class Location extends Model
         }
     }
 
+    public static function getLocationFromOdoo($odoo_id)
+    {
+
+        $odoo      = new OdooConnect();
+        $locations = $odoo->defaultExec(self::MODEL, "search_read", [[['id', '=', $odoo_id]]], ["fields" => config('odoo.model_fields.location')]);
+        foreach ($locations as $location) {
+            $loc          = new self;
+            $loc->odoo_id = $location["id"];
+            $loc->name    = $location["name"];
+            if ($location["company_id"]) {
+                $loc->company_name    = $location["company_id"][1];
+                $loc->company_odoo_id = $location["company_id"][0];
+            }
+            if ($location["warehouse_id"]) {
+                $loc->warehouse_odoo_id = $location["warehouse_id"][0];
+                $loc->warehouse_name    = $location["warehouse_id"][1];
+            }
+            if ($location["location_id"]) {
+                $loc->location_odoo_id = $location["location_id"][0];
+                $loc->location_name    = $location["location_id"][1];
+            }
+            $loc->display_name = $location['display_name'];
+            $loc->type         = $location['usage'];
+            if ($location['usage'] == 'internal') {
+                $loc->use_in_inventory = true;
+            }
+
+            $loc->store_code    = $location['store_code'];
+            $address            = [];
+            $address['city']    = $location['city'];
+            $address['state']   = $location['state_name'];
+            $address['street']  = $location['street'];
+            $address['street2'] = $location['street2'];
+            $address['zip']     = $location['zip'];
+            $loc->address       = $address;
+            $loc->save();
+
+        }
+    }
+
     public static function addVendorLocation($params)
     {
         $loc = self::find($params['location']['id']);

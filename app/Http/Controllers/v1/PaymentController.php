@@ -48,7 +48,7 @@ class PaymentController extends Controller
 
             case 'cod':
                 //return redirect('/user/order/' . $orderid . '/payment/cod/status');
-                $this->status($orderid, $type);
+                return $this->status($orderid, $type);
                 break;
 
             default:
