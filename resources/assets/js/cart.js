@@ -215,7 +215,7 @@ function fbTrackuserRegistration(){
 function fbTrackInitiateCheckout(order_total){    
     fbq('track', 'InitiateCheckout', {
         value: order_total,
-        currency: 'INR',
+        currency: 'INR'
     });
 }
 

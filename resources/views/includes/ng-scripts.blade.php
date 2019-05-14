@@ -46,8 +46,7 @@
 			value: default_price,
 			currency: 'INR',
 			content_ids: parent_id+'-'+selected_color_id,
-			content_type: 'product_group',
-			product_catalog_id : product_catalog_id
+			content_type: 'product_group'
 		});
 	}
 
@@ -105,9 +104,7 @@
 	    fbq('track', 'AddToCart', {
 	        value: sale_price,
 	        currency: 'INR',
-	        content_ids: parent_id+'-'+selected_color_id,
-	        content_type: 'product',
-	        product_catalog_id : product_catalog_id
+	        content_ids: parent_id+'-'+selected_color_id
 	    });
 	}	
 </script>
