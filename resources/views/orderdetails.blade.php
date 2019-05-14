@@ -80,12 +80,11 @@
 						 $variant_qty[] = ["id" => $item['product_id'] . '-' . $item['product_color_id'], "quantity" => $item['quantity']];
 					@endphp
 				@endforeach
-				@php $contents = json_encode($variant_qty); @endphp
-				console.log("contents ==>",JSON.parse('{{$contents}}'));
+				@php $contents = json_encode($variant_qty);@endphp
 				fbq('track', 'Purchase', {
 				    value: {{$params['order_info']['total_amount']}},
 				    currency: 'INR',
-				    contents: JSON.parse('{{$contents}}'),
+				    contents: {!!$contents!!},
 				    content_ids: '{{implode(",",$variant_ids)}}'
 				});
 				// Google pixel tracking
