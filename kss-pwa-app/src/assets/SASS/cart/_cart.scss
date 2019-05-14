@@ -623,6 +623,13 @@ body{
         color: #f9bb23;
         text-transform: uppercase;
         font-weight: 600;
+
+        &:active,&:hover,&:focus {
+            background-color: transparent !important;
+            color: #f9bb23 !important;
+            border-color: #f9bb23 !important;
+            box-shadow: none !important;
+        }
     }
     .pos-rel {
         position: relative;
@@ -637,6 +644,13 @@ body{
     .inp-coupon {
         padding-right: 72px;
         border-bottom: 1px solid transparent;
+    }
+}
+.coupon-wrap {
+    text-align: center;
+
+    img {
+        opacity: 0.4;
     }
 }
 
