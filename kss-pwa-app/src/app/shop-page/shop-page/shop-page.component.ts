@@ -249,7 +249,9 @@ export class ShopPageComponent implements OnInit {
       image : '',
       title : '',
       sale_price : '',
-      list_price : ''
+      list_price : '',
+      is_available : true,
+      is_sellable : true
     }
     this.listPage = {};
     this.listPage['page'] = this.page;
