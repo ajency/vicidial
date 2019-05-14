@@ -64,13 +64,8 @@ class User extends Authenticatable
 
     public static function getUserByPassportToken(string $token)
     {
-        $token_parts        = explode('.', $token);
-        $token_header       = $token_parts[0];
-        $token_header_json  = base64_decode($token_header);
-        $token_header_array = json_decode($token_header_json, true);
-        $user_token         = $token_header_array['jti'];
-
-        $tokenData = \DB::table('oauth_access_tokens')->where('id', $user_token)->first(['user_id']);
+        $user_token = getTokenID($token);
+        $tokenData  = \DB::table('oauth_access_tokens')->where('id', $user_token)->first(['user_id']);
         if (is_null($tokenData)) {
             abort(403);
         }

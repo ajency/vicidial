@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Offer;
 use App\User;
 use App\Variant;
+use DB;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -364,6 +365,7 @@ class CartController extends Controller
             $old_cart = Cart::find($params['active_cart']);
         }
         $cart = $user->newCart(true, $old_cart);
+        DB::table('oauth_access_tokens')->where('id', $params['token_id'])->update(['cart_id' => $cart->id]);
 
         return response()->json(['cart_id' => $cart->id]);
     }
