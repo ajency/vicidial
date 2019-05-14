@@ -62,7 +62,7 @@ class CartController extends Controller
 
     public function guestModifyItem(Request $request)
     {
-        $request->validate(['variant_id' => 'required|exists:variants,odoo_id', 'variant_quantity' => 'required']);
+        $request->validate(['variant_id' => 'required|exists:variants,id', 'variant_quantity' => 'required']);
         $params = $request->all();
         $id     = $request->session()->get('active_cart_id', false);
         $cart   = Cart::find($id);
@@ -234,7 +234,7 @@ class CartController extends Controller
 
     public function userModifyItem($id, Request $request)
     {
-        $request->validate(['variant_id' => 'required|exists:variants,odoo_id', 'variant_quantity' => 'required']);
+        $request->validate(['variant_id' => 'required|exists:variants,id', 'variant_quantity' => 'required']);
         $params = $request->all();
         $cart   = Cart::find($id);
         if ($cart == null) {
