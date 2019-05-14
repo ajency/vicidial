@@ -569,8 +569,8 @@ export class BagViewComponent implements OnInit {
 
   couponSelected(code){
     console.log("couponSelected function", code);
-    this.couponCode = code;
-    this.applyCoupon(this.couponCode); 
+    // this.couponCode = code;
+    this.applyCoupon(code); 
   }
 
   hideCouponSideBar(){
