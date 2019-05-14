@@ -161,7 +161,7 @@ Route::group([
     Route::get('/get-all-reasons', $group_app_version . '\OrderController@getAllReasons');
 
     Route::group([
-        'middleware' => ['auth:api', 'extension-api-permissions'],
+        'middleware' => ['auth:api-passport', 'extension-api-permissions'],
     ], function () use ($group_app_version) {
         Route::post('/save-page-element/new', $group_app_version . '\StaticElementController@callSaveNew');
         Route::post('/save-page-element/{seq_no}', $group_app_version . '\StaticElementController@callSave');
@@ -176,10 +176,10 @@ Route::group([
     Route::get('/test/get-page-element-dummy', $group_app_version . '\StaticElementController@callFetch');
     Route::get('/test/get-menu', $group_app_version . '\StaticElementController@getMenu');
     Route::group([
-        'middleware' => ['auth:api', 'publish-static-element'],
+        'middleware' => ['auth:api-passport', 'publish-static-element'],
     ], function () use ($group_app_version) {
         Route::get('/publish-page-element', $group_app_version . '\StaticElementController@callPublish');
     });
 });
 
-Route::middleware('auth:api')->get('/user', $app_version . '\HomeController@api');
+Route::middleware('auth:api-passport')->get('/user', $app_version . '\HomeController@api');
