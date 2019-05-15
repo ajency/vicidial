@@ -13,7 +13,7 @@ import { ApiServiceService } from './service/api-service.service';
 import { AuthGuardService } from './service/auth-guard.service';
 import { GlobalErrorHandlerService } from './service/global-error-handler.service';
 
-import { NumberModule } from './directives/number.module';
+// import { NumberModule } from './directives/number.module';
 import { LoginComponent } from './login/login.component';
 import { WidgetComponent } from './widget/widget.component';
 
@@ -32,7 +32,7 @@ import { Ng5SliderModule } from 'ng5-slider';
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
-    NumberModule,
+    // NumberModule,
     RouterModule,
     LazyModule,
     BrowserAnimationsModule,

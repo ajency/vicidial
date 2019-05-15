@@ -10,8 +10,6 @@ import { NoConnectionComponent } from './no-connection/no-connection.component';
 import { LazyLoadImageModule, intersectionObserverPreset } from 'ng-lazyload-image';
 import { GenderBoxComponent } from './gender-box/gender-box.component';
 import { LabelBoxComponent } from './label-box/label-box.component';
-import { BlogComponent } from './blog/blog.component';
-import { FeaturedBlogComponent } from './featured-blog/featured-blog.component';
 import { BackToTopComponent } from './back-to-top/back-to-top.component';
 import { MobileProductsComponent } from './mobile-products/mobile-products.component';
 import { BreadcrumsComponent } from './breadcrums/breadcrums.component';
@@ -23,7 +21,7 @@ import { SearchBoxComponent } from './search-box/search-box.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule }   from '@angular/forms';
 @NgModule({
-  declarations: [HeaderComponent, FooterComponent, SliderComponent, ProductComponent, NoProductComponent, LoaderComponent, NoConnectionComponent, GenderBoxComponent, LabelBoxComponent, BlogComponent, FeaturedBlogComponent, BackToTopComponent, MobileProductsComponent, BreadcrumsComponent, ProductPriceComponent, PageNotFoundComponent, ProductViewComponent, QuantityModalComponent, SearchBoxComponent],
+  declarations: [HeaderComponent, FooterComponent, SliderComponent, ProductComponent, NoProductComponent, LoaderComponent, NoConnectionComponent, GenderBoxComponent, LabelBoxComponent, BackToTopComponent, MobileProductsComponent, BreadcrumsComponent, ProductPriceComponent, PageNotFoundComponent, ProductViewComponent, QuantityModalComponent, SearchBoxComponent],
   imports: [
     CommonModule,
     LazyLoadImageModule.forRoot({
@@ -32,6 +30,6 @@ import { FormsModule }   from '@angular/forms';
   	RouterModule,
   	FormsModule
   ],
-  exports : [HeaderComponent, FooterComponent, SliderComponent, ProductComponent, NoProductComponent, LoaderComponent, NoConnectionComponent, GenderBoxComponent, LabelBoxComponent, BlogComponent, BackToTopComponent, MobileProductsComponent, BreadcrumsComponent, ProductPriceComponent, PageNotFoundComponent, ProductViewComponent, QuantityModalComponent, SearchBoxComponent]
+  exports : [HeaderComponent, FooterComponent, SliderComponent, ProductComponent, NoProductComponent, LoaderComponent, NoConnectionComponent, GenderBoxComponent, LabelBoxComponent, BackToTopComponent, MobileProductsComponent, BreadcrumsComponent, ProductPriceComponent, PageNotFoundComponent, ProductViewComponent, QuantityModalComponent, SearchBoxComponent]
 })
 export class ComponentsModule { }

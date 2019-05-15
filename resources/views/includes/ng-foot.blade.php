@@ -1,14 +1,3 @@
-<script type="text/javascript">
-  // Google pixel tracking id
-  /* <![CDATA[ */
-  var google_pixel_id = "{{config('analytics.google_pixel_id')}}";
-  var google_conversion_id = @php echo config('analytics.conversion_id'); @endphp;
-  var google_conversion_label = "{{config('analytics.conversion_label')}}";
-  var google_conversion_value = 1.0;
-  var google_conversion_data = "AW-{{config('analytics.conversion_id')}}/{{config('analytics.conversion_label')}}";
-  // var product_catalog_id = "{{config('analytics.fb_pixel_catalog_id')}}"
-    /* ]]> */
-</script>
 
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
