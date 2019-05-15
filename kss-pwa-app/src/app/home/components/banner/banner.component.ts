@@ -41,10 +41,12 @@ export class BannerComponent implements OnInit, OnChanges {
     },
     nav: true
   }
+  cdnUrl : any;
   constructor(private router: Router,
               private appservice : AppServiceService) { }
 
   ngOnInit() {
+    this.cdnUrl = this.appservice.cdnUrl;
   }
 
   ngOnChanges(){

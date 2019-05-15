@@ -22,6 +22,7 @@ export class MyOrdersComponent implements OnInit {
   displayShowMore : boolean = true;
   apiCallComplete : boolean = false;
   unverifiedUser : boolean = false;
+  cdnUrl : any;
   constructor(private router: Router,
 						private appservice : AppServiceService,
 						private apiservice : ApiServiceService,
@@ -29,7 +30,7 @@ export class MyOrdersComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("ngOnInit my-orders");
+    this.cdnUrl = this.appservice.cdnUrl;
   	this.appservice.removeLoader();    
     this.getOrders();      
   }

@@ -15,7 +15,7 @@ declare var $: any;
 export class MyProfileComponent implements OnInit {
 
   @Output() closeMyProfile = new EventEmitter();
-
+  cdnUrl : any;
   constructor(private appservice : AppServiceService,
               private apiservice : ApiServiceService,
               private account_service : AccountService,
@@ -25,7 +25,8 @@ export class MyProfileComponent implements OnInit {
 
   userInfo : any = {};
   showCancelButton : boolean = true;
-  ngOnInit() {    
+  ngOnInit() { 
+    this.cdnUrl = this.appservice.cdnUrl;   
     this.appservice.removeLoader(); 
     this.getUserInfo();    
   }

@@ -54,7 +54,7 @@ export class ShopPageComponent implements OnInit {
   pageNumber : any;
   showRangeFilter : any;
   filterCollpaseArray = [];
-
+  cdnUrl : any;
   constructor(private apiService: ApiServiceService,
               private appservice : AppServiceService,
               private route: ActivatedRoute,
@@ -64,7 +64,7 @@ export class ShopPageComponent implements OnInit {
     }
 
   ngOnInit() {
-    console.log("%%%%%%%%%%% ngOnInit %%%%%%%%%%%%%%");
+    this.cdnUrl = this.appservice.cdnUrl;
     this.listPage['page'] = this.page;
     this.getFilters();
     combineLatest(this.route.params, this.route.queryParams)

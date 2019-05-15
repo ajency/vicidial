@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { AppServiceService } from '../../../service/app-service.service';
 
 @Component({
   selector: 'app-navbar',
@@ -7,10 +8,11 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 	@Output() closeCartTrigger = new EventEmitter();
-
+  cdnUrl : any;
   constructor() { }
 
   ngOnInit() {
+    this.cdnUrl = this.appservice.cdnUrl;
   }
 
   closeCart(){

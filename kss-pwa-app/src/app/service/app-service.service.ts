@@ -7,6 +7,7 @@ import { ApiServiceService } from './api-service.service';
 // import * as moment from 'moment';
 
 declare var $: any;
+declare var cdn_url : any;
 
 @Injectable()
 export class AppServiceService {
@@ -68,6 +69,13 @@ export class AppServiceService {
     $("#cd-cart-trigger").on('click',function(){
       self.openCartClicked();
     });
+    try{
+      this.cdnUrl = cdn_url;  
+    }
+    catch(error){
+      console.log("cdn url error ==>", error)
+    }
+    
   }
 
   closeCart(){

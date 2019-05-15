@@ -10,10 +10,11 @@ declare var $ : any;
 export class FooterComponent implements OnInit {
 
   @Input() stickyFoot : any;
-
+  cdnUrl : any;
   constructor(private appservice : AppServiceService) { }
 
   ngOnInit() {
+    this.cdnUrl = this.appservice.cdnUrl;
   	// $('.footer-more').click(function(e){
   	// 	e.preventDefault();
   	// 	$(this).toggleClass('collapsed');

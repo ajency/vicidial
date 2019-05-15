@@ -28,6 +28,7 @@ export class ShippingSummaryComponent implements OnInit {
   showSelectPaymentError : any;
   showVerifyCod : boolean = false;
   shakePaymentModal : boolean = false;
+  cdnUrl : any;
   constructor(private router : Router,
   			   		private appservice : AppServiceService,
               private apiservice : ApiServiceService,
@@ -35,6 +36,7 @@ export class ShippingSummaryComponent implements OnInit {
   					) { }
 
   ngOnInit() {
+    this.cdnUrl = this.appservice.cdnUrl;
     this.shippingDetails = this.getProductUrl(this.appservice.shippingDetails);
     this.setUserName();
   }

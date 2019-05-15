@@ -11,12 +11,12 @@
 				    	<a (click)="navigateTo(banner.element_data.image.href)" class="d-block cursor-pointer">
 							 <picture>
 							  	<source media="(orientation: landscape)"
-									  src="/assets/img/transparent.png"
+									  src="{{cdnUrl}}assets/img/transparent.png"
 									  srcset="{{banner.images.landscape['2x']}} 1200w, {{banner.images.landscape['1x']}} 700w"
 							          sizes="(min-width:1200px) 1120px, 96vw">
 
 							  	<source media="(orientation: portrait)"
-									  src="/assets/img/transparent.png"
+									  src="{{cdnUrl}}assets/img/transparent.png"
 									  srcset="{{banner.images.portrait['2x']}} 600w, {{banner.images.portrait['1x']}} 400w"
 							          sizes="10 0vw">
 							    <img

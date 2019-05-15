@@ -30,6 +30,7 @@ export class ProductInfoComponent implements OnInit, OnChanges {
   selectedQuantity = 1;
   totalQuantity = 0;
   btnSticky : boolean = false;
+  cdnUrl : any;
   constructor(private appservice : AppServiceService,
               private apiservice : ApiServiceService,
               private breakpointObserver : BreakpointObserver) {
@@ -37,6 +38,7 @@ export class ProductInfoComponent implements OnInit, OnChanges {
     }
 
   ngOnInit() {
+    this.cdnUrl = this.appservice.cdnUrl;
     this.attributes = [];
     this.facets = [];
     this.facets.product_metatag = [];

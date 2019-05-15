@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AppServiceService } from '../../service/app-service.service';
 
 @Component({
   selector: 'app-coimbatore',
@@ -54,10 +55,11 @@ export class CoimbatoreComponent implements OnInit {
         big: '../../../assets/img/stores/coimbatore/coimbatore9-large.jpg'
     },
   ];
-
-  constructor() { }
+  cdnUrl : any;
+  constructor(private appservice : AppServiceService) { }
 
   ngOnInit() {
+    this.cdnUrl = this.appservice.cdnUrl;
   }
 
 }

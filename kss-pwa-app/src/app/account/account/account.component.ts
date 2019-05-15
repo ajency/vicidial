@@ -22,13 +22,16 @@ export class AccountComponent implements OnInit {
   openOrderDetails : boolean = false;
   showAccount : boolean = true;
   updateViewListner : Subscription;
+  cdnUrl : any;
   constructor(private appservice : AppServiceService,
       			  private router : Router,
               private route: ActivatedRoute,
               private account_service : AccountService) {
       this.loginSucessListener = this.appservice.listenToLoginSuccess().subscribe(()=>{ this.redirectToReturnUrl() });
 
-       this.updateViewListner = this.appservice.listenToUpdateAccountViewTrigger().subscribe(()=>{ this.updateView() })
+      this.updateViewListner = this.appservice.listenToUpdateAccountViewTrigger().subscribe(()=>{ this.updateView() });
+
+      this.cdnUrl = this.appservice.cdnUrl;
   	}
 
   ngOnInit() {
