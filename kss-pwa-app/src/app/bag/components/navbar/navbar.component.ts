@@ -9,7 +9,7 @@ import { AppServiceService } from '../../../service/app-service.service';
 export class NavbarComponent implements OnInit {
 	@Output() closeCartTrigger = new EventEmitter();
   cdnUrl : any;
-  constructor() { }
+  constructor(private appservice : AppServiceService) { }
 
   ngOnInit() {
     this.cdnUrl = this.appservice.cdnUrl;

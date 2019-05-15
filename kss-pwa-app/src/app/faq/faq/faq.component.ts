@@ -13,7 +13,7 @@ export class FaqComponent implements OnInit {
     {position: 2, title: 'Faq', url: '/faq'},
   ];
   cdnUrl : any;
-  constructor() { }
+  constructor(private appservice : AppServiceService) { }
 
   ngOnInit() {
     this.cdnUrl = this.appservice.cdnUrl;

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AppServiceService } from '../../service/app-service.service';
+import { AppServiceService } from '../../../service/app-service.service';
 
 @Component({
   selector: 'app-why-visit-us',

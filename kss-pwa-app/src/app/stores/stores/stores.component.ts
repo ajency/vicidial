@@ -8,7 +8,7 @@ import { AppServiceService } from '../../service/app-service.service';
 })
 export class StoresComponent implements OnInit {
 	cdnUrl : any;
-  constructor() { }
+  constructor(private appservice : AppServiceService) { }
 
   ngOnInit() {
   	this.cdnUrl = this.appservice.cdnUrl;
