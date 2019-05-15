@@ -85,7 +85,8 @@
 				    value: {{$params['order_info']['total_amount']}},
 				    currency: 'INR',
 				    contents: {!!$contents!!},
-				    content_ids: '{{implode(",",$variant_ids)}}'
+				    content_ids: '{{implode(",",$variant_ids)}}',
+				    content_type: 'product'
 				});
 				// Google pixel tracking
 				gtag('event', 'page_view', {
