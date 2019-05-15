@@ -131,7 +131,7 @@
 		</ul>
 
 		<!-- Promotion summary -->
-		<div *ngIf="promotions && promotions.length && (displayPromo || cart.promo_applied )" class="cart-promotion mt-4">
+<!-- 		<div *ngIf="promotions && promotions.length && (displayPromo || cart.promo_applied )" class="cart-promotion mt-4">
 			<h4 class="mb-2 font-weight-bold">Promotion Summary</h4>
 			<app-applied-coupon [promoApplied]="cart.promo_applied" [promotions]="promotions"> </app-applied-coupon>
 			<div *ngIf="cart.promo_applied">
@@ -139,14 +139,14 @@
 			</div>
 			<app-upgrade-cart [promotions]="promotions" [orderTotal]="cart.summary.sale_price_total" (noUpgradePromo)="displayPromo = false"> </app-upgrade-cart>
 			<hr>
-		</div>
+		</div> -->
 
-		<div *ngIf="coupons && coupons.length" class="cart-promotion mt-4" [ngClass]="{'d-none' : cart.cart_type == 'order' && !cart.applied_coupon}">
+		<div class="cart-promotion mt-4" [ngClass]="{'d-none' : cart.cart_type == 'order' && !cart.coupon_applied}">
 			<h4 class="mb-2 font-weight-bold">Coupon Summary</h4>
-			<div *ngIf="cart.applied_coupon">
-				<app-applied-coupon [promoApplied]="cart.applied_coupon" [promotions]="coupons" [orderTotal]="cart.summary.sale_price_total" [cartType]="cart.cart_type" (editCouponTrigger)="displayCouponSideBar()"> </app-applied-coupon>
+			<div *ngIf="cart.coupon_applied">
+				<app-applied-coupon [promoApplied]="cart.coupon_applied" [promotions]="coupons" [orderTotal]="cart.summary.sale_price_total" [cartType]="cart.cart_type" (editCouponTrigger)="displayCouponSideBar()"> </app-applied-coupon>
 			</div>
-			<div *ngIf="!cart.applied_coupon" class="kss-flash kss-flash--info mb-3 cursor-pointer" (click)="displayCouponSideBar()">
+			<div *ngIf="!cart.coupon_applied" class="kss-flash kss-flash--info mb-3 cursor-pointer" (click)="displayCouponSideBar()">
 				<div class="d-flex align-items-center justify-content-between py-1">
 					<div class="pr-4">
 						<h5 class="f-w-4 text-muted m-0"><i class="fas fa-ticket-alt pr-1"></i> Apply Code</h5>
@@ -316,12 +316,29 @@
 			<div *ngIf="couponErrorMessage" class="kss-flash kss-flash--error">
 			 	{{couponErrorMessage}}
 			</div>
-			<div *ngIf="coupons && coupons.length" class="coupon-wrapper">
+			<div class="coupon-inp-wrapper mt-4 mb-5 pos-rel">
+				<div class="input-group mb-3">
+					<input type="text" class="form-control inp-coupon" placeholder="Enter Coupon Code" [(ngModel)]="couponCode" aria-label="Enter Coupon Code" (ngModelChange)="couponErrorMessage = ''">
+					<div class="input-group-append pos-fixed apply-btn-wrap" [ngClass]="{'btn-disabled' : !couponCode}">
+						<button type="button" class="btn btn-primary inp-apply-btn" (click)="applyCoupon(couponCode)">Apply</button>
+					</div>
+				</div>
+			</div>
+			<div *ngIf="coupons && coupons.length; else noCoupons" class="coupon-wrapper">
 				<!-- <div class="text-center">
 					<strong class="h5 font-weight-bold">OR</strong>
 				</div> -->
-				<app-promotions-list  [promotionsList]="coupons" [orderTotal]="cart.summary.sale_price_total" [appliedCoupon]="cart.applied_coupon"></app-promotions-list>
+				<app-promotions-list  [promotionsList]="coupons" [orderTotal]="cart.summary.sale_price_total" [appliedCoupon]="cart.coupon_applied"></app-promotions-list>
 			</div>
+			<ng-template #noCoupons>
+				<div class="coupon-wrapper">
+					<div class="coupon-wrap">
+						<img src="/img/coupon.svg" alt="" width="80" height="80">
+					</div>
+					<p class="text-center">No other coupons available</p>
+				</div>
+			</ng-template>
+			<!--
 			<div class="d-block pl-3 pr-3 coupon-sticky" [ngClass]="{'fixed-bottom' : enterCoupon}">
 				<div class="py-2 pr-3 d-flex align-items-center">
 					<button class="btn kss-btn kss-btn--outline-secondary kss-btn--big mr-3" (click)="hideCouponSideBar()">Cancel</button>
@@ -332,6 +349,7 @@
 					</button>
 				</div>
 			</div>
+			-->
 		</div>
 	</div>
 </div>

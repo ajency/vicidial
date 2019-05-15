@@ -99,6 +99,7 @@ return [
                 'coupon_count',
                 'condition_id',
                 'description_sale',
+                'coupon_visibility', //public or private
             ],
         ],
         'coupon'   => [

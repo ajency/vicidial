@@ -1,6 +1,6 @@
 <!-- If valid Coupon -->
 <div *ngIf="applicablePromotions.length" class="coupon-valid">
-	<h6 class="font-weight-bold my-3 coupon-title">Choose a Valid Coupon</h6>
+	<h6 class="font-weight-bold my-3 coupon-title">Available coupons</h6>
 	<div *ngFor="let coupon of applicablePromotions; let last = last" clas
 	="radio-wrap d-flex kss_sizes wo-image mb-4">
 		<app-promotion [coupon]="coupon" [orderTotal]="orderTotal" [appliedCoupon]="appliedCoupon" [applicable]=true> </app-promotion>

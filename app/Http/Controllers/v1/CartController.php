@@ -197,7 +197,7 @@ class CartController extends Controller
         $appliedCoupon = $couponAvailability['coupon_applied'];
         
         $summary = $cart->getSummary();
-        return response()->json(['cart_count' => $cart->itemCount(), 'cart_type' => $cart->type, 'items' => $items, 'applied_coupon' => $appliedCoupon, "coupons" => $coupons, "summary" => $summary]);
+        return response()->json(['cart_count' => $cart->itemCount(), 'cart_type' => $cart->type, 'items' => $items, 'coupon_applied' => $appliedCoupon, "coupons" => $coupons, "summary" => $summary]);
     }
 
     public function guestCartFetch(Request $request)
@@ -218,7 +218,7 @@ class CartController extends Controller
 
 
         $summary = $cart->getSummary();
-        return response()->json(['cart_count' => $cart->itemCount(), 'cart_type' => $cart->type, 'items' => $items, "summary" => $summary,'applied_coupon' => $appliedCoupon, "coupons" => $coupons, ]);
+        return response()->json(['cart_count' => $cart->itemCount(), 'cart_type' => $cart->type, 'items' => $items, "summary" => $summary,'coupon_applied' => $appliedCoupon, "coupons" => $coupons, ]);
     }
 
     public function guestCartDelete(Request $request)
