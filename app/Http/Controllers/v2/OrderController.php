@@ -56,8 +56,12 @@ class OrderController extends Controller
         $response = ["items" => getCartData($cart, false), "summary" => $order->subOrderData(), "order_id" => $order->id, "address" => $order->address_data, "pincode_serviceability" => $pincode_data, "message" => 'Order Placed successfully'];
 
         $user_info = $user->userInfo();
-        if ($user_info != null) {
+        if ($user_info != null || !$params["token_verified"]) {
             $response['user_info'] = $user_info;
+        }
+        $response['user_info_editable'] = false;
+        if ($params["token_verified"] || $user_info == null) {
+            $response['user_info_editable'] = true;
         }
 
         return response()->json($response);
@@ -91,8 +95,12 @@ class OrderController extends Controller
         $response = ["items" => getCartData($cart, false), "summary" => $order->subOrderData(), "order_id" => $order->id, "address" => $order->address_data, "pincode_serviceability" => $pincode_data, "message" => 'Order Placed successfully'];
 
         $user_info = $user->userInfo();
-        if ($user_info != null) {
+        if ($user_info != null || !$params["token_verified"]) {
             $response['user_info'] = $user_info;
+        }
+        $response['user_info_editable'] = false;
+        if ($params["token_verified"] || $user_info == null) {
+            $response['user_info_editable'] = true;
         }
 
         return response()->json($response);

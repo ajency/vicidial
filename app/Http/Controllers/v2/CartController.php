@@ -117,7 +117,7 @@ class CartController extends Controller
         $coupons = Offer::getAllActiveCoupons();
 
         $summary = $cart->getSummary();
-        return response()->json(['cart_count' => $cart->itemCount(), 'cart_type' => $cart->type, 'items' => $items, 'applied_coupon' => $appliedCoupon, "coupons" => $coupons, "summary" => $summary]);
+        return response()->json(['cart_count' => $cart->itemCount(), 'cart_type' => $cart->type, 'items' => $items, 'coupon_applied' => $appliedCoupon, "coupons" => $coupons, "summary" => $summary]);
     }
 
     public function guestCartDelete(Request $request)
@@ -295,7 +295,7 @@ class CartController extends Controller
         $appliedCoupon      = $couponAvailability['coupon_applied'];
 
         $summary = $cart->getSummary();
-        return response()->json(['cart_count' => $cart->itemCount(), 'cart_type' => $cart->type, 'items' => $items, 'applied_coupon' => $appliedCoupon, "coupons" => $coupons, "summary" => $summary]);
+        return response()->json(['cart_count' => $cart->itemCount(), 'cart_type' => $cart->type, 'items' => $items, 'coupon_applied' => $appliedCoupon, "coupons" => $coupons, "summary" => $summary]);
     }
 
     public function userCartDelete($id, Request $request)
