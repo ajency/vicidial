@@ -113,7 +113,7 @@ export class ShippingSummaryComponent implements OnInit {
   }
 
   setUserName(){
-    if(!this.shippingDetails.user_info){
+    if(!this.shippingDetails.user_info && this.shippingDetails.user_info_editable){
       this.shippingDetails.user_info = {};
       this.shippingDetails.user_info.name = this.shippingDetails.address.name;
       this.shippingDetails.user_info.email = '';
@@ -122,7 +122,7 @@ export class ShippingSummaryComponent implements OnInit {
       },100);
       
     }
-    else{
+    if(this.shippingDetails.user_info){
       this.userEmail = this.shippingDetails.user_info.email;
     }
   }
