@@ -23,7 +23,7 @@
 			Valid till <strong>{{getValidTill(coupon.valid_till)}}</strong>
 		</div>
 	</div>
-	<div>
+	<div *ngIf="applicable">
 		<button type="button" class="btn btn-primary apply-coupon" (click)="couponChanged(coupon.coupon_code)">Apply</button>
 	</div>
 </label>
