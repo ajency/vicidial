@@ -334,8 +334,8 @@ class CartController extends Controller
                 $apply['messages'] = ['Coupon removed successfully'];
             }
             return response()->json($apply);
-        }catch (\Exception $e){
-            abort(400,$e->message);
+        } catch (\Exception $e) {
+            abort(400, $e->getMessage());
         }
     }
 
