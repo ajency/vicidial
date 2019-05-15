@@ -104,7 +104,8 @@
 	    fbq('track', 'AddToCart', {
 	        value: sale_price,
 	        currency: 'INR',
-	        content_ids: parent_id+'-'+selected_color_id
+	        content_ids: parent_id+'-'+selected_color_id,
+	        content_type: 'product'
 	    });
 	}	
 </script>

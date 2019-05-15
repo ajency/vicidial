@@ -11,6 +11,7 @@
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#707279"/>
 <link rel="stylesheet" href="{{CDN::asset('/js/kss-pwa/styles.'.$fileHashes['styles'].'.css')}}">
+<meta name="google-site-verification" content="SntaXthhmMlR2wlwpcynb3PYim7wcDSpSpq2rrx8t0I" />
 {!! SEOMeta::generate() !!}
 {!! OpenGraph::generate() !!}
 {!! Twitter::generate() !!}
