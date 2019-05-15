@@ -15,7 +15,7 @@ workbox.core.setCacheNameDetails({
 // 1. js and css
 workbox.routing.registerRoute(
     new RegExp('https://d34use2w6yizv9.cloudfront.net/pre_prod/public/js/kss-pwa/*'),
-    new workbox.strategies.StaleWhileRevalidate({
+    workbox.strategies.cacheFirst({
         cacheName: 'kss-pwa-pre-prod',
         plugins: [
             new workbox.expiration.Plugin({
@@ -29,7 +29,7 @@ workbox.routing.registerRoute(
 
 workbox.routing.registerRoute(
     new RegExp('https://static.kidsuperstore.in/public/js/kss-pwa/*'),
-    new workbox.strategies.StaleWhileRevalidate({
+    workbox.strategies.cacheFirst({
         cacheName: 'kss-pwa-prod',
         plugins: [
             new workbox.expiration.Plugin({

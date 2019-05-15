@@ -47,12 +47,19 @@ export class OrderComponent implements OnInit, OnChanges{
   }
 
   isReturnPolicyValid(date){
-    if(this.appservice.getAge(date) < 0)
+    if(this.getAge(date) < 0)
       return true
     return false;
   }
 
   getValidTill(date){
     return moment(date, "YYYY-MM-DD HH:mm:ss").format("DD MMM, YYYY");
+  }
+
+  getAge(vaild_from){
+    let now = moment(moment().format('YYYY-MM-DD HH:mm:ss'));
+    let start = moment(vaild_from);
+    let duration = moment.duration(now.diff(start));
+    return duration.asSeconds();
   }
 }

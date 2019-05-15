@@ -1,9 +1,6 @@
 import { Component, OnInit, isDevMode } from '@angular/core';
 import { ApiServiceService } from '../../service/api-service.service';
 import { AppServiceService } from '../../service/app-service.service';
-// import menu from '../../../assets/data/menu.json';
-
-declare var published_home: any;
 
 @Component({
   selector: 'app-home-page',
@@ -37,7 +34,6 @@ export class HomePageComponent implements OnInit {
     .catch((error)=>{
       console.log("error in get-home-page-element api ==>", error);
       this.showLoader = false;
-      // this.homePageElements = true;
     })
   }
 

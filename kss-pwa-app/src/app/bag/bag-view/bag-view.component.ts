@@ -11,13 +11,9 @@ import { BetterPromoAvailableComponent } from '../components/better-promo-availa
 import { BagSummaryComponent } from '../../shared-components/bag-summary/bag-summary/bag-summary.component';
 
 declare var $: any;
-// declare var this.appservice.add_to_cart_failed: any;
-// declare var add_to_cart_failure_message: any;
-// declare var this.appservice.add_to_cart_clicked: any;
-// declare var this.appservice.add_to_cart_completed: any;
+
 declare var fbTrackInitiateCheckout : any;
 declare var google_pixel_tracking : any;
-// declare var fbTrackuserRegistration : any;
 
 @Component({
   selector: 'app-bag-view',

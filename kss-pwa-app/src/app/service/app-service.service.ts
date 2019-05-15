@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 // import { Observable } from 'rxjs';
 // import { Subject } from 'rxjs/Subject';
 import { ApiServiceService } from './api-service.service';
-import * as moment from 'moment';
+// import * as moment from 'moment';
 
 declare var $: any;
 
@@ -231,7 +231,7 @@ export class AppServiceService {
 
   callFetchCartApi(){    
     let url = this.apiUrl + (this.isLoggedInUser() ? ("/api/rest/v1/user/cart/"+this.getCookie('cart_id')+"/get") : ("/rest/v1/anonymous/cart/get"))
-    if(isDevMode() || window.location.host == 'localhost:8000')
+    if(isDevMode())
       url = "https://demo8558685.mockable.io/fetch-cart";
     let header = this.isLoggedInUser() ? { Authorization : 'Bearer '+this.getCookie('token') } : {}
     return this.apiservice.request(url, 'get', {}, header);
@@ -261,12 +261,12 @@ export class AppServiceService {
     return ret_obj;
   }
 
-  getAge(vaild_from){
-    let now = moment(moment().format('YYYY-MM-DD HH:mm:ss'));
-    let start = moment(vaild_from);
-    let duration = moment.duration(now.diff(start));
-    return duration.asSeconds();
-  }
+  // getAge(vaild_from){
+  //   // let now = moment(moment().format('YYYY-MM-DD HH:mm:ss'));
+  //   // let start = moment(vaild_from);
+  //   // let duration = moment.duration(now.diff(start));
+  //   // return duration.asSeconds();
+  // }
 
   calculateDiscount(type, value ,order_total){
     return ( type == 'value' ? value : (order_total * value / 100).toFixed(2) )

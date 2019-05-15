@@ -74,16 +74,18 @@
 	@if(! empty($params['payment_status']))
 		@if($params['payment_status'] == 'success' || $params['payment_status'] == 'cod')
 			<script type="text/javascript">
-				@php $variant_ids = []; @endphp
+				@php $variant_ids = []; $variant_qty = []; $contents = ''; @endphp
 				@foreach($params['items'] as $item)
-					@php $variant_ids[] = $item['product_id'] . '-' . $item['product_color_id'] @endphp
+					@php $variant_ids[] = $item['product_id'] . '-' . $item['product_color_id'];
+						 $variant_qty[] = ["id" => $item['product_id'] . '-' . $item['product_color_id'], "quantity" => $item['quantity']];
+					@endphp
 				@endforeach
+				@php $contents = json_encode($variant_qty);@endphp
 				fbq('track', 'Purchase', {
 				    value: {{$params['order_info']['total_amount']}},
 				    currency: 'INR',
-				    content_ids: '{{implode(",",$variant_ids)}}',
-				    content_type: 'product',
-				    product_catalog_id : product_catalog_id
+				    contents: {!!$contents!!},
+				    content_ids: '{{implode(",",$variant_ids)}}'
 				});
 				// Google pixel tracking
 				gtag('event', 'page_view', {

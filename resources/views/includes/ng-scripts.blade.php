@@ -1,3 +1,15 @@
+<script type="text/javascript">
+  // Google pixel tracking id
+  /* <![CDATA[ */
+  var google_pixel_id = "{{config('analytics.google_pixel_id')}}";
+  var google_conversion_id = @php echo config('analytics.conversion_id'); @endphp;
+  var google_conversion_label = "{{config('analytics.conversion_label')}}";
+  var google_conversion_value = 1.0;
+  var google_conversion_data = "AW-{{config('analytics.conversion_id')}}/{{config('analytics.conversion_label')}}";
+  // var product_catalog_id = "{{config('analytics.fb_pixel_catalog_id')}}"
+    /* ]]> */
+</script>
+
 <script>
 	!function(f,b,e,v,n,t,s)
 	{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -34,8 +46,7 @@
 			value: default_price,
 			currency: 'INR',
 			content_ids: parent_id+'-'+selected_color_id,
-			content_type: 'product_group',
-			product_catalog_id : product_catalog_id
+			content_type: 'product_group'
 		});
 	}
 
@@ -93,9 +104,7 @@
 	    fbq('track', 'AddToCart', {
 	        value: sale_price,
 	        currency: 'INR',
-	        content_ids: parent_id+'-'+selected_color_id,
-	        content_type: 'product',
-	        product_catalog_id : product_catalog_id
+	        content_ids: parent_id+'-'+selected_color_id
 	    });
 	}	
 </script>

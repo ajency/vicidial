@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges} from '@angular/core';
 import { PromotionComponent } from '../promotion/promotion.component';
 import { AppServiceService } from '../../../service/app-service.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-promotions-list',
@@ -51,9 +52,16 @@ export class PromotionsListComponent implements OnInit, OnChanges {
 
   calculateAge(){
   	this.promotionsList.forEach((promotion)=>{
-  		promotion.age = this.appservice.getAge(promotion.valid_from);
+  		promotion.age = this.getAge(promotion.valid_from);
   		// console.log(promotion.age);
   	})
+  }
+
+  getAge(vaild_from){
+    let now = moment(moment().format('YYYY-MM-DD HH:mm:ss'));
+    let start = moment(vaild_from);
+    let duration = moment.duration(now.diff(start));
+    return duration.asSeconds();
   }
 
 }
