@@ -21,7 +21,7 @@ export class ProductViewComponent implements OnInit, OnChanges {
     if(!this.listPage && this.product && this.product.url)
       this.product.url = (new URL(this.product.url)).pathname;
 
-    if(this.productPage){
+    if(this.productPage && this.product && typeof this.product == 'object' ){
       this.product.is_sellable = true;
       this.product.is_available = true;
     }
