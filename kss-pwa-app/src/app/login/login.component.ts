@@ -139,7 +139,7 @@ export class LoginComponent implements OnInit {
     })
   }
 
-  reSendOTP(){
+  resendOTP(){
     this.userValidation.disableSendOtpButton = true;
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     let url = this.appservice.apiUrl + '/api/rest/v2/user/authenticate/resend_otp?';
