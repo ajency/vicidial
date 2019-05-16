@@ -76,7 +76,7 @@ class AddressController extends Controller
         $user_details = $user->userDetails();
 
         if (!$params["token_verified"]) {
-            return json_encode(["addresses" => [], "user_info" => ["mobile" => $user_details['mobile']], "user_info_editable" => (isset($user_details['email'])) ? true : false]);
+            return json_encode(["addresses" => [], "user_info" => ["mobile" => $user_details['mobile']], "get_user_info" => !isset($user_details['email'])]);
         }
 
         if (isset($params['cart_id'])) {
@@ -98,7 +98,7 @@ class AddressController extends Controller
             $address_data[] = $address->shippingAddress(true);
         }
 
-        return json_encode(["addresses" => $address_data, "user_info" => ["mobile" => $user_details['mobile']], "user_info_editable" => (isset($user_details['email'])) ? true : false]);
+        return json_encode(["addresses" => $address_data, "user_info" => ["mobile" => $user_details['mobile']], "get_user_info" => !isset($user_details['email'])]);
     }
 
     public function userDeleteAddress(Request $request)
