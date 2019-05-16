@@ -17,18 +17,18 @@
 				<a (click)="navigateTo(banner.element_data.image.href)" class="d-block mb-3 mb-md-0 cursor-pointer">
 					<picture>
 					  	<source media="(min-width: 768px)"
-							  [attr.defaultImage]="'/assets/img/transparent.png'"
+							  [attr.defaultImage]="cdnUrl + '/assets/img/transparent.png'"
 							  [attr.lazyLoad]="createDataSrcSet(banner.images.landscape['2x'], '992w', banner.images.landscape['1x'], '590w')"
 					          sizes="(min-width:1200px) 590px, 48vw">
 
 					  	<source media="(max-width: 767px)"
-							  [attr.defaultImage]="'/assets/img/transparent.png'"
+							  [attr.defaultImage]="cdnUrl + '/assets/img/transparent.png'"
 							  [attr.lazyLoad]="createDataSrcSet(banner.images.portrait['2x'], '600w', banner.images.portrait['1x'], '400w')"
 					          sizes="92vw">
 
 					    <img
 			    			[offset]=500
-			    			[defaultImage]="'/assets/img/transparent.png'"
+			    			[defaultImage]="cdnUrl + '/assets/img/transparent.png'"
 			    			[lazyLoad]="banner.images.portrait['1x']"
 			    		  	class="img-fluid w-100 img-holder"
 			    		    alt="{{banner.element_data.image.img_alt}}"

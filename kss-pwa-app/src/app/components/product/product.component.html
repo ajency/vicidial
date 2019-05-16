@@ -6,7 +6,7 @@
 
             [useSrcset]=true
             [offset]=500
-            [defaultImage]="'/assets/img/transparent.png'"
+            [defaultImage]="cdnUrl + '/assets/img/transparent.png'"
             [lazyLoad]="createDataSrcSet(product.products[0].images['1x'], '270w', product.products[0].images['2x'], '540w')"
             class="card-img-top"
             title="{{product.products[0].title}}"
@@ -14,7 +14,7 @@
             sizes="(min-width: 1200px) 270px, (min-width: 992px) 226px, (max-width: 991px) 38vw">
             <ng-template #noImage>
 	            <img
-              [defaultImage]="'/img/placeholder.svg'"
+              [defaultImage]="cdnUrl + '/img/placeholder.svg'"
               [useSrcset]=true
               [offset]=500
               [lazyLoad]="createDataSrcSet('/img/placeholder.svg', '270w', '/img/placeholder.svg', '540w', '/img/placeholder.svg', '810w')"

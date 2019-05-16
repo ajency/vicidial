@@ -25,7 +25,7 @@
           </ng-container>
           <ng-template #noImage>
             <img
-            [defaultImage]="'/img/placeholder.svg'"
+            [defaultImage]="cdnUrl + '/img/placeholder.svg'"
             [useSrcset]=true
             [offset]=1000
             [lazyLoad]="createDataSrcSet('/img/placeholder.svg', '270w', '/img/placeholder.svg', '540w')"
