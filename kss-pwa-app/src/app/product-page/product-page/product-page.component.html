@@ -42,7 +42,7 @@
 				<h3 class="text-left my-4 font-weight-bold">Similar Products</h3>
 					<div id="card-list" class="row similar-products">
 			      	<div *ngFor="let product of product.related_products" class="col similar-products__col">
-			            <app-product-view [product]="product" [showLoader]="showLoader"></app-product-view>
+			            <app-product-view [product]="product" [showLoader]="showLoader" [productPage]=true></app-product-view>
 			      	</div>
 			   </div>
 			</div>
