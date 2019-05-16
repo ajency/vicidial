@@ -129,7 +129,8 @@ export class AddressComponent implements OnInit, OnChanges {
     })
   }
 
-  saveNewAddress(){
+  saveNewAddress(myForm){
+    // console.log("myForm ==>",myForm);
     this.appservice.showLoader();
     let url = this.appservice.apiUrl + (this.newAddress.id ? "/api/rest/v2/user/address/edit" :  "/api/rest/v2/user/address/new");
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
