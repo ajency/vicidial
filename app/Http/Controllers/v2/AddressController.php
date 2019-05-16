@@ -73,8 +73,10 @@ class AddressController extends Controller
         $user   = $request->user();
         $params = $request->all();
 
+        $user_details = $user->userDetails();
+
         if (!$params["token_verified"]) {
-            return json_encode(["addresses" => [], "user_info" => $user->userDetails()]);
+            return json_encode(["addresses" => [], "user_info" => ["mobile" => $user_details['mobile']], "user_info_editable" => (isset($user_details['email'])) ? true : false]);
         }
 
         if (isset($params['cart_id'])) {
@@ -96,7 +98,7 @@ class AddressController extends Controller
             $address_data[] = $address->shippingAddress(true);
         }
 
-        return json_encode(["addresses" => $address_data, "user_info" => $user->userDetails()]);
+        return json_encode(["addresses" => $address_data, "user_info" => ["mobile" => $user_details['mobile']], "user_info_editable" => (isset($user_details['email'])) ? true : false]);
     }
 
     public function userDeleteAddress(Request $request)
@@ -166,7 +168,7 @@ class AddressController extends Controller
         }
 
         $pincode_data = checkPincodeServiceableHelper($pincode);
-        
+
         return json_encode(['district' => $pincode_entry['district'], 'state_id' => $pincode_entry['state_id'], "pincode_serviceability" => $pincode_data]);
     }
 }
