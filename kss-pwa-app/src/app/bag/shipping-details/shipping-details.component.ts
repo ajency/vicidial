@@ -83,10 +83,10 @@ export class ShippingDetailsComponent implements OnInit {
   getAddress(){
     this.appservice.showLoader();
     this.appservice.callGetAllAddressesApi().then((response)=>{
-      if(response.user_info.email){
-        this.appservice.hideAddressUser = true;
-      } else {
+      if(response.get_user_info){
         this.appservice.hideAddressUser = false;
+      } else {
+        this.appservice.hideAddressUser = true;
       }
       this.addresses = response.addresses;      
       this.appservice.shippingAddresses = response.addresses;
