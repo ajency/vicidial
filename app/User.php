@@ -184,7 +184,7 @@ class User extends Authenticatable
 
     public static function mapUnverifiedUsers($from_id, $to_id)
     {
-        $users = self::select('id')->where('id', '>=', $from_id)->where('id', '<=', $to_id)->where('verified', false)->get();
+        $users = self::where('id', '>=', $from_id)->where('id', '<=', $to_id)->where('verified', false)->get();
         foreach ($users as $user) {
             MapUnverifiedUsers::dispatch($user)->onQueue('map_users');
         }
