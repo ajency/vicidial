@@ -34,7 +34,7 @@
 			<div *ngIf="isLoggedIn()" class="my-order-parent accordion mb-4" id="accordionExample">
 				<div *ngIf="orders && orders.length" class="my-order-child">
 					<div *ngFor="let order of orders; let lastindex = last; let first = first; let getindex = index" class="child-2 my-order-card">
-						<div class="d-flex row mb-2 order-header collapsed" data-toggle="collapse" [attr.data-target]="'#collapse-' + getindex" aria-expanded="true" [attr.aria-controls]="'collapse-' + getindex">
+						<div class="d-flex row mb-2 order-header collapsed order-header-pos" data-toggle="collapse" [attr.data-target]="'#collapse-' + getindex" aria-expanded="true" [attr.aria-controls]="'collapse-' + getindex">
 							<div class="col-9">
 								<p class="m-0 pb-1">Order No. <strong>{{order.order_info.txn_no}}</strong></p>
 								<p class="m-0 pb-1">Placed on. <strong>{{order.order_info.order_date}}</strong></p>
@@ -50,6 +50,10 @@
 							</div>
 							<div class="col-3 text-right d-flex flex-column justify-content-between">
 								<span class="ordercollapse-trigger"><i class="fas fa-chevron-up arrow-down"></i></span>
+							</div>
+							<div class="order-tooltip tooltip-wrapper">
+								<div class="tooltip-icon"><i class="fas fa-info-circle"></i></div>
+								<div class="tooltip-msg">Order Placed as verfied user</div>
 							</div>
 						</div>
 						<div class="collapse" [ngClass]="{'show': orders.length == 1}" id=collapse-{{getindex}} data-parent="#accordionExample">
