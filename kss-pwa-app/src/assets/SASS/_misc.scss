@@ -1463,9 +1463,19 @@ $size: 20px;
 
     .tooltip {
         &-icon{
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 14px;
+            color: #856404;
+            vertical-align: middle;
+            font-size: 12px;
+            font-weight: 400;
+
             i {
-                font-size: 16px;
-                color: #f9bc23;
+                font-size: 14px;
+                color: #856404;
+                position: relative;
+                top: 1px;
             }
         }
         &-msg{
@@ -1473,13 +1483,14 @@ $size: 20px;
             right: 0;
             min-width: 170px;
             font-size: 12px;
-            top: -32px;
+            bottom: 120%;
             padding: 5px;
-            background: rgba(249, 188, 35, .2);
+            background: #ffeeba;
             border-radius: 2px;
-            -webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
-            box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 1px -2px rgba(0,0,0,0.12), 0 1px 2px 0 rgba(0,0,0,0.2);
+            text-align: center;
+            color: #856404;
             display: none;
+            font-weight: 400;
         }
         &-icon {
             &:hover,&:focus {
