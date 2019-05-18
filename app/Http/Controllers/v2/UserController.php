@@ -109,6 +109,9 @@ class UserController extends Controller
         if ($order != null) {
             $order->verified = true;
             $order->save();
+            $address = $order->address;
+            $address->verified = true;
+            $address->save();
         }
 
         return response()->json(["message" => '', 'user' => ["id" => $userObject->id, 'active_cart_id' => $cart->id, 'user_info' => $userObject->userDetails()], 'permissions' => ['bag' => true, 'account' => true], 'success' => true]);

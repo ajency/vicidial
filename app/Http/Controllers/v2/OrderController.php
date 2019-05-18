@@ -10,8 +10,8 @@ use App\Http\Controllers\Controller;
 use App\Jobs\OrderLineStatus;
 use App\Jobs\SubOrderStatus;
 use App\Order;
-use App\User;
 use App\SubOrder;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -49,6 +49,11 @@ class OrderController extends Controller
         $order->store_data = $storeData['store_data'];
         $order->verified   = $params["token_verified"];
         $order->save();
+
+        if (!$address->verified && $params["token_verified"]) {
+            $address->verified = $params["token_verified"];
+            $address->save();
+        }
 
         $cart->type = 'order';
         $cart->save();
@@ -90,6 +95,11 @@ class OrderController extends Controller
         } else {
             $address      = $order->address;
             $pincode_data = $address->checkPincodeServiceable();
+        }
+
+        if (!$address->verified && $params["token_verified"]) {
+            $address->verified = $params["token_verified"];
+            $address->save();
         }
 
         $response = ["items" => getCartData($cart, false), "summary" => $order->subOrderData(), "order_id" => $order->id, "address" => $order->address_data, "pincode_serviceability" => $pincode_data, "message" => 'Order Placed successfully'];
@@ -140,7 +150,7 @@ class OrderController extends Controller
             validateOrder($user, $order);
         }
 
-        $params = $order->getOrderDetailsItemWise();
+        $params = $order->getOrderDetailsItemWise(true);
 
         $params['breadcrumb']            = array();
         $params['breadcrumb']['list']    = array();
@@ -201,7 +211,7 @@ class OrderController extends Controller
         }
 
         foreach ($orders as $order) {
-            array_push($order_details, $order->getOrderDetailsItemWise());
+            array_push($order_details, $order->getOrderDetailsItemWise(true));
         }
 
         return response()->json(["message" => 'Order items received successfully', 'success' => true, 'data' => $order_details]);
@@ -212,7 +222,7 @@ class OrderController extends Controller
         $user  = $request->user();
         $order = Order::where('txnid', $txnid)->first();
         validateOrder($user, $order);
-        return response()->json(["message" => 'Order items received successfully', 'success' => true, 'data' => $order->getOrderDetailsItemWise()]);
+        return response()->json(["message" => 'Order items received successfully', 'success' => true, 'data' => $order->getOrderDetailsItemWise(true)]);
     }
 
     public function cancelOrder($id, Request $request)

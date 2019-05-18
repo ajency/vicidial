@@ -173,7 +173,7 @@ class Order extends Model
         $this->aggregate_data = $total;
     }
 
-    public function getOrderInfo()
+    public function getOrderInfo($verification)
     {
         $dateInd = Carbon::createFromFormat('Y-m-d H:i:s', $this->created_at, 'UTC');
         $dateInd->setTimezone('Asia/Kolkata');
@@ -182,6 +182,10 @@ class Order extends Model
 
         if ($this->cart->user->verified == null) {
             $order_info['token'] = $this->token;
+        }
+
+        if ($verification) {
+            $order_info['verified'] = $this->verified;
         }
 
         return $order_info;
@@ -244,7 +248,7 @@ class Order extends Model
         return $params;
     }
 
-    public function getOrderDetailsItemWise()
+    public function getOrderDetailsItemWise($verification = false)
     {
         $items = array();
         foreach ($this->subOrders as $subOrder) {
@@ -252,7 +256,7 @@ class Order extends Model
         }
 
         $params = [
-            "order_info"       => $this->getOrderInfo(),
+            "order_info"       => $this->getOrderInfo($verification),
             "items"            => $items,
             "shipping_address" => $this->address_data,
             "order_summary"    => $this->subOrderData(),

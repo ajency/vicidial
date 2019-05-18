@@ -95,7 +95,7 @@ class AddressController extends Controller
         $address_data = array();
 
         foreach ($addresses as $address) {
-            $address_data[] = $address->shippingAddress(true);
+            $address_data[] = $address->shippingAddress(true, true);
         }
 
         return json_encode(["addresses" => $address_data, "user_info" => ["mobile" => $user_details['mobile']], "get_user_info" => !isset($user_details['email'])]);

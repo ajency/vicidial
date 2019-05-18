@@ -21,7 +21,7 @@ class Address extends Model
         return $this->belongsTo('App\User');
     }
 
-    public function shippingAddress($unset = false)
+    public function shippingAddress($unset = false, $verification = false)
     {
         $address_data            = $this->address;
         $address_data["id"]      = $this->id;
@@ -32,6 +32,10 @@ class Address extends Model
         }
 
         unset($address_data['state_odoo_id']);
+
+        if ($verification) {
+            $address_data['verified'] = $this->verified;
+        }
 
         return $address_data;
     }
