@@ -51,7 +51,7 @@
 							<div class="col-3 text-right d-flex flex-column justify-content-between">
 								<span class="ordercollapse-trigger"><i class="fas fa-chevron-up arrow-down"></i></span>
 							</div>
-							<div class="order-tooltip tooltip-wrapper">
+							<div *ngIf="!order.order_info.verified" class="order-tooltip tooltip-wrapper">
 								<div class="tooltip-icon"><i class="fas fa-info-circle"></i> Unverified</div>
 								<div class="tooltip-msg">This Order was placed without mobile verification</div>
 							</div>

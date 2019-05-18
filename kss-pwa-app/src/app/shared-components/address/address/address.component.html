@@ -140,7 +140,7 @@
 							</a>
 						</div>
 					</div>
-					<div class="order-tooltip tooltip-wrapper">
+					<div *ngIf="!address.verified" class="order-tooltip tooltip-wrapper">
 						<div class="tooltip-icon"><i class="fas fa-info-circle"></i> Unverified</div>
 						<div class="tooltip-msg">This Address was added without mobile verification</div>
 					</div>

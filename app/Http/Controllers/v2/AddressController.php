@@ -39,7 +39,7 @@ class AddressController extends Controller
             $user->save();
         }
 
-        return json_encode(["address" => $address->shippingAddress(true), "message" => "Address Added successfully", 'success' => true]);
+        return json_encode(["address" => $address->shippingAddress(true, true), "message" => "Address Added successfully", 'success' => true]);
     }
 
     public function userEditAddress(Request $request)
@@ -65,7 +65,7 @@ class AddressController extends Controller
         $address->verified = $params["token_verified"];
         $address->save();
 
-        return json_encode(["address" => $address->shippingAddress(true), "message" => "Address Updated successfully", 'success' => true]);
+        return json_encode(["address" => $address->shippingAddress(true, true), "message" => "Address Updated successfully", 'success' => true]);
     }
 
     public function userFetchAddresses(Request $request)
