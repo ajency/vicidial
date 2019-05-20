@@ -147,6 +147,9 @@ class OrderController extends Controller
                 abort(401);
             }
             $user = User::getUserByPassportToken($_COOKIE['token']);
+            if ($user == null) {
+                $user = User::getUserByToken('Bearer ' . $_COOKIE['token']);
+            }
             validateOrder($user, $order);
         }
 

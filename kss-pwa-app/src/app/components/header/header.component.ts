@@ -61,7 +61,7 @@ export class HeaderComponent implements OnInit, OnChanges {
       // this.cdnUrl = this.appservice.cdnUrl;
     }
     else{
-      let url = isDevMode() ? "https://demo8558685.mockable.io/get-menu" : "/api/rest/v2/test/get-menu"
+      let url = isDevMode() ? "https://demo8558685.mockable.io/get-menu" : "/api/rest/v2/get-menu"
       this.apiService.request(url,'get',{},{}).then((data)=>{
         console.log("data ==>", data);
         // this.cdnUrl = data.cdn_url;
@@ -87,6 +87,10 @@ export class HeaderComponent implements OnInit, OnChanges {
     $('.megamenu').removeClass('active');
     $('.megamenu--left .nav-item').removeClass('active');
     $('.megamenu-wrapper').addClass('d-none');
+    $('html,body').removeClass('overflow-h');
+  }
+
+  removeOverFlow(){
     $('html,body').removeClass('overflow-h');
   }
 
