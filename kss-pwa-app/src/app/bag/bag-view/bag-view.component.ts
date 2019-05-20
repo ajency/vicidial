@@ -520,8 +520,10 @@ export class BagViewComponent implements OnInit {
   }
 
   loginSuccess(){
-    console.warn("loginSuccess navigateToShippingDetailsPage")
-    this.navigateToShippingDetailsPage();
+    if(window.location.hash.startsWith('#/bag')){
+      console.warn("loginSuccess navigateToShippingDetailsPage")
+      this.navigateToShippingDetailsPage();
+    }
   }
 
   formatCoupons(coupons){
