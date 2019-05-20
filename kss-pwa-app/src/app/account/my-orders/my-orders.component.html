@@ -31,7 +31,7 @@
 	            </div>
 	        </div>
 			<hr>
-			<div *ngIf="isLoggedIn()" class="my-order-parent accordion mb-4" id="accordionExample">
+			<div *ngIf="isLoggedIn() && !unverifiedUser; else unverified" class="my-order-parent accordion mb-4" id="accordionExample">
 				<div *ngIf="orders && orders.length" class="my-order-child">
 					<div *ngFor="let order of orders; let lastindex = last; let first = first; let getindex = index" class="child-2 my-order-card">
 						<div class="d-flex row mb-2 order-header collapsed order-header-pos" data-toggle="collapse" [attr.data-target]="'#collapse-' + getindex" aria-expanded="true" [attr.aria-controls]="'collapse-' + getindex">
@@ -126,14 +126,15 @@
 					<h4 class="py-4 mb-0">Please login to see all your orders</h4>					
 				</div>
 			</div> -->
-			
-			<div *ngIf="!isLoggedIn()">
-				<!-- <h4 class="font-weight-bold mt-3 mb-0">My Orders</h4> -->
-				<!-- <hr> -->
-				<div class="mt-4 kss-flash kss-flash--info py-3">
-					Can't see all your orders? <a href="javascript:void(0);" (click)="displayModal()" class="text-secondary font-weight-bold">Sign In</a>
+			<ng-template #unverified>
+				<div>
+					<!-- <h4 class="font-weight-bold mt-3 mb-0">My Orders</h4> -->
+					<!-- <hr> -->
+					<div class="mt-4 kss-flash kss-flash--info py-3">
+						Can't see all your orders? <a href="javascript:void(0);" (click)="displayModal()" class="text-secondary font-weight-bold">Sign In</a>
+					</div>
 				</div>
-			</div>		
+			</ng-template>
 		</div>
 </div>
 

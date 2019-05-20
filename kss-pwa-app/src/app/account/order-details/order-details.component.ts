@@ -38,6 +38,7 @@ export class OrderDetailsComponent implements OnInit {
   returnItem : boolean = false;
   cancelItemsList : any = [];
   quantity = 1;
+  unverifiedUser : boolean = false;
   constructor(private appservice : AppServiceService,
               private route: ActivatedRoute,
               private router: Router,
@@ -48,14 +49,7 @@ export class OrderDetailsComponent implements OnInit {
     this.appservice.removeLoader();
     $("#cd-my-account").scrollTop(0);
     if(this.appservice.order)
-      this.showBackButton = true;
-    // if(this.appservice.order){
-    //   this.order =  this.appservice.order;
-    //   this.showBackButton = true;
-    // }
-    // else{
-    //     this.getOrders(); 
-    // }    
+      this.showBackButton = true;  
     this.getOrderDetails();   
   }
 
@@ -65,8 +59,6 @@ export class OrderDetailsComponent implements OnInit {
 
   getOrderDetails(){
     this.appservice.showLoader();
-    // let order_id = this.route.snapshot.paramMap.get('id');
-    console.log("Check order_id ==>", window.location.href.substr(window.location.href.lastIndexOf('/') + 1))
     let order_id = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
     let url = this.appservice.apiUrl + '/api/rest/v2/user/order/'+ order_id +'/details';
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
@@ -74,18 +66,17 @@ export class OrderDetailsComponent implements OnInit {
       _token : $('meta[name="csrf-token"]').attr('content')
     };
     this.apiservice.request(url, 'get', body , header).then((response)=>{
-      // let formatted_data = this.formatData(response.data);
       this.order = response.data;
-      console.log("order ==>", this.order);
       this.appservice.removeLoader();
     })
     .catch((error)=>{
-      console.log("error ===>", error);
       if(error.status == 401)
         this.account_service.userLogout();
-      else if(error.status == 403)
+      else if(error.status == 403){
         this.order = false;
-        // this.router.navigate(['account']);
+        if(error.error.message === 'Unverified User')
+          this.unverifiedUser = true;
+      }
       this.appservice.removeLoader();
     })
   }
@@ -157,7 +148,7 @@ export class OrderDetailsComponent implements OnInit {
   }
 
   checkCancelReason(){
-    console.log("checkCancelReason ==>", this.cancelReasonId)
+    // console.log("checkCancelReason ==>", this.cancelReasonId)
     // this.cancelReasonId = parseInt(this.cancelReasonId);
   }
 
