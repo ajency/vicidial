@@ -65,7 +65,8 @@ export class LoginComponent implements OnInit {
     $('.modal-backdrop').appendTo('#cd-cart');
     $('body').addClass('hide-scroll');
     setTimeout(()=>{
-      this.mobileInput.nativeElement.focus();
+      if(this.mobileInput)
+        this.mobileInput.nativeElement.focus();
     },500);
   }
 
