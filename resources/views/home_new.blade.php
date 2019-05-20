@@ -32,7 +32,7 @@
 	window.onload = function() {
 	  // do stuff to load your page
 		var tduid_url_param = getUrlVars()["tduid"];
-		if(tduid_url_param){
+		if(tduid_url_param.match("^[A-z0-9]+$")){
 			if(getCookie('TRADEDOUBLER') == null){
 				set_new_cookie("TRADEDOUBLER", tduid_url_param, 10);
 			}
