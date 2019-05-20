@@ -4,10 +4,10 @@ namespace App\Jobs;
 
 use Ajency\Connections\ElasticQuery;
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 
 class UpdateOrderLineIndex implements ShouldQueue
 {
@@ -20,7 +20,7 @@ class UpdateOrderLineIndex implements ShouldQueue
      */
     public function __construct($id, $changes)
     {
-        $this->id = $id;
+        $this->id      = $id;
         $this->changes = $changes;
     }
 
@@ -35,9 +35,8 @@ class UpdateOrderLineIndex implements ShouldQueue
         $q->setIndex(config('elastic.indexes.weborder'));
         $q->createUpdateParams($this->id, $this->changes);
         $result = $q->update();
-        if (!isset($result['result']) && $result['result'] != 'updated') {
+        if (!isset($result['result']) || $result['result'] != 'updated') {
             throw new Exception(json_encode($result));
-
         }
     }
 }

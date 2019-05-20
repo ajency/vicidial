@@ -51,12 +51,10 @@ class OrderlineIndex implements ShouldQueue
         $indexData['orderline_state']            = $orderline->state;
         $indexData['orderline_shipment_status']  = $orderline->shipment_status;
         if ($orderline->shipment_delivery_date) {
-            //remind the idiots to fix their mistake
             $indexData['orderline_shipment_delivery_date'] = (new Carbon($orderline->shipment_delivery_date))->timestamp;
         }
 
         if ($orderline->return_expiry_date) {
-            //ugh same thing again
             $indexData['orderline_return_expiry_date'] = (new Carbon($orderline->return_expiry_date))->timestamp;
         }
 
@@ -75,20 +73,20 @@ class OrderlineIndex implements ShouldQueue
         $indexData['order_status']           = $orderline->ordersNew->first()->status;
         $indexData['order_txnid']            = $orderline->ordersNew->first()->txnid;
 
-        if($orderline->ordersReturned->first() !== null){
-            $indexData['return_order_id'] =  $orderline->ordersReturned->first()->id;
-            $indexData['return_order_txnid']=  $orderline->ordersReturned->first()->txnid;
-            $indexData['return_order_reason_id']=  ->comments->first()->reason_id;
-            $indexData['return_order_reason_additional_text']=  ->comments->first()->comments;
-            $indexData['return_suborder_id']  = $orderline->subOrdersReturned->first()->id;
+        if ($orderline->ordersReturned->first() !== null) {
+            $indexData['return_order_id']                     = $orderline->ordersReturned->first()->id;
+            $indexData['return_order_txnid']                  = $orderline->ordersReturned->first()->txnid;
+            $indexData['return_order_reason_id']              = $orderline->ordersReturned->comments->first()->reason_id;
+            $indexData['return_order_reason_additional_text'] = $orderline->ordersReturned->comments->first()->comments;
+            $indexData['return_suborder_id']                  = $orderline->subOrdersReturned->first()->id;
         }
-        
-        if($orderline->ordersCancelled->first() !== null){
-            $indexData['cancel_order_id'] =  $orderline->ordersCancelled->first()->id;
-            $indexData['cancel_order_txnid']=  $orderline->ordersCancelled->first()->txnid;
-            $indexData['cancel_order_reason_id']=  $orderline->ordersCancelled->first()->comments->first()->reason_id;
-            $indexData['cancel_order_reason_additional_text']=  $orderline->ordersCancelled->first()->comments->first()->comments; 
-            $indexData['cancel_suborder_id']  = $orderline->subOrdersCancelled->first()->id;  
+
+        if ($orderline->ordersCancelled->first() !== null) {
+            $indexData['cancel_order_id']                     = $orderline->ordersCancelled->first()->id;
+            $indexData['cancel_order_txnid']                  = $orderline->ordersCancelled->first()->txnid;
+            $indexData['cancel_order_reason_id']              = $orderline->ordersCancelled->first()->comments->first()->reason_id;
+            $indexData['cancel_order_reason_additional_text'] = $orderline->ordersCancelled->first()->comments->first()->comments;
+            $indexData['cancel_suborder_id']                  = $orderline->subOrdersCancelled->first()->id;
         }
 
         $indexData['suborder_id']          = $orderline->subOrdersNew->first()->id;
@@ -97,8 +95,6 @@ class OrderlineIndex implements ShouldQueue
         $indexData['suborder_is_invoiced'] = $orderline->subOrdersNew->first()->is_invoiced;
         $indexData['location_id']          = $orderline->subOrdersNew->first()->location->warehouse_odoo_id;
         $indexData['location_name']        = $orderline->subOrdersNew->first()->location->warehouse_name;
-
-
 
         $indexData['user_id']    = $orderline->ordersNew->first()->cart->user->id;
         $indexData['user_email'] = $orderline->ordersNew->first()->cart->user->email_id;
@@ -110,9 +106,8 @@ class OrderlineIndex implements ShouldQueue
         $q->createIndexParams($orderline->id, $indexData);
         $result = $q->index();
 
-        if (!isset($result['result']) && !($result['result'] == 'created' || $result['result'] == 'updated')) {
+        if (!isset($result['result']) || !($result['result'] == 'created' || $result['result'] == 'updated')) {
             throw new Exception(json_encode($result));
-
         }
     }
 }
