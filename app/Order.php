@@ -456,4 +456,56 @@ class Order extends Model
 
         ReturnOdooOrder::dispatch($returnSubOrder)->onQueue('odoo_order');
     }
+
+    public function getTrackbackUrlCashBackWorld()
+    {
+        // Your organization ID; provided by Cashback World.
+        $organization = config("orders.cash_back_world.organization_id");
+        // Event ID; provided by Cashback World.
+        $event = config("orders.cash_back_world.event_id");
+        // Secret Code; provided by Cashback World.
+        $secretcode = config("orders.cash_back_world.secret_code");
+        /* The orderValue is the basis for the commission paid to Cashback World. */
+        $orderValue = "0.00";
+        // Currency of the sale.
+        $currency = config("orders.cash_back_world.currency");
+        $orderNumber = $this->txnid;
+        // Event type: i.e. true = Sale; & false = Lead
+        $isSale = true;
+        // OPTIONAL: You may transmit a list of items ordered in the reportInfo parameter.
+        $reportInfo = "";
+        $reportInfo = urlencode($reportInfo);
+
+        $tduid = "";
+        if (!empty($_COOKIE[config("orders.cash_back_world.cookie_name")])) {
+            $tduid = $_COOKIE[config("orders.cash_back_world.cookie_name")];
+        } else {
+            return false;
+        }
+
+        if ($isSale) {
+            $domain = "tbs.tradedoubler.com";
+            $checkNumberName = "orderNumber";
+        } else {
+            $domain = "tbl.tradedoubler.com";
+            $checkNumberName = "leadNumber";
+            $orderValue = "1";
+        }
+
+        $checksum = "v04" . md5($secretcode . $orderNumber . $orderValue);
+
+        $trackBackUrl = "https://" . $domain . "/report"
+        . "?organization=" . $organization
+        . "&event=" . $event
+        . "&" . $checkNumberName . "=" . $orderNumber
+        . "&checksum=" . $checksum
+        . "&tduid=" . $tduid
+        . "&type=iframe"
+        . "&reportInfo=" . $reportInfo;
+        if ($isSale)
+        {
+        $trackBackUrl .= "&orderValue=" . $orderValue . "&currency=" . $currency;
+        }
+        return $trackBackUrl;
+    }
 }

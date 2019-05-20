@@ -59,5 +59,12 @@ return [
     "offer" => [
         'types'   => explode(',', env('OFFER_TYPES', '')),
     ],
-    "default_return_policy" => "Other"
+    "default_return_policy" => "Other",
+    "cash_back_world"  => [
+        'cookie_name'       => env('CASHBACK_WORLD_ORGANIZATION_COOKIE_NAME'),
+        'organization_id'   => env('CASHBACK_WORLD_ORGANIZATION_ID'),
+        'event_id'          => env('CASHBACK_WORLD_EVENT_ID'),
+        'secret_code'       => env('CASHBACK_WORLD_SECRET_CODE'),
+        'currency'          => env('CASHBACK_WORLD_CURRENCY')
+    ]
 ];
