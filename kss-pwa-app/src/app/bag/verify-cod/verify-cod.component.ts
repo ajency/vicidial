@@ -47,6 +47,12 @@ export class VerifyCodComponent implements OnInit, OnChanges {
         history.replaceState({bag : true}, 'bag', url);
         this.appservice.loadCartTrigger();
       }
+      else if(error.status == 401){
+        let url = window.location.href.split("#")[0] + '#/bag';
+        history.replaceState({bag : true}, 'bag', url);
+        console.log("openCart");
+        this.appservice.loadCartTrigger();
+      }
       else{
         this.otpVerificationFailed = true;
         this.otpVerificationErrorMsg = error.message;
@@ -78,8 +84,13 @@ export class VerifyCodComponent implements OnInit, OnChanges {
     })
     .catch((error)=>{
       console.log("error ===>", error);
-      // this.router.navigateByUrl('/bag',{ replaceUrl: true });
       this.appservice.removeLoader();
+      if(error.status == 401){
+        let url = window.location.href.split("#")[0] + '#/bag';
+        history.replaceState({bag : true}, 'bag', url);
+        console.log("openCart");
+        this.appservice.loadCartTrigger();
+      }
     }) 
   }
 

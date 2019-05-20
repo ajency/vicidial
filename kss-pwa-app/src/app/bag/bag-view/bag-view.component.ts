@@ -398,6 +398,10 @@ export class BagViewComponent implements OnInit {
     })
     .catch((error)=>{
       console.log("error ===>", error);
+      if(error.status == 401){
+        this.appservice.userLogout();
+        this.fetchCartDataFromServer();
+      }
       this.appservice.removeLoader();
     })
   }
@@ -651,10 +655,13 @@ export class BagViewComponent implements OnInit {
     })
     .catch((error)=>{
       console.log("error ===>", error);
-      // this.router.navigateByUrl('/bag', { replaceUrl: true });
       this.appservice.removeLoader();
       if(error.status == 403){
         this.editBag();
+      }
+      else if(error.status == 401){
+        this.appservice.userLogout();
+        this.fetchCartDataFromServer();
       }
     })  
   }
