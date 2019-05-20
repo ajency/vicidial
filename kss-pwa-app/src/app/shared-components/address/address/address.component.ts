@@ -172,8 +172,12 @@ export class AddressComponent implements OnInit, OnChanges {
     .catch((error)=>{
       console.log("error ===>", error);
       this.appservice.removeLoader();
-      // this.addAddress = false;
-      // this.addAddressFlagChanged.emit(false);
+      if(error.status == 401){
+        let url = window.location.href.split("#")[0] + '#/bag';
+        history.replaceState({bag : true}, 'bag', url);
+        console.log("openCart");
+        this.appservice.loadCartTrigger();
+      }
     })    
   }
 
@@ -204,6 +208,12 @@ export class AddressComponent implements OnInit, OnChanges {
     .catch((error)=>{
       console.log("error ===>", error);
       this.appservice.removeLoader();
+      if(error.status == 401){
+        let url = window.location.href.split("#")[0] + '#/bag';
+        history.replaceState({bag : true}, 'bag', url);
+        console.log("openCart");
+        this.appservice.loadCartTrigger();
+      }
     })
   }
 
