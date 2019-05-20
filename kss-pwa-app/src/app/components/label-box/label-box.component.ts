@@ -10,10 +10,12 @@ import { Router } from '@angular/router';
 export class LabelBoxComponent implements OnInit, OnChanges {
 	@Input() box_data : any;
 	@Input() box_type : any;
+  cdnUrl : any;
   constructor(private router: Router,
               private appservice : AppServiceService) { }
 
   ngOnInit() {
+    this.cdnUrl = this.appservice.cdnUrl;
   }
 
   ngOnChanges(){

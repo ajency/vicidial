@@ -1,4 +1,6 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { AppServiceService } from '../../../service/app-service.service';
+
 declare var Flickity: any;
 declare var $ : any;
 
@@ -13,10 +15,11 @@ export class ProductImgSliderComponent implements OnInit, OnChanges {
   @Input() attributes : any;
   fadeOut : boolean = false;
   hideLoader : boolean = false;
-  constructor() { }
+  cdnUrl : any;
+  constructor(private appservice : AppServiceService) { }
 
   ngOnInit() {
-
+    this.cdnUrl = this.appservice.cdnUrl;
   }
 
   ngOnChanges(){

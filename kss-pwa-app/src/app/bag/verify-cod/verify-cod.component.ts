@@ -15,10 +15,12 @@ export class VerifyCodComponent implements OnInit, OnChanges {
 	otp : any;
 	otpVerificationFailed : boolean = false;
 	otpVerificationErrorMsg : any;
+  cdnUrl : any;
   constructor(private appservice : AppServiceService,
               private apiservice : ApiServiceService) { }
 
   ngOnInit() {
+    this.cdnUrl = this.appservice.cdnUrl;
     $(".kss_shipping_summary").animate({scrollTop: $('#cod-otp-verify').scrollHeight});
   }
 

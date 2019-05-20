@@ -16,10 +16,12 @@ export class ContactUsComponent implements OnInit {
   submitLoader : boolean = false;
   contactApiSuccess : boolean = false;
   contactApiFailure : boolean = false;
+  cdnUrl : any;
   constructor(private apiService: ApiServiceService,
               private appservice : AppServiceService) { }
 
   ngOnInit() {
+    this.cdnUrl = this.appservice.cdnUrl;
   }
 
   register(form){

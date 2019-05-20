@@ -1,5 +1,6 @@
 import { Component, OnInit, isDevMode } from '@angular/core';
 import { ApiServiceService } from '../../service/api-service.service';
+import { AppServiceService } from '../../service/app-service.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,11 +11,13 @@ import { Router } from '@angular/router';
 export class LandingPageComponent implements OnInit {
 
 	menuObject : any
-
+  cdnUrl : any;
   constructor(private apiService: ApiServiceService,
+        private appservice : AppServiceService,
   			private router: Router) { }
 
   ngOnInit() {
+    this.cdnUrl = this.appservice.cdnUrl;
   }
 
   openLink(link){

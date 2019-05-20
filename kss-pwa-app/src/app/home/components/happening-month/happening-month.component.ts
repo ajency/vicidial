@@ -10,10 +10,12 @@ import { AppServiceService } from '../../../service/app-service.service';
 export class HappeningMonthComponent implements OnInit {
 
 	@Input() theme : any;
+  cdnUrl : any;
   constructor(private router: Router,
               private appservice : AppServiceService) { }
 
   ngOnInit() {
+    this.cdnUrl = this.appservice.cdnUrl;
   }
 
   createDataSrcSet(a,b,c,d){

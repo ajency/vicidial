@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AppServiceService } from '../../service/app-service.service';
 
 @Component({
   selector: 'app-no-connection',
@@ -6,10 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./no-connection.component.scss']
 })
 export class NoConnectionComponent implements OnInit {
-
-  constructor() { }
+	cdnUrl : any;
+  constructor(private appservice : AppServiceService) { }
 
   ngOnInit() {
+  	this.cdnUrl = this.appservice.cdnUrl;
   }
 
 }

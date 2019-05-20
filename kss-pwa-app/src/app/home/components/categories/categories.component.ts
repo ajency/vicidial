@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnChanges, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
-
+import { AppServiceService } from '../../../service/app-service.service';
 // declare var $: any;
 
 @Component({
@@ -12,14 +12,17 @@ export class CategoriesComponent implements OnInit {
 
 	@Input() categories : any;
 	catFlag : boolean = false;
-  	isSmallScreen : any;
-  	toggleButton = "SHOW MORE";
-  constructor(private breakpointObserver : BreakpointObserver) {
+	isSmallScreen : any;
+	toggleButton = "SHOW MORE";
+  cdnUrl : any;
+  constructor(private breakpointObserver : BreakpointObserver,
+              private appservice : AppServiceService) {
     this.isSmallScreen = this.breakpointObserver.isMatched('(max-width: 768px)');
     console.log("isSmallScreen==>", this.isSmallScreen);
   }
 
   ngOnInit() {
+    this.cdnUrl = this.appservice.cdnUrl;
     this.breakpointObserver.observe([
     '(max-width: 768px)'
       ]).subscribe(result => {

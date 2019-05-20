@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, OnChanges, AfterViewInit } from '@angular/core';
+import { AppServiceService } from '../../../service/app-service.service';
 
 @Component({
   selector: 'app-trending',
@@ -9,9 +10,11 @@ export class TrendingComponent implements OnInit, OnChanges, AfterViewInit {
 
 	@Input() trending : any;
 	trendingGroup = [];
-  constructor() { }
+  cdnUrl : any;
+  constructor(private appservice : AppServiceService) { }
 
   ngOnInit() {
+    this.cdnUrl = this.appservice.cdnUrl;
   }
 
   ngOnChanges(){

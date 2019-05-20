@@ -11,6 +11,10 @@
 		$fileHashes = json_decode(file_get_contents(public_path().'/angular_file_hash.json'),true);
 	@endphp
 
+	<script type="text/javascript">
+		var cdn_url = "{{CDN::asset('/')}}";
+	</script>
+
 	@include('includes.ng-scripts')
 
 	<noscript>Please enable JavaScript to continue using this application.</noscript>

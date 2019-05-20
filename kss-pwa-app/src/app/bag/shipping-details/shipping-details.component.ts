@@ -25,6 +25,7 @@ export class ShippingDetailsComponent implements OnInit {
   cart : any;
   widgetOpen : boolean = true;
   pincodeNotServiceable : boolean = false;
+  cdnUrl : any;
   constructor( private router : Router,
                private appservice : AppServiceService,
                private apiservice : ApiServiceService
@@ -32,6 +33,7 @@ export class ShippingDetailsComponent implements OnInit {
             ) { }
 
   ngOnInit() {
+    this.cdnUrl = this.appservice.cdnUrl;
     this.states = this.appservice.states.length ? this.appservice.states : this.getAllStates();
 
     if(this.appservice.navigatingFromBagToAddress){

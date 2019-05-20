@@ -39,6 +39,7 @@ export class OrderDetailsComponent implements OnInit {
   cancelItemsList : any = [];
   quantity = 1;
   unverifiedUser : boolean = false;
+  cdnUrl : any;
   constructor(private appservice : AppServiceService,
               private route: ActivatedRoute,
               private router: Router,
@@ -46,6 +47,7 @@ export class OrderDetailsComponent implements OnInit {
               private apiservice : ApiServiceService) { }
   
   ngOnInit() {
+    this.cdnUrl = this.appservice.cdnUrl;
     this.appservice.removeLoader();
     $("#cd-my-account").scrollTop(0);
     if(this.appservice.order)
