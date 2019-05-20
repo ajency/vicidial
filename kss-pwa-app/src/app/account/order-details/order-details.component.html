@@ -13,7 +13,7 @@
 	</nav>
 </div>
 
-<div *ngIf="isLoggedIn()" class="container mt-3 order-details p-0">
+<div *ngIf="isLoggedIn() && !unverifiedUser; else unverified" class="container mt-3 order-details p-0">
 	<div class="row">
 		<div class="col-12">
              <div>
@@ -104,13 +104,15 @@
 
 </div>
 
-<div *ngIf="!isLoggedIn()">
-	<h4 class="font-weight-bold mt-3 mb-0">My Orders</h4>
-	<hr>
-	<div class="mt-4 kss-flash kss-flash--info py-3">
-		Can't see all your orders? <a href="javascript:void(0);" (click)="displayModal()" class="text-secondary font-weight-bold">Sign In</a>
+<ng-template #unverified>
+	<div>
+		<h4 class="font-weight-bold mt-3 mb-0">Order Details</h4>
+		<hr>
+		<div class="mt-4 kss-flash kss-flash--info py-3">
+			Can't see all your orders? <a href="javascript:void(0);" (click)="displayModal()" class="text-secondary font-weight-bold">Sign In</a>
+		</div>
 	</div>
-</div>
+</ng-template>
 
 <!-- Order cancellation form -->
 <!-- Cancel Shipment section -->

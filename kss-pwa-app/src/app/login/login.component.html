@@ -3,7 +3,23 @@
 	    <div class="modal-content ">
 	      <div class="modal-body">
 
-	        <div *ngIf="!mobileNumberEntered" class="state-1">
+	        <div *ngIf="mobileNumberState == 'loader'" class="state-1">
+	          <div class="d-flex align-items-center justify-content-between">
+	            <div class="">
+	             <h3 class="modal-title font-weight-bold mt-1" id="exampleModalLabel">Verify Mobile</h3>
+	            </div>
+	            <div class="">
+	              <h3 class="modal-title font-weight-bold" data-dismiss="modal" aria-label="Close">
+	              	<span (click)="closeOtpModal()" class="modal-close-icon cursor-pointer">&times;</span>
+	                <!-- <img  class="btn-back kss_highlight" src="/img/close-icon.png" style="width:20px;"/> -->
+	              </h3>
+	            </div>
+	          </div>
+
+	          <i class="fas fa-circle-notch fa-spin fa-lg ml-1"></i>
+	        </div>
+
+	        <div *ngIf="mobileNumberState == 'mobile'" class="state-1">
 	          <div class="d-flex align-items-center justify-content-between">
 	            <div class="">
 	              <h3 class="modal-title font-weight-bold mt-1" id="exampleModalLabel"> Mobile Number</h3>
@@ -19,22 +35,22 @@
 	          <p class="sub-text w-75 mt-3">Your Shipping and payment details will be associated with this number</p>
 	          <form #mobileForm="ngForm">
 	            <div class="form-group mb-0">
-	              <input #mobileInput type="tel" class="form-control form-control-number form-control-lg" (keyup)="enterclick($event)" [ngClass]="{'has-error' : userValidation.mobileValidationFailed, 'has-value' : mobileNumber}" id="frm-mobile" name="mobile" [(ngModel)]="mobileNumber" required minlength = "10" maxlength = "10" pattern="^[789]\d{9}$" inputmode="numeric" appNumbers appKssAutoFocus>
+	              <input #mobileInput type="tel" class="form-control form-control-number form-control-lg" (keyup)="enterclick($event)" [ngClass]="{'has-error' : userValidation.mobileValidationFailed, 'has-value' : mobileNumber}" id="frm-mobile" name="mobile" [(ngModel)]="mobileNumber" required minlength = "10" maxlength = "10" pattern="^[6789]\d{9}$" inputmode="numeric" appNumbers appKssAutoFocus>
 	              <label class="control-label">Enter Mobile Number</label>
 	               <small *ngIf="userValidation.mobileValidationFailed" id="passwordHelpBlock" class="form-text text-danger">
 						{{userValidation.mobileValidationErrorMsg}}
 					</small>
-					<small *ngIf="mobileNumber<7000000000 && mobileNumber.length== 10" id="passwordHelpBlock" class="form-text text-danger">
+					<small *ngIf="mobileNumber<6000000000 && mobileNumber.length== 10" id="passwordHelpBlock" class="form-text text-danger">
 						Please enter a valid Indian Mobile Number
 					</small>
 	            </div>
 	          </form>
 	          <div class="mt-3">
-	            <button [disabled]="!mobileForm.valid || userValidation.disableSendOtpButton" type="button" class="btn kss-btn kss-btn--big btn-signin is-enter" (click)="authenticateUser()"><span> Send OTP <i class="fas fa-circle-notch fa-spin fa-lg ml-1" [ngClass]="{'d-none' : !userValidation.disableSendOtpButton}"></i> </span></button>
+	            <button [disabled]="!mobileForm.valid || userValidation.disableGetTokenButton" type="button" class="btn kss-btn kss-btn--big btn-signin is-enter" (click)="authenticateUser()"><span> Continue <i class="fas fa-circle-notch fa-spin fa-lg ml-1" [ngClass]="{'d-none' : !userValidation.disableGetTokenButton}"></i> </span></button>
 	          </div>
 	        </div>
 
-	        <div *ngIf="mobileNumberEntered" class="state-2">
+	        <div *ngIf="mobileNumberState == 'sign-in'" class="state-2">
 	          <div class="d-flex align-items-center justify-content-between">
 	            <div class="">
 	             <h3 class="modal-title font-weight-bold mt-1" id="exampleModalLabel">Verify Mobile</h3>
@@ -49,26 +65,46 @@
 
 	          <form class="mt-0" #otpForm="ngForm">
 	            <div class="form-group mb-0 mt-3">
-	              <p class="h6 my-3">Enter the OTP sent to your number <span *ngIf="displaySkipOTP"> <strong>OR</strong> <a href="javascript:void(0);" (click)="verifyMobile(false)" class="text-secondary link-underline font-weight-bold"> Skip OTP </a> </span> </p><h4 class="font-weight-bold m-0">{{mobileNumber}} <i class="fas fa-pencil-alt number-edit ml-2 cursor-pointer" (click)="resetOTP()"></i></h4>
-	              <input type="tel" class="form-control form-control-number form-control-lg mb-2 letter-spacing-5 otp-number-field" (keyup)="enterclick($event)" [ngClass]="{'has-error' : userValidation.otpVerificationFailed}"  aria-describedby="emailHelp" [(ngModel)]="otp" name="otp" placeholder="" required pattern="\d{4}$" minlength = "4" maxlength = "4" inputmode="numeric" appNumbers placeholder="Enter OTP" [ngClass]="{'has-value' : otp}" autocomplete="off" appKssAutoFocus>
-
-<!-- 		             <div class="otp-fields d-flex align-items-center justify-content-center">
-						<input type="tel" maxlength="1" size="1" min="0" max="9" pattern="\d*" class="form-control form-control-lg form-control-number mb-2 text-center mx-2" autocomplete="off" #otp1 (keydown)="onKeyDown($event,otp1,otp2,otpCode['otp1'])" (keyup)="onKeyUp($event,otp1,otp2,otpCode['otp1'])" [(ngModel)]="otpCode['otp1']" name="otp1" appNumbers (change)="otpVerificationIOS(otpCode['otp1'])">
-						<input type="tel" maxlength="1" size="1" min="0" max="9" pattern="\d*" class="form-control form-control-lg form-control-number mb-2 text-center mx-2" autocomplete="off" #otp2 (keydown)="onKeyDown($event,otp1,otp3,otpCode['otp2'])" (keyup)="onKeyUp($event,otp1,otp3,otpCode['otp2'])" [(ngModel)]="otpCode['otp2']" name="otp1" appNumbers>
-						<input type="tel" maxlength="1" size="1" min="0" max="9" pattern="\d*" class="form-control form-control-lg form-control-number mb-2 text-center mx-2" autocomplete="off" #otp3 (keydown)="onKeyDown($event,otp2,otp4,otpCode['otp3'])" (keyup)="onKeyUp($event,otp2,otp4,otpCode['otp3'])" [(ngModel)]="otpCode['otp3']" name="otp1" appNumbers>
-						<input type="tel" maxlength="1" size="1" min="0" max="9" pattern="\d*" class="form-control form-control-lg form-control-number mb-2 text-center mx-2" autocomplete="off" #otp4 (keydown)="onKeyDown($event,otp3,otp5,otpCode['otp4'])" (keyup)="onKeyUp($event,otp3,otp5,otpCode['otp4'])" [(ngModel)]="otpCode['otp4']" name="otp1" appNumbers>
-						<input type="tel" maxlength="1" size="1" min="0" max="9" pattern="\d*" class="form-control form-control-lg form-control-number mb-2 text-center mx-2" autocomplete="off" #otp5 (keydown)="onKeyDown($event,otp4,otp6,otpCode['otp5'])" (keyup)="onKeyUp($event,otp4,otp6,otpCode['otp5'])" [(ngModel)]="otpCode['otp5']" name="otp1" appNumbers>
-						<input type="tel" maxlength="1" size="1" min="0" max="9" pattern="\d*" class="form-control form-control-lg form-control-number mb-2 text-center mx-2" autocomplete="off" #otp6 (keydown)="onKeyDown($event,otp5,otp6,otpCode['otp6'])" (keyup)="onKeyUp($event,otp5,otp6,otpCode['otp6'])" [(ngModel)]="otpCode['otp6']" name="otp1" appNumbers>
-					</div> -->
-
-	              <!-- <small> Resend OTP in 18 sec</small> -->
-
-	               <small *ngIf="userValidation.otpVerificationFailed" id="passwordHelpBlock" class="form-text text-danger">
-						{{userValidation.otpVerificationErrorMsg}}
-				</small>
+	              <p class="h6 my-3">{{signInMsg}} </p>
 	            </div>
 	          </form>
-	          <div class="mt-3">
+	          <div class="mt-3 d-flex align-items-center justify-content-between">
+	          	<button (click)="skipVerify()" [disabled]="userValidation.disableSendOtpButton" type="button" class="btn kss-btn kss-btn--big kss-btn--outline-secondary is-enter mr-3" data-toggle="modal" data-target="#checkout-flow"><span>Cancel </span></button>
+
+	            <button (click)="sendOTP()" id="shipping-details" [disabled]="userValidation.disableSendOtpButton" type="button" class="btn kss-btn kss-btn--big btn-signin is-enter" data-toggle="modal" data-target="#checkout-flow"><span>Sign In <i class="fas fa-circle-notch fa-spin fa-lg ml-1" [ngClass]="{'d-none' : !userValidation.disableSendOtpButton}"></i> </span></button>
+	          </div>
+	        </div>
+
+	        <div *ngIf="mobileNumberState == 'verify'" class="state-3">
+	          <div class="d-flex align-items-center justify-content-between">
+	            <div class="">
+	             <h3 class="modal-title font-weight-bold mt-1" id="exampleModalLabel">Verify Mobile</h3>
+	            </div>
+	            <div class="">
+	              <h3 class="modal-title font-weight-bold" data-dismiss="modal" aria-label="Close">
+	              	<span (click)="closeOtpModal()" class="modal-close-icon cursor-pointer">&times;</span>
+	                <!-- <img  class="btn-back kss_highlight" src="/img/close-icon.png" style="width:20px;"/> -->
+	              </h3>
+	            </div>
+	          </div>
+
+	          <form class="mt-0" #otpForm="ngForm">
+	          	<div class="text-center mb-4">
+	          		<h6 class="font-weight-bold mt-3">Enter the 4 digit code sent to the below number</h6>
+	          		<h4 class="mb-0 mt-3 font-weight-bold">{{mobileNumberDisplay}}</h4>
+	          		<input type="tel" class="form-control form-control-number form-control-lg mb-2 letter-spacing-5 otp-number-field m-auto" (keyup)="enterclick($event)" [ngClass]="{'has-error' : userValidation.otpVerificationFailed}"  aria-describedby="emailHelp" [(ngModel)]="otp" name="otp" placeholder="" required pattern="\d{4}$" minlength = "4" maxlength = "4" inputmode="numeric" appNumbers placeholder="Enter OTP" [ngClass]="{'has-value' : otp}" autocomplete="off" appKssAutoFocus>
+	          		<small *ngIf="userValidation.otpVerificationFailed" id="passwordHelpBlock" class="form-text text-danger">
+	          			{{userValidation.otpVerificationErrorMsg}}
+	          		</small>
+
+	          		<div class="mt-2 small">
+	          			Didn't receive the code?  <a href="javascript:void(0);" class="text-secondary link-underline font-weight-bold cursor-pointer" (click)="resendOTP()" >RESEND CODE</a>
+	          		</div>
+	          	</div>
+	          </form>
+	          <div class="mt-3 d-flex align-items-center justify-content-between">
+	          	<button *ngIf="displaySkipOTP" (click)="skipVerify()" [disabled]="userValidation.disableVerifyOtpButton" type="button" class="btn kss-btn kss-btn--big kss-btn--outline-secondary is-enter mr-3" data-toggle="modal" data-target="#checkout-flow"><span>Skip OTP </span></button>
+
 	            <button (click)="verifyMobile()" id="shipping-details" [disabled]="!otpForm.valid || userValidation.disableVerifyOtpButton" type="button" class="btn kss-btn kss-btn--big btn-verify is-enter" data-toggle="modal" data-target="#checkout-flow"><span>Verify <i class="fas fa-circle-notch fa-spin fa-lg ml-1" [ngClass]="{'d-none' : !userValidation.disableVerifyOtpButton}"></i> </span></button>
 	          </div>
 	        </div>

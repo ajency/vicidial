@@ -58,7 +58,7 @@ export class ProductPageComponent implements OnInit {
     // let product_slug = this.route.snapshot.paramMap.get('product_slug');
     this.unsubscribeProductApi();
     this.queryParamSize = this.route.snapshot.queryParamMap.get('size');
-    let url = isDevMode() ? "https://demo8558685.mockable.io/get_single_product" : this.appservice.apiUrl + '/api/rest/v1/single-product?slug='+product_slug;
+    let url = isDevMode() ? "https://demo8558685.mockable.io/get_single_product" : this.appservice.apiUrl + '/api/rest/v2/single-product?slug='+product_slug;
     this.productApiCall = this.apiService.request(url,'get',{},{}, false, 'observable').subscribe((data)=>{
       this.product = data;
       let variant = this.product.variants.find((v)=>{ return this.queryParamSize == v.variant_facets.variant_size.name});
@@ -90,7 +90,7 @@ export class ProductPageComponent implements OnInit {
 
   checkSingleProductInventory(default_price){
     this.unsubscribeInventoryApiCall();
-    let url = this.appservice.apiUrl + '/api/rest/v1/single-product-inventory?product_id='+this.product.attributes.product_id + '&color_id='+ this.product.facets.product_color_html.id;
+    let url = this.appservice.apiUrl + '/api/rest/v2/single-product-inventory?product_id='+this.product.attributes.product_id + '&color_id='+ this.product.facets.product_color_html.id;
     this.inventoryApiCall = this.apiService.request(url, 'get', {} , {}, false, 'observable').subscribe((response)=>{
       console.log("check inventory response ==>", response);
       this.inventoryData = response;

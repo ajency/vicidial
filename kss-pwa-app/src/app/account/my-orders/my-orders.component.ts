@@ -21,6 +21,7 @@ export class MyOrdersComponent implements OnInit {
   order_params = { page : 1, display_limit : 10 }
   displayShowMore : boolean = true;
   apiCallComplete : boolean = false;
+  unverifiedUser : boolean = false;
   constructor(private router: Router,
 						private appservice : AppServiceService,
 						private apiservice : ApiServiceService,
@@ -61,6 +62,7 @@ export class MyOrdersComponent implements OnInit {
         if(error.status == 401)
           this.account_service.userLogout();
         else if(error.status == 403){
+          this.unverifiedUser = true;
           // this.router.navigate(['account']);
         }
         this.appservice.removeLoader();
@@ -93,6 +95,11 @@ export class MyOrdersComponent implements OnInit {
     // this.router.navigate([order_route]);
     this.appservice.order_txn_no = order.order_info.txn_no;
     this.orderDetailsClick.emit();
+  }
+
+  displayModal(){
+    this.appservice.displaySkipOTP = false;
+    this.appservice.showLoginPopupTrigger();
   }
 
 }

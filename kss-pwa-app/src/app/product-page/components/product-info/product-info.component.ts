@@ -173,7 +173,7 @@ export class ProductInfoComponent implements OnInit, OnChanges {
       console.log("error in fbTrackAddToCart ==>", error)
     }
 
-    let url = this.appservice.apiUrl + (this.appservice.isLoggedInUser() ? ("/api/rest/v1/user/cart/"+this.appservice.getCookie('cart_id')+"/insert") : ("/rest/v1/anonymous/cart/insert") )
+    let url = this.appservice.apiUrl + (this.appservice.isLoggedInUser() ? ("/api/rest/v2/user/cart/"+this.appservice.getCookie('cart_id')+"/insert") : ("/rest/v2/anonymous/cart/insert") )
     let body = {
       _token: $('meta[name="csrf-token"]').attr('content'),
       variant_id : this.selectedSize,
@@ -252,7 +252,7 @@ export class ProductInfoComponent implements OnInit, OnChanges {
   }
 
   startFresh(){
-    let url = this.appservice.apiUrl + '/api/rest/v1/user/cart/start-fresh';
+    let url = this.appservice.apiUrl + '/api/rest/v2/user/cart/start-fresh';
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     this.apiservice.request(url, 'get', {} , header ).then((response)=>{
       document.cookie='cart_id=' + response.cart_id + ";path=/";

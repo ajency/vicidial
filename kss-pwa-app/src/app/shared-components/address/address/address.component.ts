@@ -19,6 +19,7 @@ export class AddressComponent implements OnInit, OnChanges {
   @Input() hideRadio : any;
 
   @Output() addAddressFlagChanged = new EventEmitter();
+  @Output() navigateToShippingSummary = new EventEmitter();
 
 	newAddress : any = {
     name : '',
@@ -30,6 +31,12 @@ export class AddressComponent implements OnInit, OnChanges {
     state_id : '',
     default : false
   };
+  user : any = {
+    name : '',
+    email : '',
+    default : false
+  };
+  hideUserFields : boolean = false;
   hideDefaultAddressField : boolean = false;
   phoneOnBlur : boolean = false;
   pincodeBlur : boolean = false;
@@ -46,6 +53,8 @@ export class AddressComponent implements OnInit, OnChanges {
   ngOnChanges(){
   	// console.log("ngOnChanges address component ==>", this.addresses, this.addAddress, this.selectedAddressId, this.states);
     this.checkAddresses();
+    this.hideUserFields = this.appservice.hideAddressUser;
+    console.log("ngOnChanges address component ==>",this.hideUserFields);
     if(this.states && this.states.length) 
       this.initSelectPicker(false); 
   }
@@ -120,12 +129,16 @@ export class AddressComponent implements OnInit, OnChanges {
     })
   }
 
-  saveNewAddress(){
+  saveNewAddress(myForm){
+    // console.log("myForm ==>",myForm);
     this.appservice.showLoader();
-    let url = this.appservice.apiUrl + (this.newAddress.id ? "/api/rest/v1/user/address/edit" :  "/api/rest/v1/user/address/new");
+    let url = this.appservice.apiUrl + (this.newAddress.id ? "/api/rest/v2/user/address/edit" :  "/api/rest/v2/user/address/new");
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     let body : any = {};
     body = this.newAddress;
+    if(!this.hideUserFields){
+      body.user = {name:this.user.name, email:this.user.email};
+    }
     body._token = $('meta[name="csrf-token"]').attr('content');
 
     this.apiservice.request(url, 'post', body , header ).then((response)=>{
@@ -145,17 +158,26 @@ export class AddressComponent implements OnInit, OnChanges {
 
       this.addresses.forEach(address =>{ if(address.id == response.address.id) this.selectedAddressId = address.id});
       // this.selectedAddressId=response.address.id;
+      this.hideUserFields = true;
+      this.appservice.hideAddressUser = true;
+      this.selectedAddressId=response.address.id;
       this.addAddress = false;
       this.appservice.shippingAddresses = this.addresses;
       this.newAddress = {};
       this.appservice.removeLoader();
       this.addAddressFlagChanged.emit(true);
+      if(this.addresses.length == 1)
+        this.navigateToShippingSummary.emit();
     })
     .catch((error)=>{
       console.log("error ===>", error);
       this.appservice.removeLoader();
-      // this.addAddress = false;
-      // this.addAddressFlagChanged.emit(false);
+      if(error.status == 401){
+        let url = window.location.href.split("#")[0] + '#/bag';
+        history.replaceState({bag : true}, 'bag', url);
+        console.log("openCart");
+        this.appservice.loadCartTrigger();
+      }
     })    
   }
 
@@ -164,7 +186,7 @@ export class AddressComponent implements OnInit, OnChanges {
     let old_id = this.selectedAddressId;
     this.appservice.showLoader();
     let body = { address_id : id };
-    let url = this.appservice.apiUrl +  "/api/rest/v1/user/address/delete?";
+    let url = this.appservice.apiUrl +  "/api/rest/v2/user/address/delete?";
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     url = url+$.param(body);
     this.apiservice.request(url, 'get', body, header ).then((response)=>{
@@ -186,6 +208,12 @@ export class AddressComponent implements OnInit, OnChanges {
     .catch((error)=>{
       console.log("error ===>", error);
       this.appservice.removeLoader();
+      if(error.status == 401){
+        let url = window.location.href.split("#")[0] + '#/bag';
+        history.replaceState({bag : true}, 'bag', url);
+        console.log("openCart");
+        this.appservice.loadCartTrigger();
+      }
     })
   }
 
@@ -204,11 +232,12 @@ export class AddressComponent implements OnInit, OnChanges {
   getCityState(pincode){
     this.pincodeErrorMsg = "";
     this.pincodeWarning = "";
+    this.resetStateAndCity();
     if(pincode.length == 6){
       console.log("make api call");
       this.showShowLoader();
       this.unsubscribeGetLocationCall();
-      let url = this.appservice.apiUrl +  "/api/rest/v1/district-state/"+pincode;
+      let url = this.appservice.apiUrl +  "/api/rest/v2/district-state/"+pincode;
       this.getLocationCall = this.apiservice.request(url, 'get', {}, {}, false, 'observable').subscribe((response)=>{
         console.log("response from location api ==>", response);
         this.newAddress.city = response.district;
@@ -219,7 +248,6 @@ export class AddressComponent implements OnInit, OnChanges {
       },
       (error)=>{
         console.log("error ===>", error);
-        this.resetStateAndCity();
         this.removeLoader();
         if(error.status == 403)
           this.pincodeErrorMsg = "We do not service this pincode.";
@@ -231,7 +259,6 @@ export class AddressComponent implements OnInit, OnChanges {
     }
     else{
       this.unsubscribeGetLocationCall();
-      this.resetStateAndCity();
     }
   }
 
@@ -251,6 +278,12 @@ export class AddressComponent implements OnInit, OnChanges {
   resetStateAndCity(){
     this.newAddress.city = '';
     this.newAddress.state_id = '';
+  }
+
+  copyUserName(){
+    if(!this.hideUserFields && this.user.default){
+      this.user.name = this.newAddress.name;
+    }
   }
 
 }

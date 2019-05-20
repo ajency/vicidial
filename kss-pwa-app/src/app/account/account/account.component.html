@@ -59,7 +59,7 @@
 	<h4 class="font-weight-bold mt-3 mb-0">Sign In</h4>
 	<hr>
 	<div class="mt-4 kss-flash kss-flash--info py-3">
-		Get access to your Orders, Addresses and Profile information. <a href="javascript:void(0);" (click)="displayModal()" class="text-secondary font-weight-bold">Sign In</a>
+		Get access to your Orders, Addresses and Profile information. <a href="javascript:void(0);" (click)="displayModal()" class="text-secondary font-weight-bold"><span *ngIf="!isLoggedIn()">Sign In</span><span *ngIf="isLoggedIn()">Verify</span></a>
 	</div>
 </div>
 

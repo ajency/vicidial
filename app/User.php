@@ -2,20 +2,19 @@
 
 namespace App;
 
-use App\Cart;
 use Ajency\Connections\OdooConnect;
+use App\Cart;
+use App\Jobs\MapUnverifiedUsers;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
-use App\Traits\CreateToken;
 
 class User extends Authenticatable
 {
     use Notifiable;
     use HasRoles;
     use HasApiTokens;
-    use CreateToken;
 
     /**
      * The attributes that are mass assignable.
@@ -63,6 +62,18 @@ class User extends Authenticatable
         return $user;
     }
 
+    public static function getUserByPassportToken(string $token)
+    {
+        $user_token = getTokenID($token);
+        $tokenData  = \DB::table('oauth_access_tokens')->where('id', $user_token)->first(['user_id']);
+        if (is_null($tokenData)) {
+            abort(403);
+        }
+
+        $user = self::find($tokenData->user_id);
+        return $user;
+    }
+
     public function newCart($replicate = false, $old_cart = null)
     {
         // $cart = Cart::create(['user_id' => $this->id, 'active' => 1, 'type' => 'cart']);
@@ -71,8 +82,8 @@ class User extends Authenticatable
         $cart->save();
         $ac = ($old_cart == null) ? $this->activeCart() : $old_cart;
         if ($replicate) {
-            $cart->cart_data    = $ac->cart_data;
-            $cart->coupon = $ac->coupon;
+            $cart->cart_data = $ac->cart_data;
+            $cart->coupon    = $ac->coupon;
             $cart->save();
         }
         $ac->active = 0;
@@ -169,5 +180,13 @@ class User extends Authenticatable
         $response['mobile'] = $this->phone;
 
         return $response;
+    }
+
+    public static function mapUnverifiedUsers($from_id, $to_id)
+    {
+        $users = self::where('id', '>=', $from_id)->where('id', '<=', $to_id)->where('verified', false)->get();
+        foreach ($users as $user) {
+            MapUnverifiedUsers::dispatch($user)->onQueue('map_users');
+        }
     }
 }

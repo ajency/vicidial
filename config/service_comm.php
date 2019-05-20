@@ -8,11 +8,11 @@ return [
 	],
 	'mapping' => [
 		'updateSubOrderStatus' => [
-			'model' => 'App\Http\Controllers\v1\OrderController',
+			'model' => 'App\Http\Controllers\v2\OrderController',
 			'function' => 'updateSubOrderStatus',
 		],
 		'updateOrderLineStatus' => [
-			'model' => 'App\Http\Controllers\v1\OrderController',
+			'model' => 'App\Http\Controllers\v2\OrderController',
 			'function' => 'updateOrderLineStatus',
 		],
 		'inventoryElasticUpdate' => [

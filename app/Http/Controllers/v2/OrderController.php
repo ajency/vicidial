@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Jobs\OrderLineStatus;
 use App\Jobs\SubOrderStatus;
 use App\Order;
+use App\SubOrder;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -28,6 +29,7 @@ class OrderController extends Controller
         validateCart($user, $cart, 'cart');
         validateAddress($user, $address);
         $cart->checkCartAvailability();
+        $pincode_data = $address->checkPincodeServiceable();
 
         $order = Order::create([
             'cart_id'      => $cart->id,
@@ -45,16 +47,26 @@ class OrderController extends Controller
         $storeData         = $order->getStoreData();
         $order->store_ids  = $storeData['store_ids'];
         $order->store_data = $storeData['store_data'];
+        $order->verified   = $params["token_verified"];
         $order->save();
+
+        if (!$address->verified && $params["token_verified"]) {
+            $address->verified = $params["token_verified"];
+            $address->save();
+        }
 
         $cart->type = 'order';
         $cart->save();
 
-        $response = ["items" => getCartData($cart, false), "summary" => $order->subOrderData(), "order_id" => $order->id, "address" => $order->address_data, "message" => 'Order Placed successfully'];
+        $response = ["items" => getCartData($cart, false), "summary" => $order->subOrderData(), "order_id" => $order->id, "address" => $order->address_data, "pincode_serviceability" => $pincode_data, "message" => 'Order Placed successfully'];
 
         $user_info = $user->userInfo();
-        if ($user_info != null) {
+        if ($user_info != null && $params["token_verified"]) {
             $response['user_info'] = $user_info;
+        }
+        $response['user_info_editable'] = false;
+        if ($params["token_verified"] || $user_info == null) {
+            $response['user_info_editable'] = true;
         }
 
         return response()->json($response);
@@ -75,18 +87,30 @@ class OrderController extends Controller
         if (isset($params['address_id'])) {
             $address = Address::find($params["address_id"]);
             validateAddress($user, $address);
+            $pincode_data        = $address->checkPincodeServiceable();
             $order->address_id   = $address->id;
             $order->address_data = $address->shippingAddress();
+            $order->verified     = $params["token_verified"];
             $order->save();
         } else {
-            $address = $order->address;
+            $address      = $order->address;
+            $pincode_data = $address->checkPincodeServiceable();
         }
 
-        $response = ["items" => getCartData($cart, false), "summary" => $order->subOrderData(), "order_id" => $order->id, "address" => $order->address_data, "message" => 'Order Placed successfully'];
+        if (!$address->verified && $params["token_verified"]) {
+            $address->verified = $params["token_verified"];
+            $address->save();
+        }
+
+        $response = ["items" => getCartData($cart, false), "summary" => $order->subOrderData(), "order_id" => $order->id, "address" => $order->address_data, "pincode_serviceability" => $pincode_data, "message" => 'Order Placed successfully'];
 
         $user_info = $user->userInfo();
-        if ($user_info != null) {
+        if ($user_info != null && $params["token_verified"]) {
             $response['user_info'] = $user_info;
+        }
+        $response['user_info_editable'] = false;
+        if ($params["token_verified"] || $user_info == null) {
+            $response['user_info_editable'] = true;
         }
 
         return response()->json($response);
@@ -122,11 +146,11 @@ class OrderController extends Controller
             if (!isset($_COOKIE['token'])) {
                 abort(401);
             }
-            $user = User::getUserByToken('Bearer ' . $_COOKIE['token']);
+            $user = User::getUserByPassportToken($_COOKIE['token']);
             validateOrder($user, $order);
         }
 
-        $params = $order->getOrderDetailsItemWise();
+        $params = $order->getOrderDetailsItemWise(true);
 
         $params['breadcrumb']            = array();
         $params['breadcrumb']['list']    = array();
@@ -143,12 +167,12 @@ class OrderController extends Controller
 
     public static function updateSubOrderStatus($params)
     {
-        SubOrderStatus::dispatch($params["subOrderId"], $params["state"], $params["is_invoiced"], $params["external_id"])->onQueue('odoo_order');
+        SubOrderStatus::dispatch($params["subOrderId"], $params["state"], $params["is_shipped"], $params["is_invoiced"], $params["external_id"], $params["lines_status"])->onQueue('odoo_order');
     }
 
     public static function updateOrderLineStatus($params)
     {
-        OrderLineStatus::dispatch($params["lineIds"], $params["status"])->onQueue('odoo_order');
+        OrderLineStatus::dispatch($params["lineIds"], $params["status"], $params["status_datetime"])->onQueue('odoo_order');
     }
 
     public function listOrders(Request $request)
@@ -169,8 +193,11 @@ class OrderController extends Controller
             }
 
         }
-        $order_status = (isset($search_object["status"])) ? $search_object["status"] : 'payment-successful';
-        $orderObj     = Order::join('carts', 'carts.id', '=', 'orders.cart_id')->where('carts.user_id', $user_id)->where('orders.status', $order_status)->orderBy("orders." . $sort_on, $sort_by)->select("orders.*");
+        //$order_status = (isset($search_object["status"])) ? $search_object["status"] : 'payment-successful';
+        $orderObj = Order::join('carts', 'carts.id', '=', 'orders.cart_id')->where('carts.user_id', $user_id)->where(function ($q) {
+            $q->where('orders.status', 'payment-successful')
+                ->orWhere('orders.status', 'cash-on-delivery');
+        })->orderBy("orders." . $sort_on, $sort_by)->select("orders.*");
 
         if (isset($search_object["order_date"]) && isset($search_object["order_date"]["start"]) && isset($search_object["order_date"]["end"])) {
             $from     = date($search_object["order_date"]["start"]);
@@ -184,7 +211,7 @@ class OrderController extends Controller
         }
 
         foreach ($orders as $order) {
-            array_push($order_details, $order->getOrderDetailsItemWise());
+            array_push($order_details, $order->getOrderDetailsItemWise(true));
         }
 
         return response()->json(["message" => 'Order items received successfully', 'success' => true, 'data' => $order_details]);
@@ -195,7 +222,7 @@ class OrderController extends Controller
         $user  = $request->user();
         $order = Order::where('txnid', $txnid)->first();
         validateOrder($user, $order);
-        return response()->json(["message" => 'Order items received successfully', 'success' => true, 'data' => $order->getOrderDetailsItemWise()]);
+        return response()->json(["message" => 'Order items received successfully', 'success' => true, 'data' => $order->getOrderDetailsItemWise(true)]);
     }
 
     public function cancelOrder($id, Request $request)
@@ -227,5 +254,19 @@ class OrderController extends Controller
     public function getAllReasons(Request $request)
     {
         return Defaults::getReasons();
+    }
+
+    public function returnOrder($id, Request $request)
+    {
+        $user      = $request->user();
+        $sub_order = SubOrder::find($id);
+        validateSubOrder($user, $sub_order);
+
+        $request->validate(['reason' => 'required|exists:defaults,id', 'comments' => 'present', 'variant_id' => 'required|exists:variants,odoo_id', 'quantity' => 'required|integer|min:1']);
+        $params = $request->all();
+
+        $sub_order->order->placeReturnRequest($params, $sub_order);
+
+        return response()->json(["message" => 'Return request placed successfully', 'success' => true]);
     }
 }

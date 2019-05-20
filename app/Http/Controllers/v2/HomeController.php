@@ -1,24 +1,24 @@
 <?php
 
-namespace App\Http\Controllers\v1;
+namespace App\Http\Controllers\v2;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\StaticElement;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     public function index(Request $request)
     {
-        $static_elements=StaticElement::fetch('home',[], $published=true);
+        $static_elements = StaticElement::fetch('home', [], $published = true);
         setSEO('home');
         return view('home')->with('static_elements', $static_elements);
     }
-    
+
     public function drafthome(Request $request)
     {
-        $static_elements=StaticElement::fetch('home',[]);
-    	setSEO('home');
+        $static_elements = StaticElement::fetch('home', []);
+        setSEO('home');
         return view('home')->with('static_elements', $static_elements);
     }
 
@@ -29,20 +29,11 @@ class HomeController extends Controller
 
     public function newhome(Request $request)
     {
-        return view('layouts.ng-default');
+        return view('home_new');
     }
 
     public function newdraft(Request $request)
     {
-        return view('layouts.ng-default');
+        return view('draft_new');
     }
-    public function singleProduct($product_slug, Request $request)
-    {
-        return view('home_new');
-    }
-    
-    public function shop(Request $request)
-    {
-        return view('home_new');
-    }    
 }

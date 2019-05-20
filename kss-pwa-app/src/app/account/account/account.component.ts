@@ -91,20 +91,22 @@ export class AccountComponent implements OnInit {
   }
 
   redirectToReturnUrl(){
-    this.userInfo = this.appservice.userInfo;
-    setTimeout(()=>{
-      if(window.location.href.includes('#/account/my-orders/')){
-        // this.router.navigateByUrl(this.returnUrl, { replaceUrl: true });
-        console.log("redirect to order details");
-        this.openOrderDetails = true;
-        this.showAccount = false;
-        
-      }    
-      else{
-        if(!this.appservice.userInfo)
-          this.getUserInfo()
-      }
-    },100)
+    if(window.location.hash.startsWith('#/account')){
+      this.userInfo = this.appservice.userInfo;
+      setTimeout(()=>{
+        if(window.location.href.includes('#/account/my-orders/')){
+          // this.router.navigateByUrl(this.returnUrl, { replaceUrl: true });
+          console.log("redirect to order details");
+          this.openOrderDetails = true;
+          this.showAccount = false;
+          
+        }    
+        else{
+          if(!this.appservice.userInfo)
+            this.getUserInfo()
+        }
+      },100)
+    }
   }
 
   closeWidget(){

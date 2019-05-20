@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\v2;
 
 use App\Cart;
+use App\Coupon;
 use App\Http\Controllers\Controller;
 use App\Offer;
 use App\User;
 use App\Variant;
+use DB;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -14,9 +16,11 @@ class CartController extends Controller
 
     public function guestGetCount(Request $request)
     {
+        // \Log::info('enters guest_get_count function');
         $id   = $request->session()->get('active_cart_id', false);
         $cart = Cart::find($id);
         if ($cart !== null) {
+            // \Log::debug('cart = '.$cart);
             $cart->anonymousCartCheckUser();
             $cart->abortNotCart('cart');
             return response()->json(['cart_count' => $cart->itemCount()]);
@@ -59,16 +63,16 @@ class CartController extends Controller
 
     public function guestModifyItem(Request $request)
     {
-        $request->validate(['variant_id' => 'required|exists:variants,odoo_id', 'variant_quantity' => 'required']);
+        $request->validate(['variant_id' => 'required|exists:variants,id', 'variant_quantity' => 'required']);
         $params = $request->all();
         $id     = $request->session()->get('active_cart_id', false);
-        $cart = Cart::find($id);
+        $cart   = Cart::find($id);
         if ($cart == null) {
             abort(404, "Cart not found for this session");
         }
         $cart->anonymousCartCheckUser();
         $cart->abortNotCart('cart');
-        $variant = Variant::where('odoo_id', $params['variant_id'])->first();
+        $variant = Variant::find($params['variant_id']);
         $item    = $variant->getItem(true, isNotProd());
         if ($item) {
             $qty = $params['variant_quantity'];
@@ -80,18 +84,20 @@ class CartController extends Controller
                 $cart->insertItem(["id" => $variant->id, "quantity" => $qty]);
                 $cart->save();
                 $cart->refresh();
-                $message = "Item updated successfully";
+                $available = $cart->checkCouponAvailability();
+                $summary   = $cart->getSummary();
+                $coupons   = Offer::getAllActiveCoupons();
+                $message   = "Item updated successfully";
             } elseif ($qty < 1) {
                 abort(404, "Total Quantity should greater than 0");
             } else {
                 abort(404, "Quantity not available");
             }
-            $request->session()->put('active_cart_id', $cart->id);
             $item["quantity"]  = intval($cart->cart_data[$item["id"]]["quantity"]);
             $item["timestamp"] = intval($cart->cart_data[$item["id"]]["timestamp"]);
         }
         $summary = $cart->getSummary();
-        return response()->json(['cart_count' => $cart->itemCount(), "message" => $message, "item" => $item,  "summary" => $summary]);
+        return response()->json(array_merge(['cart_count' => $cart->itemCount(), "message" => $message, "item" => $item, "summary" => $summary, "coupons" => $coupons], $available));
     }
 
     public function guestCartFetch(Request $request)
@@ -105,16 +111,13 @@ class CartController extends Controller
         $cart->abortNotCart('cart');
         $items = getCartData($cart, true, isNotProd());
 
-        
-        $summary    = $cart->getSummary();
-        if($cart->coupon != null){
-            $appliedCoupon = Coupon::where('display_code', $cartData['coupon'])->first()->offer->getCouponDetails();
-        }else{
-            $appliedCoupon = null;
-        }
-        
+        $couponAvailability = $cart->checkCouponAvailability();
+        $appliedCoupon      = $couponAvailability['coupon_applied'];
+
+        $coupons = Offer::getAllActiveCoupons();
+
         $summary = $cart->getSummary();
-        return response()->json(['cart_count' => $cart->itemCount(), 'cart_type' => $cart->type, 'items' => $items, 'applied_coupon' => $appliedCoupon, "coupons" => $coupons, "summary" => $summary]);
+        return response()->json(['cart_count' => $cart->itemCount(), 'cart_type' => $cart->type, 'items' => $items, 'coupon_applied' => $appliedCoupon, "coupons" => $coupons, "summary" => $summary]);
     }
 
     public function guestCartDelete(Request $request)
@@ -132,10 +135,12 @@ class CartController extends Controller
         $cart->removeItem($params["variant_id"]);
         $cart->save();
         $cart->refresh();
-        $message    = "Item deleted successfully";
-        $summary    = $cart->getSummary();
-        
-        return response()->json(['cart_count' => $cart->itemCount(), 'message' => $message,  "summary" => $summary]);
+        $available                            = $cart->checkCouponAvailability();
+        $available['messages']['item-delete'] = "Item deleted successfully";
+        $summary                              = $cart->getSummary();
+        $coupons                              = Offer::getAllActiveCoupons();
+
+        return response()->json(array_merge(['cart_count' => $cart->itemCount(), "summary" => $summary, "coupons" => $coupons], $available));
     }
 
     public function guestCartCoupon(Request $request)
@@ -150,17 +155,17 @@ class CartController extends Controller
         }
         $cart->anonymousCartCheckUser();
         $cart->abortNotCart('cart');
-        try{
+        try {
             $apply = $cart->applyCoupon($params['coupon_code']);
             $cart->refresh();
-            if($cart->coupon != null){
+            if ($cart->coupon != null) {
                 $apply['messages'] = ['Coupon Applied successfully']; //Take from config
-            }else{
+            } else {
                 $apply['messages'] = ['Coupon removed successfully'];
             }
             return response()->json($apply);
-        }catch (\Exception $e){
-            abort(400,$e->message);
+        } catch (\Exception $e) {
+            abort(400, json_decode($e->getMessage())[0]);
         }
     }
 
@@ -181,7 +186,6 @@ class CartController extends Controller
             }
         }
 
-        
         return response()->json(["message" => 'Items are available in store', 'success' => true]);
     }
 
@@ -226,12 +230,12 @@ class CartController extends Controller
             $item["timestamp"] = intval($cart->cart_data[$item["id"]]["timestamp"]);
         }
         $summary = $cart->getSummary();
-        return response()->json(['cart_count' => $cart->itemCount(), "message" => $message, "item" => $item,  "summary" => $summary]);
+        return response()->json(['cart_count' => $cart->itemCount(), "message" => $message, "item" => $item, "summary" => $summary]);
     }
 
     public function userModifyItem($id, Request $request)
     {
-        $request->validate(['variant_id' => 'required|exists:variants,odoo_id', 'variant_quantity' => 'required']);
+        $request->validate(['variant_id' => 'required|exists:variants,id', 'variant_quantity' => 'required']);
         $params = $request->all();
         $cart   = Cart::find($id);
         if ($cart == null) {
@@ -239,7 +243,7 @@ class CartController extends Controller
         }
         $user = $request->user();
         validateCart($user, $cart, 'cart');
-        $variant = Variant::where('odoo_id', $params['variant_id'])->first();
+        $variant = Variant::find($params['variant_id']);
         $item    = $variant->getItem(true, isNotProd());
         if ($item) {
             $qty = $params['variant_quantity'];
@@ -251,7 +255,10 @@ class CartController extends Controller
                 $cart->insertItem(["id" => $variant->id, "quantity" => $qty]);
                 $cart->save();
                 $cart->refresh();
-                $message = "Item added successfully";
+                $available = $cart->checkCouponAvailability();
+                $summary   = $cart->getSummary();
+                $coupons   = Offer::getAllActiveCoupons();
+                $message   = "Item added successfully";
             } elseif ($qty < 1) {
                 abort(404, "Total Quantity should greater than 0");
             } else {
@@ -261,7 +268,7 @@ class CartController extends Controller
             $item["timestamp"] = intval($cart->cart_data[$item["id"]]["timestamp"]);
         }
         $summary = $cart->getSummary();
-        return response()->json(['cart_count' => $cart->itemCount(), "message" => $message, "item" => $item,  "summary" => $summary]);
+        return response()->json(array_merge(['cart_count' => $cart->itemCount(), "summary" => $summary, "message" => $message, "item" => $item, "coupons" => $coupons], $available));
     }
 
     public function userCartFetch($id, Request $request)
@@ -278,20 +285,17 @@ class CartController extends Controller
         if ($cart->type == 'order') {
             if (checkOrderInventory($cart->order, false) == 'failure') {
                 $cart->type = 'failure';
-                $cart->save();
             }
         }
 
-        $items = getCartData($cart, true, isNotProd());
-        $summary    = $cart->getSummary();
-        if($cart->coupon != null){
-            $appliedCoupon = Coupon::where('display_code', $cart->coupon)->first()->offer->getCouponDetails();
-        }else{
-            $appliedCoupon = null;
-        }
-        
+        $items   = getCartData($cart, true, isNotProd());
+        $coupons = Offer::getAllActiveCoupons();
+
+        $couponAvailability = $cart->checkCouponAvailability();
+        $appliedCoupon      = $couponAvailability['coupon_applied'];
+
         $summary = $cart->getSummary();
-        return response()->json(['cart_count' => $cart->itemCount(), 'cart_type' => $cart->type, 'items' => $items, 'applied_coupon' => $appliedCoupon, "coupons" => $coupons, "summary" => $summary]);
+        return response()->json(['cart_count' => $cart->itemCount(), 'cart_type' => $cart->type, 'items' => $items, 'coupon_applied' => $appliedCoupon, "coupons" => $coupons, "summary" => $summary]);
     }
 
     public function userCartDelete($id, Request $request)
@@ -308,9 +312,11 @@ class CartController extends Controller
         $cart->removeItem($params["variant_id"]);
         $cart->save();
         $cart->refresh();
-        $message    = "Item deleted successfully";
-        $summary    = $cart->getSummary();
-        return response()->json(['cart_count' => $cart->itemCount(), 'message' => $message,  "summary" => $summary, ]);
+        $available                            = $cart->checkCouponAvailability();
+        $available['messages']['item-delete'] = "Item deleted successfully";
+        $summary                              = $cart->getSummary();
+        $coupons                              = Offer::getAllActiveCoupons();
+        return response()->json(array_merge(['cart_count' => $cart->itemCount(), "summary" => $summary, "coupons" => $coupons], $available));
     }
 
     public function userCartCoupon($id, Request $request)
@@ -325,17 +331,17 @@ class CartController extends Controller
         $cart->abortNotCart('cart', true);
         $user = $request->user();
         validateCart($user, $cart, 'cart');
-        try{
+        try {
             $apply = $cart->applyCoupon($params['coupon_code']);
             $cart->refresh();
-            if($cart->coupon != null){
+            if ($cart->coupon != null) {
                 $apply['messages'] = ['Coupon Applied successfully']; //Take from config
-            }else{
+            } else {
                 $apply['messages'] = ['Coupon removed successfully'];
             }
             return response()->json($apply);
         } catch (\Exception $e) {
-            abort(400, $e->getMessage());
+            abort(400, json_decode($e->getMessage())[0]);
         }
     }
 
@@ -349,14 +355,18 @@ class CartController extends Controller
     public function startFresh(Request $request)
     {
         $request->validate(['cart_id' => 'sometimes|exists:carts,id']);
-        $user = $request->user();
+        $params = $request->all();
+        $user   = $request->user();
+
         if (isset($params['cart_id'])) {
             $old_cart = Cart::find($params['cart_id']);
             validateCart($user, $old_cart);
-            $cart = $user->newCart(true, $old_cart);
         } else {
-            $cart = $user->newCart(true);
+            $old_cart = Cart::find($params['active_cart']);
         }
+        $cart = $user->newCart(true, $old_cart);
+        DB::table('oauth_access_tokens')->where('id', $params['token_id'])->update(['cart_id' => $cart->id]);
+
         return response()->json(['cart_id' => $cart->id]);
     }
 }

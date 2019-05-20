@@ -106,7 +106,7 @@
 									</p>
 									<p *ngIf="userEmail" class="h6 mt-4 mb-0">
 										Order Tracking emails will be sent to : <br> <b class="font-weight-bold">{{userEmail}}</b>
-										<i class="fas fa-pencil-alt number-edit cursor-pointer ml-2 mt-1" (click)="editUserInfo()"></i>
+										<i *ngIf="shippingDetails.user_info_editable" class="fas fa-pencil-alt number-edit cursor-pointer ml-2 mt-1" (click)="editUserInfo()"></i>
 									</p>
 								</div>
 							</div>

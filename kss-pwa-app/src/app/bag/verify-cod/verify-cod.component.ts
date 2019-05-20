@@ -29,7 +29,7 @@ export class VerifyCodComponent implements OnInit, OnChanges {
   verifyOTP(){
     this.appservice.showLoader();
   	console.log("verifyOTP function");
-  	let url = this.appservice.apiUrl + '/api/rest/v1/user/order/' + this.shippingDetails.order_id + '/verify-otp?phone='+this.shippingDetails.address.phone+'&otp='+this.otp;
+  	let url = this.appservice.apiUrl + '/api/rest/v2/user/order/' + this.shippingDetails.order_id + '/verify-otp?phone='+this.shippingDetails.address.phone+'&otp='+this.otp;
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     this.apiservice.request(url, 'get', {} , header ).then((response)=>{
     	if(response.success)
@@ -45,6 +45,12 @@ export class VerifyCodComponent implements OnInit, OnChanges {
       if(error.status == 410){
         let url = window.location.href.split("#")[0] + '#/bag';
         history.replaceState({bag : true}, 'bag', url);
+        this.appservice.loadCartTrigger();
+      }
+      else if(error.status == 401){
+        let url = window.location.href.split("#")[0] + '#/bag';
+        history.replaceState({bag : true}, 'bag', url);
+        console.log("openCart");
         this.appservice.loadCartTrigger();
       }
       else{
@@ -70,7 +76,7 @@ export class VerifyCodComponent implements OnInit, OnChanges {
   resendOTP(){
     this.otpVerificationErrorMsg = '';
     this.appservice.showLoader();
-    let url = this.appservice.apiUrl + '/api/rest/v1/user/order/' + this.shippingDetails.order_id + '/resend-otp?phone='+this.shippingDetails.address.phone;
+    let url = this.appservice.apiUrl + '/api/rest/v2/user/order/' + this.shippingDetails.order_id + '/resend-otp?phone='+this.shippingDetails.address.phone;
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     this.apiservice.request(url, 'get', {} , header ).then((response)=>{
         this.otp = '';
@@ -78,8 +84,13 @@ export class VerifyCodComponent implements OnInit, OnChanges {
     })
     .catch((error)=>{
       console.log("error ===>", error);
-      // this.router.navigateByUrl('/bag',{ replaceUrl: true });
       this.appservice.removeLoader();
+      if(error.status == 401){
+        let url = window.location.href.split("#")[0] + '#/bag';
+        history.replaceState({bag : true}, 'bag', url);
+        console.log("openCart");
+        this.appservice.loadCartTrigger();
+      }
     }) 
   }
 

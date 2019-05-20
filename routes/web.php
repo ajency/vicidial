@@ -14,6 +14,8 @@ Route::post('/service_comm/listen', '\Ajency\ServiceComm\ServiceCommController@s
 
 $config = config('ajfileupload');
 
+Route::get('/test/productlist', 'v1\ProductListTestController@index')->name('productListTest');
+
 $app_version = 'v' . config('app.api_version');
 
 $group_app_version = 'v1';
@@ -64,22 +66,18 @@ Route::group([
             Route::get('/apply-coupon', $group_app_version . '\CartController@guestCartCoupon');
             Route::get('/check-status', $group_app_version . '\CartController@checkStatus');
         });
+        Route::get('/states/all', $group_app_version . '\AddressController@fetchStates');
     });
     Route::group([
         'prefix' => '/authenticate',
     ], function () use ($group_app_version) {
-        Route::get('/login', $group_app_version . '\UserController@verifyOTP');
-        Route::get('/skip', $group_app_version . '\UserController@skipOTP');
-        Route::get('/generate_otp', $group_app_version . '\UserController@sendSMS');
-        Route::get('/resend_otp', $group_app_version . '\UserController@reSendSMS');
+        Route::get('/get-token', $group_app_version . '\UserController@getToken');
     });
 });
-
-
 Route::get('/', $app_version . '\HomeController@newhome')->name('home');
 // Route::get('/newhome', $app_version . '\HomeController@newhome')->name('home');
 Route::get('/drafthome', $app_version . '\HomeController@newdraft')->name('drafthome');
-Route::get('/newshop', $app_version . '\HomeController@shop')->name('shop');
+Route::get('/newshop', $app_version . '\ListingController@shop')->name('shop');
 Route::get('/getWarehouseLevelInventory', $app_version . "\ProductController@allInventory");
 Route::get('/contact-us', $app_version . '\StaticController@contact');
 Route::get('/contact', $app_version . '\StaticController@contactnew');
@@ -98,7 +96,7 @@ Route::get('/stores/jaipur', $app_version . '\StaticController@singlestore');
 Route::get('/activities/{storename}', $app_version . '\StaticController@activities');
 Route::get('/shop', $app_version . '\ListingController@shop')->name('shoplisting');
 Route::get('/products/xml', $app_version . '\StaticController@productXML');
-Route::get('/test/productlist', $app_version . '\ProductListTestController@index')->name('productListTest');
+
 Route::get('/variant-diff-file', $app_version . '\StaticController@getVariantDiffFile');
 Route::get('/user/order/{orderid}/payment/{type}', $app_version . '\PaymentController@payment')->name('payment');
 Route::get('/user/order/{orderid}/payment/{type}/status', $app_version . '\PaymentController@status')->name('paymentStatus');

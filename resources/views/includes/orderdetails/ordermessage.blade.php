@@ -31,7 +31,7 @@
 		var status = '<?php echo $status;?>';
 
 		function getNewCartId(){
-	        var url = "/api/rest/v1/user/cart/mine";
+	        var url = "/api/rest/v2/user/cart/mine";
 	        $.ajax({
 	            url: url,
 	            type: 'GET',

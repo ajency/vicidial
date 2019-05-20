@@ -26,7 +26,7 @@ export class ContactUsComponent implements OnInit {
     console.log("form values ==>", form);
     if(form.valid){
       this.submitLoader = true;
-      let url = isDevMode() ? "https://demo8558685.mockable.io/send-contach-details" : "/api/rest/v1/send-contact-details";
+      let url = isDevMode() ? "https://demo8558685.mockable.io/send-contach-details" : "/api/rest/v2/send-contact-details";
 
       this.apiService.request(url,'post', form.value, {}).then((data)=>{
         this.submitLoader = false;

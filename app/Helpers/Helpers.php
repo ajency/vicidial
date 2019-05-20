@@ -591,7 +591,7 @@ function generateOTP()
 
 function createAccessToken($UserObject)
 {
-    $UserObject->createToken('KSS_USER')->accessToken;
+    return $UserObject->createToken('KSS_USER');
 }
 
 function fetchAccessToken($UserObject)
@@ -887,10 +887,19 @@ function checkForOfferItems($cartItems)
     return false;
 }
 
-
 function validateSubOrder($user, $subOrder)
 {
     if ($subOrder == null || $subOrder->order->cart->user_id != $user->id) {
         abort(403);
     }
+}
+
+function getTokenID($token)
+{
+    $token_parts        = explode('.', $token);
+    $token_header       = $token_parts[0];
+    $token_header_json  = base64_decode($token_header);
+    $token_header_array = json_decode($token_header_json, true);
+    $user_token         = $token_header_array['jti'];
+    return $user_token;
 }
