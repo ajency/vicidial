@@ -170,7 +170,6 @@ class CartController extends Controller
             } else {
                 abort(404, "Quantity not available");
             }
-            $request->session()->put('active_cart_id', $cart->id);
             $item["quantity"]  = intval($cart->cart_data[$item["id"]]["quantity"]);
             $item["timestamp"] = intval($cart->cart_data[$item["id"]]["timestamp"]);
         }

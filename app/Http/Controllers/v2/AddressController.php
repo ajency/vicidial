@@ -16,23 +16,30 @@ class AddressController extends Controller
     public function userAddAddress(Request $request)
     {
         $request->validate(['default' => 'required', 'name' => 'required', 'phone' => 'required|digits:10', 'pincode' => 'required|digits:6', 'state_id' => 'required|numeric', 'address' => 'required', 'landmark' => 'present', 'city' => 'required']);
-        $params  = $request->all();
-        $user_id = $request->user()->id;
+        $params = $request->all();
+        $user   = $request->user();
 
-        $default = $this->defaultAddressSet($user_id, $params["default"]);
+        $default = $this->defaultAddressSet($user->id, $params["default"]);
 
         $state = Defaults::find($params["state_id"]);
         if ($state == null) {
             abort(403);
         }
 
-        $address          = new Address;
-        $address->address = ["name" => $params["name"], "phone" => $params["phone"], "pincode" => $params["pincode"], "state_id" => $state->id, "state_odoo_id" => $state->meta_data['odoo_id'], "state" => $state->label, "address" => $params["address"], "landmark" => $params["landmark"], "city" => $params["city"]];
-        $address->default = $default;
-        $address->user_id = $user_id;
+        $address           = new Address;
+        $address->address  = ["name" => $params["name"], "phone" => $params["phone"], "pincode" => $params["pincode"], "state_id" => $state->id, "state_odoo_id" => $state->meta_data['odoo_id'], "state" => $state->label, "address" => $params["address"], "landmark" => $params["landmark"], "city" => $params["city"]];
+        $address->default  = $default;
+        $address->user_id  = $user->id;
+        $address->verified = $params["token_verified"];
         $address->save();
 
-        return json_encode(["address" => $address->shippingAddress(true), "message" => "Address Added successfully", 'success' => true]);
+        if (isset($params['user'])) {
+            $user->name     = $params['user']['name'];
+            $user->email_id = $params['user']['email'];
+            $user->save();
+        }
+
+        return json_encode(["address" => $address->shippingAddress(true, true), "message" => "Address Added successfully", 'success' => true]);
     }
 
     public function userEditAddress(Request $request)
@@ -53,19 +60,25 @@ class AddressController extends Controller
 
         $default = $this->defaultAddressSet($user_id, $params["default"], $address->id);
 
-        $address->address = ["name" => $params["name"], "phone" => $params["phone"], "pincode" => $params["pincode"], "state_id" => $state->id, "state_odoo_id" => $state->meta_data['odoo_id'], "state" => $state->label, "address" => $params["address"], "landmark" => $params["landmark"], "city" => $params["city"]];
-        $address->default = $default;
-        $address->user_id = $user_id;
+        $address->address  = ["name" => $params["name"], "phone" => $params["phone"], "pincode" => $params["pincode"], "state_id" => $state->id, "state_odoo_id" => $state->meta_data['odoo_id'], "state" => $state->label, "address" => $params["address"], "landmark" => $params["landmark"], "city" => $params["city"]];
+        $address->default  = $default;
+        $address->verified = $params["token_verified"];
         $address->save();
 
-        return json_encode(["address" => $address->shippingAddress(true), "message" => "Address Updated successfully", 'success' => true]);
+        return json_encode(["address" => $address->shippingAddress(true, true), "message" => "Address Updated successfully", 'success' => true]);
     }
 
     public function userFetchAddresses(Request $request)
     {
-        $user = $request->user();
-
+        $user   = $request->user();
         $params = $request->all();
+
+        $user_details = $user->userDetails();
+
+        if (!$params["token_verified"]) {
+            return json_encode(["addresses" => [], "user_info" => ["mobile" => $user_details['mobile']], "get_user_info" => !isset($user_details['email'])]);
+        }
+
         if (isset($params['cart_id'])) {
             $cart = Cart::find($params['cart_id']);
             validateCart($user, $cart, 'cart');
@@ -75,7 +88,6 @@ class AddressController extends Controller
                     abort(404, "Quantity not available");
                 }
             }
-
         }
 
         $addresses = Address::where('user_id', '=', $user->id)->where('active', '=', true)->get();
@@ -83,10 +95,10 @@ class AddressController extends Controller
         $address_data = array();
 
         foreach ($addresses as $address) {
-            $address_data[] = $address->shippingAddress(true);
+            $address_data[] = $address->shippingAddress(true, true);
         }
 
-        return json_encode(["addresses" => $address_data, "user_info" => $user->userDetails()]);
+        return json_encode(["addresses" => $address_data, "user_info" => ["mobile" => $user_details['mobile']], "get_user_info" => !isset($user_details['email'])]);
     }
 
     public function userDeleteAddress(Request $request)
@@ -155,6 +167,8 @@ class AddressController extends Controller
             abort(403);
         }
 
-        return json_encode(['district' => $pincode_entry['district'], 'state_id' => $pincode_entry['state_id']]);
+        $pincode_data = checkPincodeServiceableHelper($pincode);
+
+        return json_encode(['district' => $pincode_entry['district'], 'state_id' => $pincode_entry['state_id'], "pincode_serviceability" => $pincode_data]);
     }
 }

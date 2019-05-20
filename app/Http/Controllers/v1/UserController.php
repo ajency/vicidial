@@ -64,9 +64,11 @@ class UserController extends Controller
     public function fetchUserDetails($data, $skip = false)
     {
         $UserObject = $this->createAuthenticateUser($data, $skip);
-        $token = fetchAccessToken($UserObject);
-        $UserObject->api_token = $token->id;
-        $UserObject->save();
+        if ($UserObject->api_token == null) {
+            $token = fetchAccessToken($UserObject);
+            $UserObject->api_token = $token->id;
+            $UserObject->save();
+        }
         
         $id = $UserObject->cart_id;
         $user = ["id"=> $UserObject->id, 'active_cart_id'=> $id];
@@ -75,7 +77,7 @@ class UserController extends Controller
             $user['user_info'] = $UserObject->userDetails();
         }
         
-        return response()->json(["message"=> 'user login successful', 'user'=> $user, 'token'=> $token->id, 'success'=> true]);
+        return response()->json(["message"=> 'user login successful', 'user'=> $user, 'token'=> $UserObject->api_token, 'success'=> true]);
     }
 
     public function createAuthenticateUser($data, $skip)
@@ -113,14 +115,19 @@ class UserController extends Controller
             $cart->user_id = $UserObject->id;
             $cart->save();
 
+            $UserObject->assignRole('customer');
+
+            $token = createAccessToken($UserObject)->token;
+
             if (!$skip) {
                 $UserObject->verified = true;
                 $UserObject->save();
+                $token->verified = 1;
+            } else {
+                $token->verified = 0;
             }
-
-            $UserObject->assignRole('customer');
-
-            createAccessToken($UserObject);
+            $token->cart_id = $cart->id;
+            $token->save();
         }
 
         request()->session()->forget('active_cart_id');

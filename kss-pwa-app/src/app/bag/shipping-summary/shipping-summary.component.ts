@@ -50,7 +50,7 @@ export class ShippingSummaryComponent implements OnInit {
     }
     this.closePaymentModal();
     this.appservice.showLoader();
-    let url = this.appservice.apiUrl + '/api/rest/v1/user/order/' + this.shippingDetails.order_id + '/check-inventory'
+    let url = this.appservice.apiUrl + '/api/rest/v2/user/order/' + this.shippingDetails.order_id + '/check-inventory'
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     this.apiservice.request(url, 'get', {} , header ).then((response)=>{
       fbTrackAddPaymentInfo();
@@ -96,11 +96,11 @@ export class ShippingSummaryComponent implements OnInit {
     if(this.appservice.continueOrder){
       console.log("continue-order");
       this.appservice.continueOrder = false;
-      return (this.appservice.apiUrl + '/api/rest/v1/user/cart/' + this.appservice.getCookie('cart_id') + '/continue-order');
+      return (this.appservice.apiUrl + '/api/rest/v2/user/cart/' + this.appservice.getCookie('cart_id') + '/continue-order');
     }
     else{
       console.log("create-order");
-      return (this.appservice.apiUrl + '/api/rest/v1/user/cart/' + this.appservice.getCookie('cart_id') + '/create-order');
+      return (this.appservice.apiUrl + '/api/rest/v2/user/cart/' + this.appservice.getCookie('cart_id') + '/create-order');
     }    
   }
 
@@ -113,7 +113,7 @@ export class ShippingSummaryComponent implements OnInit {
   }
 
   setUserName(){
-    if(!this.shippingDetails.user_info){
+    if(!this.shippingDetails.user_info && this.shippingDetails.user_info_editable){
       this.shippingDetails.user_info = {};
       this.shippingDetails.user_info.name = this.shippingDetails.address.name;
       this.shippingDetails.user_info.email = '';
@@ -122,7 +122,7 @@ export class ShippingSummaryComponent implements OnInit {
       },100);
       
     }
-    else{
+    if(this.shippingDetails.user_info){
       this.userEmail = this.shippingDetails.user_info.email;
     }
   }
@@ -170,11 +170,15 @@ export class ShippingSummaryComponent implements OnInit {
 
   confirmMobile(){
     console.log("inside confirm mobile");
-    let url = this.appservice.apiUrl + '/api/rest/v1/user/order/' + this.shippingDetails.order_id + '/send-otp?phone='+this.shippingDetails.address.phone;
+    let url = this.appservice.apiUrl + '/api/rest/v2/user/order/' + this.shippingDetails.order_id + '/send-otp?phone='+this.shippingDetails.address.phone;
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     this.apiservice.request(url, 'get', {} , header ).then((response)=>{
-        this.appservice.removeLoader();
-        this.showVerifyCod = true;
+        if(response.verified)
+          window.location.href = "/user/order/" + this.shippingDetails.order_id +"/payment/cod";
+        else{
+          this.appservice.removeLoader();
+          this.showVerifyCod = true;
+        }
     })
     .catch((error)=>{
       console.log("error ===>", error);

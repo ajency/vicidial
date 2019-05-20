@@ -30,6 +30,7 @@ export class AppServiceService {
   userInfo : any;
   navigatingFromBagToAddress : boolean = false;
   userMobile : any;
+  hideAddressUser : boolean = true;
   private couponCodeSelected = new Subject<any>();
   displaySkipOTP : any;
   loadCartFromAngular : boolean = false;
@@ -224,21 +225,21 @@ export class AppServiceService {
   }
 
   callMineApi(){
-    let url = this.apiUrl + '/api/rest/v1/user/cart/mine';
+    let url = this.apiUrl + '/api/rest/v2/user/cart/mine';
     let header = { Authorization : 'Bearer '+this.getCookie('token') };
     return this.apiservice.request(url, 'get', {}, header);
   }
 
   callFetchCartApi(){    
-    let url = this.apiUrl + (this.isLoggedInUser() ? ("/api/rest/v1/user/cart/"+this.getCookie('cart_id')+"/get") : ("/rest/v1/anonymous/cart/get"))
-    if(isDevMode())
+    let url = this.apiUrl + (this.isLoggedInUser() ? ("/api/rest/v2/user/cart/"+this.getCookie('cart_id')+"/get") : ("/rest/v2/anonymous/cart/get"))
+   if(isDevMode())
       url = "https://demo8558685.mockable.io/fetch-cart";
     let header = this.isLoggedInUser() ? { Authorization : 'Bearer '+this.getCookie('token') } : {}
     return this.apiservice.request(url, 'get', {}, header);
   }
 
   callGetAllAddressesApi(send_cart_id : boolean = false){
-    let url = send_cart_id ? this.apiUrl + "/api/rest/v1/user/address/all?cart_id="+this.getCookie('cart_id') : this.apiUrl + "/api/rest/v1/user/address/all";
+    let url = send_cart_id ? this.apiUrl + "/api/rest/v2/user/address/all?cart_id="+this.getCookie('cart_id') : this.apiUrl + "/api/rest/v2/user/address/all";
     if(isDevMode())
       url = "https://demo8558685.mockable.io/fetch-addresses";
     let header = this.isLoggedInUser() ? { Authorization : 'Bearer '+this.getCookie('token') } : {};
@@ -278,7 +279,7 @@ export class AppServiceService {
   }
 
   getOrders(){
-      let url = this.apiUrl + '/api/rest/v1/user/orders';
+      let url = this.apiUrl + '/api/rest/v2/user/orders';
       let header = { Authorization : 'Bearer '+this.getCookie('token') };
       let body : any = {
         _token : $('meta[name="csrf-token"]').attr('content')
@@ -302,7 +303,7 @@ export class AppServiceService {
 
   getUserInfo(){    
     this.showLoader();
-    let url = this.apiUrl + '/api/rest/v1/user/get-user-info';
+    let url = this.apiUrl + '/api/rest/v2/user/get-user-info';
     let header = { Authorization : 'Bearer '+this.getCookie('token') };
     return this.apiservice.request(url, 'get', {} , header );
   }

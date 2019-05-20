@@ -80,7 +80,7 @@ export class MyAddressesComponent implements OnInit {
 
   getAllStates(){    
     this.appservice.showLoader();
-    let url = this.appservice.apiUrl + "/rest/v1/anonymous/states/all";
+    let url = this.appservice.apiUrl + "/rest/v2/anonymous/states/all";
     this.apiservice.request(url, 'get', {}, {} ).then((response)=>{
       this.appservice.states = response;
       this.states = response;

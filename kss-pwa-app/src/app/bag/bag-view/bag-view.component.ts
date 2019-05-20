@@ -212,7 +212,7 @@ export class BagViewComponent implements OnInit {
     this.appservice.showLoader();
     console.log("inside modifyCart function ==>", quantity, this.itemIndex);
     let item = this.cart.items[this.itemIndex];
-    let url = this.appservice.apiUrl + (this.appservice.isLoggedInUser() ? ("/api/rest/v1/user/cart/"+this.appservice.getCookie('cart_id')+"/update") : ("/rest/v1/anonymous/cart/update"));
+    let url = this.appservice.apiUrl + (this.appservice.isLoggedInUser() ? ("/api/rest/v2/user/cart/"+this.appservice.getCookie('cart_id')+"/update") : ("/rest/v2/anonymous/cart/update"));
     let body = {
     //   old_item : item.id,
     //   new_item : item.related_items.size.find(size=> size.value == item.attributes.size).id,
@@ -262,7 +262,7 @@ export class BagViewComponent implements OnInit {
     this.updateQuantityFailed = false;
     this.appservice.showLoader();
     let body = { variant_id : item.id };
-    let url = this.appservice.apiUrl + (this.appservice.isLoggedInUser() ? ("/api/rest/v1/user/cart/"+this.appservice.getCookie('cart_id')+"/delete?") : ("/rest/v1/anonymous/cart/delete?"));
+    let url = this.appservice.apiUrl + (this.appservice.isLoggedInUser() ? ("/api/rest/v2/user/cart/"+this.appservice.getCookie('cart_id')+"/delete?") : ("/rest/v2/anonymous/cart/delete?"));
     let header = this.appservice.isLoggedInUser() ? { Authorization : 'Bearer '+this.appservice.getCookie('token') } : {};
     url = url+$.param(body);
     this.apiservice.request(url, 'get', body, header ).then((response)=>{
@@ -339,6 +339,11 @@ export class BagViewComponent implements OnInit {
     if(this.cart.cart_type == "cart"){
       this.appservice.showLoader();
       this.appservice.callGetAllAddressesApi(true).then((response)=>{
+        if(response.get_user_info){
+          this.appservice.hideAddressUser = false;
+        } else {
+          this.appservice.hideAddressUser = true;
+        }
         this.appservice.shippingAddresses = response.addresses;
         this.appservice.userMobile = response.user_info.mobile;
         $("#cd-cart").css("overflow", "auto");
@@ -385,7 +390,7 @@ export class BagViewComponent implements OnInit {
 
   editBag(){
     this.appservice.showLoader();
-    let url = this.appservice.apiUrl + '/api/rest/v1/user/cart/start-fresh';
+    let url = this.appservice.apiUrl + '/api/rest/v2/user/cart/start-fresh';
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     this.apiservice.request(url, 'get', {} , header ).then((response)=>{
       document.cookie='cart_id=' + response.cart_id + ";path=/";
@@ -466,7 +471,7 @@ export class BagViewComponent implements OnInit {
 
   callCheckCartStatusApi(){
     this.appservice.showLoader();
-    let url = this.appservice.apiUrl + '/rest/v1/anonymous/cart/check-status';
+    let url = this.appservice.apiUrl + '/rest/v2/anonymous/cart/check-status';
     this.apiservice.request(url, 'get', {} , {} ).then((response)=>{
       this.appservice.removeLoader();
       this.displayModal();
@@ -515,8 +520,10 @@ export class BagViewComponent implements OnInit {
   }
 
   loginSuccess(){
-    console.warn("loginSuccess navigateToShippingDetailsPage")
-    this.navigateToShippingDetailsPage();
+    if(window.location.hash.startsWith('#/bag')){
+      console.warn("loginSuccess navigateToShippingDetailsPage")
+      this.navigateToShippingDetailsPage();
+    }
   }
 
   formatCoupons(coupons){
@@ -527,7 +534,7 @@ export class BagViewComponent implements OnInit {
     // console.log("inside applyCoupon function", this.couponCode);
     this.appservice.showLoader();
     let body = { coupon_code : code };
-    let url = this.appservice.apiUrl + (this.appservice.isLoggedInUser() ? ("/api/rest/v1/user/cart/"+this.appservice.getCookie('cart_id')+"/apply-coupon?") : ("/rest/v1/anonymous/cart/apply-coupon?"));
+    let url = this.appservice.apiUrl + (this.appservice.isLoggedInUser() ? ("/api/rest/v2/user/cart/"+this.appservice.getCookie('cart_id')+"/apply-coupon?") : ("/rest/v2/anonymous/cart/apply-coupon?"));
     let header = this.appservice.isLoggedInUser() ? { Authorization : 'Bearer '+this.appservice.getCookie('token') } : {};
     url = url+$.param(body);
     this.apiservice.request(url, 'get', body, header ).then((response)=>{
@@ -631,7 +638,7 @@ export class BagViewComponent implements OnInit {
 
   continueOrder(){
     this.appservice.showLoader();
-    let url = this.appservice.apiUrl + '/api/rest/v1/user/cart/' + this.appservice.getCookie('cart_id') + '/continue-order';
+    let url = this.appservice.apiUrl + '/api/rest/v2/user/cart/' + this.appservice.getCookie('cart_id') + '/continue-order';
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     
     this.apiservice.request(url, 'post', {} , header ).then((response)=>{

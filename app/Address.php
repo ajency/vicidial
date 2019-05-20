@@ -8,36 +8,41 @@ use Illuminate\Database\Eloquent\Model;
 class Address extends Model
 {
     protected $casts = [
-        'address' => 'array',
-        'default' => 'boolean',
-        'active'  => 'boolean',
+        'address'  => 'array',
+        'default'  => 'boolean',
+        'active'   => 'boolean',
+        'verified' => 'boolean',
     ];
 
-    protected $odooModel =  "res.partner";
+    protected $odooModel = "res.partner";
 
     public function user()
     {
         return $this->belongsTo('App\User');
     }
 
-    public function shippingAddress($unset = false)
+    public function shippingAddress($unset = false, $verification = false)
     {
         $address_data            = $this->address;
         $address_data["id"]      = $this->id;
         $address_data["default"] = $this->default;
 
-        if($unset) {
+        if ($unset) {
             unset($address_data['state']);
         }
 
         unset($address_data['state_odoo_id']);
+
+        if ($verification) {
+            $address_data['verified'] = $this->verified;
+        }
 
         return $address_data;
     }
 
     private function writeAddressToOdoo()
     {
-        $odoo          = new OdooConnect;
+        $odoo = new OdooConnect;
         return $odoo->defaultExec($this->odooModel, 'create', [[
             "customer"   => true,
             "parent_id"  => $this->user->odoo_id,
@@ -54,15 +59,16 @@ class Address extends Model
         ]], null)->first();
     }
 
-    private function updateAddressOnOdoo(){
-        $odoo          = new OdooConnect;
-        $odoo->defaultExec($this->odooModel, 'write', [[$this->odoo_id],[
-            "name"       => $this->address["name"],
-            "phone"      => $this->address["phone"],
-            "city"       => $this->address["city"],
-            "street"     => $this->address["address"],
-            "state_id"   => $this->address["state_odoo_id"],
-            "zip"        => $this->address["pincode"],
+    private function updateAddressOnOdoo()
+    {
+        $odoo = new OdooConnect;
+        $odoo->defaultExec($this->odooModel, 'write', [[$this->odoo_id], [
+            "name"     => $this->address["name"],
+            "phone"    => $this->address["phone"],
+            "city"     => $this->address["city"],
+            "street"   => $this->address["address"],
+            "state_id" => $this->address["state_odoo_id"],
+            "zip"      => $this->address["pincode"],
 
         ]], null);
     }
@@ -84,15 +90,16 @@ class Address extends Model
             $this->address["address"],
             $this->address["city"],
             $this->address["state"],
-            'India'
+            'India',
         ]);
-        $coordinates = app('geocoder')->geocode($address)->get()->first()->getCoordinates();
-        $this->latitude = $coordinates->getLatitude();
+        $coordinates     = app('geocoder')->geocode($address)->get()->first()->getCoordinates();
+        $this->latitude  = $coordinates->getLatitude();
         $this->longitude = $coordinates->getLongitude();
         parent::save($options);
     }
 
-    public function checkPincodeServiceable(){
+    public function checkPincodeServiceable()
+    {
         $pincode = $this->address["pincode"];
         return checkPincodeServiceableHelper($pincode);
     }

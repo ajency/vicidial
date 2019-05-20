@@ -38,6 +38,7 @@ export class OrderDetailsComponent implements OnInit {
   returnItem : boolean = false;
   cancelItemsList : any = [];
   quantity = 1;
+  unverifiedUser : boolean = false;
   constructor(private appservice : AppServiceService,
               private route: ActivatedRoute,
               private router: Router,
@@ -48,14 +49,7 @@ export class OrderDetailsComponent implements OnInit {
     this.appservice.removeLoader();
     $("#cd-my-account").scrollTop(0);
     if(this.appservice.order)
-      this.showBackButton = true;
-    // if(this.appservice.order){
-    //   this.order =  this.appservice.order;
-    //   this.showBackButton = true;
-    // }
-    // else{
-    //     this.getOrders(); 
-    // }    
+      this.showBackButton = true;  
     this.getOrderDetails();   
   }
 
@@ -65,27 +59,24 @@ export class OrderDetailsComponent implements OnInit {
 
   getOrderDetails(){
     this.appservice.showLoader();
-    // let order_id = this.route.snapshot.paramMap.get('id');
-    console.log("Check order_id ==>", window.location.href.substr(window.location.href.lastIndexOf('/') + 1))
     let order_id = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
-    let url = this.appservice.apiUrl + '/api/rest/v1/user/order/'+ order_id +'/details';
+    let url = this.appservice.apiUrl + '/api/rest/v2/user/order/'+ order_id +'/details';
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     let body : any = {
       _token : $('meta[name="csrf-token"]').attr('content')
     };
     this.apiservice.request(url, 'get', body , header).then((response)=>{
-      // let formatted_data = this.formatData(response.data);
       this.order = response.data;
-      console.log("order ==>", this.order);
       this.appservice.removeLoader();
     })
     .catch((error)=>{
-      console.log("error ===>", error);
       if(error.status == 401)
         this.account_service.userLogout();
-      else if(error.status == 403)
+      else if(error.status == 403){
         this.order = false;
-        // this.router.navigate(['account']);
+        if(error.error.message === 'Unverified User')
+          this.unverifiedUser = true;
+      }
       this.appservice.removeLoader();
     })
   }
@@ -125,7 +116,7 @@ export class OrderDetailsComponent implements OnInit {
   callGetReasonsApi(){
     $('#cd-cart').addClass('overflow-h');
     this.unsubscribeGetCancelReason();
-    // let url = this.appservice.apiUrl +  "/api/rest/v1/district-state"
+    // let url = this.appservice.apiUrl +  "/api/rest/v2/district-state"
     if(this.account_service.reasons){
         this.reasons = this.cancelOrder ? this.account_service.reasons.cancel : this.account_service.reasons.return;
         this.cancelReasonId = 0;
@@ -133,7 +124,7 @@ export class OrderDetailsComponent implements OnInit {
     else{
       this.appservice.showLoader();
       // let url = "https://demo8558685.mockable.io/cancel-reason";
-      let url = this.appservice.apiUrl + "/api/rest/v1/get-all-reasons";
+      let url = this.appservice.apiUrl + "/api/rest/v2/get-all-reasons";
       this.getCancelReason = this.apiservice.request(url, 'get', {}, {}, false, 'observable').subscribe((response)=>{
         console.log("response from location api ==>", response);
         response.cancel.push({id : 0, value : '--Select--' });
@@ -157,7 +148,7 @@ export class OrderDetailsComponent implements OnInit {
   }
 
   checkCancelReason(){
-    console.log("checkCancelReason ==>", this.cancelReasonId)
+    // console.log("checkCancelReason ==>", this.cancelReasonId)
     // this.cancelReasonId = parseInt(this.cancelReasonId);
   }
 
@@ -167,7 +158,7 @@ export class OrderDetailsComponent implements OnInit {
 
   callCancelOrderApi(){
     this.appservice.showLoader();
-    let url = this.appservice.apiUrl +  "/api/rest/v1/user/order/" + this.order.order_info.order_id +"/cancel";
+    let url = this.appservice.apiUrl +  "/api/rest/v2/user/order/" + this.order.order_info.order_id +"/cancel";
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     let body : any = {
       reason : this.cancelReasonId,
@@ -179,7 +170,7 @@ export class OrderDetailsComponent implements OnInit {
 
   callReturnOrderApi(){
     this.appservice.showLoader();
-    let url = this.appservice.apiUrl +  "/api/rest/v1/user/sub-order/" + this.cancelItemsList[0].suborder_id +"/return";
+    let url = this.appservice.apiUrl +  "/api/rest/v2/user/sub-order/" + this.cancelItemsList[0].suborder_id +"/return";
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     let body : any = {
       reason : this.cancelReasonId,
@@ -251,6 +242,11 @@ export class OrderDetailsComponent implements OnInit {
 
   getValidTill(date){
     return moment(date, "YYYY-MM-DD HH:mm:ss").format("DD MMM, YYYY");
+  }
+
+  displayModal(){
+    this.appservice.displaySkipOTP = false;
+    this.appservice.showLoginPopupTrigger();
   }
   
 }

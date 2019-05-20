@@ -60,16 +60,15 @@ $(document).ready(function(){
         let url = window.location.href.split("#")[0] + '#/bag';
         window.location = url;
     });
-    
 
     function userLogout(request){
         document.cookie = "cart_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-        showErrorPopup(request);
+        // showErrorPopup(request);
     }
 
     function getNewCartId(request){
-        var url = "/api/rest/v1/user/cart/mine";
+        var url = "/api/rest/v2/user/cart/mine";
         $.ajax({
             url: url,
             type: 'GET',
@@ -86,13 +85,13 @@ $(document).ready(function(){
                     startFresh(request)                    
             },
             error: function (request, status, error) {
-                showErrorPopup(request)
+                // showErrorPopup(request)
             }
         });
     }
 
     function startFresh(request){
-        var url = '/api/rest/v1/user/cart/start-fresh';
+        var url = '/api/rest/v2/user/cart/start-fresh';
         $.ajax({
             url: url,
             type: 'GET',
@@ -106,7 +105,7 @@ $(document).ready(function(){
                 addToCart();            
             },
             error: function (request, status, error) {
-                showErrorPopup(request)
+                // showErrorPopup(request)
             }
         });
     }

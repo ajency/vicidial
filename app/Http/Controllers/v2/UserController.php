@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use App\UserLogin;
 use Carbon\Carbon;
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -15,38 +16,40 @@ class UserController extends Controller
 {
     public function sendSMS(Request $request)
     {
-        $data      = $request->all();
-        $validator = $this->validateNumber($data);
-        if ($validator->fails()) {
-            return response()->json(["message" => $validator->errors()->first(), 'success' => false]);
+        $data = $request->all();
+        if ($data['token_verified']) {
+            return response()->json(["message" => 'Token is already verified.', 'success' => false]);
         }
+
+        $userObject = $request->user();
 
         $otp                   = generateOTP();
         $otp_expiry            = Carbon::now()->addMinutes(config('otp.expiry'));
-        $userLogin             = UserLogin::firstOrNew(['phone' => $data['phone']]);
+        $userLogin             = UserLogin::firstOrNew(['phone' => $userObject->phone]);
         $userLogin->otp        = $otp;
         $userLogin->otp_expiry = $otp_expiry->toDateTimeString();
         $userLogin->attempts   = 0;
         $userLogin->save();
 
         sendSMS('send-otp', [
-            'to'      => '91' . $data['phone'],
+            'to'      => '91' . $userObject->phone,
             'message' => $otp . ' is the OTP to verify your number with KidSuperStore. It will expire in ' . config('otp.expiry') . ' minutes.',
         ], true);
 
-        $response = ["message" => "OTP Sent successfully", 'success' => true];
+        $response = ["message" => "OTP Sent successfully", 'phone' => $userObject->phone, 'success' => true];
         return response()->json(isNotProd() ? array_merge($response, ['OTP' => $otp]) : $response);
     }
 
     public function reSendSMS(Request $request)
     {
-        $data      = $request->all();
-        $validator = $this->validateNumber($data);
-        if ($validator->fails()) {
-            return response()->json(["message" => $validator->errors()->first(), 'success' => false]);
+        $data = $request->all();
+        if ($data['token_verified']) {
+            return response()->json(["message" => 'Token is already verified.', 'success' => false]);
         }
 
-        $userLogin = UserLogin::where(['phone' => $data['phone']])->get()->first();
+        $userObject = $request->user();
+
+        $userLogin = UserLogin::where(['phone' => $userObject->phone])->get()->first();
         if ($userLogin == null) {
             return response()->json(["message" => 'OTP not sent to this number. Please check the number.', 'success' => false]);
         }
@@ -56,7 +59,7 @@ class UserController extends Controller
         $userLogin->save();
 
         sendSMS('send-otp', [
-            'to'      => '91' . $data['phone'],
+            'to'      => '91' . $userObject->phone,
             'message' => $userLogin->otp . ' is the OTP to verify your number with KidSuperStore. It will expire in ' . config('otp.expiry') . ' minutes.',
         ], true);
 
@@ -64,15 +67,21 @@ class UserController extends Controller
         return response()->json(isNotProd() ? array_merge($response, ['OTP' => $userLogin->otp]) : $response);
     }
 
-    public function verifyOTP(Request $request)
+    public function verifyToken(Request $request)
     {
-        $data      = $request->all();
+        $data = $request->all();
+        if ($data['token_verified']) {
+            return response()->json(["message" => 'Token is already verified.', 'success' => false]);
+        }
+
         $validator = $this->validateOTP($data);
         if ($validator->fails()) {
             return response()->json(["message" => $validator->errors()->first(), 'success' => false]);
         }
 
-        $userLogin = UserLogin::where(['phone' => $data['phone']])->get()->first();
+        $userObject = $request->user();
+
+        $userLogin = UserLogin::where(['phone' => $userObject->phone])->get()->first();
         if ($userLogin == null) {
             return response()->json(["message" => 'OTP not sent to this number. Please check the number.', 'success' => false]);
         }
@@ -93,61 +102,82 @@ class UserController extends Controller
 
         $userLogin->delete();
 
-        return $this->fetchUserDetails($data);
+        DB::table('oauth_access_tokens')->where('id', $data['token_id'])->update(['verified' => 1]);
+
+        $cart  = $this->userCart($data['active_cart'], $userObject, $data['token_id']);
+        $order = $cart->order;
+        if ($order != null) {
+            $order->verified = true;
+            $order->save();
+            $address = $order->address;
+            $address->verified = true;
+            $address->save();
+        }
+
+        return response()->json(["message" => '', 'user' => ["id" => $userObject->id, 'active_cart_id' => $cart->id, 'user_info' => $userObject->userDetails()], 'permissions' => ['bag' => true, 'account' => true], 'success' => true]);
     }
 
-    public function skipOTP(Request $request)
+    public function getToken(Request $request)
     {
+
         $data      = $request->all();
         $validator = $this->validateNumber($data);
         if ($validator->fails()) {
             return response()->json(["message" => $validator->errors()->first(), 'success' => false]);
         }
-
-        return $this->fetchUserDetails($data, true);
+        return $this->fetchUserDetails($data);
     }
 
-    public function fetchUserDetails($data, $skip = false)
+    public function fetchUserDetails($data)
     {
-        $UserObject = $this->createAuthenticateUser($data, $skip);
-        if (isLocalSetup()) {
-            $tokenArr = $UserObject->createPersonalAccessToken();
+        $authenticatedUser = $this->createAuthenticateUser($data);
+        $userObject = $authenticatedUser['userObject'];
+        $tokenArr   = createAccessToken($userObject);
+        $token      = $tokenArr->token;
+        if ($userObject->api_token == null) {
+            $userObject->api_token = $token->id;
+            $userObject->save();
+        }
+
+        $user = ["id" => $userObject->id, 'active_cart_id' => $authenticatedUser['cart_id'], "verified" => $authenticatedUser['verified']];
+
+        $token->cart_id = $authenticatedUser['cart_id'];
+        $token->save();
+
+        if ($authenticatedUser['new_user']) {
+            $show_promt = false;
+            $message    = '';
         } else {
-            $tokenArr = $UserObject->createPasswordGrantToken(defaultUserPassword($UserObject->phone));
-        }
-        $UserObject->api_token = fetchAccessToken($UserObject)->id;
-        $UserObject->save();
-
-        $id   = $UserObject->cart_id;
-        $user = ["id" => $UserObject->id, 'active_cart_id' => $id];
-
-        if ($UserObject->verified) {
-            $user['user_info'] = $UserObject->userDetails();
+            $show_promt = true;
+            $message    = 'Looks like you already have an account with a save address. Sign in with OTP for faster checkout.';
         }
 
-        return response()->json(["message" => 'user login successful', 'user' => $user, 'token' => $tokenArr['access_token'], 'token_expires_at' => $tokenArr['expires_at'], 'success' => true]);
+        return response()->json(["message" => $message, 'user' => $user, 'show_promt' => $show_promt, 'token' => $tokenArr->accessToken, 'token_expires_at' => $token->expires_at->toDateTimeString(), 'permissions' => ['bag' => true, 'account' => false], 'success' => true]);
     }
 
-    public function createAuthenticateUser($data, $skip)
+    public function createAuthenticateUser($data)
     {
-        $id = request()->session()->get('active_cart_id', false);
+        $verified = false;
+        $id       = request()->session()->get('active_cart_id', false);
 
-        if ($skip) {
-            $UserObject = null;
-        } else {
-            $UserObject = User::where('phone', '=', $data['phone'])->where('verified', '=', true)->first();
+        $userObject = User::where('phone', '=', $data['phone'])->where('verified', '=', true)->first();
+
+        $cart = ($id) ? Cart::find($id) : null;
+        if ($cart == null || $cart->user_id != null) {
+            $cart = new Cart;
+            $cart->save();
         }
 
-        if ($UserObject) {
-            $cart = $this->userCart($id, $UserObject);
-        } else {
-            $cart = ($id) ? Cart::find($id) : null;
-            if ($cart == null || $cart->user_id != null) {
-                $cart = new Cart;
-                $cart->save();
+        if ($userObject) {
+            $new_user             = false;
+            $verified_user_tokens = DB::table('oauth_access_tokens')->where('user_id', $userObject->user_id)->where('verified', 1)->get();
+            if ($verified_user_tokens) {
+                $verified = true;
             }
+        } else {
+            $new_user = true;
 
-            $UserObject = User::create([
+            $userObject = User::create([
                 'name'     => '',
                 'phone'    => $data['phone'],
                 'cart_id'  => $cart->id,
@@ -155,58 +185,45 @@ class UserController extends Controller
                 'password' => bcrypt(defaultUserPassword($data['phone'])),
             ]);
 
-            $cart->user_id = $UserObject->id;
-            $cart->save();
-
-            if (!$skip) {
-                $UserObject->verified = true;
-                $UserObject->save();
-            }
-
-            $UserObject->assignRole('customer');
+            $userObject->verified = true;
+            $userObject->assignRole('customer');
+            $userObject->save();
         }
+        $cart->user_id = $userObject->id;
+        $cart->save();
 
         request()->session()->forget('active_cart_id');
 
-        Auth::guard()->login($UserObject);
+        Auth::guard()->login($userObject);
         request()->session()->regenerate();
 
-        return $UserObject;
+        return ['userObject' => $userObject, 'cart_id' => $cart->id, 'new_user' => $new_user, 'verified' => $verified];
     }
 
-    public function userCart($id, $UserObject)
+    public function userCart($id, $userObject, $token_id)
     {
-        $cart         = null;
-        $user_cart_id = $UserObject->cart_id;
-        if ($id) {
-            $cart = Cart::find($id);
-            if ($cart != null && $cart->user_id != null) {
-                $cart = null;
-            } elseif ($cart != null) {
-                $cart->user_id = $UserObject->id;
-                $cart->save();
-                $UserObject->cart_id = $cart->id;
-                $UserObject->save();
-            }
+        $cart = Cart::find($id);
+        if ($cart->type != 'cart' || count($cart->cart_data) > 0) {
+            return $cart;
         }
 
-        if ($cart == null) {
-            $cart = Cart::find($user_cart_id);
-        } else {
-            $cartcheck = Cart::find($user_cart_id);
-            if (count($cartcheck->cart_data) == 0) {
-                $cartcheck->delete();
+        $tokenData = DB::table('oauth_access_tokens')->where('id', '!=', $token_id)->where('user_id', $userObject->id)->where('verified', 1)->orderBy('created_at', 'ASC')->get(['id', 'verified', 'cart_id'])->last();
+
+        if ($tokenData != null) {
+            $cartPrevious = Cart::find($tokenData->cart_id);
+            if ($cartPrevious->type != 'order-complete') {
+                DB::table('oauth_access_tokens')->where('id', $token_id)->update(['cart_id' => $cartPrevious->id]);
+                $cart->delete();
+                $cart = $cartPrevious;
             }
         }
-
         return $cart;
     }
 
     public function validateOTP($data)
     {
         return $validator = Validator::make($data, [
-            'phone' => 'required|digits:10',
-            'otp'   => 'required|digits:' . config('otp.length'),
+            'otp' => 'required|digits:' . config('otp.length'),
         ]);
     }
 

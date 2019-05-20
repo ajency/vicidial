@@ -33,7 +33,7 @@ export class EditUserPopupComponent implements OnInit, OnChanges {
 
   saveUserInfo(){
     this.appservice.showLoader();
-    let url = this.appservice.apiUrl + '/api/rest/v1/user/save-user-details';
+    let url = this.appservice.apiUrl + '/api/rest/v2/user/save-user-details';
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     let body : any = {
       _token : $('meta[name="csrf-token"]').attr('content'),

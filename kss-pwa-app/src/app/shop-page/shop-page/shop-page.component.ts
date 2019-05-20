@@ -144,7 +144,7 @@ export class ShopPageComponent implements OnInit {
     this.showLoader = true;
     this.createDummyList();
     this.unsubscribeListPageApi();
-    let url = isDevMode() ? "https://demo8558685.mockable.io/product-list" : this.appservice.apiUrl + '/api/rest/v1/product-list';
+    let url = isDevMode() ? "https://demo8558685.mockable.io/product-list" : this.appservice.apiUrl + '/api/rest/v2/product-list';
     // url = "https://demo8558685.mockable.io/product-list";
     if(Object.keys(this.queryObject).length != 0)
       url = url + '?' + $.param(this.queryObject);
@@ -191,7 +191,7 @@ export class ShopPageComponent implements OnInit {
     }
     else{
       this.showFilterLoader = true;
-      let url = isDevMode() ? "https://demo8558685.mockable.io/get-filters" : this.appservice.apiUrl + '/api/rest/v1/get-filters';
+      let url = isDevMode() ? "https://demo8558685.mockable.io/get-filters" : this.appservice.apiUrl + '/api/rest/v2/get-filters';
       // url = "https://demo8558685.mockable.io/get-filters";
       this.apiService.request(url, 'get', {} , {}, false, 'promise').then((response)=>{
         this.showFilterLoader = false;
@@ -210,7 +210,7 @@ export class ShopPageComponent implements OnInit {
 
   getFiltersCount(updateFilterCopy : boolean = true){
     this.unsubscribeFilterCountApiCall();
-    let url = isDevMode() ? "https://demo8558685.mockable.io/get-filters" : this.appservice.apiUrl + '/api/rest/v1/get-filters-count';
+    let url = isDevMode() ? "https://demo8558685.mockable.io/get-filters" : this.appservice.apiUrl + '/api/rest/v2/get-filters-count';
     // url = "https://demo8558685.mockable.io/get-filters";
     if(Object.keys(this.queryObject).length != 0)
       url = url + '?' + $.param(this.queryObject);

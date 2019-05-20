@@ -83,6 +83,11 @@ export class ShippingDetailsComponent implements OnInit {
   getAddress(){
     this.appservice.showLoader();
     this.appservice.callGetAllAddressesApi().then((response)=>{
+      if(response.get_user_info){
+        this.appservice.hideAddressUser = false;
+      } else {
+        this.appservice.hideAddressUser = true;
+      }
       this.addresses = response.addresses;      
       this.appservice.shippingAddresses = response.addresses;
       this.appservice.userMobile = response.user_info.mobile;
@@ -113,7 +118,7 @@ export class ShippingDetailsComponent implements OnInit {
 
   getAllStates(){    
     this.appservice.showLoader();
-    let url = this.appservice.apiUrl + "/rest/v1/anonymous/states/all";
+    let url = this.appservice.apiUrl + "/rest/v2/anonymous/states/all";
     this.apiservice.request(url, 'get', {}, {} ).then((response)=>{
       this.appservice.states = response;
       this.states = response;
@@ -145,7 +150,7 @@ export class ShippingDetailsComponent implements OnInit {
 
   callOrderApi(){
     this.appservice.showLoader();
-    let url = this.appservice.apiUrl + '/api/rest/v1/user/cart/' + this.appservice.getCookie('cart_id') + '/create-order';
+    let url = this.appservice.apiUrl + '/api/rest/v2/user/cart/' + this.appservice.getCookie('cart_id') + '/create-order';
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     let body : any = {
       _token : $('meta[name="csrf-token"]').attr('content'),
