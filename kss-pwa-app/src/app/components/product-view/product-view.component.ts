@@ -12,9 +12,11 @@ export class ProductViewComponent implements OnInit, OnChanges {
   @Input() showLoader : boolean;
   @Input() listPage : any;
   @Input() productPage : any;
+  cdnUrl : any;
   constructor(private appservice : AppServiceService) { }
 
   ngOnInit() {
+    this.cdnUrl = this.appservice.cdnUrl;
   }
 
   ngOnChanges(){

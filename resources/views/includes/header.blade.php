@@ -65,9 +65,9 @@ $json['cdn_url'] = CDN::asset('/');
                       if($item['type'] == 'Boys') {
                       @endphp
                         <div class="nav-column d-lg-none">
-                          <div class="menu-banner-item" href="/boys/junior-7-14-years--toddler-2-7-years/tshirt">
+                          <a class="menu-banner-item" href="/boys/junior-7-14-years--toddler-2-7-years/tshirt">
                             <img src="{{CDN::asset('/img/menu/banners/tshirts.jpg')}}" class="menu-item-img img-fluid mb-0 d-lg-none" title="offers">
-                          </div>
+                          </a>
                         </div>
                       @php
                       }
@@ -75,9 +75,9 @@ $json['cdn_url'] = CDN::asset('/');
                       if($item['type'] == 'Girls') {
                       @endphp
                         <div class="nav-column d-lg-none">
-                          <div class="menu-banner-item" href="/girls/junior-7-14-years--toddler-2-7-years/dress">
+                          <a class="menu-banner-item" href="/girls/junior-7-14-years--toddler-2-7-years/dress">
                             <img src="{{CDN::asset('/img/menu/banners/dresses.jpg')}}" class="menu-item-img img-fluid mb-0 d-lg-none" title="offers">
-                          </div>
+                          </a>
                         </div>
                       @php
                       }

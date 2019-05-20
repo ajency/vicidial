@@ -22,13 +22,14 @@ export class MyAddressesComponent implements OnInit {
   addresses : any;
   states : any;
   selectedAddressId : any;
-
+  cdnUrl : any;
   constructor(private appservice : AppServiceService,
               private apiservice : ApiServiceService,
               private account_service : AccountService,
               private router : Router) { }
 
   ngOnInit() {
+    this.cdnUrl = this.appservice.cdnUrl;
   	this.states = this.appservice.states.length ? this.appservice.states : this.getAllStates();
   	this.getAddress();
   }

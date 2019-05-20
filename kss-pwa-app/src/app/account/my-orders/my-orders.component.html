@@ -5,7 +5,7 @@
 		<div class="d-flex align-items-center w-100">
 			<div class="">
 				<a>
-					<img _ngcontent-c1="" class=" img-fluid m-0" src="/img/logo-kss.png" width="180px" xpreview="/img/logo-kss.png">
+					<img _ngcontent-c1="" class=" img-fluid m-0" src="{{cdnUrl}}img/logo-kss.png" width="180px" xpreview="/img/logo-kss.png">
 			 	</a>
 			</div>
 			<div class="ml-auto align-self-center">
@@ -22,7 +22,7 @@
 	            <div class="pr-3 d-block">
 	            	<a>		              	
 		              	<h4 class="m-0 font-weight-bold back-to-cart">
-			               <img (click)="navigateBack()" class="btn-back kss_highlight" src="/img/left-arrow.png" style="width:20px;">
+			               <img (click)="navigateBack()" class="btn-back kss_highlight" src="{{cdnUrl}}img/left-arrow.png" style="width:20px;">
 			             </h4>
 		          	</a>
 	            </div>
@@ -91,7 +91,7 @@
 				</div> -->
 				<div *ngIf="apiCallComplete && orders && !orders.length" class="no-order-wrapper d-flex align-items-center justify-content-center">
 					<div class="text-center d-flex align-items-center justify-content-center flex-column">
-						<img src="/img/orders-empty.png" class="img-fluid" width="80">
+						<img src="{{cdnUrl}}img/orders-empty.png" class="img-fluid" width="80">
 						<!-- <h4>Can't see all your orders?</h4> -->
 						<h5 class="pt-4 pb-2 mb-0" style="line-height: 1.5;">You havent placed any orders yet.</h5>
 						<div class="mb-4">

@@ -15,24 +15,23 @@ export class HomePageComponent implements OnInit {
   showTrendingSection : boolean = false;
   showStories : boolean = false;
   showLoader : boolean = true;
+  cdnUrl : any;
   constructor(private apiService: ApiServiceService,
               private appservice : AppServiceService) {
   }
 
   ngOnInit() {
-  	console.log("ngOnInit HomePageComponent", window.location.pathname);
-    let url =  "/api/rest/v2/test/get-page-element-dummy?page_slug=home";
+    this.cdnUrl = this.appservice.cdnUrl;
+    let url =  "/api/rest/v2/get-page-elements?page_slug=home";
     if(window.location.pathname == '/')
       url = url + '&published=true';
     if(isDevMode())
       url = "https://demo8558685.mockable.io/get-home-page-elements-test";
     this.apiService.request(url,'get',{},{}).then((data)=>{
-      console.log("home page data ==>", data);
       this.showLoader = false;
       this.homePageElements = data;     
     })
     .catch((error)=>{
-      console.log("error in get-home-page-element api ==>", error);
       this.showLoader = false;
     })
   }

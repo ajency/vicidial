@@ -11,10 +11,12 @@ export class BrandsComponent implements OnInit {
 
 	@Input() brands : any;
 	@Input() brandBanners : any;
+  cdnUrl : any;
   constructor(private router: Router,
               private appservice : AppServiceService) { }
 
   ngOnInit() {
+    this.cdnUrl = this.appservice.cdnUrl;
   }
 
   createDataSrcSet(a,b,c,d){

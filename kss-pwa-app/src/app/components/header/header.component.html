@@ -11,14 +11,14 @@
 				</div>
 
 		    <a routerLink="/" class="header-logo">
-		      <img src="/assets/img/logo-kss.png" class=" img-fluid m-0 kss-logo" width="180px">
+		      <img src="{{cdnUrl}}assets/img/logo-kss.png" class=" img-fluid m-0 kss-logo" width="180px">
 		    </a>
 
 		    <div class="megamenu">
 
 		      <div class="d-flex d-lg-none justify-content-between align-items-center border-bottom border-cancel header-close-trigger header-top">
 		        <a routerLink="/" >
-		          <img src="/assets/img/logo-kss.png" class=" img-fluid m-3 d-block d-lg-none" width="180px">
+		          <img src="{{cdnUrl}}assets/img/logo-kss.png" class=" img-fluid m-3 d-block d-lg-none" width="180px">
 		        </a>
 		        <div class="megamenu-close menu-toggle p-3" (click)="closeMenu()">
 		          <i class="fas fa-times"></i>
@@ -116,7 +116,7 @@
 		                             	<img  class="d-block w-100 img-fluid offer-img mt-4 mt-lg-0"
 											[useSrcset]="true"
 											[offset]=0
-											[defaultImage]="'/assets/img/transparent.png'"
+											[defaultImage]="cdnUrl + 'assets/img/transparent.png'"
 											[lazyLoad]="createDataSrcSet(item.image_section.images['2x'], '2x', item.image_section.images['1x'], '1x')"
 									        sizes='(min-width: 1200px) 328px, (min-width: 768px) 26vw,  58vw'
 									        title="{{item.image_section.title}}"
@@ -140,13 +140,13 @@
 						<div class="megamenu-wrapper" data-menu="otherlinks">
 							<div class="nav-column mb-0">
 								<ul class="list-unstyled">
-									<li><a class="megamenu-link" routerLink="/about-us">About Us</a></li>
-									<li><a class="megamenu-link" routerLink="/contact">Contact Us</a></li>
+									<li><a class="megamenu-link" (click)="removeOverFlow()" routerLink="/about-us">About Us</a></li>
+									<li><a class="megamenu-link" (click)="removeOverFlow()" routerLink="/contact">Contact Us</a></li>
 									<li><a href="https://cutshort.io/company/omni-edge-retail-private-ltd?career_page=true" class="megamenu-link">Careers</a></li>
-									<li><a class="megamenu-link" routerLink="/faq">FAQ</a></li>
-									<li><a class="megamenu-link" routerLink="/terms-and-conditions">Terms of Use</a></li>
-									<li><a class="megamenu-link" routerLink="/privacy-policy">Privacy Policy</a></li>
-									<li><a class="megamenu-link" href="/ideas/">Blog</a></li>
+									<li><a class="megamenu-link" (click)="removeOverFlow()" routerLink="/faq">FAQ</a></li>
+									<li><a class="megamenu-link" (click)="removeOverFlow()" routerLink="/terms-and-conditions">Terms of Use</a></li>
+									<li><a class="megamenu-link" (click)="removeOverFlow()" routerLink="/privacy-policy">Privacy Policy</a></li>
+									<li><a class="megamenu-link" (click)="removeOverFlow()" href="/ideas/">Blog</a></li>
 								</ul>
 							</div>
 						</div>

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnChanges, AfterViewInit, Output, EventEmitter } from '@angular/core';
-
+import { AppServiceService } from '../../../service/app-service.service';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 
 @Component({
@@ -10,16 +10,19 @@ import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 export class StoriesComponent implements OnInit, OnChanges, AfterViewInit {
 
 	@Input() stories : any;
-    catFlag : boolean = false;  
-    isSmallScreen : any;
-    toggleButton = "SHOW MORE";
+  catFlag : boolean = false;  
+  isSmallScreen : any;
+  toggleButton = "SHOW MORE";
+  cdnUrl : any;
   @Output() storiesLoaded = new EventEmitter();
-  constructor(private breakpointObserver : BreakpointObserver) {
+  constructor(private breakpointObserver : BreakpointObserver,
+              private appservice : AppServiceService) {
     this.isSmallScreen = this.breakpointObserver.isMatched('(max-width: 600px)');
     // console.log("isSmallScreen==>", this.isSmallScreen);
   }
 
   ngOnInit() {
+    this.cdnUrl = this.appservice.cdnUrl;
     this.breakpointObserver.observe([
     '(max-width: 600px)'
       ]).subscribe(result => {

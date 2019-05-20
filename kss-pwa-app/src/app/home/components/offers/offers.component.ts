@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, OnChanges, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import { AppServiceService } from '../../../service/app-service.service';
 @Component({
   selector: 'app-offers',
   templateUrl: './offers.component.html',
@@ -35,12 +36,14 @@ export class OffersComponent implements OnInit {
     nav: true
   }
   isMobile : boolean = false;
-
-  constructor(private breakpointObserver : BreakpointObserver) {
+  cdnUrl : any;
+  constructor(private breakpointObserver : BreakpointObserver,
+              private appservice : AppServiceService) {
     this.isMobile = this.breakpointObserver.isMatched('(max-width: 768px)');
   }
 
   ngOnInit() {
+    this.cdnUrl = this.appservice.cdnUrl;
   }
 
   ngOnChanges(){

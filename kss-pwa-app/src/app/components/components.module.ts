@@ -11,7 +11,6 @@ import { LazyLoadImageModule, intersectionObserverPreset } from 'ng-lazyload-ima
 import { GenderBoxComponent } from './gender-box/gender-box.component';
 import { LabelBoxComponent } from './label-box/label-box.component';
 import { BackToTopComponent } from './back-to-top/back-to-top.component';
-import { MobileProductsComponent } from './mobile-products/mobile-products.component';
 import { BreadcrumsComponent } from './breadcrums/breadcrums.component';
 import { ProductPriceComponent } from './product-price/product-price.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -21,7 +20,7 @@ import { SearchBoxComponent } from './search-box/search-box.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule }   from '@angular/forms';
 @NgModule({
-  declarations: [HeaderComponent, FooterComponent, SliderComponent, ProductComponent, NoProductComponent, LoaderComponent, NoConnectionComponent, GenderBoxComponent, LabelBoxComponent, BackToTopComponent, MobileProductsComponent, BreadcrumsComponent, ProductPriceComponent, PageNotFoundComponent, ProductViewComponent, QuantityModalComponent, SearchBoxComponent],
+  declarations: [HeaderComponent, FooterComponent, SliderComponent, ProductComponent, NoProductComponent, LoaderComponent, NoConnectionComponent, GenderBoxComponent, LabelBoxComponent, BackToTopComponent, BreadcrumsComponent, ProductPriceComponent, PageNotFoundComponent, ProductViewComponent, QuantityModalComponent, SearchBoxComponent],
   imports: [
     CommonModule,
     LazyLoadImageModule.forRoot({
@@ -30,6 +29,6 @@ import { FormsModule }   from '@angular/forms';
   	RouterModule,
   	FormsModule
   ],
-  exports : [HeaderComponent, FooterComponent, SliderComponent, ProductComponent, NoProductComponent, LoaderComponent, NoConnectionComponent, GenderBoxComponent, LabelBoxComponent, BackToTopComponent, MobileProductsComponent, BreadcrumsComponent, ProductPriceComponent, PageNotFoundComponent, ProductViewComponent, QuantityModalComponent, SearchBoxComponent]
+  exports : [HeaderComponent, FooterComponent, SliderComponent, ProductComponent, NoProductComponent, LoaderComponent, NoConnectionComponent, GenderBoxComponent, LabelBoxComponent, BackToTopComponent, BreadcrumsComponent, ProductPriceComponent, PageNotFoundComponent, ProductViewComponent, QuantityModalComponent, SearchBoxComponent]
 })
 export class ComponentsModule { }

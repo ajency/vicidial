@@ -49,11 +49,13 @@ export class BagViewComponent implements OnInit {
   itemIndex : any;
   updateQuantityFailed : any;
   updateQuantityFailureMsg : any;
+  cdnUrl : any;
   constructor( private router: Router,
                private appservice : AppServiceService,
                private apiservice : ApiServiceService,
                private zone : NgZone
               ) {
+    this.cdnUrl = this.appservice.cdnUrl;
     this.reloadSubscription = this.appservice.listenToAddToCartEvent().subscribe(()=> { this.reloadCart() });
     this.loadSubscription = this.appservice.listenToOpenCartEvent().subscribe(()=> { this.loadCart() });
 

@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { AppServiceService } from '../../service/app-service.service';
 
 @Component({
   selector: 'app-product',
@@ -8,9 +9,11 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
 export class ProductComponent implements OnInit, OnChanges {
 
 	@Input() product : any;
-  constructor() { }
+  cdnUrl : any;
+  constructor(private appservice : AppServiceService,) { }
 
   ngOnInit() {
+    this.cdnUrl = this.appservice.cdnUrl;
   }
 
   ngOnChanges(){

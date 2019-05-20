@@ -82,7 +82,7 @@
 					<h5 *ngIf="shippingDetails.summary.mrp_total + shippingDetails.summary.shipping_fee - shippingDetails.summary.you_pay != 0 " class="font-weight-bold text-success line-height-5">Your total savings on this order ₹{{roundOff(shippingDetails.summary.mrp_total + shippingDetails.summary.shipping_fee - shippingDetails.summary.you_pay)}}</h5>
 					<hr class="dashed">
 					<div class="align-items-center d-flex py-2">
-						<img src="/img/shield.png" class="img-fluid" width="30" alt="100% Secure Payments" title="100% Secure Payments">
+						<img src="{{cdnUrl}}img/shield.png" class="img-fluid" width="30" alt="100% Secure Payments" title="100% Secure Payments">
 						<div class="pl-2 genuinity">
 							<p class="mb-1">Genuine products. 7 day returns.</p>
 							<p class="my-1">100% Secure payments.</p>
@@ -177,7 +177,7 @@
 		      	          <button id="payment-details" type="button" class=" btn kss-btn kss-btn--big mt-1 mb-1 d-flex align-items-center justify-content-center" (click)="navigateToPaymentPage()">
 		      		          	<span *ngIf="!selectedPaymentOption">Select mode of Payment
 		      	          		</span>
-		      	          		<span *ngIf="selectedPaymentOption == 'payu'" class="d-flex align-items-center">Pay ₹{{shippingDetails.summary.you_pay}} via  <img src="/img/pay-u-icon.png" class="ml-2" width="50"> <i class="fas fa-angle-right position-absolute r-0 mt-i-1"></i>
+		      	          		<span *ngIf="selectedPaymentOption == 'payu'" class="d-flex align-items-center">Pay ₹{{shippingDetails.summary.you_pay}} via  <img src="{{cdnUrl}}img/pay-u-icon.png" class="ml-2" width="50"> <i class="fas fa-angle-right position-absolute r-0 mt-i-1"></i>
 		      	          		</span>
 		      	          		<span *ngIf="selectedPaymentOption == 'cod'" class="d-flex align-items-center">Pay ₹{{shippingDetails.summary.you_pay}} via COD <i class="fas fa-angle-right position-absolute r-0 mt-i-1"></i>
 		      	          		</span>
