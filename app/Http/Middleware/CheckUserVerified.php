@@ -20,14 +20,14 @@ class CheckUserVerified
                 if ($request->user()->verified == true) {
                     return $next($request);
                 } else {
-                    abort(403);
+                    abort(403, "Unverified User");
                 }
                 break;
             case 'v2':
                 if ($request->all()['token_verified'] == true) {
                     return $next($request);
                 } else {
-                    abort(403);
+                    abort(403, "Unverified User");
                 }
                 break;
         }
