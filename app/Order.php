@@ -173,7 +173,7 @@ class Order extends Model
         $this->aggregate_data = $total;
     }
 
-    public function getOrderInfo($verification)
+    public function getOrderInfo($verification = false)
     {
         $dateInd = Carbon::createFromFormat('Y-m-d H:i:s', $this->created_at, 'UTC');
         $dateInd->setTimezone('Asia/Kolkata');
