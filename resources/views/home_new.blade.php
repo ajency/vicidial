@@ -31,10 +31,11 @@
 
 	window.onload = function() {
 	  // do stuff to load your page
+		var new_cookie_name =  '{{ config("orders.cash_back_world.cookie_name") }}';
 		var tduid_url_param = getUrlVars()["tduid"];
-		if(tduid_url_param.match("^[A-z0-9]+$")){
-			if(getCookie('TRADEDOUBLER') == null){
-				set_new_cookie("TRADEDOUBLER", tduid_url_param, 10);
+		if(tduid_url_param && tduid_url_param.match("^[A-z0-9]+$")){
+			if(getCookie(new_cookie_name) == ''){
+				set_new_cookie(new_cookie_name, tduid_url_param, 10);
 			}
 		}
 	};
