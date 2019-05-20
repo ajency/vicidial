@@ -97,4 +97,9 @@ export class MyOrdersComponent implements OnInit {
     this.orderDetailsClick.emit();
   }
 
+  displayModal(){
+    this.appservice.displaySkipOTP = false;
+    this.appservice.showLoginPopupTrigger();
+  }
+
 }

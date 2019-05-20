@@ -243,5 +243,10 @@ export class OrderDetailsComponent implements OnInit {
   getValidTill(date){
     return moment(date, "YYYY-MM-DD HH:mm:ss").format("DD MMM, YYYY");
   }
+
+  displayModal(){
+    this.appservice.displaySkipOTP = false;
+    this.appservice.showLoginPopupTrigger();
+  }
   
 }
