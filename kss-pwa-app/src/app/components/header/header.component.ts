@@ -90,6 +90,10 @@ export class HeaderComponent implements OnInit, OnChanges {
     $('html,body').removeClass('overflow-h');
   }
 
+  removeOverFlow(){
+    $('html,body').removeClass('overflow-h');
+  }
+
   openCart(){
     this.appservice.loadCartFromAngular = true;
     let url = window.location.href.split("#")[0] + '#/bag';
