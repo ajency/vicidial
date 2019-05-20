@@ -1500,4 +1500,16 @@ $size: 20px;
             }
         }
     }
+    @media (max-width: 400px){
+        right: 20px;
+        .tooltip {
+            &-icon{
+                font-size: 10px;
+                font-weight: 600;
+                i {
+                    font-size: 12px;
+                }
+            }
+        }
+    }
 }
