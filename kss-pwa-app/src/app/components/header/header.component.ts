@@ -61,13 +61,15 @@ export class HeaderComponent implements OnInit, OnChanges {
       // this.cdnUrl = this.appservice.cdnUrl;
     }
     else{
-      let url = isDevMode() ? "https://demo8558685.mockable.io/get-menu" : "/api/rest/v2/get-menu"
+      let url = "/api/rest/v2/get-menu?page_slug=menu";
+      if(window.location.pathname !== '/drafthome')
+        url = url + '&published=true';
+      if(isDevMode())
+        url = "https://demo8558685.mockable.io/get-menu";
       this.apiService.request(url,'get',{},{}).then((data)=>{
         console.log("data ==>", data);
-        // this.cdnUrl = data.cdn_url;
-        // this.appservice.cdnUrl = this.cdnUrl;
-        this.menu = data.menu;
-        this.appservice.menuObject = this.menu;
+        // this.menu = data.menu;
+        // this.appservice.menuObject = this.menu;
       })
       .catch((error)=>{
         console.log("error in fetching the json",error);
