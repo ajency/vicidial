@@ -68,8 +68,8 @@ export class HeaderComponent implements OnInit, OnChanges {
         url = "https://demo8558685.mockable.io/get-menu";
       this.apiService.request(url,'get',{},{}).then((data)=>{
         console.log("data ==>", data);
-        // this.menu = data.menu;
-        // this.appservice.menuObject = this.menu;
+        this.menu = data;
+        this.appservice.menuObject = this.menu;
       })
       .catch((error)=>{
         console.log("error in fetching the json",error);
@@ -147,6 +147,10 @@ export class HeaderComponent implements OnInit, OnChanges {
 
   isActive(path){
     return (window.location.pathname.substr(0, path.length) === path) ? 'active' : '';
+  }
+
+  isArray(images){
+    return Array.isArray(images);
   }
 
 }
