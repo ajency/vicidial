@@ -31,9 +31,9 @@ export class HyderabadComponent implements OnInit {
           big: this.cdnUrl + 'assets/img/stores/hyderabad/hyderabad2-large.jpg'
       },
       {
-          small: this.cdnUrl + 'assets/img/stores/hyderabad/hyderabad14-large.jpg',
-          medium: this.cdnUrl + 'assets/img/stores/hyderabad/hyderabad14-small.jpg',
-          big: this.cdnUrl + 'assets/img/stores/hyderabad/hyderabad14-large.jpg'
+          small: this.cdnUrl + 'assets/img/stores/hyderabad/hyderabad4-large.jpg',
+          medium: this.cdnUrl + 'assets/img/stores/hyderabad/hyderabad4-small.jpg',
+          big: this.cdnUrl + 'assets/img/stores/hyderabad/hyderabad4-large.jpg'
       },    
     ];
   }
