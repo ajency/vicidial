@@ -174,6 +174,7 @@ Route::group([
     });
     Route::get('/get-page-elements', $group_app_version . '\StaticElementController@callFetch');
     Route::get('/get-menu', $group_app_version . '\StaticElementController@getMenu');
+    Route::get('/get-menu-new', $group_app_version . '\StaticElementController@callFetch');
     Route::get('/test/get-page-element-dummy', $group_app_version . '\StaticElementController@callFetch');
     Route::get('/test/get-menu', $group_app_version . '\StaticElementController@getMenu');
     Route::group([

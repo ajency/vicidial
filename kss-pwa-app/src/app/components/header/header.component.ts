@@ -18,6 +18,7 @@ export class HeaderComponent implements OnInit, OnChanges {
   isMobile : boolean = false;
   @Input() browserback : any;
   cdnUrl : any;
+  isDraftHome : boolean;
   constructor(private appservice : AppServiceService,
               private apiService: ApiServiceService,
               private location: Location,
@@ -27,6 +28,8 @@ export class HeaderComponent implements OnInit, OnChanges {
         }
 
   ngOnInit(){
+    this.isDraftHome = window.location.pathname == '/drafthome' ? true : false;
+
     this.cdnUrl = this.appservice.cdnUrl;
     this.getMenu();
     $('.megamenu--left .nav-item').click(function(){
@@ -61,15 +64,29 @@ export class HeaderComponent implements OnInit, OnChanges {
       // this.cdnUrl = this.appservice.cdnUrl;
     }
     else{
-      let url = "/api/rest/v2/get-menu?page_slug=menu";
-      if(window.location.pathname !== '/drafthome')
-        url = url + '&published=true';
+      let url;
+      if(this.isDraftHome)
+         url = "/api/rest/v2/get-menu-new?page_slug=menu";
+      else
+        url = "/api/rest/v2/get-menu";
+
+      //uncomment below code before 2nd release
+      // if(window.location.pathname !== '/drafthome')
+        // url = url + '&published=true';
+
       if(isDevMode())
         url = "https://demo8558685.mockable.io/get-menu";
+
       this.apiService.request(url,'get',{},{}).then((data)=>{
         console.log("data ==>", data);
-        this.menu = data;
-        this.appservice.menuObject = this.menu;
+        if(this.isDraftHome){
+          this.menu = data;
+          this.appservice.menuObject = this.menu;
+        }
+        else{
+          this.menu = data.menu;
+          this.appservice.menuObject = this.menu;
+        }
       })
       .catch((error)=>{
         console.log("error in fetching the json",error);

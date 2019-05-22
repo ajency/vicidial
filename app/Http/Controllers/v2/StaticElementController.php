@@ -114,32 +114,10 @@ class StaticElementController extends Controller
 
     public function getMenu(Request $request)
     {
-        $request->validate(['type' => 'sometimes', 'page_slug' => 'required', 'published' => 'sometimes']);
-        $params = $request->all();
-
-        $data = array();
-        if (isset($params['type'])) {
-            $data['type'] = $params['type'];
-        }
-
-        if (isset($params['published'])) {
-            if ($params['published'] && !isset($params['type'])) {
-                $key         = 'static_element_' . $params['page_slug'] . '_published';
-                $fetchedData = Cache::rememberForever($key, function () use ($params, $data) {
-                    return StaticElement::fetch($params['page_slug'], $data, $params['published']);
-                });
-            } else {
-                $fetchedData = StaticElement::fetch($params['page_slug'], $data, $params['published']);
-            }
-
-        } else {
-            $fetchedData = StaticElement::fetch($params['page_slug'], $data);
-        }
-        return (json_encode($fetchedData));
-        // $json = json_decode(file_get_contents(config_path() . "/static_responses/menu.json"), true);
-        // $json['cdn_url'] = \CDN::asset('/');
-        // $json['site_url'] = url('/');
-        // return response()->json($json);
+        $json = json_decode(file_get_contents(config_path() . "/static_responses/menu.json"), true);
+        $json['cdn_url'] = \CDN::asset('/');
+        $json['site_url'] = url('/');
+        return response()->json($json);
     }
 
     public function getFacets(Request $request)
