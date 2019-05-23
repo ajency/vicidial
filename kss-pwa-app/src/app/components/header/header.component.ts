@@ -143,7 +143,10 @@ export class HeaderComponent implements OnInit, OnChanges {
 
   openMenuLink(link){
     this.hideMenu = true;
-    this.router.navigateByUrl(link);
+    if(this.appservice.getLink(link))
+      this.router.navigateByUrl(this.appservice.getLink(link));
+    else
+      window.location.href = link;
     if(this.isMobile)
       this.closeMenu();
     setTimeout(()=>{

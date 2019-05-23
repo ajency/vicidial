@@ -91,7 +91,7 @@
 
 				                        <ul class="list-unstyled layout--3-col">
 				                          	<li *ngFor="let item of menu.boys | slice:0:2 ; index as i" class="kss-extension" static_element-display_type="Menu" page_slug="menu" attr.static_element-type="{{item.type}}" attr.static_element-id="{{item.sequence}}">
-												<a class="megamenu-link cursor-pointer" (click)="openMenuLink(item.link)" [ngClass]="{active: isActive('type.link')}">
+												<a class="megamenu-link cursor-pointer" (click)="openMenuLink(item.element_data.image.href)" [ngClass]="{active: isActive('type.link')}">
 													<ng-container *ngIf="!isArray(item.images)">
 														<img src="{{item.images.default['2x']}}" class="menu-item-img img-fluid mb-1">
 													</ng-container>
@@ -105,7 +105,7 @@
 
 				                        <ul class="list-unstyled layout--3-col">
 				                          	<li *ngFor="let item of menu.boys | slice:2:7 ; index as i" class="kss-extension" static_element-display_type="Menu" page_slug="menu" attr.static_element-type="{{item.type}}" attr.static_element-id="{{item.sequence}}">
-												<a class="megamenu-link cursor-pointer" (click)="openMenuLink(item.link)" [ngClass]="{active: isActive('type.link')}">
+												<a class="megamenu-link cursor-pointer" (click)="openMenuLink(item.element_data.image.href)" [ngClass]="{active: isActive('type.link')}">
 													<ng-container *ngIf="!isArray(item.images)">
 														<img src="{{item.images.default['2x']}}" class="menu-item-img img-fluid mb-1">
 													</ng-container>
@@ -121,7 +121,7 @@
 
 				                        <ul class="list-unstyled layout--3-col">
 				                          	<li *ngFor="let item of menu.boys | slice:7:16 ; index as i" class="kss-extension" static_element-display_type="Menu" page_slug="menu" attr.static_element-type="{{item.type}}" attr.static_element-id="{{item.sequence}}">
-												<a class="megamenu-link cursor-pointer" (click)="openMenuLink(item.link)" [ngClass]="{active: isActive('type.link')}">
+												<a class="megamenu-link cursor-pointer" (click)="openMenuLink(item.element_data.image.href)" [ngClass]="{active: isActive('type.link')}">
 													<ng-container *ngIf="!isArray(item.images)">
 														<img src="{{item.images.default['2x']}}" class="menu-item-img img-fluid mb-1">
 													</ng-container>
@@ -137,7 +137,7 @@
 
 				                        <ul class="list-unstyled layout--tags">
 				                          	<li *ngFor="let item of menu.boys | slice:16:20 ; index as i" class="kss-extension" static_element-display_type="Menu" page_slug="menu" attr.static_element-type="{{item.type}}" attr.static_element-id="{{item.sequence}}">
-												<a class="megamenu-link cursor-pointer" (click)="openMenuLink(item.link)" [ngClass]="{active: isActive('type.link')}">
+												<a class="megamenu-link cursor-pointer" (click)="openMenuLink(item.element_data.link)" [ngClass]="{active: isActive('type.link')}">
 													<ng-container *ngIf="!isArray(item.images)">
 														<img src="{{item.images.default['2x']}}" class="menu-item-img img-fluid mb-1">
 													</ng-container>
@@ -151,7 +151,7 @@
 
 				                        <ul class="list-unstyled layout--2-col">
 				                          	<li *ngFor="let item of menu.boys | slice:20:22 ; index as i" class="kss-extension" static_element-display_type="Menu" page_slug="menu" attr.static_element-type="{{item.type}}" attr.static_element-id="{{item.sequence}}">
-												<a class="megamenu-link cursor-pointer" (click)="openMenuLink(item.link)" [ngClass]="{active: isActive('type.link')}">
+												<a class="megamenu-link cursor-pointer" (click)="openMenuLink(item.element_data.image.href)" [ngClass]="{active: isActive('type.link')}">
 													<ng-container *ngIf="!isArray(item.images)">
 														<img src="{{item.images.default['2x']}}" class="menu-item-img img-fluid mb-1">
 													</ng-container>
@@ -224,7 +224,7 @@
 
 				                        <ul class="list-unstyled layout--3-col">
 				                          	<li *ngFor="let item of menu.girls | slice:0:2 ; index as i" class="kss-extension" static_element-display_type="Menu" page_slug="menu" attr.static_element-type="{{item.type}}" attr.static_element-id="{{item.sequence}}">
-												<a class="megamenu-link cursor-pointer" (click)="openMenuLink(item.link)" [ngClass]="{active: isActive('type.link')}">
+												<a class="megamenu-link cursor-pointer" (click)="openMenuLink(item.element_data.image.href)" [ngClass]="{active: isActive('type.link')}">
 													<ng-container *ngIf="!isArray(item.images)">
 														<img src="{{item.images.default['2x']}}" class="menu-item-img img-fluid mb-1">
 													</ng-container>
@@ -238,7 +238,7 @@
 
 				                        <ul class="list-unstyled layout--3-col">
 				                          	<li *ngFor="let item of menu.girls | slice:2:7 ; index as i" class="kss-extension" static_element-display_type="Menu" page_slug="menu" attr.static_element-type="{{item.type}}" attr.static_element-id="{{item.sequence}}">
-												<a class="megamenu-link cursor-pointer" (click)="openMenuLink(item.link)" [ngClass]="{active: isActive('type.link')}">
+												<a class="megamenu-link cursor-pointer" (click)="openMenuLink(item.element_data.image.href)" [ngClass]="{active: isActive('type.link')}">
 													<ng-container *ngIf="!isArray(item.images)">
 														<img src="{{item.images.default['2x']}}" class="menu-item-img img-fluid mb-1">
 													</ng-container>
@@ -254,7 +254,7 @@
 
 				                        <ul class="list-unstyled layout--3-col">
 				                          	<li *ngFor="let item of menu.girls | slice:7:15 ; index as i" class="kss-extension" static_element-display_type="Menu" page_slug="menu" attr.static_element-type="{{item.type}}" attr.static_element-id="{{item.sequence}}">
-												<a class="megamenu-link cursor-pointer" (click)="openMenuLink(item.link)" [ngClass]="{active: isActive('type.link')}">
+												<a class="megamenu-link cursor-pointer" (click)="openMenuLink(item.element_data.image.href)" [ngClass]="{active: isActive('type.link')}">
 													<ng-container *ngIf="!isArray(item.images)">
 														<img src="{{item.images.default['2x']}}" class="menu-item-img img-fluid mb-1">
 													</ng-container>
@@ -270,7 +270,7 @@
 
 				                        <ul class="list-unstyled layout--tags">
 				                          	<li *ngFor="let item of menu.girls | slice:15:19 ; index as i" class="kss-extension" static_element-display_type="Menu" page_slug="menu" attr.static_element-type="{{item.type}}" attr.static_element-id="{{item.sequence}}">
-												<a class="megamenu-link cursor-pointer" (click)="openMenuLink(item.link)" [ngClass]="{active: isActive('type.link')}">
+												<a class="megamenu-link cursor-pointer" (click)="openMenuLink(item.element_data.link)" [ngClass]="{active: isActive('type.link')}">
 													<ng-container *ngIf="!isArray(item.images)">
 														<img src="{{item.images.default['2x']}}" class="menu-item-img img-fluid mb-1">
 													</ng-container>
@@ -284,7 +284,7 @@
 
 				                        <ul class="list-unstyled layout--2-col">
 				                          	<li *ngFor="let item of menu.girls | slice:19:21 ; index as i" class="kss-extension" static_element-display_type="Menu" page_slug="menu" attr.static_element-type="{{item.type}}" attr.static_element-id="{{item.sequence}}">
-												<a class="megamenu-link cursor-pointer" (click)="openMenuLink(item.link)" [ngClass]="{active: isActive('type.link')}">
+												<a class="megamenu-link cursor-pointer" (click)="openMenuLink(item.element_data.image.href)" [ngClass]="{active: isActive('type.link')}">
 													<ng-container *ngIf="!isArray(item.images)">
 														<img src="{{item.images.default['2x']}}" class="menu-item-img img-fluid mb-1">
 													</ng-container>
@@ -349,7 +349,7 @@
 
 				                        <ul class="list-unstyled layout--3-col">
 				                          	<li *ngFor="let item of menu.infants | slice:0:2 ; index as i" class="kss-extension" static_element-display_type="Menu" page_slug="menu" attr.static_element-type="{{item.type}}" attr.static_element-id="{{item.sequence}}">
-												<a class="megamenu-link cursor-pointer" (click)="openMenuLink(item.link)" [ngClass]="{active: isActive('type.link')}">
+												<a class="megamenu-link cursor-pointer" (click)="openMenuLink(item.element_data.image.href)" [ngClass]="{active: isActive('type.link')}">
 													<ng-container *ngIf="!isArray(item.images)">
 														<img src="{{item.images.default['2x']}}" class="menu-item-img img-fluid mb-1">
 													</ng-container>
@@ -363,7 +363,7 @@
 
 				                        <ul class="list-unstyled layout--3-col">
 				                          	<li *ngFor="let item of menu.infants | slice:2:7 ; index as i" class="kss-extension" static_element-display_type="Menu" page_slug="menu" attr.static_element-type="{{item.type}}" attr.static_element-id="{{item.sequence}}">
-												<a class="megamenu-link cursor-pointer" (click)="openMenuLink(item.link)" [ngClass]="{active: isActive('type.link')}">
+												<a class="megamenu-link cursor-pointer" (click)="openMenuLink(item.element_data.image.href)" [ngClass]="{active: isActive('type.link')}">
 													<ng-container *ngIf="!isArray(item.images)">
 														<img src="{{item.images.default['2x']}}" class="menu-item-img img-fluid mb-1">
 													</ng-container>
@@ -379,7 +379,7 @@
 
 				                        <ul class="list-unstyled layout--3-col">
 				                          	<li *ngFor="let item of menu.infants | slice:7:18 ; index as i" class="kss-extension" static_element-display_type="Menu" page_slug="menu" attr.static_element-type="{{item.type}}" attr.static_element-id="{{item.sequence}}">
-												<a class="megamenu-link cursor-pointer" (click)="openMenuLink(item.link)" [ngClass]="{active: isActive('type.link')}">
+												<a class="megamenu-link cursor-pointer" (click)="openMenuLink(item.element_data.image.href)" [ngClass]="{active: isActive('type.link')}">
 													<ng-container *ngIf="!isArray(item.images)">
 														<img src="{{item.images.default['2x']}}" class="menu-item-img img-fluid mb-1">
 													</ng-container>
@@ -395,7 +395,7 @@
 
 				                        <ul class="list-unstyled layout--tags">
 				                          	<li *ngFor="let item of menu.infants | slice:18:22 ; index as i" class="kss-extension" static_element-display_type="Menu" page_slug="menu" attr.static_element-type="{{item.type}}" attr.static_element-id="{{item.sequence}}">
-												<a class="megamenu-link cursor-pointer" (click)="openMenuLink(item.link)" [ngClass]="{active: isActive('type.link')}">
+												<a class="megamenu-link cursor-pointer" (click)="openMenuLink(item.element_data.link)" [ngClass]="{active: isActive('type.link')}">
 													<ng-container *ngIf="!isArray(item.images)">
 														<img src="{{item.images.default['2x']}}" class="menu-item-img img-fluid mb-1">
 													</ng-container>
@@ -441,7 +441,7 @@
 				                        <div class="nav-column--heading mt-1 mb-2">Shop by Sub-Types</div>
 				                        <ul class="list-unstyled layout--3-col">
 				                          	<li *ngFor="let item of menu.toys | slice:0:2 ; index as i" class="kss-extension" static_element-display_type="Menu" page_slug="menu" attr.static_element-type="{{item.type}}" attr.static_element-id="{{item.sequence}}">
-												<a class="megamenu-link cursor-pointer" (click)="openMenuLink(item.link)" [ngClass]="{active: isActive('type.link')}">
+												<a class="megamenu-link cursor-pointer" (click)="openMenuLink(item.element_data.image.href)" [ngClass]="{active: isActive('type.link')}">
 													<ng-container *ngIf="!isArray(item.images)">
 														<img src="{{item.images.default['2x']}}" class="menu-item-img img-fluid mb-1">
 													</ng-container>
@@ -456,7 +456,7 @@
 				                        <div class="nav-column--heading mt-1 mb-2">Shop by Price</div>
 				                        <ul class="list-unstyled layout--tags">
 				                          	<li *ngFor="let item of menu.toys | slice:2:6 ; index as i" class="kss-extension" static_element-display_type="Menu" page_slug="menu" attr.static_element-type="{{item.type}}" attr.static_element-id="{{item.sequence}}">
-												<a class="megamenu-link cursor-pointer" (click)="openMenuLink(item.link)" [ngClass]="{active: isActive('type.link')}">
+												<a class="megamenu-link cursor-pointer" (click)="openMenuLink(item.element_data.link)" [ngClass]="{active: isActive('type.link')}">
 													<ng-container *ngIf="!isArray(item.images)">
 														<img src="{{item.images.default['2x']}}" class="menu-item-img img-fluid mb-1">
 													</ng-container>
@@ -502,7 +502,7 @@
 				                        <div class="nav-column--heading mt-1 mb-2">Shop by Sub-Types</div>
 				                        <ul class="list-unstyled layout--3-col">
 				                          	<li *ngFor="let item of menu.stationery | slice:0:4 ; index as i" class="kss-extension" static_element-display_type="Menu" page_slug="menu" attr.static_element-type="{{item.type}}" attr.static_element-id="{{item.sequence}}">
-												<a class="megamenu-link cursor-pointer" (click)="openMenuLink(item.link)" [ngClass]="{active: isActive('type.link')}">
+												<a class="megamenu-link cursor-pointer" (click)="openMenuLink(item.element_data.image.href)" [ngClass]="{active: isActive('type.link')}">
 													<ng-container *ngIf="!isArray(item.images)">
 														<img src="{{item.images.default['2x']}}" class="menu-item-img img-fluid mb-1">
 													</ng-container>
@@ -517,7 +517,7 @@
 				                        <div class="nav-column--heading mt-1 mb-2">Shop by Price</div>
 				                        <ul class="list-unstyled layout--tags">
 				                          	<li *ngFor="let item of menu.stationery | slice:4:8 ; index as i" class="kss-extension" static_element-display_type="Menu" page_slug="menu" attr.static_element-type="{{item.type}}" attr.static_element-id="{{item.sequence}}">
-												<a class="megamenu-link cursor-pointer" (click)="openMenuLink(item.link)" [ngClass]="{active: isActive('type.link')}">
+												<a class="megamenu-link cursor-pointer" (click)="openMenuLink(item.element_data.link)" [ngClass]="{active: isActive('type.link')}">
 													<ng-container *ngIf="!isArray(item.images)">
 														<img src="{{item.images.default['2x']}}" class="menu-item-img img-fluid mb-1">
 													</ng-container>
