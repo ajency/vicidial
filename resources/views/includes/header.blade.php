@@ -1,5 +1,5 @@
 @php
-$json = json_decode(file_get_contents(config_path() . "/static_responses/menu.json"), true);
+$menu =  getMenu();
 $json['cdn_url'] = CDN::asset('/');
 @endphp
 <div class="container pl-2 pl-sm-0 pr-2 pr-sm-0">
@@ -51,19 +51,17 @@ $json['cdn_url'] = CDN::asset('/');
         </ul>
 
         <ul class="nav megamenu--right">
-            <!-- Boys -->
+
               <li>
                   <a class="d-none d-lg-block cursor-pointer">Boys</a>
                   <div class="megamenu-wrapper" data-menu="Boys">
                     
-                      <!-- Mobile Menu Banner -->
                       <div class="nav-column d-lg-none">
                         <a class="menu-banner-item" href="/boys/junior-7-14-years--toddler-2-7-years/tshirt">
                           <img src="{{CDN::asset('/img/menu/banners/tshirts.jpg')}}" class="menu-item-img img-fluid mb-0 d-lg-none" title="offers">
                         </a>
                       </div>
 
-                      <!-- Supper Offers -->
                       <div class="nav-column d-lg-none">
                         <div>
                             <div class="nav-column--heading mt-1 mb-2">Supper Offers</div>
@@ -141,7 +139,7 @@ $json['cdn_url'] = CDN::asset('/');
                             <ul class="list-unstyled layout--tags">
                                 @for ($i = 16; $i < 20; $i++)
                                     <li >
-                                        <a class="megamenu-link cursor-pointer" href="{{$menu['boys'][$i]['element_data']['image']['href']}}">
+                                        <a class="megamenu-link cursor-pointer" href="{{$menu['boys'][$i]['element_data']['link']}}">
                                             @if(!is_array($menu['boys'][$i]['images']))
                                                 <img src="{{$menu['boys'][$i]['images']['default']['2x']}}" class="menu-item-img img-fluid mb-1">
                                             @endif
@@ -173,9 +171,9 @@ $json['cdn_url'] = CDN::asset('/');
                     <div class="nav-column nav-column--wide d-none d-lg-block">
                         <a href="{{$menu['boys'][22]['element_data']['image']['href']}}" class="d-block">
                           <img  class="d-block w-100 img-fluid offer-img mt-4 mt-lg-0"
-                             src="{{CDN::asset('/'.$menu['boys'][22]['images']['1x'])}}"
-                             data-srcset="{{CDN::asset('/'.$menu['boys'][22]['images']['2x'])}} 2x,
-                                          {{CDN::asset('/'.$menu['boys'][22]['images']['1x'])}} 1x"
+                             src="{{$menu['boys'][22]['images']['default']['1x']}}"
+                             data-srcset="{{$menu['boys'][22]['images']['default']['2x']}} 2x,
+                                          {{$menu['boys'][22]['images']['default']['1x']}} 1x"
                              alt="{{$menu['boys'][22]['element_data']['image']['img_alt']}}"
                              title="{{$menu['boys'][22]['element_data']['image']['title']}}"/>
                         </a>
@@ -186,7 +184,7 @@ $json['cdn_url'] = CDN::asset('/');
                                   <div class="text-white">{{$menu['boys'][22]['element_data']['text']['text1']}}</div>
                                 </div>
                                 <div class="col-5">
-                                  <a href="{{$item['image_section']['href']}}" class="btn kss-btn kss-btn--mini">Shop now</a>
+                                  <a href="{{$menu['boys'][22]['element_data']['image']['href']}}" class="btn kss-btn kss-btn--mini">Shop now</a>
                                 </div>
                             </div>
                         @endif
@@ -282,7 +280,7 @@ $json['cdn_url'] = CDN::asset('/');
                             <ul class="list-unstyled layout--tags">
                                 @for ($i = 15; $i < 19; $i++)
                                     <li >
-                                        <a class="megamenu-link cursor-pointer" href="{{$menu['girls'][$i]['element_data']['image']['href']}}">
+                                        <a class="megamenu-link cursor-pointer" href="{{$menu['girls'][$i]['element_data']['link']}}">
                                             @if(!is_array($menu['girls'][$i]['images']))
                                                 <img src="{{$menu['girls'][$i]['images']['default']['2x']}}" class="menu-item-img img-fluid mb-1">
                                             @endif
@@ -314,9 +312,9 @@ $json['cdn_url'] = CDN::asset('/');
                     <div class="nav-column nav-column--wide d-none d-lg-block">
                         <a href="{{$menu['girls'][21]['element_data']['image']['href']}}" class="d-block">
                           <img  class="d-block w-100 img-fluid offer-img mt-4 mt-lg-0"
-                             src="{{CDN::asset('/'.$menu['girls'][21]['images']['1x'])}}"
-                             data-srcset="{{CDN::asset('/'.$menu['girls'][21]['images']['2x'])}} 2x,
-                                          {{CDN::asset('/'.$menu['girls'][21]['images']['1x'])}} 1x"
+                             src="{{$menu['girls'][21]['images']['default']['1x']}}"
+                             data-srcset="{{$menu['girls'][21]['images']['default']['2x']}} 2x,
+                                          {{$menu['girls'][21]['images']['default']['1x']}} 1x"
                              alt="{{$menu['girls'][21]['element_data']['image']['img_alt']}}"
                              title="{{$menu['girls'][21]['element_data']['image']['title']}}"/>
                         </a>
@@ -327,7 +325,7 @@ $json['cdn_url'] = CDN::asset('/');
                                   <div class="text-white">{{$menu['girls'][21]['element_data']['text']['text1']}}</div>
                                 </div>
                                 <div class="col-5">
-                                  <a href="{{$item['image_section']['href']}}" class="btn kss-btn kss-btn--mini">Shop now</a>
+                                  <a href="{{$menu['girls'][21]['element_data']['image']['href']}}" class="btn kss-btn kss-btn--mini">Shop now</a>
                                 </div>
                             </div>
                         @endif
@@ -417,7 +415,7 @@ $json['cdn_url'] = CDN::asset('/');
                             <ul class="list-unstyled layout--tags">
                                 @for ($i = 18; $i < 22; $i++)
                                     <li >
-                                        <a class="megamenu-link cursor-pointer" href="{{$menu['infants'][$i]['element_data']['image']['href']}}">
+                                        <a class="megamenu-link cursor-pointer" href="{{$menu['infants'][$i]['element_data']['link']}}">
                                             @if(!is_array($menu['infants'][$i]['images']))
                                                 <img src="{{$menu['infants'][$i]['images']['default']['2x']}}" class="menu-item-img img-fluid mb-1">
                                             @endif
@@ -433,9 +431,9 @@ $json['cdn_url'] = CDN::asset('/');
                     <div class="nav-column nav-column--wide d-none d-lg-block">
                         <a href="{{$menu['infants'][22]['element_data']['image']['href']}}" class="d-block">
                           <img  class="d-block w-100 img-fluid offer-img mt-4 mt-lg-0"
-                             src="{{CDN::asset('/'.$menu['infants'][22]['images']['1x'])}}"
-                             data-srcset="{{CDN::asset('/'.$menu['infants'][22]['images']['2x'])}} 2x,
-                                          {{CDN::asset('/'.$menu['infants'][22]['images']['1x'])}} 1x"
+                             src="{{$menu['infants'][22]['images']['default']['1x']}}"
+                             data-srcset="{{$menu['infants'][22]['images']['default']['2x']}} 2x,
+                                          {{$menu['infants'][22]['images']['default']['1x']}} 1x"
                              alt="{{$menu['infants'][22]['element_data']['image']['img_alt']}}"
                              title="{{$menu['infants'][22]['element_data']['image']['title']}}"/>
                         </a>
@@ -446,7 +444,7 @@ $json['cdn_url'] = CDN::asset('/');
                                   <div class="text-white">{{$menu['infants'][22]['element_data']['text']['text1']}}</div>
                                 </div>
                                 <div class="col-5">
-                                  <a href="{{$item['image_section']['href']}}" class="btn kss-btn kss-btn--mini">Shop now</a>
+                                  <a href="{{$menu['infants'][22]['element_data']['image']['href']}}" class="btn kss-btn kss-btn--mini">Shop now</a>
                                 </div>
                             </div>
                         @endif
@@ -484,7 +482,7 @@ $json['cdn_url'] = CDN::asset('/');
                             <ul class="list-unstyled layout--tags">
                                 @for ($i = 2; $i < 6; $i++)
                                     <li >
-                                        <a class="megamenu-link cursor-pointer" href="{{$menu['toys'][$i]['element_data']['image']['href']}}">
+                                        <a class="megamenu-link cursor-pointer" href="{{$menu['toys'][$i]['element_data']['link']}}">
                                             @if(!is_array($menu['toys'][$i]['images']))
                                                 <img src="{{$menu['toys'][$i]['images']['default']['2x']}}" class="menu-item-img img-fluid mb-1">
                                             @endif
@@ -499,9 +497,9 @@ $json['cdn_url'] = CDN::asset('/');
                     <div class="nav-column nav-column--wide d-none d-lg-block">
                         <a href="{{$menu['toys'][6]['element_data']['image']['href']}}" class="d-block">
                           <img  class="d-block w-100 img-fluid offer-img mt-4 mt-lg-0"
-                             src="{{CDN::asset('/'.$menu['toys'][6]['images']['1x'])}}"
-                             data-srcset="{{CDN::asset('/'.$menu['toys'][6]['images']['2x'])}} 2x,
-                                          {{CDN::asset('/'.$menu['toys'][6]['images']['1x'])}} 1x"
+                             src="{{$menu['toys'][6]['images']['default']['1x']}}"
+                             data-srcset="{{$menu['toys'][6]['images']['default']['2x']}} 2x,
+                                          {{$menu['toys'][6]['images']['default']['1x']}} 1x"
                              alt="{{$menu['toys'][6]['element_data']['image']['img_alt']}}"
                              title="{{$menu['toys'][6]['element_data']['image']['title']}}"/>
                         </a>
@@ -512,7 +510,7 @@ $json['cdn_url'] = CDN::asset('/');
                                   <div class="text-white">{{$menu['toys'][6]['element_data']['text']['text1']}}</div>
                                 </div>
                                 <div class="col-5">
-                                  <a href="{{$item['image_section']['href']}}" class="btn kss-btn kss-btn--mini">Shop now</a>
+                                  <a href="{{$menu['toys'][6]['element_data']['image']['href']}}" class="btn kss-btn kss-btn--mini">Shop now</a>
                                 </div>
                             </div>
                         @endif
@@ -550,7 +548,7 @@ $json['cdn_url'] = CDN::asset('/');
                             <ul class="list-unstyled layout--tags">
                                 @for ($i = 4; $i < 8; $i++)
                                     <li >
-                                        <a class="megamenu-link cursor-pointer" href="{{$menu['stationery'][$i]['element_data']['image']['href']}}">
+                                        <a class="megamenu-link cursor-pointer" href="{{$menu['stationery'][$i]['element_data']['link']}}">
                                             @if(!is_array($menu['stationery'][$i]['images']))
                                                 <img src="{{$menu['stationery'][$i]['images']['default']['2x']}}" class="menu-item-img img-fluid mb-1">
                                             @endif
@@ -565,9 +563,9 @@ $json['cdn_url'] = CDN::asset('/');
                     <div class="nav-column nav-column--wide d-none d-lg-block">
                         <a href="{{$menu['stationery'][8]['element_data']['image']['href']}}" class="d-block">
                           <img  class="d-block w-100 img-fluid offer-img mt-4 mt-lg-0"
-                             src="{{CDN::asset('/'.$menu['stationery'][8]['images']['1x'])}}"
-                             data-srcset="{{CDN::asset('/'.$menu['stationery'][8]['images']['2x'])}} 2x,
-                                          {{CDN::asset('/'.$menu['stationery'][8]['images']['1x'])}} 1x"
+                             src="{{$menu['stationery'][8]['images']['default']['1x']}}"
+                             data-srcset="{{$menu['stationery'][8]['images']['default']['2x']}} 2x,
+                                          {{$menu['stationery'][8]['images']['default']['1x']}} 1x"
                              alt="{{$menu['stationery'][8]['element_data']['image']['img_alt']}}"
                              title="{{$menu['stationery'][8]['element_data']['image']['title']}}"/>
                         </a>
@@ -578,7 +576,7 @@ $json['cdn_url'] = CDN::asset('/');
                                   <div class="text-white">{{$menu['stationery'][8]['element_data']['text']['text1']}}</div>
                                 </div>
                                 <div class="col-5">
-                                  <a href="{{$item['image_section']['href']}}" class="btn kss-btn kss-btn--mini">Shop now</a>
+                                  <a href="{{$menu['stationery'][8]['element_data']['image']['href']}}" class="btn kss-btn kss-btn--mini">Shop now</a>
                                 </div>
                             </div>
                         @endif
