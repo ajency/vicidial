@@ -88,7 +88,7 @@ $json['cdn_url'] = CDN::asset('/');
                                 @for ($i = 0; $i < 2; $i++)
                                     <li >
                                         <a class="megamenu-link cursor-pointer" href="{{$menu['boys'][$i]['element_data']['image']['href']}}">
-                                            @if(!is_array($menu['boys'][$i]['images']))
+                                            @if(!empty($menu['boys'][$i]['images']))
                                                 <img src="{{$menu['boys'][$i]['images']['default']['2x']}}" class="menu-item-img img-fluid mb-1">
                                             @endif
                                             <span class="title">{{$menu['boys'][$i]['element_data']['text']['text1']}}</span> 
@@ -104,7 +104,7 @@ $json['cdn_url'] = CDN::asset('/');
                                 @for ($i = 2; $i < 7; $i++)
                                     <li>
                                         <a class="megamenu-link cursor-pointer" href="{{$menu['boys'][$i]['element_data']['image']['href']}}">
-                                            @if(!is_array($menu['boys'][$i]['images']))
+                                            @if(!empty($menu['boys'][$i]['images']))
                                                 <img src="{{$menu['boys'][$i]['images']['default']['2x']}}" class="menu-item-img img-fluid mb-1">
                                             @endif
                                             <span class="title">{{$menu['boys'][$i]['element_data']['text']['text1']}}</span> 
@@ -122,7 +122,7 @@ $json['cdn_url'] = CDN::asset('/');
                                 @for ($i = 7; $i < 16; $i++)
                                     <li >
                                         <a class="megamenu-link cursor-pointer" href="{{$menu['boys'][$i]['element_data']['image']['href']}}">
-                                            @if(!is_array($menu['boys'][$i]['images']))
+                                            @if(!empty($menu['boys'][$i]['images']))
                                                 <img src="{{$menu['boys'][$i]['images']['default']['2x']}}" class="menu-item-img img-fluid mb-1">
                                             @endif
                                             <span class="title">{{$menu['boys'][$i]['element_data']['text']['text1']}}</span> 
@@ -140,7 +140,7 @@ $json['cdn_url'] = CDN::asset('/');
                                 @for ($i = 16; $i < 20; $i++)
                                     <li >
                                         <a class="megamenu-link cursor-pointer" href="{{$menu['boys'][$i]['element_data']['link']}}">
-                                            @if(!is_array($menu['boys'][$i]['images']))
+                                            @if(!empty($menu['boys'][$i]['images']))
                                                 <img src="{{$menu['boys'][$i]['images']['default']['2x']}}" class="menu-item-img img-fluid mb-1">
                                             @endif
                                             <span class="title">{{$menu['boys'][$i]['element_data']['text']['text1']}}</span> 
@@ -156,7 +156,7 @@ $json['cdn_url'] = CDN::asset('/');
                                 @for ($i = 20; $i < 22; $i++)
                                     <li >
                                         <a class="megamenu-link cursor-pointer" href="{{$menu['boys'][$i]['element_data']['image']['href']}}">
-                                            @if(!is_array($menu['boys'][$i]['images']))
+                                            @if(!empty($menu['boys'][$i]['images']))
                                                 <img src="{{$menu['boys'][$i]['images']['default']['2x']}}" class="menu-item-img img-fluid mb-1">
                                             @endif
                                             <span class="title">{{$menu['boys'][$i]['element_data']['text']['text1']}}</span> 
@@ -229,7 +229,7 @@ $json['cdn_url'] = CDN::asset('/');
                                 @for ($i = 0; $i < 2; $i++)
                                     <li >
                                         <a class="megamenu-link cursor-pointer" href="{{$menu['girls'][$i]['element_data']['image']['href']}}">
-                                            @if(!is_array($menu['girls'][$i]['images']))
+                                            @if(!empty($menu['girls'][$i]['images']))
                                                 <img src="{{$menu['girls'][$i]['images']['default']['2x']}}" class="menu-item-img img-fluid mb-1">
                                             @endif
                                             <span class="title">{{$menu['girls'][$i]['element_data']['text']['text1']}}</span> 
@@ -245,7 +245,7 @@ $json['cdn_url'] = CDN::asset('/');
                                 @for ($i = 2; $i < 7; $i++)
                                     <li>
                                         <a class="megamenu-link cursor-pointer" href="{{$menu['girls'][$i]['element_data']['image']['href']}}">
-                                            @if(!is_array($menu['girls'][$i]['images']))
+                                            @if(!empty($menu['girls'][$i]['images']))
                                                 <img src="{{$menu['girls'][$i]['images']['default']['2x']}}" class="menu-item-img img-fluid mb-1">
                                             @endif
                                             <span class="title">{{$menu['girls'][$i]['element_data']['text']['text1']}}</span> 
@@ -263,7 +263,7 @@ $json['cdn_url'] = CDN::asset('/');
                                 @for ($i = 7; $i < 15; $i++)
                                     <li >
                                         <a class="megamenu-link cursor-pointer" href="{{$menu['girls'][$i]['element_data']['image']['href']}}">
-                                            @if(!is_array($menu['girls'][$i]['images']))
+                                            @if(!empty($menu['girls'][$i]['images']))
                                                 <img src="{{$menu['girls'][$i]['images']['default']['2x']}}" class="menu-item-img img-fluid mb-1">
                                             @endif
                                             <span class="title">{{$menu['girls'][$i]['element_data']['text']['text1']}}</span> 
@@ -281,7 +281,7 @@ $json['cdn_url'] = CDN::asset('/');
                                 @for ($i = 15; $i < 19; $i++)
                                     <li >
                                         <a class="megamenu-link cursor-pointer" href="{{$menu['girls'][$i]['element_data']['link']}}">
-                                            @if(!is_array($menu['girls'][$i]['images']))
+                                            @if(!empty($menu['girls'][$i]['images']))
                                                 <img src="{{$menu['girls'][$i]['images']['default']['2x']}}" class="menu-item-img img-fluid mb-1">
                                             @endif
                                             <span class="title">{{$menu['girls'][$i]['element_data']['text']['text1']}}</span> 
@@ -297,7 +297,7 @@ $json['cdn_url'] = CDN::asset('/');
                                 @for ($i = 19; $i < 21; $i++)
                                     <li >
                                         <a class="megamenu-link cursor-pointer" href="{{$menu['girls'][$i]['element_data']['image']['href']}}">
-                                            @if(!is_array($menu['girls'][$i]['images']))
+                                            @if(!empty($menu['girls'][$i]['images']))
                                                 <img src="{{$menu['girls'][$i]['images']['default']['2x']}}" class="menu-item-img img-fluid mb-1">
                                             @endif
                                             <span class="title">{{$menu['girls'][$i]['element_data']['text']['text1']}}</span> 
@@ -364,7 +364,7 @@ $json['cdn_url'] = CDN::asset('/');
                                 @for ($i = 0; $i < 2; $i++)
                                     <li >
                                         <a class="megamenu-link cursor-pointer" href="{{$menu['infants'][$i]['element_data']['image']['href']}}">
-                                            @if(!is_array($menu['infants'][$i]['images']))
+                                            @if(!empty($menu['infants'][$i]['images']))
                                                 <img src="{{$menu['infants'][$i]['images']['default']['2x']}}" class="menu-item-img img-fluid mb-1">
                                             @endif
                                             <span class="title">{{$menu['infants'][$i]['element_data']['text']['text1']}}</span> 
@@ -380,7 +380,7 @@ $json['cdn_url'] = CDN::asset('/');
                                 @for ($i = 2; $i < 7; $i++)
                                     <li>
                                         <a class="megamenu-link cursor-pointer" href="{{$menu['infants'][$i]['element_data']['image']['href']}}">
-                                            @if(!is_array($menu['infants'][$i]['images']))
+                                            @if(!empty($menu['infants'][$i]['images']))
                                                 <img src="{{$menu['infants'][$i]['images']['default']['2x']}}" class="menu-item-img img-fluid mb-1">
                                             @endif
                                             <span class="title">{{$menu['infants'][$i]['element_data']['text']['text1']}}</span> 
@@ -398,7 +398,7 @@ $json['cdn_url'] = CDN::asset('/');
                                 @for ($i = 7; $i < 18; $i++)
                                     <li >
                                         <a class="megamenu-link cursor-pointer" href="{{$menu['infants'][$i]['element_data']['image']['href']}}">
-                                            @if(!is_array($menu['infants'][$i]['images']))
+                                            @if(!empty($menu['infants'][$i]['images']))
                                                 <img src="{{$menu['infants'][$i]['images']['default']['2x']}}" class="menu-item-img img-fluid mb-1">
                                             @endif
                                             <span class="title">{{$menu['infants'][$i]['element_data']['text']['text1']}}</span> 
@@ -416,7 +416,7 @@ $json['cdn_url'] = CDN::asset('/');
                                 @for ($i = 18; $i < 22; $i++)
                                     <li >
                                         <a class="megamenu-link cursor-pointer" href="{{$menu['infants'][$i]['element_data']['link']}}">
-                                            @if(!is_array($menu['infants'][$i]['images']))
+                                            @if(!empty($menu['infants'][$i]['images']))
                                                 <img src="{{$menu['infants'][$i]['images']['default']['2x']}}" class="menu-item-img img-fluid mb-1">
                                             @endif
                                             <span class="title">{{$menu['infants'][$i]['element_data']['text']['text1']}}</span> 
@@ -465,7 +465,7 @@ $json['cdn_url'] = CDN::asset('/');
                                 @for ($i = 0; $i < 2; $i++)
                                     <li >
                                         <a class="megamenu-link cursor-pointer" href="{{$menu['toys'][$i]['element_data']['image']['href']}}">
-                                            @if(!is_array($menu['toys'][$i]['images']))
+                                            @if(!empty($menu['toys'][$i]['images']))
                                                 <img src="{{$menu['toys'][$i]['images']['default']['2x']}}" class="menu-item-img img-fluid mb-1">
                                             @endif
                                             <span class="title">{{$menu['toys'][$i]['element_data']['text']['text1']}}</span> 
@@ -483,7 +483,7 @@ $json['cdn_url'] = CDN::asset('/');
                                 @for ($i = 2; $i < 6; $i++)
                                     <li >
                                         <a class="megamenu-link cursor-pointer" href="{{$menu['toys'][$i]['element_data']['link']}}">
-                                            @if(!is_array($menu['toys'][$i]['images']))
+                                            @if(!empty($menu['toys'][$i]['images']))
                                                 <img src="{{$menu['toys'][$i]['images']['default']['2x']}}" class="menu-item-img img-fluid mb-1">
                                             @endif
                                             <span class="title">{{$menu['toys'][$i]['element_data']['text']['text1']}}</span> 
@@ -531,7 +531,7 @@ $json['cdn_url'] = CDN::asset('/');
                                 @for ($i = 0; $i < 4; $i++)
                                     <li >
                                         <a class="megamenu-link cursor-pointer" href="{{$menu['stationery'][$i]['element_data']['image']['href']}}">
-                                            @if(!is_array($menu['stationery'][$i]['images']))
+                                            @if(!empty($menu['stationery'][$i]['images']))
                                                 <img src="{{$menu['stationery'][$i]['images']['default']['2x']}}" class="menu-item-img img-fluid mb-1">
                                             @endif
                                             <span class="title">{{$menu['stationery'][$i]['element_data']['text']['text1']}}</span> 
@@ -549,7 +549,7 @@ $json['cdn_url'] = CDN::asset('/');
                                 @for ($i = 4; $i < 8; $i++)
                                     <li >
                                         <a class="megamenu-link cursor-pointer" href="{{$menu['stationery'][$i]['element_data']['link']}}">
-                                            @if(!is_array($menu['stationery'][$i]['images']))
+                                            @if(!empty($menu['stationery'][$i]['images']))
                                                 <img src="{{$menu['stationery'][$i]['images']['default']['2x']}}" class="menu-item-img img-fluid mb-1">
                                             @endif
                                             <span class="title">{{$menu['stationery'][$i]['element_data']['text']['text1']}}</span> 
