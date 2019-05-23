@@ -56,6 +56,17 @@ return [
             'queue' => env('SQS_QUEUE', 'your-queue-name'),
             'region' => env('SQS_REGION', 'us-east-1'),
         ],
+        
+        'sqs-sns' =>[
+            'driver' => 'sqs-sns',
+            'key' => env('AWS_KEY', 'your-public-key'),
+            'secret' => env('AWS_SECRET', 'your-secret-key'),
+            'queue' => env('SQS_QUEUE', 'shank-report'),
+            'prefix' => env('SQS_PREFIX', 'https://sqs.ap-south-1.amazonaws.com/468853766333'),
+            'region' => env('AWS_REGION', 'us-east-1'),
+            'routes' => [
+            ]
+        ],
 
         'redis' => [
             'driver' => 'redis',

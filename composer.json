@@ -39,7 +39,7 @@
         "ajency/comm": "dev-kss-release",
         "ajency/connections": "dev-master",
         "ajency/file-upload": "dev-tanvi/v4",
-        "ajency/service_comm": "dev-master",
+        "ajency/service_comm": "dev-async",
         "alexpechkarev/google-maps": "1.0.9",
         "artesaos/seotools": "^0.12.1",
         "darkaonline/ripcord": "^0.1.6",

@@ -28,4 +28,18 @@ return [
 			'function' => 'updateMultipleIndex'
 		],
 	],
+	'async_provider' => 'sns',
+	'sns' => [
+		'client' => [
+			'id' => env('AWS_ID'),
+			'credentials' => [
+				'key' => env('AWS_KEY'),
+				'secret' => env('AWS_SECRET')
+			],
+			'region'=> env('AWS_REGION'),
+			'version' => 'latest'
+		],
+		'prefix' => str_slug(env('APP_ENV')),
+		'topics' => ['OrderCreated']
+	],
 ];
