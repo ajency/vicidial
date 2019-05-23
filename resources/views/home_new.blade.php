@@ -29,15 +29,44 @@
 		return;
 	}
 
-	window.onload = function() {
-	  // do stuff to load your page
-		var new_cookie_name =  '{{ config("orders.cash_back_world.cookie_name") }}';
-		var tduid_url_param = getUrlVars()["tduid"];
-		if(tduid_url_param && tduid_url_param.match("^[A-z0-9]+$")){
-			if(getCookie(new_cookie_name) == ''){
-				set_new_cookie(new_cookie_name, tduid_url_param, 10);
+	function removeURLParameter(url, parameter) {
+		//prefer to use l.search if you have a location/link object
+		var urlparts = url.split('?');
+		if (urlparts.length >= 2) {
+
+			var prefix = encodeURIComponent(parameter) + '=';
+			var pars = urlparts[1].split(/[&;]/g);
+
+			//reverse iteration as may be destructive
+			for (var i = pars.length; i-- > 0;) {
+				//idiom for string.startsWith
+				if (pars[i].lastIndexOf(prefix, 0) !== -1) { 
+					pars.splice(i, 1);
+				}
 			}
+
+			return urlparts[0] + (pars.length > 0 ? '?' + pars.join('&') : '');
 		}
-	};
+		return url;
+	}
+
+	function redirTo() {
+		var strReturn = "";
+		var strHref = document.location.href;
+		if ( strHref.indexOf("&url=") > -1 ) {
+			strReturn = strHref.substr(strHref.indexOf("&url=")+5);
+		} else {
+			// Change URL to the default landing page/homepage.
+			strReturn = removeURLParameter(document.location.href, 'tduid') ;
+		}
+		return strReturn;
+	}
+
+	var new_cookie_name =  '{{ config("orders.cash_back_world.cookie_name") }}';
+	var tduid_url_param = getUrlVars()["tduid"];
+	if(tduid_url_param && tduid_url_param.match("^[A-z0-9]+$")){
+		set_new_cookie(new_cookie_name, tduid_url_param, 10);
+		window.location = redirTo();
+	}
 
 </script>

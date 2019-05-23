@@ -466,7 +466,7 @@ class Order extends Model
         // Secret Code; provided by Cashback World.
         $secretcode = config("orders.cash_back_world.secret_code");
         /* The orderValue is the basis for the commission paid to Cashback World. */
-        $orderValue = "0.00";
+        $orderValue = $this->aggregate_data['you_pay'];
         // Currency of the sale.
         $currency = config("orders.cash_back_world.currency");
         $orderNumber = $this->txnid;
