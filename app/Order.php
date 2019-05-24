@@ -16,6 +16,7 @@ use App\SubOrder;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Tzsk\Payu\Fragment\Payable;
+use App\Jobs\OrderCreatedNotification;
 
 class Order extends Model
 {
@@ -78,10 +79,11 @@ class Order extends Model
             foreach ($orderLineIds as $orderLineId) {
                 $subOrder->orderLines()->attach($orderLineId, ['type' => $subOrder->type]);
                 $this->orderLines()->attach($orderLineId, ['type' => $this->type]);
-                OrderlineIndex::dispatch($orderLineId)->onQueue('order_index');
+                // OrderlineIndex::dispatch($orderLineId)->onQueue('order_index');
             }
         }
         SaveReturnPolicies::dispatch($this->id)->onQueue('orderline_return_policy');
+        OrderCreatedNotification::dispatch($this->id)->onQueue('order_index');
     }
 
     public function checkInventoryForSuborders()
