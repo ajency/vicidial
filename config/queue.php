@@ -62,7 +62,7 @@ return [
             'key' => env('AWS_KEY', 'your-public-key'),
             'secret' => env('AWS_SECRET', 'your-secret-key'),
             'queue' => env('SQS_QUEUE', 'shank-report'),
-            'prefix' => env('SQS_PREFIX', 'https://sqs.ap-south-1.amazonaws.com/468853766333'),
+            'prefix' => 'https://sqs.'.env('AWS_REGION').'.amazonaws.com/'.env('AWS_ID'),
             'region' => env('AWS_REGION', 'us-east-1'),
             'routes' => [
             ]
