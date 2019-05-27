@@ -407,5 +407,181 @@ return [
             "height" => 648,
             "width" => 1200
         ],
-    ]
+    ],
+
+
+
+    'boys_box_menu_presets'=> [
+        "default" => [
+            "1x"=>"50X50",
+            "2x"=>"100X100"
+        ]
+    ],
+    'boys_box_menu_upload'=> [
+        "default" => [
+            "size" => 30000,
+            "size_gif" => 500000,
+            "height" => 100,
+            "width" => 100
+        ]
+    ],
+
+    'boys_price_menu_presets'=> [],
+    'boys_price_menu_upload'=> [],
+
+    'boys_side_bar_image_presets'=> [
+        "default" => [
+            "1x"=>"409X384",
+            "2x"=>"818X766"
+        ]
+    ],
+    'boys_side_bar_image_upload'=> [
+        "default" => [
+            "size" => 70000,
+            "size_gif" => 500000,
+            "height" => 766,
+            "width" => 818
+        ]
+    ],
+
+
+
+
+    'girls_box_menu_presets'=> [
+        "default" => [
+            "1x"=>"50X50",
+            "2x"=>"100X100"
+        ]
+    ],
+    'girls_box_menu_upload'=> [
+        "default" => [
+            "size" => 30000,
+            "size_gif" => 500000,
+            "height" => 100,
+            "width" => 100
+        ]
+    ],
+    'girls_price_menu_presets'=> [],
+    'girls_price_menu_upload'=> [],
+
+    'girls_side_bar_image_presets'=> [
+        "default" => [
+            "1x"=>"409X508",
+            "2x"=>"818X1016"
+        ]
+    ],
+    'girls_side_bar_image_upload'=> [
+        "default" => [
+            "size" => 70000,
+            "size_gif" => 500000,
+            "height" => 1016,
+            "width" => 818
+        ]
+    ],
+
+
+
+
+    'infants_box_menu_presets'=> [
+        "default" => [
+            "1x"=>"50X50",
+            "2x"=>"100X100"
+        ]
+    ],
+    'infants_box_menu_upload'=> [
+        "default" => [
+            "size" => 30000,
+            "size_gif" => 500000,
+            "height" => 100,
+            "width" => 100
+        ]
+    ],
+    'infants_price_menu_presets'=> [],
+    'infants_price_menu_upload'=> [],
+
+    'infants_side_bar_image_presets'=> [
+        "default" => [
+            "1x"=>"409X384",
+            "2x"=>"818X766"
+        ]
+    ],
+    'infants_side_bar_image_upload'=> [
+        "default" => [
+            "size" => 70000,
+            "size_gif" => 500000,
+            "height" => 766,
+            "width" => 818
+        ]
+    ],
+
+
+
+
+    'toys_box_menu_presets'=> [
+        "default" => [
+            "1x"=>"50X50",
+            "2x"=>"100X100"
+        ]
+    ],
+    'toys_box_menu_upload'=> [
+        "default" => [
+            "size" => 30000,
+            "size_gif" => 500000,
+            "height" => 100,
+            "width" => 100
+        ]
+    ],
+    'toys_price_menu_presets'=> [],
+    'toys_price_menu_upload'=> [],
+
+    'toys_side_bar_image_presets'=> [
+        "default" => [
+            "1x"=>"400X475",
+            "2x"=>"800X950"
+        ]
+    ],
+    'toys_side_bar_image_upload'=> [
+        "default" => [
+            "size" => 70000,
+            "size_gif" => 500000,
+            "height" => 950,
+            "width" => 800
+        ]
+    ],
+
+
+
+
+    'stationery_box_menu_presets'=> [
+        "default" => [
+            "1x"=>"50X50",
+            "2x"=>"100X100"
+        ]
+    ],
+    'stationery_box_menu_upload'=> [
+        "default" => [
+            "size" => 30000,
+            "size_gif" => 500000,
+            "height" => 100,
+            "width" => 100
+        ]
+    ],
+    'stationery_price_menu_presets'=> [],
+    'stationery_price_menu_upload'=> [],
+
+    'stationery_side_bar_image_presets'=> [
+        "default" => [
+            "1x"=>"400X475",
+            "2x"=>"800X950"
+        ]
+    ],
+    'stationery_side_bar_image_upload'=> [
+        "default" => [
+            "size" => 70000,
+            "size_gif" => 500000,
+            "height" => 950,
+            "width" => 800
+        ]
+    ],
+
 ];
