@@ -293,13 +293,14 @@ class Offer extends Model
         //perform the offer action
         $cartData = $this->action->apply($cartData);
 
-        $couponSpecificItems = (!empty($cartData['coupon_specific_products']))? true : false;
-
         //Add offer applied
         $cartData['offersApplied'][] = $this;
+        
+        // bool flag; Coupon is for specific products
+        $boolIsSpecificItemsCoupon = !empty($cartData['is_specific_products_coupon']);
 
         //translate to items
-        return translateDiscountToItems($cartData, $couponSpecificItems);
+        return translateDiscountToItems($cartData, $boolIsSpecificItemsCoupon);
     }
 
     public static function buildCartData($cartData)

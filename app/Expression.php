@@ -82,8 +82,8 @@ class Expression extends Model
                                 $total_amount += ( $isCouponApplicable )? $orderItem['price_sale'] * $orderItem['quantity'] : 0;
                             }
                             $boolIsValid = ($total_amount < $value)? false : $boolIsValid;
-                            $data['coupon_products_total']    = $total_amount;
-                            $data['coupon_specific_products'] = $boolIsValid;
+                            $data['is_specific_products_coupon']  = $boolIsValid;
+                            $data['coupon_products_total_amount'] = $total_amount;
                            return $boolIsValid;
                            break;
                        
@@ -113,8 +113,8 @@ class Expression extends Model
                                 $total_amount += ( $isCouponApplicable )? $orderItem['price_sale'] * $orderItem['quantity'] : 0;
                             }
                             $boolIsValid = ($total_amount < $value)? false : $boolIsValid;
-                            $data['coupon_products_total']    = $total_amount;
-                            $data['coupon_specific_products'] = $boolIsValid;
+                            $data['is_specific_products_coupon']  = $boolIsValid;
+                            $data['coupon_products_total_amount'] = $total_amount;
                            return $boolIsValid;
                            break;
 

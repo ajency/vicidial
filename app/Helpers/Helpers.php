@@ -841,7 +841,7 @@ function defaultUserPassword($append)
     return $key;
 }
 
-function translateDiscountToItems($cartData, $couponSpecificItems = false)
+function translateDiscountToItems($cartData, $boolIsSpecificItemsCoupon = false)
 {
     $total           = 0;
     $discountRatio   = $cartData['final_total'] / floatval($cartData['sale_total']);
@@ -851,10 +851,10 @@ function translateDiscountToItems($cartData, $couponSpecificItems = false)
         $newPrice    = round($cartItem['price_sale'] * $discountRatio, 2);
 
         // For product specific coupon action
-        if( $couponSpecificItems ){
-            // If the item doesn't belong to the coupon category, don't change the final price
-            if( $cartItem['is_coupon_applicable'] && !empty($cartData['coupon_products_total']) ) {
-                $discountRatio = $cartItem['price_final'] / floatval($cartData['coupon_products_total']);
+        if( $boolIsSpecificItemsCoupon ){
+            // If the item doesn't belong to the coupon, don't change the final price
+            if( $cartItem['is_coupon_applicable'] && !empty($cartData['coupon_products_total_amount']) ) {
+                $discountRatio = $cartItem['price_final'] / floatval($cartData['coupon_products_total_amount']);
                 if($cartItem['price_sale'] > ($discount_amount * $discountRatio)) {
                     $newPrice  = round($cartItem['price_sale'] -($discount_amount * $discountRatio), 2);
                 } else {
