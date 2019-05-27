@@ -50,7 +50,7 @@
 		          </li>
 		        </ul>
 
-		        <ng-container *ngIf="isDraftHome; else notDraft">
+		        <!-- <ng-container *ngIf="isDraftHome; else notDraft"> -->
 			        <ul *ngIf="menu" class="nav megamenu--right">
 			            <!-- Boys -->
 			            <li *ngIf="menu.boys && menu.boys.length">
@@ -576,101 +576,7 @@
 							</div>
 			            </li>
 			        </ul>
-			    </ng-container>
-
-		        <ng-template #notDraft>
-			        <ul *ngIf="menu" class="nav megamenu--right">
-			            <li *ngFor="let item of menu">
-			                <a *ngIf="item.type != 'Blog' && item.type != 'Uniforms'" class="d-none d-lg-block cursor-pointer">{{item.type}}</a>
-			                <a href="/ideas" *ngIf="item.type == 'Blog'" class="d-none d-lg-block">{{item.type}}</a>
-			                <a routerLink="/shop/uniforms" *ngIf="item.type == 'Uniforms'" class="d-none d-lg-block">{{item.type}}</a>
-			                <div class="megamenu-wrapper" attr.data-menu="{{item.type}}">
-													
-													<div *ngIf="item.type == 'Boys' " class="nav-column d-lg-none">
-														<div (click)="openMenuLink('/boys/junior-7-14-years--toddler-2-7-years/tshirt')" class="menu-banner-item cursor-pointer">
-															<img src="{{cdnUrl}}img/menu/banners/tshirts.jpg" class="menu-item-img img-fluid mb-0 d-lg-none" title="offers">
-														</div>
-													</div>
-													<div *ngIf="item.type == 'Girls' " class="nav-column d-lg-none">
-														<div class="menu-banner-item cursor-pointer" (click)="openMenuLink('/girls/junior-7-14-years--toddler-2-7-years/dress')">
-															<img src="{{cdnUrl}}img/menu/banners/dresses.jpg" class="menu-item-img img-fluid mb-0 d-lg-none" title="offers">
-														</div>
-													</div>
-													
-													<div *ngIf="item.type == 'Boys' || item.type == 'Girls' || item.type == 'Infants'" class="nav-column d-lg-none">
-														<div>
-																<div class="nav-column--heading mt-1 mb-2">Supper Offers</div>
-																<ul class="list-unstyled layout--offers">
-																	<li>
-																		<a (click)="openMenuLink('/shop?pf=tag:flat-50')" class="megamenu-link cursor-pointer">
-																			<img src="{{cdnUrl}}img/menu/offer/50-off.jpg" class="menu-item-img img-fluid d-lg-none">
-																		</a>
-																	</li>
-																	<li>
-																		<a (click)="openMenuLink('/shop?pf=tag:flat-50')" class="megamenu-link cursor-pointer">
-																			<img src="{{cdnUrl}}img/menu/offer/holiday-off.jpg" class="menu-item-img img-fluid d-lg-none">
-																		</a>
-																	</li>
-																</ul>
-														</div>													
-													</div>
-
-			                    <div *ngFor="let row of item.rows" class="nav-column">
-			                    	<div *ngFor="let menu of row.menus">
-				                        <div class="nav-column--heading mt-1 mb-2">{{menu.shop_by}} 
-				                        </div>
-				                        <ul class="list-unstyled" [ngClass]="{'layout--3-col' : menu.shop_by == 'Shop by Category' || menu.shop_by == 'Shop by Clothing' || menu.shop_by == 'Shop by Brands' || menu.shop_by == 'Shop by Sub-Types' || menu.shop_by == 'Shop by Gender', 'layout--tags' : menu.shop_by == 'Shop by Price', 'layout--2-col' : menu.shop_by == 'Shop by Age Group'}">
-				                          	<li *ngFor="let type of menu.data">
-												<a class="megamenu-link cursor-pointer" [ngClass]="{'megamenu-link--primary' : type.title === 'View all products'}" (click)="openMenuLink(type.link)" title="{{type.title}}" [ngClass]="{active: isActive('type.link')}">
-													<img *ngIf="type.image" [src]=cdnUrl+type.image class="menu-item-img img-fluid mb-1">
-													<!-- <span *ngIf="menu.shop_by == 'Shop by Age Group'" class="sub-title">Juniors</span> -->
-													<span class="title">{{type.title}}</span>	
-												</a>
-											</li>
-				                        </ul>
-			                        </div>
-			                    </div>
-			                    <div *ngIf="item.image_section" class="nav-column nav-column--wide d-none d-lg-block">
-			                        <a (click)="openMenuLink(item.image_section.href)" class="d-block cursor-pointer">
-			                             	<img  class="d-block w-100 img-fluid offer-img mt-4 mt-lg-0"
-												[useSrcset]="true"
-												[offset]=0
-												[defaultImage]="cdnUrl + 'assets/img/transparent.png'"
-												[lazyLoad]="createDataSrcSet(item.image_section.images['2x'], '2x', item.image_section.images['1x'], '1x')"
-										        sizes='(min-width: 1200px) 328px, (min-width: 768px) 26vw,  58vw'
-										        title="{{item.image_section.title}}"
-										        alt="{{item.image_section.img_alt}}"/>
-			                        </a>
-			                        <div *ngIf="item.image_section.text" class="row align-items-center mt-2 mb-4 mb-lg-0">
-			                            <div class="col-7">
-			                              <div class="h5 text-primary font-weight-bold">Spotlight on</div>
-			                              <div class="text-white">{{item.image_section.text}}</div>
-			                            </div>
-			                            <div class="col-5">
-			                              <a (click)="openMenuLink(item.image_section.href)" class="btn kss-btn kss-btn--mini cursor-pointer">Shop now</a>
-			                            </div>
-			                        </div>
-			                    </div>
-			                </div>
-			            </li>
-
-			            <li class="d-lg-none align-self-end">
-							<div class="megamenu-wrapper" data-menu="otherlinks">
-								<div class="nav-column mb-0">
-									<ul class="list-unstyled">
-										<li><a class="megamenu-link" (click)="removeOverFlow()" routerLink="/about-us">About Us</a></li>
-										<li><a class="megamenu-link" (click)="removeOverFlow()" routerLink="/contact">Contact Us</a></li>
-										<li><a href="https://cutshort.io/company/omni-edge-retail-private-ltd?career_page=true" class="megamenu-link">Careers</a></li>
-										<li><a class="megamenu-link" (click)="removeOverFlow()" routerLink="/faq">FAQ</a></li>
-										<li><a class="megamenu-link" (click)="removeOverFlow()" routerLink="/terms-and-conditions">Terms of Use</a></li>
-										<li><a class="megamenu-link" (click)="removeOverFlow()" routerLink="/privacy-policy">Privacy Policy</a></li>
-										<li><a class="megamenu-link" (click)="removeOverFlow()" href="/ideas/">Blog</a></li>
-									</ul>
-								</div>
-							</div>
-			            </li>
-			        </ul>
-			    </ng-template>
+			    <!-- </ng-container> -->
 		      </div>
 		    </div>
 

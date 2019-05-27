@@ -8,6 +8,8 @@ use App\Jobs\FetchProductImages;
 use App\Location;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
+use App\StaticElement;
+use Illuminate\Support\Facades\Cache;
 
 function valInteger($object, $values)
 {
@@ -902,4 +904,11 @@ function getTokenID($token)
     $token_header_array = json_decode($token_header_json, true);
     $user_token         = $token_header_array['jti'];
     return $user_token;
+}
+
+function getMenu(){
+    return Cache::rememberForever('static_element_menu_published', function () {
+        return StaticElement::fetch('menu',[], $published=true);
+    });
+    
 }

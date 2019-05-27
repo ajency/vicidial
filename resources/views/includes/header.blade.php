@@ -1,5 +1,5 @@
 @php
-$json = json_decode(file_get_contents(config_path() . "/static_responses/menu.json"), true);
+$menu =  getMenu();
 $json['cdn_url'] = CDN::asset('/');
 @endphp
 <div class="container pl-2 pl-sm-0 pr-2 pr-sm-0">
@@ -51,138 +51,538 @@ $json['cdn_url'] = CDN::asset('/');
         </ul>
 
         <ul class="nav megamenu--right">
-            <!-- Boys -->
-            @php
-            foreach($json['menu'] as $item) {
-              if($item['type'] != 'Blog' && $item['type'] != 'Uniforms') {
-            @endphp
+
               <li>
-                  <a class="d-none d-lg-block cursor-pointer">{{$item['type']}}</a>
-                  <div class="megamenu-wrapper" data-menu="{{$item['type']}}">
+                  <a class="d-none d-lg-block cursor-pointer">Boys</a>
+                  <div class="megamenu-wrapper" data-menu="Boys">
                     
-                      <!-- Mobile Menu Banner -->
-                      @php
-                      if($item['type'] == 'Boys') {
-                      @endphp
-                        <div class="nav-column d-lg-none">
-                          <a class="menu-banner-item" href="/boys/junior-7-14-years--toddler-2-7-years/tshirt">
-                            <img src="{{CDN::asset('/img/menu/banners/tshirts.jpg')}}" class="menu-item-img img-fluid mb-0 d-lg-none" title="offers">
-                          </a>
-                        </div>
-                      @php
-                      }
+                      <div class="nav-column d-lg-none">
+                        <a class="menu-banner-item" href="/boys/junior-7-14-years--toddler-2-7-years/tshirt">
+                          <img src="{{CDN::asset('/img/menu/banners/tshirts.jpg')}}" class="menu-item-img img-fluid mb-0 d-lg-none" title="offers">
+                        </a>
+                      </div>
 
-                      if($item['type'] == 'Girls') {
-                      @endphp
-                        <div class="nav-column d-lg-none">
-                          <a class="menu-banner-item" href="/girls/junior-7-14-years--toddler-2-7-years/dress">
-                            <img src="{{CDN::asset('/img/menu/banners/dresses.jpg')}}" class="menu-item-img img-fluid mb-0 d-lg-none" title="offers">
-                          </a>
-                        </div>
-                      @php
-                      }
-                      @endphp
-
-                      <!-- Supper Offers -->
-                      @php
-                      if($item['type'] == 'Boys' || $item['type'] == 'Girls' || $item['type'] == 'Infants') {
-                      @endphp
-                        <div class="nav-column d-lg-none">
-                          <div>
-                              <div class="nav-column--heading mt-1 mb-2">Supper Offers</div>
-                              <ul class="list-unstyled layout--offers">
-                                <li>
-                                  <a href="/shop?pf=tag:flat-50" class="megamenu-link">
-                                    <img src="{{CDN::asset('/img/menu/offer/50-off.jpg')}}" class="menu-item-img img-fluid d-lg-none">
-                                  </a>
-                                </li>
-                                <li>
-                                  <a href="/shop?pf=tag:flat-50" class="megamenu-link">
-                                    <img src="{{CDN::asset('/img/menu/offer/holiday-off.jpg')}}" class="menu-item-img img-fluid d-lg-none">
-                                  </a>
-                                </li>
-                              </ul>
-                          </div>                          
-                        </div>
-                      @php
-                      }
-                      @endphp
-
-                      @php
-                      foreach($item['rows'] as $row) {
-                      @endphp
-                      <div class="nav-column">
-                        @php
-                        foreach($row['menus'] as $menu) {
-                        @endphp
+                      <div class="nav-column d-lg-none">
                         <div>
-                            <div class="nav-column--heading mt-1 mb-2">{{$menu['shop_by']}}</div>
-                            <ul class="list-unstyled @php if($menu['shop_by'] == 'Shop by Category' || $menu['shop_by'] == 'Shop by Clothing' || $menu['shop_by'] == 'Shop by Brands' || $menu['shop_by'] == 'Shop by Sub-Types' || $menu['shop_by'] == 'Shop by Gender') { @endphp layout--3-col @php } if($menu['shop_by'] == 'Shop by Price') { @endphp layout--tags  @php } if($menu['shop_by'] == 'Shop by Age Group') { @endphp layout--2-col @php } @endphp">
-                            @php
-                            foreach($menu['data'] as $type) {
-                            @endphp
+                            <div class="nav-column--heading mt-1 mb-2">Supper Offers</div>
+                            <ul class="list-unstyled layout--offers">
                               <li>
-                                <a class="megamenu-link @php if($type['title'] == 'View all products') { @endphp megamenu-link--primary @php } @endphp" href="{{$type['link']}}" title="{{$type['title']}}">
-                                @php
-                                if(isset($type['image'])) {
-                                @endphp
-                                  <img src="{{CDN::asset('/'.$type['image'])}}" class="menu-item-img img-fluid mb-1">
-                                @php
-                                }
-                                @endphp
-                                  <span class="title">{{$type['title']}}</span> 
+                                <a href="/shop?pf=tag:flat-50" class="megamenu-link">
+                                  <img src="{{CDN::asset('/img/menu/offer/50-off.jpg')}}" class="menu-item-img img-fluid d-lg-none">
                                 </a>
                               </li>
-                            @php
-                            }
-                            @endphp
+                              <li>
+                                <a href="/shop?pf=tag:flat-50" class="megamenu-link">
+                                  <img src="{{CDN::asset('/img/menu/offer/holiday-off.jpg')}}" class="menu-item-img img-fluid d-lg-none">
+                                </a>
+                              </li>
+                            </ul>
+                        </div>                          
+                      </div>
+
+                      <div class="nav-column">
+                        <div>
+                            <div class="nav-column--heading mt-1 mb-2">Shop by Category</div>
+
+                            <ul class="list-unstyled layout--3-col">
+                                @for ($i = 0; $i < 2; $i++)
+                                    <li >
+                                        <a class="megamenu-link cursor-pointer" href="{{$menu['boys'][$i]['element_data']['image']['href']}}">
+                                            @if(!empty($menu['boys'][$i]['images']))
+                                                <img src="{{$menu['boys'][$i]['images']['default']['2x']}}" class="menu-item-img img-fluid mb-1">
+                                            @endif
+                                            <span class="title">{{$menu['boys'][$i]['element_data']['text']['text1']}}</span> 
+                                        </a>
+                                    </li>
+                                @endfor
                             </ul>
                         </div>
-                        @php
-                        }
-                        @endphp
-                      </div>
-                      @php
-                      }
-                      @endphp
+                        <div>
+                            <div class="nav-column--heading mt-1 mb-2">Shop by Brands</div>
 
-                      @php
-                      if(isset($item['image_section'])) {
-                      @endphp
-                        <div class="nav-column nav-column--wide d-none d-lg-block">
-                            <a href="{{$item['image_section']['href']}}" class="d-block">
-                              <img  class="d-block w-100 img-fluid offer-img mt-4 mt-lg-0"
-                                 src="{{CDN::asset('/'.$item['image_section']['images']['1x'])}}"
-                                 data-srcset="{{CDN::asset('/'.$item['image_section']['images']['2x'])}} 2x,
-                                              {{CDN::asset('/'.$item['image_section']['images']['1x'])}} 1x"
-                                 alt="{{$item['image_section']['img_alt']}}"
-                                 title="{{$item['image_section']['title']}}"/>
-                            </a>
-                            @php
-                            if(isset($item['image_section']['text'])) {
-                            @endphp
+                            <ul class="list-unstyled layout--3-col">
+                                @for ($i = 2; $i < 7; $i++)
+                                    <li>
+                                        <a class="megamenu-link cursor-pointer" href="{{$menu['boys'][$i]['element_data']['image']['href']}}">
+                                            @if(!empty($menu['boys'][$i]['images']))
+                                                <img src="{{$menu['boys'][$i]['images']['default']['2x']}}" class="menu-item-img img-fluid mb-1">
+                                            @endif
+                                            <span class="title">{{$menu['boys'][$i]['element_data']['text']['text1']}}</span> 
+                                        </a>
+                                    </li>
+                                @endfor
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="nav-column">
+                        <div>
+                            <div class="nav-column--heading mt-1 mb-2">Shop by Clothing</div>
+
+                            <ul class="list-unstyled layout--3-col">
+                                @for ($i = 7; $i < 16; $i++)
+                                    <li >
+                                        <a class="megamenu-link cursor-pointer" href="{{$menu['boys'][$i]['element_data']['image']['href']}}">
+                                            @if(!empty($menu['boys'][$i]['images']))
+                                                <img src="{{$menu['boys'][$i]['images']['default']['2x']}}" class="menu-item-img img-fluid mb-1">
+                                            @endif
+                                            <span class="title">{{$menu['boys'][$i]['element_data']['text']['text1']}}</span> 
+                                        </a>
+                                    </li>
+                                @endfor
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="nav-column">
+                        <div>
+                            <div class="nav-column--heading mt-1 mb-2">Shop by Price</div>
+
+                            <ul class="list-unstyled layout--tags">
+                                @for ($i = 16; $i < 20; $i++)
+                                    <li >
+                                        <a class="megamenu-link cursor-pointer" href="{{$menu['boys'][$i]['element_data']['link']}}">
+                                            @if(!empty($menu['boys'][$i]['images']))
+                                                <img src="{{$menu['boys'][$i]['images']['default']['2x']}}" class="menu-item-img img-fluid mb-1">
+                                            @endif
+                                            <span class="title">{{$menu['boys'][$i]['element_data']['text']['text1']}}</span> 
+                                        </a>
+                                    </li>
+                                @endfor
+                            </ul>
+                        </div>
+                        <div>
+                            <div class="nav-column--heading mt-1 mb-2">Shop by Age Group</div>
+
+                            <ul class="list-unstyled layout--2-col">
+                                @for ($i = 20; $i < 22; $i++)
+                                    <li >
+                                        <a class="megamenu-link cursor-pointer" href="{{$menu['boys'][$i]['element_data']['image']['href']}}">
+                                            @if(!empty($menu['boys'][$i]['images']))
+                                                <img src="{{$menu['boys'][$i]['images']['default']['2x']}}" class="menu-item-img img-fluid mb-1">
+                                            @endif
+                                            <span class="title">{{$menu['boys'][$i]['element_data']['text']['text1']}}</span> 
+                                        </a>
+                                    </li>
+                                @endfor
+                            </ul>
+                        </div>
+                    </div>
+                      
+
+                    <div class="nav-column nav-column--wide d-none d-lg-block">
+                        <a href="{{$menu['boys'][22]['element_data']['image']['href']}}" class="d-block">
+                          <img  class="d-block w-100 img-fluid offer-img mt-4 mt-lg-0"
+                             src="{{$menu['boys'][22]['images']['default']['1x']}}"
+                             data-srcset="{{$menu['boys'][22]['images']['default']['2x']}} 2x,
+                                          {{$menu['boys'][22]['images']['default']['1x']}} 1x"
+                             alt="{{$menu['boys'][22]['element_data']['image']['img_alt']}}"
+                             title="{{$menu['boys'][22]['element_data']['image']['title']}}"/>
+                        </a>
+                        @if($menu['boys'][22]['element_data']['text']['text1'])
                             <div class="row align-items-center mt-2 mb-4 mb-lg-0">
                                 <div class="col-7">
                                   <div class="h5 text-primary font-weight-bold">Spotlight on</div>
-                                  <div class="text-white">{{$item['image_section']['text']}}</div>
+                                  <div class="text-white">{{$menu['boys'][22]['element_data']['text']['text1']}}</div>
                                 </div>
                                 <div class="col-5">
-                                  <a href="{{$item['image_section']['href']}}" class="btn kss-btn kss-btn--mini">Shop now</a>
+                                  <a href="{{$menu['boys'][22]['element_data']['image']['href']}}" class="btn kss-btn kss-btn--mini">Shop now</a>
                                 </div>
                             </div>
-                            @php
-                            }
-                            @endphp
-                        </div>
-                      @php
-                      }
-                      @endphp
+                        @endif
+                        
+                    </div>
                   </div>
               </li>
-            @php
-              }
-            }
-            @endphp
+
+               <li>
+                  <a class="d-none d-lg-block cursor-pointer">Girls</a>
+                  <div class="megamenu-wrapper" data-menu="Girls">
+
+                    <div class="nav-column d-lg-none">
+                      <a class="menu-banner-item" href="/girls/junior-7-14-years--toddler-2-7-years/dress">
+                        <img src="{{CDN::asset('/img/menu/banners/dresses.jpg')}}" class="menu-item-img img-fluid mb-0 d-lg-none" title="offers">
+                      </a>
+                    </div>
+
+                    <div class="nav-column d-lg-none">
+                      <div>
+                          <div class="nav-column--heading mt-1 mb-2">Supper Offers</div>
+                          <ul class="list-unstyled layout--offers">
+                            <li>
+                              <a href="/shop?pf=tag:flat-50" class="megamenu-link">
+                                <img src="{{CDN::asset('/img/menu/offer/50-off.jpg')}}" class="menu-item-img img-fluid d-lg-none">
+                              </a>
+                            </li>
+                            <li>
+                              <a href="/shop?pf=tag:flat-50" class="megamenu-link">
+                                <img src="{{CDN::asset('/img/menu/offer/holiday-off.jpg')}}" class="menu-item-img img-fluid d-lg-none">
+                              </a>
+                            </li>
+                          </ul>
+                      </div>                          
+                    </div>
+
+                    <div class="nav-column">
+                        <div>
+                            <div class="nav-column--heading mt-1 mb-2">Shop by Category</div>
+
+                            <ul class="list-unstyled layout--3-col">
+                                @for ($i = 0; $i < 2; $i++)
+                                    <li >
+                                        <a class="megamenu-link cursor-pointer" href="{{$menu['girls'][$i]['element_data']['image']['href']}}">
+                                            @if(!empty($menu['girls'][$i]['images']))
+                                                <img src="{{$menu['girls'][$i]['images']['default']['2x']}}" class="menu-item-img img-fluid mb-1">
+                                            @endif
+                                            <span class="title">{{$menu['girls'][$i]['element_data']['text']['text1']}}</span> 
+                                        </a>
+                                    </li>
+                                @endfor
+                            </ul>
+                        </div>
+                        <div>
+                            <div class="nav-column--heading mt-1 mb-2">Shop by Brands</div>
+
+                            <ul class="list-unstyled layout--3-col">
+                                @for ($i = 2; $i < 7; $i++)
+                                    <li>
+                                        <a class="megamenu-link cursor-pointer" href="{{$menu['girls'][$i]['element_data']['image']['href']}}">
+                                            @if(!empty($menu['girls'][$i]['images']))
+                                                <img src="{{$menu['girls'][$i]['images']['default']['2x']}}" class="menu-item-img img-fluid mb-1">
+                                            @endif
+                                            <span class="title">{{$menu['girls'][$i]['element_data']['text']['text1']}}</span> 
+                                        </a>
+                                    </li>
+                                @endfor
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="nav-column">
+                        <div>
+                            <div class="nav-column--heading mt-1 mb-2">Shop by Clothing</div>
+
+                            <ul class="list-unstyled layout--3-col">
+                                @for ($i = 7; $i < 15; $i++)
+                                    <li >
+                                        <a class="megamenu-link cursor-pointer" href="{{$menu['girls'][$i]['element_data']['image']['href']}}">
+                                            @if(!empty($menu['girls'][$i]['images']))
+                                                <img src="{{$menu['girls'][$i]['images']['default']['2x']}}" class="menu-item-img img-fluid mb-1">
+                                            @endif
+                                            <span class="title">{{$menu['girls'][$i]['element_data']['text']['text1']}}</span> 
+                                        </a>
+                                    </li>
+                                @endfor
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="nav-column">
+                        <div>
+                            <div class="nav-column--heading mt-1 mb-2">Shop by Price</div>
+
+                            <ul class="list-unstyled layout--tags">
+                                @for ($i = 15; $i < 19; $i++)
+                                    <li >
+                                        <a class="megamenu-link cursor-pointer" href="{{$menu['girls'][$i]['element_data']['link']}}">
+                                            @if(!empty($menu['girls'][$i]['images']))
+                                                <img src="{{$menu['girls'][$i]['images']['default']['2x']}}" class="menu-item-img img-fluid mb-1">
+                                            @endif
+                                            <span class="title">{{$menu['girls'][$i]['element_data']['text']['text1']}}</span> 
+                                        </a>
+                                    </li>
+                                @endfor
+                            </ul>
+                        </div>
+                        <div>
+                            <div class="nav-column--heading mt-1 mb-2">Shop by Age Group</div>
+
+                            <ul class="list-unstyled layout--2-col">
+                                @for ($i = 19; $i < 21; $i++)
+                                    <li >
+                                        <a class="megamenu-link cursor-pointer" href="{{$menu['girls'][$i]['element_data']['image']['href']}}">
+                                            @if(!empty($menu['girls'][$i]['images']))
+                                                <img src="{{$menu['girls'][$i]['images']['default']['2x']}}" class="menu-item-img img-fluid mb-1">
+                                            @endif
+                                            <span class="title">{{$menu['girls'][$i]['element_data']['text']['text1']}}</span> 
+                                        </a>
+                                    </li>
+                                @endfor
+                            </ul>
+                        </div>
+                    </div>
+                      
+
+                    <div class="nav-column nav-column--wide d-none d-lg-block">
+                        <a href="{{$menu['girls'][21]['element_data']['image']['href']}}" class="d-block">
+                          <img  class="d-block w-100 img-fluid offer-img mt-4 mt-lg-0"
+                             src="{{$menu['girls'][21]['images']['default']['1x']}}"
+                             data-srcset="{{$menu['girls'][21]['images']['default']['2x']}} 2x,
+                                          {{$menu['girls'][21]['images']['default']['1x']}} 1x"
+                             alt="{{$menu['girls'][21]['element_data']['image']['img_alt']}}"
+                             title="{{$menu['girls'][21]['element_data']['image']['title']}}"/>
+                        </a>
+                        @if($menu['girls'][21]['element_data']['text']['text1'])
+                            <div class="row align-items-center mt-2 mb-4 mb-lg-0">
+                                <div class="col-7">
+                                  <div class="h5 text-primary font-weight-bold">Spotlight on</div>
+                                  <div class="text-white">{{$menu['girls'][21]['element_data']['text']['text1']}}</div>
+                                </div>
+                                <div class="col-5">
+                                  <a href="{{$menu['girls'][21]['element_data']['image']['href']}}" class="btn kss-btn kss-btn--mini">Shop now</a>
+                                </div>
+                            </div>
+                        @endif
+                        
+                    </div>
+                  </div>
+              </li>
+
+              <li>
+                  <a class="d-none d-lg-block cursor-pointer">Infants</a>
+                  <div class="megamenu-wrapper" data-menu="Infants">
+
+                    <div class="nav-column d-lg-none">
+                      <div>
+                          <div class="nav-column--heading mt-1 mb-2">Supper Offers</div>
+                          <ul class="list-unstyled layout--offers">
+                            <li>
+                              <a href="/shop?pf=tag:flat-50" class="megamenu-link">
+                                <img src="{{CDN::asset('/img/menu/offer/50-off.jpg')}}" class="menu-item-img img-fluid d-lg-none">
+                              </a>
+                            </li>
+                            <li>
+                              <a href="/shop?pf=tag:flat-50" class="megamenu-link">
+                                <img src="{{CDN::asset('/img/menu/offer/holiday-off.jpg')}}" class="menu-item-img img-fluid d-lg-none">
+                              </a>
+                            </li>
+                          </ul>
+                      </div>                          
+                    </div>
+
+                    <div class="nav-column">
+                        <div>
+                            <div class="nav-column--heading mt-1 mb-2">Shop by Category</div>
+
+                            <ul class="list-unstyled layout--3-col">
+                                @for ($i = 0; $i < 2; $i++)
+                                    <li >
+                                        <a class="megamenu-link cursor-pointer" href="{{$menu['infants'][$i]['element_data']['image']['href']}}">
+                                            @if(!empty($menu['infants'][$i]['images']))
+                                                <img src="{{$menu['infants'][$i]['images']['default']['2x']}}" class="menu-item-img img-fluid mb-1">
+                                            @endif
+                                            <span class="title">{{$menu['infants'][$i]['element_data']['text']['text1']}}</span> 
+                                        </a>
+                                    </li>
+                                @endfor
+                            </ul>
+                        </div>
+                        <div>
+                            <div class="nav-column--heading mt-1 mb-2">Shop by Brands</div>
+
+                            <ul class="list-unstyled layout--3-col">
+                                @for ($i = 2; $i < 7; $i++)
+                                    <li>
+                                        <a class="megamenu-link cursor-pointer" href="{{$menu['infants'][$i]['element_data']['image']['href']}}">
+                                            @if(!empty($menu['infants'][$i]['images']))
+                                                <img src="{{$menu['infants'][$i]['images']['default']['2x']}}" class="menu-item-img img-fluid mb-1">
+                                            @endif
+                                            <span class="title">{{$menu['infants'][$i]['element_data']['text']['text1']}}</span> 
+                                        </a>
+                                    </li>
+                                @endfor
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="nav-column">
+                        <div>
+                            <div class="nav-column--heading mt-1 mb-2">Shop by Clothing</div>
+
+                            <ul class="list-unstyled layout--3-col">
+                                @for ($i = 7; $i < 18; $i++)
+                                    <li >
+                                        <a class="megamenu-link cursor-pointer" href="{{$menu['infants'][$i]['element_data']['image']['href']}}">
+                                            @if(!empty($menu['infants'][$i]['images']))
+                                                <img src="{{$menu['infants'][$i]['images']['default']['2x']}}" class="menu-item-img img-fluid mb-1">
+                                            @endif
+                                            <span class="title">{{$menu['infants'][$i]['element_data']['text']['text1']}}</span> 
+                                        </a>
+                                    </li>
+                                @endfor
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="nav-column">
+                        <div>
+                            <div class="nav-column--heading mt-1 mb-2">Shop by Price</div>
+
+                            <ul class="list-unstyled layout--tags">
+                                @for ($i = 18; $i < 22; $i++)
+                                    <li >
+                                        <a class="megamenu-link cursor-pointer" href="{{$menu['infants'][$i]['element_data']['link']}}">
+                                            @if(!empty($menu['infants'][$i]['images']))
+                                                <img src="{{$menu['infants'][$i]['images']['default']['2x']}}" class="menu-item-img img-fluid mb-1">
+                                            @endif
+                                            <span class="title">{{$menu['infants'][$i]['element_data']['text']['text1']}}</span> 
+                                        </a>
+                                    </li>
+                                @endfor
+                            </ul>
+                        </div>
+                    </div>
+                      
+
+                    <div class="nav-column nav-column--wide d-none d-lg-block">
+                        <a href="{{$menu['infants'][22]['element_data']['image']['href']}}" class="d-block">
+                          <img  class="d-block w-100 img-fluid offer-img mt-4 mt-lg-0"
+                             src="{{$menu['infants'][22]['images']['default']['1x']}}"
+                             data-srcset="{{$menu['infants'][22]['images']['default']['2x']}} 2x,
+                                          {{$menu['infants'][22]['images']['default']['1x']}} 1x"
+                             alt="{{$menu['infants'][22]['element_data']['image']['img_alt']}}"
+                             title="{{$menu['infants'][22]['element_data']['image']['title']}}"/>
+                        </a>
+                        @if($menu['infants'][22]['element_data']['text']['text1'])
+                            <div class="row align-items-center mt-2 mb-4 mb-lg-0">
+                                <div class="col-7">
+                                  <div class="h5 text-primary font-weight-bold">Spotlight on</div>
+                                  <div class="text-white">{{$menu['infants'][22]['element_data']['text']['text1']}}</div>
+                                </div>
+                                <div class="col-5">
+                                  <a href="{{$menu['infants'][22]['element_data']['image']['href']}}" class="btn kss-btn kss-btn--mini">Shop now</a>
+                                </div>
+                            </div>
+                        @endif
+                        
+                    </div>
+                  </div>
+              </li>
+
+              <li>
+                  <a class="d-none d-lg-block cursor-pointer">Toys</a>
+                  <div class="megamenu-wrapper" data-menu="Toys">
+
+                    <div class="nav-column">
+                        <div>
+                            <div class="nav-column--heading mt-1 mb-2">Shop by Sub-Types</div>
+
+                            <ul class="list-unstyled layout--3-col">
+                                @for ($i = 0; $i < 2; $i++)
+                                    <li >
+                                        <a class="megamenu-link cursor-pointer" href="{{$menu['toys'][$i]['element_data']['image']['href']}}">
+                                            @if(!empty($menu['toys'][$i]['images']))
+                                                <img src="{{$menu['toys'][$i]['images']['default']['2x']}}" class="menu-item-img img-fluid mb-1">
+                                            @endif
+                                            <span class="title">{{$menu['toys'][$i]['element_data']['text']['text1']}}</span> 
+                                        </a>
+                                    </li>
+                                @endfor
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="nav-column">
+                        <div>
+                            <div class="nav-column--heading mt-1 mb-2">Shop by Price</div>
+
+                            <ul class="list-unstyled layout--tags">
+                                @for ($i = 2; $i < 6; $i++)
+                                    <li >
+                                        <a class="megamenu-link cursor-pointer" href="{{$menu['toys'][$i]['element_data']['link']}}">
+                                            @if(!empty($menu['toys'][$i]['images']))
+                                                <img src="{{$menu['toys'][$i]['images']['default']['2x']}}" class="menu-item-img img-fluid mb-1">
+                                            @endif
+                                            <span class="title">{{$menu['toys'][$i]['element_data']['text']['text1']}}</span> 
+                                        </a>
+                                    </li>
+                                @endfor
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="nav-column nav-column--wide d-none d-lg-block">
+                        <a href="{{$menu['toys'][6]['element_data']['image']['href']}}" class="d-block">
+                          <img  class="d-block w-100 img-fluid offer-img mt-4 mt-lg-0"
+                             src="{{$menu['toys'][6]['images']['default']['1x']}}"
+                             data-srcset="{{$menu['toys'][6]['images']['default']['2x']}} 2x,
+                                          {{$menu['toys'][6]['images']['default']['1x']}} 1x"
+                             alt="{{$menu['toys'][6]['element_data']['image']['img_alt']}}"
+                             title="{{$menu['toys'][6]['element_data']['image']['title']}}"/>
+                        </a>
+                        @if($menu['toys'][6]['element_data']['text']['text1'])
+                            <div class="row align-items-center mt-2 mb-4 mb-lg-0">
+                                <div class="col-6">
+                                  <div class="h5 text-primary font-weight-bold">Spotlight on</div>
+                                  <div class="text-white">{{$menu['toys'][6]['element_data']['text']['text1']}}</div>
+                                </div>
+                                <div class="col-5">
+                                  <a href="{{$menu['toys'][6]['element_data']['image']['href']}}" class="btn kss-btn kss-btn--mini">Shop now</a>
+                                </div>
+                            </div>
+                        @endif
+                        
+                    </div>
+                  </div>
+              </li>
+
+              <li>
+                  <a class="d-none d-lg-block cursor-pointer">Stationery</a>
+                  <div class="megamenu-wrapper" data-menu="Stationery">
+
+                    <div class="nav-column">
+                        <div>
+                            <div class="nav-column--heading mt-1 mb-2">Shop by Sub-Types</div>
+
+                            <ul class="list-unstyled layout--3-col">
+                                @for ($i = 0; $i < 4; $i++)
+                                    <li >
+                                        <a class="megamenu-link cursor-pointer" href="{{$menu['stationery'][$i]['element_data']['image']['href']}}">
+                                            @if(!empty($menu['stationery'][$i]['images']))
+                                                <img src="{{$menu['stationery'][$i]['images']['default']['2x']}}" class="menu-item-img img-fluid mb-1">
+                                            @endif
+                                            <span class="title">{{$menu['stationery'][$i]['element_data']['text']['text1']}}</span> 
+                                        </a>
+                                    </li>
+                                @endfor
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="nav-column">
+                        <div>
+                            <div class="nav-column--heading mt-1 mb-2">Shop by Price</div>
+
+                            <ul class="list-unstyled layout--tags">
+                                @for ($i = 4; $i < 8; $i++)
+                                    <li >
+                                        <a class="megamenu-link cursor-pointer" href="{{$menu['stationery'][$i]['element_data']['link']}}">
+                                            @if(!empty($menu['stationery'][$i]['images']))
+                                                <img src="{{$menu['stationery'][$i]['images']['default']['2x']}}" class="menu-item-img img-fluid mb-1">
+                                            @endif
+                                            <span class="title">{{$menu['stationery'][$i]['element_data']['text']['text1']}}</span> 
+                                        </a>
+                                    </li>
+                                @endfor
+                            </ul>
+                        </div>
+                    </div>      
+
+                    <div class="nav-column nav-column--wide d-none d-lg-block">
+                        <a href="{{$menu['stationery'][8]['element_data']['image']['href']}}" class="d-block">
+                          <img  class="d-block w-100 img-fluid offer-img mt-4 mt-lg-0"
+                             src="{{$menu['stationery'][8]['images']['default']['1x']}}"
+                             data-srcset="{{$menu['stationery'][8]['images']['default']['2x']}} 2x,
+                                          {{$menu['stationery'][8]['images']['default']['1x']}} 1x"
+                             alt="{{$menu['stationery'][8]['element_data']['image']['img_alt']}}"
+                             title="{{$menu['stationery'][8]['element_data']['image']['title']}}"/>
+                        </a>
+                        @if($menu['stationery'][8]['element_data']['text']['text1'])
+                            <div class="row align-items-center mt-2 mb-4 mb-lg-0">
+                                <div class="col-7">
+                                  <div class="h5 text-primary font-weight-bold">Spotlight on</div>
+                                  <div class="text-white">{{$menu['stationery'][8]['element_data']['text']['text1']}}</div>
+                                </div>
+                                <div class="col-5">
+                                  <a href="{{$menu['stationery'][8]['element_data']['image']['href']}}" class="btn kss-btn kss-btn--mini">Shop now</a>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+                  </div>
+              </li>
 
             <li>
               <a href="/ideas" class="d-none d-lg-block">Blog</a>
