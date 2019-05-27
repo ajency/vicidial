@@ -49,8 +49,8 @@ class OrderLineStatus implements ShouldQueue
                         $return_expiry_date = ($return_policy->expressions->first()->value[0] == 0) ? null : $orderDate->endOfDay()->addDays($return_policy->expressions->first()->value[0] - 1)->toDateTimeString();
                     }
                     $changes = [
-                        'orderline_return_expiry_date'     => $return_expiry_date,
-                        'orderline_shipment_delivery_date' => $this->delivery_date,
+                        'orderline_return_expiry_date'     => (new Carbon($return_expiry_date))->timestamp,
+                        'orderline_shipment_delivery_date' => (new Carbon($this->delivery_date))->timestamp,
                     ];
                 }
                 $ol->shipment_status        = $this->status;
