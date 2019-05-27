@@ -40,6 +40,6 @@ return [
 			'version' => 'latest'
 		],
 		'prefix' => str_slug(env('APP_ENV')),
-		'topics' => ['OrderCreated']
+		'topics' => ['OrderCreated', 'OrderUpdated','SignUp']
 	],
 ];
