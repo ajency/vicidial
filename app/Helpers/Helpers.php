@@ -841,16 +841,35 @@ function defaultUserPassword($append)
     return $key;
 }
 
-function translateDiscountToItems($cartData)
+function translateDiscountToItems($cartData, $couponSpecificItems = false)
 {
-    $discountRatio = $cartData['final_total'] / floatval($cartData['sale_total']);
-    $total         = 0;
+    $total           = 0;
+    $discountRatio   = $cartData['final_total'] / floatval($cartData['sale_total']);
+    $discount_amount = $cartData['discount'];
+
     foreach ($cartData['items'] as $id => $cartItem) {
-        $newPrice                              = round($cartItem['price_sale'] * $discountRatio, 2);
-        $cartData['items'][$id]['price_final'] = $newPrice;
+        $newPrice    = round($cartItem['price_sale'] * $discountRatio, 2);
+
+        // For product specific coupon action
+        if( $couponSpecificItems ){
+            // If the item doesn't belong to the coupon category, don't change the final price
+            if( $cartItem['is_coupon_applicable'] && !empty($cartData['coupon_products_total']) ) {
+                $discountRatio = $cartItem['price_final'] / floatval($cartData['coupon_products_total']);
+                if($cartItem['price_sale'] > ($discount_amount * $discountRatio)) {
+                    $newPrice  = round($cartItem['price_sale'] -($discount_amount * $discountRatio), 2);
+                } else {
+                    $newPrice  = round(($discount_amount * $discountRatio) - $cartItem['price_sale'], 2);
+                }
+                $cartData['items'][$id]['price_final']          = $newPrice;
+                $cartData['items'][$id]['item_discount_amount'] = ($discount_amount * $discountRatio);
+                $cartData['items'][$id]['price_final'] = $newPrice;
+            }
+        } else {
+            $cartData['items'][$id]['price_final'] = $newPrice;
+        }
         $total += $newPrice;
     }
-    $cartData['round_off'] = $cartData['final_total'] - $total;
+    $cartData['round_off']  = $cartData['final_total'] - $total;
     return $cartData;
 }
 

@@ -321,7 +321,7 @@ class Variant extends Model
     }
 
     /**
-     * Get variant subtype
+     * Get variant CategoryType
      *
      * @return string
      */
@@ -331,11 +331,38 @@ class Variant extends Model
         return (isset($this->elastic_data["search_result_data"]["product_category_type"]) && $this->elastic_data["search_result_data"]["product_category_type"]) ? $this->elastic_data["search_result_data"]["product_category_type"] : false;
     }
 
+    /**
+     * Get variant subType
+     *
+     * @return string
+     */
 
     public function getSubType()
     {
         return (isset($this->elastic_data["search_result_data"]["product_subtype"]) && $this->elastic_data["search_result_data"]["product_subtype"]) ? $this->elastic_data["search_result_data"]["product_subtype"] : false;
     }
+     /**
+    * Get variant Gender
+    *
+    * @return string
+    */
+
+   public function getGender()
+   {
+       return (isset($this->elastic_data["search_result_data"]["product_gender"]) && $this->elastic_data["search_result_data"]["product_gender"]) ? $this->elastic_data["search_result_data"]["product_gender"] : false;
+   }
+
+    /**
+    * Get variant AgeGroup
+    *
+    * @return string
+    */
+
+   public function getAgeGroup()
+   {
+       return (isset($this->elastic_data["search_result_data"]["product_age_group"]) && $this->elastic_data["search_result_data"]["product_age_group"]) ? $this->elastic_data["search_result_data"]["product_age_group"] : false;
+   }
+
 
     /**
      * Get display title

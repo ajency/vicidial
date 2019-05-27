@@ -256,13 +256,14 @@ class Offer extends Model
             $cartData['coupon']                   = null;
             return $cartData;
         }
-        //check if offer satisfies all condition
 
+        //check if offer satisfies all condition
         foreach ($expressions as $expression) {
             if (!$expression->validate($cartData)) {
                 $isApplicable = false;
             }
         }
+
         if (!$isApplicable) {
             $cartData['messages']['offer_not_applicable'] = "Offer {$this->title} not applicable on your cart";
             $cartData['coupon']                           = null;
@@ -292,11 +293,13 @@ class Offer extends Model
         //perform the offer action
         $cartData = $this->action->apply($cartData);
 
+        $couponSpecificItems = (!empty($cartData['coupon_specific_products']))? true : false;
+
         //Add offer applied
         $cartData['offersApplied'][] = $this;
 
         //translate to items
-        return translateDiscountToItems($cartData);
+        return translateDiscountToItems($cartData, $couponSpecificItems);
     }
 
     public static function buildCartData($cartData)
