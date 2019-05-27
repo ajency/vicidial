@@ -861,7 +861,7 @@ function translateDiscountToItems($cartData, $couponSpecificItems = false)
                     $newPrice  = round(($discount_amount * $discountRatio) - $cartItem['price_sale'], 2);
                 }
                 $cartData['items'][$id]['price_final']          = $newPrice;
-                $cartData['items'][$id]['item_discount_amount'] = ($discount_amount * $discountRatio);
+                $cartData['items'][$id]['item_discount_amount'] = round($discount_amount * $discountRatio, 2);
                 $cartData['items'][$id]['price_final'] = $newPrice;
             }
         } else {
