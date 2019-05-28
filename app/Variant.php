@@ -157,13 +157,18 @@ class Variant extends Model
     public function getItem($related_items = true, $current_quantity = false)
     {
         $item = array(
+            "id"                 => $this->id,
+            'gender'             => $this->getGender(),
+            "odoo_id"            => $this->odoo_id,
+            'sub_type'           => $this->getSubType(),
+            'age_group'          => $this->getAgeGroup(),
+            'category_type'      => $this->getCategoryType(),
+            'message'            => $this->getMessage(),
+            "pixel_id"           => $this->getParentId() . "-" . $this->getVarColorId(),
+            'attributes'         => $this->getItemAttributes(),
             'product_slug'       => $this->getProductSlug(),
             'availability'       => $this->getAvailability(),
             'available_quantity' => $this->getQuantity(),
-            'message'            => $this->getMessage(),
-            'attributes'         => $this->getItemAttributes(),
-            "id"                 => $this->id,
-            "pixel_id"           => $this->getParentId() . "-" . $this->getVarColorId(),
         );
 
         if ($related_items) {
