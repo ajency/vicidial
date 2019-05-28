@@ -76,6 +76,7 @@ export class PromotionsListComponent implements OnInit, OnChanges {
         }
       })
     }
+    promo.shop_more = promo.condition.value.value - price;
     if(price > promo.condition.value.value)
       return true;
     return false;

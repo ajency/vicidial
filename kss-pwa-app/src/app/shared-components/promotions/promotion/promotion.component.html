@@ -21,16 +21,17 @@
 				</ng-container>
 				<ng-template #otherCoupon>
 					<div>
-						Save 
-						<span *ngIf="coupon.action.type == 'value'">Rs. </span>
-						{{coupon.action.value}}
-						<span *ngIf="coupon.action.type == 'percent'">%</span>
+						Shop for Rs. {{coupon.shop_more}} more to avail this coupon and save 
+						<span class="text-success"> <span *ngIf="coupon.action.type == 'value'">Rs. </span>{{coupon.action.value}}<span *ngIf="coupon.action.type == 'percent'">%</span></span>
 					</div>
 				</ng-template>
 			</div>
 		</div>
 		<div class="coupon-box__validity custom-size font-weight-normal valid-till">
 			Valid till <strong>{{getValidTill(coupon.valid_till)}}</strong>
+		</div>
+		<div class="coupon-box__validity custom-size font-weight-normal valid-till">
+			* Applicable on selected products
 		</div>
 	</div>
 	<div *ngIf="applicable">
