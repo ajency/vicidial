@@ -32,13 +32,11 @@ return [
 	'sns' => [
 		'client' => [
 			'id' => env('AWS_ID'),
-			'credentials' => [
-				'key' => env('AWS_KEY'),
-				'secret' => env('AWS_SECRET')
-			],
+			'credentials' => false,
 			'region'=> env('AWS_REGION'),
 			'version' => 'latest'
 		],
+		'aws_role' => env('AWS_ROLE','kss-role'),
 		'prefix' => str_slug(env('APP_ENV')),
 		'topics' => ['OrderCreated', 'OrderUpdated','SignUp']
 	],
