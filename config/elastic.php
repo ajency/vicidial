@@ -12,5 +12,6 @@ return [
         "inventory" => "inventory",
         "variants"  => "variants",
         "jobs"      => "queue_jobs",
+        'weborder'  => "web_orders",
     ],
 ];

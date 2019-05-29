@@ -7,6 +7,7 @@ use App\Cart;
 use App\Comment;
 use App\Defaults;
 use App\Http\Controllers\Controller;
+use App\Jobs\OrderCreatedNotification;
 use App\Jobs\OrderLineStatus;
 use App\Jobs\SubOrderStatus;
 use App\Order;
@@ -49,6 +50,7 @@ class OrderController extends Controller
         $order->store_data = $storeData['store_data'];
         $order->verified   = $params["token_verified"];
         $order->save();
+        OrderCreatedNotification::dispatch($order->id)->onQueue('order_index');
 
         if (!$address->verified && $params["token_verified"]) {
             $address->verified = $params["token_verified"];

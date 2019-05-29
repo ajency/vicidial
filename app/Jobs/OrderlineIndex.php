@@ -1,117 +1,40 @@
 <?php
 
-namespace App;
+namespace App\Jobs;
 
+use Ajency\Connections\ElasticQuery;
+use App\OrderLine;
+use Carbon\Carbon;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 
-use App\Jobs\CreateOrderlineIndexJobs;
-use App\Jobs\OrderlineIndex;
-use App\Jobs\UpdateOrderLineIndex;
-use Illuminate\Database\Eloquent\Model;
-
-class OrderLine extends Model
+class OrderlineIndex implements ShouldQueue
 {
-    protected $casts = [
-        'images'        => 'array',
-        'return_policy' => 'array',
-        'is_returned'   => 'boolean',
-    ];
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $fillable = [
-        'title',
-        'name',
-        'variant_id',
-        'images',
-        'size',
-        'price_mrp',
-        'price_final',
-        'price_discounted',
-        'discount_per',
-        'product_id',
-        'product_color_id',
-        'product_slug',
-        'product_type',
-        'product_subtype',
-    ];
-
-    public function orders()
+    protected $id;
+    /**
+     * Create a new job instance.
+     *
+     * @return void
+     */
+    public function __construct($id)
     {
-        return $this->morphedByMany('App\Order', 'line_mapping');
+        $this->id = $id;
     }
 
-    public function ordersNew()
+    /**
+     * Execute the job.
+     *
+     * @return void
+     */
+    public function handle()
     {
-        return $this->morphedByMany('App\Order', 'line_mapping')->wherePivot('type', 'New Transaction');
-    }
-
-    public function ordersCancelled()
-    {
-        return $this->morphedByMany('App\Order', 'line_mapping')->wherePivot('type', 'Cancelled Transaction');
-    }
-
-    public function ordersReturned()
-    {
-        return $this->morphedByMany('App\Order', 'line_mapping')->wherePivot('type', 'Returned Transaction');
-    }
-
-    public function subOrders()
-    {
-        return $this->morphedByMany('App\SubOrder', 'line_mapping');
-    }
-
-    public function subOrdersNew()
-    {
-        return $this->morphedByMany('App\SubOrder', 'line_mapping')->wherePivot('type', 'New Transaction');
-    }
-
-    public function subOrdersCancelled()
-    {
-        return $this->morphedByMany('App\SubOrder', 'line_mapping')->wherePivot('type', 'Cancelled Transaction');
-    }
-
-    public function subOrdersReturned()
-    {
-        return $this->morphedByMany('App\SubOrder', 'line_mapping')->wherePivot('type', 'Returned Transaction');
-    }
-
-    public function comments()
-    {
-        return $this->morphMany('App\Comment','model');
-    }
-
-    public static function indexAllOrderLines($min = false, $max = false)
-    {
-        $orderlines = self::select('id');
-        if ($min) {
-            $orderlines->where('id', '>', $min);
-        }
-        if ($max) {
-            $orderlines->where('id', '<', $max);
-        }
-        $orderlines->pluck('id')->chunk(30)->each(function ($chunkedOrderLines) {
-            CreateOrderlineIndexJobs::dispatch($chunkedOrderLines)->onQueue('order_index');
-        });
-    }
-
-    public function index()
-    {
-        OrderlineIndex::dispatch($this->id)->onQueue('order_index');
-    }
-
-    public function updateIndex($changes)
-    {
-        UpdateOrderLineIndex::dispatch($this->id,$changes)->onQueue('order_index');
-    }
-
-    public static function updateMultipleIndex($params){
-        foreach ($params['orderLines'] as $key => $changes) {
-            $ol = self::find($key);
-            $ol->updateIndex($changes);
-        }
-    }
-
-    public function flatData(){
         $indexData                               = [];
-        $orderline                               = $this;
+        $orderline                               = OrderLine::find($this->id);
         $indexData['orderline_id']               = $orderline->id;
         $indexData['orderline_title']            = $orderline->title;
         $indexData['orderline_name']             = $orderline->name;
@@ -134,12 +57,14 @@ class OrderLine extends Model
         if ($orderline->return_expiry_date) {
             $indexData['orderline_return_expiry_date'] = (new Carbon($orderline->return_expiry_date))->timestamp;
         }
+
         $indexData['orderline_return_policy']   = $orderline->return_policy;
         $indexData['orderline_product_type']    = $orderline->product_type;
         $indexData['orderline_product_subtype'] = $orderline->product_subtype;
         $indexData['orderline_is_returned']     = $orderline->is_returned;
         $indexData['orderline_created_at']      = $orderline->created_at->timestamp;
         $indexData['orderline_updated_at']      = $orderline->updated_at->timestamp;
+
         $indexData['order_id']               = $orderline->ordersNew->first()->id;
         $indexData['order_address_id']       = $orderline->ordersNew->first()->address_id;
         $indexData['order_transaction_mode'] = $orderline->ordersNew->first()->transaction_mode;
@@ -176,7 +101,13 @@ class OrderLine extends Model
         $indexData['user_phone'] = $orderline->ordersNew->first()->cart->user->phone;
         $indexData['user_name']  = $orderline->ordersNew->first()->cart->user->name;
 
-        return $indexData;
-    }
+        $q = new ElasticQuery;
+        $q->setIndex(config('elastic.indexes.weborder'));
+        $q->createIndexParams($orderline->id, $indexData);
+        $result = $q->index();
 
+        if (!isset($result['result']) || !($result['result'] == 'created' || $result['result'] == 'updated')) {
+            throw new Exception(json_encode($result));
+        }
+    }
 }

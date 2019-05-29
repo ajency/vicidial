@@ -50,6 +50,11 @@ class Order extends Model
         return $this->morphToMany('App\OrderLine', 'line_mapping');
     }
 
+    public function comments()
+    {
+        return $this->morphMany('App\Comment', 'model');
+    }
+
     public function setSubOrders()
     {
         $cart = Cart::find($this->cart_id);
@@ -72,6 +77,7 @@ class Order extends Model
             foreach ($orderLineIds as $orderLineId) {
                 $subOrder->orderLines()->attach($orderLineId, ['type' => $subOrder->type]);
                 $this->orderLines()->attach($orderLineId, ['type' => $this->type]);
+                // OrderlineIndex::dispatch($orderLineId)->onQueue('order_index');
             }
         }
         SaveReturnPolicies::dispatch($this->id)->onQueue('orderline_return_policy');
@@ -95,6 +101,11 @@ class Order extends Model
             foreach ($subOrder->orderLines as $orderLine) {
                 $orderLine->state = 'draft';
                 $orderLine->save();
+                try {
+                    $orderLine->update(['orderline_state' => 'draft']);
+                } catch (\Exception $e) {
+                    \Log::error($e->message);
+                }
                 if (!isset($variantQuantity[$orderLine->variant_id])) {
                     $variantQuantity[$orderLine->variant_id] = 0;
                 }
@@ -138,6 +149,7 @@ class Order extends Model
                 $order->orderLines()->attach($orderLine->id, ['type' => $order->type]);
                 $orderLine->state = 'processing-cancel';
                 $orderLine->save();
+                $orderLine->index();
             }
             CancelOdooOrder::dispatch($cancelSubOrder, $subOrder->id)->onQueue('odoo_order');
         }
@@ -429,6 +441,7 @@ class Order extends Model
             $comment->save();
             $order_line->is_returned = true;
             $order_line->save();
+            $order_line->index();
         }
 
         ReturnOdooOrder::dispatch($returnSubOrder)->onQueue('odoo_order');
