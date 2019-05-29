@@ -8,7 +8,6 @@ use App\Jobs\CancelOdooOrder;
 use App\Jobs\OdooOrder;
 use App\Jobs\OdooOrderLine;
 use App\Jobs\OrderLineDeliveryDate;
-use App\Jobs\OrderlineIndex;
 use App\Jobs\ReturnOdooOrder;
 use App\Jobs\SaveReturnPolicies;
 use App\ReturnPolicy;
@@ -16,7 +15,6 @@ use App\SubOrder;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Tzsk\Payu\Fragment\Payable;
-use App\Jobs\OrderCreatedNotification;
 
 class Order extends Model
 {
@@ -54,7 +52,7 @@ class Order extends Model
 
     public function comments()
     {
-        return $this->morphMany('App\Comment','model');
+        return $this->morphMany('App\Comment', 'model');
     }
 
     public function setSubOrders()
@@ -83,7 +81,6 @@ class Order extends Model
             }
         }
         SaveReturnPolicies::dispatch($this->id)->onQueue('orderline_return_policy');
-        OrderCreatedNotification::dispatch($this->id)->onQueue('order_index');
     }
 
     public function checkInventoryForSuborders()
