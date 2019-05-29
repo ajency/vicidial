@@ -23,5 +23,21 @@ return [
 			'model' => 'App\Location',
 			'function' => 'addVendorLocation',
 		],
+		'updateOrderLineIndex' => [
+			'model' => "App\OrderLine",
+			'function' => 'updateMultipleIndex'
+		],
+	],
+	'async_provider' => 'sns',
+	'sns' => [
+		'client' => [
+			'id' => env('AWS_ID'),
+			'credentials' => false,
+			'region'=> env('AWS_REGION'),
+			'version' => 'latest'
+		],
+		'aws_role' => env('AWS_ROLE','kss-role'),
+		'prefix' => str_slug(env('APP_ENV')),
+		'topics' => ['OrderCreated', 'OrderUpdated','SignUp']
 	],
 ];

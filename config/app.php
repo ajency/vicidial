@@ -202,6 +202,7 @@ return [
         GoogleMaps\ServiceProvider\GoogleMapsServiceProvider::class,
         Ajency\Connections\ConnectionsServiceProvider::class,
         Corcel\Laravel\CorcelServiceProvider::class,
+        Joblocal\LaravelSqsSnsSubscriptionQueue\SqsSnsServiceProvider::class,
 
     ],
 
