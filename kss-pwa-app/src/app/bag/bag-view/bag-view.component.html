@@ -133,7 +133,7 @@
 		<div class="cart-promotion mt-4" [ngClass]="{'d-none' : cart.cart_type == 'order' && !cart.coupon_applied}">
 			<h4 class="mb-2 font-weight-bold">Coupon Summary</h4>
 			<div *ngIf="cart.coupon_applied">
-				<app-applied-coupon [promoApplied]="cart.coupon_applied" [promotions]="coupons" [orderTotal]="cart.summary.sale_price_total" [cartType]="cart.cart_type" (editCouponTrigger)="displayCouponSideBar()"> </app-applied-coupon>
+				<app-applied-coupon [promoApplied]="cart.coupon_applied" [items]="cart.items" [promotions]="coupons" [orderTotal]="cart.summary.sale_price_total" [cartType]="cart.cart_type" (editCouponTrigger)="displayCouponSideBar('coupon')"> </app-applied-coupon>
 			</div>
 			<div *ngIf="!cart.coupon_applied" class="kss-flash kss-flash--info mb-3 cursor-pointer" (click)="displayCouponSideBar()">
 				<div class="d-flex align-items-center justify-content-between py-1">
