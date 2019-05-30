@@ -141,6 +141,8 @@ class OrderController extends Controller
         if (request()->session()->get('payment', false)) {
             $params['payment_status'] = request()->session()->get('payment');
         }
+        
+        $params['trackBackUrl'] = $order->getTrackbackUrlCashBackWorld();
 
         return view('orderdetails')->with('params', $params);
     }
