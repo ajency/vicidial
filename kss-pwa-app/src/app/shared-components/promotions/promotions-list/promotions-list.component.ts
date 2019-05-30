@@ -50,36 +50,13 @@ export class PromotionsListComponent implements OnInit, OnChanges {
           break;
 
         case 'specific_products' :
-          if(this.productSpecificCouponApplicable(promo))
+          if(this.appservice.productSpecificCouponApplicable(promo, this.items))
             this.applicablePromotions.push(promo);
           else
             this.nonApplicablePromotions.push(promo);
           break;
       }  
     })
-  }
-
-  productSpecificCouponApplicable(promo){
-    let facet = promo.condition.value.facet;
-    let price = 0;
-    if(promo.condition.value.activity == 'include'){
-      this.items.forEach((item)=>{
-        if( (!facet.age_group || item.age_group === facet.age_group) && (!facet.category_type || item.category_type === facet.category_type) && (!facet.gender || item.gender === facet.gender) && (!facet.sub_type || facet.sub_type === item.sub_type) && !promo.condition.value.variant.includes(item.odoo_id) ){
-          price = price + item.attributes.price_final * item.quantity;
-        }
-      })
-    }
-    else if(promo.condition.value.activity == 'exclude'){
-      this.items.forEach((item)=>{
-        if( (!facet.age_group || item.age_group !== facet.age_group) || (!facet.category_type || item.category_type !== facet.category_type) || (!facet.gender || item.gender !== facet.gender) || (!facet.sub_type || facet.sub_type !== item.sub_type) || promo.condition.value.variant.includes(item.odoo_id) ){
-          price = price + item.attributes.price_final * item.quantity;
-        }
-      })
-    }
-    promo.shop_more = promo.condition.value.value - price;
-    if(price > promo.condition.value.value)
-      return true;
-    return false;
   }
 
   calculateAge(){

@@ -341,4 +341,28 @@ export class AppServiceService {
     return ''
   }
 
+  productSpecificCouponApplicable(promo, items){
+    let facet = promo.condition.value.facet;
+    let price = 0;
+    if(promo.condition.value.activity == 'include'){
+      items.forEach((item)=>{
+        if( (!facet.age_group || item.age_group === facet.age_group) && (!facet.category_type || item.category_type === facet.category_type) && (!facet.gender || item.gender === facet.gender) && (!facet.sub_type || facet.sub_type === item.sub_type) && !promo.condition.value.variant.includes(item.odoo_id) ){
+          price = price + item.attributes.price_final * item.quantity;
+        }
+      })
+    }
+    else if(promo.condition.value.activity == 'exclude'){
+      items.forEach((item)=>{
+        if( (!facet.age_group || item.age_group !== facet.age_group) || (!facet.category_type || item.category_type !== facet.category_type) || (!facet.gender || item.gender !== facet.gender) || (!facet.sub_type || facet.sub_type !== item.sub_type) || promo.condition.value.variant.includes(item.odoo_id) ){
+          price = price + item.attributes.price_final * item.quantity;
+        }
+      })
+    }
+    promo.shop_more = promo.condition.value.value - price;
+    promo.actual_discount = this.calculateDiscount(promo.action.type, promo.action.value, price);
+    if(price > promo.condition.value.value)
+      return true;
+    return false;
+  }
+
 }
