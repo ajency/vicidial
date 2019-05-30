@@ -83,6 +83,16 @@ class Order extends Model
         SaveReturnPolicies::dispatch($this->id)->onQueue('orderline_return_policy');
     }
 
+    public function updateOrderlineIndex($fields){
+        foreach ($this->orderlines as $orderline) {
+            $changes = [];
+            foreach ($fields as $field) {
+                $changes['order_'.$field] = $this->$field;
+            }
+            $orderline->updateIndex($changes);
+        }
+    }
+
     public function checkInventoryForSuborders()
     {
         foreach ($this->subOrders as $subOrder) {

@@ -38,9 +38,11 @@ class PaymentController extends Controller
                 ];
 
                 $order->status     = 'payment-in-progress';
+                //status update 
                 $expires_at        = Carbon::now()->addMinutes(config('orders.payu_expiry'));
                 $order->expires_at = $expires_at->timestamp;
                 $order->save();
+                $order->updateOrderlineIndex(['status']);
 
                 return Payment::with($order)->make($attributes, function ($then) use ($orderid) {
                     $then->redirectTo('/user/order/' . $orderid . '/payment/payu/status');
@@ -113,6 +115,7 @@ class PaymentController extends Controller
                     abort(400, 'Payment Type Not Available');
                     break;
             }
+            $order->updateOrderlineIndex(['status','transaction_mode']);
         } catch (\Exception $e) {
             \Log::notice('Order Success Method Failed');
             \Log::notice('Order id : ' . $orderid);
