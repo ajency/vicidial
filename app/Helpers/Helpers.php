@@ -844,30 +844,26 @@ function defaultUserPassword($append)
 function translateDiscountToItems($cartData, $boolIsSpecificItemsCoupon = false)
 {
     $total           = 0;
-    $discountRatio   = $cartData['final_total'] / floatval($cartData['sale_total']);
     $discount_amount = $cartData['discount'];
+
+    $discountRatio   = $cartData['final_total'] / floatval($cartData['sale_total']);
 
     foreach ($cartData['items'] as $id => $cartItem) {
         $newPrice    = round($cartItem['price_sale'] * $discountRatio, 2);
 
-        // For product specific coupon action
-        if( $boolIsSpecificItemsCoupon ){
-            // If the item doesn't belong to the coupon, don't change the final price
-            if( $cartItem['is_coupon_applicable'] && !empty($cartData['coupon_products_total_amount']) ) {
-                $discountRatio = $cartItem['price_final'] / floatval($cartData['coupon_products_total_amount']);
-                if($cartItem['price_sale'] > ($discount_amount * $discountRatio)) {
-                    $newPrice  = round($cartItem['price_sale'] -($discount_amount * $discountRatio), 2);
-                } else {
-                    $newPrice  = round(($discount_amount * $discountRatio) - $cartItem['price_sale'], 2);
-                }
-                $cartData['items'][$id]['price_final']          = $newPrice;
-                $cartData['items'][$id]['item_discount_amount'] = round($discount_amount * $discountRatio, 2);
-                $cartData['items'][$id]['price_final'] = $newPrice;
-            }
-        } else {
+        if ( !$boolIsSpecificItemsCoupon ) {
             $cartData['items'][$id]['price_final'] = $newPrice;
+            $total += $newPrice;
+        } else {
+            if( $cartItem['is_coupon_applicable'] ) {
+                // For product specific coupon action
+                $discountRatio = ($cartData['coupon_products_total_amount'] - $discount_amount) / floatval($cartData['coupon_products_total_amount']);
+                $newPrice      = round($cartItem['price_sale'] * $discountRatio, 2);
+                $cartData['items'][$id]['price_final']          = $newPrice;
+                $cartData['items'][$id]['item_discount_amount'] = round($cartItem['price_sale'] - $newPrice, 2);
+                $total += $newPrice;
+            }
         }
-        $total += $newPrice;
     }
     $cartData['round_off']  = $cartData['final_total'] - $total;
     return $cartData;
