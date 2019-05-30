@@ -71,7 +71,7 @@ export class PromotionsListComponent implements OnInit, OnChanges {
     }
     else if(promo.condition.value.activity == 'exclude'){
       this.items.forEach((item)=>{
-        if( (facet.age_group && item.age_group !== facet.age_group) || (facet.category_type && item.category_type !== facet.category_type) || (facet.gender && item.gender !== facet.gender) || (facet.subtype && facet.subtype !== item.subtype) || promo.condition.value.variant.includes(item.odoo_id) ){
+        if( (!facet.age_group || item.age_group !== facet.age_group) || (!facet.category_type || item.category_type !== facet.category_type) || (!facet.gender || item.gender !== facet.gender) || (!facet.subtype || facet.subtype !== item.subtype) || promo.condition.value.variant.includes(item.odoo_id) ){
           price = price + item.attributes.price_final * item.quantity;
         }
       })
