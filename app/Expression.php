@@ -60,26 +60,26 @@ class Expression extends Model
                          case 'include':
                             foreach ($data['items'] as $key => $orderItem) {
                                 // Check for each item in the cart if condition satisfies
-                                $isCouponApplicable = false;
                                 if( ( !$categoryType || ($orderItem['category_type'] === $categoryType) ) && ( !$subType || ($orderItem['sub_type'] === $subType) ) && ( !$gender || ($orderItem['gender'] === $gender) ) && ( !$ageGroup || ($orderItem['age_group'] === $ageGroup) ) && ( !is_array($variantIds) || !in_array($orderItem['odoo_id'], $variantIds) ) ) {
-                                    $isCouponApplicable = true;
+                                    $isCouponCartApplicable = true;
+                                    $data['items'][$key]['is_coupon_applicable'] = true;
+                                    $total_amount += $orderItem['price_sale'] * $orderItem['quantity'];
+                                    continue;
                                 }
-                                $isCouponCartApplicable |= $isCouponApplicable;
-                                $data['items'][$key]['is_coupon_applicable'] = $isCouponApplicable;
-                                $total_amount += ( $isCouponApplicable )? $orderItem['price_sale'] * $orderItem['quantity'] : 0;
+                                $data['items'][$key]['is_coupon_applicable'] = false;
                             }
                            break;
                        
                          case 'exclude':
                             foreach ($data['items'] as $key => $orderItem) {
                                 // Check for each item in the cart if condition satisfies
-                                $isCouponApplicable = false;
                                 if ( ( !$categoryType || ($orderItem['category_type'] !== $categoryType) ) || ( !$subType || ($orderItem['sub_type'] !== $subType) ) || ( !$gender || ($orderItem['gender'] !== $gender) ) || ( !$ageGroup || ($orderItem['age_group'] !== $ageGroup) ) || ( !is_array($variantIds) && in_array($orderItem['odoo_id'], $variantIds) ) ) {
-                                    $isCouponApplicable = true;
+                                    $isCouponCartApplicable = true;
+                                    $data['items'][$key]['is_coupon_applicable'] = true;
+                                    $total_amount += $orderItem['price_sale'] * $orderItem['quantity'];
+                                    continue;
                                 }
-                                $isCouponCartApplicable |= $isCouponApplicable;
-                                $data['items'][$key]['is_coupon_applicable'] = $isCouponApplicable;
-                                $total_amount += ( $isCouponApplicable )? $orderItem['price_sale'] * $orderItem['quantity'] : 0;
+                                $data['items'][$key]['is_coupon_applicable'] = false;
                             }
                            break;
 
