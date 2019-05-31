@@ -53,7 +53,7 @@ class Offer extends Model
     {
         self::where('active', true)->update(['active' => false]);
         $odoo    = new OdooConnect;
-        $coupons = $odoo->defaultExec(config('odoo.model.discount.name'), 'search', [[['coupon_typ', '=', 'SPECIFIC_COUPON'], ['type', '=', 'discount'], ['discount_rule', '=', 'cart'], ['channel', 'in', ['all','web']]]], ['limit' => 1000]);
+        $coupons = $odoo->defaultExec(config('odoo.model.discount.name'), 'search', [[['coupon_typ', '=', 'SPECIFIC_COUPON'], ['type', '=', 'discount'], ['discount_rule', '=', 'cart'], ['channel', 'in', ['all', 'web']]]], ['limit' => 1000]);
         $coupons->each(function ($couponID) {
             self::indexDiscount($couponID);
         });
@@ -94,9 +94,24 @@ class Offer extends Model
         switch ($discount['discount_rule']) {
             case 'cart':
                 $expn         = new Expression;
-                $expn->entity = 'cart_price';
                 $expn->filter = 'greater_than';
-                $expn->value  = [$discount['qty_step']];
+                if ($discount['exclude_type'] == "category") {
+                    $expn->entity = 'specific_products';
+                    $expn->value  = [
+                        "activity" => $discount['action'],
+                        "facet"    => [
+                            "category_type" => ($discount['categ_exclude_1']) ? trim(collect(explode('/', $discount['categ_exclude_1'][1]))->last()) : false,
+                            "gender"        => ($discount['categ_exclude_2']) ? trim(collect(explode('/', $discount['categ_exclude_2'][1]))->last()) : false,
+                            "age_group"     => ($discount['categ_exclude_3']) ? trim(collect(explode('/', $discount['categ_exclude_3'][1]))->last()) : false,
+                            "sub_type"       => ($discount['categ_exclude_4']) ? trim(collect(explode('/', $discount['categ_exclude_4'][1]))->last()) : false,
+                        ],
+                        "variant"  => $discount['remove_product_ids'],
+                        "value"    => $discount['qty_step'],
+                    ];
+                } else {
+                    $expn->entity = 'cart_price';
+                    $expn->value  = [$discount['qty_step']];
+                }
                 $this->expressions()->save($expn);
                 break;
         }
@@ -106,8 +121,7 @@ class Offer extends Model
     public function saveActionData($discount)
     {
         $this->action()->delete();
-        $action         = new Action;
-        $action->entity = 'cart_price';
+        $action = new Action;
         switch ($discount['apply1']) {
             case 'cart_fixed':
                 $action->type = 'value';
@@ -119,8 +133,23 @@ class Offer extends Model
                 # code...
                 break;
         }
-
-        $action->value = ['value' => $discount['discount_amt']];
+        if ($discount['exclude_type'] == "category") {
+            $action->entity = 'specific_products';
+            $action->value  = [
+                "activity" => $discount['action'],
+                "facet"    => [
+                    "category_type" => ($discount['categ_exclude_1']) ? trim(collect(explode('/', $discount['categ_exclude_1'][1]))->last()) : false,
+                    "gender"        => ($discount['categ_exclude_2']) ? trim(collect(explode('/', $discount['categ_exclude_2'][1]))->last()) : false,
+                    "age_group"     => ($discount['categ_exclude_3']) ? trim(collect(explode('/', $discount['categ_exclude_3'][1]))->last()) : false,
+                    "sub_type"       => ($discount['categ_exclude_4']) ? trim(collect(explode('/', $discount['categ_exclude_4'][1]))->last()) : false,
+                ],
+                "variant"  => $discount['remove_product_ids'],
+                "value"    => $discount['discount_amt'],
+            ];
+        } else {
+            $action->entity = 'cart_price';
+            $action->value  = ['value' => $discount['discount_amt']];
+        }
         $this->action()->save($action);
     }
 
@@ -227,13 +256,14 @@ class Offer extends Model
             $cartData['coupon']                   = null;
             return $cartData;
         }
-        //check if offer satisfies all condition
 
+        //check if offer satisfies all condition
         foreach ($expressions as $expression) {
             if (!$expression->validate($cartData)) {
                 $isApplicable = false;
             }
         }
+
         if (!$isApplicable) {
             $cartData['messages']['offer_not_applicable'] = "Offer {$this->title} not applicable on your cart";
             $cartData['coupon']                           = null;
@@ -265,9 +295,12 @@ class Offer extends Model
 
         //Add offer applied
         $cartData['offersApplied'][] = $this;
+        
+        // bool flag; Coupon is for specific products
+        $boolIsSpecificItemsCoupon = !empty($cartData['is_specific_products_coupon']);
 
         //translate to items
-        return translateDiscountToItems($cartData);
+        return translateDiscountToItems($cartData, $boolIsSpecificItemsCoupon);
     }
 
     public static function buildCartData($cartData)

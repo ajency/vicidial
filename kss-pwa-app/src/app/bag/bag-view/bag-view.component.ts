@@ -537,16 +537,13 @@ export class BagViewComponent implements OnInit {
   }
 
   applyCoupon(code){
-    // console.log("inside applyCoupon function", this.couponCode);
     this.appservice.showLoader();
     let body = { coupon_code : code };
-    let url = this.appservice.apiUrl + (this.appservice.isLoggedInUser() ? ("/api/rest/v2/user/cart/"+this.appservice.getCookie('cart_id')+"/apply-coupon?") : ("/rest/v2/anonymous/cart/apply-coupon?"));
+    let url = this.appservice.apiUrl + (this.appservice.isLoggedInUser() ? ("/api/rest/v2/user/cart/"+this.appservice.getCookie('cart_id')+"/apply-coupon") : ("/rest/v2/anonymous/cart/apply-coupon"));
     let header = this.appservice.isLoggedInUser() ? { Authorization : 'Bearer '+this.appservice.getCookie('token') } : {};
-    url = url+$.param(body);
     this.apiservice.request(url, 'get', body, header ).then((response)=>{
       this.cart.summary = response.summary;
       this.cart.coupon_applied = response.coupon_applied;
-      // this.displayPromo = true;
       this.hideCouponSideBar()
       this.appservice.removeLoader();
       this.couponErrorMessage = '';

@@ -15,12 +15,23 @@
 				You save: <span class="text-success">Rs.{{coupon.actual_discount}}</span>
 			</div>
 			<div *ngIf="!applicable" class="font-weight-bold coupon-box__saving custom-size">
-				Shop for Rs. {{coupon.condition.value[0] - orderTotal}} more to avail this coupon and save 
-				<span class="text-success"> <span *ngIf="coupon.action.type == 'value'">Rs. </span>{{coupon.action.value}}<span *ngIf="coupon.action.type == 'percent'">%</span></span>
+				<ng-container *ngIf="coupon.condition.entity == 'cart_price'; else otherCoupon">
+					Shop for Rs. {{coupon.condition.value[0] - orderTotal}} more to avail this coupon and save 
+					<span class="text-success"> <span *ngIf="coupon.action.type == 'value'">Rs. </span>{{coupon.action.value}}<span *ngIf="coupon.action.type == 'percent'">%</span></span>
+				</ng-container>
+				<ng-template #otherCoupon>
+					<div>
+						Shop for Rs. {{coupon.shop_more}} more to avail this coupon and save 
+						<span class="text-success"> <span *ngIf="coupon.action.type == 'value'">Rs. </span>{{coupon.action.value}}<span *ngIf="coupon.action.type == 'percent'">%</span></span>
+					</div>
+				</ng-template>
 			</div>
 		</div>
 		<div class="coupon-box__validity custom-size font-weight-normal valid-till">
 			Valid till <strong>{{getValidTill(coupon.valid_till)}}</strong>
+		</div>
+		<div class="coupon-box__validity custom-size font-weight-normal valid-till">
+			* Applicable on selected products
 		</div>
 	</div>
 	<div *ngIf="applicable">

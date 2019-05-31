@@ -157,13 +157,18 @@ class Variant extends Model
     public function getItem($related_items = true, $current_quantity = false)
     {
         $item = array(
+            "id"                 => $this->id,
+            'gender'             => $this->getGender(),
+            "odoo_id"            => $this->odoo_id,
+            'sub_type'           => $this->getSubType(),
+            'age_group'          => $this->getAgeGroup(),
+            'category_type'      => $this->getCategoryType(),
+            'message'            => $this->getMessage(),
+            "pixel_id"           => $this->getParentId() . "-" . $this->getVarColorId(),
+            'attributes'         => $this->getItemAttributes(),
             'product_slug'       => $this->getProductSlug(),
             'availability'       => $this->getAvailability(),
             'available_quantity' => $this->getQuantity(),
-            'message'            => $this->getMessage(),
-            'attributes'         => $this->getItemAttributes(),
-            "id"                 => $this->id,
-            "pixel_id"           => $this->getParentId() . "-" . $this->getVarColorId(),
         );
 
         if ($related_items) {
@@ -321,7 +326,7 @@ class Variant extends Model
     }
 
     /**
-     * Get variant subtype
+     * Get variant CategoryType
      *
      * @return string
      */
@@ -331,11 +336,38 @@ class Variant extends Model
         return (isset($this->elastic_data["search_result_data"]["product_category_type"]) && $this->elastic_data["search_result_data"]["product_category_type"]) ? $this->elastic_data["search_result_data"]["product_category_type"] : false;
     }
 
+    /**
+     * Get variant subType
+     *
+     * @return string
+     */
 
     public function getSubType()
     {
         return (isset($this->elastic_data["search_result_data"]["product_subtype"]) && $this->elastic_data["search_result_data"]["product_subtype"]) ? $this->elastic_data["search_result_data"]["product_subtype"] : false;
     }
+     /**
+    * Get variant Gender
+    *
+    * @return string
+    */
+
+   public function getGender()
+   {
+       return (isset($this->elastic_data["search_result_data"]["product_gender"]) && $this->elastic_data["search_result_data"]["product_gender"]) ? $this->elastic_data["search_result_data"]["product_gender"] : false;
+   }
+
+    /**
+    * Get variant AgeGroup
+    *
+    * @return string
+    */
+
+   public function getAgeGroup()
+   {
+       return (isset($this->elastic_data["search_result_data"]["product_age_group"]) && $this->elastic_data["search_result_data"]["product_age_group"]) ? $this->elastic_data["search_result_data"]["product_age_group"] : false;
+   }
+
 
     /**
      * Get display title

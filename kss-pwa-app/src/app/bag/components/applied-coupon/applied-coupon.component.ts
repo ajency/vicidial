@@ -11,6 +11,7 @@ export class AppliedCouponComponent implements  OnInit, OnChanges {
 	@Input() promotions : any;
   @Input() orderTotal : any;
   @Input() cartType : any;
+  @Input() items : any;
 
   @Output() editCouponTrigger = new EventEmitter();
 
@@ -21,8 +22,15 @@ export class AppliedCouponComponent implements  OnInit, OnChanges {
   }
 
   ngOnChanges(){
-    this.promoApplied.actual_discount = this.appservice.calculateDiscount(this.promoApplied.action.type, this.promoApplied.action.value, this.orderTotal);
-    this.promo = this.promoApplied;
+    switch(this.promoApplied.condition.entity){
+      case 'cart_price' : 
+        this.promoApplied.actual_discount = this.appservice.calculateDiscount(this.promoApplied.action.type, this.promoApplied.action.value, this.orderTotal);        
+        break;
+
+      case 'specific_products' :
+        this.appservice.productSpecificCouponApplicable(this.promoApplied, this.items);
+        break;
+    }    
   }
 
   editCoupon(){

@@ -237,6 +237,9 @@ class Cart extends Model
             $singleItem['price_sale']             = $item['item']->getSalePrice();
             $singleItem['brand']                  = $item['item']->getBrand();
             $singleItem['category_type']          = $item['item']->getCategoryType();
+            $singleItem['gender']                 = $item['item']->getGender();
+            $singleItem['sub_type']               = $item['item']->getSubType();
+            $singleItem['age_group']              = $item['item']->getAgeGroup();
             $cartData['items'][$item['item']->id] = $singleItem;
         }
         return $cartData;

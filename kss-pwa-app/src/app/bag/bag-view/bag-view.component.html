@@ -130,21 +130,10 @@
 			</li>
 		</ul>
 
-		<!-- Promotion summary -->
-<!-- 		<div *ngIf="promotions && promotions.length && (displayPromo || cart.promo_applied )" class="cart-promotion mt-4">
-			<h4 class="mb-2 font-weight-bold">Promotion Summary</h4>
-			<app-applied-coupon [promoApplied]="cart.promo_applied" [promotions]="promotions"> </app-applied-coupon>
-			<div *ngIf="cart.promo_applied">
-				<app-better-promo-available [promoApplied]="cart.promo_applied" [promotions]="promotions" [orderTotal]="cart.summary.sale_price_total"></app-better-promo-available>
-			</div>
-			<app-upgrade-cart [promotions]="promotions" [orderTotal]="cart.summary.sale_price_total" (noUpgradePromo)="displayPromo = false"> </app-upgrade-cart>
-			<hr>
-		</div> -->
-
 		<div class="cart-promotion mt-4" [ngClass]="{'d-none' : cart.cart_type == 'order' && !cart.coupon_applied}">
 			<h4 class="mb-2 font-weight-bold">Coupon Summary</h4>
 			<div *ngIf="cart.coupon_applied">
-				<app-applied-coupon [promoApplied]="cart.coupon_applied" [promotions]="coupons" [orderTotal]="cart.summary.sale_price_total" [cartType]="cart.cart_type" (editCouponTrigger)="displayCouponSideBar()"> </app-applied-coupon>
+				<app-applied-coupon [promoApplied]="cart.coupon_applied" [items]="cart.items" [promotions]="coupons" [orderTotal]="cart.summary.sale_price_total" [cartType]="cart.cart_type" (editCouponTrigger)="displayCouponSideBar('coupon')"> </app-applied-coupon>
 			</div>
 			<div *ngIf="!cart.coupon_applied" class="kss-flash kss-flash--info mb-3 cursor-pointer" (click)="displayCouponSideBar()">
 				<div class="d-flex align-items-center justify-content-between py-1">
@@ -159,35 +148,6 @@
 			<hr>
 		</div>
 
-
-<!-- 		<div *ngIf="promotions && promotions.length">
-			<app-promotions-list  [promotionsList]="promotions" [orderTotal]="cart.summary.sale_price_total"></app-promotions-list>
-		</div> -->
-
-		<!-- <div class="row no-gutters">
-			<div class="col-7">
-	   <div class="form-group m-0">
-	            <input class="form-control form-control-lg br-1" id="name" type="text" placeholder="Enter Promo Code">
-
-	  </div>
-			</div>
-			<div class="col-1">
-			</div>
-			<div class="col-4">
-				<button type="button" class="btn btn-lg btn-primary"> Apply Code</button>
-			</div>
-		</div> -->
-<!-- 		<div class="alert alert-light p-3 m-3 ">
-			<div id="kss_coupon" class="d-flex" (click)="enterCoupon = true">
-				<div>
-					<h5 class="f-w-4 text-muted m-0"><i class="fas fa-ticket-alt"></i>  Apply Code</h5>
-				</div>
-				<div class="ml-auto">
-					<h5 class="m-0"><i class="fas fa-angle-right"></i></h5>
-				</div>
-			</div>
-		</div> -->
-		<!-- <hr> -->
 		<div class="cart-summary final-summary mt-4">
 			<h4 class="mb-2 font-weight-bold">Bag Summary</h4>
 			<app-bag-summary [summary]="cart.summary"></app-bag-summary>
@@ -328,7 +288,7 @@
 				<!-- <div class="text-center">
 					<strong class="h5 font-weight-bold">OR</strong>
 				</div> -->
-				<app-promotions-list  [promotionsList]="coupons" [orderTotal]="cart.summary.sale_price_total" [appliedCoupon]="cart.coupon_applied"></app-promotions-list>
+				<app-promotions-list [items]="cart.items"  [promotionsList]="coupons" [orderTotal]="cart.summary.sale_price_total" [appliedCoupon]="cart.coupon_applied"></app-promotions-list>
 			</div>
 			<ng-template #noCoupons>
 				<div class="coupon-wrapper">
