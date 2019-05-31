@@ -41,8 +41,8 @@ class Action extends Model
                       $cartData['discount'] += $this->value['value'];
                       break;
                   case 'percent':
-                      $cartData['discount'] += round($cartData['final_total'] * $this->value['value'] / (float) 100,2);
-                      $cartData['final_total'] = round($cartData['final_total'] - $cartData['final_total'] * $this->value['value'] / (float) 100, 2);
+                      $cartData['discount'] += round($cartData['coupon_products_total_amount'] * $this->value['value'] / (float) 100,2);
+                      $cartData['final_total'] = round($cartData['final_total'] - $cartData['coupon_products_total_amount'] * $this->value['value'] / (float) 100, 2);
                       break;
                 
                   default:
