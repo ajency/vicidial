@@ -190,7 +190,7 @@ class Product
                     'external_product_id' => $product['product_id'],
                     'product_color_id'    => $elastic->id,
                     'product_barcode'     => $product['product_barcode'],
-                    'product_name'        => ($productData['product_att_magento_display_name'] && $productData['product_att_magento_display_name'] != '') ? $productData['product_att_magento_display_name'] : $productData['product_name'],
+                    'product_name'        => ($product['product_att_magento_display_name'] && $product['product_att_magento_display_name'] != '') ? $product['product_att_magento_display_name'] : $product['product_name'],
                     'product_color'       => $variant['product_color_name'] . "-" . str_slug($variant['product_color_html']),
                 ], 'sns', false);
             }
