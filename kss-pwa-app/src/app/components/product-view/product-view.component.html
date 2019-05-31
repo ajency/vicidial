@@ -1,4 +1,4 @@
-<div class="card h-100 product-card">
+<div class="card product-card">
   	<a [routerLink]="product.url" >
         <div class="product-card__wrapper d-flex align-items-center justify-content-center">
         <div *ngIf="showLoader" class="loadingBg mt-3 d-md-block d-none" style="height: 100%; width: 100%; position: absolute; top: 0; bottom: 0;
@@ -25,7 +25,7 @@
           </ng-container>
           <ng-template #noImage>
             <img
-            [defaultImage]="cdnUrl + '/img/placeholder.svg'"
+            [defaultImage]="cdnUrl + 'img/placeholder.svg'"
             [useSrcset]=true
             [offset]=1000
             [lazyLoad]="createDataSrcSet('/img/placeholder.svg', '270w', '/img/placeholder.svg', '540w')"
