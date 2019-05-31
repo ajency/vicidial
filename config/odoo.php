@@ -100,6 +100,13 @@ return [
                 'condition_id',
                 'description_sale',
                 'coupon_visibility', //public or private
+                'action',
+                'exclude_type',
+                'categ_exclude_1',
+                'categ_exclude_2',
+                'categ_exclude_3',
+                'categ_exclude_4',
+                'remove_product_ids',
             ],
         ],
         'coupon'   => [

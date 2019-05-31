@@ -536,16 +536,16 @@ return [
 
     'toys_side_bar_image_presets'=> [
         "default" => [
-            "1x"=>"400X475",
-            "2x"=>"800X950"
+            "1x"=>"530X371",
+            "2x"=>"1060X742"
         ]
     ],
     'toys_side_bar_image_upload'=> [
         "default" => [
             "size" => 70000,
             "size_gif" => 500000,
-            "height" => 950,
-            "width" => 800
+            "height" => 742,
+            "width" => 1060
         ]
     ],
 
@@ -571,16 +571,16 @@ return [
 
     'stationery_side_bar_image_presets'=> [
         "default" => [
-            "1x"=>"400X475",
-            "2x"=>"800X950"
+            "1x"=>"530X371",
+            "2x"=>"1060X742"
         ]
     ],
     'stationery_side_bar_image_upload'=> [
         "default" => [
             "size" => 70000,
             "size_gif" => 500000,
-            "height" => 950,
-            "width" => 800
+            "height" => 742,
+            "width" => 1060
         ]
     ],
 
