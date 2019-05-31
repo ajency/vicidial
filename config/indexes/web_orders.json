@@ -215,6 +215,9 @@
         "location_id" : {
           "type": "long"
         },
+        "location_db_id" : {
+          "type": "long"
+        },
         "location_name" : {
           "type": "keyword"
         },
