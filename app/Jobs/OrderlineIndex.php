@@ -95,6 +95,7 @@ class OrderlineIndex implements ShouldQueue
         $indexData['suborder_is_invoiced'] = $orderline->subOrdersNew->first()->is_invoiced;
         $indexData['location_id']          = $orderline->subOrdersNew->first()->location->warehouse_odoo_id;
         $indexData['location_name']        = $orderline->subOrdersNew->first()->location->warehouse_name;
+        $indexData['location_db_id']       = $orderline->subOrdersNew->first()->location->id;
 
         $indexData['user_id']    = $orderline->ordersNew->first()->cart->user->id;
         $indexData['user_email'] = $orderline->ordersNew->first()->cart->user->email_id;

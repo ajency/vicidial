@@ -142,6 +142,8 @@ class Order extends Model
             'expires_at'   => Carbon::now()->addMinutes(config('orders.expiry'))->timestamp,
             'type'         => 'Cancelled Transaction',
         ]);
+        $order->new_transaction_id = $this->id;
+        $order->save();
 
         //create a job to place order on odoo for all suborders.
         foreach ($this->subOrders as $subOrder) {
@@ -151,6 +153,7 @@ class Order extends Model
             $cancelSubOrder->type        = 'Cancelled Transaction';
             $cancelSubOrder->item_data   = $subOrder->item_data;
             $cancelSubOrder->odoo_status = 'cancel';
+            $cancelSubOrder->new_transaction_id = $subOrder->id;
             $cancelSubOrder->save();
             $cancelSubOrder->refresh();
 
