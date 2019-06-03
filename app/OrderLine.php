@@ -2,7 +2,6 @@
 
 namespace App;
 
-
 use App\Jobs\CreateOrderlineIndexJobs;
 use App\Jobs\OrderlineIndex;
 use App\Jobs\UpdateOrderLineIndex;
@@ -75,7 +74,7 @@ class OrderLine extends Model
 
     public function comments()
     {
-        return $this->morphMany('App\Comment','model');
+        return $this->morphMany('App\Comment', 'model');
     }
 
     public static function indexAllOrderLines($min = false, $max = false)
@@ -99,17 +98,19 @@ class OrderLine extends Model
 
     public function updateIndex($changes)
     {
-        UpdateOrderLineIndex::dispatch($this->id,$changes)->onQueue('order_index');
+        UpdateOrderLineIndex::dispatch($this->id, $changes)->onQueue('order_index');
     }
 
-    public static function updateMultipleIndex($params){
+    public static function updateMultipleIndex($params)
+    {
         foreach ($params['orderLines'] as $key => $changes) {
             $ol = self::find($key);
             $ol->updateIndex($changes);
         }
     }
 
-    public function flatData(){
+    public function flatData()
+    {
         $indexData                               = [];
         $orderline                               = $this;
         $indexData['orderline_id']               = $orderline->id;
@@ -140,13 +141,13 @@ class OrderLine extends Model
         $indexData['orderline_is_returned']     = $orderline->is_returned;
         $indexData['orderline_created_at']      = $orderline->created_at->timestamp;
         $indexData['orderline_updated_at']      = $orderline->updated_at->timestamp;
-        $indexData['order_id']               = $orderline->ordersNew->first()->id;
-        $indexData['order_address_id']       = $orderline->ordersNew->first()->address_id;
-        $indexData['order_transaction_mode'] = $orderline->ordersNew->first()->transaction_mode;
-        $indexData['order_address_data']     = $orderline->ordersNew->first()->address_data;
-        $indexData['order_aggregate_data']   = $orderline->ordersNew->first()->aggregate_data;
-        $indexData['order_status']           = $orderline->ordersNew->first()->status;
-        $indexData['order_txnid']            = $orderline->ordersNew->first()->txnid;
+        $indexData['order_id']                  = $orderline->ordersNew->first()->id;
+        $indexData['order_address_id']          = $orderline->ordersNew->first()->address_id;
+        $indexData['order_transaction_mode']    = $orderline->ordersNew->first()->transaction_mode;
+        $indexData['order_address_data']        = $orderline->ordersNew->first()->address_data;
+        $indexData['order_aggregate_data']      = $orderline->ordersNew->first()->aggregate_data;
+        $indexData['order_status']              = $orderline->ordersNew->first()->status;
+        $indexData['order_txnid']               = $orderline->ordersNew->first()->txnid;
 
         if ($orderline->ordersReturned->first() !== null) {
             $indexData['return_order_id']                     = $orderline->ordersReturned->first()->id;
@@ -168,9 +169,11 @@ class OrderLine extends Model
         $indexData['suborder_status']      = $orderline->subOrdersNew->first()->odoo_status;
         $indexData['suborder_is_shipped']  = $orderline->subOrdersNew->first()->is_shipped;
         $indexData['suborder_is_invoiced'] = $orderline->subOrdersNew->first()->is_invoiced;
-        $indexData['location_id']          = $orderline->subOrdersNew->first()->location->warehouse_odoo_id;
-        $indexData['location_name']        = $orderline->subOrdersNew->first()->location->warehouse_name;
-        $indexData['location_db_id']       = $orderline->subOrdersNew->first()->location->id;
+        $indexData['suborder_odoo_data']   = $orderline->subOrdersNew->first()->odoo_data;
+
+        $indexData['location_id']    = $orderline->subOrdersNew->first()->location->warehouse_odoo_id;
+        $indexData['location_name']  = $orderline->subOrdersNew->first()->location->warehouse_name;
+        $indexData['location_db_id'] = $orderline->subOrdersNew->first()->location->id;
 
         $indexData['user_id']    = $orderline->ordersNew->first()->cart->user->id;
         $indexData['user_email'] = $orderline->ordersNew->first()->cart->user->email_id;

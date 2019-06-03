@@ -206,6 +206,25 @@
         "suborder_status" : {
           "type": "keyword"
         },
+        "suborder_odoo_data": {
+          "properties" : {
+            "you_pay": {
+              "type" : "long"
+            },
+            "mrp_total": {
+              "type": "long"
+            },
+            "shipping_fee" : {
+              "type" : "long"
+            },
+            "cart_discount": {
+              "type": "long"
+            },
+            "sale_price_total" : {
+              "type" : "long"
+            }
+          }
+        },
         "return_suborder_id": {
           "type" : "long"
         },
