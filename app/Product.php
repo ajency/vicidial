@@ -170,8 +170,9 @@ class Product
 
     public static function storeVariantData($variant, $product)
     {
-        $exists    = true;
-        $new_facet = false;
+        $exists      = true;
+        $new_facet   = false;
+        $new_product = true;
         try {
             $elastic             = new ProductColor;
             $elastic->elastic_id = $product['product_id'] . '.' . $variant['product_color_id'];
@@ -180,7 +181,21 @@ class Product
             $elastic->save();
         } catch (\Exception $e) {
             \Log::warning($e->getMessage());
-            $elastic = ProductColor::where('elastic_id', $product['product_id'] . '.' . $variant['product_color_id'])->first();
+            $elastic     = ProductColor::where('elastic_id', $product['product_id'] . '.' . $variant['product_color_id'])->first();
+            $new_product = false;
+        }
+        try {
+            if ($new_product) {
+                \Ajency\ServiceComm\Comm\Async::call('NewProductColor', [
+                    'external_product_id' => $product['product_id'],
+                    'product_color_id'    => $elastic->id,
+                    'product_barcode'     => $product['product_barcode'],
+                    'product_name'        => ($product['product_att_magento_display_name'] && $product['product_att_magento_display_name'] != '') ? $product['product_att_magento_display_name'] : $product['product_name'],
+                    'product_color'       => $variant['product_color_name'] . "-" . str_slug($variant['product_color_html']),
+                ], 'sns', false);
+            }
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
         }
         try {
             $object          = Variant::firstOrNew(['odoo_id' => $variant['variant_id']]);
