@@ -309,20 +309,27 @@ class Product
         $product        = $odoo->defaultExec('product.template', 'read', [$product_id], ["fields" => ["images", "att_magento_display_name"]]);
         $magento_name   = $product[0]["att_magento_display_name"];
         $product_images = $odoo->defaultExec("product.image", "read", [$product[0]["images"]], [
-            "fields" => ["image", "color_variant", "name"],
+            "fields" => ["image", "color_variant", "name", "position"],
         ]);
-        $images = collect();
+        $images        = collect();
+        $merged_images = collect();
         foreach ($product_images as $image) {
             $temp = [
                 "image"        => $image["image"],
                 "color_id"     => $image["color_variant"][0],
                 "color_name"   => $image["color_variant"][1],
                 "name"         => $image["name"],
+                "position"     => $image["position"],
                 "magento_name" => $magento_name,
             ];
             $images->push($temp);
         }
-        return $images;
+
+        foreach ($images->sortBy('position')->groupBy('color_id')->sortKeys() as $collection) {
+            $merged_images = $merged_images->merge($collection);
+        }
+
+        return $merged_images;
     }
 
     public static function getVariantInventory(array $variant_ids)
@@ -364,6 +371,13 @@ class Product
         })->where('fileupload_mapping.id', null)->select('product_colors.product_id')->where('product_colors.no_image', '!=', true)->distinct()->get();
         foreach ($products as $product) {
             FetchProductImages::dispatch($product->product_id)->onQueue('process_product_images');
+        }
+    }
+
+    public static function fetchImageForProducts($product_ids)
+    {
+        foreach ($product_ids as $product_id) {
+            FetchProductImages::dispatch($product_id)->onQueue('process_product_images');
         }
     }
 
