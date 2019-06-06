@@ -65,6 +65,7 @@ return [
             'prefix' => 'https://sqs.'.env('AWS_REGION').'.amazonaws.com/'.env('AWS_ID'),
             'region' => env('AWS_REGION', 'us-east-1'),
             'routes' => [
+                'ImageUpload' => 'App\\Jobs\\FetchProductImages',
             ]
         ],
 

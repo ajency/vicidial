@@ -743,10 +743,6 @@ function checkOrderInventory($order, $abort = true)
         return $subOrder->checkInventory($abort);
     }
 }
-function addProductImageToQueue($product_id)
-{
-    FetchProductImages::dispatch($product_id)->onQueue('process_product_images');
-}
 
 function isNotProd()
 {
