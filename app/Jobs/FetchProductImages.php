@@ -102,7 +102,7 @@ class FetchProductImages implements ShouldQueue
 
         foreach ($prod_images as $pIndex => $prodImage) {
             $image = $prodImage['image'];
-            \Storage::delete($image);
+            \Storage::disk('s3')->delete($image);
         }
 
     }
