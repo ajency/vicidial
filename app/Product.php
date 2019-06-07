@@ -134,8 +134,6 @@ class Product
         $productData = $odoo->defaultExec('product.template', 'read', [[$product_id]], ['fields' => config('product.template_fields')])->first();
         $products    = self::indexVariants($productData['product_variant_ids'], sanitiseProductData($productData));
         self::bulkIndexProducts($products);
-        //create photo job for $product_id
-        FetchProductImages::dispatch($product_id)->onQueue('process_product_images');
     }
 
     public static function indexVariants($variant_ids, $productData)
@@ -303,35 +301,6 @@ class Product
         $responses = $query->bulk();
     }
 
-    public static function fetchProductImages(int $product_id)
-    {
-        $odoo           = new OdooConnect;
-        $product        = $odoo->defaultExec('product.template', 'read', [$product_id], ["fields" => ["images", "att_magento_display_name"]]);
-        $magento_name   = $product[0]["att_magento_display_name"];
-        $product_images = $odoo->defaultExec("product.image", "read", [$product[0]["images"]], [
-            "fields" => ["image", "color_variant", "name", "position"],
-        ]);
-        $images        = collect();
-        $merged_images = collect();
-        foreach ($product_images as $image) {
-            $temp = [
-                "image"        => $image["image"],
-                "color_id"     => $image["color_variant"][0],
-                "color_name"   => $image["color_variant"][1],
-                "name"         => $image["name"],
-                "position"     => $image["position"],
-                "magento_name" => $magento_name,
-            ];
-            $images->push($temp);
-        }
-
-        foreach ($images->sortBy('position')->groupBy('color_id')->sortKeys() as $collection) {
-            $merged_images = $merged_images->merge($collection);
-        }
-
-        return $merged_images;
-    }
-
     public static function getVariantInventory(array $variant_ids)
     {
         $odoo          = new OdooConnect;
@@ -363,40 +332,20 @@ class Product
         return false;
     }
 
-    public static function getNoImageProducts()
+    public static function updateImageFacets($productColorId)
     {
-        $products = ProductColor::leftJoin('fileupload_mapping', function ($join) {
-            $join->on('product_colors.id', '=', 'fileupload_mapping.object_id');
-            $join->where('fileupload_mapping.object_type', '=', "App\ProductColor");
-        })->where('fileupload_mapping.id', null)->select('product_colors.product_id')->where('product_colors.no_image', '!=', true)->distinct()->get();
-        foreach ($products as $product) {
-            FetchProductImages::dispatch($product->product_id)->onQueue('process_product_images');
-        }
-    }
-
-    public static function fetchImageForProducts($product_ids)
-    {
-        foreach ($product_ids as $product_id) {
-            FetchProductImages::dispatch($product_id)->onQueue('process_product_images');
-        }
-    }
-
-    public static function updateImageFacets($product_id)
-    {
-        $products = ProductColor::where('product_id', $product_id)->get();
-        foreach ($products as $product) {
-            $images = $product->getAllImages(array_keys(config('ajfileupload.presets')));
-            if (count($images) > 0) {
-                $changeData = [
-                    $product->elastic_id => [
-                        'elastic_data' => $product->getElasticData(),
-                        'change'       => function (&$product, &$variants) {
-                            $product['product_image_available'] = true;
-                        },
-                    ],
-                ];
-                ProductColor::updateElasticData($changeData);
-            }
+        $product = ProductColor::find($productColorId);
+        $images = $product->getAllImages(array_keys(config('ajfileupload.presets')));
+        if (count($images) > 0) {
+            $changeData = [
+                $product->elastic_id => [
+                    'elastic_data' => $product->getElasticData(),
+                    'change'       => function (&$product, &$variants) {
+                        $product['product_image_available'] = true;
+                    },
+                ],
+            ];
+            ProductColor::updateElasticData($changeData);
         }
     }
 

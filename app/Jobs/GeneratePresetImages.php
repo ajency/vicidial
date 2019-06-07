@@ -14,7 +14,7 @@ class GeneratePresetImages implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public $tries = 3;
-    protected $productId;
+    protected $productColorId;
     protected $product_color_details;
 
     /**
@@ -22,9 +22,9 @@ class GeneratePresetImages implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($productId,$product_color_details)
+    public function __construct($productColorId,$product_color_details)
     {
-        $this->productId = $productId;
+        $this->productColorId = $productColorId;
         $this->product_color_details = $product_color_details;
     }
 
@@ -35,20 +35,17 @@ class GeneratePresetImages implements ShouldQueue
      */
     public function handle()
     {
-        $productColors = ProductColor::where('product_id', $this->productId)->get();
+        $productColor = ProductColor::find($this->productColorId);
         $config        = config('ajfileupload');
-        foreach ($productColors as $pcs) {
-            if(isset($this->product_color_details[$pcs->id])){
-                foreach($config["presets"] as $preset => $deptharr){
-                    if($preset != "original"){
-                        foreach($deptharr as $depth => $dim){
-                            foreach($this->product_color_details[$pcs->id] as $product_color_detail){
-                                $pcs->getImage($product_color_detail["photo_id"], $preset, $depth, $product_color_detail["filename"]);
-                            }
+        if(isset($this->product_color_details[$productColor->id])){
+            foreach($config["presets"] as $preset => $deptharr){
+                if($preset != "original"){
+                    foreach($deptharr as $depth => $dim){
+                        foreach($this->product_color_details[$productColor->id] as $product_color_detail){
+                            $productColor->getImage($product_color_detail["photo_id"], $preset, $depth, $product_color_detail["filename"]);
                         }
-                    }    
-                }
-                
+                    }
+                }    
             }
             
         }
