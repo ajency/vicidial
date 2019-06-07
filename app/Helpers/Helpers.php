@@ -439,8 +439,7 @@ function generateVariantImageName($product_name, $color_name, $colors, $index)
         $append = ($index + 1);
     }
 
-    $image_name = $product_name . "-" . $color_name . $append;
-    $image_name = str_slug(implode(' ', [$product_name, $color_name, $append]));
+    $image_name = str_slug(implode(' ', [$product_name, $color_name, $append, Carbon::now()->timestamp]));
     return $image_name;
 
 }
