@@ -305,57 +305,64 @@ function buildProductIndexFromOdooData($productData, $variantData)
         $facets = ['string_facet', 'number_facet', 'boolean_facet'];
         foreach ($facets as $facet) {
             foreach (config('product.facets.' . $facet . '.product') as $value) {
-
-                if ($value == 'product_metatag') {
-                    foreach ($productData[$value] as $metatag) {
-                        $facetObj = [
-                            'facet_name'  => $value,
-                            'facet_value' => $metatag,
-                            'facet_slug'  => str_slug($metatag),
-                        ];
-                        $search_data[$facet][] = $facetObj;
+                if (isset($productData[$value])) {
+                    if ($value == 'product_metatag') {
+                        foreach ($productData[$value] as $metatag) {
+                            $facetObj = [
+                                'facet_name'  => $value,
+                                'facet_value' => $metatag,
+                                'facet_slug'  => str_slug($metatag),
+                            ];
+                            $search_data[$facet][] = $facetObj;
+                        }
+                        continue;
                     }
-                    continue;
+                    if ($value == 'product_gender' && $productData[$value] == 'Unisex') {
+                        $search_data[$facet][] = ['facet_name' => $value, 'facet_value' => 'Girls', 'facet_slug' => 'girls'];
+                        $search_data[$facet][] = ['facet_name' => $value, 'facet_value' => 'Boys', 'facet_slug' => 'boys'];
+                        $search_data[$facet][] = ['facet_name' => $value, 'facet_value' => 'Unisex', 'facet_slug' => 'unisex'];
+                        continue;
+                    }
+                    $facetObj = [
+                        'facet_name'  => $value,
+                        'facet_value' => $productData[$value],
+                    ];
+                    if ($facet == 'string_facet') {
+                        $facetObj['facet_slug'] = str_slug($productData[$value]);
+                    }
+                    $search_data[$facet][] = $facetObj;
                 }
-                if ($value == 'product_gender' && $productData[$value] == 'Unisex') {
-                    $search_data[$facet][] = ['facet_name' => $value, 'facet_value' => 'Girls', 'facet_slug' => 'girls'];
-                    $search_data[$facet][] = ['facet_name' => $value, 'facet_value' => 'Boys', 'facet_slug' => 'boys'];
-                    $search_data[$facet][] = ['facet_name' => $value, 'facet_value' => 'Unisex', 'facet_slug' => 'unisex'];
-                    continue;
-                }
-                $facetObj = [
-                    'facet_name'  => $value,
-                    'facet_value' => $productData[$value],
-                ];
-                if ($facet == 'string_facet') {
-                    $facetObj['facet_slug'] = str_slug($productData[$value]);
-                }
-                $search_data[$facet][] = $facetObj;
             }
             foreach (config('product.facets.' . $facet . '.variant') as $value) {
-                $facetObj = [
-                    'facet_name'  => $value,
-                    'facet_value' => $variant[$value],
-                ];
-                if ($facet == 'string_facet') {
-                    $facetObj['facet_slug'] = str_slug($variant[$value]);
-                }
+                if (isset($variant[$value])) {
+                    $facetObj = [
+                        'facet_name'  => $value,
+                        'facet_value' => $variant[$value],
+                    ];
+                    if ($facet == 'string_facet') {
+                        $facetObj['facet_slug'] = str_slug($variant[$value]);
+                    }
 
-                $search_data[$facet][] = $facetObj;
+                    $search_data[$facet][] = $facetObj;
+                }
             }
         }
         foreach (config('product.facets.attributes.product') as $value) {
-            $search_data['attributes'][] = [
-                'attribute_name'  => $value,
-                'attribute_value' => $productData[$value],
-                'attribute_slug'  => str_slug($productData[$value]),
-            ];
+            if (isset($productData[$value])) {
+                $search_data['attributes'][] = [
+                    'attribute_name'  => $value,
+                    'attribute_value' => $productData[$value],
+                    'attribute_slug'  => str_slug($productData[$value]),
+                ];
+            }
         }
         foreach (config('product.facets.attributes.variant') as $value) {
-            $search_data['attributes'][] = [
-                'attribute_name'  => $value,
-                'attribute_value' => $variant[$value],
-            ];
+            if (isset($variant[$value])) {
+                $search_data['attributes'][] = [
+                    'attribute_name'  => $value,
+                    'attribute_value' => $variant[$value],
+                ];
+            }
         }
         $indexData['search_data'][] = $search_data;
     }
