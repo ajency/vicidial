@@ -31,13 +31,16 @@
           "type": "keyword"
         },
         "orderline_price_mrp": {
-          "type" : "long"
+          "type" : "double"
         },
         "orderline_price_final": {
-          "type" : "long"
+          "type" : "double"
         },
         "orderline_price_discounted": {
-          "type" : "long"
+          "type" : "double"
+        },
+        "orderline_kss_cash" : {
+          "type" : "double"
         },
         "orderline_discount_per": {
           "type" : "long"
@@ -145,19 +148,22 @@
         "order_aggregate_data": {
           "properties" : {
             "you_pay": {
-              "type" : "long"
+              "type" : "double"
             },
             "mrp_total": {
-              "type": "long"
+              "type": "double"
             },
             "shipping_fee" : {
-              "type" : "long"
+              "type" : "double"
             },
             "cart_discount": {
-              "type": "long"
+              "type": "double"
             },
             "sale_price_total" : {
-              "type" : "long"
+              "type" : "double"
+            },
+            "kss_cash" : {
+              "type" : "double"
             }
           }
         },
@@ -209,19 +215,22 @@
         "suborder_odoo_data": {
           "properties" : {
             "you_pay": {
-              "type" : "long"
+              "type" : "double"
             },
             "mrp_total": {
-              "type": "long"
+              "type": "double"
             },
             "shipping_fee" : {
-              "type" : "long"
+              "type" : "double"
             },
             "cart_discount": {
-              "type": "long"
+              "type": "double"
             },
             "sale_price_total" : {
-              "type" : "long"
+              "type" : "double"
+            },
+            "kss_cash" : {
+              "type" : "double"
             }
           }
         },
