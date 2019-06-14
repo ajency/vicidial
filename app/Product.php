@@ -153,6 +153,7 @@ class Product
             $sanitisedData['variant_availability'] = Variant::select('inventory')->where('odoo_id', $sanitisedData['variant_id'])->first()->getAvailability();
             $variants->push($sanitisedData);
         }
+        $productData['product_image_available'] = !collect($productColor->getAllImages(["main"]))->isEmpty();
         $colorvariants = $variants->groupBy('product_color_id');
         foreach ($colorvariants as $colorVariantData) {
             $products->push(buildProductIndexFromOdooData($productData, $colorVariantData));
