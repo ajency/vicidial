@@ -8,7 +8,6 @@ use App\Facet;
 use App\Jobs\CreateProductJobs;
 use App\Jobs\CreateRefreshCacheJobs;
 use App\Jobs\CreateUpdateProductJobs;
-use App\Jobs\FetchProductImages;
 use App\Jobs\RefreshFacetCache;
 use App\Jobs\RefreshProductCache;
 use App\Jobs\UpdateSearchText;
@@ -152,9 +151,11 @@ class Product
 
             $sanitisedData['variant_availability'] = Variant::select('inventory')->where('odoo_id', $sanitisedData['variant_id'])->first()->getAvailability();
             $variants->push($sanitisedData);
+            $product_color_id = $sanitisedData['product_color_id'];
         }
+        $productColor                           = ProductColor::where('elastic_id', $productData['product_id'] . '.' . $product_color_id)->first();
         $productData['product_image_available'] = !collect($productColor->getAllImages(["main"]))->isEmpty();
-        $colorvariants = $variants->groupBy('product_color_id');
+        $colorvariants                          = $variants->groupBy('product_color_id');
         foreach ($colorvariants as $colorVariantData) {
             $products->push(buildProductIndexFromOdooData($productData, $colorVariantData));
 
@@ -336,7 +337,7 @@ class Product
     public static function updateImageFacets($productColorId)
     {
         $product = ProductColor::find($productColorId);
-        $images = $product->getAllImages(array_keys(config('ajfileupload.presets')));
+        $images  = $product->getAllImages(array_keys(config('ajfileupload.presets')));
         if (count($images) > 0) {
             $changeData = [
                 $product->elastic_id => [
