@@ -238,4 +238,23 @@ class PaymentController extends Controller
             'phone' => 'required|digits:10',
         ]);
     }
-}
+    public function payuNotify()
+    {
+        $response = [];
+        $response['header'] = getHeaderValues('OpenPayu-Signature');
+        $incoming_signature = getHeaderValues('OpenPayu-Signature', 'signature');
+        $incoming_signature = getHeaderValues('OpenPayu-Signature', 'algorithm');
+        $response['Incoming Signature'] = $incoming_signature;
+        $notificationBody = $request->getContent();
+        $response['body'] = $notificationBody;
+        $expected_signature = md5($notificationBody);
+        $response['Expected Signature'] = $expected_signature;
+        if($expected_signature == $incoming_signature){
+            $response['valid'] = true;
+        }
+        else{
+            $response['valid'] = false;
+        }
+        \Log::info('payu_params: '.json_encode($response));
+        return response()->json(['success' => 'success'], 200);
+    }
