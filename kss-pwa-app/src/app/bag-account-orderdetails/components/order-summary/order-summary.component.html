@@ -1,0 +1,23 @@
+<div *ngIf="order_summary">
+  <label class="mt-4">Order Summary</label>
+  <div class="card shadow-sm">
+    <div class="card-body">
+
+    <app-bag-summary [summary]="order_summary"></app-bag-summary>
+
+       <hr class="dashed">
+       <div class="cd-cart-total pb-0">
+          <h5 class="font-weight-bold mb-0">
+             Total <span><i class="fas fa-rupee-sign"></i> {{order_summary.you_pay}}</span>
+          </h5>
+       </div>
+    </div>
+  </div>
+
+  <!-- Total savings -->
+  <div *ngIf="(order_summary.mrp_total + order_summary.shipping_fee) != order_summary.you_pay" class="card shadow-sm mt-3">
+     <div class="card-body text-success d-flex">
+        <strong>Your Total Savings on this Order is <span> <i class="fas fa-rupee-sign sm-font pl-1"></i></span> {{order_summary.mrp_total + order_summary.shipping_fee - order_summary.you_pay}}</strong>
+     </div>
+  </div>  
+</div>
