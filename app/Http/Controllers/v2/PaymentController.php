@@ -238,7 +238,7 @@ class PaymentController extends Controller
             'phone' => 'required|digits:10',
         ]);
     }
-    public function payuNotify()
+    public function payuNotify(Request $request)
     {
         $response = [];
         $response['header'] = getHeaderValues('OpenPayu-Signature');
