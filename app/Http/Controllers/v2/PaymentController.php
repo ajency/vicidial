@@ -240,6 +240,7 @@ class PaymentController extends Controller
     }
     public function payuNotify(Request $request)
     {
+        \Log::info('payuNotify_called: '.json_encode($request->getContent()));
         $response = [];
         $response['header'] = getHeaderValues('OpenPayu-Signature');
         $incoming_signature = getHeaderValues('OpenPayu-Signature', 'signature');
@@ -255,7 +256,7 @@ class PaymentController extends Controller
         else{
             $response['valid'] = false;
         }
-        \Log::info('payu_params: '.json_encode($response));
+        \Log::info('payuNotify_end: '.json_encode($response));
         return response()->json(['success' => 'success'], 200);
     }
 }
