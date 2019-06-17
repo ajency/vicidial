@@ -190,21 +190,9 @@ export class AppServiceService {
     $('.ng-cart-loader').removeClass('cart-loader')
   }
 
-  updateCartId(){
-    this.clearSessionStorage();
-    document.cookie='cart_count=' + 0 + ";path=/";
-    this.updateCartCountInUI();
-
-    this.callMineApi().then((response)=>{
-      document.cookie='cart_id=' + response.cart_id + ";path=/";  
-    })
-    .catch((error)=>{
-      console.log("error : mine api ==>", error);
-    }) 
-  }
-
   clearSessionStorage(){
-    sessionStorage.removeItem('cart_data');
+    if(this.isSessionStorageSupported)
+      sessionStorage.removeItem('cart_data');
   }
 
   updateCartCountInUI() {
@@ -218,6 +206,16 @@ export class AppServiceService {
     else{
       $(".cart-counter").addClass('d-none'), 100;
       $(".cart-counter").removeClass('d-block'), 100;
+    }
+  }
+
+  isSessionStorageSupported() {
+    try {
+      sessionStorage.setItem('test', 'test');
+      sessionStorage.removeItem('test');
+      return true;
+    } catch (e) {
+      return false;
     }
   }
 

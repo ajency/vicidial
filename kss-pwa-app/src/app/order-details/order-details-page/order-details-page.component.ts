@@ -4,6 +4,12 @@ import { ApiServiceService } from '../../service/api-service.service';
 import { AppServiceService } from '../../service/app-service.service';
 import { Router }  from '@angular/router';
 
+declare var fbq : any;
+declare var gtag : any;
+declare var google_pixel_id : any;
+declare var google_conversion_data : any;
+declare var google_id : any;
+
 @Component({
   selector: 'app-order-details-page',
   templateUrl: './order-details-page.component.html',
@@ -16,8 +22,8 @@ export class OrderDetailsPageComponent implements OnInit {
       {position: 2, title: 'Order Details', url: ''},
   ];
   orderDetailsCall : any;
-  showLoader : any;
   orderDetails : any;
+  showLoader : boolean = true; 
   constructor(private route: ActivatedRoute,
               private apiService: ApiServiceService,
               private appservice : AppServiceService,
@@ -38,6 +44,12 @@ export class OrderDetailsPageComponent implements OnInit {
     this.orderDetailsCall = this.apiService.request(url,'get',{},{}, false, 'observable').subscribe((response)=>{
       this.showLoader = false;
       this.orderDetails = response.data;
+      try{
+        this.handleAnalytics();
+      }
+      catch(error){
+        console.log("Analytics failure");
+      }
     },
     (error)=>{
       console.log("error in fetching the json",error);
@@ -48,6 +60,51 @@ export class OrderDetailsPageComponent implements OnInit {
   unsubscribeorderDetailsCall(){
     if(this.orderDetailsCall)
       this.orderDetailsCall.unsubscribe();
+  }
+
+  handleAnalytics(){
+    if(this.orderDetails.payment_status && (this.orderDetails.payment_status === 'success' || this.orderDetails.payment_status === 'cod')){
+      let variant_ids = [], content_ids = [], id;
+
+      this.orderDetails.items.forEach((item)=>{
+        id = item.product_id + '-' + item.product_color_id
+        variant_ids.push(id);
+        content_ids.push({id : id, quantity : item.quantity })
+      })
+
+      fbq('track', 'Purchase', {
+            value: this.orderDetails.order_info.total_amount,
+            currency: 'INR',
+            contents: content_ids,
+            content_ids: variant_ids,
+            content_type: 'product'
+      });
+
+      // Google pixel tracking
+        gtag('event', 'page_view', {
+          'send_to': google_pixel_id,
+          'ecomm_pagetype': 'purchase',
+          'ecomm_prodid': variant_ids,
+          'ecomm_totalvalue': this.orderDetails.order_info.total_amount,
+          'user_id': this.appservice.getCookie('user_id')
+        });
+
+        // Google Conversion tracking
+        gtag('event', 'conversion', {
+            'send_to': google_conversion_data,
+            'value': this.orderDetails.order_info.total_amount,
+            'currency': 'INR',
+            'transaction_id': this.orderDetails.order_info.txn_no
+        });
+
+        // Analytics ecommerce purchase event
+        gtag('event', 'purchase', {
+          "send_to": google_id,
+          "transaction_id": this.orderDetails.order_info.txn_no,
+          "value": this.orderDetails.order_info.total_amount,
+          "currency": "INR"
+        });
+    }
   }
 
 }

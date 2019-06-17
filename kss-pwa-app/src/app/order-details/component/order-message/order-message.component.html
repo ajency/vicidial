@@ -10,13 +10,13 @@
 			Easily track all Kidsuperstore Orders!
 		</div>
 
-		<!-- <iframe *ngIf="trackBackUrl" src="{{trackBackUrl}}" height="1" width="1" frameborder="0"></iframe> -->
+		<iframe *ngIf="trackBackUrl" src="{{trackBackUrl}}" height="1" width="1" frameborder="0"></iframe>
 
-		<!-- <iframe src="https://af0y.com/p.ashx?o=301&e=225&t={{orderInfo['txn_no']}}&ect={{orderInfo['total_amount']}}&p={{orderInfo['total_amount']}}" height="1" width="1" frameborder="0"></iframe> -->
+		<iframe *ngIf="iframeSrc" [src]="iframeSrc" height="1" width="1" frameborder="0"></iframe>
 	</ng-container>
 
 	<ng-container *ngIf="status == 'failure'">
-		<button class="btn btn-primary retry-pay-btn">Retry Payment</button>
+		<button class="btn btn-primary retry-pay-btn" (click)="openCart()">Retry Payment</button>
 		<div>
 			<h4 class="font-weight-bold failed-title"><i class="fas fa-times-circle"></i> Payment Failed</h4>
 			<p class="mb-2 pt-3 pt-md-0">We could not process your payment. This could be due to the following reasons :</p>
