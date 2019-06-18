@@ -933,19 +933,3 @@ function getMenu()
     });
 
 }
-
-function getHeaderValues($header_key, $param_key = null)
-{
-    $header      = request()->header($header_key);
-    if($param_key == null){
-        return $header;
-    }
-    $payu_params = explode(';', $header);
-    foreach ($payu_params as $param) {
-        $signature_params = explode('=', $param);
-        if ($signature_params[0] == $param_key) {
-            return $signature_params[1];
-        }
-    }
-    return null;
-}

@@ -11,6 +11,7 @@ use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Tzsk\Payu\Facade\Payment;
+use Tzsk\Payu\Model\PayuPayment;
 
 class PaymentController extends Controller
 {
@@ -37,8 +38,8 @@ class PaymentController extends Controller
                     'phone'       => $user->phone, # Payee Phone Number.
                 ];
 
-                $order->status     = 'payment-in-progress';
-                //status update 
+                $order->status = 'payment-in-progress';
+                //status update
                 $expires_at        = Carbon::now()->addMinutes(config('orders.payu_expiry'));
                 $order->expires_at = $expires_at->timestamp;
                 $order->save();
@@ -81,7 +82,7 @@ class PaymentController extends Controller
                         $cart       = $order->cart;
                         $cart->type = 'order-complete';
                         $cart->save();
-                        $new_cart = $order->cart->user->newCart(false, $cart);
+                        $new_cart   = $order->cart->user->newCart(false, $cart);
                         $user_token = getTokenID($_COOKIE['token']);
                         DB::table('oauth_access_tokens')->where('id', $user_token)->update(['cart_id' => $new_cart->id]);
                         $order->sendSuccessEmail();
@@ -103,7 +104,7 @@ class PaymentController extends Controller
                     $cart       = $order->cart;
                     $cart->type = 'order-complete';
                     $cart->save();
-                    $new_cart = $order->cart->user->newCart(false, $cart);
+                    $new_cart   = $order->cart->user->newCart(false, $cart);
                     $user_token = getTokenID($_COOKIE['token']);
                     DB::table('oauth_access_tokens')->where('id', $user_token)->update(['cart_id' => $new_cart->id]);
                     $order->sendSuccessEmail();
@@ -115,7 +116,7 @@ class PaymentController extends Controller
                     abort(400, 'Payment Type Not Available');
                     break;
             }
-            $order->updateOrderlineIndex(['status','transaction_mode']);
+            $order->updateOrderlineIndex(['status', 'transaction_mode']);
         } catch (\Exception $e) {
             \Log::notice('Order Success Method Failed');
             \Log::notice('Order id : ' . $orderid);
@@ -238,25 +239,11 @@ class PaymentController extends Controller
             'phone' => 'required|digits:10',
         ]);
     }
+
     public function payuNotify(Request $request)
     {
-        \Log::info('payuNotify_called: '.json_encode($request->getContent()));
-        $response = [];
-        $response['header'] = getHeaderValues('OpenPayu-Signature');
-        $incoming_signature = getHeaderValues('OpenPayu-Signature', 'signature');
-        $incoming_signature = getHeaderValues('OpenPayu-Signature', 'algorithm');
-        $response['Incoming Signature'] = $incoming_signature;
-        $notificationBody = $request->getContent();
-        $response['body'] = $notificationBody;
-        $expected_signature = md5($notificationBody);
-        $response['Expected Signature'] = $expected_signature;
-        if($expected_signature == $incoming_signature){
-            $response['valid'] = true;
-        }
-        else{
-            $response['valid'] = false;
-        }
-        \Log::info('payuNotify_end: '.json_encode($response));
-        return response()->json(['success' => 'success'], 200);
+        \Log::info('payumoney_webhook_content: '.json_encode($request->all()));
+        \Log::info('payumoney_webhook_header: '.json_encode($request->header()));
+        return response()->json(['success' => true], 200);
     }
 }
