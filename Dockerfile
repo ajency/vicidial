@@ -71,7 +71,7 @@ RUN set -x \
         && find /var/www/html -type d -exec chmod 755 {} \; \
         && chmod -R ug+rwx /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/public/wordpress/wp-content \
         && sed -i 's/memory_limit = .*/memory_limit = '2048M'/' /etc/php/7.2/fpm/php.ini \
-        && sed -i 's/max_execution_time = .*/max_execution_time = '120'/' /etc/php/7.2/fpm/php.ini \
+        && sed -i 's/max_execution_time = .*/max_execution_time = '90'/' /etc/php/7.2/fpm/php.ini \
         && chmod +x /var/www/html/run.sh
 	
 COPY supervisor-worker.conf /etc/supervisor/conf.d/supervisor-worker.conf
