@@ -278,7 +278,7 @@ class PaymentController extends Controller
                     $order->save();
                     $order->updateOrderlineIndex(['status']);
 
-                    return Payment::with($order)->make($attributes, function ($then) use ($order->id) {
+                    return Payment::with($order)->make($attributes, function ($then) use ($id) {
                         //$then->redirectTo('/user/order/' . $orderid . '/payment/payu/status');
                     });
                     break;
