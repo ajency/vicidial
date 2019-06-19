@@ -21,11 +21,12 @@ class Order extends Model
     use Payable;
 
     protected $casts = [
-        'address_data'   => 'array',
-        'aggregate_data' => 'array',
-        'store_ids'      => 'array',
-        'store_data'     => 'array',
-        'verified'       => 'boolean',
+        'address_data'        => 'array',
+        'aggregate_data'      => 'array',
+        'store_ids'           => 'array',
+        'store_data'          => 'array',
+        'verified'            => 'boolean',
+        'payment_in_progress' => 'boolean',
     ];
 
     protected $fillable = ['cart_id', 'address_id', 'address_data', 'expires_at', 'type'];
@@ -83,11 +84,12 @@ class Order extends Model
         SaveReturnPolicies::dispatch($this->id)->onQueue('orderline_return_policy');
     }
 
-    public function updateOrderlineIndex($fields){
+    public function updateOrderlineIndex($fields)
+    {
         foreach ($this->orderlines as $orderline) {
             $changes = [];
             foreach ($fields as $field) {
-                $changes['order_'.$field] = $this->$field;
+                $changes['order_' . $field] = $this->$field;
             }
             $orderline->updateIndex($changes);
         }
@@ -147,12 +149,12 @@ class Order extends Model
 
         //create a job to place order on odoo for all suborders.
         foreach ($this->subOrders as $subOrder) {
-            $cancelSubOrder              = new SubOrder;
-            $cancelSubOrder->order_id    = $order->id;
-            $cancelSubOrder->location_id = $subOrder->location_id;
-            $cancelSubOrder->type        = 'Cancelled Transaction';
-            $cancelSubOrder->item_data   = $subOrder->item_data;
-            $cancelSubOrder->odoo_status = 'cancel';
+            $cancelSubOrder                     = new SubOrder;
+            $cancelSubOrder->order_id           = $order->id;
+            $cancelSubOrder->location_id        = $subOrder->location_id;
+            $cancelSubOrder->type               = 'Cancelled Transaction';
+            $cancelSubOrder->item_data          = $subOrder->item_data;
+            $cancelSubOrder->odoo_status        = 'cancel';
             $cancelSubOrder->new_transaction_id = $subOrder->id;
             $cancelSubOrder->save();
             $cancelSubOrder->refresh();
@@ -471,7 +473,7 @@ class Order extends Model
         /* The orderValue is the basis for the commission paid to Cashback World. */
         $orderValue = $this->aggregate_data['you_pay'];
         // Currency of the sale.
-        $currency = config("orders.cash_back_world.currency");
+        $currency    = config("orders.cash_back_world.currency");
         $orderNumber = $this->txnid;
         // Event type: i.e. true = Sale; & false = Lead
         $isSale = true;
@@ -487,27 +489,26 @@ class Order extends Model
         }
 
         if ($isSale) {
-            $domain = "tbs.tradedoubler.com";
+            $domain          = "tbs.tradedoubler.com";
             $checkNumberName = "orderNumber";
         } else {
-            $domain = "tbl.tradedoubler.com";
+            $domain          = "tbl.tradedoubler.com";
             $checkNumberName = "leadNumber";
-            $orderValue = "1";
+            $orderValue      = "1";
         }
 
         $checksum = "v04" . md5($secretcode . $orderNumber . $orderValue);
 
         $trackBackUrl = "https://" . $domain . "/report"
-        . "?organization=" . $organization
-        . "&event=" . $event
-        . "&" . $checkNumberName . "=" . $orderNumber
-        . "&checksum=" . $checksum
-        . "&tduid=" . $tduid
-        . "&type=iframe"
-        . "&reportInfo=" . $reportInfo;
-        if ($isSale)
-        {
-        $trackBackUrl .= "&orderValue=" . $orderValue . "&currency=" . $currency;
+            . "?organization=" . $organization
+            . "&event=" . $event
+            . "&" . $checkNumberName . "=" . $orderNumber
+            . "&checksum=" . $checksum
+            . "&tduid=" . $tduid
+            . "&type=iframe"
+            . "&reportInfo=" . $reportInfo;
+        if ($isSale) {
+            $trackBackUrl .= "&orderValue=" . $orderValue . "&currency=" . $currency;
         }
         return $trackBackUrl;
     }

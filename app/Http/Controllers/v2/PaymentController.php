@@ -11,7 +11,6 @@ use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Tzsk\Payu\Facade\Payment;
-use Tzsk\Payu\Model\PayuPayment;
 
 class PaymentController extends Controller
 {
@@ -240,10 +239,86 @@ class PaymentController extends Controller
         ]);
     }
 
-    public function payuNotify(Request $request)
+    public function notifyPayment($status, Request $request)
     {
-        \Log::info('payumoney_webhook_content: '.json_encode($request->all()));
-        \Log::info('payumoney_webhook_header: '.json_encode($request->header()));
+        //\Log::info('payumoney_webhook_content: '.json_encode($request->getContent()));
+        //\Log::info('payumoney_webhook_header: '.json_encode($request->header()));
+        $request_params = $request->getContent();
+        NotifyPayment::dispatch($request_params)->onQueue('notify_payment');
         return response()->json(['success' => true], 200);
+    }
+
+    public function orderPayment($id, $type)
+    {
+        $order = Order::find($id);
+        $cart  = $order->cart;
+        $user  = $cart->user;
+
+        $order->checkInventoryForSuborders();
+        $couponAvailability = $order->cart->checkCouponAvailability();
+        if (!empty($couponAvailability['messages'])) {
+            abort(400, array_values($couponAvailability['messages'])[0]);
+        }
+        try {
+            switch ($type) {
+                case 'payu':
+                    $attributes = [
+                        'txnid'       => $order->txnid, # Transaction ID.
+                        'amount'      => $order->subOrderData()['you_pay'], # Amount to be charged.
+                        'productinfo' => $order->id,
+                        'firstname'   => $user->name, # Payee Name.
+                        'email'       => $user->email_id, # Payee Email Address.
+                        'phone'       => $user->phone, # Payee Phone Number.
+                    ];
+
+                    $order->status              = 'payment-in-progress';
+                    $order->payment_in_progress = true;
+                    $expires_at                 = Carbon::now()->addMinutes(config('orders.payu_expiry'));
+                    $order->expires_at          = $expires_at->timestamp;
+                    $order->save();
+                    $order->updateOrderlineIndex(['status']);
+
+                    return Payment::with($order)->make($attributes, function ($then) use ($orderid) {
+                        //$then->redirectTo('/user/order/' . $orderid . '/payment/payu/status');
+                    });
+                    break;
+
+                case 'cod':
+                    $order->status           = 'cash-on-delivery';
+                    $order->transaction_mode = 'COD';
+                    $order->save();
+                    $order->placeOrderOnOdoo();
+                    request()->session()->flash('payment', "cod");
+                    $cart       = $order->cart;
+                    $cart->type = 'order-complete';
+                    $cart->save();
+                    $new_cart   = $order->cart->user->newCart(false, $cart);
+                    $user_token = getTokenID($_COOKIE['token']);
+                    DB::table('oauth_access_tokens')->where('id', $user_token)->update(['cart_id' => $new_cart->id]);
+                    $order->sendSuccessEmail();
+                    $order->sendSuccessSMS();
+                    $order->sendVendorSMS();
+                    break;
+                default:
+                    abort(400, 'Payment Type Not Available');
+                    break;
+            }
+            $order->updateOrderlineIndex(['status', 'transaction_mode']);
+        } catch (\Exception $e) {
+            \Log::notice('Order Success Method Failed');
+            \Log::notice('Order id : ' . $orderid);
+            sendEmail('failed-job', [
+                'from'          => config('communication.failed-job.from'),
+                'subject'       => 'Order Success Method Failed : ' . $type . ' [' . config('app.env') . ']',
+                'template_data' => [
+                    'queue'     => $event->job->getQueue(),
+                    'job'       => 'Order Success Method',
+                    'exception' => $e->getMessage(),
+                    'body'      => 'Order id : ' . $orderid,
+                    'trace'     => $e->getTraceAsString(),
+                ],
+                'priority'      => 'default',
+            ]);
+        }
     }
 }
