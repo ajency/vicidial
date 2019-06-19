@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router'
+import { Router, ActivatedRoute } from '@angular/router';
 import { AppServiceService } from '../../service/app-service.service';
 import { ApiServiceService } from '../../service/api-service.service';
 import { BagSummaryComponent } from '../../shared-components/bag-summary/bag-summary/bag-summary.component';
 import { EditUserPopupComponent } from '../../shared-components/edit-user/edit-user-popup/edit-user-popup.component';
+import { BagService } from '../services/bag.service';
 
 declare var $: any;
 declare var fbTrackAddPaymentInfo : any;
@@ -31,6 +32,7 @@ export class ShippingSummaryComponent implements OnInit {
   cdnUrl : any;
   constructor(private router : Router,
   			   		private appservice : AppServiceService,
+              private bagservice : BagService,
               private apiservice : ApiServiceService,
               private route : ActivatedRoute
   					) { }
@@ -176,7 +178,7 @@ export class ShippingSummaryComponent implements OnInit {
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     this.apiservice.request(url, 'get', {} , header ).then((response)=>{
         if(response.verified)
-          window.location.href = "/user/order/" + this.shippingDetails.order_id +"/payment/cod";
+          this.bagservice.confirmOrderPayment(this.shippingDetails.order_id);
         else{
           this.appservice.removeLoader();
           this.showVerifyCod = true;

@@ -172,6 +172,11 @@ class OrderController extends Controller
         return view('orderdetails')->with('params', $params);
     }
 
+    public function newOrderDetails($product_slug, Request $request)
+    {
+        return view('home_new');
+    }
+
     public static function updateSubOrderStatus($params)
     {
         SubOrderStatus::dispatch($params["subOrderId"], $params["state"], $params["is_shipped"], $params["is_invoiced"], $params["external_id"], $params["lines_status"])->onQueue('odoo_order');

@@ -30,16 +30,19 @@ export class OrderDetailsPageComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
-    this.getOrderDetails()
+    this.route.params.subscribe(routeParams => {
+      this.getOrderDetails(routeParams.trxn_id)
+    });
+    
   }
 
   ngOnDestroy(){
     this.unsubscribeorderDetailsCall();
   }
 
-  getOrderDetails(){
+  getOrderDetails(order_id){
     this.unsubscribeorderDetailsCall();
-    let order_id = this.route.snapshot.queryParamMap.get('orderid');
+    // let order_id = this.route.snapshot.queryParamMap.get('orderid');
     let url = isDevMode() ? "https://demo8558685.mockable.io/order-details" : this.appservice.apiUrl + '/api/rest/v2/order-details/'+order_id;
     this.orderDetailsCall = this.apiService.request(url,'get',{},{}, false, 'observable').subscribe((response)=>{
       this.showLoader = false;

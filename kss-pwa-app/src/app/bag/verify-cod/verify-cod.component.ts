@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { AppServiceService } from '../../service/app-service.service';
 import { ApiServiceService } from '../../service/api-service.service';
+import { BagService } from '../services/bag.service';
+
 declare var $: any;
 
 @Component({
@@ -17,7 +19,8 @@ export class VerifyCodComponent implements OnInit, OnChanges {
 	otpVerificationErrorMsg : any;
   cdnUrl : any;
   constructor(private appservice : AppServiceService,
-              private apiservice : ApiServiceService) { }
+              private apiservice : ApiServiceService,
+              private bagservice : BagService) { }
 
   ngOnInit() {
     this.cdnUrl = this.appservice.cdnUrl;
@@ -35,7 +38,7 @@ export class VerifyCodComponent implements OnInit, OnChanges {
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     this.apiservice.request(url, 'get', {} , header ).then((response)=>{
     	if(response.success)
-        window.location.href = "/user/order/" + this.shippingDetails.order_id +"/payment/cod";
+        this.bagservice.confirmOrderPayment(this.shippingDetails.order_id);
       else{
       	this.otpVerificationFailed = true;
 	      this.otpVerificationErrorMsg = response.message;
