@@ -11,8 +11,8 @@ class VerifyCsrfToken extends Middleware
         'rest/v2/anonymous/cart/insert',
         'rest/v2/anonymous/cart/update',
         'user/order/payu-payment/status',
-        'payu/payment/success',
-        'payu/payment/failed',
+        'payu/notify/payment/success',
+        'payu/notify/payment/failed',
     ];
     /**
      * The URIs that should be excluded from CSRF verification.
@@ -24,7 +24,7 @@ class VerifyCsrfToken extends Middleware
         'rest/v2/anonymous/cart/insert',
         'rest/v2/anonymous/cart/update',
         'user/order/payu-payment/status',
-        'payu/payment/success',
-        'payu/payment/failed',
+        'payu/notify/payment/success',
+        'payu/notify/payment/failed',
     ];
 }

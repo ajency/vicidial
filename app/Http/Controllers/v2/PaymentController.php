@@ -241,8 +241,7 @@ class PaymentController extends Controller
 
     public function notifyPayment($status, Request $request)
     {
-        //\Log::info('payumoney_webhook_content: '.json_encode($request->getContent()));
-        //\Log::info('payumoney_webhook_header: '.json_encode($request->header()));
+        \Log::info('payumoney_webhook_content: '.json_encode($request->getContent()));
         $request_params = $request->getContent();
         NotifyPayment::dispatch($request_params)->onQueue('notify_payment');
         return response()->json(['success' => true], 200);
