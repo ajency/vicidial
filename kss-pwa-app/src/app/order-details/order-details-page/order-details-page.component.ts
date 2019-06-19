@@ -25,6 +25,7 @@ export class OrderDetailsPageComponent implements OnInit {
   orderDetails : any;
   showLoader : boolean = true;
   paymentStatus : any; 
+  trackBackUrl : any;
   constructor(private route: ActivatedRoute,
               private apiService: ApiServiceService,
               private appservice : AppServiceService,
@@ -50,6 +51,7 @@ export class OrderDetailsPageComponent implements OnInit {
       this.showLoader = false;
       this.orderDetails = response.data;
       this.paymentStatus = response.status;
+      this.trackBackUrl = response.trackback_url;
       try{
         this.handleAnalytics();
       }
