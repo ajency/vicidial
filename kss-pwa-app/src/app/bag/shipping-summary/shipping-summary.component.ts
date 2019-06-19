@@ -38,7 +38,7 @@ export class ShippingSummaryComponent implements OnInit {
               private apiservice : ApiServiceService,
               private route : ActivatedRoute
   					) { 
-      this.closeWidgetListner = this.appservice.listenTocloseWidgetTriggerr().subscribe(()=>{ this.closeCart() })
+      this.closeWidgetListner = this.bagservice.listenTocloseWidgetTriggerr().subscribe(()=>{ this.closeCart() })
   }
 
   ngOnInit() {
