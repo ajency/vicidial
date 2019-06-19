@@ -306,7 +306,7 @@ class OrderController extends Controller
             'data'          => $order->getOrderDetailsItemWise(true),
             'order-pending' => false,
             'status'        => $status,
-            'trackback_url' => $order->getTrackbackUrlCashBackWorld();,
+            'trackback_url' => $order->getTrackbackUrlCashBackWorld(),
         ]);
     }
 }
