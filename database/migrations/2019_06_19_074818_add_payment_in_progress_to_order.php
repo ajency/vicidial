@@ -15,6 +15,7 @@ class AddPaymentInProgressToOrder extends Migration
     {
         Schema::table('progress_to_order', function (Blueprint $table) {
             $table->boolean('payment_in_progress')->default(false);
+            $table->boolean('viewed')->default(false);
         });
     }
 
@@ -27,6 +28,7 @@ class AddPaymentInProgressToOrder extends Migration
     {
         Schema::table('progress_to_order', function (Blueprint $table) {
             $table->dropColumn('payment_in_progress');
+            $table->dropColumn('viewed');
         });
     }
 }

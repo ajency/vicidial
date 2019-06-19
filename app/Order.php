@@ -27,6 +27,7 @@ class Order extends Model
         'store_data'          => 'array',
         'verified'            => 'boolean',
         'payment_in_progress' => 'boolean',
+        'viewed'              => 'boolean',
     ];
 
     protected $fillable = ['cart_id', 'address_id', 'address_data', 'expires_at', 'type'];

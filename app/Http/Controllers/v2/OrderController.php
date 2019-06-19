@@ -289,7 +289,7 @@ class OrderController extends Controller
         validateOrder($user, $order);
         switch ($order->status) {
             case 'cash-on-delivery':
-                $status = 'cod';
+                $status = ($order->viewed) ? '' : 'cod';
                 break;
             case 'payment-successful':
                 $status = 'success';
@@ -300,6 +300,8 @@ class OrderController extends Controller
             default:
                 return response()->json(['order-pending' => true]);
         }
+        $order->viewed = true;
+        $order->save();
         return response()->json([
             'data'          => $order->getOrderDetailsItemWise(true),
             'order-pending' => false,
