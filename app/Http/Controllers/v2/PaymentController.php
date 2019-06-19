@@ -320,5 +320,6 @@ class PaymentController extends Controller
                 'priority'      => 'default',
             ]);
         }
+        return response()->json(['txnid' => $order->txnid]);
     }
 }
