@@ -5,6 +5,7 @@ import { ApiServiceService } from '../../service/api-service.service';
 import { BagSummaryComponent } from '../../shared-components/bag-summary/bag-summary/bag-summary.component';
 import { EditUserPopupComponent } from '../../shared-components/edit-user/edit-user-popup/edit-user-popup.component';
 import { BagService } from '../services/bag.service';
+import { Subscription } from 'rxjs';
 
 declare var $: any;
 declare var fbTrackAddPaymentInfo : any;
@@ -30,12 +31,15 @@ export class ShippingSummaryComponent implements OnInit {
   showVerifyCod : boolean = false;
   shakePaymentModal : boolean = false;
   cdnUrl : any;
+  closeWidgetListner : Subscription;
   constructor(private router : Router,
   			   		private appservice : AppServiceService,
               private bagservice : BagService,
               private apiservice : ApiServiceService,
               private route : ActivatedRoute
-  					) { }
+  					) { 
+      this.closeWidgetListner = this.appservice.listenTocloseWidgetTriggerr().subscribe(()=>{ this.closeCart() })
+  }
 
   ngOnInit() {
     this.cdnUrl = this.appservice.cdnUrl;
@@ -89,6 +93,7 @@ export class ShippingSummaryComponent implements OnInit {
     let url = window.location.href.split("#")[0];
     history.replaceState({cart : false}, 'cart', url);
     this.widgetOpen = false;
+    this.hideVerifyCOD();
     this.appservice.closeCart();
   }
 

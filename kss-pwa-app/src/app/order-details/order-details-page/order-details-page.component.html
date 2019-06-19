@@ -20,7 +20,7 @@
 	<div class="row mt-md-2 mt-0">
 		<div class="col-12 col-xl-8 col-lg-8">
 			<!-- Order Message -->
-			<app-order-message *ngIf="orderDetails.payment_status" [status]="orderDetails.payment_status" [orderInfo]="orderDetails.order_info" [trackBackUrl]="orderDetails.trackBackUrl"></app-order-message>
+			<app-order-message *ngIf="paymentStatus" [status]="paymentStatus" [orderInfo]="orderDetails.order_info" [trackBackUrl]="orderDetails.trackBackUrl"></app-order-message>
 
 			<hr class="mb-4">
 

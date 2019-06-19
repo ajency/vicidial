@@ -23,7 +23,8 @@ export class OrderDetailsPageComponent implements OnInit {
   ];
   orderDetailsCall : any;
   orderDetails : any;
-  showLoader : boolean = true; 
+  showLoader : boolean = true;
+  paymentStatus : any; 
   constructor(private route: ActivatedRoute,
               private apiService: ApiServiceService,
               private appservice : AppServiceService,
@@ -48,6 +49,7 @@ export class OrderDetailsPageComponent implements OnInit {
     this.orderDetailsCall = this.apiService.request(url,'get',{},header, false, 'observable').subscribe((response)=>{
       this.showLoader = false;
       this.orderDetails = response.data;
+      this.paymentStatus = response.status;
       try{
         this.handleAnalytics();
       }
@@ -67,7 +69,7 @@ export class OrderDetailsPageComponent implements OnInit {
   }
 
   handleAnalytics(){
-    if(this.orderDetails.payment_status && (this.orderDetails.payment_status === 'success' || this.orderDetails.payment_status === 'cod')){
+    if(this.paymentStatus && (this.paymentStatus === 'success' || this.paymentStatus === 'cod')){
       let variant_ids = [], content_ids = [], id;
 
       this.orderDetails.items.forEach((item)=>{
