@@ -243,10 +243,13 @@ class PaymentController extends Controller
     public function notifyPayment($status, Request $request)
     {
         \Log::info('payumoney_webhook_content: '.json_encode($request->getContent()));
-        $order = Order::where('txnid', $request_params['merchantTransactionId'])->first();
+        
         $request_params = $request->getContent();
-        if($order->payment_in_progress){
-            NotifyPayment::dispatch($request_params)->onQueue('notify_payment');
+        if(isset($request_params['merchantTransactionId'])){
+            $order = Order::where('txnid', $request_params['merchantTransactionId'])->first();
+            if($order->payment_in_progress){
+                NotifyPayment::dispatch($request_params)->onQueue('notify_payment');
+            }
         }
         return response()->json(['success' => true], 200);
     }
