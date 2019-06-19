@@ -287,6 +287,19 @@ class OrderController extends Controller
         $user  = $request->user();
         $order = Order::where('txnid', $txnid)->first();
         validateOrder($user, $order);
-        return response()->json(['data' => $order->getOrderDetailsItemWise(true)]);
+        switch ($order->status) {
+            case 'cash-on-delivery':
+                $status = 'cod';
+                break;
+            case 'payment-successful':
+                $status = 'success';
+                break;
+            case 'payment-failed':
+                $status = 'failure';
+                break;
+            default: 
+                return response()->json(['order-pending' => true]); 
+        }
+        return response()->json(['data' => $order->getOrderDetailsItemWise(true), 'order-pending' => false, 'status' => $status]);
     }
 }
