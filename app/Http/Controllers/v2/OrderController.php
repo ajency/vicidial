@@ -297,9 +297,14 @@ class OrderController extends Controller
             case 'payment-failed':
                 $status = 'failure';
                 break;
-            default: 
-                return response()->json(['order-pending' => true]); 
+            default:
+                return response()->json(['order-pending' => true]);
         }
-        return response()->json(['data' => $order->getOrderDetailsItemWise(true), 'order-pending' => false, 'status' => $status]);
+        return response()->json([
+            'data'          => $order->getOrderDetailsItemWise(true),
+            'order-pending' => false,
+            'status'        => $status,
+            'trackback_url' => $order->getTrackbackUrlCashBackWorld();,
+        ]);
     }
 }
