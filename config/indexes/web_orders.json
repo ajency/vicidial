@@ -135,7 +135,7 @@
               "type": "boolean"
             },
             "pincode": {
-              "type": "long"
+              "type": "keyword"
             },
             "landmark": {
               "type": "text"
