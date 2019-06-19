@@ -44,7 +44,8 @@ export class OrderDetailsPageComponent implements OnInit {
     this.unsubscribeorderDetailsCall();
     // let order_id = this.route.snapshot.queryParamMap.get('orderid');
     let url = isDevMode() ? "https://demo8558685.mockable.io/order-details" : this.appservice.apiUrl + '/api/rest/v2/user/order/details/'+order_id;
-    this.orderDetailsCall = this.apiService.request(url,'get',{},{}, false, 'observable').subscribe((response)=>{
+    let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
+    this.orderDetailsCall = this.apiService.request(url,'get',{},header, false, 'observable').subscribe((response)=>{
       this.showLoader = false;
       this.orderDetails = response.data;
       try{
