@@ -278,7 +278,7 @@ class PaymentController extends Controller
                     $order->save();
                     $order->updateOrderlineIndex(['status']);
 
-                    return Payment::with($order)->make($attributes, function ($then) use ($orderid) {
+                    return Payment::with($order)->make($attributes, function ($then) use ($order->id) {
                         //$then->redirectTo('/user/order/' . $orderid . '/payment/payu/status');
                     });
                     break;
@@ -306,7 +306,7 @@ class PaymentController extends Controller
             $order->updateOrderlineIndex(['status', 'transaction_mode']);
         } catch (\Exception $e) {
             \Log::notice('Order Success Method Failed');
-            \Log::notice('Order id : ' . $orderid);
+            \Log::notice('Order id : ' . $order->id);
             sendEmail('failed-job', [
                 'from'          => config('communication.failed-job.from'),
                 'subject'       => 'Order Success Method Failed : ' . $type . ' [' . config('app.env') . ']',
@@ -314,7 +314,7 @@ class PaymentController extends Controller
                     'queue'     => $event->job->getQueue(),
                     'job'       => 'Order Success Method',
                     'exception' => $e->getMessage(),
-                    'body'      => 'Order id : ' . $orderid,
+                    'body'      => 'Order id : ' . $order->id,
                     'trace'     => $e->getTraceAsString(),
                 ],
                 'priority'      => 'default',
