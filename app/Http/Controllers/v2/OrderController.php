@@ -282,11 +282,11 @@ class OrderController extends Controller
         return response()->json(["message" => 'Return request placed successfully', 'success' => true]);
     }
 
-    public function successDetails($txnid, Request $request)
+    public function finalPageDetails($txnid, Request $request)
     {
         $user  = $request->user();
         $order = Order::where('txnid', $txnid)->first();
         validateOrder($user, $order);
-        return response()->json($order->getOrderDetailsItemWise(true));
+        return response()->json(['data' => $order->getOrderDetailsItemWise(true)]);
     }
 }
