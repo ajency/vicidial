@@ -288,7 +288,6 @@ class PaymentController extends Controller
                     $order->transaction_mode = 'COD';
                     $order->save();
                     $order->placeOrderOnOdoo();
-                    request()->session()->flash('payment', "cod");
                     $cart       = $order->cart;
                     $cart->type = 'order-complete';
                     $cart->save();
@@ -311,7 +310,7 @@ class PaymentController extends Controller
                 'from'          => config('communication.failed-job.from'),
                 'subject'       => 'Order Success Method Failed : ' . $type . ' [' . config('app.env') . ']',
                 'template_data' => [
-                    'queue'     => $event->job->getQueue(),
+                    'queue'     => '',
                     'job'       => 'Order Success Method',
                     'exception' => $e->getMessage(),
                     'body'      => 'Order id : ' . $order->id,
