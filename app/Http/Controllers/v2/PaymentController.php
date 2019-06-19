@@ -11,6 +11,7 @@ use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Tzsk\Payu\Facade\Payment;
+use App\Jobs\NotifyPayment;
 
 class PaymentController extends Controller
 {
@@ -242,8 +243,11 @@ class PaymentController extends Controller
     public function notifyPayment($status, Request $request)
     {
         \Log::info('payumoney_webhook_content: '.json_encode($request->getContent()));
+        $order = Order::where('txnid', $request_params['merchantTransactionId'])->first();
         $request_params = $request->getContent();
-        NotifyPayment::dispatch($request_params)->onQueue('notify_payment');
+        if($order->payment_in_progress){
+            NotifyPayment::dispatch($request_params)->onQueue('notify_payment');
+        }
         return response()->json(['success' => true], 200);
     }
 

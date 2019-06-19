@@ -34,16 +34,7 @@ class NotifyPayment implements ShouldQueue
     public function handle()
     {
         $request_params = $this->response;
-        if (!$request_params) {
-            abort(400, 'Notify API returned null');
-        }
         $order = Order::where('txnid', $request_params['merchantTransactionId'])->first();
-        if (!$order) {
-            abort(400, 'Order not found');
-        }
-        if(!$order->payment_in_progress){
-            abort(400, 'Payment not in progress');
-        }
         $payu_payment = PayuPayment::create([
             'account'        => config('payu.default'),
             'payable_id'     => $order->id,
