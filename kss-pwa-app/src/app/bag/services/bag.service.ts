@@ -18,7 +18,7 @@ export class BagService {
   	let url = this.appservice.apiUrl + '/api/rest/v2/user/order/' + order_id + '/payment/cod'
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     this.apiservice.request(url, 'get', {} , header ).then((response)=>{
-    	this.router.navigateByUrl('/order/details'+response.txnid,{ replaceUrl: true });
+    	this.router.navigateByUrl('/order/details/'+response.txnid,{ replaceUrl: true });
     })
     .catch((error)=>{
       this.appservice.removeLoader();      
