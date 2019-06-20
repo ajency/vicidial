@@ -6,7 +6,6 @@ use App\Facet;
 use App\Http\Controllers\Controller;
 use App\SizechartImage;
 use App\StaticElement;
-use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
@@ -114,8 +113,8 @@ class StaticElementController extends Controller
 
     public function getMenu(Request $request)
     {
-        $json = json_decode(file_get_contents(config_path() . "/static_responses/menu.json"), true);
-        $json['cdn_url'] = \CDN::asset('/');
+        $json             = json_decode(file_get_contents(config_path() . "/static_responses/menu.json"), true);
+        $json['cdn_url']  = \CDN::asset('/');
         $json['site_url'] = url('/');
         return response()->json($json);
     }
@@ -123,22 +122,17 @@ class StaticElementController extends Controller
     public function getFacets(Request $request)
     {
         $params = $request->all();
-        // dd($params["type"]);
-        $types  = explode(",", $params["type"]);
-        $data   = [];
-        $facets = Facet::whereIn("facet_name", $types)->select('facet_name', DB::raw('group_concat(facet_value) as "values",group_concat(display_name) as "display_names", group_concat(slug) as "slugs"'))->groupBy('facet_name')->get();
-        // dd($facets->toArray());
-        $facets_data = [];
-        foreach ($facets as $facet) {
 
-            $facet_values      = explode(",", $facet->values);
-            $display_names     = explode(",", $facet->display_names);
-            $slugs             = explode(",", $facet->slugs);
+        $types       = explode(",", $params["type"]);
+        $facet_group = Facet::whereIn("facet_name", $types)->select(['facet_name', 'facet_value', 'display_name', 'slug'])->get()->groupBy('facet_name');
+
+        $facets_data = [];
+        foreach ($facet_group as $facet_key => $facets) {
             $facet_values_data = [];
-            foreach ($facet_values as $facet_key => $facet_value) {
-                array_push($facet_values_data, ["facet_value" => $facet_value, "slug" => $slugs[$facet_key], "display_name" => $display_names[$facet_key]]);
+            foreach ($facets as $facet) {
+                array_push($facet_values_data, ["facet_value" => $facet->facet_value, "slug" => $facet->slug, "display_name" => $facet->display_name]);
             }
-            array_push($facets_data, ["facet_name" => $facet->facet_name, "facet_values" => $facet_values_data]);
+            array_push($facets_data, ["facet_name" => $facet_key, "facet_values" => $facet_values_data]);
         }
         return response()->json(["success" => true, "data" => $facets_data, "message" => "facets fetched successfully!!"], 200);
     }
