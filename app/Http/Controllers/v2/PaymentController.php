@@ -47,7 +47,7 @@ class PaymentController extends Controller
                 $order->updateOrderlineIndex(['status']);
 
                 return Payment::with($order)->make($attributes, function ($then) use ($orderid) {
-                    $then->redirectTo('/user/order/' . $orderid . '/payment/payu/status');
+                    //$then->redirectTo('/user/order/' . $orderid . '/payment/payu/status');
                 });
                 break;
 
@@ -259,6 +259,7 @@ class PaymentController extends Controller
         $order = Order::find($id);
         $cart  = $order->cart;
         $user  = $cart->user;
+        $data = $request->all();
 
         $order->checkInventoryForSuborders();
         $couponAvailability = $order->cart->checkCouponAvailability();
@@ -276,8 +277,7 @@ class PaymentController extends Controller
                     $cart->type = 'order-complete';
                     $cart->save();
                     $new_cart   = $order->cart->user->newCart(false, $cart);
-                    $user_token = getTokenID($_COOKIE['token']);
-                    DB::table('oauth_access_tokens')->where('id', $user_token)->update(['cart_id' => $new_cart->id]);
+                    DB::table('oauth_access_tokens')->where('id', $data['token_id'])->update(['cart_id' => $new_cart->id]);
                     $order->sendSuccessEmail();
                     $order->sendSuccessSMS();
                     $order->sendVendorSMS();
@@ -304,35 +304,5 @@ class PaymentController extends Controller
             ]);
         }
         return response()->json(['txnid' => $order->txnid]);
-    }
-
-    public function payuPayment($orderid)
-    {
-        $order = Order::find($orderid);
-        $cart  = $order->cart;
-        $user  = $cart->user;
-
-        $order->checkInventoryForSuborders();
-        $couponAvailability = $order->cart->checkCouponAvailability();
-        if (!empty($couponAvailability['messages'])) {
-            abort(400, array_values($couponAvailability['messages'])[0]);
-        }
-        $attributes = [
-            'txnid'       => $order->txnid, # Transaction ID.
-            'amount'      => $order->subOrderData()['you_pay'], # Amount to be charged.
-            'productinfo' => $order->id,
-            'firstname'   => $user->name, # Payee Name.
-            'email'       => $user->email_id, # Payee Email Address.
-            'phone'       => $user->phone, # Payee Phone Number.
-        ];
-
-        $order->status              = 'payment-in-progress';
-        $order->payment_in_progress = true;
-        $expires_at                 = Carbon::now()->addMinutes(config('orders.payu_expiry'));
-        $order->expires_at          = $expires_at->timestamp;
-        $order->save();
-        $order->updateOrderlineIndex(['status']);
-
-        return Payment::with($order)->make($attributes);
     }
 }
