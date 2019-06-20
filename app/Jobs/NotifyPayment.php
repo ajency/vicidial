@@ -9,6 +9,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Tzsk\Payu\Model\PayuPayment;
+use DB;
 
 class NotifyPayment implements ShouldQueue
 {
@@ -19,9 +20,10 @@ class NotifyPayment implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($response)
+    public function __construct($response, $status)
     {
         $this->response = $response;
+        $this->status = $status;
     }
 
     /**
@@ -39,12 +41,11 @@ class NotifyPayment implements ShouldQueue
             'payable_id'       => $order->id,
             'payable_type'     => get_class($order),
             'txnid'            => $order->txnid,
-            'mihpayid'         => $request_params['paymentId'],
+            'mode'             => $request_params['paymentMode'],
             'firstname'        => $request_params['customerName'],
             'email'            => $request_params['customerEmail'],
             'phone'            => $request_params['customerPhone'],
             'amount'           => $request_params['amount'],
-            'net_amount_debit' => $request_params['amount'],
             'data'             => json_encode($request_params),
             'status'           => $request_params['status'],
             'mode'             => $request_params['paymentMode'],
@@ -52,42 +53,40 @@ class NotifyPayment implements ShouldQueue
             'bankcode'         => '',
         ]);
 
-/*        $post_params = [
-'merchantKey'            => config('payu.payumoney.key'),
-'merchantTransactionIds' => $request_params['merchantTransactionId'],
-];
-$api_url  = config('payu.paymentResponseApiUrl') . '?' . http_build_query($post_params);
-$client   = new Client();
-$response = $client->request('POST', $api_url, [
-'headers' => [
-'Authorization' => config('payu.payumoney.auth'),
-],
-]);
-$response_params = json_decode($response->getBody(), true);
-if (isset($response_params['result'][0]['postBackParam'])) {
-$post_back_params               = $response_params['result'][0]['postBackParam'];
-$payu_payment->data             = json_encode($response_params['result']);
-$payu_payment->bank_ref_num     = $post_back_params['bank_ref_num'];
-$payu_payment->bankcode         = $post_back_params['bankcode'];
-$payu_payment->cardnum          = $post_back_params['cardnum'];
-$payu_payment->name_on_card     = $post_back_params['name_on_card'];
-$payu_payment->card_type        = $post_back_params['card_type'];
-$payu_payment->mihpayid         = $post_back_params['mihpayid'];
-$payu_payment->unmappedstatus   = $post_back_params['unmappedstatus'];
-$payu_payment->net_amount_debit = $post_back_params['net_amount_debit'];
-$payu_payment->save();
-}
- */
-        if ($payu_payment->unmappedstatus == 'captured') {
+        /*$post_params = [
+            'merchantKey'            => config('payu.payumoney.key'),
+            'merchantTransactionIds' => $request_params['merchantTransactionId'],
+        ];
+        $api_url  = config('payu.paymentResponseApiUrl') . '?' . http_build_query($post_params);
+        $client   = new Client();
+        $response = $client->request('POST', $api_url, [
+            'headers' => [
+                'Authorization' => config('payu.payumoney.auth'),
+            ],
+        ]);
+        $response_params = json_decode($response->getBody(), true);
+        if (isset($response_params['result'][0]['postBackParam'])) {
+            $post_back_params               = $response_params['result'][0]['postBackParam'];
+            $payu_payment->data             = json_encode($response_params['result']);
+            $payu_payment->bank_ref_num     = $post_back_params['bank_ref_num'];
+            $payu_payment->bankcode         = $post_back_params['bankcode'];
+            $payu_payment->cardnum          = $post_back_params['cardnum'];
+            $payu_payment->name_on_card     = $post_back_params['name_on_card'];
+            $payu_payment->card_type        = $post_back_params['card_type'];
+            $payu_payment->mihpayid         = $post_back_params['mihpayid'];
+            $payu_payment->unmappedstatus   = $post_back_params['unmappedstatus'];
+            $payu_payment->net_amount_debit = $post_back_params['net_amount_debit'];
+            $payu_payment->save();
+        }*/
+
+        if ($this->status == 'success') {
             $order->status           = 'payment-successful';
             $order->transaction_mode = 'Prepaid';
             $order->save();
             $order->placeOrderOnOdoo();
-
             $cart       = $order->cart;
             $cart->type = 'order-complete';
             $cart->save();
-
             $order->sendSuccessEmail();
             $order->sendSuccessSMS();
             $order->sendVendorSMS();

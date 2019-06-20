@@ -285,11 +285,16 @@ class OrderController extends Controller
     public function finalPageDetails($txnid, Request $request)
     {
         $user  = $request->user();
+        $params = $request->all();
         $order = Order::where('txnid', $txnid)->first();
         validateOrder($user, $order);
+        setActiveCart($params['token_id'], $params['active_cart']);
+        if($order->payment_in_progress){
+            return response()->json(['order-pending' => true]);
+        }     
         switch ($order->status) {
             case 'cash-on-delivery':
-                $status = ($order->viewed) ? '' : 'cod';
+                $status = 'cod';
                 break;
             case 'payment-successful':
                 $status = 'success';
@@ -297,15 +302,14 @@ class OrderController extends Controller
             case 'payment-failed':
                 $status = 'failure';
                 break;
-            default:
-                return response()->json(['order-pending' => true]);
         }
         $order->viewed = true;
         $order->save();
+
         return response()->json([
             'data'          => $order->getOrderDetailsItemWise(true),
             'order-pending' => false,
-            'status'        => $status,
+            'status'        => ($order->viewed) ? '' : $status,
             'trackback_url' => $order->getTrackbackUrlCashBackWorld(),
         ]);
     }

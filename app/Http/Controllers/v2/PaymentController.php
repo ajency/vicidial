@@ -50,12 +50,6 @@ class PaymentController extends Controller
                     $then->redirectTo('/user/order/' . $orderid . '/payment/payu/status');
                 });
                 break;
-
-            case 'cod':
-                //return redirect('/user/order/' . $orderid . '/payment/cod/status');
-                return $this->status($orderid, $type);
-                break;
-
             default:
                 abort(400, 'Payment Type Not Available');
                 break;
@@ -248,7 +242,7 @@ class PaymentController extends Controller
         if (isset($request_params['merchantTransactionId'])) {
             $order = Order::where('txnid', $request_params['merchantTransactionId'])->first();
             if ($order && $order->payment_in_progress) {
-                NotifyPayment::dispatch($request_params)->onQueue('notify_payment');
+                NotifyPayment::dispatch($request_params, $status)->onQueue('notify_payment');
             }
         }
         return response()->json(['success' => true], 200);
@@ -259,7 +253,7 @@ class PaymentController extends Controller
         $order = Order::find($id);
         $cart  = $order->cart;
         $user  = $cart->user;
-        $data = $request->all();
+        $params = $request->all();
         $order->checkInventoryForSuborders();
         $couponAvailability = $order->cart->checkCouponAvailability();
         if (!empty($couponAvailability['messages'])) {
@@ -276,7 +270,7 @@ class PaymentController extends Controller
                     $cart->type = 'order-complete';
                     $cart->save();
                     $new_cart   = $order->cart->user->newCart(false, $cart);
-                    DB::table('oauth_access_tokens')->where('id', $data['token_id'])->update(['cart_id' => $new_cart->id]);
+                    DB::table('oauth_access_tokens')->where('id', $params['token_id'])->update(['cart_id' => $new_cart->id]);
                     $order->sendSuccessEmail();
                     $order->sendSuccessSMS();
                     $order->sendVendorSMS();

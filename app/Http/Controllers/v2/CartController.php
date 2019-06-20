@@ -348,8 +348,10 @@ class CartController extends Controller
     public function getCartID(Request $request)
     {
         $user = $request->user();
-        $cart = Cart::find($user->cart_id);
-        return response()->json(["cart_id" => $user->cart_id, "cart_type" => $cart->type]);
+        $params = $request->all();
+        $cart_id = setActiveCart($params['token_id'], $params['active_cart']);
+        $cart = Cart::find($cart_id);
+        return response()->json(["cart_id" => $cart_id, "cart_type" => $cart->type]);
     }
 
     public function startFresh(Request $request)
@@ -358,11 +360,13 @@ class CartController extends Controller
         $params = $request->all();
         $user   = $request->user();
 
+        $cart_id = setActiveCart($params['token_id'], $params['active_cart']);
+
         if (isset($params['cart_id'])) {
             $old_cart = Cart::find($params['cart_id']);
             validateCart($user, $old_cart);
-        } else {
-            $old_cart = Cart::find($params['active_cart']);
+        } else { 
+            $old_cart = Cart::find($cart_id);
         }
         $cart = $user->newCart(true, $old_cart);
         DB::table('oauth_access_tokens')->where('id', $params['token_id'])->update(['cart_id' => $cart->id]);

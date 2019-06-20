@@ -1,6 +1,7 @@
 <?php
 
 use Ajency\Connections\OdooConnect;
+use App\Cart;
 use App\Defaults;
 use App\EntityData;
 use App\Facet;
@@ -10,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use App\ProductColor;
 use Illuminate\Support\Str;
+use DB;
 
 function valInteger($object, $values)
 {
@@ -931,5 +933,15 @@ function getMenu()
     return Cache::rememberForever('static_element_menu_published', function () {
         return StaticElement::fetch('menu', [], $published = true);
     });
+}
 
+function setActiveCart($token_id, $cart_id)
+{
+    $cart = Cart::find($cart_id);
+    if ($cart->type == 'order-complete') {
+        $new_cart = $cart->user->newCart(false, $cart);
+        DB::table('oauth_access_tokens')->where('id', $token_id)->update(['cart_id' => $new_cart->id]);
+        $cart_id = $new_cart->id;
+    }
+    return $cart_id;
 }
