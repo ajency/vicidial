@@ -16,6 +16,9 @@
 	<iframe src="{{$trackBackUrl}}" height="1" width="1" frameborder="0"></iframe>
 	@endif
 	<iframe src="https://af0y.com/p.ashx?o=301&e=225&t={{$order_info['txn_no']}}&ect={{$order_info['total_amount']}}&p={{$order_info['total_amount']}}" height="1" width="1" frameborder="0"></iframe>
+
+	<!-- Trade tracker iframe -->
+	<iframe src="https://ts.tradetracker.net/?cid=30735&pid=47044&tgi=&tid={{$order_info['txn_no']}}&tam={{$order_info['total_amount']}}&descrMerchant={descrMerchant}&descrAffiliate={{$order_info['txn_no']}}&currency={currency}&data={{$order_info['txn_no']}}&vc={voucherCode}" height="1" width="1" frameborder="0"></iframe>
 	@endif
 	@if($status == 'failure')
 	<button class="btn btn-primary retry-pay-btn">Retry Payment</button>
