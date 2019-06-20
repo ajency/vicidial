@@ -254,13 +254,12 @@ class PaymentController extends Controller
         return response()->json(['success' => true], 200);
     }
 
-    public function orderPayment($id, $type)
+    public function orderPayment($id, $type, Request $request)
     {
         $order = Order::find($id);
         $cart  = $order->cart;
         $user  = $cart->user;
         $data = $request->all();
-
         $order->checkInventoryForSuborders();
         $couponAvailability = $order->cart->checkCouponAvailability();
         if (!empty($couponAvailability['messages'])) {
