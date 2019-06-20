@@ -304,8 +304,4 @@ class PaymentController extends Controller
         }
         return response()->json(['txnid' => $order->txnid]);
     }
-
-    public function payuOrderPlaced($status){
-
-    }
 }
