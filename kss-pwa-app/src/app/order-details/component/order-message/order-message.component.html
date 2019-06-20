@@ -13,6 +13,10 @@
 		<iframe *ngIf="trackBackUrl" src="{{trackBackUrl}}" height="1" width="1" frameborder="0"></iframe>
 
 		<iframe *ngIf="iframeSrc" [src]="iframeSrc" height="1" width="1" frameborder="0"></iframe>
+
+		<!-- Trade tracker iframe -->
+		<iframe [src]="tradeTrackerIFrame" height="1" width="1" frameborder="0"></iframe>
+
 	</ng-container>
 
 	<ng-container *ngIf="status == 'failure'">

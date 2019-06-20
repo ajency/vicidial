@@ -13,6 +13,7 @@ export class OrderMessageComponent implements OnInit {
 	@Input() orderInfo : any;
 	@Input() trackBackUrl : any;
 	iframeSrc : any;
+  tradeTrackerIFrame : any;
   constructor(private sanitizer: DomSanitizer,
               private appservice : AppServiceService) { 
   	
@@ -24,6 +25,7 @@ export class OrderMessageComponent implements OnInit {
   ngOnChanges(){
   	if(this.orderInfo){
 	  	this.iframeSrc = this.sanitizer.bypassSecurityTrustResourceUrl("https://af0y.com/p.ashx?o=301&e=225&t="+ this.orderInfo['txn_no'] + "&ect=" +this.orderInfo['total_amount'] + "&p=" +this.orderInfo['total_amount']);
+      this.tradeTrackerIFrame = this.sanitizer.bypassSecurityTrustResourceUrl("https://ts.tradetracker.net/?cid=30735&pid=47044&tgi=&tid=" + this.orderInfo['txn_no'] + "&tam=" + this.orderInfo['total_amount'] + "&descrMerchant={descrMerchant}&descrAffiliate=" + this.orderInfo['txn_no'] + "&currency={currency}&data=" + this.orderInfo['txn_no'] + "&vc={voucherCode}");
 	  }
 
     if(this.status == 'success' || this.status == 'cod'){
