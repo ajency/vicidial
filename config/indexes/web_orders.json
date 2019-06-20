@@ -116,8 +116,7 @@
               "type": "long"
             },
             "city": {
-              "type": "text",
-              "ignore_above": 256
+              "type": "text"
             },
             "name": {
               "type": "text"
