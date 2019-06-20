@@ -33,21 +33,22 @@ class NotifyPayment implements ShouldQueue
     public function handle()
     {
         $request_params = $this->response;
-        $order = Order::where('txnid', $request_params['merchantTransactionId'])->first();
-        $payu_payment = PayuPayment::create([
-            'account'        => config('payu.default'),
-            'payable_id'     => $order->id,
-            'payable_type'   => get_class($order),
-            'txnid'          => $order->txnid,
-            'mihpayid'       => $request_params['paymentId'],
-            'firstname'      => $request_params['customerName'],
-            'email'          => $request_params['customerEmail'],
-            'phone'          => $request_params['customerPhone'],
-            'amount'         => $request_params['amount'],
-            'data'           => json_encode($request_params),
-            'status'         => $request_params['status'],
-            'mode'           => $request_params['paymentMode'],
-            'unmappedstatus' => 'pending',
+        $order          = Order::where('txnid', $request_params['merchantTransactionId'])->first();
+        $payu_payment   = PayuPayment::create([
+            'account'          => config('payu.default'),
+            'payable_id'       => $order->id,
+            'payable_type'     => get_class($order),
+            'txnid'            => $order->txnid,
+            'mihpayid'         => $request_params['paymentId'],
+            'firstname'        => $request_params['customerName'],
+            'email'            => $request_params['customerEmail'],
+            'phone'            => $request_params['customerPhone'],
+            'amount'           => $request_params['amount'],
+            'net_amount_debit' => $request_params['amount'],
+            'data'             => json_encode($request_params),
+            'status'           => $request_params['status'],
+            'mode'             => $request_params['paymentMode'],
+            'unmappedstatus'   => 'pending',
         ]);
 
         $post_params = [
