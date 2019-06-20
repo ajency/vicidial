@@ -9,6 +9,7 @@ export class OrderInfoComponent implements OnInit {
 
 	@Input() order_info : any;
   @Input() showStatus : any;
+  @Input() orderSuccess : any;
   constructor() { }
 
   ngOnInit() {

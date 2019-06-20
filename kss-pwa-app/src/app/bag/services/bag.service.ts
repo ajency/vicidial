@@ -24,7 +24,7 @@ export class BagService {
     	this.router.navigateByUrl('/order/details/'+response.txnid,{ replaceUrl: true });
       setTimeout(()=>{
         this.closeWidgetTrigger();
-      },200);
+      },100);
     })
     .catch((error)=>{
       this.appservice.removeLoader();      
