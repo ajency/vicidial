@@ -4,6 +4,7 @@ namespace App\Http\Controllers\v2;
 
 use App\CashOnDelivery;
 use App\Http\Controllers\Controller;
+use App\Jobs\NotifyPayment;
 use App\Order;
 use App\User;
 use Carbon\Carbon;
@@ -11,7 +12,6 @@ use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Tzsk\Payu\Facade\Payment;
-use App\Jobs\NotifyPayment;
 
 class PaymentController extends Controller
 {
@@ -40,8 +40,9 @@ class PaymentController extends Controller
 
                 $order->status = 'payment-in-progress';
                 //status update
-                $expires_at        = Carbon::now()->addMinutes(config('orders.payu_expiry'));
-                $order->expires_at = $expires_at->timestamp;
+                $expires_at                 = Carbon::now()->addMinutes(config('orders.payu_expiry'));
+                $order->expires_at          = $expires_at->timestamp;
+                $order->payment_in_progress = true;
                 $order->save();
                 $order->updateOrderlineIndex(['status']);
 
@@ -242,12 +243,11 @@ class PaymentController extends Controller
 
     public function notifyPayment($status, Request $request)
     {
-        \Log::info('payumoney_webhook_content: '.json_encode($request->getContent()));
-        
         $request_params = $request->getContent();
-        if(isset($request_params['merchantTransactionId'])){
+        \Log::info('payumoney_webhook_content: ' . json_encode($request_params));
+        if (isset($request_params['merchantTransactionId'])) {
             $order = Order::where('txnid', $request_params['merchantTransactionId'])->first();
-            if($order->payment_in_progress){
+            if ($order && $order->payment_in_progress) {
                 NotifyPayment::dispatch($request_params)->onQueue('notify_payment');
             }
         }
@@ -267,28 +267,6 @@ class PaymentController extends Controller
         }
         try {
             switch ($type) {
-                case 'payu':
-                    $attributes = [
-                        'txnid'       => $order->txnid, # Transaction ID.
-                        'amount'      => $order->subOrderData()['you_pay'], # Amount to be charged.
-                        'productinfo' => $order->id,
-                        'firstname'   => $user->name, # Payee Name.
-                        'email'       => $user->email_id, # Payee Email Address.
-                        'phone'       => $user->phone, # Payee Phone Number.
-                    ];
-
-                    $order->status              = 'payment-in-progress';
-                    $order->payment_in_progress = true;
-                    $expires_at                 = Carbon::now()->addMinutes(config('orders.payu_expiry'));
-                    $order->expires_at          = $expires_at->timestamp;
-                    $order->save();
-                    $order->updateOrderlineIndex(['status']);
-
-                    return Payment::with($order)->make($attributes, function ($then) use ($id) {
-                        //$then->redirectTo('/user/order/' . $orderid . '/payment/payu/status');
-                    });
-                    break;
-
                 case 'cod':
                     $order->status           = 'cash-on-delivery';
                     $order->transaction_mode = 'COD';
@@ -326,5 +304,35 @@ class PaymentController extends Controller
             ]);
         }
         return response()->json(['txnid' => $order->txnid]);
+    }
+
+    public function payuPayment($orderid)
+    {
+        $order = Order::find($orderid);
+        $cart  = $order->cart;
+        $user  = $cart->user;
+
+        $order->checkInventoryForSuborders();
+        $couponAvailability = $order->cart->checkCouponAvailability();
+        if (!empty($couponAvailability['messages'])) {
+            abort(400, array_values($couponAvailability['messages'])[0]);
+        }
+        $attributes = [
+            'txnid'       => $order->txnid, # Transaction ID.
+            'amount'      => $order->subOrderData()['you_pay'], # Amount to be charged.
+            'productinfo' => $order->id,
+            'firstname'   => $user->name, # Payee Name.
+            'email'       => $user->email_id, # Payee Email Address.
+            'phone'       => $user->phone, # Payee Phone Number.
+        ];
+
+        $order->status              = 'payment-in-progress';
+        $order->payment_in_progress = true;
+        $expires_at                 = Carbon::now()->addMinutes(config('orders.payu_expiry'));
+        $order->expires_at          = $expires_at->timestamp;
+        $order->save();
+        $order->updateOrderlineIndex(['status']);
+
+        return Payment::with($order)->make($attributes);
     }
 }
