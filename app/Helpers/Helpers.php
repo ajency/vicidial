@@ -11,7 +11,6 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use App\ProductColor;
 use Illuminate\Support\Str;
-use DB;
 
 function valInteger($object, $values)
 {
