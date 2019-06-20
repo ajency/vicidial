@@ -22,7 +22,9 @@ export class BagService {
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     this.apiservice.request(url, 'get', {} , header ).then((response)=>{
     	this.router.navigateByUrl('/order/details/'+response.txnid,{ replaceUrl: true });
-      this.closeWidgetTrigger();
+      setTimeout(()=>{
+        this.closeWidgetTrigger();
+      },200);
     })
     .catch((error)=>{
       this.appservice.removeLoader();      
