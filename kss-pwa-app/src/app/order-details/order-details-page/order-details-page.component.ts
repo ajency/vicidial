@@ -26,6 +26,7 @@ export class OrderDetailsPageComponent implements OnInit {
   showLoader : boolean = true;
   paymentStatus : any; 
   trackBackUrl : any;
+  orderDetailsFailure : any;
   constructor(private route: ActivatedRoute,
               private apiService: ApiServiceService,
               private appservice : AppServiceService,
@@ -48,20 +49,27 @@ export class OrderDetailsPageComponent implements OnInit {
     let url = isDevMode() ? "https://demo8558685.mockable.io/order-details" : this.appservice.apiUrl + '/api/rest/v2/user/order/details/'+order_id;
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     this.orderDetailsCall = this.apiService.request(url,'get',{},header, false, 'observable').subscribe((response)=>{
-      this.showLoader = false;
-      this.orderDetails = response.data;
-      this.paymentStatus = response.status;
-      this.trackBackUrl = response.trackback_url;
-      try{
-        this.handleAnalytics();
-      }
-      catch(error){
-        console.log("Analytics failure");
+      if(response['order-pending'])
+        setTimeout(()=>{
+          this.getOrderDetails(order_id);
+        },500)
+      else{
+        this.showLoader = false;
+        this.orderDetails = response.data;
+        this.paymentStatus = response.status;
+        this.trackBackUrl = response.trackback_url;
+        try{
+          this.handleAnalytics();
+        }
+        catch(error){
+          console.log("Analytics failure");
+        }
       }
     },
     (error)=>{
       console.log("error in fetching the json",error);
       this.showLoader = false;
+      this.orderDetailsFailure = true;
     });
   }
 

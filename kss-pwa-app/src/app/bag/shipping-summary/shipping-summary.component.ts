@@ -31,14 +31,12 @@ export class ShippingSummaryComponent implements OnInit {
   showVerifyCod : boolean = false;
   shakePaymentModal : boolean = false;
   cdnUrl : any;
-  closeWidgetListner : Subscription;
   constructor(private router : Router,
   			   		private appservice : AppServiceService,
               private bagservice : BagService,
               private apiservice : ApiServiceService,
               private route : ActivatedRoute
   					) { 
-      this.closeWidgetListner = this.bagservice.listenTocloseWidgetTriggerr().subscribe(()=>{ this.closeCart() })
   }
 
   ngOnInit() {
