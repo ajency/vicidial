@@ -140,15 +140,15 @@ Route::group([
                 Route::get('/{id}/send-otp', $group_app_version . '\PaymentController@sendCODVerifySMS');
                 Route::get('/{id}/resend-otp', $group_app_version . '\PaymentController@reSendCODVerifySMS');
                 Route::get('/{id}/verify-otp', $group_app_version . '\PaymentController@verifyOTP');
-                Route::get('/{id}/payment/{type}', $group_app_version . '\PaymentController@orderPayment');
+                Route::get('/{id}/payment/{type}', $group_app_version . '\PaymentController@orderPayment');                   
+                Route::get('/order/details/{txnid}', $group_app_version . '\OrderController@finalPageDetails');
             });
             Route::group([
                 'middleware' => ['check-user:' . $group_app_version],
             ], function () use ($group_app_version) {
                 Route::post('/orders', $group_app_version . '\OrderController@listOrders');
                 Route::get('/order/{txnid}/details', $group_app_version . '\OrderController@singleOrder');
-                Route::post('/order/{id}/cancel', $group_app_version . '\OrderController@cancelOrder');            
-                Route::get('/order/details/{txnid}', $group_app_version . '\OrderController@finalPageDetails');
+                Route::post('/order/{id}/cancel', $group_app_version . '\OrderController@cancelOrder');       
                 Route::post('/sub-order/{id}/return', $group_app_version . '\OrderController@returnOrder');
                 Route::get('/get-user-info', $group_app_version . '\UserController@fetchUserInfo');
             });
