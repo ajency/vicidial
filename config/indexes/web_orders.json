@@ -116,7 +116,7 @@
               "type": "long"
             },
             "city": {
-              "type": "keyword",
+              "type": "text",
               "ignore_above": 256
             },
             "name": {
@@ -126,7 +126,7 @@
               "type" : "keyword"
             },
             "state": {
-              "type": "keyword"
+              "type": "text"
             },
             "address": {
               "type": "text"
