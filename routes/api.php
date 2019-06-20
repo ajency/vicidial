@@ -141,7 +141,7 @@ Route::group([
                 Route::get('/{id}/resend-otp', $group_app_version . '\PaymentController@reSendCODVerifySMS');
                 Route::get('/{id}/verify-otp', $group_app_version . '\PaymentController@verifyOTP');
                 Route::get('/{id}/payment/{type}', $group_app_version . '\PaymentController@orderPayment');                   
-                Route::get('/order/details/{txnid}', $group_app_version . '\OrderController@finalPageDetails');
+                Route::get('/details/{txnid}', $group_app_version . '\OrderController@finalPageDetails');
             });
             Route::group([
                 'middleware' => ['check-user:' . $group_app_version],

@@ -63,27 +63,23 @@ class NotifyPayment implements ShouldQueue
                     'Authorization' => config('payu.payumoney.auth'),
                 ],
             ]);
-            if (200 != $result->getStatusCode()) {
-                throw new Exception('Get Payment Response API returned ' . $result->getStatusCode());
-            }
-
             $response_params = json_decode($response->getBody(), true);
-            if (!isset($response_params['result']['postBackParam'])) {
+            if (!isset($response_params['result'][0]['postBackParam'])) {
                 throw new Exception('Get Payment Response API returned null');
             }
-
-            $post_back_params = $response_params['result']['postBackParam'];
+            $post_back_params = $response_params['result'][0]['postBackParam'];
         } catch (\Exception $e) {
             abort(400, $e->getMessage());
         }
-        $payu_payment->data           = json_encode($response_params['result']);
-        $payu_payment->bank_ref_num   = $post_back_params['bank_ref_num'];
-        $payu_payment->bankcode       = $post_back_params['bankcode'];
-        $payu_payment->cardnum        = $post_back_params['cardnum'];
-        $payu_payment->name_on_card   = $post_back_params['name_on_card'];
-        $payu_payment->card_type      = $post_back_params['card_type'];
-        $payu_payment->mihpayid       = $post_back_params['mihpayid'];
-        $payu_payment->unmappedstatus = $post_back_params['unmappedstatus'];
+        $payu_payment->data             = json_encode($response_params['result']);
+        $payu_payment->bank_ref_num     = $post_back_params['bank_ref_num'];
+        $payu_payment->bankcode         = $post_back_params['bankcode'];
+        $payu_payment->cardnum          = $post_back_params['cardnum'];
+        $payu_payment->name_on_card     = $post_back_params['name_on_card'];
+        $payu_payment->card_type        = $post_back_params['card_type'];
+        $payu_payment->mihpayid         = $post_back_params['mihpayid'];
+        $payu_payment->unmappedstatus   = $post_back_params['unmappedstatus'];
+        $payu_payment->net_amount_debit = $post_back_params['net_amount_debit'];
         $payu_payment->save();
 
         if ($payu_payment->unmappedstatus == 'captured') {
