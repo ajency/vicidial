@@ -20,7 +20,7 @@ class NotifyPayment implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($repsonse)
+    public function __construct($response)
     {
         $this->response = $response;
     }
