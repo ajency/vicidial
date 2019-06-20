@@ -47,7 +47,7 @@ class PaymentController extends Controller
                 $order->updateOrderlineIndex(['status']);
 
                 return Payment::with($order)->make($attributes, function ($then) use ($orderid) {
-                    //$then->redirectTo('/user/order/' . $orderid . '/payment/payu/status');
+                    $then->redirectTo('/user/order/' . $orderid . '/payment/payu/status');
                 });
                 break;
 
@@ -304,5 +304,9 @@ class PaymentController extends Controller
             ]);
         }
         return response()->json(['txnid' => $order->txnid]);
+    }
+
+    public function payuOrderPlaced($status){
+
     }
 }

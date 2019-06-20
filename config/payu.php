@@ -100,8 +100,8 @@ return [
     'table'    => 'payu_payments',
 
     'redirect' => [
-        'surl' => env('ANGULAR_URL', '').'/payu-payment/success',
-        'furl' => env('ANGULAR_URL', '').'/payu-payment/failed',
+        'surl' => env('ANGULAR_URL', '').'/order/payu-payment/success',
+        'furl' => env('ANGULAR_URL', '').'/order/payu-payment/failed',
     ],
 
     'paymentResponseApiUrl' => env('PAYU_PAYMENT_RESPONSE_URL'),

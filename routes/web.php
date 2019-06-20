@@ -98,10 +98,10 @@ Route::get('/shop', $app_version . '\ListingController@shop')->name('shoplisting
 Route::get('/products/xml', $app_version . '\StaticController@productXML');
 
 Route::get('/variant-diff-file', $app_version . '\StaticController@getVariantDiffFile');
-Route::get('/user/order/{orderid}/payment', $app_version . '\PaymentController@payuPayment')->name('payment');
 Route::get('/user/order/{orderid}/payment/{type}', $app_version . '\PaymentController@payment')->name('payment');
 Route::get('/user/order/{orderid}/payment/{type}/status', $app_version . '\PaymentController@status')->name('paymentStatus');
 Route::post('/payu/notify/payment/{status}', $app_version . '\PaymentController@notifyPayment');
+Route::get('/order/payu-payment/{status}', $app_version . '\PaymentController@payuOrderPlaced');
 Route::get('/my/order/details', $app_version . '\OrderController@getOrderDetails')->name('orderDetails');
 Route::get('/order/details/{trxn_id}', $app_version . '\OrderController@newOrderDetails')->name('neworderDetails');
 Route::get('/shop/{gendername}', $app_version . '\StaticController@gender');
