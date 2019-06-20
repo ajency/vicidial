@@ -200,7 +200,7 @@ class StaticController extends Controller
                 abort(413,"CSV headers do not match!!");
             }
 
-            Storage::disk('s3')->put(config('ajfileupload.doc_base_root_path') . '/'.$name,$path."/".$name);
+            Storage::disk('s3')->put(config('ajfileupload.doc_base_root_path') . '/'.$name, $csv->getContent());
             Defaults::addOrUpdateLastUpdatedEntityDataFile($name);
             UploadEntityCsv::dispatch()->onQueue('upload_entity_csv');
             return response()->json(["success"=>true,"message"=>"Rank CSV saved successfully!!"],200);
@@ -222,6 +222,7 @@ class StaticController extends Controller
         $csv = Writer::createFromFileObject(new SplTempFileObject());
         $csv->insertAll($rows);
         $csv->output('rank_csv.csv');
+        return response()->json(["success"=>true,"message"=>"Rank CSV downloaded successfully!!"],200);
     }
 
 }
