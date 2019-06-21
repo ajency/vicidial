@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use App\EntityData;
 use DB;
 use App\Jobs\UpdateProductRank;
+use SoapBox\Formatter\Formatter;
 
 class EntityCsv extends Model
 {
@@ -19,9 +20,8 @@ class EntityCsv extends Model
     public static function readRankCSV(){
     	$filename = Defaults::getLastUpdatedEntityDataFile();
     	$file = Storage::disk('s3')->get(config('ajfileupload.doc_base_root_path') . '/'.$filename);
-    	$csv = Reader::createFromPath($file, 'r');
-        $csv->setHeaderOffset(0); //set the CSV header offset
-        $records = $csv->getRecords();
+        $formatter = Formatter::make($file, Formatter::CSV);
+        $records = $formatter->toArray();
         $header_columns = array_flip(EntityCsv::$header_column_mapping);
         $insertList =[];
         EntityCsv::truncate();
