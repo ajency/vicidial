@@ -327,16 +327,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.100.7",
+            "version": "3.100.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "25233e0cde3fe5e5723c136c6ac66fb7c66e9115"
+                "reference": "d4abc59e6fb3407fc66e241886092251a23423e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/25233e0cde3fe5e5723c136c6ac66fb7c66e9115",
-                "reference": "25233e0cde3fe5e5723c136c6ac66fb7c66e9115",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/d4abc59e6fb3407fc66e241886092251a23423e0",
+                "reference": "d4abc59e6fb3407fc66e241886092251a23423e0",
                 "shasum": ""
             },
             "require": {
@@ -406,7 +406,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2019-06-19T19:57:46+00:00"
+            "time": "2019-06-20T18:11:43+00:00"
         },
         {
             "name": "clue/stream-filter",
@@ -4982,16 +4982,16 @@
         },
         {
             "name": "spatie/browsershot",
-            "version": "3.30.0",
+            "version": "3.31.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/browsershot.git",
-                "reference": "504507fa344d15856c719730efef652ffd3e6e49"
+                "reference": "30c0b4f7543e42b2647f34fde20eec3cad7247b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/browsershot/zipball/504507fa344d15856c719730efef652ffd3e6e49",
-                "reference": "504507fa344d15856c719730efef652ffd3e6e49",
+                "url": "https://api.github.com/repos/spatie/browsershot/zipball/30c0b4f7543e42b2647f34fde20eec3cad7247b8",
+                "reference": "30c0b4f7543e42b2647f34fde20eec3cad7247b8",
                 "shasum": ""
             },
             "require": {
@@ -5034,7 +5034,7 @@
                 "screenshot",
                 "webpage"
             ],
-            "time": "2019-06-06T23:44:40+00:00"
+            "time": "2019-06-20T21:57:39+00:00"
         },
         {
             "name": "spatie/crawler",
@@ -7149,12 +7149,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ajency/payu.git",
-                "reference": "64bc7454f33091f44392eae01ee29ed3035a9763"
+                "reference": "9d922e0c23901678abb0ac030cac99987e0956be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ajency/payu/zipball/64bc7454f33091f44392eae01ee29ed3035a9763",
-                "reference": "64bc7454f33091f44392eae01ee29ed3035a9763",
+                "url": "https://api.github.com/repos/ajency/payu/zipball/9d922e0c23901678abb0ac030cac99987e0956be",
+                "reference": "9d922e0c23901678abb0ac030cac99987e0956be",
                 "shasum": ""
             },
             "require": {
@@ -7223,7 +7223,7 @@
             "support": {
                 "source": "https://github.com/ajency/payu/tree/saeesh/payu-change"
             },
-            "time": "2019-06-20T11:47:29+00:00"
+            "time": "2019-06-21T05:47:38+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
