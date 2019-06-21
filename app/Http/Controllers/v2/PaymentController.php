@@ -44,7 +44,7 @@ class PaymentController extends Controller
                 $order->expires_at          = $expires_at->timestamp;
                 $order->payment_in_progress = true;
                 $order->save();
-                $order->reserveInventory();
+                $order->updateInventory('OrderPayment');
                 $order->updateOrderlineIndex(['status']);
 
                 return Payment::with($order)->make($attributes, function ($then) use ($orderid) {
@@ -266,7 +266,7 @@ class PaymentController extends Controller
                     $order->status           = 'cash-on-delivery';
                     $order->transaction_mode = 'COD';
                     $order->save();
-                    $order->reserveInventory();
+                    $order->updateInventory('OrderPayment');
                     $order->placeOrderOnOdoo();
                     $cart       = $order->cart;
                     $cart->type = 'order-complete';

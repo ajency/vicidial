@@ -107,7 +107,7 @@ class Order extends Model
         }
     }
 
-    public function reserveInventory()
+    public function updateInventory($topic)
     {
         $inventoryData = [];
         foreach ($this->subOrders as $subOrder) {
@@ -120,23 +120,7 @@ class Order extends Model
             }
             $inventoryData[$subOrder->location_id] = $variantQuantity;
         }
-        Async::call('OrderPayment', ['inventoryData' => $inventoryData], 'sns', false);
-    }
-
-    public function unreserveInventory()
-    {
-        $inventoryData = [];
-        foreach ($this->subOrders as $subOrder) {
-            $variantQuantity = [];
-            foreach ($subOrder->orderLines as $orderLine) {
-                if (!isset($variantQuantity[$orderLine->variant_id])) {
-                    $variantQuantity[$orderLine->variant_id] = 0;
-                }
-                $variantQuantity[$orderLine->variant_id] += 1;
-            }
-            $inventoryData[$subOrder->location_id] = $variantQuantity;
-        }
-        Async::call('OrderPaymentFailed', ['inventoryData' => $inventoryData], 'sns', false);
+        Async::call($topic, ['inventoryData' => $inventoryData], 'sns', false);
     }
 
     public function placeOrderOnOdoo()
