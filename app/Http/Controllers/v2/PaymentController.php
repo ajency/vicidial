@@ -287,7 +287,7 @@ class PaymentController extends Controller
                 'from'          => config('communication.failed-job.from'),
                 'subject'       => 'Order Success Method Failed : ' . $type . ' [' . config('app.env') . ']',
                 'template_data' => [
-                    'queue'     => '',
+                    'queue'     => 'Order Success Method',
                     'job'       => 'Order Success Method',
                     'exception' => $e->getMessage(),
                     'body'      => 'Order id : ' . $order->id,

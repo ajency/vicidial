@@ -82,8 +82,8 @@ class OrderController extends Controller
         $cart = Cart::find($id);
         validateCart($user, $cart, 'order');
 
-        $order = $cart->order;
-
+        $old_order = $cart->order;
+        $order     = $old_order->newOrder($cart, $params['token_id']);
         checkOrderInventory($order);
 
         if (isset($params['address_id'])) {
@@ -284,14 +284,14 @@ class OrderController extends Controller
 
     public function finalPageDetails($txnid, Request $request)
     {
-        $user  = $request->user();
+        $user   = $request->user();
         $params = $request->all();
-        $order = Order::where('txnid', $txnid)->first();
+        $order  = Order::where('txnid', $txnid)->first();
         validateOrder($user, $order);
         setActiveCart($params['token_id'], $params['active_cart']);
-        if($order->payment_in_progress){
+        if ($order->payment_in_progress) {
             return response()->json(['order-pending' => true]);
-        }     
+        }
         switch ($order->status) {
             case 'cash-on-delivery':
                 $status = 'cod';

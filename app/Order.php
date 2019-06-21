@@ -15,6 +15,8 @@ use App\SubOrder;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Tzsk\Payu\Fragment\Payable;
+use DB;
+use App\Jobs\OrderCreatedNotification;
 
 class Order extends Model
 {
@@ -512,5 +514,31 @@ class Order extends Model
             $trackBackUrl .= "&orderValue=" . $orderValue . "&currency=" . $currency;
         }
         return $trackBackUrl;
+    }
+
+    public function newOrder($old_cart, $token_id)
+    {
+        $cart = $this->cart->user->newCart(true, $old_cart);
+        DB::table('oauth_access_tokens')->where('id', $token_id)->update(['cart_id' => $cart->id]);
+
+        $order = Order::create([
+            'cart_id'      => $cart->id,
+            'address_id'   => $this->address->id,
+            'address_data' => $this->address->shippingAddress(),
+            'expires_at'   => Carbon::now()->addMinutes(config('orders.expiry'))->timestamp,
+            'type'         => 'New Transaction',
+        ]);
+        saveTxnid($order);
+        saveOrderToken($order);
+        $order->setSubOrders();
+        $order->aggregateSubOrderData();
+        $storeData         = $order->getStoreData();
+        $order->store_ids  = $storeData['store_ids'];
+        $order->store_data = $storeData['store_data'];
+        $order->save();
+        OrderCreatedNotification::dispatch($order->id)->onQueue('order_index');
+        $cart->type = 'order';
+        $cart->save();
+        return $order;
     }
 }
