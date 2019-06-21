@@ -303,13 +303,14 @@ class OrderController extends Controller
                 $status = 'failure';
                 break;
         }
+        $status = ($order->viewed) ? '' : $status;
         $order->viewed = true;
         $order->save();
 
         return response()->json([
             'data'          => $order->getOrderDetailsItemWise(true),
             'order-pending' => false,
-            'status'        => ($order->viewed) ? '' : $status,
+            'status'        => $status,
             'trackback_url' => $order->getTrackbackUrlCashBackWorld(),
         ]);
     }
