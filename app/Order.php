@@ -3,20 +3,22 @@
 namespace App;
 
 use Ajency\ServiceComm\Comm\Sync;
+use Ajency\ServiceComm\Comm\Async;
 use App\Cart;
 use App\Jobs\CancelOdooOrder;
+use App\Jobs\NotifyPayment;
 use App\Jobs\OdooOrder;
 use App\Jobs\OdooOrderLine;
+use App\Jobs\OrderCreatedNotification;
 use App\Jobs\OrderLineDeliveryDate;
 use App\Jobs\ReturnOdooOrder;
 use App\Jobs\SaveReturnPolicies;
 use App\ReturnPolicy;
 use App\SubOrder;
 use Carbon\Carbon;
+use DB;
 use Illuminate\Database\Eloquent\Model;
 use Tzsk\Payu\Fragment\Payable;
-use DB;
-use App\Jobs\OrderCreatedNotification;
 
 class Order extends Model
 {
@@ -105,14 +107,44 @@ class Order extends Model
         }
     }
 
+    public function reserveInventory()
+    {
+        $inventoryData = [];
+        foreach ($this->subOrders as $subOrder) {
+            $variantQuantity = [];
+            foreach ($subOrder->orderLines as $orderLine) {
+                if (!isset($variantQuantity[$orderLine->variant_id])) {
+                    $variantQuantity[$orderLine->variant_id] = 0;
+                }
+                $variantQuantity[$orderLine->variant_id] += 1;
+            }
+            $inventoryData[$subOrder->location_id] = $variantQuantity;
+        }
+        Async::call('OrderPayment', ['inventoryData' => $inventoryData], 'sns', false);
+    }
+
+    public function unreserveInventory()
+    {
+        $inventoryData = [];
+        foreach ($this->subOrders as $subOrder) {
+            $variantQuantity = [];
+            foreach ($subOrder->orderLines as $orderLine) {
+                if (!isset($variantQuantity[$orderLine->variant_id])) {
+                    $variantQuantity[$orderLine->variant_id] = 0;
+                }
+                $variantQuantity[$orderLine->variant_id] += 1;
+            }
+            $inventoryData[$subOrder->location_id] = $variantQuantity;
+        }
+        Async::call('OrderPaymentFailed', ['inventoryData' => $inventoryData], 'sns', false);
+    }
+
     public function placeOrderOnOdoo()
     {
         //create a job to place order on odoo for all suborders.
-        $inventoryData = [];
         foreach ($this->subOrders as $subOrder) {
             $subOrder->odoo_status = 'draft';
             $subOrder->save();
-            $variantQuantity = [];
             foreach ($subOrder->orderLines as $orderLine) {
                 $orderLine->state = 'draft';
                 $orderLine->save();
@@ -121,15 +153,9 @@ class Order extends Model
                 } catch (\Exception $e) {
                     \Log::error($e->message);
                 }
-                if (!isset($variantQuantity[$orderLine->variant_id])) {
-                    $variantQuantity[$orderLine->variant_id] = 0;
-                }
-                $variantQuantity[$orderLine->variant_id] += 1;
             }
-            $inventoryData[$subOrder->location_id] = $variantQuantity;
             OdooOrder::dispatch($subOrder, true)->onQueue('odoo_order');
         }
-        Sync::call('inventory', 'reserveInventory', ['inventoryData' => $inventoryData]);
         /*if ($this->cart->coupon != null) {
     $odoo              = new OdooConnect;
     $currentCouponLeft = $odoo->defaultExec('sale.order.coupon', 'search_read', [[['global_code', '=', $this->cart->coupon]]], ['fields' => ['consumed_coupon_count']])->first();

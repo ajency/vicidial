@@ -86,6 +86,7 @@ class NotifyPayment implements ShouldQueue
                     $order->status           = 'payment-successful';
                     $order->transaction_mode = 'Prepaid';
                     $order->save();
+                    $order->reserveInventory();
                     $order->placeOrderOnOdoo();
                     $cart       = $order->cart;
                     $cart->type = 'order-complete';
@@ -94,6 +95,7 @@ class NotifyPayment implements ShouldQueue
                     $order->sendSuccessSMS();
                     $order->sendVendorSMS();
                 } else {
+                    $order->unreserveInventory();
                     $order->status = 'payment-failed';
                     $order->save();
                 }
