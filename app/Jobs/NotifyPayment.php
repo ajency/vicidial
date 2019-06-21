@@ -9,12 +9,11 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Tzsk\Payu\Model\PayuPayment;
-use DB;
 
 class NotifyPayment implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    protected $response;
+    protected $response, $status;
     /**
      * Create a new job instance.
      *
@@ -23,7 +22,7 @@ class NotifyPayment implements ShouldQueue
     public function __construct($response, $status)
     {
         $this->response = $response;
-        $this->status = $status;
+        $this->status   = $status;
     }
 
     /**
@@ -33,39 +32,43 @@ class NotifyPayment implements ShouldQueue
      */
     public function handle()
     {
-        $request_params             = $this->response;
-        $order                      = Order::where('txnid', $request_params['merchantTransactionId'])->first();
-        $request_params['bankcode'] = '';
-        $payu_payment               = PayuPayment::create([
-            'account'          => config('payu.default'),
-            'payable_id'       => $order->id,
-            'payable_type'     => get_class($order),
-            'txnid'            => $order->txnid,
-            'mode'             => $request_params['paymentMode'],
-            'firstname'        => $request_params['customerName'],
-            'email'            => $request_params['customerEmail'],
-            'phone'            => $request_params['customerPhone'],
-            'amount'           => $request_params['amount'],
-            'data'             => json_encode($request_params),
-            'status'           => $request_params['status'],
-            'mode'             => $request_params['paymentMode'],
-            'unmappedstatus'   => 'pending',
-            'bankcode'         => '',
-        ]);
+        $request_params = $this->response;
+        $order          = Order::where('txnid', $request_params['merchantTransactionId'])->first();
+        if (!$order->payment_in_progress) {
+            $request_params['bankcode'] = '';
+            try {
+                $payu_payment = PayuPayment::create([
+                    'account'        => config('payu.default'),
+                    'payable_id'     => $order->id,
+                    'payable_type'   => get_class($order),
+                    'txnid'          => $order->txnid,
+                    'mode'           => $request_params['paymentMode'],
+                    'firstname'      => $request_params['customerName'],
+                    'email'          => $request_params['customerEmail'],
+                    'phone'          => $request_params['customerPhone'],
+                    'amount'         => $request_params['amount'],
+                    'data'           => json_encode($request_params),
+                    'status'         => $request_params['status'],
+                    'mode'           => $request_params['paymentMode'],
+                    'unmappedstatus' => 'pending',
+                    'bankcode'       => '',
+                ]);
+            } catch (\Exception $e) {
 
-        /*$post_params = [
+            }
+            /*$post_params = [
             'merchantKey'            => config('payu.payumoney.key'),
             'merchantTransactionIds' => $request_params['merchantTransactionId'],
-        ];
-        $api_url  = config('payu.paymentResponseApiUrl') . '?' . http_build_query($post_params);
-        $client   = new Client();
-        $response = $client->request('POST', $api_url, [
+            ];
+            $api_url  = config('payu.paymentResponseApiUrl') . '?' . http_build_query($post_params);
+            $client   = new Client();
+            $response = $client->request('POST', $api_url, [
             'headers' => [
-                'Authorization' => config('payu.payumoney.auth'),
+            'Authorization' => config('payu.payumoney.auth'),
             ],
-        ]);
-        $response_params = json_decode($response->getBody(), true);
-        if (isset($response_params['result'][0]['postBackParam'])) {
+            ]);
+            $response_params = json_decode($response->getBody(), true);
+            if (isset($response_params['result'][0]['postBackParam'])) {
             $post_back_params               = $response_params['result'][0]['postBackParam'];
             $payu_payment->data             = json_encode($response_params['result']);
             $payu_payment->bank_ref_num     = $post_back_params['bank_ref_num'];
@@ -77,24 +80,41 @@ class NotifyPayment implements ShouldQueue
             $payu_payment->unmappedstatus   = $post_back_params['unmappedstatus'];
             $payu_payment->net_amount_debit = $post_back_params['net_amount_debit'];
             $payu_payment->save();
-        }*/
-
-        if ($this->status == 'success') {
-            $order->status           = 'payment-successful';
-            $order->transaction_mode = 'Prepaid';
-            $order->save();
-            $order->placeOrderOnOdoo();
-            $cart       = $order->cart;
-            $cart->type = 'order-complete';
-            $cart->save();
-            $order->sendSuccessEmail();
-            $order->sendSuccessSMS();
-            $order->sendVendorSMS();
-        } else {
-            $order->status = 'payment-failed';
-            $order->save();
+            }*/
+            try {
+                if ($this->status == 'success') {
+                    $order->status           = 'payment-successful';
+                    $order->transaction_mode = 'Prepaid';
+                    $order->save();
+                    $order->placeOrderOnOdoo();
+                    $cart       = $order->cart;
+                    $cart->type = 'order-complete';
+                    $cart->save();
+                    $order->sendSuccessEmail();
+                    $order->sendSuccessSMS();
+                    $order->sendVendorSMS();
+                } else {
+                    $order->status = 'payment-failed';
+                    $order->save();
+                }
+                $order->payment_in_progress = false;
+                $order->save();
+            } catch (\Exception $e) {
+                \Log::notice('Order Success Method Failed');
+                \Log::notice('Order id : ' . $orderid);
+                sendEmail('failed-job', [
+                    'from'          => config('communication.failed-job.from'),
+                    'subject'       => 'Order Success Method Failed : ' . $type . ' [' . config('app.env') . ']',
+                    'template_data' => [
+                        'queue'     => '',
+                        'job'       => 'Order Success Method',
+                        'exception' => $e->getMessage(),
+                        'body'      => 'Order id : ' . $orderid,
+                        'trace'     => $e->getTraceAsString(),
+                    ],
+                    'priority'      => 'default',
+                ]);
+            }
         }
-        $order->payment_in_progress = false;
-        $order->save();
     }
 }

@@ -15,6 +15,7 @@ class ChangeMihpayidInPayuPayments extends Migration
     {
         Schema::table('payu_payments', function (Blueprint $table) {
              $table->string('mihpayid')->nullable(true)->change();
+             $table->unique(['txnid']);
         });
     }
 
@@ -26,7 +27,8 @@ class ChangeMihpayidInPayuPayments extends Migration
     public function down()
     {
         Schema::table('payu_payments', function (Blueprint $table) {
-            //
+            $table->string('mihpayid')->nullable(false)->change();
+            $table->dropUnique(['txnid']);
         });
     }
 }
