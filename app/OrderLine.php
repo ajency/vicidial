@@ -6,6 +6,7 @@ use App\Jobs\CreateOrderlineIndexJobs;
 use App\Jobs\OrderlineIndex;
 use App\Jobs\UpdateOrderLineIndex;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class OrderLine extends Model
 {
@@ -105,6 +106,28 @@ class OrderLine extends Model
     {
         foreach ($params['orderLines'] as $key => $changes) {
             $ol = self::find($key);
+            $ol->updateIndex($changes);
+        }
+    }
+
+    public static function addDeliveryDate($id, $delivery_date)
+    {
+        $ol = self::find($id);
+        if ($ol) {
+            $d         = explode("-", explode("T", explode(" ", $delivery_date)[0])[0]);
+            $orderDate = Carbon::createFromDate($d[0], $d[1], $d[2], "Asia/Kolkata");
+            $orderDate->startOfDay();
+            if ($ol->return_policy) {
+                $return_policy      = ReturnPolicy::find($ol->return_policy['id']);
+                $return_expiry_date = ($return_policy->expressions->first()->value[0] == 0) ? null : $orderDate->endOfDay()->addDays($return_policy->expressions->first()->value[0] - 1)->toDateTimeString();
+            }
+            $ol->shipment_delivery_date = $delivery_date;
+            $ol->return_expiry_date     = $return_expiry_date;
+            $changes                    = [
+                'orderline_return_expiry_date'     => (new Carbon($return_expiry_date))->timestamp,
+                'orderline_shipment_delivery_date' => (new Carbon($delivery_date))->timestamp,
+            ];
+            $ol->save();
             $ol->updateIndex($changes);
         }
     }

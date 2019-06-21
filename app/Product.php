@@ -151,10 +151,7 @@ class Product
 
             $sanitisedData['variant_availability'] = Variant::select('inventory')->where('odoo_id', $sanitisedData['variant_id'])->first()->getAvailability();
             $variants->push($sanitisedData);
-            $product_color_id = $sanitisedData['product_color_id'];
         }
-        $productColor                           = ProductColor::where('elastic_id', $productData['product_id'] . '.' . $product_color_id)->first();
-        $productData['product_image_available'] = !collect($productColor->getAllImages(["main"]))->isEmpty();
         $colorvariants                          = $variants->groupBy('product_color_id');
         foreach ($colorvariants as $colorVariantData) {
             $products->push(buildProductIndexFromOdooData($productData, $colorVariantData));
