@@ -13,6 +13,7 @@ class VerifyCsrfToken extends Middleware
         'user/order/payu-payment/status',
         'payu/notify/payment/success',
         'payu/notify/payment/failed',
+        'order/details/*'
     ];
     /**
      * The URIs that should be excluded from CSRF verification.
@@ -26,5 +27,6 @@ class VerifyCsrfToken extends Middleware
         'user/order/payu-payment/status',
         'payu/notify/payment/success',
         'payu/notify/payment/failed',
+        'order/details/*'
     ];
 }

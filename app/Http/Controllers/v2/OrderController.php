@@ -172,7 +172,7 @@ class OrderController extends Controller
         return view('orderdetails')->with('params', $params);
     }
 
-    public function newOrderDetails($product_slug, Request $request)
+    public function newOrderDetails($trxn_id, Request $request)
     {
         return view('home_new');
     }
