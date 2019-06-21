@@ -48,14 +48,14 @@ class OrderLineStatus implements ShouldQueue
                         $return_policy      = ReturnPolicy::find($ol->return_policy['id']);
                         $return_expiry_date = ($return_policy->expressions->first()->value[0] == 0) ? null : $orderDate->endOfDay()->addDays($return_policy->expressions->first()->value[0] - 1)->toDateTimeString();
                     }
-                    $changes = [
+                    $ol->shipment_delivery_date = $this->delivery_date;
+                    $ol->return_expiry_date     = $return_expiry_date;
+                    $changes                    = [
                         'orderline_return_expiry_date'     => (new Carbon($return_expiry_date))->timestamp,
                         'orderline_shipment_delivery_date' => (new Carbon($this->delivery_date))->timestamp,
                     ];
                 }
-                $ol->shipment_status        = $this->status;
-                $ol->shipment_delivery_date = $this->delivery_date;
-                $ol->return_expiry_date     = $return_expiry_date;
+                $ol->shipment_status = $this->status;
                 $ol->save();
                 $changes['orderline_shipment_status'] = $this->status;
                 $ol->updateIndex($changes);

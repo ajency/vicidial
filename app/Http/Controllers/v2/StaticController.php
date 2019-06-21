@@ -221,8 +221,7 @@ class StaticController extends Controller
         }
         $csv = Writer::createFromFileObject(new SplTempFileObject());
         $csv->insertAll($rows);
-        $csv->output('rank_csv.csv');
-        return response()->json(["success"=>true,"message"=>"Rank CSV downloaded successfully!!"],200);
+        return response()->make($csv->getContent(),200);
     }
 
 }

@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use App\EntityData;
 use DB;
 use App\Jobs\UpdateProductRank;
+use SoapBox\Formatter\Formatter;
 
 class EntityCsv extends Model
 {

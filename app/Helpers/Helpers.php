@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Str;
 use App\StaticElement;
 use Illuminate\Support\Facades\Cache;
+use App\ProductColor;
 
 function valInteger($object, $values)
 {
@@ -240,6 +241,9 @@ function buildProductIndexFromOdooData($productData, $variantData)
         $productData['product_id'],
         $variantData->first()['product_color_name'],
     ]));
+
+    $productColor                           = ProductColor::where('elastic_id', $productData['product_id'] . '.' . $variantData->first()['product_color_id'])->first();
+    $productData['product_image_available'] = !collect($productColor->getAllImages(["main"]))->isEmpty();
 
     $indexData = [
         'type'        => "product",
