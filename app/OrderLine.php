@@ -5,6 +5,7 @@ namespace App;
 use App\Jobs\CreateOrderlineIndexJobs;
 use App\Jobs\OrderlineIndex;
 use App\Jobs\UpdateOrderLineIndex;
+use App\Jobs\WayBillOrderlineIndex;
 use Illuminate\Database\Eloquent\Model;
 
 class OrderLine extends Model
