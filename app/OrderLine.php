@@ -136,6 +136,11 @@ class OrderLine extends Model
         if ($orderline->return_expiry_date) {
             $indexData['orderline_return_expiry_date'] = (new Carbon($orderline->return_expiry_date))->timestamp;
         }
+
+        if( in_array($orderline->ordersNew->first()->status, [ config("orders.order_status.cash_on_delivery"), config("orders.order_status.payment_successful") ]) )
+        {
+            $indexData['waybill']               = $orderline->waybill;
+        }
         $indexData['orderline_return_policy']   = $orderline->return_policy;
         $indexData['orderline_product_type']    = $orderline->product_type;
         $indexData['orderline_product_subtype'] = $orderline->product_subtype;

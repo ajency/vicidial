@@ -36,7 +36,8 @@ class WayBillOrderlineIndex implements ShouldQueue
                 DB::table('order_lines')
                     ->where('id', $id)
                     ->update(['wayBill' => $wayBill]);
-                OrderlineIndex::dispatch($this->id)->onQueue('order_index');
+                $orderline = OrderLine::find($id);
+                $orderline->flatData();
             });
         } catch (Exception $e) {
             \Log::warning($e->getMessage());
