@@ -139,7 +139,7 @@ class OrderLine extends Model
 
         if( in_array($orderline->ordersNew->first()->status, [ config("orders.order_status.cash_on_delivery"), config("orders.order_status.payment_successful") ]) )
         {
-            $indexData['waybill']               = $orderline->waybill;
+            $indexData['delivery_waybill']             = $orderline->waybill;
         }
         $indexData['orderline_return_policy']   = $orderline->return_policy;
         $indexData['orderline_product_type']    = $orderline->product_type;

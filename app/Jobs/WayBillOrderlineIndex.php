@@ -32,7 +32,8 @@ class WayBillOrderlineIndex implements ShouldQueue
     {
         try {
             $this->ids->each(function ($id) {
-                $waybill = Sync::call('backoffice', 'fetchWaybillNumber', ["orderline_id" => $id] );
+                $indexData = [];
+                $wayBill = Sync::call('backoffice', 'fetchWaybillNumber', ["orderline_id" => $id] );
                 DB::table('order_lines')
                     ->where('id', $id)
                     ->update(['wayBill' => $wayBill]);
@@ -40,7 +41,7 @@ class WayBillOrderlineIndex implements ShouldQueue
                 $indexData = $orderline->flatData();
                 $q = new ElasticQuery;
                 $q->setIndex(config('elastic.indexes.weborder'));
-                $q->createIndexParams($id, $indexData);
+                $q->createIndexParams($orderline->id, $indexData);
                 $result = $q->index();
 
                 if (!isset($result['result']) || !($result['result'] == 'created' || $result['result'] == 'updated')) {
