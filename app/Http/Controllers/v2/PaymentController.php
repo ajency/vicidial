@@ -44,7 +44,7 @@ class PaymentController extends Controller
                 $order->expires_at          = $expires_at->timestamp;
                 $order->payment_in_progress = true;
                 $order->save();
-                $order->updateInventory('OrderPayment');
+                $order->updateInventory('ReserveInventory');
                 $order->updateOrderlineIndex(['status']);
 
                 return Payment::with($order)->make($attributes, function ($then) use ($orderid) {
@@ -275,7 +275,7 @@ class PaymentController extends Controller
                     $order->sendSuccessEmail();
                     $order->sendSuccessSMS();
                     $order->sendVendorSMS();
-                    $order->updateInventory('OrderPayment');
+                    $order->updateInventory('ReserveInventory');
                     break;
                 default:
                     abort(400, 'Payment Type Not Available');
@@ -283,7 +283,6 @@ class PaymentController extends Controller
             }
             $order->updateOrderlineIndex(['status', 'transaction_mode']);
         } catch (\Exception $e) {
-            $order->updateInventory('OrderPaymentFailed');
             \Log::notice('Order Success Method Failed');
             \Log::notice('Order id : ' . $order->id);
             sendEmail('failed-job', [

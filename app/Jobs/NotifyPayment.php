@@ -85,7 +85,7 @@ class NotifyPayment implements ShouldQueue
                 if ($this->status == 'success') {
                     $order->status           = 'payment-successful';
                     $order->transaction_mode = 'Prepaid';
-                    $order->save();         
+                    $order->save();
                     $order->placeOrderOnOdoo();
                     $cart       = $order->cart;
                     $cart->type = 'order-complete';
@@ -93,14 +93,12 @@ class NotifyPayment implements ShouldQueue
                     $order->sendSuccessEmail();
                     $order->sendSuccessSMS();
                     $order->sendVendorSMS();
-                    $order->updateInventory('OrderPayment');
                 } else {
-                    $order->updateInventory('OrderPaymentFailed');
                     $order->status = 'payment-failed';
                     $order->save();
+                    $order->updateInventory('UnreserveInventory');
                 }
-                $order->payment_in_progress = false;
-                $order->save();
+
             } catch (\Exception $e) {
                 \Log::notice('Order Success Method Failed');
                 \Log::notice('Order id : ' . $order->id);
@@ -111,12 +109,14 @@ class NotifyPayment implements ShouldQueue
                         'queue'     => 'Order Success Method',
                         'job'       => 'Order Success Method',
                         'exception' => $e->getMessage(),
-                        'body'      => 'Order id : ' .$order->id,
+                        'body'      => 'Order id : ' . $order->id,
                         'trace'     => $e->getTraceAsString(),
                     ],
                     'priority'      => 'default',
                 ]);
             }
+            $order->payment_in_progress = false;
+            $order->save();
         }
     }
 }
