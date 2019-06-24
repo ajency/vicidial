@@ -37,7 +37,15 @@ class WayBillOrderlineIndex implements ShouldQueue
                     ->where('id', $id)
                     ->update(['wayBill' => $wayBill]);
                 $orderline = OrderLine::find($id);
-                $orderline->flatData();
+                $indexData = $orderline->flatData();
+                $q = new ElasticQuery;
+                $q->setIndex(config('elastic.indexes.weborder'));
+                $q->createIndexParams($id, $indexData);
+                $result = $q->index();
+
+                if (!isset($result['result']) || !($result['result'] == 'created' || $result['result'] == 'updated')) {
+                    throw new Exception(json_encode($result));
+                }
             });
         } catch (Exception $e) {
             \Log::warning($e->getMessage());
