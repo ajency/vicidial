@@ -36,6 +36,7 @@ class WayBillOrderlineIndex implements ShouldQueue
             $this->ids->each(function ($id) {
                 $indexData = [];
                 $wayBill = Sync::call('backoffice', 'fetchWaybillNumber', ["orderline_id" => $id] );
+                $wayBill = ($wayBill) ? $wayBill : null;
                 \DB::table('order_lines')
                     ->where('id', $id)
                     ->update(['waybill' => $wayBill]);
