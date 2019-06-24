@@ -2,7 +2,9 @@
 
 namespace App\Jobs;
 
+use Ajency\Connections\ElasticQuery;
 use Ajency\ServiceComm\Comm\Sync;
+use App\OrderLine;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -12,7 +14,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 class WayBillOrderlineIndex implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
+    protected $ids;
     /**
      * Create a new job instance.
      *
@@ -20,7 +22,7 @@ class WayBillOrderlineIndex implements ShouldQueue
      */
     public function __construct($orderlines)
     {
-        $this->id = $orderlines;
+        $this->ids = $orderlines;
     }
 
     /**
@@ -34,9 +36,9 @@ class WayBillOrderlineIndex implements ShouldQueue
             $this->ids->each(function ($id) {
                 $indexData = [];
                 $wayBill = Sync::call('backoffice', 'fetchWaybillNumber', ["orderline_id" => $id] );
-                DB::table('order_lines')
+                \DB::table('order_lines')
                     ->where('id', $id)
-                    ->update(['wayBill' => $wayBill]);
+                    ->update(['waybill' => $wayBill]);
                 $orderline = OrderLine::find($id);
                 $indexData = $orderline->flatData();
                 $q = new ElasticQuery;

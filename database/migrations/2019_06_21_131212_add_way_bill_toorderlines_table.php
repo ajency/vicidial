@@ -14,7 +14,7 @@ class AddWayBillToorderlinesTable extends Migration
     public function up()
     {
         Schema::table('order_lines', function (Blueprint $table) {
-            $table->bigInteger('waybill')->after('id')->nullable();
+            $table->string('waybill')->after('id')->nullable();
         });
         OrderLine::indexWaybillToOrderLines();
     }
