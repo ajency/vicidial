@@ -66,5 +66,12 @@ return [
         'event_id'          => env('CASHBACK_WORLD_EVENT_ID'),
         'secret_code'       => env('CASHBACK_WORLD_SECRET_CODE'),
         'currency'          => env('CASHBACK_WORLD_CURRENCY')
+    ],
+    "order_status"  => [
+        'draft'                 => "draft",
+        'payment_failed'        => "payment-failed",
+        'cash_on_delivery'      => "cash-on-delivery",
+        'payment_successful'    => "payment-successful",
     ]
+
 ];

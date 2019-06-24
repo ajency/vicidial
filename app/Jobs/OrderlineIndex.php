@@ -89,6 +89,11 @@ class OrderlineIndex implements ShouldQueue
             $indexData['cancel_suborder_id']                  = $orderline->subOrdersCancelled->first()->id;
         }
 
+        if( in_array($orderline->ordersNew->first()->status, [ config("orders.order_status.cash_on_delivery"), config("orders.order_status.payment_successful") ]) )
+        {
+            $indexData['waybill']          = $orderline->waybill;
+        }
+
         $indexData['suborder_id']          = $orderline->subOrdersNew->first()->id;
         $indexData['suborder_status']      = $orderline->subOrdersNew->first()->odoo_status;
         $indexData['suborder_is_shipped']  = $orderline->subOrdersNew->first()->is_shipped;

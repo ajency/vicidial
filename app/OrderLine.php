@@ -183,4 +183,18 @@ class OrderLine extends Model
         return $indexData;
     }
 
+    public static function indexWaybillToOrderLines($min = false, $max = false)
+    {
+        $orderlines = self::select('id');
+        if ($min) {
+            $orderlines->where('id', '>', $min);
+        }
+        if ($max) {
+            $orderlines->where('id', '<', $max);
+        }
+        $orderlines->pluck('id')->chunk(30)->each(function ($chunkedOrderLines) {
+            WayBillOrderlineIndex::dispatch($chunkedOrderLines)->onQueue('order_index');
+        });
+    }
+
 }
