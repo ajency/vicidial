@@ -266,7 +266,6 @@ class PaymentController extends Controller
                     $order->status           = 'cash-on-delivery';
                     $order->transaction_mode = 'COD';
                     $order->save();
-                    $order->updateInventory('OrderPayment');
                     $order->placeOrderOnOdoo();
                     $cart       = $order->cart;
                     $cart->type = 'order-complete';
@@ -276,6 +275,7 @@ class PaymentController extends Controller
                     $order->sendSuccessEmail();
                     $order->sendSuccessSMS();
                     $order->sendVendorSMS();
+                    $order->updateInventory('OrderPayment');
                     break;
                 default:
                     abort(400, 'Payment Type Not Available');
@@ -283,6 +283,7 @@ class PaymentController extends Controller
             }
             $order->updateOrderlineIndex(['status', 'transaction_mode']);
         } catch (\Exception $e) {
+            $order->updateInventory('OrderPaymentFailed');
             \Log::notice('Order Success Method Failed');
             \Log::notice('Order id : ' . $order->id);
             sendEmail('failed-job', [
