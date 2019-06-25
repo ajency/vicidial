@@ -265,7 +265,7 @@ class PaymentController extends Controller
             $cart->type = 'order-complete';
             $cart->save();
             $new_cart = $order->cart->user->newCart(false, $cart);
-            DB::table('oauth_access_tokens')->where('id', $params['token_id'])->update(['cart_id' => $new_cart->id]);
+            DB::table('oauth_access_tokens')->where('id', request()['token_id'])->update(['cart_id' => $new_cart->id]);
             $order->sendSuccessEmail();
             $order->sendSuccessSMS();
             $order->sendVendorSMS();
