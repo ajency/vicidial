@@ -56,28 +56,30 @@ export class ShippingSummaryComponent implements OnInit {
     }
     this.closePaymentModal();
     this.appservice.showLoader();
+    this.checkPaymentOption();         
+  }
+
+  checkInventory(){
     let url = this.appservice.apiUrl + '/api/rest/v2/user/order/' + this.shippingDetails.order_id + '/check-inventory'
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     this.apiservice.request(url, 'get', {} , header ).then((response)=>{
       fbTrackAddPaymentInfo();
-      this.checkPaymentOption()
+      window.location.href = "/user/order/" + this.shippingDetails.order_id +"/payment/payu";
     })
     .catch((error)=>{
       console.log("error ===>", error);
-      // this.router.navigateByUrl('/bag',{ replaceUrl: true });
       this.appservice.removeLoader();      
       let url = window.location.href.split("#")[0] + '#/bag';
       history.replaceState({bag : true}, 'bag', url);
       console.log("openCart");
       this.appservice.loadCartTrigger();
-    })      
+    })
   }
 
   checkPaymentOption(){
-    console.log("checkPaymentOption ==>", this.selectedPaymentOption);
     switch(this.selectedPaymentOption)
     {
-      case 'payu' :   window.location.href = "/user/order/" + this.shippingDetails.order_id +"/payment/payu";
+      case 'payu' :   this.checkInventory();
                       break;
       case 'cod' :  {
                       this.confirmMobile();
@@ -176,13 +178,11 @@ export class ShippingSummaryComponent implements OnInit {
   }
 
   confirmMobile(){
-    console.log("inside confirm mobile");
+    fbTrackAddPaymentInfo();
     let url = this.appservice.apiUrl + '/api/rest/v2/user/order/' + this.shippingDetails.order_id + '/send-otp?phone='+this.shippingDetails.address.phone;
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     this.apiservice.request(url, 'get', {} , header ).then((response)=>{
-        if(response.verified)
-          this.bagservice.confirmOrderPayment(this.shippingDetails.order_id);
-        else{
+        if(!response.verified){
           this.appservice.removeLoader();
           this.showVerifyCod = true;
         }

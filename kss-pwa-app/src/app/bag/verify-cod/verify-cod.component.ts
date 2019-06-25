@@ -37,9 +37,7 @@ export class VerifyCodComponent implements OnInit, OnChanges {
   	let url = this.appservice.apiUrl + '/api/rest/v2/user/order/' + this.shippingDetails.order_id + '/verify-otp?phone='+this.shippingDetails.address.phone+'&otp='+this.otp;
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     this.apiservice.request(url, 'get', {} , header ).then((response)=>{
-    	if(response.success)
-        this.bagservice.confirmOrderPayment(this.shippingDetails.order_id);
-      else{
+      if(!response.success){
       	this.otpVerificationFailed = true;
 	      this.otpVerificationErrorMsg = response.message;
         this.appservice.removeLoader();
@@ -47,15 +45,9 @@ export class VerifyCodComponent implements OnInit, OnChanges {
     })
     .catch((error)=>{
       console.log("error ===>", error);
-      if(error.status == 410){
+      if(error.status == 410 || error.status == 401){
         let url = window.location.href.split("#")[0] + '#/bag';
         history.replaceState({bag : true}, 'bag', url);
-        this.appservice.loadCartTrigger();
-      }
-      else if(error.status == 401){
-        let url = window.location.href.split("#")[0] + '#/bag';
-        history.replaceState({bag : true}, 'bag', url);
-        console.log("openCart");
         this.appservice.loadCartTrigger();
       }
       else{
