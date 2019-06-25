@@ -37,7 +37,11 @@ export class VerifyCodComponent implements OnInit, OnChanges {
   	let url = this.appservice.apiUrl + '/api/rest/v2/user/order/' + this.shippingDetails.order_id + '/verify-otp?phone='+this.shippingDetails.address.phone+'&otp='+this.otp;
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     this.apiservice.request(url, 'get', {} , header ).then((response)=>{
-      if(!response.success){
+      if(response.success){
+        if(response.txnid)
+          window.location.href = '/order/details/'+response.txnid;
+      }
+      else{
       	this.otpVerificationFailed = true;
 	      this.otpVerificationErrorMsg = response.message;
         this.appservice.removeLoader();

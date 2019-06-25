@@ -182,18 +182,21 @@ export class ShippingSummaryComponent implements OnInit {
     let url = this.appservice.apiUrl + '/api/rest/v2/user/order/' + this.shippingDetails.order_id + '/send-otp?phone='+this.shippingDetails.address.phone;
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     this.apiservice.request(url, 'get', {} , header ).then((response)=>{
-        if(!response.verified){
+      if(response.success){
+        if(response.txnid)
+          window.location.href = '/order/details/'+response.txnid;
+        else if(!response.verified){
           this.appservice.removeLoader();
           this.showVerifyCod = true;
         }
+      }
     })
     .catch((error)=>{
       console.log("error ===>", error);
       this.appservice.removeLoader();
-      if(error.status == 401){
+      if(error.status == 401 || error.status == 410 || error.status == 400){
         let url = window.location.href.split("#")[0] + '#/bag';
         history.replaceState({bag : true}, 'bag', url);
-        console.log("openCart");
         this.appservice.loadCartTrigger();
       }
     }) 
