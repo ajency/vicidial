@@ -2,8 +2,8 @@
 
 namespace App;
 
-use Ajency\ServiceComm\Comm\Sync;
 use Ajency\ServiceComm\Comm\Async;
+use Ajency\ServiceComm\Comm\Sync;
 use App\Cart;
 use App\Jobs\CancelOdooOrder;
 use App\Jobs\NotifyPayment;
@@ -550,5 +550,28 @@ class Order extends Model
         $cart->type = 'order';
         $cart->save();
         return $order;
+    }
+
+    public function validate()
+    {
+        $cart  = $this->cart;
+        $user  = request()->user();
+        validateOrder($user, $this);
+        $this->checkInventoryForSuborders();
+        $couponAvailability = $this->cart->checkCouponAvailability();
+        if (!empty($couponAvailability['messages'])) {
+            abort(400, array_values($couponAvailability['messages'])[0]);
+        }
+
+        if (isset($this->subOrderData()['kss_cash'])) {
+            $kss_cash = Sync::call('referral', 'getUserReferralPoints', ['user_id' => $user->id]);
+            if ($this->subOrderData()['kss_cash'] > $kss_cash) {
+                abort(400, 'KSS cash is expired');
+            }
+            $amount_charged = $this->subOrderData()['you_pay'] - $this->subOrderData()['kss_cash'];
+        } else {
+            $amount_charged = $this->subOrderData()['you_pay'];
+        }
+        checkCODServiceable($this->address->checkPincodeServiceable()["cod"]);
     }
 }

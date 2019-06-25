@@ -104,7 +104,7 @@ class NotifyPayment implements ShouldQueue
                 \Log::notice('Order id : ' . $order->id);
                 sendEmail('failed-job', [
                     'from'          => config('communication.failed-job.from'),
-                    'subject'       => 'Order Success Method Failed : [' . config('app.env') . ']',
+                    'subject'       => 'Order Success Method Failed : PAYU [' . config('app.env') . ']',
                     'template_data' => [
                         'queue'     => 'Order Success Method',
                         'job'       => 'Order Success Method',
@@ -115,6 +115,7 @@ class NotifyPayment implements ShouldQueue
                     'priority'      => 'default',
                 ]);
             }
+            $order->updateOrderlineIndex(['status', 'transaction_mode']);
             $order->payment_in_progress = false;
             $order->save();
         }
