@@ -199,8 +199,8 @@ class PaymentController extends Controller
         if ($cashOnDelivery->otp != $data['otp']) {
             return response()->json(["message" => 'The entered OTP is invalid. Please try again.', 'success' => false]);
         }
-
         $this->makeOrderCOD($order, $data);
+        return response()->json(['txnid' => $order->txnid, 'success' => true]);
     }
 
     public function validateOTP($data)
@@ -237,10 +237,10 @@ class PaymentController extends Controller
         if ($validator->fails()) {
             return ["message" => $validator->errors()->first(), 'success' => false, 'verified' => false];
         }
-        if (!$data["token_verified"] && $data['phone'] != request()->user()->phone) {
+        if (!$data["token_verified"] && $data['phone'] == request()->user()->phone) {
             $otp                        = generateOTP();
             $otp_expiry                 = Carbon::now()->addMinutes(config('otp.cod_expiry'));
-            $cashOnDelivery             = CashOnDelivery::firstOrNew(['order_id' => $id, 'phone' => $data['phone']]);
+            $cashOnDelivery             = CashOnDelivery::firstOrNew(['order_id' => $order->id, 'phone' => $data['phone']]);
             $cashOnDelivery->otp        = $otp;
             $cashOnDelivery->otp_expiry = $otp_expiry->toDateTimeString();
             $cashOnDelivery->save();
