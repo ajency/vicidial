@@ -39,6 +39,10 @@ return [
 			'model' => "App\Location",
 			'function' => 'getLocationDetails'
 		],
+		'fetchFacetList' => [
+			'model' => "App\Facet",
+			'function' => 'fetchFacetList'
+		],
 	],
 	'async_provider' => 'sns',
 	'sns' => [

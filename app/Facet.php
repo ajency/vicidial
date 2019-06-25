@@ -56,4 +56,27 @@ class Facet extends Model
             $offset = $offset + $attributesData->count();
         } while ($attributesData->count() == config('odoo.limit'));
     }
+
+    public static function fetchFacetList($params)
+    {
+        $facetByName = collect(config('product.facet_display_data'))->mapWithKeys(function ($facet, $key) {
+            return ($facet['filter_type'] == 'primary_filter') ? [
+                $facet['name'] => $key,
+            ] : [];
+        });
+        if(isset($facetByName[$params['facet']])){
+            $facetList = self::where('facet_name', $facetByName[$params['facet']])->get()->map(function ($facet) {
+                return [
+                    'name'     => $facet->display_name,
+                    'value'    => $facet->facet_value,
+                    'sequence' => $facet->sequence,
+                    'display'  => $facet->display,
+                ];
+            });
+        }
+        else{
+            $facetList = [];
+        }
+        return $facetList;
+    }
 }
