@@ -66,6 +66,7 @@ return [
             'region' => env('AWS_REGION', 'us-east-1'),
             'routes' => [
                 'ImageUpload' => 'App\\Jobs\\FetchProductImages',
+                'DelhiveryConfirm' => 'App\\Jobs\\SyncDelhiveryWaybill',
             ]
         ],
 
