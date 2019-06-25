@@ -59,24 +59,17 @@ class Facet extends Model
 
     public static function fetchFacetList($params)
     {
-        $facetByName = collect(config('product.facet_display_data'))->mapWithKeys(function ($facet, $key) {
-            return ($facet['filter_type'] == 'primary_filter') ? [
-                $facet['name'] => $key,
-            ] : [];
+        $facet = collect(config('product.facet_display_data'))->mapWithKeys(function ($facet, $key) use ($params) {
+            return ($facet['name'] == $params['facet']) ? [$key] : [];
+        })->first();
+        $facetList = self::where('facet_name', $facet)->get()->map(function ($facet) {
+            return [
+                'name'     => $facet->display_name,
+                'value'    => $facet->facet_value,
+                'sequence' => $facet->sequence,
+                'display'  => $facet->display,
+            ];
         });
-        if(isset($facetByName[$params['facet']])){
-            $facetList = self::where('facet_name', $facetByName[$params['facet']])->get()->map(function ($facet) {
-                return [
-                    'name'     => $facet->display_name,
-                    'value'    => $facet->facet_value,
-                    'sequence' => $facet->sequence,
-                    'display'  => $facet->display,
-                ];
-            });
-        }
-        else{
-            $facetList = [];
-        }
         return $facetList;
     }
 }
