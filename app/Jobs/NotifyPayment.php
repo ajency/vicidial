@@ -9,6 +9,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Tzsk\Payu\Model\PayuPayment;
+use GuzzleHttp\Client;
 
 class NotifyPayment implements ShouldQueue
 {
@@ -82,7 +83,7 @@ class NotifyPayment implements ShouldQueue
                 $payu_payment->net_amount_debit = $post_back_params['net_amount_debit'];
                 $payu_payment->save();
             }
-            
+
             try {
                 if ($this->status == 'success') {
                     $order->status           = 'payment-successful';
