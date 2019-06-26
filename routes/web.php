@@ -51,6 +51,7 @@ Route::group([
 $group_app_version = 'v2';
 Route::group([
     'prefix' => '/rest/' . $group_app_version,
+    'middleware' => ['cors'],
 ], function () use ($group_app_version) {
     Route::group([
         'prefix' => '/anonymous',
