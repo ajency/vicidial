@@ -34,7 +34,7 @@ class NotifyPayment implements ShouldQueue
     {
         $request_params = $this->response;
         $order          = Order::where('txnid', $request_params['merchantTransactionId'])->first();
-        if ($order && !$order->payment_in_progress) {
+        if ($order && $order->payment_in_progress) {
             $request_params['bankcode'] = '';
             try {
                 $payu_payment = PayuPayment::create([
@@ -51,10 +51,10 @@ class NotifyPayment implements ShouldQueue
                     'status'         => $request_params['status'],
                     'mode'           => $request_params['paymentMode'],
                     'unmappedstatus' => 'pending',
-                    'bankcode'       => '',
+                    'bankcode'       => $request_params['bankcode'],
                 ]);
             } catch (\Exception $e) {
-
+                \Log::notice('payu_payment update failed for order ID:' . $order->id.' with error: '.$e->getMessage());
             }
             /*$post_params = [
             'merchantKey'            => config('payu.payumoney.key'),
@@ -100,7 +100,7 @@ class NotifyPayment implements ShouldQueue
                 }
 
             } catch (\Exception $e) {
-                \Log::notice('Order Success Method Failed');
+                \Log::notice('Order Success Payu Method Failed with error: '.$e->getMessage());
                 \Log::notice('Order id : ' . $order->id);
                 sendEmail('failed-job', [
                     'from'          => config('communication.failed-job.from'),
