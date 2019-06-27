@@ -104,6 +104,6 @@ return [
         'furl' => env('ANGULAR_URL', '').'/order/details/',
     ],
 
-    'paymentResponseApiUrl' => env('PAYU_PAYMENT_RESPONSE_URL'),
+    'paymentResponseApiUrl' => 'https://www.payumoney.com/payment/op/getPaymentResponse',
 ];
 

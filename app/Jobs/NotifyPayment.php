@@ -3,13 +3,13 @@
 namespace App\Jobs;
 
 use App\Order;
+use GuzzleHttp\Client;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Tzsk\Payu\Model\PayuPayment;
-use GuzzleHttp\Client;
 
 class NotifyPayment implements ShouldQueue
 {
@@ -58,30 +58,32 @@ class NotifyPayment implements ShouldQueue
                 \Log::notice('payu_payment update failed for order ID:' . $order->id . ' with error: ' . $e->getMessage());
             }
 
-            $post_params = [
-                'merchantKey'            => config('payu.payumoney.key'),
-                'merchantTransactionIds' => $request_params['merchantTransactionId'],
-            ];
-            $api_url  = config('payu.paymentResponseApiUrl') . '?' . http_build_query($post_params);
-            $client   = new Client();
-            $response = $client->request('POST', $api_url, [
-                'headers' => [
-                    'Authorization' => config('payu.payumoney.auth'),
-                ],
-            ]);
-            $response_params = json_decode($response->getBody(), true);
-            if (isset($response_params['result'][0]['postBackParam'])) {
-                $post_back_params               = $response_params['result'][0]['postBackParam'];
-                $payu_payment->data             = json_encode($response_params['result']);
-                $payu_payment->bank_ref_num     = $post_back_params['bank_ref_num'];
-                $payu_payment->bankcode         = $post_back_params['bankcode'];
-                $payu_payment->cardnum          = $post_back_params['cardnum'];
-                $payu_payment->name_on_card     = $post_back_params['name_on_card'];
-                $payu_payment->card_type        = $post_back_params['card_type'];
-                $payu_payment->mihpayid         = $post_back_params['mihpayid'];
-                $payu_payment->unmappedstatus   = $post_back_params['unmappedstatus'];
-                $payu_payment->net_amount_debit = $post_back_params['net_amount_debit'];
-                $payu_payment->save();
+            if (config('app.env') == 'production') {
+                $post_params = [
+                    'merchantKey'            => config('payu.payumoney.key'),
+                    'merchantTransactionIds' => $request_params['merchantTransactionId'],
+                ];
+                $api_url  = config('payu.paymentResponseApiUrl') . '?' . http_build_query($post_params);
+                $client   = new Client();
+                $response = $client->request('POST', $api_url, [
+                    'headers' => [
+                        'Authorization' => config('payu.payumoney.auth'),
+                    ],
+                ]);
+                $response_params = json_decode($response->getBody(), true);
+                if (isset($response_params['result'][0]['postBackParam'])) {
+                    $post_back_params               = $response_params['result'][0]['postBackParam'];
+                    $payu_payment->data             = json_encode($response_params['result']);
+                    $payu_payment->bank_ref_num     = $post_back_params['bank_ref_num'];
+                    $payu_payment->bankcode         = $post_back_params['bankcode'];
+                    $payu_payment->cardnum          = $post_back_params['cardnum'];
+                    $payu_payment->name_on_card     = $post_back_params['name_on_card'];
+                    $payu_payment->card_type        = $post_back_params['card_type'];
+                    $payu_payment->mihpayid         = $post_back_params['mihpayid'];
+                    $payu_payment->unmappedstatus   = $post_back_params['unmappedstatus'];
+                    $payu_payment->net_amount_debit = $post_back_params['net_amount_debit'];
+                    $payu_payment->save();
+                }
             }
 
             try {
