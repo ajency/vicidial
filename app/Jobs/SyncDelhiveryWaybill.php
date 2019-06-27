@@ -33,8 +33,7 @@ class SyncDelhiveryWaybill implements ShouldQueue
     public function handle()
     {
         $waybill_id              = $this->payload["waybill_id"];
-        $shipping_data           = $this->payload["shipping_data"];
-        $shipping_lines          = $shipping_data["shippingLines"];
+        $shipping_lines          = $this->payload["shipping_lines"];
 
         foreach ($shipping_lines as $line) {
             $orderline_id = $line["order_line_id"];
