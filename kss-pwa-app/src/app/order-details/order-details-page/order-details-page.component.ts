@@ -27,6 +27,7 @@ export class OrderDetailsPageComponent implements OnInit {
   paymentStatus : any; 
   trackBackUrl : any;
   orderDetailsFailure : any;
+  orderDetailsTimeout : any;
   constructor(private route: ActivatedRoute,
               private apiService: ApiServiceService,
               private appservice : AppServiceService,
@@ -41,6 +42,12 @@ export class OrderDetailsPageComponent implements OnInit {
 
   ngOnDestroy(){
     this.unsubscribeorderDetailsCall();
+    this.clearOrderDetailsTimeout();
+  }
+
+  clearOrderDetailsTimeout(){
+    if(this.orderDetailsTimeout)
+      clearTimeout(this.orderDetailsTimeout);
   }
 
   getOrderDetails(order_id){
@@ -49,10 +56,11 @@ export class OrderDetailsPageComponent implements OnInit {
     let url = isDevMode() ? "https://demo8558685.mockable.io/order-details" : this.appservice.apiUrl + '/api/rest/v2/user/order/details/'+order_id;
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     this.orderDetailsCall = this.apiService.request(url,'get',{},header, false, 'observable').subscribe((response)=>{
-      if(response['order-pending'])
-        setTimeout(()=>{
+      if(response['order-pending']){
+        this.orderDetailsTimeout = setTimeout(()=>{
           this.getOrderDetails(order_id);
         },2000)
+      }
       else{
         this.showLoader = false;
         this.orderDetails = response.data;
