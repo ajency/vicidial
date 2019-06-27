@@ -16,7 +16,8 @@ class AddWayBillToorderlinesTable extends Migration
         Schema::table('order_lines', function (Blueprint $table) {
             $table->string('waybill')->after('id')->nullable();
         });
-        OrderLine::indexWaybillToOrderLines();
+        // To migrate manually, execute below function
+        // OrderLine::indexWaybillToOrderLines();
     }
 
     /**

@@ -32,21 +32,19 @@ class SyncDelhiveryWaybill implements ShouldQueue
      */
     public function handle()
     {
-        $shipping_data           = $this->payload["shipping_data"];
         $waybill_id              = $this->payload["waybill_id"];
-        $orderline_ids           = $shipping_data->shippingLines->pluck('order_line_id')->toArray();
-        try {
-            foreach ($orderline_ids as $line_id) {
-                \DB::table('order_lines')
-                    ->where('id', $line_id)
-                    ->update(['waybill' => $waybill_id]);
-                $orderline = OrderLine::find($line_id);
-                $index_data = $orderline->flatData();
-                $orderlines["orderLines"][$line_id] = $index_data;
-            }
-            OrderLine::updateMultipleIndex($orderlines);
-        } catch (Exception $e) {
-            \Log::warning($e->getMessage());
+        $shipping_data           = $this->payload["shipping_data"];
+        $shipping_lines          = $shipping_data["shippingLines"];
+
+        foreach ($shipping_lines as $line) {
+            $orderline_id = $line["order_line_id"];
+            \DB::table('order_lines')
+                ->where('id', $orderline_id)
+                ->update(['waybill' => $waybill_id]);
+            $orderline = OrderLine::find($orderline_id);
+            $index_data = $orderline->flatData();
+            $orderlines["orderLines"][$orderline_id] = $index_data;
         }
+        OrderLine::updateMultipleIndex($orderlines);
     }
 }
