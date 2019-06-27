@@ -178,12 +178,10 @@ class OrderLine extends Model
         $indexData['location_name']  = $orderline->subOrdersNew->first()->location->warehouse_name;
         $indexData['location_db_id'] = $orderline->subOrdersNew->first()->location->id;
 
-        if(isset($orderline->ordersNew->first()->cart->user)) {
-            $indexData['user_id']    = $orderline->ordersNew->first()->cart->user->id;
-            $indexData['user_email'] = $orderline->ordersNew->first()->cart->user->email_id;
-            $indexData['user_phone'] = $orderline->ordersNew->first()->cart->user->phone;
-            $indexData['user_name']  = $orderline->ordersNew->first()->cart->user->name;
-        }
+        $indexData['user_id']    = $orderline->ordersNew->first()->cart->user->id;
+        $indexData['user_email'] = $orderline->ordersNew->first()->cart->user->email_id;
+        $indexData['user_phone'] = $orderline->ordersNew->first()->cart->user->phone;
+        $indexData['user_name']  = $orderline->ordersNew->first()->cart->user->name;
 
         return $indexData;
     }
