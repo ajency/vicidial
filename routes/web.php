@@ -10,13 +10,16 @@
 | contains the "web" middleware group. Now create something great!
 |
  */
+
+$app_version = 'v' . config('app.api_version');
+
+Route::options('{all}', $app_version . '\HomeController@options')->where('all', '.*');
+
 Route::post('/service_comm/listen', '\Ajency\ServiceComm\ServiceCommController@serviceCommListen');
 
 $config = config('ajfileupload');
 
 Route::get('/test/productlist', 'v1\ProductListTestController@index')->name('productListTest');
-
-$app_version = 'v' . config('app.api_version');
 
 $group_app_version = 'v1';
 Route::group([
@@ -75,6 +78,7 @@ Route::group([
         Route::get('/get-token', $group_app_version . '\UserController@getToken');
     });
 });
+
 Route::get('/', $app_version . '\HomeController@newhome')->name('home');
 // Route::get('/newhome', $app_version . '\HomeController@newhome')->name('home');
 Route::get('/drafthome', $app_version . '\HomeController@newdraft')->name('drafthome');

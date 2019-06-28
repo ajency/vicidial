@@ -13,6 +13,8 @@
 
 $app_version = 'v' . config('app.api_version');
 
+Route::options('{all}', $app_version . '\HomeController@options')->where('all', '.*');
+
 $group_app_version = 'v1';
 Route::group([
     'prefix' => '/rest/' . $group_app_version,
