@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Facet extends Model
 {
+    protected $fillable = ['display_name', 'sequence', 'display'];
+
     protected $casts = [
         'display' => 'boolean',
     ];
@@ -59,17 +61,23 @@ class Facet extends Model
 
     public static function fetchFacetList($params)
     {
-        $facet = collect(config('product.facet_display_data'))->mapWithKeys(function ($facet, $key) use ($params) {
-            return ($facet['name'] == $params['facet']) ? [$key] : [];
-        })->first();
-        $facetList = self::where('facet_name', $facet)->get()->map(function ($facet) {
-            return [
-                'name'     => $facet->display_name,
-                'value'    => $facet->facet_value,
-                'sequence' => $facet->sequence,
-                'display'  => $facet->display,
-            ];
+        $editable_facets = config('product.facets.editable');
+        $facet_categories = collect(config('product.facet_display_data'))->filter(function ($facet, $key) use ($editable_facets) {
+            return in_array($key, $editable_facets);
+        })->mapWithKeys(function ($facet, $key) use ($params) {
+            return [$key => $facet['name']];
         });
-        return $facetList;
+        $facets = collect(config('product.facets.editable'))->filter(function ($facet) use ($params) {
+            return ($params['category'] == 'all') ? true : ($params['category'] == $facet);
+        });
+        $facetList = self::select('id,facet_value,display_name,sequence,display')->whereIn('facet_name', $facets)->get();
+        return ['list' => $facetList, 'categories' => $facet_categories];
+    }
+
+    public static function updateFacets($params)
+    {
+        collect($params['facets'])->each(function($facet){
+            self::find($facet['id'])->update([$facet['name'] => $facet['value']]);
+        });
     }
 }
