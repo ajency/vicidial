@@ -5,6 +5,7 @@ namespace App;
 use App\Jobs\CreateOrderlineIndexJobs;
 use App\Jobs\OrderlineIndex;
 use App\Jobs\UpdateOrderLineIndex;
+use App\Jobs\WayBillOrderlineIndex;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 
@@ -158,6 +159,8 @@ class OrderLine extends Model
         if ($orderline->return_expiry_date) {
             $indexData['orderline_return_expiry_date'] = (new Carbon($orderline->return_expiry_date))->timestamp;
         }
+
+        $indexData['delivery_waybill']          = !is_null($orderline->waybill)? $orderline->waybill : "";
         $indexData['orderline_return_policy']   = $orderline->return_policy;
         $indexData['orderline_product_type']    = $orderline->product_type;
         $indexData['orderline_product_subtype'] = $orderline->product_subtype;
@@ -204,6 +207,20 @@ class OrderLine extends Model
         $indexData['user_name']  = $orderline->ordersNew->first()->cart->user->name;
 
         return $indexData;
+    }
+
+    public static function indexWaybillToOrderLines($min = false, $max = false)
+    {
+        $orderlines = self::select('id');
+        if ($min) {
+            $orderlines->where('id', '>', $min);
+        }
+        if ($max) {
+            $orderlines->where('id', '<', $max);
+        }
+        $orderlines->pluck('id')->chunk(30)->each(function ($chunkedOrderLines) {
+            WayBillOrderlineIndex::dispatch($chunkedOrderLines)->onQueue('order_index');
+        });
     }
 
 }
