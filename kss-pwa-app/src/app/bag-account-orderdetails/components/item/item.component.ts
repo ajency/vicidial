@@ -26,7 +26,12 @@ export class ItemComponent implements OnInit, OnChanges {
   }
 
   ngAfterViewInit(){
-    $('[data-toggle="tooltip"]').tooltip();
+    try{
+      $('[data-toggle="tooltip"]').tooltip();
+    }
+    catch(error){
+      console.log("jqury not found")
+    }
   }
 
   openQuantityModal(){

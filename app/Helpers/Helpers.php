@@ -1,16 +1,16 @@
 <?php
 
 use Ajency\Connections\OdooConnect;
+use App\Cart;
 use App\Defaults;
 use App\EntityData;
 use App\Facet;
-use App\Jobs\FetchProductImages;
 use App\Location;
-use Carbon\Carbon;
-use Illuminate\Support\Str;
 use App\StaticElement;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use App\ProductColor;
+use Illuminate\Support\Str;
 
 function valInteger($object, $values)
 {
@@ -852,26 +852,26 @@ function translateDiscountToItems($cartData, $boolIsSpecificItemsCoupon = false)
     $total           = 0;
     $discount_amount = $cartData['discount'];
 
-    $discountRatio   = $cartData['final_total'] / floatval($cartData['sale_total']);
+    $discountRatio = $cartData['final_total'] / floatval($cartData['sale_total']);
 
     foreach ($cartData['items'] as $id => $cartItem) {
-        $newPrice    = round($cartItem['price_sale'] * $discountRatio, 2);
+        $newPrice = round($cartItem['price_sale'] * $discountRatio, 2);
 
-        if ( !$boolIsSpecificItemsCoupon ) {
+        if (!$boolIsSpecificItemsCoupon) {
             $cartData['items'][$id]['price_final'] = $newPrice;
             $total += $newPrice;
         } else {
-            if( $cartItem['is_coupon_applicable'] ) {
+            if ($cartItem['is_coupon_applicable']) {
                 // For product specific coupon action
-                $discountRatio = ($cartData['coupon_products_total_amount'] - $discount_amount) / floatval($cartData['coupon_products_total_amount']);
-                $newPrice      = round($cartItem['price_sale'] * $discountRatio, 2);
+                $discountRatio                                  = ($cartData['coupon_products_total_amount'] - $discount_amount) / floatval($cartData['coupon_products_total_amount']);
+                $newPrice                                       = round($cartItem['price_sale'] * $discountRatio, 2);
                 $cartData['items'][$id]['price_final']          = $newPrice;
                 $cartData['items'][$id]['item_discount_amount'] = round($cartItem['price_sale'] - $newPrice, 2);
                 $total += $newPrice;
             }
         }
     }
-    $cartData['round_off']  = $cartData['final_total'] - $total;
+    $cartData['round_off'] = $cartData['final_total'] - $total;
     return $cartData;
 }
 
@@ -927,9 +927,20 @@ function getTokenID($token)
     return $user_token;
 }
 
-function getMenu(){
+function getMenu()
+{
     return Cache::rememberForever('static_element_menu_published', function () {
-        return StaticElement::fetch('menu',[], $published=true);
+        return StaticElement::fetch('menu', [], $published = true);
     });
-    
+}
+
+function setActiveCart($token_id, $cart_id)
+{
+    $cart = Cart::find($cart_id);
+    if ($cart->type == 'order-complete') {
+        $new_cart = $cart->user->newCart(false, $cart);
+        DB::table('oauth_access_tokens')->where('id', $token_id)->update(['cart_id' => $new_cart->id]);
+        $cart_id = $new_cart->id;
+    }
+    return $cart_id;
 }

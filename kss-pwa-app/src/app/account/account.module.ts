@@ -12,15 +12,16 @@ import { BagSummaryModule } from '../shared-components/bag-summary/bag-summary.m
 import { AddressModule } from '../shared-components/address/address.module';
 import { EditUserModule } from '../shared-components/edit-user/edit-user.module';
 import { ComponentsModule } from '../components/components.module';
+import { BagAccountOrderdetailsModule } from '../bag-account-orderdetails/bag-account-orderdetails.module';
 
-import { OrderInfoComponent } from './components/order-info/order-info.component';
-import { OrderComponent } from './components/order/order.component';
-import { ShippingAddressComponent } from './components/shipping-address/shipping-address.component';
-import { PaymentInfoComponent } from './components/payment-info/payment-info.component';
-import { OrderSummaryComponent } from './components/order-summary/order-summary.component';
+// import { OrderInfoComponent } from './components/order-info/order-info.component';
+// import { OrderComponent } from './components/order/order.component';
+// import { ShippingAddressComponent } from './components/shipping-address/shipping-address.component';
+// import { PaymentInfoComponent } from './components/payment-info/payment-info.component';
+// import { OrderSummaryComponent } from './components/order-summary/order-summary.component';
 
 import { AccountService } from './services/account.service';
-import { ItemComponent } from './components/item/item.component';
+// import { ItemComponent } from './components/item/item.component';
 
 @NgModule({
   imports: [
@@ -30,20 +31,21 @@ import { ItemComponent } from './components/item/item.component';
     AddressModule,
     EditUserModule,
     FormsModule,
-    ComponentsModule
+    ComponentsModule,
+    BagAccountOrderdetailsModule
   ],
   declarations: [
   	AccountComponent, 
   	MyOrdersComponent, 
   	OrderDetailsComponent,
-  	OrderInfoComponent,
-  	OrderComponent,
-  	ShippingAddressComponent,
-  	PaymentInfoComponent,
-  	OrderSummaryComponent,
+  	// OrderInfoComponent,
+  	// OrderComponent,
+  	// ShippingAddressComponent,
+  	// PaymentInfoComponent,
+  	// OrderSummaryComponent,
   	MyAddressesComponent,
   	MyProfileComponent,
-  	ItemComponent
+  	// ItemComponent
   ],
   providers: [
     AccountService

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\v2;
 
 use App\CashOnDelivery;
 use App\Http\Controllers\Controller;
+use App\Jobs\NotifyPayment;
 use App\Order;
 use App\User;
 use Carbon\Carbon;
@@ -37,23 +38,19 @@ class PaymentController extends Controller
                     'phone'       => $user->phone, # Payee Phone Number.
                 ];
 
-                $order->status     = 'payment-in-progress';
-                //status update 
-                $expires_at        = Carbon::now()->addMinutes(config('orders.payu_expiry'));
-                $order->expires_at = $expires_at->timestamp;
+                $order->status = 'payment-in-progress';
+                //status update
+                $expires_at                 = Carbon::now()->addMinutes(config('orders.payu_expiry'));
+                $order->expires_at          = $expires_at->timestamp;
+                $order->payment_in_progress = true;
                 $order->save();
+                $order->updateInventory('ReserveInventory');
                 $order->updateOrderlineIndex(['status']);
 
                 return Payment::with($order)->make($attributes, function ($then) use ($orderid) {
                     $then->redirectTo('/user/order/' . $orderid . '/payment/payu/status');
                 });
                 break;
-
-            case 'cod':
-                //return redirect('/user/order/' . $orderid . '/payment/cod/status');
-                return $this->status($orderid, $type);
-                break;
-
             default:
                 abort(400, 'Payment Type Not Available');
                 break;
@@ -82,7 +79,7 @@ class PaymentController extends Controller
                         $cart       = $order->cart;
                         $cart->type = 'order-complete';
                         $cart->save();
-                        $new_cart = $order->cart->user->newCart(false, $cart);
+                        $new_cart   = $order->cart->user->newCart(false, $cart);
                         $user_token = getTokenID($_COOKIE['token']);
                         DB::table('oauth_access_tokens')->where('id', $user_token)->update(['cart_id' => $new_cart->id]);
                         $order->sendSuccessEmail();
@@ -104,7 +101,7 @@ class PaymentController extends Controller
                     $cart       = $order->cart;
                     $cart->type = 'order-complete';
                     $cart->save();
-                    $new_cart = $order->cart->user->newCart(false, $cart);
+                    $new_cart   = $order->cart->user->newCart(false, $cart);
                     $user_token = getTokenID($_COOKIE['token']);
                     DB::table('oauth_access_tokens')->where('id', $user_token)->update(['cart_id' => $new_cart->id]);
                     $order->sendSuccessEmail();
@@ -116,7 +113,7 @@ class PaymentController extends Controller
                     abort(400, 'Payment Type Not Available');
                     break;
             }
-            $order->updateOrderlineIndex(['status','transaction_mode']);
+            $order->updateOrderlineIndex(['status', 'transaction_mode']);
         } catch (\Exception $e) {
             \Log::notice('Order Success Method Failed');
             \Log::notice('Order id : ' . $orderid);
@@ -139,33 +136,15 @@ class PaymentController extends Controller
 
     public function sendCODVerifySMS($id, Request $request)
     {
-        $user  = $request->user();
+        $data  = $request->all();
         $order = Order::find($id);
-        validateOrder($user, $order);
-        checkCODServiceable($order->address->checkPincodeServiceable()["cod"]);
-
-        $data      = $request->all();
-        $validator = $this->validateNumber($data);
-        if ($validator->fails()) {
-            return response()->json(["message" => $validator->errors()->first(), 'success' => false, 'verified' => false]);
+        $order->validate();
+        $response = $this->sendUserOTP($order, $data);
+        if ($response) {
+            return response()->json($response);
         }
-        if ($data["token_verified"] && $data['phone'] == $user->phone) {
-            return response()->json(["message" => "User verified successfully", 'success' => true, 'verified' => true]);
-        } else {
-            $otp                        = generateOTP();
-            $otp_expiry                 = Carbon::now()->addMinutes(config('otp.cod_expiry'));
-            $cashOnDelivery             = CashOnDelivery::firstOrNew(['order_id' => $id, 'phone' => $data['phone']]);
-            $cashOnDelivery->otp        = $otp;
-            $cashOnDelivery->otp_expiry = $otp_expiry->toDateTimeString();
-            $cashOnDelivery->save();
-
-            sendSMS('send-otp', [
-                'to'      => '91' . $data['phone'],
-                'message' => $otp . ' is the code required to verify your payment of Rs.' . $order->subOrderData()['you_pay'] . ' on kidsuperstore.in. The code will expire in ' . config('otp.cod_expiry') . ' minutes.',
-            ], true);
-        }
-        $response = ["message" => "OTP Sent successfully", 'success' => true, 'verified' => false];
-        return response()->json(isNotProd() ? array_merge($response, ['OTP' => $otp]) : $response);
+        $this->makeOrderCOD($order, $data);       
+        return response()->json(['txnid' => $order->txnid, 'success' => true]);
     }
 
     public function reSendCODVerifySMS($id, Request $request)
@@ -221,8 +200,8 @@ class PaymentController extends Controller
         if ($cashOnDelivery->otp != $data['otp']) {
             return response()->json(["message" => 'The entered OTP is invalid. Please try again.', 'success' => false]);
         }
-
-        return response()->json(["message" => "OTP match successful", 'success' => true]);
+        $this->makeOrderCOD($order, $data);
+        return response()->json(['txnid' => $order->txnid, 'success' => true]);
     }
 
     public function validateOTP($data)
@@ -238,5 +217,76 @@ class PaymentController extends Controller
         return $validator = Validator::make($data, [
             'phone' => 'required|digits:10',
         ]);
+    }
+
+    public function notifyPayment($status, Request $request)
+    {
+        $request_params = json_decode($request->getContent(), true);
+        \Log::info('payumoney_webhook_content: ' . $request->getContent());
+        if (isset($request_params['merchantTransactionId'])) {
+            $order = Order::where('txnid', $request_params['merchantTransactionId'])->first();
+            if ($order && $order->payment_in_progress) {
+                NotifyPayment::dispatch($request_params, $status)->onQueue('notify_payment');
+            }
+        }
+        return response()->json(['success' => true], 200);
+    }
+
+    public function sendUserOTP($order, $data)
+    {
+        $validator = $this->validateNumber($data);
+        if ($validator->fails()) {
+            return ["message" => $validator->errors()->first(), 'success' => false, 'verified' => false];
+        }
+        if (!$data["token_verified"] && $data['phone'] == request()->user()->phone) {
+            $otp                        = generateOTP();
+            $otp_expiry                 = Carbon::now()->addMinutes(config('otp.cod_expiry'));
+            $cashOnDelivery             = CashOnDelivery::firstOrNew(['order_id' => $order->id, 'phone' => $data['phone']]);
+            $cashOnDelivery->otp        = $otp;
+            $cashOnDelivery->otp_expiry = $otp_expiry->toDateTimeString();
+            $cashOnDelivery->save();
+
+            sendSMS('send-otp', [
+                'to'      => '91' . $data['phone'],
+                'message' => $otp . ' is the code required to verify your payment of Rs.' . $order->subOrderData()['you_pay'] . ' on kidsuperstore.in. The code will expire in ' . config('otp.cod_expiry') . ' minutes.',
+            ], true);
+            $response = ["message" => "OTP Sent successfully", 'success' => true, 'verified' => false];
+            return isNotProd() ? array_merge($response, ['OTP' => $otp]) : $response;
+        }
+    }
+
+    public function makeOrderCOD($order, $data)
+    {
+        try {
+            $order->status           = 'cash-on-delivery';
+            $order->transaction_mode = 'COD';
+            $order->save();
+            $order->placeOrderOnOdoo();
+            $cart       = $order->cart;
+            $cart->type = 'order-complete';
+            $cart->save();
+            $new_cart = $order->cart->user->newCart(false, $cart);
+            DB::table('oauth_access_tokens')->where('id', request()['token_id'])->update(['cart_id' => $new_cart->id]);
+            $order->sendSuccessEmail();
+            $order->sendSuccessSMS();
+            $order->sendVendorSMS();
+            $order->updateInventory('ReserveInventory');
+            $order->updateOrderlineIndex(['status', 'transaction_mode']);
+        } catch (\Exception $e) {
+            \Log::notice('Order Success Method Failed');
+            \Log::notice('Order id : ' . $order->id);
+            sendEmail('failed-job', [
+                'from'          => config('communication.failed-job.from'),
+                'subject'       => 'Order Success Method Failed : COD [' . config('app.env') . ']',
+                'template_data' => [
+                    'queue'     => 'Order Success Method',
+                    'job'       => 'Order Success Method',
+                    'exception' => $e->getMessage(),
+                    'body'      => 'Order id : ' . $order->id,
+                    'trace'     => $e->getTraceAsString(),
+                ],
+                'priority'      => 'default',
+            ]);
+        }
     }
 }

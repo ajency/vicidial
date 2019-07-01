@@ -9,7 +9,11 @@ class VerifyCsrfToken extends Middleware
 	private $openRoutes = [
         'service_comm/listen',
         'rest/v2/anonymous/cart/insert',
-        'rest/v2/anonymous/cart/update'
+        'rest/v2/anonymous/cart/update',
+        'user/order/payu-payment/status',
+        'payu/notify/payment/success',
+        'payu/notify/payment/failed',
+        'order/details/*'
     ];
     /**
      * The URIs that should be excluded from CSRF verification.
@@ -19,6 +23,10 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
         'service_comm/listen',
         'rest/v2/anonymous/cart/insert',
-        'rest/v2/anonymous/cart/update'
+        'rest/v2/anonymous/cart/update',
+        'user/order/payu-payment/status',
+        'payu/notify/payment/success',
+        'payu/notify/payment/failed',
+        'order/details/*'
     ];
 }

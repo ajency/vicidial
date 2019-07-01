@@ -1,0 +1,53 @@
+<app-header></app-header>
+
+<app-loader *ngIf="showLoader"></app-loader>
+
+<div *ngIf="orderDetails" class="container mt-3 order-details">
+	<div class="row">
+		<div class="col-12">
+			<div class="d-none d-md-block mb-4">
+				  <app-breadcrums [breadcrumbs]="breadcrumbs"></app-breadcrums>
+            </div>
+            <div >
+             	<div class="d-flex align-items-top top-navbar">
+	            	<div class="">
+	              		<h4 class="font-weight-bold m-0">Order Details</h4>
+	            	</div>
+	          	</div>
+	      	</div>
+		</div>
+	</div>
+	<div class="row mt-md-2 mt-0">
+		<div class="col-12 col-xl-8 col-lg-8">
+			<!-- Order Message -->
+			<app-order-message *ngIf="paymentStatus" [status]="paymentStatus" [orderInfo]="orderDetails.order_info" [trackBackUrl]="trackBackUrl"></app-order-message>
+
+			<hr class="mb-4">
+
+			<app-order-info [order_info]="orderDetails.order_info" [showStatus]=true [orderSuccess]=true></app-order-info>
+
+			<hr class="mb-4">
+
+			<app-order [items]="orderDetails.items" [showStatus]=true></app-order>
+
+			<div class="d-flex  align-self-center mb-4">
+				<label>
+					Need help with this order? <a href="#" class="kss-anchor">Visit our help center</a>
+				</label>
+			</div>
+
+		</div>
+
+		<!-- Order Info sidebar -->
+		<div class="col-12 col-xl-4 col-lg-4">
+			<app-order-sidebar [orderDetails]="orderDetails"></app-order-sidebar>
+		</div>
+	</div>
+</div>
+
+<app-page-not-found *ngIf="orderDetailsFailure"></app-page-not-found>
+
+<!-- Back to top -->
+<div app-back-to-top></div>
+
+<app-footer></app-footer>

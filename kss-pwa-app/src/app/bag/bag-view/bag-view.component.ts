@@ -435,8 +435,7 @@ export class BagViewComponent implements OnInit {
   }
 
   updateLocalDataAndUI(cart : any = null, cart_count = 0){
-    console.log("isSessionStorageSupported ==>", this.isSessionStorageSupported());
-    if(this.isSessionStorageSupported()){
+    if(this.appservice.isSessionStorageSupported()){
       if(cart)
           sessionStorage.setItem('cart_data', JSON.stringify(cart));
       else
@@ -487,16 +486,6 @@ export class BagViewComponent implements OnInit {
       this.appservice.removeLoader();
       this.fetchCartDataFromServer()
     })
-  }
-
-  isSessionStorageSupported() {
-    try {
-      sessionStorage.setItem('test', 'test');
-      sessionStorage.removeItem('test');
-      return true;
-    } catch (e) {
-      return false;
-    }
   }
 
   formatPromotions(response){

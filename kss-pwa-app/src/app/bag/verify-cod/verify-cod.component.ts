@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { AppServiceService } from '../../service/app-service.service';
 import { ApiServiceService } from '../../service/api-service.service';
+import { BagService } from '../services/bag.service';
+
 declare var $: any;
 
 @Component({
@@ -17,7 +19,8 @@ export class VerifyCodComponent implements OnInit, OnChanges {
 	otpVerificationErrorMsg : any;
   cdnUrl : any;
   constructor(private appservice : AppServiceService,
-              private apiservice : ApiServiceService) { }
+              private apiservice : ApiServiceService,
+              private bagservice : BagService) { }
 
   ngOnInit() {
     this.cdnUrl = this.appservice.cdnUrl;
@@ -34,8 +37,10 @@ export class VerifyCodComponent implements OnInit, OnChanges {
   	let url = this.appservice.apiUrl + '/api/rest/v2/user/order/' + this.shippingDetails.order_id + '/verify-otp?phone='+this.shippingDetails.address.phone+'&otp='+this.otp;
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     this.apiservice.request(url, 'get', {} , header ).then((response)=>{
-    	if(response.success)
-        window.location.href = "/user/order/" + this.shippingDetails.order_id +"/payment/cod";
+      if(response.success){
+        if(response.txnid)
+          window.location.href = '/order/details/'+response.txnid;
+      }
       else{
       	this.otpVerificationFailed = true;
 	      this.otpVerificationErrorMsg = response.message;
@@ -44,15 +49,9 @@ export class VerifyCodComponent implements OnInit, OnChanges {
     })
     .catch((error)=>{
       console.log("error ===>", error);
-      if(error.status == 410){
+      if(error.status == 410 || error.status == 401){
         let url = window.location.href.split("#")[0] + '#/bag';
         history.replaceState({bag : true}, 'bag', url);
-        this.appservice.loadCartTrigger();
-      }
-      else if(error.status == 401){
-        let url = window.location.href.split("#")[0] + '#/bag';
-        history.replaceState({bag : true}, 'bag', url);
-        console.log("openCart");
         this.appservice.loadCartTrigger();
       }
       else{
