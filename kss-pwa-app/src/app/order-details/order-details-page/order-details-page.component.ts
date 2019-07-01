@@ -59,7 +59,7 @@ export class OrderDetailsPageComponent implements OnInit {
       if(response['order-pending']){
         this.orderDetailsTimeout = setTimeout(()=>{
           this.getOrderDetails(order_id);
-        }1000)
+        },1000)
       }
       else{
         this.showLoader = false;
