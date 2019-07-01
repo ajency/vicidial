@@ -160,14 +160,8 @@ class Location extends Model
         $location_variants      = [];
         $enabled_location_ids   = Sync::call("inventory", "getEnabledLocationIds", []);
         foreach ($enabled_location_ids as $location_id) {
-            $product_color_ids = Sync::call("inventory", "getProductColorIds", ["location_id" => $location_id]);
-            if(!empty($product_color_ids)){
-                // get product_id using product_color_id
-                $variant_ids = \DB::table('product_colors')
-                    ->whereIn("color_id", $product_color_ids)
-                    ->pluck('id');
-                $location_variants[$location_id][] = $variant_ids;
-            }
+            $variant_ids = Sync::call("inventory", "getVariantIds", ["location_id" => $location_id]);
+            $location_variants[$location_id][] = $variant_ids;
         }
 
         return ["enabled_location_ids" =>$enabled_location_ids,"location_variant_ids" => $location_variants];
