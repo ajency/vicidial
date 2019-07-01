@@ -61,22 +61,29 @@ class Facet extends Model
 
     public static function fetchFacetList($params)
     {
-        $editable_facets = config('product.facets.editable');
+        $editable_facets  = config('product.facets.editable');
         $facet_categories = collect(config('product.facet_display_data'))->filter(function ($facet, $key) use ($editable_facets) {
             return in_array($key, $editable_facets);
         })->mapWithKeys(function ($facet, $key) use ($params) {
             return [$key => $facet['name']];
         });
-        $facets = collect(config('product.facets.editable'))->filter(function ($facet) use ($params) {
-            return ($params['category'] == 'all') ? true : ($params['category'] == $facet);
-        });
-        $facetList = self::select('id','facet_value','display_name','sequence','display')->whereIn('facet_name', $facets)->get();
-        return ['list' => $facetList, 'categories' => $facet_categories];
+        $facets = collect($editable_facets);
+        if ($params['category'] != 'all') {
+            $facets = $facets->filter(function ($facet) use ($params) {
+                return ($params['category'] == $facet);
+            });
+        }
+        $facet_list_obj = self::select('id', 'facet_value', 'display_name', 'sequence', 'display')->whereIn('facet_name', $facets);
+        if (isset($params['offset']) && isset($params['limit'])) {
+            $facet_list_obj->offset($params['offset'])->limit($params['limit']);
+        }
+        $facet_list = $facet_list_obj->get();
+        return ['list' => $facet_list, 'categories' => $facet_categories];
     }
 
     public static function updateFacets($params)
     {
-        collect($params['facets'])->each(function($facet){
+        collect($params['facets'])->each(function ($facet) {
             self::find($facet['id'])->update([$facet['name'] => $facet['value']]);
         });
     }
