@@ -116,8 +116,7 @@
               "type": "long"
             },
             "city": {
-              "type": "keyword",
-              "ignore_above": 256
+              "type": "text"
             },
             "name": {
               "type": "text"
@@ -126,7 +125,7 @@
               "type" : "keyword"
             },
             "state": {
-              "type": "keyword"
+              "type": "text"
             },
             "address": {
               "type": "text"
@@ -135,7 +134,7 @@
               "type": "boolean"
             },
             "pincode": {
-              "type": "long"
+              "type": "keyword"
             },
             "landmark": {
               "type": "text"
