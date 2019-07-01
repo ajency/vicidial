@@ -69,6 +69,7 @@ class PaymentController extends Controller
                 case 'payu':
                     $payment = Payment::capture();
                     if ($order->status != 'payment-in-progress') {
+                        return redirect()->route('orderDetails', ['orderid' => $order->txnid]);
                         abort(400);
                     }
 
