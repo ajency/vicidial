@@ -27,6 +27,14 @@ return [
 			'model' => "App\OrderLine",
 			'function' => 'updateMultipleIndex'
 		],
+		'getEnabledLocationVariants' => [
+			'model' => "App\Location",
+			'function' => 'getEnabledLocationVariants'
+		],
+		'reindexVariantInventory' => [
+			'model' => 'App\Variant',
+			'function' => 'updateInventory',
+		],
 	],
 	'async_provider' => 'sns',
 	'sns' => [

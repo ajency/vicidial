@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Ajency\ServiceComm\Comm\Sync;
 use Ajency\Connections\OdooConnect;
 use Illuminate\Database\Eloquent\Model;
 use App\Events\NewVendorLocation;
@@ -152,6 +153,24 @@ class Location extends Model
         $weights = $locations->map(function ($loc) use ($distancesArray) {return ['id' => $loc->id, 'distance' => $distancesArray[$loc->id], 'business_wt' => $loc->business_pref_wt, 'loc_wt' => $loc->dist_wt];});
         $scores = $weights->keyBy('id')->map(function ($item) {return (config('orders.location_scores.distance') - $item['distance']) * $item['loc_wt'] / config('orders.location_scores.distance') + $item['business_wt'];});
         return $scores;
+    }
+
+    public static function getEnabledLocationVariants()
+    {
+        $location_variants      = [];
+        $enabled_location_ids   = Sync::call("inventory", "getEnabledLocationIds", []);
+        foreach ($enabled_location_ids as $location_id) {
+            $product_color_ids = Sync::call("inventory", "getProductColorIds", ["location_id" => $location_id]);
+            if(!empty($product_color_ids)){
+                // get product_id using product_color_id
+                $variant_ids = \DB::table('product_colors')
+                    ->whereIn("color_id", $product_color_ids)
+                    ->pluck('id');
+                $location_variants[$location_id][] = $variant_ids;
+            }
+        }
+
+        return ["enabled_location_ids" =>$enabled_location_ids,"location_variant_ids" => $location_variants];
     }
 
 }
