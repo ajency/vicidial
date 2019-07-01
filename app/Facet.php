@@ -70,7 +70,7 @@ class Facet extends Model
         $facets = collect(config('product.facets.editable'))->filter(function ($facet) use ($params) {
             return ($params['category'] == 'all') ? true : ($params['category'] == $facet);
         });
-        $facetList = self::select('id,facet_value,display_name,sequence,display')->whereIn('facet_name', $facets)->get();
+        $facetList = self::select('id','facet_value','display_name','sequence','display')->whereIn('facet_name', $facets)->get();
         return ['list' => $facetList, 'categories' => $facet_categories];
     }
 
