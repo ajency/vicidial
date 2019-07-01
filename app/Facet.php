@@ -74,11 +74,12 @@ class Facet extends Model
             });
         }
         $facet_list_obj = self::select('id', 'facet_value', 'display_name', 'sequence', 'display')->whereIn('facet_name', $facets);
+        $total_count = $facet_list_obj->count();
         if (isset($params['offset']) && isset($params['limit'])) {
             $facet_list_obj->offset($params['offset'])->limit($params['limit']);
         }
-        $facet_list = $facet_list_obj->get();
-        return ['list' => $facet_list, 'categories' => $facet_categories];
+        $facet_list = $facet_list_obj->get();     
+        return ['list' => $facet_list, 'total_count' => $total_count, 'categories' => $facet_categories];
     }
 
     public static function updateFacets($params)
