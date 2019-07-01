@@ -82,8 +82,8 @@ class OrderController extends Controller
         $cart = Cart::find($id);
         validateCart($user, $cart, 'order');
 
-        $order = $cart->order;
-
+        $old_order = $cart->order;
+        $order     = $old_order->newOrder($cart, $params['token_id']);
         checkOrderInventory($order);
 
         if (isset($params['address_id'])) {
@@ -170,6 +170,11 @@ class OrderController extends Controller
         $params['trackBackUrl'] = $order->getTrackbackUrlCashBackWorld();
 
         return view('orderdetails')->with('params', $params);
+    }
+
+    public function newOrderDetails($trxn_id, Request $request)
+    {
+        return view('home_new');
     }
 
     public static function updateSubOrderStatus($params)
@@ -275,5 +280,38 @@ class OrderController extends Controller
         $sub_order->order->placeReturnRequest($params, $sub_order);
 
         return response()->json(["message" => 'Return request placed successfully', 'success' => true]);
+    }
+
+    public function finalPageDetails($txnid, Request $request)
+    {
+        $user   = $request->user();
+        $params = $request->all();
+        $order  = Order::where('txnid', $txnid)->first();
+        validateOrder($user, $order);
+        setActiveCart($params['token_id'], $params['active_cart']);
+        if ($order->payment_in_progress) {
+            return response()->json(['order-pending' => true]);
+        }
+        switch ($order->status) {
+            case 'cash-on-delivery':
+                $status = 'cod';
+                break;
+            case 'payment-successful':
+                $status = 'success';
+                break;
+            case 'payment-failed':
+                $status = 'failure';
+                break;
+        }
+        $status = ($order->viewed) ? '' : $status;
+        $order->viewed = true;
+        $order->save();
+
+        return response()->json([
+            'data'          => $order->getOrderDetailsItemWise(true),
+            'order-pending' => false,
+            'status'        => $status,
+            'trackback_url' => $order->getTrackbackUrlCashBackWorld(),
+        ]);
     }
 }

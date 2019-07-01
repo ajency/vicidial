@@ -21,6 +21,7 @@ import { VerifyCodComponent } from './verify-cod/verify-cod.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { CancelCodComponent } from './components/cancel-cod/cancel-cod.component';
 
+import { BagService } from './services/bag.service';
 
 @NgModule({
   imports: [
@@ -44,6 +45,9 @@ import { CancelCodComponent } from './components/cancel-cod/cancel-cod.component
   				NavbarComponent,
   				CancelCodComponent],
   entryComponents: [BagViewComponent],
+  providers: [
+    BagService
+  ],
   bootstrap: [BagViewComponent]
 })
 export class BagModule { }

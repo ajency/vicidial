@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router'
+import { Router, ActivatedRoute } from '@angular/router';
 import { AppServiceService } from '../../service/app-service.service';
 import { ApiServiceService } from '../../service/api-service.service';
 import { BagSummaryComponent } from '../../shared-components/bag-summary/bag-summary/bag-summary.component';
 import { EditUserPopupComponent } from '../../shared-components/edit-user/edit-user-popup/edit-user-popup.component';
+import { BagService } from '../services/bag.service';
+import { Subscription } from 'rxjs';
 
 declare var $: any;
 declare var fbTrackAddPaymentInfo : any;
@@ -31,9 +33,11 @@ export class ShippingSummaryComponent implements OnInit {
   cdnUrl : any;
   constructor(private router : Router,
   			   		private appservice : AppServiceService,
+              private bagservice : BagService,
               private apiservice : ApiServiceService,
               private route : ActivatedRoute
-  					) { }
+  					) { 
+  }
 
   ngOnInit() {
     this.cdnUrl = this.appservice.cdnUrl;
@@ -52,28 +56,30 @@ export class ShippingSummaryComponent implements OnInit {
     }
     this.closePaymentModal();
     this.appservice.showLoader();
+    this.checkPaymentOption();         
+  }
+
+  checkInventory(){
     let url = this.appservice.apiUrl + '/api/rest/v2/user/order/' + this.shippingDetails.order_id + '/check-inventory'
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     this.apiservice.request(url, 'get', {} , header ).then((response)=>{
       fbTrackAddPaymentInfo();
-      this.checkPaymentOption()
+      window.location.href = "/user/order/" + this.shippingDetails.order_id +"/payment/payu";
     })
     .catch((error)=>{
       console.log("error ===>", error);
-      // this.router.navigateByUrl('/bag',{ replaceUrl: true });
       this.appservice.removeLoader();      
       let url = window.location.href.split("#")[0] + '#/bag';
       history.replaceState({bag : true}, 'bag', url);
       console.log("openCart");
       this.appservice.loadCartTrigger();
-    })      
+    })
   }
 
   checkPaymentOption(){
-    console.log("checkPaymentOption ==>", this.selectedPaymentOption);
     switch(this.selectedPaymentOption)
     {
-      case 'payu' :   window.location.href = "/user/order/" + this.shippingDetails.order_id +"/payment/payu";
+      case 'payu' :   this.checkInventory();
                       break;
       case 'cod' :  {
                       this.confirmMobile();
@@ -87,6 +93,7 @@ export class ShippingSummaryComponent implements OnInit {
     let url = window.location.href.split("#")[0];
     history.replaceState({cart : false}, 'cart', url);
     this.widgetOpen = false;
+    this.hideVerifyCOD();
     this.appservice.closeCart();
   }
 
@@ -171,24 +178,25 @@ export class ShippingSummaryComponent implements OnInit {
   }
 
   confirmMobile(){
-    console.log("inside confirm mobile");
+    fbTrackAddPaymentInfo();
     let url = this.appservice.apiUrl + '/api/rest/v2/user/order/' + this.shippingDetails.order_id + '/send-otp?phone='+this.shippingDetails.address.phone;
     let header = { Authorization : 'Bearer '+this.appservice.getCookie('token') };
     this.apiservice.request(url, 'get', {} , header ).then((response)=>{
-        if(response.verified)
-          window.location.href = "/user/order/" + this.shippingDetails.order_id +"/payment/cod";
-        else{
+      if(response.success){
+        if(response.txnid)
+          window.location.href = '/order/details/'+response.txnid;
+        else if(!response.verified){
           this.appservice.removeLoader();
           this.showVerifyCod = true;
         }
+      }
     })
     .catch((error)=>{
       console.log("error ===>", error);
       this.appservice.removeLoader();
-      if(error.status == 401){
+      if(error.status == 401 || error.status == 410 || error.status == 400){
         let url = window.location.href.split("#")[0] + '#/bag';
         history.replaceState({bag : true}, 'bag', url);
-        console.log("openCart");
         this.appservice.loadCartTrigger();
       }
     }) 

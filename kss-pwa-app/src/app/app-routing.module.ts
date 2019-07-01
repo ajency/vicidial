@@ -18,7 +18,8 @@ const routes: Routes = [
 	{ path: 'ideas/category/:category', component : WidgetComponent },
 
 	{ path: 'activities/:storename', component : WidgetComponent },
-	{ path: 'my/order/details', component : WidgetComponent },
+	{ path: 'my/order/details', component : WidgetComponent  },
+	{ path: 'order/details/:trxn_id', loadChildren : './order-details/order-details.module#OrderDetailsModule'  },
 	{ path: 'shop', loadChildren : './shop-page/shop-page.module#ShopPageModule' },
 
 	{ path: 'shop/uniforms',  loadChildren: './landing-page/landing-page.module#LandingPageModule'},

@@ -133,22 +133,27 @@ Route::group([
             });
             Route::post('/save-user-details', $group_app_version . '\UserController@saveUserDetails');
 
-            Route::get('/order/{id}/check-inventory', $group_app_version . '\OrderController@checkSubOrderInventory');
-            Route::get('/order/{id}/send-otp', $group_app_version . '\PaymentController@sendCODVerifySMS');
-            Route::get('/order/{id}/resend-otp', $group_app_version . '\PaymentController@reSendCODVerifySMS');
-            Route::get('/order/{id}/verify-otp', $group_app_version . '\PaymentController@verifyOTP');
+            Route::group([
+                'prefix' => '/order',
+            ], function () use ($group_app_version) {
+                Route::get('/{id}/check-inventory', $group_app_version . '\OrderController@checkSubOrderInventory');
+                Route::get('/{id}/send-otp', $group_app_version . '\PaymentController@sendCODVerifySMS');
+                Route::get('/{id}/resend-otp', $group_app_version . '\PaymentController@reSendCODVerifySMS');
+                Route::get('/{id}/verify-otp', $group_app_version . '\PaymentController@verifyOTP');
+                Route::get('/{id}/payment/{type}', $group_app_version . '\PaymentController@orderPayment');                   
+                Route::get('/details/{txnid}', $group_app_version . '\OrderController@finalPageDetails');
+            });
             Route::group([
                 'middleware' => ['check-user:' . $group_app_version],
             ], function () use ($group_app_version) {
                 Route::post('/orders', $group_app_version . '\OrderController@listOrders');
                 Route::get('/order/{txnid}/details', $group_app_version . '\OrderController@singleOrder');
-                Route::post('/order/{id}/cancel', $group_app_version . '\OrderController@cancelOrder');
+                Route::post('/order/{id}/cancel', $group_app_version . '\OrderController@cancelOrder');       
                 Route::post('/sub-order/{id}/return', $group_app_version . '\OrderController@returnOrder');
                 Route::get('/get-user-info', $group_app_version . '\UserController@fetchUserInfo');
             });
         });
     });
-
     Route::get('/single-product', $group_app_version . '\ProductController@SingleProductApi');
     Route::get('/single-product-inventory', $group_app_version . '\ProductController@SingleProductInventory');
     Route::get('/product-list', $group_app_version . '\ListingController@productList');

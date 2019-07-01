@@ -11,9 +11,9 @@ return [
     | "test" For testing and development.
     | "secure" For live payment.
     |
-    */
+     */
 
-    'env' => env('PAYU_ENV','test'),
+    'env'      => env('PAYU_ENV', 'test'),
 
     /*
     |--------------------------------------------------------------------------
@@ -22,8 +22,8 @@ return [
     |
     | The account to be used for Payment
     |
-    */
-    'default' => 'payumoney',
+     */
+    'default'  => 'payumoney',
 
     /*
     |--------------------------------------------------------------------------
@@ -32,7 +32,7 @@ return [
     |
     | All the different accounts with its names
     |
-    */
+     */
     'accounts' => [
         /*
         |--------------------------------------------------------------------------
@@ -47,19 +47,19 @@ return [
         | money => (boolean)    Is it a payumoney account?
         | auth  => (string)     Authorization Token if it is a payumoney account.
         |
-        */
-        'payubiz' => [
-            'key' => env('PAYUB_KEY',''),
-            'salt' => env('PAYUB_SALT',''),
+         */
+        'payubiz'   => [
+            'key'   => env('PAYUB_KEY', ''),
+            'salt'  => env('PAYUB_SALT', ''),
             'money' => false,
-            'auth' => env('PAYUB_AUTH',null)
+            'auth'  => env('PAYUB_AUTH', null),
         ],
 
         'payumoney' => [
-            'key' => env('PAYUM_KEY',''),
-            'salt' => env('PAYUM_SALT',''),
+            'key'   => env('PAYUM_KEY', ''),
+            'salt'  => env('PAYUM_SALT', ''),
             'money' => true,
-            'auth' => env('PAYUM_AUTH',null)
+            'auth'  => env('PAYUM_AUTH', null),
         ],
     ],
 
@@ -70,7 +70,7 @@ return [
     |
     | Payment endpoint for Payu.
     |
-    */
+     */
     'endpoint' => 'payu.in/_payment',
 
     /*
@@ -84,8 +84,8 @@ return [
     | Note: If you use session driver make sure you are using secure = true
     | in config/session.php
     |
-    */
-    'driver' => 'database',
+     */
+    'driver'   => 'database',
 
     /*
     |--------------------------------------------------------------------------
@@ -96,6 +96,14 @@ return [
     | Run: php artisan vendor:publish to get the table in the migrations
     | directory. If you did change the table name then specify here.
     |
-    */
-    'table' => 'payu_payments',
+     */
+    'table'    => 'payu_payments',
+
+    'redirect' => [
+        'surl' => env('ANGULAR_URL', '').'/order/details/',
+        'furl' => env('ANGULAR_URL', '').'/order/details/',
+    ],
+
+    'paymentResponseApiUrl' => 'https://www.payumoney.com/payment/op/getPaymentResponse',
 ];
+

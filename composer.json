@@ -60,7 +60,7 @@
         "spatie/laravel-permission": "^2.23",
         "spatie/laravel-sitemap": "^5.2",
         "toin0u/geocoder-laravel": "^4.0",
-        "tzsk/payu": "dev-ajency"
+        "tzsk/payu": "dev-saeesh/payu-change"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",

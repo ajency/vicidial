@@ -2,17 +2,21 @@
 
 namespace App;
 
+use Ajency\ServiceComm\Comm\Async;
 use Ajency\ServiceComm\Comm\Sync;
 use App\Cart;
 use App\Jobs\CancelOdooOrder;
+use App\Jobs\NotifyPayment;
 use App\Jobs\OdooOrder;
 use App\Jobs\OdooOrderLine;
+use App\Jobs\OrderCreatedNotification;
 use App\Jobs\OrderLineDeliveryDate;
 use App\Jobs\ReturnOdooOrder;
 use App\Jobs\SaveReturnPolicies;
 use App\ReturnPolicy;
 use App\SubOrder;
 use Carbon\Carbon;
+use DB;
 use Illuminate\Database\Eloquent\Model;
 use Tzsk\Payu\Fragment\Payable;
 
@@ -21,11 +25,13 @@ class Order extends Model
     use Payable;
 
     protected $casts = [
-        'address_data'   => 'array',
-        'aggregate_data' => 'array',
-        'store_ids'      => 'array',
-        'store_data'     => 'array',
-        'verified'       => 'boolean',
+        'address_data'        => 'array',
+        'aggregate_data'      => 'array',
+        'store_ids'           => 'array',
+        'store_data'          => 'array',
+        'verified'            => 'boolean',
+        'payment_in_progress' => 'boolean',
+        'viewed'              => 'boolean',
     ];
 
     protected $fillable = ['cart_id', 'address_id', 'address_data', 'expires_at', 'type'];
@@ -83,11 +89,12 @@ class Order extends Model
         SaveReturnPolicies::dispatch($this->id)->onQueue('orderline_return_policy');
     }
 
-    public function updateOrderlineIndex($fields){
+    public function updateOrderlineIndex($fields)
+    {
         foreach ($this->orderlines as $orderline) {
             $changes = [];
             foreach ($fields as $field) {
-                $changes['order_'.$field] = $this->$field;
+                $changes['order_' . $field] = $this->$field;
             }
             $orderline->updateIndex($changes);
         }
@@ -100,14 +107,28 @@ class Order extends Model
         }
     }
 
+    public function updateInventory($topic)
+    {
+        $inventoryData = [];
+        foreach ($this->subOrders as $subOrder) {
+            $variantQuantity = [];
+            foreach ($subOrder->orderLines as $orderLine) {
+                if (!isset($variantQuantity[$orderLine->variant_id])) {
+                    $variantQuantity[$orderLine->variant_id] = 0;
+                }
+                $variantQuantity[$orderLine->variant_id] += 1;
+            }
+            $inventoryData[$subOrder->location_id] = $variantQuantity;
+        }
+        Async::call($topic, ['inventoryData' => $inventoryData], 'sns', false);
+    }
+
     public function placeOrderOnOdoo()
     {
         //create a job to place order on odoo for all suborders.
-        $inventoryData = [];
         foreach ($this->subOrders as $subOrder) {
             $subOrder->odoo_status = 'draft';
             $subOrder->save();
-            $variantQuantity = [];
             foreach ($subOrder->orderLines as $orderLine) {
                 $orderLine->state = 'draft';
                 $orderLine->save();
@@ -116,15 +137,9 @@ class Order extends Model
                 } catch (\Exception $e) {
                     \Log::error($e->message);
                 }
-                if (!isset($variantQuantity[$orderLine->variant_id])) {
-                    $variantQuantity[$orderLine->variant_id] = 0;
-                }
-                $variantQuantity[$orderLine->variant_id] += 1;
             }
-            $inventoryData[$subOrder->location_id] = $variantQuantity;
             OdooOrder::dispatch($subOrder, true)->onQueue('odoo_order');
         }
-        Sync::call('inventory', 'reserveInventory', ['inventoryData' => $inventoryData]);
         /*if ($this->cart->coupon != null) {
     $odoo              = new OdooConnect;
     $currentCouponLeft = $odoo->defaultExec('sale.order.coupon', 'search_read', [[['global_code', '=', $this->cart->coupon]]], ['fields' => ['consumed_coupon_count']])->first();
@@ -147,12 +162,12 @@ class Order extends Model
 
         //create a job to place order on odoo for all suborders.
         foreach ($this->subOrders as $subOrder) {
-            $cancelSubOrder              = new SubOrder;
-            $cancelSubOrder->order_id    = $order->id;
-            $cancelSubOrder->location_id = $subOrder->location_id;
-            $cancelSubOrder->type        = 'Cancelled Transaction';
-            $cancelSubOrder->item_data   = $subOrder->item_data;
-            $cancelSubOrder->odoo_status = 'cancel';
+            $cancelSubOrder                     = new SubOrder;
+            $cancelSubOrder->order_id           = $order->id;
+            $cancelSubOrder->location_id        = $subOrder->location_id;
+            $cancelSubOrder->type               = 'Cancelled Transaction';
+            $cancelSubOrder->item_data          = $subOrder->item_data;
+            $cancelSubOrder->odoo_status        = 'cancel';
             $cancelSubOrder->new_transaction_id = $subOrder->id;
             $cancelSubOrder->save();
             $cancelSubOrder->refresh();
@@ -471,7 +486,7 @@ class Order extends Model
         /* The orderValue is the basis for the commission paid to Cashback World. */
         $orderValue = $this->aggregate_data['you_pay'];
         // Currency of the sale.
-        $currency = config("orders.cash_back_world.currency");
+        $currency    = config("orders.cash_back_world.currency");
         $orderNumber = $this->txnid;
         // Event type: i.e. true = Sale; & false = Lead
         $isSale = true;
@@ -487,28 +502,76 @@ class Order extends Model
         }
 
         if ($isSale) {
-            $domain = "tbs.tradedoubler.com";
+            $domain          = "tbs.tradedoubler.com";
             $checkNumberName = "orderNumber";
         } else {
-            $domain = "tbl.tradedoubler.com";
+            $domain          = "tbl.tradedoubler.com";
             $checkNumberName = "leadNumber";
-            $orderValue = "1";
+            $orderValue      = "1";
         }
 
         $checksum = "v04" . md5($secretcode . $orderNumber . $orderValue);
 
         $trackBackUrl = "https://" . $domain . "/report"
-        . "?organization=" . $organization
-        . "&event=" . $event
-        . "&" . $checkNumberName . "=" . $orderNumber
-        . "&checksum=" . $checksum
-        . "&tduid=" . $tduid
-        . "&type=iframe"
-        . "&reportInfo=" . $reportInfo;
-        if ($isSale)
-        {
-        $trackBackUrl .= "&orderValue=" . $orderValue . "&currency=" . $currency;
+            . "?organization=" . $organization
+            . "&event=" . $event
+            . "&" . $checkNumberName . "=" . $orderNumber
+            . "&checksum=" . $checksum
+            . "&tduid=" . $tduid
+            . "&type=iframe"
+            . "&reportInfo=" . $reportInfo;
+        if ($isSale) {
+            $trackBackUrl .= "&orderValue=" . $orderValue . "&currency=" . $currency;
         }
         return $trackBackUrl;
+    }
+
+    public function newOrder($old_cart, $token_id)
+    {
+        $cart = $this->cart->user->newCart(true, $old_cart);
+        DB::table('oauth_access_tokens')->where('id', $token_id)->update(['cart_id' => $cart->id]);
+
+        $order = Order::create([
+            'cart_id'      => $cart->id,
+            'address_id'   => $this->address->id,
+            'address_data' => $this->address->shippingAddress(),
+            'expires_at'   => Carbon::now()->addMinutes(config('orders.expiry'))->timestamp,
+            'type'         => 'New Transaction',
+        ]);
+        saveTxnid($order);
+        saveOrderToken($order);
+        $order->setSubOrders();
+        $order->aggregateSubOrderData();
+        $storeData         = $order->getStoreData();
+        $order->store_ids  = $storeData['store_ids'];
+        $order->store_data = $storeData['store_data'];
+        $order->save();
+        OrderCreatedNotification::dispatch($order->id)->onQueue('order_index');
+        $cart->type = 'order';
+        $cart->save();
+        return $order;
+    }
+
+    public function validate()
+    {
+        $cart  = $this->cart;
+        $user  = request()->user();
+        validateOrder($user, $this);
+        $this->checkInventoryForSuborders();
+        $couponAvailability = $this->cart->checkCouponAvailability();
+        if (!empty($couponAvailability['messages'])) {
+            abort(400, array_values($couponAvailability['messages'])[0]);
+        }
+
+        if (isset($this->subOrderData()['kss_cash'])) {
+            $kss_cash = Sync::call('referral', 'getUserReferralPoints', ['user_id' => $user->id]);
+            if ($this->subOrderData()['kss_cash'] > $kss_cash) {
+                abort(400, 'KSS cash is expired');
+            }
+            $amount_charged = $this->subOrderData()['you_pay'] - $this->subOrderData()['kss_cash'];
+        } else {
+            $amount_charged = $this->subOrderData()['you_pay'];
+        }
+        checkCODServiceable($this->address->checkPincodeServiceable()["cod"]);
     }
 }
