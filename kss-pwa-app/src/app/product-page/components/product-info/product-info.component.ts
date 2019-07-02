@@ -45,6 +45,7 @@ export class ProductInfoComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(){
+    this.selectedSize = '';
   	this.variants = this.variants.sort((a,b)=>{ 
       if(a.variant_facets.variant_size.sequence === b.variant_facets.variant_size.sequence){
         let v1 = a.variant_facets.variant_size.name.toLowerCase();
