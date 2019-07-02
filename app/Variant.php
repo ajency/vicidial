@@ -75,8 +75,6 @@ class Variant extends Model
         $q                = new ElasticQuery();
         $q->setIndex($this->elastic_index);
         $search = $q->get($this->elastic_id);
-        \Log::info("elastic object fetched");
-        \Log::info($search);
         $this->elastic_data = $search["_source"];
         foreach ($this->elastic_data["variants"] as $variant) {
             if ($variant["variant_id"] == $this->odoo_id) {

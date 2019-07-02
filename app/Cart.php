@@ -158,16 +158,13 @@ class Cart extends Model
         }
     }
 
-    public function abortNotCart($type, $skip_session = false)
+    public function abortNotCart($type)
     {
         if ($this->type == null && $type == 'cart') {
             return;
         }
 
         if ($this->type != $type) {
-            if (!$skip_session) {
-                request()->session()->forget('active_cart_id');
-            }
             abort(403);
         }
     }
@@ -175,7 +172,6 @@ class Cart extends Model
     public function anonymousCartCheckUser()
     {
         if ($this->user_id != null) {
-            request()->session()->forget('active_cart_id');
             abort(403);
         }
     }

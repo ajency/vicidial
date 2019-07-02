@@ -158,11 +158,10 @@ class UserController extends Controller
     public function createAuthenticateUser($data)
     {
         $verified = false;
-        $id       = request()->session()->get('active_cart_id', false);
 
         $userObject = User::where('phone', '=', $data['phone'])->where('verified', '=', true)->first();
 
-        $cart = ($id) ? Cart::find($id) : null;
+        $cart = (isset($data['cart_id'])) ? Cart::find($data['cart_id']) : null;
         if ($cart == null || $cart->user_id != null) {
             $cart = new Cart;
             $cart->save();
@@ -191,8 +190,6 @@ class UserController extends Controller
         }
         $cart->user_id = $userObject->id;
         $cart->save();
-
-        request()->session()->forget('active_cart_id');
 
         Auth::guard()->login($userObject);
         request()->session()->regenerate();
