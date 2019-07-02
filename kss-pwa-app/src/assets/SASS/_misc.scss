@@ -1513,3 +1513,10 @@ $size: 20px;
         }
     }
 }
+
+
+.display-5-md {
+   @media (min-width: 768px){
+       font-size: 3rem;
+   }
+}
