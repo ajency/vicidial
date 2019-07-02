@@ -944,3 +944,11 @@ function setActiveCart($token_id, $cart_id)
     }
     return $cart_id;
 }
+
+function RefreshProductCache($product_slug){
+    $cache_key = 'Job-RefreshProductCache-'.$product_slug;
+    if(!Cache::has($cache_key)){
+        Cache::forever($cache_key, true);
+        RefreshProductCache::dispatch($product_slug)->onQueue('refresh_cache');
+    }
+}

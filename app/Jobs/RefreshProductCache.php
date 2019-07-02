@@ -44,5 +44,6 @@ class RefreshProductCache implements ShouldQueue
             $apiResponse   = $singleProduct->generateSinglePageData(['attributes', 'facets', 'variants', 'images', 'is_sellable', 'is_available']);
             return $apiResponse;
         });
+        Cache::forget('Job-RefreshProductCache-' . $slug);
     }
 }

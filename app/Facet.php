@@ -2,8 +2,11 @@
 
 namespace App;
 
+use Ajency\Connections\ElasticQuery;
 use Ajency\Connections\OdooConnect;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
+use App\Jobs\RefreshProductCache;
 
 class Facet extends Model
 {
@@ -74,18 +77,44 @@ class Facet extends Model
             });
         }
         $facet_list_obj = self::select('id', 'facet_value', 'display_name', 'sequence', 'display')->whereIn('facet_name', $facets);
-        $total_count = $facet_list_obj->count();
+        $total_count    = $facet_list_obj->count();
         if (isset($params['offset']) && isset($params['limit'])) {
             $facet_list_obj->offset($params['offset'])->limit($params['limit']);
         }
-        $facet_list = $facet_list_obj->get();     
+        $facet_list = $facet_list_obj->get();
         return ['list' => $facet_list, 'total_count' => $total_count, 'categories' => $facet_categories];
     }
 
     public static function updateFacets($params)
     {
-        collect($params['facets'])->each(function ($facet) {
-            self::find($facet['id'])->update([$facet['name'] => $facet['value']]);
-        });
+        $should     = [];
+        $nested     = [];
+        $path       = "search_data";
+        $facet_type = "string_facet";
+
+        foreach ($params['facets'] as $facet) {
+            $facet_data = self::find($facet['id']);
+
+            $defaultFilters['primary_filter'][$facet_data['facet_name']] = $facet_data['facet_value'];
+            $facet_data->update([$facet['name'] => $facet['value']]);
+        }
+        $q = new ElasticQuery;
+        $q->setIndex(config("elastic.indexes.product"));
+        $filters = makeQueryfromParams($defaultFilters);
+        foreach ($filters[$path][$facet_type] as $field => $value) {
+            $facetName  = $q::createTerm($path . "." . $facet_type . '.facet_name', $field);
+            $facetValue = $q::createTerms($path . "." . $facet_type . '.facet_value', $value['value']);
+            $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
+            $nested[]   = $q::createNested($path . '.' . $facet_type, $filter);
+            $should     = $q::addToBoolQuery('should', $nested, $should);
+        }
+        $filters = $q::addToBoolQuery('should', $should);
+        $query   = $q::createNested("search_data", $filters);
+        $q->setQuery($query)->setSource(['search_result_data.product_slug']);
+        $products = $q->search()['hits']['hits'];
+
+        foreach ($products as $product) {
+            RefreshProductCache($product['_source']['search_result_data']['product_slug']);
+        }
     }
 }
