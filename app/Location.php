@@ -161,7 +161,7 @@ class Location extends Model
         $enabled_location_ids   = Sync::call("inventory", "getEnabledLocationIds", []);
         foreach ($enabled_location_ids as $location_id) {
             $variant_ids = Sync::call("inventory", "getVariantIds", ["location_id" => $location_id]);
-            $location_variants[$location_id][] = $variant_ids;
+            $location_variants[$location_id] = $variant_ids;
         }
 
         return ["enabled_location_ids" =>$enabled_location_ids,"location_variant_ids" => $location_variants];
