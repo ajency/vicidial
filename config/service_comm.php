@@ -43,6 +43,10 @@ return [
 			'model' => "App\Facet",
 			'function' => 'fetchFacetList'
 		],
+		'updateFacets' => [
+			'model' => "App\Facet",
+			'function' => 'updateFacets'
+		],
 	],
 	'async_provider' => 'sns',
 	'sns' => [

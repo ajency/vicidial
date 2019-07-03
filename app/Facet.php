@@ -5,8 +5,6 @@ namespace App;
 use Ajency\Connections\ElasticQuery;
 use Ajency\Connections\OdooConnect;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Cache;
-use App\Jobs\RefreshProductCache;
 
 class Facet extends Model
 {
@@ -87,7 +85,7 @@ class Facet extends Model
 
     public static function updateFacets($params)
     {
-        $should     = [];
+        $query      = [];
         $nested     = [];
         $path       = "search_data";
         $facet_type = "string_facet";
@@ -95,7 +93,7 @@ class Facet extends Model
         foreach ($params['facets'] as $facet) {
             $facet_data = self::find($facet['id']);
 
-            $defaultFilters['primary_filter'][$facet_data['facet_name']] = $facet_data['facet_value'];
+            $defaultFilters['primary_filter'][$facet_data['facet_name']][] = $facet_data['facet_value'];
             $facet_data->update([$facet['name'] => $facet['value']]);
         }
         $q = new ElasticQuery;
@@ -106,13 +104,10 @@ class Facet extends Model
             $facetValue = $q::createTerms($path . "." . $facet_type . '.facet_value', $value['value']);
             $filter     = $q::addToBoolQuery('filter', [$facetName, $facetValue]);
             $nested[]   = $q::createNested($path . '.' . $facet_type, $filter);
-            $should     = $q::addToBoolQuery('should', $nested, $should);
+            $query      = $q::addToBoolQuery('should', $nested, $query);
         }
-        $filters = $q::addToBoolQuery('should', $should);
-        $query   = $q::createNested("search_data", $filters);
-        $q->setQuery($query)->setSource(['search_result_data.product_slug']);
+        $q->setQuery($query)->setSource(['search_result_data.product_slug'])->setSize(10000);
         $products = $q->search()['hits']['hits'];
-
         foreach ($products as $product) {
             RefreshProductCache($product['_source']['search_result_data']['product_slug']);
         }

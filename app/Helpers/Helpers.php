@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use App\ProductColor;
 use Illuminate\Support\Str;
+use App\Jobs\RefreshProductCache;
 
 function valInteger($object, $values)
 {
