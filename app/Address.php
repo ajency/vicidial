@@ -76,7 +76,9 @@ class Address extends Model
     private function odooSync()
     {
         if ($this->odoo_id == null) {
-            $this->odoo_id = $this->writeAddressToOdoo();
+            $new_odoo_id = $this->writeAddressToOdoo();
+            //Default Address
+            $this->odoo_id = ($new_odoo_id == 1 && config('app.env') == 'production') ? 18957 : $new_odoo_id;
         } else {
             //update the customer if the customer already exists
             $this->updateAddressOnOdoo();
