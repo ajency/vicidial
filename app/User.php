@@ -145,7 +145,7 @@ class User extends Authenticatable
                 //if customer does not exist, create a new customer
                 $new_odoo_id = $this->writeNewCustomerToOdoo();
                 //Default User
-                $this->odoo_id = ($new_odoo_id == 1 && config('app.env') == 'production') ? 18956 : $new_odoo_id;
+                $this->odoo_id = ($new_odoo_id == 1 && config('app.env') == 'production') ? config('odoo.user_default_id') : $new_odoo_id;
             } else {
                 $this->odoo_id = $odoo_id;
             }

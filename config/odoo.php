@@ -16,6 +16,8 @@ return [
     'dropshipping_warehouse_name' => 'Omni Edge Retail Private Limited',
     'dropshipping_company_id' => env('DROPSHIPPING_COMPANY',1),
     'dropshipping_company_name' => 'Omni Edge Retail Private Limited',
+    'user_default_id' => 18956,
+    'address_default_id' => 18957,
 
     'model_fields'  => [
         'location'   => [

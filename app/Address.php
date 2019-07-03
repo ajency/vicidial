@@ -78,7 +78,7 @@ class Address extends Model
         if ($this->odoo_id == null) {
             $new_odoo_id = $this->writeAddressToOdoo();
             //Default Address
-            $this->odoo_id = ($new_odoo_id == 1 && config('app.env') == 'production') ? 18957 : $new_odoo_id;
+            $this->odoo_id = ($new_odoo_id == 1 && config('app.env') == 'production') ? config('odoo.address_default_id') : $new_odoo_id;
         } else {
             //update the customer if the customer already exists
             $this->updateAddressOnOdoo();
