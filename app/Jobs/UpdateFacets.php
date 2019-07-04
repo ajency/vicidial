@@ -9,6 +9,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Ajency\Connections\ElasticQuery;
 use App\Facet;
+use App\Jobs\RefreshFacetCache;
 
 class UpdateFacets implements ShouldQueue
 {
@@ -58,5 +59,6 @@ class UpdateFacets implements ShouldQueue
         foreach ($products as $product) {
             RefreshProductCache($product['_source']['search_result_data']['product_slug']);
         }
+        RefreshFacetCache::dispatch()->onQueue('create_cache_jobs');
     }
 }
