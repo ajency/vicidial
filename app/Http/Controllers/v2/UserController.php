@@ -192,7 +192,6 @@ class UserController extends Controller
         $cart->save();
 
         Auth::guard()->login($userObject);
-        request()->session()->regenerate();
 
         return ['userObject' => $userObject, 'cart_id' => $cart->id, 'new_user' => $new_user, 'verified' => $verified];
     }

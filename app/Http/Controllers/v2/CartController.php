@@ -164,7 +164,7 @@ class CartController extends Controller
 
     public function checkStatus(Request $request)
     {
-        $request->validate(['coupon_code' => 'required', 'cart_id' => 'required']);
+        $request->validate(['cart_id' => 'required']);
         $params = $request->all();
         $cart   = Cart::find($params['cart_id']);
         if ($cart == null) {

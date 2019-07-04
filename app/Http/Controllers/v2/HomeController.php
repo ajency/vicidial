@@ -10,9 +10,10 @@ class HomeController extends Controller
     public function options($all, Request $request)
     {
         $headers = [
-            'Access-Control-Allow-Methods' => 'POST, GET, OPTIONS, PUT, DELETE',
-            'Access-Control-Allow-Headers' => '*',
-            'Access-Control-Allow-Origin'  => '*',
+            'Access-Control-Allow-Origin'      => config('app.angular_url'),
+            'Access-Control-Allow-Methods'     => 'POST, GET, OPTIONS, PUT, DELETE',
+            'Access-Control-Allow-Headers'     => 'Content-Type, Access-Control-Allow-Origin, Authorization',
+            'Access-Control-Allow-Credentials' => 'true',
         ];
 
         return response('', 200)->withHeaders($headers);
