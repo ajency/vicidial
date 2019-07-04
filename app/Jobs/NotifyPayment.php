@@ -43,16 +43,15 @@ class NotifyPayment implements ShouldQueue
                     'payable_id'     => $order->id,
                     'payable_type'   => get_class($order),
                     'txnid'          => $order->txnid,
-                    'mode'           => $request_params['paymentMode'],
+                    'mode'           => isset($request_params['paymentMode']) ? $request_params['paymentMode'] : null,
                     'firstname'      => $request_params['customerName'],
                     'email'          => $request_params['customerEmail'],
                     'phone'          => $request_params['customerPhone'],
                     'amount'         => $request_params['amount'],
                     'data'           => json_encode($request_params),
                     'status'         => $request_params['status'],
-                    'mode'           => $request_params['paymentMode'],
                     'unmappedstatus' => 'pending',
-                    'bankcode'       => $request_params['bankcode'],
+                    'bankcode'       => isset($request_params['bankcode']) ? $request_params['bankcode'] : null,
                 ]);
             } catch (\Exception $e) {
                 \Log::notice('payu_payment update failed for order ID:' . $order->id . ' with error: ' . $e->getMessage());

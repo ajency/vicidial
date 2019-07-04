@@ -68,7 +68,7 @@ class SizechartImage extends Model
         $mustFilter = setElasticFacetFilters($q, ['search_object' => $defaultFilters], false)[0];
         $filters    = $q::addToBoolQuery('must', $mustFilter);
         $query      = $q::createNested("search_data", $filters);
-        $q->setQuery($query)->setSource(['search_result_data.product_slug']);
+        $q->setQuery($query)->setSource(['search_result_data.product_slug'])->setSize(10000);
 
         $products = $q->search()['hits']['hits'];
 
