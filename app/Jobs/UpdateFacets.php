@@ -10,7 +10,7 @@ use Illuminate\Queue\SerializesModels;
 use Ajency\Connections\ElasticQuery;
 use App\Facet;
 
-class FetchProductImages implements ShouldQueue
+class UpdateFacets implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     protected $subject, $payload;
