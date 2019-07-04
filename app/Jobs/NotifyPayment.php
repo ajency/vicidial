@@ -43,14 +43,13 @@ class NotifyPayment implements ShouldQueue
                     'payable_id'     => $order->id,
                     'payable_type'   => get_class($order),
                     'txnid'          => $order->txnid,
-                    'mode'           => $request_params['paymentMode'],
+                    'mode'           => isset($request_params['paymentMode']) ? $request_params['paymentMode'] : null,
                     'firstname'      => $request_params['customerName'],
                     'email'          => $request_params['customerEmail'],
                     'phone'          => $request_params['customerPhone'],
                     'amount'         => $request_params['amount'],
                     'data'           => json_encode($request_params),
                     'status'         => $request_params['status'],
-                    'mode'           => $request_params['paymentMode'],
                     'unmappedstatus' => 'pending',
                     'bankcode'       => $request_params['bankcode'],
                 ]);
@@ -72,7 +71,7 @@ class NotifyPayment implements ShouldQueue
                 ]);
 
                 $response_params = json_decode($response->getBody(), true);
-                if (isset($response_params['result'][0]['postBackParam'])) {
+                if (isset($response_params['result'][0]['postBackParam']) && $payu_payment) {
                     $post_back_params           = $response_params['result'][0]['postBackParam'];
                     $payu_payment->data         = json_encode($post_back_params);
                     $payu_payment->bank_ref_num = $post_back_params['bank_ref_num'];
