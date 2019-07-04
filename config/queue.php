@@ -13,9 +13,9 @@ return [
     |
     | Supported: "sync", "database", "beanstalkd", "sqs", "redis", "null"
     |
-    */
+     */
 
-    'default' => env('QUEUE_DRIVER', 'database'),
+    'default'     => env('QUEUE_DRIVER', 'database'),
 
     /*
     |--------------------------------------------------------------------------
@@ -26,55 +26,56 @@ return [
     | is used by your application. A default configuration has been added
     | for each back-end shipped with Laravel. You are free to add more.
     |
-    */
+     */
 
     'connections' => [
 
-        'sync' => [
+        'sync'       => [
             'driver' => 'sync',
         ],
 
-        'database' => [
-            'driver' => 'database',
-            'table' => 'jobs',
-            'queue' => 'default',
+        'database'   => [
+            'driver'      => 'database',
+            'table'       => 'jobs',
+            'queue'       => 'default',
             'retry_after' => 300,
         ],
 
         'beanstalkd' => [
-            'driver' => 'beanstalkd',
-            'host' => 'localhost',
-            'queue' => 'default',
+            'driver'      => 'beanstalkd',
+            'host'        => 'localhost',
+            'queue'       => 'default',
             'retry_after' => 90,
         ],
 
-        'sqs' => [
+        'sqs'        => [
             'driver' => 'sqs',
-            'key' => env('SQS_KEY', 'your-public-key'),
+            'key'    => env('SQS_KEY', 'your-public-key'),
             'secret' => env('SQS_SECRET', 'your-secret-key'),
             'prefix' => env('SQS_PREFIX', 'https://sqs.us-east-1.amazonaws.com/your-account-id'),
-            'queue' => env('SQS_QUEUE', 'your-queue-name'),
+            'queue'  => env('SQS_QUEUE', 'your-queue-name'),
             'region' => env('SQS_REGION', 'us-east-1'),
         ],
-        
-        'sqs-sns' =>[
+
+        'sqs-sns'    => [
             'driver' => 'sqs-sns',
-            'key' => env('AWS_KEY', 'your-public-key'),
+            'key'    => env('AWS_KEY', 'your-public-key'),
             'secret' => env('AWS_SECRET', 'your-secret-key'),
-            'queue' => env('SQS_QUEUE', 'shank-report'),
-            'prefix' => 'https://sqs.'.env('AWS_REGION').'.amazonaws.com/'.env('AWS_ID'),
+            'queue'  => env('SQS_QUEUE', 'shank-report'),
+            'prefix' => 'https://sqs.' . env('AWS_REGION') . '.amazonaws.com/' . env('AWS_ID'),
             'region' => env('AWS_REGION', 'us-east-1'),
             'routes' => [
-                'ImageUpload' => 'App\\Jobs\\FetchProductImages',
+                'ImageUpload'      => 'App\\Jobs\\FetchProductImages',
                 'DelhiveryConfirm' => 'App\\Jobs\\SyncDelhiveryWaybill',
                 'EnableLocation' => 'App\\Jobs\\EnableWebsiteLocation',
-            ]
+                'FacetsUpdated'    => 'App\\Jobs\\UpdateFacets',
+            ],
         ],
 
-        'redis' => [
-            'driver' => 'redis',
-            'connection' => 'default',
-            'queue' => 'default',
+        'redis'      => [
+            'driver'      => 'redis',
+            'connection'  => 'default',
+            'queue'       => 'default',
             'retry_after' => 90,
         ],
 
@@ -89,11 +90,11 @@ return [
     | can control which database and table are used to store the jobs that
     | have failed. You may change them to any database / table you wish.
     |
-    */
+     */
 
-    'failed' => [
+    'failed'      => [
         'database' => env('DB_CONNECTION', 'mysql'),
-        'table' => 'failed_jobs',
+        'table'    => 'failed_jobs',
     ],
 
 ];
