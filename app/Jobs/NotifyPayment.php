@@ -71,7 +71,7 @@ class NotifyPayment implements ShouldQueue
                 ]);
 
                 $response_params = json_decode($response->getBody(), true);
-                if (isset($response_params['result'][0]['postBackParam']) && $payu_payment) {
+                if (isset($response_params['result'][0]['postBackParam'])) {
                     $post_back_params           = $response_params['result'][0]['postBackParam'];
                     $payu_payment->data         = json_encode($post_back_params);
                     $payu_payment->bank_ref_num = $post_back_params['bank_ref_num'];
