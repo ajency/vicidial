@@ -169,7 +169,7 @@ class Location extends Model
 
     public static function getAllLocationDetails($params)
     {
-        $all_locations = [];
+        $response = [];
         $start  = isset($params['start']) ? $params['start'] : '';
         $length = isset($params['length']) ? $params['length'] : '';
 
@@ -185,9 +185,9 @@ class Location extends Model
         if(isset($start) && isset($length)) {
             $all_locations  = $all_locations->skip($start)->take($length);
         }
-        $all_locations      = $all_locations->get();
+        $response      = $all_locations->get();
 
-        return $all_locations;
+        return $response;
     }
 
     public static function getLocationDetails($location_id)
