@@ -190,8 +190,9 @@ class Location extends Model
         return $response;
     }
 
-    public static function getLocationDetails($location_id)
+    public static function getLocationDetails($params)
     {
+        $location_id = $params['location_id'];
         $location_details = \DB::table('locations')
             ->select("warehouses.latitude", "warehouses.longitude", "locations.type")
             ->join('warehouses', 'warehouses.odoo_id', '=', 'locations.warehouse_odoo_id')
