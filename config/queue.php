@@ -67,6 +67,7 @@ return [
             'routes' => [
                 'ImageUpload' => 'App\\Jobs\\FetchProductImages',
                 'DelhiveryConfirm' => 'App\\Jobs\\SyncDelhiveryWaybill',
+                'EnableWebsiteLocation' => 'App\\Jobs\\EnableWebsiteLocation',
             ]
         ],
 
