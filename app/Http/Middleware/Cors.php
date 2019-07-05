@@ -15,6 +15,14 @@ class Cors
      */
     public function handle($request, Closure $next)
     {
+        $all_headers = getallheaders();
+        if (isset($all_headers['Chrome_Extension']) && $all_headers['Chrome_Extension'] == 'KSS') {
+            return $next($request)
+                ->header("Access-Control-Allow-Origin", "*")
+                ->header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+                ->header("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Origin, Authorization");
+        }
+        
         return $next($request)
             ->header("Access-Control-Allow-Origin", config('app.angular_url'))
             ->header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
