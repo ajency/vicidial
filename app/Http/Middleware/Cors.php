@@ -16,7 +16,7 @@ class Cors
     public function handle($request, Closure $next)
     {
         $all_headers = getallheaders();
-        if (isset($all_headers['Chrome_Extension']) && $all_headers['Chrome_Extension'] == 'KSS') {
+        if (isset($all_headers['X-Chrome-Extension']) && $all_headers['X-Chrome-Extension'] == 'KSS') {
             return $next($request)
                 ->header("Access-Control-Allow-Origin", "*")
                 ->header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
