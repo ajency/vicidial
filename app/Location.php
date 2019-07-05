@@ -196,7 +196,7 @@ class Location extends Model
         $location_details = \DB::table('locations')
             ->select("warehouses.latitude", "warehouses.longitude", "locations.type")
             ->join('warehouses', 'warehouses.odoo_id', '=', 'locations.warehouse_odoo_id')
-            ->whereIn("locations.id", $location_id)
+            ->where("locations.id", $location_id)
             ->first();
 
         return $location_details;
