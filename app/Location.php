@@ -182,7 +182,7 @@ class Location extends Model
         ->whereIn("locations.type", ["internal", "dropshipping"])
         ->orderBy('locations.id', 'DESC');
         
-        if($start && $length) {
+        if(($start && $length) || $length) {
             $all_locations  = $all_locations->skip($start)->take($length);
         }
         $response      = $all_locations->get();
