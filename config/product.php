@@ -176,7 +176,8 @@ return [
             ],
             'variant' => ['variant_style_no'],
         ],
-        "editable" => ['product_category_type', 'product_metatag', 'product_gender', 'product_age_group', 'product_subtype', 'product_color_html', 'variant_size_name'],
+        "editable"      => ['product_category_type', 'product_gender', 'product_age_group', 'product_subtype', 'product_brand
+', 'product_color_html', 'variant_size_name', 'product_metatag'],
     ],
     "inventory_fields"               => ["product_id", "quantity", 'location_id'],
     'facet_display_data'             => [

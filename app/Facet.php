@@ -69,17 +69,16 @@ class Facet extends Model
             return [$key => $facet['name']];
         });
         $facets = collect($editable_facets);
-        if ($params['category'] != 'all') {
-            $facets = $facets->filter(function ($facet) use ($params) {
-                return ($params['category'] == $facet);
-            });
+
+        $facet_list_obj = self::select('id', 'facet_name', 'facet_value', 'display_name', 'sequence', 'display');
+        if($params['category'] != 'all'){
+            $facet_list_obj->where('facet_name', $params['category']);
         }
-        $facet_list_obj = self::select('id', 'facet_value', 'display_name', 'sequence', 'display')->whereIn('facet_name', $facets);
         $total_count    = $facet_list_obj->count();
         if (isset($params['offset']) && isset($params['limit'])) {
             $facet_list_obj->offset($params['offset'])->limit($params['limit']);
         }
-        $facet_list = $facet_list_obj->get();
+        $facet_list = collect($facet_list_obj->get()->groupBy('facet_name')->toArray())->flatten(1);
         return ['list' => $facet_list, 'total_count' => $total_count, 'categories' => $facet_categories];
     }
 }
