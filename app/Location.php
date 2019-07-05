@@ -167,4 +167,38 @@ class Location extends Model
         return ["enabled_location_ids" =>$enabled_location_ids,"location_variant_ids" => $location_variants];
     }
 
+    public static function getAllLocationDetails($params)
+    {
+        $all_locations = [];
+        $start  = isset($params['start']) ? $params['start'] : '';
+        $length = isset($params['length']) ? $params['length'] : '';
+
+        $all_locations      = \DB::table('locations')
+        ->select("locations.id", "locations.odoo_id", "locations.location_name", "locations.display_name",
+            "locations.address", "locations.use_in_inventory", "locations.warehouse_name",
+            "warehouses.id as warehouse_id", "warehouses.latitude", "warehouses.longitude", "locations.type"
+        )
+        ->join('warehouses', 'warehouses.odoo_id', '=', 'locations.warehouse_odoo_id')
+        ->whereIn("locations.type", ["internal", "dropshipping"])
+        ->orderBy('locations.id', 'DESC');
+        
+        if(isset($start) && isset($length)) {
+            $all_locations  = $all_locations->skip($start)->take($length);
+        }
+        $all_locations      = $all_locations->get();
+
+        return $all_locations;
+    }
+
+    public static function getLocationDetails($location_id)
+    {
+        $location_details = \DB::table('locations')
+            ->select("warehouses.latitude", "warehouses.longitude", "locations.type")
+            ->join('warehouses', 'warehouses.odoo_id', '=', 'locations.warehouse_odoo_id')
+            ->whereIn("locations.id", $location_id)
+            ->first();
+
+        return $location_details;
+    }
+
 }

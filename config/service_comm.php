@@ -31,6 +31,14 @@ return [
 			'model' => "App\Location",
 			'function' => 'getEnabledLocationVariants'
 		],
+		'getAllLocationDetails' => [
+			'model' => "App\Location",
+			'function' => 'getAllLocationDetails'
+		],
+		'getLocationDetails' => [
+			'model' => "App\Location",
+			'function' => 'getLocationDetails'
+		],
 	],
 	'async_provider' => 'sns',
 	'sns' => [
