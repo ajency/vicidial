@@ -35,7 +35,6 @@ RUN set -x \
         && chmod 777 storage/logs/laravel.log \
         && chmod -R 777 /var/www/html/storage
 
-RUN mkdir /var/www/html/public/assets
 COPY --from=frontend /root/build/public/js/ /var/www/html/public/js/
 COPY --from=frontend /root/build/public/css/ /var/www/html/public/css/
 COPY --from=frontend /root/build/public/fonts/ /var/www/html/public/fonts/
