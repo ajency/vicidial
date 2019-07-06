@@ -52,26 +52,10 @@ Route::group([
 });
 
 Route::get('/', $app_version . '\HomeController@newhome')->name('home');
-// Route::get('/newhome', $app_version . '\HomeController@newhome')->name('home');
-Route::get('/drafthome', $app_version . '\HomeController@newdraft')->name('drafthome');
-Route::get('/newshop', $app_version . '\ListingController@shop')->name('shop');
 Route::get('/getWarehouseLevelInventory', $app_version . "\ProductController@allInventory");
-Route::get('/contact-us', $app_version . '\StaticController@contact');
-Route::get('/contact', $app_version . '\StaticController@contactnew');
-Route::get('/faq', $app_version . '\StaticController@faq');
-Route::get('/about-us', $app_version . '\StaticController@about');
-Route::get('/terms-and-conditions', $app_version . '\StaticController@tc');
-Route::get('/privacy-policy', $app_version . '\StaticController@privacy');
 Route::get('/ideas', $app_version . '\PostController@blog');
 Route::get('/ideas/{title}', $app_version . '\PostController@post');
 Route::get('/ideas/category/{category}', $app_version . '\PostController@category');
-Route::get('/stores', $app_version . '\StaticController@stores');
-Route::get('/stores/surat', $app_version . '\StaticController@singlestore');
-Route::get('/stores/hyderabad', $app_version . '\StaticController@singlestore');
-Route::get('/stores/coimbatore', $app_version . '\StaticController@singlestore');
-Route::get('/stores/jaipur', $app_version . '\StaticController@singlestore');
-Route::get('/activities/{storename}', $app_version . '\StaticController@activities');
-Route::get('/shop', $app_version . '\ListingController@shop')->name('shoplisting');
 Route::get('/products/xml', $app_version . '\StaticController@productXML');
 
 Route::get('/variant-diff-file', $app_version . '\StaticController@getVariantDiffFile');
@@ -79,17 +63,9 @@ Route::get('/user/order/{orderid}/payment/{type}', $app_version . '\PaymentContr
 Route::get('/user/order/{orderid}/payment/{type}/status', $app_version . '\PaymentController@status')->name('paymentStatus');
 
 Route::post('/payu/notify/payment/{status}', $app_version . '\PaymentController@notifyPayment');
-Route::get('/my/order/details', $app_version . '\OrderController@getOrderDetails')->name('orderDetails');
-Route::get('/order/details/{trxn_id}', $app_version . '\OrderController@newOrderDetails')->name('neworderDetails');
-Route::post('/order/details/{trxn_id}', $app_version . '\OrderController@newOrderDetails')->name('neworderDetails');
-Route::get('/shop/{gendername}', $app_version . '\StaticController@gender');
-Route::get('/draft/{gendername}', $app_version . '\StaticController@draft');
-Route::get('/{product_slug}/buy', $app_version . '\ProductController@singleProduct')->name('product');
 Route::get('/' . $config['base_root_path'] . $config['model']["App\ProductColor"]['base_path'] . '/{photo_id}/{preset}/{depth}/{image}', $app_version . '\ProductController@getImage');
 Route::get('/sitemap.xml', $app_version.'\StaticController@sitemapXML');
 Route::get('/products_list.xml', $app_version.'\StaticController@productlistXML');
 
 Route::get('/' . config('fileupload_static_element')['base_root_path'] . config('fileupload_static_element')['model']["App\StaticElement"]['base_path'] . '/{photo_id}/{preset}/{depth}/{image}', $app_version . '\StaticElementController@getImage');
 Route::get('/' . config('fileupload_static_element')['base_root_path'] . config('fileupload_static_element')['model']["App\StaticElement"]['base_path'] . '/{photo_id}/{preset}/{image}', $app_version . '\StaticElementController@getOriginalImage');
-// Route::get('/{gendername}', $app_version.'\StaticController@gender');
-Route::get('/{cat1}/{cat2?}/{cat3?}/{cat4?}/{cat5?}', $app_version . '\ListingController@index')->name('listing');

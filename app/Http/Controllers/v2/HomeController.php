@@ -40,7 +40,7 @@ class HomeController extends Controller
 
     public function newhome(Request $request)
     {
-        return view('home_new');
+        return view('welcome');
     }
 
     public function newdraft(Request $request)
