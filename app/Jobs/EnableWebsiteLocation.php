@@ -12,16 +12,18 @@ use Illuminate\Foundation\Bus\Dispatchable;
 class EnableWebsiteLocation implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    protected $subject, $payload;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($params)
+
+    public function __construct($subject, $payload)
     {
-        $this->enable       = $params["enable"];
-        $this->location_id  = $param["location_id"];
+        $this->subject = $subject;
+        $this->payload = $payload;
     }
 
     /**
@@ -31,9 +33,9 @@ class EnableWebsiteLocation implements ShouldQueue
      */
     public function handle()
     {
-        $update_params  = ["use_in_inventory" => $this->enable];
+        $update_params  = ["use_in_inventory" => $this->payload['enable']];
         \DB::table('locations')
-            ->where("id", "=", $this->location_id)
+            ->where("id", "=", $this->payload['location_id'])
             ->update($update_params);
     }
 }
