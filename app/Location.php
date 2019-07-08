@@ -155,16 +155,12 @@ class Location extends Model
         return $scores;
     }
 
-    public static function getEnabledLocationVariants()
+    public static function getEnabledLocations()
     {
         $location_variants      = [];
         $enabled_location_ids   = Sync::call("inventory", "getEnabledLocationIds", []);
-        foreach ($enabled_location_ids as $location_id) {
-            $variant_ids = Sync::call("inventory", "getVariantIds", ["location_id" => $location_id]);
-            $location_variants[$location_id] = $variant_ids;
-        }
-
-        return ["enabled_location_ids" =>$enabled_location_ids,"location_variant_ids" => $location_variants];
+        
+        return ["enabled_location_ids" =>$enabled_location_ids];
     }
 
     public static function getAllLocationDetails($params)
@@ -194,7 +190,7 @@ class Location extends Model
     {
         $location_id = $params['location_id'];
         $location_details = \DB::table('locations')
-            ->select("warehouses.latitude", "warehouses.longitude", "locations.type", "locations.name")
+            ->select("warehouses.latitude", "warehouses.longitude", "locations.type", "locations.name", "location.use_in_inventory")
             ->join('warehouses', 'warehouses.odoo_id', '=', 'locations.warehouse_odoo_id')
             ->where("locations.id", $location_id)
             ->first();

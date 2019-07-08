@@ -27,9 +27,9 @@ return [
 			'model' => "App\OrderLine",
 			'function' => 'updateMultipleIndex'
 		],
-		'getEnabledLocationVariants' => [
+		'getEnabledLocations' => [
 			'model' => "App\Location",
-			'function' => 'getEnabledLocationVariants'
+			'function' => 'getEnabledLocations'
 		],
 		'getAllLocationDetails' => [
 			'model' => "App\Location",
