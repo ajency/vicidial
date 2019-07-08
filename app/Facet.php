@@ -63,13 +63,15 @@ class Facet extends Model
     public static function fetchFacetList($params)
     {
         $editable_facets  = config('product.facets.editable');
-        $facet_categories = collect(config('product.facet_display_data'))->filter(function ($facet, $key) use ($editable_facets) {
-            return in_array($key, $editable_facets);
-        })->mapWithKeys(function ($facet, $key) use ($params) {
-            return [$key => $facet['name']];
-        });
-        $facets = collect($editable_facets);
+        $data_facets  = config('product.facet_display_data');
+        $facet_categories = collect();
+        foreach ($data_facets as $facet_key => $facet_data) {
+            if(in_array($facet_key, $editable_facets)){
+                $facet_categories->push(['display_name' => $facet_data['name'], 'value' => $facet_key]);
+            }
+        }
 
+        $facets = collect($editable_facets);
         $facet_list_obj = self::select('id', 'facet_name', 'facet_value', 'display_name', 'sequence', 'display');
         if($params['category'] != 'all'){
             $facet_list_obj->where('facet_name', $params['category']);
