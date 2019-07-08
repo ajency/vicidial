@@ -194,7 +194,7 @@ class Location extends Model
     {
         $location_id = $params['location_id'];
         $location_details = \DB::table('locations')
-            ->select("warehouses.latitude", "warehouses.longitude", "locations.type")
+            ->select("warehouses.latitude", "warehouses.longitude", "locations.type", "locations.name")
             ->join('warehouses', 'warehouses.odoo_id', '=', 'locations.warehouse_odoo_id')
             ->where("locations.id", $location_id)
             ->first();
