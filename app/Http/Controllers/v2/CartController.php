@@ -16,25 +16,23 @@ class CartController extends Controller
 
     public function guestGetCount(Request $request)
     {
-        // \Log::info('enters guest_get_count function');
-        $id   = $request->session()->get('active_cart_id', false);
-        $cart = Cart::find($id);
+        $request->validate(['cart_id' => 'required']);
+        $params = $request->all();
+        $cart = Cart::find($params['cart_id']);
         if ($cart !== null) {
-            // \Log::debug('cart = '.$cart);
             $cart->anonymousCartCheckUser();
             $cart->abortNotCart('cart');
             return response()->json(['cart_count' => $cart->itemCount()]);
         } else {
-            return abort('404', "Cart not found for this session");
+            return abort(404, "Cart not found");
         }
     }
 
     public function guestAddItem(Request $request)
     {
-        $request->validate(['variant_id' => 'required|exists:variants,odoo_id', 'variant_quantity' => 'required']);
+        $request->validate(['variant_id' => 'required|exists:variants,odoo_id', 'variant_quantity' => 'required', 'cart_id' => 'sometimes']);
         $params = $request->all();
-        $id     = $request->session()->get('active_cart_id', false);
-        $cart   = ($id) ? Cart::find($id) : new Cart;
+        $cart   = (isset($params['cart_id'])) ? Cart::find($params['cart_id']) : new Cart;
         $cart->anonymousCartCheckUser();
         $cart->abortNotCart('cart');
         $variant = Variant::where('odoo_id', $params['variant_id'])->first();
@@ -53,22 +51,20 @@ class CartController extends Controller
             } else {
                 abort(404, "Quantity not available");
             }
-            $request->session()->put('active_cart_id', $cart->id);
             $item["quantity"]  = intval($cart->cart_data[$item["id"]]["quantity"]);
             $item["timestamp"] = intval($cart->cart_data[$item["id"]]["timestamp"]);
         }
         $summary = $cart->getSummary();
-        return response()->json(['cart_count' => $cart->itemCount(), "message" => $message, "item" => $item, "summary" => $summary]);
+        return response()->json(['cart_count' => $cart->itemCount(), 'cart_id' => $cart->id, "message" => $message, "item" => $item, "summary" => $summary]);
     }
 
     public function guestModifyItem(Request $request)
     {
-        $request->validate(['variant_id' => 'required|exists:variants,id', 'variant_quantity' => 'required']);
+        $request->validate(['variant_id' => 'required|exists:variants,id', 'variant_quantity' => 'required', 'cart_id' => 'required']);
         $params = $request->all();
-        $id     = $request->session()->get('active_cart_id', false);
-        $cart   = Cart::find($id);
+        $cart   = Cart::find($params['cart_id']);
         if ($cart == null) {
-            abort(404, "Cart not found for this session");
+            abort(404, "Cart not found");
         }
         $cart->anonymousCartCheckUser();
         $cart->abortNotCart('cart');
@@ -102,10 +98,11 @@ class CartController extends Controller
 
     public function guestCartFetch(Request $request)
     {
-        $id   = $request->session()->get('active_cart_id', false);
-        $cart = Cart::find($id);
+        $request->validate(['cart_id' => 'required']);
+        $params = $request->all();
+        $cart   = Cart::find($params['cart_id']);
         if ($cart == null) {
-            abort(404, "Cart not found for this session");
+            abort(404, "Cart not found");
         }
         $cart->anonymousCartCheckUser();
         $cart->abortNotCart('cart');
@@ -122,13 +119,11 @@ class CartController extends Controller
 
     public function guestCartDelete(Request $request)
     {
-        $request->validate(['variant_id' => 'required|exists:variants,id']);
-        $id     = $request->session()->get('active_cart_id', false);
+        $request->validate(['variant_id' => 'required|exists:variants,id', 'cart_id' => 'required']);
         $params = $request->all();
-
-        $cart = Cart::find($id);
+        $cart   = Cart::find($params['cart_id']);
         if ($cart == null) {
-            abort(404, "Cart not found for this session");
+            abort(404, "Cart not found");
         }
         $cart->anonymousCartCheckUser();
         $cart->abortNotCart('cart');
@@ -145,13 +140,11 @@ class CartController extends Controller
 
     public function guestCartCoupon(Request $request)
     {
-        $request->validate(['coupon_code' => 'required']);
-        $id     = $request->session()->get('active_cart_id', false);
+        $request->validate(['coupon_code' => 'required', 'cart_id' => 'required']);
         $params = $request->all();
-
-        $cart = Cart::find($id);
+        $cart   = Cart::find($params['cart_id']);
         if ($cart == null) {
-            abort(404, "Cart not found for this session");
+            abort(404, "Cart not found");
         }
         $cart->anonymousCartCheckUser();
         $cart->abortNotCart('cart');
@@ -171,10 +164,11 @@ class CartController extends Controller
 
     public function checkStatus(Request $request)
     {
-        $id   = $request->session()->get('active_cart_id', false);
-        $cart = Cart::find($id);
+        $request->validate(['cart_id' => 'required']);
+        $params = $request->all();
+        $cart   = Cart::find($params['cart_id']);
         if ($cart == null) {
-            abort(404, "Cart not found for this session");
+            abort(404, "Cart not found");
         }
         $cart->anonymousCartCheckUser();
         $cart->abortNotCart('cart');
@@ -328,7 +322,7 @@ class CartController extends Controller
         if ($cart == null) {
             abort(404, "Requested Cart ID not found");
         }
-        $cart->abortNotCart('cart', true);
+        $cart->abortNotCart('cart');
         $user = $request->user();
         validateCart($user, $cart, 'cart');
         try {

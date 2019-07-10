@@ -33,6 +33,7 @@ class AddFolderForProductColor implements ShouldQueue
         $elastic_data = $this->product_color->getElasticData();
         $attributes = collect($elastic_data['search_data'][0]['attributes'])->keyBy('attribute_name');
         \Ajency\ServiceComm\Comm\Async::call('NewProductColor', [
+            'catalog_id'          => 1,
             'external_product_id' => $this->product_color->product_id,
             'product_color_id'    => $this->product_color->id,
             'product_barcode'     => (isset($attributes['product_barcode']['attribute_value'])) ? $attributes['product_barcode']['attribute_value'] : '',

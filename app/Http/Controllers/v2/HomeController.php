@@ -3,11 +3,22 @@
 namespace App\Http\Controllers\v2;
 
 use App\Http\Controllers\Controller;
-use App\StaticElement;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+    public function options($all, Request $request)
+    {
+        $headers = [
+            'Access-Control-Allow-Origin'      => config('app.angular_url'),
+            'Access-Control-Allow-Methods'     => 'POST, GET, OPTIONS, PUT, DELETE',
+            'Access-Control-Allow-Headers'     => 'Content-Type, Access-Control-Allow-Origin, Authorization',
+            'Access-Control-Allow-Credentials' => 'true',
+        ];
+
+        return response('', 200)->withHeaders($headers);
+    }
+
     public function index(Request $request)
     {
         $static_elements = StaticElement::fetch('home', [], $published = true);
@@ -29,7 +40,7 @@ class HomeController extends Controller
 
     public function newhome(Request $request)
     {
-        return view('home_new');
+        return view('welcome');
     }
 
     public function newdraft(Request $request)
