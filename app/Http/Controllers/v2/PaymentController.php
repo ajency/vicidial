@@ -26,7 +26,12 @@ class PaymentController extends Controller
         if (!empty($couponAvailability['messages'])) {
             abort(400, array_values($couponAvailability['messages'])[0]);
         }
-
+        if($order->txnid){
+            $payment = DB::table('payu_payments')->where('txnid', $order->txnid)->first();
+            if($payment){
+                abort(400,'Payment for the order already made');
+            }
+        }
         switch ($type) {
             case 'payu':
                 $attributes = [

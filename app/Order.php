@@ -6,7 +6,6 @@ use Ajency\ServiceComm\Comm\Async;
 use Ajency\ServiceComm\Comm\Sync;
 use App\Cart;
 use App\Jobs\CancelOdooOrder;
-use App\Jobs\NotifyPayment;
 use App\Jobs\OdooOrder;
 use App\Jobs\OdooOrderLine;
 use App\Jobs\OrderCreatedNotification;
@@ -554,15 +553,17 @@ class Order extends Model
 
     public function validate()
     {
-        $cart  = $this->cart;
-        $user  = request()->user();
+        $cart = $this->cart;
+        $user = request()->user();
         validateOrder($user, $this);
         $this->checkInventoryForSuborders();
         $couponAvailability = $this->cart->checkCouponAvailability();
+        if ($this->status != 'draft') {
+            abort(400, 'Placing order not allowed');
+        }
         if (!empty($couponAvailability['messages'])) {
             abort(400, array_values($couponAvailability['messages'])[0]);
         }
-
         if (isset($this->subOrderData()['kss_cash'])) {
             $kss_cash = Sync::call('referral', 'getUserReferralPoints', ['user_id' => $user->id]);
             if ($this->subOrderData()['kss_cash'] > $kss_cash) {

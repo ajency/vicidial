@@ -82,8 +82,10 @@ class OrderController extends Controller
         $cart = Cart::find($id);
         validateCart($user, $cart, 'order');
 
-        $old_order = $cart->order;
-        $order     = $old_order->newOrder($cart, $params['token_id']);
+        if($order->status != 'draft'){
+            $old_order = $cart->order;
+            $order     = $old_order->newOrder($cart, $params['token_id']);
+        }
         checkOrderInventory($order);
 
         if (isset($params['address_id'])) {
