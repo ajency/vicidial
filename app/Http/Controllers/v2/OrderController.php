@@ -121,7 +121,7 @@ class OrderController extends Controller
     {
         $user  = $request->user();
         $order = Order::find($id);
-        $order->validate($request->user);
+        $order->validate($user);
         $cart  = $order->cart;
         return response()->json(["message" => 'Items are available in store', 'success' => true]);
     }
