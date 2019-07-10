@@ -61,5 +61,6 @@ class Kernel extends HttpKernel
         'extension-api-permissions' => \App\Http\Middleware\ExtensionApiPermissions::class,
         'publish-static-element' => \App\Http\Middleware\PublishStaticElement::class,
         'get-token-details' => \App\Http\Middleware\getTokenDetails::class,
+        'cors' => \App\Http\Middleware\Cors::class,
     ];
 }

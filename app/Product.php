@@ -184,6 +184,7 @@ class Product
         try {
             if ($new_product) {
                 \Ajency\ServiceComm\Comm\Async::call('NewProductColor', [
+                    'catalog_id'          => 1,
                     'external_product_id' => $product['product_id'],
                     'product_color_id'    => $elastic->id,
                     'product_barcode'     => $product['product_barcode'],

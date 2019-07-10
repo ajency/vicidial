@@ -13,6 +13,8 @@
 
 $app_version = 'v' . config('app.api_version');
 
+Route::options('{all}', $app_version . '\HomeController@options')->where('all', '.*');
+
 $group_app_version = 'v1';
 Route::group([
     'prefix' => '/rest/' . $group_app_version,
@@ -94,6 +96,7 @@ Route::group([
 $group_app_version = 'v2';
 Route::group([
     'prefix' => '/rest/' . $group_app_version,
+    'middleware' => ['cors'],
 ], function () use ($group_app_version) {
     Route::group([
         'middleware' => ['auth:api-passport', 'get-token-details'],
@@ -186,6 +189,27 @@ Route::group([
         'middleware' => ['auth:api-passport', 'publish-static-element'],
     ], function () use ($group_app_version) {
         Route::get('/publish-page-element', $group_app_version . '\StaticElementController@callPublish');
+    });
+    Route::group([
+        'prefix' => '/anonymous',
+    ], function () use ($group_app_version) {
+        Route::group([
+            'prefix' => '/cart',
+        ], function () use ($group_app_version) {
+            Route::get('/count', $group_app_version . '\CartController@guestGetCount');
+            Route::post('/insert', $group_app_version . '\CartController@guestAddItem');
+            Route::post('/update', $group_app_version . '\CartController@guestModifyItem');
+            Route::get('/get', $group_app_version . '\CartController@guestCartFetch');
+            Route::get('/delete', $group_app_version . '\CartController@guestCartDelete');
+            Route::get('/apply-coupon', $group_app_version . '\CartController@guestCartCoupon');
+            Route::get('/check-status', $group_app_version . '\CartController@checkStatus');
+        });
+    });
+    Route::get('/states/all', $group_app_version . '\AddressController@fetchStates');
+    Route::group([
+        'prefix' => '/authenticate',
+    ], function () use ($group_app_version) {
+        Route::get('/get-token', $group_app_version . '\UserController@getToken');
     });
 });
 
