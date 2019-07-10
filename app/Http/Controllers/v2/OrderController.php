@@ -77,17 +77,14 @@ class OrderController extends Controller
     public function continueOrder($id, Request $request)
     {
         $params = $request->all();
-
         $user = $request->user();
         $cart = Cart::find($id);
         validateCart($user, $cart, 'order');
-
         if($order->status != 'draft'){
             $old_order = $cart->order;
             $order     = $old_order->newOrder($cart, $params['token_id']);
         }
         checkOrderInventory($order);
-
         if (isset($params['address_id'])) {
             $address = Address::find($params["address_id"]);
             validateAddress($user, $address);
@@ -124,11 +121,8 @@ class OrderController extends Controller
     {
         $user  = $request->user();
         $order = Order::find($id);
+        $order->validate($request->user);
         $cart  = $order->cart;
-        validateCart($user, $cart, 'order');
-
-        checkOrderInventory($order);
-
         return response()->json(["message" => 'Items are available in store', 'success' => true]);
     }
 

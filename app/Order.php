@@ -551,11 +551,10 @@ class Order extends Model
         return $order;
     }
 
-    public function validate()
+    public function validate($user)
     {
         $cart = $this->cart;
-        $user = request()->user();
-        validateOrder($user, $this);
+        validateCart($user, $cart, 'order');
         $this->checkInventoryForSuborders();
         $couponAvailability = $this->cart->checkCouponAvailability();
         if ($this->status != 'draft') {
@@ -564,15 +563,7 @@ class Order extends Model
         if (!empty($couponAvailability['messages'])) {
             abort(400, array_values($couponAvailability['messages'])[0]);
         }
-        if (isset($this->subOrderData()['kss_cash'])) {
-            $kss_cash = Sync::call('referral', 'getUserReferralPoints', ['user_id' => $user->id]);
-            if ($this->subOrderData()['kss_cash'] > $kss_cash) {
-                abort(400, 'KSS cash is expired');
-            }
-            $amount_charged = $this->subOrderData()['you_pay'] - $this->subOrderData()['kss_cash'];
-        } else {
-            $amount_charged = $this->subOrderData()['you_pay'];
-        }
+        $amount_charged = $this->subOrderData()['you_pay'];
         checkCODServiceable($this->address->checkPincodeServiceable()["cod"]);
     }
 }

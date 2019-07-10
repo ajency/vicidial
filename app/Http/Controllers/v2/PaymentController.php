@@ -20,18 +20,7 @@ class PaymentController extends Controller
         $order = Order::find($orderid);
         $cart  = $order->cart;
         $user  = $cart->user;
-
-        $order->checkInventoryForSuborders();
-        $couponAvailability = $order->cart->checkCouponAvailability();
-        if (!empty($couponAvailability['messages'])) {
-            abort(400, array_values($couponAvailability['messages'])[0]);
-        }
-        if($order->txnid){
-            $payment = DB::table('payu_payments')->where('txnid', $order->txnid)->first();
-            if($payment){
-                abort(400,'Payment for the order already made');
-            }
-        }
+        $order->validate($user);
         switch ($type) {
             case 'payu':
                 $attributes = [
@@ -143,7 +132,7 @@ class PaymentController extends Controller
     {
         $data  = $request->all();
         $order = Order::find($id);
-        $order->validate();
+        $order->validate($request->user());
         $response = $this->sendUserOTP($order, $data);
         if ($response) {
             return response()->json($response);
@@ -185,8 +174,7 @@ class PaymentController extends Controller
     public function verifyOTP($id, Request $request)
     {
         $order = Order::find($id);
-        $order->checkInventoryForSuborders();
-
+        $order->validate($request->user());
         $data      = $request->all();
         $validator = $this->validateOTP($data);
         if ($validator->fails()) {
