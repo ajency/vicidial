@@ -10,18 +10,17 @@ class HomeController extends Controller
 {
     public function options($all, Request $request, Response $response)
     {
-        if(in_array($request->headers->get('Origin'),['https://www.kidsuperstore.in','http://www.kidsuperstore.in']))){
-            
+        if(in_array($request->headers->get('Origin'),['https://www.kidsuperstore.in','http://www.kidsuperstore.in'])){
             $headers = [
+                'Access-Control-Allow-Methods'     => 'POST, GET, OPTIONS, PUT, DELETE',
+                'Access-Control-Allow-Headers'     => 'Content-Type, Access-Control-Allow-Origin, Authorization',
+            ];
+        }else{
+           $headers = [
                 'Access-Control-Allow-Origin'      => config('app.angular_url'),
                 'Access-Control-Allow-Methods'     => 'POST, GET, OPTIONS, PUT, DELETE',
                 'Access-Control-Allow-Headers'     => 'Content-Type, Access-Control-Allow-Origin, Authorization',
                 'Access-Control-Allow-Credentials' => 'true',
-            ];
-        }else{
-            $headers = [
-                'Access-Control-Allow-Methods'     => 'POST, GET, OPTIONS, PUT, DELETE',
-                'Access-Control-Allow-Headers'     => 'Content-Type, Access-Control-Allow-Origin, Authorization',
             ];
         }
 
