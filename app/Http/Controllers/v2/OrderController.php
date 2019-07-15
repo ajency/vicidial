@@ -77,12 +77,13 @@ class OrderController extends Controller
     public function continueOrder($id, Request $request)
     {
         $params = $request->all();
-        $user = $request->user();
-        $cart = Cart::find($id);
+        $user   = $request->user();
+        $cart   = Cart::find($id);
         validateCart($user, $cart, 'order');
-        if($order->status != 'draft'){
-            $old_order = $cart->order;
-            $order     = $old_order->newOrder($cart, $params['token_id']);
+        $order = $cart->order;
+        if ($order->status != 'draft') {
+            $new_order = $order->newOrder($cart, $params['token_id']);
+            $order     = $new_order;
         }
         checkOrderInventory($order);
         if (isset($params['address_id'])) {
@@ -122,7 +123,7 @@ class OrderController extends Controller
         $user  = $request->user();
         $order = Order::find($id);
         $order->validate($user);
-        $cart  = $order->cart;
+        $cart = $order->cart;
         return response()->json(["message" => 'Items are available in store', 'success' => true]);
     }
 
@@ -299,7 +300,7 @@ class OrderController extends Controller
                 $status = 'failure';
                 break;
         }
-        $status = ($order->viewed) ? '' : $status;
+        $status        = ($order->viewed) ? '' : $status;
         $order->viewed = true;
         $order->save();
 
