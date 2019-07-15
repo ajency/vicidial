@@ -14,7 +14,7 @@ class HomeController extends Controller
             $headers = [
                 'Access-Control-Allow-Origin'  => '*',
                 'Access-Control-Allow-Methods' => 'POST, GET, OPTIONS, PUT, DELETE',
-                'Access-Control-Allow-Headers' => 'Content-Type, Access-Control-Allow-Origin, Authorization',
+                'Access-Control-Allow-Headers' => 'Content-Type, Access-Control-Allow-Origin, Authorization, X-Chrome-Extension',
             ];
             return response('', 200)->withHeaders($headers);
         }
