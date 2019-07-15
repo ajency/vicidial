@@ -22,11 +22,16 @@ class Cors
                 ->header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
                 ->header("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Origin, Authorization");
         }
-        
-        return $next($request)
+        if(in_array($request->headers->get('Origin'),['https://www.kidsuperstore.in','http://www.kidsuperstore.in'])){
+             return $next($request)
+            ->header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+            ->header("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Origin, Authorization");
+        }else{
+            return $next($request)
             ->header("Access-Control-Allow-Origin", config('app.angular_url'))
             ->header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
             ->header("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Origin, Authorization")
             ->header("Access-Control-Allow-Credentials", 'true');
+        }
     }
 }
