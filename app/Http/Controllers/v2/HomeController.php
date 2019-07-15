@@ -10,7 +10,7 @@ class HomeController extends Controller
 {
     public function options($all, Request $request)
     {
-        if (isset($request->headers->get('Origin')) && Str::is('*chrome-extension*', $request->headers->get('Origin'))) {
+        if (Str::is('*chrome-extension*', $request->headers->get('Origin'))) {
             $headers = [
                 'Access-Control-Allow-Origin'  => '*',
                 'Access-Control-Allow-Methods' => 'POST, GET, OPTIONS, PUT, DELETE',
@@ -18,7 +18,7 @@ class HomeController extends Controller
             ];
             return response('', 200)->withHeaders($headers);
         }
-        if (isset($request->headers->get('Origin')) && in_array($request->headers->get('Origin'), config('app.cors'))) {
+        if (in_array($request->headers->get('Origin'), config('app.cors'))) {
             $headers = [
                 'Access-Control-Allow-Methods' => 'POST, GET, OPTIONS, PUT, DELETE',
                 'Access-Control-Allow-Headers' => 'Content-Type, Access-Control-Allow-Origin, Authorization',
