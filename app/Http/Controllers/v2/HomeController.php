@@ -4,17 +4,33 @@ namespace App\Http\Controllers\v2;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class HomeController extends Controller
 {
     public function options($all, Request $request)
     {
-        $headers = [
-            'Access-Control-Allow-Origin'      => config('app.angular_url'),
-            'Access-Control-Allow-Methods'     => 'POST, GET, OPTIONS, PUT, DELETE',
-            'Access-Control-Allow-Headers'     => 'Content-Type, Access-Control-Allow-Origin, Authorization',
-            'Access-Control-Allow-Credentials' => 'true',
-        ];
+        if (isset($request->headers->get('Origin')) && Str::is('*chrome-extension*', $request->headers->get('Origin'))) {
+            $headers = [
+                'Access-Control-Allow-Origin'  => '*',
+                'Access-Control-Allow-Methods' => 'POST, GET, OPTIONS, PUT, DELETE',
+                'Access-Control-Allow-Headers' => 'Content-Type, Access-Control-Allow-Origin, Authorization',
+            ];
+            return response('', 200)->withHeaders($headers);
+        }
+        if (isset($request->headers->get('Origin')) && in_array($request->headers->get('Origin'), config('app.cors'))) {
+            $headers = [
+                'Access-Control-Allow-Methods' => 'POST, GET, OPTIONS, PUT, DELETE',
+                'Access-Control-Allow-Headers' => 'Content-Type, Access-Control-Allow-Origin, Authorization',
+            ];
+        } else {
+            $headers = [
+                'Access-Control-Allow-Origin'      => config('app.angular_url'),
+                'Access-Control-Allow-Methods'     => 'POST, GET, OPTIONS, PUT, DELETE',
+                'Access-Control-Allow-Headers'     => 'Content-Type, Access-Control-Allow-Origin, Authorization',
+                'Access-Control-Allow-Credentials' => 'true',
+            ];
+        }
 
         return response('', 200)->withHeaders($headers);
     }
