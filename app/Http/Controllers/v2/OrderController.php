@@ -81,11 +81,11 @@ class OrderController extends Controller
         $cart   = Cart::find($id);
         validateCart($user, $cart, 'order');
         $order = $cart->order;
-        if ($order->status != 'draft') {
-            $new_order = $order->newOrder($cart, $params['token_id']);
-            $order     = $new_order;
-        }
         checkOrderInventory($order);
+        if ($order->status != 'draft') {
+            $order = $order->newOrder($cart, $params['token_id']);
+            $cart  = $order->cart;
+        }
         if (isset($params['address_id'])) {
             $address = Address::find($params["address_id"]);
             validateAddress($user, $address);

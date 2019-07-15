@@ -55,6 +55,7 @@ return [
     'url' => env('APP_URL', 'http://localhost'),
     'angular_url' => env('ANGULAR_URL', 'http://localhost'),
     'backoffice_url' => env('BACKOFFICE_URL', 'http://localhost'),
+    'cors' => ['https://www.kidsuperstore.in', 'http://www.kidsuperstore.in'],
 
     /*
     |--------------------------------------------------------------------------
