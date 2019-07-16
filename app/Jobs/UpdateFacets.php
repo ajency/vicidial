@@ -39,6 +39,7 @@ class UpdateFacets implements ShouldQueue
         $path       = "search_data";
         $facet_type = "string_facet";
 
+        RefreshFacetCache::dispatch()->onQueue('create_cache_jobs');
         foreach ($this->payload['facets'] as $facet) {
             $facet_data = Facet::find($facet['id']);
             $defaultFilters['primary_filter'][$facet_data['facet_name']][] = $facet_data['facet_value'];
@@ -58,7 +59,6 @@ class UpdateFacets implements ShouldQueue
         $products = $q->search()['hits']['hits'];
         foreach ($products as $product) {
             RefreshProductCache($product['_source']['search_result_data']['product_slug']);
-        }
-        RefreshFacetCache::dispatch()->onQueue('create_cache_jobs');
+        } 
     }
 }
