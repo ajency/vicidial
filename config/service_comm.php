@@ -27,6 +27,22 @@ return [
 			'model' => "App\OrderLine",
 			'function' => 'updateMultipleIndex'
 		],
+		'getEnabledLocations' => [
+			'model' => "App\Location",
+			'function' => 'getEnabledLocations'
+		],
+		'getAllLocationDetails' => [
+			'model' => "App\Location",
+			'function' => 'getAllLocationDetails'
+		],
+		'getLocationDetails' => [
+			'model' => "App\Location",
+			'function' => 'getLocationDetails'
+		],
+		'fetchFacetList' => [
+			'model' => "App\Facet",
+			'function' => 'fetchFacetList'
+		],
 	],
 	'async_provider' => 'sns',
 	'sns' => [
@@ -38,6 +54,6 @@ return [
 		],
 		'aws_role' => env('AWS_ROLE','kss-role'),
 		'prefix' => str_slug(env('APP_ENV')),
-		'topics' => ['OrderCreated', 'OrderUpdated', 'SignUp', 'NewProductColor','ReserveInventory','UnreserveInventory']
+		'topics' => ['OrderCreated', 'OrderUpdated', 'SignUp', 'NewProductColor', 'ReserveInventory', 'UnreserveInventory']
 	],
 ];

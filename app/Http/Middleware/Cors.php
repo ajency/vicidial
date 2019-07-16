@@ -22,7 +22,7 @@ class Cors
                 ->header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
                 ->header("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Origin, Authorization");
         }
-        if (isset($request->headers->get('Origin')) && in_array($request->headers->get('Origin'), config('app.cors'))) {
+        if (in_array($request->headers->get('Origin'), config('app.cors'))) {
             return $next($request)
                 ->header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
                 ->header("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Origin, Authorization");

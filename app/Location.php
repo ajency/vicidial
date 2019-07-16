@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Ajency\ServiceComm\Comm\Sync;
 use Ajency\Connections\OdooConnect;
 use Illuminate\Database\Eloquent\Model;
 use App\Events\NewVendorLocation;
@@ -152,6 +153,49 @@ class Location extends Model
         $weights = $locations->map(function ($loc) use ($distancesArray) {return ['id' => $loc->id, 'distance' => $distancesArray[$loc->id], 'business_wt' => $loc->business_pref_wt, 'loc_wt' => $loc->dist_wt];});
         $scores = $weights->keyBy('id')->map(function ($item) {return (config('orders.location_scores.distance') - $item['distance']) * $item['loc_wt'] / config('orders.location_scores.distance') + $item['business_wt'];});
         return $scores;
+    }
+
+    public static function getEnabledLocations()
+    {
+        $location_variants      = [];
+        $enabled_location_ids   = Sync::call("inventory", "getEnabledLocationIds", []);
+        
+        return ["enabled_location_ids" =>$enabled_location_ids];
+    }
+
+    public static function getAllLocationDetails($params)
+    {
+        $response = [];
+        $start  = isset($params['start']) ? $params['start'] : '';
+        $length = isset($params['length']) ? $params['length'] : '';
+
+        $all_locations      = \DB::table('locations')
+        ->select("locations.id", "locations.odoo_id", "locations.location_name", "locations.display_name",
+            "locations.address", "locations.use_in_inventory", "locations.warehouse_name",
+            "warehouses.id as warehouse_id", "warehouses.latitude", "warehouses.longitude", "locations.type"
+        )
+        ->join('warehouses', 'warehouses.odoo_id', '=', 'locations.warehouse_odoo_id')
+        ->whereIn("locations.type", ["internal", "dropshipping"])
+        ->orderBy('locations.id', 'DESC');
+        
+        if(($start && $length) || $length) {
+            $all_locations  = $all_locations->skip($start)->take($length);
+        }
+        $response      = $all_locations->get();
+
+        return $response;
+    }
+
+    public static function getLocationDetails($params)
+    {
+        $location_id = $params['location_id'];
+        $location_details = \DB::table('locations')
+            ->select("warehouses.latitude", "warehouses.longitude", "locations.type", "locations.display_name", "locations.use_in_inventory")
+            ->join('warehouses', 'warehouses.odoo_id', '=', 'locations.warehouse_odoo_id')
+            ->where("locations.id", $location_id)
+            ->first();
+
+        return $location_details;
     }
 
 }

@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use Exception;
 use App\SingleProduct;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -43,6 +44,12 @@ class RefreshProductCache implements ShouldQueue
         $apiResponse = Cache::rememberForever('list-product-' . $slug, function () use ($singleProduct) {
             $apiResponse   = $singleProduct->generateSinglePageData(['attributes', 'facets', 'variants', 'images', 'is_sellable', 'is_available']);
             return $apiResponse;
-        });
+        });     
+        Cache::forget('Job-RefreshProductCache-' . $this->slug);
+    }
+
+    public function failed(Exception $exception)
+    {
+        Cache::forget('Job-RefreshProductCache-' . $this->slug);
     }
 }

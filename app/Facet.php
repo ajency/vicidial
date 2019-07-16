@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Facet extends Model
 {
+    protected $fillable = ['display_name', 'sequence', 'display'];
+
     protected $casts = [
         'display' => 'boolean',
     ];
@@ -55,5 +57,29 @@ class Facet extends Model
 
             $offset = $offset + $attributesData->count();
         } while ($attributesData->count() == config('odoo.limit'));
+    }
+
+    public static function fetchFacetList($params)
+    {
+        $editable_facets  = config('product.facets.editable');
+        $data_facets      = config('product.facet_display_data');
+        $facet_categories = collect();
+        foreach ($data_facets as $facet_key => $facet_data) {
+            if (in_array($facet_key, $editable_facets)) {
+                $facet_categories->push(['display_name' => $facet_data['name'], 'value' => $facet_key]);
+            }
+        }
+
+        $facets         = collect($editable_facets);
+        $facet_list_obj = self::select('id', 'facet_name', 'facet_value', 'display_name', 'sequence', 'display');
+        if ($params['category'] != 'all') {
+            $facet_list_obj->where('facet_name', $params['category']);
+        }
+        $total_count = $facet_list_obj->count();
+        if (isset($params['offset']) && isset($params['limit'])) {
+            $facet_list_obj->offset($params['offset'])->limit($params['limit']);
+        }
+        $facet_list = collect($facet_list_obj->get()->groupBy('facet_name')->toArray())->flatten(1);
+        return ['list' => $facet_list, 'total_count' => $total_count, 'categories' => $facet_categories];
     }
 }
