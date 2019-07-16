@@ -39,12 +39,12 @@ class UpdateFacets implements ShouldQueue
         $path       = "search_data";
         $facet_type = "string_facet";
 
-        RefreshFacetCache::dispatch()->onQueue('create_cache_jobs');
         foreach ($this->payload['facets'] as $facet) {
             $facet_data = Facet::find($facet['id']);
             $defaultFilters['primary_filter'][$facet_data['facet_name']][] = $facet_data['facet_value'];
             $facet_data->update([$facet['name'] => $facet['value']]);
         }
+        RefreshFacetCache::dispatch()->onQueue('create_cache_jobs');
         $q = new ElasticQuery;
         $q->setIndex(config("elastic.indexes.product"));
         $filters = makeQueryfromParams($defaultFilters);
