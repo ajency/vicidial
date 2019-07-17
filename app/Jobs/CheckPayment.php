@@ -14,14 +14,15 @@ use Tzsk\Payu\Model\PayuPayment;
 class NotifyPayment implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    protected $txnid;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($txnid)
     {
-        
+        $this->txnid = $txnid;
     }
 
     /**
@@ -31,28 +32,37 @@ class NotifyPayment implements ShouldQueue
      */
     public function handle()
     {
-        $payments = PayuPayment::where([
-            ['created_at', '>' , Carbon::now()->subMinutes(50)->toDateTimeString()],
-            ['created_at', '<' , Carbon::now()->subMinutes(45)->toDateTimeString()],
-            ['status', 'failed'],
-        ])->get();
-        foreach ($payments as $payu_payment) {
-            $order = Order::where('txnid', $payments->txnid)->first();
-            $post_params = [
-                'merchantKey'            => config('payu.accounts.payumoney.key'),
-                'merchantTransactionIds' => $request_params['merchantTransactionId'],
-            ];
-            $api_url  = config('payu.paymentResponseApiUrl') . '?' . http_build_query($post_params);
-            $client   = new Client();
-            $response = $client->request('POST', $api_url, [
-                'headers' => [
-                    'Authorization' => config('payu.accounts.payumoney.auth'),
-                ],
-            ]);
-
-            $response_params = json_decode($response->getBody(), true);
-            if (isset($response_params['result'][0]['postBackParam']) && ($payu_payment->status == 'failed' && $post_back_params['status'] == 'success')) {
-                $post_back_params           = $response_params['result'][0]['postBackParam'];
+        $order = Order::where('txnid', $this->txnid)->first();
+        $post_params = [
+            'merchantKey'            => config('payu.accounts.payumoney.key'),
+            'merchantTransactionIds' => $order->txnid,
+        ];
+        $api_url  = config('payu.paymentResponseApiUrl') . '?' . http_build_query($post_params);
+        $client   = new Client();
+        $response = $client->request('POST', $api_url, [
+            'headers' => [
+                'Authorization' => config('payu.accounts.payumoney.auth'),
+            ],
+        ]);
+        $response_params = json_decode($response->getBody(), true);
+        $payu_payment = PayuPayment::firstOrNew(['txnid' => $order->txnid]);
+        if (isset($response_params['result'][0]['postBackParam'])) {
+            $post_back_params           = $response_params['result'][0]['postBackParam'];
+            if(is_null($payu_payment->id)){
+                $payu_payment->account        = config('payu.default');
+                $payu_payment->payable_id     = $order->id;
+                $payu_payment->payable_type   = get_class($order);
+                $payu_payment->mode           = isset($post_back_params['mode']) ? $post_back_params['mode'] : null;
+                $payu_payment->firstname      = $post_back_params['firstname'];
+                $payu_payment->email          = $post_back_params['email'];
+                $payu_payment->phone          = $post_back_params['phone'];
+                $payu_payment->amount         = $post_back_params['amount'];
+                $payu_payment->data           = json_encode($post_back_params);
+                $payu_payment->status         = $post_back_params['status'];
+                $payu_payment->unmappedstatus = 'pending';
+                $payu_payment->bankcode       = isset($post_back_params['bankcode']) ? $post_back_params['bankcode'] : null;
+            }
+            if(is_null($payu_payment->id) || ($payu_payment->status == 'failed' && $post_back_params['status'] == 'success')){
                 $payu_payment->status       = $post_back_params['status'];
                 $payu_payment->data         = json_encode($post_back_params);
                 $payu_payment->bank_ref_num = $post_back_params['bank_ref_num'];

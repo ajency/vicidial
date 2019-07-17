@@ -10,7 +10,6 @@ use App\Jobs\ProductMoveSync;
 use App\Jobs\ProductSync;
 use App\Jobs\VariantSync;
 use App\Jobs\FetchWarehouse;
-use App\Jobs\CheckPayment;
 use App\ProductColor;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -39,7 +38,6 @@ class Kernel extends ConsoleKernel
                 $schedule->job(new ProductSync, 'create_jobs')->name('ProductSync')->cron('0 */4 * * *')->onOneServer();
                 $schedule->job(new VariantSync, 'create_jobs')->cron('0 */2 * * *')->onOneServer();
                 $schedule->job(new FetchWarehouse, 'process_details')->name('FetchWarehouse')->weekly()->onOneServer();
-                $schedule->job(new CheckPayment, 'notify_payment')->name('CheckPayment')->everyMinute()->onOneServer();
             } else {
                 $schedule->job(new ProductSync, 'create_jobs')->name('ProductSyncProd')->everyTenMinutes()->onOneServer();
                 $schedule->job(new VariantSync, 'create_jobs')->everyTenMinutes()->onOneServer();
@@ -58,6 +56,9 @@ class Kernel extends ConsoleKernel
             $schedule->call(function () {
                 Coupon::updateCouponLeft();
             })->name('updateCouponLeft')->everyFifteenMinutes()->onOneServer();
+            $schedule->call(function () {
+                Order::checkPayment();
+            })->name('checkPayment')->everyFiveMinutes()->onOneServer();
             $schedule->call(function () {
                 GenerateSitemapProductList::dispatch()->onQueue('process_sitemap_product_list');
                 GenerateSitemap::dispatch()->onQueue('process_sitemap_parent');
