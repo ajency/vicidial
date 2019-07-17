@@ -575,14 +575,14 @@ class Order extends Model
             ['status', 'failed'],
         ])->get();
         foreach ($payments as $payment) {
-            CheckPayment::dispatch($payment->txnid)->onQueue('notify_payment');
+            CheckPayment::dispatch($payment->txnid)->onQueue('check_payment');
         }
         $orders = Order::where([
             ['payment_in_progress', true],
             ['created_at', '<' , Carbon::now()->subMinutes(45)->toDateTimeString()],
         ])->get();
         foreach ($orders as $order) {
-            CheckPayment::dispatch($order->txnid)->onQueue('notify_payment');
+            CheckPayment::dispatch($order->txnid)->onQueue('check_payment');
         }
     }
 }

@@ -46,6 +46,7 @@ class CheckPayment implements ShouldQueue
         ]);
         $response_params = json_decode($response->getBody(), true);
         $payu_payment = PayuPayment::firstOrNew(['txnid' => $order->txnid]);
+        
         if (isset($response_params['result'][0]['postBackParam'])) {
             $post_back_params           = $response_params['result'][0]['postBackParam'];
             if(is_null($payu_payment->id)){
@@ -77,7 +78,8 @@ class CheckPayment implements ShouldQueue
                 if (!is_null($post_back_params['net_amount_debit'])) {
                     $payu_payment->net_amount_debit = $post_back_params['net_amount_debit'];
                 }
-            
+                $payu_payment->save();
+
                 try {
                     if($post_back_params['status'] == 'success'){
                         if ($order->status == 'payment-failed') {
@@ -99,7 +101,6 @@ class CheckPayment implements ShouldQueue
                         $order->save();
                         $order->updateInventory('UnreserveInventory');
                     }
-                    $payu_payment->save();
                 } catch (\Exception $e) {
                     \Log::notice('Order Success Payu Method Failed with error: ' . $e->getMessage());
                     \Log::notice('Order id : ' . $order->id);
