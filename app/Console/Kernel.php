@@ -3,13 +3,12 @@
 namespace App\Console;
 
 use App\Coupon;
+use App\Jobs\FetchWarehouse;
 use App\Jobs\GenerateSitemap;
 use App\Jobs\GenerateSitemapProductList;
-use App\Jobs\IndexInactiveProducts;
 use App\Jobs\ProductMoveSync;
 use App\Jobs\ProductSync;
 use App\Jobs\VariantSync;
-use App\Jobs\FetchWarehouse;
 use App\ProductColor;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -42,6 +41,11 @@ class Kernel extends ConsoleKernel
                 $schedule->job(new ProductSync, 'create_jobs')->name('ProductSyncProd')->everyTenMinutes()->onOneServer();
                 $schedule->job(new VariantSync, 'create_jobs')->everyTenMinutes()->onOneServer();
             }
+            if (config('app.env') == 'production') {
+                $schedule->call(function () {
+                    Order::checkPayment();
+                })->name('checkPayment')->everyFiveMinutes()->onOneServer();
+            }
             $schedule->job(new ProductMoveSync, 'create_jobs')->name('ProductMoveSync')->dailyAt('21:00')->onOneServer();
             $schedule->call(function () {
                 ProductColor::productXMLData();
@@ -56,9 +60,6 @@ class Kernel extends ConsoleKernel
             $schedule->call(function () {
                 Coupon::updateCouponLeft();
             })->name('updateCouponLeft')->everyFifteenMinutes()->onOneServer();
-            $schedule->call(function () {
-                Order::checkPayment();
-            })->name('checkPayment')->everyFiveMinutes()->onOneServer();
             $schedule->call(function () {
                 GenerateSitemapProductList::dispatch()->onQueue('process_sitemap_product_list');
                 GenerateSitemap::dispatch()->onQueue('process_sitemap_parent');
