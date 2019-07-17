@@ -11,7 +11,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Tzsk\Payu\Model\PayuPayment;
 
-class NotifyPayment implements ShouldQueue
+class CheckPayment implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     protected $txnid;
@@ -77,20 +77,29 @@ class NotifyPayment implements ShouldQueue
                 if (!is_null($post_back_params['net_amount_debit'])) {
                     $payu_payment->net_amount_debit = $post_back_params['net_amount_debit'];
                 }
-                $payu_payment->save();
+            
                 try {
-                    $order->updateInventory('ReserveInventory');
-                    $order->status           = 'payment-successful';
-                    $order->transaction_mode = 'Prepaid';
-                    $order->save();
-                    $order->placeOrderOnOdoo();
-                    $cart       = $order->cart;
-                    $cart->type = 'order-complete';
-                    $cart->save();
-                    $order->sendSuccessEmail();
-                    $order->sendSuccessSMS();
-                    $order->sendVendorSMS();
-
+                    if($post_back_params['status'] == 'success'){
+                        if ($order->status == 'payment-failed') {
+                            $order->updateInventory('ReserveInventory');
+                        }
+                        $order->status           = 'payment-successful';
+                        $order->transaction_mode = 'Prepaid';
+                        $order->save();
+                        $order->placeOrderOnOdoo();
+                        $cart       = $order->cart;
+                        $cart->type = 'order-complete';
+                        $cart->save();
+                        $order->sendSuccessEmail();
+                        $order->sendSuccessSMS();
+                        $order->sendVendorSMS();
+                    }
+                    else{
+                        $order->status = 'payment-failed';
+                        $order->save();
+                        $order->updateInventory('UnreserveInventory');
+                    }
+                    $payu_payment->save();
                 } catch (\Exception $e) {
                     \Log::notice('Order Success Payu Method Failed with error: ' . $e->getMessage());
                     \Log::notice('Order id : ' . $order->id);
