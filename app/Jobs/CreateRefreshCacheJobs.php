@@ -32,7 +32,7 @@ class CreateRefreshCacheJobs implements ShouldQueue
     public function handle()
     {
         foreach ($this->items as $item) {
-            RefreshProductCache::dispatch($item["_source"]["search_result_data"]["product_slug"])->onQueue('refresh_cache');
+            RefreshProductCache($item["_source"]["search_result_data"]["product_slug"]);
         }
     }
 }

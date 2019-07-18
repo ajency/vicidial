@@ -73,7 +73,7 @@ class SizechartImage extends Model
         $products = $q->search()['hits']['hits'];
 
         foreach ($products as $product) {
-            RefreshProductCache::dispatch($product['_source']['search_result_data']['product_slug'])->onQueue('refresh_cache');
+            RefreshProductCache($product['_source']['search_result_data']['product_slug']);
         }
     }
 }
