@@ -50,7 +50,6 @@ class CheckPayment implements ShouldQueue
         if (isset($response_params['result'][0]['postBackParam'])) {
             $post_back_params           = $response_params['result'][0]['postBackParam'];
             if(is_null($payu_payment->id)){
-                \Log::info('payumoney-checkpayment-new: '.json_encode($response_params));
                 $payu_payment->account        = config('payu.default');
                 $payu_payment->payable_id     = $order->id;
                 $payu_payment->payable_type   = get_class($order);
@@ -82,10 +81,15 @@ class CheckPayment implements ShouldQueue
                 $payu_payment->save();
 
                 try {
+                    if ($order->status == 'payment-in-progress') {
+                        \Log::info('payumoney-checkpayment-new: '.json_encode($response_params));
+                    }
+                    else{
+                        \Log::info('payumoney-checkpayment-update: '.json_encode($response_params));
+                    }
                     if($post_back_params['status'] == 'success'){
                         if ($order->status == 'payment-failed') {
                             $order->updateInventory('ReserveInventory');
-                            \Log::info('payumoney-checkpayment-update: '.json_encode($response_params));
                         }
                         $order->status           = 'payment-successful';
                         $order->transaction_mode = 'Prepaid';

@@ -15,6 +15,7 @@ use App\Jobs\UpdateVariantInventory;
 use App\ProductColor;
 use App\Variant;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
 
 class Product
 {

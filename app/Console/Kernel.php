@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Coupon;
+use App\Order;
 use App\Jobs\FetchWarehouse;
 use App\Jobs\GenerateSitemap;
 use App\Jobs\GenerateSitemapProductList;
