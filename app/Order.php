@@ -19,6 +19,7 @@ use Carbon\Carbon;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 use Tzsk\Payu\Fragment\Payable;
+use Tzsk\Payu\Model\PayuPayment;
 
 class Order extends Model
 {
