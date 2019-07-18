@@ -33,9 +33,13 @@ class EnableWebsiteLocation implements ShouldQueue
      */
     public function handle()
     {
-        $update_params  = ["use_in_inventory" => $this->payload['enable']];
+        $location_id    = $this->payload['location_id' ];
+        $enable_vendor  = $this->payload['enable'];
+        $update_params  = ["use_in_inventory" => $enable_vendor];
         \DB::table('locations')
-            ->where("id", "=", $this->payload['location_id'])
+            ->where("id", "=", $location_id)
             ->update($update_params);
+
+        Async::call("EnableInventoryLocation", ["location_id" => $location_id, "enable" => $enable_vendor], "sns", false);
     }
 }
