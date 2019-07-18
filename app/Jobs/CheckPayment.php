@@ -125,6 +125,7 @@ class CheckPayment implements ShouldQueue
                 }
                 $order->updateOrderlineIndex(['status', 'transaction_mode']);
                 $order->payment_in_progress = false;
+                $order->viewed = false;
                 $order->save();
             }
         }
