@@ -54,6 +54,6 @@ return [
 		],
 		'aws_role' => env('AWS_ROLE','kss-role'),
 		'prefix' => str_slug(env('APP_ENV')),
-		'topics' => ['OrderCreated', 'OrderUpdated', 'SignUp', 'NewProductColor', 'ReserveInventory', 'UnreserveInventory']
+		'topics' => ['OrderCreated', 'OrderUpdated', 'SignUp', 'NewProductColor', 'ReserveInventory', 'UnreserveInventory', 'EnableInventoryLocation']
 	],
 ];
