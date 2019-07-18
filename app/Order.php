@@ -19,6 +19,7 @@ use Carbon\Carbon;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 use Tzsk\Payu\Fragment\Payable;
+use Tzsk\Payu\Model\PayuPayment;
 
 class Order extends Model
 {
@@ -578,7 +579,7 @@ class Order extends Model
             CheckPayment::dispatch($payment->txnid)->onQueue('check_payment');
         }
         $orders = Order::where([
-            ['payment_in_progress', true],
+            ['status', 'payment-in-progress'],
             ['created_at', '<' , Carbon::now()->subMinutes(45)->toDateTimeString()],
         ])->get();
         foreach ($orders as $order) {

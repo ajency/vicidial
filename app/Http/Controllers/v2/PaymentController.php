@@ -215,7 +215,7 @@ class PaymentController extends Controller
     public function notifyPayment($status, Request $request)
     {
         $request_params = json_decode($request->getContent(), true);
-        \Log::info('payumoney_webhook_content: ' . $request->getContent());
+        \Log::notice('payumoney_webhook_content: ' . $request->getContent());
         if (isset($request_params['merchantTransactionId'])) {
             $order = Order::where('txnid', $request_params['merchantTransactionId'])->first();
             if ($order) {

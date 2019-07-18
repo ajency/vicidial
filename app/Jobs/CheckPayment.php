@@ -82,10 +82,10 @@ class CheckPayment implements ShouldQueue
 
                 try {
                     if ($order->status == 'payment-in-progress') {
-                        \Log::info('payumoney-checkpayment-new: '.json_encode($response_params));
+                        \Log::notice('payumoney-checkpayment-new: '.json_encode($response_params));
                     }
                     else{
-                        \Log::info('payumoney-checkpayment-update: '.json_encode($response_params));
+                        \Log::notice('payumoney-checkpayment-update: '.json_encode($response_params));
                     }
                     if($post_back_params['status'] == 'success'){
                         if ($order->status == 'payment-failed') {
@@ -125,6 +125,7 @@ class CheckPayment implements ShouldQueue
                 }
                 $order->updateOrderlineIndex(['status', 'transaction_mode']);
                 $order->payment_in_progress = false;
+                $order->viewed = false;
                 $order->save();
             }
         }
