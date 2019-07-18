@@ -299,6 +299,9 @@ class OrderController extends Controller
             case 'payment-failed':
                 $status = 'failure';
                 break;
+            default:
+                $status = '';
+                break;
         }
         $status        = ($order->viewed) ? '' : $status;
         $order->viewed = true;
