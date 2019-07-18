@@ -2,7 +2,6 @@
 
 namespace App\Jobs;
 
-use App\Jobs\RefreshProductCache;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -32,7 +31,7 @@ class CreateRefreshCacheJobs implements ShouldQueue
     public function handle()
     {
         foreach ($this->items as $item) {
-            RefreshProductCache::dispatch($item["_source"]["search_result_data"]["product_slug"])->onQueue('refresh_cache');
+            RefreshProductCache($item["_source"]["search_result_data"]["product_slug"]);
         }
     }
 }

@@ -12,6 +12,7 @@ use App\Jobs\OrderCreatedNotification;
 use App\Jobs\OrderLineDeliveryDate;
 use App\Jobs\ReturnOdooOrder;
 use App\Jobs\SaveReturnPolicies;
+use App\Jobs\CheckPayment;
 use App\ReturnPolicy;
 use App\SubOrder;
 use Carbon\Carbon;
@@ -565,5 +566,23 @@ class Order extends Model
         }
         $amount_charged = $this->subOrderData()['you_pay'];
         checkCODServiceable($this->address->checkPincodeServiceable()["cod"]);
+    }
+
+    public static function checkPayment(){
+        $payments = PayuPayment::where([
+            ['created_at', '>' , Carbon::now()->subMinutes(60)->toDateTimeString()],
+            ['created_at', '<' , Carbon::now()->subMinutes(45)->toDateTimeString()],
+            ['status', 'failed'],
+        ])->get();
+        foreach ($payments as $payment) {
+            CheckPayment::dispatch($payment->txnid)->onQueue('check_payment');
+        }
+        $orders = Order::where([
+            ['payment_in_progress', true],
+            ['created_at', '<' , Carbon::now()->subMinutes(45)->toDateTimeString()],
+        ])->get();
+        foreach ($orders as $order) {
+            CheckPayment::dispatch($order->txnid)->onQueue('check_payment');
+        }
     }
 }

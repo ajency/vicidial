@@ -33,30 +33,30 @@ class NotifyPayment implements ShouldQueue
      */
     public function handle()
     {
-        $request_params = $this->response;
-        $order          = Order::where('txnid', $request_params['merchantTransactionId'])->first();
-        if ($order && $order->payment_in_progress) {
-            $request_params['bankcode'] = '';
+        $request_params             = $this->response;
+        $order                      = Order::where('txnid', $request_params['merchantTransactionId'])->first();
+        $request_params['bankcode'] = '';
+        $payu_payment               = PayuPayment::firstOrNew(['txnid' => $order->txnid]);
+        if (in_array($order->status, ['payment-in-progress', 'payment-failed']) && (is_null($payu_payment->id) || ($payu_payment->status == 'failed' && $this->status == 'success'))) {
             try {
-                $payu_payment = PayuPayment::create([
-                    'account'        => config('payu.default'),
-                    'payable_id'     => $order->id,
-                    'payable_type'   => get_class($order),
-                    'txnid'          => $order->txnid,
-                    'mode'           => isset($request_params['paymentMode']) ? $request_params['paymentMode'] : null,
-                    'firstname'      => $request_params['customerName'],
-                    'email'          => $request_params['customerEmail'],
-                    'phone'          => $request_params['customerPhone'],
-                    'amount'         => $request_params['amount'],
-                    'data'           => json_encode($request_params),
-                    'status'         => $request_params['status'],
-                    'unmappedstatus' => 'pending',
-                    'bankcode'       => isset($request_params['bankcode']) ? $request_params['bankcode'] : null,
-                ]);
+                $payu_payment->account        = config('payu.default');
+                $payu_payment->payable_id     = $order->id;
+                $payu_payment->payable_type   = get_class($order);
+                $payu_payment->mode           = isset($request_params['paymentMode']) ? $request_params['paymentMode'] : null;
+                $payu_payment->firstname      = $request_params['customerName'];
+                $payu_payment->email          = $request_params['customerEmail'];
+                $payu_payment->phone          = $request_params['customerPhone'];
+                $payu_payment->amount         = $request_params['amount'];
+                $payu_payment->data           = json_encode($request_params);
+                $payu_payment->status         = $request_params['status'];
+                $payu_payment->unmappedstatus = 'pending';
+                $payu_payment->bankcode       = isset($request_params['bankcode']) ? $request_params['bankcode'] : null;
+                $payu_payment->save();
             } catch (\Exception $e) {
                 \Log::notice('payu_payment update failed for order ID:' . $order->id . ' with error: ' . $e->getMessage());
                 $payu_payment = PayuPayment::where('txnid', $request_params['merchantTransactionId'])->first();
             }
+
             if (config('app.env') == 'production') {
                 $post_params = [
                     'merchantKey'            => config('payu.accounts.payumoney.key'),
@@ -91,7 +91,15 @@ class NotifyPayment implements ShouldQueue
             }
 
             try {
+                if ($order->status == 'payment-in-progress') {
+                    \Log::info('payumoney-notifypayment-new: ' . json_encode($request_params));
+                } else {
+                    \Log::info('payumoney-notifypayment-update: ' . json_encode($request_params));
+                }
                 if ($this->status == 'success') {
+                    if ($order->status == 'payment-failed') {
+                        $order->updateInventory('ReserveInventory');
+                    } 
                     $order->status           = 'payment-successful';
                     $order->transaction_mode = 'Prepaid';
                     $order->save();

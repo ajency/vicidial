@@ -218,7 +218,7 @@ class PaymentController extends Controller
         \Log::info('payumoney_webhook_content: ' . $request->getContent());
         if (isset($request_params['merchantTransactionId'])) {
             $order = Order::where('txnid', $request_params['merchantTransactionId'])->first();
-            if ($order && $order->payment_in_progress) {
+            if ($order) {
                 NotifyPayment::dispatch($request_params, $status)->onQueue('notify_payment');
             }
         }

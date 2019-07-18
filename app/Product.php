@@ -9,11 +9,11 @@ use App\Jobs\CreateProductJobs;
 use App\Jobs\CreateRefreshCacheJobs;
 use App\Jobs\CreateUpdateProductJobs;
 use App\Jobs\RefreshFacetCache;
-use App\Jobs\RefreshProductCache;
 use App\Jobs\UpdateSearchText;
 use App\Jobs\UpdateVariantInventory;
 use App\ProductColor;
 use App\Variant;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class Product
@@ -152,7 +152,7 @@ class Product
             $sanitisedData['variant_availability'] = Variant::select('inventory')->where('odoo_id', $sanitisedData['variant_id'])->first()->getAvailability();
             $variants->push($sanitisedData);
         }
-        $colorvariants                          = $variants->groupBy('product_color_id');
+        $colorvariants = $variants->groupBy('product_color_id');
         foreach ($colorvariants as $colorVariantData) {
             $products->push(buildProductIndexFromOdooData($productData, $colorVariantData));
 
@@ -296,7 +296,7 @@ class Product
         $query->initializeBulkIndexing();
         $products->each(function ($item, $key) use ($query) {
             $query->addToBulkIndexing($item['id'], $item);
-            RefreshProductCache::dispatch($item['search_result_data']['product_slug'])->onQueue('refresh_cache');
+            RefreshProductCache($item['search_result_data']['product_slug']);
         });
         $responses = $query->bulk();
     }
@@ -502,5 +502,17 @@ class Product
         foreach ($chunks as $chunk) {
             CreateRefreshCacheJobs::dispatch($chunk->toArray())->onQueue('create_cache_jobs');
         }
+    }
+
+    public static function clearRefreshProductCache()
+    {
+        $redis = Cache::getRedis();
+        $keys  = $redis->keys("*Job-RefreshProductCache*");
+        $count = 0;
+        foreach ($keys as $key) {
+            $redis->del($key);
+            $count++;
+        }
+        return $count;
     }
 }
