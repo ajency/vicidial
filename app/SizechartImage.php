@@ -5,8 +5,6 @@ namespace App;
 use Ajency\Connections\ElasticQuery;
 use Ajency\FileUpload\FileUpload;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Cache;
-use App\Jobs\RefreshProductCache;
 
 class SizechartImage extends Model
 {

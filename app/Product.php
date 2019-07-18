@@ -9,13 +9,12 @@ use App\Jobs\CreateProductJobs;
 use App\Jobs\CreateRefreshCacheJobs;
 use App\Jobs\CreateUpdateProductJobs;
 use App\Jobs\RefreshFacetCache;
-use App\Jobs\RefreshProductCache;
 use App\Jobs\UpdateSearchText;
 use App\Jobs\UpdateVariantInventory;
 use App\ProductColor;
 use App\Variant;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class Product
 {
