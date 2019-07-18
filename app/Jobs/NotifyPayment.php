@@ -92,9 +92,9 @@ class NotifyPayment implements ShouldQueue
 
             try {
                 if ($order->status == 'payment-in-progress') {
-                    \Log::info('payumoney-notifypayment-new: ' . json_encode($request_params));
+                    \Log::notice('payumoney-notifypayment-new: ' . json_encode($request_params));
                 } else {
-                    \Log::info('payumoney-notifypayment-update: ' . json_encode($request_params));
+                    \Log::notice('payumoney-notifypayment-update: ' . json_encode($request_params));
                 }
                 if ($this->status == 'success') {
                     if ($order->status == 'payment-failed') {
