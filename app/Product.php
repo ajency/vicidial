@@ -507,7 +507,7 @@ class Product
     public static function clearRefreshProductCache()
     {
         $redis = Cache::getRedis();
-        $keys  = $redis->keys("*RefreshProductCache*");
+        $keys  = $redis->keys("*Job-RefreshProductCache*");
         $count = 0;
         foreach ($keys as $key) {
             $redis->del($key);

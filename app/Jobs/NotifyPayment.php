@@ -94,6 +94,10 @@ class NotifyPayment implements ShouldQueue
                 if ($this->status == 'success') {
                     if ($order->status == 'payment-failed') {
                         $order->updateInventory('ReserveInventory');
+                        \Log::info('payumoney-notifypayment-update: '.json_encode($response_params));
+                    }
+                    else{
+                        \Log::info('payumoney-notifypayment-new: '.json_encode($response_params));
                     }
                     $order->status           = 'payment-successful';
                     $order->transaction_mode = 'Prepaid';
