@@ -581,6 +581,7 @@ class Order extends Model
         $orders = Order::where([
             ['status', 'payment-in-progress'],
             ['created_at', '<' , Carbon::now()->subMinutes(45)->toDateTimeString()],
+            ['created_at', '>' , Carbon::now()->subMinutes(60)->toDateTimeString()],
         ])->get();
         foreach ($orders as $order) {
             CheckPayment::dispatch($order->txnid)->onQueue('check_payment');
