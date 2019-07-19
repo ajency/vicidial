@@ -105,5 +105,7 @@ return [
     ],
 
     'paymentResponseApiUrl' => 'https://www.payumoney.com/payment/op/getPaymentResponse',
+
+    'failStatuses' => ['failure', 'Failed', 'failed'],
 ];
 
