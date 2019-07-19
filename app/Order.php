@@ -573,15 +573,14 @@ class Order extends Model
         $payments = PayuPayment::where([
             ['created_at', '>' , Carbon::now()->subMinutes(60)->toDateTimeString()],
             ['created_at', '<' , Carbon::now()->subMinutes(45)->toDateTimeString()],
-            ['status', 'failed'],
-        ])->get();
+        ])->whereIn('status', config('payu.failStatuses'))->get();
         foreach ($payments as $payment) {
             CheckPayment::dispatch($payment->txnid)->onQueue('check_payment');
         }
         $orders = Order::where([
             ['status', 'payment-in-progress'],
-            ['created_at', '<' , Carbon::now()->subMinutes(45)->toDateTimeString()],
-            ['created_at', '>' , Carbon::now()->subMinutes(60)->toDateTimeString()],
+            ['updated_at', '<' , Carbon::now()->subMinutes(45)->toDateTimeString()],
+            ['updated_at', '>' , Carbon::now()->subMinutes(60)->toDateTimeString()],
         ])->get();
         foreach ($orders as $order) {
             CheckPayment::dispatch($order->txnid)->onQueue('check_payment');

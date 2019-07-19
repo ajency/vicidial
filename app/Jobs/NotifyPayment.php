@@ -37,7 +37,7 @@ class NotifyPayment implements ShouldQueue
         $order                      = Order::where('txnid', $request_params['merchantTransactionId'])->first();
         $request_params['bankcode'] = '';
         $payu_payment               = PayuPayment::firstOrNew(['txnid' => $order->txnid]);
-        if (in_array($order->status, ['payment-in-progress', 'payment-failed']) && (is_null($payu_payment->id) || ($payu_payment->status == 'failed' && $this->status == 'success'))) {
+        if (in_array($order->status, ['payment-in-progress', 'payment-failed']) && (is_null($payu_payment->id) || (in_array($payu_payment->status, config('payu.failStatuses')) && $this->status == 'success'))) {
             try {
                 $payu_payment->account        = config('payu.default');
                 $payu_payment->payable_id     = $order->id;
