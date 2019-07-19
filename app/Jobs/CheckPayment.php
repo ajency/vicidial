@@ -63,7 +63,7 @@ class CheckPayment implements ShouldQueue
                 $payu_payment->unmappedstatus = 'pending';
                 $payu_payment->bankcode       = isset($post_back_params['bankcode']) ? $post_back_params['bankcode'] : null;
             }
-            if(is_null($payu_payment->id) || ($payu_payment->status == 'failed' && $post_back_params['status'] == 'success')){
+            if(is_null($payu_payment->id) || ($payu_payment->status == 'failed' && $post_back_params['status'] == 'success') || ($post_back_params['status'] != 'success')){
                 $payu_payment->status       = $post_back_params['status'];
                 $payu_payment->data         = json_encode($post_back_params);
                 $payu_payment->bank_ref_num = $post_back_params['bank_ref_num'];
