@@ -36,6 +36,13 @@ $app = new Laravel\Lumen\Application(
 |
 */
 
+$app->instance('path.config', app()->basePath() . DIRECTORY_SEPARATOR . 'config');
+$app->instance('path.storage', app()->basePath() . DIRECTORY_SEPARATOR . 'storage');
+
+$app->withEloquent();
+$app->configure('database');
+$app->configure('queue');
+
 $app->singleton(
     Illuminate\Contracts\Debug\ExceptionHandler::class,
     App\Exceptions\Handler::class
