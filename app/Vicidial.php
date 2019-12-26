@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Jobs\IndexData;
+
 class Vicidial
 {
     private static $mapping = [
@@ -88,7 +90,7 @@ class Vicidial
         $sanitized_data = collect();
         foreach ($raw_data as $single_data) {
         	$mapping = self::$mapping;
-            foreach ($mapping as $entity => $entity_data) {
+            foreach ($mapping as $entity => &$entity_data) {
                 foreach ($entity_data as $name => &$field) {
                 	if($field){
                     	$field = $single_data->{$field};
@@ -104,6 +106,8 @@ class Vicidial
     {
         $raw_data       = self::fetch();
         $sanitized_data = self::sanitize($raw_data);
-        return $sanitized_data;
+        foreach (collect($sanitized_data)->chunk(10) as $sanitized_batched_data) {
+        	dispatch(new IndexData($sanitized_batched_data));
+        }
     }
 }
