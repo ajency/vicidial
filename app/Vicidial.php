@@ -69,26 +69,22 @@ class Vicidial
 
     public static function fetch()
     {
+    	$response_data = collect();
     	foreach(collect(self::$mapping)->flatten()->filter()->values() as $field){
     		$field_arr = explode('.', $field); 
     		$fields_by_table[$field_arr[0]][] = $field;
     	}
 
-        $log = \DB::connection('vicidial')->table('vicidial_log')->get();
-        foreach(collect($log)->chunk(10) as $chunked_log){
-        	$fields_by_table = collect($fields_by_table);
-        	$campaign_ids = collect($chunked_log)->pluck('campaign_id');
-        	$list_ids = collect($chunked_log)->pluck('list_id');
-        	$lead_ids = collect($chunked_log)->pluck('lead_id');
-        	$status_ids = collect($chunked_log)->pluck('status');
-
-        	$campaigns = \DB::connection('vicidial')->table('vicidial_campaigns')->whereIn('campaign_id', $campaign_ids)->get($fields_by_table['vicidial_campaigns']);
-        	$lists = \DB::connection('vicidial')->table('vicidial_lists')->whereIn('list_id', $list_ids)->get($fields_by_table['vicidial_lists']);
-        	$leads = \DB::connection('vicidial')->table('vicidial_list')->whereIn('lead_id', $lead_ids)->get($fields_by_table['vicidial_list']);
-        	$statuses = \DB::connection('vicidial')->table('vicidial_statuses')->whereIn('status', $status_ids)->get($fields_by_table['vicidial_statuses']);
-        	$response_data = (object)array_merge_recursive((array)$chunked_log, (array)$campaigns, (array)$lists, (array)$leads, (array)$statuses);
-        };
-        return $response_data;
+        $data = \DB::connection('vicidial')->table('vicidial_log')
+            ->join('vicidial_log', 'vicidial_users.user', '=', 'vicidial_log.user')
+            ->join('vicidial_campaigns', 'vicidial_log.campaign_id', '=', 'vicidial_campaigns.campaign_id')
+            ->join('vicidial_lists', 'vicidial_log.list_id', '=', 'vicidial_lists.list_id')
+            ->join('vicidial_list', 'vicidial_list.lead_id', '=', 'vicidial_log.lead_id')
+            ->join('vicidial_statuses', 'vicidial_statuses.status', '=', 'vicidial_log.status')
+            ->select(collect(self::$mapping)->flatten()->filter()->implode(','))
+            ->get();
+            
+         return $data;
     }
 
     public static function sanitze()
