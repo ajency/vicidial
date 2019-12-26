@@ -75,7 +75,7 @@ class Vicidial
             ->join('vicidial_lists', 'vicidial_log.list_id', '=', 'vicidial_lists.list_id')
             ->join('vicidial_list', 'vicidial_list.lead_id', '=', 'vicidial_log.lead_id')
             ->join('vicidial_statuses', 'vicidial_statuses.status', '=', 'vicidial_log.status')
-            ->select(collect(self::$mapping)->flatten()->filter()->values())
+            ->select(collect(self::$mapping)->flatten()->filter()->values()->toArray())
             ->get();
 
          return $data;
