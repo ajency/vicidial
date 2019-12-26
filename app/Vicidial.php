@@ -69,21 +69,15 @@ class Vicidial
 
     public static function fetch()
     {
-    	$response_data = collect();
-    	foreach(collect(self::$mapping)->flatten()->filter()->values() as $field){
-    		$field_arr = explode('.', $field); 
-    		$fields_by_table[$field_arr[0]][] = $field;
-    	}
-
         $data = \DB::connection('vicidial')->table('vicidial_log')
-            ->join('vicidial_log', 'vicidial_users.user', '=', 'vicidial_log.user')
+            ->join('vicidial_users', 'vicidial_users.user', '=', 'vicidial_log.user')
             ->join('vicidial_campaigns', 'vicidial_log.campaign_id', '=', 'vicidial_campaigns.campaign_id')
             ->join('vicidial_lists', 'vicidial_log.list_id', '=', 'vicidial_lists.list_id')
             ->join('vicidial_list', 'vicidial_list.lead_id', '=', 'vicidial_log.lead_id')
             ->join('vicidial_statuses', 'vicidial_statuses.status', '=', 'vicidial_log.status')
-            ->select(collect(self::$mapping)->flatten()->filter()->implode(','))
+            ->select(collect(self::$mapping)->flatten()->filter()->values())
             ->get();
-            
+
          return $data;
     }
 
