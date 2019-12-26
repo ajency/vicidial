@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Jobs\IndexData;
+use Carbon\Carbon;
 
 class Vicidial
 {
