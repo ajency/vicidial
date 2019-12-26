@@ -69,7 +69,8 @@ class Vicidial
 
     public static function fetch()
     {
-    	foreach(collect($data)->flatten()->filter()->values() as $field){
+
+    	foreach(collect(self::$mapping)->flatten()->filter()->values() as $field){
     		$field_arr = explode('.', $field); 
     		$fields_by_table[$field_arr[0]][] = $field;
     	}
