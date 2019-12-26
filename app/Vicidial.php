@@ -69,14 +69,13 @@ class Vicidial
 
     public static function fetch()
     {
-
     	foreach(collect(self::$mapping)->flatten()->filter()->values() as $field){
     		$field_arr = explode('.', $field); 
     		$fields_by_table[$field_arr[0]][] = $field;
     	}
 
         $log = \DB::connection('vicidial')->table('vicidial_log')->get();
-        collect($log)->chunk(10)->each(function($chunked_log) use ($fields_by_table){
+        foreach(collect($log)->chunk(10) as $chunked_log){
         	$fields_by_table = collect($fields_by_table);
         	$campaign_ids = collect($chunked_log)->pluck('campaign_id');
         	$list_ids = collect($chunked_log)->pluck('list_id');
@@ -84,11 +83,11 @@ class Vicidial
         	$status_ids = collect($chunked_log)->pluck('status');
 
         	$campaigns = \DB::connection('vicidial')->table('vicidial_campaigns')->whereIn('campaign_id', $campaign_ids)->get($fields_by_table['vicidial_campaigns']);
-        	$lists = \DB::connection('vicidial')->table('vicidial_lists')->whereIn('list_id', $list_ids)->get($fields_by_tablefields_by_table['vicidial_lists']);
+        	$lists = \DB::connection('vicidial')->table('vicidial_lists')->whereIn('list_id', $list_ids)->get($fields_by_table['vicidial_lists']);
         	$leads = \DB::connection('vicidial')->table('vicidial_list')->whereIn('lead_id', $lead_ids)->get($fields_by_table['vicidial_list']);
         	$statuses = \DB::connection('vicidial')->table('vicidial_statuses')->whereIn('status', $status_ids)->get($fields_by_table['vicidial_statuses']);
         	$response_data = (object)array_merge_recursive((array)$chunked_log, (array)$campaigns, (array)$lists, (array)$leads, (array)$statuses);
-        });
+        };
         return $response_data;
     }
 
