@@ -13,8 +13,8 @@ class Vicidial
             'current_status' => '',
         ],
         'session'  => [
-   //         'station' => 'vicidial_stations.agent_station',
-    //        'id'      => 'vicidial_session_data.session_name',
+            //         'station' => 'vicidial_stations.agent_station',
+            //        'id'      => 'vicidial_session_data.session_name',
         ],
         'call'     => [
             'id'                   => 'vicidial_log.uniqueid',
@@ -75,16 +75,33 @@ class Vicidial
             ->join('vicidial_lists', 'vicidial_log.list_id', '=', 'vicidial_lists.list_id')
             ->join('vicidial_list', 'vicidial_list.lead_id', '=', 'vicidial_log.lead_id')
             ->join('vicidial_statuses', 'vicidial_statuses.status', '=', 'vicidial_log.status')
-            ->select(collect(self::$mapping)->flatten()->filter()->values()->map(function($field){
-            	return $field.' as '.$field;
+            ->select(collect(self::$mapping)->flatten()->filter()->values()->map(function ($field) {
+                return $field . ' as ' . $field;
             })->toArray())
             ->get();
 
-         return $data;
+        return $data;
     }
 
-    public static function sanitze()
+    public static function sanitize($raw_data)
     {
+        $sanitized_data = collect();
+        foreach ($raw_data as $single_data) {
+        	$mapping = self::$mapping;
+            foreach ($mapping as $entity => $entity_data) {
+                foreach ($entity_data as $name => &$field) {
+                    $field = $raw_data->{$field};
+                }
+            }
+            $sanitized_data->push($mapping);
+        }
+        return $sanitized_data;
+    }
 
+    public static function index()
+    {
+        $raw_data       = self::fetch();
+        $sanitized_data = self::sanitize($raw_data);
+        return $sanitized_data;
     }
 }
