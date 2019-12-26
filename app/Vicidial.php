@@ -90,7 +90,9 @@ class Vicidial
         	$mapping = self::$mapping;
             foreach ($mapping as $entity => $entity_data) {
                 foreach ($entity_data as $name => &$field) {
-                    $field = $raw_data->{$field};
+                	if($field){
+                    	$field = $single_data->{$field};
+                	}
                 }
             }
             $sanitized_data->push($mapping);
