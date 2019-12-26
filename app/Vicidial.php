@@ -41,6 +41,9 @@ class Vicidial
                         	$field_data = $single_data->{$field_data['field']};
                         }
                     }
+                    else{
+                    	$field_data = '';
+                    }
                 }
             }
             $sanitized_data->push($mapping);

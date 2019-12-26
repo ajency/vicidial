@@ -43,11 +43,11 @@ return [
         ],
         'start_time'           => [
             'field' => 'vicidial_log.start_epoch',
-            'type'  => 'string',
+            'type'  => 'date',
         ],
         'end_time'             => [
             'field' => 'vicidial_log.end_epoch',
-            'type'  => 'string',
+            'type'  => 'date',
         ],
         'lead_status'          => [
             'field' => 'vicidial_list.status',
