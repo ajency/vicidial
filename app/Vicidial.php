@@ -16,7 +16,7 @@ class Vicidial
         ],
         'session'  => [
             //         'station' => 'vicidial_stations.agent_station',
-            //        'id'      => 'vicidial_session_data.session_name',
+            'id' => 'vicidial_session_data.session_name',
         ],
         'call'     => [
             'id'                   => 'vicidial_log.uniqueid',
@@ -77,6 +77,10 @@ class Vicidial
             ->join('vicidial_lists', 'vicidial_log.list_id', '=', 'vicidial_lists.list_id')
             ->join('vicidial_list', 'vicidial_list.lead_id', '=', 'vicidial_log.lead_id')
             ->join('vicidial_statuses', 'vicidial_statuses.status', '=', 'vicidial_log.status')
+            ->join('vicidial_session_data', function ($join) {
+                $join->on('vicidial_session_data.user', '=', 'vicidial_log.user')
+                    ->on('vicidial_session_data.campaign_id', '=', 'vicidial_log.campaign_id');
+            })
             ->select(collect(self::$mapping)->flatten()->filter()->values()->map(function ($field) {
                 return $field . ' as ' . $field;
             })->toArray())
@@ -89,12 +93,12 @@ class Vicidial
     {
         $sanitized_data = collect();
         foreach ($raw_data as $single_data) {
-        	$mapping = self::$mapping;
+            $mapping = self::$mapping;
             foreach ($mapping as $entity => &$entity_data) {
                 foreach ($entity_data as $name => &$field) {
-                	if($field){
-                    	$field = $single_data->{$field};
-                	}
+                    if ($field) {
+                        $field = $single_data->{$field};
+                    }
                 }
             }
             $sanitized_data->push($mapping);
@@ -107,7 +111,7 @@ class Vicidial
         $raw_data       = self::fetch();
         $sanitized_data = self::sanitize($raw_data);
         foreach (collect($sanitized_data)->chunk(10) as $sanitized_batched_data) {
-        	dispatch(new IndexData($sanitized_batched_data));
+            dispatch(new IndexData($sanitized_batched_data));
         }
     }
 }
