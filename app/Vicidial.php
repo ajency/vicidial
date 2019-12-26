@@ -83,10 +83,10 @@ class Vicidial
         	$lead_ids = collect($chunked_log)->pluck('lead_id');
         	$status_ids = collect($chunked_log)->pluck('status');
 
-        	$campaigns = \DB::connection('vicidial')->table('vicidial_campaigns')->whereIn('campaign_id', $campaign_ids)->get($field_by_table['vicidial_campaigns']);
-        	$lists = \DB::connection('vicidial')->table('vicidial_lists')->whereIn('list_id', $list_ids)->get($field_by_table['vicidial_lists']);
-        	$leads = \DB::connection('vicidial')->table('vicidial_list')->whereIn('lead_id', $lead_ids)->get($field_by_table['vicidial_list']);
-        	$statuses = \DB::connection('vicidial')->table('vicidial_statuses')->whereIn('status', $status_ids)->get($field_by_table['vicidial_statuses']);
+        	$campaigns = \DB::connection('vicidial')->table('vicidial_campaigns')->whereIn('campaign_id', $campaign_ids)->get($fields_by_table['vicidial_campaigns']);
+        	$lists = \DB::connection('vicidial')->table('vicidial_lists')->whereIn('list_id', $list_ids)->get($fields_by_tablefields_by_table['vicidial_lists']);
+        	$leads = \DB::connection('vicidial')->table('vicidial_list')->whereIn('lead_id', $lead_ids)->get($fields_by_table['vicidial_list']);
+        	$statuses = \DB::connection('vicidial')->table('vicidial_statuses')->whereIn('status', $status_ids)->get($fields_by_table['vicidial_statuses']);
         	$response_data = (object)array_merge_recursive((array)$chunked_log, (array)$campaigns, (array)$lists, (array)$leads, (array)$statuses);
         });
         return $response_data;
