@@ -18,7 +18,7 @@ class Vicidial
                 $join->on('vicidial_session_data.user', '=', 'vicidial_log.user')
                     ->on('vicidial_session_data.campaign_id', '=', 'vicidial_log.campaign_id');
             })
-            ->select(collect(config('field_mapping'))->flatten()->filter()->values()->map(function ($field) {
+            ->select(collect(config('field_mapping'))->flatten(1)->pluck('field')->filter()->values()->map(function ($field) {
                 return $field . ' as ' . $field;
             })->toArray())
             ->get();
@@ -32,12 +32,14 @@ class Vicidial
         foreach ($raw_data as $single_data) {
             $mapping = config('field_mapping');
             foreach ($mapping as $entity => &$entity_data) {
-                foreach ($entity_data as $name => &$field) {
-                    if ($field) {
-                        if ($name) {
-                            $field = $single_data->{$field};
+                foreach ($entity_data as $name => &$field_data) {
+                    if ($field_data['field']) {
+                        if ($field_data['type'] == 'date') {
+                            $field_data = Carbon::createFromTimestamp($single_data->{$field_data['field']})->toDateTimeString();
                         }
-
+                        else{
+                        	$field_data = $single_data->{$field_data['field']};
+                        }
                     }
                 }
             }
