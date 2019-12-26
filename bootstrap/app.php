@@ -42,6 +42,7 @@ $app->instance('path.storage', app()->basePath() . DIRECTORY_SEPARATOR . 'storag
 $app->withEloquent();
 $app->configure('database');
 $app->configure('queue');
+$app->configure('field_mapping');
 
 $app->singleton(
     Illuminate\Contracts\Debug\ExceptionHandler::class,
