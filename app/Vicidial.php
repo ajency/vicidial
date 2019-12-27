@@ -85,15 +85,18 @@ class Vicidial
         $status = \DB::connection('vicidial')->table('vicidial_status')->pluck('status');
         $log = json_decode(json_encode($log), true);
 
-        $lead_ids = [8,9,10];
-        $phone = ['7798870476','8073726204','7276874408'];
-        $log['start_epoch'] = time();
-        $log['end_epoch'] = time();
-        $log['call_date'] = Carbon::parse($log['call_date'])->addDays(1);
-        $log['lead_id'] = $lead_ids[rand(0,count($lead_ids))];
-        $log['length_in_sec'] = rand(0,2000);
-        $log['status'] = $status[rand(0,count($status))];
-        $log['phone_number'] = $phone[rand(0,count($phone))];
-        \DB::connection('vicidial')->table('vicidial_log')->insert($log);
+        for ($i=0; $i < 5000; $i++) { 
+            $lead_ids = [8,9,10];
+            $phone = ['7798870476','8073726204','7276874408'];
+            $log['start_epoch'] = time();
+            $log['end_epoch'] = time();
+            $log['call_date'] = Carbon::parse($log['call_date'])->addDays(1);
+            $log['lead_id'] = $lead_ids[rand(0,count($lead_ids))];
+            $log['length_in_sec'] = rand(0,2000);
+            $log['status'] = $status[rand(0,count($status))];
+            $log['phone_number'] = $phone[rand(0,count($phone))];
+            \DB::connection('vicidial')->table('vicidial_log')->insert($log);
+        }
+
     }
 }
