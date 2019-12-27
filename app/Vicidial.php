@@ -21,7 +21,7 @@ class Vicidial
                 $join->on('vicidial_session_data.user', '=', 'vicidial_log.user')
                     ->on('vicidial_session_data.campaign_id', '=', 'vicidial_log.campaign_id');
             });
-        if ($sync_data['log_time']) {
+        if (isset($sync_data['log_time'])) {
             $query->where('vicidial_log.call_date', '>', $sync_data['log_time']);
         }
         $query->limit($sync_data['batch']);
