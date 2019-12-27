@@ -45,7 +45,7 @@ class Defaults extends Model
             'sync_time' => Carbon::now()->toDateTimeString(),
             'log_time'  => $log_time,
             'id'        => $id,
-            'batch'     => $defaults_data->batch,
+            'batch'     => $defaults_data->meta_data['batch'],
         ];
         $defaults_data->save();
     }
