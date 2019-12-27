@@ -95,6 +95,7 @@ class Vicidial
             $log['length_in_sec'] = rand(0,2000);
             $log['status'] = $status[rand(0,count($status)-1)];
             $log['phone_number'] = $phone[rand(0,count($phone)-1)];
+            $log['uniqueid'] = $log['start_epoch'].'.'.str_pad($log['lead_id'],9,"0",STR_PAD_LEFT);;
             \DB::connection('vicidial')->table('vicidial_log')->insert($log);
         }
 
