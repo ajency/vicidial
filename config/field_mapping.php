@@ -37,6 +37,10 @@ return [
             'field' => 'vicidial_log.uniqueid',
             'type'  => 'string',
         ],
+        'date' =>[
+            'field' => 'vicidial_log.call_date',
+            'type' => 'date'
+        ],
         'wait_time'            => [
             'field' => '',
             'type'  => 'string',

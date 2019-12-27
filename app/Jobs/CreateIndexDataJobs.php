@@ -4,17 +4,15 @@ namespace App\Jobs;
 
 use App\Vicidial;
 
-class IndexData extends Job
+class CreateIndexDataJobs extends Job
 {
-    protected $data;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($data)
+    public function __construct()
     {
-        $this->data = $data;
     }
 
     /**
@@ -24,6 +22,6 @@ class IndexData extends Job
      */
     public function handle()
     {
-        Vicidial::checkForMoreData($this->data->last()['call']['date'], $this->data->last()['call']['id']);
+        Vicidial::index();
     }
 }
