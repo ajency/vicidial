@@ -43,6 +43,7 @@ $app->withEloquent();
 $app->configure('database');
 $app->configure('queue');
 $app->configure('field_mapping');
+$app->configure('static');
 
 $app->singleton(
     Illuminate\Contracts\Debug\ExceptionHandler::class,
