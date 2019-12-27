@@ -39,7 +39,7 @@ return [
         ],
         'date' =>[
             'field' => 'vicidial_log.call_date',
-            'type' => 'date'
+            'type' => 'string'
         ],
         'wait_time'            => [
             'field' => '',
