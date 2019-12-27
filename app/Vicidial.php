@@ -82,7 +82,7 @@ class Vicidial
     public static function duplicate()
     {
         $log = \DB::connection('vicidial')->table('vicidial_log')->orderBy('call_date', 'DESC')->limit(1)->first();
-        $status = \DB::connection('vicidial')->table('vicidial_status')->pluck('status');
+        $status = \DB::connection('vicidial')->table('vicidial_statuses')->pluck('status');
         $log = json_decode(json_encode($log), true);
 
         for ($i=0; $i < 5000; $i++) { 
@@ -91,10 +91,10 @@ class Vicidial
             $log['start_epoch'] = time();
             $log['end_epoch'] = time();
             $log['call_date'] = Carbon::parse($log['call_date'])->addDays(1);
-            $log['lead_id'] = $lead_ids[rand(0,count($lead_ids))];
+            $log['lead_id'] = $lead_ids[rand(0,count($lead_ids)-1)];
             $log['length_in_sec'] = rand(0,2000);
-            $log['status'] = $status[rand(0,count($status))];
-            $log['phone_number'] = $phone[rand(0,count($phone))];
+            $log['status'] = $status[rand(0,count($status)-1)];
+            $log['phone_number'] = $phone[rand(0,count($phone)-1)];
             \DB::connection('vicidial')->table('vicidial_log')->insert($log);
         }
 
