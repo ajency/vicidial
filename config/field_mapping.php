@@ -45,8 +45,9 @@ return [
             'source' => 'database',
         ],
         'date'                 => [
-            'field' => 'vicidial_log.call_date',
-            'type'  => 'string',
+            'field'  => 'vicidial_log.call_date',
+            'type'   => 'string',
+            'source' => 'database',
         ],
         'wait_time'            => [
             'field'  => '',
