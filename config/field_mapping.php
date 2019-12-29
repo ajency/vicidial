@@ -13,8 +13,8 @@ return [
             'field' => '', //'vicidial_agent_log.sub_status',
             'type'  => 'string',
         ],
-        'last_activity'  => [
-            'field' => '',
+        'last_login'  => [
+            'field' => 'vicidial_users.last_login_date',
             'type'  => 'string',
         ],
         'current_status' => [
@@ -174,7 +174,7 @@ return [
             'type'  => 'string',
         ],
         'dial_method'     => [
-            'field' => '',
+            'field' => 'vicidial_campaigns.dial_method',
             'type'  => 'string',
         ],
         'list_order'      => [
@@ -199,12 +199,12 @@ return [
             'field' => 'vicidial_lists.expiration_date',
             'type'  => 'string',
         ],
-        'total_number_records' => [
-            'field' => '',
+        'total_records' => [
+            'field' => 'vicidial_lists.total_records',
             'type'  => 'string',
         ],
         'duplicate_records'    => [
-            'field' => '',
+            'field' => 'vicidial_lists.duplicate_records',
             'type'  => 'string',
         ],
     ],
