@@ -54,12 +54,14 @@ return [
             'source' => 'database',
         ],
         'start_time'           => [
-            'field' => 'vicidial_log.start_epoch',
-            'type'  => 'date',
+            'field'  => 'vicidial_log.start_epoch',
+            'type'   => 'date',
+            'source' => 'database',
         ],
         'end_time'             => [
-            'field' => 'vicidial_log.end_epoch',
-            'type'  => 'date',
+            'field'  => 'vicidial_log.end_epoch',
+            'type'   => 'date',
+            'source' => 'database',
         ],
         'lead_status'          => [
             'field'  => 'vicidial_list.status',
