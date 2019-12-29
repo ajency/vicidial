@@ -30,7 +30,7 @@ class Vicidial
             if($field_data['source'] == 'database'){
                 return $field_data['field'] . ' as ' . $field_data['field'];
             }
-        })->filter()->values();
+        })->filter()->values()->toArray();
         $data = $query->select($db_fields)->get();
         foreach ($data as &$log) {
             $unique_list_count      = \DB::connection('vicidial')->table('vicidial_list')->where('list_id', $log->{'vicidial_lists.list_id'})->groupBy('phone_number')->count();
