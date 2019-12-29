@@ -25,12 +25,10 @@ class Vicidial
             $query->where('vicidial_log.call_date', '>', $sync_data['log_time']);
         }
         $query->limit($sync_data['batch']);
-        $db_fields = collect(config('field_mapping'))->flatten(1)
-        ->map(function ($field_data) {
-            if($field_data['source'] == 'database'){
+        $db_fields = collect(config('field_mapping'))->flatten(1)->map(function ($field_data) {
+            if ($field_data['source'] == 'database' && $field_data['field'] != '') {
                 return $field_data['field'] . ' as ' . $field_data['field'];
-            }
-        })->filter()->values()->toArray();
+            }})->filter()->values()->toArray();
         $data = $query->select($db_fields)->get();
         foreach ($data as &$log) {
             $unique_list_count      = \DB::connection('vicidial')->table('vicidial_list')->where('list_id', $log->{'vicidial_lists.list_id'})->groupBy('phone_number')->count();
