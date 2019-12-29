@@ -25,15 +25,18 @@ class Vicidial
             $query->where('vicidial_log.call_date', '>', $sync_data['log_time']);
         }
         $query->limit($sync_data['batch']);
-        $data = $query->select(collect(config('field_mapping'))->flatten(1)->pluck('field')->filter()->values()->map(function ($field) {
-            return $field . ' as ' . $field;
-        })->toArray())
-            ->get();
+        $db_fields = collect(config('field_mapping'))->flatten(1)
+        ->map(function ($field_data) {
+            if($field_data['source'] == 'database'){
+                return $field_data['field'] . ' as ' . $field_data['field'];
+            }
+        })->filter()->values();
+        $data = $query->select($db_fields)->get();
         foreach ($data as &$log) {
-            $unique_list_count                         = \DB::connection('vicidial')->table('vicidial_list')->where('list_id', $log->{'vicidial_lists.list_id'})->groupBy('phone_number')->count();
-            $total_list_count                          = \DB::connection('vicidial')->table('vicidial_list')->where('list_id', $log->{'vicidial_lists.list_id'})->count();
-            $log->{'vicidial_lists.total_records'}     = $unique_list_count;
-            $log->{'vicidial_lists.duplicate_records'} = $total_list_count - $unique_list_count;
+            $unique_list_count      = \DB::connection('vicidial')->table('vicidial_list')->where('list_id', $log->{'vicidial_lists.list_id'})->groupBy('phone_number')->count();
+            $total_list_count       = \DB::connection('vicidial')->table('vicidial_list')->where('list_id', $log->{'vicidial_lists.list_id'})->count();
+            $log->total_records     = $unique_list_count;
+            $log->duplicate_records = $total_list_count - $unique_list_count;
         }
         return $data;
     }
