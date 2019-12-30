@@ -90,7 +90,7 @@ class Vicidial
 
     public static function duplicateBatchData()
     {
-        $log    = \DB::connection('vicidial')->table('vicidial_log')->orderBy('unique_id', 'DESC')->limit(1)->first();
+        $log    = \DB::connection('vicidial')->table('vicidial_log')->orderBy('uniqueid', 'DESC')->limit(1)->first();
         $status = \DB::connection('vicidial')->table('vicidial_statuses')->pluck('status');
         $log    = json_decode(json_encode($log), true);
 
@@ -112,7 +112,7 @@ class Vicidial
 
     public static function duplicate()
     {
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 0; $i < 17; $i++) {
             dispatch(new DuplicateData())->onQueue('duplicate_data');
         }
     }
