@@ -4,6 +4,7 @@ namespace App;
 
 use App\Jobs\CreateIndexDataJobs;
 use App\Jobs\IndexData;
+use App\Jobs\DuplicateData;
 use Carbon\Carbon;
 
 class Vicidial
