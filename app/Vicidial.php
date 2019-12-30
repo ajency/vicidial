@@ -3,7 +3,6 @@
 namespace App;
 
 use App\Jobs\CreateIndexData;
-use App\Jobs\DuplicateData;
 use App\Jobs\IndexData;
 use Carbon\Carbon;
 
@@ -86,34 +85,5 @@ class Vicidial
     public static function createIndexData()
     {
         dispatch(new CreateIndexData())->onQueue('fetch_data');
-    }
-
-    public static function duplicateBatchData()
-    {
-        $log    = \DB::connection('vicidial')->table('vicidial_log')->orderBy('uniqueid', 'DESC')->limit(1)->first();
-        $status = \DB::connection('vicidial')->table('vicidial_statuses')->pluck('status');
-        $log    = json_decode(json_encode($log), true);
-
-        for ($i = 0, $j = 1577533251; $i < 5000; $i++) {
-            $date                 = Carbon::parse($log['call_date'])->addDays(1)->toDateTimeString();
-            $lead_ids             = [8, 9, 10];
-            $phone                = ['7798870476', '8073726204', '7276874408'];
-            $log['start_epoch']   = $j--;
-            $log['end_epoch']     = $j;
-            $log['call_date']     = $date;
-            $log['lead_id']       = $lead_ids[rand(0, count($lead_ids) - 1)];
-            $log['length_in_sec'] = rand(0, 2000);
-            $log['status']        = $status[rand(0, count($status) - 1)];
-            $log['phone_number']  = $phone[rand(0, count($phone) - 1)];
-            $log['uniqueid']      = $log['start_epoch'] . '.' . str_pad($log['lead_id'], 9, "0", STR_PAD_LEFT);
-            \DB::connection('vicidial')->table('vicidial_log')->insert($log);
-        }
-    }
-
-    public static function duplicate()
-    {
-        for ($i = 0; $i < 17; $i++) {
-            dispatch(new DuplicateData())->onQueue('duplicate_data');
-        }
     }
 }
