@@ -65,12 +65,12 @@ class Vicidial
 
     public static function index()
     {
-        $sync_data      = Defaults::getLastSync();
         $raw_data       = self::fetch();
         $sanitized_data = collect(self::sanitize($raw_data));
         foreach ($sanitized_data->chunk(config('static.fetch_limit')) as $sanitized_batched_data) {
             dispatch(new IndexData($sanitized_batched_data))->onQueue('index_data');
         }
+
         self::checkForMoreData($sanitized_data->last()['call']['date'], $sanitized_data->last()['call']['id']);
     }
 

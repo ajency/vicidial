@@ -35,11 +35,7 @@ class Defaults extends Model
 
     public static function updateLastSync($log_time, $id)
     {
-        $defaults_data = self::where('label', 'sync')->first();
-        if (!$defaults_data) {
-            $defaults_data        = new self;
-            $defaults_data->label = 'sync';
-        }
+        $defaults_data = self::firstOrNew(['label' => 'sync']);
         $defaults_data->meta_data = [
             'sync_time' => Carbon::now()->toDateTimeString(),
             'log_time'  => $log_time,
