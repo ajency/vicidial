@@ -71,7 +71,7 @@ class Vicidial
         foreach ($sanitized_data->chunk(config('static.fetch_limit')) as $sanitized_batched_data) {
             dispatch(new IndexData($sanitized_batched_data))->onQueue('index_data');
         }
-        self::checkForMoreData($sanitized_data->last()['call']['date'], $this->data->last()['call']['id']);
+        self::checkForMoreData($sanitized_data->last()['call']['date'], $sanitized_data->last()['call']['id']);
     }
 
     public static function checkForMoreData($date, $id)
