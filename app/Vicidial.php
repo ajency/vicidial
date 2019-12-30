@@ -110,7 +110,7 @@ class Vicidial
     {
         $success = false;
         $i=0;
-        while($success){
+        while($success == false){
             try{
                 $date = Carbon::parse($log['call_date'])->addDays(1)->toDateTimeString();
                 $lead_ids             = [8, 9, 10];
