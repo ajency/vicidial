@@ -4,6 +4,7 @@ namespace App;
 
 use App\Jobs\DuplicateData;
 use App\Jobs\IndexData;
+use App\Jobs\CreateIndexData;
 use Carbon\Carbon;
 
 class Vicidial
@@ -82,7 +83,7 @@ class Vicidial
         }
     }
 
-    public static function CreateIndexData()
+    public static function createIndexData()
     {
         dispatch(new CreateIndexData())->onQueue('fetch_data');
     }
