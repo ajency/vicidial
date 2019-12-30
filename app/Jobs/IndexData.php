@@ -25,6 +25,6 @@ class IndexData extends Job
     public function handle()
     {
         \Log::info('Count: '.count($this->data));
-        \Log::info('Data: '.json_encode($this->data->first));
+        \Log::info('Data: '.json_encode($this->data->first()));
     }
 }
