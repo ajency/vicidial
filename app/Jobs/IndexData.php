@@ -24,6 +24,6 @@ class IndexData extends Job
      */
     public function handle()
     {
-        Vicidial::checkForMoreData($this->data->last()['call']['date'], $this->data->last()['call']['id']);
+        
     }
 }

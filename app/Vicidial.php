@@ -2,9 +2,8 @@
 
 namespace App;
 
-use App\Jobs\CreateIndexDataJobs;
-use App\Jobs\IndexData;
 use App\Jobs\DuplicateData;
+use App\Jobs\IndexData;
 use Carbon\Carbon;
 
 class Vicidial
@@ -25,7 +24,7 @@ class Vicidial
         if (isset($sync_data['log_time'])) {
             $query->where('vicidial_log.call_date', '>', $sync_data['log_time']);
         }
-        $query->limit($sync_data['batch']);
+        $query->limit(config('static.fetch_limit'));
         $db_fields = collect(config('field_mapping'))->flatten(1)->map(function ($field_data) {
             if ($field_data['source'] == 'database' && $field_data['field'] != '') {
                 return $field_data['field'] . ' as ' . $field_data['field'];
@@ -65,11 +64,13 @@ class Vicidial
 
     public static function index()
     {
+        $sync_data      = Defaults::getLastSync();
         $raw_data       = self::fetch();
-        $sanitized_data = self::sanitize($raw_data);
-        foreach (collect($sanitized_data)->chunk(10) as $sanitized_batched_data) {
-            dispatch(new IndexData($sanitized_batched_data));
+        $sanitized_data = collect(self::sanitize($raw_data));
+        foreach ($sanitized_data->chunk(config('static.fetch_limit')) as $sanitized_batched_data) {
+            dispatch(new IndexData($sanitized_batched_data))->onQueue('index_data');
         }
+        self::checkForMoreData($sanitized_data->last()['call']['date'], $this->data->last()['call']['id']);
     }
 
     public static function checkForMoreData($date, $id)
@@ -77,13 +78,13 @@ class Vicidial
         Defaults::updateLastSync($date, $id);
         $last_data = \DB::connection('vicidial')->table('vicidial_log')->where('call_date', '>', $date)->get();
         if (count($last_data) > 0) {
-            dispatch(new CreateIndexData());
+            dispatch(new CreateIndexData())->onQueue('fetch_data');
         }
     }
 
     public static function CreateIndexData()
     {
-        dispatch(new CreateIndexData());
+        dispatch(new CreateIndexData())->onQueue('fetch_data');
     }
 
     public static function duplicateBatchData()
@@ -109,8 +110,8 @@ class Vicidial
 
     public static function duplicate()
     {
-        for ($i=0; $i < 20; $i++) { 
-            dispatch(new DuplicateData());
+        for ($i = 0; $i < 20; $i++) {
+            dispatch(new DuplicateData())->onQueue('duplicate_data');
         }
     }
 }
