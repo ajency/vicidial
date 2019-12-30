@@ -2,9 +2,9 @@
 
 namespace App;
 
+use App\Jobs\CreateIndexData;
 use App\Jobs\DuplicateData;
 use App\Jobs\IndexData;
-use App\Jobs\CreateIndexData;
 use Carbon\Carbon;
 
 class Vicidial
@@ -90,12 +90,8 @@ class Vicidial
 
     public static function duplicateBatchData()
     {
-        $log    = \DB::connection('vicidial')->table('vicidial_log')->orderBy('uniqueid', 'DESC')->limit(1)->first();
-        $status = \DB::connection('vicidial')->table('vicidial_statuses')->pluck('status');
-        $log    = json_decode(json_encode($log), true);
-
         for ($i = 0; $i < 5000; $i++) {
-            self::add_log_data($log, $status);
+            $i = self::add_log_data($log, $status);
         }
     }
 
@@ -109,14 +105,17 @@ class Vicidial
     public static function add_log_data($log, $status)
     {
         $success = false;
-        $i=0;
-        while($success == false){
-            try{
-                $date = Carbon::parse($log['call_date'])->addDays(1)->toDateTimeString();
+        while ($success == false) {
+            try {
+                $log    = \DB::connection('vicidial')->table('vicidial_log')->orderBy('uniqueid', 'DESC')->limit(1)->first();
+                $status = \DB::connection('vicidial')->table('vicidial_statuses')->pluck('status');
+                $log    = json_decode(json_encode($log), true);
+
+                $date                 = Carbon::parse($log['call_date'])->addDays(1)->toDateTimeString();
                 $lead_ids             = [8, 9, 10];
                 $phone                = ['7798870476', '8073726204', '7276874408'];
-                $log['start_epoch']   = $i;
-                $log['end_epoch']     = $i;
+                $log['start_epoch']   = $log['start_epoch'] + $i;
+                $log['end_epoch']     = $log['start_epoch'] + $i;
                 $log['call_date']     = $date;
                 $log['lead_id']       = $lead_ids[rand(0, count($lead_ids) - 1)];
                 $log['length_in_sec'] = rand(0, 2000);
@@ -125,10 +124,10 @@ class Vicidial
                 $log['uniqueid']      = $log['start_epoch'] . '.' . str_pad($log['lead_id'], 9, "0", STR_PAD_LEFT);
                 \DB::connection('vicidial')->table('vicidial_log')->insert($log);
                 $success = true;
-            }
-            catch(\Exception $e){
+            } catch (\Exception $e) {
                 $i++;
             }
         }
+        return $i;
     }
 }
