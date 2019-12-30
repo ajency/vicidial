@@ -90,16 +90,17 @@ class Vicidial
 
     public static function duplicateBatchData()
     {
-        $log    = \DB::connection('vicidial')->table('vicidial_log')->orderBy('call_date', 'DESC')->limit(1)->first();
+        $log    = \DB::connection('vicidial')->table('vicidial_log')->orderBy('unique_id', 'DESC')->limit(1)->first();
         $status = \DB::connection('vicidial')->table('vicidial_statuses')->pluck('status');
         $log    = json_decode(json_encode($log), true);
 
         for ($i = 0; $i < 5000; $i++) {
+            $date = Carbon::parse($log['call_date'])->addDays(1)->toDateTimeString();
             $lead_ids             = [8, 9, 10];
             $phone                = ['7798870476', '8073726204', '7276874408'];
-            $log['start_epoch']   = $log['start_epoch'] + $i + 1;
-            $log['end_epoch']     = $log['start_epoch'] + $i + 1;
-            $log['call_date']     = Carbon::parse($log['call_date'])->addDays(1);
+            $log['start_epoch']   = strtotime($date);
+            $log['end_epoch']     = strtotime($date);
+            $log['call_date']     = $date;
             $log['lead_id']       = $lead_ids[rand(0, count($lead_ids) - 1)];
             $log['length_in_sec'] = rand(0, 2000);
             $log['status']        = $status[rand(0, count($status) - 1)];
