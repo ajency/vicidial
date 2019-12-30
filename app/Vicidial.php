@@ -76,16 +76,16 @@ class Vicidial
         Defaults::updateLastSync($date, $id);
         $last_data = \DB::connection('vicidial')->table('vicidial_log')->where('call_date', '>', $date)->get();
         if (count($last_data) > 0) {
-            dispatch(new CreateIndexDataJobs());
+            dispatch(new CreateIndexData());
         }
     }
 
-    public static function CreateIndexDataJobs()
+    public static function CreateIndexData()
     {
-        dispatch(new CreateIndexDataJobs());
+        dispatch(new CreateIndexData());
     }
 
-    public static function duplicate()
+    public static function duplicateBatchData()
     {
         $log    = \DB::connection('vicidial')->table('vicidial_log')->orderBy('call_date', 'DESC')->limit(1)->first();
         $status = \DB::connection('vicidial')->table('vicidial_statuses')->pluck('status');
@@ -104,6 +104,12 @@ class Vicidial
             $log['uniqueid']      = $log['start_epoch'] . '.' . str_pad($log['lead_id'], 9, "0", STR_PAD_LEFT);
             \DB::connection('vicidial')->table('vicidial_log')->insert($log);
         }
+    }
 
+    public static function duplicate()
+    {
+        for ($i=0; $i < 20; $i++) { 
+            dispatch(new DuplicateData());
+        }
     }
 }

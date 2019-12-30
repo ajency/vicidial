@@ -4,7 +4,7 @@ namespace App\Jobs;
 
 use App\Vicidial;
 
-class CreateIndexDataJobs extends Job
+class CreateIndexData extends Job
 {
     /**
      * Create a new job instance.
