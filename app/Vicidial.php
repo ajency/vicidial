@@ -64,18 +64,18 @@ class Vicidial
 
     public static function index()
     {
+        $start_time = Carbon::now();
         $raw_data       = self::fetch();
         $sanitized_data = collect(self::sanitize($raw_data));
         foreach ($sanitized_data->chunk(config('static.fetch_limit')) as $sanitized_batched_data) {
             dispatch(new IndexData($sanitized_batched_data))->onQueue('index_data');
         }
-
-        self::checkForMoreData($sanitized_data->last()['call']['date'], $sanitized_data->last()['call']['id']);
+        self::checkForMoreData($sanitized_data->last()['call']['date'], $sanitized_data->last()['call']['id'], $start_time);
     }
 
-    public static function checkForMoreData($date, $id)
+    public static function checkForMoreData($date, $id, $start_time)
     {
-        Defaults::updateLastSync($date, $id);
+        Defaults::updateLastSync($date, $id, $start_time);
         $last_data = \DB::connection('vicidial')->table('vicidial_log')->where('call_date', '>', $date)->get();
         if (count($last_data) > 0) {
             dispatch(new CreateIndexData())->onQueue('fetch_data');
