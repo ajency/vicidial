@@ -97,8 +97,8 @@ class Vicidial
         for ($i = 0; $i < 5000; $i++) {
             $lead_ids             = [8, 9, 10];
             $phone                = ['7798870476', '8073726204', '7276874408'];
-            $log['start_epoch']   = time() + $i;
-            $log['end_epoch']     = time() + $i;
+            $log['start_epoch']   = $log['start_epoch'] + $i;
+            $log['end_epoch']     = $log['start_epoch'] + $i;
             $log['call_date']     = Carbon::parse($log['call_date'])->addDays(1);
             $log['lead_id']       = $lead_ids[rand(0, count($lead_ids) - 1)];
             $log['length_in_sec'] = rand(0, 2000);
