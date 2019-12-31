@@ -29,18 +29,19 @@ class Vicidial
             if ($field_data['source'] == 'database' && $field_data['field'] != '') {
                 return $field_data['field'] . ' as ' . $field_data['fetch'];
             }})->filter()->values()->toArray();
-        $data = $query->select($db_fields)->get();
-        return $data;
+        $dataByList = $query->select($db_fields)->get()->keyBy('vicidial_lists_list_id');
 
-        $unique_list_count = \DB::connection('vicidial')->table('vicidial_list')->where('list_id', $log->{'vicidial_lists.list_id'})->groupBy('phone_number')->count();
-        $total_list_count  = \DB::connection('vicidial')->table('vicidial_list')->where('list_id', $log->{'vicidial_lists.list_id'})->count();
+        $unique_list_ids = $data->pluck('vicidial_lists_list_id')->unique()->toArray();
+        $list_data       = \DB::connection('vicidial')->select("select list_id, sum(countx) as 'duplicate_records', count(*) as 'total_records' FROM (select phone_number, list_id,if(count(*)>1,1,0) as countx from vicidial_list group by phone_number,list_id) as count_table GROUP BY list_id");
+        $list_data       = collect($list_data)->keyBy('list_id');
 
-        foreach ($data as &$log) {
-
-            $log->total_records     = $unique_list_count;
-            $log->duplicate_records = $total_list_count - $unique_list_count;
+        foreach ($dataByList as &$data) {
+            foreach ($data as $list_id => &$single_data) {
+                $single_data->duplicate_records = $list_data[$list_id]->duplicate_records;
+                $single_data->total_records = $list_data[$list_id]->total_records;
+            }
         }
-        return $data;
+        return $dataByList->flatten(1);
     }
 
     public static function sanitize($raw_data)
