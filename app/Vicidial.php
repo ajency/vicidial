@@ -11,31 +11,18 @@ class Vicidial
     public static function fetch()
     {
         $sync_data = Defaults::getLastSync();
-        $query     = \DB::connection('vicidial')->table('vicidial_log')
-            ->join('vicidial_users', 'vicidial_users.user', '=', 'vicidial_log.user')
-            ->join('vicidial_campaigns', 'vicidial_log.campaign_id', '=', 'vicidial_campaigns.campaign_id')
-            ->join('vicidial_lists', 'vicidial_log.list_id', '=', 'vicidial_lists.list_id')
-            ->join('vicidial_list', 'vicidial_list.lead_id', '=', 'vicidial_log.lead_id')
-            ->join('vicidial_statuses', 'vicidial_statuses.status', '=', 'vicidial_log.status')
-            ->join('vicidial_session_data', function ($join) {
-                $join->on('vicidial_session_data.user', '=', 'vicidial_log.user')
-                    ->on('vicidial_session_data.campaign_id', '=', 'vicidial_log.campaign_id');
-            });
-        if (isset($sync_data['log_time'])) {
-            $query->where('vicidial_log.call_date', '>', $sync_data['log_time']);
-        }
-        $query->limit(config('static.fetch_limit'));
         $db_fields = collect(config('field_mapping'))->flatten(1)->map(function ($field_data) {
-            if ($field_data['source'] == 'database' && $field_data['field'] != '') {
-                return $field_data['field'] . ' as ' . $field_data['field'];
-            }})->filter()->values()->toArray();
-        $data = $query->select($db_fields)->get();
-        foreach ($data as &$log) {
-            $unique_list_count      = \DB::connection('vicidial')->table('vicidial_list')->where('list_id', $log->{'vicidial_lists.list_id'})->groupBy('phone_number')->count();
-            $total_list_count       = \DB::connection('vicidial')->table('vicidial_list')->where('list_id', $log->{'vicidial_lists.list_id'})->count();
-            $log->total_records     = $unique_list_count;
-            $log->duplicate_records = $total_list_count - $unique_list_count;
+            if ($field_data['field'] != '') {
+                return $field_data['field'] . " as '" . $field_data['field'] . "'";
+            }
+        })->filter()->values()->implode(',');
+        $query_string = "select " . $db_fields . " from vicidial_log inner join vicidial_list on vicidial_list.lead_id = vicidial_log.lead_id inner join vicidial_users on vicidial_users.user = vicidial_log.user inner join vicidial_campaigns on vicidial_log.campaign_id = vicidial_campaigns.campaign_id inner join vicidial_lists on vicidial_log.list_id = vicidial_lists.list_id inner join vicidial_statuses on vicidial_statuses.status = vicidial_log.status inner join vicidial_session_data on vicidial_session_data.user = vicidial_log.user and vicidial_session_data.campaign_id = vicidial_log.campaign_id left join (select list_id, sum(countx) as countx, count(*) as county FROM (select phone_number, list_id,if(count(*)>1,1,0) as countx from vicidial_list group by phone_number,list_id) as count_table GROUP BY list_id) as list_join on list_join.list_id = vicidial_log.list_id";
+        if (isset($sync_data['log_time'])) {
+            $query_string .= ' where vicidial_log.call_date > '.$sync_data['log_time'];
         }
+        $query_string .= ' limit ' . config('static.fetch_limit');
+
+        $data = DB::connection('vicidial')->selectRaw($query_string);
         return $data;
     }
 
@@ -48,9 +35,9 @@ class Vicidial
                 foreach ($entity_data as $name => &$field_data) {
                     if ($field_data['field']) {
                         if ($field_data['type'] == 'date') {
-                            $field_data = Carbon::createFromTimestamp($single_data->{$field_data['field']})->toDateTimeString();
+                            $field_data = Carbon::createFromTimestamp($single_data[$field_data['field']])->toDateTimeString();
                         } else {
-                            $field_data = $single_data->{$field_data['field']};
+                            $field_data = $single_data[$field_data['field']];
                         }
                     } else {
                         $field_data = '';
@@ -64,7 +51,7 @@ class Vicidial
 
     public static function index()
     {
-        $start_time = Carbon::now();
+        $start_time     = Carbon::now();
         $raw_data       = self::fetch();
         $sanitized_data = collect(self::sanitize($raw_data));
         foreach ($sanitized_data->chunk(config('static.fetch_limit')) as $sanitized_batched_data) {
