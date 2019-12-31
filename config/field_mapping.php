@@ -246,12 +246,12 @@ return [
             'source' => 'database',
         ],
         'list_join.total_records'     => [
-            'field'  => 'total_records',
+            'field'  => 'list_join.total_records',
             'type'   => 'string',
             'source' => 'code',
         ],
         'list_join.duplicate_records' => [
-            'field'  => 'duplicate_records',
+            'field'  => 'list_join.duplicate_records',
             'type'   => 'string',
             'source' => 'code',
         ],
