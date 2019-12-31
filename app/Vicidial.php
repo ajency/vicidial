@@ -27,12 +27,16 @@ class Vicidial
         $query->limit(config('static.fetch_limit'));
         $db_fields = collect(config('field_mapping'))->flatten(1)->map(function ($field_data) {
             if ($field_data['source'] == 'database' && $field_data['field'] != '') {
-                return $field_data['field'] . ' as ' . $field_data['field'];
+                return $field_data['field'] . ' as ' . $field_data['fetch'];
             }})->filter()->values()->toArray();
         $data = $query->select($db_fields)->get();
+        return $data;
+
+        $unique_list_count = \DB::connection('vicidial')->table('vicidial_list')->where('list_id', $log->{'vicidial_lists.list_id'})->groupBy('phone_number')->count();
+        $total_list_count  = \DB::connection('vicidial')->table('vicidial_list')->where('list_id', $log->{'vicidial_lists.list_id'})->count();
+
         foreach ($data as &$log) {
-            $unique_list_count      = \DB::connection('vicidial')->table('vicidial_list')->where('list_id', $log->{'vicidial_lists.list_id'})->groupBy('phone_number')->count();
-            $total_list_count       = \DB::connection('vicidial')->table('vicidial_list')->where('list_id', $log->{'vicidial_lists.list_id'})->count();
+
             $log->total_records     = $unique_list_count;
             $log->duplicate_records = $total_list_count - $unique_list_count;
         }
@@ -64,7 +68,7 @@ class Vicidial
 
     public static function index()
     {
-        $start_time = Carbon::now();
+        $start_time     = Carbon::now();
         $raw_data       = self::fetch();
         $sanitized_data = collect(self::sanitize($raw_data));
         foreach ($sanitized_data->chunk(config('static.fetch_limit')) as $sanitized_batched_data) {
