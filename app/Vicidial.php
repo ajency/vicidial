@@ -45,7 +45,7 @@ class Vicidial
                     }
                 }
             }
-            $sanitized_data->push($single_data);
+            $sanitized_data->push($sanitized_single_data);
         }
         return $sanitized_data;
     }
