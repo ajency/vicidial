@@ -1,0 +1,157 @@
+{
+    "mappings": {
+        "_doc": {
+            "properties": {
+                "variant_external_id": {
+                    "type": "text"
+                },
+                "agent_name": {
+                    "type": "text"
+                },
+                "agent_id": {
+                    "type": "text"
+                },
+                "agent_login_status": {
+                    "type": "text"
+                },
+                "agent_last_login": {
+                    "type": "text"
+                },
+                "agent_current_status": {
+                    "type": "text"
+                },
+                "session_id": {
+                    "type": "text"
+                },
+                "call_id": {
+                    "type": "text"
+                },
+                "call_date": {
+                    "type": "text"
+                },
+                "call_wait_time": {
+                    "type": "text"
+                },
+                "call_start_time": {
+                    "type": "date",
+                    "format": "epoch_second"
+                },
+                "call_end_time": {
+                    "type": "date",
+                    "format": "epoch_second"
+                },
+                "call_lead_status": {
+                    "type": "text"
+                },
+                "call_desposition_assigned": {
+                    "type": "text"
+                },
+                "call_desposition_value": {
+                    "type": "text"
+                },
+                "call_contact": {
+                    "type": "text"
+                },
+                "call_active_time_spent": {
+                    "type": "text"
+                },
+                "call_call_status": {
+                    "type": "text"
+                },
+                "call_lasts_sync": {
+                    "type": "text"
+                },
+                "lead_id": {
+                    "type": "text"
+                },
+                "lead_country_code": {
+                    "type": "text"
+                },
+                "lead_phone": {
+                    "type": "text"
+                },
+                "lead_first_name": {
+                    "type": "text"
+                },
+                "lead_middle_name": {
+                    "type": "text"
+                },
+                "lead_last_name": {
+                    "type": "text"
+                },
+                "lead_owner": {
+                    "type": "text"
+                },
+                "lead_rank": {
+                    "type": "text"
+                },
+                "lead_invalid": {
+                    "type": "text"
+                },
+                "lead_valid": {
+                    "type": "text"
+                },
+                "lead_non-british": {
+                    "type": "text"
+                },
+                "lead_dialable": {
+                    "type": "text"
+                },
+                "lead_quantity_eu": {
+                    "type": "text"
+                },
+                "lead_lead-subscription": {
+                    "type": "text"
+                },
+                "lead_clean-lines": {
+                    "type": "text"
+                },
+                "lead_dial_type": {
+                    "type": "text"
+                },
+                "campaign_name": {
+                    "type": "text"
+                },
+                "campaign_id": {
+                    "type": "text"
+                },
+                "campaign_dial_level": {
+                    "type": "text"
+                },
+                "campaign_hopper_setting": {
+                    "type": "text"
+                },
+                "campaign_no_hopper_leads": {
+                    "type": "text"
+                },
+                "campaign_lead_filter": {
+                    "type": "text"
+                },
+                "campaign_dial_method": {
+                    "type": "text"
+                },
+                "campaign_list_order": {
+                    "type": "text"
+                },
+                "list_name": {
+                    "type": "text"
+                },
+                "list_id": {
+                    "type": "text"
+                },
+                "list_status": {
+                    "type": "text"
+                },
+                "list_expiration_date": {
+                    "type": "text"
+                },
+                "list_total_records": {
+                    "type": "long"
+                },
+                "list_duplicate_records": {
+                    "type": "long"
+                }
+            }
+        }
+    }
+}

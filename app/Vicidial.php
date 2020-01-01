@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Ajency\Connections\ElasticQuery;
 use App\Jobs\CreateIndexData;
 use App\Jobs\IndexData;
 use Carbon\Carbon;
@@ -31,25 +32,25 @@ class Vicidial
         $sanitized_data = collect();
         foreach ($raw_data as $single_data) {
             $mapping = config('field_mapping');
-            foreach ($mapping as $entity => &$entity_data) {
-                foreach ($entity_data as $name => &$field_data) {
+            foreach ($mapping as $entity => $entity_data) {
+                foreach ($entity_data as $name => $field_data) {
                     if ($field_data['field']) {
                         if ($field_data['type'] == 'date') {
-                            $field_data = Carbon::createFromTimestamp($single_data->{$field_data['field']})->toDateTimeString();
+                            $single_data[$entity.'_'.$name] = Carbon::createFromTimestamp($single_data->{$field_data['fetch']})->toDateTimeString();
                         } else {
-                            $field_data = $single_data->{$field_data['field']};
+                            $single_data[$entity.'_'.$name] = $single_data->{$field_data['fetch']};
                         }
                     } else {
-                        $field_data = '';
+                        $single_data[$entity.'_'.$name] = '';
                     }
                 }
             }
-            $sanitized_data->push($mapping);
+            $sanitized_data->push($single_data);
         }
         return $sanitized_data;
     }
 
-    public static function index()
+    public static function buildData()
     {
         $start_time     = Carbon::now();
         $raw_data       = self::fetch();
@@ -62,15 +63,27 @@ class Vicidial
 
     public static function checkForMoreData($date, $id, $start_time)
     {
-        Defaults::updateLastSync($date, $id, $start_time);
         $last_data = \DB::connection('vicidial')->table('vicidial_log')->where('call_date', '>', $date)->get();
         if (count($last_data) > 0) {
             dispatch(new CreateIndexData())->onQueue('fetch_data');
         }
+        Defaults::updateLastSync($date, $id, $start_time);
     }
 
     public static function createIndexData()
     {
         dispatch(new CreateIndexData())->onQueue('fetch_data');
+    }
+
+    public static function index($data)
+    {
+        $query = new ElasticQuery;
+        $query->setIndex(config('elastic.indexes.call'));
+        $query->initializeBulkIndexing();
+        $data->each(function ($item, $key) use ($query) {
+            $query->addToBulkIndexing($item['call_id'], $item);
+        });
+        $responses = $query->bulk();
+        return $responses;
     }
 }

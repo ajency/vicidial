@@ -6,12 +6,7 @@ return [
     "user"    => env('ELASTIC_USER', ""),
     "pass"    => env('ELASTIC_PASS', ""),
     "prefix"  => env('ELASTIC_PREFIX', ""),
-    "index" => {
-		"mappings": {
-			"_doc": {
-				"properties": {
-				}
-			}
-		}
-	}
+    "indexes" => [
+    	"call" => "calls"
+    ]
 ];

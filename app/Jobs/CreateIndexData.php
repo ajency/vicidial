@@ -22,6 +22,6 @@ class CreateIndexData extends Job
      */
     public function handle()
     {
-        Vicidial::index();
+        Vicidial::buildData();
     }
 }
