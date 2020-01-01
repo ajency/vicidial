@@ -38,7 +38,7 @@ class Vicidial
                         if ($field_data['type'] == 'date') {
                             $single_data[$entity.'_'.$name] = Carbon::createFromTimestamp($single_data->{$field_data['fetch']})->toDateTimeString();
                         } else {
-                            $single_data[$entity.'_'.$name] = $single_data->{$field_data['fetch']};
+                            $single_data[$entity.'_'.$name] = $single_data->{$field_data['field']};
                         }
                     } else {
                         $single_data[$entity.'_'.$name] = '';
