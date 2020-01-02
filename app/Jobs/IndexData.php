@@ -30,7 +30,7 @@ class IndexData extends Job
         Vicidial::index($this->data);
         $defaults_data = Defaults::firstOrNew(['label' => 'sync']);
         $meta_data = $defaults_data->meta_data;
-        $meta_data['index_time'] = Carbon::now()->diffInSeconds($start_time);
+        $meta_data['index_time'][] = Carbon::now()->diffInSeconds($start_time);
         $defaults_data->meta_data = $meta_data;
         $defaults_data->save();
     }
