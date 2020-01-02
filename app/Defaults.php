@@ -40,7 +40,7 @@ class Defaults extends Model
             'sync_time' => Carbon::now()->toDateTimeString(),
             'log_time'  => $log_time,
             'id'        => $id,
-            'time_taken'=> Carbon::now()->diffInSeconds($start_time)
+            'fetch_time'=> Carbon::now()->diffInSeconds($start_time)
         ];
         $defaults_data->save();
     }

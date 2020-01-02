@@ -59,7 +59,7 @@ class Vicidial
             dispatch(new IndexData($sanitized_batched_data))->onQueue('index_data');
         }
         self::checkForMoreData($sanitized_data->last()['call_date'], $sanitized_data->last()['call_id'], $start_time);
-    }
+    } 
 
     public static function checkForMoreData($date, $id, $start_time)
     {
@@ -84,6 +84,5 @@ class Vicidial
             $query->addToBulkIndexing($item['call_id'], $item);
         });
         $responses = $query->bulk();
-        return $responses;
     }
 }

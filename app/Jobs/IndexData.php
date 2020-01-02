@@ -3,6 +3,8 @@
 namespace App\Jobs;
 
 use App\Vicidial;
+use App\Defaults;
+use Carbon\Carbon;
 
 class IndexData extends Job
 {
@@ -24,6 +26,12 @@ class IndexData extends Job
      */
     public function handle()
     {
+        $start_time     = Carbon::now();
         Vicidial::index($this->data);
+        $defaults_data = Defaults::firstOrNew(['label' => 'sync']);
+        $meta_data = $defaults_data->meta_data;
+        $meta_data['index_time'] = Carbon::now()->diffInSeconds($start_time);
+        $defaults_data->meta_data = $meta_data;
+        $defaults_data->save();
     }
 }
