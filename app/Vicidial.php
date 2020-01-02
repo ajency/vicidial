@@ -55,7 +55,7 @@ class Vicidial
         $start_time     = Carbon::now();
         $raw_data       = self::fetch();
         $sanitized_data = collect(self::sanitize($raw_data));
-        foreach ($sanitized_data->chunk(config('static.fetch_limit')) as $sanitized_batched_data) {
+        foreach ($sanitized_data->chunk(config('static.index_limit')) as $sanitized_batched_data) {
             dispatch(new IndexData($sanitized_batched_data))->onQueue('index_data');
         }
         self::checkForMoreData($sanitized_data->last()['call_date'], $sanitized_data->last()['call_id'], $start_time);

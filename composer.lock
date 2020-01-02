@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "50d608cbb04e65d729c635e3e6faf0aa",
+    "content-hash": "f6f4df1014af27b69ddd0c83f63c93fb",
     "packages": [
         {
             "name": "ajency/connections",
-            "version": "dev-master",
+            "version": "dev-vicidial",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ajency/aj-connections.git",
-                "reference": "89c982e95c925c6861a51dde805a3614a72891dc"
+                "reference": "133967aa93eef23451eacd74c436eb33ffcea258"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ajency/aj-connections/zipball/89c982e95c925c6861a51dde805a3614a72891dc",
-                "reference": "89c982e95c925c6861a51dde805a3614a72891dc",
+                "url": "https://api.github.com/repos/ajency/aj-connections/zipball/133967aa93eef23451eacd74c436eb33ffcea258",
+                "reference": "133967aa93eef23451eacd74c436eb33ffcea258",
                 "shasum": ""
             },
             "require": {
@@ -26,9 +26,6 @@
             },
             "type": "library",
             "autoload": {
-                "files": [
-                    "src/helpers.php"
-                ],
                 "psr-4": {
                     "Ajency\\Connections\\": "src/"
                 }
@@ -41,10 +38,10 @@
             ],
             "description": "Elasticsearch and Odoo wrapper",
             "support": {
-                "source": "https://github.com/ajency/aj-connections/tree/ajency",
+                "source": "https://github.com/ajency/aj-connections/tree/backup",
                 "issues": "https://github.com/ajency/aj-connections/issues"
             },
-            "time": "2019-11-25T06:56:41+00:00"
+            "time": "2019-08-27T07:27:11+00:00"
         },
         {
             "name": "darkaonline/ripcord",
