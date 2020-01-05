@@ -54,7 +54,7 @@ class Vicidial
         $sync_data = Defaults::getLastSync();
         if ($sync_data['run_cron']) {
             $start_time     = Carbon::now();
-            $raw_data       = self::fetch();
+            $raw_data       = self::fetch($sync_data);
             $sanitized_data = collect(self::sanitize($raw_data));
             foreach ($sanitized_data->chunk(config('static.index_limit')) as $sanitized_batched_data) {
                 dispatch(new IndexData($sanitized_batched_data))->onQueue('index_data');
