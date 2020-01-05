@@ -19,7 +19,7 @@ return [
         'last_login'     => [
             'field'  => 'vicidial_users.last_login_date',
             'type'   => 'date',
-            'fomat'  => 'd-m-Y H:i:s',
+            'format'  => 'd-m-Y H:i:s',
             'source' => 'database',
         ],
         'current_status' => [
@@ -48,7 +48,7 @@ return [
         'date'                 => [
             'field'  => 'vicidial_log.call_date',
             'type'   => 'date',
-            'fomat'  => 'd-m-Y H:i:s',
+            'format'  => 'd-m-Y H:i:s',
             'source' => 'database',
         ],
         'wait_time'            => [
@@ -247,7 +247,7 @@ return [
         'expiration_date'   => [
             'field'  => 'vicidial_lists.expiration_date',
             'type'   => 'date',
-            'fomat'  => 'd-m-Y',
+            'format'  => 'd-m-Y',
             'source' => 'database',
         ],
         'total_records'     => [
