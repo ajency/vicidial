@@ -34,9 +34,12 @@ class Vicidial
             foreach ($mapping as $entity => $entity_data) {
                 foreach ($entity_data as $name => $field_data) {
                     if ($field_data['field']) {
-                        if ($field_data['type'] == 'date') {
-                            $sanitized_single_data[$entity . '_' . $name] = Carbon::createFromTimestamp($single_data->{$field_data['field']})->toDateTimeString();
-                        } else {
+                        if ($field_data['type'] == 'date' && $field_data['format'] == 'timestamp') {
+                            $sanitized_single_data[$entity . '_' . $name] = Carbon::createFromTimestamp($single_data->{$field_data['field']})->timestamp;
+                        } elseif ($field_data['type'] == 'date') {
+                            $sanitized_single_data[$entity . '_' . $name] = Carbon::parse($single_data->{$field_data['field']})->timestamp;
+                        }
+                        else{
                             $sanitized_single_data[$entity . '_' . $name] = $single_data->{$field_data['field']};
                         }
                     } else {
