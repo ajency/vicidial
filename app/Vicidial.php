@@ -9,9 +9,8 @@ use Carbon\Carbon;
 
 class Vicidial
 {
-    public static function fetch()
+    public static function fetch($sync_data)
     {
-        $sync_data = Defaults::getLastSync();
         $db_fields = collect(config('field_mapping'))->flatten(1)->map(function ($field_data) {
             if ($field_data['field'] != '') {
                 return $field_data['field'] . " as '" . $field_data['field'] . "'";
@@ -36,12 +35,12 @@ class Vicidial
                 foreach ($entity_data as $name => $field_data) {
                     if ($field_data['field']) {
                         if ($field_data['type'] == 'date') {
-                            $sanitized_single_data[$entity.'_'.$name] = Carbon::createFromTimestamp($single_data->{$field_data['field']})->toDateTimeString();
+                            $sanitized_single_data[$entity . '_' . $name] = Carbon::createFromTimestamp($single_data->{$field_data['field']})->toDateTimeString();
                         } else {
-                            $sanitized_single_data[$entity.'_'.$name] = $single_data->{$field_data['field']};
+                            $sanitized_single_data[$entity . '_' . $name] = $single_data->{$field_data['field']};
                         }
                     } else {
-                        $sanitized_single_data[$entity.'_'.$name] = '';
+                        $sanitized_single_data[$entity . '_' . $name] = '';
                     }
                 }
             }
@@ -52,14 +51,17 @@ class Vicidial
 
     public static function buildData()
     {
-        $start_time     = Carbon::now();
-        $raw_data       = self::fetch();
-        $sanitized_data = collect(self::sanitize($raw_data));
-        foreach ($sanitized_data->chunk(config('static.index_limit')) as $sanitized_batched_data) {
-            dispatch(new IndexData($sanitized_batched_data))->onQueue('index_data');
+        $sync_data = Defaults::getLastSync();
+        if ($sync_data['run_cron']) {
+            $start_time     = Carbon::now();
+            $raw_data       = self::fetch();
+            $sanitized_data = collect(self::sanitize($raw_data));
+            foreach ($sanitized_data->chunk(config('static.index_limit')) as $sanitized_batched_data) {
+                dispatch(new IndexData($sanitized_batched_data))->onQueue('index_data');
+            }
+            self::checkForMoreData($sanitized_data->last()['call_date'], $sanitized_data->last()['call_id'], $start_time);
         }
-        self::checkForMoreData($sanitized_data->last()['call_date'], $sanitized_data->last()['call_id'], $start_time);
-    } 
+    }
 
     public static function checkForMoreData($date, $id, $start_time)
     {

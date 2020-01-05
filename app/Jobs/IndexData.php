@@ -28,7 +28,7 @@ class IndexData extends Job
     {
         $start_time     = Carbon::now();
         Vicidial::index($this->data);
-        $defaults_data = Defaults::firstOrNew(['label' => 'sync']);
+        $defaults_data = Defaults::where(['label' => 'sync'])->first();
         $meta_data = $defaults_data->meta_data;
         $meta_data['index_time'][] = Carbon::now()->diffInSeconds($start_time);
         $defaults_data->meta_data = $meta_data;

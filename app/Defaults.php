@@ -28,6 +28,7 @@ class Defaults extends Model
         if ($defaults_data == null) {
             $defaults_data            = new self;
             $defaults_data->label     = 'sync';
+            $defaults_data->meta_data = ['run_cron' => 0];
             $defaults_data->save();
         }
         return $defaults_data->meta_data;
@@ -35,13 +36,13 @@ class Defaults extends Model
 
     public static function updateLastSync($log_time, $id, $start_time)
     {
-        $defaults_data = self::firstOrNew(['label' => 'sync']);
-        $defaults_data->meta_data = [
-            'sync_time' => Carbon::now()->toDateTimeString(),
-            'log_time'  => $log_time,
-            'id'        => $id,
-            'fetch_time'=> Carbon::now()->diffInSeconds($start_time)
-        ];
+        $defaults_data             = self::where(['label' => 'sync'])->first();
+        $meta_data                 = $defaults_data->meta_data;
+        $meta_data['sync_time']    = Carbon::now()->toDateTimeString();
+        $meta_data['log_time']     = $log_time;
+        $meta_data['id']           = $id;
+        $meta_data['fetch_time'][] = Carbon::now()->diffInSeconds($start_time);
+        $defaults_data->meta_data  = $meta_data;
         $defaults_data->save();
     }
 }
