@@ -1,6 +1,5 @@
 {
     "mappings": {
-        "_doc": {
             "properties": {
                 "variant_external_id": {
                     "type": "text"
@@ -152,6 +151,5 @@
                     "type": "long"
                 }
             }
-        }
     }
 }
