@@ -38,7 +38,7 @@ class Defaults extends Model
         $defaults_data             = self::where(['label' => 'sync'])->first();
         $meta_data                 = $defaults_data->meta_data;
         $meta_data['sync_time']    = Carbon::now()->toDateTimeString();
-        $meta_data['log_time']     = Carbon::createFromTimestamp($log_time)->toDateTimeString();
+        $meta_data['log_time']     = $log_time;
         $meta_data['id']           = $id;
         $meta_data['fetch_time'][] = Carbon::now()->diffInSeconds($start_time);
         $defaults_data->meta_data  = $meta_data;
