@@ -51,12 +51,12 @@ class Vicidial
         return $sanitized_data;
     }
 
-    public static function buildData($date)
+    public static function buildData($last_date)
     {
         $sync_data = Defaults::getCronStatus();
         if ($sync_data['run_cron']) {
             $start_time     = Carbon::now();
-            $date           = Carbon::createFromTimestamp($log_time)->toDateTimeString();
+            $date           = Carbon::createFromTimestamp($last_date)->toDateTimeString();
             $raw_data       = self::fetch($date);
             $sanitized_data = collect(self::sanitize($raw_data));
             if (count($sanitized_data) > 0) {
