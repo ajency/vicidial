@@ -56,6 +56,7 @@ class Vicidial
         $sync_data = Defaults::getCronStatus();
         if ($sync_data['run_cron']) {
             $start_time     = Carbon::now();
+            $date           = Carbon::createFromTimestamp($log_time)->toDateTimeString();
             $raw_data       = self::fetch($date);
             $sanitized_data = collect(self::sanitize($raw_data));
             if (count($sanitized_data) > 0) {
