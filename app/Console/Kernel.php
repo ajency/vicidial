@@ -27,6 +27,6 @@ class Kernel extends ConsoleKernel
     {
         $schedule->call(function () {
             Vicidial::buildData();
-        })->everyTenMinutes();
+        })->everyFiveMinutes();
     }
 }
