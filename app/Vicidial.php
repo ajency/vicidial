@@ -9,7 +9,7 @@ use Carbon\Carbon;
 
 class Vicidial
 {
-    public static function fetch($sync_data)
+    public static function fetch($date)
     {
         $db_fields = collect(config('field_mapping'))->flatten(1)->map(function ($field_data) {
             if ($field_data['field'] != '') {
@@ -17,8 +17,8 @@ class Vicidial
             }
         })->filter()->values()->implode(',');
         $query_string = "select " . $db_fields . " from vicidial_log inner join vicidial_list on vicidial_list.lead_id = vicidial_log.lead_id inner join vicidial_users on vicidial_users.user = vicidial_log.user inner join vicidial_campaigns on vicidial_log.campaign_id = vicidial_campaigns.campaign_id inner join vicidial_lists on vicidial_log.list_id = vicidial_lists.list_id inner join vicidial_statuses on vicidial_statuses.status = vicidial_log.status inner join vicidial_session_data on vicidial_session_data.user = vicidial_log.user and vicidial_session_data.campaign_id = vicidial_log.campaign_id left join (select list_id, sum(countx) as 'duplicate_records', count(*) as 'total_records' FROM (select phone_number, list_id,if(count(*)>1,1,0) as countx from vicidial_list group by phone_number,list_id) as count_table GROUP BY list_id) as list_join on list_join.list_id = vicidial_log.list_id";
-        if (isset($sync_data['log_time'])) {
-            $query_string .= " where vicidial_log.call_date > '" . $sync_data['log_time'] . "'";
+        if ($date) {
+            $query_string .= " where vicidial_log.call_date > '" . $date . "'";
         }
         $query_string .= ' limit ' . config('static.fetch_limit');
 
@@ -51,12 +51,12 @@ class Vicidial
         return $sanitized_data;
     }
 
-    public static function buildData()
+    public static function buildData($date)
     {
         $sync_data = Defaults::getLastSync();
         if ($sync_data['run_cron']) {
             $start_time     = Carbon::now();
-            $raw_data       = self::fetch($sync_data);
+            $raw_data       = self::fetch($date);
             $sanitized_data = collect(self::sanitize($raw_data));
             if (count($sanitized_data) > 0) {
                 foreach ($sanitized_data->chunk(config('static.index_limit')) as $sanitized_batched_data) {
@@ -71,14 +71,16 @@ class Vicidial
     {
         $last_data = \DB::connection('vicidial')->table('vicidial_log')->where('call_date', '>', $date)->get();
         if (count($last_data) > 0) {
-            dispatch(new CreateIndexData())->onQueue('fetch_data');
+            dispatch(new CreateIndexData($date))->onQueue('fetch_data');
         }
         Defaults::updateLastSync($date, $id, $start_time);
     }
 
     public static function createIndexData()
     {
-        dispatch(new CreateIndexData())->onQueue('fetch_data');
+        $sync_data = Defaults::getLastSync();
+        $date = isset($sync_data['log_time']) ? $sync_data['log_time'] : null;
+        dispatch(new CreateIndexData($date))->onQueue('fetch_data');
     }
 
     public static function index($data)
