@@ -53,7 +53,7 @@ class Vicidial
 
     public static function buildData($date)
     {
-        $sync_data = Defaults::getLastSync();
+        $sync_data = Defaults::getCronStatus();
         if ($sync_data['run_cron']) {
             $start_time     = Carbon::now();
             $raw_data       = self::fetch($date);

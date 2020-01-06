@@ -45,4 +45,16 @@ class Defaults extends Model
         $defaults_data->meta_data  = $meta_data;
         $defaults_data->save();
     }
+
+    public static function getCronStatus()
+    {
+        $defaults_data = self::where('label', 'cron')->first();
+        if ($defaults_data == null) {
+            $defaults_data            = new self;
+            $defaults_data->label     = 'cron';
+            $defaults_data->meta_data = ['run_cron' => 0];
+            $defaults_data->save();
+        }
+        return $defaults_data->meta_data;
+    }
 }
