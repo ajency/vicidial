@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ajency/aj-connections.git",
-                "reference": "133967aa93eef23451eacd74c436eb33ffcea258"
+                "reference": "734031c2eb603180634559a8615d1c3176e30bbe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ajency/aj-connections/zipball/133967aa93eef23451eacd74c436eb33ffcea258",
-                "reference": "133967aa93eef23451eacd74c436eb33ffcea258",
+                "url": "https://api.github.com/repos/ajency/aj-connections/zipball/734031c2eb603180634559a8615d1c3176e30bbe",
+                "reference": "734031c2eb603180634559a8615d1c3176e30bbe",
                 "shasum": ""
             },
             "require": {
@@ -38,10 +38,10 @@
             ],
             "description": "Elasticsearch and Odoo wrapper",
             "support": {
-                "source": "https://github.com/ajency/aj-connections/tree/backup",
+                "source": "https://github.com/ajency/aj-connections/tree/vicidial",
                 "issues": "https://github.com/ajency/aj-connections/issues"
             },
-            "time": "2019-08-27T07:27:11+00:00"
+            "time": "2020-01-06T13:45:23+00:00"
         },
         {
             "name": "darkaonline/ripcord",
