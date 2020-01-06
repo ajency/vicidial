@@ -38,8 +38,7 @@ class Vicidial
                             $sanitized_single_data[$entity . '_' . $name] = Carbon::createFromTimestamp($single_data->{$field_data['field']})->timestamp;
                         } elseif ($field_data['type'] == 'date') {
                             $sanitized_single_data[$entity . '_' . $name] = Carbon::parse($single_data->{$field_data['field']})->timestamp;
-                        }
-                        else{
+                        } else {
                             $sanitized_single_data[$entity . '_' . $name] = $single_data->{$field_data['field']};
                         }
                     } else {
@@ -54,15 +53,17 @@ class Vicidial
 
     public static function buildData()
     {
-        $sync_data = Defaults::getLastSync();
+        $sync_data = Defaults::getCronStatus();
         if ($sync_data['run_cron']) {
             $start_time     = Carbon::now();
             $raw_data       = self::fetch($sync_data);
             $sanitized_data = collect(self::sanitize($raw_data));
-            foreach ($sanitized_data->chunk(config('static.index_limit')) as $sanitized_batched_data) {
-                dispatch(new IndexData($sanitized_batched_data))->onQueue('index_data');
+            if (count($sanitized_data) > 0) {
+                foreach ($sanitized_data->chunk(config('static.index_limit')) as $sanitized_batched_data) {
+                    dispatch(new IndexData($sanitized_batched_data))->onQueue('index_data');
+                }
+                self::checkForMoreData($sanitized_data->last()['call_date'], $sanitized_data->last()['call_id'], $start_time);
             }
-            self::checkForMoreData($sanitized_data->last()['call_date'], $sanitized_data->last()['call_id'], $start_time);
         }
     }
 
