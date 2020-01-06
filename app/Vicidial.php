@@ -18,7 +18,7 @@ class Vicidial
         })->filter()->values()->implode(',');
         $query_string = "select " . $db_fields . " from vicidial_log inner join vicidial_list on vicidial_list.lead_id = vicidial_log.lead_id inner join vicidial_users on vicidial_users.user = vicidial_log.user inner join vicidial_campaigns on vicidial_log.campaign_id = vicidial_campaigns.campaign_id inner join vicidial_lists on vicidial_log.list_id = vicidial_lists.list_id inner join vicidial_statuses on vicidial_statuses.status = vicidial_log.status inner join vicidial_session_data on vicidial_session_data.user = vicidial_log.user and vicidial_session_data.campaign_id = vicidial_log.campaign_id left join (select list_id, sum(countx) as 'duplicate_records', count(*) as 'total_records' FROM (select phone_number, list_id,if(count(*)>1,1,0) as countx from vicidial_list group by phone_number,list_id) as count_table GROUP BY list_id) as list_join on list_join.list_id = vicidial_log.list_id";
         if ($date) {
-            $query_string .= " where vicidial_log.call_date >= '" . $date . "'";
+            $query_string .= " where vicidial_log.call_date > '" . $date . "'";
         }
         $query_string .= ' limit ' . config('static.fetch_limit');
 
