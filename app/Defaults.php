@@ -28,7 +28,6 @@ class Defaults extends Model
         if ($defaults_data == null) {
             $defaults_data            = new self;
             $defaults_data->label     = 'sync';
-            $defaults_data->meta_data = ['run_cron' => 0];
             $defaults_data->save();
         }
         return $defaults_data->meta_data;
