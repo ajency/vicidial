@@ -24,6 +24,6 @@ class CreateIndexData extends Job
      */
     public function handle()
     {
-        Vicidial::buildData($date);
+        Vicidial::buildData($this->date);
     }
 }
